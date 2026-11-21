@@ -715,8 +715,8 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(input:not([type=checkbox])
 /* (the title bar's search pop is not one of these fields: it floats over the bar and the page, a menu that holds a field,
    and keeps the menu plate the base Glass theme gives every title-bar menu; drawn as a field, the page read through it,
    FO-20) */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pmw-msearch) { background-color: var(--lg-fill) !important; border-color: var(--lg-line) !important; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pmw-msearch) :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]), textarea) { background: transparent !important; border-color: transparent !important; box-shadow: none !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pmw-msearch, .o55-tags-box) { background-color: var(--lg-fill) !important; border-color: var(--lg-line) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pmw-msearch, .o55-tags-box) :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]), textarea) { background: transparent !important; border-color: transparent !important; box-shadow: none !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-press {
   display: block; position: fixed; width: 36px; height: 36px; border-radius: 50%; pointer-events: none; z-index: 2147483000;
   background: radial-gradient(closest-side, rgba(255, 255, 255, .6), rgba(255, 255, 255, .16) 55%, transparent); mix-blend-mode: plus-lighter;

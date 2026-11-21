@@ -29,8 +29,9 @@ directory must be outside the repository: the check refuses one inside it with e
 anything.
 
 Exit codes: 0 nothing to report, and every subcheck finished; 1 nothing it reports stops the
-landing, meaning governance staleness on files the branch edited, pre-existing failures whose count
-has not risen against a current baseline (see "Only against a current baseline" below), failures
+landing, meaning governance staleness on files the branch edited, pre-existing or
+`unknown-pre-existing` failures whose count has not risen against a current baseline (see "Only
+against a current baseline" and "Pre-existing and improved failures" below), failures
 that are new but name none of the branch's files, or a subcheck that timed out, so that the run was
 not fully verified; 2 something it reports does stop the landing, meaning a failure on the branch's
 files that is neither staleness nor pre-existing, a bucket that grew whose error kind is not
@@ -427,15 +428,21 @@ grown bucket whose kind is not staleness stops it, as before. In `--json`, `pre_
 reported pre-existing failure, and those rows and the matching `on_branch` rows carry `standing`,
 `baseline_count` and `count`.
 
-What this cannot see: a failure that sat above its subcheck's print cap when the baseline was
-recorded is not in `baseline.json`, so when it later falls inside the sample on a touched file it is
-judged as before and stops the landing. The run-gates copy of that self-test row was one: run-gates
-printed 50 of the baseline's 79 readiness rows and the self-test row was not among them, while the
-audit-governance copy, printed in full, was. That run-gates copy is now judged by its
-audit-governance copy instead (see "A validator both aggregates run" above), so the brief's
-motivating case, the storage registry repairs landing, replays as exit 1 with 0 blocking items
-instead of 2 with 1. The edge remains for a validator that only run-gates runs, or whose
-audit-governance copy prints only a sample too.
+What this cannot prove: a failure that sat above its subcheck's print cap when the baseline was
+recorded is not in `baseline.json`, so when it later falls inside the sample on a touched file, the
+run cannot tell it from an old one. It is reported as `unknown-pre-existing`, in one line naming the
+row and the baseline's reported total, and it never stops the landing, as long as the subcheck
+reports no more failures than the baseline did. That is T272, the audit-closure row appended after
+the validator's 200 capped errors: the baseline printed 100 of 201, main had the reopened-rows row,
+and a branch that cut the total to 68 printed it for the first time and blocked on it. The tradeoff
+is the other direction: a real new failure in such a subcheck, on a landing whose own cuts keep the
+total at or below the baseline's, is indistinguishable from an old one, and is reported as unknown
+rather than excused silently. A subcheck that reports more than the baseline did still keeps the
+truncated rule and stops the landing. The run-gates copy of the storage registry repairs self-test
+row, mentioned above, is now judged by its audit-governance copy (see "A validator both aggregates
+run"), so the brief's motivating case replays as exit 1 with 0 blocking items instead of 2 with 1.
+`--json` keeps these rows in `unknown_pre_existing`, with `baseline_total`, `baseline_sampled`,
+`unprinted_rows` and `unmatched_rows`.
 
 It cannot tell one failure from another of the same kind on the same path. A branch that fixes one
 missing reference in a document it edits and adds another keeps the bucket's count, so the new one

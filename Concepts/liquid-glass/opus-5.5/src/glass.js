@@ -2264,6 +2264,9 @@
     var pre = m && m.target === target ? m : null;
     if (!target || !(pre ? pre.shown : visible(target) && visible(strip))) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); return; }
     hiddenLenses.delete(L); showUnwatch(L);
+    if (!L.carryFrame && switchMotion === 'hop' &&
+        ((cfg.sel === '.pmw-strip' && target.getAttribute('data-tab-id') === 'dashboard:home') ||
+         (filesSwitcher(strip) && target.getAttribute('data-tab') === 'explorer'))) sampleCarryFrame(L);
     if (L.scroller && L.scroller.isConnected) {
       var out;
       if (pre && pre.scroller === L.scroller && pre.out !== undefined) out = pre.out;
@@ -2419,12 +2422,13 @@
     var T = L.hopTarget; if (!T || !L.hopFrames) return;
     if (!T.isConnected) { endHop(L); return; }
     var cfg = L.cfg; if (!T.matches(cfg.active || '.active')) return;
+    if (T.getAttribute('data-tab') === 'changed' && filesSwitcher(L.strip)) L.filesChangedSeen = true;
     /* (a carried block lands by its own clock, which a long task right after the press may have held back) */
     var K = L.carry, wait = K ? K.dur - carryAge(K) : L.hopEnd - performance.now();
     /* (and not before the compositor has reported the block's start, nor while its change is still to come: until then
        its age is an estimate, or its end is not its tab's, and a block cut short lands the chip under the labels a step
        ahead of it, 14 px in Basic Light on Alexis) */
-    if (K && ((K.anim && K.anim.startTime == null && K.anim.playState !== 'finished') || K.change || K.due)) wait = Math.max(wait, 16);
+    if (K && ((!K.framePaced && K.anim && K.anim.startTime == null && K.anim.playState !== 'finished') || K.change || K.due)) wait = Math.max(wait, 16);
     if (wait > 0) { if (!L.hopT) L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, wait + 1); return; }
     endHop(L);
   }
@@ -2433,7 +2437,10 @@
        go), on its clock, so the chip is not set back to where it was when the press came while the compositor carried
        it on until the new block was drawn (9 px, Friendly Light on Alexis, 88 ms between the two) */
     var K = L.carry, go = null;
-    if (K && K.pose && L.hopFrames && CARRY[switchMotion] && carryZero(K) != null) { var KA = carryAge(K); if (KA < K.dur) go = { K: K, at: KA, zero: carryZero(K) }; }
+    if (K && K.pose && L.hopFrames && CARRY[switchMotion]) {
+      var KA = carryAge(K), zero = carryZero(K);
+      if (KA < K.dur && (K.framePaced || zero != null)) go = { K: K, at: KA, zero: zero };
+    }
     stopLensTravel(L);
     if (switchMotion === 'cut' || !A) { setLensBox(L, B); return; }
     if (CARRY[switchMotion]) { carry(L, A, B, strip, cfg, target, vertical, go); return; }
@@ -2503,6 +2510,7 @@
      waits to start at the age it is to be drawn at (its hold: its current time while it waits) */
   function carryAge(K) {
     var a = K.anim, f = K.from || 0;
+    if (a && a.__pmHeld) return f + (a.currentTime || 0);
     if (a && a.startTime != null) return Math.max(0, performance.now() - a.startTime + f);
     /* drawn, but its start not reported yet (the compositor reports it to a main thread that may still be busy): from
        when its first frame was drawn, at the age it was held at. A block made again from a reported age of 0 began its
@@ -2511,7 +2519,7 @@
     return !a ? f : f + (a.currentTime || 0);
   }
   /* when the trip's age was 0, on the wall clock; null until a frame has drawn it */
-  function carryZero(K) { var a = K.anim; return a && a.startTime != null ? a.startTime - (K.from || 0) : K.drawn != null ? K.drawn - K.at : null; }
+  function carryZero(K) { var a = K.anim; if (a && a.__pmHeld) return null; return a && a.startTime != null ? a.startTime - (K.from || 0) : K.drawn != null ? K.drawn - K.at : null; }
   /* a carried block whose start the compositor has not reported yet (one made late in a long frame: the report comes with
      the next frame) has no clock the main thread can read, and a block made to go on from it now has only a guess at its
      age: held at the age the main thread last knew while the compositor had carried the trip on for 150 ms, it was drawn
@@ -2520,7 +2528,7 @@
      frames, then as before) */
   function startUnknown(L, strip) {
     var K = L.carry, a = K && K.anim;
-    if (!K || !K.pose || !L.hopFrames || !a || a.startTime != null || a.playState === 'finished') return false;
+    if (!K || !K.pose || !L.hopFrames || K.framePaced || !a || a.startTime != null || a.playState === 'finished') return false;
     if ((K.waits = (K.waits || 0) + 1) > 30) return false;
     /* (and the block does not land meanwhile: landed at its own box while its tab had grown, the chip under the labels
        would take the tab's new box at once) */
@@ -2532,6 +2540,19 @@
   var CARRY_FOLLOW = 0.5, CARRY_FOLLOW_MS = 110;   /* the least time a carried chip takes to follow its tab to a new box: half
                                                      its trip, never under 110 ms (Basic's snap is 110 ms, Friendly's hop 440) */
   var FRAME_MS = 1000 / 60;
+  function filesSwitcher(strip) { return strip.matches('#panel-files > .pm-segtab'); }
+  /* Measure the starting strip's refresh before a cold carry. At 120 Hz a 16.7 ms allowance per
+     callback would spend two refreshes of travel in a single commit after even a short missed frame. */
+  function sampleCarryFrame(L) {
+    var last = null, count = 0;
+    L.carryFrame = FRAME_MS;
+    function sample(now) {
+      if (last != null && now > last && now - last < FRAME_MS * 0.75) L.carryFrame = FRAME_MS / 2;
+      last = now;
+      if (++count < 12 && L.carryFrame === FRAME_MS) requestAnimationFrame(sample);
+    }
+    requestAnimationFrame(sample);
+  }
   /* go: the trip under way that a new block goes on with ({ K: that trip, at: its age now, zero: when its age was 0, or
      null if no frame has drawn it yet, retarget: its tab changed under it }). Retarget (FO-195): the trip so far stays as
      it was, its lift, tilt and squash included, and the change of box is added to it from the new block's first frame
@@ -2664,20 +2685,29 @@
     var g0 = go ? go.K.from || 0 : 0;
     var from = go ? g0 + Math.floor(Math.max(0, (zero != null ? Math.min(at, tl - zero) : at) - g0) / FRAME_MS) * FRAME_MS : 0;
     var T = plan(at, go ? null : 0, from), start = performance.now() - at;
+    var coldAgents = !go && cfg.sel === '.pmw-strip' &&
+      target.getAttribute('data-tab-id') === 'dashboard:agents' && window.PMW && !window.PMW.instances['dashboard:agents'];
+    var coldChanged = !go && !L.filesChangedSeen && target.getAttribute('data-tab') === 'changed' && filesSwitcher(strip);
+    var framePaced = go ? go.K.framePaced : (coldAgents || coldChanged) && hopping;
     var parts = [F, G, S].concat(SK), anims = [], lead = null;
     parts.forEach(function (e, j) {
       if (!e) return;
       var a = e.animate(T.frames[j], { duration: T.span, easing: 'linear', fill: 'forwards' });
-      if (zero != null) a.startTime = zero + from; else if (at > from) a.currentTime = at - from;
+      if (framePaced) {
+        a.__pmFramePaced = true;
+        a.__pmHeld = true;
+        a.pause();
+        a.currentTime = at - from;
+      } else if (zero != null) a.startTime = zero + from; else if (at > from) a.currentTime = at - from;
       anims.push(a); if (!lead) lead = a;
     });
-    var probe = F.animate([], { duration: 1000 }), made = performance.now(), inFrame = frameSync > 0 || postRunning;
+    var probe = framePaced ? null : F.animate([], { duration: 1000 }), made = performance.now(), inFrame = frameSync > 0 || postRunning;
     setLensBox(L, B);
     /* the chip under the labels stays hidden while the block is up (as for a step's blocks) */
     var hide = L.anim = L.hopHide = L.lens.animate([{ opacity: 0 }, { opacity: 0 }], { duration: 600000 });
     if (!L.hopMarks) L.hopMarks = new Map();
     L.hopFrames = S ? [S, F] : [F]; L.hopTarget = target;
-    var K = L.carry = { A: A, B: B, vertical: vertical, anim: lead, liftX: liftX, liftY: liftY, change: !!go };
+    var K = L.carry = { A: A, B: B, vertical: vertical, anim: lead, liftX: liftX, liftY: liftY, change: !!go, framePaced: framePaced };
     function take(P) {
       K.t0 = start; K.dur = P.end; K.from = P.from; K.pose = P.pose; K.at = P.at; K.B = P.to;
       L.path = { t0: start, dur: P.end, rects: P.rects }; L.hopEnd = start + P.end;
@@ -2685,7 +2715,27 @@
       L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, Math.max(0, start + P.end - performance.now()) + 1);
     }
     take(T);
-    requestAnimationFrame(function () {
+    if (coldAgents && !framePaced && typeof window.PM_START_ON_SHOWN === 'function') window.PM_START_ON_SHOWN(anims, { startHeld: true, frames: 10 });
+    if (framePaced) {
+      // The carry can start on pointerdown, before the click renders Agents or fits the Changed pane.
+      // Advance all parts together and leave out time from frames missed during that work.
+      var last = null;
+      var advance = function (now) {
+        if (L.carry !== K) return;
+        var end = K.dur - K.from, time = Math.min(end, lead.currentTime + (last == null ? 0 : Math.min(now - last, L.carryFrame || FRAME_MS)));
+        // Once the cold hop has run for its nominal duration and landed, its remaining squash can
+        // finish as soon as both edges are within a pixel of rest.
+        if (!go && time > 0 && now - made >= end) {
+          var P = K.pose(K.from + time);
+          if (!P.lift && (P.sx - 1) * P.w < 2 && (1 - P.sy) * P.h < 2) time = end;
+        }
+        last = now;
+        anims.forEach(function (a) { a.currentTime = time; });
+        if (time < end || K.change) requestAnimationFrame(advance);
+        else requestAnimationFrame(function () { if (L.carry === K) hopSettle(L); });
+      };
+      requestAnimationFrame(advance);
+    } else requestAnimationFrame(function () {
       /* the first frame callback after the block was made: when it was first drawn (K.drawn), so its age is known before
          the compositor reports its start (its probe, an empty animation, starts in the lifecycle of the frame that first
          draws it: started means drawn in the frame it was made in, at its own layout; waiting means drawn once this frame
@@ -2694,7 +2744,7 @@
          drawn in that frame whatever its probe says). A block that goes on with a drawn trip has the trip's start time
          from the moment it is made, so its age never needs this */
       var drawn = inFrame || probe.startTime != null || lead.startTime != null; probe.cancel();
-      if (L.carry !== K) return;
+      if (L.carry !== K || coldAgents) return;
       if (drawn) { K.drawn = made; return; }
       setTimeout(function () { if (K.drawn == null) K.drawn = performance.now(); }, 0);
     });
@@ -2727,15 +2777,19 @@
         var tl1 = document.timeline && document.timeline.currentTime != null ? document.timeline.currentTime : null;
         if (!rest && tl1 != null && performance.now() - tl1 > 12) { requestAnimationFrame(change); return; }
         var P = plan(at, age, rest ? age : from);
-        if (rest) {
+        if (rest && !framePaced) {
           anims = anims.map(function (a) { var e = a.effect.target, b; a.cancel(); b = e.animate(P.frames[parts.indexOf(e)], { duration: P.span, easing: 'linear', fill: 'forwards' }); return b; });
           lead = K.anim = anims[0]; K.drawn = null;
-        } else anims.forEach(function (a) { a.effect.setKeyframes(P.frames[parts.indexOf(a.effect.target)]); a.effect.updateTiming({ duration: P.span }); });
+        } else anims.forEach(function (a) {
+          a.effect.setKeyframes(P.frames[parts.indexOf(a.effect.target)]);
+          a.effect.updateTiming({ duration: P.span });
+          if (rest) a.currentTime = 0;
+        });
         K.change = false; take(P);
       };
       var change = function () {
         if (L.carry !== K) return;
-        if ((lead.startTime == null || (hide.startTime == null && hide.playState !== 'finished')) && ++tries < 30) { requestAnimationFrame(change); return; }
+        if (((!framePaced && lead.startTime == null) || (hide.startTime == null && hide.playState !== 'finished')) && ++tries < 30) { requestAnimationFrame(change); return; }
         if (!afterLayout(apply)) apply();
       };
       requestAnimationFrame(change);

@@ -1,11 +1,13 @@
 // FO-67 / FO-52 dependency: real mouse and keyboard opening independently keep the entire popup in view.
-import {clearToastsOver} from '../helpers/toasts.mjs';
+import {quickClickClear} from '../helpers/toasts.mjs';
 const LOOKS = ['basic','friendly','retro','glass','nier'].flatMap(f => [`${f}-light`,`${f}-dark`]);
 const SIZES = [[740,900],[860,900],[1024,900],[1280,500],[1390,900],[1920,900]];
 /* PM7KIT-LOOK-PALETTE-TOAST-20261118 (F12E-NORMAL-TOAST-COVER-20261118): a live notice under the title bar — its action
    row div.pmn-acts "Open Usage" — can paint over this trigger when the quick click runs, and Jared ruled toasts may
-   cover controls, so before every mouse quick click the shared helper (helpers/toasts.mjs) dismisses every staged toast
-   whose box meets the trigger's box by its own button. */
+   cover controls, so every mouse quick click goes through quickClickClear (helpers/toasts.mjs): quickClick's own pointer
+   path and 480 ms hover dwell, then the shared clear AFTER the dwell and immediately before the press, then the press —
+   so a notice that arrives during the dwell itself is dismissed too (F follow-up, batch 12 ITEMS line: the clear that
+   ran before the hover missed one; a leg failed and its identical retry passed). */
 export const tests = Object.fromEntries(['onboarding','tour','settings'].map(route => [route, async t => {
   await t.emulate({reducedMotion:'reduce'});
   const f = await t.app.open(route === 'onboarding' ? {onboarding:true,query:'o55=screen=welcome'} : {});
@@ -44,7 +46,7 @@ export const tests = Object.fromEntries(['onboarding','tour','settings'].map(rou
       for (const input of ['mouse','keyboard']) {
         const label = `${route} ${look} ${w}x${h} ${input}`;
         await trigger.scrollIntoViewIfNeeded();
-        if (input === 'mouse') { await clearToastsOver(t, f, trigger, label); await t.quickClick(trigger); }
+        if (input === 'mouse') { await quickClickClear(t, f, trigger, label); }
         else { await trigger.focus(); await trigger.press('Enter'); }
         const opened = await f.locator(popup).isVisible();
         await t.check(`${label}: palette opened`, opened);

@@ -48,7 +48,8 @@ function o55ChoicesFor(setting, current) {
     const opts = (setting.options || []).slice(); if (!opts.length) return null;
     return { kind: 'single', items: opts.map(o => ({ raw: o, label: PM51.valueLabel(setting.id, o), on: String(o) === String(current), marks: mark(o), swatch: o === 'Theme' ? 'var(--o55-theme-accent, var(--accent-primary))' : ((typeof O55_SWATCH === 'object' && O55_SWATCH[o]) || '') })) };
   }
-  if (control === 'multiselect') {
+  /* tags list their suggested kinds here; any other tag is typed on the row itself (FO-161) */
+  if (control === 'multiselect' || control === 'tags') {
     const opts = o55Options(setting); if (!opts.length) return null;
     const cur = Array.isArray(current) ? current.map(String) : [];
     const defs = Array.isArray(def) ? def.map(String) : [];

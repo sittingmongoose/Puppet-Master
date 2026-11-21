@@ -454,7 +454,9 @@
     set('project', 'harbor', 'system.mcp.timeout', 60000);
     // the rest of tastebook's own settings, from Split v2 4.9 (its Theme, Everyday model and Profile in use are left out:
     // they would contradict this concept's world, BUILD-SPEC 4.4)
-    set('project', 'tastebook', 'ai.models.worker-model', 'openai/gpt-5');
+    /* Jared 2026-11-20: a model this page lists (tastebook uses the Codex account). openai/gpt-5 is not one of them, so
+       the row's picker put it first as "Not in the list now", ahead of its inherit choice */
+    set('project', 'tastebook', 'ai.models.worker-model', 'openai-codex/gpt-codex');
     set('project', 'tastebook', 'planning.verification.goal-auto-resume', false);
     set('project', 'tastebook', 'safety.approvals.auto-continue', true);
     set('project', 'tastebook', 'branching.worktrees.auto-worktree-new-threads', true);
@@ -509,8 +511,14 @@
      anything that isn't an object or a list. A value it can't hold is never put into it (feed.js) and is said in
      words in its place (rows.js), and the base control is used again as soon as it can hold the value. */
   const HOLDS_MAP = ['keyvalue'], HOLDS_LIST = ['list', 'multiselect', 'reorder', 'keyvalue'];
+  /* Jared 2026-11-20: a row whose control the page draws itself, whatever its setting's control word still says. Stream
+     F's FO-186 draws Model nicknames as its own list of lines (kit.d/32-model-nicknames.js, which also gives
+     PM51.modelNicknames) while the setting's control word is still the old text box's. Reading only the word, the layer
+     hid that list behind "No nicknames yet · Change", so its Add line could not be used. */
+  const OWN_MAPS = { 'ai.models.model-alias': () => !!(W.PM51 && typeof W.PM51.modelNicknames === 'function') };
   function holds(id, v) {
     if (v === null || typeof v !== 'object') return true;
+    if (!Array.isArray(v) && OWN_MAPS[id] && OWN_MAPS[id]()) return true;
     const s = setting(id), c = s && s.control;
     if (!c) return true;
     return Array.isArray(v) ? HOLDS_LIST.includes(c) : HOLDS_MAP.includes(c);
@@ -531,7 +539,9 @@
     if (v && typeof v === 'object' && !isModel(id) && !holds(id, v)) return countWords(id, v);
     if (isModel(id)) {
       const f = factsOf(id) || {};
-      if (v === 'inherit' && f.labels && f.labels.inherit) return f.labels.inherit;
+      /* Jared's option A (2026-11-20): it names the setting it follows and the model that gives here, "Same as Everyday
+         model · Claude Opus 4" */
+      if (v === 'inherit' && f.labels && f.labels.inherit) { const iw = PSX.places && PSX.places.inheritWords ? PSX.places.inheritWords(id) : null; return iw && iw.model ? `${f.labels.inherit} · ${iw.model}` : f.labels.inherit; }
       if (v && typeof v === 'object' && !Array.isArray(v)) { const m = vt(id, modelOf(v)); return effortOf(v) ? `${m} · ${effortOf(v)} thinking` : m; }
     }
     if (id === 'system.mcp.timeout') { const n = Number(v); return n >= 1000 ? `${+(n / 1000).toFixed(1)} seconds` : `${n} ms`; }

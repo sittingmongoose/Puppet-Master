@@ -90,10 +90,17 @@ PMW.activateTab = function (tabId, opts) {
   if (restored) { maximizeLeft(); announce('Panels restored'); }
   if (changed) bus.emit('activate', { tabId: tabId, panelId: p.id, kind: l.tabs[tabId].kind, reason: opts.reason || 'user' });
   if (opts.focus) {
+    var focusPanelId = l.view.focus;
     nextFrame(function () {
-      var e = instances[tabId];
-      if (e && e.instance && e.instance.focus) { try { e.instance.focus(); } catch (_) {} }
-      else if (e) e.host.focus({ preventScroll: true });
+      // Let the newly shown body finish layout and paint before native focus can flush its layout.
+      var from = doc.activeElement;
+      setTimeout(function () {
+        var e = instances[tabId], panel = model.panelOf(L(), tabId);
+        if (!e || !e.visible || !panel || panel.active !== tabId ||
+            L().view.focus !== focusPanelId || doc.activeElement !== from) return;
+        if (e.instance && e.instance.focus) { try { e.instance.focus(); } catch (_) {} }
+        else e.host.focus({ preventScroll: true });
+      }, 0);
     });
   }
   if (PMW.strip.reveal) PMW.strip.reveal(tabId);
