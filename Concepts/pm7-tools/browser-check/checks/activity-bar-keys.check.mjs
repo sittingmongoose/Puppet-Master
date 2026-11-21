@@ -831,7 +831,7 @@ async function run(t, w, h) {
   // under a key focus). Read first with the focus where the action left it, then at rest with the focus stepped off
   // without scrolling; the key focus is then given back by a real Tab. A control the action left without a key focus
   // (:focus-visible off) is skipped, as no mark is due.
-  const markNow = async (target) => {
+  const markNow = async (target, bothNeighbours = both) => {
     const st = await f.evaluate(k => { const el = document.querySelector(`#activityBar .icon[data-ab-id="${k}"]`); return { fv: !!el && document.activeElement === el && el.matches(':focus-visible') }; }, target);
     if (!st.fv) return { key: target, focused: false, skipped: 'no key focus after the action' };
     await f.waitForTimeout(450);
@@ -861,7 +861,7 @@ async function run(t, w, h) {
     if (!clear) return { key: target, focused: false, restBlocked: 'NieR brackets still overlap the rest capture' };
     const ox = region.x - off.x, oy = region.y - off.y;
     return { key: target, lit: b.lit, focused: !moved, moved, brackets: b.brackets, clip: b.brackets ? null : b.clip,
-      ...(b.brackets ? { corners: bestCorners(r0, r1, b, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy, both), sides(r0, r1, b.item, ox, oy, both)) }) };
+      ...(b.brackets ? { corners: bestCorners(r0, r1, b, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy, bothNeighbours), sides(r0, r1, b.item, ox, oy, bothNeighbours)) }) };
   };
   const sampleMark = async (target, act) => {
     const ready = await f.waitForFunction(markOn, { target, ready: true }, { timeout: 2000 }).then(() => true, () => false);
@@ -1157,14 +1157,14 @@ async function run(t, w, h) {
       await t.crop(`${at}-files-${surface}-${look}`, f.locator('#activityBar'), `${at} ${look}: lit Files with the key focus mark`);
     }
     // A family change with the key focus kept on the open panel's icon (K-F96c-1). In Glass the lens carries the mark;
-    // in the look it changes to (Basic, then Retro, each from this Glass look) the icon draws its own at once, with no
+    // in the look it changes to (Basic, Retro and Friendly, each from this Glass look) the icon draws its own, with no
     // focus flag left behind (F96c-1). The change is made with the rail idle (1.6 s on the icon: no sync of the lens
     // still queued, which on b622109459 could clear the flag by chance). Last in the look, as the next look is set by
     // the loop.
     if (/^glass-/.test(look)) {
       const flags = async () => ({ ...(await f.evaluate(() => { const i = document.querySelector('#activityBar .icon[data-ab-id="files"]'), L = document.querySelector('.lg-lens[data-lg-for="rail-icons"]');
         return { theme: document.documentElement.getAttribute('data-theme'), iconFlag: !!i && i.hasAttribute('data-lg-focus'), lensFlag: !!L && L.hasAttribute('data-lg-focus'), keyFocus: !!i && document.activeElement === i && i.matches(':focus-visible') }; })), mark: (await f.evaluate(markOn, 'files')).any });
-      for (const fam of ['basic', 'retro']) {
+      for (const fam of ['basic', 'retro', 'friendly']) {
         if (fam !== 'basic') {
           await t.app.look(look);
           await f.waitForFunction(() => !window.PM_THEME_TRANSITION?.busy?.() && !window.PM_LOOK_COVERED?.(), null, { timeout: 20000 }).catch(() => {});
@@ -1174,13 +1174,15 @@ async function run(t, w, h) {
         const reached = await tabTo('files');
         await f.waitForTimeout(1600);
         const pre = await flags();
+        const destination = look.replace('glass', fam);
         await f.evaluate(fam => PM_THEME.setFamily(fam, { persist: false }), fam);
-        await f.waitForFunction(fam => (document.documentElement.getAttribute('data-theme') || '').startsWith(fam + '-') && !window.PM_THEME_TRANSITION?.busy?.() && !window.PM_LOOK_COVERED?.(), fam, { timeout: 20000 }).catch(() => {});
+        await f.waitForFunction(theme => document.documentElement.getAttribute('data-theme') === theme
+          && !window.PM_THEME_TRANSITION?.busy?.() && !window.PM_LOOK_COVERED?.(), destination, { timeout: 20000 }).catch(() => {});
         await frames(f, 4);
-        const post = await flags(), r = await markNow('files');
-        t.log(`${at} ${look} -> ${fam} with the focus kept: before ${JSON.stringify(pre)}, after ${JSON.stringify(post)}, mark ${JSON.stringify(brief(r))}`);
-        await t.check(`${at} ${look}: a change to ${fam} with the key focus kept on the open panel's icon leaves it its own mark at 3:1 on every side and no focus flag`,
-          reached && pre.keyFocus && pre.mark && post.keyFocus && !post.iconFlag && !post.lensFlag && !r.skipped && markOk(r), JSON.stringify({ pre, post, mark: brief(r) }));
+        const post = await flags(), r = await markNow('files', destination === 'friendly-light');
+        t.log(`${at} ${look} -> ${destination} with the focus kept: before ${JSON.stringify(pre)}, after ${JSON.stringify(post)}, mark ${JSON.stringify(brief(r))}`);
+        await t.check(`${at} ${look}: a change to ${destination} with the key focus kept on the open panel's icon leaves it its own mark at 3:1 on every side and no focus flag`,
+          reached && pre.keyFocus && pre.mark && post.theme === destination && post.keyFocus && !post.iconFlag && !post.lensFlag && !r.skipped && markOk(r), JSON.stringify({ pre, post, mark: brief(r) }));
       }
     }
   }
