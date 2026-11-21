@@ -204,7 +204,7 @@ function mountAgents(rec) {
   rec.work = U.list(list, {
     label: 'Agents at work', empty: 'No agents match this filter.', where: true,
     filter: function (it) { var f = rec.filter || 'all'; return it.kind === 'agent' && (f === 'all' || U.agentGroup(it) === f); },
-    active: function () { return !rec.gone && rec.shown !== false; },
+    active: function () { return !rec.gone && (rec.shown || rec.host.hasAttribute('data-pmw-prepared')); },
     onPaint: function () { if (rec.paintLeft) rec.paintLeft(); }
   });
   rec.filterAgents = function () { rec.work.refresh(); };

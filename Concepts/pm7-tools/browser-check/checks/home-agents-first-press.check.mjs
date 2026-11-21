@@ -25,9 +25,15 @@ export default async function (t) {
 	const homeBox = await from.boundingBox(), agentsBox = await to.boundingBox();
 	const isSelected = async (locator) => rail ? locator.evaluate((e) => e.classList.contains('active'))
 		: await locator.getAttribute('aria-selected') === 'true';
-	const cold = rail || await f.evaluate(() => !window.PMW.instances['dashboard:agents']);
-	if (!(await t.check(rail ? 'Fresh Files rail with Explorer selected' : 'Settled Home and an unmounted Agents panel',
-		!!homeBox && !!agentsBox && cold && await isSelected(from) && !(await isSelected(to))))) return;
+	const agents = rail ? null : await f.evaluate(() => {
+		const entry = window.PMW.instances['dashboard:agents'];
+		if (!entry) return { mounted: false, prepared: false };
+		const { host, visible } = entry;
+		return { mounted: true, prepared: !visible && host.hidden && host.inert && host.hasAttribute('data-pmw-prepared') };
+	});
+	const fresh = rail || !agents.mounted || agents.prepared;
+	if (!(await t.check(rail ? 'Fresh Files rail with Explorer selected' : 'Settled Home before its first Agents selection',
+		!!homeBox && !!agentsBox && fresh && await isSelected(from) && !(await isSelected(to))))) return;
 
 	await f.evaluate(({ item, tab, scope }) => {
 		const read = window.__fo240Native = { clicks: [], pointer: [], animation: null };
@@ -59,5 +65,5 @@ export default async function (t) {
 	const selected = await isSelected(to);
 	const firstPress = clicks.length === 1 && clicks[0].trusted && clicks[0].id === targetId;
 	await t.check(`One trusted press selected ${rail ? 'Changed' : 'Agents'} and had a carried chip`, firstPress && selected && !!animation);
-	writeFileSync(t.run.dir + '/native-press.json', JSON.stringify({ homeBox, agentsBox, pointer, clicks, animation, firstPress, selected, ...(rail ? { route: 'rail' } : {}) }));
+	writeFileSync(t.run.dir + '/native-press.json', JSON.stringify({ homeBox, agentsBox, agents, pointer, clicks, animation, firstPress, selected, ...(rail ? { route: 'rail' } : {}) }));
 }

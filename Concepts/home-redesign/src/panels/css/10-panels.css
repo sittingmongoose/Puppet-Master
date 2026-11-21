@@ -50,6 +50,8 @@
   outline: none;
 }
 .pmw-tabbody[hidden] { display: none; }
+/* The initial Agents board can lay out at its real size while the user is still on Home. */
+.pmw-tabbody[hidden][data-pmw-prepared] { display: block; opacity: 0; pointer-events: none; }
 .pmw-tab-error, .pmw-empty-note { padding: 24px; color: var(--pmw-text-2); font-size: 13px; }
 
 /* focus between panels: contrast plus a quiet inner outline of the focused panel's silhouette (research 9.2) */

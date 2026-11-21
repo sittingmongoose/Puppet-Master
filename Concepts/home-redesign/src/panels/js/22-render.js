@@ -269,6 +269,7 @@ render.bodyOf = function (tabId) { var r = instances[tabId]; return r ? r.host :
 /* ---- tab bodies ---- */
 function syncBodies(panelEl, p, l, panelHidden) {
   var body = panelEl.querySelector('.pmw-body');
+  if (!panelHidden && !p.collapsed && p.active === 'dashboard:home' && p.tabs.indexOf('dashboard:agents') >= 0) prepareAgents();
   for (var i = 0; i < p.tabs.length; i++) {
     var tid = p.tabs[i];
     var active = tid === p.active;
@@ -277,6 +278,10 @@ function syncBodies(panelEl, p, l, panelHidden) {
     if (!rec && (active || (kindDef(l.tabs[tid].kind) || {}).eager)) rec = mountTab(tid, body, visible);
     if (!rec) continue;
     if (rec.host.parentNode !== body) body.appendChild(rec.host);   // a moved tab keeps its instance
+    if (visible && rec.host.hasAttribute('data-pmw-prepared')) {
+      rec.host.removeAttribute('data-pmw-prepared');
+      rec.host.inert = false;
+    }
     setAttr(rec.host, 'hidden', !visible);
     if (visible !== rec.visible) {
       rec.visible = visible;
@@ -301,16 +306,39 @@ function syncBodies(panelEl, p, l, panelHidden) {
   }
 }
 
+var preparingAgents = false;
+function prepareAgents() {
+  var id = 'dashboard:agents', busy = window.PM_BUSY;
+  if (preparingAgents || instances[id] || !homeIsPage() || PMW.reduced() ||
+      !/^friendly/.test(doc.documentElement.getAttribute('data-theme') || '') || !busy || !busy.idle) return;
+  preparingAgents = true;
+  busy.idle(function () {
+    preparingAgents = false;
+    if (instances[id] || doc.hidden || !homeIsPage() || PMW.reduced() ||
+        !/^friendly/.test(doc.documentElement.getAttribute('data-theme') || '')) return;
+    if (busy()) {
+      preparingAgents = true;
+      window.addEventListener('pm-idle', function () { preparingAgents = false; prepareAgents(); }, { once: true });
+      return;
+    }
+    var panel = model.panelOf(state.layout, id), el = panel && panelEls[panel.id];
+    if (el && !el.hidden && !panel.collapsed && panel.active === 'dashboard:home') {
+      mountTab(id, el.querySelector('.pmw-body'), false, true);
+    }
+  }, 1000, { quiet: 160 });
+}
+
 var tabSeq = 0;
 /* The body is attached to its panel (and sized by it) before mount() runs, so a kind can measure in mount(): a tab
    that will show is laid out at its real size, one that will not (an eager background tab) is hidden already. The
    first onResize, once sizes have settled, is still where precise work belongs (a panel may be mid-glide). */
-function mountTab(tabId, parent, visible) {
+function mountTab(tabId, parent, visible, prepared) {
   var l = state.layout, recd = l.tabs[tabId];
   if (!recd) return null;
   var k = kindDef(recd.kind) || PMW.missingKind;
   tabSeq += 1;
   var host = h('div', { class: 'pmw-tabbody', role: 'tabpanel', id: 'pmw-tp-' + tabSeq, 'data-pmw-tab': tabId, 'data-pmw-kind': recd.kind, tabindex: '-1' });
+  if (prepared) { host.setAttribute('data-pmw-prepared', ''); host.inert = true; }
   if (parent) { if (!visible) host.hidden = true; parent.appendChild(host); }
   var entry = { id: tabId, kind: recd.kind, host: host, instance: null, api: null, visible: false, off: [], size: null };
   instances[tabId] = entry;
