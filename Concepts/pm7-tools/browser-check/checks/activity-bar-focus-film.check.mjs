@@ -148,7 +148,8 @@ async function rig(t) {
       window.__fo96ShiftTabAt = null;
       window.addEventListener('keydown', function stamp(e) {
         if (!e.isTrusted || e.key !== 'Tab' || !e.shiftKey) return;
-        window.__fo96ShiftTabAt = performance.timeOrigin + e.timeStamp;
+        // The input can wait in Chrome's queue before the app receives the keydown.
+        window.__fo96ShiftTabAt = performance.timeOrigin + performance.now();
         window.removeEventListener('keydown', stamp, true);
       }, true);
     });
@@ -171,7 +172,7 @@ async function rig(t) {
   // every frame of a press, judged: the tile is still (a focused tile stands still), the lens's resting box is read after
   let crops = 0;   /* the first 24 failing frames of a test are cropped */
   // Shift+Tab can leave the previous ring on leading frames before keydown and on the first frame within one 60 Hz
-  // interval after it. Use the key event's epoch time, on the same clock as the compositor frame timestamps.
+  // interval after it. Stamp delivery in the app frame using the same epoch as the compositor frame timestamps.
   const frameFaults = async (look, label, k, cap, from = null) => {
     const tile = await boxOf(`#activityBar .icon[data-ab-id="${k}"] .symbol`), lens = await boxOf('#lg-lenses .lg-lens[data-lg-for="rail-icons"]'), ink = await inkOf(k);
     const prev = from ? await boxOf(`#activityBar .icon[data-ab-id="${from}"] .symbol`) : null;
