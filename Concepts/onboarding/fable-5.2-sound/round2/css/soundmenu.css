@@ -41,6 +41,9 @@ body[data-fam="retro"] .psm-slider input::-webkit-slider-thumb, body[data-fam="n
 .psm-mark { flex: none; width: 14px; height: 14px; display: inline-grid; place-items: center; color: var(--accent); }
 body[data-fam="nier"] .psm-mark { color: var(--text); }
 .psm-juke[aria-checked="true"] .psm-meta { color: var(--accent); font-weight: 700; }
+.psm-now { cursor: default; }
+.psm-now:hover { background: transparent; }
+.psm-now[hidden] { display: none; }
 .psm-skip { color: var(--muted); }
 .psm-skip[hidden] { display: none; }
 .psm-menu[data-off] .psm-slider, .psm-menu[data-off] [data-psm-songs], .psm-menu[data-off] .psm-head, .psm-menu[data-off] .psm-juke, .psm-menu[data-off] .psm-skip { opacity: .5; }

@@ -26,7 +26,7 @@ the iPhone simulator (iOS 27.3): they load, the first tap starts the sound, and 
 | 5 | Encore's stage details, polished; the crank; performance | The music box is in every look that has a floor. Its crank is drawn edge on and turns as a side crank does. What moves in time with the song is run by the compositor; nothing is written per frame (see "The stage"). |
 | 6 | Gemini 4 Neon to review all the audio | It passed a hearing test (ten clips with known flaws), reviewed round one against the notes, and judged round two **blind**, old against new (see "Heard, and measured"). |
 | 7 | Keep the original music | "Original" is one of the four songs in every look: today's tune and instruments, ported note for note, lightly refined. |
-| 8 | A sound menu; four songs a look; defaults; a jukebox; reworks | `js/soundmenu.js`. Defaults: Encore, except Glass (Crystal Carousel), Retro Dark (Bit Bop) and NieR (Paper Lanterns). Bubble Drift, Tidy Trio and Open Glass are rewritten; Bit Bop sleeps to a lullaby of its own hook. |
+| 8 | A sound menu; four songs a look; defaults; a jukebox; reworks | `js/soundmenu.js`. Defaults: Encore, except Glass (Crystal Carousel), Retro Dark (Bit Bop) and NieR (Paper Lanterns). Bubble Drift, Tidy Trio and Open Glass are rewritten; Bit Bop sleeps to a lullaby of its own hook. Two things he found on the delivered menu (21 Nov) are fixed: the jukebox now plays any song of any look, and a level turns down the sound and its echo together (see "The sound menu"). |
 | 9 | Retro Light's printer effect breaks up | It was a ratchet of many metal clicks at an even, fast pace. Now a few spaced key taps and the margin bell. |
 | 10 | The listening room | Pip's area stands upright, as in the onboarding (the wide box drew the Retro looks wrongly). The controls are two numbered blocks: 1 pick a song, 2 walk through the onboarding, each step saying what joins, with "Walk it for me". Nothing but the song sounds there: Pip sleeps on the Asleep step without snoring, Play and Stop set off no fanfare, and Stop is silence. (First delivered otherwise, and Jared heard it at once: "a constant de doo sound in the background". It was the snore, two soft falling notes every 3.8 s, which the onboarding only ever plays once because Pip wakes within three seconds. `tools/checks/room.check.mjs` now counts every effect that sounds.) |
 
@@ -36,9 +36,19 @@ Press the speaker and a small menu drops under it, laid out the way PMConcept7's
 top, then rows to pick from, hung under its button and over the page.
 
 - **Sound on / Off.**
-- **Music, Effects, Pip:** three levels. Letting go of Effects or Pip plays a sample at the new level.
+- **Music, Effects, Pip:** three levels. Letting go of Effects or Pip plays a sample at the new level. A level turns
+  down everything it names, the room's echo of it included. (First delivered otherwise: a sound's send to the room
+  left before its level, so a slider took the sound away and left its echo at full. Jared, 21 Nov: "they just make
+  things sound more far away, not lower volume". Each bus now has its own door into each room, which follows the
+  bus's level: `Engine.sendIn` in `js/audio/core.js`. At the starting levels the mix is what it was, to the sample.)
 - **Song:** the four songs of the look on show. The one playing has three moving bars; "Default" marks the look's own.
-- **Jukebox:** when a song has been once round, another of the four comes on, never the same twice. "Next song" moves on at once.
+- **Jukebox:** when a song has been once round, another comes on, drawn from **every song of every look**
+  (twenty-four), whatever look is on show. Each is heard once before any comes round again, and the original tune,
+  which every look has in its own instruments, is never drawn twice running. The menu names the song that is on and
+  the look it was written for. While the jukebox is on, its song stays on through a change of look; the window's
+  effects and Pip's voice stay the look's own and play in the key of the song that is on. Choosing one of the look's
+  four puts that one on and the jukebox carries on from it. "Next song" moves on at once. Switched off, the look's own
+  chosen song comes back.
 
 It remembers what was set (`localStorage`, key `pipSound.r2`: the levels, on or off, the song chosen for each look,
 the jukebox). There is one menu; it hangs under whichever speaker was pressed. In PMConcept7 it belongs in the title
@@ -131,7 +141,7 @@ browser-check run tools/checks/page.check.mjs --set looks=...        # the windo
 browser-check run tools/checks/page.check.mjs --set pace=5 --set trace=/abs/walk.json   # walk it as a person would and keep the walk
 browser-check run tools/checks/render.check.mjs --set out=/abs/dir [--set trace=/abs/walk.json]   # render to WAV (and play a kept walk back)
 node tools/measure.mjs /abs/dir                                      # loudness, peaks, hum, wobble, buzz
-browser-check run tools/checks/room.check.mjs                        # the listening room, at three widths
+browser-check run tools/checks/room.check.mjs                        # the listening room, at three widths; nothing but the song; a level turns everything down
 browser-check run tools/checks/orig.check.mjs --set out=/abs/dir     # today's sound, rendered for comparison
 python3 tools/build_standalone.py /abs/dir [--debug]                 # two single files that open anywhere
 browser-check run tools/checks/room.check.mjs --sandbox --set page=file:///abs/dir/pip-sound2-room.html          # a single file as T3's viewer shows it (a sandboxed frame, no storage)
@@ -145,5 +155,5 @@ Levels are matched by measurement (BS.1770): a spoken line at −26 LUFS, a full
 ## Not done
 
 - Only the onboarding window is covered: not the Guided Tour, the chat, or Settings › Notifications & Sounds.
-- Nothing here is in PMConcept7 or in Plans. PMConcept7's sound is `O55.sound` (`../../opus-5.5/src/js/15-sound.js`, 49 events, shown in Settings) and `15-sound-pip.js`; putting this in means mapping those events, moving the stage additions into `58-rig.js` by its rules, placing the menu in the title bar and removing the chat's button. That is a job for the PMConcept7 build, after Jared has heard this round.
+- Nothing here is in PMConcept7 or in Plans. PMConcept7's sound is `O55.sound` (`../../opus-5.5/src/js/15-sound.js`, 49 events, shown in Settings) and `15-sound-pip.js`; putting this in means mapping those events, moving the stage additions into `58-rig.js` by its rules, placing the menu in the title bar and removing the chat's button. Jared, 21 Nov 2026: with the jukebox and the levels fixed it is ready to go in, and a new agent will do that together with other PMConcept7 work once the rounds now running are finished. Not this thread, and not yet.
 - The three `concept-N.html` pages only point at `onboarding.html`. They are leftovers of copying round one's folder; a delete was refused by a safety check and not worked around.

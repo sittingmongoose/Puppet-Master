@@ -35,10 +35,12 @@
     PS.SONGS[kit] = FAMILY.map(([id, c, family]) => {
       const L = C[c].looks[kit], song = L.song;
       song.room = song.room || L.room;
-      return { id, family, title: song.title, song, reg: L.reg, motif: L.motif, level: C[c].intensity };
+      return { id, kit, family, title: song.title, song, reg: L.reg, motif: L.motif, level: C[c].intensity };
     });
     // the tune PMConcept7 has today: the key and the motif are Encore's, which was built on it
-    PS.SONGS[kit].push({ id: 'original', family: 'Original', title: 'Original', song: PS.orig.songs[kit], reg: base.reg, motif: base.motif, level: (s) => (s.asleep ? 0 : 1) });
+    PS.SONGS[kit].push({ id: 'original', kit, family: 'Original', title: 'Original', song: PS.orig.songs[kit], reg: base.reg, motif: base.motif, level: (s) => (s.asleep ? 0 : 1) });
   });
   PS.KITS = KITS;
+  // one song by the look it was written for and its name there (the jukebox plays any of the twenty-four in any look)
+  PS.songOf = (kit, id) => (PS.SONGS[kit] || []).find((e) => e.id === id) || null;
 })(window);

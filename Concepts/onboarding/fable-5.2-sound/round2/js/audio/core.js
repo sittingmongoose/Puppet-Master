@@ -10,6 +10,8 @@
   PS.errors = [];   // faults caught where sound must go on regardless (a listener, a gesture); the checks read them
   PS.mf = (m) => 440 * Math.pow(2, (m - 69) / 12);
   PS.db = (d) => Math.pow(10, d / 20);
+  // where the three levels start (what the sound menu's sliders show at first): the mix was balanced here
+  PS.MIX = { music: 0.85, voice: 1, sfx: 1 };
   PS.rng = function (seed) {
     let a = seed >>> 0;
     return function () { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
@@ -93,7 +95,7 @@
       this.pre.connect(hp); if (opts.limit === false) hp.connect(this.master); else { hp.connect(lim); lim.connect(this.master); }
       this.master.connect(opts.dest || c.destination);
       if (!this.offline && c.createAnalyser) { this.analyser = c.createAnalyser(); this.analyser.fftSize = 1024; this.analyser.smoothingTimeConstant = 0.72; this.master.connect(this.analyser); }
-      this.bus = {}; this.vol = { music: 1, sfx: 1, voice: 1 };
+      this.bus = {}; this.vol = Object.assign({}, PS.MIX); this.sends = {};
       ['music', 'sfx', 'voice'].forEach((n) => {
         const g = c.createGain(), duck = c.createGain(); g.connect(duck); duck.connect(this.pre);
         this.bus[n] = g; this.bus[n + 'Duck'] = duck;
@@ -103,7 +105,23 @@
       this.roomName = null; this.setRoom(opts.room || 'felt');
     }
     now() { return this.ctx.currentTime; }
-    setVolume(name, v) { this.vol[name] = clamp(+v || 0, 0, 1.5); this.bus[name].gain.setTargetAtTime(this.vol[name], this.now(), 0.03); }
+    /* A level turns down the whole of what it names: the sound itself and what the room gives back of it. (Until
+       21 Nov 2026 the sends left before the level and the room's return joined after it, so a slider took the sound
+       away and left its echo: Jared, "they just make things sound more far away, not lower volume".) now: set at once,
+       for a render. */
+    setVolume(name, v, now) {
+      v = this.vol[name] = clamp(+v || 0, 0, 1.5);
+      const set = (g, x) => { if (now) g.gain.value = x; else g.gain.setTargetAtTime(x, this.now(), 0.03); };
+      set(this.bus[name], v); Object.keys(this.sends).forEach((k) => { if (k.split('>')[0] === name) set(this.sends[k], v / PS.MIX[name]); });
+    }
+    /* where a bus's sounds enter a room: one door for each bus and room, which follows the bus's level. The song was
+       balanced against its room with the music at its starting level, so there the door stands fully open. */
+    sendIn(busName, roomName) {
+      if (!PS.ROOMS[roomName]) roomName = 'felt';
+      const key = busName + '>' + roomName;
+      if (!this.sends[key]) { const g = this.ctx.createGain(); g.gain.value = this.vol[busName] / PS.MIX[busName]; g.connect(this.roomIn(roomName)); this.sends[key] = g; }
+      return this.sends[key];
+    }
     /* the room every send goes to. A new look swaps it; tails of the old room finish on their own. */
     setRoom(name) {
       if (!PS.ROOMS[name]) name = 'felt';
@@ -140,9 +158,10 @@
       // the window's own sounds carry nothing low: a click or a prop set down is never a thump, in the room either
       if (busName === 'sfx') { [0.54, 1.3].forEach((q) => { const hp = c.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 165; hp.Q.value = q; head.connect(hp); head = hp; }); }
       if (o.pan && c.createStereoPanner) { const p = c.createStereoPanner(); p.pan.value = clamp(o.pan, -1, 1); head.connect(p); head = p; }
-      head.connect(this.bus[busName] || this.bus.sfx);
+      if (!this.bus[busName]) busName = 'sfx';
+      head.connect(this.bus[busName]);
       const send = o.send == null ? 0.5 : o.send;
-      if (send > 0.001) { const s = c.createGain(); s.gain.value = send; head.connect(s); s.connect(o.room ? this.roomIn(o.room) : this.room); }
+      if (send > 0.001) { const s = c.createGain(); s.gain.value = send; head.connect(s); s.connect(this.sendIn(busName, o.room || this.roomName)); }
       return g;
     }
     /* a rendered note: o { gain, rate, dur (held for; then damped over rel), rel, offset } */
