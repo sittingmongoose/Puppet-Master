@@ -5,7 +5,7 @@
 // still in; the verdict per state is that count (0 = no pixel changed where main's page holds still), with the share of
 // the frame main varies in and its boxes.
 //   node tools/usage-hover-pause-pix-judge.mjs <shots dir> [--json out.json]
-import { readFileSync, readdirSync, existsSync, writeFileSync } from 'node:fs';
+import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
@@ -13,6 +13,7 @@ import { decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs
 const G = 16;
 export function stillJudge(a1png, a2png, bpng, rect = null) {
 	const a1 = decodePng(a1png), a2 = decodePng(a2png), b = decodePng(bpng), W = a1.width, H = a1.height;
+	if ([a2, b].some((img) => img.width !== W || img.height !== H)) throw new Error('triplet image dimensions differ');
 	const cw = Math.ceil(W / G), ch = Math.ceil(H / G), vary = new Uint8Array(cw * ch);
 	const px = (img, i) => img.data[i] | (img.data[i + 1] << 8) | (img.data[i + 2] << 16);
 	for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const i = (y * W + x) * 4; if (px(a1, i) !== px(a2, i)) vary[Math.floor(y / G) * cw + Math.floor(x / G)] = 1; }
@@ -45,17 +46,45 @@ export function stillJudge(a1png, a2png, bpng, rect = null) {
 	return { changed, maxDelta, bounds, changedBoxes: merge(hit, hit), varyShare: Math.round(varyCells / (cw * ch) * 10000) / 100, varyBoxes: merge(vary) };
 }
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
 	const dir = process.argv[2], out = process.argv.indexOf('--json') > 0 ? process.argv[process.argv.indexOf('--json') + 1] : null;
-	const rows = [];
-	for (const f of readdirSync(dir).filter((n) => n.endsWith('-A1.png')).sort()) {
-		const name = f.slice(0, -'-A1.png'.length), p = (t) => path.join(dir, `${name}-${t}.png`);
-		if (!existsSync(p('B')) || !existsSync(p('A2'))) { rows.push({ name, identical: true }); console.log(`${name}: B and A2 not kept (identical to A1 when shot)`); continue; }
+	const rows = [], states = new Map(), summaries = new Map();
+	for (const file of readdirSync(dir).sort()) {
+		const shot = /^(.+)-(A1|A2|B)\.png$/.exec(file);
+		if (shot) {
+			if (!states.has(shot[1])) states.set(shot[1], new Set());
+			states.get(shot[1]).add(shot[2]);
+		}
+		if (!/^(normal|sandbox)-summary\.json$/.test(file)) continue;
+		for (const row of JSON.parse(readFileSync(path.join(dir, file), 'utf8'))) {
+			if (file !== row.surface + '-summary.json') continue;
+			const name = [row.surface, row.look, row.state].join('-');
+			summaries.set(name, row);
+		}
+	}
+	for (const name of [...new Set([...states.keys(), ...summaries.keys()])].sort()) {
+		const tags = states.get(name) || new Set();
+		const p = (tag) => path.join(dir, name + '-' + tag + '.png');
+		if (tags.size !== 3) {
+			const row = summaries.get(name);
+			const alone = tags.size === 1 && tags.has('A1');
+			const identical = alone && row?.judged === true && row.drift === 0 && row.diff === 0 && row.diff2 === 0;
+			if (identical) {
+				decodePng(readFileSync(p('A1')));
+				rows.push({ name, identical: true });
+				console.log(name + ': capture summary confirms identical A1, B and A2');
+			} else {
+				const error = alone ? 'missing identical capture summary' : 'incomplete triplet (' + ([...tags].join(', ') || 'no shots') + ')';
+				rows.push({ name, error });
+				console.error(name + ': ' + error);
+			}
+			continue;
+		}
 		const j = stillJudge(readFileSync(p('A1')), readFileSync(p('A2')), readFileSync(p('B')));
 		rows.push({ name, ...j });
 		console.log(`${name}: ${j.changed} px changed where main holds still (max delta ${j.maxDelta}${j.changed ? ', boxes [px, x0, y0, x1, y1] ' + JSON.stringify(j.changedBoxes) : ''}); main varies in ${j.varyShare} % of the frame: ${JSON.stringify(j.varyBoxes)}`);
 	}
 	console.log(`SUMMARY: ${rows.filter((r) => r.identical || r.changed === 0).length} of ${rows.length} states: no pixel changed where main holds still`);
 	if (out) writeFileSync(out, JSON.stringify(rows, null, 1));
-	process.exit(rows.every((r) => r.identical || r.changed === 0) ? 0 : 1);
+	process.exitCode = rows.length && rows.every((r) => r.identical || r.changed === 0) ? 0 : 1;
 }

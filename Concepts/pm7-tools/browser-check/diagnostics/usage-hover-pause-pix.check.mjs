@@ -85,14 +85,14 @@ export default async function (t) {
 		if (d.rawDiffPixels || d2.rawDiffPixels || !judged) { writeFileSync(path.join(dir, `${name}-B.png`), s.B); writeFileSync(path.join(dir, `${name}-A2.png`), s.A2); if (d.heatmap) writeFileSync(path.join(dir, `${name}-heat-A1-B.png`), d.heatmap); }
 		// where main itself varies between loads, only cells it holds still in are judged (tools/usage-hover-pause-pix-judge.mjs):
 		// over the whole frame and inside the board's pane, the pause's scope
-		const whole = judged ? null : stillJudge(s.A1, s.A2, s.B), board = judged ? null : stillJudge(s.A1, s.A2, s.B, boards[look]);
+		const whole = judged ? null : stillJudge(s.A1, s.A2, s.B), board = stillJudge(s.A1, s.A2, s.B, boards[look]);
 		const row = { surface, look, state, judged, drift: drift.rawDiffPixels, diff: d.rawDiffPixels, diff2: d2.rawDiffPixels, maxDelta: d.maxChannelDelta, bounds: d.bounds, board: boards[look],
-			stillFrame: whole ? whole.changed : d.rawDiffPixels, stillFrameBoxes: whole ? whole.changedBoxes : null, stillBoard: board ? board.changed : null, stillBoardBoxes: board ? board.changedBoxes : null, varyShare: whole ? whole.varyShare : 0 };
+			stillFrame: whole ? whole.changed : d.rawDiffPixels, stillFrameBoxes: whole ? whole.changedBoxes : null, stillBoard: board.changed, stillBoardBoxes: board.changedBoxes, varyShare: whole ? whole.varyShare : 0 };
 		rows.push(row);
 		t.log(`${name}: main against main ${drift.rawDiffPixels} px; pause against main ${d.rawDiffPixels} px (max channel delta ${d.maxChannelDelta}), against the second main ${d2.rawDiffPixels} px` +
-			(judged ? ' | judged whole' : ` | main varies in ${whole.varyShare} % of the frame; where it holds still the pause changed ${whole.changed} px in the frame${whole.changed ? ' ' + JSON.stringify(whole.changedBoxes) : ''}, ${board.changed} px in the board ${JSON.stringify(boards[look])}${board.changed ? ' ' + JSON.stringify(board.changedBoxes) : ''}`));
+			(judged ? ' | judged whole; ' + board.changed + ' px changed in the board' : ` | main varies in ${whole.varyShare} % of the frame; where it holds still the pause changed ${whole.changed} px in the frame${whole.changed ? ' ' + JSON.stringify(whole.changedBoxes) : ''}, ${board.changed} px in the board ${JSON.stringify(boards[look])}${board.changed ? ' ' + JSON.stringify(board.changedBoxes) : ''}`));
 	}
 	writeFileSync(path.join(dir, `${surface}-summary.json`), JSON.stringify(rows, null, 1));
-	const zero = (k) => rows.filter((r) => (r.judged ? r.diff : r[k]) === 0).length;
+	const zero = (k) => rows.filter((r) => r[k] === 0).length;
 	t.log(`SUMMARY ${surface}: ${rows.filter((r) => r.judged && r.diff === 0).length} of ${rows.length} states pixel-identical to main; where main holds still between its loads, no pixel changed in ${zero('stillFrame')} of ${rows.length} frames and in ${zero('stillBoard')} of ${rows.length} boards`);
 }
