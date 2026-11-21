@@ -25,7 +25,9 @@ rerun reports it names. Write `judgment.json` in that run directory with the sam
 `report_sha256`, a Boolean `proceed` and a short `judgment` explaining the comparison. Save the complete file with an atomic rename. The lander waits before touching the shared checkout.
 
 Use `run <branch> --dry-run` to check and verify a published commit, or a local branch pointing
-at fetched main, without acquiring the lock or pushing. While a remote worktree is still in place,
+at fetched main, without acquiring the lock or pushing. If main moves during the dry run, the tool
+keeps the verification for the original base, writes `base-moved.json` and exits 3. Run again at
+the new main before relying on the result for a landing. While a remote worktree is still in place,
 `python3 scripts/pm-land.py verify <record.json> --commit <full commit SHA> --base <full origin/main SHA>`
 fetches main and asks the host to rehash the live checkout and shared inputs. It prints whether
 the record matches and returns the landing check’s exit code when it does. A verification failure
