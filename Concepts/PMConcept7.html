@@ -27027,6 +27027,7 @@ html[data-theme^="retro"] .pm51-popout.o55-mgp-menu.is-described .pm51-menu-item
 html[data-theme^="retro"] #panel-settings .o55-tags-box { border-radius: 2px; }
 html[data-theme^="retro"] #panel-settings :is(.o55-tag-chip),
 html[data-theme^="retro"] #panel-settings :is(.o55-tag-sug) { border-radius: 2px; }
+html[data-theme^="retro"] #panel-settings .o55-tag-x { box-shadow: none; }
 @container pm51-detail (max-width: 540px) {
   #panel-settings .o55-tags { width: 100%; }
 }
@@ -74263,9 +74264,10 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) :where(select):not(.t7.t7.t7.t
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search),
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.hero-search),
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.o55-num),
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmw-msearch) { background-color: var(--lg-fill) !important; border-color: var(--lg-line) !important; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pmw-msearch) :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color])),
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pmw-msearch) :where(textarea):not(.t7.t7.t7.t7:not(*)):not(t7:not(*)) { background: transparent !important; border-color: transparent !important; box-shadow: none !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmw-msearch),
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.o55-tags-box) { background-color: var(--lg-fill) !important; border-color: var(--lg-line) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pmw-msearch, .o55-tags-box) :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color])),
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pmw-msearch, .o55-tags-box) :where(textarea):not(.t7.t7.t7.t7:not(*)):not(t7:not(*)) { background: transparent !important; border-color: transparent !important; box-shadow: none !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-press {
   display: block; position: fixed; width: 36px; height: 36px; border-radius: 50%; pointer-events: none; z-index: 2147483000;
   background: radial-gradient(closest-side, rgba(255, 255, 255, .6), rgba(255, 255, 255, .16) 55%, transparent); mix-blend-mode: plus-lighter;
