@@ -194,6 +194,12 @@ def after_state(result):
                 refusal_code=result.get('refusal_code'))
 
 
+def same_code(intact_code, cut_code):
+    """The after-state rule's precondition: two owner refusal codes, both present and equal."""
+    return all(isinstance(c, str) and c and not c.startswith('crash:') for c in (intact_code, cut_code)) \
+        and intact_code == cut_code
+
+
 def killed_code_check(target, intact_code, restoration_code, cut_code, origin=None, refusing_sites=()):
     """KILLED_CODE's four conditions (addendum 1); the caller has already found the intact
     run exact (outcome exact_expected), the restoration's errors equal to it and the cut
@@ -448,6 +454,11 @@ class Collector:
             elif code['different_code']:
                 record['kill'] = 'CANNOT_DECIDE'   # a different-code refusal is never COVERED_LATER
                 record['cannot_decide_reason'] = 'different-code later refusal: ' + code['reason']
+            elif not same_code(code['intact_code'], code['cut_code']):
+                # Only a same-code later refusal can be cover (review (b)): both codes must exist and be equal.
+                record['kill'] = 'CANNOT_DECIDE'
+                record['cannot_decide_reason'] = 'not a same-code later refusal: intact %r, cut %r' % (
+                    code['intact_code'], code['cut_code'])
             else:
                 repeat, repeat_state = self._trial(evaluate, value, (), state=True)
                 record['restoration_repeat_errors'] = repeat
@@ -1095,9 +1106,17 @@ def judge_self_test():
         rows.append(dict(case='same_code_later_refusal',expected_outcome='exact_expected',actual_outcome=record.get('outcome'),
                          expected_kill='COVERED_LATER',actual_kill=record.get('kill'),cut=record.get('cut_errors')))
         # The same chain with an exported, unchanged after-state is COVERED_LATER.
-        def chained_state(value):
-            return dict(errors=chained(value),store_after_sha256='0'*64,owner_state_sha256='1'*64,
-                        owner_state=dict(hook='selftest'))
+        def chained_state(value, codes=True):
+            errors=chained(value)
+            return dict(errors=errors,store_after_sha256='0'*64,owner_state_sha256='1'*64,
+                        refusal_code='selftest/same' if codes and errors else None,owner_state=dict(hook='selftest'))
+        # No refusal codes exported: equal after-states, but not a same-code refusal (review (b)).
+        collector.invoke('judge/no_codes_not_cover',lambda v:chained_state(v,False),dict(x=False),False,
+                         target='selftest/first',generated=True)
+        record=collector.ledger[-1]
+        rows.append(dict(case='later_refusal_without_codes',expected_outcome='exact_expected',
+                         actual_outcome=record.get('outcome'),expected_kill='CANNOT_DECIDE',actual_kill=record.get('kill'),
+                         cut=record.get('cut_errors')))
         collector.invoke('judge/covered_later_single_state',chained_state,dict(x=False),False,target='selftest/first',
                          generated=True)
         record=collector.ledger[-1]
