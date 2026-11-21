@@ -18,6 +18,13 @@ export function pathNotePresent(notes, path, format) {
     ? note.trim() === 'Copied ' + path
     : note.trim().endsWith(' · ' + path));
 }
+// The authored Tastebook project root (48-shims.js). Both effects use this fixture expectation.
+const FX_ROOT = '~/tastebook/api';
+export function copiedFullPath(copies, path) {
+  const expected = FX_ROOT + '/' + path;
+  return copies.find(copy => copy === expected);
+}
+
 // A popup trigger opens by every way the owners wire it: a press, and Enter, Space and ArrowDown on the focused trigger.
 const POPUP_INPUTS = ['mouse', 'enter', 'space', 'arrowdown'];
 const PKEY = { enter: 'Enter', space: ' ', arrowdown: 'ArrowDown' };
@@ -1245,7 +1252,6 @@ export default async function (t) {
         return null;
       };
       const norm = s => String(s || '').replace(/\/+$/, '').replace(/^(?:~|\/home\/[^/]+|\/Users\/[^/]+)(?=\/|$)/, '');
-      let root = null;
       // What a command did: null when it acted on the row as it should, else what happened.
       const judge = async (cmd, r) => {
         const want = r.want, until = fn => g.waitForFunction(fn, [want, cmd.where || null], { timeout: 3000, polling: 50 }).then(() => true, () => false);
@@ -1273,10 +1279,9 @@ export default async function (t) {
           return now.copies.includes(want) && pathNotePresent(now.toasts, want, 'copy') ? null : { copies: now.copies, toasts: now.toasts };
         }
         if (cmd.how === 'copyfull') {
-          await until(([w]) => __fx.copies.some(c => c.endsWith('/' + w)));
-          const now = await fx(), c = now.copies.find(c => c.endsWith('/' + want) && c.length > want.length + 1);
-          if (c) root = c.slice(0, -(want.length + 1));
-          return c && pathNotePresent(now.toasts, c, 'copy') ? null : { copies: now.copies, toasts: now.toasts };
+          await until(() => __fx.copies.length && __fx.toasts.length);
+          const now = await fx(), c = copiedFullPath(now.copies, want);
+          return c && pathNotePresent(now.toasts, c, 'copy') ? null : { expected: FX_ROOT + '/' + want, copies: now.copies, toasts: now.toasts };
         }
         if (cmd.how === 'source' || cmd.how === 'note') {
           await until(() => __fx.toasts.length > 0);
@@ -1287,7 +1292,8 @@ export default async function (t) {
           const now = await fx(), o = now.opens.find(o => o.kind === 'terminal'), id = now.reveals[now.reveals.length - 1];
           const cwd = o ? o.cwd : await g.evaluate(id => { const sid = String(id || '').replace(/^terminal:/, ''); try { return (window.PMT && PMT.sessions ? PMT.sessions() : []).find(s => s.id === sid)?.cwd || null; } catch (_) { return null; } }, id);
           const dir = r.folder ? want : (want.includes('/') ? want.slice(0, want.lastIndexOf('/')) : '');
-          return root != null && cwd != null && norm(cwd) === norm(root + (dir ? '/' + dir : '')) ? null : { opens: now.opens, reveals: now.reveals, cwd, root, dir };
+          const expected = FX_ROOT + (dir ? '/' + dir : '');
+          return cwd != null && norm(cwd) === norm(expected) ? null : { expected, cwd, opens: now.opens, reveals: now.reveals };
         }
         return { unknown: cmd.how };
       };
