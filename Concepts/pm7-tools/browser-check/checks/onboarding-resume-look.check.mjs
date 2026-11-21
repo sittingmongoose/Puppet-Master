@@ -52,7 +52,8 @@
 // in its look, the id dropped, no error (stream F's OK, 2026-11-16).
 // R80 P1 (the lead's quick review of db5211725d): a Project committed by setup (Creating done) and the setup closed on the
 // optional step after it, then a reload: the Project is listed and selected, and its title-bar row carries the same
-// location line and hover detail as before the reload (its name, path and branch, its words and its tags).
+// location line, and the title-bar button keeps its own hover label and detail. Runs for a local Project and an online
+// repository with a branch. --set only=r80p1 runs just these reload cases.
 // Round 2 (stream F's blind review of 6d160cdf1e): F1 the title bar's label is the Project's as parsing ends and in every
 // frame of a reload (into the setup's Project and into harbor); F3 Demo Studio Reset -> Progress, reloaded: every frame is
 // the default Project's look, no stored id of the removed Project; F4 harbor in Glass Dark, then ?o55=fresh twice: every
@@ -605,16 +606,40 @@ const rowNow = (f, id) => f.evaluate((id) => {
 	const r = Array.prototype.find.call(document.querySelectorAll('#projectMenu [data-project]'), (x) => x.getAttribute('data-project') === id);
 	if (!r) return null;
 	const a = {}; ['data-project-name', 'data-project-path', 'data-project-branch', 'data-project-stack', 'title', 'aria-label', 'data-pm-hover', 'data-tip'].forEach((k) => { if (r.hasAttribute(k)) a[k] = r.getAttribute(k); });
-	return { attrs: a, text: r.textContent.replace(/\s+/g, ' ').trim(), selected: r.classList.contains('is-selected') };
+	const button = document.getElementById('projectMenuBtn');
+	const hover = button && { label: button.getAttribute('data-pm-hover-label'), detail: button.getAttribute('data-pm-hover-detail') };
+	return { attrs: a, text: r.textContent.replace(/\s+/g, ' ').trim(), selected: r.classList.contains('is-selected'), hover };
 }, id);
-async function r80p1(t) {
-	const tag = 'normal: R80 P1, a Project committed by setup, closed on the step after Creating, reloaded';
-	const NAME = 'Recipe shelf';
+export function projectHoverMatches(project, branch) {
+	const path = project?.attrs['data-project-path'];
+	const { label, detail } = project?.hover || {};
+	if (!path || !detail || label !== project.attrs['data-project-name']) return false;
+	const location = branch ? `${path} on ${branch}` : path;
+	return detail.startsWith(location + ' · ') || detail.startsWith(location + '. Switch project:');
+}
+async function r80p1(t, { online = false, legacy = false } = {}) {
+	const mode = online ? 'online repository' : 'local Project';
+	const tag = `normal: R80 P1, ${mode} committed by setup, closed on the step after Creating, reloaded`;
+	const NAME = online ? 'Recipe shelf online' : 'Recipe shelf';
+	const branch = online ? 'main' : '';
 	await t.emulate({ reducedMotion: 'no-preference' });
 	const f = await t.app.open({ onboarding: true, query: 'o55=fresh&o55scenario=fresh', sandbox: false, settleMs: 1500 });
 	const A = app(t, f);
 	await A.screen('welcome'); await A.click('start', null, 'look'); await A.click('next', null, 'where');
-	await A.click('pick', 'this'); await A.click('next', null, 'begin'); await A.click('pick', 'new'); await A.click('next', null, 'name');
+	await A.click('pick', 'this'); await A.click('next', null, 'begin');
+	if (online) {
+		await A.click('pick', 'existing'); await A.click('sub', 'online'); await A.click('next', null, 'online-service');
+		await A.click('pick', 'github');
+		if (await f.locator(LAYER + ' [data-o55-do="variant"][data-arg="hosted"]').filter({ visible: true }).count()) await A.click('variant', 'hosted');
+		await A.click('next', null, 'online-signin');
+		await A.click('signIn');
+		await f.waitForFunction(() => O55.S.sess.signin.state === 'done', null, { timeout: 15000 });
+		await A.click('next', null, 'ex-repos');
+		await f.locator(LAYER + ' [data-o55-do="pick"]').filter({ hasText: 'recipe-app', visible: true }).click();
+		await A.click('next', null, 'name');
+	} else {
+		await A.click('pick', 'new'); await A.click('next', null, 'name');
+	}
 	await f.locator('#o55f-name').fill(NAME); await sleep(200); await A.click('next');
 	let at = '';
 	for (let i = 0; i < 30; i++) {
@@ -628,9 +653,12 @@ async function r80p1(t) {
 	const id = await f.evaluate(() => (O55.S.sess.commit || {}).projectId || null);
 	await A.close();
 	const before = await rowNow(f, id);
-	await t.check(`${tag}: Creating done, closed on '${at}': the row is listed and selected before the reload`, !!at && !!before && before.selected && !!before.attrs['data-project-path'], JSON.stringify({ at, id, before }));
+	await t.check(`${tag}: Creating done, closed on '${at}': the row is listed and selected before the reload`, !!at && !!before && before.selected && !!before.attrs['data-project-path'] && (before.attrs['data-project-branch'] || '') === branch, JSON.stringify({ at, id, before }));
+	await t.check(`${tag}: before reload the title-bar hover names the Project and its location`, projectHoverMatches(before, branch), JSON.stringify(before));
 	const r = await freshLoad(t), after = await rowNow(r.f, id);
-	await t.check(`${tag}: reloaded, the row is listed and selected with the same location line and hover detail`, !!after && after.selected && JSON.stringify(after.attrs) === JSON.stringify(before && before.attrs) && after.text === (before && before.text), JSON.stringify({ before, after }));
+	await t.check(`${tag}: reloaded, the row is listed and selected with the same location line`, !!after && after.selected && JSON.stringify(after.attrs) === JSON.stringify(before?.attrs) && after.text === before?.text, JSON.stringify({ before, after }));
+	await t.check(`${tag}: reloaded, the title-bar hover keeps its label and detail`, projectHoverMatches(after, branch) && JSON.stringify(after.hover) === JSON.stringify(before?.hover), JSON.stringify({ before, after }));
+	if (!legacy) return;
 	/* R87-P2: a Project known only to an older version's storage (its entry in the shell's setup-Project record removed, so
 	   only the onboarding record names it), with a fixture Project active (harbor): Run Onboarding Again, close, reload:
 	   still listed, harbor still selected with its look */
@@ -752,7 +780,8 @@ async function f4install(t) {
 export default async function (t) {
 	await t.viewport(1440, 960);
 	const looks = t.args.looks ? String(t.args.looks).split(',') : ALL;
-	if (t.args.only === 'fo222') { if (t.app.surfaces().includes('normal')) { await fo222(t); await r80p1(t); await f4install(t); } return; }
+	if (t.args.only === 'r80p1') { if (t.app.surfaces().includes('normal')) { await r80p1(t); await r80p1(t, { online: true }); } return; }
+	if (t.args.only === 'fo222') { if (t.app.surfaces().includes('normal')) { await fo222(t); await r80p1(t, { legacy: true }); await f4install(t); await r80p1(t, { online: true }); } return; }
 	if (t.args.only === 'r57') { for (const sf of t.app.surfaces()) { const sb = sf === 'sandbox'; if (!sb) await r57f1(t); await r57f2(t, sb); await r57f3(t, sb); } await t.emulate({ reducedMotion: 'no-preference' }); return; }
 	if (t.args.only === 'fo219') { if (t.app.surfaces().includes('normal')) await fo219(t); return; }
 	if (t.args.only === 'openreload') { if (t.app.surfaces().includes('normal')) { await openReload(t, 'nier-light', 'basic-dark'); await openReload(t, 'glass-light', 'nier-dark', { back: true }); await openReloadNoPick(t); } return; }
@@ -770,7 +799,7 @@ export default async function (t) {
 			await nierBackground(t, sandbox);
 			if (!sandbox) await fo219(t);
 			if (!sandbox) await r57f1(t);
-			if (!sandbox) { await fo222(t); await r80p1(t); await f4install(t); }
+			if (!sandbox) { await fo222(t); await r80p1(t, { legacy: true }); await f4install(t); await r80p1(t, { online: true }); }
 			await r57f2(t, sandbox); await r57f3(t, sandbox);
 			if (!sandbox) { await openReload(t, 'nier-light', 'basic-dark'); await openReload(t, 'glass-light', 'nier-dark', { back: true }); await openReloadNoPick(t); }
 		}

@@ -1,6 +1,6 @@
 // The verdict of checks/perf-usage-scroll.check.mjs from its four measured windows (as built, control, control, as built),
 // kept apart from the browser so tools/usage-scroll-verdict.selftest.mjs can judge it on constructed windows.
-// A window: { name: 'as built' | 'control', scrolls, whole, lost: [why], renderer (the trace's renderer pid, null when
+// A window: { name: 'as built' | 'control', travel, scrolls, whole, lost: [why], renderer (the trace's renderer pid, null when
 // the trace named none), paint, full (frames never presented a second), partial, unknown, restFrames, restLost }.
 // Returns { rows: [{ name, ok, detail }] the judged rows (could judge, the paint ratio), logs: [text], warnings: [text]
 // (a guard breached: logged as WARNING by the check, never a failed row) }.
@@ -8,10 +8,28 @@
 // as-built window halves the mean and the ratio can pass unmeasured (the guard self-test shows 0.50).
 import { traceJudgeable } from './trace-guard.mjs';
 
+export const WHEEL_STEP_PX = 40;
+export const SCROLL_TOLERANCE_PX = 1;
+
+export function paneTravel({ onPane, ticks, turn, positions } = {}) {
+	if (!onPane || !Number.isInteger(ticks) || ticks < 1 || !Number.isInteger(turn) || turn < 1 ||
+		!Array.isArray(positions) || positions.length !== Math.ceil(ticks / turn) + 1) return false;
+	let target = 0;
+	return positions.every((top, i) => {
+		if (i > 0) target += Math.min(turn, ticks - (i - 1) * turn) * (i % 2 ? WHEEL_STEP_PX : -WHEEL_STEP_PX);
+		return Number.isFinite(top) && Math.abs(top - target) <= SCROLL_TOLERANCE_PX;
+	});
+}
+
 export function usageScrollVerdict(windows, { ratio = 0.85, rm = false } = {}) {
 	const rows = [], logs = [], warnings = [];
-	const judged = windows.length > 0 && windows.every((w) => w.scrolls > 0 && w.whole && traceJudgeable(w).ok);
-	rows.push({ name: 'could judge: the wheel scrolled the board in all four windows, each trace is whole and names its renderer', ok: judged, detail: windows.map((w) => `${w.name} ${w.scrolls} scroll events${w.whole ? '' : ' (' + (w.lost || []).join(', ') + ')'}${traceJudgeable(w).ok ? '' : ': ' + traceJudgeable(w).why}`).join(', ') });
+	const judged = windows.length === 4 && windows.every((w) => paneTravel(w.travel) && w.scrolls > 0 && w.whole && traceJudgeable(w).ok);
+	const detailOf = (w) => {
+		const { positions = [], hit = 'none' } = w.travel || {};
+		const trace = traceJudgeable(w);
+		return `${w.name}: pane ${positions.join(' -> ') || 'unmeasured'} px, pointer ${hit}, ${w.scrolls} renderer scroll events${w.whole ? '' : ' (' + (w.lost || []).join(', ') + ')'}${trace.ok ? '' : ': ' + trace.why}`;
+	};
+	rows.push({ name: 'could judge: every window hit the Usage pane, traveled the wheel path and has a whole trace with its renderer', ok: judged, detail: windows.map(detailOf).join(', ') });
 	if (!judged) return { rows, logs, warnings };
 	const mean = (name, k) => { const v = windows.filter((w) => w.name === name).map((w) => w[k] || 0); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : 0; };
 	const [bp, cp] = [mean('as built', 'paint'), mean('control', 'paint')];
