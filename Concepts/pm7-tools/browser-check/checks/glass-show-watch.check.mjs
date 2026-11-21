@@ -20,9 +20,9 @@
 // (v-main.html), plus row 2 x20 per surface on the branch page twice (the lead's queue and QW6's own). Ranges are
 // min-max over both looks.
 //   1  inline display: nav.page-tabs style.display='none', lens out, then '' again: lens back within 150 ms
-//      (the ResizeObserver wake; one frame plus layout). Branch measured 18-88 ms. FAILS on main: its 400 ms poll
-//      answers, and the show is landed just after a poll fire (showTabsLocked below), the poll's worst case, so
-//      main reads about 350-420 ms every run. Without that lock main's free-phase tail reached 114 ms (an ambient
+//      (the ResizeObserver wake; one frame plus layout). Branch measured 18-88 ms. The old 400 ms poll should
+//      miss the budget: showTabsLocked waits for the queued check's re-arm before showing. The old page read
+//      about 350-420 ms with the original lock; its free-phase tail reached 114 ms (an ambient
 //      sync or the PM_LG.sync() fallback can discover the hide at any poll phase), which no bound above the
 //      branch's 88 ms could fail every run; the lock makes the separation deterministic. The measured time is
 //      from the show write either way; the branch has no 400 ms timer, so its show is never delayed.
@@ -195,7 +195,7 @@ export const TIMER_PROBE = (range) => {
 
 /* in the page: the lens over a strip's chosen item, captured while shown (its box stays when it goes out), and an
    rAF-sampled wait for its inline opacity to leave '0' or come back */
-const PROBE = () => {
+export const PROBE = () => {
 	const lensOver = (item) => {
 		const r = item.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
 		for (const l of document.querySelectorAll('i.lg-lens:not(.lg-bead)')) {
@@ -231,6 +231,14 @@ const PROBE = () => {
 			this.opMo.observe(lens, { attributes: true, attributeFilter: ['style'] });
 		},
 		mark() { this.t0 = performance.now(); },
+		showTabs(how) {
+			this.mark();
+			const s = document.querySelector('nav.page-tabs');
+			if (how === 'display') s.style.display = '';
+			else if (how === 'visibility') s.style.visibility = '';
+			else document.getElementById('gsw-case-c')?.remove();
+			window.__swt.note('show');
+		},
 		out() { return !!this.lens && (!this.lens.isConnected || this.lens.style.opacity === '0'); },
 		back() { return !!this.lens && this.lens.isConnected && this.lens.style.opacity !== '0' && getComputedStyle(this.lens).visibility !== 'hidden'; },
 		/* ms from the last mark() (fromGone: from the recorded removal of data-o55-open instead) */
@@ -300,35 +308,34 @@ async function hideTabs(f, how) {
 	return { ...out, hooked };
 }
 
-async function showTabs(f, how) {
-	await f.evaluate((h) => {
-		window.__gsw.mark();
-		const s = document.querySelector('nav.page-tabs');
-		if (h === 'display') s.style.display = '';
-		else if (h === 'visibility') s.style.visibility = '';
-		else { const st = document.getElementById('gsw-case-c'); if (st) st.remove(); }
-		if (window.__swt) window.__swt.note('show');
-	}, how);
-}
+const showTabs = (f, how) => f.evaluate((h) => window.__gsw.showTabs(h), how);
 
-/* rows 1 and 13: on a page that still polls at 400 ms (main), land the show just after a poll fire — the poll's
-   worst case — so the separation from the event path is deterministic (main's free-phase tail reached 114 ms on
-   row 1 and 13 ms on row 13). The event path answers any phase: when no 400 ms timer is pending, the show is not
-   delayed. The measured time is from the show write either way. */
-async function showTabsLocked(f, how) {
-	await f.evaluate(async () => {
+/* A poll fire queues layout work. Keep the strip hidden until checkShownNow itself requests the next poll,
+   then write in the same evaluation so a driver round trip can't spend the interval we just established. */
+export async function showTabsLocked(f, how) {
+	return f.evaluate(async (h) => {
 		const P = window.__swt;
-		if (!P) return;
-		let poll = false;
-		P.byId.forEach((m) => { if (m.d === 400) poll = true; });
-		if (!poll) return;
-		const t0 = performance.now();
-		while (performance.now() - t0 < 700) {
-			if (P.events.some((e) => e.k === 'fire' && e.d === 400 && e.at >= t0)) break;
+		const show = () => window.__gsw.showTabs(h);
+		const hiddenAt = P.events.findLast((e) => e.k === 'hide')?.at ?? performance.now();
+		const pendingPolls = () => [...P.byId.values()].filter((m) => m.d === 400);
+		const polledWhileHidden = P.events.some((e) => e.d === 400 && e.at >= hiddenAt);
+		if (!polledWhileHidden && !pendingPolls().length) {
+			show();
+			return { ok: true, detail: 'no 400 ms poll observed' };
+		}
+		const until = performance.now() + 700;
+		while (performance.now() < until) {
+			const fire = P.events.findLast((e) => e.k === 'fire' && e.d === 400 && !e.hidden && e.at >= hiddenAt);
+			const next = fire && pendingPolls().find((m) => m.site === 'checkShownNow' && m.n > fire.n);
+			if (next && performance.now() - next.asked < 240) {
+				show();
+				return { ok: true, detail: `poll #${fire.n} completed and re-armed #${next.n}` };
+			}
 			await new Promise((r) => setTimeout(r, 8));
 		}
-	});
-	await showTabs(f, how);
+		show(); // Restore the strip so the next row can run.
+		return { ok: false, detail: 'no fresh 400 ms re-arm from the queued check within 700 ms' };
+	}, how);
 }
 
 async function cell(t, surface, W, H) {
@@ -380,7 +387,11 @@ async function cell(t, surface, W, H) {
 					}
 					continue;
 				}
-				await (row === 1 ? showTabsLocked(f, how) : showTabs(f, how));
+				if (row === 1) {
+					const phase = await showTabsLocked(f, how);
+					await t.check(`row 1: the show phase is established ${tag}`, phase.ok, phase.detail);
+					if (!phase.ok) continue;
+				} else await showTabs(f, how);
 				const back = await f.evaluate((b) => window.__gsw.wait('back', b + 2000), budget);
 				let trace = '';
 				if (row === 2) {
@@ -496,7 +507,9 @@ async function cell(t, surface, W, H) {
 				await t.check(`row 13: at most 6 show-watch timers fire in 10 s ${tag}`, c.fired <= 6, `${c.fired} fired (the 2000 ms net fires about 5; the old poll about 25)`);
 				await t.check(`row 13: at most 12 show-watch timer requests in 10 s ${tag}`, c.asked <= 12, `${c.asked} requests (one after each tick, and one more for each wake or sync that lands while a check is queued: 5-7 measured)`);
 			}
-			await showTabsLocked(f, 'display');
+			const phase = await showTabsLocked(f, 'display');
+			await t.check(`row 13: the show phase is established ${tag}`, phase.ok, phase.detail);
+			if (!phase.ok) continue;
 			const back = await f.evaluate(() => window.__gsw.wait('back', 2040));
 			t.log(`row 13 ${tag}: lens back in ${Math.round(back.ms)} ms after the count (row 1's 150 ms budget)`);
 			await t.check(`row 13: the lens still appears within 150 ms once shown ${tag}`, back.ok && back.ms <= 150, `${Math.round(back.ms)} ms`);
