@@ -27,7 +27,9 @@ in this shared runner (GH2 and GO reuse it; see "Extension points" below):
   credit. A later refusal is judged in this order (rulings 1121112536-0b66 (3),
   1121115610-7650, addendum 1 = 1121124828-43f4 (1)):
   KILLED_CODE (a kill, shown apart from KILLED) when the declared target is the
-  row's own guard with its own code, the intact run is exact, the cut refuses
+  row's own guard with its own code (its recorded origin frame is that guard,
+  or the gate's static single-raise-site check holds; addendum 11 =
+  1121131008-95db), the intact run is exact, the cut refuses
   with a DIFFERENT owner refusal code and the uncached restoration repeats the
   intact result (errors and code); a crash is never KILLED_CODE. A
   different-code refusal that misses any condition is CANNOT_DECIDE, never
@@ -192,7 +194,7 @@ def after_state(result):
                 refusal_code=result.get('refusal_code'))
 
 
-def killed_code_check(target, intact_code, restoration_code, cut_code):
+def killed_code_check(target, intact_code, restoration_code, cut_code, origin=None, refusing_sites=()):
     """KILLED_CODE's four conditions (addendum 1); the caller has already found the intact
     run exact (outcome exact_expected), the restoration's errors equal to it and the cut
     refusing at a later row. Returns dict(verdict=KILLED_CODE|None, different_code, ...)."""
@@ -208,7 +210,7 @@ def killed_code_check(target, intact_code, restoration_code, cut_code):
     if not isinstance(target, str):
         return dict(out, verdict=None, reason='declared target is a set, not one guard')
     import pm_goal_dg5_boundaries as bridge
-    own = bridge.row_code_check(target, intact_code)
+    own = bridge.row_code_check(target, intact_code, origin, refusing_sites or ())
     out['own_guard'] = own
     if not own['own']:
         return dict(out, verdict=None, reason='declared target is not the row guard with its own code: ' + str(own['why']))
@@ -343,7 +345,9 @@ class Collector:
             generated=generated, errors=sorted(errors), first=first, sig=self._signature(merged),
             failing=tuple(sorted(name for name, holds in merged.items() if not holds)),
             after_state=after_state(result),
-            refusal_code=result.get('refusal_code') if isinstance(result, dict) else None)
+            refusal_code=result.get('refusal_code') if isinstance(result, dict) else None,
+            refusal_origin=result.get('refusal_origin') if isinstance(result, dict) else None,
+            refusing_sites=result.get('refusing_sites') if isinstance(result, dict) else None)
         self.ledger.append(record)
         one = len(errors) == 1 and first in errors
         for name, holds in merged.items():
@@ -432,7 +436,8 @@ class Collector:
         elif cut:
             # After KILLED (the cut accepts): KILLED_CODE, then the after-state rule.
             code = killed_code_check(record['target'], record.get('refusal_code'),
-                                     (restoration_state or {}).get('refusal_code'), (cut_state or {}).get('refusal_code'))
+                                     (restoration_state or {}).get('refusal_code'), (cut_state or {}).get('refusal_code'),
+                                     record.get('refusal_origin'), record.get('refusing_sites'))
             record['killed_code_check'] = code
             if code['verdict'] == 'KILLED_CODE':
                 record['kill'] = 'KILLED_CODE'
@@ -1061,18 +1066,29 @@ def judge_self_test():
                          expected_kill='CANNOT_DECIDE',actual_kill=record.get('kill'),cut=record.get('cut_errors')))
         # Exported refusal codes: a different-code later refusal at the row's own code is
         # KILLED_CODE; the same chain refusing with one shared code stays with the after-state rule.
-        def coded(value, shared=False):
+        def coded(value, shared=False, origin=True):
             gate=common.Gates();gate.require('dg5/selftest/first/schema', value['x'])
             if not gate.errors:gate.require('dg5/selftest/second/schema', value['x'])
             errors=sorted(gate.errors)
             row=errors[0].split('/')[-2] if errors else None
             code=None if not errors else ('selftest/shared/schema/x' if shared else f'selftest/{row}/schema/x')
+            # The recorded origin (addendum 11): the refusal's traceback passes through the
+            # site where its row refused. Without it the own-guard condition fails closed.
+            where=['scripts/selftest_owner.py', 10 if row == 'first' else 20]
             return dict(errors=errors,refusal_code=code,
+                        refusal_origin=dict(site=where,frames=[['selftest_owner.py',where[1],'check']]) if origin else None,
+                        refusing_sites=[(e,where) for e in errors],
                         store_after_sha256='0'*64,owner_state_sha256='1'*64,owner_state=dict(hook='selftest'))
         collector.invoke('judge/killed_code',coded,dict(x=False),False,target='dg5/selftest/first/schema',generated=True)
         record=collector.ledger[-1]
         rows.append(dict(case='killed_code',expected_outcome='exact_expected',actual_outcome=record.get('outcome'),
                          expected_kill='KILLED_CODE',actual_kill=record.get('kill'),cut=record.get('cut_errors')))
+        collector.invoke('judge/killed_code_without_origin',lambda v:coded(v,origin=False),dict(x=False),False,
+                         target='dg5/selftest/first/schema',generated=True)
+        record=collector.ledger[-1]
+        rows.append(dict(case='killed_code_without_origin',expected_outcome='exact_expected',
+                         actual_outcome=record.get('outcome'),expected_kill='CANNOT_DECIDE',actual_kill=record.get('kill'),
+                         cut=record.get('cut_errors')))
         collector.invoke('judge/same_code_not_killed_code',lambda v:coded(v,True),dict(x=False),False,
                          target='dg5/selftest/first/schema',generated=True)
         record=collector.ledger[-1]
