@@ -311,7 +311,7 @@ function midText(full, n) {
   for (let k = 0; k < 4 && start + k < full.length - 2; k++) if (tsep.test(full[start + k])) { start = start + k; break; }
   return full.slice(0, head) + '…' + full.slice(start);
 }
-function midFit(el, strict) {
+function midFit(el, strict, fixedColumns) {
   if (el.children.length) return;
   /* a name that is a phrase ("multi-arch publish dry-run …") wraps onto a second line instead (a folder is cut) */
   if (!el.classList.contains('d-dir-t') && /\s/.test((el._dFull != null ? el._dFull : el.textContent).trim())) { addClass(el, 'd-wrap'); return; }
@@ -321,7 +321,10 @@ function midFit(el, strict) {
     remember(() => { el.textContent = full; delete el._dFull; });
   }
   const full = el._dFull;
-  if (el.textContent !== full) el.textContent = full;
+  if (el.textContent !== full) {
+    fixedColumns = null;
+    el.textContent = full;
+  }
   /* a folder's box is measured at the whole folder's width (40-rows), so its room is all the line can give it */
   const isDir = el.classList.contains('d-dir-t');
   if (isDir) el.style.setProperty('--d-full-w', Math.ceil(textWidth(el, full) + 1) + 'px');
@@ -361,11 +364,12 @@ function midFit(el, strict) {
       if (s > score) { best = full.slice(0, k) + '…' + tail; score = s; }
     }
   }
+  if (fixedColumns && best) {
+    fixedColumns.push({ el, full, best, bestN });
+    return;
+  }
   if (best && best !== el.textContent) el.textContent = best;
-  /* the canvas can differ from layout by a pixel or two: confirm in the DOM (to the sub-pixel) and step down if the
-     browser disagrees */
-  let n = Math.max(4, bestN) + 1;
-  while (n > 4 && overflows(el)) { n -= 1; el.textContent = midText(full, n); }
+  confirmMidFit(el, full, bestN);
   /* then it closes up on the cut text, so the dot and the change kind follow it with no gap */
   if (isDir && el.textContent !== full) {
     const rg = document.createRange();
@@ -373,21 +377,33 @@ function midFit(el, strict) {
     el.style.setProperty('--d-full-w', Math.ceil(rg.getBoundingClientRect().width + 0.5) + 'px');
   }
 }
+function confirmMidFit(el, full, bestN) {
+  /* the canvas can differ from layout by a pixel or two: confirm in the DOM (to the sub-pixel) and step down if the
+     browser disagrees */
+  let n = Math.max(4, bestN) + 1;
+  while (n > 4 && overflows(el)) { n -= 1; el.textContent = midText(full, n); }
+}
 /* read every width first (one layout), then fit only the names whose room changed since their last fit (a folder's
    room is its meta line, since its own box closes up on the cut text) */
 const roomOf = el => (el.classList.contains('d-dir-t') && el.closest('.sh-meta') ? el.closest('.sh-meta').clientWidth : el.clientWidth);
 function midFitAll(root) {
   const els = Array.from(root.querySelectorAll(MID_SEL));
   const rooms = els.map(el => (el.offsetParent ? roomOf(el) : 0));
+  const fixedColumns = [];
   let changed = false;
   els.forEach((el, i) => {
     if (!rooms[i]) return;
     const key = rooms[i] + '|' + (el._dFull != null ? el._dFull : el.textContent);
     if (el._dFitKey === key) return;
-    midFit(el);
-    el._dFitKey = roomOf(el) + '|' + (el._dFull != null ? el._dFull : el.textContent);
+    // The Files grid gives its file and directory names the same column width
+    // after a cut. Read those rows together, then write and verify their cuts.
+    const fixed = el.matches(':is(.fm-changerow, .fm-openitem > .fm-openrow) > :is(.fm-cfile, .fm-cdir)');
+    midFit(el, false, fixed ? fixedColumns : null);
+    el._dFitKey = (fixed ? rooms[i] : roomOf(el)) + '|' + (el._dFull != null ? el._dFull : el.textContent);
     changed = true;
   });
+  fixedColumns.forEach(({ el, best }) => { el.textContent = best; });
+  fixedColumns.forEach(({ el, full, bestN }) => { confirmMidFit(el, full, bestN); });
   if (changed) midDistinct(els);
 }
 /* two different names in one list never read the same ("crates/puppet-….rs" twice): such a pair takes the plain cut */
