@@ -44,6 +44,8 @@ What a hook excludes, and why (the only exclusions)
   validators and registries, already bound by the sealed call input),
   interpreter objects (frames, tracebacks, generators, locks, files). Every
   such value is counted by type in `opaque`, so an inventory shows each one.
+* Immutable standard-library values are digested by value, not skipped: compiled
+  regular expressions (pattern and flags), dates, times, timedeltas, decimals.
 * `functools.lru_cache` wrappers: memo of a pure function (counted in `opaque`
   as `memo`). Listed for the reviewer; no owner here keeps state in one.
 
@@ -56,6 +58,8 @@ with the reason, and the judge gives CANNOT_DECIDE.
 from __future__ import annotations
 
 import collections
+import datetime
+import decimal
 import functools
 import hashlib
 import json
@@ -184,6 +188,18 @@ class Walk:
             return
         if isinstance(value, PurePath):
             self.put('p', kind.__name__, str(value))
+            return
+        if isinstance(value, re.Pattern):  # immutable: digested by its pattern and flags
+            self.put('re', value.pattern if isinstance(value.pattern, str) else value.pattern.hex(), value.flags)
+            return
+        if isinstance(value, (datetime.datetime, datetime.date, datetime.time)):
+            self.put('dt', kind.__name__, value.isoformat(), str(getattr(value, 'tzinfo', None)))
+            return
+        if isinstance(value, datetime.timedelta):
+            self.put('td', value.days, value.seconds, value.microseconds)
+            return
+        if isinstance(value, decimal.Decimal):
+            self.put('dec', str(value))
             return
         ident = id(value)
         if ident in self.memo:
