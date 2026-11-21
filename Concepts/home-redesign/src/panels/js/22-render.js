@@ -269,16 +269,20 @@ render.bodyOf = function (tabId) { var r = instances[tabId]; return r ? r.host :
 /* ---- tab bodies ---- */
 function syncBodies(panelEl, p, l, panelHidden) {
   var body = panelEl.querySelector('.pmw-body');
-  if (!panelHidden && !p.collapsed && p.active === 'dashboard:home' && p.tabs.indexOf('dashboard:agents') >= 0) prepareAgents();
   for (var i = 0; i < p.tabs.length; i++) {
     var tid = p.tabs[i];
     var active = tid === p.active;
     var rec = instances[tid];
     var visible = active && !panelHidden && !p.collapsed;
+    if (rec && rec.host.hasAttribute('data-pmw-prepared') && rec.preparedFor !== agentsPreparationKey()) {
+      unmountTab(tid);
+      rec = null;
+    }
     if (!rec && (active || (kindDef(l.tabs[tid].kind) || {}).eager)) rec = mountTab(tid, body, visible);
     if (!rec) continue;
     if (rec.host.parentNode !== body) body.appendChild(rec.host);   // a moved tab keeps its instance
     if (visible && rec.host.hasAttribute('data-pmw-prepared')) {
+      if (rec.raster) rec.raster.cancel();
       rec.host.removeAttribute('data-pmw-prepared');
       rec.host.inert = false;
     }
@@ -304,9 +308,11 @@ function syncBodies(panelEl, p, l, panelHidden) {
       catch (err) { try { console.error('[pm-home] focus/blur failed', err); } catch (_) {} }
     }
   }
+  if (!panelHidden && !p.collapsed && p.active === 'dashboard:home' && p.tabs.indexOf('dashboard:agents') >= 0) prepareAgents();
 }
 
 var preparingAgents = false;
+function agentsPreparationKey() { return projectId() + '|' + doc.documentElement.getAttribute('data-theme'); }
 function prepareAgents() {
   var id = 'dashboard:agents', busy = window.PM_BUSY;
   if (preparingAgents || instances[id] || !homeIsPage() || PMW.reduced() ||
@@ -323,7 +329,14 @@ function prepareAgents() {
     }
     var panel = model.panelOf(state.layout, id), el = panel && panelEls[panel.id];
     if (el && !el.hidden && !panel.collapsed && panel.active === 'dashboard:home') {
-      mountTab(id, el.querySelector('.pmw-body'), false, true);
+      var entry = mountTab(id, el.querySelector('.pmw-body'), false, true);
+      if (!entry) return;
+      entry.preparedFor = agentsPreparationKey();
+      // Opacity zero skips raster. As in the look cover, one colour level draws the layer during idle.
+      requestAnimationFrame(function () { requestAnimationFrame(function () {
+        if (instances[id] !== entry || entry.visible || !homeIsPage()) return;
+        entry.raster = entry.host.animate([{ opacity: 0.004 }, { opacity: 0.004 }], { duration: 160 });
+      }); });
     }
   }, 1000, { quiet: 160 });
 }
