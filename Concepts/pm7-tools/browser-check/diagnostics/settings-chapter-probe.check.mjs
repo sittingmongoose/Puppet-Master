@@ -8,6 +8,10 @@
 //   rows   SETCHAPTER-ROWCOUNT-FIRST-RAF: the commit asks a frame for a callback that adds 20 rows. It runs after the
 //          probe's own tick in the same frame, so the first painted frame has 25 rows; 30 more arrive 600 ms later. The
 //          probe's first-frame count must be 25, not the tick's 5, and not more than 25.
+//   walk   R97 #4: General's first section holds 8 tagged rows (so all six sampled nodes are there), its second 4. In the
+//          commit task's microtasks, before the first frame, the page walks the old chapter's SECOND section; the whole
+//          old block is walked 800 ms later. The early walk is a walk of the leaving chapter before its first frame and must
+//          be counted (the old probe counted only roots holding a sampled node, so it saw none before paint).
 import { readFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -40,6 +44,8 @@ document.getElementById('to-code').addEventListener('click', (e) => {
 	window.__fx = { committed: performance.now() };
 	requestAnimationFrame(() => { blk.insertAdjacentHTML('beforeend', rowsHtml(20)); window.__fx.inFrame = performance.now(); });
 	setTimeout(() => { blk.insertAdjacentHTML('beforeend', rowsHtml(30)); window.__fx.late = performance.now(); }, 600);
+	queueMicrotask(() => { PM_HOVER_TAG_CONTROLLER.cleanupRemoved(old.children[1]); window.__fx.early = performance.now(); });
+	setTimeout(() => PM_HOVER_TAG_CONTROLLER.cleanupRemoved(old), 800);
 	window.__fx.old = old;
 });
 </script></body></html>`;
@@ -57,9 +63,13 @@ export const tests = {
 		await t.page.click('#to-code');
 		await t.page.waitForTimeout(1500);
 		const r = await t.page.evaluate(`(${pick(src, 'COLLECT')})()`);
-		const fx = await t.page.evaluate(() => ({ inFrame: !!window.__fx.inFrame, late: !!window.__fx.late }));
+		const fx = await t.page.evaluate(() => ({ inFrame: !!window.__fx.inFrame, late: !!window.__fx.late, early: !!window.__fx.early, walked: PM_HOVER_TAG_CONTROLLER.walked }));
 		t.log(`rows: first frame ${r.rowsFirst} (tick ${r.rowsRaf ?? '-'}), end ${r.rowsEnd}; painted ${r.clickToPainted} ms after the click`);
 		await t.check('could judge: the constructed switch ran (in-frame rows and late rows both added, 55 at the end)', fx.inFrame && fx.late && r.rowsEnd === 55, JSON.stringify({ fx, rowsEnd: r.rowsEnd }));
 		await t.check('rows: the first frame\'s count includes the rows a later callback of that frame added (25, not 5)', r.rowsFirst === 25, `first-frame count ${r.rowsFirst}`);
+		t.log(`walk: page walked ${fx.walked.join(', ')}; probe saw ${r.walks ?? '-'} walk(s) of the old chapter, ${r.cleanupsBeforePaint} before paint; sampled ${r.tagged}, still tagged ${r.taggedStill}`);
+		await t.check('could judge walk: the page walked g2 before the frame and the old block later, and six tagged nodes were sampled', fx.early && fx.walked.join(',') === 'g2,general' && r.tagged === 6, JSON.stringify({ fx, tagged: r.tagged }));
+		await t.check('walk: the early walk of the old chapter\'s second section counts as a walk before the first frame', r.cleanupsBeforePaint === 1, `${r.cleanupsBeforePaint} walk(s) before paint`);
+		await t.check('walk: both walks of the old chapter are seen by collection', r.walks === 2, `${r.walks} walk(s) seen`);
 	}
 };

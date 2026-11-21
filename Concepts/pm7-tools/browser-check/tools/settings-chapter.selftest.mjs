@@ -2,7 +2,7 @@
 // node tools/settings-chapter.selftest.mjs
 // The page probe itself is tested in a browser on a constructed page: diagnostics/settings-chapter-probe.check.mjs.
 import assert from 'node:assert/strict';
-import { firstScreenVerdict, restoreJudgeable, flingVerdict } from '../checks/perf-settings-chapter.check.mjs';
+import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict } from '../checks/perf-settings-chapter.check.mjs';
 
 /* SETCHAPTER-ROWCOUNT-FIRST-RAF: the first-screen row over the Code & Tools arrivals */
 {
@@ -50,4 +50,23 @@ import { firstScreenVerdict, restoreJudgeable, flingVerdict } from '../checks/pe
 	assert.equal(flingVerdict(fling({ targetInView: false }))[1].ok, false, 'the target not in the sampled view');
 	assert.equal(flingVerdict(fling({ empty: ['editor-terminal-look'] }))[2].ok, false, 'an empty visible list fails');
 	console.log('PASS fling: pending judged at wheel delivery, and Terminal look in the sampled view');
+}
+
+/* R97 #4: the release rows need a sampled leaving chapter and a seen walk of it */
+{
+	const sw = (pair, o) => ({ pair, tagged: 6, taggedAll: 1900, walks: 2, cleanupsBeforePaint: 0, taggedStill: 0, ...o });
+	const ok = (rows) => hoverVerdict(rows).map((x) => x.ok);
+	assert.deepEqual(ok([sw('general->code'), sw('code->ai')]), [true, true, true], 'sampled, walked after the frame, released: passes');
+	// R97 #4's case: nothing sampled; the old two rows (walks before paint, still tagged) both passed on it
+	const none = hoverVerdict([sw('ai->general', { tagged: 0, taggedAll: 0, walks: 0 })]);
+	assert.deepEqual(none.map((x) => x.ok), [false, true, true], 'no sampled tag: could not judge');
+	assert.match(none[0].detail, /ai->general: no tagged node of the leaving chapter was sampled/);
+	// sampled but no walk of the leaving chapter seen (an instrumentation that misses the walk passed the frame row)
+	const unseen = hoverVerdict([sw('general->code', { walks: 0 })]);
+	assert.equal(unseen[0].ok, false, 'no walk seen: could not judge');
+	assert.match(unseen[0].detail, /no walk of the leaving chapter was seen/);
+	assert.equal(hoverVerdict([sw('general->code', { cleanupsBeforePaint: 1 })])[1].ok, false, 'a walk before the first frame fails');
+	assert.equal(hoverVerdict([sw('general->code', { taggedStill: 2 })])[2].ok, false, 'tags kept fail');
+	assert.equal(hoverVerdict([])[0].ok, false, 'no switch');
+	console.log('PASS hover release: judged only with sampled leaving-chapter tags and a seen walk of that chapter');
 }

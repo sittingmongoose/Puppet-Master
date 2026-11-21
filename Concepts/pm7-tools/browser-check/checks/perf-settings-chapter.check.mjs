@@ -79,8 +79,14 @@ const PROBE = () => {
 	if (hover && typeof hover.cleanupRemoved === 'function') {
 		const cleanup = hover.cleanupRemoved;
 		/* only a walk of the leaving chapter counts (a part removed at the press, a popout or a tag of the pressed link, may
-		   be walked in idle time during the hold) */
-		hover.cleanupRemoved = function (r) { if (P.on && r && (P.tagged || []).some((n) => n === r || (r.contains && r.contains(n)))) P.cleanups.push(performance.now()); return cleanup.apply(this, arguments); };
+		   be walked in idle time during the hold). R97 #4: a walk is the leaving chapter's when the chapter has changed and
+		   its root was a node of the old stage (ARM keeps them all) or holds the old block, not only when it holds one of
+		   the six sampled tagged nodes: a walk of another part of the old chapter counts too. */
+		hover.cleanupRemoved = function (r) {
+			if (P.on && r && r.nodeType === 1 && P.leaving && sig() !== P.old
+				&& (P.leaving.has(r) || (P.oldBlock && r.contains(P.oldBlock)) || (P.tagged || []).some((n) => r.contains(n)))) P.cleanups.push(performance.now());
+			return cleanup.apply(this, arguments);
+		};
 	}
 	try { new PerformanceObserver((l) => { if (P.on) for (const e of l.getEntries()) for (const s of e.scripts || []) if (s.sourceFunctionName === 'finish') P.loaf.push(s.duration); }).observe({ type: 'long-animation-frame' }); } catch (e) { /* none */ }
 	return true;
@@ -89,7 +95,11 @@ const PROBE = () => {
 const ARM = () => {
 	const P = window.__psc;
 	Object.assign(P, { on: true, cv: [], saves: [], cleanups: [], loaf: [], click: 0, commit: 0, first: 0, painted: 0, rows1: 0, rowsRaf: 0, rows1At: '', old: P.sig() });
-	P.tagged = [...document.querySelectorAll('#workspace-stage [data-pm-hover-bound="true"]')].slice(0, 6);
+	const stage = document.querySelector('#workspace-stage');
+	P.leaving = new WeakSet(stage ? [...stage.querySelectorAll('*')] : []);
+	P.oldBlock = stage ? stage.querySelector('[data-workspace-block]') : null;
+	const bound = stage ? [...stage.querySelectorAll('[data-pm-hover-bound="true"]')] : [];
+	P.tagged = bound.slice(0, 6); P.taggedAll = bound.length;
 	return { old: P.old, tagged: P.tagged.length };
 };
 const COLLECT = () => {
@@ -109,7 +119,7 @@ const COLLECT = () => {
 		elements: stage ? stage.getElementsByTagName('*').length : 0, unlocks,
 		savesBeforePaint: P.saves.filter((s) => P.painted && s.t < P.painted).length,
 		savedPlace: P.saves.filter((s) => s.domain === domain).length,
-		cleanupsBeforePaint: P.cleanups.filter((c) => P.painted && c < P.painted).length,
+		cleanupsBeforePaint: P.cleanups.filter((c) => P.painted && c < P.painted).length, walks: P.cleanups.length,
 		/* null when the first frame's end read did not happen (SETCHAPTER-ROWCOUNT-FIRST-RAF): not judged as a first screen */
 		rowsFirst: P.rows1At === 'frame end' ? P.rows1 : null, rowsRaf: P.rowsRaf || 0, rowsEnd: stage ? stage.querySelectorAll('.setting-row').length : 0,
 		pendingLeft: document.querySelectorAll('#workspace-stage [data-o55-fill="pending"]').length,
@@ -125,7 +135,7 @@ const COLLECT = () => {
 		})(),
 		dupIds: (() => { const ids = [...document.querySelectorAll('#workspace-stage [id^="setting-"]')].map((n) => n.id); return ids.length - new Set(ids).size; })(),
 		taggedStill: (P.tagged || []).filter((n) => !n.isConnected && n.getAttribute('data-pm-hover-bound') === 'true').length,
-		tagged: (P.tagged || []).length
+		tagged: (P.tagged || []).length, taggedAll: P.taggedAll || 0
 	};
 };
 /* C1's first-screen row over the Code & Tools arrivals (exported for tools/settings-chapter.selftest.mjs). A row whose
@@ -226,6 +236,22 @@ const ARM_RESTORE = (id) => {
 	mo.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
 	R.stop = () => { mo.disconnect(); tome.save = save; tome.restoreProjectDefaults = restore; };
 };
+/* The release rows (exported for tools/settings-chapter.selftest.mjs). R97 #4: both rows pass vacuously when nothing of
+   the leaving chapter was sampled or no walk of it was seen, so each switch must have sampled tagged nodes of the leaving
+   chapter and seen at least one walk of that chapter by collection; then no such walk may come before the new chapter's
+   first frame, and the sampled nodes must have let go of their tags. */
+export function hoverVerdict(rows) {
+	const unsampled = rows.filter((r) => !(r.tagged > 0));
+	const unwalked = rows.filter((r) => r.tagged > 0 && !(r.walks > 0));
+	const walked = rows.filter((r) => r.cleanupsBeforePaint > 0);
+	const kept = rows.filter((r) => r.taggedStill > 0);
+	return [
+		{ name: 'could judge the old chapter\'s hover tags: every switch sampled tagged nodes of the leaving chapter and saw a walk of it by collection', ok: rows.length > 0 && !unsampled.length && !unwalked.length,
+			detail: [...unsampled.map((r) => `${r.pair}: no tagged node of the leaving chapter was sampled`), ...unwalked.map((r) => `${r.pair}: no walk of the leaving chapter was seen`)].join('; ') || (rows.length ? '' : 'no switch') },
+		{ name: 'the old chapter\'s hover tags are not walked before the new chapter\'s first frame', ok: !walked.length, detail: walked.map((r) => `${r.pair}: ${r.cleanupsBeforePaint} walk(s)`).join('; ') },
+		{ name: 'the old chapter\'s tagged nodes let go of their tags by collection after the capped row-completion wait', ok: !kept.length, detail: kept.map((r) => `${r.pair}: ${r.taggedStill} of ${r.tagged}`).join('; ') }
+	];
+}
 /* R93 #4's fling rows (exported for tools/settings-chapter.selftest.mjs). R97 #3: Terminal look must still be pending
    when the wheel is delivered (the commit's sample is logged only), and the scroll frame's sample must have Terminal look
    in view, so the empty-list row has the pending target in front of it. */
@@ -910,7 +936,7 @@ for (const surface of ['normal', 'sandbox']) {
 					const r = await f.evaluate(COLLECT);
 					r.pair = `${a}->${b}`;
 					rows.push(r);
-					t.log(`${look} ${surface} ${r.pair}: release -> painted ${r.clickToPainted} ms (commit ${r.commit}, build task ${r.build ?? '-'} ms, ${r.elements} elements; rows ${r.rowsFirst ?? '-'} in the first frame (${r.rowsRaf} at its first animation-frame callback) of ${r.rowsEnd}); one-frame unlocks ${r.unlocks.length ? r.unlocks.join(',') : 'none'}; saves before paint ${r.savesBeforePaint}, place saved ${r.savedPlace}; tag walks before paint ${r.cleanupsBeforePaint}, old tagged nodes still tagged ${r.taggedStill}/${r.tagged}`);
+					t.log(`${look} ${surface} ${r.pair}: release -> painted ${r.clickToPainted} ms (commit ${r.commit}, build task ${r.build ?? '-'} ms, ${r.elements} elements; rows ${r.rowsFirst ?? '-'} in the first frame (${r.rowsRaf} at its first animation-frame callback) of ${r.rowsEnd}); one-frame unlocks ${r.unlocks.length ? r.unlocks.join(',') : 'none'}; saves before paint ${r.savesBeforePaint}, place saved ${r.savedPlace}; tag walks of the old chapter ${r.walks} (before paint ${r.cleanupsBeforePaint}), old tagged nodes ${r.taggedAll} (sampled ${r.tagged}, still tagged ${r.taggedStill})`);
 					await t.page.waitForTimeout(500);
 				}
 				const shown = rows.filter((r) => r.clickToPainted !== null && r.to === r.pair.split('->')[1]);
@@ -925,10 +951,7 @@ for (const surface of ['normal', 'sandbox']) {
 					left.map((r) => `${r.pair}: ${r.pendingLeft} row lists still pending, ${r.dupIds} duplicate row ids, missing ${r.missing ? r.missing.gone.join(', ') || 'none' : '?'} of ${r.missing ? r.missing.want : '?'} modeled on ${r.missing ? r.missing.ws : '?'}`).join('; '));
 				const unsaved = rows.filter((r) => r.savedPlace < 1);
 				await t.check(`${look} ${surface}: the new place is saved by collection after the capped row-completion wait`, !unsaved.length, unsaved.map((r) => r.pair).join(', '));
-				const walked = rows.filter((r) => r.cleanupsBeforePaint > 0);
-				await t.check(`${look} ${surface}: the old chapter's hover tags are not walked before the new chapter's first frame`, !walked.length, walked.map((r) => `${r.pair}: ${r.cleanupsBeforePaint} walk(s)`).join('; '));
-				const kept = rows.filter((r) => r.taggedStill > 0);
-				await t.check(`${look} ${surface}: the old chapter's tagged nodes let go of their tags by collection after the capped row-completion wait`, !kept.length, kept.map((r) => `${r.pair}: ${r.taggedStill} of ${r.tagged}`).join('; '));
+				for (const row of hoverVerdict(rows)) await t.check(`${look} ${surface}: ${row.name}`, row.ok, row.detail);
 			});
 		}
 	};
