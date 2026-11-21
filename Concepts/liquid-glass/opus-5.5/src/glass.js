@@ -2847,8 +2847,7 @@
       L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, Math.max(0, start + P.end - performance.now()) + 1);
     }
     take(T);
-    if (splice && (filesSwitcher(strip) ||
-        (cfg.sel === '.pmw-strip' && target.getAttribute('data-tab-id') === 'dashboard:agents'))) {
+    if (splice && filesSwitcher(strip)) {
       var afterCarry = function () {
         return new Promise(function (resolve) {
           requestAnimationFrame(function () { requestAnimationFrame(resolve); });
@@ -2864,19 +2863,13 @@
     // Its moving layers take over from the original chip at the first advancing pose.
     if (holdStart && reuse) {
       anims.forEach(function (a) { a.pause(); a.__pmHeld = true; });
-      var railPress = filesSwitcher(strip);
-      function firstAvailable(frame) {
+      anims.forEach(function (a) { a.__pmHeld = false; a.play(); });
+      if (splice) requestAnimationFrame(function positionRestingChip() {
         if (L.carry !== K) return;
-        if (!railPress && frame - made < 30) { requestAnimationFrame(firstAvailable); return; }
-        anims.forEach(function (a) { a.__pmHeld = false; a.play(); });
-        if (splice) requestAnimationFrame(function positionRestingChip() {
-          if (L.carry !== K) return;
-          if (lead.currentTime < 9) { requestAnimationFrame(positionRestingChip); return; }
-          // By this point the actual lens is hidden by the paired visibility animation.
-          setLensBox(L, B);
-        });
-      }
-      if (railPress) firstAvailable(made); else requestAnimationFrame(firstAvailable);
+        if (lead.currentTime < 9) { requestAnimationFrame(positionRestingChip); return; }
+        // By this point the actual lens is hidden by the paired visibility animation.
+        setLensBox(L, B);
+      });
     } else if (holdStart) window.PM_START_ON_SHOWN(anims, { startHeld: true, frames: cold ? 6 : 10 });
     else requestAnimationFrame(function () {
       /* the first frame callback after the block was made: when it was first drawn (K.drawn), so its age is known before

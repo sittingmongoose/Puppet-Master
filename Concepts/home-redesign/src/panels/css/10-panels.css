@@ -52,6 +52,10 @@
 .pmw-tabbody[hidden] { display: none; }
 /* The initial Agents board can lay out at its real size while the user is still on Home. */
 .pmw-tabbody[hidden][data-pmw-prepared] { display: block; opacity: 0; pointer-events: none; }
+/* Prepare the loader's resting drawing along with its row. Only the moving parts resume when shown. */
+.pmw-tabbody[data-pmw-prepared] .pml-ld[data-pml-run="on"] :is(.pml-ctl, .pml-pup, .pml-str, .pml-dot, .pml-fr) {
+  animation-play-state: paused;
+}
 .pmw-tabbody[data-pmw-tab="dashboard:agents"],
 html[data-theme^="friendly"] .pmw-tabbody[data-pmw-tab="dashboard:home"] { will-change: opacity; }
 .pmw-tabbody[hidden][data-pmw-retiring] { display: block; opacity: 0; pointer-events: none; }
