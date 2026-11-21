@@ -52,6 +52,20 @@ export default async function (t) {
 			}
 			return animate.call(this, frames, timing);
 		};
+		const play = Animation.prototype.play;
+		Animation.prototype.play = function () {
+			const target = this.effect?.target;
+			if (!read.animation && target?.__lgWasPrepared && target.matches('.lg-carry') && target.closest(scope)) {
+				const kf = this.effect.getKeyframes().map(({ transform, computedOffset: o }) => {
+					const m = new DOMMatrix(transform);
+					return { o, dx: m.e, dy: m.f, r: Math.atan2(m.b, m.a) * 180 / Math.PI,
+						kx: Math.hypot(m.a, m.b), ky: Math.hypot(m.c, m.d) };
+				});
+				read.animation = { kf, dur: this.effect.getTiming().duration, width: parseFloat(target.style.width),
+					height: parseFloat(target.style.height), at: performance.now(), prepared: true };
+			}
+			return play.call(this);
+		};
 	}, { item, tab, scope: rail ? '#panel-files' : '.pmw-strip' });
 	await t.page.mouse.move(agentsBox.x + agentsBox.width / 2, agentsBox.y + agentsBox.height / 2);
 	await t.mark(rail ? 'First Explorer to Changed press' : 'First Home to Agents press');

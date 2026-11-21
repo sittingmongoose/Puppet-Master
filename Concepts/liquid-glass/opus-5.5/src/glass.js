@@ -2620,16 +2620,20 @@
     var lo = Math.min.apply(null, ends.map(function (r) { return vertical ? r.y : r.x; })) - CARRY_REACH, hi = Math.max.apply(null, ends.map(function (r) { return vertical ? r.y + r.h : r.x + r.w; })) + CARRY_REACH;
     var crossed = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(visible).map(function (it) { var w = (cfg.twin && cfg.twin(it)) || it; return { it: w, r: rectIn(strip, w, 0) }; })
       .filter(function (s) { var a = vertical ? s.r.y : s.r.x, b = a + (vertical ? s.r.h : s.r.w); return b > lo && a < hi; });
-    var preview = L.carryPreview, F, G, S = null, SK;
+    var preview = L.carryPreview, reuse = false, F, G, S = null, SK;
     if (preview) {
       L.carryPreview = null;
-      preview.anims.forEach(function (a) { a.cancel(); });
+      preview.pulses.forEach(function (a) { a.cancel(); });
       if (!prepare && !go && preview.target === target && preview.theme === root.getAttribute('data-theme') &&
           sameCarryBox(preview.A, A) && sameCarryBox(preview.B, B)) {
+        reuse = true;
         F = preview.F; G = preview.G; S = preview.S; SK = preview.SK;
-        [F, S].forEach(function (e) { if (e) { e.style.opacity = ''; e.removeAttribute('data-lg-prepared'); } });
+        [F, S].forEach(function (e) { if (e) { e.style.opacity = '0.999'; e.removeAttribute('data-lg-prepared'); } });
         F.classList.replace('lg-carry-prepared', 'lg-carry'); F.__lgWasPrepared = true;
-      } else { preview.F.remove(); if (preview.S) preview.S.remove(); }
+      } else {
+        preview.anims.forEach(function (a) { a.cancel(); });
+        preview.F.remove(); if (preview.S) preview.S.remove();
+      }
     }
     if (!F) {
       var over = overLayer(strip), tag = cfg.tag;
@@ -2713,13 +2717,14 @@
        pose at every time: a frame apart from another instant, Basic's snap drew 1.05 px off where they bend) */
     var g0 = go ? go.K.from || 0 : 0;
     var from = go ? g0 + Math.floor(Math.max(0, (zero != null ? Math.min(at, tl - zero) : at) - g0) / FRAME_MS) * FRAME_MS : 0;
-    var T = plan(at, go ? null : 0, from), start = performance.now() - at;
+    var T = reuse ? preview.trip : plan(at, go ? null : 0, from), start = performance.now() - at;
     var holdStart = !go && (cold || coldAgents(cfg, target)) && typeof window.PM_START_ON_SHOWN === 'function';
-    var parts = [F, G, S].concat(SK), anims = [], lead = null;
+    var parts = [F, G, S].concat(SK), anims = reuse ? preview.anims : [], lead = anims[0] || null;
     if (prepare) [F, S].forEach(function (e) {
       if (e) { e.style.opacity = '0'; e.style.willChange = 'opacity, transform'; e.setAttribute('data-lg-prepared', ''); }
     });
-    parts.forEach(function (e, j) {
+    if (reuse) anims.forEach(function (a) { a.currentTime = 0; a.play(); });
+    else parts.forEach(function (e, j) {
       if (!e) return;
       var a = e.animate(T.frames[j], { duration: T.span, easing: 'linear', fill: 'forwards' });
       if (zero != null) a.startTime = zero + from; else if (at > from) a.currentTime = at - from;
@@ -2727,10 +2732,15 @@
     });
     if (prepare) {
       // Draw the same carry layers once during idle. A one-level opacity pulse leaves their tiles ready for the press.
+      var pulses = [];
       [F, S].forEach(function (e) {
-        if (e) anims.push(e.animate([{ opacity: 0.004 }, { opacity: 0.004 }], { duration: T.span }));
+        if (e) pulses.push(e.animate([{ opacity: 0.004 }, { opacity: 0.004 }], { duration: T.span }));
       });
-      L.carryPreview = { F: F, G: G, S: S, SK: SK, A: A, B: B, target: target, theme: root.getAttribute('data-theme'), anims: anims };
+      var cached = L.carryPreview = { F: F, G: G, S: S, SK: SK, A: A, B: B, target: target,
+        theme: root.getAttribute('data-theme'), anims: anims, pulses: pulses, trip: T };
+      Promise.all(pulses.map(function (a) { return a.finished; })).then(function () {
+        if (L.carryPreview === cached) anims.forEach(function (a) { a.pause(); a.currentTime = 0; });
+      }, function () { /* consumed by a press */ });
       return;
     }
     var probe = holdStart ? null : F.animate([], { duration: 1000 }), made = performance.now(), inFrame = frameSync > 0 || postRunning;

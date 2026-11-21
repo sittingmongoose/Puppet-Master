@@ -46,8 +46,8 @@ function firstPress(data) {
 	if (data.animation) {
 		if (!data.firstPress || !data.selected) throw new Error('Missing the trusted first press or its selected destination');
 		const rail = data.route === 'rail';
-		const { frames, dur, width: w, height: h } = data.animation;
-		const kf = frames.map(({ offset: o, transform }) => {
+		const { frames, kf: sampledKeyframes, dur, width: w, height: h } = data.animation;
+		const kf = sampledKeyframes || frames.map(({ offset: o, transform }) => {
 			const m = /^translate\(([-\d.]+)px,\s*([-\d.]+)px\) rotate\(([-\d.]+)deg\) scale\(([-\d.]+),\s*([-\d.]+)\)$/.exec(transform);
 			if (!m) throw new Error('The carry keyframe has no readable transform');
 			const [dx, dy, r, kx, ky] = m.slice(1).map(Number);
