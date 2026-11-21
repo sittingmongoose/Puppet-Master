@@ -25,6 +25,33 @@ export function copiedFullPath(copies, path) {
   return copies.find(copy => copy === expected);
 }
 
+export function pickEffectRows([p, toks, authored]) {
+  document.querySelectorAll('[data-shelf-fx]').forEach(e => { e.removeAttribute('data-shelf-fx'); e.removeAttribute('data-shelf-fx-want'); });
+  const pane = document.getElementById(p), mismatch = [];
+  for (const tok of toks) {
+    const live = [...pane.querySelectorAll('.' + CSS.escape(tok))], a = authored[tok] || [];
+    if (live.length !== a.length) {
+      mismatch.push({ tok, live: live.length, authored: a.length });
+      continue;
+    }
+    live.forEach((e, i) => {
+      if (a[i]) e.setAttribute('data-shelf-fx-want', a[i]);
+      else mismatch.push({ tok, index: i, error: 'row has no authored path' });
+    });
+  }
+  const sel = toks.map(t => '.' + CSS.escape(t)).join(',');
+  const rows = [...pane.querySelectorAll(sel)].filter(e => !e.closest('[role="menu"]') && e.checkVisibility() && e.getBoundingClientRect().width && e.hasAttribute('data-shelf-fx-want'));
+  const groupOf = e => e.closest('[role="tree"]') || [...(function* () { for (let a = e.parentElement; a && a !== pane; a = a.parentElement) yield a; })()].find(a => a.matches('[data-acc]') && a.querySelectorAll(sel).length > 1) || pane;
+  const folder = e => e.getAttribute('data-kind') === 'folder' || (e.getAttribute('role') === 'treeitem' && e.hasAttribute('aria-expanded'));
+  const groups = new Map();
+  for (const e of rows) { const k = groupOf(e); const key = [...groups.keys()].find(x => x.el === k && x.folder === folder(e)) || { el: k, folder: folder(e) }; if (!groups.has(key)) groups.set(key, []); groups.get(key).push(e); }
+  const out = [];
+  for (const [key, list] of groups) for (const e of [list[0], list[list.length - 1]]) if (!out.some(o => o.el === e)) out.push({ el: e, g: key.el });
+  const glabel = gEl => (gEl.getAttribute('aria-label') || gEl.querySelector(':scope > [data-collapse]')?.textContent || gEl.id || '').trim().replace(/\s+/g, ' ');
+  return { mismatch, rows: out.map((o, i) => { o.el.setAttribute('data-shelf-fx', String(i));
+    return { i, want: o.el.getAttribute('data-shelf-fx-want'), folder: folder(o.el), expandable: o.el.hasAttribute('aria-expanded'), keys: o.el.tabIndex >= 0 && !o.el.closest('[inert]'), group: glabel(o.g) }; }) };
+}
+
 // A popup trigger opens by every way the owners wire it: a press, and Enter, Space and ArrowDown on the focused trigger.
 const POPUP_INPUTS = ['mouse', 'enter', 'space', 'arrowdown'];
 const PKEY = { enter: 'Enter', space: ' ', arrowdown: 'ArrowDown' };
@@ -1159,26 +1186,7 @@ export default async function (t) {
         await g.locator('[data-shelf-fx-head]').click(); await g.waitForTimeout(300);
       }
       // Name each row and choose the rows to ask: the first and last of each group with an expected path.
-      const pick = await g.evaluate(([p, toks, authored]) => {
-        document.querySelectorAll('[data-shelf-fx]').forEach(e => { e.removeAttribute('data-shelf-fx'); e.removeAttribute('data-shelf-fx-want'); });
-        const pane = document.getElementById(p), mismatch = [];
-        for (const tok of toks) {
-          const live = [...pane.querySelectorAll('.' + CSS.escape(tok))], a = authored[tok] || [];
-          live.forEach((e, i) => { const w = (live.length === a.length ? a[i] : null) || e.getAttribute('data-path'); if (w) e.setAttribute('data-shelf-fx-want', w); });
-          if (live.length !== a.length && live.some(e => !e.getAttribute('data-path'))) mismatch.push({ tok, live: live.length, authored: a.length });
-        }
-        const sel = toks.map(t => '.' + CSS.escape(t)).join(',');
-        const rows = [...pane.querySelectorAll(sel)].filter(e => !e.closest('[role="menu"]') && e.checkVisibility() && e.getBoundingClientRect().width && e.hasAttribute('data-shelf-fx-want'));
-        const groupOf = e => e.closest('[role="tree"]') || [...(function* () { for (let a = e.parentElement; a && a !== pane; a = a.parentElement) yield a; })()].find(a => a.matches('[data-acc]') && a.querySelectorAll(sel).length > 1) || pane;
-        const folder = e => e.getAttribute('data-kind') === 'folder' || (e.getAttribute('role') === 'treeitem' && e.hasAttribute('aria-expanded'));
-        const groups = new Map();
-        for (const e of rows) { const k = groupOf(e); const key = [...groups.keys()].find(x => x.el === k && x.folder === folder(e)) || { el: k, folder: folder(e) }; if (!groups.has(key)) groups.set(key, []); groups.get(key).push(e); }
-        const out = [];
-        for (const [key, list] of groups) for (const e of [list[0], list[list.length - 1]]) if (!out.some(o => o.el === e)) out.push({ el: e, g: key.el });
-        const glabel = gEl => (gEl.getAttribute('aria-label') || gEl.querySelector(':scope > [data-collapse]')?.textContent || gEl.id || '').trim().replace(/\s+/g, ' ');
-        return { mismatch, rows: out.map((o, i) => { o.el.setAttribute('data-shelf-fx', String(i));
-          return { i, want: o.el.getAttribute('data-shelf-fx-want'), folder: folder(o.el), expandable: o.el.hasAttribute('aria-expanded'), keys: o.el.tabIndex >= 0 && !o.el.closest('[inert]'), group: glabel(o.g) }; }) };
-      }, [pn.panel, toks, authoredFx]);
+      const pick = await g.evaluate(pickEffectRows, [pn.panel, toks, authoredFx]);
       await t.check(`${T}: the rows of ${toks.join(', ')} match the rows the page file authors`, !pick.mismatch.length, JSON.stringify(pick.mismatch), { hard: true });
       const rowsI = pick.rows.filter(r => input === 'mouse' || r.keys);
       t.log('FO93B-ROWS ' + JSON.stringify({ pane: pn.state, input, rows: rowsI }));
