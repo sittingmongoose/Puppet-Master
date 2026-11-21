@@ -14,19 +14,24 @@
 //             Shift+Tab then takes the focus out of the panel (to the core), and the pin stays over the next handover.
 //   click     a real click on the panel's words (not a control) leaves the focus on the page; PageDown then scrolls the
 //             panel and pins it, and three handovers keep its node and scroll (F104-1, opus-recheck-act8).
+//   touch     a touch swipe on the panel scrolls and pins it; a handover keeps the node, subject, scroll and pin.
 //   elsewhere a real click on the panel's words, then one outside the chat on no control, then PageDown with the focus
 //             on the page: the panel does not scroll, a scroll of it with no input does not pin it, and the next
 //             handover changes the subject (round 3, F104-2).
 //   mark      a real wheel up over the unscrolled panel marks it without scrolling it. With no press after it, a scroll of
 //             the panel with no input inside the 700 ms pins it (the control: the mark was made); after a real click
 //             outside the chat it does not, and the next handover changes the subject (opus-recheck-act8c O1).
+//   mark-touch repeats the mark case with a touch tap outside the chat in place of the click.
+//   second-panel reopens a completed Orbit card, marks its panel with a wheel, then presses the live panel's words.
+//             A scroll with no input on the first panel pins it only in the control without the press.
 //   scrollbar a real press on the panel's scrollbar track pages it down and pins it; a handover keeps it (skipped where
 //             scrollbars overlay the content and leave no gutter).
 //   no input  scrollTop set by script, then a clamp (the panel scrolled to its end by script and its last rows taken
 //             out, so the browser clamps scrollTop and fires scroll, as a patch that shortens it would) pin nothing,
 //             and the next handover changes the subject.
 // Fails group 7 c4ba49b137: the first handover replaces the panel (node, scroll and focus lost), and nothing pins.
-//   --set chat=<path or URL of a 5.6 Pro build (build.py --out)>   --set only=wheel,keys,click,elsewhere,mark,scrollbar,none
+//   --set chat=<path or URL of a 5.6 Pro build (build.py --out)>
+//   --set only=wheel,keys,click,touch,elsewhere,mark,mark-touch,scrollbar,none,second-panel
 
 // In the app's frame: helpers the steps below read through window.__fo104.
 function install() {
@@ -222,6 +227,48 @@ async function clickKeysCase(t, f, where) {
   await f.waitForTimeout(300);
 }
 
+async function withTouch(t, run) {
+  const cdp = await t.page.context().newCDPSession(t.page);
+  try {
+    await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 1 });
+    await run((type, point) => cdp.send('Input.dispatchTouchEvent', { type, touchPoints: point ? [point] : [] }));
+  } finally {
+    await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: false });
+    await cdp.detach();
+  }
+}
+
+async function touchCase(t, f, where) {
+  const tag = `${where} touch swipe`;
+  await freshWindow(t, f, tag);
+  // Keep the subject on screen while the gesture is sent. Resume the same run for the handover.
+  const before = await f.evaluate(() => {
+    window.PM56_DEMO.pauseWorking();
+    return window.__fo104.snap();
+  });
+  await withTouch(t, async send => {
+    const a = await f.evaluate(() => window.__fo104.aim());
+    await t.check(`${tag}: the touch starts inside an overflowing, unpinned panel`, a?.ok && before.over >= 16 && !before.pinned,
+      JSON.stringify({ a, before }), { hard: true });
+    const x = OFF.x + a.x, y = OFF.y + a.y;
+    await send('touchStart', { x, y });
+    for (let step = 1; step <= 6; step++) {
+      await f.waitForTimeout(16);
+      await send('touchMove', { x, y: y - step * 16 });
+    }
+    await send('touchEnd');
+  });
+  const after = await settled(f);
+  await t.check(`${tag}: the swipe scrolls and pins the same panel before handover`,
+    after.top > before.top && after.pinned === 'node:' + before.uid && after.node === before.node,
+    JSON.stringify({ before, after }));
+  const card = f.locator('.working-card:not(.is-done)').filter({ has: f.locator('.orbit-stage.is-open') });
+  const play = card.locator('[data-action="start-working"]');
+  if (!(await play.isVisible())) await card.locator('[data-action="work-demo-menu"]').click();
+  await play.click();
+  await held(t, `${tag} handover`, after, await nextHandover(f, after, tag));
+}
+
 // a press on the panel's own scrollbar track (below its thumb) pages it down: a real input that scrolls it, so it pins
 async function scrollbarCase(t, f, where) {
   const tag = `${where} scrollbar`;
@@ -272,25 +319,34 @@ async function elsewhereCase(t, f, where) {
 // a press elsewhere also ends a wheel's (or a touch's) 700 ms mark (opus-recheck-act8c O1): a wheel up over the panel at
 // its top marks it and scrolls nothing. The control, with no press after the wheel, shows the mark was made: a scroll of
 // the panel with no input inside the 700 ms pins it. After a real click outside the chat, the same scroll must not.
-async function markElsewhereCase(t, f, where) {
+async function markElsewhereCase(t, f, where, pressOutside, touch = false) {
   for (const press of [false, true]) {
-    const tag = `${where} wheel mark${press ? ' then a press elsewhere' : ' (control, no press)'}`;
+    const tag = `${where} wheel mark${touch ? ' (touch context)' : ''}${press ? ` then a ${touch ? 'touch tap' : 'press'} elsewhere` : ' (control, no press)'}`;
     const s0 = await freshWindow(t, f, tag);
     const a = await f.evaluate(() => window.__fo104.aim('.orbit-panel-title'));
     const o = await f.evaluate(() => window.__fo104.outside());
     await t.check(`${tag}: the panel at its top, its words, and a spot outside the chat that is no control`, !!(a && a.ok && o && s0.top === 0),
       JSON.stringify({ top: s0.top, title: a, outside: o }), { hard: true });
     await t.page.mouse.move(OFF.x + a.x, OFF.y + a.y);
-    const t0 = await f.evaluate(() => performance.now());
+    await f.evaluate(() => {
+      const probe = window.__fo104;
+      probe.wheelAt = null;
+      probe.panel().addEventListener('wheel', () => { probe.wheelAt = performance.now(); }, { once: true, passive: true });
+    });
     await t.page.mouse.wheel(0, -48);
-    if (press) await t.page.mouse.click(OFF.x + o.x, OFF.y + o.y);
-    const r = await f.evaluate(async (t0) => {
-      const p = window.__fo104.panel(), fr = () => new Promise((res) => requestAnimationFrame(() => res()));
+    if (press) await pressOutside({ x: OFF.x + o.x, y: OFF.y + o.y });
+    const r = await f.evaluate(async () => {
+      const probe = window.__fo104, p = probe.panel(), fr = () => new Promise(res => requestAnimationFrame(res));
       const wheelTop = p.scrollTop;
+      let scroll = null;
+      const onScroll = () => { scroll = { top: p.scrollTop, ms: probe.wheelAt === null ? null : Math.round(performance.now() - probe.wheelAt) }; };
+      p.addEventListener('scroll', onScroll, { once: true });
       p.scrollTop = 14; await fr(); await fr(); await fr();
-      return { wheelTop, scriptTop: p.scrollTop, ms: Math.round(performance.now() - t0), pinned: window.__fo104.snap().pinned };
-    }, t0);
-    const inWindow = r.ms < 700 && r.wheelTop === 0 && r.scriptTop > 0;
+      p.removeEventListener('scroll', onScroll);
+      return { wheelTop, scroll, pinned: probe.snap().pinned };
+    });
+    // Read the input and scroll events on the page's clock. Later compositor frames only settle the pin.
+    const inWindow = r.wheelTop === 0 && r.scroll?.top > 0 && r.scroll.ms !== null && r.scroll.ms >= 0 && r.scroll.ms < 700;
     if (!press) {
       await t.check(`${tag}: a scroll with no input inside the wheel's 700 ms pins the panel (the mark was made)`,
         inWindow && r.pinned === 'node:' + s0.uid, JSON.stringify({ ...r, uid: s0.uid }));
@@ -335,19 +391,80 @@ async function noInputCase(t, f, where) {
   await t.check(`${tag}: the next handover changes the subject`, n.uid !== s.uid && !n.pinned, `${s.uid} -> ${n.uid}`);
 }
 
+async function secondPanelCase(t, f, where) {
+  const tag = `${where} second Orbit panel`;
+  await f.evaluate(() => window.PM56_DEMO.selectThread('orbit-run'));
+  const done = f.locator('.working-card.is-done[data-card-ui="orbit-run-02"]');
+  const first = done.locator('.orbit-stage.is-open .orbit-panel-in');
+  const second = f.locator('.working-card[data-card-ui="orbit-run-04"] .orbit-stage.is-open .orbit-panel-in');
+  await second.waitFor({ timeout: 40000 });
+  await done.locator('.orbit-strip-chev').click();
+  await first.waitFor();
+  // These demo panels are short. Cap the reopened scroller so the mark can be tested with a real scroll event.
+  await first.evaluate(panel => {
+    Object.assign(panel.style, { maxHeight: '60px', minHeight: '0px', overflowY: 'auto' });
+  });
+  const words = panel => panel.locator('.orbit-panel-title').evaluate(e => {
+    e.closest('.orbit-panel-in').scrollIntoView({ block: 'nearest' });
+    const r = e.getBoundingClientRect(), x = r.left + 12, y = r.top + Math.min(r.height / 2, 8);
+    return { x, y, ok: e.contains(document.elementFromPoint(x, y)) };
+  });
+  for (const press of [true, false]) {
+    const label = `${tag}${press ? ' with a press on the live panel' : ' (control, no press)'}`;
+    const a = await words(first);
+    await t.check(`${label}: the reopened panel's words can be reached`, a.ok, JSON.stringify(a), { hard: true });
+    await t.page.mouse.move(OFF.x + a.x, OFF.y + a.y);
+    const at = await f.evaluate(() => performance.now());
+    await t.page.mouse.wheel(0, -48);
+    let b = null;
+    if (press) {
+      b = await words(second);
+      if (b.ok) await t.page.mouse.click(OFF.x + b.x, OFF.y + b.y);
+    }
+    const r = await first.evaluate(async (panel, at) => {
+      const stage = panel.closest('.orbit-stage');
+      const pin = () => stage.querySelector('.orbit-node[aria-pressed="true"]')?.getAttribute('data-k') ?? null;
+      const before = { top: panel.scrollTop, pin: pin(), over: panel.scrollHeight - panel.clientHeight };
+      const nextFrame = () => new Promise(resolve => requestAnimationFrame(resolve));
+      let scroll = null;
+      const onScroll = () => { scroll = { top: panel.scrollTop, ms: Math.round(performance.now() - at) }; };
+      panel.addEventListener('scroll', onScroll, { once: true });
+      panel.scrollTop = 14;
+      await nextFrame(); await nextFrame(); await nextFrame();
+      panel.removeEventListener('scroll', onScroll);
+      // The pin can re-render the completed card and clamp the test's scroll. Read the scroll event and the pin separately.
+      const result = { before, scroll, pin: pin(), connected: panel.isConnected, uid: stage.getAttribute('data-orbit-focus') };
+      panel.scrollTop = 0;
+      return result;
+    }, at);
+    await t.check(`${label}: a scroll with no input inside 700 ms ${press ? 'does not pin' : 'pins'} the reopened panel`,
+      (!press || b?.ok) && r.connected && r.scroll?.ms < 700 && r.before.over >= 16 && r.before.top === 0 && !r.before.pin && r.scroll.top > 0 &&
+      r.pin === (press ? null : 'node:' + r.uid), JSON.stringify({ ...r, pressTarget: b }));
+    if (press) await f.waitForTimeout(700); // Expire the previous trial's mark before the control.
+  }
+}
+
 async function run(t, f, where) {
   await f.evaluate(install);
   OFF = await frameOffset(t, f);
   const s = await f.evaluate(() => window.__fo104.snap());
   await t.check(`${where}: a live Working card with the Orbit panel`, !!s, JSON.stringify(s), { hard: true });
-  const only = list(t.args.only, ['wheel', 'keys', 'click', 'elsewhere', 'mark', 'scrollbar', 'none']);
+  const only = list(t.args.only, ['wheel', 'keys', 'click', 'touch', 'elsewhere', 'mark', 'mark-touch', 'scrollbar', 'none', 'second-panel']);
   if (only.includes('wheel')) await wheelCase(t, f, where);
   if (only.includes('keys')) await keysCase(t, f, where);
   if (only.includes('click')) await clickKeysCase(t, f, where);
   if (only.includes('elsewhere')) await elsewhereCase(t, f, where);
-  if (only.includes('mark')) await markElsewhereCase(t, f, where);
+  if (only.includes('mark')) await markElsewhereCase(t, f, where, ({ x, y }) => t.page.mouse.click(x, y));
+  if (only.includes('mark-touch')) await withTouch(t, async send => {
+    await markElsewhereCase(t, f, where, async point => {
+      await send('touchStart', point);
+      await send('touchEnd');
+    }, true);
+  });
   if (only.includes('scrollbar')) await scrollbarCase(t, f, where);
   if (only.includes('none')) await noInputCase(t, f, where);
+  if (only.includes('touch')) await touchCase(t, f, where);
+  if (only.includes('second-panel')) await secondPanelCase(t, f, where);
 }
 
 async function home(t, surface) {
