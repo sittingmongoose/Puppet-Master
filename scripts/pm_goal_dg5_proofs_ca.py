@@ -1029,3 +1029,28 @@ WITHDRAWN = {
             [(ST, 1509), (ST, 1531), (ST, 1534)]),
     ),
 }
+
+
+# Landed from methodb-pilot a17cf2bb8c, scripts/pm_goal_dg5_methodb_stage8_ca_template_keys.py PROOFS (the
+# stage-8 intake that admitted the row); every cited line is current at the lane head.
+PROOFS.update({
+    'dg5/site/pm_goal_dg_ca_assignment.py:715': dict(
+        kind='template_value_requires_same_keys',
+        families=['goal.cancelled'],
+        depends_on=['dg5/site/pm_goal_dg_ca_assignment.py:716'],
+        sites=[
+            (AS, 714),
+            (AS, 715),
+            (AS, 716),
+            (AD, 83),
+            (AD, 88),
+        ],
+        argument=(
+            'The two adjacent checks use the same two dictionaries. The later equality check requires '
+            'identical keys before comparing values. The original extra-template-member example refuses at '
+            'the key check. Disabling just that check exposes the later value check. Disabling just the value '
+            'check preserves the key refusal, disabling both allows the original append to complete, and '
+            'restoring both repeats the original refusal.'
+        ),
+    ),
+})

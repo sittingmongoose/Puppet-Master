@@ -190,7 +190,7 @@ PROOFS = {
         kind='code-selection',
         families=FAMILIES,
         depends_on=[SITE + '1624'],
-        sites=[(ST, 1622), (ST, 1624), (ST, 1630), (ST, 1633)],
+        sites=[(ST, 1622), (ST, 1624), (ST, 1631), (ST, 1633), (ST, 1634)],
         argument=(
             'read_event at :1633 requires the event index entry to exist, then delegates '
             'to read_frame, whose first check at :1624 requires the identical index '
