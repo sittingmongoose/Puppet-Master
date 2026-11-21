@@ -145,6 +145,7 @@
       if (!fn) return false;
       const h = this.helper(name, op, t, kit, scale);
       fn(h);
+      if (name === 'snore') this.snoreOut = h.out;
       if (PRI[name] != null) this.lastUi = { t, pri: PRI[name], out: h.out };
       this.recent.push(t);
       E.emit('sfx', { name, kit: K }, t);
@@ -370,7 +371,9 @@
       level = clamp(+level || 0, 0, 1); S.want[name] = level;
       if (name === 'bed') { if (level > 0.001) startMusic(); else stopMusic(); }
       else if (name === 'work' || name === 'power') { if (sess) sess.flag(name, level > 0.001); }
-      else if (name === 'snore') { if (level > 0.001 && !snoreT) snoreLoop(); else if (level <= 0.001) { clearTimeout(snoreT); snoreT = 0; } }
+      // (a snore is two breaths and two soft notes, laid out 2.7 s ahead: when Pip wakes, the one that is sounding is
+      // let go too, or its two notes arrive after Pip is already up)
+      else if (name === 'snore') { if (level > 0.001 && !snoreT) snoreLoop(); else if (level <= 0.001) { clearTimeout(snoreT); snoreT = 0; if (sess && sess.snoreOut && E) { try { sess.snoreOut.gain.setTargetAtTime(0, E.now(), 0.05); } catch (e) { /* gone */ } sess.snoreOut = null; } } }
       else if (name === 'swing') swingLoop(level);
     },
     /* where the person is: { index (screen in the flow), chapter 0..4, asleep } */

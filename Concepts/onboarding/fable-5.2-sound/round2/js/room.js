@@ -29,7 +29,9 @@
   function scene(say) {
     if (!stage) return;
     const st = STEPS[S.step][1];
-    stage.setChapter(CHAPTER[st.chapter]);
+    // (only when the chapter really is another one: the stage plays its fanfare on every call, and this ran on Play,
+    // on Stop and on a change of look, so each of those had a fanfare of its own)
+    if (stage.chapter !== CHAPTER[st.chapter]) stage.setChapter(CHAPTER[st.chapter]);
     stage.direct({ chapter: CHAPTER[st.chapter], props: [], pip: { mood: S.playing ? 'happy' : 'idle' } });
     if (say) stage.sayNow(say[0], say[1]);
   }
@@ -49,7 +51,9 @@
     P.progress(STEPS[S.step][1]);
     P.loop('bed', 1); S.playing = true; scene(); sync();
   }
-  function stop() { walk(false); P.loop('bed', 0); P.hush(); S.playing = false; scene(); sync(); }
+  // Stop is silence: the song, Pip's line, and whatever the stage had looping (its 'bed' is the song itself, so it is
+  // left to the line above it)
+  function stop() { walk(false); S.playing = false; P.loop('bed', 0); P.hush(); ['snore', 'swing'].forEach((n) => P.loop(n, 0)); scene(); sync(); }
   /* walk it for me: from Pip asleep to Ready, a step every two bars or so, so the parts are heard joining */
   function walk(on) {
     clearTimeout(S.walk); S.walk = 0;
@@ -152,6 +156,13 @@
      drawn for (in round one's wide box the two Retro tubes drew Pip far too large). */
   try {
     stage = new window.PipStage.Stage($('#rmStage'), { theme: S.theme, layout: 'portrait', reduced: root.getAttribute('data-reduced-motion') === '1' });
+    /* The stage keeps its own sounds to the song. In the onboarding Pip sleeps for three seconds at most, so its snore
+       (two breaths and two soft falling notes, every 3.8 s) is heard once. Here Pip stays asleep for as long as the
+       Asleep step is chosen, and the snore went on over the song and on after Stop (Jared, 20 Nov 2026: "a constant
+       de doo sound in the background"). So: no snore in this room, and when no song plays the stage is silent. */
+    const stageSfx = stage.sfx.bind(stage), stageLoop = stage.loopSnd.bind(stage);
+    stage.sfx = (ev, o) => { if (S.playing) stageSfx(ev, o); };
+    stage.loopSnd = (name, level) => stageLoop(name, name === 'snore' || !S.playing ? 0 : level);
     new ResizeObserver(() => { stage.setLayout('portrait'); scene(); }).observe($('#rmStage').parentNode);
   } catch (e) { stage = null; }
   new MutationObserver(() => {

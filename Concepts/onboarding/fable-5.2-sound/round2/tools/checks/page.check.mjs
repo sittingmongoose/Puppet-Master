@@ -95,6 +95,12 @@ export const tests = {
 		await t.check('in the app\'s bar, beside the theme picker, the speaker opens the same menu', app.open && app.under && app.right && app.songs === 4, JSON.stringify(app));
 		if (t.args.shots) { await sleep(450); } if (t.args.shots) await t.shot('menu-app', 'the sound menu under the app\'s speaker, beside the theme picker');
 		await t.page.keyboard.press('Escape');
+		// with the window closed nothing sounds: every effect that would is counted for a quarter of a minute (a hidden Pip
+		// fidgets every 7 to 13 s, and its swish was heard out of nowhere; found after Jared heard the snore in the listening room)
+		await t.page.evaluate(() => { window.__closedHeard = []; const wrap = (set, tag) => Object.keys(set).forEach((k) => { const f = set[k]; if (typeof f !== 'function' || f.__counted) return; const g = function () { if (window.__closedHeard) window.__closedHeard.push(tag + k); return f.apply(this, arguments); }; g.__counted = true; set[k] = g; }); wrap(window.PS5.sfx.SET, ''); Object.keys(window.PS5.sfx.SPECIAL).forEach((n) => wrap(window.PS5.sfx.SPECIAL[n], n + ':')); });
+		await sleep(16000);
+		const closed = await t.page.evaluate(() => { const h = window.__closedHeard; window.__closedHeard = null; return { heard: h, song: window.PipSound.transport().playing }; });
+		await t.check(`with the window closed nothing sounds for 16 s: no effect (${closed.heard.join(', ') || 'none'}) and no song`, closed.heard.length === 0 && closed.song === false, JSON.stringify(closed));
 		await t.page.locator('#resumePill').click(); await sleep(1200);
 		await t.page.evaluate(() => { window.PipSound.setSong(window.PS5.DEFAULT_SONG[window.PipSound.kit]); window.PipSound.volume('music', 0.5); });
 

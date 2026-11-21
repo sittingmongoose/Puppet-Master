@@ -63,5 +63,47 @@ export const tests = {
 			await t.check(`at ${w} px Pip's area stands upright (${box.w}x${box.h})`, box.h > box.w * 1.15 && box.w >= 240, JSON.stringify(box));
 			if (t.args.shots) await t.shot(`room-${w}`, `the listening room at ${w} px`);
 		}
+	},
+	/* Nothing but the song. Every effect that actually sounds is counted from the moment the page loads (each gesture of
+	   the effect set is wrapped), then a person's three ways in are tried. Found by ear (Jared, 20 Nov 2026: "a constant
+	   de doo sound in the background", during a song and after Stop): on the Asleep step Pip went on snoring, two soft
+	   falling notes every 3.8 s, and Play and Stop each set off the stage's chapter fanfare. */
+	async 'nothing but the song'(t) {
+		const open = async () => {
+			await t.goto(String(t.args.page || 'index.html'));
+			await t.page.waitForFunction(() => !!(window.__room && window.PipSound && window.PS5 && window.__room.stage()));
+			await t.page.evaluate(() => {
+				window.__heard = [];
+				const wrap = (set, tag) => Object.keys(set).forEach((k) => { const f = set[k]; if (typeof f !== 'function') return; set[k] = function () { window.__heard.push(tag + k); return f.apply(this, arguments); }; });
+				wrap(window.PS5.sfx.SET, ''); Object.keys(window.PS5.sfx.SPECIAL).forEach((n) => wrap(window.PS5.sfx.SPECIAL[n], n + ':'));
+			});
+		};
+		const take = () => t.page.evaluate(() => window.__heard.splice(0));
+		const silent = (ms) => t.page.evaluate(async (ms) => { const an = window.PipSound.analyser(), buf = new Uint8Array(an.fftSize); let dev = 0; const t0 = performance.now(); while (performance.now() - t0 < ms) { an.getByteTimeDomainData(buf); for (let i = 0; i < buf.length; i++) dev = Math.max(dev, Math.abs(buf[i] - 128)); await new Promise((r) => setTimeout(r, 50)); } return dev; }, ms);
+		// 1. the room as it opens: Play, listen, Stop
+		await open();
+		await t.page.locator('#rmPlay').click();
+		await t.page.waitForFunction(() => window.PipSound.transport().playing, null, { timeout: 12000 });
+		await sleep(9000);
+		const playing = await take();
+		await t.check(`Play sets off no fanfare, and Pip does not snore (heard while the song played: ${playing.join(', ') || 'only the song'})`, !playing.some((n) => /chapter|snore/.test(n)), JSON.stringify(playing));
+		await t.page.locator('#rmStop').click(); await sleep(1200);
+		const dev1 = await silent(8000), after1 = await take();
+		await t.check(`Stop is silence: no effect follows it (${after1.join(', ') || 'none'}) and nothing reaches the output (peak ${dev1} of 128)`, after1.length === 0 && dev1 < 2, JSON.stringify({ after1, dev1 }));
+		// 2. the Asleep step: Pip sleeps through the tune without a sound of its own, and after Stop too
+		await open();
+		await t.page.locator('#rmSteps [data-step="0"]').click(); await sleep(500);
+		await t.page.locator('#rmPlay').click();
+		await t.page.waitForFunction(() => window.PipSound.transport().playing, null, { timeout: 12000 });
+		await sleep(9000);
+		const asleep = await t.page.evaluate(() => ({ z: !!window.__room.stage().sleepZ, song: window.PipSound.session.asleep })), slept = await take();
+		await t.check(`on the Asleep step Pip is asleep and only the song is heard (${slept.join(', ') || 'only the song'})`, asleep.z && asleep.song === true && !slept.some((n) => /snore|chapter/.test(n)), JSON.stringify({ asleep, slept }));
+		await t.page.locator('#rmStop').click(); await sleep(1200);
+		const dev2 = await silent(9000), after2 = await take();
+		await t.check(`after Stop on the Asleep step: no snore (${after2.join(', ') || 'none'}), a silent output (peak ${dev2} of 128)`, after2.length === 0 && dev2 < 2, JSON.stringify({ after2, dev2 }));
+		// 3. changing the look while stopped: no fanfare either (the look's own signature is the page's to play)
+		await t.page.locator('#rmLook').selectOption('glass-dark'); await sleep(1500);
+		const looked = await take();
+		await t.check(`a change of look while nothing plays sets off no fanfare (${looked.join(', ') || 'none'})`, !looked.some((n) => /chapter|snore/.test(n)), JSON.stringify(looked));
 	}
 };

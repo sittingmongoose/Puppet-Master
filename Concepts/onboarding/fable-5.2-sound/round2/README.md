@@ -28,7 +28,7 @@ the iPhone simulator (iOS 27.3): they load, the first tap starts the sound, and 
 | 7 | Keep the original music | "Original" is one of the four songs in every look: today's tune and instruments, ported note for note, lightly refined. |
 | 8 | A sound menu; four songs a look; defaults; a jukebox; reworks | `js/soundmenu.js`. Defaults: Encore, except Glass (Crystal Carousel), Retro Dark (Bit Bop) and NieR (Paper Lanterns). Bubble Drift, Tidy Trio and Open Glass are rewritten; Bit Bop sleeps to a lullaby of its own hook. |
 | 9 | Retro Light's printer effect breaks up | It was a ratchet of many metal clicks at an even, fast pace. Now a few spaced key taps and the margin bell. |
-| 10 | The listening room | Pip's area stands upright, as in the onboarding (the wide box drew the Retro looks wrongly). The controls are two numbered blocks: 1 pick a song, 2 walk through the onboarding, each step saying what joins, with "Walk it for me". |
+| 10 | The listening room | Pip's area stands upright, as in the onboarding (the wide box drew the Retro looks wrongly). The controls are two numbered blocks: 1 pick a song, 2 walk through the onboarding, each step saying what joins, with "Walk it for me". Nothing but the song sounds there: Pip sleeps on the Asleep step without snoring, Play and Stop set off no fanfare, and Stop is silence. (First delivered otherwise, and Jared heard it at once: "a constant de doo sound in the background". It was the snore, two soft falling notes every 3.8 s, which the onboarding only ever plays once because Pip wakes within three seconds. `tools/checks/room.check.mjs` now counts every effect that sounds.) |
 
 ## The sound menu
 

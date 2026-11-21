@@ -865,7 +865,8 @@
     frameRate() { return this.reduced ? 0 : this.tube === 'teletype' ? 10 : this.fam.fps || 0; }
     // Pip's idle life: now and then it looks up at the bar, kicks its feet, wiggles or glances round
     life(dt) {
-      if (this.reduced || this.sleepZ) return;
+      // (not while the window is closed: a hidden Pip fidgeting was a swish out of nowhere every ten seconds or so)
+      if (this.reduced || this.sleepZ || this.active === false) return;
       const quiet = this.t - (this.busyT || 0) > 3.5;
       if (this.t > this.idleNext && quiet) {
         this.idleNext = this.t + 7 + Math.random() * 6;
@@ -1072,8 +1073,8 @@
       if (f !== 'nier') this.placeBubble(H, ang);
       if (this.tipBox) this.placeTip(H, ang, this.t - (this.tipLast || this.t)); this.tipLast = this.t;
       // big swings can be heard
-      if (!this.reduced && this.t - (this.swT || 0) > .07) { this.swT = this.t; this.loopSnd('swing', clamp((Math.abs(ps.thv) - .25) / 1.6, 0, 1)); }
-      this.loopSnd('snore', this.sleepZ ? 1 : 0);
+      if (!this.reduced && this.t - (this.swT || 0) > .07) { this.swT = this.t; this.loopSnd('swing', this.active === false ? 0 : clamp((Math.abs(ps.thv) - .25) / 1.6, 0, 1)); }
+      this.loopSnd('snore', this.sleepZ && this.active !== false ? 1 : 0);
     }
     placeBubble(H, ang) {
       const tall = this.layoutName === 'portrait';
