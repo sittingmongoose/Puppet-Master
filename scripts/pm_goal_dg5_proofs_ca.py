@@ -501,13 +501,6 @@ PROOFS = {
         "with no last receipt cannot be produced by any owner call; direct "
         "cell tampering is refused earlier by the image origin sha binding.",
         [(BO, 798)]),
-    'dg5/site/pm_goal_dg_ca3_native.py:142': _p(
-        "verify_custody checks the selector sha against the current cell "
-        "bytes immediately before the schema check; a cell whose schema_id "
-        "differed from the selector's would have different bytes and is "
-        "refused at selector_hash first, and a sha-matching cell carries "
-        "the selector's schema_id by construction of src_sel.",
-        [(N3, 140), (N3, 142)]),
     'dg5/site/pm_goal_dg_ca3_native.py:250': _p(
         "issue() keys are fresh uid/test keys or deterministic per-run "
         "keys issued once behind the phase guards (already_prepared / "
@@ -1225,6 +1218,27 @@ WITHDRAWN = {
             "process; no stored input carries it, so no single-defect case "
             "can present it at the uint64 ceiling.",
             [(N3, 518)]),
+    ),
+    # Round 3 follow-up 1 (pm-ea-lead 1121132345-c739): FINAL-LIST-113.r4 withdrawals after the S2-SURV
+    # review, moved here unchanged.
+    'dg5/site/pm_goal_dg_ca3_native.py:142': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3, follow-up 1 (pm-ea-lead 1121132345-c739), on FINAL-LIST-113.r4 '
+            '(sha256 6a2c1422...). Review S2-SURV '
+            '(event-authority-20261104/reviews/PROOF-REVIEW-R2/S2-SURV/REVIEW.md): UNSOUND, accepting mutant. Run to '
+            'settle_owner, replace the D06 intent.safe_stop_source with src_sel(D05 result) keeping the sha and '
+            "setting schema_version to 9.9.9, reseal the control intent sha (level 3, the supplement's "
+            'c3/d06_d05_join channel): intact refuses selector_schema at :142; cut, settle_owner and freeze_event '
+            'accept (probe_native142.py, reproduced). r4 route: kill: the mutant becomes a single-defect negative '
+            '(S2-SURV, level 3 via c3/d06_d05_join field).'
+        ),
+        proof=_p(
+            "verify_custody checks the selector sha against the current cell "
+            "bytes immediately before the schema check; a cell whose schema_id "
+            "differed from the selector's would have different bytes and is "
+            "refused at selector_hash first, and a sha-matching cell carries "
+            "the selector's schema_id by construction of src_sel.",
+            [(N3, 140), (N3, 142)]),
     ),
 }
 

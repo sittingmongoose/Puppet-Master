@@ -166,32 +166,6 @@ PROOFS = {
             'validation at :1486. The tighter cap always refuses first by three orders '
             'of magnitude, so no complete append call can make :441 refuse alone. It '
             'closes by this proof once :473 is closed.')),
-    SITE + '187': dict(
-        kind='code-selection',
-        families=FAMILIES,
-        depends_on=[SITE + '473'],
-        sites=[(ST, 186), (ST, 187), (ST, 473)],
-        argument=(
-            'scope_partition at :187 requires an application-scoped event to carry no '
-            'project_id, during append dedupe. The whole EventRecord validation later in '
-            'the same append (:473, via validate_event_record) bounds the identical '
-            'scope_kind/project_id pair by the identical predicate (application scope '
-            'requires a null project). With :187 cut, an application candidate carrying '
-            'a project still refuses there before any frame is written (the '
-            'scope_application_project chain witnesses exactly this), so :187 selects '
-            'the precise scope code and never gates acceptance alone.')),
-    SITE + '189': dict(
-        kind='code-selection',
-        families=FAMILIES,
-        depends_on=[SITE + '473'],
-        sites=[(ST, 189), (ST, 473)],
-        argument=(
-            'scope_partition at :189 requires the candidate project_id to be a non-empty '
-            'string during append dedupe; the whole EventRecord validation later in the '
-            'same append (:473) bounds the identical project_id field by type string '
-            'plus minLength 1. With :189 cut, an empty project_id still refuses there '
-            'before any frame is written, so :189 selects the precise scope code and '
-            'never gates acceptance alone. It closes by this proof once :473 is closed.')),
     SITE + '470': dict(
         kind='code-selection',
         families=FAMILIES,
@@ -361,5 +335,61 @@ WITHDRAWN = {
                 'CUT_EXCEPTION witnesses exactly this), so no execution accepts a frame whose '
                 'payload does not decode; :572 converts the codec refusal to the exact '
                 'payload_codec code.')),
+    ),
+    # Round 3 follow-up 1 (pm-ea-lead 1121132345-c739): FINAL-LIST-113.r4 withdrawals after the S2-SURV
+    # review, moved here unchanged.
+    'dg5/site/pm_goal_test_storage.py:187': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3, follow-up 1 (pm-ea-lead 1121132345-c739), on FINAL-LIST-113.r4 '
+            '(sha256 6a2c1422...). Review S2-SURV '
+            '(event-authority-20261104/reviews/PROOF-REVIEW-R2/S2-SURV/REVIEW.md): UNSOUND, refuted premise. Two '
+            'appends (level 1), an application event, then the same event_id and idempotency_key with project_id set: '
+            ':473 never runs on the dedupe branch, and the cut is caught at :1464 with append/conflict/producer25, a '
+            'different code. The real cover on the dedupe branch (:1464) is missing from depends_on; recorded here, '
+            'the withdrawn proof is kept unchanged. r4 why: addendum 7: break is a note; SOUND survives a dispute. r4 '
+            'route: kill: KILLED_CODE (addendum 10); cut refuses at :1464 with another code.'
+        ),
+        proof=dict(
+            kind='code-selection',
+            families=FAMILIES,
+            depends_on=[SITE + '473'],
+            sites=[(ST, 186), (ST, 187), (ST, 473)],
+            argument=(
+                'scope_partition at :187 requires an application-scoped event to carry no '
+                'project_id, during append dedupe. The whole EventRecord validation later in '
+                'the same append (:473, via validate_event_record) bounds the identical '
+                'scope_kind/project_id pair by the identical predicate (application scope '
+                'requires a null project). With :187 cut, an application candidate carrying '
+                'a project still refuses there before any frame is written (the '
+                'scope_application_project chain witnesses exactly this), so :187 selects '
+                'the precise scope code and never gates acceptance alone.')),
+    ),
+    'dg5/site/pm_goal_test_storage.py:189': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3, follow-up 1 (pm-ea-lead 1121132345-c739), on FINAL-LIST-113.r4 '
+            '(sha256 6a2c1422...). Review S2-SURV '
+            '(event-authority-20261104/reviews/PROOF-REVIEW-R2/S2-SURV/REVIEW.md): UNSOUND, refuted premise. append '
+            'with project scope and project_id None or 7 (level 1): the cut is caught at :163 with '
+            "key/component_type; re-appending a stored event_id with project_id '' is caught at :1463 with "
+            'append/conflict/scoped_identity; :473 never runs. S2-SURV defects, recorded here (the withdrawn proof is '
+            'kept unchanged): depends_on names :473, which is not a goal_run.started row; and the goal.cancelled '
+            "proof of :163 depends on :189 while :189's non-string case is covered only by :163, so the two proofs "
+            'covered each other. This withdrawal ends that mutual cover: :189 now closes only by its own kill, and '
+            'the :163 proof (on neither final list) depends on a row that a kill must close. r4 why: addendum 7: '
+            'break is a note; SOUND survives a dispute. r4 route: kill: KILLED_CODE (addendum 10); cut refuses at '
+            ':163 / :1463 with other codes.'
+        ),
+        proof=dict(
+            kind='code-selection',
+            families=FAMILIES,
+            depends_on=[SITE + '473'],
+            sites=[(ST, 189), (ST, 473)],
+            argument=(
+                'scope_partition at :189 requires the candidate project_id to be a non-empty '
+                'string during append dedupe; the whole EventRecord validation later in the '
+                'same append (:473) bounds the identical project_id field by type string '
+                'plus minLength 1. With :189 cut, an empty project_id still refuses there '
+                'before any frame is written, so :189 selects the precise scope code and '
+                'never gates acceptance alone. It closes by this proof once :473 is closed.')),
     ),
 }
