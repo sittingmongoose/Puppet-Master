@@ -48,23 +48,64 @@ export default async function (t) {
 			const turn = Math.max(3, Math.min(12, Math.floor(range / 40) - 2));
 			await t.page.mouse.move(W - 6, Math.round(H / 2));
 			await t.page.waitForTimeout(2000);
-			const at = await f.evaluate(() => { const s = document.getElementById('pmuScroll'); s.scrollTop = 0; const p = document.querySelector('.page.active') || document.body, r = p.getBoundingClientRect(); return { x: Math.round(r.left + r.width / 2), y: Math.round(r.top + r.height * 0.55) }; });
+			const at = await f.evaluate(() => {
+				const pane = document.getElementById('pmuScroll');
+				pane.scrollTop = 0;
+				const page = (document.querySelector('.page.active') || document.body).getBoundingClientRect();
+				const bounds = pane.getBoundingClientRect();
+				return { x: Math.round(page.left + page.width / 2), y: Math.round(page.top + page.height * 0.55),
+					left: bounds.left, top: bounds.top };
+			});
 			await t.page.waitForTimeout(400);
-			await t.page.mouse.move(at.x, at.y);
+			const pane = await f.locator('#pmuScroll').boundingBox();
+			if (!pane || !await f.evaluate(({ x, y }) => document.elementFromPoint(x, y)?.closest('#pmuScroll')?.id === 'pmuScroll', at)) {
+				await t.check(name + ' ' + look + ': could judge: the centre pointer hits the Usage pane', false);
+				continue;
+			}
+			await t.page.mouse.move(at.x + pane.x - at.left, at.y + pane.y - at.top);
 			await t.page.waitForTimeout(600);
-			let ticks = 0, inputStart, lastWheelAck, inputEnd, tailEnd;
-			const x = await traceWindow(cdp, { ms: 1, url: f.url(), during: async () => {
-				inputStart = Date.now(); const until = inputStart + MS; let i = 0;
-				while (i < TICKS && Date.now() < until) {
-					await t.page.mouse.wheel(0, (Math.floor(i++ / turn) % 2 ? -1 : 1) * 40);
-					lastWheelAck = Date.now(); await new Promise((r) => setTimeout(r, 14));
-				}
-				ticks = i; inputEnd = Date.now(); await new Promise((r) => setTimeout(r, TAIL)); tailEnd = Date.now();
-			} });
+			await f.evaluate(() => {
+				const pane = document.getElementById('pmuScroll'), legs = [];
+				const wheel = (event) => {
+					if (!event.isTrusted || !event.deltaY) return;
+					const direction = Math.sign(event.deltaY);
+					let leg = legs.at(-1);
+					if (leg?.direction !== direction) {
+						if (leg) leg.end = pane.scrollTop;
+						leg = { direction, start: pane.scrollTop, wheels: 0 };
+						legs.push(leg);
+					}
+					leg.wheels++;
+				};
+				pane.addEventListener('wheel', wheel, { capture: true, passive: true });
+				window.__uhpPriceTravel = () => {
+					pane.removeEventListener('wheel', wheel, true);
+					if (legs.length) legs.at(-1).end = pane.scrollTop;
+					return legs;
+				};
+			});
+			let ticks = 0, inputStart, lastWheelAck, inputEnd, tailEnd, x, legs;
+			try {
+				x = await traceWindow(cdp, { ms: 1, url: f.url(), during: async () => {
+					inputStart = Date.now(); const until = inputStart + MS; let i = 0;
+					while (i < TICKS && Date.now() < until) {
+						await t.page.mouse.wheel(0, (Math.floor(i++ / turn) % 2 ? -1 : 1) * 40);
+						lastWheelAck = Date.now(); await new Promise((r) => setTimeout(r, 14));
+					}
+					ticks = i; inputEnd = Date.now(); await new Promise((r) => setTimeout(r, TAIL)); tailEnd = Date.now();
+				} });
+			} finally {
+				legs = await f.evaluate(() => window.__uhpPriceTravel());
+			}
+			const travelled = legs.length === Math.ceil(TICKS / turn) && legs.every((leg, i) => {
+				const requested = Math.min(turn, TICKS - i * turn);
+				return leg.direction === (i % 2 ? -1 : 1) && leg.wheels === requested &&
+					leg.direction * (leg.end - leg.start) >= requested * 40 * 0.6;
+			});
 			const sp = x.split, fr = x.frames;
-			const row = { look, name, load: n, ticks, secs: x.secs, dataLoss: x.dataLoss, main: Math.round(x.cost.main), paint: Math.round((sp.paint || 0) + (sp.prepaint || 0) + (sp.layerize || 0)), gpu: Math.round(x.cost.gpuMain), notPresented: fr.notPresentedPerSec, partial: fr.partialPerSec, unknown: fr.presentationUnknownPerSec, dropped: fr.droppedPerSec, drawn: x.drawn.perSec, scrolls: x.dispatched.scroll || 0, pointerover: x.dispatched.pointerover || 0 };
+			const row = { look, name, load: n, ticks, legs, travelled, secs: x.secs, dataLoss: x.dataLoss, main: Math.round(x.cost.main), paint: Math.round((sp.paint || 0) + (sp.prepaint || 0) + (sp.layerize || 0)), gpu: Math.round(x.cost.gpuMain), notPresented: fr.notPresentedPerSec, partial: fr.partialPerSec, unknown: fr.presentationUnknownPerSec, dropped: fr.droppedPerSec, drawn: x.drawn.perSec, scrolls: x.dispatched.scroll || 0, pointerover: x.dispatched.pointerover || 0 };
 			// Observation only: serial wheel acknowledgments, requested sleeps and trace event span have different clocks.
-			// Do not infer wheel duration from x.secs (the trace-wide event span); keep the original qualification unchanged.
+			// Do not infer wheel duration from x.secs (the trace-wide event span).
 			row.timing = { wheelAckMs: lastWheelAck - inputStart, inputLoopMs: inputEnd - inputStart,
 				tailMs: tailEnd - inputEnd, traceDuringMs: tailEnd - x.at };
 			out.push(row);
@@ -77,8 +118,8 @@ export default async function (t) {
 	const keys = ['main', 'paint', 'gpu', 'notPresented', 'partial', 'unknown', 'drawn'];
 	for (const look of looks) {
 		const rows = out.filter((r) => r.look === look);
-		const mean = (nm, k) => { const v = rows.filter((r) => r.name === nm).map((r) => r[k] || 0); return v.length ? Math.round(v.reduce((a, b) => a + b, 0) / v.length * 10) / 10 : null; };
+		const mean = (nm, k) => { const v = rows.filter((r) => r.name === nm && r.travelled && !r.dataLoss).map((r) => r[k] || 0); return v.length ? Math.round(v.reduce((a, b) => a + b, 0) / v.length * 10) / 10 : null; };
 		t.log(`${look} SUMMARY main -> pause (means): ` + keys.map((k) => `${k} ${mean('main', k)} -> ${mean('pause', k)}`).join(', '));
-		await t.check(`${look}: could judge: every window scrolled its ${TICKS} ticks and each trace is whole`, rows.length === order.length && rows.every((r) => r.ticks === TICKS && r.scrolls > 0 && !r.dataLoss), rows.map((r) => `${r.name} ${r.ticks} ticks ${r.scrolls} scrolls${r.dataLoss ? ' lost data' : ''}`).join(', '));
+		await t.check(`${look}: could judge: every window scrolled its ${TICKS} ticks and each trace is whole`, rows.length === order.length && rows.every((r) => r.ticks === TICKS && r.travelled && r.scrolls > 0 && !r.dataLoss), rows.map((r) => `${r.name} ${r.ticks} ticks ${r.scrolls} scrolls${r.dataLoss ? ' lost data' : ''}`).join(', '));
 	}
 }

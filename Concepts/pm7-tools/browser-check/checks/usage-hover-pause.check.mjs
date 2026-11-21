@@ -90,12 +90,18 @@ export const INSTALL = () => {
 	// the engine's in a frame, so a frame sample sees a light one frame after the frame that drew it)
 	new MutationObserver((ms) => {
 		if (!R.on) return; const now = performance.now(), live = document.getElementById('pmuBoard');
+		const changes = ms.filter((m) => m.target === live && m.attributeName === 'data-op');
+		let next = 0;
 		for (const m of ms) {
-			if (m.target === live && m.attributeName === 'data-op') R.ops.push({t:now,op:live.getAttribute('data-op')});
+			if (m === changes[next]) {
+				const following = changes[++next];
+				const op = following ? following.oldValue : live.getAttribute('data-op');
+				if (op !== m.oldValue) R.ops.push({ t: now, op });
+			}
 			if(m.attributeName==='class'&&m.target.matches?.('.pmu-irow.is-hl-on,.pmu-dl-row.is-hot'))R.chartRows.add(m.target);
 			if (m.attributeName === 'class' && m.target.parentNode === live && m.target.classList.contains('pmu-card')) R.cls.push({ t: now, card: cardId(m.target), on: m.target.classList.contains('pmh-on') });
 		}
-	}).observe(sc, { attributes: true, attributeFilter: ['class','data-op'], subtree: true });
+	}).observe(sc, { attributes: true, attributeFilter: ['class','data-op'], attributeOldValue: true, subtree: true });
 	R.start = () => {
 		const tools = document.querySelector('#pmuBoard .pmu-card:hover .pmu-cardtools');
 		const fadeMs = tools ? Math.max(...getComputedStyle(tools).transitionDuration.split(',').map((v) => parseFloat(v) * (v.trim().endsWith('ms') ? 1 : 1000))) : 140;

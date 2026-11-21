@@ -50,7 +50,8 @@ const windowStub = {
 };
 globalThis.window = windowStub;
 globalThis.document = { getElementById: (id) => (id === 'pmuScroll' ? sc : id === 'pmuBoard' ? board : null), querySelector: () => null, querySelectorAll: () => [] };
-globalThis.MutationObserver = function () { this.observe = () => {}; this.disconnect = () => {}; this.takeRecords = () => []; };
+let observeMutations;
+globalThis.MutationObserver = function (callback) { observeMutations = callback; this.observe = () => {}; this.disconnect = () => {}; this.takeRecords = () => []; };
 globalThis.requestAnimationFrame = () => 0;
 const dispatch = (type) => {
 	const e = { type, target: sc };
@@ -109,6 +110,15 @@ assert.equal(v.r2.end, release.t - Math.max(...R.wheels, ...R.scrolls), 'sanity:
 assert.ok(v.r2.end >= 200, `the pause ended ${v.r2.end} ms after the last input`);
 assert.ok(v.r2.late <= 2, `the host was not late (${v.r2.late} ms); the page's fit is not queue delay (${summary})`);
 assert.equal(v.r2.ok, false, 'a page that returns 60 ms after its own rest is late, not excused by that work');
+
+// The observer receives a single batch for two marker transitions with the same final DOM value.
+board.getAttribute = () => 'wheel';
+R.ops = [];
+observeMutations([
+	{ target: board, attributeName: 'data-op', oldValue: 'wheel' },
+	{ target: board, attributeName: 'data-op', oldValue: null }
+]);
+assert.deepEqual(R.ops.map(({ op }) => op), [null, 'wheel'], 'a clear and re-arm within one task cannot hide the gap');
 
 globalThis.setTimeout = realSetTimeout;
 globalThis.clearTimeout = realClearTimeout;

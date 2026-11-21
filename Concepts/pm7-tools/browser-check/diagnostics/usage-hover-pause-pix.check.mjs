@@ -12,7 +12,7 @@
 // varies between its loads (the title bar's notification ticker, the status bar, a pill's live count), only the 16 px
 // cells it holds still in are judged (tools/usage-hover-pause-pix-judge.mjs), over the whole frame and inside the board's
 // pane (#pmuScroll, the pause's scope). Shots are taken with Playwright's animations disabled. Shots and heat maps go to
-// --set shots=<dir>. Asserts only that each load came up.
+// --set shots=<dir>. Requires the named hit-tested states and actual travel of the Usage pane.
 //   NODE_OPTIONS=--max-old-space-size=8192 browser-check run diagnostics/usage-hover-pause-pix.check.mjs --host alexis \
 //     --set page=http://192.168.50.179:18644/vh-<n>.html --set main=http://192.168.50.179:18644/vh-main.html \
 //     --set sandbox=0|1 --set shots=<dir> --out <run folder>   [--set looks=...] [--set rm=1] [--set fixed=0]
@@ -32,6 +32,7 @@ export default async function (t) {
 	if (String(t.args.rm || '') === '1') await t.emulate({ reducedMotion: 'reduce' });
 	if (String(t.args.fixed ?? '1') !== '0') await t.page.context().clock.setFixedTime(new Date('2026-11-17T15:00:00-05:00'));
 	const pages = [['A1', String(t.args.main)], ['B', String(t.args.page)], ['A2', String(t.args.main)]];
+	const states = ['park0', 'hover0', 'back0', 'park300'];
 	const shots = {};   // `${look}|${state}` -> { A1, B, A2 }
 	const boards = {};  // look -> the board pane's rect in the screenshot (#pmuScroll)
 	let n = 0;
@@ -62,23 +63,66 @@ export default async function (t) {
 			await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 }).catch(() => {});
 			await f.evaluate(() => PM_PAGES.go('usage'));
 			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 8000));
-			const at = await f.evaluate(() => { const s = document.getElementById('pmuScroll'); s.scrollTop = 0; const p = document.querySelector('.page.active') || document.body, r = p.getBoundingClientRect(), q = s.getBoundingClientRect(); return { x: Math.round(r.left + r.width / 2), y: Math.round(r.top + r.height * 0.55), board: [q.left, q.top, q.right, q.bottom].map(Math.round) }; });
-			const fe = f === t.page.mainFrame() ? null : await f.frameElement().catch(() => null), off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
-			boards[look] = [at.board[0] + off.x, at.board[1] + off.y, at.board[2] + off.x, at.board[3] + off.y].map(Math.round);
-			await park(); await t.page.waitForTimeout(2600); await shot(`${look}|park0`);
-			await t.page.mouse.move(at.x, at.y, { steps: 6 }); await t.page.waitForTimeout(1500); await shot(`${look}|hover0`);
-			for (let i = 0; i < 24; i++) { await t.page.mouse.wheel(0, i < 12 ? 40 : -40); await t.page.waitForTimeout(30); }
-			await t.page.waitForTimeout(900); await shot(`${look}|back0`);
-			await park(); await f.evaluate(() => { document.getElementById('pmuScroll').scrollTop = 300; }); await t.page.waitForTimeout(2600); await shot(`${look}|park300`);
+			const at = await f.evaluate(() => {
+				const pane = document.getElementById('pmuScroll');
+				pane.scrollTop = 0;
+				const page = (document.querySelector('.page.active') || document.body).getBoundingClientRect();
+				const q = pane.getBoundingClientRect();
+				return { x: Math.round(page.left + page.width / 2), y: Math.round(page.top + page.height * 0.55),
+					board: [q.left, q.top, q.right, q.bottom] };
+			});
+			const pane = await f.locator('#pmuScroll').boundingBox();
+			if (!pane) {
+				await t.check(tag + ' ' + look + ': could judge the Usage pane is visible', false);
+				continue;
+			}
+			const dx = pane.x - at.board[0], dy = pane.y - at.board[1];
+			boards[look] = at.board.map((edge, i) => Math.round(edge + (i % 2 ? dy : dx)));
+			const read = () => f.evaluate(({ x, y }) => {
+				const pane = document.getElementById('pmuScroll'), board = document.getElementById('pmuBoard');
+				const hit = document.elementFromPoint(x, y), card = hit?.closest('.pmu-card');
+				return { top: pane.scrollTop, range: pane.scrollHeight - pane.clientHeight, inPane: pane.contains(hit),
+					card: card?.parentNode === board && card.matches(':hover') ? card.dataset.widget : null };
+			}, at);
+			const capture = async (state, qualified, evidence) => {
+				if (qualified) await shot(look + '|' + state);
+				else await t.check(tag + ' ' + look + ' ' + state + ': could judge the Usage capture', false, JSON.stringify(evidence));
+			};
+			await park(); await t.page.waitForTimeout(2600);
+			const parked = await read();
+			await capture('park0', parked.inPane && parked.top === 0 && !parked.card, parked);
+
+			await t.page.mouse.move(at.x + dx, at.y + dy, { steps: 6 }); await t.page.waitForTimeout(1500);
+			const hover = await read();
+			await capture('hover0', !!hover.card && hover.top === 0, hover);
+			let down, back;
+			if (hover.card) {
+				for (const direction of [1, -1]) {
+					for (let i = 0; i < 12; i++) { await t.page.mouse.wheel(0, direction * 40); await t.page.waitForTimeout(30); }
+					if (direction === 1) down = await read();
+				}
+				await t.page.waitForTimeout(900);
+				back = await read();
+			}
+			const travel = Math.min(hover.range, 12 * 40) * 0.6;
+			await capture('back0', !!hover.card && back?.card === hover.card && travel > 0 &&
+				down.top - hover.top >= travel && down.top - back.top >= travel && Math.abs(back.top - hover.top) <= 1,
+				{ hover, down, back });
+			await park(); await f.evaluate(() => { document.getElementById('pmuScroll').scrollTop = 300; }); await t.page.waitForTimeout(2600);
+			const away = await read();
+			await capture('park300', away.inPane && Math.abs(away.top - 300) <= 1 && !away.card, away);
 		}
 		await cdp.send('Animation.disable').catch(() => {});
 		await cdp.detach().catch(() => {});
-		await t.check(`${tag}: ${base} loaded and shot ${looks.length * 4} states`, looks.every((l) => shots[`${l}|park300`] && shots[`${l}|park300`][tag]));
+		await t.check(`${tag}: ${base} loaded and shot ${looks.length * 4} states`, looks.every((look) => states.every((state) => shots[look + '|' + state]?.[tag])));
 	}
 	const surface = sandbox ? 'sandbox' : 'normal', rows = [];
-	for (const [key, s] of Object.entries(shots)) {
-		if (!s.A1 || !s.B || !s.A2) continue;
-		const [look, state] = key.split('|'), name = `${surface}-${look}-${state}`;
+	for (const look of looks) for (const state of states) {
+		const s = shots[look + '|' + state], name = [surface, look, state].join('-');
+		if (!s?.A1 || !s.B || !s.A2) {
+			rows.push({ surface, look, state, error: 'unqualified capture' });
+			continue;
+		}
 		const drift = diffPng(s.A1, s.A2), d = diffPng(s.A1, s.B), d2 = diffPng(s.A2, s.B);
 		const judged = drift.rawDiffPixels === 0;
 		writeFileSync(path.join(dir, `${name}-A1.png`), s.A1);
