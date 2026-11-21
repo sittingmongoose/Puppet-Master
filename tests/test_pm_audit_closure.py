@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import contextlib
 import copy
 import importlib.util
@@ -12,8 +13,11 @@ import sys
 import tempfile
 import time
 import unittest
+from collections.abc import Callable
 from pathlib import Path
 from unittest.mock import patch
+
+import pytest
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -31,6 +35,20 @@ STATUS_INDEX_SPEC.loader.exec_module(pm_audit_status_index)
 
 def write_jsonl(path: Path, rows: list[dict]) -> None:
     path.write_text("".join(json.dumps(row, sort_keys=True) + "\n" for row in rows), encoding="utf-8")
+
+
+def test_owner_answer_signature_matches_the_committed_ed25519_key() -> None:
+    serialization = pytest.importorskip("cryptography.hazmat.primitives.serialization")
+    ed25519 = pytest.importorskip("cryptography.hazmat.primitives.asymmetric.ed25519")
+    decisions = ROOT / "Plans/.audits/closure-reaudit-20261104/decisions"
+    answer = json.loads((decisions / "vm.pm-closure-lead--C-FP2-SPLIT.json").read_bytes())
+    signature = answer.pop("signature")
+    assert signature["alg"] == "ed25519"
+    assert signature["keyId"] == "c112b38be1d32ea0"
+    key = serialization.load_pem_public_key((decisions / "c112b38be1d32ea0.pub").read_bytes())
+    assert isinstance(key, ed25519.Ed25519PublicKey)
+    payload = json.dumps(answer, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+    key.verify(base64.b64decode(signature["value"], validate=True), payload)
 
 
 def refs(audit_id: str = "audit-terminal", ledger_id: str = "pldg-test") -> dict[str, str]:
@@ -195,13 +213,13 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
         self.git("commit", "-qm", message)
         return self.git("rev-parse", "HEAD")
 
-    def prepare_record(self) -> None:
+    def prepare_record(self, *, configure: Callable[[dict, dict], None] | None = None, line: int = 1) -> None:
         commit = self.commit("recheck state")
         resolver = pm_audit_closure.AnchorResolver(self.root)
         record = {
             "schema_id": pm_audit_closure.REAUDIT_RECORD_SCHEMA,
             "reaudit_id": "reaudit-fixture", "closure_id": self.target["closure_id"],
-            "line": 1, "row_sha256": pm_audit_closure.sha256_text(pm_audit_closure.raw_registry_lines(self.registry)[1]),
+            "line": line, "row_sha256": pm_audit_closure.sha256_text(pm_audit_closure.raw_registry_lines(self.registry)[line]),
             "recheck_commit": commit, "verdict": "supported",
             "claim": "The registry fixture repair is present.",
             "rationale": "The registry row states the fixture repair.",
@@ -211,7 +229,7 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
             "stale_hashes_at_recheck": [], "stale_ref_dispositions": [], "fix": None,
         }
         packet = {
-            "line": 1, "closure_id": record["closure_id"], "row_sha256": record["row_sha256"],
+            "line": line, "closure_id": record["closure_id"], "row_sha256": record["row_sha256"],
             "recheck_commit": commit, "claim": {k: v for k, v in self.target.items() if k != "hashes"},
             "dependency_anchors": [{"ref": self.anchor, "sha256": resolver.sha256(self.anchor),
                                     "text": resolver.content(self.anchor)[1], "truncated": False}],
@@ -221,7 +239,7 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
         write_jsonl(packet_path, [packet])
         reviews = {}
         for who in pm_audit_closure.REAUDIT_REVIEWERS:
-            judged = {"line": 1, "closure_id": record["closure_id"], "verdict": "supported"}
+            judged = {"line": line, "closure_id": record["closure_id"], "verdict": "supported"}
             if who == "worker":
                 judged.update({k: record.get(k) for k in pm_audit_closure.REAUDIT_WORKER_FIELDS})
                 judged.update({k: record[k] for k in (
@@ -239,14 +257,360 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
                               packet_sha256=pm_audit_closure.sha256_file(packet_path))
             reviews[who] = review
         record["reviews"] = reviews
+        if configure is not None:
+            configure(record, packet)
         write_jsonl(self.records, [record])
         self.commit("reviewed receipts")
+
+    def prepare_owner_split(
+        self, *, outcome: str = "supported", worker: str = "supported",
+        sol: str = "not_supported", astra: str = "supported",
+        sol_status: str | None = None, astra_status: str | None = None,
+        include_decision: bool = True, decision_changes: dict | None = None,
+        answer_changes: dict | None = None, missing_split_field: str | None = None,
+        tamper_file: str | None = None, bad_digest_echo: bool = False,
+        bad_split_encoding: bool = False,
+        split_changes: Callable[[dict], None] | None = None,
+        assembled_worker: str | None = None, initial_without_verdict: bool = False,
+        split_packet_earlier_commit: bool = False,
+        scope: str | list[int] = "standing",
+    ) -> None:
+        m = pm_audit_closure
+        card_id = "fixture-split"
+        decision = {"card_id": card_id, "rule": "split_majority_of_three", "choice": "B"}
+        pins = {"rule": decision["rule"], "choice": "B", "scope": scope}
+        card = {"id": card_id, "seq": 3, "options": [{"key": "B"}]}
+        answer = {"cardId": card_id, "cardSeq": 2, "kind": "answer", "choice": ["B"], "answeredBy": "owner"}
+        answer.update(answer_changes or {})
+        for kind, data in (("card", json.dumps(card)), ("answer", json.dumps(answer)), ("key", "fixture key")):
+            path = self.audit_dir / f"decision-{kind}"
+            path.write_text(data, encoding="utf-8")
+            digest = m.sha256_file(path)
+            pins[f"{kind}_sha256"] = digest
+            decision.update({f"{kind}_path": m.rel(path), f"{kind}_sha256": digest})
+            if kind == tamper_file:
+                path.write_text(data + "\n", encoding="utf-8")
+        decision.update(decision_changes or {})
+        pins_patch = patch.dict(m.OWNER_DECISIONS, {card_id: pins})
+        pins_patch.start()
+        self.addCleanup(pins_patch.stop)
+
+        def configure(record: dict, packet: dict) -> None:
+            worker_review = record["reviews"]["worker"]
+            worker_path = self.root / worker_review["evidence_path"]
+            source = dict(json.loads(worker_path.read_bytes()), verdict=worker, status_now=None)
+            source_path = self.audit_dir / "worker-source.jsonl"
+            write_jsonl(source_path, [source])
+            worker_review.update(source_path=m.rel(source_path), source_sha256=m.sha256_file(source_path))
+            earlier = [dict(reading="A", verdict=source["verdict"], status_now=source["status_now"],
+                            rationale=source["rationale"])]
+            for role, who, vote in (("C", "sol", "not_supported"), ("D", "astra", "supported")):
+                initial = self.audit_dir / f"initial-{who}.jsonl"
+                output = self.root / record["reviews"][who]["evidence_path"]
+                source_vote = dict(json.loads(output.read_bytes()), verdict=vote, reason=f"Initial reading from {who}.")
+                earlier.append(dict(reading=role, verdict=source_vote["verdict"], reason=source_vote["reason"]))
+                if who == "sol" and initial_without_verdict:
+                    source_vote.pop("verdict")
+                write_jsonl(initial, [source_vote])
+                record["reviews"][who].update(initial_evidence_path=m.rel(initial),
+                                              initial_evidence_sha256=m.sha256_file(initial))
+            split = {key: packet[key] for key in ("line", "closure_id", "recheck_commit", "packet_row_digest")}
+            split.update(split_id="fixture-1", packet_row=dict(packet, held_line=1), readings=earlier,
+                         anchors_at_R=copy.deepcopy(packet["dependency_anchors"]))
+            if split_changes:
+                split_changes(split)
+            split["split_row_digest"] = m.sha256_text(m.canonical_json(split))
+            split_path = self.audit_dir / "split-packet.jsonl"
+            write_jsonl(split_path, [split])
+            if bad_split_encoding:
+                split_path.write_bytes(b"\xff")
+            if split_packet_earlier_commit:
+                self.git("add", "--", m.rel(split_path))
+                self.git("commit", "-qm", "isolated split packet")
+            for who, vote, status in (("worker", assembled_worker or worker, None),
+                                      ("sol", sol, sol_status), ("astra", astra, astra_status)):
+                review = record["reviews"][who]
+                path = self.root / review["evidence_path"]
+                judged = json.loads(path.read_bytes())
+                if who != "worker":
+                    split_fields = {key: split[key] for key in ("split_id", "split_row_digest")}
+                    judged.update(split_fields)
+                    review.update(split_fields, split_packet_path=m.rel(split_path),
+                                  split_packet_sha256=m.sha256_file(split_path))
+                    if who == "sol" and missing_split_field:
+                        review.pop(missing_split_field)
+                    if who == "sol" and bad_digest_echo:
+                        judged["split_row_digest"] = "a" * 64
+                judged.update(verdict=vote, status_now=status)
+                write_jsonl(path, [judged])
+                review.update(verdict=vote, evidence_sha256=m.sha256_file(path))
+            record.update(verdict=outcome, rationale="The owner rule settles the split receipts.",
+                          fix={"description": "Recheck the unresolved fixture requirement."} if outcome == "not_supported" else None)
+            if include_decision:
+                record["owner_decision"] = decision
+
+        self.prepare_record(configure=configure)
+
+    def assert_owner_split_result(self, expected_error: str | None = None) -> None:
+        before = self.registry.read_bytes()
+        code, report = self.append(dry_run=True)
+        self.assertEqual(self.registry.read_bytes(), before)
+        if expected_error:
+            self.assertNotEqual(code, 0, report)
+            self.assertTrue(any(expected_error in error for error in report["errors"]), report)
+        else:
+            self.assertEqual((code, report["would_append"], report["errors"]), (0, 1, []), report)
+
+    def test_owner_majority_of_two_supported_readings_passes(self) -> None:
+        self.prepare_owner_split()
+        self.assert_owner_split_result()
+
+    def test_owner_record_cannot_take_the_minority_reading(self) -> None:
+        self.prepare_owner_split(outcome="not_supported")
+        self.assert_owner_split_result("split majority reading")
+
+    def test_owner_three_distinct_readings_pass_when_reopened(self) -> None:
+        self.prepare_owner_split(outcome="not_supported", sol="resolved_differently", sol_status="stale_retired",
+                                 astra="not_supported")
+        self.assert_owner_split_result()
+
+    def test_owner_three_distinct_readings_fail_if_kept_closed(self) -> None:
+        self.prepare_owner_split(sol="resolved_differently", sol_status="stale_retired", astra="not_supported")
+        self.assert_owner_split_result("split has no majority")
+
+    def test_owner_same_verdict_with_different_statuses_is_no_majority(self) -> None:
+        self.prepare_owner_split(outcome="not_supported", sol="resolved_differently", sol_status="stale_retired",
+                                 astra="resolved_differently", astra_status="false_positive")
+        self.assert_owner_split_result()
+
+    def test_owner_card_bytes_must_match_the_pinned_hash(self) -> None:
+        self.prepare_owner_split(tamper_file="card")
+        self.assert_owner_split_result("owner_decision.card_path: file SHA-256")
+
+    def test_owner_answer_bytes_must_match_the_pinned_hash(self) -> None:
+        self.prepare_owner_split(tamper_file="answer")
+        self.assert_owner_split_result("owner_decision.answer_path: file SHA-256")
+
+    def test_owner_key_bytes_must_match_the_pinned_hash(self) -> None:
+        self.prepare_owner_split(tamper_file="key")
+        self.assert_owner_split_result("owner_decision.key_path: file SHA-256")
+
+    def test_owner_answer_cannot_name_another_card_even_if_pinned(self) -> None:
+        self.prepare_owner_split(answer_changes={"cardId": "another-card"})
+        self.assert_owner_split_result("answer.cardId must equal card.id")
+
+    def test_owner_card_must_be_pinned(self) -> None:
+        self.prepare_owner_split(decision_changes={"card_id": "unreviewed"})
+        self.assert_owner_split_result("unpinned card or choice")
+
+    def test_owner_choice_must_be_pinned(self) -> None:
+        self.prepare_owner_split(decision_changes={"choice": "A"})
+        self.assert_owner_split_result("unpinned card or choice")
+
+    def test_owner_decision_cannot_be_used_outside_pinned_scope(self) -> None:
+        self.prepare_owner_split(scope=[2])
+        self.assert_owner_split_result("pinned scope does not cover closure line 1")
+
+    def test_owner_split_receipt_must_reference_initial_evidence(self) -> None:
+        self.prepare_owner_split(missing_split_field="initial_evidence_sha256")
+        self.assert_owner_split_result("needs initial_evidence_path")
+
+    def test_owner_split_output_must_echo_the_split_row_digest(self) -> None:
+        self.prepare_owner_split(bad_digest_echo=True)
+        self.assert_owner_split_result("must bind the same split id and row digest")
+
+    def test_owner_split_packet_with_a_matching_hash_must_still_be_readable(self) -> None:
+        self.prepare_owner_split(bad_split_encoding=True)
+        self.assert_owner_split_result("split_packet file cannot be read as UTF-8 JSONL")
+
+    def test_owner_split_packet_must_include_the_three_earlier_readings(self) -> None:
+        def omit_readings(split: dict) -> None:
+            split.pop("readings")
+
+        self.prepare_owner_split(split_changes=omit_readings)
+        self.assert_owner_split_result("split packet must carry one earlier reading each")
+
+    def test_owner_split_packet_may_include_a_preliminary_reading_alongside_bound_readings(self) -> None:
+        def add_preliminary(split: dict) -> None:
+            split["readings"].insert(1, {"reading": "B", "verdict": "not_supported", "reason": "Preliminary reading."})
+
+        self.prepare_owner_split(split_changes=add_preliminary)
+        self.assert_owner_split_result()
+
+    def test_owner_earlier_reading_must_match_its_initial_judgment(self) -> None:
+        self.prepare_owner_split(split_changes=lambda split: split["readings"][1].update(
+            verdict="supported", status_now="repaired", later_closure_id="another-closure", reason="Different reason.",
+        ))
+        self.assert_owner_split_result("earlier reading C must match the committed sol judgment and reason")
+
+    def test_owner_initial_receipt_must_be_a_judgment_with_a_verdict(self) -> None:
+        self.prepare_owner_split(initial_without_verdict=True)
+        self.assert_owner_split_result("initial evidence must carry a judgment verdict")
+
+    def test_owner_assembled_worker_cannot_change_the_worker_vote_after_the_split(self) -> None:
+        self.prepare_owner_split(worker="not_supported", assembled_worker="supported")
+        self.assert_owner_split_result("assembled worker judgment or reason differs from the committed worker source")
+
+    def test_owner_split_anchor_must_be_in_the_record_snapshot(self) -> None:
+        self.prepare_owner_split(split_changes=lambda split: split["anchors_at_R"][0].update(
+            ref="Plans/Fixture.md#section=Added for the split",
+        ))
+        self.assert_owner_split_result("split packet showed 'Plans/Fixture.md#section=Added for the split' at a different snapshot")
+
+    def test_owner_split_anchor_hash_must_match_the_record_snapshot(self) -> None:
+        self.prepare_owner_split(split_changes=lambda split: split["anchors_at_R"][0].update(sha256="a" * 64))
+        self.assert_owner_split_result(f"split packet showed {self.anchor!r} at a different snapshot")
+
+    def test_owner_split_anchor_text_must_match_the_recheck_commit(self) -> None:
+        self.prepare_owner_split(split_changes=lambda split: split["anchors_at_R"][0].update(text="Invented text."))
+        self.assert_owner_split_result(f"split packet text for {self.anchor} is not that anchor's text at recheck_commit")
+
+    def test_owner_split_anchor_may_show_a_flagged_prefix(self) -> None:
+        def truncate(split: dict) -> None:
+            anchor = split["anchors_at_R"][0]
+            anchor.update(text=anchor["text"][:20], truncated=True)
+
+        self.prepare_owner_split(split_changes=truncate)
+        self.assert_owner_split_result()
+
+    def test_owner_split_packet_and_output_must_be_added_in_the_same_commit(self) -> None:
+        self.prepare_owner_split(split_packet_earlier_commit=True)
+        self.assert_owner_split_result("split packet and split output were not committed together")
+
+    def test_owner_decision_cannot_be_attached_to_unanimous_readings(self) -> None:
+        self.prepare_owner_split(sol="supported")
+        self.assert_owner_split_result("all three readings agree")
+
+    def test_owner_rule_requires_disagreement_between_deep_reviewers(self) -> None:
+        self.prepare_owner_split(worker="not_supported", sol="supported")
+        self.assert_owner_split_result("disagreement between the split reviewers")
+
+    def test_disagreement_still_fails_without_an_owner_decision(self) -> None:
+        self.prepare_owner_split(include_decision=False)
+        self.assert_owner_split_result("reviews.sol.verdict must equal the record verdict")
 
     def append(self, *, dry_run: bool = False) -> tuple[int, dict]:
         args = argparse.Namespace(registry=str(self.registry), records=str(self.records), only="", dry_run=dry_run)
         with contextlib.redirect_stdout(io.StringIO()) as output:
             code = pm_audit_closure.cmd_reaudit_append(args)
         return code, json.loads(output.getvalue())
+
+    def prepare_currentness_split(self, *, snapshot_conflict: bool = False) -> tuple[Path, str, Path]:
+        m = pm_audit_closure
+        extra = self.audit_dir / "split-only.json"
+        extra.write_text('{"evidence": "Additional evidence shown in the split round."}\n', encoding="utf-8")
+        extra_ref = m.rel(extra) + "#json=/evidence"
+        path = self.audit_dir / "currentness-split-packet.jsonl"
+
+        def configure(record: dict, packet: dict) -> None:
+            target = {key: record[key] for key in ("line", "closure_id")}
+            shared = copy.deepcopy(packet["dependency_anchors"])
+            additional = {"ref": extra_ref, "sha256": m.AnchorResolver().sha256(extra_ref)}
+            astra_anchors = copy.deepcopy(shared) + [additional]
+            if snapshot_conflict:
+                astra_anchors[0]["sha256"] = "a" * 64
+            write_jsonl(path, [
+                dict(target, split_id="earlier-round", anchors_at_R=[dict(additional, sha256="b" * 64)]),
+                dict(target, split_id="sol-bound", anchors_at_R=shared),
+                dict(target, split_id="astra-bound", anchors_at_R=astra_anchors),
+            ])
+            digest = m.sha256_file(path)
+            for who in ("sol", "astra"):
+                record["reviews"][who].update(split_id=f"{who}-bound", split_packet_path=m.rel(path),
+                                              split_packet_sha256=digest)
+
+        self.prepare_record(configure=configure)
+        return extra, extra_ref, path
+
+    def test_split_only_anchor_is_current_after_append(self) -> None:
+        self.prepare_currentness_split()
+        code, appended = self.append()
+        self.assertEqual((code, appended["appended"], appended["errors"]), (0, 1, []), appended)
+        report = pm_audit_closure.validate_registry(self.registry)
+        self.assertEqual(report["errors"], [])
+        self.assertEqual(report["unsuperseded_stale_hash_count"], 0)
+
+    def test_moved_split_only_anchor_is_stale_and_held_back_on_append(self) -> None:
+        m = pm_audit_closure
+        extra, ref, _ = self.prepare_currentness_split()
+        stored = m.AnchorResolver().sha256(ref)
+        before = self.registry.read_bytes()
+        code, appended = self.append()
+        self.assertEqual((code, appended["appended"]), (0, 1), appended)
+        extra.write_text('{"evidence": "Changed since the split review."}\n', encoding="utf-8")
+        current = m.AnchorResolver().sha256(ref)
+        report = m.validate_registry(self.registry)
+        self.assertEqual(report["errors"], [
+            f"{self.registry_ref}:2: split_anchor_hashes for {ref} is stale (stored {stored}, current {current})",
+        ])
+        self.assertEqual(report["unsuperseded_stale_hash_count"], 1)
+        self.registry.write_bytes(before)
+        code, held = self.append()
+        self.assertEqual((code, held["would_append"], held["appended"], held["errors"]), (0, 0, 0, []), held)
+        self.assertEqual(held["moved_since_recheck"], [{
+            "closure_id": self.target["closure_id"], "line": 1,
+            "changed_anchors": {ref: {"at_recheck": stored, "now": current}},
+        }])
+        self.assertEqual(self.registry.read_bytes(), before)
+
+    def test_unresolvable_split_only_anchor_is_stale_and_held_back(self) -> None:
+        extra, ref, _ = self.prepare_currentness_split()
+        before = self.registry.read_bytes()
+        code, appended = self.append()
+        self.assertEqual((code, appended["appended"]), (0, 1), appended)
+        extra.write_text("{}\n", encoding="utf-8")
+        report = pm_audit_closure.validate_registry(self.registry)
+        self.assertEqual(report["unsuperseded_stale_hash_count"], 1)
+        self.assertTrue(report["errors"][0].startswith(
+            f"{self.registry_ref}:2: split_anchor_hashes anchor {ref} no longer resolves: "
+        ), report)
+        self.registry.write_bytes(before)
+        code, held = self.append(dry_run=True)
+        self.assertEqual((code, held["would_append"], held["errors"]), (0, 0, []), held)
+        self.assertTrue(held["moved_since_recheck"][0]["changed_anchors"][ref]["now"].startswith("unresolved:"))
+
+    def test_split_anchor_must_agree_with_the_snapshot(self) -> None:
+        self.prepare_currentness_split(snapshot_conflict=True)
+        self.assert_owner_split_result(f"record.reviews.astra split_packet has a conflicting hash for {self.anchor}")
+
+    def test_split_packet_file_must_match_receipt_hash(self) -> None:
+        _, _, path = self.prepare_currentness_split()
+        before = self.registry.read_bytes()
+        code, appended = self.append()
+        self.assertEqual((code, appended["appended"]), (0, 1), appended)
+        with path.open("a", encoding="utf-8") as output:
+            output.write("\n")
+        report = pm_audit_closure.validate_registry(self.registry)
+        self.assertTrue(any("split_packet file is missing or its SHA-256 differs" in error
+                            for error in report["errors"]), report)
+        self.registry.write_bytes(before)
+        self.assert_owner_split_result("split_packet file is missing or its SHA-256 differs")
+
+    def test_superseded_split_round_is_exempt_from_split_currentness(self) -> None:
+        extra, _, path = self.prepare_currentness_split()
+        code, appended = self.append()
+        self.assertEqual((code, appended["appended"]), (0, 1), appended)
+        extra.write_text('{"evidence": "Changed since the split review."}\n', encoding="utf-8")
+        self.target = json.loads(self.registry.read_bytes().splitlines()[-1])
+        self.audit_dir = self.audit_dir.parent / "successor"
+        self.audit_dir.mkdir()
+        self.records = self.audit_dir / "records.jsonl"
+        self.prepare_record(line=2)
+        code, appended = self.append()
+        self.assertEqual((code, appended["appended"]), (0, 1), appended)
+        with path.open("a", encoding="utf-8") as output:
+            output.write("\n")
+        report = pm_audit_closure.validate_registry(self.registry)
+        self.assertEqual(report["errors"], [])
+        self.assertEqual(report["superseded_lines"], [1, 2])
+        self.assertEqual(report["unsuperseded_stale_hash_count"], 0)
+
+    def test_record_without_split_receipts_ignores_unbound_packet(self) -> None:
+        (self.audit_dir / "unbound-split-packet.jsonl").write_text("Invalid JSON.\n", encoding="utf-8")
+        self.prepare_record()
+        code, appended = self.append()
+        self.assertEqual((code, appended["appended"], appended["errors"]), (0, 1, []), appended)
+        self.assertEqual(pm_audit_closure.validate_registry(self.registry)["errors"], [])
 
     def test_self_anchor_is_current_after_append(self) -> None:
         self.prepare_record()
