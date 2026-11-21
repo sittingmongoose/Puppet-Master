@@ -412,8 +412,8 @@ export default async function (t) {
 				await f.locator('.pmw-tab').filter({ hasText: 'Agents' }).first().click();
 				await t.page.waitForTimeout(800);
 			}
+			await f.evaluate(() => { window.__stillInputs = []; window.__stillOnAt = null; window.__stillTogglePopulation = null; });
 			await move();
-			await f.evaluate(() => { window.__stillInputs = []; window.__stillOnAt = null; });
 			const t0 = Date.now();
 			await t.page.waitForTimeout(Math.min(1500, after / 2));
 
@@ -431,10 +431,7 @@ export default async function (t) {
 			const stillNow = () => f.evaluate(() => document.documentElement.hasAttribute('data-pm-still'));
 			await t.page.waitForTimeout(Math.max(0, after - 400 - (Date.now() - t0)));
 			let tg = null, toggleMiss = null;
-			if (await stillNow()) {
-				const onAt = await f.evaluate(() => window.__stillOnAt);
-				toggleMiss = `the page was already still when the trace was to start${onAt == null ? '' : ` (data-pm-still at ${Math.round(onAt)} ms)`}`;
-			}
+			if (await stillNow()) toggleMiss = 'the page was already still when the trace was to start';
 			else {
 				tg = await traceToggle({ ms: 0, url, during: async () => {
 					const w = await waitStill(stillNow, { waitMs: toggleWait });
@@ -454,6 +451,9 @@ export default async function (t) {
 			await t.check(`${at}: no endless animation runs while still`, a.run.length === 0, a.run.length ? `${a.run.length} running: ${a.run.slice(0, 6).join('; ')}` : `${a.held} held, ${a.marks} elements marked${a.exempt.length ? `, exempt: ${a.exempt.join('; ')}` : ''}`);
 			await t.check(`${at}: every mark holds an endless loop (no stray mark)`, a.stray.length === 0, a.stray.length ? a.stray.slice(0, 6).join('; ') : `${a.marks} marks`);
 			await t.check(`${at}: no finite animation is held by the state`, newlyPaused.length === 0, newlyPaused.length ? newlyPaused.slice(0, 6).join('; ') : `${a.finRun} finite running`);
+			const stillTime = a.stillAt == null ? '' : `; data-pm-still observed at ${Math.round(a.stillAt)} ms in the app frame`;
+			const onDetail = toggleMiss ? `could not judge: ${toggleMiss}` : `${JSON.stringify(onCost)}; ${on?.found ? `${on.firstFrameMs} ms frame; largest following recalc ${on.max}, ${on.total} in ${on.steps}` : 'no recalc or mark: unjudgeable'}`;
+			await t.check(`${at}: going still cost stays within its marked population`, onCost.pass, onDetail + stillTime);
 			// frames while still: up to three 2 s traces, each once no finite animation runs; the quietest is judged
 			const live = view === 'usage';
 			// main frames are the RENDERED ones (PM7PERF-STILL-FRAMES-STARTS): frame starts less those Chrome abandons with
@@ -521,8 +521,6 @@ export default async function (t) {
 					if (judgeStarts) await t.check(`${at}: still, the main thread starts at most 0.45 per refresh (${Number.isFinite(startCap) ? startCap.toFixed(1) : '?'} a second at ${Number.isFinite(refreshHz) ? refreshHz.toFixed(0) : '?'} Hz, capped at ${startsMax})`, Number.isFinite(startCap) && x.mainFrames.perSec <= startCap, `${x.mainFrames.perSec}/s started (${x.mainFrames.noUpdatePerSec}/s of them with nothing to update, ${rendered(x)}/s rendered), bound ${Number.isFinite(startCap) ? startCap.toFixed(1) : 'unread'}/s = 0.45 of ${Number.isFinite(refreshHz) ? refreshHz.toFixed(0) : '?'} Hz, cap ${startsMax}/s; ${framesBy ? 'asked for by ' + (askers(x) || 'nothing named') : 'run with --set framesBy=1 to name what asks for them'}`);
 				}
 			}
-			if (a.still) await t.check(`${at}: going still cost stays within its marked population`, onCost.pass, toggleMiss ? `could not judge: ${toggleMiss}` : `${JSON.stringify(onCost)}; ${on?.found ? `${on.firstFrameMs} ms frame; largest following recalc ${on.max}, ${on.total} in ${on.steps}` : 'no recalc or mark: unjudgeable'}`);
-
 			const stable = await f.evaluate(() => ({ still: document.documentElement.hasAttribute('data-pm-still'), inputs: window.__stillInputs }));
 			await t.check(`${at}: the view stays still throughout its rest traces`, a.still && stable.still,
 				`still ${a.still} -> ${stable.still}; new wake events ${JSON.stringify(stable.inputs)}`);
