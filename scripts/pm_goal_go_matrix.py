@@ -139,7 +139,8 @@ def main():
             kills = collections.Counter(r.get('kill') for r in tries if r.get('kill'))
             exact = [r for r in tries if r.get('outcome') == 'exact_expected']
             best = None
-            for preference in ('KILLED', 'DUPLICATE_SET_KILLED', 'COVERED_LATER', 'CUT_EXCEPTION', 'NOT_REPLAYED_CAP'):
+            for preference in ('KILLED', 'DUPLICATE_SET_KILLED', 'COVERED_LATER', 'CUT_LEFT_EFFECT', 'CANNOT_DECIDE',
+                               'CUT_EXCEPTION', 'NOT_REPLAYED_CAP'):
                 best = next((r for r in exact if r.get('kill') == preference), None)
                 if best:
                     break

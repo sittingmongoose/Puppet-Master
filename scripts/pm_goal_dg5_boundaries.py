@@ -874,7 +874,18 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
                     else:
                         code = refusal_code(error)
                         result = dict(errors=[refusal_row(error)], original_refusal=code)
-                result.update(observations=entries, after=manifest(file_state(work)),
+                # The trial's after-state, taken in this child before it exits: the
+                # whole store manifest and the family hook's digest of the owners'
+                # in-memory state (pm_goal_dg5_owner_state). The judge compares both
+                # with the intact trial's before it grants COVERED_LATER.
+                ACTIVE[0] = False
+                import pm_goal_dg5_owner_state as owner_state
+                try:
+                    owner = owner_state.owner_state_digest(family, world, arguments)
+                except Exception as error:  # noqa: BLE001 - no digest, never a guess
+                    owner = dict(schema=owner_state.SCHEMA, hook=family, sha256=None,
+                                 reason='owner-state hook raised %s: %s' % (type(error).__name__, str(error)[:160]))
+                result.update(observations=entries, after=manifest(file_state(work)), owner_state=owner,
                               replay_unknown_rows=sorted(tables.COLLECTOR.replay_unknown_rows))
             except BaseException as error:
                 result = dict(exception=type(error).__name__, detail=str(error),
@@ -898,8 +909,11 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
             where = ' @ ' + ' <- '.join('%s:%s(%s)' % f for f in reversed(frames[-2:])) if frames else ''
             raise RuntimeError(result['exception'] + where + ': ' + result['detail'][:200])
         actual.append(result['original_refusal'])
+        owner = result.get('owner_state') or {}
         return dict(errors=result['errors'], store_snapshot_sha256=store_sha,
-                    store_after_sha256=sweep.digest(result['after']))
+                    store_after_sha256=sweep.digest(result['after']),
+                    owner_state_sha256=owner.get('sha256'),
+                    owner_state={k: v for k, v in owner.items() if k in ('schema', 'hook', 'reason', 'objects')})
 
     collector = tables.COLLECTOR
     if collector is None:
