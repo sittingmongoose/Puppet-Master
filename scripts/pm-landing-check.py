@@ -61,6 +61,17 @@ days older than it by commit time. Otherwise rule 2 is off for the landing, such
 as it was before rule 2, and the report's first lines say that the baseline is stale and must be
 re-recorded before the next landing, never to make this one pass.
 
+A row in a subcheck the baseline only sampled is not in `baseline.json` at all when it sat above the
+print cap. When a branch cuts the subcheck's total under that cap the row is printed for the first
+time, names a file the branch touched, and is in no baseline bucket: T272's false block, on a row
+main already had. Such a row is `unknown-pre-existing`, and it never stops the landing, when the
+baseline's reported total covers the rows this run prints, that is the subcheck did not report more
+than the baseline did. The report prints it in one line with the row and the baseline's total, and
+says the run cannot tell it from an old failure. A subcheck that rose instead keeps the truncated
+rule and stops the landing, because a real new failure whose total has not also been cut by the
+branch raises it; one that has been cut is indistinguishable, and reported as unknown rather than
+excused silently.
+
 A subcheck that pm-plans-verify.py killed at --subcheck-timeout-seconds (600 by default here) has no
 result. Its timeout row is an infrastructure result, printed on its own line with the subcheck, how
 long it ran and the limit; it is never a new failure, growth or a blocker. The run it happened in was
@@ -107,9 +118,11 @@ Exit codes:
      are new but name none of the branch's files (push, and report them); or a subcheck timed out,
      so the run was not fully verified (rerun it on its own before pushing)
   2  it reports something that does stop the landing: a failure on the branch's files that is
-     neither staleness nor pre-existing, a bucket that grew whose error kind is not staleness, or a
-     rise in a subcheck whose failures are truncated, where the on-branch match cannot see what was
-     added, other than the readiness growth counter; a subcheck keyed from its export is not truncated
+     neither staleness nor pre-existing (nor `unknown-pre-existing`, a row in a subcheck the
+     baseline only sampled whose total covers this run), a bucket that grew whose error kind is not
+     staleness, or a rise in a subcheck whose failures are truncated, where the on-branch match
+     cannot see what was added, other than the readiness growth counter; a subcheck keyed from its
+     export is not truncated
   3  the script could not run a check or could not read the baseline or the branch paths, or a
      subcheck timed out while recording a baseline, or readiness audit inputs could not be compared
 """
@@ -830,6 +843,54 @@ def standing_of(count: int, baseline_count: int | None) -> str | None:
     return "pre-existing" if count == baseline_count else "improved"
 
 
+UNKNOWN_PRE_EXISTING = "unknown-pre-existing"
+
+
+def unknown_pre_existing_subchecks(
+    compared: dict[str, dict[str, dict[str, int]]],
+    baseline_checks: dict[str, Any],
+    run_counts: dict[str, int],
+    baseline_counts: dict[str, int],
+) -> dict[tuple[str, str], dict[str, int]]:
+    """Subchecks the baseline only sampled, whose reported total covers every row this run prints.
+
+    The baseline's buckets hold the rows it printed, so a row above the print cap is not in
+    `baseline.json` at all. When a branch cuts the subcheck's total under the cap, that row is
+    printed for the first time, names a file the branch touched, and is in no baseline bucket: it
+    reads as neither staleness nor pre-existing and blocks, although main had it all along (T272;
+    the audit-closure row after the stage-2 append). For such a subcheck whose total did not rise,
+    no printed row can be shown to be new: every one of them was counted in the baseline's total
+    whether or not its sample held it, and which rows a sample holds changes on its own. Those rows
+    are `unknown-pre-existing`: reported with the row and the baseline's total, never blocking.
+
+    A subcheck that reports more than the baseline did is not covered: a real new failure raised its
+    total, and the truncated-rise rule judges that as before. One whose baseline printed every row is
+    not truncated, so a row absent from the baseline there is new, as before.
+    """
+    out: dict[tuple[str, str], dict[str, int]] = {}
+    for check in sorted(compared):
+        for name in sorted(compared[check]):
+            recorded = ((baseline_checks.get(check) or {}).get("subchecks") or {}).get(name) or {}
+            reported = int(recorded.get("reported", 0))
+            sampled = keyed_rows(recorded)
+            if sampled >= reported:
+                continue  # the baseline printed every row, so absence from it means new
+            if compared[check][name]["reported"] > reported:
+                continue  # it rose: the truncated-rise rule judges what was added
+            unmatched = sum(
+                max(0, count - baseline_counts.get(bucket, 0))
+                for bucket, count in run_counts.items()
+                if bucket_subcheck(bucket) == (check, name)
+            )
+            out[(check, name)] = {
+                "baseline_total": reported,
+                "baseline_sampled": sampled,
+                "unprinted_rows": reported - sampled,
+                "unmatched_rows": unmatched,
+            }
+    return out
+
+
 def readiness_counter_is_staleness(
     row: dict[str, Any],
     items: list[dict[str, Any]],
@@ -871,11 +932,11 @@ def blocking_items(
     """What stops a landing, by the rule in AGENTS.md.
 
     A failure on a file the branch touched that is neither governance staleness nor pre-existing
-    (`standing` on the item, rule 2); a bucket that grew whose error kind is not staleness; and a rise
-    in a truncated subcheck, whose added failures nothing can match against the branch's paths,
-    unless it is the readiness growth counter of stale readiness rows (`stale` on the row). A failure
-    that is new but names none of the branch's files does not stop the landing: it is reported and
-    pushed, exactly as the shard-check rule reads.
+    (`standing` on the item, rule 2, which includes `unknown-pre-existing`); a bucket that grew whose
+    error kind is not staleness; and a rise in a truncated subcheck, whose added failures nothing can
+    match against the branch's paths, unless it is the readiness growth counter of stale readiness
+    rows (`stale` on the row). A failure that is new but names none of the branch's files does not
+    stop the landing: it is reported and pushed, exactly as the shard-check rule reads.
     """
     return (
         [item for item in on_branch if not item["stale"] and not item.get("standing")]
@@ -1758,7 +1819,8 @@ def describe(item: dict[str, Any], tag: str, width: int = 150) -> str:
     """One line per failure. Only the trailing fields are cut to fit, never the identity or the
     baseline and branch counts that rule 2 reports."""
     where = item["path"] or "(no path)"
-    counted = f"  {item['baseline_count']} -> {item['count']}" if item.get("standing") else ""
+    counted = (f"  {item['baseline_count']} -> {item['count']}"
+               if item.get("standing") and item.get("baseline_count") is not None else "")
     head = f"  [{tag:<12}] {item['check']}/{item['subcheck'] or '-'}  {item['error']}  {where}{counted}"
     fields = canonical(item["fields"])
     room = width - len(head) - 2
@@ -2003,9 +2065,12 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
 
     run_counts = bucket_counts(items)
     rule_two = currency["rule_two_applies"]
+    unknown_covered = (unknown_pre_existing_subchecks(compared, baseline_checks, run_counts, baseline_counts)
+                       if rule_two else {})
     new_items: list[dict[str, Any]] = []
     on_branch: list[dict[str, Any]] = []
     pre_existing: list[dict[str, Any]] = []
+    unknown_pre_existing: list[dict[str, Any]] = []
     changed_on_branch = 0
     seen_buckets: dict[str, int] = {}
     renamed_buckets: dict[str, int] = {}
@@ -2024,17 +2089,28 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         # Only against a current baseline; against a stale one every failure is judged as before.
         standing = (None if item["stale"] or not rule_two
                     else standing_of(run_counts[name], baseline_counts.get(name)))
-        counted = (
-            {"standing": standing, "baseline_count": baseline_counts[name], "count": run_counts[name]}
-            if standing else {}
-        )
+        covered = (None if standing or item["stale"] or not rule_two
+                   else unknown_covered.get((item["check"], item["subcheck"])))
+        if covered is not None:
+            standing = UNKNOWN_PRE_EXISTING
+        if standing == UNKNOWN_PRE_EXISTING:
+            counted = {"standing": standing, "baseline_count": None, "count": run_counts[name], **covered}
+        elif standing:
+            counted = {"standing": standing, "baseline_count": baseline_counts[name], "count": run_counts[name]}
+        else:
+            counted = {}
         hits = names_branch_path(item, tokens, root, units)
         # What the row is, for the line of a subcheck keyed from its export.
         item["_class"] = ("staleness" if item["stale"] else standing if standing else "blocking" if hits
                           else "new" if fresh else "in a baseline bucket")
         if fresh and not standing:
             new_items.append(item)
-        if standing and (fresh or hits):
+        if standing == UNKNOWN_PRE_EXISTING:
+            # Only the rows that would be reported at all: one that names no branch path is not
+            # blocking, and listing every other row of a large sampled subcheck would drown the report.
+            if hits:
+                unknown_pre_existing.append({**public(item), **counted, "branch_paths": hits})
+        elif standing and (fresh or hits):
             pre_existing.append({**public(item), **counted, "branch_paths": hits})
             # Same bucket count, different content, on a file the branch touched: the brief's rule
             # excuses it, but it may be one failure fixed and another added. Say so.
@@ -2063,6 +2139,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         {item["key"] for item in new_items}
         | {item["key"] for item in on_branch}
         | {item["key"] for item in pre_existing}
+        | {item["key"] for item in unknown_pre_existing}
     )
     reported = [item for item in items if item["key"] in reported_keys]
     blocking = blocking_items(on_branch, grown, subcheck_growth)
@@ -2106,6 +2183,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                 "new": [public(item) for item in new_items],
                 "on_branch": on_branch,
                 "pre_existing": pre_existing,
+                "unknown_pre_existing": unknown_pre_existing,
                 "grown_buckets": grown,
                 "grown_subchecks": subcheck_growth,
                 "rename_excuse_lost": dict(sorted(rename_context.why.items())) if rename_context else {},
@@ -2199,6 +2277,16 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
             print(describe(item, item_tag(item, bool(item["branch_paths"]))) + where)
         if len(pre_existing) > 40:
             print(f"  ... {len(pre_existing) - 40} more")
+        if unknown_pre_existing:
+            print(f"In a subcheck the baseline only sampled, its reported total covering this run's rows, "
+                  f"so neither provably old nor new (never blocks): {len(unknown_pre_existing)}")
+            for item in unknown_pre_existing[:40]:
+                where = f"; names {', '.join(item['branch_paths'])}" if item["branch_paths"] else ""
+                print(describe(item, "unknown-pre-existing")
+                      + f"  (baseline reported {item['baseline_total']}, printed {item['baseline_sampled']}, "
+                        f"{item['unprinted_rows']} never keyed{where})")
+            if len(unknown_pre_existing) > 40:
+                print(f"  ... {len(unknown_pre_existing) - 40} more")
         print(f"Checks whose failure count rose: {len(grown)}")
         for row in grown[:40]:
             print(f"  [{'staleness' if row['stale'] else 'blocking '}] {row['bucket']}  "
@@ -2226,9 +2314,13 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
             print(f"  of which excused as governance staleness, by kind ({sum(excused.values())} in total):")
             for kind, count in excused.items():
                 print(f"      {count:7d}  {kind}")
-        pre_on_branch = sum(1 for item in on_branch if item.get("standing"))
+        pre_on_branch = sum(1 for item in on_branch
+                            if item.get("standing") and item["standing"] != UNKNOWN_PRE_EXISTING)
         if pre_on_branch:
             print(f"  of which pre-existing or improved, listed above: {pre_on_branch}")
+        unknown_on_branch = sum(1 for item in on_branch if item.get("standing") == UNKNOWN_PRE_EXISTING)
+        if unknown_on_branch:
+            print(f"  of which unknown-pre-existing, in a subcheck the baseline only sampled: {unknown_on_branch}")
         for item in on_branch[:40]:
             print(describe(item, item_tag(item, True)))
         if len(on_branch) > 40:
@@ -2256,6 +2348,9 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                               "baseline's rows: the same count can hide one failure fixed and another added")
             elif pre_existing:
                 advice.append("pre-existing failures whose count has not risen, so nothing for this branch to fix")
+            if unknown_pre_existing:
+                advice.append(f"{len(unknown_pre_existing)} in a subcheck the baseline only sampled, so this "
+                              "run cannot tell them from old failures and they never stop a landing")
             if any(item["key"] not in {other["key"] for other in on_branch} for item in new_items):
                 advice.append("new but names no file this branch touched, so report it to Jared")
             if any(row["stale"] for row in subcheck_growth):
