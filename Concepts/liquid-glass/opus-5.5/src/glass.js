@@ -2278,7 +2278,6 @@
     }
     if (L.lens.style.opacity) L.lens.style.opacity = '';
     prewarmSoon(L, cfg, strip);
-    if (L.rect) warmColdCarry(L, cfg, strip, target);
     var lay = pre && pre.R && pre.lay, R = lay && L.layer.parentElement === lay.parent && (!lay.usedEl || L.layer === lay.el) ? pre.R : null;
     if (!R) R = rectIn(strip, cfg.box ? cfg.box(target) : target, lensPad(strip, cfg));
     var A = L.rect;
@@ -2606,23 +2605,20 @@
     return { x: (next.left - base.left) / scale - strip.clientLeft, y: (next.top - base.top) / scale - strip.clientTop,
              w: next.width / scale, h: next.height / scale };
   }
-  function warmColdCarry(L, cfg, strip, active) {
-    if (!filesSwitcher(strip) || active.getAttribute('data-tab') !== 'explorer' || L.carryWarming ||
-        L.carry || L.pending || !L.under || reduced() || switchMotion !== 'hop') return;
-    var busy = window.PM_BUSY, target = Array.prototype.find.call(strip.querySelectorAll('[data-tab="changed"], [data-tab="open"]'), function (item) {
-      return !L.carryPreviews?.has(item) && unseenFilesCarry(L, item);
-    });
-    if (!target || !busy || !busy.idle) return;
-    L.carryWarming = true;
-    busy.idle(function () {
-      L.carryWarming = false;
-      if (!strip.isConnected || !strip.getClientRects().length || !target.isConnected || busy() || document.hidden ||
-          L.carry || L.pending || reduced() || switchMotion !== 'hop' || L.tgt !== active || !L.rect) return;
-      var R = rectIn(strip, cfg.box ? cfg.box(target) : target, lensPad(strip, cfg));
-      if (R.w <= 0 || R.h <= 0) return;
-      var chosenBox = measuredSelectedRailBox(strip, cfg, target);
-      carry(L, L.rect, chosenBox || R, strip, cfg, target, !!cfg.vertical || Math.abs(L.rect.y - R.y) > Math.abs(L.rect.x - R.x), null, false, true, R);
-    }, 900, { quiet: 180 });
+  function prepareFilesCarry(L, cfg, strip, target) {
+    if (L.tgt?.getAttribute('data-tab') !== 'explorer' || !L.rect || L.carry || L.pending || !L.under ||
+        !strip.isConnected || !target.isConnected || document.hidden || reduced() || switchMotion !== 'hop' ||
+        !unseenFilesCarry(L, target)) return;
+    var preview = L.carryPreviews?.get(target);
+    if (preview) {
+      if (preview.theme === root.getAttribute('data-theme')) return;
+      L.carryPreviews.delete(target);
+      removeCarryPreview(preview);
+    }
+    var R = rectIn(strip, cfg.box ? cfg.box(target) : target, lensPad(strip, cfg));
+    if (R.w <= 0 || R.h <= 0) return;
+    var chosenBox = measuredSelectedRailBox(strip, cfg, target);
+    carry(L, L.rect, chosenBox || R, strip, cfg, target, !!cfg.vertical || Math.abs(L.rect.y - R.y) > Math.abs(L.rect.x - R.x), null, false, true, R);
   }
   /* go: the trip under way that a new block goes on with ({ K: that trip, at: its age now, zero: when its age was 0, or
      null if no frame has drawn it yet, retarget: its tab changed under it }). Retarget (FO-195): the trip so far stays as
@@ -2831,7 +2827,6 @@
       Promise.all(pulses.map(function (a) { return a.finished; })).then(function () {
         if (previews.get(target) !== cached) return;
         anims.forEach(function (a) { a.pause(); a.currentTime = 0; });
-        if (filesSwitcher(strip) && L.tgt) warmColdCarry(L, cfg, strip, L.tgt);
       }, function () { /* consumed by a press */ });
       return;
     }
@@ -3010,6 +3005,25 @@
     }
     return null;
   }
+  function filesCarryIntent(e) {
+    if (!switchOn() || !e.target.closest?.('#panel-files > .pm-segtab')) return;
+    var hit = stripAt(e.target), L = hit && lenses.get(hit.strip);
+    if (!L || !choosable(hit.item, hit.cfg) || hit.item.contains(e.relatedTarget)) return;
+    prepareFilesCarry(L, hit.cfg, hit.strip, hit.item);
+  }
+  function endFilesCarryIntent(e) {
+    if (!e.target.closest?.('#panel-files > .pm-segtab')) return;
+    var hit = stripAt(e.target), L = hit && lenses.get(hit.strip);
+    var preview = L && L.carryPreviews?.get(hit.item);
+    if (!preview || hit.item.contains(e.relatedTarget) ||
+        (e.type === 'pointerout' ? hit.item.matches(':focus-within') : hit.item.matches(':hover'))) return;
+    L.carryPreviews.delete(hit.item);
+    removeCarryPreview(preview);
+  }
+  document.addEventListener('pointerover', filesCarryIntent, true);
+  document.addEventListener('focusin', filesCarryIntent, true);
+  document.addEventListener('pointerout', endFilesCarryIntent, true);
+  document.addEventListener('focusout', endFilesCarryIntent, true);
   document.addEventListener('pointerdown', function (e) {
     if (!switchOn() || e.button !== 0 || reduced()) return;
     var hit = stripAt(e.target); if (!hit) return;
