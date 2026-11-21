@@ -190,3 +190,23 @@ test('retained: the IQR bound is set from the alone baseline and never above 50'
 	assert.equal(v.iqrMs, 50);
 	assert.equal(v.couldNotJudge, true);
 });
+
+// Real bite records: run-bite50C-1/-2 opaque (delay50 vs main, 3 concurrent, clean Mac). The 50 ms child-side
+// busy-wait shifts firstNewMs by a resolved median of 61.9 / 70.2 ms — far past the tolerance — while retainedMs
+// reads could-not-judge (clip-race IQR 104.1 / 70.8 > 25). Both are failing bite rows.
+const BITE50C_1_FIRSTNEW = [-48.4, 2.9, 12.3, 29.2, 61.9, 92.8, 122.5, 129, 185.4];
+const BITE50C_2_FIRSTNEW = [13.8, 19.4, 37.5, 70.2, 83, 85.3, 113.3];
+const BITE50C_1_RETAINED = [0, 16.7, 50, 116.7, 133.3, 183.3];
+
+test('bite: real delay50 records fail firstNewMs and retained reads could-not-judge', () => {
+	const fn1 = rasterAbVerdict({firstNewMs: BITE50C_1_FIRSTNEW.map(d => ({diff: d, resolved: true}))}, {minResolved: 6}).firstNewMs;
+	assert.equal(fn1.medianDiffMs, 61.9);
+	assert.equal(fn1.ok, false, 'delay50 shifts firstNew past the tolerance');
+	const fn2 = rasterAbVerdict({firstNewMs: BITE50C_2_FIRSTNEW.map(d => ({diff: d, resolved: true}))}, {minResolved: 6}).firstNewMs;
+	assert.equal(fn2.medianDiffMs, 70.2);
+	assert.equal(fn2.ok, false);
+	const ret = rasterAbVerdict(retPairs(BITE50C_1_RETAINED), {minResolved: 6}).retainedMs;
+	assert.equal(ret.couldNotJudge, true);
+	assert.equal(ret.ok, false, 'retained bite fails as could-not-judge clip-race noise');
+	assert.match(ret.rule, /clip-race noise, IQR 104\.1 ms over 25/);
+});
