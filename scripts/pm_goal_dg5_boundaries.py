@@ -874,7 +874,8 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
                         raise
                     else:
                         code = refusal_code(error)
-                        result = dict(errors=[refusal_row(error)], original_refusal=code)
+                        result = dict(errors=[refusal_row(error)], original_refusal=code,
+                                      refusal_origin=refusal_origin(error, code))
                 # The trial's after-state, taken in this child before it exits: the
                 # whole store manifest and the family hook's digest of the owners'
                 # in-memory state (pm_goal_dg5_owner_state). The judge compares both
@@ -892,6 +893,7 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
                                      reason='owner-state hook raised %s: %s' % (type(error).__name__,
                                                                                 str(error)[:160]))
                 result.update(observations=entries, after=manifest(file_state(work)), owner_state=owner,
+                              refusing_sites=[(name, list(site)) for name, holds, site in entries if not holds],
                               replay_unknown_rows=sorted(tables.COLLECTOR.replay_unknown_rows))
             except BaseException as error:
                 result = dict(exception=type(error).__name__, detail=str(error),
@@ -918,6 +920,7 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
         owner = result.get('owner_state') or {}
         return dict(errors=result['errors'], store_snapshot_sha256=store_sha,
                     refusal_code=result['original_refusal'],
+                    refusal_origin=result.get('refusal_origin'), refusing_sites=result.get('refusing_sites', []),
                     store_after_sha256=sweep.digest(result['after']),
                     owner_state_sha256=owner.get('sha256'),
                     owner_state={k: v for k, v in owner.items() if k in ('schema', 'hook', 'reason', 'objects')})
@@ -1079,24 +1082,100 @@ def _sealed(action, work, files):
 
 
 GUARD_CODE = re.compile(r"\b(?:require|guard|halt|refuse)\(\s*'([^']+)'")
+# Guard helper functions: a refusal raised inside one of these originates at its caller.
+GUARD_HELPERS = frozenset(('require', 'guard', 'refuse', 'halt', 'shared_require', 'shared_refuse'))
+# Static single-raise-site check (addendum 11 (2)): the admission-gate worker's importable module
+# (admission-gate/gate-e2/code_sites.py: OwnerSites({path: text}).unique(code) -> (ok, evidence)),
+# loaded by path from PM_DG5_GATE_E2 or the default below, built once per run over this source's
+# owner files. Not installed or unusable: no static proof (fails closed).
+GATE_E2 = os.environ.get('PM_DG5_GATE_E2', '/home/sittingmongoose/pm-scratch/ea-c12-dg5/admission-gate/gate-e2')
+_GATE_SITES = []
 
 
-def row_code_check(target, code):
-    """Is `code` the declared row's own guard code? (KILLED_CODE condition 1, addendum 1.)
+def refusal_origin(error, code):
+    """Where the refusal that ended the call originated (addendum 11 (1)).
 
-    The row's guard identity is its name: a site row `dg5/site/<file>:<line>` is the
-    guard statement at that line of this run's source, and its code is the literal
-    first argument of that require/guard/halt/refuse call (keycheck.py check (iii)'s
-    guard_code, widened from require to the four routed guard calls). A routed
-    refusal may carry a wrapper prefix (`refusal_row`'s own rule), so the code may
-    also end with '/' + the guard code. Any other row (schema, number, date-time,
-    boolean) owns a code when `row(code)` names it. A crash or a missing code owns
-    nothing.
+    Follows the exception chain (`__cause__`, else `__context__`, also under `from None`)
+    while each earlier exception carries the same refusal code unchanged; the deepest one
+    is the origin. Its innermost traceback frame outside this bridge and outside the guard
+    helpers (`GUARD_HELPERS`) is the origin site. A refusal rebuilt fresh at another site,
+    with no chained original carrying its code, originates at that site.
     """
-    out = dict(row=target, code=code, guard_code=None, own=False, why=None)
+    chain, seen, current = [], set(), error
+    while current is not None and id(current) not in seen:
+        seen.add(id(current))
+        chain.append(current)
+        current = current.__cause__ or current.__context__
+    origin, depth = error, 0
+    for number, earlier in enumerate(chain[1:], 1):
+        try:
+            same = isinstance(earlier, Exception) and refusal_code(earlier) == code
+        except Exception:  # noqa: BLE001
+            same = False
+        if not same:
+            break
+        origin, depth = earlier, number
+    here = str(Path(__file__).resolve())
+    frames = traceback.extract_tb(origin.__traceback__)
+    site = None
+    for frame in reversed(frames):
+        if str(Path(frame.filename).resolve()) == here or frame.name in GUARD_HELPERS:
+            continue
+        path = Path(frame.filename)
+        try:
+            where = str(path.resolve().relative_to(ROOT))
+        except ValueError:
+            where = str(path)
+        site = [where, frame.lineno]
+        break
+    return dict(site=site, chain_depth=depth, chain_length=len(chain), origin_type=type(origin).__name__,
+                frames=[[Path(f.filename).name, f.lineno, f.name] for f in frames[-5:]])
+
+
+def static_single_raise_site(code):
+    """Addendum 11 (2) through the admission gate's code_sites module, or None when it is not installed."""
+    import importlib.util
+    module_path = Path(GATE_E2) / 'code_sites.py'
+    if not module_path.is_file():
+        return None
+    try:
+        if not _GATE_SITES:
+            spec = importlib.util.spec_from_file_location('dg5_gate_e2_code_sites', module_path)
+            gate = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(gate)
+            files = {str(p.relative_to(ROOT)): p.read_text() for p in sorted((ROOT / 'scripts').glob('*.py'))
+                     if p.name.startswith(SITE_MODULE_PREFIXES)}
+            _GATE_SITES.append((gate.OwnerSites(files), hashlib.sha256(module_path.read_bytes()).hexdigest()))
+        sites, sha = _GATE_SITES[0]
+        ok, evidence = sites.unique(code)
+        return dict(ok=bool(ok), reason=(evidence or {}).get('why'), evidence=evidence, gate_sha256=sha)
+    except Exception as error:  # noqa: BLE001 - an unusable gate is no proof
+        return dict(ok=False, reason='gate-e2 unusable: %s: %s' % (type(error).__name__, str(error)[:200]))
+
+
+def row_code_check(target, code, origin=None, refusing_sites=()):
+    """Is the intact refusal the declared row's own guard with its own code? (KILLED_CODE condition 1.)
+
+    Addendum 1 with addendum 11 (pm-ea-lead 1121131008-95db): the harness's code-matched
+    errors list is not trusted. The code must be the row's own guard code, and its
+    origin must be verified:
+      (1) the recorded origin frame (`refusal_origin`) is the row's guard: for a site row
+          `dg5/site/<file>:<line>`, the origin site is that line; for any other row
+          (schema, number, date-time, boolean), the origin traceback passes through the
+          site where that row refused in this trial (`refusing_sites`); or
+      (2) the code has exactly one raise site in the owner source (the admission gate's
+          static check, `static_single_raise_site`), which a run-time-built code fails.
+    Neither holds: unverifiable, fails closed (own False).
+    The site row's guard code is the literal first argument of the require/guard/halt/refuse
+    call at that line (keycheck.py check (iii)'s guard_code, widened from require to the four
+    routed guard calls); a routed refusal may carry a wrapper prefix ('/' + guard code).
+    Any other row owns a code when `row(code)` names it. A crash or a missing code owns nothing.
+    """
+    out = dict(row=target, code=code, guard_code=None, own=False, code_matches=False, origin=origin, why=None)
     if not isinstance(code, str) or not code or code.startswith('crash:'):
         return dict(out, why='no owner refusal code')
     prefix = PREFIX + 'site/'
+    site = None
     if target.startswith(prefix):
         name, _, line = target[len(prefix):].rpartition(':')
         try:
@@ -1107,10 +1186,29 @@ def row_code_check(target, code):
         if not found:
             return dict(out, why='row site line has no literal guard code: ' + text.strip()[:120])
         guard = found.group(1)
-        own = code == guard or code.endswith('/' + guard)
-        return dict(out, guard_code=guard, own=own, why=None if own else 'refusal code is not the row guard code')
-    own = row(code) == target
-    return dict(out, guard_code=target, own=own, why=None if own else 'refusal code maps to another row')
+        out['guard_code'] = guard
+        if not (code == guard or code.endswith('/' + guard)):
+            return dict(out, why='refusal code is not the row guard code')
+        site = ['scripts/' + name, int(line)]
+    else:
+        out['guard_code'] = target
+        if row(code) != target:
+            return dict(out, why='refusal code maps to another row')
+    out['code_matches'] = True
+    origin_site = (origin or {}).get('site')
+    if site is not None and origin_site == site:
+        return dict(out, own=True, verified_by='origin frame at the row guard')
+    if site is None and origin:
+        sites = [list(s) for n, s in refusing_sites if n == target]
+        through = {(Path(f[0]).name, f[1]) for f in origin.get('frames', [])}
+        if any((Path(s[0]).name, s[1]) in through for s in sites):
+            return dict(out, own=True, verified_by='origin traceback passes through the row refusing site')
+    static = static_single_raise_site(code)
+    out['static_check'] = static
+    if static and static.get('ok'):
+        return dict(out, own=True, verified_by='single raise site (gate-e2)')
+    why = 'origin not at the row guard (origin %s)' % (origin_site,) if origin else 'no recorded origin'
+    return dict(out, why=why + ('; gate-e2 not installed' if static is None else '; gate-e2: %s' % static.get('reason')))
 
 
 def refusal_code(error):
