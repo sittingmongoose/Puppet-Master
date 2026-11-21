@@ -934,6 +934,10 @@ class OwnerCheck:
                 raise
             record['refusal'] = bridge.refusal_code(error)
             record['errors'] = [self.row if record['refusal'] == expected else bridge.row(record['refusal'])]
+            # Addendum 6: the refusal's origin frame (harness frames transparent, owner paths relative to the
+            # installed owner source), as bridge.invoke records it.
+            import pm_goal_dg5_methodb_export as export
+            record['refusal_origin'] = export.origin(error, record['refusal'], self.source)
         finally:
             for document, member in changed:
                 document.pop(member)
@@ -997,7 +1001,10 @@ class OwnerCheck:
                         record['final_store'] = self.result_digest(final_manifest)
                     elif record['errors']:
                         require(not record['store_wrote'], 'refused owner call changed its copied store')
-                    sender.send(record)
+                # Addendum 6: the trial's after-state (the copied store's manifest; the owners' digest when the
+                # judge asks), taken in this child once the store-root patches are undone.
+                self.export(record, final_manifest, world)
+                sender.send(record)
             except Exception as error:
                 sender.send({'exception': str(error)})
             finally:
@@ -1012,6 +1019,49 @@ class OwnerCheck:
             receiver.close()
             child.join()
         require(child.exitcode == 0 and 'exception' not in record, record)
+        self.runs.append(record)
+        for observed in record['observations']:
+            self.collector.observe(self.row, not observed['errors'], tuple(self.site))
+        return record
+
+    def export(self, record, after, world):
+        import pm_goal_dg5_methodb_export as export
+        export.export(record, after=after, family=self.declare['family'], world=world,
+                      refusing_sites=[(self.row, tuple(self.site)) for o in record['observations'] if o['errors']])
+        return record
+
+    def call_forked(self, world, action, edit, require_exact):
+        """Addendum 6: one complete call with the defect in a forked child of the untouched parent.
+
+        The child runs `call` unchanged, then exports the after-state (the sealed store's manifest and, when
+        the judge asks, the owners' digest). The parent records the trial and replays its observations into
+        the collector, as `call_on_copy` does for a transaction route."""
+        import pm_goal_dg5_boundaries as bridge
+
+        context = multiprocessing.get_context('fork')
+        receiver, sender = context.Pipe(duplex=False)
+
+        def run_child():
+            try:
+                record = self.call(action, edit, require_exact=require_exact)
+                self.export(record, bridge.manifest(bridge.file_state(self.scratch)), world)
+                sender.send(record)
+            except Exception as error:
+                sender.send({'exception': str(error), 'exception_type': type(error).__name__})
+            finally:
+                sender.close()
+
+        child = context.Process(target=run_child)
+        child.start()
+        sender.close()
+        try:
+            record = receiver.recv()
+        finally:
+            receiver.close()
+            child.join()
+        require(child.exitcode == 0, f'complete-call child failed: {child.exitcode}')
+        if 'exception' in record:
+            raise (ValueError if record['exception_type'] == 'ValueError' else RuntimeError)(record['exception'])
         self.runs.append(record)
         for observed in record['observations']:
             self.collector.observe(self.row, not observed['errors'], tuple(self.site))
@@ -1033,10 +1083,13 @@ class OwnerCheck:
                 exact = not self.collector.replaying
                 if self.declare.get('transaction'):
                     result = self.call_on_copy(world, action, change, exact)
+                elif change is not None:
+                    result = self.call_forked(world, action, change, exact)
                 else:
                     result = self.call(action, change, require_exact=exact)
                 require(bridge.manifest(bridge.file_state(self.scratch)) == initial, 'passive call changed the store')
-                return result
+                import pm_goal_dg5_methodb_export as export
+                return export.evaluate_result(result, result['errors'])
 
             first_run = len(self.runs)
             self.collector.invoke('Method B/' + self.declare['route'], evaluate, value, change is None,
