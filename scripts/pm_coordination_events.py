@@ -38,6 +38,7 @@ if str(ROOT / "scripts") not in sys.path:
 from pm_pnc019_currentness import event_authority_denominator_status  # noqa: E402 - the denominator state comes from the installed edition
 
 from pm_coordination_guard_bridge import gate_code, gate_items
+from pm_coordination_table_ledger_unprovable import LEDGER_RESOURCE_GAPS
 from pm_coordination_numbers import (
     SEALED_TIMESTAMP_PROFILE,
     TIMESTAMP_FIELDS,
@@ -902,17 +903,17 @@ def ledger_failures(ledger: dict[str, Any] | None = None, *, root: Path = ROOT) 
         failures.append({"error": "mirror_payload_schema_unresolved", "event_type": MIRROR})
     if not ref_resolves(mirror["semantic_owner_ref"], root):
         failures.append({"error": "mirror_owner_ref_unresolved", "event_type": MIRROR})
-    # These rows do not fail alone: each one is preceded by the ledger schema or by
-    # prepared_registry_row_mismatch on the same edit. They stay enforced.
-    entailed_codes = {
+    # These rows remain enforced outside the credited ledger-input witness set.
+    # The resource-dependent rows can refuse even with an unchanged submitted ledger.
+    uncredited_codes = {
         "prepared_registry_row_schema", "ledger_owner_join", "prepared_payload_schema_unresolved",
-        "prepared_registry_row_ref_unresolved", "ledger_retention_binding", "mirror_owner_ref_unresolved",
+        "mirror_owner_ref_unresolved", *LEDGER_RESOURCE_GAPS,
     }
-    proved = [item for item in failures if item["error"] not in entailed_codes]
-    entailed = [item for item in failures if item["error"] in entailed_codes]
+    proved = [item for item in failures if item["error"] not in uncredited_codes]
+    uncredited = [item for item in failures if item["error"] in uncredited_codes]
     proved_names = {item["error"] for item in _gate("ledger", proved)}
-    entailed_names = {item["error"] for item in _gate("ledger_unprovable", entailed)}
-    return [item for item in failures if item["error"] in proved_names or item["error"] in entailed_names]
+    uncredited_names = {item["error"] for item in _gate("ledger_unprovable", uncredited)}
+    return [item for item in failures if item["error"] in proved_names or item["error"] in uncredited_names]
 
 
 def registry_membership_failures(registry: dict[str, Any] | None = None, ledger: dict[str, Any] | None = None,
