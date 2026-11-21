@@ -177,9 +177,22 @@ function corners(rest, focus, item, ox, oy) {
   return { tl: corner(L, T, 1, 1), tr: corner(Rr, T, -1, 1), bl: corner(L, B, 1, -1), br: corner(Rr, B, -1, -1) };
 }
 // a mark passes when every side (every corner for NieR) is there at 3:1
+// The reticle root has zero width even while its four absolutely positioned children paint.
+function reticleClear({ x, y, width, height }) {
+  const reticle = document.getElementById('o55np-reticle');
+  if (!reticle) return true;
+  const style = getComputedStyle(reticle);
+  if (style.display === 'none' || Number(style.opacity) === 0) return true;
+  return [...reticle.children].every(corner => {
+    const rect = corner.getBoundingClientRect();
+    return getComputedStyle(corner).visibility !== 'visible' || !rect.width || !rect.height
+      || rect.right <= x || rect.left >= x + width || rect.bottom <= y || rect.top >= y + height;
+  });
+}
+
 const markOk = r => !!r && r.focused && (r.brackets ? Object.values(r.corners).every(n => n >= 6)
   : Object.values(r.sides).every(sd => sd.share >= 0.9) && (!r.clip || Object.values(r.clip).every(v => v <= 1)));
-const brief = r => r && { key: r.key, lit: r.lit, focused: r.focused, ...(r.unreached ? { unreached: true } : {}), ...(r.skipped ? { skipped: r.skipped } : {}), ...(r.moved ? { moved: true } : {}), ...(r.clip && Object.values(r.clip).some(v => v > 1) ? { clip: r.clip } : {}),
+const brief = r => r && { key: r.key, lit: r.lit, focused: r.focused, ...(r.unreached ? { unreached: true } : {}), ...(r.skipped ? { skipped: r.skipped } : {}), ...(r.restBlocked ? { restBlocked: r.restBlocked } : {}), ...(r.moved ? { moved: true } : {}), ...(r.clip && Object.values(r.clip).some(v => v > 1) ? { clip: r.clip } : {}),
   ...(r.corners ? { corners: r.corners } : {}), ...(r.sides ? { sides: Object.fromEntries(Object.entries(r.sides).map(([k, v]) => [k, `${v.share} ${v.worst}-${v.median}`])) } : {}), ...(r.names ? { names: r.names } : {}) };
 
 // A key-focused bar control's mark as the page holds it (not its paint, which the pixel reads judge): the rail's focus
@@ -829,13 +842,14 @@ async function run(t, w, h) {
     const r1 = await t.pixels(region);
     if (t.args.debug && b.brackets) t.log(`debug markNow ${target} reticle at focus ` + JSON.stringify(await f.evaluate(() => { const r = document.getElementById('o55np-reticle'); return r ? { on: r.hasAttribute('data-on'), kids: [...r.children].map(i => (q => [q.left, q.top].map(Math.round))(i.getBoundingClientRect())) } : null; })) + ' item ' + JSON.stringify(b.item));
     await f.evaluate(placeSentinel, ['#activityBar', 'before']); await focusQuiet(null); await f.waitForTimeout(350);
-    // NieR locks its brackets on a clicked (or Enter-pressed) item for 1.2 s (19-nier-parts.js retChoose): the rest is
-    // read once they have left it
-    if (b.brackets) await f.waitForFunction(() => { const r = document.getElementById('o55np-reticle'); return !r || !r.hasAttribute('data-on') || r.getBoundingClientRect().width === 0 || [...r.children].every(i => i.getBoundingClientRect().top < -50); }, null, { timeout: 2000 }).catch(() => f.waitForTimeout(1300));
-    const r0 = await t.pixels(region);
+    // Wait through the press lock and opacity fade if the painted corners still overlap the rest capture.
+    const clear = !b.brackets || await f.waitForFunction(reticleClear,
+      { ...region, x: region.x - off.x, y: region.y - off.y }, { timeout: 2500 }).then(() => true, () => false);
+    const r0 = clear ? await t.pixels(region) : null;
     if (t.args.debug && b.brackets) t.log(`debug markNow ${target} reticle at rest ` + JSON.stringify(await f.evaluate(() => { const r = document.getElementById('o55np-reticle'); return r ? { on: r.hasAttribute('data-on'), kids: [...r.children].map(i => (q => [q.left, q.top].map(Math.round))(i.getBoundingClientRect())), act: document.activeElement?.id || document.activeElement?.tagName } : null; })));
     const moved = await f.evaluate(([k, t0]) => { const q = document.querySelector(`#activityBar .icon[data-ab-id="${k}"]`).getBoundingClientRect(); return Math.abs(q.x - t0.x) + Math.abs(q.y - t0.y) > 0.5; }, [target, b.item]);
     await focusQuiet(await before(target)); await kb.press('Tab'); await f.waitForTimeout(150);
+    if (!clear) return { key: target, focused: false, restBlocked: 'NieR brackets still overlap the rest capture' };
     const ox = region.x - off.x, oy = region.y - off.y;
     return { key: target, lit: b.lit, focused: !moved, moved, brackets: b.brackets, clip: b.brackets ? null : b.clip,
       ...(b.brackets ? { corners: bestCorners(r0, r1, b, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy, both), sides(r0, r1, b.item, ox, oy, both)) }) };
