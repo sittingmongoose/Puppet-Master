@@ -250,7 +250,11 @@ const firstPainted = (o) => { const x = o.rec.frames.find((y) => !y.held); retur
 
 // Q4-2: the opens at each [width, motion], judged (judgeOpen), with the first painted footer of each logged; and for
 // c-ready, the same reached by Back from the screen after it (opus-recheck-look8b: never reached), at its own change
-async function fresh(t, f, tag, look, screen, cases, samples, flips) {
+async function fresh(t, f, tag, look, screen, cases, samples, flips, bounded = false) {
+	if (bounded && samples.size && !cases.length) {
+		t.log(`${tag}: Q4-2 no footer change in the sampled range; no fresh opens scheduled`);
+		return;
+	}
 	const bad = [], log = [];
 	for (const [w, motion] of cases) {
 		const o = await openAt(t, f, screen, w, motion);
@@ -293,6 +297,7 @@ async function fresh(t, f, tag, look, screen, cases, samples, flips) {
 
 async function run(t, mode) {
 	const from = +t.args.from || 1280, to = +t.args.to || 380, step = +t.args.step || 10;
+	const bounded = from < 1280 || to > 380;
 	const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
 	await t.viewport(from, 900);
 	let f = await t.app.open({ sandbox: mode === 'sandbox', onboarding: true, query: 'o55=screen=welcome', settleMs: 1000 });
@@ -405,7 +410,7 @@ async function run(t, mode) {
 					if (x && y && x.word !== y.word) near.forEach((w) => flipAt.add(w));
 				}
 				const cases = [...at].sort((p, q) => q - p).map((w) => [w, 'no-preference']).concat(t.args.freshRm === '0' ? [] : [...flipAt].sort((p, q) => q - p).map((w) => [w, 'reduce']));
-				await fresh(t, f, tag, look, screen, cases, samples, flips);
+				await fresh(t, f, tag, look, screen, cases, samples, flips, bounded && seq.length > 0);
 			}
 		}
 	}
