@@ -48,8 +48,8 @@
 //      7-27 ms, the spec's budget kept). The window's exit animation runs before that removal; the wall time from
 //      the close() call is logged, not judged (532-1062 ms seen).
 //   13 resting wake count: with one strip hidden by row 1's method, a setTimeout wrapper installed before the
-//      page's scripts run counts the timers asked for from glass.js (the lg-js block's lines) with delay 400 or
-//      2000 ms over 10 s, and of those the ones that fire: none asked at 400 ms, at most 6 FIRE (the cost: one
+//      page's scripts run counts show-watch timer requests by their glass.js call sites at any delay over 10 s,
+//      and counts the callbacks that fire: only 2000 ms is allowed, at most 6 FIRE (the cost: one
 //      tick per 2000 ms is 5, 6 on a window edge) and at most 12 are asked. Requests are not wakes: since
 //      34b45edf15 a sync that lands while a check is queued arms a tick which that check drops, and each wake
 //      drops and re-arms one, so the count of requests moves with ambient syncs (5 on the normal surface, 5-7
@@ -60,7 +60,7 @@
 //      could pass on main — the counts above are row 13's unconditional separation).
 //
 // QW5: --set only=1,2,3,4,9,13 runs those rows and no others; --set repeat=<n> runs each of them n times
-// (default 1). Row 2 keeps a trace, times relative to the show write: each glass.js timer of 400 or 2000 ms
+// (default 1). Row 2 keeps a trace, times relative to the show write: each attributed show-watch timer
 // (ask, fire, and clear — a clear is the ResizeObserver wake, or the queued check, dropping the pending tick),
 // and each change of the captured lens's inline opacity. An ask's g is its line inside the lg-js block, which is
 // glass.js's own line (the block is that file). At 5ea1e87906 the ask sites are awaitShow (g2081, only when no
@@ -80,8 +80,7 @@
 //     back with visibility not hidden), the spec's measure. On the loaded host one sampling gap measured 63 ms
 //     and one timer callback ran 60 ms late (the 2067 and 2110 ms reps): the budget, not the product, carries
 //     those gaps; both traces show one tick, one check, the lens back on that check.
-//   - Row 13's attribution is the built page's lg-js block (helpers/built-source.mjs); the counts matched on every
-//     run (branch 4-5 at 2000 ms, main 24-25 at 400 ms), and no other glass.js timer at 400/2000 ms fires at rest.
+//   - Row 13 resolves show-watch call sites inside the built page's lg-js block (helpers/built-source.mjs).
 //   --set looks=glass-dark   --set size=1920x1080   --set settle=6000   --set only=2   --set repeat=20
 import { muteSound, parkPointer } from '../helpers/quiet-page.mjs';
 import { pageSource, blocksOf } from '../helpers/built-source.mjs';
@@ -103,17 +102,34 @@ const repeatCount = (v) => {
 };
 const tagOf = (look, surface, rep, reps) => `${look} ${surface}` + (reps > 1 ? ` rep ${rep}` : '');
 
-/* installed before the page's scripts: counts setTimeout REQUESTS, and of those the ones that FIRE (a request that
-   is cleared never wakes the page), with delay 400 or 2000 ms whose asking stack's innermost page frame lies in the
-   lg-js block (glass.js). Everything else is forwarded untouched. */
-const TIMER_PROBE = (range) => {
-	const P = window.__swt = { armed: false, n400: 0, n2000: 0, f400: 0, f2000: 0, sites: [], events: [], seq: 1, byId: new Map(), depth: 0 };
+/* Read call sites from the exact build being tested, including the pre-event 400 ms implementation. */
+export function showWatchSites(src, range) {
+	const sites = {};
+	let owner = '';
+	for (const [offset, line] of src.split('\n').slice(range.from - 1, range.to).entries()) {
+		const declaration = /^  function (\w+)\(/.exec(line);
+		if (declaration) owner = declaration[1];
+		if (/\bshowT\s*=\s*setTimeout\s*\(\s*checkShown\b/.test(line)) sites[range.from + offset] = owner;
+	}
+	return sites;
+}
+
+export function restAttribution(c) {
+	if (c.unattributed) return `${c.unattributed} show-watch timer calls could not be attributed to the built source`;
+	if (!c.asked && !c.fired) return 'no matching show-watch timers were observed';
+	return '';
+}
+
+/* Installed before page scripts. Read the immediate caller, and use the owner's callback name to detect stack
+   attribution failures even when they would otherwise produce a plausible zero. */
+export const TIMER_PROBE = (range) => {
+	const P = window.__swt = { armed: false, events: [], seq: 1, byId: new Map(), depth: 0 };
 	const realSet = window.setTimeout;
 	const realClear = window.clearTimeout;
 	const lineOf = () => {
-		const lines = String(new Error().stack || '').split('\n');
-		for (let i = 3; i < lines.length; i++) { const m = /:(\d+):\d+/.exec(lines[i]); if (m) return Number(m[1]); }
-		return -1;
+		const caller = String(new Error().stack || '').split('\n')[3] || '';
+		const match = /:(\d+):\d+\)?$/.exec(caller);
+		return match && caller.slice(0, match.index).endsWith(location.href) ? Number(match[1]) : -1;
 	};
 	const push = (e) => {
 		P.events.push(e);
@@ -130,15 +146,18 @@ const TIMER_PROBE = (range) => {
 		push({ k, at: Math.round(performance.now()), vis: s.vis, op: s.op, t0: window.__gsw ? Math.round(window.__gsw.t0) : 0 });
 	};
 	window.setTimeout = function (fn, delay, ...rest) {
-		const d = delay | 0;
-		if (typeof fn !== 'function' || (d !== 400 && d !== 2000)) return realSet.call(window, fn, delay, ...rest);
 		const l = lineOf();
-		if (l < range.from || l > range.to) return realSet.call(window, fn, delay, ...rest);
-		const meta = { n: P.seq++, d, asked: Math.round(performance.now()), line: l, g: l - range.from, fired: 0 };
+		const site = range.sites[l];
+		if (!site || typeof fn !== 'function') {
+			if (P.armed && (site || fn?.name === 'checkShown')) P.unattributed++;
+			return realSet.call(window, fn, delay, ...rest);
+		}
+		const d = Number(delay);
+		const meta = { n: P.seq++, d, asked: Math.round(performance.now()), line: l, g: l - range.from, site, fired: 0 };
 		let id = 0;
 		const wrapped = function (...a) {
 			meta.fired = Math.round(performance.now());
-			if (P.armed) { if (d === 400) P.f400++; else P.f2000++; }
+			if (P.armed) { P.fired++; P.delays.add(d); }
 			P.byId.delete(id);
 			const s = snap();
 			push({ k: 'fire', n: meta.n, d: meta.d, at: meta.fired, asked: meta.asked, g: meta.g, vis: s.vis, op: s.op, hidden: document.hidden });
@@ -149,9 +168,10 @@ const TIMER_PROBE = (range) => {
 		id = realSet.call(window, wrapped, delay, ...rest);
 		P.byId.set(id, meta);
 		const s = snap();
-		push({ k: 'ask', n: meta.n, d, at: meta.asked, g: meta.g, vis: s.vis, op: s.op, inFire: P.depth > 0, hidden: document.hidden });
+		push({ k: 'ask', n: meta.n, d, at: meta.asked, g: meta.g, site, vis: s.vis, op: s.op, inFire: P.depth > 0, hidden: document.hidden });
 		if (P.armed) {
-			if (d === 400) P.n400++; else P.n2000++;
+			P.asked++;
+			P.delays.add(d);
 			if (P.sites.length < 14) P.sites.push(d + 'ms@' + l);
 		}
 		return id;
@@ -165,8 +185,11 @@ const TIMER_PROBE = (range) => {
 		}
 		return realClear.call(window, id);
 	};
-	P.arm = () => { P.n400 = 0; P.n2000 = 0; P.f400 = 0; P.f2000 = 0; P.sites = []; P.armed = true; };
-	P.read = () => { P.armed = false; return { n400: P.n400, n2000: P.n2000, f400: P.f400, f2000: P.f2000, sites: P.sites.slice() }; };
+	P.arm = () => { P.asked = 0; P.fired = 0; P.unattributed = 0; P.delays = new Set(); P.sites = []; P.armed = true; };
+	P.read = () => {
+		P.armed = false;
+		return { asked: P.asked, fired: P.fired, unattributed: P.unattributed, delays: [...P.delays], sites: P.sites.slice() };
+	};
 	P.between = (a, b) => P.events.filter((e) => e.at >= a && e.at <= b);
 };
 
@@ -316,7 +339,10 @@ async function cell(t, surface, W, H) {
 	const lg = blocksOf(src).find((b) => b.id === 'lg-js');
 	await t.check(`the built page carries the lg-js block ${surface}`, !!lg, lg ? `lines ${lg.from}-${lg.to}` : 'no script#lg-js: glass.js timers cannot be attributed', { hard: true });
 	if (!lg) return;
-	await t.page.addInitScript(TIMER_PROBE, { from: lg.from, to: lg.to });
+	const sites = showWatchSites(src, lg);
+	const knownSites = Object.values(sites);
+	await t.check(`show-watch timer attribution is available ${surface}`, knownSites.includes('awaitShow') && knownSites.includes('checkShownNow'), 'expected showT setTimeout sites in awaitShow and checkShownNow', { hard: true });
+	await t.page.addInitScript(TIMER_PROBE, { ...lg, sites });
 	const f = await t.app.open({ query: 'pm-warm=0', sandbox: surface === 'sandbox' });
 	await f.evaluate(PROBE);
 	await f.evaluate(() => document.fonts.ready.then(() => true));
@@ -462,10 +488,14 @@ async function cell(t, surface, W, H) {
 			await f.evaluate(() => window.__swt.arm());
 			await t.page.waitForTimeout(10000);
 			const c = await f.evaluate(() => window.__swt.read());
-			t.log(`row 13 ${tag}: glass.js show-watch timer requests in 10 s: ${c.n400} at 400 ms, ${c.n2000} at 2000 ms [${c.sites.join(', ')}]; fired: ${c.f400} at 400 ms, ${c.f2000} at 2000 ms`);
-			await t.check(`row 13: no 400 ms show-watch timer is asked for ${tag}`, c.n400 === 0, `${c.n400} requests at 400 ms (main asks about 25 in 10 s)`);
-			await t.check(`row 13: at most 6 show-watch timers fire in 10 s ${tag}`, c.f400 + c.f2000 <= 6, `${c.f400 + c.f2000} fired (the 2000 ms net fires about 5; main's poll about 25)`);
-			await t.check(`row 13: at most 12 show-watch timer requests in 10 s ${tag}`, c.n400 + c.n2000 <= 12, `${c.n400 + c.n2000} requests (one after each tick, and one more for each wake or sync that lands while a check is queued: 5-7 measured)`);
+			const attribution = restAttribution(c);
+			t.log(`row 13 ${tag}: ${c.asked} show-watch requests [${c.sites.join(', ')}], ${c.fired} fires, ${c.unattributed} unattributed`);
+			await t.check(`row 13: show-watch timer activity is attributed ${tag}`, !attribution, attribution);
+			if (!attribution) {
+				await t.check(`row 13: only 2000 ms show-watch timers are used ${tag}`, c.delays.every((d) => d === 2000), `observed delays: ${c.delays.join(', ')} ms`);
+				await t.check(`row 13: at most 6 show-watch timers fire in 10 s ${tag}`, c.fired <= 6, `${c.fired} fired (the 2000 ms net fires about 5; the old poll about 25)`);
+				await t.check(`row 13: at most 12 show-watch timer requests in 10 s ${tag}`, c.asked <= 12, `${c.asked} requests (one after each tick, and one more for each wake or sync that lands while a check is queued: 5-7 measured)`);
+			}
 			await showTabsLocked(f, 'display');
 			const back = await f.evaluate(() => window.__gsw.wait('back', 2040));
 			t.log(`row 13 ${tag}: lens back in ${Math.round(back.ms)} ms after the count (row 1's 150 ms budget)`);
