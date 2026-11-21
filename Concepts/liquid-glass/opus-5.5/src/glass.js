@@ -2807,7 +2807,11 @@
     else parts.forEach(function (e, j) {
       if (!e) return;
       var a = e.animate(T.frames[j], { duration: T.span, easing: 'linear', fill: 'forwards' });
-      if (framePaced) {
+      if (prepare) {
+        // Raster the source pose while the pointer approaches. The carry starts on the press.
+        a.pause();
+        a.currentTime = 0;
+      } else if (framePaced) {
         a.__pmFramePaced = true;
         a.__pmHeld = true;
         a.pause();
