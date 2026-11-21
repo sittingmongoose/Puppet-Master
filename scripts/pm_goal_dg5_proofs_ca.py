@@ -323,18 +323,6 @@ PROOFS = {
         "so a divergent operation id cannot survive to the route join.",
         [(R3, 797), (N3, 944), (N3, 1069)],
         ['dg5/site/pm_goal_dg_ca3_native.py:1069']),
-    'dg5/site/pm_goal_dg_ca3_route.py:801': _p(
-        "owners_native compares the cell named by the d06 control's result "
-        "selector with the result record from d06.readback, which reads "
-        "the result by the run dict's result_key (native :1066). The two "
-        "are bound by the control_result hash and verify_custody, not by "
-        "being the same cell: d06.readback requires at native :1069 that "
-        "the control's result selector digest equals the row hash of the "
-        "record it read, and verify_custody (route :788, its hash check at "
-        "native :140) requires, before :801 in the same synchronous settle "
-        "call, that the cell the selector names carries that digest. No "
-        "write to the result cell runs between these reads and :801.",
-        [(R3, 801), (N3, 1066), (N3, 1069), (R3, 788), (N3, 140)]),
     'dg5/site/pm_goal_dg_ca3_route.py:812': _p(
         "The safe-stop scope join compares the d05 readback's scopes with "
         "the route run scope; the d05 result/origin are bound together by "
@@ -1239,6 +1227,39 @@ WITHDRAWN = {
             "refused at selector_hash first, and a sha-matching cell carries "
             "the selector's schema_id by construction of src_sel.",
             [(N3, 140), (N3, 142)]),
+    ),
+    # Round 3 follow-up 1, second commit (pm-ea-lead 1121132345-c739): ca3_route :801, whose corrected
+    # argument a probe of the different-key case refutes, moved here unchanged.
+    'dg5/site/pm_goal_dg_ca3_route.py:801': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3, follow-up 1 (pm-ea-lead 1121132345-c739: correct the argument '
+            'for the older-saved-version case, or leave :801 withdrawn if the corrected claim is false). It is false. '
+            'FINAL-LIST-113.r4 held it (held_needs_targeted_review) after the ROUND3-EDITS review: verify_custody '
+            '(native :138-140) also accepts a selector whose digest is an older committed version of its cell '
+            '(WorkflowLeasedStorage.committed_version, route :104-112). Probe '
+            'round3-edits/followup1/probes/probe_801.py (sha256 4ce470d1a4e96015...) at owner 34f212, case '
+            'diffkey_old_both, run twice: at settle_owner, commit a copy of the genuine d06 result V at a new key K2, '
+            "then commit V with record.committed_at_utc changed at K2, and re-point the d06 control's result selector "
+            "and the publish origin's afterimages.result to K2 keeping the digest of V (genuine transactions). "
+            "verify_custody passes through committed_version, and :1069 still holds at the run dict's result_key. "
+            'Intact, settle_owner refuses C3/settle_owner/d06_result_custody at :801; with :801 cut, settle_owner and '
+            'freeze_event both accept. So :801 is the only check that refuses: the row closes only by a kill (this '
+            'input as a single-defect negative). With the origin left unchanged the cut is caught at :802 '
+            '(d06_origin_publish), a different code; with a single current commit at K2, or a same-key rewrite, :801 '
+            'never refuses.'
+        ),
+        proof=_p(
+            "owners_native compares the cell named by the d06 control's result "
+            "selector with the result record from d06.readback, which reads "
+            "the result by the run dict's result_key (native :1066). The two "
+            "are bound by the control_result hash and verify_custody, not by "
+            "being the same cell: d06.readback requires at native :1069 that "
+            "the control's result selector digest equals the row hash of the "
+            "record it read, and verify_custody (route :788, its hash check at "
+            "native :140) requires, before :801 in the same synchronous settle "
+            "call, that the cell the selector names carries that digest. No "
+            "write to the result cell runs between these reads and :801.",
+            [(R3, 801), (N3, 1066), (N3, 1069), (R3, 788), (N3, 140)]),
     ),
 }
 
