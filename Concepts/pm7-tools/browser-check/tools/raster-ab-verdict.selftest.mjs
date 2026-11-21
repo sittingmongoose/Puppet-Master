@@ -210,3 +210,18 @@ test('bite: real delay50 records fail firstNewMs and retained reads could-not-ju
 	assert.equal(ret.ok, false, 'retained bite fails as could-not-judge clip-race noise');
 	assert.match(ret.rule, /clip-race noise, IQR 104\.1 ms over 25/);
 });
+
+// bite50C-3 opaque firstNewMs: the 50 ms delay's resolved median shift is only 34.8 ms (frame quantization + noise).
+// At the old 35 ms tolerance this PASSED (a false pass of the real fault); the lead ruled 30 ms so it fails
+// (1121031239-e11a). Every clean green still passes at 30 (max median 25.8). This record pins that ruling.
+const BITE50C_3_FIRSTNEW = [2.9, 9.2, 29.9, 39.6, 67, 105];
+test('bite: the 34.8 ms delay50 shift fails at the ruled 30 ms tolerance (passed at 35)', () => {
+	const pairs = {firstNewMs: BITE50C_3_FIRSTNEW.map(d => ({diff: d, resolved: true}))};
+	const v30 = rasterAbVerdict(pairs, {minResolved: 6}).firstNewMs;
+	assert.equal(v30.medianDiffMs, 34.8);
+	assert.equal(v30.ok, false, '34.8 > 30: the real 50 ms fault must not pass');
+	const v35 = rasterAbVerdict(pairs, {tolMs: {firstNewMs: 35}, minResolved: 6}).firstNewMs;
+	assert.equal(v35.ok, true, 'at 35 it passed — the false pass the 30 ms ruling fixes');
+	assert.equal(RASTER_AB_TOL_MS.firstNewMs, 30);
+	assert.equal(RASTER_AB_TOL_MS.settledMs, 30);
+});

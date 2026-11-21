@@ -19,13 +19,17 @@
 // Tolerances are hard caps in ms, chosen from measured resolved-pair noise (RN-REPORT.md, 2026-11-11-pm7-performance
 // share). They stay below the bite thresholds so a sustained regression of 50 ms (firstNewMs / retainedMs) or 100 ms
 // (settledMs) always puts the resolved paired median past its tolerance. No run-time noise estimate widens them.
-// Measured on the Mac (Apple M3, local client, file://), 3 concurrent runs as the load (lead ruling 1120225932-bad7):
-//   green max resolved paired median  firstNewMs 27.9 / settledMs 26 / retainedMs 16.7 ms
-//   bite minimum shifted median       firstNewMs 46.6 / settledMs 43.2 / retainedMs 41.7 ms
-// so 35/35/25 ms sit between the green noise and the bite signal, inside the 50/50/100 ms caps. At 4 concurrent the
-// client contends enough that retainedMs reads "could not judge" in ~1 run of 4 (a failing row, never a pass); proofs
-// run at 3 concurrent. See RN-REPORT.md.
-export const RASTER_AB_TOL_MS = Object.freeze({firstNewMs: 35, retainedMs: 25, settledMs: 35});
+// Measured on the Mac (Apple M3, local client, file://), 3 concurrent runs as the load, uncontended (lead rulings
+// 1120225932-bad7, 1121031239-e11a):
+//   clean green max resolved paired median  firstNewMs/settledMs 25.8 ms, retainedMs 16.7 ms
+//   clean bite minimum shifted median       firstNewMs/settledMs 34.8 ms (bite50C-3), retainedMs 41.7 ms
+// so 30/30/25 ms sit between the green noise and the bite signal, inside the 50/50/100 ms caps: green margin 4.2 ms,
+// bite margin 4.8 ms. The bar puts a false PASS of the real fault first — at 35 ms the 50 ms bite (bite50C-3, 34.8)
+// passed, at 30 ms it fails and every clean green still passes. It is the gap-aware capture marker, NOT the tolerance,
+// that protects saturated runs: under heavy load unresolved pairs and the retained IQR gate read "could not judge"
+// (a failing infrastructure row, never a pass or a numeric false fail) rather than widening the tolerance. Proofs run
+// at 3 concurrent on an uncontended host. See RN-REPORT.md.
+export const RASTER_AB_TOL_MS = Object.freeze({firstNewMs: 30, retainedMs: 25, settledMs: 30});
 export const RASTER_AB_BITE_MS = Object.freeze({firstNewMs: 50, retainedMs: 50, settledMs: 100});
 // resolution: an edge gap above R is unresolved. R = min(factor x median frame interval, capMs).
 export const RASTER_AB_RES = Object.freeze({factor: 3, capMs: 50});
