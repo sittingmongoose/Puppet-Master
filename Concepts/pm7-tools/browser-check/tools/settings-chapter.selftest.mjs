@@ -2,7 +2,7 @@
 // node tools/settings-chapter.selftest.mjs
 // The page probe itself is tested in a browser on a constructed page: diagnostics/settings-chapter-probe.check.mjs.
 import assert from 'node:assert/strict';
-import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT } from '../checks/perf-settings-chapter.check.mjs';
+import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press } from '../checks/perf-settings-chapter.check.mjs';
 
 /* SETCHAPTER-ROWCOUNT-FIRST-RAF: the first-screen row over the Code & Tools arrivals */
 {
@@ -69,6 +69,42 @@ import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arriv
 	assert.equal(hoverVerdict([sw('general->code', { taggedStill: 2 })])[2].ok, false, 'tags kept fail');
 	assert.equal(hoverVerdict([])[0].ok, false, 'no switch');
 	console.log('PASS hover release: judged only with sampled leaving-chapter tags and a seen walk of that chapter');
+}
+
+/* R97 #4: the matrix sets up a real tag to sample, including when the chapter's idle census is late. */
+{
+	const run = async (waitForHoverTags, censusFinishes) => {
+		const events = [];
+		let tagged = 0;
+		const f = {
+			locator: (selector) => ({
+				first: () => ({
+					boundingBox: async () => ({ x: 0, y: 0, width: 60, height: 20 }),
+					waitFor: async ({ state, timeout }) => {
+						assert.equal(selector, '#workspace-stage [data-pm-hover-bound="true"]');
+						assert.equal(state, 'attached');
+						assert.ok(timeout > 0, 'the wait is bounded');
+						events.push('wait for tags');
+						await Promise.resolve();
+						if (!censusFinishes) throw Object.assign(new Error('no tag appeared'), { name: 'TimeoutError' });
+						tagged = 1;
+					}
+				})
+			}),
+			evaluate: async () => { events.push('sample'); return { tagged }; }
+		};
+		const mouse = { move: async () => {}, down: async () => { events.push('press'); }, up: async () => {} };
+		const t = { page: { mouse, waitForTimeout: async () => {} } };
+		const sample = await press(t, f, 'ai', { waitForHoverTags });
+		return { events, tagged: sample.tagged };
+	};
+	assert.deepEqual(await run(true, true), { events: ['wait for tags', 'sample', 'press'], tagged: 1 },
+		'wait for the delayed census before sampling the old chapter and pressing the next link');
+	assert.deepEqual(await run(true, false), { events: ['wait for tags', 'sample', 'press'], tagged: 0 },
+		'a timed-out census still yields an unsampled switch for the existing verdict');
+	assert.deepEqual(await run(false, true), { events: ['sample', 'press'], tagged: 0 },
+		'presses outside the hover matrix keep their original schedule');
+	console.log('PASS hover setup: the matrix samples after a delayed census, or reports missing tags on timeout');
 }
 
 /* R97 #6: the wait ends on the fill's own completion, and an unfinished fill is told apart from a missing row */

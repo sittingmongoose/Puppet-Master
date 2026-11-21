@@ -152,7 +152,16 @@ export function firstScreenVerdict(code) {
 }
 const ACTIVE = () => (document.querySelector('#pm-settings-root .domain-link.active') || {}).dataset?.domain || '';
 
-async function press(t, f, domain) {
+export async function press(t, f, domain, { waitForHoverTags = false } = {}) {
+	if (waitForHoverTags) {
+		// The page binds tags in idle batches. Give the chapter a chance to bind a real tag before sampling it.
+		try {
+			await f.locator('#workspace-stage [data-pm-hover-bound="true"]').first().waitFor({ state: 'attached', timeout: 10000 });
+		} catch (error) {
+			if (error.name !== 'TimeoutError') throw error;
+			// Capture the switch anyway so the could-judge row reports the missing tags.
+		}
+	}
 	const box = await f.locator(`#pm-settings-root .domain-link[data-domain="${domain}"]`).first().boundingBox();
 	if (!box) throw new Error(`no chapter link for ${domain}`);
 	await t.page.mouse.move(Math.round(box.x + Math.min(box.width / 2, 60)), Math.round(box.y + box.height / 2));
@@ -973,7 +982,7 @@ for (const surface of ['normal', 'sandbox']) {
 				const rows = [];
 				for (const [a, b] of seq) {
 					if ((await f.evaluate(ACTIVE)) !== a) { await f.locator(`#pm-settings-root .domain-link[data-domain="${a}"]`).first().click(); await t.page.waitForTimeout(2000); }
-					await press(t, f, b);
+					await press(t, f, b, { waitForHoverTags: true });
 					await t.page.waitForTimeout(2500);
 					/* the rest of the page is filled in idle slices: wait for the fill's own completion (R97 #6) */
 					const fill = await f.evaluate(FILL_WAIT, FILL_LIMITS);
