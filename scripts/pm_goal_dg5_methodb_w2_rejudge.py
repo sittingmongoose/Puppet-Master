@@ -86,6 +86,7 @@ def main():
     parser.add_argument('--root')
     parser.add_argument('--out', type=Path, required=True)
     args = parser.parse_args()
+    args.out.mkdir(parents=True, exist_ok=True)
     case = json.loads(args.case.read_bytes())
     reference = worker.load_reference(args.reference, [case], args.native_bindings)
     name = case['row']
