@@ -205,7 +205,7 @@ export function judge(rec, { rest, back }) {
 	// delay), and the row passed a page that never stayed suppressed to its end. Signals before the actual end are
 	// now an early return; the return itself must be seen at or after it.
 	const sinceEnd = (x) => endT != null && x.t >= endT;
-	const early = endT == null ? [] : after.filter((x) => x.t < endT && x.card === target && (x.lit.includes(target) || x.tools > 0.5));
+	const early = endT == null ? [] : after.filter((x) => x.t < endT && (x.proxyLit || (x.card === target && (x.lit.includes(target) || x.tools > 0.5))));
 	const earlyClass = release && (rec.cls || []).some((x) => {
 		const beforeRelease = x.t < endT || (x.t === endT && x.order < release.order);
 		const afterStart = x.t > started.t || (x.t === started.t && x.order > started.order);

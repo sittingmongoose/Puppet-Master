@@ -308,3 +308,13 @@ test('V6 P5: only a witnessed early idle release qualifies, and it must retain t
  r.markers[1].t = 260;
  assert.equal(judgeShortHandoff(r).qualified, false);
 });
+
+test('R117 T3: a visible proxy before a late marker clear is an early return', () => {
+ const r = make();
+ r.ops[1].t = 720;
+ r.probe.fired = 720;
+ r.cls = [{t:730,card:'new',on:true}];
+ for (const f of r.frames) Object.assign(f, {op:f.t<720?'wheel':null,lit:f.t>=730?['new']:[],tools:f.t>=730?.9:0});
+ r.frames.find(f => f.t === 700).proxyLit = true;
+ assert.equal(j(r).r2.ok, false);
+});
