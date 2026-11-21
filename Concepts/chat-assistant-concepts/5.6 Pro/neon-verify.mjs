@@ -73,6 +73,7 @@
  *      check plus its slack and the longest frame gap, by one frame and 40 ms) are real overlaps a person would see, and
  *      must fail it; so must pod-shyhost-typo (the page's SHY_HOST reads 'buton') and
  *      pod-declared-slow (the page declares a 2000 ms fade), which run on an edited copy of the page.
+ *      The overlap monitor also limits the total above-target exposure across episodes in a rolling window.
  *      18b checks the running clear wait after three confirmed hits under the Pod.
  *      --cpu <rate> throttles the page's CPU (CDP) for check 18.
  *   19 the chat header's status word wears its mark's tone (nine statuses; three themes).
@@ -1731,6 +1732,9 @@ const POD_SHY_SLACK_MS = 80, POD_FADE_SLACK_MS = 60, POD_TARGET_SLACK = .02;
 const POD_CLEAR_EARLY_SLACK_MS = 20, POD_CLEAR_LATE_SLACK_MS = 80;
 /* T58: past the episode's own deadline, how long the Pod may be above its shy target over a control in one episode */
 const POD_EPISODE_ALLOW_MS = 300;
+/* T92/T126: the batch 5 clean baseline peaked at 570 ms in 2 s (Nas1, 6x CPU).
+   Allow 40 ms beyond that recorded worst, about two 60 Hz frames plus rounding. */
+const POD_WINDOW_MS = 2000, POD_WINDOW_ALLOW_MS = 610;
 /* the values the product is meant to have (70-nier-pod-shy.js and nier-parts.js at the time of T57): the controls its shy
    test counts, its check interval, its clear wait, its fade and its shy opacity */
 const POD_EXPECTED = Object.freeze({ shyHost: 'button, a[href], summary, [role="button"], input, select, textarea', checkMs: 90, clearMs: 350, fadeMs: 180, target: .16 });
@@ -1752,8 +1756,8 @@ const POD_DECLARED = (() => {
   }
   return { found, drift };
 })();
-async function measurePodClearWait(page) {
-  return page.evaluate(async () => {
+async function measurePodClearWait(page, readyMs) {
+  return page.evaluate(async readyMs => {
     const pod = document.getElementById('o55np-pod');
     if (!pod) return { error: 'no Pod' };
     const waitFor = (pred, ms) => new Promise(resolve => {
@@ -1766,7 +1770,19 @@ async function measurePodClearWait(page) {
       poll();
     });
     const isShy = () => pod.hasAttribute('data-shy');
-    if (!await waitFor(() => !isShy(), 3000)) return { error: 'data-shy was already set before the probe' };
+    let readySince = null, previousBox = '';
+    const isReady = () => {
+      const r = pod.getBoundingClientRect(), now = performance.now();
+      if (!r.width || !r.height || r.left < 0 || r.top < 0 || r.right > innerWidth || r.bottom > innerHeight || isShy()) {
+        readySince = null;
+        return false;
+      }
+      const signature = [r.left, r.top, r.width, r.height].map(Math.round).join(',');
+      if (readySince === null || signature !== previousBox) readySince = now;
+      previousBox = signature;
+      return now - readySince >= readyMs;
+    };
+    if (!await waitFor(isReady, 3500)) return { error: 'the Pod did not settle in view before the clear-wait probe' };
 
     const host = PM56_TEST.host, box = pod.getBoundingClientRect();
     if (!box.width || !box.height) return { error: 'the Pod has no box' };
@@ -1817,6 +1833,8 @@ async function measurePodClearWait(page) {
         if (!isShy()) return { error: 'data-shy was absent after a confirmed hit', hit: i + 1 };
       }
       const lastHit = hits.at(-1);
+      const hitMs = hits.map(at => Math.round(at - hits[0]));
+      if (offAt !== null && offAt < lastHit) return { hitMs, error: 'data-shy cleared between confirmed hits' };
       let previous = lastHit, gap = 0;
       scroll();
       const released = await waitFor(() => {
@@ -1826,7 +1844,7 @@ async function measurePodClearWait(page) {
         return offAt !== null;
       }, 3000);
       return {
-        hitMs: hits.map(at => Math.round(at - hits[0])),
+        hitMs,
         heldMs: released ? Math.round(offAt - lastHit) : null,
         gap: Math.round(gap)
       };
@@ -1836,11 +1854,11 @@ async function measurePodClearWait(page) {
       else delete document.elementsFromPoint;
       probe.remove();
     }
-  });
+  }, readyMs);
 }
 
 if (THEMES.includes('nier-dark')) await sec('pod', async () => {
-  const bad = [], windows = [], unsettled = [], opaque = [], copies = [], clears = []; let views = 0;
+  const bad = [], windows = [], unsettled = [], opaque = [], copies = [], clears = [], failureKinds = {}; let views = 0;
   check(!POD_DECLARED.drift.length, `18a Pod 042: the page declares the shy values pinned in the check (SHY_HOST, a ${POD_EXPECTED.checkMs} ms check, a ${POD_EXPECTED.clearMs} ms clear wait, a ${POD_EXPECTED.fadeMs} ms fade, opacity ${POD_EXPECTED.target}); the product's shy values changed otherwise: update POD_EXPECTED in a reviewed change to the check`, { drift: POD_DECLARED.drift, found: POD_DECLARED.found });
   const HOST = POD_EXPECTED.shyHost;
   for (const [w, h] of [[1440, 900], [1512, 982], [1920, 1100]]) {
@@ -1860,7 +1878,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
       console.log('MEASURE Pod window ' + JSON.stringify(windows.at(-1)) + (CPU !== null ? ' cpu ' + CPU + 'x' : ''));
       await prepareWideHistory(p);
       await setTheme(p, 'nier-dark');
-      clears.push({ size: w + 'x' + h, ...await measurePodClearWait(p) });
+      clears.push({ size: w + 'x' + h, ...await measurePodClearWait(p, POD_EXPECTED.clearMs + POD_EXPECTED.fadeMs) });
       await p.evaluate(() => window.PM56_DEMO.setVariant(1, 5));
       /* (the page-edit self-tests, pod-shyhost-typo and pod-declared-slow, add nothing here: their page is the edit) */
       if (SELFTEST && !PAGE_EDITS[SELFTEST]) await p.evaluate(kind => {
@@ -1925,6 +1943,9 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
       /* T47 round 2: the fade-back mechanism, frame by frame (see above) */
       await p.evaluate(([HOST, P]) => {
         const M = window.__nvPodOpaque = { phase: '', ep: null, over: [], worst: 0, worstAt: '', worstLate: 0, worstLateAt: '', frames: 0, shyAt: null, shyFade: null, shyTiming: '', lastFrame: null, gaps: [] };
+        const samples = [];
+        let sampleMs = 0, wasOpaque = false, worstWindowMs = 0, worstWindowAt = '';
+        let windowFlaggedPhase = null, offscreenFlaggedPhase = null;
         const fadeOf = pod => { const cs = getComputedStyle(pod), list = v => v.split(',').map(x => x.trim()), ms = x => x.endsWith('ms') ? parseFloat(x) : parseFloat(x) * 1000;
           const props = list(cs.transitionProperty), durs = list(cs.transitionDuration), dels = list(cs.transitionDelay); let worst = 0, txt = 'none';
           props.forEach((pr, i) => { if (pr !== 'opacity' && pr !== 'all') return; const d = ms(durs[i % durs.length]), dl = ms(dels[i % dels.length]); if (d + dl >= worst) { worst = d + dl; txt = `${pr} ${Math.round(dl)} ms delay + ${Math.round(d)} ms`; } });
@@ -1932,10 +1953,10 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
         const gapSince = t0 => M.gaps.reduce((g, [t, d]) => (t >= t0 ? Math.max(g, d) : g), 0);
         M.shyBy = gap => P.checkMs + P.shySlack + gap;   /* (the shy step's allowance; T59's trap reads it) */
         const flag = (kind, msg) => { const e = M.ep; if (!e || e.flagged[kind]) return; e.flagged[kind] = true; M.over.push({ phase: e.phase, kind, msg }); };
-        const underNow = () => {
-          const pod = document.getElementById('o55np-pod'), tr = document.querySelector('.transcript');
+        const underNow = (pod, Pb) => {
+          const tr = document.querySelector('.transcript');
           if (!pod || !tr || getComputedStyle(pod).display === 'none') return null;
-          const Pb = pod.getBoundingClientRect(), T = tr.getBoundingClientRect();
+          const T = tr.getBoundingClientRect();
           for (const e of tr.querySelectorAll(HOST)) {
             const q = e.getBoundingClientRect(); if (q.bottom < T.top || q.top > T.bottom) continue;
             const ix = Math.min(Pb.right, q.right) - Math.max(Pb.left, q.left), iy = Math.min(Pb.bottom, q.bottom) - Math.max(Pb.top, q.top);
@@ -1957,7 +1978,38 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
           const now = performance.now(), pod = document.getElementById('o55np-pod'), dt = M.lastFrame === null ? 0 : now - M.lastFrame;
           if (M.lastFrame !== null) { M.gaps.push([now, now - M.lastFrame]); if (M.gaps.length > 600) M.gaps.splice(0, 300); }
           M.lastFrame = now; M.frames++;
-          const what = underNow(), op = pod ? +getComputedStyle(pod).opacity : 0, shy = !!pod && pod.hasAttribute('data-shy');
+          const bounds = pod?.getBoundingClientRect();
+          // A Pod entirely outside the viewport has left its seat. A brief return can
+          // fit under even a calibrated exposure budget, so report the departure itself.
+          if (M.phase && offscreenFlaggedPhase !== M.phase && bounds?.width > 0 && bounds.height > 0 &&
+              (bounds.right <= 0 || bounds.bottom <= 0 || bounds.left >= innerWidth || bounds.top >= innerHeight)) {
+            offscreenFlaggedPhase = M.phase;
+            M.over.push({ phase: M.phase, kind: 'offscreen', msg: 'the Pod left the viewport during a clearance view' });
+          }
+          const what = underNow(pod, bounds), op = pod ? +getComputedStyle(pod).opacity : 0, shy = !!pod && pod.hasAttribute('data-shy');
+          // A sampled state covers the interval until the next frame. Clip the oldest
+          // interval at the window boundary so a partial frame cannot inflate the sum.
+          if (wasOpaque && dt > 0) {
+            samples.push([now - dt, now]);
+            sampleMs += dt;
+          }
+          wasOpaque = Boolean(what && op > P.target + P.targetSlack);
+          const cutoff = now - P.windowMs;
+          while (samples.length && samples[0][1] <= cutoff) {
+            const [start, end] = samples.shift();
+            sampleMs -= end - start;
+          }
+          const total = sampleMs - (samples.length ? Math.max(0, cutoff - samples[0][0]) : 0);
+          if (total > worstWindowMs) {
+            worstWindowMs = total;
+            worstWindowAt = M.phase;
+          }
+          if (total > P.windowAllowMs && M.phase !== windowFlaggedPhase) {
+            windowFlaggedPhase = M.phase;
+            M.over.push({ phase: M.phase, kind: 'window',
+              msg: 'above-target exposure over transcript controls totaled ' + Math.ceil(total) + ' ms in ' +
+                P.windowMs + ' ms across episodes (allowed ' + P.windowAllowMs + ' ms)' });
+          }
           if (M.ep && !what && now - M.ep.lastUnder >= P.clearMs) M.ep = null;   /* the episode ends after the clear wait */
           if (what) {
             if (!M.ep) M.ep = { phase: M.phase, from: now, what, lastUnder: now, spanFrom: now, under: true, opaqueFor: 0, late: 0, flagged: {} };
@@ -1981,8 +2033,9 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
           } else if (M.ep) M.ep.under = false;
           requestAnimationFrame(tick);
         };
+        M.windowStats = () => ({ windowMs: Math.round(worstWindowMs), windowAt: worstWindowAt });
         requestAnimationFrame(tick);
-      }, [HOST, { checkMs: POD_EXPECTED.checkMs, clearMs: POD_EXPECTED.clearMs, fadeMs: POD_EXPECTED.fadeMs, target: POD_EXPECTED.target, shySlack: POD_SHY_SLACK_MS, fadeSlack: POD_FADE_SLACK_MS, targetSlack: POD_TARGET_SLACK, allowMs: POD_EPISODE_ALLOW_MS }]);
+      }, [HOST, { checkMs: POD_EXPECTED.checkMs, clearMs: POD_EXPECTED.clearMs, fadeMs: POD_EXPECTED.fadeMs, target: POD_EXPECTED.target, shySlack: POD_SHY_SLACK_MS, fadeSlack: POD_FADE_SLACK_MS, targetSlack: POD_TARGET_SLACK, allowMs: POD_EPISODE_ALLOW_MS, windowMs: POD_WINDOW_MS, windowAllowMs: POD_WINDOW_ALLOW_MS }]);
       const phase = label => p.evaluate(l => { window.__nvPodOpaque.phase = l; }, label);
       const ids = await p.evaluate(() => [...document.querySelectorAll('.thread-row')].map(r => r.dataset.id));
       for (const id of ids) {
@@ -2063,15 +2116,18 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
           if (r.copies) copies.push(r.copies);
           /* T47 round 2: every step of the fade-back that failed, up to this settled frame (one per kind per episode) */
           const late = await p.evaluate(() => { const M = window.__nvPodOpaque, x = M.over.slice(); M.over = []; return x; });
-          for (const c of late) bad.push(`${c.phase}: ${c.kind}: ${c.msg}`);
+          for (const c of late) {
+            failureKinds[c.kind] = (failureKinds[c.kind] || 0) + 1;
+            bad.push(`${c.phase}: ${c.kind}: ${c.msg}`);
+          }
           if (!settled.settled) unsettled.push(`${w} ${id} ${pos}`);
           if (r.nopod) bad.push(`${w} ${id}: no Pod`);
           else if (r.out.length) bad.push(`${w} ${id} ${pos}: ${r.out.join(', ')}${settled.settled ? '' : ' (not settled after 3 s; judged as it stood)'}`);
         }
       }
-      const m = await p.evaluate(() => { const M = window.__nvPodOpaque; return { ms: Math.round(M.worst), at: M.worstAt, pastDeadlineMs: Math.round(M.worstLate), pastDeadlineAt: M.worstLateAt, frames: M.frames, longestFrameGap: Math.round(M.gaps.reduce((g, [, d]) => Math.max(g, d), 0)) }; });
+      const m = await p.evaluate(() => { const M = window.__nvPodOpaque; return { ms: Math.round(M.worst), at: M.worstAt, pastDeadlineMs: Math.round(M.worstLate), pastDeadlineAt: M.worstLateAt, ...M.windowStats(), frames: M.frames, longestFrameGap: Math.round(M.gaps.reduce((g, [, d]) => Math.max(g, d), 0)) }; });
       opaque.push({ size: `${w}x${h}`, ...m });
-      console.log('MEASURE Pod longest opaque time over a control (measured, not judged) ' + JSON.stringify(opaque.at(-1)));
+      console.log('MEASURE Pod overlap and peak rolling exposure ' + JSON.stringify(opaque.at(-1)));
       { const c = copies.filter(x => x.size === undefined); c.forEach(x => { x.size = `${w}x${h}`; });
         console.log('MEASURE FO-76 Activity items that are not live (hidden or inert copies; counted, never judged) ' + JSON.stringify({ size: `${w}x${h}`, views: c.length, items: Math.max(0, ...c.map(x => x.items)), notLive: Math.max(0, ...c.map(x => x.notLive)), inert: Math.max(0, ...c.map(x => x.inert)), viewsWithACopyOverThePod: c.filter(x => x.notLiveOverPod).length })); }
       if (!(m.frames > 0)) bad.push(`${w}x${h}: the Pod's fade-back monitor saw no frame`);
@@ -2083,7 +2139,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
   check(clears.length === windows.length && clears.length > 0 && !wrongClears.length,
     '18b Pod 042: the clear wait restarts on each confirmed hit and holds data-shy through the wait after the last hit',
     { clearMs: POD_EXPECTED.clearMs, minClear, clears, wrong: wrongClears });
-  check(views > 0 && bad.length === 0, `18 Pod 042 clear of the jump chip, the bar, the queue, the decision panel and the composer (${views} views: 3 sizes x every thread x top and bottom, each judged once the Pod has settled; at the bottom no transcript button either; faded back over any it passes, by the product's own steps, at the values pinned in the check: data-shy within ${POD_EXPECTED.checkMs} ms, a fade within ${POD_EXPECTED.fadeMs} ms, then opacity ${POD_EXPECTED.target}; and past each episode's own deadline at most ${POD_EPISODE_ALLOW_MS} ms above it over a control)`, { bad: bad.slice(0, 12), windows, unsettled, opaque, expected: POD_EXPECTED, declared: POD_DECLARED.found, cpu: CPU });
+  check(views > 0 && bad.length === 0, `18 Pod 042 clear of the jump chip, the bar, the queue, the decision panel and the composer (${views} views: 3 sizes x every thread x top and bottom, each judged once the Pod has settled; at the bottom no transcript button either; faded back over any it passes, by the product's own steps, at the values pinned in the check: data-shy within ${POD_EXPECTED.checkMs} ms, a fade within ${POD_EXPECTED.fadeMs} ms, then opacity ${POD_EXPECTED.target}; and past each episode's own deadline at most ${POD_EPISODE_ALLOW_MS} ms above it over a control, with at most ${POD_WINDOW_ALLOW_MS} ms in any ${POD_WINDOW_MS} ms across episodes)`, { bad: bad.slice(0, 12), failureKinds, windows, unsettled, opaque, expected: POD_EXPECTED, declared: POD_DECLARED.found, cpu: CPU });
 });
 
 /* ------------------------------------------------------------- check 19: the header word wears its mark's tone */
