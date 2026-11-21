@@ -222,6 +222,30 @@ export async function trace(cdp, { ms, during, url, keep, track = false, by = fa
 	return { sum, after, marks, events };
 }
 
+// Time the idle row in the app frame. The toggle trace can still be open after this deadline.
+export const installStillDeadline = () => {
+	const root = document.documentElement;
+	window.__stillOnAt = null;
+	window.__stillDeadline = null;
+	new MutationObserver(() => {
+		const idle = window.__stillDeadline;
+		if (!idle) return;
+		const now = performance.now();
+		const still = root.hasAttribute('data-pm-still');
+		if (still && window.__stillOnAt == null) window.__stillOnAt = now;
+		if (now <= idle.deadlineAt) idle.still = still;
+	}).observe(root, { attributes: true, attributeFilter: ['data-pm-still'] });
+	window.__armStillDeadline = (idleMs) => {
+		window.__stillOnAt = null;
+		window.__stillDeadline = null;
+		window.addEventListener('pointermove', (event) => {
+			if (!event.isTrusted) return;
+			const inputAt = performance.now();
+			window.__stillDeadline = { inputAt, deadlineAt: inputAt + idleMs, still: root.hasAttribute('data-pm-still') };
+		}, { capture: true, once: true });
+	};
+};
+
 // Marks the state's changes in the trace (a check-side observer: the product writes no marks)
 export const MARKER = () => {
 	if (window.__stillMarker) return true;
@@ -262,6 +286,11 @@ export default async function (t) {
 	const looks = String(t.args.looks || 'all') === 'all' ? ALL : String(t.args.looks).split(',').filter(Boolean);
 	const views = String(t.args.views || 'settings,dashboard,usage').split(',').filter(Boolean);
 	const after = Number(t.args.after || 3000), ms = Number(t.args.ms || 2000);
+	const toggleWaitArg = String(t.args.toggleWait ?? 8000).trim();
+	const toggleWait = Number(toggleWaitArg);
+	if (!toggleWaitArg || !Number.isFinite(toggleWait) || toggleWait < 0) {
+		throw new Error('--set toggleWait must be a finite nonnegative number of milliseconds');
+	}
 	const drawnMax = Number(t.args.drawn || 15), mainMax = Number(t.args.main || 10), startsMax = Number(t.args.starts || 60);
 	// --set framesBy=1 (diagnosis, logged only): each rest trace also says what asked for its main frame starts
 	const framesBy = String(t.args.framesBy || '0') === '1';
@@ -316,12 +345,10 @@ export default async function (t) {
 
 	const f = await t.app.open({ query: `pm-warm=0&pm-still=${after}` });
 	await f.evaluate(() => document.fonts.ready.then(() => true));
+	await f.evaluate(installStillDeadline);
 	const watchFinite = String(t.args.toggleWatchFinite || '0') === '1';
 	if (watchFinite) await f.evaluate(installToggleFiniteWatch);
 	await f.evaluate(MARKER);
-	// when this page went still for the current reading (a check-side observer, as on f0): a toggle that lands after
-	// the trace is named with its time instead of a bare restyled:null. Reset to null at the start of every cell.
-	await f.evaluate(() => { window.__stillOnAt = null; new MutationObserver(() => { if (window.__stillOnAt == null && document.documentElement.hasAttribute('data-pm-still')) window.__stillOnAt = performance.now(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-pm-still'] }); });
 	await f.evaluate(installHomeLiveWatch);
 	await f.evaluate(installPrewarmProbe, { park: false });
 	const watchUsage = String(t.args.toggleWatchLive || '0') === '1';
@@ -407,8 +434,13 @@ export default async function (t) {
 				await f.locator('.pmw-tab').filter({ hasText: 'Agents' }).first().click();
 				await t.page.waitForTimeout(800);
 			}
+			const idleMs = after + 3000;
+			await f.evaluate((duration) => {
+				window.__stillInputs = [];
+				window.__stillTogglePopulation = null;
+				window.__armStillDeadline(duration);
+			}, idleMs);
 			await move();
-			await f.evaluate(() => { window.__stillInputs = []; window.__stillOnAt = null; });
 			const t0 = Date.now();
 			await t.page.waitForTimeout(Math.min(1500, after / 2));
 
@@ -426,30 +458,32 @@ export default async function (t) {
 			const stillNow = () => f.evaluate(() => document.documentElement.hasAttribute('data-pm-still'));
 			await t.page.waitForTimeout(Math.max(0, after - 400 - (Date.now() - t0)));
 			let tg = null, toggleMiss = null;
-			if (await stillNow()) {
-				const onAt = await f.evaluate(() => window.__stillOnAt);
-				toggleMiss = `the page was already still when the trace was to start${onAt == null ? '' : ` (data-pm-still at ${Math.round(onAt)} ms)`}`;
-			}
+			if (await stillNow()) toggleMiss = 'the page was already still when the trace was to start';
 			else {
-				const waitMs = Number(t.args.toggleWait || 8000);
 				tg = await traceToggle({ ms: 0, url, during: async () => {
-					const w = await waitStill(stillNow, { waitMs });
-					if (!w.saw) t.log(`${at}: NOTE the page did not report data-pm-still within ${waitMs} ms of the trace opening`);
+					const w = await waitStill(stillNow, { waitMs: toggleWait });
+					if (!w.saw) t.log(`${at}: NOTE the page did not report data-pm-still within ${toggleWait} ms of the trace opening`);
 				}, ...toggleTraceOptions(look, view, 'on') }, view);
-				if (tg.marks['pm-still:on'] === undefined) toggleMiss = `the pm-still:on mark did not land inside the trace (waited up to ${waitMs} ms from before the toggle)`;
+				if (tg.marks['pm-still:on'] === undefined) toggleMiss = `the pm-still:on mark did not land inside the trace (waited up to ${toggleWait} ms from before the toggle)`;
 			}
 			const on = tg ? tg.after('pm-still:on', 'pm-still:on') : null;
 
 			// (a) STILL_AFTER + 3 s
-			await t.page.waitForTimeout(Math.max(0, after + 3000 - (Date.now() - t0)));
+			await t.page.waitForTimeout(Math.max(0, idleMs - (Date.now() - t0)));
 			const a = await f.evaluate(CENSUS);
-			const onPopulation = await f.evaluate(() => window.__stillTogglePopulation);
+			const { onPopulation, idle } = await f.evaluate(() => ({ onPopulation: window.__stillTogglePopulation, idle: window.__stillDeadline }));
 			const onCost = recordToggle(look, view, 'on', on, onPopulation || { marks: null, marked: [], held: 0 });
 			const newlyPaused = a.finPaused.filter((x) => !b.finPaused.includes(x));
-			await t.check(`${at}: ${after + 3000} ms after the last input the page is still`, a.still, `data-pm-still ${a.still ? 'on' : 'off'}${a.hasScript ? '' : ' (no still-page script in this page)'}`);
+			const deadlineRead = idle && a.now >= idle.deadlineAt;
+			const idleDetail = deadlineRead ? `data-pm-still ${idle.still ? 'on' : 'off'} at the deadline` : 'could not judge: no completed idle window from a trusted pointer move';
+			const idleToggle = idle && a.stillAt != null ? `; observed on ${Math.round(a.stillAt - idle.inputAt)} ms after input` : '';
+			await t.check(`${at}: ${idleMs} ms after the last input the page is still`, Boolean(deadlineRead && idle.still), idleDetail + idleToggle + (a.hasScript ? '' : ' (no still-page script in this page)'));
 			await t.check(`${at}: no endless animation runs while still`, a.run.length === 0, a.run.length ? `${a.run.length} running: ${a.run.slice(0, 6).join('; ')}` : `${a.held} held, ${a.marks} elements marked${a.exempt.length ? `, exempt: ${a.exempt.join('; ')}` : ''}`);
 			await t.check(`${at}: every mark holds an endless loop (no stray mark)`, a.stray.length === 0, a.stray.length ? a.stray.slice(0, 6).join('; ') : `${a.marks} marks`);
 			await t.check(`${at}: no finite animation is held by the state`, newlyPaused.length === 0, newlyPaused.length ? newlyPaused.slice(0, 6).join('; ') : `${a.finRun} finite running`);
+			const stillTime = a.stillAt == null ? '' : `; data-pm-still observed at ${Math.round(a.stillAt)} ms in the app frame`;
+			const onDetail = toggleMiss ? `could not judge: ${toggleMiss}` : `${JSON.stringify(onCost)}; ${on?.found ? `${on.firstFrameMs} ms frame; largest following recalc ${on.max}, ${on.total} in ${on.steps}` : 'no recalc or mark: unjudgeable'}`;
+			await t.check(`${at}: going still cost stays within its marked population`, onCost.pass, onDetail + stillTime);
 			// frames while still: up to three 2 s traces, each once no finite animation runs; the quietest is judged
 			const live = view === 'usage';
 			// main frames are the RENDERED ones (PM7PERF-STILL-FRAMES-STARTS): frame starts less those Chrome abandons with
@@ -517,8 +551,6 @@ export default async function (t) {
 					if (judgeStarts) await t.check(`${at}: still, the main thread starts at most 0.45 per refresh (${Number.isFinite(startCap) ? startCap.toFixed(1) : '?'} a second at ${Number.isFinite(refreshHz) ? refreshHz.toFixed(0) : '?'} Hz, capped at ${startsMax})`, Number.isFinite(startCap) && x.mainFrames.perSec <= startCap, `${x.mainFrames.perSec}/s started (${x.mainFrames.noUpdatePerSec}/s of them with nothing to update, ${rendered(x)}/s rendered), bound ${Number.isFinite(startCap) ? startCap.toFixed(1) : 'unread'}/s = 0.45 of ${Number.isFinite(refreshHz) ? refreshHz.toFixed(0) : '?'} Hz, cap ${startsMax}/s; ${framesBy ? 'asked for by ' + (askers(x) || 'nothing named') : 'run with --set framesBy=1 to name what asks for them'}`);
 				}
 			}
-			if (a.still) await t.check(`${at}: going still cost stays within its marked population`, onCost.pass, toggleMiss ? `could not judge: ${toggleMiss}` : `${JSON.stringify(onCost)}; ${on?.found ? `${on.firstFrameMs} ms frame; largest following recalc ${on.max}, ${on.total} in ${on.steps}` : 'no recalc or mark: unjudgeable'}`);
-
 			const stable = await f.evaluate(() => ({ still: document.documentElement.hasAttribute('data-pm-still'), inputs: window.__stillInputs }));
 			await t.check(`${at}: the view stays still throughout its rest traces`, a.still && stable.still,
 				`still ${a.still} -> ${stable.still}; new wake events ${JSON.stringify(stable.inputs)}`);
