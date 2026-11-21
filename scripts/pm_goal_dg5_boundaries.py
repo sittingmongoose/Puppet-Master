@@ -1160,21 +1160,23 @@ def row_code_check(target, code, origin=None, refusing_sites=()):
     """Is the intact refusal the declared row's own guard with its own code? (KILLED_CODE condition 1.)
 
     Addendum 1 with addendum 11 (pm-ea-lead 1121131008-95db): the harness's code-matched
-    errors list is not trusted. The code must be the row's own guard code, and its
-    origin must be verified:
-      (1) the recorded origin frame (`refusal_origin`) is the row's guard: for a site row
+    errors list is not trusted. Method 1 decides whenever the trial recorded an origin;
+    method 2 is the fallback only when it did not (review (a), lead answer 3):
+      (1) the recorded origin (`refusal_origin`) is the row's guard: for a site row
           `dg5/site/<file>:<line>`, the origin site (innermost frame outside this bridge and
           the guard helpers) is that line; for any other row (schema, number, date-time,
           boolean), the site where that row refused in this trial (`refusing_sites`) is in
           the origin traceback with only checker frames inside it (`CHECKER_FILES`,
-          `CHECKER_FUNCTIONS`: NUMRULE, a bank's validate path, guard helpers); or
-      (2) the code has exactly one raise site in the owner source (the admission gate's
-          static check, `static_single_raise_site`), which a run-time-built code fails.
-    Neither holds: unverifiable, fails closed (own False).
-    The site row's guard code is the literal first argument of the require/guard/halt/refuse
-    call at that line (keycheck.py check (iii)'s guard_code, widened from require to the four
-    routed guard calls); a routed refusal may carry a wrapper prefix ('/' + guard code).
-    Any other row owns a code when `row(code)` names it. A crash or a missing code owns nothing.
+          `CHECKER_FUNCTIONS`: NUMRULE, a bank's validate path, guard helpers). A refusal
+          raised at the row's guard carries that guard's code whatever builds it (a
+          FrameError, a template, a computed name), so a line with no literal code is
+          judged by its origin. A literal guard code that differs from the refusal code
+          (less a wrapper prefix '/' + code) is not the row's own code.
+      (2) no origin recorded: the code has exactly one raise site in the owner source and
+          that site is the row's (the pinned gate module, `static_single_raise_site`); a
+          code built at run time fails.
+    Neither holds: unverifiable, fails closed (own False). Any non-site row owns a code
+    only when `row(code)` names it. A crash or a missing code owns nothing.
     """
     out = dict(row=target, code=code, guard_code=None, own=False, code_matches=False, origin=origin, why=None)
     if not isinstance(code, str) or not code or code.startswith('crash:'):
@@ -1188,11 +1190,9 @@ def row_code_check(target, code, origin=None, refusing_sites=()):
         except (OSError, ValueError, IndexError):
             return dict(out, why='row site line not in this source')
         found = GUARD_CODE.search(text)
-        if not found:
-            return dict(out, why='row site line has no literal guard code: ' + text.strip()[:120])
-        guard = found.group(1)
+        guard = found.group(1) if found else None
         out['guard_code'] = guard
-        if not (code == guard or code.endswith('/' + guard)):
+        if guard is not None and not (code == guard or code.endswith('/' + guard)):
             return dict(out, why='refusal code is not the row guard code')
         site = ['scripts/' + name, int(line)]
     else:
@@ -1200,22 +1200,30 @@ def row_code_check(target, code, origin=None, refusing_sites=()):
         if row(code) != target:
             return dict(out, why='refusal code maps to another row')
     out['code_matches'] = True
-    origin_site = (origin or {}).get('site')
-    if site is not None and origin_site == site:
-        return dict(out, own=True, verified_by='origin frame at the row guard')
-    if site is None and origin:
+    if origin:
+        origin_site = origin.get('site')
+        if site is not None:
+            if origin_site == site:
+                return dict(out, own=True, verified_by='origin frame at the row guard')
+            return dict(out, why='origin not at the row guard (origin %s)' % (origin_site,))
         sites = {tuple(s) for n, s in refusing_sites if n == target}
         for where, line, _, _, checker in reversed(origin.get('frames') or []):
             if (where, line) in sites:
                 return dict(out, own=True, verified_by='origin at the row refusing site (only checker frames inside)')
             if not checker:
                 break
+        return dict(out, why='origin not at the row refusing site (origin %s)' % (origin_site,))
     static = static_single_raise_site(code)
     out['static_check'] = static
     if static and static.get('ok'):
-        return dict(out, own=True, verified_by='single raise site (gate-e2)')
-    why = 'origin not at the row guard (origin %s)' % (origin_site,) if origin else 'no recorded origin'
-    return dict(out, why=why + ('; gate-e2 not installed' if static is None else '; gate-e2: %s' % static.get('reason')))
+        const = (static.get('evidence') or {}).get('const_sites') or []
+        allowed = ['%s:%s' % (site[0], site[1])] if site is not None else \
+            ['%s:%s' % (s[0], s[1]) for n, s in refusing_sites if n == target]
+        if len(const) == 1 and const[0] in allowed:
+            return dict(out, own=True, verified_by='single raise site (gate-e2), the row guard')
+        return dict(out, why='no recorded origin; the single raise site %s is not the row guard' % (const,))
+    return dict(out, why='no recorded origin' + ('; gate-e2 not installed' if static is None
+                                                 else '; gate-e2: %s' % static.get('reason')))
 
 
 def refusal_code(error):
