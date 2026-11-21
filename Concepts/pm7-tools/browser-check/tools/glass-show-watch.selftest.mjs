@@ -1,7 +1,7 @@
 // Constructed schedules for the browser check's own probes. Run with node.
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
-import { PROBE, TIMER_PROBE, restAttribution, showTabsLocked, showWatchSites } from '../checks/glass-show-watch.check.mjs';
+import { PROBE, TIMER_PROBE, appearanceVerdict, restAttribution, showTabs, showTabsLocked, showWatchSites } from '../checks/glass-show-watch.check.mjs';
 
 const url = 'file:///glass-test.html';
 const script = `<script id="lg-js">
@@ -13,15 +13,21 @@ const script = `<script id="lg-js">
   function checkShown() { showT = 0; }
 </script>`;
 
-function fixture(range, src = script) {
+function fixture(range, src = script, frameMs = 16) {
 	let now = 100, seq = 0;
 	const timers = new Map();
 	const shows = [];
-	const strip = { style: { set display(value) { if (value === '') shows.push(now); } } };
+	const strip = { style: { set display(value) {
+		if (value !== '') return;
+		shows.push(now);
+		browser.setTimeout(() => { if (browser.__gsw.lens) browser.__gsw.lens.style.opacity = '1'; }, 30);
+	} } };
 	const browser = vm.createContext({
 		document: { hidden: false, querySelector: () => strip },
 		location: { href: url },
 		performance: { now: () => now },
+		getComputedStyle: (el) => el.style,
+		requestAnimationFrame: (fn) => browser.setTimeout(fn, frameMs),
 		setTimeout(fn, delay, ...args) {
 			const id = ++seq;
 			timers.set(id, { at: now + (Number(delay) || 0), fn, args });
@@ -37,7 +43,7 @@ function fixture(range, src = script) {
 	return {
 		run,
 		shows,
-		frame: { evaluate(fn, arg) { return run(`(${fn})(${JSON.stringify(arg)})`); } },
+		frame: { evaluate(fn, arg) { return run(`(${fn})`)(arg); } },
 		async advance(ms) {
 			const end = now + ms;
 			for (;;) {
@@ -94,3 +100,21 @@ await lost.advance(800);
 assert.equal((await timedOut).ok, false, 'a lost queued check must fail the phase');
 assert.equal(lost.shows.length, 1, 'even a failed phase restores the strip');
 console.log('PASS show waits for the queued poll re-arm and fails a lost re-arm');
+
+const sampler = fixture({ ...range, sites });
+sampler.run('__gsw.lens = { isConnected: true, style: { opacity: "0" } };');
+await showTabs(sampler.frame, 'display', 2150);
+await sampler.advance(170); // No controller read until after the 150 ms budget.
+const sampled = sampler.run('__gsw.sample');
+assert.equal((await sampled).ms, 32, 'an on-time first good frame must survive a late driver read');
+assert.equal(appearanceVerdict(await sampled, 150), 'pass');
+
+const gap = fixture({ ...range, sites }, script, 170);
+gap.run('__gsw.lens = { isConnected: true, style: { opacity: "0" } };');
+await showTabs(gap.frame, 'display', 2150);
+await gap.advance(170);
+const gapped = await gap.run('__gsw.sample');
+assert.equal(gapped.maxGapMs, 170);
+assert.equal(appearanceVerdict(gapped, 150), 'sampling gap');
+assert.equal(appearanceVerdict({ ok: true, ms: 180, lastMissMs: 160 }, 150), 'late');
+console.log('PASS first good frame survives driver delay; a frame gap is distinguished from witnessed lateness');

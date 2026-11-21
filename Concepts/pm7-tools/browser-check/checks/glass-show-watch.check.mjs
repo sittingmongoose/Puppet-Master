@@ -76,10 +76,9 @@
 //     the check calls PM_LG.sync() once (the spec's named hook) and logs it: 5 of the 20 row-2 hides in the
 //     branch's full runs used it, 3 of 40 in each queue run. The appearance budget is measured from the show
 //     write either way.
-//   - Timings are rAF-sampled (±1 frame) from the DOM write to the lens's inline opacity leaving '0' (or coming
-//     back with visibility not hidden), the spec's measure. On the loaded host one sampling gap measured 63 ms
-//     and one timer callback ran 60 ms late (the 2067 and 2110 ms reps): the budget, not the product, carries
-//     those gaps; both traces show one tick, one check, the lens back on that check.
+//   - A page-side rAF sampler arms before each write and saves its first good sample. A frame gap spanning the
+//     budget leaves the timing unverified and is reported separately from a lens still out after the deadline.
+//     On the loaded host one sampling gap measured 63 ms and one timer callback ran 60 ms late (2067 and 2110 ms).
 //   - Row 13 resolves show-watch call sites inside the built page's lg-js block (helpers/built-source.mjs).
 //   --set looks=glass-dark   --set size=1920x1080   --set settle=6000   --set only=2   --set repeat=20
 import { muteSound, parkPointer } from '../helpers/quiet-page.mjs';
@@ -231,7 +230,9 @@ export const PROBE = () => {
 			this.opMo.observe(lens, { attributes: true, attributeFilter: ['style'] });
 		},
 		mark() { this.t0 = performance.now(); },
-		showTabs(how) {
+		arm(state, timeout, fromGone = false) { this.sample = this.wait(state, timeout, fromGone); },
+		showTabs(how, timeout) {
+			if (timeout !== undefined) this.arm('back', timeout);
 			this.mark();
 			const s = document.querySelector('nav.page-tabs');
 			if (how === 'display') s.style.display = '';
@@ -246,10 +247,18 @@ export const PROBE = () => {
 			const want = state === 'out' ? () => this.out() : () => this.back();
 			return new Promise((resolve) => {
 				const start = performance.now();
+				let lastMissMs = 0;
+				let previous = start;
+				let maxGapMs = 0;
 				const tick = () => {
 					const from = fromGone ? this.tGone : this.t0;
-					if (from && want()) { resolve({ ok: true, ms: performance.now() - from }); return; }
-					if (performance.now() - start > timeout) { resolve({ ok: false, ms: from ? performance.now() - from : -1 }); return; }
+					const ok = !!from && want();
+					const now = performance.now();
+					const ms = from ? now - from : -1;
+					if (from) maxGapMs = Math.max(maxGapMs, now - Math.max(previous, from));
+					if (!ok && from) lastMissMs = ms;
+					if (ok || now - start > timeout) { resolve({ ok, ms, lastMissMs, maxGapMs }); return; }
+					previous = now;
 					requestAnimationFrame(tick);
 				};
 				requestAnimationFrame(tick);
@@ -257,6 +266,23 @@ export const PROBE = () => {
 		}
 	};
 };
+
+export function appearanceVerdict(sample, budget) {
+	if (sample.ok && sample.ms <= budget) return 'pass';
+	if (sample.ms < 0) return 'missing origin';
+	return sample.lastMissMs >= budget ? 'late' : 'sampling gap';
+}
+
+async function checkAppearance(t, label, sample, budget, trace = '') {
+	const verdict = appearanceVerdict(sample, budget);
+	const fmt = (ms) => `${Math.round(ms)} ms`;
+	const detail = `${fmt(sample.ms)} from the write, max sampling gap ${fmt(sample.maxGapMs)}${trace ? `; ${trace}` : ''}`;
+	if (verdict === 'sampling gap') {
+		await t.check(`${label} (sampling gap)`, false, `last miss at ${fmt(sample.lastMissMs)}; ${detail}`);
+	} else {
+		await t.check(label, verdict === 'pass', verdict === 'missing origin' ? 'measurement origin was never observed' : detail);
+	}
+}
 
 /* hide nav.page-tabs by inline display, inline visibility, or a temporary head stylesheet; wait for the lens to go
    out (ambient app writes discover the hide; PM_LG.sync() once as the fallback, logged) */
@@ -291,6 +317,7 @@ async function showTrace(f) {
 
 async function hideTabs(f, how) {
 	await f.evaluate((h) => {
+		window.__gsw.arm('out', 1200);
 		window.__gsw.mark();
 		const s = document.querySelector('nav.page-tabs');
 		if (h === 'display') s.style.display = 'none';
@@ -298,24 +325,24 @@ async function hideTabs(f, how) {
 		else { const st = document.createElement('style'); st.id = 'gsw-case-c'; st.textContent = 'nav.page-tabs { visibility: hidden }'; document.head.appendChild(st); }
 		if (window.__swt) window.__swt.note('hide');
 	}, how);
-	let out = await f.evaluate(() => window.__gsw.wait('out', 1200));
+	let out = await f.evaluate(() => window.__gsw.sample);
 	let hooked = false;
 	if (!out.ok) {
 		hooked = true;
-		await f.evaluate(() => { if (window.__swt) window.__swt.note('sync'); PM_LG.sync(); });
-		out = await f.evaluate(() => window.__gsw.wait('out', 600));
+		await f.evaluate(() => { window.__gsw.arm('out', 600); window.__swt.note('sync'); PM_LG.sync(); });
+		out = await f.evaluate(() => window.__gsw.sample);
 	}
 	return { ...out, hooked };
 }
 
-const showTabs = (f, how) => f.evaluate((h) => window.__gsw.showTabs(h), how);
+export const showTabs = (f, how, timeout) => f.evaluate(([h, ms]) => window.__gsw.showTabs(h, ms), [how, timeout]);
 
 /* A poll fire queues layout work. Keep the strip hidden until checkShownNow itself requests the next poll,
    then write in the same evaluation so a driver round trip can't spend the interval we just established. */
-export async function showTabsLocked(f, how) {
-	return f.evaluate(async (h) => {
+export async function showTabsLocked(f, how, timeout) {
+	return f.evaluate(async ([h, ms]) => {
 		const P = window.__swt;
-		const show = () => window.__gsw.showTabs(h);
+		const show = () => window.__gsw.showTabs(h, ms);
 		const hiddenAt = P.events.findLast((e) => e.k === 'hide')?.at ?? performance.now();
 		const pendingPolls = () => [...P.byId.values()].filter((m) => m.d === 400);
 		const polledWhileHidden = P.events.some((e) => e.d === 400 && e.at >= hiddenAt);
@@ -333,9 +360,9 @@ export async function showTabsLocked(f, how) {
 			}
 			await new Promise((r) => setTimeout(r, 8));
 		}
-		show(); // Restore the strip so the next row can run.
+		window.__gsw.showTabs(h); // Restore the strip so the next row can run.
 		return { ok: false, detail: 'no fresh 400 ms re-arm from the queued check within 700 ms' };
-	}, how);
+	}, [how, timeout]);
 }
 
 async function cell(t, surface, W, H) {
@@ -388,18 +415,18 @@ async function cell(t, surface, W, H) {
 					continue;
 				}
 				if (row === 1) {
-					const phase = await showTabsLocked(f, how);
+					const phase = await showTabsLocked(f, how, budget + 2000);
 					await t.check(`row 1: the show phase is established ${tag}`, phase.ok, phase.detail);
 					if (!phase.ok) continue;
-				} else await showTabs(f, how);
-				const back = await f.evaluate((b) => window.__gsw.wait('back', b + 2000), budget);
+				} else await showTabs(f, how, budget + 2000);
+				const back = await f.evaluate(() => window.__gsw.sample);
 				let trace = '';
 				if (row === 2) {
 					const traced = await showTrace(f);
 					trace = formatTrace(traced.events, traced.origin);
 					t.log(`row 2 ${tag}: lens back in ${Math.round(back.ms)} ms (budget ${budget} ms)${out.hooked ? '; hide used PM_LG.sync()' : ''}; ${trace}`);
 				} else t.log(`row ${row} ${tag}: lens back in ${Math.round(back.ms)} ms (budget ${budget} ms)`);
-				await t.check(`row ${row}: the lens appears within ${budget} ms ${tag}`, back.ok && back.ms <= budget, trace ? `${Math.round(back.ms)} ms; ${trace}` : `${Math.round(back.ms)} ms`);
+				await checkAppearance(t, `row ${row}: the lens appears within ${budget} ms ${tag}`, back, budget, trace);
 				if (reps > 1 && !back.ok) {
 					await f.evaluate(() => PM_LG.sync());
 					const again = await f.evaluate(() => window.__gsw.wait('back', 2500));
@@ -419,13 +446,13 @@ async function cell(t, surface, W, H) {
 				const shown = cap && await f.evaluate(() => window.__gsw.back());
 				await t.check(`row 4: the Usage range lens is shown ${tag}`, shown, cap ? 'lens out already' : 'no lens over the chosen range button: could not judge', { hard: reps === 1 });
 				if (!shown) continue;
-				await f.evaluate(() => { window.__gsw.mark(); document.querySelector('#pmuRange').closest('.primary-content > .page').classList.remove('active'); });
-				const out = await f.evaluate(() => window.__gsw.wait('out', 2000));
+				await f.evaluate(() => { window.__gsw.arm('out', 2000); window.__gsw.mark(); document.querySelector('#pmuRange').closest('.primary-content > .page').classList.remove('active'); });
+				const out = await f.evaluate(() => window.__gsw.sample);
 				await t.check(`row 4: the page class hide puts the lens out ${tag}`, out.ok, `${Math.round(out.ms)} ms`);
-				await f.evaluate(() => { window.__gsw.mark(); document.querySelector('#pmuRange').closest('.primary-content > .page').classList.add('active'); });
-				const back = await f.evaluate(() => window.__gsw.wait('back', 2000));
+				await f.evaluate(() => { window.__gsw.arm('back', 2000); window.__gsw.mark(); document.querySelector('#pmuRange').closest('.primary-content > .page').classList.add('active'); });
+				const back = await f.evaluate(() => window.__gsw.sample);
 				t.log(`row 4 ${tag}: lens back in ${Math.round(back.ms)} ms (budget 600 ms; a .page class change alone syncs through lazySync's 140 ms debounce, see the header)`);
-				await t.check(`row 4: the ancestor class show returns the lens within 600 ms ${tag}`, back.ok && back.ms <= 600, `${Math.round(back.ms)} ms`);
+				await checkAppearance(t, `row 4: the ancestor class show returns the lens within 600 ms ${tag}`, back, 600);
 			}
 		}
 		if (runRow(4) && (runRow(9) || runRow(13))) {
@@ -455,10 +482,10 @@ async function cell(t, surface, W, H) {
 			const shown = cap && await f.evaluate(() => window.__gsw.back());
 			await t.check(`row 9: the page-tabs lens is shown before the measured open ${tag}`, shown, cap ? 'lens out already' : 'no lens over the active tab: could not judge', { hard: reps === 1 });
 			if (shown) {
-				await f.evaluate(() => { window.__gsw.mark(); O55.solid.set(true); O55.ui.open(); });
-				const out = await f.evaluate(() => window.__gsw.wait('out', 1500));
+				await f.evaluate(() => { window.__gsw.arm('out', 1500); window.__gsw.mark(); O55.solid.set(true); O55.ui.open(); });
+				const out = await f.evaluate(() => window.__gsw.sample);
 				t.log(`row 9 ${tag}: lens out in ${Math.round(out.ms)} ms from the open call (budget 700 ms)`);
-				await t.check(`row 9: the open puts the behind-window lens out within 700 ms ${tag}`, out.ok && out.ms <= 700, `${Math.round(out.ms)} ms`);
+				await checkAppearance(t, `row 9: the open puts the behind-window lens out within 700 ms ${tag}`, out, 700);
 				await f.waitForFunction(() => document.documentElement.hasAttribute('data-o55-solid') && !document.getElementById('pm-o55-onboarding').classList.contains('o55-opening'), null, { timeout: 10000 });
 				const solid = await f.evaluate(() => getComputedStyle(document.querySelector('nav.page-tabs')).visibility === 'hidden');
 				await t.check(`row 9: the solid sheet rule hides the strip (case C exercised) ${tag}`, solid, solid ? '' : 'nav.page-tabs is not visibility:hidden under the open solid window: the row judged nothing');
@@ -466,12 +493,14 @@ async function cell(t, surface, W, H) {
 					window.__gsw.tGone = 0; window.__gsw.tClose = performance.now();
 					const mo = new MutationObserver(() => { if (!document.documentElement.hasAttribute('data-o55-open')) { window.__gsw.tGone = performance.now(); mo.disconnect(); } });
 					mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-o55-open'] });
+					window.__gsw.arm('back', 4000, true);
+					window.__gsw.sample.then(() => mo.disconnect());
 					O55.ui.close();
 				});
-				const back = await f.evaluate(() => window.__gsw.wait('back', 4000, true));
+				const back = await f.evaluate(() => window.__gsw.sample);
 				const wall = await f.evaluate(() => window.__gsw.tGone ? Math.round(window.__gsw.tGone - window.__gsw.tClose) : -1);
 				t.log(`row 9 ${tag}: close() to data-o55-open removal ${wall} ms (the window's exit, logged not judged); lens back in ${Math.round(back.ms)} ms from the removal (budget 200 ms)`);
-				await t.check(`row 9: the close returns the lens within 200 ms of data-o55-open's removal ${tag}`, back.ok && back.ms <= 200, `${Math.round(back.ms)} ms`);
+				await checkAppearance(t, `row 9: the close returns the lens within 200 ms of data-o55-open's removal ${tag}`, back, 200);
 			}
 			await f.evaluate(() => { try { O55.solid.set(null); } catch (e) {} if (window.O55.S.open) O55.ui.close(); });
 			await f.waitForFunction(() => !document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 10000 }).catch(() => {});
@@ -507,12 +536,12 @@ async function cell(t, surface, W, H) {
 				await t.check(`row 13: at most 6 show-watch timers fire in 10 s ${tag}`, c.fired <= 6, `${c.fired} fired (the 2000 ms net fires about 5; the old poll about 25)`);
 				await t.check(`row 13: at most 12 show-watch timer requests in 10 s ${tag}`, c.asked <= 12, `${c.asked} requests (one after each tick, and one more for each wake or sync that lands while a check is queued: 5-7 measured)`);
 			}
-			const phase = await showTabsLocked(f, 'display');
+			const phase = await showTabsLocked(f, 'display', 2040);
 			await t.check(`row 13: the show phase is established ${tag}`, phase.ok, phase.detail);
 			if (!phase.ok) continue;
-			const back = await f.evaluate(() => window.__gsw.wait('back', 2040));
+			const back = await f.evaluate(() => window.__gsw.sample);
 			t.log(`row 13 ${tag}: lens back in ${Math.round(back.ms)} ms after the count (row 1's 150 ms budget)`);
-			await t.check(`row 13: the lens still appears within 150 ms once shown ${tag}`, back.ok && back.ms <= 150, `${Math.round(back.ms)} ms`);
+			await checkAppearance(t, `row 13: the lens still appears within 150 ms once shown ${tag}`, back, 150);
 		}
 	}
 	await parkPointer(t.page, W, H);
