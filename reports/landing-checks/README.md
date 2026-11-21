@@ -12,8 +12,24 @@ file any landing branch touched: stale governance hashes, and a plan-migration s
 
 ## Commands
 
-    python3 scripts/pm-landing-check.py --base origin/main   # at landing, in the shared checkout
-    python3 scripts/pm-landing-check.py --record-baseline    # refresh, in a full checkout at main
+From a local topic worktree on the VM, start the lander under `long-job`:
+
+    long-job start pm-land-my-topic -- python3 scripts/pm-land.py run fix/my-topic --agent my-name --wait-for-review
+    long-job wait pm-land-my-topic --timeout 1500
+
+Wait again on exit 124. The check itself runs as a separate long-job on the 1070ti. Use
+`--checks-on nas1` for Nas1. The lander prints the check’s original exit code and a share directory
+with `landing-check.json`, `record.json`, `verification.json` and the subcheck reports. If it
+asks for a judgment, compare the rows in `review.json` with the baseline and read any timeout
+rerun reports it names. Write `judgment.json` in that run directory with the same
+`report_sha256`, a Boolean `proceed` and a short `judgment` explaining the comparison. Save the complete file with an atomic rename. The lander waits before touching the shared checkout.
+
+Use `run <branch> --dry-run` to check and verify a published commit, or a local branch pointing
+at fetched main, without acquiring the lock or pushing. While a remote worktree is still in place,
+`python3 scripts/pm-land.py verify <record.json> --commit <full commit SHA> --base <full origin/main SHA>`
+fetches main and asks the host to rehash the live checkout and shared inputs. It prints whether
+the record matches and returns the landing check’s exit code when it does. A verification failure
+exits 3. The tool removes its temporary remote worktree when the run ends.
 
 Both hand the aggregate checks `--subcheck-timeout-seconds`, 1800 by default; see "Subchecks that
 time out" below.
@@ -45,9 +61,8 @@ from its export is not truncated; one whose export falls back is, and the summar
 repository, so every file outside a sparse cone reads as missing: a dry run at `ecb77f4e6c` on a
 worktree without `Concepts` and `tests` produced three blocking items and 76 new failures that were
 all the absent cone, in two truncated subchecks, and none of them about the branch. The tool was
-right to stop, but a lander would have read those as theirs. Run it in the shared checkout at
-landing or after `git sparse-checkout disable`; `--allow-sparse` overrides it for a deliberate
-partial run.
+right to stop, but a lander would have read those as theirs. Run it in a full checkout on the idle
+machine. `--allow-sparse` is for a deliberate partial run outside the landing flow.
 
 The recorded `commit` is the commit the baseline was taken at, and it has to be a commit of `main`:
 rule 2 applies only while that commit is an ancestor of the landing's base (see "Only against a
@@ -99,7 +114,7 @@ There is no staleness exception or pre-existing classification for an input mism
 recorded input edition; never re-record a baseline to make a pending landing pass.
 
 Older baselines without this field cannot establish input equivalence and the new checker refuses
-them. Adopt the recorder during a scheduled refresh between landings, using the full local worktree
+them. Adopt the recorder during a scheduled refresh between landings, using a full worktree on the idle machine
 at the pushed `main`; the old checker accepts the additive field. The adoption order is documented
 in [the readiness drift notes](readiness-drift-20261011/NOTES.md). This fix does not refresh the
 repository baseline or authorize a governance reseal.
@@ -593,7 +608,41 @@ failure of the same key as pre-existing. Copy from the shared checkout:
     Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_SHEET_ANSWERS_20260910.json
     Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_SHEET_PLAIN_20260909.md
 
-Copy only these, not the whole .audits folder (about 30 GB).
+Copy these paths, the ignored readiness directory and any other untracked final reports the audit
+index reads. The whole `.audits` folder is about 30 GB.
+
+## Landing by hand
+
+1. Take the landing lock as described in `AGENTS.md`. Fetch and record the full fetched
+   `origin/main` SHA. Rebase and push the topic branch. Record its full commit and tree SHAs.
+2. SSH to `1070ti` or `nas1-agent`. Fetch the topic and create a temporary, detached worktree at the
+   recorded commit in `~/src/PuppetMaster` using `git worktree add --detach <path> <commit>`.
+   Confirm `git rev-parse HEAD HEAD^{tree}`, `git status --porcelain`, and
+   `git config --bool --get core.sparseCheckout`. The SHAs must match and the status must be empty.
+   The sparse setting must be false or unset. Check `git ls-files -v` for skip-worktree and
+   assume-unchanged entries.
+3. Copy the ignored audit inputs above, the untracked `Plans/.audits/audit-*/FINAL_REPORT.md`
+   files, and the readiness audit directory from the shared checkout. Recreate the raw evidence
+   directory link using the resolved shared target. Use the exact raw evidence paths in
+   `tests/fixtures/governance/raw_evidence_capture_modes.json` to hash the files behind the link.
+   Save a manifest with both inventories’ relative paths and SHA-256 values. Compare the inventories
+   by path and hash, including the resolved link target. Record UTC start and end times, host,
+   commit, tree, full base, input manifest and the exit code with the report.
+4. Run the shard check in the remote worktree. On the same host, use
+   `long-job start <name> --cwd <worktree> --log <share-log> -- bash <run-script>`.
+   The run script must run
+   `python3 scripts/pm-landing-check.py --base <full base SHA> --subcheck-timeout-seconds 1800 --json --readiness-audit-root <worktree>/Plans/.audits/event-authority-2026-08-13-currentness --keep-check-reports <share-dir>/subchecks`,
+   redirect its JSON and stderr to the share, and save and return its original exit code. Wait
+   with `long-job wait <name> --timeout 1500` and re-arm on 124. Read the report and apply the
+   ordinary rules for unchanged-count rows and timeouts before touching the shared checkout.
+5. Fetch again in the shared checkout. If the base moved, repeat from the rebase. Verify the remote
+   HEAD, tree, clean full checkout and both sets of ignored input hashes against the record.
+   Stop if a file the branch touches has uncommitted changes in the shared checkout. Fast-forward
+   to the recorded commit, confirm its HEAD and tree, run the shared shard check and repeat the
+   input verification. Push main in the same step. If anything fails after the fast-forward,
+   use `git reset --keep origin/main` immediately.
+6. For Plans changes, keep the lock and complete the follow-up below. Remove both temporary
+   worktrees and release the lock when the landing is complete.
 
 ## Refreshing it after a Plans landing
 
@@ -602,29 +651,30 @@ landing agent keeps the same landing lock and refreshes the migration snapshot a
 separate follow-up commit. A landing with no `Plans/` paths refreshes neither artifact. Never
 refresh the baseline to make a landing pass: that excuses exactly the failure it was meant to show.
 
-Working directory: `~/pm-worktrees/snapshot-$(date -u +%Y%m%d)`, a full worktree on the VM's local
-disk at the newly pushed `main`, never the shared checkout. The snapshot writes a new tracked run
+Working directory: a fresh full worktree on the idle machine at the newly pushed `main`. Use
+the same copied inputs and hashes as for the landing. Run the two generation commands together
+under `long-job` on that host. If a snapshot for this UTC day already exists, use the next
+three-digit sequence in its run ID. The snapshot writes a new tracked run
 directory and removes snapshot runs older than the one it replaces, which is why it cannot run where
 branches land. The replaced run stays because the new run declares it and validation reads its
 summary. `git add Plans/.plan_migration` below stages both changes. Git history keeps the removed bytes.
 
     cd ~/pm-worktrees/snapshot-$(date -u +%Y%m%d)
     git fetch origin
-    git checkout -B plans/snapshot-$(date -u +%Y%m%d) origin/main
-    git sparse-checkout disable
-    ln -sfn /mnt/Cursor/PuppetMaster-Evidence/tests/agent_packet_restrictions \
-            tests/agent_packet_restrictions
     python3 scripts/pm-plan-migration.py snapshot-current \
         --run-id pds-$(date -u +%Y%m%d)-001-current-planunit-snapshot \
         --expected-doc-count "$(ls Plans/*.md | wc -l)" \
         --supersedes-run-id "$(python3 -c "import json;print(json.load(open('Plans/.plan_migration/current_run.json'))['run_id'])")"
-    python3 scripts/pm-landing-check.py --record-baseline
+    python3 scripts/pm-landing-check.py --record-baseline \
+        --readiness-audit-root "$PWD/Plans/.audits/event-authority-2026-08-13-currentness"
     git add Plans/.plan_migration reports/landing-checks/baseline.json
     git commit -m "plans: refresh the plan-migration snapshot and the landing-check baseline"
-    git push -u origin HEAD
+    git push origin HEAD:refs/heads/fix/my-landing-snapshot
 
-Land that separate commit through the ordinary fast-forward, shard-check, landing-check, main-push
-and worktree-removal procedure while holding the same landing lock; release it afterward.
+From the shared checkout, land that separate commit through the same remote check, fast-forward,
+shard check, verification and main push while holding the same landing lock. If generation or
+validation fails after a Plans landing, keep the lock for recovery and use the saved report to
+finish the follow-up. Remove the temporary worktrees and release the lock when it is published.
 
 Six things that make the difference between a good baseline and a misleading one:
 
