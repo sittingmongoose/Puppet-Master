@@ -56,6 +56,28 @@ const past = (f, r) => {
 	return Math.max(0, v[0] - r[0], r[2] - v[2], v[1] - r[1], r[3] - v[3]);
 };
 
+function pipAwake() {
+	const root = window.O55?.S?.root;
+	const stage = root && O55.pipStage.of(root.querySelector('.o55-stage'));
+	return !!stage?.ps && !stage.sleepZ && !stage.ps.asleep;
+}
+
+async function wakePip(t, f) {
+	if (await f.evaluate(pipAwake)) return;
+	const box = await f.locator('.o55-stage').boundingBox({ timeout: 3000 });
+	if (!box) return;
+	const y = box.y + box.height / 2;
+	for (let i = 0; i < 9; i++) {
+		await t.page.mouse.move(box.x + box.width * (0.3 + i * 0.05), y + (i % 2) * 4);
+		await f.waitForTimeout(60);
+	}
+	try {
+		await f.waitForFunction(pipAwake, null, { timeout: 6000 });
+	} catch (error) {
+		if (error.name !== 'TimeoutError') throw error;
+	}
+}
+
 async function run(t, mode) {
 	let f, size;
 	if (mode === 'normal') {
@@ -79,8 +101,10 @@ async function run(t, mode) {
 		await f.waitForTimeout(2500);
 		for (let i = 1; i <= reps; i++) {
 			const tag = `${mode} ${look} c-ready rep ${i}`;
+			await wakePip(t, f);
 			await f.evaluate(install);
 			await f.waitForTimeout(150);
+			await t.check(`${tag}: Pip is awake before the shrink`, await f.evaluate(pipAwake), 'requires the stage and pose awake after real pointer travel', { hard: true });
 			await t.mark(`${look} rep ${i} 740`);
 			const sizedAt = await size(740, 768);
 			await f.waitForTimeout(1500);
