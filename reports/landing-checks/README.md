@@ -631,6 +631,8 @@ the set of paths and each SHA-256 before checking. Repeat both comparisons befor
 and before push. A file visible on only one side invalidates the receipt. A full audit-folder
 copy can include tens of gigabytes of unrelated capture data.
 
+Anyone who writes a checker input in the shared checkout, including readiness receipts, currentness editions and other ignored inputs the check reads, must hold the landing lock.
+
 ## Landing by hand
 
 1. Take the landing lock as described in `AGENTS.md`. Save the lander name, branch and UTC time on
@@ -830,19 +832,21 @@ prefix = "publication: "
 lines = path.read_text().splitlines()
 existing = [line[len(prefix):] for line in lines if line.startswith(prefix)]
 if phase == "fast-forward-pending":
-    base, candidate, pre_merge_head, plans, completes, reseal, worktree, branch = fields
+    base, candidate, pre_merge_head, plans, completes, reseal, worktree, branch, common = fields
     if (existing or base == candidate
             or any(not re.fullmatch(r"[0-9a-f]{40}", value) for value in (base, candidate, pre_merge_head))
             or any(value not in ("true", "false") for value in (plans, completes, reseal))
             or (reseal == "true" and plans != "true")
-            or (completes != "true" and (not Path(worktree).is_absolute() or not branch))
+            or (completes != "true" and (not Path(worktree).is_absolute() or not branch
+                                        or not Path(common).is_absolute()))
             or (plans == "true" and completes == "true")
             or (completes == "true") != any(line.startswith("follow-up-owed: ") for line in lines)):
         raise SystemExit("inconsistent publication or Plans follow-up")
     marker = dict(base=base, candidate=candidate, pre_merge_head=pre_merge_head,
                   plans_followup=plans == "true", completes_followup=completes == "true",
                   reseal=reseal == "true",
-                  topic=dict(worktree=worktree, branch=branch, tip=candidate) if completes == "false" else None)
+                  topic=dict(worktree=worktree, branch=branch, tip=candidate,
+                             git_common_dir=str(Path(common).resolve())) if completes == "false" else None)
 else:
     base, candidate = fields
     if len(existing) != 1:
@@ -877,10 +881,14 @@ fast_forward_checked() {
     pre_merge_head=$(git rev-parse --verify HEAD)
     git merge-base --is-ancestor "$pre_merge_head" "$PM_LAND_BASE"
     git merge-base --is-ancestor "$PM_LAND_BASE" "$PM_LAND_COMMIT"
+    topic_git_dir=
+    if [ "${PM_LAND_COMPLETES_FOLLOWUP:?}" = false ]; then
+        topic_git_dir=$(git -C "${PM_LAND_TOPIC_WORKTREE:?}" rev-parse --path-format=absolute --git-common-dir)
+    fi
     shared_preflight
     save_landing_phase fast-forward-pending "$PM_LAND_BASE" "$PM_LAND_COMMIT" "$pre_merge_head" \
         "${PM_LAND_PLANS_FOLLOWUP:?}" "${PM_LAND_COMPLETES_FOLLOWUP:?}" "${PM_LAND_RESEAL:-false}" \
-        "${PM_LAND_TOPIC_WORKTREE:-}" "${PM_LAND_TOPIC_BRANCH:-}"
+        "${PM_LAND_TOPIC_WORKTREE:-}" "${PM_LAND_TOPIC_BRANCH:-}" "$topic_git_dir"
     if ! git merge --ff-only --no-overwrite-ignore "$PM_LAND_COMMIT"; then
         save_landing_phase fast-forward-failed "$PM_LAND_BASE" "$PM_LAND_COMMIT"
         python3 -B "$PM_LAND_SCRIPT" failed-ff-state --before "$pre_merge_head" --commit "$PM_LAND_COMMIT" \
@@ -925,7 +933,7 @@ fast-forward. Replace the placeholders with full SHAs. Flush the temporary holde
 directory when replacing the holder so the marker survives interruption.
 
 ```text
-publication: {"base": "<fetched main>", "candidate": "<checked commit>", "pre_merge_head": "<shared HEAD before merging>", "plans_followup": true, "completes_followup": false, "phase": "fast-forward-pending", "reseal": false, "topic": {"worktree": "<original absolute path>", "branch": "<topic branch>", "tip": "<checked commit>"}}
+publication: {"base": "<fetched main>", "candidate": "<checked commit>", "pre_merge_head": "<shared HEAD before merging>", "plans_followup": true, "completes_followup": false, "phase": "fast-forward-pending", "reseal": false, "topic": {"worktree": "<original absolute path>", "branch": "<topic branch>", "tip": "<checked commit>", "git_common_dir": "<original absolute Git directory>"}}
 ```
 
 Use `plans_followup: true` for a topic that changes Plans. For the snapshot follow-up, keep the
@@ -964,8 +972,10 @@ replace its token under the guard, and reconcile while holding the recovered loc
   candidate, record its follow-up and original checkout cleanup before clearing the journal.
 - **Finish recovery.** Clear the pending marker after reconciliation. Complete any owed Plans
   follow-up at fetched main before another landing. Check the original worktree and branch
-  against the saved tip and fresh primary ancestry before removal. If the checkout has moved or
-  changed, keep the cleanup identity and hand it off for inspection.
+  against the saved tip and fresh primary ancestry before removal. If Git already removed the
+  original worktree, confirm it is unregistered in the recorded Git directory and the branch
+  still points at the recorded tip in freshly fetched primary main. Delete the ref only at that
+  exact tip and clear the cleanup marker. If proof is missing, keep the marker for inspection.
 
 ## Refreshing it after a Plans landing
 
