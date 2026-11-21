@@ -368,23 +368,48 @@ async function openChapter(f, domain) {
 
 async function openManagerTab(f, ws, tab) {
 	const sel = `[data-continuous-workspace-body="${ws}"] .manager-tab[data-tab="${tab}"]`;
-	await f.locator(sel).scrollIntoViewIfNeeded({ timeout: 2500 }).catch(() => {});
-	try { await f.locator(sel).click({ timeout: 6000 }); } catch (e) {
-		/* a manager tab whose press Playwright cannot land still switches by the page's own click */
-		const pressed = await f.evaluate(([w, id]) => {
-			const body = document.querySelector(`[data-continuous-workspace-body="${w}"]`);
-			const btn = body && body.querySelector(`.manager-tab[data-tab="${id}"]`);
-			if (!btn) return false;
-			btn.click();
+	const oldBody = await f.evaluateHandle((w) => document.querySelector(
+		`[data-continuous-workspace-body="${w}"] .pm51-mgr > .manager-body:not(.o55-leaving)`
+	), ws);
+	try {
+		await f.locator(sel).scrollIntoViewIfNeeded({ timeout: 2500 }).catch(() => {});
+		try { await f.locator(sel).click({ timeout: 6000 }); } catch (e) {
+			/* a manager tab whose press Playwright cannot land still switches by the page's own click */
+			const pressed = await f.evaluate(([w, id]) => {
+				const body = document.querySelector(`[data-continuous-workspace-body="${w}"]`);
+				const btn = body && body.querySelector(`.manager-tab[data-tab="${id}"]`);
+				if (!btn) return false;
+				btn.click();
+				return true;
+			}, [ws, tab]).catch(() => false);
+			if (!pressed) return false;
+		}
+		// The active button changes at the start of the swap, while the outgoing body is still present.
+		return await f.waitForFunction(async ([w, id, previous]) => {
+			const read = () => {
+				const body = document.querySelector(`[data-continuous-workspace-body="${w}"]`);
+				const manager = body?.querySelector('.pm51-mgr');
+				const shown = manager?.querySelector(':scope > .manager-body');
+				const active = manager?.querySelector(':scope > .pm51-tabs .manager-tab.active');
+				if (active?.dataset.tab !== id || !shown || shown === previous ||
+					manager.querySelectorAll(':scope > .manager-body').length !== 1 ||
+					shown.getAnimations().some((animation) => animation.pending || animation.playState === 'running')) return null;
+				const { x, y, width, height } = shown.getBoundingClientRect();
+				if (!width || !height) return null;
+				return { shown, signature: JSON.stringify([shown.textContent, x, y, width, height]) };
+			};
+			const first = read();
+			if (!first) return false;
+			for (let frame = 0; frame < 2; frame++) {
+				await new Promise((resolve) => requestAnimationFrame(resolve));
+				const next = read();
+				if (!next || next.shown !== first.shown || next.signature !== first.signature) return false;
+			}
 			return true;
-		}, [ws, tab]).catch(() => false);
-		if (!pressed) return false;
+		}, [ws, tab, oldBody], { timeout: 6000 }).then(() => true).catch(() => false);
+	} finally {
+		await oldBody.dispose();
 	}
-	return f.waitForFunction(([w, id]) => {
-		const body = document.querySelector(`[data-continuous-workspace-body="${w}"]`);
-		const btn = body && body.querySelector(`.manager-tab[data-tab="${id}"]`);
-		return !!(btn && btn.classList.contains('active'));
-	}, [ws, tab], { timeout: 6000 }).then(() => true).catch(() => false);
 }
 
 export default async function (t) {
@@ -421,7 +446,9 @@ export default async function (t) {
 				}
 				const place = `${domain}/${ws}${tab ? `/${tab}` : ''}`;
 				await expand(f, ws);
+				const before = seen.size;
 				await scan(t, f, ws, tab, place, bag, seen, limits);
+				if (tab && seen.size === before) t.log(`no confirm candidates: ${place}`);
 			}
 		}
 	}

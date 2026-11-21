@@ -1,6 +1,6 @@
 {
  "v": 1,
- "about": "settings-min-text: committed renames of line-baseline state keys in the committed fixture settings-min-text.lines.json (a supplement is recorded under the new keys and is not renamed). A baseline state that finds no head state fails unless this file renames it or lists it under retired. Prefix renames only: rows are never edited. Each rule replaces a leading \"from\" with its \"to\" and applies, in order, to the key the rules before it produced. Retired states are named by their original fixture key.",
+ "about": "settings-min-text: committed renames of line-baseline state keys in the committed fixture settings-min-text.lines.json (a supplement is recorded under the new keys and is not renamed). A baseline state that finds no head state fails unless this file renames it or lists it under retired. Each rule replaces a leading \"from\" with its \"to\" and applies, in order, to the key the rules before it produced. Retired states are named by their original fixture key. Row renames use exact tag-and-text keys in the remapped state. Row retirements apply only to the named cell and state. Neither rule changes the baseline line counts.",
  "prefixes": [
   {
    "from": "Memory & Automation Context, › ",
@@ -66,6 +66,35 @@
   {
    "state": "Memory & Automation › Context & Memory › Sources",
    "why": "FO-167 (quiet Memory, Jared 2026-11-11) removed the Context & Memory manager's tabs; Memory is one page. The fixture recorded no row in this state."
+  }
+ ],
+ "rowRenames": [
+  {
+   "state": "home",
+   "from": "div|Context, memories, Goals, personas, and crews.",
+   "to": "div|Memory, Goals, personas, and crews.",
+   "why": "FO-167 shortened the Settings Home description of Memory & Automation."
+  }
+ ],
+ "retiredRows": [
+  {
+   "cell": "normal|nier-dark|740x900",
+   "state": "Code & Tools Editor, termina › Testing & Debug › Debug",
+   "rows": [
+    "button|Automatic",
+    "button|Always",
+    "button|Never"
+   ],
+   "why": "This Debug recording duplicated the entire adjacent What it can test tab during a delayed tab swap. The three keys remain checked in What it can test."
+  },
+  {
+   "cell": "sandbox|basic-light|860x900",
+   "state": "System › Server & Project Location › Servers",
+   "rows": [
+    "button|Project details",
+    "button|Where the files are"
+   ],
+   "why": "This Servers recording duplicated the entire adjacent Home & Location tab during a delayed tab swap. Both keys remain checked in Home & Location."
   }
  ]
 }
