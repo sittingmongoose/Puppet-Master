@@ -21,6 +21,11 @@ Different-code later refusals (KILLED_CODE):
   not_own_code              the declared row's guard code is not the code it refuses with: CANNOT_DECIDE
   restoration_not_repeating restoration refuses at the row with another code: CANNOT_DECIDE
   crash_cut                 the cut path crashes (Storage Crash): CANNOT_DECIDE, never KILLED_CODE or cover
+  rebuilt_same_code         the guard's refusal is caught and a fresh refusal with the same code is raised
+                            at another site (no chained original): the origin frame is not the row's guard,
+                            so CANNOT_DECIDE (addendum 11), although the code-matched errors name the row
+  rebuilt_chained           the same rebuild inside the handler (`raise ... from None`, as cf3_projector.py:329):
+                            the chained original carries the code unchanged from the guard: KILLED_CODE
 
 A trial passes only when the kill class is the expected one and the record
 carries the judge's evidence for it (`killed_code_check`, and for same-code
@@ -93,7 +98,8 @@ class SyntheticWorld:
         self.notes = []
 
 
-DIFFERENT = ('killed_code', 'not_own_code', 'restoration_not_repeating', 'crash_cut')
+DIFFERENT = ('killed_code', 'not_own_code', 'restoration_not_repeating', 'crash_cut', 'rebuilt_same_code',
+             'rebuilt_chained')
 
 
 def action_for(case, world):
@@ -109,6 +115,19 @@ def action_for(case, world):
                 handle.write('x')
             again = runs.stat().st_size >= 3          # the third trial process is the restoration
             require('selftest/cl/flaky', False, raise_code='selftest/cl/flaky-again' if again else None)  # site:flaky
+        elif case == 'rebuilt_same_code':
+            failed = False
+            try:
+                require('selftest/cl/rebuilt', False)  # site:rebuilt
+            except Refusal:
+                failed = True
+            if failed:
+                raise Refusal('selftest/cl/rebuilt')   # rebuilt fresh at another site, same code
+        elif case == 'rebuilt_chained':
+            try:
+                require('selftest/cl/chained', False)  # site:chained
+            except Refusal as error:
+                raise Refusal(error.code) from None    # rebuilt in the handler (the original stays on __context__)
         elif case in DIFFERENT:
             require('selftest/cl/first', False)        # site:first
         else:
@@ -126,7 +145,8 @@ def action_for(case, world):
         else:
             require('selftest/cl/shared', False)       # site:shared_second
         return 'accepted'
-    target = site({'not_own_code': 'not_own', 'restoration_not_repeating': 'flaky'}.get(
+    target = site({'not_own_code': 'not_own', 'restoration_not_repeating': 'flaky', 'rebuilt_same_code': 'rebuilt',
+                   'rebuilt_chained': 'chained'}.get(
         case, 'first' if case in DIFFERENT else 'shared_first'))
     return action, target
 
@@ -142,6 +162,8 @@ EXPECTED = {
     'not_own_code': ('CANNOT_DECIDE', FAMILY),
     'restoration_not_repeating': ('CANNOT_DECIDE', FAMILY),
     'crash_cut': ('CANNOT_DECIDE', FAMILY),
+    'rebuilt_same_code': ('CANNOT_DECIDE', FAMILY),
+    'rebuilt_chained': ('KILLED_CODE', FAMILY),
 }
 # Which judge evidence each case must carry (what makes the verdict, not only its name).
 EVIDENCE = {
@@ -153,6 +175,8 @@ EVIDENCE = {
     'not_own_code': ('code', 'not the row guard'),
     'restoration_not_repeating': ('code', 'restoration did not repeat'),
     'crash_cut': ('code', 'crash'),
+    'rebuilt_same_code': ('code', 'origin not at the row guard'),
+    'rebuilt_chained': ('code', 'KILLED_CODE'),
 }
 
 
@@ -183,7 +207,8 @@ def run(work):
             elif kind == 'after':
                 ok = ok and after.get('verdict') == expected and (want is None or after.get('effect') == want)
             elif want == 'KILLED_CODE':
-                ok = ok and code.get('verdict') == 'KILLED_CODE' and (code.get('own_guard') or {}).get('own') is True
+                ok = ok and code.get('verdict') == 'KILLED_CODE' and (code.get('own_guard') or {}).get('own') is True \
+                    and (code.get('own_guard') or {}).get('verified_by') == 'origin frame at the row guard'
             else:
                 ok = ok and code.get('verdict') is None and want in (code.get('reason') or '') + \
                     (record.get('cannot_decide_reason') or '')
