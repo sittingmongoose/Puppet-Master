@@ -1088,11 +1088,16 @@ GUARD_HELPERS = frozenset(('require', 'guard', 'refuse', 'halt', 'shared_require
 # its site: these frames may lie between that site and the raise (NUMRULE, a bank's validate path).
 CHECKER_FILES = ('pm_goal_test_numrule.py',)
 CHECKER_FUNCTIONS = frozenset(('validate', '_checked', 'errors', 'check')) | GUARD_HELPERS
-# Static single-raise-site check (addendum 11 (2)): the admission-gate worker's importable module
-# (admission-gate/gate-e2/code_sites.py: OwnerSites({path: text}).unique(code) -> (ok, evidence)),
-# loaded by path from PM_DG5_GATE_E2 or the default below, built once per run over this source's
-# owner files. Not installed or unusable: no static proof (fails closed).
-GATE_E2 = os.environ.get('PM_DG5_GATE_E2', '/home/sittingmongoose/pm-scratch/ea-c12-dg5/admission-gate/gate-e2')
+# Static single-raise-site check (addendum 11 (2)), only the fallback when no origin was recorded.
+# Review (c): it loads only the pinned copy of the admission gate's module in this branch
+# (scripts/dg5_gate_e2/: code_sites.py and the proof_sources.py it loads from its own folder),
+# and only when both files match GATE_E2_PIN; any other bytes fail closed. A new gate edition
+# is a new pin (dg5_gate_e2/README.md).
+GATE_E2 = ROOT / 'scripts' / 'dg5_gate_e2'
+GATE_E2_PIN = {
+    'code_sites.py': '4ffb2b834c95e5e229e66fc0012b8195238a9db4f57bfefee4d1c45f2a37ca2b',
+    'proof_sources.py': '335bbb989dafa21df7510bda9182693a9231cf559d39b646a7752c7b40fd837e',
+}
 _GATE_SITES = []
 
 
@@ -1136,22 +1141,28 @@ def refusal_origin(error, code):
 
 
 def static_single_raise_site(code):
-    """Addendum 11 (2) through the admission gate's code_sites module, or None when it is not installed."""
+    """Addendum 11 (2) through the pinned gate module; None when it is absent, ok False when it is not the pin."""
     import importlib.util
-    module_path = Path(GATE_E2) / 'code_sites.py'
+    folder = Path(GATE_E2)
+    module_path = folder / 'code_sites.py'
     if not module_path.is_file():
         return None
+    actual = {name: hashlib.sha256((folder / name).read_bytes()).hexdigest() if (folder / name).is_file() else None
+              for name in GATE_E2_PIN}
+    if actual != GATE_E2_PIN:
+        return dict(ok=False, reason='gate-e2 module is not the pinned file (sha256 %s, pinned %s)' % (actual, GATE_E2_PIN))
     try:
-        if not _GATE_SITES:
+        if not _GATE_SITES or _GATE_SITES[0][1] != actual['code_sites.py']:
             spec = importlib.util.spec_from_file_location('dg5_gate_e2_code_sites', module_path)
             gate = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(gate)
             files = {str(p.relative_to(ROOT)): p.read_text() for p in sorted((ROOT / 'scripts').glob('*.py'))
                      if p.name.startswith(SITE_MODULE_PREFIXES)}
-            _GATE_SITES.append((gate.OwnerSites(files), hashlib.sha256(module_path.read_bytes()).hexdigest()))
+            _GATE_SITES[:] = [(gate.OwnerSites(files), actual['code_sites.py'])]
         sites, sha = _GATE_SITES[0]
         ok, evidence = sites.unique(code)
-        return dict(ok=bool(ok), reason=(evidence or {}).get('why'), evidence=evidence, gate_sha256=sha)
+        return dict(ok=bool(ok), reason=(evidence or {}).get('why'), evidence=evidence, gate_sha256=sha,
+                    gate_pin=dict(GATE_E2_PIN))
     except Exception as error:  # noqa: BLE001 - an unusable gate is no proof
         return dict(ok=False, reason='gate-e2 unusable: %s: %s' % (type(error).__name__, str(error)[:200]))
 
