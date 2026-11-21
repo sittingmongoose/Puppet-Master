@@ -2851,9 +2851,10 @@
     // chip runs on the compositor so later main-thread work cannot pin it midway along.
     if (holdStart && reuse) {
       anims.forEach(function (a) { a.pause(); a.__pmHeld = true; });
-      requestAnimationFrame(function firstAvailable(frame) {
+      var railPress = filesSwitcher(strip);
+      function firstAvailable(frame) {
         if (L.carry !== K) return;
-        if (!filesSwitcher(strip) && frame - made < 30) { requestAnimationFrame(firstAvailable); return; }
+        if (!railPress && frame - made < 30) { requestAnimationFrame(firstAvailable); return; }
         anims.forEach(function (a) { a.__pmHeld = false; a.play(); });
         if (splice) requestAnimationFrame(function positionRestingChip() {
           if (L.carry !== K) return;
@@ -2861,7 +2862,8 @@
           // By this point the actual lens is hidden by the paired visibility animation.
           setLensBox(L, B);
         });
-      });
+      }
+      if (railPress) firstAvailable(made); else requestAnimationFrame(firstAvailable);
     } else if (holdStart) window.PM_START_ON_SHOWN(anims, { startHeld: true, frames: cold ? 6 : 10 });
     else requestAnimationFrame(function () {
       /* the first frame callback after the block was made: when it was first drawn (K.drawn), so its age is known before
