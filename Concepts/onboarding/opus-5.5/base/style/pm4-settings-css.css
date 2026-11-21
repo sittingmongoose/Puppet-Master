@@ -325,7 +325,9 @@
 }
 
 #panel-settings .page-index {
-  padding: 10px 8px 12px; border-right: 1px solid var(--k3-line);
+  /* no right border: its card has its own edge, and the column's line drew a second one 6 px beside it in Basic,
+     Friendly, Retro and NieR (Jared, 2026-11-21: "This line needs to be removed. on the themes where it is there") */
+  padding: 10px 8px 12px;
   background: var(--k3-bg-2); overflow: auto;
 }
 #panel-settings .page-index-card {

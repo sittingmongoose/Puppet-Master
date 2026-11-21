@@ -21,15 +21,24 @@ const pm51HasTabs = w => w && w.type !== 'settings' && (pm51TabOrder[w.id] || []
 const pm51TabLabel = (ws, t) => (((PLACEMENT && PLACEMENT.managers[ws]) || {}).tabs || {})[t] || humanize(t);
 
 /* A group the manager draws itself (a composed placement section) has no anchor of its own. Its first drawn row
-   names the card it sits in; that card becomes the group's anchor, so the index, a jump and the scroll spy all see it. */
+   names the card it sits in; that card becomes the group's anchor, so the index, a jump and the scroll spy all see it.
+   A group the manager draws one item at a time (PM51.page's `owns`: Media abilities, Web abilities) is its list and
+   the shown item's details, so its anchor is that list/detail block: its first row sits in the details' Defaults card,
+   far below the list's top, and "For the whole project" stayed lit while the list filled the screen (Jared,
+   2026-11-21: "the highlight on the submenu doesnt work properly ... still not fixed"). The copy a tab switch is
+   morphing out (.o55-leaving) is not the page: an anchor left on it no longer counts, and none is adopted into it, or
+   the arriving copy got no anchors and the open tab listed no groups once the leaving copy was gone. */
+const pm51Live = (scope, sel) => [...scope.querySelectorAll(sel)].find(el => !el.closest('.o55-leaving'));
 function pm51AdoptAnchors(ws, body) {
   const w = getDomain().workspaces.find(x => x.id === ws);
   if (!w || !body || !Array.isArray(w.sections)) return;
   for (const s of w.sections) {
-    if (!s.inline || s.advanced || body.querySelector(`[data-section-id="${cssEscape(s.id)}"]`)) continue;
-    const row = (s.settings || []).map(st => body.querySelector(`#setting-${cssEscape(st.id)}, [data-setting-id="${cssEscape(st.id)}"]`)).find(Boolean);
-    if (!row) continue;
-    const card = row.closest('.pm51-section, .settings-section');
+    if (!s.inline || s.advanced || pm51Live(body, `[data-section-id="${cssEscape(s.id)}"]`)) continue;
+    const owner = [...body.querySelectorAll('[data-pm51-owns]')].find(p => (p.dataset.pm51Owns || '').split(' ').includes(s.id));
+    const split = owner && pm51Live(owner, '.pm51-split:not([data-section-id])');
+    const row = split ? null : (s.settings || []).map(st => pm51Live(body, `#setting-${cssEscape(st.id)}, [data-setting-id="${cssEscape(st.id)}"]`)).find(Boolean);
+    if (!split && !row) continue;
+    const card = split || row.closest('.pm51-section, .settings-section');
     const host = card && !card.hasAttribute('data-section-id') ? card : (row.hasAttribute('data-section-id') ? null : row);
     if (!host) continue;
     host.setAttribute('data-section-id', s.id); host.setAttribute('data-o55-adopted', '');
