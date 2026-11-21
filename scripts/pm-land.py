@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import ast
 from contextlib import contextmanager
 from datetime import datetime, timezone
 import fcntl
@@ -47,8 +48,8 @@ SHARD = ("python3", "-B", "scripts/pm-shard-plans.py", "--check", "--config",
          "Plans/sharding_config.json")
 # Roots used by the aggregates, the separate migration check, and the PM7 build check.
 # json-syntax gets its ordinary inputs from Git, with raw captures selected by the manifest.
-IGNORED_INPUT_ROOTS = ("Plans", "reports", "scripts", "Concepts", "tests/fixtures", ".puppet-master/project")
-SHARED_INPUT_ROOTS = (*IGNORED_INPUT_ROOTS, "tests")
+IGNORED_INPUT_ROOTS = ("Plans", "reports", "scripts", "Concepts", "tests", ".puppet-master/project")
+GUI_POLICY = "scripts/pm-gui-asset-policy.py"
 PLAN_INPUT_EXTENSIONS = {".md", ".json", ".jsonl", ".yaml", ".yml", ".schema", ".py"}
 FIXTURE_INPUT_EXTENSIONS = PLAN_INPUT_EXTENSIONS | {".txt", ".csv", ".tsv", ".html", ".css", ".js", ".svg"}
 CONCEPT_ASSET_EXTENSIONS = {".gif", ".jpeg", ".jpg", ".otf", ".png", ".ttf", ".webp", ".woff", ".woff2"}
@@ -63,6 +64,10 @@ class TransportFailure(Refusal):
     """The remote job may still be active, so preserve its worktree and evidence."""
 
 
+class ManualRecovery(Refusal):
+    """The publication journal was retained with the evidence for manual reconciliation."""
+
+
 def now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
@@ -71,21 +76,20 @@ def say(message: str) -> None:
     print(message, flush=True)
 
 
-def command(argv, *, cwd=None, capture=True, check=True, input_text=None, pass_fds=()):
+def command(argv, *, cwd=None, capture=True, check=True, pass_fds=()):
     result = subprocess.run(argv, cwd=cwd, check=False, text=True,
                             stdout=subprocess.PIPE if capture else None,
                             stderr=subprocess.PIPE if capture else None,
-                            encoding="utf-8", errors="surrogateescape", input=input_text,
-                            pass_fds=pass_fds)
+                            encoding="utf-8", errors="surrogateescape", pass_fds=pass_fds)
     if check and result.returncode:
         raise Refusal(f"{shlex.join(map(str, argv))} exited {result.returncode}"
                       + (f": {result.stderr.strip()}" if result.stderr else ""))
     return result
 
 
-def git(root, *args, check=True, guard_fd=None, input_text=None):
+def git(root, *args, check=True, guard_fd=None):
     return command(["git", "--no-optional-locks", "-C", str(root), *args], check=check,
-                   input_text=input_text, pass_fds=() if guard_fd is None else (guard_fd,))
+                   pass_fds=() if guard_fd is None else (guard_fd,))
 
 
 def revision(root, ref):
@@ -121,8 +125,8 @@ def safe_relative(name, prefix):
     return name
 
 
-def raw_paths(worktree):
-    manifest = read_json(worktree / RAW_MANIFEST)
+def raw_paths(worktree, tracked, commit):
+    manifest = json.loads(tracked_text(worktree, RAW_MANIFEST, tracked, commit))
     return {safe_relative(row["path"], RAW_LINK) for row in manifest["entries"]}
 
 
@@ -152,50 +156,56 @@ def selected_ignored_input(name):
     return suffix in FIXTURE_INPUT_EXTENSIONS or ".schema." in path.name.lower()
 
 
-def declared_refs(document):
-    if not document.is_file():
-        return {}
+def tracked_text(worktree, name, tracked, commit):
+    if name not in tracked:
+        return ""
+    if commit:
+        return git(worktree, "show", f"{commit}:{name}").stdout
+    return (worktree / name).read_text(encoding="utf-8", errors="surrogateescape")
+
+
+def declared_refs(text):
     try:
-        content = read_json(document)
+        content = json.loads(text)
     except (ValueError, UnicodeError):
         # The validator reports malformed bytes from the bound input itself.
         return {}
     return content if isinstance(content, dict) else {}
 
 
-def closure_inputs(document):
+def closure_inputs(text):
     """The registry names decision inputs through whole-file and anchored references."""
-    if not document.is_file():
-        return set()
     refs = set()
-    with document.open(encoding="utf-8", errors="surrogateescape") as stream:
-        for line in stream:
-            try:
-                row = json.loads(line)
-            except ValueError:
-                continue
-            if not isinstance(row, dict):
-                continue
-            hashes = row.get("hashes")
-            if isinstance(hashes, dict):
-                for key in ("owner_evidence_hashes", "closure_evidence_hashes"):
-                    group = hashes.get(key)
-                    if isinstance(group, dict):
-                        refs.update(group)
-            evidence = row.get("closure_evidence")
-            if isinstance(evidence, list):
-                refs.update(ref for ref in evidence if isinstance(ref, str))
+    for line in text.splitlines():
+        try:
+            row = json.loads(line)
+        except ValueError:
+            continue
+        if not isinstance(row, dict):
+            continue
+        hashes = row.get("hashes")
+        if isinstance(hashes, dict):
+            for key in ("owner_evidence_hashes", "closure_evidence_hashes"):
+                group = hashes.get(key)
+                if isinstance(group, dict):
+                    refs.update(group)
+        evidence = row.get("closure_evidence")
+        if isinstance(evidence, list):
+            refs.update(ref for ref in evidence if isinstance(ref, str))
     return {ref.split("#", 1)[0].split(":", 1)[0] for ref in refs}
 
 
-def declared_input_paths(root, worktree, ignored, tracked):
+def declared_input_paths(root, worktree, ignored, tracked, commit):
     """Find exact hash targets, including artifacts whose extension is not scanned."""
     targets = set()
 
     def declaration(name):
-        return (root if name in ignored else worktree) / name
+        path = root / name
+        if name in ignored or name == f"{READINESS}/VALIDATOR_RECEIPT.json":
+            return path.read_text(encoding="utf-8", errors="surrogateescape") if path.is_file() else ""
+        return tracked_text(worktree, name, tracked, commit)
 
-    readiness = declared_refs(root / READINESS / "VALIDATOR_RECEIPT.json").get("artifact_hashes")
+    readiness = declared_refs(declaration(f"{READINESS}/VALIDATOR_RECEIPT.json")).get("artifact_hashes")
     if isinstance(readiness, dict):
         targets.update(readiness)
 
@@ -211,11 +221,10 @@ def declared_input_paths(root, worktree, ignored, tracked):
                 targets.update(f"Plans/.audits/{name}/{filename}" for filename in entry["files"])
 
     targets.update(closure_inputs(declaration("Plans/.audits/_semantic_closure_registry.jsonl")))
-    evidence = set((worktree / "Plans/.evidence").glob("**/evidence.json"))
-    evidence.update(root / name for name in ignored
-                    if within(name, "Plans/.evidence") and PurePosixPath(name).name == "evidence.json")
-    for document in evidence:
-        artifacts = declared_refs(document).get("artifacts")
+    evidence = (name for name in tracked | ignored
+                if within(name, "Plans/.evidence") and PurePosixPath(name).name == "evidence.json")
+    for name in evidence:
+        artifacts = declared_refs(declaration(name)).get("artifacts")
         if isinstance(artifacts, list):
             targets.update(row["path"] for row in artifacts if isinstance(row, dict)
                            and isinstance(row.get("path"), str) and row.get("sha256"))
@@ -235,12 +244,30 @@ def ignored_reference_paths(root, refs):
     return set(os.fsdecode(result.stdout).split("\0")) - {""}
 
 
-def copies(root, worktree, tracked):
+def gui_test_inputs(ignored, worktree, tracked, commit):
+    source = tracked_text(worktree, GUI_POLICY, tracked, commit)
+    if not source:
+        return set()
+    # Read the validator's literal path rules from the checked tree without executing that tree.
+    names = {"SOURCE_ROOTS", "SOURCE_EXTENSIONS", "EXCLUDED_DIRS"}
+    rules = {target.id: ast.literal_eval(row.value) for row in ast.parse(source).body
+             if isinstance(row, ast.Assign) for target in row.targets
+             if isinstance(target, ast.Name) and target.id in names}
+    if "tests" not in rules["SOURCE_ROOTS"]:
+        return set()
+    return {name for name in ignored if name.startswith("tests/") and
+            PurePosixPath(name).suffix.lower() in rules["SOURCE_EXTENSIONS"] and
+            not rules["EXCLUDED_DIRS"].intersection(PurePosixPath(name).parts[1:])}
+
+
+def copies(root, worktree, tracked, commit):
     found = git(root, "ls-files", "--others", "--ignored", "--exclude-standard",
                 "-z", "--", *IGNORED_INPUT_ROOTS).stdout
     ignored = set(found.split("\0")) - {""} - tracked
-    selected = {name for name in ignored if selected_ignored_input(name)}
-    references = declared_input_paths(root, worktree, ignored, tracked)
+    selected = {name for name in ignored if
+                (not within(name, "tests") or within(name, "tests/fixtures")) and selected_ignored_input(name)}
+    selected.update(gui_test_inputs(ignored, worktree, tracked, commit))
+    references = declared_input_paths(root, worktree, ignored, tracked, commit)
     selected.update(ignored_reference_paths(root, references))
     return selected
 
@@ -259,13 +286,14 @@ def regular_hash(root, name, *, through_raw_link=False):
     return file_hash(path)
 
 
-def tracklist(worktree):
-    paths = git(worktree, "ls-files", "-z").stdout
+def tracklist(worktree, commit=None):
+    args = ("ls-tree", "-r", "--name-only", "-z", commit) if commit else ("ls-files", "-z")
+    paths = git(worktree, *args).stdout
     return set(paths.split("\0")) - {""}
 
 
-def input_manifest(root, worktree, tracked):
-    manifest = {name: regular_hash(root, name) for name in sorted(copies(root, worktree, tracked))}
+def input_manifest(root, worktree, tracked, commit=None):
+    manifest = {name: regular_hash(root, name) for name in sorted(copies(root, worktree, tracked, commit))}
     link = root / RAW_LINK
     if not link.is_symlink() or not link.is_dir():
         raise Refusal(f"missing or invalid raw evidence link: {link}")
@@ -273,7 +301,7 @@ def input_manifest(root, worktree, tracked):
     if not target.is_relative_to(EVIDENCE.resolve(strict=True)):
         raise Refusal(f"raw evidence link leaves the evidence share: {link} -> {target}")
     manifest[RAW_LINK] = f"symlink:{target}"
-    for name in sorted(raw_paths(worktree)):
+    for name in sorted(raw_paths(worktree, tracked, commit)):
         manifest[name] = regular_hash(root, name, through_raw_link=True)
     return manifest
 
@@ -441,6 +469,7 @@ def remote_verify(folder, host, head, tree, base):
         if hashlib.sha256(record_bytes).hexdigest() != record_witness(root).read_text(encoding="ascii").strip():
             raise Refusal(f"remote landing record changed since the check completed: {path}")
         result = verify_record(folder, root, SHARED, host, head, tree, base, json.loads(record_bytes))
+        result["record_sha256"] = hashlib.sha256(record_bytes).hexdigest()
     except (Refusal, OSError, ValueError, KeyError) as exc:
         write_json(folder / "verification.json", {"verified_utc": now(), "error": str(exc)})
         raise
@@ -472,9 +501,9 @@ def remote_cleanup(folder):
                 or not isinstance(states[0], dict) or states[0].get("name") != name):
             raise Refusal(f"unexpected status for remote job {name}")
         state = states[0].get("state")
-        if state in ("starting", "running", "partial"):
-            raise Refusal(f"remote job is still in use: {name} ({state})")
-        if state not in ("done", "failed", "stopped", "lost"):
+        if state in ("starting", "running", "partial", "lost"):
+            raise Refusal(f"preserving worktree {root}: job {name} ({state}) may still have worker processes")
+        if state not in ("done", "failed", "stopped"):
             raise Refusal(f"unknown state for remote job {name}: {state}")
     git(CLONE, "worktree", "remove", "--force", str(root))
 
@@ -570,12 +599,18 @@ def checked_remote(folder, host, ref, head, tree, base, heartbeat=lambda: None, 
 
 
 def verify_over_ssh(folder, host, head, tree, base):
+    record = (folder / "record.json").read_bytes()
     result = ssh(host, *helper(folder, host, "verify", head, tree, base), capture_output=False, check=False)
     if result.returncode == 255:
         mode = "followup" if job_receipt(folder, "followup").is_file() else "check"
         raise transport_failure(folder, host, mode, 1)
     if result.returncode:
         raise Refusal(f"verification on {host} exited {result.returncode}. See {folder / 'verification.json'}")
+    verified = read_json(folder / "verification.json")
+    if (verified.get("record_sha256") != hashlib.sha256(record).hexdigest()
+            or (verified.get("head"), verified.get("tree"), verified.get("base")) != (head, tree, base)):
+        raise Refusal(f"the verified receipt changed during verification: {folder / 'record.json'}")
+    return json.loads(record)
 
 
 def cleanup_over_ssh(folder, host):
@@ -660,13 +695,21 @@ def remote_snapshot(folder, host, head, tree, branch):
         folder / "snapshot.stderr")
     if code:
         raise Refusal(f"snapshot-current exited {code}; see {folder / 'snapshot.json'}")
+    require_same_inputs(inputs, input_manifest(root, root, tracklist(root)), "before recording baseline")
     code, baseline_seconds = capture(
         [*CHECK, "--record-baseline", "--subcheck-timeout-seconds", str(TIMEOUT),
          "--readiness-audit-root", str(root / READINESS)],
         root, folder / "baseline.stdout", folder / "baseline.stderr")
-    if code or read_json(root / BASELINE).get("commit") != head:
+    baseline = read_json(root / BASELINE) if not code else {}
+    if baseline.get("commit") != head:
         raise Refusal(f"baseline did not record at {head}; see {folder / 'baseline.stderr'}")
     tracked = tracklist(root)
+    readiness = baseline.get("readiness_audit_inputs", {}).get("files")
+    if not isinstance(readiness, dict):
+        raise Refusal("snapshot baseline did not bind its readiness edition")
+    changed = sorted(name for name, digest in readiness.items() if name not in tracked and inputs.get(name) != digest)
+    if changed:
+        raise Refusal("snapshot baseline used different readiness bytes: " + ", ".join(changed))
     require_same_inputs(inputs, input_manifest(root, root, tracked), "snapshot checkout")
     require_same_inputs(inputs, input_manifest(SHARED, root, tracked), "shared checkout")
     git(root, "add", "--", MIGRATION, BASELINE)
@@ -722,6 +765,18 @@ def changed_paths(root, base, head):
                    "-z", base, head, "--").stdout.rstrip("\0").split("\0")) - {""}
 
 
+def requires_reseal(paths):
+    for name in paths:
+        if name in ("Plans/Spec_Lock.json", "Plans/auto_decisions.jsonl") or within(name, "Plans/.evidence"):
+            return True
+        if name.startswith(("Plans/.audits/", "reports/governance-reseal-")) and any(
+            part == "currentness" or part.startswith("currentness-") or part.endswith("-currentness")
+            for part in PurePosixPath(name).parts[1:-1]
+        ):
+            return True
+    return False
+
+
 def status_paths(root, *, untracked="normal"):
     fields = iter(git(root, "status", "--porcelain=v1", "-z", "--ignore-submodules=none",
                       f"--untracked-files={untracked}").stdout.split("\0"))
@@ -742,7 +797,7 @@ def overlaps(changed, touched):
 
 def affects_shared_check(name):
     # The aggregates also parse tracked and visible JSON/JSONL outside these roots.
-    return (any(within(name, root) for root in SHARED_INPUT_ROOTS)
+    return (any(within(name, root) for root in IGNORED_INPUT_ROOTS)
             or PurePosixPath(name).suffix.lower() in {".json", ".jsonl"}
             or name in {".gitignore", ".gitattributes", "AGENTS.md"})
 
@@ -758,14 +813,31 @@ def clean_touched(root, touched):
                       + ", ".join(dirty))
 
 
-def publication_preflight(root, base, candidate):
-    """Check the shared state for either guarded publication step."""
+def publication_preflight(root, base, candidate, expected_inputs):
+    """Re-read shared checker inputs at the guarded publication boundary."""
     touched = changed_paths(root, base, candidate)
     head = revision(root, "HEAD^{commit}")
     if head not in (base, candidate):
         # A shared checkout behind the checked base also fast-forwards through these paths.
         touched |= changed_paths(root, head, base)
     clean_touched(root, touched)
+    if head != candidate:
+        added = git(root, "diff", "--name-only", "--no-renames", "--diff-filter=A", "-z",
+                    head, candidate, "--").stdout.split("\0")
+        present = set()
+        for name in filter(None, added):
+            path = PurePosixPath(name)
+            if os.path.lexists(root / path):
+                present.add(name)
+            present.update(str(parent) for parent in path.parents if
+                           (root / parent).is_symlink() or (root / parent).is_file())
+        if present:
+            collisions = git(root, "--literal-pathspecs", "ls-files", "--others", "--ignored", "--exclude-standard",
+                             "-z", "--", *sorted(present)).stdout.split("\0")
+            if any(collisions):
+                raise Refusal("candidate would overwrite ignored files: " + ", ".join(sorted(filter(None, collisions))))
+    tracked = tracklist(root, candidate)
+    require_same_inputs(expected_inputs, input_manifest(root, root, tracked, candidate), "shared publication")
 
 
 def shared_shards(folder, touched):
@@ -866,6 +938,25 @@ def holder_age(lock):
     return time.time() - latest, body
 
 
+class Topic(NamedTuple):
+    worktree: str
+    branch: str
+    tip: str
+
+
+def parse_topic(raw):
+    if not isinstance(raw, dict) or raw.keys() != set(Topic._fields):
+        raise Refusal("invalid topic cleanup identity in landing holder")
+    topic = Topic(**raw)
+    if not isinstance(topic.worktree, str) or not Path(topic.worktree).is_absolute():
+        raise Refusal("topic cleanup worktree must be an absolute path")
+    if not isinstance(topic.branch, str):
+        raise Refusal("topic cleanup branch must be a branch name")
+    check_ref(topic.branch)
+    sha(topic.tip, "topic cleanup tip")
+    return topic
+
+
 class Publication(NamedTuple):
     base: str
     candidate: str
@@ -873,6 +964,11 @@ class Publication(NamedTuple):
     completes_followup: bool
     phase: str = "fast-forward-pending"
     pre_merge_head: str | None = None
+    reseal: bool = False
+    topic: Topic | None = None
+
+    def fields(self):
+        return {**self._asdict(), "topic": self.topic._asdict() if self.topic else None}
 
 
 def holder_field(body, name):
@@ -905,6 +1001,8 @@ class LandingLock:
         self.branch = branch
         self.token = uuid.uuid4().hex
         self.owed = ""
+        self.reseal = False
+        self.cleanup = None
         self.publication = None
 
     def __enter__(self):
@@ -940,7 +1038,11 @@ class LandingLock:
             raise Refusal(f"the expired landing holder needs manual recovery: {LOCK / 'holder.txt'}")
         owed = holder_field(body, "follow-up-owed")
         raw_publication = holder_field(body, "publication")
-        if not owed and not raw_publication:
+        raw_cleanup = holder_field(body, "cleanup-owed")
+        followup_kind = holder_field(body, "follow-up-kind")
+        if followup_kind and (followup_kind != "reseal" or not owed):
+            raise Refusal("invalid follow-up kind in landing holder")
+        if not owed and not raw_publication and not raw_cleanup:
             return False
         if owed:
             sha(owed, "owed Plans commit")
@@ -948,9 +1050,11 @@ class LandingLock:
         if raw_publication:
             entry = json.loads(raw_publication)
             fields = set(Publication._fields)
-            required = fields - {"phase", "pre_merge_head"}
+            required = fields - {"phase", "pre_merge_head", "reseal", "topic"}
             if not isinstance(entry, dict) or not required <= entry.keys() <= fields:
                 raise Refusal("invalid publication marker in landing holder")
+            if entry.get("topic") is not None:
+                entry["topic"] = parse_topic(entry["topic"])
             publication = Publication(**entry)
             sha(publication.base, "publication base")
             sha(publication.candidate, "publication candidate")
@@ -958,12 +1062,18 @@ class LandingLock:
                 sha(publication.pre_merge_head, "pre-merge shared HEAD")
             if (type(publication.plans_followup) is not bool
                     or type(publication.completes_followup) is not bool
-                    or publication.phase not in ("fast-forward-pending", "push-pending", "rollback-pending")
+                    or type(publication.reseal) is not bool
+                    or (publication.reseal and not publication.plans_followup)
+                    or (publication.topic and (publication.topic.tip != publication.candidate or raw_cleanup))
+                    or publication.phase not in ("fast-forward-pending", "fast-forward-failed",
+                                                 "push-pending", "rollback-pending")
                     or publication.base == publication.candidate
                     or publication.completes_followup != bool(owed)
                     or (publication.plans_followup and publication.completes_followup)):
                 raise Refusal("inconsistent publication marker in landing holder")
         # Replace the owner while preserving its work in the same directory.
+        self.cleanup = parse_topic(json.loads(raw_cleanup)) if raw_cleanup else None
+        self.reseal = followup_kind == "reseal"
         self.write_locked(publication, owed)
         say(f"Took over the expired landing with its recovery marker at {LOCK / 'holder.txt'}.")
         return True
@@ -972,8 +1082,12 @@ class LandingLock:
         content = f"{self.agent} {self.branch} {now()}\ntoken: {self.token}\n"
         if owed:
             content += f"follow-up-owed: {owed}\n"
+        if self.reseal:
+            content += "follow-up-kind: reseal\n"
+        if self.cleanup:
+            content += "cleanup-owed: " + json.dumps(self.cleanup._asdict(), sort_keys=True) + "\n"
         if publication:
-            content += "publication: " + json.dumps(publication._asdict(), sort_keys=True) + "\n"
+            content += "publication: " + json.dumps(publication.fields(), sort_keys=True) + "\n"
         path = LOCK / f".holder-{self.token}.tmp"
         with path.open("w", encoding="utf-8") as stream:
             stream.write(content)
@@ -1003,13 +1117,14 @@ class LandingLock:
             # Git inherits the guard until it exits, including after controller loss.
             yield guard_fd
 
-    def begin_publication(self, base, candidate, plans_followup, completes_followup, pre_merge_head):
+    def begin_publication(self, base, candidate, plans_followup, completes_followup, pre_merge_head,
+                          reseal, topic):
         """Journal a fast-forward while its shared mutation guard is held."""
         if (self.publication or bool(self.owed) != completes_followup
-                or (plans_followup and completes_followup)):
+                or (plans_followup and completes_followup) or (self.cleanup and not completes_followup)):
             raise Refusal("resolve the previous publication or Plans follow-up first")
         self.write_locked(Publication(base, candidate, plans_followup, completes_followup,
-                                      pre_merge_head=pre_merge_head), self.owed)
+                                      pre_merge_head=pre_merge_head, reseal=reseal, topic=topic), self.owed)
 
     def mark_push_pending(self):
         """Update the journal while the push's shared mutation guard is held."""
@@ -1022,14 +1137,19 @@ class LandingLock:
             owed = self.owed
             if published and previous.plans_followup:
                 owed = previous.candidate
+                self.reseal = previous.reseal or requires_reseal(changed_paths(SHARED, previous.base,
+                                                                               previous.candidate))
             elif published and previous.completes_followup:
                 owed = ""
+                self.reseal = False
+            if published and previous.topic:
+                self.cleanup = previous.topic
             self.write_locked(None, owed)
 
     def __exit__(self, *_):
         with landing_guard():
             self.require_owner()
-            if self.publication or self.owed:
+            if self.publication or self.owed or self.cleanup:
                 self.write_locked(self.publication, self.owed)
                 say(f"Landing lock retained for recovery. See {LOCK / 'holder.txt'}.")
             else:
@@ -1061,33 +1181,79 @@ def ref_at(root, remote, ref):
     return sha(output[0].split("\t", 1)[0], ref)
 
 
-def rebase_and_push(worktree, ref, base):
-    git(worktree, "fetch", "origin")
+def require_topic(worktree, ref, expected=None):
+    actual = git(worktree, "symbolic-ref", "--quiet", "HEAD", check=False).stdout.strip()
+    if actual != ref:
+        raise Refusal(f"topic worktree switched from {ref} to {actual or 'detached HEAD'}: {worktree}")
+    tip = revision(worktree, ref + "^{commit}")
+    if (expected is not None and tip != expected) or revision(worktree, "HEAD^{commit}") != tip:
+        raise Refusal(f"topic {ref} changed in {worktree}; expected {expected or tip}, found {tip}")
+    return tip
+
+
+def rebase_and_push(worktree, ref, base, expected):
+    require_topic(worktree, ref, expected)
+    fetch_primary(worktree, None)
     if full_main(worktree) != base:
         return None
     if status_paths(worktree):
         raise Refusal(f"topic worktree has uncommitted changes: {worktree}")
     # The lease protects someone else's push to this topic branch during our rebase.
     existing = ref_at(worktree, "origin", ref)
-    original_head = revision(worktree, "HEAD^{commit}")
-    if existing and git(worktree, "merge-base", "--is-ancestor", existing, original_head,
+    if existing and git(worktree, "merge-base", "--is-ancestor", existing, expected,
                         check=False).returncode:
         # A failed push can leave the previously published tip in the local branch's reflog after rebase.
         prior_tips = git(worktree, "reflog", "show", "--format=%H", ref).stdout.splitlines()
         if existing not in prior_tips:
             raise Refusal(f"published topic branch contains work absent from the local branch: {ref}")
+    require_topic(worktree, ref, expected)
     git(worktree, "rebase", base)
-    head = revision(worktree, "HEAD^{commit}")
+    head = require_topic(worktree, ref)
     if head == base:
         return head
-    git(worktree, "push", f"--force-with-lease={ref}:{existing}", "origin", f"HEAD:{ref}")
+    require_topic(worktree, ref, head)
+    git(worktree, "push", f"--force-with-lease={ref}:{existing}", "origin", f"{head}:{ref}")
     return head
 
 
 def fetch_shared(lock, *refs):
     with lock.shared_mutation() as guard_fd:
         lock.write_locked(lock.publication, lock.owed)
-        git(SHARED, "fetch", "origin", *refs, guard_fd=guard_fd)
+        if refs:
+            git(SHARED, "fetch", "origin", *refs, guard_fd=guard_fd)
+        else:
+            fetch_primary(SHARED, guard_fd)
+
+
+def main_push_urls(root):
+    urls = git(root, "remote", "get-url", "--push", "--all", "origin").stdout.splitlines()
+    if not urls:
+        raise Refusal("origin has no main push destination")
+    return urls
+
+
+def fetch_primary(root, guard_fd):
+    primary = main_push_urls(root)[0]
+    git(root, "fetch", "--no-tags", primary, f"+{MAIN_REF}:{ORIGIN_MAIN}", guard_fd=guard_fd)
+
+
+def push_main(root, base, candidate, results_path, guard_fd):
+    results = {"primary": None, "mirrors": []}
+    for position, url in enumerate(main_push_urls(root)):
+        result = git(root, "push", f"--force-with-lease={MAIN_REF}:{base}", url,
+                     f"{candidate}:{MAIN_REF}", check=False, guard_fd=guard_fd)
+        attempt = {"exit_code": result.returncode, "stdout": result.stdout, "stderr": result.stderr}
+        if not position:
+            primary = result
+            results["primary"] = attempt
+        else:
+            results["mirrors"].append(attempt)
+            if result.returncode:
+                say(f"Main mirror {position} rejected {candidate}. See {results_path}.")
+        write_json(results_path, results)
+        if not position and result.returncode:
+            break
+    return primary
 
 
 def is_ancestor(root, earlier, later):
@@ -1121,150 +1287,69 @@ def rollback_shared(lock, marker, upstream):
             marker.candidate, guard_fd=guard_fd)
 
 
-UNKNOWN_ENTRY = object()
-
-
-def fast_forward_entries(before, candidate):
-    """The old and candidate tree entries on paths a fast-forward can change."""
-    raw = git(SHARED, "diff", "--raw", "--no-abbrev", "--no-ext-diff", "--no-renames",
-              "-z", before, candidate, "--").stdout
-    fields = iter(raw.split("\0"))
-    changes = {}
-    for metadata in fields:
-        if not metadata:
-            break
-        old_mode, new_mode, old_oid, new_oid, _ = metadata[1:].split()
-        name = next(fields)
-        old = (old_mode, old_oid) if old_mode != "000000" else None
-        new = (new_mode, new_oid) if new_mode != "000000" else None
-        changes[name] = (old, new)
-    return changes
-
-
-def partial_checkout_index(paths):
-    staged = {}
-    fields = git(SHARED, "ls-files", "--stage", "-v", "-z").stdout.split("\0")
-    for entry in fields:
-        if not entry:
-            continue
+def failed_fast_forward_state(root, before, candidate):
+    names = changed_paths(root, before, candidate)
+    index = git(root, "ls-files", "--stage", "-v", "-z").stdout.split("\0")
+    paths = {}
+    for name in sorted(names):
+        relative = PurePosixPath(name)
+        path = root / relative
+        try:
+            if any((root / parent).is_symlink() for parent in relative.parents):
+                digest = "beneath symlink"
+            elif path.is_symlink():
+                digest = "symlink:" + hashlib.sha256(os.fsencode(os.readlink(path))).hexdigest()
+            elif not os.path.lexists(path):
+                digest = None
+            elif stat.S_ISREG(path.lstat().st_mode):
+                digest = file_hash(path)
+            else:
+                digest = "non-regular path"
+        except OSError as exc:
+            digest = str(exc)
+        paths[name] = {"index": [], "worktree_sha256": digest}
+    for entry in filter(None, index):
         metadata, name = entry.split("\t", 1)
         if name in paths:
-            tag, mode, oid, stage = metadata.split()
-            staged[name] = (mode, oid) if tag == "H" and stage == "0" else UNKNOWN_ENTRY
-    return staged
+            paths[name]["index"].append(metadata)
+    return {"head": revision(root, "HEAD^{commit}"),
+            "status": git(root, "status", "--porcelain=v1", "--untracked-files=all").stdout,
+            "paths": paths}
 
 
-def stat_identity(info):
-    return (info.st_dev, info.st_ino, info.st_mode, info.st_size, info.st_mtime_ns, info.st_ctime_ns)
-
-
-def working_entry(name, object_format):
-    """Read the raw worktree entry without following links or applying clean filters."""
-    relative = PurePosixPath(name)
-    path = SHARED / relative
-    if any((SHARED / parent).is_symlink() for parent in relative.parents if parent != PurePosixPath(".")):
-        return UNKNOWN_ENTRY
+def failed_fast_forward(lock, folder, error):
+    marker = lock.publication
+    say(f"Failed fast-forward {marker.pre_merge_head} -> {marker.candidate}: {error}")
+    message = (f"Manual reconciliation required. Keep {LOCK / 'holder.txt'} and fetch primary main. "
+               "Compare shared HEAD, the index and the listed working paths with the journaled base and candidate. "
+               "Preserve other writers' edits. Reconcile only confirmed candidate changes by hand, "
+               "then record any published follow-up and cleanup obligations before clearing the marker.")
     try:
-        metadata = path.lstat()
-    except FileNotFoundError:
-        return None
-    except OSError:
-        return UNKNOWN_ENTRY
-
-    digest = hashlib.new(object_format, usedforsecurity=False)
-    try:
-        if stat.S_ISLNK(metadata.st_mode):
-            data = os.fsencode(os.readlink(path))
-            digest.update(f"blob {len(data)}\0".encode())
-            digest.update(data)
-            mode = "120000"
-        elif stat.S_ISREG(metadata.st_mode):
-            descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
-            with os.fdopen(descriptor, "rb") as stream:
-                if stat_identity(os.fstat(stream.fileno())) != stat_identity(metadata):
-                    return UNKNOWN_ENTRY
-                digest.update(f"blob {metadata.st_size}\0".encode())
-                for block in iter(lambda: stream.read(1024 * 1024), b""):
-                    digest.update(block)
-            mode = "100755" if metadata.st_mode & stat.S_IXUSR else "100644"
-        else:
-            return UNKNOWN_ENTRY
-        if stat_identity(path.lstat()) != stat_identity(metadata):
-            return UNKNOWN_ENTRY
-    except OSError:
-        return UNKNOWN_ENTRY
-    return mode, digest.hexdigest()
+        state = failed_fast_forward_state(SHARED, marker.pre_merge_head or marker.base, marker.candidate)
+    except (Refusal, OSError) as exc:
+        state = {"read_error": str(exc)}
+    state["merge_error"] = str(error)
+    say(json.dumps(state, indent=2, sort_keys=True))
+    record_publication_recovery(lock, message, folder, state=state)
+    raise ManualRecovery(message)
 
 
-def partial_checkout_state(changes, object_format):
-    staged = partial_checkout_index(changes)
-    return {name: (staged.get(name), working_entry(name, object_format)) for name in changes}
-
-
-def matches_worktree(working, expected, trust_filemode):
-    """Match the blob and type, honoring Git's executable-bit policy for regular files."""
-    return working == expected or (
-        not trust_filemode and isinstance(working, tuple) and isinstance(expected, tuple)
-        and {working[0], expected[0]} == {"100644", "100755"} and working[1] == expected[1]
-    )
-
-
-def repair_failed_fast_forward(lock, marker, upstream):
-    """Restore only affected paths whose bytes can be attributed to the failed merge."""
-    before = marker.pre_merge_head
-    if before is None:
-        raise Refusal("publication has no pre-merge shared HEAD. Inspect its index and worktree before clearing it")
-    with lock.shared_mutation() as guard_fd:
-        require_shared_main()
-        current = revision(SHARED, "HEAD^{commit}")
-        if current != before or full_main(SHARED) != upstream or not is_ancestor(SHARED, before, marker.base):
-            raise Refusal(f"shared main {current} or origin changed after the recorded pre-merge HEAD {before}")
-        changes = fast_forward_entries(before, marker.candidate)
-        object_format = git(SHARED, "rev-parse", "--show-object-format").stdout.strip()
-        trust_filemode = git(SHARED, "config", "--type=bool", "--default=true",
-                             "--get", "core.filemode").stdout.strip() == "true"
-        observed = partial_checkout_state(changes, object_format)
-        restore, ambiguous = set(), set()
-        for name, (old, new) in changes.items():
-            indexed, working = observed[name]
-            working_is_old = matches_worktree(working, old, trust_filemode)
-            if indexed == old and working_is_old:
-                continue
-            # A concurrent save can match the candidate while Git leaves the index at the base.
-            if (indexed == old or indexed != new
-                    or not (working_is_old or matches_worktree(working, new, trust_filemode))):
-                ambiguous.add(name)
-            else:
-                restore.add(name)
-        restore.difference_update(overlaps(restore, ambiguous))
-        if restore:
-            lock.write_locked(marker, lock.owed)
-            git(SHARED, "--literal-pathspecs", "restore", f"--source={before}",
-                "--staged", "--worktree", "--no-overlay", "--pathspec-from-file=-", "--pathspec-file-nul",
-                input_text="\0".join(sorted(restore)) + "\0", guard_fd=guard_fd)
-            observed = partial_checkout_state(changes, object_format)
-        remaining = [name for name, (old, _) in changes.items()
-                     if observed[name][0] != old or not matches_worktree(observed[name][1], old, trust_filemode)]
-        if remaining:
-            raise Refusal("ambiguous index or working-tree bytes after failed fast-forward: "
-                          + ", ".join(sorted(remaining)))
-
-
-def record_publication_recovery(lock, error, folder):
+def record_publication_recovery(lock, error, folder, *, state=None):
     marker = lock.publication
     if marker is None:
         return
     path = (folder / "publication-recovery.json" if folder is not None
             else LOCK.parent / f"recovery-{marker.candidate}.json")
     try:
-        write_json(path, {**marker._asdict(), "follow_up_owed": lock.owed,
-                          "reason": str(error), "utc": now(), "holder": str(LOCK / "holder.txt")})
+        write_json(path, {**marker.fields(), "follow_up_owed": lock.owed,
+                          "reason": str(error), "utc": now(), "holder": str(LOCK / "holder.txt"),
+                          **({"state": state} if state is not None else {})})
     except OSError as record_error:
         say(f"Could not save the recovery notice at {path}: {record_error}")
     say(f"Publication needs the current lock owner's attention. Recovery notice: {path}.")
 
 
-def settle_publication(lock, upstream, *, require_candidate=False):
+def settle_publication(lock, upstream, *, require_candidate=False, folder=None):
     """Resolve a journaled fast-forward against a known origin tip."""
     require_shared_main()
     marker = lock.publication
@@ -1273,6 +1358,10 @@ def settle_publication(lock, upstream, *, require_candidate=False):
     shared_head = revision(SHARED, "HEAD^{commit}")
     if require_candidate and shared_head != marker.candidate:
         raise Refusal(f"shared main changed to {shared_head} after fast-forwarding {marker.candidate}")
+    if marker.phase == "fast-forward-failed" or (
+        marker.phase == "fast-forward-pending" and shared_head != marker.candidate
+    ):
+        failed_fast_forward(lock, folder, "the journal contains an incomplete fast-forward")
     published = is_ancestor(SHARED, marker.candidate, upstream)
     if shared_head == marker.candidate and not published:
         rollback_shared(lock, marker, upstream)
@@ -1282,8 +1371,6 @@ def settle_publication(lock, upstream, *, require_candidate=False):
     elif not is_ancestor(SHARED, shared_head, upstream):
         raise Refusal(f"shared main {shared_head} is unrelated to fetched main {upstream} "
                       f"and the recorded publication {marker.candidate}")
-    elif shared_head != marker.candidate and marker.phase == "fast-forward-pending":
-        repair_failed_fast_forward(lock, marker, upstream)
     lock.finish_publication(published)
     return published
 
@@ -1291,82 +1378,122 @@ def settle_publication(lock, upstream, *, require_candidate=False):
 def reconcile_publication(lock, folder=None, *, refresh=True, require_candidate=False):
     try:
         if refresh:
-            fetch_shared(lock)
+            with lock.shared_mutation() as guard_fd:
+                fetch_primary(SHARED, guard_fd)
         else:
             lock.heartbeat()
-        return settle_publication(lock, full_main(SHARED), require_candidate=require_candidate)
+        return settle_publication(lock, full_main(SHARED), require_candidate=require_candidate, folder=folder)
+    except ManualRecovery:
+        raise
     except (Refusal, OSError, ValueError) as exc:
         record_publication_recovery(lock, exc, folder)
         raise
 
 
 def push_checked_main(folder, host, head, tree, base, touched, lock, plans_followup, *,
-                      completes_followup=False):
-    """Journal the verified fast-forward before changing shared main."""
+                      completes_followup=False, topic=None, baseline_inputs=None):
+    """Verify the receipt, then recheck shared inputs under the guard at each mutation."""
     require_shared_main()
     old_head = revision(SHARED, "HEAD^{commit}")
     git(SHARED, "merge-base", "--is-ancestor", old_head, base)
     git(SHARED, "merge-base", "--is-ancestor", base, head)
-    publication_preflight(SHARED, base, head)
-    verify_over_ssh(folder, host, head, tree, base)
-    fast_forwarded = False
+    clean_touched(SHARED, touched | changed_paths(SHARED, old_head, base))
+    verified = verify_over_ssh(folder, host, head, tree, base)
+    if verified["exit_code"] not in (0, 1):
+        raise Refusal("the verified receipt does not permit publication")
+    inputs = verified["ignored_inputs"]
+    if baseline_inputs is not None:
+        require_same_inputs(baseline_inputs, inputs, "snapshot baseline")
+    reseal = not completes_followup and requires_reseal(touched)
+    with lock.shared_mutation() as guard_fd:
+        fetch_primary(SHARED, guard_fd)
+        require_shared_main()
+        if revision(SHARED, "HEAD^{commit}") != old_head:
+            raise Refusal("shared HEAD changed before fast-forward")
+        if full_main(SHARED) != base:
+            return False
+        if topic:
+            require_topic(Path(topic.worktree), check_ref(topic.branch), topic.tip)
+        publication_preflight(SHARED, base, head, inputs)
+        lock.begin_publication(base, head, plans_followup or reseal, completes_followup, old_head, reseal, topic)
+        merge = git(SHARED, "merge", "--ff-only", "--no-overwrite-ignore", head, check=False, guard_fd=guard_fd)
+        if merge.returncode:
+            lock.write_locked(lock.publication._replace(phase="fast-forward-failed"), lock.owed)
+            failed_fast_forward(lock, folder, f"git merge exited {merge.returncode}: {merge.stderr.strip()}")
+
     attempted_push = False
+    leave_for_recovery = False
     published = False
+    result = None
     try:
-        with lock.shared_mutation() as guard_fd:
-            require_shared_main()
-            if revision(SHARED, "HEAD^{commit}") != old_head or full_main(SHARED) != base:
-                raise Refusal("shared HEAD or origin/main changed before fast-forward")
-            publication_preflight(SHARED, base, head)
-            lock.begin_publication(base, head, plans_followup, completes_followup, old_head)
-            git(SHARED, "merge", "--ff-only", "--no-overwrite-ignore", head, guard_fd=guard_fd)
-            fast_forwarded = True
         if revision(SHARED, "HEAD^{commit}") != head or revision(SHARED, "HEAD^{tree}") != tree:
             raise Refusal("shared fast-forward did not produce the checked commit and tree")
         shared_shards(folder, touched)
-        verify_over_ssh(folder, host, head, tree, base)
+        leave_for_recovery = True
+        verified = verify_over_ssh(folder, host, head, tree, base)
+        if verified["exit_code"] not in (0, 1):
+            raise Refusal("the verified receipt does not permit publication")
+        require_same_inputs(inputs, verified["ignored_inputs"], "verified receipt")
+        leave_for_recovery = False
         with lock.shared_mutation() as guard_fd:
+            fetch_primary(SHARED, guard_fd)
             require_shared_main()
             if revision(SHARED, "HEAD^{commit}") != head:
                 raise Refusal("shared HEAD changed after the fast-forward")
-            publication_preflight(SHARED, base, head)
-            lock.mark_push_pending()
-            # The lease binds the server's base. The ancestry check makes this a fast-forward.
-            attempted_push = True
-            result = git(SHARED, "push", f"--force-with-lease={MAIN_REF}:{base}", "origin",
-                         f"{head}:{MAIN_REF}", check=False, guard_fd=guard_fd)
-        if not result.returncode:
+            if full_main(SHARED) == base:
+                try:
+                    publication_preflight(SHARED, base, head, inputs)
+                except (Refusal, OSError, ValueError, KeyError):
+                    leave_for_recovery = True
+                    raise
+                lock.mark_push_pending()
+                attempted_push = True
+                result = push_main(SHARED, base, head, folder / "publication-push.json", guard_fd)
+        if result is not None and not result.returncode:
             lock.finish_publication(True)
-            say(f"Pushed main at {head}.")
+            say(f"Pushed primary main at {head}.")
             return True
     finally:
-        if lock.publication:
-            # After attempting a push, ask the primary before deciding whether to roll back.
-            # With no attempt, the still-owned lock and last fetch establish that it is unpublished.
-            published = reconcile_publication(lock, folder, refresh=attempted_push,
-                                              require_candidate=fast_forwarded)
+        if lock.publication and not leave_for_recovery:
+            published = reconcile_publication(lock, folder, refresh=attempted_push, require_candidate=True)
     if published:
-        say(f"Primary main reached {head}, but the push reported an error. "
-            f"Check the configured push mirrors: {result.stderr.strip()}")
+        say(f"Primary main reached {head}. See the recorded push results at {folder / 'publication-push.json'}.")
         return True
-    if full_main(SHARED) != base:
+    if result is None or full_main(SHARED) != base:
         return False
-    raise Refusal(f"main push failed: {result.stderr.strip()}")
+    raise Refusal(f"primary main push failed: {result.stderr.strip()}")
 
 
-def remove_topic(worktree, branch, head):
+def remove_topic(worktree, branch, head, *, guard_fd=None):
     ref = check_ref(branch)
-    git(worktree, "fetch", "origin")
+    fetch_primary(worktree, guard_fd)
     fetched_main = full_main(worktree)
     git(worktree, "merge-base", "--is-ancestor", head, fetched_main)
     if (git(worktree, "symbolic-ref", "HEAD").stdout.strip() != ref
             or revision(worktree, ref + "^{commit}") != head or status_paths(worktree)):
         raise Refusal(f"topic worktree changed during landing. Inspect before removing {worktree}")
     common = Path(git(worktree, "rev-parse", "--path-format=absolute", "--git-common-dir").stdout.strip())
-    git(common, "worktree", "remove", str(worktree))
+    git(common, "worktree", "remove", str(worktree), guard_fd=guard_fd)
     # Git's checked-out branch in this clone can lag fetched main. Delete only
     # the proven tip, even if another writer updates the ref after worktree removal.
-    git(common, "update-ref", "-d", ref, head)
+    git(common, "update-ref", "-d", ref, head, guard_fd=guard_fd)
+
+
+def complete_topic_cleanup(lock):
+    if not lock.cleanup:
+        return
+    with lock.shared_mutation() as guard_fd:
+        topic = lock.cleanup
+        worktree = Path(topic.worktree)
+        try:
+            if not worktree.is_dir() or worktree.is_symlink() or worktree.resolve() == SHARED.resolve():
+                raise Refusal("the original topic worktree is absent or moved")
+            remove_topic(worktree, topic.branch, topic.tip, guard_fd=guard_fd)
+        except (Refusal, OSError) as exc:
+            raise Refusal(f"cleanup owed for {topic.branch} at {topic.tip} in {worktree}. "
+                          f"Inspect it before removing the worktree or deleting the branch: {exc}") from exc
+        lock.cleanup = None
+        lock.write_locked(lock.publication, lock.owed)
 
 
 def snapshot_followup(host, head, tree, lock, wait_for_review):
@@ -1394,7 +1521,7 @@ def snapshot_followup(host, head, tree, lock, wait_for_review):
             raise Refusal("origin/main moved before publishing the snapshot follow-up")
         touched = changed_paths(SHARED, head, candidate)
         if not push_checked_main(folder, host, candidate, snapshot["tree"], head, touched, lock, False,
-                                 completes_followup=True):
+                                 completes_followup=True, baseline_inputs=snapshot["ignored_inputs"]):
             raise Refusal("origin/main moved before publishing the snapshot follow-up")
         return code
 
@@ -1402,33 +1529,46 @@ def snapshot_followup(host, head, tree, lock, wait_for_review):
 def recover_pending_landing(host, lock, wait_for_review):
     if lock.publication:
         reconcile_publication(lock)
-    if not lock.owed:
-        return 0
-    require_shared_main()
-    fetch_shared(lock)
-    base = full_main(SHARED)
-    git(SHARED, "merge-base", "--is-ancestor", lock.owed, base)
-    say(f"Completing the recovered Plans follow-up for {lock.owed} at {base}.")
-    return snapshot_followup(host, base, revision(SHARED, base + "^{tree}"), lock, wait_for_review)
+    if lock.reseal:
+        raise Refusal("reseal: follow the reseal-record hand procedure")
+    code = 0
+    if lock.owed:
+        require_shared_main()
+        with lock.shared_mutation() as guard_fd:
+            fetch_primary(SHARED, guard_fd)
+        base = full_main(SHARED)
+        git(SHARED, "merge-base", "--is-ancestor", lock.owed, base)
+        say(f"Completing the Plans follow-up for {lock.owed} at {base}.")
+        code = snapshot_followup(host, base, revision(SHARED, base + "^{tree}"), lock, wait_for_review)
+    if code in (0, 1):
+        complete_topic_cleanup(lock)
+    return code
 
 
 def live_run(args, root, ref):
     host = args.checks_on
     worktree = branch_worktree(root, ref)
+    expected = require_topic(worktree, ref)
     agent = args.agent or os.environ.get("USER")
     if not agent or not re.fullmatch(r"[A-Za-z0-9_.-]+", agent):
         raise Refusal("supply your landing name with --agent")
     with LandingLock(agent, args.branch) as lock:
+        require_topic(worktree, ref, expected)
+        current_topic = Topic(str(worktree), args.branch, expected)
+        recovering_topic = lock.cleanup or (lock.publication.topic if lock.publication else None)
         recovered_code = recover_pending_landing(host, lock, args.wait_for_review)
         if recovered_code in (2, 3):
+            return recovered_code
+        if recovering_topic == current_topic and not worktree.exists():
             return recovered_code
         while True:
             fetch_shared(lock)
             base = full_main(SHARED)
-            head = rebase_and_push(worktree, ref, base)
+            head = rebase_and_push(worktree, ref, base, expected)
             if head is None:
                 say("origin/main changed while fetching. Fetching and rebasing again.")
                 continue
+            expected = head
             if head == base:
                 say(f"The topic has no changes beyond main at {base}.")
                 lock.heartbeat()
@@ -1454,21 +1594,16 @@ def live_run(args, root, ref):
                     continue
                 touched = changed_paths(SHARED, base, head)
                 followup = any(name.startswith("Plans/") for name in touched)
-                if not push_checked_main(folder, host, head, tree, base, touched, lock, followup):
+                topic = Topic(str(worktree), args.branch, head)
+                if not push_checked_main(folder, host, head, tree, base, touched, lock, followup, topic=topic):
                     say("origin/main moved during the push. Fetching, rebasing and checking again.")
                     continue
-                if followup:
-                    code = max(code, snapshot_followup(host, head, tree, lock, args.wait_for_review))
-                    if code in (2, 3):
-                        return code
-                lock.heartbeat()
-                remove_topic(worktree, args.branch, head)
-                return max(code, recovered_code)
+                return max(code, recovered_code, recover_pending_landing(host, lock, args.wait_for_review))
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    commands = parser.add_subparsers(dest="command", required=True, metavar="{run,verify,preflight}")
+    commands = parser.add_subparsers(dest="command", required=True, metavar="command")
     run = commands.add_parser("run", help="check a branch and land it under the landing lock")
     run.add_argument("branch")
     run.add_argument("--checks-on", choices=HOSTS, default=DEFAULT_HOST)
@@ -1480,9 +1615,22 @@ def main():
     verify.add_argument("record", type=Path)
     verify.add_argument("--commit", required=True)
     verify.add_argument("--base", required=True, help="full SHA of freshly fetched origin/main")
+    commands.add_parser("inventory", help="print the copied input inventory from a checked worktree as JSON")
     preflight = commands.add_parser("preflight", help="check the current shared checkout before publication")
     preflight.add_argument("--commit", required=True, help="full SHA of the checked candidate")
     preflight.add_argument("--base", required=True, help="full SHA of the checked base")
+    preflight.add_argument("--receipt", type=Path, required=True, help="verified hand check receipt")
+    preflight.add_argument("--receipt-sha256", required=True, help="digest from hand receipt verification")
+    fetch = commands.add_parser("fetch-main", help="fetch the primary during a guarded hand landing")
+    fetch.add_argument("--guard-fd", type=int, required=True)
+    push = commands.add_parser("push-main", help="publish primary then mirrors during a guarded hand landing")
+    push.add_argument("--guard-fd", type=int, required=True)
+    push.add_argument("--commit", required=True)
+    push.add_argument("--base", required=True)
+    push.add_argument("--results", type=Path, required=True)
+    failure = commands.add_parser("failed-ff-state", help="print read-only evidence for failed fast-forward recovery")
+    failure.add_argument("--before", required=True)
+    failure.add_argument("--commit", required=True)
     remote = commands.add_parser("_remote")
     remote.add_argument("mode", choices=(*JOB_MODES, "verify", "cleanup"))
     remote.add_argument("folder", type=Path)
@@ -1514,20 +1662,42 @@ def main():
                 remote_cleanup(args.folder)
             return 0
         root = Path(git(Path.cwd(), "rev-parse", "--show-toplevel").stdout.strip())
+        if args.command == "inventory":
+            say(json.dumps(input_manifest(root, root, tracklist(root)), sort_keys=True))
+            return 0
         if args.command == "preflight":
-            publication_preflight(root, sha(args.base, "checked base"), sha(args.commit, "checked commit"))
+            base, commit = sha(args.base, "checked base"), sha(args.commit, "checked commit")
+            raw = args.receipt.read_bytes()
+            if hashlib.sha256(raw).hexdigest() != args.receipt_sha256:
+                raise Refusal(f"verified hand receipt changed: {args.receipt}")
+            receipt = json.loads(raw)
+            if ((receipt.get("base"), receipt.get("commit")) != (base, commit)
+                    or receipt.get("exit_code") not in (0, 1)
+                    or not isinstance(receipt.get("ignored_inputs"), dict)):
+                raise Refusal(f"verified hand receipt does not permit publication: {args.receipt}")
+            publication_preflight(root, base, commit, receipt["ignored_inputs"])
+            return 0
+        if args.command == "fetch-main":
+            fetch_primary(root, args.guard_fd)
+            return 0
+        if args.command == "push-main":
+            base, commit = sha(args.base, "checked base"), sha(args.commit, "checked commit")
+            return push_main(root, base, commit, args.results, args.guard_fd).returncode
+        if args.command == "failed-ff-state":
+            before, commit = sha(args.before, "pre-merge HEAD"), sha(args.commit, "candidate")
+            say(json.dumps(failed_fast_forward_state(root, before, commit), indent=2, sort_keys=True))
             return 0
         if args.command == "verify":
             if args.record.name != "record.json":
                 raise Refusal("expected the record.json path from the remote run")
             sha(args.commit, "target commit")
             sha(args.base, "fetched origin/main")
-            if ref_at(SHARED, "origin", MAIN_REF) != args.base:
+            if ref_at(SHARED, main_push_urls(SHARED)[0], MAIN_REF) != args.base:
                 raise Refusal("origin/main has moved from the supplied base")
             record = read_json(args.record)
             tree = revision(root, args.commit + "^{tree}")
-            verify_over_ssh(args.record.parent, record["host"], args.commit, tree, args.base)
-            return record["exit_code"]
+            verified = verify_over_ssh(args.record.parent, record["host"], args.commit, tree, args.base)
+            return verified["exit_code"]
         ref = check_ref(args.branch)
         if args.dry_run:
             return dry_run(args, root, ref)

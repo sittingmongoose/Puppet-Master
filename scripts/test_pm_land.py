@@ -65,6 +65,17 @@ class LandingFixture(unittest.TestCase):
         self.report = self.folder / "landing-check.json"
         self.record_path = self.folder / "record.json"
         self.record = self.make_record(1)
+        # Direct publication fixtures can use their pinned tracking ref without a server.
+        # Workflows with a disposable origin use the real primary fetch.
+        primary_fetch = land.fetch_primary
+
+        def fixture_primary_fetch(root, guard_fd):
+            if land.git(root, "config", "--get", "remote.origin.url", check=False).returncode == 0:
+                primary_fetch(root, guard_fd)
+
+        patcher = patch.object(land, "fetch_primary", side_effect=fixture_primary_fetch)
+        patcher.start()
+        self.addCleanup(patcher.stop)
 
     def git(self, repository, *args, **kwargs):
         repository.mkdir(parents=True, exist_ok=True)
@@ -75,6 +86,32 @@ class LandingFixture(unittest.TestCase):
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(content, encoding="utf-8")
         return path
+
+    def hand_script(self):
+        return self.put(self.root, "hand-pm-land.py", f"""
+import importlib.util
+from pathlib import Path
+spec = importlib.util.spec_from_file_location("pm_land", {str(Path(__file__).with_name('pm-land.py').resolve())!r})
+land = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(land)
+land.EVIDENCE = Path({str(self.evidence)!r})
+raise SystemExit(land.main())
+""")
+
+    def hand_require_raw_inputs(self, root):
+        self.put(root, land.RAW_MANIFEST, (self.shared / land.RAW_MANIFEST).read_text())
+        with (root / ".git/info/exclude").open("a") as exclude:
+            exclude.write("\n/tests/agent_packet_restrictions\n")
+        (root / land.RAW_LINK).symlink_to(self.evidence / "raw", target_is_directory=True)
+
+    def hand_receipt_environment(self, root, base, candidate, expected=None):
+        if expected is None:
+            expected = land.input_manifest(root, root, land.tracklist(root, candidate), candidate)
+        receipt = self.folder / "hand-receipt.json"
+        land.write_json(receipt, {"base": base, "commit": candidate, "exit_code": 1, "ignored_inputs": expected})
+        return {"PM_LAND_RECEIPT_DIR": str(self.folder), "PM_LAND_RECEIPT_SHA256": land.file_hash(receipt),
+                "PM_LAND_SCRIPT": str(self.hand_script()), "PM_LAND_TOPIC_WORKTREE": str(self.remote),
+                "PM_LAND_TOPIC_BRANCH": "fix/hand"}
 
     def make_record(self, code):
         land.write_json(self.report, {"schema_id": "pm.landing_check.report.v1",
@@ -155,6 +192,60 @@ class LandingFixture(unittest.TestCase):
         with self.assertRaisesRegex(land.Refusal, "shared checkout ignored input mismatch:.*ignored.txt"):
             self.verify()
 
+    def test_guarded_fast_forward_refuses_readiness_receipt_reissued_during_verification(self):
+        name = f"{land.READINESS}/VALIDATOR_RECEIPT.json"
+        old = '{"generated_at_utc":"2026-11-15T17:42:50+00:00"}\n'
+        refreshed = '{"generated_at_utc":"2026-11-21T19:23:14+00:00"}\n'
+        shared = self.put(self.shared, name, old)
+        self.put(self.remote, name, old)
+        self.git(self.shared, "reset", "--keep", self.base)
+        self.git(self.shared, "update-ref", land.ORIGIN_MAIN, self.base)
+        record = {**self.make_record(0), "ignored_inputs": land.input_manifest(
+            self.remote, self.remote, land.tracklist(self.remote))}
+        original_inventory = land.input_manifest
+
+        def verify_then_return(*_):
+            def reissue_after_hash(root, worktree, tracked, commit=None):
+                inventory = original_inventory(root, worktree, tracked, commit)
+                if root == self.shared:
+                    shared.write_text(refreshed, encoding="utf-8")
+                return inventory
+
+            with patch.object(land, "input_manifest", side_effect=reissue_after_hash):
+                self.assertEqual(self.verify(record=record)["exit_code"], 0)
+            return record
+
+        with (patch.object(land, "verify_over_ssh", side_effect=verify_then_return),
+              self.assertRaisesRegex(land.Refusal, f"shared publication ignored input mismatch: {name}")):
+            with land.LandingLock("first", "fix/topic") as lock:
+                land.push_checked_main(self.folder, "nas1", self.head, self.tree, self.base,
+                                       {"tracked.txt"}, lock, False)
+        self.assertEqual(land.revision(self.shared, "HEAD"), self.base)
+        self.assertEqual(shared.read_text(), refreshed)
+        self.assertFalse(self.lock_path.exists())
+
+    def test_guarded_push_leaves_checkout_and_journal_when_ignored_input_appears(self):
+        name = f"{land.READINESS}/approved-input.json"
+        self.git(self.shared, "reset", "--keep", self.base)
+        self.git(self.shared, "update-ref", land.ORIGIN_MAIN, self.base)
+
+        def install_after_check(_folder, _host, head, _tree, _base):
+            if land.revision(self.shared, "HEAD") == head:
+                self.put(self.shared, name, '{"edition":"approved"}\n')
+            return self.record
+
+        with (patch.object(land, "verify_over_ssh", side_effect=install_after_check),
+              patch.object(land, "shared_shards"), patch.object(land, "push_main") as push,
+              self.assertRaisesRegex(land.Refusal, f"shared publication ignored input mismatch: {name}")):
+            with land.LandingLock("first", "fix/topic") as lock:
+                land.push_checked_main(self.folder, "nas1", self.head, self.tree, self.base,
+                                       {"tracked.txt"}, lock, False)
+        push.assert_not_called()
+        self.assertEqual(land.revision(self.shared, "HEAD"), self.head)
+        self.assertEqual((self.shared / name).read_text(), '{"edition":"approved"}\n')
+        marker = land.json.loads(land.holder_field((self.lock_path / "holder.txt").read_text(), "publication"))
+        self.assertEqual(marker["phase"], "fast-forward-pending")
+
     def test_shared_new_globbed_report_refused(self):
         self.put(self.shared, "Plans/.audits/audit-new/FINAL_REPORT.md", "new")
         with self.assertRaisesRegex(land.Refusal, "shared checkout ignored input mismatch:.*audit-new"):
@@ -194,7 +285,7 @@ class LandingFixture(unittest.TestCase):
               patch.object(land, "LandingLock") as lock,
               patch.object(land, "new_run", return_value=self.folder),
               patch.object(land, "checked_remote", return_value=record),
-              patch.object(land, "verify_over_ssh") as verify,
+              patch.object(land, "verify_over_ssh", return_value=self.record) as verify,
               patch.object(land, "cleanup_over_ssh") as cleanup):
             def local_fetch(root, *argv, **kwargs):
                 if argv[:2] == ("fetch", "origin"):
@@ -217,7 +308,7 @@ class LandingFixture(unittest.TestCase):
             path.write_text(path.read_text() + "/local-only\n")
             raise land.Refusal("a blocking shard failure")
 
-        with (patch.object(land, "verify_over_ssh") as verify,
+        with (patch.object(land, "verify_over_ssh", return_value=self.record) as verify,
               patch.object(land, "shared_shards", side_effect=stop_shards),
               self.assertRaisesRegex(land.Refusal, "blocking shard failure")):
             with land.LandingLock("fixture", "fix/topic") as lock:
@@ -230,7 +321,7 @@ class LandingFixture(unittest.TestCase):
     def test_uncommitted_change_on_touched_path_stops_before_fast_forward(self):
         self.git(self.shared, "reset", "--keep", self.base)
         self.put(self.shared, "tracked.txt", "another thread's edit")
-        with (patch.object(land, "verify_over_ssh") as verify,
+        with (patch.object(land, "verify_over_ssh", return_value=self.record) as verify,
               self.assertRaisesRegex(land.Refusal, "uncommitted changes.*tracked.txt")):
             land.push_checked_main(self.folder, "1070ti", self.head, self.tree, self.base,
                                    {"tracked.txt"}, Mock(), False)
@@ -251,6 +342,7 @@ class LandingFixture(unittest.TestCase):
 
         with (patch.object(land, "git", side_effect=fixture_git),
               patch.object(land, "branch_worktree", return_value=self.remote),
+              patch.object(land, "require_topic", return_value=self.head),
               patch.object(land, "rebase_and_push", return_value=self.head),
               patch.object(land, "ref_at", return_value=self.head),
               patch.object(land, "new_run", return_value=self.folder),
@@ -296,6 +388,47 @@ class LandingFixture(unittest.TestCase):
             self.assertEqual(land.snapshot_followup("1070ti", self.base, self.tree, lock, False), 1)
         publish.assert_called_once()
         self.assertTrue(publish.call_args.kwargs["completes_followup"])
+        self.assertEqual(publish.call_args.kwargs["baseline_inputs"], self.manifest)
+
+    def test_followup_refuses_receipt_from_a_different_baseline_input_edition(self):
+        input_name = f"{land.READINESS}/VALIDATOR_RECEIPT.json"
+        self.git(self.shared, "reset", "--keep", self.base)
+        self.git(self.shared, "update-ref", land.ORIGIN_MAIN, self.base)
+        record = {**self.record, "ignored_inputs": {**self.manifest, input_name: "new edition"}}
+        baseline_inputs = {**self.manifest, input_name: "edition used for the baseline"}
+        with (patch.object(land, "verify_over_ssh", return_value=record),
+              self.assertRaisesRegex(land.Refusal, f"snapshot baseline ignored input mismatch: {input_name}")):
+            with land.LandingLock("first", "fix/followup") as lock:
+                lock.owed = self.base
+                lock.heartbeat()
+                land.push_checked_main(self.folder, "nas1", self.head, self.tree, self.base, {"tracked.txt"},
+                                       lock, False, completes_followup=True, baseline_inputs=baseline_inputs)
+        self.assertEqual(land.revision(self.shared, "HEAD"), self.base)
+        held = (self.lock_path / "holder.txt").read_text()
+        self.assertEqual(land.holder_field(held, "follow-up-owed"), self.base)
+        self.assertFalse(land.holder_field(held, "publication"))
+
+    def test_snapshot_rejects_baseline_recorded_against_a_different_readiness_hash(self):
+        name = f"{land.READINESS}/VALIDATOR_RECEIPT.json"
+        self.put(self.remote, name, '{"generated_at_utc":"before"}')
+        self.put(self.shared, name, '{"generated_at_utc":"before"}')
+        self.put(self.remote, f"{land.MIGRATION}/current_run.json", '{"run_id":"prior"}')
+        inputs = land.input_manifest(self.remote, self.remote, land.tracklist(self.remote))
+        self.assertIn(name, inputs)
+
+        def generate(argv, *_):
+            if "--record-baseline" in argv:
+                baseline = self.remote / land.BASELINE
+                baseline.parent.mkdir(parents=True)
+                land.write_json(baseline, {"commit": self.head, "readiness_audit_inputs": {
+                    "files": {name: "edition used during baseline generation"}}})
+            return 0, 1
+
+        with (patch.object(land, "prepare_remote", return_value=(self.remote, inputs)),
+              patch.object(land, "capture", side_effect=generate),
+              self.assertRaisesRegex(land.Refusal, f"snapshot baseline used different readiness bytes: {name}")):
+            land.remote_snapshot(self.folder, "nas1", self.head, self.tree, "fix/landing-snapshot-fixture")
+        self.assertFalse((self.folder / "snapshot-record.json").exists())
 
 
     def test_topic_push_can_retry_after_local_rebase(self):
@@ -321,8 +454,8 @@ class LandingFixture(unittest.TestCase):
 
         with (patch.object(land, "git", side_effect=fixture_git),
               patch.object(land, "ref_at", return_value=self.head)):
-            self.assertEqual(land.rebase_and_push(self.shared, ref, self.base), rebased)
-        self.assertEqual(pushes, [("push", f"--force-with-lease={ref}:{self.head}", "origin", f"HEAD:{ref}")])
+            self.assertEqual(land.rebase_and_push(self.shared, ref, self.base, rebased), rebased)
+        self.assertEqual(pushes, [("push", f"--force-with-lease={ref}:{self.head}", "origin", f"{rebased}:{ref}")])
 
 
     def test_dry_run_retains_verification_but_refuses_a_moved_base(self):
@@ -344,7 +477,7 @@ class LandingFixture(unittest.TestCase):
         with (patch.object(land, "git", side_effect=moving_fetch),
               patch.object(land, "new_run", return_value=self.folder),
               patch.object(land, "checked_remote", return_value=record),
-              patch.object(land, "verify_over_ssh") as verify,
+              patch.object(land, "verify_over_ssh", return_value=self.record) as verify,
               patch.object(land, "cleanup_over_ssh") as cleanup,
               self.assertRaisesRegex(land.Refusal, "origin/main moved")):
             land.dry_run(args, self.shared, land.MAIN_REF)
@@ -381,6 +514,7 @@ class LandingFixture(unittest.TestCase):
         ssh_failure = subprocess.CompletedProcess([], 255)
         with (patch.object(land, "git", side_effect=fixture_git),
               patch.object(land, "branch_worktree", return_value=self.remote),
+              patch.object(land, "require_topic", return_value=self.head),
               patch.object(land, "rebase_and_push", return_value=self.head),
               patch.object(land, "new_run", return_value=self.folder),
               patch.object(land, "ssh", side_effect=[ssh_failure] * 3) as ssh,
@@ -443,7 +577,7 @@ class LandingFixture(unittest.TestCase):
         self.git(self.remote, "switch", "--no-track", "-c", "fix/remove-topic")
         self.git(self.shared, "reset", "--keep", self.base)
 
-    def interrupt_publication(self, boundary, *, primary_plans=True, owed=""):
+    def interrupt_publication(self, boundary, *, primary_plans=True, owed="", topic=None):
         """Crash without running Python cleanup at the selected real Git boundary."""
         origin = self.root / "origin.git"
         self.git(self.shared, "clone", "--bare", str(self.shared), str(origin))
@@ -466,14 +600,14 @@ class LandingFixture(unittest.TestCase):
                     return result
 
                 with (patch.object(land, "git", side_effect=interrupt_git),
-                      patch.object(land, "verify_over_ssh"), patch.object(land, "shared_shards"),
+                      patch.object(land, "verify_over_ssh", return_value=self.record), patch.object(land, "shared_shards"),
                       land.LandingLock("first", "fix/interrupted") as lock):
                     if owed:
                         lock.owed = owed
                         lock.heartbeat()
                     kwargs = {"completes_followup": True} if owed else {}
                     land.push_checked_main(self.folder, "1070ti", self.head, self.tree, self.base,
-                                           {"tracked.txt"}, lock, primary_plans, **kwargs)
+                                           {"tracked.txt"}, lock, primary_plans, topic=topic, **kwargs)
             except BaseException:
                 os._exit(77)
             os._exit(78)
@@ -516,6 +650,161 @@ class LandingFixture(unittest.TestCase):
                 self.assertEqual(lock.owed, "")
         self.assertFalse(self.lock_path.exists())
 
+    def test_interrupted_push_finishes_original_topic_cleanup(self):
+        branch = "fix/interrupted"
+        self.git(self.remote, "switch", "-c", branch)
+        topic = land.Topic(str(self.remote), branch, self.head)
+        marker = self.interrupt_publication("push", primary_plans=False, topic=topic)
+        self.assertEqual(land.json.loads(land.holder_field(marker, "publication"))["topic"], topic._asdict())
+        with patch.object(land.time, "time", return_value=land.time.time() + 91 * 60):
+            with land.LandingLock("next", "fix/other-topic") as lock:
+                self.assertEqual(land.recover_pending_landing("nas1", lock, False), 0)
+        self.assertFalse(self.remote.exists())
+        self.assertNotEqual(self.git(self.shared, "show-ref", "--verify", land.check_ref(branch),
+                                    check=False).returncode, 0)
+        self.assertFalse(self.lock_path.exists())
+
+    def test_resume_of_same_published_topic_finishes_after_cleanup(self):
+        branch = "fix/interrupted"
+        self.git(self.remote, "switch", "-c", branch)
+        topic = land.Topic(str(self.remote), branch, self.head)
+        self.interrupt_publication("push", primary_plans=False, topic=topic)
+        args = argparse.Namespace(branch=branch, checks_on="nas1", agent="next", wait_for_review=False)
+        with (patch.object(land.time, "time", return_value=land.time.time() + 91 * 60),
+              patch.object(land, "rebase_and_push") as rebase):
+            self.assertEqual(land.live_run(args, self.shared, land.check_ref(branch)), 0)
+        rebase.assert_not_called()
+        self.assertFalse(self.remote.exists())
+        self.assertFalse(self.lock_path.exists())
+
+    def test_interrupted_push_hands_off_a_changed_original_worktree(self):
+        branch = "fix/interrupted"
+        self.git(self.remote, "switch", "-c", branch)
+        topic = land.Topic(str(self.remote), branch, self.head)
+        self.interrupt_publication("push", primary_plans=False, topic=topic)
+        changed = self.put(self.remote, "tracked.txt", "another thread's work")
+        with (patch.object(land.time, "time", return_value=land.time.time() + 91 * 60),
+              self.assertRaisesRegex(land.Refusal, "cleanup owed for fix/interrupted")):
+            with land.LandingLock("next", "fix/other-topic") as lock:
+                land.recover_pending_landing("nas1", lock, False)
+        self.assertEqual(changed.read_text(), "another thread's work")
+        self.assertEqual(land.revision(self.shared, land.check_ref(branch)), self.head)
+        holder = (self.lock_path / "holder.txt").read_text()
+        self.assertEqual(land.json.loads(land.holder_field(holder, "cleanup-owed")), topic._asdict())
+
+    def test_queued_lander_refuses_switched_worktree_before_rebase(self):
+        branch = "fix/requested"
+        self.git(self.remote, "switch", "-c", branch)
+        self.git(self.shared, "branch", "fix/other", self.base)
+        enter = land.LandingLock.__enter__
+
+        def switch_while_queued(lock):
+            self.git(self.remote, "switch", "fix/other")
+            return enter(lock)
+
+        args = argparse.Namespace(branch=branch, checks_on="nas1", agent="fixture", wait_for_review=False)
+        with (patch.object(land.LandingLock, "__enter__", new=switch_while_queued),
+              patch.object(land, "rebase_and_push") as rebase,
+              self.assertRaisesRegex(land.Refusal, "switched from refs/heads/fix/requested")):
+            land.live_run(args, self.shared, land.check_ref(branch))
+        rebase.assert_not_called()
+        self.assertEqual(land.revision(self.shared, land.check_ref(branch)), self.head)
+        self.assertFalse(self.lock_path.exists())
+
+    def test_topic_switch_during_rebase_stops_the_topic_push(self):
+        branch = "fix/requested"
+        ref = land.check_ref(branch)
+        self.git(self.remote, "switch", "-c", branch)
+        self.git(self.shared, "branch", "fix/other", self.base)
+        self.git(self.shared, "update-ref", land.ORIGIN_MAIN, self.base)
+        real_git = land.git
+
+        def switch_after_rebase(root, *argv, **kwargs):
+            if argv[0] == "fetch":
+                return
+            self.assertNotEqual(argv[0], "push")
+            result = real_git(root, *argv, **kwargs)
+            if argv[0] == "rebase":
+                real_git(root, "switch", "fix/other")
+            return result
+
+        with (patch.object(land, "git", side_effect=switch_after_rebase),
+              patch.object(land, "ref_at", return_value=self.head),
+              self.assertRaisesRegex(land.Refusal, "switched from refs/heads/fix/requested")):
+            land.rebase_and_push(self.remote, ref, self.base, self.head)
+        self.assertEqual(land.revision(self.shared, ref), self.head)
+
+    def test_main_push_requires_primary_before_mirror_and_records_both(self):
+        primary = self.root / "primary.git"
+        mirror = self.root / "mirror.git"
+        for remote in (primary, mirror):
+            self.git(self.shared, "clone", "--bare", str(self.shared), str(remote))
+            self.git(remote, "update-ref", land.MAIN_REF, self.base, self.head)
+        advanced = self.git(self.shared, "commit-tree", self.tree, "-p", self.base,
+                            "-m", "competing publication").stdout.strip()
+        for remote in (primary, mirror):
+            self.git(remote, "fetch", str(self.shared), advanced)
+        self.git(self.shared, "remote", "add", "origin", str(primary))
+        for remote in (primary, mirror):
+            self.git(self.shared, "config", "--add", "remote.origin.pushurl", str(remote))
+        results = self.folder / "publication-push.json"
+
+        self.git(primary, "update-ref", land.MAIN_REF, advanced, self.base)
+        with land.landing_guard() as guard_fd:
+            refused = land.push_main(self.shared, self.base, self.head, results, guard_fd)
+        record = land.read_json(results)
+        self.assertNotEqual(refused.returncode, 0)
+        self.assertIn("stale info", record["primary"]["stderr"])
+        self.assertEqual(record["mirrors"], [])
+        self.assertEqual(land.revision(mirror, "HEAD"), self.base)
+
+        self.git(primary, "update-ref", land.MAIN_REF, self.base, advanced)
+        self.git(mirror, "update-ref", land.MAIN_REF, advanced, self.base)
+        with land.landing_guard() as guard_fd:
+            accepted = land.push_main(self.shared, self.base, self.head, results, guard_fd)
+        record = land.read_json(results)
+        self.assertEqual(accepted.returncode, 0)
+        self.assertEqual(record["primary"]["exit_code"], 0)
+        self.assertNotEqual(record["mirrors"][0]["exit_code"], 0)
+        self.assertEqual(land.revision(primary, "HEAD"), self.head)
+        self.assertEqual(land.revision(mirror, "HEAD"), advanced)
+
+    def test_reseal_publication_retains_handoff_for_assigned_agent(self):
+        paths = ("Plans/Spec_Lock.json", "Plans/.evidence/topic/evidence.json", "Plans/auto_decisions.jsonl",
+                 f"{land.READINESS}/VALIDATOR_RECEIPT.json",
+                 "reports/governance-reseal-20261114/currentness-final/receipt.json")
+        for path in paths:
+            with self.subTest(path=path):
+                self.assertTrue(land.requires_reseal({path}))
+        self.assertFalse(land.requires_reseal({land.BASELINE, f"{land.MIGRATION}/current_run.json"}))
+
+        self.git(self.shared, "reset", "--keep", self.base)
+        origin = self.root / "origin.git"
+        self.git(self.shared, "clone", "--bare", str(self.shared), str(origin))
+        self.git(self.shared, "remote", "add", "origin", str(origin))
+        self.git(self.shared, "fetch", "origin")
+        self.put(self.shared, paths[0], "{}")
+        self.git(self.shared, "add", "--", paths[0])
+        self.git(self.shared, "commit", "-m", "assigned reseal")
+        candidate, tree = (land.revision(self.shared, ref) for ref in ("HEAD", "HEAD^{tree}"))
+        self.git(self.shared, "reset", "--keep", self.base)
+        with (patch.object(land, "verify_over_ssh", return_value=self.record),
+              patch.object(land, "shared_shards"), patch.object(land, "snapshot_followup") as automatic):
+            with land.LandingLock("first", "fix/reseal") as lock:
+                self.assertTrue(land.push_checked_main(self.folder, "nas1", candidate, tree, self.base,
+                                                      {paths[0]}, lock, True))
+                with self.assertRaisesRegex(land.Refusal, "reseal: follow the reseal-record hand procedure"):
+                    land.recover_pending_landing("nas1", lock, False)
+            with patch.object(land.time, "time", return_value=land.time.time() + 91 * 60):
+                with land.LandingLock("next", "fix/other") as lock:
+                    with self.assertRaisesRegex(land.Refusal, "reseal: follow the reseal-record hand procedure"):
+                        land.recover_pending_landing("nas1", lock, False)
+        automatic.assert_not_called()
+        self.assertEqual(land.revision(origin, "HEAD"), candidate)
+        holder = (self.lock_path / "holder.txt").read_text()
+        self.assertEqual(land.holder_field(holder, "follow-up-owed"), candidate)
+        self.assertEqual(land.holder_field(holder, "follow-up-kind"), "reseal")
+
     def test_live_recovery_finishes_owed_followup_before_rebasing_next_topic(self):
         self.interrupt_publication("push")
         args = argparse.Namespace(branch="fix/next", checks_on="nas1", agent="next", wait_for_review=False)
@@ -536,6 +825,7 @@ class LandingFixture(unittest.TestCase):
 
         with (patch.object(land.time, "time", return_value=land.time.time() + 91 * 60),
               patch.object(land, "branch_worktree", return_value=self.remote),
+              patch.object(land, "require_topic", return_value=self.head),
               patch.object(land, "snapshot_followup", side_effect=complete),
               patch.object(land, "rebase_and_push", side_effect=rebase),
               patch.object(land, "remove_topic")):
@@ -554,7 +844,7 @@ class LandingFixture(unittest.TestCase):
             calls.append("lost")
             raise land.Refusal("shard result disturbed")
 
-        with (patch.object(land, "verify_over_ssh"), patch.object(land, "shared_shards", side_effect=lose_owner),
+        with (patch.object(land, "verify_over_ssh", return_value=self.record), patch.object(land, "shared_shards", side_effect=lose_owner),
               self.assertRaisesRegex(land.Refusal, "changed owners")):
             with land.LandingLock("first", "fix/topic") as lock:
                 land.push_checked_main(self.folder, "1070ti", self.head, self.tree, self.base,
@@ -574,6 +864,7 @@ class LandingFixture(unittest.TestCase):
             verifications.append(1)
             if len(verifications) == 2:
                 (self.lock_path / "holder.txt").write_text("token: other-holder\n", encoding="utf-8")
+            return self.record
 
         def fixture_git(root, *argv, **kwargs):
             if argv[0] == "push":
@@ -614,6 +905,31 @@ class LandingFixture(unittest.TestCase):
         self.assertEqual((fresh / "Plans/.audits/later/new-notes.MD").read_text(),
                          "ContractName:Plans/Fixture.md")
         self.assertNotIn("Plans/.audits/later/unused.mp4", manifest)
+
+    def test_inventory_uses_gui_validator_selection_outside_test_fixtures(self):
+        repo = Path(__file__).resolve().parents[1]
+        name = "tests/test_v3_residuals.js"
+        historical = self.git(repo, "show", f"956ce278dc:{name}", check=False)
+        if historical.returncode:
+            self.skipTest("historical GUI source is unavailable")
+        self.put(self.shared, land.GUI_POLICY, (repo / land.GUI_POLICY).read_text())
+        ignore = self.shared / ".gitignore"
+        ignore.write_text(ignore.read_text() + f"/{name}\n/tests/node_modules/\n/tests/unchecked.txt\n")
+        self.git(self.shared, "add", "--", land.GUI_POLICY, ".gitignore")
+        self.git(self.shared, "commit", "-m", "GUI validator and ignore rules")
+        self.put(self.shared, name, historical.stdout)
+        self.put(self.shared, "tests/node_modules/generated.js", "excluded source")
+        self.put(self.shared, "tests/unchecked.txt", "unselected file type")
+        candidate = land.revision(self.shared, "HEAD")
+        fresh = self.root / "gui-copy"
+        self.git(self.shared, "worktree", "add", "--detach", str(fresh), candidate)
+        manifest = land.copy_inputs(self.shared, fresh)
+        self.assertEqual((fresh / name).read_text(), historical.stdout)
+        self.assertIn(name, manifest)
+        self.assertNotIn("tests/node_modules/generated.js", manifest)
+        self.assertNotIn("tests/unchecked.txt", manifest)
+        self.assertEqual(land.input_manifest(self.shared, self.shared, land.tracklist(self.shared, candidate),
+                                            candidate), manifest)
 
     def test_inventory_includes_exact_artifacts_declared_by_validators(self):
         custody = "Plans/.audits/older/frozen.bin"
@@ -677,7 +993,7 @@ class LandingFixture(unittest.TestCase):
                         self.git(self.shared, "add", "--", name)
                 else:
                     self.git(self.shared, "update-index", f"--{mode}", "--", name)
-                with (patch.object(land, "verify_over_ssh") as verify,
+                with (patch.object(land, "verify_over_ssh", return_value=self.record) as verify,
                       patch.object(land, "shared_shards", side_effect=land.Refusal("unexpected fast-forward")),
                       land.LandingLock("first", "fix/topic") as lock,
                       self.assertRaisesRegex(land.Refusal, "Plans/.evidence/q5/evidence.json")):
@@ -746,14 +1062,14 @@ class LandingFixture(unittest.TestCase):
 
     def test_cleanup_defers_while_job_is_starting_running_or_partial(self):
         land.write_json(self.folder / "snapshot-job.json", {"job": land.job_name(self.folder, "snapshot")})
-        for state in ("starting", "running", "partial"):
+        for state in ("starting", "running", "partial", "lost"):
             with self.subTest(state=state):
                 name = land.job_name(self.folder, "snapshot")
                 status = subprocess.CompletedProcess([], 0, land.json.dumps([{"name": name, "state": state}]), "")
                 with (patch.object(land, "worktree_path", return_value=self.remote),
                       patch.object(land, "command", return_value=status),
                       patch.object(land, "git") as git,
-                      self.assertRaisesRegex(land.Refusal, "still in use")):
+                      self.assertRaisesRegex(land.Refusal, "may still have worker")):
                     land.remote_cleanup(self.folder)
                 git.assert_not_called()
 
@@ -771,7 +1087,7 @@ class LandingFixture(unittest.TestCase):
             with (self.subTest(code=code), patch.object(land, "git", side_effect=fixture_git),
                   patch.object(land, "new_run", return_value=self.folder),
                   patch.object(land, "checked_remote", return_value=self.make_record(code)),
-                  patch.object(land, "verify_over_ssh"),
+                  patch.object(land, "verify_over_ssh", return_value=self.record),
                   patch.object(land, "cleanup_over_ssh", side_effect=land.Refusal("worktree in use"))):
                 self.assertEqual(land.dry_run(args, self.shared, land.MAIN_REF), code)
                 self.assertIn("worktree in use",
@@ -787,14 +1103,19 @@ class LandingFixture(unittest.TestCase):
                 return None
             return real_git(root, *argv, **kwargs)
 
+        def publish_topic(*args, topic, **_):
+            args[6].cleanup = topic
+            return True
+
         with (patch.object(land, "git", side_effect=fixture_git),
               patch.object(land, "branch_worktree", return_value=self.remote),
+              patch.object(land, "require_topic", return_value=self.head),
               patch.object(land, "rebase_and_push", return_value=self.head),
               patch.object(land, "ref_at", return_value=self.head),
               patch.object(land, "new_run", return_value=self.folder),
               patch.object(land, "checked_remote", return_value=self.make_record(1)),
               patch.object(land, "check_judgments", return_value=1),
-              patch.object(land, "push_checked_main", return_value=True) as publish,
+              patch.object(land, "push_checked_main", side_effect=publish_topic) as publish,
               patch.object(land, "remove_topic") as remove_topic,
               patch.object(land, "cleanup_over_ssh", side_effect=land.Refusal("remote cleanup disconnected"))):
             self.assertEqual(land.live_run(args, self.shared, land.check_ref(args.branch)), 1)
@@ -817,7 +1138,7 @@ class LandingFixture(unittest.TestCase):
             path.write_text(unstaged)
             raise land.Refusal("shards refused")
 
-        with (patch.object(land, "verify_over_ssh"),
+        with (patch.object(land, "verify_over_ssh", return_value=self.record),
               patch.object(land, "shared_shards", side_effect=edits_during_verification),
               self.assertRaisesRegex(land.Refusal, "shards refused")):
             with land.LandingLock("first", "fix/topic") as lock:
@@ -873,7 +1194,7 @@ class LandingFixture(unittest.TestCase):
             alternate = land.revision(self.shared, "HEAD")
             raise land.Refusal("checker stopped")
 
-        with (patch.object(land, "verify_over_ssh"), patch.object(land, "shared_shards", side_effect=lose_expected_head),
+        with (patch.object(land, "verify_over_ssh", return_value=self.record), patch.object(land, "shared_shards", side_effect=lose_expected_head),
               self.assertRaisesRegex(land.Refusal, "shared main")):
             with land.LandingLock("first", "fix/topic") as lock:
                 land.push_checked_main(self.folder, "1070ti", self.head, self.tree, self.base,
@@ -892,7 +1213,7 @@ class LandingFixture(unittest.TestCase):
             self.git(self.shared, "reset", "--keep", self.base)
             raise land.Refusal("the shard check was interrupted")
 
-        with (patch.object(land, "verify_over_ssh"),
+        with (patch.object(land, "verify_over_ssh", return_value=self.record),
               patch.object(land, "shared_shards", side_effect=concurrent_head_move),
               self.assertRaisesRegex(land.Refusal, "shared main changed")):
             with land.LandingLock("first", "fix/topic") as lock:
@@ -924,7 +1245,7 @@ if code != 3:
 raise SystemExit(code)
 """)
         environ = {**os.environ, "PM_LAND_COMMIT": self.head, "PM_LAND_BASE": self.base,
-                   "PM_LAND_RECEIPT_DIR": str(self.folder)}
+                   "PM_LAND_RECEIPT_DIR": str(self.folder), "PM_LAND_SCRIPT": str(self.hand_script())}
 
         def shell(snippet, **extra):
             return subprocess.run(["bash", "-c", snippet], cwd=self.remote,
@@ -990,85 +1311,48 @@ fi
         self.git(self.shared, "config", "core.hooksPath", str(hook.parent))
         return owner, base, candidate, tree
 
-    def test_failed_git_ref_transaction_repairs_candidate_checkout(self):
-        owner, base, candidate, tree = self.rejected_fast_forward_fixture()
-        with (patch.object(land, "verify_over_ssh"),
-              self.assertRaisesRegex(land.Refusal, "fixture rejected the main ref transaction")):
-            with land.LandingLock("first", "fix/topic") as lock:
-                land.push_checked_main(self.folder, "1070ti", candidate, tree, base,
-                                       {owner, "Plans/new.md"}, lock, True)
-        self.assertEqual(land.revision(self.shared, "HEAD"), base)
-        self.assertEqual(self.git(self.shared, "show", f":{owner}").stdout, "base edition\n")
-        self.assertEqual((self.shared / owner).read_text(), "base edition\n")
-        self.assertFalse((self.shared / "Plans/new.md").exists())
-        self.assertEqual(self.git(self.shared, "show", ":outside.txt").stdout, "outside staged\n")
-        self.assertEqual((self.shared / "outside.txt").read_text(), "outside working\n")
-        self.assertFalse(self.lock_path.exists())
-
-    def test_failed_fast_forward_repairs_mount_mode_when_git_ignores_it(self):
+    def test_failed_ref_transaction_keeps_partial_checkout_and_concurrent_edit(self):
         owner, base, candidate, tree = self.rejected_fast_forward_fixture()
         addition = "Plans/new.md"
-        self.git(self.shared, "config", "core.filemode", "false")
-        (self.shared / owner).chmod(0o777)
-        real_git = land.git
+        real_hash = land.file_hash
+        generated = self.shared / addition
+        editor_save = "someone else's later edition\n"
+        inspected = []
 
-        def mount_modes(root, *argv, **kwargs):
-            if argv[0] == "merge":
-                result = real_git(root, *argv, **{**kwargs, "check": False})
-                self.assertNotEqual(result.returncode, 0)
-                for name in (owner, addition):
-                    self.assertTrue(real_git(root, "ls-files", "--stage", "--", name).stdout.startswith("100644 "))
-                    (root / name).chmod(0o777)
-                raise land.Refusal(result.stderr)
-            result = real_git(root, *argv, **kwargs)
-            if argv[:2] == ("--literal-pathspecs", "restore"):
-                (root / owner).chmod(0o777)
-            return result
+        def read_during_editor_save(path):
+            inspected.append(path)
+            if path == self.shared / owner:
+                self.assertIn(generated, inspected)
+                generated.write_text(editor_save, encoding="utf-8")
+            return real_hash(path)
 
-        with (patch.object(land, "git", side_effect=mount_modes),
-              patch.object(land, "verify_over_ssh"),
-              self.assertRaisesRegex(land.Refusal, "fixture rejected the main ref transaction")):
-            with land.LandingLock("first", "fix/topic") as lock:
-                land.push_checked_main(self.folder, "1070ti", candidate, tree, base, {owner, addition}, lock, True)
-        self.assertEqual(land.revision(self.shared, "HEAD"), base)
-        self.assertEqual(self.git(self.shared, "status", "--porcelain").stdout, "MM outside.txt\n")
-        self.assertEqual(self.git(self.shared, "show", f":{owner}").stdout, "base edition\n")
-        self.assertEqual((self.shared / owner).read_text(), "base edition\n")
-        self.assertEqual((self.shared / owner).stat().st_mode & 0o777, 0o777)
-        self.assertFalse((self.shared / addition).exists())
-        self.assertEqual(self.git(self.shared, "show", ":outside.txt").stdout, "outside staged\n")
-        self.assertEqual((self.shared / "outside.txt").read_text(), "outside working\n")
-        self.assertFalse(self.lock_path.exists())
-
-    def test_failed_fast_forward_retains_journal_for_ambiguous_bytes(self):
-        owner, base, candidate, tree = self.rejected_fast_forward_fixture()
-        self.git(self.shared, "config", "core.filemode", "false")
-        real_git = land.git
-
-        def concurrent_edit(root, *argv, **kwargs):
-            if argv[0] != "merge":
-                return real_git(root, *argv, **kwargs)
-            result = real_git(root, *argv, **{**kwargs, "check": False})
-            self.assertNotEqual(result.returncode, 0)
-            self.assertEqual(real_git(root, "show", f":{owner}").stdout, "candidate edition\n")
-            self.put(root, owner, "someone else's edit\n")
-            (root / owner).chmod(0o777)
-            if kwargs.get("check", True):
-                raise land.Refusal("fixture rejected the main ref transaction")
-            return result
-
-        with (patch.object(land, "git", side_effect=concurrent_edit),
-              patch.object(land, "verify_over_ssh"), self.assertRaisesRegex(land.Refusal, "fixture|ambiguous")):
+        with (patch.object(land, "verify_over_ssh", return_value=self.record),
+              patch.object(land, "file_hash", side_effect=read_during_editor_save),
+              self.assertRaisesRegex(land.ManualRecovery, "Manual reconciliation required")):
             with land.LandingLock("first", "fix/topic") as lock:
                 land.push_checked_main(self.folder, "1070ti", candidate, tree, base,
-                                       {owner, "Plans/new.md"}, lock, True)
+                                       {owner, addition}, lock, True)
         self.assertEqual(land.revision(self.shared, "HEAD"), base)
-        self.assertEqual((self.shared / owner).read_text(), "someone else's edit\n")
         self.assertEqual(self.git(self.shared, "show", f":{owner}").stdout, "candidate edition\n")
-        self.assertFalse((self.shared / "Plans/new.md").exists())
-        marker = (self.lock_path / "holder.txt").read_text()
-        self.assertIn(f'"pre_merge_head": "{base}"', marker)
-        self.assertIn(owner, (self.folder / "publication-recovery.json").read_text())
+        self.assertEqual(self.git(self.shared, "show", f":{addition}").stdout, "candidate addition\n")
+        self.assertEqual((self.shared / owner).read_text(), "candidate edition\n")
+        self.assertEqual(generated.read_text(), editor_save)
+        self.assertEqual(self.git(self.shared, "show", ":outside.txt").stdout, "outside staged\n")
+        self.assertEqual((self.shared / "outside.txt").read_text(), "outside working\n")
+        notice = land.read_json(self.folder / "publication-recovery.json")
+        self.assertEqual(notice["state"]["head"], base)
+        self.assertIn(f"AM {addition}", notice["state"]["status"])
+        self.assertEqual(set(notice["state"]["paths"]), {owner, addition})
+        self.assertEqual(notice["phase"], "fast-forward-failed")
+
+        status = self.git(self.shared, "status", "--porcelain").stdout
+        with (patch.object(land.time, "time", return_value=land.time.time() + 91 * 60),
+              self.assertRaises(land.ManualRecovery)):
+            with land.LandingLock("next", "fix/next") as lock:
+                land.reconcile_publication(lock)
+        self.assertEqual(self.git(self.shared, "status", "--porcelain").stdout, status)
+        self.assertEqual(generated.read_text(), editor_save)
+        self.assertIn('"phase": "fast-forward-failed"', (self.lock_path / "holder.txt").read_text())
 
     def test_failed_fast_forward_preserves_unstaged_save_of_candidate_bytes(self):
         repo = Path(__file__).resolve().parents[1]
@@ -1106,69 +1390,23 @@ fi
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("would be overwritten by merge", result.stderr)
             self.assertEqual(real_git(root, "status", "--porcelain").stdout, unstaged)
-            raise land.Refusal(result.stderr)
+            return result
 
         with (patch.object(land, "git", side_effect=save_at_merge),
-              patch.object(land, "verify_over_ssh"), self.assertRaises(land.Refusal) as refusal):
+              patch.object(land, "verify_over_ssh", return_value=self.record), self.assertRaises(land.Refusal) as refusal):
             with land.LandingLock("first", "fix/topic") as lock:
                 land.push_checked_main(self.folder, "1070ti", candidate, tree, base, {evidence}, lock, True)
         self.assertEqual(land.revision(self.shared, "HEAD"), base)
         self.assertEqual(self.git(self.shared, "show", f":{evidence}").stdout, prior.stdout)
         self.assertEqual(self.git(self.shared, "status", "--porcelain").stdout, unstaged)
         self.assertEqual(target.read_text(encoding="utf-8"), sealed.stdout)
-        self.assertIn(evidence, str(refusal.exception))
+        self.assertIn("Manual reconciliation", str(refusal.exception))
         holder = (self.lock_path / "holder.txt").read_text()
         marker = land.json.loads(land.holder_field(holder, "publication"))
-        self.assertEqual((marker["candidate"], marker["phase"]), (candidate, "fast-forward-pending"))
+        self.assertEqual((marker["candidate"], marker["phase"]), (candidate, "fast-forward-failed"))
         notice = land.read_json(self.folder / "publication-recovery.json")
-        self.assertIn(f"ambiguous index or working-tree bytes after failed fast-forward: {evidence}", notice["reason"])
-
-    def test_recovery_repairs_interrupted_failed_fast_forward_even_if_candidate_reached_origin(self):
-        owner, base, candidate, tree = self.rejected_fast_forward_fixture()
-        self.git(self.shared, "config", "core.filemode", "false")
-        origin = self.root / "origin.git"
-        self.git(self.shared, "clone", "--bare", str(self.shared), str(origin))
-        self.git(self.shared, "remote", "add", "origin", str(origin))
-        # The local clone copied the candidate object without advancing its main.
-        self.git(origin, "cat-file", "-e", f"{candidate}^{{commit}}")
-        real_git = land.git
-
-        def interrupt_after_merge(root, *argv, **kwargs):
-            if argv[0] != "merge":
-                return real_git(root, *argv, **kwargs)
-            result = real_git(root, *argv, **{**kwargs, "check": False})
-            os._exit(76 if result.returncode else 77)
-
-        pid = os.fork()
-        if pid == 0:
-            try:
-                with (patch.object(land, "git", side_effect=interrupt_after_merge),
-                      patch.object(land, "verify_over_ssh"), land.LandingLock("first", "fix/interrupted") as lock):
-                    land.push_checked_main(self.folder, "1070ti", candidate, tree, base,
-                                           {owner, "Plans/new.md"}, lock, True)
-            except BaseException:
-                os._exit(78)
-            os._exit(79)
-        _, status = os.waitpid(pid, 0)
-        self.assertEqual(os.waitstatus_to_exitcode(status), 76)
-        marker = (self.lock_path / "holder.txt").read_text()
-        self.assertIn(f'"pre_merge_head": "{base}"', marker)
-        self.assertEqual(self.git(self.shared, "show", f":{owner}").stdout, "candidate edition\n")
-        for name in (owner, "Plans/new.md"):
-            (self.shared / name).chmod(0o777)
-
-        self.git(origin, "update-ref", land.MAIN_REF, candidate, base)
-        with patch.object(land.time, "time", return_value=land.time.time() + 91 * 60):
-            with land.LandingLock("next", "fix/next") as lock:
-                self.assertTrue(land.reconcile_publication(lock))
-                self.assertEqual(lock.owed, candidate)
-                self.assertIsNone(lock.publication)
-        self.assertEqual(land.revision(self.shared, "HEAD"), base)
-        self.assertEqual(self.git(self.shared, "show", f":{owner}").stdout, "base edition\n")
-        self.assertEqual((self.shared / owner).read_text(), "base edition\n")
-        self.assertEqual(self.git(self.shared, "show", ":outside.txt").stdout, "outside staged\n")
-        self.assertEqual((self.shared / "outside.txt").read_text(), "outside working\n")
-        self.assertFalse((self.shared / "Plans/new.md").exists())
+        self.assertIn(evidence, notice["state"]["paths"])
+        self.assertEqual(notice["state"]["status"], unstaged)
 
     def test_hand_fast_forward_protects_historical_ignored_fixture(self):
         repo = Path(__file__).resolve().parents[1]
@@ -1186,7 +1424,9 @@ fi
         self.git(folder, "add", "--", ".gitignore")
         self.git(folder, "commit", "-m", "historic base")
         base = land.revision(folder, "HEAD")
-        self.git(folder, "update-ref", land.ORIGIN_MAIN, base)
+        origin = self.root / "historical-origin.git"
+        self.git(folder, "clone", "--bare", str(folder), str(origin))
+        self.git(folder, "remote", "add", "origin", str(origin))
         self.put(folder, ".gitignore", self.git(repo, "show", f"{history}:.gitignore").stdout)
         self.put(folder, fixture_path, historic.stdout)
         self.git(folder, "add", "--", ".gitignore", fixture_path)
@@ -1218,15 +1458,25 @@ fi
             env = {**os.environ, "PM_LAND_LOCK": str(self.lock_path), "PM_LAND_TOKEN": lock.token,
                    "PM_LAND_BASE": base, "PM_LAND_COMMIT": candidate,
                    "PM_LAND_PLANS_FOLLOWUP": "false", "PM_LAND_COMPLETES_FOLLOWUP": "false",
-                   "PM_LAND_SCRIPT": str(repo / "scripts/pm-land.py")}
+                   **self.hand_receipt_environment(folder, base, candidate, expected={})}
             result = subprocess.run(["bash", "-c", recipe], cwd=folder, env=env, capture_output=True, text=True)
             self.assertNotEqual(result.returncode, 0)
             self.assertIn(fixture_path, result.stderr)
             body = (self.lock_path / "holder.txt").read_text()
-            marker = land.json.loads(land.holder_field(body, "publication"))
-            self.assertEqual((marker["pre_merge_head"], marker["phase"]), (base, "fast-forward-pending"))
+            self.assertFalse(land.holder_field(body, "publication"))
         self.assertEqual(local_copy.read_text(), "local ignored schema bytes\n")
         self.assertEqual(land.revision(folder, "HEAD"), base)
+        self.assertFalse(self.lock_path.exists())
+
+        tree = land.revision(folder, f"{candidate}^{{tree}}")
+        with (patch.object(land, "SHARED", folder), patch.object(land, "verify_over_ssh", return_value=self.record),
+              self.assertRaisesRegex(land.Refusal, f"candidate would overwrite ignored files: {fixture_path}")):
+            with land.LandingLock("tool", "fix/historical") as lock:
+                land.push_checked_main(self.folder, "nas1", candidate, tree, base, {".gitignore", fixture_path},
+                                       lock, False)
+        self.assertEqual(local_copy.read_text(), "local ignored schema bytes\n")
+        self.assertEqual(land.revision(folder, "HEAD"), base)
+        self.assertFalse(self.lock_path.exists())
 
     def test_hand_publication_rechecks_historical_q5_input_before_each_mutation(self):
         repo = Path(__file__).resolve().parents[1]
@@ -1246,14 +1496,19 @@ fi
         fast_forward = recipe("Guard and fast-forward the checked commit")
         push = recipe("Push the checked commit")
         observe_git = """
-git() {
-    if [ "$1" = push ]; then
+python3() {
+    if [ "${3-}" = push-main ]; then
         echo 'reached Git push'
         return 0
     fi
-    command git "$@" || return "$?"
-    if [ "$1" = fetch ] && [ "$PM_LAND_TEST_PHASE" = push ]; then
-        cp -- "$PM_LAND_TEST_PRIOR" "$PM_LAND_TEST_EVIDENCE"
+    command python3 "$@" || return "$?"
+    if [ "${3-}" = fetch-main ]; then
+        fetch_count=$(cat "$PM_LAND_TEST_FETCH_COUNT")
+        fetch_count=$((fetch_count + 1))
+        printf '%s\n' "$fetch_count" >"$PM_LAND_TEST_FETCH_COUNT"
+        if [ "$fetch_count" = 2 ] && [ "$PM_LAND_TEST_PHASE" = push ]; then
+            cp -- "$PM_LAND_TEST_PRIOR" "$PM_LAND_TEST_EVIDENCE"
+        fi
     fi
 }
 """
@@ -1267,7 +1522,8 @@ git() {
                     self.git(folder, "config", "user.email", "fixture@example.invalid")
                     self.git(folder, "config", "core.hooksPath", str(self.root / "no-hooks"))
                     target = self.put(folder, evidence, sealed.stdout)
-                    self.git(folder, "add", "--", evidence)
+                    self.hand_require_raw_inputs(folder)
+                    self.git(folder, "add", "--", evidence, land.RAW_MANIFEST)
                     self.git(folder, "commit", "-m", "sealed Q5 base")
                     base = land.revision(folder, "HEAD")
                     self.git(folder, "clone", "--bare", str(folder), str(origin))
@@ -1288,11 +1544,13 @@ git() {
                         if followup:
                             lock.owed = base
                             lock.heartbeat()
+                        fetch_count = self.put(self.root, f"fetch-count-{phase}-{followup}", "0\n")
                         env = {**os.environ, "PM_LAND_LOCK": str(held), "PM_LAND_TOKEN": lock.token,
                                "PM_LAND_BASE": base, "PM_LAND_COMMIT": candidate,
                                "PM_LAND_PLANS_FOLLOWUP": "false",
                                "PM_LAND_COMPLETES_FOLLOWUP": str(followup).lower(),
-                               "PM_LAND_SCRIPT": str(repo / "scripts/pm-land.py"),
+                               **self.hand_receipt_environment(folder, base, candidate),
+                               "PM_LAND_TEST_FETCH_COUNT": str(fetch_count),
                                "PM_LAND_TEST_PHASE": phase, "PM_LAND_TEST_PRIOR": str(replacement),
                                "PM_LAND_TEST_EVIDENCE": evidence}
                         if phase == "ff":
@@ -1313,6 +1571,51 @@ git() {
                         self.assertEqual(land.revision(folder, "HEAD"), candidate if phase == "push" else base)
                     self.assertEqual(land.revision(origin, "HEAD"), base)
                     self.assertEqual(target.read_text(), prior.stdout)
+
+    def test_hand_push_refuses_approved_ignored_edition_installed_after_verification(self):
+        edition_name = "CURRENT_EVENT_SOURCE_INVENTORY.json"
+        path = f"{land.READINESS}/{edition_name}"
+        archive = Path("/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261114")
+        prior = archive / "backup/shared-edition-before-install-20261115T1623Z" / edition_name
+        approved = archive / "currentness-final" / edition_name
+        old_bytes = prior.read_bytes() if prior.is_file() else b'{"edition":"previous"}\n'
+        approved_bytes = approved.read_bytes() if approved.is_file() else b'{"edition":"approved"}\n'
+        target = self.put(self.shared, path, "")
+        target.write_bytes(old_bytes)
+        edition = self.put(self.root, edition_name, "")
+        edition.write_bytes(approved_bytes)
+        self.assertNotEqual(old_bytes, approved_bytes)
+        self.git(self.shared, "reset", "--keep", self.base)
+        origin = self.root / "origin.git"
+        self.git(self.shared, "clone", "--bare", str(self.shared), str(origin))
+        self.git(self.shared, "remote", "add", "origin", str(origin))
+
+        readme = (Path(__file__).resolve().parents[1] / "reports/landing-checks/README.md").read_text()
+        fence = chr(96) * 3
+
+        def recipe(title):
+            return re.search(rf"^#### {title}\n.*?^{fence}sh\n(.*?)^{fence}$", readme, re.M | re.S)[1]
+
+        fast_forward = recipe("Guard and fast-forward the checked commit")
+        push = recipe("Push the checked commit")
+        with land.LandingLock("hand", "fix/edition") as lock:
+            env = {**os.environ, "PM_LAND_LOCK": str(self.lock_path), "PM_LAND_TOKEN": lock.token,
+                   "PM_LAND_BASE": self.base, "PM_LAND_COMMIT": self.head,
+                   "PM_LAND_PLANS_FOLLOWUP": "false", "PM_LAND_COMPLETES_FOLLOWUP": "false",
+                   "PM_LAND_TEST_EDITION": str(edition), "PM_LAND_TEST_INPUT": path,
+                   **self.hand_receipt_environment(self.shared, self.base, self.head)}
+            command = fast_forward + 'cp -- "$PM_LAND_TEST_EDITION" "$PM_LAND_TEST_INPUT"\n' + push
+            result = subprocess.run(["bash", "-c", command], cwd=self.shared, env=env, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 3, result.stderr)
+            self.assertIn(path, result.stderr)
+            self.assertEqual(self.git(self.shared, "status", "--porcelain").stdout, "")
+            self.assertEqual(land.revision(self.shared, "HEAD"), self.head)
+            holder = (self.lock_path / "holder.txt").read_text()
+            self.assertEqual(land.json.loads(land.holder_field(holder, "publication"))["phase"],
+                             "fast-forward-pending")
+        self.assertEqual(land.revision(origin, "HEAD"), self.base)
+        self.assertEqual(target.read_bytes(), approved_bytes)
+        self.assertFalse((self.folder / "publication-push.json").exists())
 
     def test_takeover_between_push_marker_and_git_is_blocked(self):
         self.git(self.shared, "reset", "--keep", self.base)
@@ -1347,9 +1650,10 @@ git() {
                 return subprocess.CompletedProcess([], 0)
             return real_git(root, *argv, **kwargs)
 
-        with (patch.object(land.LandingLock, "mark_push_pending", new=after_transition),
+        with (patch.object(land, "main_push_urls", return_value=["origin"]),
+              patch.object(land.LandingLock, "mark_push_pending", new=after_transition),
               patch.object(land, "git", side_effect=fixture_git),
-              patch.object(land, "verify_over_ssh"), patch.object(land, "shared_shards")):
+              patch.object(land, "verify_over_ssh", return_value=self.record), patch.object(land, "shared_shards")):
             first = land.LandingLock("first", "fix/topic")
             try:
                 with first:
