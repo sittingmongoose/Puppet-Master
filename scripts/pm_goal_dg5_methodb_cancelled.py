@@ -1318,6 +1318,14 @@ class OwnerExample:
         self.writes = self.pointer or self.checkpoint or route['call'] in (
             'issue_physical', 'filesafe_invocation', 'publish_workflow_head')
 
+    def place_edit(self, value, edit, filler):
+        """Add the one extra member to the checked document (here: at its root)."""
+        require(edit not in value, 'test example already has the extra member')
+        value[edit] = filler
+
+    def edit_returned(self, returned, edit):
+        return returned.get(edit) == 'example'
+
     def call(self, world, action, inputs, edit):
         import pm_goal_dg5_boundaries as bridge
         import pm_goal_dg5_closure as closure
@@ -1356,8 +1364,8 @@ class OwnerExample:
                         and same(value, provenance['document']),
                         'the preserved reader must validate the exact originally checked document')
             if edit and not (self.preserved_head or self.filesafe_effects) and len(result['observations']) + 1 == checks:
-                require(edit not in value, 'test example already has the extra member')
-                value[edit] = 'example' if not self.checkpoint or self.route['edition'] == 'integrated_native' else 'x' * 16384
+                self.place_edit(value, edit, 'example' if not self.checkpoint or self.route['edition'] == 'integrated_native'
+                                else 'x' * 16384)
             errors = errors_list(list(plain.iter_errors(value)))
             result['observations'].append(dict(root=ident, binding=binding, site=site, realm=realm, ref=ref,
                                                registry_realm=registry_realm,
@@ -1442,7 +1450,7 @@ class OwnerExample:
             result['value_sha256'] = value_sha(returned)
             if edit and not (self.checkpoint or self.preserved_head or self.filesafe_effects) and self.route['call'] not in (
                     'read_c3_proof', 'read_request', 'decode_projection'):
-                require(returned.get(edit) == 'example', 'the accepted call did not return the altered document')
+                require(self.edit_returned(returned, edit), 'the accepted call did not return the altered document')
         except Exception as error:
             if type(error).__name__ not in bridge.REFUSAL_CLASSES:
                 raise
