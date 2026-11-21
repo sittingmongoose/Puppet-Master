@@ -1195,7 +1195,9 @@ class EndToEnd(unittest.TestCase):
         self.assertEqual(code, 1, out)
 
     def test_a_churned_row_that_names_a_branch_file_is_still_reported(self):
-        """Being compared by total does not take the sample out of the branch match."""
+        """Being compared by total does not take the sample out of the branch match. The baseline
+        printed 1 of 1552 and this run reports the same total, so T272 makes the churned row
+        unknown-pre-existing rather than blocking: it is still named, and exits 1."""
         self.stub_checks([STALE_HASH], [self.SPAN], gates_reported=1552)
         self.record()
         self.touch("Touched.md")
@@ -1203,7 +1205,8 @@ class EndToEnd(unittest.TestCase):
         code, out = self.compare()
         self.assertIn("New since the baseline: 0", out)
         self.assertIn("Naming a path this branch touches: 1", out)
-        self.assertEqual(code, 2, out)
+        self.assertIn("[unknown-pre-existing] run-gates/verify_spec_lock  brand_new_kind  Plans/Touched.md", out)
+        self.assertEqual(code, 1, out)
 
     def test_a_regenerated_index_row_for_an_untouched_unit_does_not_stop_the_landing(self):
         self.write_index({"ATS-020": "Plans/Untouched.md"})
@@ -1757,11 +1760,13 @@ class RuleTwoPreExisting(LandingRun):
         self.assertEqual(code, 1, out)
         self.assertIn("[pre-existing] run-gates/validate_implementation_readiness", out)
 
-    def test_a_row_the_baseline_sample_never_printed_is_not_in_the_baseline_and_blocks(self):
-        """Rule 2 reads baseline.json. A row that sat above the baseline's print cap is not in it, so
-        when it falls inside the sample on a touched file it is judged as before. The storage registry
-        repairs landing's run-gates copy of the self-test row was such a row; with no audit-governance
-        copy to judge it instead (review L-07, PairedValidatorCopies below), it still blocks."""
+    def test_a_row_the_baseline_sample_never_printed_is_unknown_pre_existing_not_a_block(self):
+        """T272: rule 2 reads baseline.json, and a row above the baseline's print cap is not in it.
+        When the row falls inside the sample on a touched file the old rule called it new and blocked,
+        although main had it. The baseline's reported total covers this run's rows, so it is
+        unknown-pre-existing now. The storage registry repairs landing's run-gates copy of the self-test
+        row was such a row; with no audit-governance copy to judge it instead (review L-07,
+        PairedValidatorCopies below), it exits 1."""
         filler = [registry_row(n) for n in range(50)]
         row = self_test_row("check_0")
         self.stub(gates={self.RG_READINESS: (filler + [row], 51)})
@@ -1769,8 +1774,9 @@ class RuleTwoPreExisting(LandingRun):
         self.touch(self.VALIDATOR)
         self.stub(gates={self.RG_READINESS: ([row] + filler, 51)})
         code, out = self.compare()
-        self.assertEqual(code, 2, out)
-        self.assertIn("the baseline does not excuse", out)
+        self.assertEqual(code, 1, out)
+        self.assertIn("[unknown-pre-existing] run-gates/validate_implementation_readiness", out)
+        self.assertIn("(baseline reported 51, printed 50, 1 never keyed", out)
 
 
 class RuleTwoNeedsACurrentBaseline(LandingRun):
@@ -1865,6 +1871,82 @@ class RuleTwoNeedsACurrentBaseline(LandingRun):
         unknown = self.module.baseline_currency(self.repo, "c0ffee" * 6 + "c0ff", base)
         self.assertFalse(unknown["rule_two_applies"])
         self.assertIn("is not a commit this repository has", unknown["reason"])
+
+
+AUDIT_CLOSURE = "audit_closure"
+CLOSURE_REGISTRY = "Plans/.audits/_semantic_closure_registry.jsonl"
+
+
+def closure_error(n):
+    """One of the closure validator's errors, as cmd_validate_audit_closure reports them."""
+    return {"path": CLOSURE_REGISTRY, "error": "audit_closure_validator_error",
+            "detail": f"reopened closure AC-{n:04d} has no resolution"}
+
+
+def reopened_rows(count):
+    """The row the validator appends after its capped errors: the registry's reopened rows."""
+    return {"path": CLOSURE_REGISTRY, "error": "audit_closure_reopened_rows_present",
+            "rows": [{"line": n, "closure_id": f"AC-{n:04d}", "finding_key": "k"}
+                     for n in range(min(count, 2))],
+            "row_count": count}
+
+
+class TruncatedBaselineRows(LandingRun):
+    """T272, the fp-s2 shape: audit-governance's audit_closure printed 100 of 201, so its reopened-rows
+    row, appended after the 200 capped validator errors, was never keyed. A branch that cuts the total
+    under the cap prints every row; the reopened row names the registry, its bucket is absent from the
+    baseline, and the old rule blocked on it although main had it all along. It is now
+    `unknown-pre-existing`: the baseline's reported total covers this run's rows, the report names the
+    row and that total, and it never blocks. A rise keeps the truncated rule."""
+
+    def baseline_201(self):
+        """The recorded shape: 201 failures, the first 100 printed, the reopened row above the cap."""
+        self.stub(audit={AUDIT_CLOSURE: ([closure_error(n) for n in range(100)], 201)})
+        self.record()
+
+    def test_the_fp_s2_shape_exits_one_with_the_row_and_the_baseline_total(self):
+        self.baseline_201()
+        self.touch(CLOSURE_REGISTRY)
+        self.stub(audit={AUDIT_CLOSURE: ([closure_error(n) for n in range(67)] + [reopened_rows(56)], 68)})
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)
+        self.assertIn("In a subcheck the baseline only sampled, its reported total covering this run's rows, "
+                      "so neither provably old nor new (never blocks): 1", out)
+        self.assertIn("[unknown-pre-existing] audit-governance/audit_closure  "
+                      "audit_closure_reopened_rows_present  "
+                      "Plans/.audits/_semantic_closure_registry.jsonl", out)
+        self.assertIn("(baseline reported 201, printed 100, 101 never keyed", out)
+        self.assertIn("1 in a subcheck the baseline only sampled", out)
+        report = json.loads(self.compare("--json")[1])
+        self.assertEqual(report["blocking"], 0)
+        self.assertEqual([(item["standing"], item["baseline_total"], item["baseline_sampled"])
+                          for item in report["unknown_pre_existing"]],
+                         [("unknown-pre-existing", 201, 100)])
+
+    def test_a_subcheck_that_rose_still_stops_the_landing(self):
+        """A real new failure raises the total, and the truncated rise is judged as before."""
+        self.baseline_201()
+        self.touch(CLOSURE_REGISTRY)
+        self.stub(audit={AUDIT_CLOSURE: ([closure_error(n) for n in range(100)], 202)})
+        code, out = self.compare()
+        self.assertEqual(code, 2, out)
+        self.assertIn("[blocking ] audit-governance/audit_closure  201 -> 202", out)
+        self.assertIn("1 item the baseline does not excuse", out)
+        report = json.loads(self.compare("--json")[1])
+        self.assertEqual((report["blocking"], report["unknown_pre_existing"]), (1, []))
+
+    def test_a_row_absent_from_a_complete_baseline_still_stops_the_landing(self):
+        """There the baseline printed every row it counted, so a row it does not hold is new."""
+        self.stub(audit={AUDIT_CLOSURE: [closure_error(n) for n in range(40)]})
+        self.record()
+        self.touch(CLOSURE_REGISTRY)
+        self.stub(audit={AUDIT_CLOSURE: [closure_error(n) for n in range(40)] + [reopened_rows(56)]})
+        code, out = self.compare()
+        self.assertEqual(code, 2, out)
+        self.assertIn("the baseline does not excuse", out)
+        self.assertIn("audit_closure_reopened_rows_present", out)
+        report = json.loads(self.compare("--json")[1])
+        self.assertEqual((report["blocking"], report["unknown_pre_existing"]), (1, []))
 
 
 def timeout_row(command_id="lint-contractrefs", seconds=180):
@@ -2075,30 +2157,35 @@ class PairedValidatorCopies(LandingRun):
         self.assertNotIn("run-gates/validate_implementation_readiness", report["subchecks_compared_by_total_only"])
 
     def test_totals_that_disagree_fall_back_to_the_truncated_rule_and_say_why(self):
+        """Not paired, so the run-gates copy is judged on its own: its row is in no baseline bucket
+        (the baseline printed 50 of 79, without the self-test row) and T272 makes it
+        unknown-pre-existing, never blocking. The audit-governance row it could not be paired with
+        reads in full and is pre-existing."""
         on_branch = self.storage_shape(audit=[registry_row(n) for n in range(1, 32)]
                                        + [self_test_row("check_0", "check_1", "check_2")])
         self.assertEqual(len(on_branch), 33)
         code, out = self.compare()
-        self.assertEqual(code, 2, out)
+        self.assertEqual(code, 1, out)
         self.assertIn("[not paired] run-gates/validate_implementation_readiness and "
                       "audit-governance/implementation_readiness (33 of 33 printed, 50 of 79 in the baseline): "
                       "the totals disagree: run-gates 33, audit-governance 32; the run-gates copy is judged on "
                       "its own, by the truncated rule", out)
-        self.assertIn("[blocking    ] run-gates/validate_implementation_readiness", out)
+        self.assertIn("[unknown-pre-existing] run-gates/validate_implementation_readiness", out)
 
     def test_a_timeout_in_the_audit_governance_copy_falls_back(self):
         self.storage_shape(audit=[timeout_row("validate-implementation-readiness", 600)])
         code, out = self.compare()
-        self.assertEqual(code, 2, out)
+        self.assertEqual(code, 1, out)
         self.assertIn("(33 of 33 printed, 50 of 79 in the baseline): the audit-governance copy timed out;", out)
-        self.assertIn("[blocking    ] run-gates/validate_implementation_readiness", out)
+        self.assertIn("[unknown-pre-existing] run-gates/validate_implementation_readiness", out)
 
     def test_a_run_gates_row_the_audit_governance_copy_lacks_falls_back(self):
         """Equal totals are not enough: the rows must be the same failures."""
         self.storage_shape(gates=[registry_row(n) for n in range(32)] + [self_test_row("check_9")])
         code, out = self.compare()
-        self.assertEqual(code, 2, out)
+        self.assertEqual(code, 1, out)
         self.assertIn(": 1 of the rows the run-gates copy printed is not among the audit-governance copy's rows;", out)
+        self.assertIn("[unknown-pre-existing] run-gates/validate_implementation_readiness", out)
 
     def test_validator_code_that_changes_between_the_two_aggregates_falls_back(self):
         self.storage_shape()
@@ -2110,8 +2197,9 @@ class PairedValidatorCopies(LandingRun):
             return inner(name, root, run_dir, timeout)
         self.module.run_check = run_check
         code, out = self.compare()
-        self.assertEqual(code, 2, out)
+        self.assertEqual(code, 1, out)
         self.assertIn(": a file under scripts/ changed between the two aggregate runs;", out)
+        self.assertIn("[unknown-pre-existing] run-gates/validate_implementation_readiness", out)
 
     def test_an_audit_governance_copy_that_prints_only_a_sample_does_not_judge(self):
         """The evidence and plan-graph shape: both copies are truncated, so both rises still block."""
@@ -2129,13 +2217,15 @@ class PairedValidatorCopies(LandingRun):
         self.assertIn("[blocking ] audit-governance/evidence  665 -> 876", out)
 
     def test_without_the_subcheck_map_nothing_is_paired(self):
-        """A tree whose scripts/pm-plans-verify.py cannot be read pairs nothing and says so."""
+        """A tree whose scripts/pm-plans-verify.py cannot be read pairs nothing and says so; the
+        run-gates copy is judged on its own, and its sampled-baseline row is unknown-pre-existing."""
         self.module.aggregate_subcheck_commands = M.aggregate_subcheck_commands
         self.storage_shape()
         code, out = self.compare()
-        self.assertEqual(code, 2, out)
+        self.assertEqual(code, 1, out)
         self.assertIn("what each subcheck runs could not be read from scripts/pm-plans-verify.py "
                       "(RuntimeError: scripts/pm-plans-verify.py is missing)", out)
+        self.assertIn("[unknown-pre-existing] run-gates/validate_implementation_readiness", out)
 
     def test_the_real_pm_plans_verify_map_pairs_what_both_aggregates_run(self):
         names = {"run-gates": {"validate_implementation_readiness", "verify_spec_lock", "lint_contractrefs",

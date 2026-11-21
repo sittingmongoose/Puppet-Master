@@ -1371,6 +1371,20 @@ REAUDIT_VERDICTS = {"supported", "resolved_differently", "superseded_by_later_cl
 REAUDIT_REVIEWERS = ("worker", "sol", "astra")
 REAUDIT_MIN_QUOTE = 12
 REAUDIT_WORKER_FIELDS = ("verdict", "claim", "dependencies", "evidence", "stale_ref_dispositions", "rationale", "fix")
+OWNER_DECISIONS = {
+    "vm.pm-closure-lead--C-FP2-SPLIT": {
+        "card_sha256": "0662836eb9edde4f109464b1bd56d913a9f8bec1cbd02d48d42580f8ad62034a",
+        "answer_sha256": "80f35e1d0052aa4d38c960e1188858a950ad4450fafb607170e3ac2d443891b2",
+        "key_sha256": "c7cbc2509f98671e48097b4c5a756f0afb0ca4292a677f595e9369313b6ed55a",
+        "choice": "B",
+        "rule": "split_majority_of_three",
+        "scope": "standing",
+    },
+}
+OWNER_DECISION_FILES = ("card", "answer", "key")
+OWNER_DECISION_FIELDS = ("rule", "card_id", "choice") + tuple(
+    f"{kind}_{field}" for kind in OWNER_DECISION_FILES for field in ("path", "sha256")
+)
 
 
 def raw_registry_lines(registry_path: Path) -> dict[int, str]:
@@ -1422,7 +1436,7 @@ def _is_sha256(value: Any) -> bool:
     return isinstance(value, str) and bool(SHA256_RE.match(value))
 
 
-def _jsonl_row_for(path: Path, line: int, closure_id: str) -> dict[str, Any] | None:
+def _jsonl_row_for(path: Path, line: int, closure_id: str, *, split_id: str | None = None) -> dict[str, Any] | None:
     """The one row of a review or worker output file that judges registry line `line`."""
     found = None
     for raw in _lines(path.read_text(encoding="utf-8")):
@@ -1432,7 +1446,8 @@ def _jsonl_row_for(path: Path, line: int, closure_id: str) -> dict[str, Any] | N
             item = strict_json_loads(raw)
         except (json.JSONDecodeError, AnchorError):
             return None
-        if isinstance(item, dict) and item.get("line") == line and item.get("closure_id") == closure_id:
+        if (isinstance(item, dict) and item.get("line") == line and item.get("closure_id") == closure_id
+                and (split_id is None or item.get("split_id") == split_id)):
             if found is not None:
                 return None
             found = item
@@ -1665,7 +1680,204 @@ def reaudit_record_shape_problems(record: Any) -> list[str]:
         for review in reviews.values()
     ):
         out.append("record.reviews must map reviewers to objects of strings")
+    if "owner_decision" in record:
+        decision = record["owner_decision"]
+        if not isinstance(decision, dict) or set(decision) != set(OWNER_DECISION_FIELDS) or not all(
+            isinstance(value, str) and value.strip() for value in decision.values()
+        ):
+            out.append("record.owner_decision must contain exactly the rule, card_id, choice and three file paths and SHA-256 values")
     return out
+
+
+def validate_reaudit_owner_decision(decision: dict[str, str], line: int, label: str, errors: list[str]) -> None:
+    label = f"{label}: record.owner_decision"
+    card_id = decision["card_id"]
+    pins = OWNER_DECISIONS.get(card_id)
+    if pins is None or decision["choice"] != pins["choice"]:
+        errors.append(f"{label}: unpinned card or choice {card_id!r}/{decision['choice']!r}")
+        return
+    if decision["rule"] != pins["rule"] or decision["rule"] != "split_majority_of_three":
+        errors.append(f"{label}: rule must match the pinned split_majority_of_three rule")
+    if pins["scope"] != "standing" and line not in pins["scope"]:
+        errors.append(f"{label}: pinned scope does not cover closure line {line}")
+    documents = {}
+    for kind in OWNER_DECISION_FILES:
+        path_ref = decision[f"{kind}_path"]
+        digest = decision[f"{kind}_sha256"]
+        try:
+            if not path_ref.startswith("Plans/.audits/"):
+                raise AnchorError("must be under Plans/.audits/")
+            path = contained_path(ROOT, path_ref)
+            if not path.is_file():
+                raise AnchorError("file is missing")
+            data = path.read_bytes()
+            if digest != pins[f"{kind}_sha256"] or hashlib.sha256(data).hexdigest() != digest:
+                raise AnchorError("file SHA-256 must match both the record and the owner decision pin")
+            if kind != "key":
+                document = strict_json_loads(data.decode("utf-8"))
+                if not isinstance(document, dict):
+                    raise AnchorError("must contain a JSON object")
+                documents[kind] = document
+        except (AnchorError, OSError, UnicodeError, json.JSONDecodeError) as exc:
+            errors.append(f"{label}.{kind}_path: {exc}")
+    if len(documents) != 2:
+        return
+    card, answer = documents["card"], documents["answer"]
+    if not (answer.get("cardId") == card.get("id") == card_id):
+        errors.append(f"{label}: answer.cardId must equal card.id and the pinned card id")
+    if not (_is_int(answer.get("cardSeq")) and _is_int(card.get("seq")) and answer["cardSeq"] <= card["seq"]):
+        errors.append(f"{label}: answer.cardSeq must be an integer at or below card.seq")
+    if answer.get("kind") != "answer" or answer.get("choice") != [pins["choice"]] or answer.get("answeredBy") != "owner":
+        errors.append(f"{label}: answer must record the pinned choice {pins['choice']!r} from the owner")
+    options = card.get("options")
+    if not isinstance(options, list) or not any(isinstance(option, dict) and option.get("key") == pins["choice"] for option in options):
+        errors.append(f"{label}: card.options must include the pinned choice {pins['choice']!r}")
+
+
+def _reaudit_split_reading(judged: dict[str, Any], old_status: str) -> tuple[str, str | None, str | None] | None:
+    verdict, status, later_id = (judged.get(key) for key in ("verdict", "status_now", "later_closure_id"))
+    if not isinstance(verdict, str) or verdict not in REAUDIT_VERDICTS or (
+        status is not None and not isinstance(status, str)
+    ) or (later_id is not None and not isinstance(later_id, str)):
+        return None
+    if verdict == "resolved_differently":
+        if status not in ALLOWED_STATUSES - OPEN_STATUSES or later_id is not None:
+            return None
+        # A recheck that keeps the existing status is supported, as in the unanimous path.
+        return ("supported", None, None) if status == old_status else (verdict, status, None)
+    if verdict == "superseded_by_later_closure":
+        return (verdict, None, later_id) if later_id and later_id.strip() and status is None else None
+    # Workers can repeat the target's status on a supported reading. The status is implicit.
+    if later_id is not None or (status is not None and (verdict != "supported" or status != old_status)):
+        return None
+    return verdict, None, None
+
+
+def validate_reaudit_split_outcome(
+    record: dict[str, Any], readings: dict[str, tuple[str, str | None, str | None]], label: str, errors: list[str],
+) -> None:
+    if len(readings) != len(REAUDIT_REVIEWERS):
+        return  # missing or invalid readings already have diagnostics
+    worker, sol, astra = (readings[who] for who in REAUDIT_REVIEWERS)
+    if worker == sol == astra:
+        errors.append(f"{label}: owner_decision is unnecessary when all three readings agree")
+        return
+    if sol == astra:
+        errors.append(f"{label}: owner_decision requires disagreement between the split reviewers")
+        return
+    selected = tuple(record.get(key) for key in ("verdict", "status_now", "later_closure_id"))
+    if worker in (sol, astra):
+        if selected != worker:
+            errors.append(f"{label}: record must equal the split majority reading {worker!r}, got {selected!r}")
+    elif selected != ("not_supported", None, None):
+        errors.append(f"{label}: split has no majority, so the record must be not_supported (reopened)")
+
+
+def _bound_split_output(
+    review: dict[str, Any], kind: str, supersedes: dict[str, Any], commit: str,
+    receipts: ReceiptLedger, label: str, who: str, errors: list[str],
+) -> tuple[dict[str, Any] | None, str | None]:
+    try:
+        part = _bound_output_row(review, kind, supersedes, label, who, errors)
+    except (OSError, UnicodeError) as exc:
+        errors.append(f"{label}: record.reviews.{who} {kind} file cannot be read as UTF-8 JSONL: {exc}")
+        return None, None
+    if part is None:
+        return None, None
+    added, problem = receipts.check(review[f"{kind}_path"], commit)
+    if problem:
+        errors.append(f"{label}: record.reviews.{who}.{kind}_path: {problem}")
+    return part, added
+
+
+def validate_reaudit_split_receipt(
+    review: dict[str, Any], judged: dict[str, Any], shown: dict[str, Any], supersedes: dict[str, Any],
+    commit: str, output_commit: str | None, receipts: ReceiptLedger, label: str, who: str, errors: list[str],
+) -> tuple[dict[str, Any], dict[str, Any]] | None:
+    split_id, digest = review.get("split_id"), review.get("split_row_digest")
+    if not split_id or not split_id.strip() or not _is_sha256(digest):
+        errors.append(f"{label}: record.reviews.{who} needs a split_id and a SHA-256 split_row_digest")
+        return None
+    split, split_commit = _bound_split_output(review, "split_packet", supersedes, commit, receipts, label, who, errors)
+    initial, _ = _bound_split_output(review, "initial_evidence", supersedes, commit, receipts, label, who, errors)
+    if split is None or initial is None:
+        return None
+    if split_commit and output_commit and split_commit != output_commit:
+        errors.append(f"{label}: record.reviews.{who} split packet and split output were not committed together")
+    try:
+        split_digest = sha256_text(canonical_json({key: value for key, value in split.items() if key != "split_row_digest"}))
+    except AnchorError:
+        split_digest = None
+    if (split_digest != digest or split.get("split_row_digest") != digest or judged.get("split_row_digest") != digest
+            or split.get("split_id") != split_id or judged.get("split_id") != split_id):
+        errors.append(f"{label}: record.reviews.{who} split packet, receipt and output must bind the same split id and row digest")
+    packet_row = split.get("packet_row")
+    shown_digest = shown.get("packet_row_digest")
+    if (split.get("recheck_commit") != commit or split.get("packet_row_digest") != shown_digest
+            or not isinstance(packet_row, dict) or {k: v for k, v in packet_row.items() if k != "held_line"} != shown):
+        errors.append(f"{label}: record.reviews.{who} split packet must wrap the original packet row at recheck_commit")
+    if initial.get("packet_row_digest") != shown_digest or "split_id" in initial or "split_row_digest" in initial:
+        errors.append(f"{label}: record.reviews.{who} initial evidence must judge the original packet before the split")
+    initial_verdict = initial.get("verdict")
+    if not isinstance(initial_verdict, str) or initial_verdict not in REAUDIT_VERDICTS:
+        errors.append(f"{label}: record.reviews.{who} initial evidence must carry a judgment verdict")
+    return split, initial
+
+
+def validate_reaudit_split_readings(
+    packet: dict[str, Any], worker: dict[str, Any] | None, sol: dict[str, Any], astra: dict[str, Any],
+    label: str, errors: list[str],
+) -> None:
+    earlier = packet.get("readings")
+    if not isinstance(earlier, list) or not all(
+        isinstance(item, dict) and isinstance(item.get("reading"), str) for item in earlier
+    ):
+        errors.append(f"{label}: split packet must carry one earlier reading each for A (worker), C (Sol) and D (Astra)")
+        return
+    by_role = {item["reading"]: item for item in earlier}
+    # Stage 2 includes reading B when a preliminary review exists.
+    if len(by_role) != len(earlier) or not {"A", "C", "D"} <= by_role.keys() <= {"A", "B", "C", "D"}:
+        errors.append(f"{label}: split packet must carry one earlier reading each for A (worker), C (Sol) and D (Astra)")
+        return
+    for role, who, source, reason_field in (
+        ("A", "worker", worker, "rationale"), ("C", "sol", sol, "reason"), ("D", "astra", astra, "reason"),
+    ):
+        if source is None:
+            continue  # the missing source has a receipt diagnostic
+        fields = ("verdict", "status_now", "later_closure_id", reason_field)
+        if not _nonempty_str(source.get(reason_field)) or any(by_role[role].get(key) != source.get(key) for key in fields):
+            errors.append(f"{label}: split packet earlier reading {role} must match the committed {who} judgment and reason")
+
+
+def validate_reaudit_packet_anchors(
+    packet: dict[str, Any], field: str, snapshot: dict[str, str], at_commit: CommitResolver,
+    label: str, errors: list[str],
+) -> None:
+    anchors_shown = packet.get(field)
+    if not isinstance(anchors_shown, list) or not anchors_shown:
+        errors.append(f"{label} row shows no {field}")
+        return
+    shown_refs: list[Any] = []
+    for item in anchors_shown:
+        ref = item.get("ref") if isinstance(item, dict) else None
+        shown_refs.append(ref)
+        if not isinstance(ref, str) or ref not in snapshot or item.get("sha256") != snapshot[ref]:
+            errors.append(f"{label} showed {ref!r} at a different snapshot than the record")
+            continue
+        text = item.get("text")
+        try:
+            view = at_commit.content(ref)[1]
+        except AnchorError:
+            continue  # reported as an unresolvable dependency
+        # Stage 2's split packets capped text at 16,000 characters without a flag.
+        truncated = item.get("truncated", field == "anchors_at_R" and isinstance(text, str)
+                             and len(text) == 16_000 and len(view) > 16_000)
+        if not isinstance(text, str) or not isinstance(truncated, bool) or not (
+            (not truncated and text == view) or (truncated and len(text) < len(view) and view.startswith(text))
+        ):
+            errors.append(f"{label} text for {ref} is not that anchor's text at recheck_commit")
+    if len(set(map(str, shown_refs))) != len(shown_refs):
+        errors.append(f"{label} shows an anchor twice")
 
 
 def validate_reaudit_record(
@@ -1694,6 +1906,7 @@ def validate_reaudit_record(
         errors.extend(f"{label}: {problem}" for problem in shape)
         return
     verdict = record["verdict"]
+    decision = record.get("owner_decision")
     deps = record["dependencies"]
     evidence = record["evidence"]
     if record.get("schema_id") != REAUDIT_RECORD_SCHEMA or record.get("reaudit_id") != reaudit.get("reaudit_id"):
@@ -1823,10 +2036,18 @@ def validate_reaudit_record(
     reviews = record["reviews"]
     claim_view = {k: v for k, v in target.items() if k not in ("hashes", "_line_no")}
     receipts = receipts if receipts is not None else ReceiptLedger(ROOT)
+    readings: dict[str, tuple[str, str | None, str | None]] = {}
+    split_rounds: dict[str, tuple[dict[str, Any], dict[str, Any]]] = {}
+    worker_source = None
+    if decision is not None:
+        validate_reaudit_owner_decision(decision, supersedes["line"], label, errors)
     for who in REAUDIT_REVIEWERS:
         review = reviews.get(who)
-        if not isinstance(review, dict) or review.get("verdict") != verdict:
+        if decision is None and (not isinstance(review, dict) or review.get("verdict") != verdict):
             errors.append(f"{label}: record.reviews.{who}.verdict must equal the record verdict {verdict!r}")
+            continue
+        if not isinstance(review, dict):
+            errors.append(f"{label}: record.reviews.{who} is required for owner_decision")
             continue
         if not isinstance(review.get("model"), str) or not review["model"].strip():
             errors.append(f"{label}: record.reviews.{who}.model must name the model")
@@ -1855,7 +2076,13 @@ def validate_reaudit_record(
         judged_verdict = judged.get("verdict")
         if judged_verdict == "resolved_differently" and judged.get("status_now") == target.get("closure_status"):
             judged_verdict = "supported"  # the status decides
-        if judged_verdict != verdict:
+        if decision is not None:
+            reading = _reaudit_split_reading(judged, target.get("closure_status"))
+            if reading is None or review.get("verdict") != reading[0]:
+                errors.append(f"{label}: record.reviews.{who}.verdict must match a valid reading in its judged output")
+            else:
+                readings[who] = reading
+        elif judged_verdict != verdict:
             errors.append(f"{label}: record.reviews.{who} evidence judged this row {judged.get('verdict')!r}, not {verdict!r}")
         elif verdict == "resolved_differently" and judged.get("status_now") != record.get("status_now"):
             errors.append(f"{label}: record.reviews.{who} evidence gives a different status_now")
@@ -1872,6 +2099,19 @@ def validate_reaudit_record(
             # The record is assembled from the committed worker output: its judgement fields must be that output's.
             bound = list(REAUDIT_WORKER_FIELDS) + (["status_now"] if verdict == "resolved_differently" else []) \
                 + (["later_closure_id"] if verdict == "superseded_by_later_closure" else [])
+            if decision is not None:
+                # The owner's outcome has its own rationale and can require a reopening fix.
+                # Keep the worker's claim, evidence, dependency and stale-ref bindings.
+                bound = ["claim", "dependencies", "evidence", "stale_ref_dispositions"]
+                if readings.get(who) == tuple(record.get(k) for k in ("verdict", "status_now", "later_closure_id")):
+                    bound.append("fix")
+                worker_source, _ = _bound_split_output(review, "source", supersedes, commit, receipts, label, who, errors)
+                if worker_source is not None:
+                    if worker_source.get("recheck_commit") != commit or worker_source.get("row_sha256") != supersedes["row_sha256"]:
+                        errors.append(f"{label}: worker source must bind the record's recheck_commit and superseded row")
+                    if any(worker_source.get(key) != judged.get(key) for key in
+                           ("verdict", "status_now", "later_closure_id", "rationale")):
+                        errors.append(f"{label}: assembled worker judgment or reason differs from the committed worker source")
             for field in bound:
                 if judged.get(field) != record.get(field):
                     errors.append(f"{label}: record.{field} differs from the committed worker output it was assembled from")
@@ -1879,6 +2119,12 @@ def validate_reaudit_record(
         shown = _bound_output_row(review, "packet", supersedes, label, who, errors)
         if shown is None:
             continue
+        if decision is not None:
+            split = validate_reaudit_split_receipt(
+                review, judged, shown, supersedes, commit, added["evidence"], receipts, label, who, errors,
+            )
+            if split is not None:
+                split_rounds[who] = split
         if shown.get("claim") != claim_view:
             errors.append(f"{label}: record.reviews.{who} packet showed a different claim than the superseded row")
         for field, expected in (("recheck_commit", commit), ("row_sha256", supersedes.get("row_sha256"))):
@@ -1893,33 +2139,23 @@ def validate_reaudit_record(
             errors.append(f"{label}: record.reviews.{who} packet row's packet_row_digest is missing or does not match its content")
         elif judged.get("packet_row_digest") != declared_digest:
             errors.append(f"{label}: record.reviews.{who} output does not echo the digest of the packet row it judged")
-        anchors_shown = shown.get("dependency_anchors")
-        if not isinstance(anchors_shown, list) or not anchors_shown:
-            errors.append(f"{label}: record.reviews.{who} packet row shows no dependency_anchors")
-            continue
-        shown_refs: list[Any] = []
-        for item in anchors_shown:
-            ref = item.get("ref") if isinstance(item, dict) else None
-            shown_refs.append(ref)
-            if not isinstance(ref, str) or ref not in snapshot or item.get("sha256") != snapshot[ref]:
-                errors.append(f"{label}: record.reviews.{who} packet showed {ref!r} at a different snapshot than the record")
-                continue
-            # What the reviewer read must be that anchor's text at the recheck commit (a prefix when truncated).
-            text, truncated = item.get("text"), item.get("truncated", False)
-            try:
-                view = at_commit.content(ref)[1]
-            except AnchorError:
-                continue  # reported above as an unresolvable dependency
-            if not isinstance(text, str) or not isinstance(truncated, bool) or not (
-                (not truncated and text == view) or (truncated and len(text) < len(view) and view.startswith(text))
-            ):
-                errors.append(f"{label}: record.reviews.{who} packet text for {ref} is not that anchor's text at recheck_commit")
-        if len(set(map(str, shown_refs))) != len(shown_refs):
-            errors.append(f"{label}: record.reviews.{who} packet shows an anchor twice")
+        validate_reaudit_packet_anchors(shown, "dependency_anchors", snapshot, at_commit,
+                                        f"{label}: record.reviews.{who} packet", errors)
+    if decision is not None:
+        if len(split_rounds) == 2:
+            split_packet, initial_sol = split_rounds["sol"]
+            astra_packet, initial_astra = split_rounds["astra"]
+            if split_packet != astra_packet:
+                errors.append(f"{label}: owner_decision requires both reviewers to judge the same split packet row")
+            else:
+                validate_reaudit_packet_anchors(split_packet, "anchors_at_R", snapshot, at_commit, f"{label}: split packet", errors)
+                validate_reaudit_split_readings(split_packet, worker_source, initial_sol, initial_astra, label, errors)
+        validate_reaudit_split_outcome(record, readings, label, errors)
 
 
 def _bound_output_row(
-    review: dict[str, Any], kind: str, supersedes: dict[str, Any], label: str, who: str, errors: list[str]
+    review: dict[str, Any], kind: str, supersedes: dict[str, Any], label: str, who: str, errors: list[str],
+    *, split_id: str | None = None,
 ) -> dict[str, Any] | None:
     """The single row of a committed output file (kind evidence or packet) for this closure."""
     path_ref = review.get(f"{kind}_path")
@@ -1935,10 +2171,52 @@ def _bound_output_row(
     if not output.is_file() or sha256_file(output) != digest:
         errors.append(f"{label}: record.reviews.{who} {kind} file is missing or its SHA-256 differs")
         return None
-    judged = _jsonl_row_for(output, supersedes.get("line"), supersedes.get("closure_id"))
+    judged = _jsonl_row_for(output, supersedes.get("line"), supersedes.get("closure_id"), split_id=split_id)
     if judged is None:
-        errors.append(f"{label}: record.reviews.{who} {kind} file has no single row for this closure")
+        split = f" with split_id {split_id!r}" if split_id is not None else ""
+        errors.append(f"{label}: record.reviews.{who} {kind} file has no single row for this closure{split}")
     return judged
+
+
+def reaudit_split_anchor_hashes(record: dict[str, Any], label: str, errors: list[str]) -> dict[str, str]:
+    """Return the receipt-bound split anchors that the dependency snapshot does not cover."""
+    snapshot = record["dependency_hashes_at_recheck"]
+    extra: dict[str, str] = {}
+    checked: set[tuple[str, str, str]] = set()
+    for who in ("sol", "astra"):
+        review = record["reviews"].get(who, {})
+        if not {"split_packet_path", "split_packet_sha256"} <= review.keys():
+            continue
+        split_id = review.get("split_id", "")
+        review_label = f"{label}: record.reviews.{who} split_packet"
+        if not split_id.strip():
+            errors.append(f"{review_label} receipt needs a split_id")
+            continue
+        receipt = (review["split_packet_path"], review["split_packet_sha256"], split_id)
+        if receipt in checked:
+            continue
+        checked.add(receipt)
+        try:
+            packet = _bound_output_row(review, "split_packet", record, label, who, errors, split_id=split_id)
+        except (OSError, UnicodeError) as exc:
+            errors.append(f"{review_label} file cannot be read as UTF-8 JSONL: {exc}")
+            continue
+        if packet is None:
+            continue
+        anchors = packet.get("anchors_at_R")
+        if not isinstance(anchors, list) or not anchors:
+            errors.append(f"{review_label} row shows no anchors_at_R")
+            continue
+        for anchor in anchors:
+            ref = anchor.get("ref") if isinstance(anchor, dict) else None
+            digest = anchor.get("sha256") if isinstance(anchor, dict) else None
+            if not isinstance(ref, str) or not _is_sha256(digest):
+                errors.append(f"{review_label} anchors_at_R entries need a string ref and a SHA-256")
+                continue
+            recorded = snapshot[ref] if ref in snapshot else extra.setdefault(ref, digest)
+            if recorded != digest:
+                errors.append(f"{review_label} has a conflicting hash for {ref} (recorded {recorded}, shown {digest})")
+    return extra
 
 
 def _is_registry_file(dependency_path: str, registry_ref: str) -> bool:
@@ -2099,7 +2377,8 @@ def validate_reaudit_row(
         if differing:
             errors.append(f"{label}: self-excluding re-audit generated fields differ from bound record and predecessor: {differing}")
             return None
-    return {"target": line, "verdict": record.get("verdict"), "later_closure_id": record.get("later_closure_id")}
+    return {"target": line, "verdict": record.get("verdict"), "later_closure_id": record.get("later_closure_id"),
+            "record": record}
 
 
 def validate_registry(registry_path: Path, *, anchor_registry_path: Path | None = None) -> dict[str, Any]:
@@ -2242,6 +2521,24 @@ def validate_registry(registry_path: Path, *, anchor_registry_path: Path | None 
             superseded_by.pop(target, None)
             proposed.pop(s_line, None)
 
+    # Only a live re-audit row needs its split-only anchors to be current. Keep that
+    # check separate from the historical proof of the supersession edge.
+    invalid_split_lines: set[int] = set()
+    for line_no, edge in proposed.items():
+        if line_no in superseded_by:
+            continue
+        label = f"{rel(registry_path)}:{line_no}"
+        before = len(errors)
+        split_hashes = reaudit_split_anchor_hashes(edge["record"], label, errors)
+        if split_hashes:
+            stale = []
+            row_resolver = registry_row_resolver(rows_by_line[line_no], resolver, registry_ref)
+            validate_anchor_hashes(split_hashes, "split_anchor_hashes", label, errors, stale, row_resolver)
+            if stale:
+                stale_by_line.setdefault(line_no, []).extend(stale)
+        if len(errors) != before:
+            invalid_split_lines.add(line_no)
+
     superseded_stale = 0
     for line_no, stale in sorted(stale_by_line.items()):
         if line_no in superseded_by:
@@ -2263,7 +2560,8 @@ def validate_registry(registry_path: Path, *, anchor_registry_path: Path | None 
         if current == line_no:
             return False
         leaf = rows_by_line[current]
-        return leaf.get("closure_status") not in OPEN_STATUSES and current not in stale_by_line
+        return (leaf.get("closure_status") not in OPEN_STATUSES and current not in stale_by_line
+                and current not in invalid_split_lines)
 
     def leaf_of(line_no: int) -> int:
         seen_lines = {line_no}
@@ -4668,8 +4966,8 @@ def cmd_reaudit_append(args: argparse.Namespace) -> int:
 def _reaudit_append(args: argparse.Namespace) -> int:
     """Migration: append one re-audit row per reviewed record whose anchors have not moved.
 
-    A record whose dependency anchors hash differently now than when it was rechecked is
-    not appended; it is listed under `moved` for a delta re-audit. Records already
+    A record whose dependency or split anchors hash differently now than when it was rechecked is
+    not appended; it is listed under `moved_since_recheck` for a delta re-audit. Records already
     appended (same record hash) are skipped, so the command is idempotent.
     """
     registry_path = repo_path(args.registry)
@@ -4732,17 +5030,25 @@ def _reaudit_append(args: argparse.Namespace) -> int:
                 or not isinstance(record.get("dependency_hashes_at_recheck"), dict):
             errors.append(f"{closure_id}: record has an unknown verdict or malformed dependencies")
             continue
+        snapshot = record["dependency_hashes_at_recheck"]
+        if set(snapshot) != set(record["dependencies"]):
+            errors.append(f"{closure_id}: dependency_hashes_at_recheck must cover exactly the dependencies")
+            continue
+        split_hashes = {}
+        if "owner_decision" not in record:
+            before = len(errors)
+            split_hashes = reaudit_split_anchor_hashes(record, closure_id, errors)
+            if len(errors) != before:
+                continue
+        # Owner decisions already require every split anchor to match the snapshot.
         changed: dict[str, Any] = {}
-        for ref, recorded in sorted((record.get("dependency_hashes_at_recheck") or {}).items()):
+        for ref, recorded in sorted((snapshot | split_hashes).items()):
             try:
                 now_hash = resolver.sha256(ref)
             except AnchorError as exc:
                 now_hash = f"unresolved: {exc}"
             if now_hash != recorded:
                 changed[ref] = {"at_recheck": recorded, "now": now_hash}
-        if set(record.get("dependency_hashes_at_recheck") or {}) != set(record.get("dependencies") or []):
-            errors.append(f"{closure_id}: dependency_hashes_at_recheck must cover exactly the dependencies")
-            continue
         if changed:
             moved.append({"closure_id": closure_id, "line": line, "changed_anchors": changed})
             continue
@@ -4775,7 +5081,7 @@ def _reaudit_append(args: argparse.Namespace) -> int:
         baseline = set(validate_registry(registry_path)["errors"])
         stale_pattern = re.compile(
             rf"{re.escape(rel(registry_path))}:(?P<line>[1-9][0-9]*): "
-            r"(?P<group>owner_evidence_hashes|closure_evidence_hashes) for (?P<ref>.+) "
+            r"(?P<group>owner_evidence_hashes|closure_evidence_hashes|split_anchor_hashes) for (?P<ref>.+) "
             r"is stale \(stored (?P<stored>[0-9a-f]{64}), current (?P<current>[0-9a-f]{64})\)"
         )
 
@@ -4957,6 +5263,7 @@ def cmd_self_test(args: argparse.Namespace) -> int:
     import io  # noqa: PLC0415
     import shutil  # noqa: PLC0415
     import tempfile  # noqa: PLC0415
+    from unittest.mock import patch  # noqa: PLC0415
 
     global ROOT, LEGACY_INVENTORY_SHA256  # noqa: PLW0603 - the fixtures live in a temporary repository root.
     saved_root = ROOT
@@ -5225,6 +5532,116 @@ def cmd_self_test(args: argparse.Namespace) -> int:
                 assert verdict
                 rec["reviews"][who]["evidence_sha256"] = sha256_file(path)
             return apply
+
+        decision_card = audit_dir / "decision-card.json"
+        decision_answer = audit_dir / "decision-answer.json"
+        decision_key = audit_dir / "decision-key.pub"
+        card_body = {"id": "fixture-split", "seq": 3, "options": [{"key": "B"}]}
+        answer_body = {"kind": "answer", "cardId": "fixture-split", "cardSeq": 2, "choice": ["B"], "answeredBy": "owner"}
+        decision_card.write_text(json.dumps(card_body))
+        decision_answer.write_text(json.dumps(answer_body))
+        decision_key.write_text("Fixture public key.\n")
+        owner_fields = {"card_id": "fixture-split", "choice": "B", "rule": "split_majority_of_three"}
+        pins: dict[str, Any] = {"choice": "B", "rule": "split_majority_of_three", "scope": "standing"}
+        for kind, path in zip(OWNER_DECISION_FILES, (decision_card, decision_answer, decision_key)):
+            pins[f"{kind}_sha256"] = sha256_file(path)
+            owner_fields.update({f"{kind}_sha256": pins[f"{kind}_sha256"], f"{kind}_path": rel(path)})
+
+        def split_record(
+            worker: str, sol: str, astra: str, *, decision: bool = True, split_case: str = "", **changes: str,
+        ) -> Any:
+            def apply(rec: dict[str, Any]) -> None:
+                if decision:
+                    rec["owner_decision"] = dict(owner_fields, **changes)
+                rewrite_output(rec, "worker", verdict=worker, status_now="repaired" if worker == "supported" else None)
+                worker_review = rec["reviews"]["worker"]
+                source_path = audit_dir / "reviews" / f"worker-source-{counter[0]}.jsonl"
+                source_path.write_bytes((tmp / worker_review["evidence_path"]).read_bytes())
+                source = json.loads(source_path.read_bytes())
+                worker_review.update(verdict=worker, source_path=rel(source_path), source_sha256=sha256_file(source_path))
+                if split_case == "changed_worker":
+                    rewrite_output(rec, "worker", verdict="supported", status_now="repaired")
+                    worker_review["verdict"] = "supported"
+                earlier = [dict(reading="A", **{key: source.get(key) for key in ("verdict", "status_now", "rationale")})]
+                for role, who, vote in (("C", "sol", "not_supported"), ("D", "astra", "supported")):
+                    review = rec["reviews"][who]
+                    initial = audit_dir / "reviews" / f"initial-{who}-{counter[0]}.jsonl"
+                    first = json.loads((tmp / review["evidence_path"]).read_bytes())
+                    first.update(verdict=vote, reason=f"Initial {who} reasoning.")
+                    earlier.append(dict(reading=role, verdict=vote, reason=first["reason"]))
+                    if who == "sol" and split_case == "missing_initial_verdict":
+                        first.pop("verdict")
+                    initial.write_text(json.dumps(first) + "\n")
+                    review.update(initial_evidence_path=rel(initial), initial_evidence_sha256=sha256_file(initial))
+                shown = json.loads((tmp / rec["reviews"]["sol"]["packet_path"]).read_bytes())
+                split = {k: shown[k] for k in ("line", "closure_id", "packet_row_digest", "recheck_commit")}
+                anchors = [dict(item) for item in shown["dependency_anchors"]]
+                split.update(split_id="fixture-split-1", packet_row=shown, anchors_at_R=anchors)
+                if split_case != "missing_readings":
+                    split["readings"] = earlier
+                if split_case == "reading_differs":
+                    earlier[1]["reason"] = "A reason the initial reviewer did not give."
+                if split_case == "false_anchor_text":
+                    anchors[0]["text"] = "Text added after the review."
+                if split_case == "absent_anchor":
+                    anchors[0]["ref"] = "Plans/Fixture.md#unit=FIX-404"
+                split["split_row_digest"] = sha256_text(canonical_json(split))
+                packet = audit_dir / "reviews" / f"split-{counter[0]}.jsonl"
+                packet.write_text(json.dumps(split) + "\n")
+                if split_case == "separate_commit":
+                    git("add", "--", rel(packet))
+                    git("commit", "-qm", "split packet only")
+                receipt = {k: split[k] for k in ("split_id", "split_row_digest")}
+                for who, vote in (("sol", sol), ("astra", astra)):
+                    review = rec["reviews"][who]
+                    review.update(receipt, verdict=vote, split_packet_path=rel(packet), split_packet_sha256=sha256_file(packet))
+                    rewrite_output(rec, who, **receipt, verdict=vote, status_now="stale_retired" if vote == "resolved_differently" else None)
+            return apply
+
+        with patch.dict(OWNER_DECISIONS, {"fixture-split": pins}):
+            for name, verdict, mutate, expected in (
+                ("owner_two_supported_votes_pass", "supported", split_record("supported", "not_supported", "supported"), None),
+                ("owner_minoritarian_record_fails", "not_supported", split_record("supported", "not_supported", "supported"), "split majority reading"),
+                ("owner_three_distinct_readings_reopen", "not_supported", split_record("supported", "resolved_differently", "not_supported"), None),
+                ("owner_three_distinct_readings_cannot_close", "supported", split_record("supported", "resolved_differently", "not_supported"), "split has no majority"),
+                ("owner_unpinned_card_fails", "supported", split_record("supported", "not_supported", "supported", card_id="unreviewed"), "unpinned card or choice"),
+                ("owner_unpinned_choice_fails", "supported", split_record("supported", "not_supported", "supported", choice="A"), "unpinned card or choice"),
+                ("owner_unanimity_needs_no_decision", "supported", split_record("supported", "supported", "supported"), "all three readings agree"),
+                ("owner_split_reviewers_must_disagree", "supported", split_record("not_supported", "supported", "supported"), "disagreement between the split reviewers"),
+                ("disagreement_without_owner_receipt_fails", "supported", split_record("supported", "not_supported", "supported", decision=False), "reviews.sol.verdict"),
+                ("owner_split_missing_earlier_readings_fails", "supported", split_record("supported", "not_supported", "supported", split_case="missing_readings"), "split packet must carry one earlier reading each"),
+                ("owner_split_earlier_reading_must_match_initial_reason", "supported", split_record("supported", "not_supported", "supported", split_case="reading_differs"), "earlier reading C must match"),
+                ("owner_split_initial_output_must_carry_a_verdict", "supported", split_record("supported", "not_supported", "supported", split_case="missing_initial_verdict"), "initial evidence must carry a judgment verdict"),
+                ("owner_assembled_worker_cannot_change_its_vote", "supported", split_record("not_supported", "not_supported", "supported", split_case="changed_worker"), "assembled worker judgment or reason differs"),
+                ("owner_split_anchor_requires_snapshot_entry", "supported", split_record("supported", "not_supported", "supported", split_case="absent_anchor"), "split packet showed 'Plans/Fixture.md#unit=FIX-404' at a different snapshot"),
+                ("owner_split_anchor_requires_recheck_text", "supported", split_record("supported", "not_supported", "supported", split_case="false_anchor_text"), f"split packet text for {unit_ref} is not that anchor"),
+                ("owner_split_packet_and_output_require_same_commit", "supported", split_record("supported", "not_supported", "supported", split_case="separate_commit"), "split packet and split output were not committed together"),
+            ):
+                row = append_with(verdict, mutate=mutate)
+                report = validate_rows([legacy_row(), row])
+                check(name, has(report, expected) if expected else not report["errors"], report["errors"])
+
+            for kind in OWNER_DECISION_FILES:
+                row = append_with(mutate=split_record("supported", "not_supported", "supported", **{f"{kind}_sha256": "f" * 64}))
+                report = validate_rows([legacy_row(), row])
+                check(f"owner_{kind}_hash_mismatch_fails", has(report, f"owner_decision.{kind}_path: file SHA-256"), report["errors"])
+
+            def missing_split_field(rec: dict[str, Any]) -> None:
+                split_record("supported", "not_supported", "supported")(rec)
+                rec["reviews"]["sol"].pop("split_row_digest")
+
+            row = append_with(mutate=missing_split_field)
+            report = validate_rows([legacy_row(), row])
+            check("owner_initial_review_cannot_replace_split_receipt", has(report, "needs a split_id and a SHA-256 split_row_digest"), report["errors"])
+
+            bad_answer = audit_dir / "other-answer.json"
+            bad_answer.write_text(json.dumps(dict(answer_body, cardId="different-card")))
+            bad_hash = sha256_file(bad_answer)
+            with patch.dict(pins, {"answer_sha256": bad_hash}):
+                row = append_with(mutate=split_record("supported", "not_supported", "supported",
+                                                      answer_path=rel(bad_answer), answer_sha256=bad_hash))
+                report = validate_rows([legacy_row(), row])
+                check("owner_answer_must_name_its_card_even_when_pinned", has(report, "answer.cardId must equal card.id"), report["errors"])
 
         for name, mutate, text in (
             ("reviewer_disagreement_fails", set_review("astra", verdict="not_supported"), "reviews.astra.verdict"),
@@ -5774,6 +6191,61 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         check("reaudit_append_holds_back_moved_anchor", moved["appended"] == 0 and len(moved["moved_since_recheck"]) == 1
               and len(registry.read_text().splitlines()) == 1, moved)
         write_doc()
+
+        split_only_ref = "Plans/Fixture.md#unit=FIX-002"
+
+        def bind_split_for_currentness(rec: dict[str, Any], *, conflict: bool = False) -> None:
+            resolver = AnchorResolver(tmp)
+            split = {key: rec[key] for key in ("line", "closure_id")}
+            split.update(split_id=f"fixture-currentness-{counter[0]}", anchors_at_R=[
+                {"ref": unit_ref, "sha256": "f" * 64 if conflict else resolver.sha256(unit_ref)},
+                {"ref": split_only_ref, "sha256": resolver.sha256(split_only_ref)},
+            ])
+            packet = audit_dir / "reviews" / f"{split['split_id']}.jsonl"
+            packet.write_text(json.dumps(split) + "\n", encoding="utf-8")
+            for who in ("sol", "astra"):
+                rec["reviews"][who].update(split_id=split["split_id"], split_packet_path=rel(packet),
+                                           split_packet_sha256=sha256_file(packet))
+
+        split_row = append_with(mutate=bind_split_for_currentness)
+        current = validate_rows([legacy_row(), split_row])
+        check("split_only_anchor_current_validates", not current["errors"], current["errors"])
+        stored = AnchorResolver(tmp).sha256(split_only_ref)
+        write_doc(SELF_TEST_DOC.replace("unrelated unit that other edits change", "unrelated unit, edited"))
+        changed_hash = AnchorResolver(tmp).sha256(split_only_ref)
+        stale_error = f"split_anchor_hashes for {split_only_ref} is stale (stored {stored}, current {changed_hash})"
+        changed = validate_registry(registry)
+        check("split_only_anchor_move_is_stale", has(changed, stale_error)
+              and changed["unsuperseded_stale_hash_count"] == 1, changed["errors"])
+        write_registry([legacy_row()])
+        code, held = run_append()
+        check("reaudit_append_holds_back_moved_split_only_anchor",
+              code == 0 and held["would_append"] == 0 and not held["errors"]
+              and len(held["moved_since_recheck"]) == 1
+              and held["moved_since_recheck"][0]["changed_anchors"] == {
+                  split_only_ref: {"at_recheck": stored, "now": changed_hash}},
+              held)
+        successor = append_with(rows_before=[legacy_row(), split_row], line=2)
+        superseded = validate_rows([legacy_row(), split_row, successor])
+        check("superseded_split_only_anchor_is_exempt", not superseded["errors"]
+              and superseded["superseded_lines"] == [1, 2], superseded["errors"])
+        check("row_without_split_receipt_is_unaffected", superseded["unsuperseded_stale_hash_count"] == 0, superseded)
+
+        write_doc()
+        conflict = append_with(mutate=lambda rec: bind_split_for_currentness(rec, conflict=True))
+        report = validate_rows([legacy_row(), conflict])
+        check("split_anchor_hash_conflict_with_snapshot_fails", has(report, f"conflicting hash for {unit_ref}"), report["errors"])
+        write_registry([legacy_row()])
+        code, report = run_append()
+        check("reaudit_append_refuses_split_anchor_conflict", code != 0 and report["would_append"] == 0
+              and has(report, f"conflicting hash for {unit_ref}"), report)
+        split_row = append_with(mutate=bind_split_for_currentness)
+        packet = audit_dir / "reviews" / f"fixture-currentness-{counter[0]}.jsonl"
+        with packet.open("a", encoding="utf-8") as output:
+            output.write("\n")
+        report = validate_rows([legacy_row(), split_row])
+        check("split_packet_sha256_mismatch_fails", has(report, "split_packet file is missing or its SHA-256 differs"), report["errors"])
+
         append_with(mutate=lambda rec: rec["reviews"].pop("sol"))
         write_registry([legacy_row()])
         code, invalid = run_append()

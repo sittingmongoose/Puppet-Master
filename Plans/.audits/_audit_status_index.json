@@ -95,6 +95,17 @@
     },
     {
       "audit_ids": [
+        "audit-20260617-007-semantic-closure-registry-post-repair-fidelity",
+        "closure-reaudit-20261104"
+      ],
+      "closure_id": "closure-reaudit-20261104--closure-audit-20260617-007-semantic-closure-registry-post-repair-fidelity-001",
+      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Lead reconcile (pm-closure-lead, pm7-build decision 1112002103-d9d5): supported, as both blind max reviews judged this row at R 77bae0c636. Sol 6.1 max: The original defect was accepting previously closed findings without current owner and closure evidence checks, and both groups are still checked. PLS-025 now renews changed evidence through bound append-only re-audits; the old refresh/correction wording does not license restamping. Astra max: The finding was that stale current evidence could still pass validation and be reused as previously_closed. Current hash validation detects mismatches, and PLS-025 permits suppressing a stale predecessor only through a validated re-audit successor; this claim does not depend on the withdrawn refresh-hashes writer. The worker's and the cheap recheck's not_supported reading (renewal by restamping is withdrawn by DL-039 and PLS-025) is not adopted: both checks the original defect lacked are still enforced, and renewal now runs through PLS-025 re-audit rows, which this closure does not contradict. The not_supported fix is dropped. Evidence: the max reviewers' quotes first, then the worker's quotes, all verbatim at R; dependencies and stale-ref dispositions are the worker's, which cover exactly the stale set at R. | Lead: adopted the verdict both fresh max reviews (FU-01 rfu) agree on, per pm7-build 1112013508-4999.",
+      "closure_status": "reopened",
+      "finding_key": "sfk-22c5cd3ccf834ffd403199c8",
+      "line": 1202
+    },
+    {
+      "audit_ids": [
         "fable-20260706",
         "closure-reaudit-20261104"
       ],
@@ -103,19 +114,6 @@
       "closure_status": "reopened",
       "finding_key": "sfk-22dc78d1dd563f9d4e6b3e9b",
       "line": 1329
-    },
-    {
-      "audit_ids": [
-        "audit-20260617-012-plans-to-code-handoff-deep-fidelity",
-        "audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair",
-        "audit-20260618-004-plans-to-code-currentness-compatibility-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-reaudit-20261104--closure-audit-20260617-012-plans-to-code-handoff-deep-fidelity-023",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Delta at 77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947: base verdict supported; changed: none. No dependency anchor moved. The exact tokens all WorkNodes terminal and all automated tests passed remain in the canonical_text of EP-103, GRS-030, POA-048 and RAP-029 (RAP-029 as projections of owner receipts). Do not accept worker says done as code completion remains a negative constraint of EP-103, GRS-030 and POA-048. The stale ref is now the EP-103 unit. The exact-token body proof holds. | Lead: adopted the verdict both fresh max reviews (FU-01 rfu) agree on, per pm7-build 1112013508-4999.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-2498233b7721649d04d1222a",
-      "line": 1206
     },
     {
       "audit_ids": [
@@ -211,6 +209,18 @@
       "closure_status": "reopened",
       "finding_key": "sfk-4043b32d5199f598c10b4d7c",
       "line": 1388
+    },
+    {
+      "audit_ids": [
+        "fable-20260706",
+        "fable-20260706-deferred-action-repair",
+        "closure-reaudit-20261104"
+      ],
+      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0171-f42c38eb78",
+      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Owner card vm.pm-closure-lead--C-FP2-SPLIT, choice B, applied split_majority_of_three. Majority reading is NO. worker [NO]: Final pass at 10ba97e699: The Manifest has exact fields and the action table carries retention_until_utc, but neither defines a numeric retention policy or naming/storage recipe for the cited browser-session artifacts. sol [NO]: The Browser owner names manifest fields and reuses the GUI-automation artifact pipeline. SMPFS-328 still expressly records a missing typed DevTools result contract, so the manifest list supplies only part of the compound fix. astra [SU]: D follows the Browser owner\u2019s explicit adoption of GUI automation naming, retention and manifest shape. The exported evidence has a schema and step-based names, Testing owns retention in days with a retain-all default, and the session owner distinguishes ordinary restore from ephemeral authenticated browsing.",
+      "closure_status": "reopened",
+      "finding_key": "sfk-428ef01929e71a57d1398c6c",
+      "line": 1785
     },
     {
       "audit_ids": [
@@ -959,6 +969,18 @@
         "fable-20260706-deferred-action-repair",
         "closure-reaudit-20261104"
       ],
+      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0170-3ec5b419b7",
+      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Owner card vm.pm-closure-lead--C-FP2-SPLIT, choice B, applied split_majority_of_three. No majority. Reopen the closure. worker [SU]: Final pass at 10ba97e699: The browser owner gives exact alias targets and a restricted source form; the old bare inputs are not separate tool authorities. sol [RE/stale_retired]: The catalog explicitly settles the command roles in this finding. The share command remains active under Browser ownership, and the two bare tool spellings survive as limited compatibility inputs. Their former production role is stale_retired, which accounts for their absence as production entries in Tools. astra [NO]: D checks the location specified in the original finding. Section 15 retires the two bare execution names as independent commands, but sharing remains an active command and the exact cmd.browser.share_with_agent reference is still absent from Tools.md.",
+      "closure_status": "reopened",
+      "finding_key": "sfk-e54b3afabeac1b898c98913a",
+      "line": 1784
+    },
+    {
+      "audit_ids": [
+        "fable-20260706",
+        "fable-20260706-deferred-action-repair",
+        "closure-reaudit-20261104"
+      ],
       "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0318-6f6c8c0d7d",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: The repair table gives all three values for seven codes. GI-037 retains additional canonical GI-017 codes, including actions_missing_scope_runtime and actions_dispatch_input_invalid, without extending the table to those codes.",
       "closure_status": "reopened",
@@ -1072,7 +1094,7 @@
       "line": 1480
     }
   ],
-  "generated_at_utc": "2026-11-20T02:11:16Z",
+  "generated_at_utc": "2026-11-20T23:59:59Z",
   "reports": [
     {
       "audit_id": "audit-20260615-001-part-3-fable-cleanup",
@@ -1494,10 +1516,10 @@
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
           "reopened": 6,
-          "repaired": 113,
+          "repaired": 114,
           "stale_retired": 1
         },
-        "matching_rows": 120,
+        "matching_rows": 121,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -1587,11 +1609,11 @@
           "explicitly_deferred": 4,
           "not_for_plan": 6,
           "reopened": 4,
-          "repaired": 98,
+          "repaired": 99,
           "source_lineage_only": 24,
           "stale_retired": 1
         },
-        "matching_rows": 137,
+        "matching_rows": 138,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -1609,10 +1631,10 @@
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
           "reopened": 3,
-          "repaired": 59,
+          "repaired": 60,
           "source_lineage_only": 36
         },
-        "matching_rows": 98,
+        "matching_rows": 99,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -2437,10 +2459,10 @@
     "reports_glob": "Plans/.audits/audit-*/FINAL_REPORT.md"
   },
   "summary": {
-    "closure_registry_row_count": 1781,
-    "current_blocker_count": 92,
-    "current_open_finding_count": 92,
-    "current_reopened_finding_count": 92,
+    "closure_registry_row_count": 1788,
+    "current_blocker_count": 94,
+    "current_open_finding_count": 94,
+    "current_reopened_finding_count": 94,
     "current_report_blocker_count": 0,
     "historical_blocked_or_fail_report_count": 25,
     "report_count": 71,

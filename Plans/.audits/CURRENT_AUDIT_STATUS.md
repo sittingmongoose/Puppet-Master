@@ -2,14 +2,14 @@
 
 This generated index separates immutable historical report headers from current presentation status. Old `FINAL_REPORT.md` files are not rewritten; finding-level closure authority remains `Plans/.audits/_semantic_closure_registry.jsonl`.
 
-- Generated: `2026-11-20T02:11:16Z`
+- Generated: `2026-11-20T23:59:59Z`
 - Reports indexed: 71
-- Current blockers: 92
+- Current blockers: 94
 - Current report blockers: 0
-- Open finding blockers: 92
-- Reopened finding blockers: 92
+- Open finding blockers: 94
+- Reopened finding blockers: 94
 - Historical BLOCKED/FAIL reports indexed: 25
-- Closure registry rows: 1781
+- Closure registry rows: 1788
 
 ## Active open findings
 
@@ -25,8 +25,8 @@ Open as `scripts/pm-audit-closure.py validate` reports them: a finding stays ope
 | `sfk-14f1edcd99e2501fd3ac3427` | `closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0139-65d736bc7f` | `reopened` | 1334 |
 | `sfk-1bec1a20ed08f9e31908b59c` | `closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0062-69b8fb0d2b` | `reopened` | 1519 |
 | `sfk-21e738494edd9a31e779711d` | `closure-reaudit-20261104--closure-fable-20260706-remaining-registry-l0086-repaired-superseded-977c5ac8fa` | `reopened` | 1469 |
+| `sfk-22c5cd3ccf834ffd403199c8` | `closure-reaudit-20261104--closure-audit-20260617-007-semantic-closure-registry-post-repair-fidelity-001` | `reopened` | 1202 |
 | `sfk-22dc78d1dd563f9d4e6b3e9b` | `closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0019-a872e3eedc` | `reopened` | 1329 |
-| `sfk-2498233b7721649d04d1222a` | `closure-reaudit-20261104--closure-reaudit-20261104--closure-audit-20260617-012-plans-to-code-handoff-deep-fidelity-023` | `reopened` | 1206 |
 | `sfk-27e1aaa4aab173a18bd95557` | `closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0099-814db499a3` | `reopened` | 1536 |
 | `sfk-29a2a142bff79df42b07c209` | `closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0211-041dbe7cde` | `reopened` | 1342 |
 | `sfk-2c2724eecefb5f4a899ed133` | `closure-reaudit-20261104--closure-reaudit-20261104--closure-audit-20260628-001-feature-intake-closed-world-semantic-fidelity-repair-003` | `reopened` | 1253 |
@@ -35,6 +35,7 @@ Open as `scripts/pm-audit-closure.py validate` reports them: a finding stays ope
 | `sfk-32ef50717ffba6844b8fd1b1` | `closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0339-59d7c52912` | `reopened` | 1603 |
 | `sfk-3955371de4d0ad946607f7bf` | `closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0191-6f4d7a8022` | `reopened` | 1572 |
 | `sfk-4043b32d5199f598c10b4d7c` | `closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0308-f7d633b4a8` | `reopened` | 1388 |
+| `sfk-428ef01929e71a57d1398c6c` | `closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0171-f42c38eb78` | `reopened` | 1785 |
 | `sfk-4295336d87f4f0b9df21a400` | `closure-reaudit-20261104--closure-reaudit-20261104--closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-011` | `reopened` | 1256 |
 | `sfk-44fc5bdffa0bcce04abbbff6` | `closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0193-7e4000d7e7` | `reopened` | 1573 |
 | `sfk-4742460e7b36a74c74bfee02` | `closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0061-aced83f846` | `reopened` | 1518 |
@@ -99,6 +100,7 @@ Open as `scripts/pm-audit-closure.py validate` reports them: a finding stays ope
 | `sfk-de32beba50e6829df96ed574` | `closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0162-cf8ae69ed6` | `reopened` | 1547 |
 | `sfk-e1fcd45c960c7c2508038375` | `closure-reaudit-20261104--closure-reaudit-20261104--closure-audit-20260623-001-fff-ledger-to-plans-semantic-fidelity-repair-003` | `reopened` | 1249 |
 | `sfk-e3b56d7ed334127e363a00ed` | `closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0372-790886e47c` | `reopened` | 1416 |
+| `sfk-e54b3afabeac1b898c98913a` | `closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0170-3ec5b419b7` | `reopened` | 1784 |
 | `sfk-e8a11748d3f22b24b1c58bba` | `closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0318-6f6c8c0d7d` | `reopened` | 1391 |
 | `sfk-e9a09a9742076790d2b272df` | `closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0221-7baff85371` | `reopened` | 1344 |
 | `sfk-ee0d880fe7d372b34c249dd3` | `closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0294-83741bd5a0` | `reopened` | 1588 |
@@ -135,13 +137,13 @@ Open as `scripts/pm-audit-closure.py validate` reports them: a finding stays ope
 | `audit-20260617-009-orchestrator-goal-runtime-flow-post-repair-fidelity` | `PASS_WITH_WARNINGS` | `reported_pass_or_pass_with_warnings` | false | 0 |
 | `audit-20260617-010-orchestrator-goal-runtime-flow-post-repair-fidelity` | `PASS` | `reported_pass_or_pass_with_warnings` | false | 0 |
 | `audit-20260617-011-plans-to-code-handoff-post-compile` | `PASS_WITH_GOVERNANCE_BLOCKERS` | `reported_pass_or_pass_with_warnings` | false | 0 |
-| `audit-20260617-012-plans-to-code-handoff-deep-fidelity` | `BLOCKED_WITH_FINDINGS` | `historical_blocked_or_fail_report_indexed` | false | 120 |
+| `audit-20260617-012-plans-to-code-handoff-deep-fidelity` | `BLOCKED_WITH_FINDINGS` | `historical_blocked_or_fail_report_indexed` | false | 121 |
 | `audit-20260617-013-plans-to-code-handoff-post-repair-fidelity` | `BLOCKED_WITH_FINDINGS` | `historical_blocked_or_fail_report_indexed` | false | 3 |
 | `audit-20260617-014-plans-to-code-handoff-post-repair-clean-fidelity` | `PASS_WITH_GOVERNANCE_STALE` | `reported_pass_or_pass_with_warnings` | false | 0 |
 | `audit-20260618-001-plans-to-code-handoff-post-governance-deep-fidelity` | `PASS` | `reported_pass_or_pass_with_warnings` | false | 0 |
 | `audit-20260618-002-plans-to-code-final-docs-repair-certification` | `PASS certified` | `reported_pass_or_pass_with_warnings` | false | 0 |
-| `audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair` | `PASS certified` | `reported_pass_or_pass_with_warnings` | false | 137 |
-| `audit-20260618-004-plans-to-code-currentness-compatibility-repair` | `PASS_CERTIFIED` | `reported_pass_or_pass_with_warnings` | false | 98 |
+| `audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair` | `PASS certified` | `reported_pass_or_pass_with_warnings` | false | 138 |
+| `audit-20260618-004-plans-to-code-currentness-compatibility-repair` | `PASS_CERTIFIED` | `reported_pass_or_pass_with_warnings` | false | 99 |
 | `audit-20260618-005-plans-to-code-final-corrective-certification` | `PASS_CERTIFIED` | `reported_pass_or_pass_with_warnings` | false | 0 |
 | `audit-20260618-006-prd-planning-wizard-semantic-fidelity` | `BLOCKED` | `historical_blocked_or_fail_report_indexed` | false | 39 |
 | `audit-20260618-007-prd-planning-wizard-post-repair-fidelity` | `BLOCKED` | `historical_blocked_or_fail_report_indexed` | false | 309 |
