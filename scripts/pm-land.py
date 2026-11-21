@@ -14,6 +14,7 @@ import re
 import shlex
 import shutil
 import socket
+import stat
 import subprocess
 import sys
 import time
@@ -23,6 +24,7 @@ SHARED = Path("/mnt/Cursor/PuppetMaster")
 EVIDENCE = SHARED.with_name("PuppetMaster-Evidence")
 RUNS = EVIDENCE / "scratch/landing-remote"
 CLONE = Path.home() / "src/PuppetMaster"
+PROC = Path("/proc")
 HOSTS = {"1070ti": "1070ti", "nas1": "nas1-agent"}
 MACHINES = {"1070ti": "1070ti", "nas1": "ubuntu-agent-nas1"}
 DEFAULT_HOST = "nas1"
@@ -435,16 +437,17 @@ def changed_paths(root, base, head):
                    "-z", base, head, "--").stdout.rstrip("\0").split("\0")) - {""}
 
 
-def status_paths(root, *, untracked="normal"):
+def status_paths(root):
     fields = iter(git(root, "status", "--porcelain=v1", "-z", "--ignore-submodules=none",
-                      f"--untracked-files={untracked}").stdout.split("\0"))
-    paths = set()
+                      "--untracked-files=all").stdout.split("\0"))
+    tracked, untracked = set(), set()
     for entry in fields:
         if entry:
+            paths = untracked if entry.startswith("?? ") else tracked
             paths.add(entry[3:].rstrip("/"))
             if any(flag in "RC" for flag in entry[:2]):
                 paths.add(next(fields).rstrip("/"))
-    return paths
+    return tracked, untracked
 
 
 def overlaps(changed, touched):
@@ -460,24 +463,29 @@ def affects_shared_check(name):
             or name in {".gitignore", ".gitattributes", "AGENTS.md"})
 
 
-def clean_touched(root, touched):
+def require_clean_shared_checkout(root, touched):
     hidden = {entry[2:] for entry in git(root, "ls-files", "-v", "-z").stdout.split("\0")
               if entry and (entry[0] == "S" or entry[0].islower())}
-    changed = status_paths(root, untracked="all") | hidden
-    tracked_input_changes = {name for name in changed if affects_shared_check(name)}
-    dirty = sorted(tracked_input_changes | set(overlaps(changed, touched)))
+    tracked, untracked = status_paths(root)
+    untracked_inputs = {name for name in untracked if affects_shared_check(name)}
+    dirty = sorted(tracked | hidden | untracked_inputs | set(overlaps(untracked, touched)))
     if dirty:
-        raise Refusal("shared checkout has uncommitted changes or hidden index flags in landing or check inputs: "
-                      + ", ".join(dirty))
+        raise Refusal("shared checkout has uncommitted changes or hidden index flags: " + ", ".join(dirty))
 
 
 def require_clean_shared_index(root):
-    # reset --keep can discard staged bytes even outside the topic and checker paths.
+    # reset --keep can discard staged bytes even outside the rollback paths.
     output = git(root, "diff", "--cached", "--name-only", "--no-renames", "--no-ext-diff",
                  "--ignore-submodules=none", "--ita-visible-in-index", "-z", "HEAD", "--").stdout
     staged = sorted(set(output.split("\0")) - {""})
     if staged:
         raise Refusal("shared checkout has staged changes: " + ", ".join(staged))
+
+
+def added_paths(root, before, after):
+    output = git(root, "diff", "--name-only", "--no-renames", "--diff-filter=A", "-z",
+                 "--ignore-submodules=none", before, after, "--").stdout
+    return set(output.split("\0")) - {""}
 
 
 def publication_preflight(root, base, candidate, expected_inputs):
@@ -488,12 +496,10 @@ def publication_preflight(root, base, candidate, expected_inputs):
     if head not in (base, candidate):
         # A shared checkout behind the checked base also fast-forwards through these paths.
         touched |= changed_paths(root, head, base)
-    clean_touched(root, touched)
+    require_clean_shared_checkout(root, touched)
     if head != candidate:
-        added = git(root, "diff", "--name-only", "--no-renames", "--diff-filter=A", "-z",
-                    head, candidate, "--").stdout.split("\0")
         present = set()
-        for name in filter(None, added):
+        for name in added_paths(root, head, candidate):
             path = PurePosixPath(name)
             if os.path.lexists(root / path):
                 present.add(name)
@@ -506,6 +512,41 @@ def publication_preflight(root, base, candidate, expected_inputs):
                 raise Refusal("candidate would overwrite ignored files: " + ", ".join(sorted(filter(None, collisions))))
     require_same_inputs(expected_inputs, guarded_input_manifest(root, candidate), "shared publication")
     require_clean_shared_index(root)
+
+
+def verify_rollback(candidate, target):
+    """Protect local files before a hand lander resets to the fetched primary tip."""
+    candidate = sha(candidate, "unpublished candidate")
+    target = sha(target, "fetched rollback target")
+    root = SHARED
+    if git(root, "symbolic-ref", "--quiet", "HEAD", check=False).stdout.strip() != MAIN_REF:
+        raise Refusal("shared checkout must be on main")
+    if revision(root, "HEAD^{commit}") != candidate:
+        raise Refusal(f"shared HEAD is not the rollback candidate {candidate}")
+    if full_main(root) != target:
+        raise Refusal(f"fetched origin/main is not the rollback target {target}")
+    if is_ancestor(root, candidate, target):
+        raise Refusal(f"candidate {candidate} is already in fetched origin/main")
+
+    require_clean_shared_index(root)
+    tracked = tracklist(root, candidate)
+    collisions = set()
+    for name in added_paths(root, candidate, target):
+        path = PurePosixPath(name)
+        for part in (*reversed(path.parents), path):
+            try:
+                mode = (root / part).lstat().st_mode
+            except FileNotFoundError:
+                break
+            if part == path or not stat.S_ISDIR(mode):
+                if str(part) not in tracked:
+                    collisions.add(str(part))
+                break
+    if collisions:
+        raise Refusal("rollback would overwrite local paths: " + ", ".join(sorted(collisions)))
+    require_clean_shared_index(root)
+    say(f"Verified rollback paths from {candidate} to {target}.")
+    return 0
 
 
 def is_ancestor(root, earlier, later):
@@ -651,6 +692,30 @@ def remote_verify(folder, digest):
         require_clean_full(root, record["head"], record["tree"])
 
 
+def require_no_worktree_users(root, job):
+    real_root = root.resolve(strict=True)
+    try:
+        for process in PROC.iterdir():
+            if not process.name.isdecimal():
+                continue
+            try:
+                links = [process / "cwd", *(process / "fd").iterdir()]
+            except FileNotFoundError:
+                # The process may have exited. Still inspect cwd if it exists.
+                links = [process / "cwd"]
+            for link in links:
+                try:
+                    target = Path(os.readlink(link).removesuffix(" (deleted)"))
+                except FileNotFoundError:
+                    continue  # The process exited or closed this descriptor.
+                if target.is_absolute() and target.is_relative_to(real_root):
+                    location = "cwd" if link.name == "cwd" else f"fd/{link.name}"
+                    raise Refusal(f"preserving {root}: job {job} ended but PID {process.name} still uses "
+                                  f"{location} in the worktree: {target}")
+    except OSError as exc:
+        raise Refusal(f"preserving {root}: cannot prove job {job} left no worktree users: {exc}") from exc
+
+
 def remote_cleanup(folder):
     root = worktree_path(folder)
     if not os.path.lexists(root):
@@ -667,12 +732,16 @@ def remote_cleanup(folder):
             or info[0].get("name") != name):
         raise Refusal(f"preserving {root}: job {name} has no proven terminal state")
     job = info[0]
-    if (job.get("state") not in ("done", "failed") or not job.get("ended")
-            or type(job.get("code")) is not int or job.get("signal")):
-        raise Refusal(f"preserving {root}: job {name} ({job.get('state')}) has no proven normal exit")
+    code, signal = job.get("code"), job.get("signal")
+    done = (job.get("state") == "done" and type(code) is int and code == 0 and not signal)
+    failed = (job.get("state") == "failed" and (signal or (type(code) is int and code != 0)))
+    if not job.get("ended") or not (done or failed):
+        raise Refusal(f"preserving {root}: job {name} ({job.get('state')}) has no proven terminal exit")
     require_owned_worktree(root, folder)
     if git(root, "symbolic-ref", "--quiet", "HEAD", check=False).returncode != 1:
         raise Refusal(f"preserving {root}: could not establish that the temporary worktree is detached")
+    if failed:
+        require_no_worktree_users(root, name)
     git(CLONE, "worktree", "remove", "--force", str(root))
     say(f"Removed temporary remote worktree {root}")
 
@@ -866,13 +935,23 @@ def main(argv=None):
         check.add_argument("branch")
         check.add_argument("--on", choices=HOSTS, default=DEFAULT_HOST)
         verify = commands.add_parser("verify", help="read-only verification under the hand lander's guard")
-        verify.add_argument("--receipt", type=Path, required=True)
+        mode = verify.add_mutually_exclusive_group(required=True)
+        mode.add_argument("--receipt", type=Path)
+        mode.add_argument("--rollback-check", action="store_true", help="check paths before a hand rollback")
         verify.add_argument("--commit")
         verify.add_argument("--base")
+        verify.add_argument("--from", dest="rollback_from")
+        verify.add_argument("--to", dest="rollback_to")
         args = parser.parse_args(argv)
         if args.command == "check":
             root = Path(git(Path.cwd(), "rev-parse", "--show-toplevel").stdout.strip())
             return check_topic(root, args.branch, args.on)
+        if args.rollback_check:
+            if not (args.rollback_from and args.rollback_to) or args.commit is not None or args.base is not None:
+                verify.error("--rollback-check requires --from and --to and does not take --commit or --base")
+            return verify_rollback(args.rollback_from, args.rollback_to)
+        if args.rollback_from is not None or args.rollback_to is not None:
+            verify.error("--from and --to require --rollback-check")
         return verify_receipt(args.receipt, args.commit, args.base)
     except (Refusal, OSError, ValueError, KeyError, TypeError) as exc:
         print(f"pm-land: {exc}", file=sys.stderr)

@@ -1,6 +1,6 @@
 """Remote check and read-only receipt verification with private Git fixtures."""
 
-from contextlib import redirect_stdout
+from contextlib import redirect_stderr, redirect_stdout
 import importlib.util
 import io
 import json
@@ -9,6 +9,7 @@ from pathlib import Path
 import re
 import socket
 import subprocess
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -253,12 +254,67 @@ class LandingFixture(unittest.TestCase):
         self.assertTrue(self.remote.is_dir())
 
     def test_cleanup_preserves_signaled_or_unconfirmed_failure(self):
-        for extra in ({"code": None, "signal": "TERM"}, {"ended": None}):
-            with self.subTest(extra=extra), self.assertRaisesRegex(land.Refusal, "no proven normal exit"):
+        for extra in ({"code": None, "signal": None}, {"ended": None}):
+            with self.subTest(extra=extra), self.assertRaisesRegex(land.Refusal, "no proven terminal exit"):
                 self.cleanup("failed", **extra)
             self.assertTrue(self.remote.is_dir())
-        self.cleanup("failed", code=3)
+        proc = self.root / "proc"
+        with patch.object(land, "PROC", proc):
+            with self.assertRaisesRegex(land.Refusal, r"preserving .*no worktree users"):
+                self.cleanup("failed", code=None, signal=15)
+            self.assertTrue(self.remote.is_dir())
+            proc.mkdir()
+            self.cleanup("failed", code=3)
         self.assertFalse(self.remote.exists())
+
+    def test_cleanup_preserves_nested_validator_after_checker_signal(self):
+        validator = "import os, sys; print(os.getpid(), flush=True); sys.stdin.readline(); print('released', flush=True)"
+        checker = ("import os, signal, subprocess, sys; "
+                   "subprocess.Popen([sys.executable, '-c', sys.argv[1]]); "
+                   "os.kill(os.getpid(), signal.SIGKILL)")
+        wrapper = ("import subprocess, sys; "
+                   "result = subprocess.run([sys.executable, '-c', *sys.argv[1:]]); "
+                   "sys.exit(3 if result.returncode == -9 else 4)")
+        with subprocess.Popen([sys.executable, "-c", wrapper, checker, validator], cwd=self.remote,
+                              stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True) as worker:
+            try:
+                pid = int(worker.stdout.readline())
+                self.assertEqual(worker.wait(timeout=5), 3)
+                proc = self.root / "proc"
+                proc.mkdir()
+                (proc / str(pid)).symlink_to(Path("/proc") / str(pid))
+                with patch.object(land, "PROC", proc, create=True):
+                    with self.assertRaisesRegex(land.Refusal, rf"preserving .*{land.job_name(self.folder)}.*PID {pid}.*cwd"):
+                        self.cleanup("failed", code=3)
+                self.assertTrue(self.remote.is_dir())
+                self.assertEqual((Path("/proc") / str(pid) / "cwd").resolve(), self.remote)
+            finally:
+                worker.stdin.write("release\n")
+                worker.stdin.flush()
+                self.assertEqual(worker.stdout.readline().strip(), "released")
+
+    def test_cleanup_preserves_live_process_with_open_worktree_file(self):
+        reader = ("import os, sys; handle = open(sys.argv[1]); "
+                  "print(os.getpid(), flush=True); sys.stdin.readline(); handle.close()")
+        path = self.remote / "tracked.txt"
+        with subprocess.Popen([sys.executable, "-c", reader, str(path)], cwd=self.root,
+                              stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True) as process:
+            try:
+                pid = int(process.stdout.readline())
+                proc = self.root / "proc"
+                proc.mkdir()
+                (proc / str(pid)).symlink_to(Path("/proc") / str(pid))
+                with patch.object(land, "PROC", proc, create=True):
+                    for code, signal in ((3, None), (None, 15)):
+                        with self.subTest(code=code, signal=signal), self.assertRaisesRegex(
+                            land.Refusal, rf"preserving .*{land.job_name(self.folder)}.*PID {pid}.*fd"
+                        ):
+                            self.cleanup("failed", code=code, signal=signal)
+                self.assertTrue(path.is_file())
+            finally:
+                process.stdin.write("release\n")
+                process.stdin.flush()
+                self.assertEqual(process.wait(timeout=5), 0)
 
     def test_job_name_is_valid_with_long_mixed_case_branch(self):
         folder = land.new_run("fix/" + "Case" * 50, self.head)
@@ -434,13 +490,121 @@ class LandingFixture(unittest.TestCase):
         with self.assertRaisesRegex(land.Refusal, r"shared checkout has staged changes: extra-a\.txt, extra-b\.txt"):
             self.verify()
 
+    def test_verify_refuses_deleted_claude_rules_on_the_historical_decision_log_topic(self):
+        repo = Path(__file__).resolve().parents[1]
+        rules = ".claude/CLAUDE.md"
+        owner = "Plans/Decision_Log.md"
+        self.put(self.shared, rules, self.git(repo, "show", f"516a7c96a2:{rules}").stdout)
+        self.put(self.shared, owner, self.git(repo, "show", f"516a7c96a2:{owner}").stdout)
+        self.git(self.shared, "add", "--", rules, owner)
+        self.git(self.shared, "commit", "-m", "historical path-reference base")
+        previous_base, previous_tip = self.base, self.head
+        self.base = land.revision(self.shared, "HEAD")
+        self.put(self.shared, owner, self.git(repo, "show", f"bf939041db:{owner}").stdout)
+        self.git(self.shared, "commit", "-am", "historical decision log update")
+        self.head = land.revision(self.shared, "HEAD")
+        self.tree = land.revision(self.shared, "HEAD^{tree}")
+        self.git(self.origin, "fetch", str(self.shared), land.MAIN_REF)
+        self.git(self.origin, "update-ref", land.MAIN_REF, self.base, previous_base)
+        self.git(self.origin, "update-ref", self.ref, self.head, previous_tip)
+        self.git(self.shared, "fetch", "origin")
+        self.git(self.shared, "reset", "--keep", self.base)
+        self.cleanup()
+        self.remote, self.manifest = land.prepare_remote(self.folder, self.ref, self.head, self.tree, self.base)
+        self.make_record(1)
+        self.assertEqual(land.changed_paths(self.shared, self.base, self.head), {owner})
+        self.assertEqual(self.verify(), 0)
+
+        target = self.shared / rules
+        saved = target.rename(self.root / "saved-claude.md")
+        index = self.shared / ".git/index"
+        before = (index.read_bytes(), index.stat().st_mtime_ns, saved.read_bytes())
+        self.assertEqual(self.git(self.shared, "status", "--porcelain").stdout, f" D {rules}\n")
+        with self.assertRaisesRegex(land.Refusal, r"\.claude/CLAUDE\.md"):
+            self.verify()
+        self.assertFalse(target.exists())
+        self.assertEqual((index.read_bytes(), index.stat().st_mtime_ns, saved.read_bytes()), before)
+        self.assertEqual(land.revision(self.shared, "HEAD"), self.base)
+        saved.rename(target)
+        for flag in ("assume-unchanged", "skip-worktree"):
+            with self.subTest(flag=flag):
+                self.git(self.shared, "update-index", "--" + flag, "--", rules)
+                with self.assertRaisesRegex(land.Refusal, r"hidden index flags: \.claude/CLAUDE\.md"):
+                    self.verify()
+                self.git(self.shared, "update-index", "--no-" + flag, "--", rules)
+
+    def rollback_check(self, candidate, target):
+        errors = io.StringIO()
+        with redirect_stderr(errors):
+            result = land.main(["verify", "--rollback-check", "--from", candidate, "--to", target])
+        return result, errors.getvalue()
+
+    def test_rollback_refuses_the_ignored_file_preserved_by_the_historical_fast_forward(self):
+        repo = Path(__file__).resolve().parents[1]
+        name = "Concepts/chat-assistant-concepts/5.6 Pro/tests/stop-chip-beat-verify.mjs"
+        ignored = self.git(repo, "show", f"919945cd08:{name}").stdout
+        restored = self.git(repo, "show", f"4c47382d36f9:{name}").stdout
+        with (self.shared / ".gitignore").open("a", encoding="utf-8") as gitignore:
+            gitignore.write(f"/{name}\n")
+        self.git(self.shared, "commit", "-am", "older shared checkout ignores the local verifier")
+        older = land.revision(self.shared, "HEAD")
+        path = self.put(self.shared, name, restored)
+        self.git(self.shared, "add", "-f", "--", name)
+        self.git(self.shared, "commit", "-m", "primary tracks the verifier")
+        target = land.revision(self.shared, "HEAD")
+        self.assertEqual(land.revision(self.shared, f"{target}:{name}"), "9e07d1e784e6c4dc8880651692c7a24e54d1075d")
+        self.git(self.shared, "rm", "--cached", "--", name)
+        self.git(self.shared, "commit", "-m", "unpublished candidate drops the verifier")
+        candidate = land.revision(self.shared, "HEAD")
+        path.rename(self.root / "restored-verifier.mjs")
+        self.git(self.shared, "reset", "--keep", older)
+        self.put(self.shared, name, ignored)
+        self.git(self.shared, "check-ignore", "--quiet", "--", name)
+        self.git(self.shared, "merge", "--ff-only", "--no-overwrite-ignore", candidate)
+        self.git(self.shared, "update-ref", land.ORIGIN_MAIN, target)
+        self.assertEqual(self.git(self.shared, "status", "--porcelain").stdout, "")
+        self.assertEqual(self.git(self.shared, "hash-object", "--", name).stdout.strip(),
+                         "9618db6812213836b215250c17065d891cef504d")
+        index = self.shared / ".git/index"
+        before = (index.read_bytes(), index.stat().st_mtime_ns, path.read_bytes())
+
+        result, errors = self.rollback_check(candidate, target)
+        self.assertEqual(result, 3, errors)
+        self.assertIn(name, errors)
+        self.assertEqual((index.read_bytes(), index.stat().st_mtime_ns, path.read_bytes()), before)
+        self.assertEqual(land.revision(self.shared, "HEAD"), candidate)
+        path.rename(self.root / "preserved-verifier.mjs")
+        self.assertEqual(self.rollback_check(candidate, target), (0, ""))
+
+        path.mkdir()
+        self.put(path, "local-notes.txt", "untracked directory contents\n")
+        result, errors = self.rollback_check(candidate, target)
+        self.assertEqual(result, 3, errors)
+        self.assertIn(name, errors)
+        path.rename(self.root / "preserved-dir")
+        path.parent.rename(self.root / "preserved-parent-dir")
+        path.parent.write_text("untracked parent file\n", encoding="utf-8")
+        result, errors = self.rollback_check(candidate, target)
+        self.assertEqual(result, 3, errors)
+        self.assertIn(str(path.parent.relative_to(self.shared)), errors)
+        self.assertEqual(path.parent.read_text(), "untracked parent file\n")
+        path.parent.rename(self.root / "preserved-parent-file")
+
+        self.put(self.shared, "tracked.txt", "staged before rollback\n")
+        self.git(self.shared, "add", "--", "tracked.txt")
+        result, errors = self.rollback_check(candidate, target)
+        self.assertEqual(result, 3, errors)
+        self.assertIn("shared checkout has staged changes: tracked.txt", errors)
+        self.assertEqual(self.git(self.shared, "show", ":tracked.txt").stdout, "staged before rollback\n")
+
     def test_documented_followup_creates_and_checks_the_same_local_branch(self):
         repo = Path(__file__).resolve().parents[1]
         readme = (repo / "reports/landing-checks/README.md").read_text()
         fence = chr(96) * 3
         recipe = re.search(rf"^## Refreshing it after a Plans landing\n.*?^{fence}sh\n(.*?)^{fence}$",
                            readme, re.MULTILINE | re.DOTALL)[1]
-        branch_commands = ("git fetch origin", 'PM_LAND_TOPIC_BRANCH="fix/landing-snapshot-$(date -u +%Y%m%d-%H%M%S)"',
+        branch_commands = ("git fetch origin", "PM_LAND_TIMESTAMP=$(date -u +%Y%m%d-%H%M%S)",
+                           'PM_LAND_TOPIC_BRANCH="fix/landing-snapshot-$PM_LAND_TIMESTAMP"',
                            'git switch -c "$PM_LAND_TOPIC_BRANCH" origin/main',
                            'git push origin "HEAD:refs/heads/$PM_LAND_TOPIC_BRANCH"',
                            'long-job start "pm-${PM_LAND_TOPIC_BRANCH#fix/}" -- python3 -B "$PM_LAND_SCRIPT" check "$PM_LAND_TOPIC_BRANCH"',
@@ -452,6 +616,9 @@ class LandingFixture(unittest.TestCase):
                 self.assertIn(command, section)
 
         self.put(self.shared, "Plans/owner.md", "test plan\n")
+        historical_runs = self.git(repo, "ls-tree", "-d", "--name-only", "a45c1a0362:Plans/.plan_migration")
+        for name in historical_runs.stdout.splitlines():
+            self.put(self.shared, f"Plans/.plan_migration/{name}/summary.json", "{}\n")
         self.put(self.shared, "Plans/.plan_migration/current_run.json", '{"run_id":"previous"}')
         self.put(self.shared, "scripts/pm-plan-migration.py", """import json, sys
 from pathlib import Path
@@ -504,6 +671,13 @@ case "$mode" in
 esac
 """)
         launcher.chmod(0o700)
+        date = self.put(self.root, "bin/date", """#!/bin/sh
+case "$*" in
+    '-u +%Y%m%d-%H%M%S') echo 20261121-224647 ;;
+    *) exit 2 ;;
+esac
+""")
+        date.chmod(0o700)
         env = {**os.environ, "PATH": f"{launcher.parent}:{os.environ['PATH']}", "PM_LAND_SCRIPT": str(runner),
                "TEST_JOB": str(self.root / "started-job")}
         result = subprocess.run(["bash", "-c", recipe], cwd=scratch, env=env, capture_output=True, text=True)
@@ -514,6 +688,8 @@ esac
         self.assertEqual(land.revision(scratch, "HEAD^"), published)
         self.assertEqual(land.revision(self.origin, f"refs/heads/{branch}"), tip)
         self.assertEqual(land.read_json(observed), {"branch": branch, "head": tip})
+        self.assertEqual(land.read_json(scratch / "Plans/.plan_migration/current_run.json")["run_id"],
+                         "pds-20261121-002-current-planunit-snapshot")
 
     def test_ignored_input_membership_and_bytes_must_match_on_either_side(self):
         path = "Plans/.audits/usage-successor/governance/auto-decision-receipt.json"
