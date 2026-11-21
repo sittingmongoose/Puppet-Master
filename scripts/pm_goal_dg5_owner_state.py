@@ -118,8 +118,9 @@ def owner_modules():
 class Walk:
     """One canonical digest of a value graph (identity by first-visit order)."""
 
-    def __init__(self, hook, inventory=None):
+    def __init__(self, hook, inventory=None, outer=None):
         self.hook = hook
+        self.outer = outer  # the enclosing walk's identities (a set element's sub-walk)
         self.sha = hashlib.sha256()
         self.memo = {}
         self.pinned = []
@@ -134,12 +135,21 @@ class Walk:
 
     def sub(self, value):
         """Digest of one set element, in a walk of its own (sets have no order)."""
-        walk = Walk(self.hook, self.inventory)
+        # Objects the enclosing walk has already met are referenced by its index, so a set
+        # of objects sharing a large graph is not re-walked once per element.
+        walk = Walk(self.hook, self.inventory, outer=self.outer_memo())
         walk.run([('element', value)])
         self.opaque.update(walk.opaque)
         self.excluded.update(walk.excluded)
         self.objects += walk.objects
         return walk.sha.hexdigest()
+
+    def outer_memo(self):
+        if self.outer is None:
+            return self.memo
+        merged = dict(self.outer)
+        merged.update({k: ('sub', v) for k, v in self.memo.items()})
+        return merged
 
     def run(self, roots):
         stack = []
@@ -204,6 +214,9 @@ class Walk:
         ident = id(value)
         if ident in self.memo:
             self.put('r', self.memo[ident])
+            return
+        if self.outer is not None and ident in self.outer:
+            self.put('R', self.outer[ident])
             return
         self.memo[ident] = len(self.memo)
         self.pinned.append(value)
