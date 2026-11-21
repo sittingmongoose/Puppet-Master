@@ -381,6 +381,97 @@ def check_named_context_sentinel():
             raise AssertionError('arbitrary identity-only object was accepted')
 
 
+def check_passive_refusal_rule():
+    """Lead 1121000124-5847: a returned UnavailableRead counts as the call's refusal only for the four listed passive
+    entries, and only with a code that very call set."""
+    import tempfile
+    from types import SimpleNamespace
+
+    import pm_goal_dg5_boundaries as bridge
+    import pm_goal_dg_ca3_inspection as inspection
+
+    listed = inspection.Inspector.read_original_inspection_custody
+    unlisted = inspection.Inspector.read_source_audit  # a fifth Inspector method, not a listed passive entry
+    assert len(bridge.PASSIVE_ENTRIES) == 4 and bridge.passive_entry(listed) and not bridge.passive_entry(unlisted)
+    for module, qualname in bridge.PASSIVE_ENTRIES:
+        owner, method = qualname.split('.')
+        assert getattr(getattr(sys.modules[module], owner), method).__qualname__ == qualname, qualname
+    receiver = SimpleNamespace(last_code=None)
+
+    def unavailable(code):
+        def run():
+            receiver.last_code = None  # Inspector.passive resets it at its start
+            if code:
+                receiver.last_code = code
+            return dict(kind='unavailable', reason='missing_original', action_authority='none')
+        return run
+
+    # Refuse credit: an available result.
+    assert bridge.passive_call(listed, receiver, lambda: dict(kind='original_inspection_custody'))[1] is None
+    # Refuse credit: a stale code left by an earlier call; this call never set one.
+    receiver.last_code = 'C4I/read_original_inspection_custody/missing'
+    assert bridge.passive_call(listed, receiver, lambda: dict(kind='unavailable', reason='x'))[1] is None
+    # Refuse credit: the same return and code from a fifth, unlisted entry.
+    assert bridge.passive_call(unlisted, receiver, unavailable('C4I/x/missing'))[1] is None
+    # Grant: the exact code set by this call.
+    assert bridge.passive_call(listed, receiver, unavailable('C4I/x/missing'))[1] == 'C4I/x/missing'
+
+    # End to end through entry_call and the kill judge: a passive owner whose one routed predicate refuses.
+    dg5.install(prove=False)
+    class Refusal(Exception):
+        pass
+
+    def require(code, condition):
+        if not condition:
+            raise Refusal(code)
+
+    routed = bridge.guard_wrapper(require)
+
+    class Owner:
+        def __init__(self, present, code):
+            self.present, self.code, self.last_code = present, code, None
+
+        def read(self):
+            self.last_code = None
+            try:
+                routed(self.code, self.present)  # the one routed predicate (its row is this file and line)
+            except Exception as error:  # the passive owner turns the refusal into a typed result
+                self.last_code = str(error)
+                return dict(kind='unavailable', reason='missing_original', action_authority='none')
+            return dict(kind='original_inspection_custody')
+    Owner.read.__module__, Owner.read.__qualname__ = listed.__module__, listed.__qualname__
+    line = Owner.read.__code__.co_firstlineno + 3
+    row = 'dg5/site/pm_goal_dg5_collector_selftest.py:%d' % line
+    outcomes = {}
+    saved_discovery = tables.DISCOVERY
+    tables.DISCOVERY = True  # the collection's own mode: rows are decided from their conditions, cuts from CUT
+    for name, declared, present in (('exact', 'C4I/selftest/missing', False), ('different', 'C4I/selftest/other', False)):
+        collector = sweep.Collector(judge=True)
+        tables.COLLECTOR = collector
+        owner = Owner(present, 'C4I/selftest/missing')
+        with tempfile.TemporaryDirectory(prefix='dg5-passive-', dir=os.environ.get('TMPDIR')) as work:
+            case = dict(id='selftest/' + name, expected=declared)
+            bridge.CASE[0] = case
+            try:
+                bridge.entry_call(case, case['id'] + '/Inspector.read_original_inspection_custody', 'goal.cancelled',
+                                  lambda: owner.read(), Path(work), world=SimpleNamespace(work=work),
+                                  arguments=dict(receiver=owner, args=(), kwargs={}), original=Owner.read,
+                                  target=row if name == 'exact' else 'dg5/site/pm_goal_dg5_collector_selftest.py:1')
+            finally:
+                bridge.CASE[0] = None
+        record = collector.ledger[-1]
+        outcomes[name] = (record.get('outcome'), record.get('errors'), record.get('kill'),
+                          record.get('cut_errors'), record.get('restoration_errors'))
+    tables.DISCOVERY = saved_discovery
+    assert outcomes['exact'][1] == [row], outcomes
+    assert outcomes['exact'][0] == 'exact_expected', outcomes
+    # Grant: cut gives an available result (no refusal), restore gives the same refusal row, so the judge kills it.
+    assert outcomes['exact'][2] == 'KILLED' and outcomes['exact'][3] == [] and outcomes['exact'][4] == [row], outcomes
+    assert outcomes['different'][0] != 'exact_expected', outcomes
+    assert not bridge.FAILURES, bridge.FAILURES
+    print('passive rule outcomes', outcomes)
+
+
 def main():
     check_named_context_sentinel()
     check_frame_error_target_mapping()
@@ -395,6 +486,7 @@ def main():
     check_schema_validate_routing_guard()
     check_boundaries_schema_row_guard()
     check_u_bank_validate_routing_guard()
+    check_passive_refusal_rule()
     print('pm_goal_dg5_collector_selftest: PASS')
     return 0
 
