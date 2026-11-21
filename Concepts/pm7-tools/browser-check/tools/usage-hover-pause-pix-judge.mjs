@@ -15,7 +15,7 @@ export function stillJudge(a1png, a2png, bpng, rect = null) {
 	const a1 = decodePng(a1png), a2 = decodePng(a2png), b = decodePng(bpng), W = a1.width, H = a1.height;
 	if ([a2, b].some((img) => img.width !== W || img.height !== H)) throw new Error('triplet image dimensions differ');
 	const cw = Math.ceil(W / G), ch = Math.ceil(H / G), vary = new Uint8Array(cw * ch);
-	const px = (img, i) => img.data[i] | (img.data[i + 1] << 8) | (img.data[i + 2] << 16);
+	const px = (img, i) => img.data[i] | (img.data[i + 1] << 8) | (img.data[i + 2] << 16) | (img.data[i + 3] << 24);
 	for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const i = (y * W + x) * 4; if (px(a1, i) !== px(a2, i)) vary[Math.floor(y / G) * cw + Math.floor(x / G)] = 1; }
 	const wide = new Uint8Array(cw * ch);
 	for (let cy = 0; cy < ch; cy++) for (let cx = 0; cx < cw; cx++) if (vary[cy * cw + cx]) for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) { const x = cx + dx, y = cy + dy; if (x >= 0 && y >= 0 && x < cw && y < ch) wide[y * cw + x] = 1; }
@@ -28,7 +28,7 @@ export function stillJudge(a1png, a2png, bpng, rect = null) {
 		const i = (y * W + x) * 4;
 		if (px(a1, i) === px(b, i)) continue;
 		changed++; hit[Math.floor(y / G) * cw + Math.floor(x / G)]++;
-		for (let c = 0; c < 3; c++) maxDelta = Math.max(maxDelta, Math.abs(a1.data[i + c] - b.data[i + c]));
+		for (let c = 0; c < 4; c++) maxDelta = Math.max(maxDelta, Math.abs(a1.data[i + c] - b.data[i + c]));
 		bounds = bounds ? [Math.min(bounds[0], x), Math.min(bounds[1], y), Math.max(bounds[2], x), Math.max(bounds[3], y)] : [x, y, x, y];
 	}
 	// cells merged by touch into boxes, largest first: where main varies, and where the pause's page changed a pixel
@@ -65,8 +65,13 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
 	for (const name of [...new Set([...states.keys(), ...summaries.keys()])].sort()) {
 		const tags = states.get(name) || new Set();
 		const p = (tag) => path.join(dir, name + '-' + tag + '.png');
+		const row = summaries.get(name);
+		if (row?.error) {
+			rows.push({ name, error: row.error });
+			console.error(name + ': ' + row.error);
+			continue;
+		}
 		if (tags.size !== 3) {
-			const row = summaries.get(name);
 			const alone = tags.size === 1 && tags.has('A1');
 			const identical = alone && row?.judged === true && row.drift === 0 && row.diff === 0 && row.diff2 === 0;
 			if (identical) {
