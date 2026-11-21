@@ -292,5 +292,32 @@ class LandingFixture(unittest.TestCase):
         publish.assert_called_once()
 
 
+    def test_topic_push_can_retry_after_local_rebase(self):
+        branch = "fix/retry"
+        ref = land.check_ref(branch)
+        self.git(self.shared, "switch", "-c", branch)
+        self.git(self.shared, "reset", "--keep", self.base)
+        self.put(self.shared, "tracked.txt", "rebased change")
+        self.git(self.shared, "commit", "-am", "rebased commit")
+        self.git(self.shared, "update-ref", land.ORIGIN_MAIN, self.base)
+        rebased = land.revision(self.shared, "HEAD")
+        self.assertNotEqual(rebased, self.head)
+        pushes = []
+        real_git = land.git
+
+        def fixture_git(root, *argv, **kwargs):
+            if argv[0] == "fetch":
+                return None
+            if argv[0] == "push":
+                pushes.append(argv)
+                return None
+            return real_git(root, *argv, **kwargs)
+
+        with (patch.object(land, "git", side_effect=fixture_git),
+              patch.object(land, "ref_at", return_value=self.head)):
+            self.assertEqual(land.rebase_and_push(self.shared, ref, self.base), rebased)
+        self.assertEqual(pushes, [("push", f"--force-with-lease={ref}:{self.head}", "origin", f"HEAD:{ref}")])
+
+
 if __name__ == "__main__":
     unittest.main()
