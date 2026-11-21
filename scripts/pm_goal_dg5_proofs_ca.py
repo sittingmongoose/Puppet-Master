@@ -42,12 +42,6 @@ PROOFS = {
         "fields (schema_id/schema_version), so 'const' is always present when the "
         "branch is reached with a schema from that bank.",
         [(C1, 59), (C1, 47), ('scripts/pm_goal_own_c3_w12b_roots.py', 24)]),
-    'dg5/site/pm_goal_dg_ca_c1.py:322': _p(
-        "The statement is acquired only as the issuing AssociationOwner's original "
-        "(registry acquire), and AssociationOwner.inventory builds it with the "
-        "literal complete=True; no other statement shape can be issued or acquired, "
-        "so the completeness re-check cannot refuse alone.",
-        [(C1, 320), (C1, 322), (OWN, 730), (OWN, 737)]),
     'dg5/site/pm_goal_dg_ca_c1.py:323': _p(
         "statement['owner_epoch'] is copied from owner.owner_epoch inside inventory() "
         "and compared with the same attribute immediately after acquire in the same "
@@ -184,16 +178,6 @@ PROOFS = {
         "smoke). Even at a uniform 512 characters per member the canonical "
         "header measures 3107 bytes, under the 4096 cap; genuine ids measure 193.",
         [(AS, 597), (AS, 600), (ST, 426)]),
-    'dg5/site/pm_goal_dg_ca_c1.py:628': _p(
-        "In append_original the stored event is Storage's encoding of the exact "
-        "producer value passed to append (required frozen at :611), and Storage "
-        "validates the candidate's producer25 template at append; producer25 of "
-        "the read-back event therefore equals that producer. The check runs "
-        "after the append, so no preserved-effects suite negative can target "
-        "it; the same comparison is negatively witnessed on the resolve path "
-        "(:648).",
-        [(C1, 611), (C1, 616), (C1, 628)],
-        ['dg5/site/pm_goal_dg_ca_c1.py:648']),
     'dg5/site/pm_goal_dg_ca_c1.py:630': _p(
         "appender.first_receipt(handle) resolves the append-issued receipt "
         "handle through Storage.receipt_of, which returns a deepcopy of the "
@@ -270,13 +254,6 @@ PROOFS = {
         "be indexed.",
         [(ST, 1057), (ST, 1463), (ST, 1466)],
         ['dg5/site/pm_goal_test_storage.py:1463']),
-    'dg5/site/pm_goal_test_storage.py:1618': _p(
-        "durable_group_value assembles the group value from the commit "
-        "record Storage itself wrote at append (commit frame fields and "
-        "member tuples from the indexed group) and checks it against the "
-        "group schema those same writers satisfy; no caller-supplied field "
-        "reaches it without append-time validation.",
-        [(ST, 254), (ST, 1618)]),
     'dg5/site/pm_goal_test_storage.py:1624': _p(
         "read_frame is reached only from read_event (which has just required "
         "the same events-dict lookup at :1633) and from scan/recovery over "
@@ -303,18 +280,6 @@ PROOFS = {
         "A stored control_epoch that could overflow the increment therefore "
         "cannot be carried to it by any coherent route state.",
         [(R3, 516), (R3, 591), (R3, 682)]),
-    'dg5/site/pm_goal_dg_ca3_route.py:1189': _p(
-        "control['pending'] at publish_control entails the same pending at "
-        "settle_owner: the only genuine writer is GoalOwner.reserve_pending, "
-        "which is fenced off while a cancellation is pending (owners :478) - "
-        "and cancellation_pending is set from latch until publish itself "
-        "clears it after this check - so no genuine operation can introduce "
-        "a body pending between settle and publish, and settle's identical "
-        "check at :866 refuses any pending introduced earlier. The same "
-        "field and predicate are witnessed at :866.",
-        [(R3, 866), (R3, 1189), (OWN, 478)],
-        ['dg5/site/pm_goal_dg_ca3_route.py:866',
-         'dg5/site/pm_goal_dg_ca_owners.py:478']),
     'dg5/site/pm_goal_dg_ca3_native.py:738': _p(
         "effects.inventory is called only from D05 aggregate/readback paths "
         "inside run_native, immediately after effects.drain has read the same "
@@ -360,11 +325,6 @@ PROOFS = {
         "(witnessed: tampering the result scope refuses at :874 first).",
         [(R3, 812), (N3, 874)],
         ['dg5/site/pm_goal_dg_ca3_native.py:874']),
-    'dg5/site/pm_goal_dg_ca3_native.py:805': _p(
-        "aggregate reads run['scheduler_stop_key'] only after scheduler.stop "
-        "in the same run_native call has set it unconditionally (:635) before "
-        "drain and aggregate run; the key and its cell therefore exist.",
-        [(N3, 635), (N3, 805)]),
     'dg5/site/pm_goal_dg_ca3_native.py:938': _p(
         "d06.prepare is called only from run_native, which aggregate-blocks a "
         "second entry at :803 long before prepare could run twice; run['d06'] "
@@ -372,25 +332,6 @@ PROOFS = {
         "with 'd06' present cannot arise through any route call.",
         [(N3, 803), (N3, 938), (N3, 983)],
         ['dg5/site/pm_goal_dg_ca3_native.py:803']),
-    'dg5/site/pm_goal_dg_ca3_native.py:993': _p(
-        "publish is called only from run_native immediately after prepare in "
-        "the same synchronous sequence, and prepare always leaves "
-        "run['d06']['phase'] == 'prepared'; nothing runs between the two "
-        "calls that could change the phase.",
-        [(N3, 983), (N3, 993)]),
-    'dg5/site/pm_goal_dg_ca3_native.py:997': _p(
-        "publish compares the current body/control selectors with the "
-        "before-selectors captured in prepare in the same run_native "
-        "sequence; between prepare and publish only readback and reads run "
-        "(no body/control writer), so the selectors cannot diverge.",
-        [(N3, 948), (N3, 997)]),
-    'dg5/site/pm_goal_dg_ca3_native.py:1006': _p(
-        "The candidate's producer_semantic_digest is computed at prepare "
-        "from the exact event dict that publish appends unchanged (the "
-        "frozen producer path), and custody's digest is Storage's "
-        "producer_digest of that same stored event; both are "
-        "NR.producer_digest of one dict with no intervening edit path.",
-        [(N3, 935), (N3, 1006)]),
     'dg5/site/pm_goal_dg_ca3_route.py:840': _p(
         "native_selections compares the d06 origin cell with the origin "
         "record from d06.readback, which reads that same cell moments "
@@ -525,20 +466,6 @@ PROOFS = {
         "replay no-effect check restates read_result's passive guarantee.",
         [('scripts/pm_goal_dg_cb_migration.py', 759), ('scripts/pm_goal_dg_cb_migration.py', 868)],
         ['dg5/site/pm_goal_dg_cb_migration.py:868']),
-    'dg5/site/pm_goal_dg_cb_migration.py:868': _p(
-        "read_result captures the cell generation and then only reads "
-        "stored cells and schema-validates them (predicate run twice, both "
-        "read-only); no transact or append runs in between, so the "
-        "generation cannot move.",
-        [('scripts/pm_goal_dg_cb_migration.py', 826), ('scripts/pm_goal_dg_cb_migration.py', 868)]),
-    'dg5/site/pm_goal_dg_cb_migration.py:867': _p(
-        "read_result evaluates the identical pure predicate twice over the "
-        "same stored cells with no intervening write (its own passive check "
-        "at :868 covers the same span), so the two results cannot differ "
-        "through any genuine call (the helper test seam is not a family "
-        "entry argument).",
-        [('scripts/pm_goal_dg_cb_migration.py', 862), ('scripts/pm_goal_dg_cb_migration.py', 867)],
-        ['dg5/site/pm_goal_dg_cb_migration.py:868']),
     'dg5/site/pm_goal_dg_cb_migration.py:790': _p(
         "commit reads back each write from the same Storage transaction it "
         "has just applied (transact is all-or-none and w.value returns the "
@@ -555,21 +482,6 @@ PROOFS = {
         "with no last receipt cannot be produced by any owner call; direct "
         "cell tampering is refused earlier by the image origin sha binding.",
         [(BO, 798)]),
-    'dg5/site/pm_goal_dg_cb_owners.py:291': _p(
-        "MigrationStorage.transact checks are built only in Coordinator."
-        "derive from the capture images' versions, and commit re-derives "
-        "the candidate from a final capture and requires the checks to be "
-        "identical (final_candidate) before transacting; a cell whose "
-        "version moved between capture and commit is therefore refused at "
-        "final_candidate (or independent/final capture) before any stale "
-        "check can reach transact, and no write runs between the final "
-        "derive and the transaction in the same call.",
-        [(BO, 291), ('scripts/pm_goal_dg_cb_migration.py', 778)]),
-    'dg5/site/pm_goal_dg_cb_owners.py:289': _p(
-        "Derive builds checks only with expected=<captured version> (never "
-        "None), so the expected-is-None absent branch of MigrationStorage."
-        "transact is unreachable from any family caller.",
-        [(BO, 289), ('scripts/pm_goal_dg_cb_migration.py', 613)]),
     'dg5/site/pm_goal_dg_ca3_native.py:142': _p(
         "verify_custody checks the selector sha against the current cell "
         "bytes immediately before the schema check; a cell whose schema_id "
@@ -577,13 +489,6 @@ PROOFS = {
         "refused at selector_hash first, and a sha-matching cell carries "
         "the selector's schema_id by construction of src_sel.",
         [(N3, 140), (N3, 142)]),
-    'dg5/site/pm_goal_dg_ca3_native.py:211': _p(
-        "make() seeds are dicts the issuing owner has just built from "
-        "stored records it validated against the same root at issuance "
-        "(issue/validate paths), then re-validates with the identical "
-        "validator; a seed leaf the specimen would not preserve cannot "
-        "have passed issuance validation in the same process.",
-        [(N3, 211), (N3, 250)]),
     'dg5/site/pm_goal_dg_ca3_native.py:250': _p(
         "issue() keys are fresh uid/test keys or deterministic per-run "
         "keys issued once behind the phase guards (already_prepared / "
@@ -592,12 +497,6 @@ PROOFS = {
         [(N3, 250), (N3, 803), (N3, 938)],
         ['dg5/site/pm_goal_dg_ca3_native.py:803',
          'dg5/site/pm_goal_dg_ca3_native.py:938']),
-    'dg5/run/revision/number': _p(
-        "run['revision'] is an in-memory counter starting at allocation "
-        "and incremented once per genuine run transition in the same "
-        "process; no stored input carries it, so no single-defect case "
-        "can present it at the uint64 ceiling.",
-        [(N3, 518)]),
     'dg5/site/pm_goal_dg_ca3_route.py:807': _p(
         "owners_native is reached only with a d06 disposition from "
         "d06.readback, whose safe-stop seed status is the literal "
@@ -619,11 +518,6 @@ PROOFS = {
         "bound by the append custody checks at C1 :628 (proof).",
         [(R3, 822), (N3, 1095)],
         ['dg5/site/pm_goal_dg_ca_c1.py:628']),
-    'dg5/site/pm_goal_dg_ca3_route.py:824': _p(
-        "Same first-custody read twice argument as C1 :630 on the C3 "
-        "readback path: both sides are deepcopies of the one custody row "
-        "for the event, read in the same synchronous sequence.",
-        [(R3, 824), (N3, 1095)]),
     'dg5/site/pm_goal_dg_ca3_route.py:827': _p(
         "mutation_started in the frozen producer payload is computed at "
         "freeze from the same safe-stop settlements list the disposition "
@@ -639,27 +533,6 @@ PROOFS = {
         "presented to msgpack_decode through any stored cell in this "
         "storage model.",
         [(BO, 154), (BO, 169)]),
-    'dg5/site/pm_goal_dg_cb_migration.py:782': _p(
-        "Commit writes are the derive() candidate: manifest parts are "
-        "grouped by manifest_parts under the same PART_CAP probe size, "
-        "and every other write is a schema-bounded record (binding, "
-        "result with bounded scope/member selectors from the manifest "
-        "parts), so no single write value can exceed the cap.",
-        [('scripts/pm_goal_dg_cb_migration.py', 579), ('scripts/pm_goal_dg_cb_migration.py', 782)]),
-    'dg5/site/pm_goal_dg_cb_migration.py:783': _p(
-        "operation_cap adds only the physical_key wrapper around a write "
-        "value already bounded by stored_part_cap and the manifest "
-        "grouping probe, which sizes parts with the identical "
-        "dict(physical_key, value) measure; non-part writes are "
-        "schema-bounded records far under the cap (see :782).",
-        [('scripts/pm_goal_dg_cb_migration.py', 579), ('scripts/pm_goal_dg_cb_migration.py', 783)],
-        ['dg5/site/pm_goal_dg_cb_migration.py:782']),
-    'dg5/site/pm_goal_dg_cb_migration.py:842': _p(
-        "read_result re-measures manifest parts that manifest_parts "
-        "grouped under exactly this cap measure at commit and that are "
-        "bound by the whole-manifest sha check at :844 in the same "
-        "predicate; a part over cap cannot have been committed.",
-        [('scripts/pm_goal_dg_cb_migration.py', 579), ('scripts/pm_goal_dg_cb_migration.py', 842)]),
     'dg5/site/pm_goal_dg_ca3_route.py:799': _p(
         "The route re-checks the d06 control phase/result that "
         "d06.readback has just required at native :1069 (committed phase "
@@ -667,73 +540,17 @@ PROOFS = {
         "reached owners_native already passed that exact predicate.",
         [(R3, 799), (N3, 1069)],
         ['dg5/site/pm_goal_dg_ca3_native.py:1069']),
-    'dg5/site/pm_goal_dg_cb_migration.py:424': _p(
-        "derive_joins runs only after goal enumeration and authentication "
-        "succeed, which requires the goal body and control cells to be "
-        "present and imageable; cap.images therefore contains both items "
-        "when derive_joins reads them in the same capture call.",
-        [('scripts/pm_goal_dg_cb_migration.py', 424), ('scripts/pm_goal_dg_cb_migration.py', 361)]),
-    'dg5/site/pm_goal_dg_cb_migration.py:425': _p(
-        "Same enumeration argument as :424 for the body item specifically: "
-        "the goal owner's enumeration reads the body cell through "
-        "body_cell (goal/body_unavailable) before any image is "
-        "authenticated, so a missing body refuses there first.",
-        [('scripts/pm_goal_dg_cb_migration.py', 425)],
-        ['dg5/site/pm_goal_dg_cb_owners.py:438']),
-    'dg5/site/pm_goal_dg_cb_migration.py:426': _p(
-        "Same enumeration argument as :424 for the control item: the goal "
-        "owner's control() read (goal/control_unavailable) precedes "
-        "derive_joins in the same capture call.",
-        [('scripts/pm_goal_dg_cb_migration.py', 426)],
-        ['dg5/site/pm_goal_dg_cb_owners.py:443']),
-    'dg5/site/pm_goal_dg_cb_migration.py:428': _p(
-        "Body and control scope fields are written at goal birth from the "
-        "same scope the keys are scoped by (goal keys embed project/thread/"
-        "goal ids), and both cells are bound by their issuance origins in "
-        "authenticate_mapping before derive_joins; a scope-divergent body "
-        "cannot be the cell stored under this scope's body key without "
-        "breaking that origin binding first.",
-        [('scripts/pm_goal_dg_cb_migration.py', 428)]),
-    'dg5/site/pm_goal_dg_cb_migration.py:443': _p(
-        "Each receipt image in cap.images was issued by the goal owner for "
-        "this scope at mutation time (receipt record scope/owner are the "
-        "issuing mutation's scope and owner) and is bound by its issuance "
-        "origin in authenticate_mapping before derive_joins re-checks the "
-        "same fields.",
-        [('scripts/pm_goal_dg_cb_migration.py', 443)]),
     'dg5/site/pm_goal_dg_cb_migration.py:451': _p(
         "cap.stop is the projection returned by the host owner's "
         "read_for_binding_migration in the same capture, built from the "
         "same stop cell whose image stop_item carries; both reads are of "
         "one cell in one synchronous capture with no stop write between.",
         [('scripts/pm_goal_dg_cb_migration.py', 451), (BO, 776)]),
-    'dg5/site/pm_goal_dg_cb_migration.py:462': _p(
-        "The goal_plan_binding image is enumerated by the plan owner for "
-        "this scope (gpb_key scoped by the run id under this scope) and "
-        "its record goal_id is written by bind_goal from that scope; the "
-        "storage instance is the wrapper's own instance stamped at "
-        "issuance in this Storage.",
-        [('scripts/pm_goal_dg_cb_migration.py', 462)]),
-    'dg5/site/pm_goal_dg_cb_migration.py:920': _p(
-        "withdraw reads the stored result via result_selection at entry "
-        "as 'original' and re-reads the identical cell at :920 in the same "
-        "synchronous call; the only writes in between are the read_result "
-        "audit (passive, :868) and no result write, so the two reads "
-        "cannot differ.",
-        [('scripts/pm_goal_dg_cb_migration.py', 920)],
-        ['dg5/site/pm_goal_dg_cb_migration.py:868']),
     'dg5/site/pm_goal_dg_cb_owners.py:228': _p(
         "schema_ref_for is called only from image()/physical issuance "
         "paths with the owners' fixed family names, every one a key of "
         "FAMILY_SCHEMAS; no caller passes a caller-supplied family.",
         [(BO, 228), (BO, 395)]),
-    'dg5/site/pm_goal_dg_ca3_native.py:947': _p(
-        "Same prepare-only argument as d06/revision: unsupported_status is "
-        "checked only in d06.prepare, whose refusals run_native catches and "
-        "records instead of refusing the entry; the body status itself is "
-        "written only by allocate ('running') and transition() with the "
-        "statuses its callers pass from NONTERMINAL+TERMINAL.",
-        [(N3, 947), (N3, 518)]),
     'dg5/site/pm_goal_dg_ca3_route.py:78': _p(
         "Same wrapper argument as C1 :56 on the C3 route wrapper: every "
         "wrap() call site whose def requires physical_key passes a "
@@ -971,6 +788,404 @@ WITHDRAWN = {
             "genuine transition in the same process.",
             [(N3, 949)],
             ['dg5/run/revision/number']),
+    ),
+    # Round 3 (pm-ea-lead 1121124828-43f4 (b)): moved here unchanged from PROOFS; each reason names its final list, the reviews and
+    # the route by which the row now closes (a kill or OPEN). Withdrawn proofs never credit.
+    'dg5/site/pm_goal_dg_ca3_native.py:1006': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 1 shard0 UNSOUND, '
+            'shard3 UNSOUND; round 2 ADJ UNSOUND (accepting mutant). 113.r2 route: kill: the mutant becomes a '
+            'single-defect negative.'
+        ),
+        proof=_p(
+            "The candidate's producer_semantic_digest is computed at prepare "
+            "from the exact event dict that publish appends unchanged (the "
+            "frozen producer path), and custody's digest is Storage's "
+            "producer_digest of that same stored event; both are "
+            "NR.producer_digest of one dict with no intervening edit path.",
+            [(N3, 935), (N3, 1006)]),
+    ),
+    'dg5/site/pm_goal_dg_ca3_native.py:211': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 1 shard1 UNSOUND, '
+            'shard2 UNSOUND; round 2 ADJ UNSOUND (refuted premise). 113.r2 route: kill: a negative expecting the '
+            "guard's own code (rule C)."
+        ),
+        proof=_p(
+            "make() seeds are dicts the issuing owner has just built from "
+            "stored records it validated against the same root at issuance "
+            "(issue/validate paths), then re-validates with the identical "
+            "validator; a seed leaf the specimen would not preserve cannot "
+            "have passed issuance validation in the same process.",
+            [(N3, 211), (N3, 250)]),
+    ),
+    'dg5/site/pm_goal_dg_ca3_native.py:805': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 1 audit SOUND; '
+            "round 2 S-A UNSOUND (refuted premise). 113.r2 route: kill: a negative expecting the guard's own code "
+            '(rule C).'
+        ),
+        proof=_p(
+            "aggregate reads run['scheduler_stop_key'] only after scheduler.stop "
+            "in the same run_native call has set it unconditionally (:635) before "
+            "drain and aggregate run; the key and its cell therefore exist.",
+            [(N3, 635), (N3, 805)]),
+    ),
+    'dg5/site/pm_goal_dg_ca3_native.py:947': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 2 M-A-1 UNSOUND '
+            '(accepting mutant), M-A-2 SOUND. 113.r2 route: kill: the mutant becomes a single-defect negative.'
+        ),
+        proof=_p(
+            "Same prepare-only argument as d06/revision: unsupported_status is "
+            "checked only in d06.prepare, whose refusals run_native catches and "
+            "records instead of refusing the entry; the body status itself is "
+            "written only by allocate ('running') and transition() with the "
+            "statuses its callers pass from NONTERMINAL+TERMINAL.",
+            [(N3, 947), (N3, 518)]),
+    ),
+    'dg5/site/pm_goal_dg_ca3_native.py:993': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 1 shard0 UNSOUND, '
+            'shard3 UNSOUND; round 2 ADJ UNSOUND (accepting mutant). 113.r2 route: kill: the mutant becomes a '
+            'single-defect negative.'
+        ),
+        proof=_p(
+            "publish is called only from run_native immediately after prepare in "
+            "the same synchronous sequence, and prepare always leaves "
+            "run['d06']['phase'] == 'prepared'; nothing runs between the two "
+            "calls that could change the phase.",
+            [(N3, 983), (N3, 993)]),
+    ),
+    'dg5/site/pm_goal_dg_ca3_native.py:997': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 2 M-A-1 UNSOUND '
+            '(refuted premise), M-A-2 UNSOUND (accepting mutant). 113.r2 route: kill: a negative expecting the '
+            "guard's own code (rule C)."
+        ),
+        proof=_p(
+            "publish compares the current body/control selectors with the "
+            "before-selectors captured in prepare in the same run_native "
+            "sequence; between prepare and publish only readback and reads run "
+            "(no body/control writer), so the selectors cannot diverge.",
+            [(N3, 948), (N3, 997)]),
+    ),
+    'dg5/site/pm_goal_dg_ca3_route.py:1189': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 1 shard1 UNSOUND, '
+            'shard2 UNSOUND; round 2 ADJ UNSOUND (refuted premise). 113.r2 route: kill: a negative expecting the '
+            "guard's own code (rule C)."
+        ),
+        proof=_p(
+            "control['pending'] at publish_control entails the same pending at "
+            "settle_owner: the only genuine writer is GoalOwner.reserve_pending, "
+            "which is fenced off while a cancellation is pending (owners :478) - "
+            "and cancellation_pending is set from latch until publish itself "
+            "clears it after this check - so no genuine operation can introduce "
+            "a body pending between settle and publish, and settle's identical "
+            "check at :866 refuses any pending introduced earlier. The same "
+            "field and predicate are witnessed at :866.",
+            [(R3, 866), (R3, 1189), (OWN, 478)],
+            ['dg5/site/pm_goal_dg_ca3_route.py:866',
+             'dg5/site/pm_goal_dg_ca_owners.py:478']),
+    ),
+    'dg5/site/pm_goal_dg_ca3_route.py:824': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 2 M-A-1 UNSOUND '
+            '(accepting mutant), M-A-2 UNSOUND (accepting mutant). 113.r2 route: kill: the mutant becomes a '
+            'single-defect negative.'
+        ),
+        proof=_p(
+            "Same first-custody read twice argument as C1 :630 on the C3 "
+            "readback path: both sides are deepcopies of the one custody row "
+            "for the event, read in the same synchronous sequence.",
+            [(R3, 824), (N3, 1095)]),
+    ),
+    'dg5/site/pm_goal_dg_ca_c1.py:322': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final lists '
+            'FINAL-LIST-113.r2 and FINAL-LIST-R2B. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round '
+            '1 shard1 SOUND, shard2 UNSOUND; round 2 ADJ SOUND; round 2b P-B-1 UNSOUND, P-B-2 UNSOUND. 113.r2 why: '
+            'both round-2b reviewers UNSOUND. 113.r2 route: kill: the mutant becomes a single-defect negative. R2B '
+            'why: reproduces on the ladder: UNSOUND, accepting mutant. R2B route: kill (rule 2): this mutant as a '
+            "single-defect negative, owner.inventory replaced by the owner's own body with complete=False, expecting "
+            'C1/capture_source/inventory_complete/<role>.'
+        ),
+        proof=_p(
+            "The statement is acquired only as the issuing AssociationOwner's original "
+            "(registry acquire), and AssociationOwner.inventory builds it with the "
+            "literal complete=True; no other statement shape can be issued or acquired, "
+            "so the completeness re-check cannot refuse alone.",
+            [(C1, 320), (C1, 322), (OWN, 730), (OWN, 737)]),
+    ),
+    'dg5/site/pm_goal_dg_ca_c1.py:628': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 1 shard1 UNSOUND, '
+            'shard2 SOUND; round 2 ADJ UNSOUND (accepting mutant). 113.r2 route: kill: the mutant becomes a '
+            'single-defect negative.'
+        ),
+        proof=_p(
+            "In append_original the stored event is Storage's encoding of the exact "
+            "producer value passed to append (required frozen at :611), and Storage "
+            "validates the candidate's producer25 template at append; producer25 of "
+            "the read-back event therefore equals that producer. The check runs "
+            "after the append, so no preserved-effects suite negative can target "
+            "it; the same comparison is negatively witnessed on the resolve path "
+            "(:648).",
+            [(C1, 611), (C1, 616), (C1, 628)],
+            ['dg5/site/pm_goal_dg_ca_c1.py:648']),
+    ),
+    'dg5/site/pm_goal_dg_cb_migration.py:424': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 1 shard1 UNSOUND, '
+            'shard2 UNSOUND; round 2 ADJ UNSOUND (refuted premise). 113.r2 route: kill: a negative expecting the '
+            "guard's own code (rule C)."
+        ),
+        proof=_p(
+            "derive_joins runs only after goal enumeration and authentication "
+            "succeed, which requires the goal body and control cells to be "
+            "present and imageable; cap.images therefore contains both items "
+            "when derive_joins reads them in the same capture call.",
+            [('scripts/pm_goal_dg_cb_migration.py', 424), ('scripts/pm_goal_dg_cb_migration.py', 361)]),
+    ),
+    'dg5/site/pm_goal_dg_cb_migration.py:425': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 2 M-B-1 UNSOUND '
+            "(refuted premise), M-B-2 UNSOUND (refuted premise). 113.r2 route: kill: a negative expecting the guard's "
+            'own code (rule C).'
+        ),
+        proof=_p(
+            "Same enumeration argument as :424 for the body item specifically: "
+            "the goal owner's enumeration reads the body cell through "
+            "body_cell (goal/body_unavailable) before any image is "
+            "authenticated, so a missing body refuses there first.",
+            [('scripts/pm_goal_dg_cb_migration.py', 425)],
+            ['dg5/site/pm_goal_dg_cb_owners.py:438']),
+    ),
+    'dg5/site/pm_goal_dg_cb_migration.py:426': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 1 shard0 UNSOUND, '
+            'shard3 UNSOUND; round 2 ADJ UNSOUND (refuted premise). 113.r2 route: kill: a negative expecting the '
+            "guard's own code (rule C)."
+        ),
+        proof=_p(
+            "Same enumeration argument as :424 for the control item: the goal "
+            "owner's control() read (goal/control_unavailable) precedes "
+            "derive_joins in the same capture call.",
+            [('scripts/pm_goal_dg_cb_migration.py', 426)],
+            ['dg5/site/pm_goal_dg_cb_owners.py:443']),
+    ),
+    'dg5/site/pm_goal_dg_cb_migration.py:428': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 2 M-B-1 UNSOUND '
+            "(refuted premise), M-B-2 UNSOUND (refuted premise). 113.r2 route: kill: a negative expecting the guard's "
+            'own code (rule C).'
+        ),
+        proof=_p(
+            "Body and control scope fields are written at goal birth from the "
+            "same scope the keys are scoped by (goal keys embed project/thread/"
+            "goal ids), and both cells are bound by their issuance origins in "
+            "authenticate_mapping before derive_joins; a scope-divergent body "
+            "cannot be the cell stored under this scope's body key without "
+            "breaking that origin binding first.",
+            [('scripts/pm_goal_dg_cb_migration.py', 428)]),
+    ),
+    'dg5/site/pm_goal_dg_cb_migration.py:443': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 1 shard1 UNSOUND, '
+            'shard2 UNSOUND; round 2 ADJ UNSOUND (accepting mutant). 113.r2 route: kill: the mutant becomes a '
+            'single-defect negative.'
+        ),
+        proof=_p(
+            "Each receipt image in cap.images was issued by the goal owner for "
+            "this scope at mutation time (receipt record scope/owner are the "
+            "issuing mutation's scope and owner) and is bound by its issuance "
+            "origin in authenticate_mapping before derive_joins re-checks the "
+            "same fields.",
+            [('scripts/pm_goal_dg_cb_migration.py', 443)]),
+    ),
+    'dg5/site/pm_goal_dg_cb_migration.py:462': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 1 shard0 UNSOUND, '
+            'shard3 UNSOUND; round 2 ADJ UNSOUND (accepting mutant). 113.r2 route: kill: the mutant becomes a '
+            'single-defect negative.'
+        ),
+        proof=_p(
+            "The goal_plan_binding image is enumerated by the plan owner for "
+            "this scope (gpb_key scoped by the run id under this scope) and "
+            "its record goal_id is written by bind_goal from that scope; the "
+            "storage instance is the wrapper's own instance stamped at "
+            "issuance in this Storage.",
+            [('scripts/pm_goal_dg_cb_migration.py', 462)]),
+    ),
+    'dg5/site/pm_goal_dg_cb_migration.py:782': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 2 M-B-1 UNSOUND '
+            "(refuted premise), M-B-2 UNSOUND (refuted premise). 113.r2 route: kill: a negative expecting the guard's "
+            'own code (rule C).'
+        ),
+        proof=_p(
+            "Commit writes are the derive() candidate: manifest parts are "
+            "grouped by manifest_parts under the same PART_CAP probe size, "
+            "and every other write is a schema-bounded record (binding, "
+            "result with bounded scope/member selectors from the manifest "
+            "parts), so no single write value can exceed the cap.",
+            [('scripts/pm_goal_dg_cb_migration.py', 579), ('scripts/pm_goal_dg_cb_migration.py', 782)]),
+    ),
+    'dg5/site/pm_goal_dg_cb_migration.py:783': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 1 shard1 UNSOUND, '
+            'shard2 UNSOUND; round 2 ADJ UNSOUND (accepting mutant). 113.r2 route: kill: the mutant becomes a '
+            'single-defect negative.'
+        ),
+        proof=_p(
+            "operation_cap adds only the physical_key wrapper around a write "
+            "value already bounded by stored_part_cap and the manifest "
+            "grouping probe, which sizes parts with the identical "
+            "dict(physical_key, value) measure; non-part writes are "
+            "schema-bounded records far under the cap (see :782).",
+            [('scripts/pm_goal_dg_cb_migration.py', 579), ('scripts/pm_goal_dg_cb_migration.py', 783)],
+            ['dg5/site/pm_goal_dg_cb_migration.py:782']),
+    ),
+    'dg5/site/pm_goal_dg_cb_migration.py:842': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 1 shard0 UNSOUND, '
+            'shard3 UNSOUND; round 2 ADJ UNSOUND (accepting mutant). 113.r2 route: kill: the mutant becomes a '
+            'single-defect negative.'
+        ),
+        proof=_p(
+            "read_result re-measures manifest parts that manifest_parts "
+            "grouped under exactly this cap measure at commit and that are "
+            "bound by the whole-manifest sha check at :844 in the same "
+            "predicate; a part over cap cannot have been committed.",
+            [('scripts/pm_goal_dg_cb_migration.py', 579), ('scripts/pm_goal_dg_cb_migration.py', 842)]),
+    ),
+    'dg5/site/pm_goal_dg_cb_migration.py:867': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 2 M-B-1 UNSOUND '
+            '(refuted premise), M-B-2 UNSOUND (accepting mutant). 113.r2 route: kill: a negative expecting the '
+            "guard's own code (rule C)."
+        ),
+        proof=_p(
+            "read_result evaluates the identical pure predicate twice over the "
+            "same stored cells with no intervening write (its own passive check "
+            "at :868 covers the same span), so the two results cannot differ "
+            "through any genuine call (the helper test seam is not a family "
+            "entry argument).",
+            [('scripts/pm_goal_dg_cb_migration.py', 862), ('scripts/pm_goal_dg_cb_migration.py', 867)],
+            ['dg5/site/pm_goal_dg_cb_migration.py:868']),
+    ),
+    'dg5/site/pm_goal_dg_cb_migration.py:868': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 1 shard1 UNSOUND, '
+            'shard2 UNSOUND; round 2 ADJ UNSOUND (accepting mutant). 113.r2 route: kill: the mutant becomes a '
+            'single-defect negative.'
+        ),
+        proof=_p(
+            "read_result captures the cell generation and then only reads "
+            "stored cells and schema-validates them (predicate run twice, both "
+            "read-only); no transact or append runs in between, so the "
+            "generation cannot move.",
+            [('scripts/pm_goal_dg_cb_migration.py', 826), ('scripts/pm_goal_dg_cb_migration.py', 868)]),
+    ),
+    'dg5/site/pm_goal_dg_cb_migration.py:920': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 2 M-B-1 UNSOUND '
+            '(accepting mutant), M-B-2 UNSOUND (accepting mutant). 113.r2 route: kill: the mutant becomes a '
+            'single-defect negative.'
+        ),
+        proof=_p(
+            "withdraw reads the stored result via result_selection at entry "
+            "as 'original' and re-reads the identical cell at :920 in the same "
+            "synchronous call; the only writes in between are the read_result "
+            "audit (passive, :868) and no result write, so the two reads "
+            "cannot differ.",
+            [('scripts/pm_goal_dg_cb_migration.py', 920)],
+            ['dg5/site/pm_goal_dg_cb_migration.py:868']),
+    ),
+    'dg5/site/pm_goal_dg_cb_owners.py:289': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 2 M-B-1 UNSOUND '
+            '(accepting mutant), M-B-2 UNSOUND (accepting mutant). 113.r2 route: kill: the mutant becomes a '
+            'single-defect negative.'
+        ),
+        proof=_p(
+            "Derive builds checks only with expected=<captured version> (never "
+            "None), so the expected-is-None absent branch of MigrationStorage."
+            "transact is unreachable from any family caller.",
+            [(BO, 289), ('scripts/pm_goal_dg_cb_migration.py', 613)]),
+    ),
+    'dg5/site/pm_goal_dg_cb_owners.py:291': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 1 shard1 UNSOUND, '
+            'shard2 UNSOUND; round 2 ADJ UNSOUND (accepting mutant). 113.r2 route: kill: the mutant becomes a '
+            'single-defect negative.'
+        ),
+        proof=_p(
+            "MigrationStorage.transact checks are built only in Coordinator."
+            "derive from the capture images' versions, and commit re-derives "
+            "the candidate from a final capture and requires the checks to be "
+            "identical (final_candidate) before transacting; a cell whose "
+            "version moved between capture and commit is therefore refused at "
+            "final_candidate (or independent/final capture) before any stale "
+            "check can reach transact, and no write runs between the final "
+            "derive and the transaction in the same call.",
+            [(BO, 291), ('scripts/pm_goal_dg_cb_migration.py', 778)]),
+    ),
+    'dg5/site/pm_goal_test_storage.py:1618': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 1 shard0 SOUND; '
+            'round 2 S-A SOUND (entailment). 113.r2 why: addendum 3: same field, any value its type admits. 113.r2 '
+            "route: kill: a negative expecting the guard's own code (rule C)."
+        ),
+        proof=_p(
+            "durable_group_value assembles the group value from the commit "
+            "record Storage itself wrote at append (commit frame fields and "
+            "member tuples from the indexed group) and checks it against the "
+            "group schema those same writers satisfy; no caller-supplied field "
+            "reaches it without append-time validation.",
+            [(ST, 254), (ST, 1618)]),
+    ),
+    'dg5/run/revision/number': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final lists '
+            'FINAL-LIST-113.r2 and FINAL-LIST-R2B. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round '
+            '1 shard1 UNSOUND, shard2 SOUND; round 2 ADJ SOUND; round 2b P-B-1 UNSOUND, P-B-2 CANNOT_DECIDE. 113.r2 '
+            'why: ADJ3: break stands at level 2 (run.restart at level 1). 113.r2 route: kill: a negative expecting '
+            "the guard's own code (rule C). R2B why: break stands (P-B-1), refuted premise. R2B route: kill: "
+            'owner-shaped run at revision 2**64-1, route to terminal, run.restart, expecting '
+            'run/revision/numrule/integer_range, under the forked judge.'
+        ),
+        proof=_p(
+            "run['revision'] is an in-memory counter starting at allocation "
+            "and incremented once per genuine run transition in the same "
+            "process; no stored input carries it, so no single-defect case "
+            "can present it at the uint64 ceiling.",
+            [(N3, 518)]),
     ),
 }
 

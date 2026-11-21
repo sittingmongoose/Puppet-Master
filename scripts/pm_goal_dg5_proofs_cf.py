@@ -28,21 +28,6 @@ PROOFS = {
             'validation.'
         ),
     ),
-    'dg5/commit/evidence/schema': dict(
-        kind='entailed-by-final-commit-evidence',
-        families=['goal_run.certified'],
-        depends_on=['dg5/commit_final/evidence/schema'],
-        sites=[
-            (WORLD, 932),
-            (WORLD, 1055),
-            (WORLD, 1073),
-        ],
-        argument=(
-            'Commit checks the identical evidence in the same schema bank at entry and again before its '
-            'write. Disabling only the earlier schema check sent the unchanged invalid document to the final '
-            'check and restoring it repeated the first refusal.'
-        ),
-    ),
     'dg5/current/guard/schema': dict(
         kind='entailed-by-final-current-guard',
         families=['goal_run.certified'],
@@ -92,41 +77,6 @@ PROOFS = {
             'then compares the canonical bytes against that control cell. The encoding preserves JSON values '
             'and types. With the schema check disabled the invalid document still fails f5a/control_bytes and '
             'restoring the schema check repeats the original message.'
-        ),
-    ),
-    'dg5/f5a/intent/schema': dict(
-        kind='entailed-by-validated-arm-intent',
-        families=['goal_run.certified'],
-        depends_on=['dg5/arm/intent/schema'],
-        sites=[
-            (WORLD, 65),
-            (WORLD, 130),
-            (WORLD, 741),
-            (WORLD, 745),
-            (WORLD, 746),
-            (WORLD, 753),
-            (WORLD, 757),
-            (WORLD, 790),
-            (WORLD, 792),
-            (WORLD, 794),
-            ('scripts/pm_goal_test_owner_adapters.py', 74),
-            ('scripts/pm_goal_test_numrule.py', 187),
-            ('scripts/pm_event_numbers.py', 309),
-            ('scripts/pm_event_numbers.py', 328),
-            ('scripts/pm_event_numbers.py', 332),
-            ('scripts/pm_event_numbers.py', 345),
-            ('scripts/pm_event_numbers.py', 357),
-            ('scripts/pm_event_numbers.py', 358),
-            ('scripts/pm_event_numbers.py', 372),
-            ('scripts/pm_event_numbers.py', 375),
-            ('scripts/pm_event_numbers.py', 384),
-        ],
-        argument=(
-            'Arm validates the stored intent using the same StorageIntent definition and then writes that '
-            'document. F5a reads that arm cell and requires its canonical bytes to equal the supplied intent. '
-            'The encoding preserves JSON values and types, so an invalid intent cannot equal the validated '
-            'document. The complete call repeats the original schema message after restoration and reaches '
-            'f5a/intent_bytes with just the schema check disabled.'
         ),
     ),
     'dg5/f5d/evidence/schema': dict(
@@ -222,6 +172,82 @@ PROOFS = {
             'The retry result requires the original evidence under the identical AppendEvidence definition. '
             'Disabling only the earlier check sends the unchanged invalid evidence to the result validator. '
             'Restoring the earlier check repeats the original message.'
+        ),
+    ),
+}
+
+
+# Withdrawn written proofs (proof maintenance round 3, pm-ea-lead 1121124828-43f4 (b), from the final lists
+# FINAL-LIST-113.r2 and FINAL-LIST-R2B). They are kept for the record and are deliberately outside PROOFS, so no
+# tool loads them as proofs: pm_goal_dg5_justified.written_proofs and keycheck.py read only PROOFS. Do not move one
+# back without a new argument and a recorded probe whose cut run refuses.
+WITHDRAWN = {
+    'dg5/commit/evidence/schema': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-R2B. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 2b P-A-1 UNSOUND, '
+            'P-A-2 SOUND. R2B why: break stands (P-A-1), refuted premise. R2B route: kill: a negative presenting '
+            'appended.evidence={} after a real append, expecting commit/evidence/schema/, under the forked judge (the '
+            'cut crashes).'
+        ),
+        proof=dict(
+            kind='entailed-by-final-commit-evidence',
+            families=['goal_run.certified'],
+            depends_on=['dg5/commit_final/evidence/schema'],
+            sites=[
+                (WORLD, 932),
+                (WORLD, 1055),
+                (WORLD, 1073),
+            ],
+            argument=(
+                'Commit checks the identical evidence in the same schema bank at entry and again before its '
+                'write. Disabling only the earlier schema check sent the unchanged invalid document to the final '
+                'check and restoring it repeated the first refusal.'
+            ),
+        ),
+    ),
+    'dg5/f5a/intent/schema': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-R2B. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 2b P-A-1 SOUND, P-A-2 '
+            'UNSOUND. R2B why: break stands (P-A-2), refuted premise. R2B route: kill: CF08-N15 state plus a direct '
+            'f5a entry call, expecting f5a/intent/schema, under the forked judge (the cut refuses '
+            'f5a/control_intent).'
+        ),
+        proof=dict(
+            kind='entailed-by-validated-arm-intent',
+            families=['goal_run.certified'],
+            depends_on=['dg5/arm/intent/schema'],
+            sites=[
+                (WORLD, 65),
+                (WORLD, 130),
+                (WORLD, 741),
+                (WORLD, 745),
+                (WORLD, 746),
+                (WORLD, 753),
+                (WORLD, 757),
+                (WORLD, 790),
+                (WORLD, 792),
+                (WORLD, 794),
+                ('scripts/pm_goal_test_owner_adapters.py', 74),
+                ('scripts/pm_goal_test_numrule.py', 187),
+                ('scripts/pm_event_numbers.py', 309),
+                ('scripts/pm_event_numbers.py', 328),
+                ('scripts/pm_event_numbers.py', 332),
+                ('scripts/pm_event_numbers.py', 345),
+                ('scripts/pm_event_numbers.py', 357),
+                ('scripts/pm_event_numbers.py', 358),
+                ('scripts/pm_event_numbers.py', 372),
+                ('scripts/pm_event_numbers.py', 375),
+                ('scripts/pm_event_numbers.py', 384),
+            ],
+            argument=(
+                'Arm validates the stored intent using the same StorageIntent definition and then writes that '
+                'document. F5a reads that arm cell and requires its canonical bytes to equal the supplied intent. '
+                'The encoding preserves JSON values and types, so an invalid intent cannot equal the validated '
+                'document. The complete call repeats the original schema message after restoration and reaches '
+                'f5a/intent_bytes with just the schema check disabled.'
+            ),
         ),
     ),
 }
