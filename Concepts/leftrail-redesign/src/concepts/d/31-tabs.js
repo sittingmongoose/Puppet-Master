@@ -147,6 +147,7 @@ function onTabCapture(ev) {
   fitViewOnly(ev);
   const tab = ev.target && ev.target.closest && ev.target.closest('.pm-segtab-item:is([data-tab], [data-jj-tab])');
   if (!tab || !inPanels(tab) || tab.classList.contains('active')) return;
+  if (tab.__lgFirstCarryShown && tab.closest('#panel-files')) return;
   const st = tab.parentElement;
   if (!st || !st.classList.contains('pm-segtab') || !st.offsetWidth) return;
   st._dFrom = snapStrip(st, tab);
@@ -169,9 +170,18 @@ function tabChanged(tab) {
   if (now === was) return;
   /* the label shows in this same task, so the target brackets (placed on the next frame) measure the final box */
   if (st) fitTabs(st);
-  const shown = activePane(panel);
+  const shown = activePane(panel), dir = now > was ? 1 : -1;
+  if (panel.id === 'panel-files' && tab.__lgFirstCarryShown && shown) {
+    // The prepared chip supplies the transition. Fit the selected pane and show its
+    // rows in their final positions on this first reveal.
+    requestAnimationFrame(() => {
+      if (!D.on || activePane(panel) !== shown) return;
+      stackHeads(shown); stackRows(shown); midFitAll(shown);
+    });
+    return;
+  }
   const left = fromPane && fromPane.box && fromPane.pane !== shown && fromPane.pane.isConnected ? holdLeaving(fromPane.pane, fromPane.box) : null;
-  playTabs(st, from, now > was ? 1 : -1, () => activePane(panel), null, left);
+  playTabs(st, from, dir, () => activePane(panel), null, left);
 }
 /* one frame callback makes every animation of a change, and startTogether starts them all on the next frame: the ink,
    the icons, the inverse tick and the rows share one clock, whatever the shell's fit pass costs this frame. paneOf: the
