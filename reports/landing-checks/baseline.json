@@ -84,6 +84,26 @@
   },
   {
    "check": "audit-governance",
+   "count": 1,
+   "error": "stale_audit_status_index",
+   "fingerprints": [
+    "-"
+   ],
+   "path": "Plans/.audits/_audit_status_index.json",
+   "subcheck": "audit_status_index"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "stale_current_audit_status_markdown",
+   "fingerprints": [
+    "-"
+   ],
+   "path": "Plans/.audits/CURRENT_AUDIT_STATUS.md",
+   "subcheck": "audit_status_index"
+  },
+  {
+   "check": "audit-governance",
    "count": 100,
    "error": "artifact_hash_stale",
    "fingerprints": [
@@ -213,7 +233,7 @@
   },
   {
    "check": "audit-governance",
-   "count": 35,
+   "count": 36,
    "error": "event_authority_currentness_source_drift",
    "fingerprints": [
     "006050d34ec8",
@@ -247,6 +267,7 @@
     "a40aa02ebc9f",
     "d1cb22ec6bb2",
     "d5be4dc5e9b9",
+    "d94a146403ea",
     "d9e287f261e5",
     "dd3707254603",
     "ebc2af553cac",
@@ -607,6 +628,16 @@
   {
    "check": "audit-governance",
    "count": 1,
+   "error": "missing_ref",
+   "fingerprints": [
+    "976753f2c3a3"
+   ],
+   "path": "Plans/00-plans-index.md",
+   "subcheck": "support_refs"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
    "error": "validator_no_output",
    "fingerprints": [
     "ca2d9bc8e006"
@@ -623,6 +654,16 @@
    ],
    "path": "Plans/card2_event_p2a_cases.json",
    "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "missing_ref",
+   "fingerprints": [
+    "976753f2c3a3"
+   ],
+   "path": "Plans/00-plans-index.md",
+   "subcheck": "lint_contractrefs"
   },
   {
    "check": "run-gates",
@@ -682,6 +723,26 @@
    ],
    "path": "Plans/.audits/_semantic_closure_registry.jsonl",
    "subcheck": "validate_audit_closure"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_audit_status_index",
+   "fingerprints": [
+    "-"
+   ],
+   "path": "Plans/.audits/_audit_status_index.json",
+   "subcheck": "validate_audit_status_index"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_current_audit_status_markdown",
+   "fingerprints": [
+    "-"
+   ],
+   "path": "Plans/.audits/CURRENT_AUDIT_STATUS.md",
+   "subcheck": "validate_audit_status_index"
   },
   {
    "check": "run-gates",
@@ -1041,30 +1102,38 @@
  ],
  "checks": {
   "audit-governance": {
-   "failure_total": 5452,
+   "failure_total": 5876,
    "status": "fail",
    "subchecks": {
     "audit_closure": {
      "reported": 64,
      "sampled": 64
     },
+    "audit_status_index": {
+     "reported": 2,
+     "sampled": 2
+    },
     "evidence": {
-     "exported": 2653,
-     "reported": 2653,
+     "exported": 2863,
+     "reported": 2863,
      "sampled": 100
     },
     "implementation_readiness": {
-     "reported": 66,
-     "sampled": 66
+     "reported": 67,
+     "sampled": 67
     },
     "plan_graph": {
-     "exported": 2653,
-     "reported": 2653,
+     "exported": 2863,
+     "reported": 2863,
      "sampled": 100
     },
     "spec_lock": {
      "reported": 15,
      "sampled": 15
+    },
+    "support_refs": {
+     "reported": 1,
+     "sampled": 1
     },
     "usage_contract_drift": {
      "reported": 1,
@@ -1083,10 +1152,14 @@
    }
   },
   "run-gates": {
-   "failure_total": 5453,
+   "failure_total": 5877,
    "status": "fail",
    "subchecks": {
     "json_syntax": {
+     "reported": 1,
+     "sampled": 1
+    },
+    "lint_contractrefs": {
      "reported": 1,
      "sampled": 1
     },
@@ -1094,19 +1167,23 @@
      "reported": 64,
      "sampled": 50
     },
+    "validate_audit_status_index": {
+     "reported": 2,
+     "sampled": 2
+    },
     "validate_evidence": {
-     "exported": 2653,
-     "reported": 2653,
+     "exported": 2863,
+     "reported": 2863,
      "sampled": 50
     },
     "validate_implementation_readiness": {
-     "exported": 66,
-     "reported": 66,
+     "exported": 67,
+     "reported": 67,
      "sampled": 50
     },
     "validate_plan_graph": {
-     "exported": 2653,
-     "reported": 2653,
+     "exported": 2863,
+     "reported": 2863,
      "sampled": 50
     },
     "validate_usage_contract_drift": {
@@ -1120,11 +1197,11 @@
    }
   }
  },
- "commit": "dd8fbb4bc494c63229d7815bb2a440f9bcf68cd2",
+ "commit": "ba3eb81425136f8ec483863e5036840d3aa292c1",
  "export_buckets": [
   {
    "check": "audit-governance",
-   "count": 2473,
+   "count": 2683,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1321,7 +1398,7 @@
   },
   {
    "check": "audit-governance",
-   "count": 2473,
+   "count": 2683,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1518,7 +1595,7 @@
   },
   {
    "check": "run-gates",
-   "count": 2473,
+   "count": 2683,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1735,7 +1812,7 @@
   },
   {
    "check": "run-gates",
-   "count": 35,
+   "count": 36,
    "error": "event_authority_currentness_source_drift",
    "fingerprints": [
     "006050d34ec8",
@@ -1769,6 +1846,7 @@
     "a40aa02ebc9f",
     "d1cb22ec6bb2",
     "d5be4dc5e9b9",
+    "d94a146403ea",
     "d9e287f261e5",
     "dd3707254603",
     "ebc2af553cac",
@@ -1869,7 +1947,7 @@
   },
   {
    "check": "run-gates",
-   "count": 2473,
+   "count": 2683,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -2086,8 +2164,8 @@
   },
   "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
  },
- "recorded_at_utc": "2026-11-21T04:05:26Z",
- "run_dir": "Plans/.plan_migration/pds-20261121-001-current-planunit-snapshot",
+ "recorded_at_utc": "2026-11-21T09:30:51Z",
+ "run_dir": "Plans/.plan_migration/pds-20261121-002-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
  "untracked_inputs": [
   "tests/agent_packet_restrictions"

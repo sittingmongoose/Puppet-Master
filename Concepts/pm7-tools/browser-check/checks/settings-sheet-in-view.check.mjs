@@ -77,11 +77,14 @@ export default async function(t){
     const pr=await drawer.locator('.pm51-panel').boundingBox();await t.check(`${look} ${nw}x${nh}: notification sheet fits`,!!pr&&pr.x>=0&&pr.y>=0&&pr.x+pr.width<=nw&&pr.y+pr.height<=nh,JSON.stringify(pr));
     const header=drawer.locator('.pm51-panel-head').first(), close=drawer.locator('.pm51-panel-close').first();
     if(pr&&pr.y>=0){
-     // F12E-SB-SHEET-TOAST-COVER: a live notice can sit over the sheet's head or close at 1920, and Jared ruled toasts
-     // may cover controls, so clear them by their own button (helpers/toasts.mjs) before judging 'exposed'. The
+     // F12E-SB-SHEET-TOAST-COVER and its follow-up (the KIT-TOAST2 residual): a live notice can sit over the sheet's
+     // head or close at 1920, and Jared ruled toasts may cover controls, so clear them by their own button
+     // (helpers/toasts.mjs) immediately before EACH 'exposed' assertion, against that assertion's own element — a
+     // second notice can arrive after one assertion has run (the incident: ~0.7 s after the clear, over the close),
+     // which a clear once per sheet leaves sitting there; clearing again before the next assertion removes it. The
      // assertions themselves are unchanged; a toast that will not leave is still reported by them as a cover.
-     await clearToastsOver(t,f,header,`${look} ${nw}`,'the sheet header');await clearToastsOver(t,f,close,`${look} ${nw}`,'the close box');
-     await t.visible(header,`${look} ${nw}: sheet header exposed`);await t.visible(close,`${look} ${nw}: close exposed`);
+     await clearToastsOver(t,f,header,`${look} ${nw}`,'the sheet header');await t.visible(header,`${look} ${nw}: sheet header exposed`);
+     await clearToastsOver(t,f,close,`${look} ${nw}`,'the close box');await t.visible(close,`${look} ${nw}: close exposed`);
      await drawer.locator('.pm51-dd-trigger').first().click();await t.settle();
      const list=f.locator('.pm51-dd-list.is-open').last();await list.waitFor({state:'visible'});
      const lr=await list.boundingBox();await t.check(`${look} ${nw}: quiet destination popup fits`,!!lr&&lr.x>=0&&lr.y>=0&&lr.x+lr.width<=nw&&lr.y+lr.height<=nh,JSON.stringify(lr));

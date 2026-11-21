@@ -15,7 +15,7 @@ file any landing branch touched: stale governance hashes, and a plan-migration s
     python3 scripts/pm-landing-check.py --base origin/main   # at landing, in the shared checkout
     python3 scripts/pm-landing-check.py --record-baseline    # refresh, in a full checkout at main
 
-Both hand the aggregate checks `--subcheck-timeout-seconds`, 600 by default; see "Subchecks that
+Both hand the aggregate checks `--subcheck-timeout-seconds`, 1800 by default; see "Subchecks that
 time out" below.
 
 At landing, also pass `--keep-check-reports <dir>`, a directory under
@@ -370,6 +370,13 @@ recording the baseline, the rule never applies. `renamed_shard_ref` and `RenameC
 the rule; `tests/test_pm_landing_check.py` `RenamedShardStaleness` reproduces the Q5 case against a git base
 and the negatives, P6 and P8 among them.
 
+The working-tree check includes ignored files and rejects skip-worktree or assume-unchanged index
+flags. It also compares the on-disk file's blob ID after Git applies the path's clean filters with the
+blob ID at HEAD (T137). A clean CRLF checkout can keep the rename classification, and a content edit
+that changes the filtered blob still loses it. The ignored-file regression (T195) checks that the
+refusal names the `!!` status entry. With ignored-file reporting disabled, the HEAD-blob check
+still refuses the same file because it has no blob at HEAD.
+
 Deliberately not on the list: the shard and index kinds such as `shard_hash_stale` and
 `stale_generated_index_artifact`, because a branch that edits canon regenerates those and a stale one
 is the branch's to fix; `event_authority_currentness_audit_unavailable`, which says the ignored audit
@@ -497,8 +504,11 @@ each timed-out subcheck on its own and judges what it reports by the rules above
 calls such a run clean. In `--json` the timed-out subchecks are listed under `infrastructure` with
 `elapsed_seconds` and `limit_seconds`, beside the `subcheck_timeout_seconds` the run used.
 
-The landing check hands the aggregates a bound of 600 seconds by default, where it used to hand them
-180. Since 2026-11-04 `pm-plans-verify.py` uses the same 600 seconds when `run-gates` or
+The landing check passes a default limit of 1800 seconds to the aggregates. After the November
+2026 stage 1 re-audit expanded the closure registry, the previous 600-second limit killed
+`validate_audit_closure` and `validate_audit_status_index` in `run-gates`. Baseline recording
+completed on retry with `--subcheck-timeout-seconds 1800` (T271).
+Since 2026-11-04 `pm-plans-verify.py` uses 600 seconds when `run-gates` or
 `audit-governance` runs without `--subcheck-timeout-seconds`, and for the standalone commands that run
 their validator as a subprocess and accept that flag (such as `validate-plan-migration`). Commands
 that run in-process have no such bound, and `validate-bootstrap-ledgers` keeps its own 180-second
@@ -644,7 +654,7 @@ subchecks. The run also ends at a new `current_run.json`, so the next landing ch
 snapshot rather than the one it replaced.
 
 If `--record-baseline` refuses with exit 3 because a subcheck timed out, rerun it with a larger
-`--subcheck-timeout-seconds`, for example `--subcheck-timeout-seconds 1200`, before committing the
+`--subcheck-timeout-seconds` before committing the
 follow-up and releasing the landing lock.
 
 ## Related branch

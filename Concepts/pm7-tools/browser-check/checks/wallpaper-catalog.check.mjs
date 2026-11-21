@@ -28,7 +28,7 @@ export const tests = {
 		const badPrints = prints.filter((p) => !p.size || p.size[0] !== 2560 || p.size[1] !== 1440);
 		await t.check(`every print decodes at 2560x1440 (${prints.length})`, badPrints.length === 0, badPrints.map((p) => `${p.k}: ${p.size ? p.size.join('x') : 'no image'}`).join(', '));
 
-		await t.page.locator('#tab-settings').click({ force: true });
+		await f.locator('#tab-settings').click({ force: true });
 		await t.page.waitForTimeout(100);
 		await f.evaluate(() => window.PM12_KIMI.navigate('general', 'app-input'));
 		await f.waitForFunction((id) => !!document.getElementById(id)?.querySelector('.wpk-gallery'), ROW, { timeout: 20000 });

@@ -64,7 +64,7 @@ def memory_check():
 ONLY_FAMILIES = None  # --family: run the trials over these families only (reported as such)
 
 
-def family_checkers(m):
+def family_checkers(m, *, mutated=False):
     """Execute every full family checker sequentially, with a RAM gate per family."""
     failures, counts, runs = [], {}, []
     for row in m.load('Plans/runtime_artifact_event_drafts.json')['rows']:
@@ -73,8 +73,17 @@ def family_checkers(m):
             continue
         available = memory_check()
         stream = io.StringIO()
-        with contextlib.redirect_stdout(stream):
-            code = int(m.main({family}))
+        try:
+            with contextlib.redirect_stdout(stream):
+                code = int(m.main({family}))
+        except Exception as exc:
+            if not mutated:
+                raise
+            # A trial may fail before producing a checker report. Keep the
+            # exception type separate from asserted family refusal messages.
+            runs.append(dict(family=family, exit_code=1, status='exception',
+                             exception_type=type(exc).__name__, available_ram_GB=available))
+            continue
         report = json.loads(stream.getvalue())
         failures.extend(report['failures'])
         counts[family] = report['per_family'].get(family, 0)
@@ -104,14 +113,16 @@ def run(name, standing, configure=None, source=None, selected=None):
         CANONICAL_CASES = causal_cases(canonical)
     m.guard_cases = lambda boundary, excluded=(): [c for c in CANONICAL_CASES if c[1] not in excluded]
     started = time.monotonic()
-    code, report = family_checkers(m)
+    code, report = family_checkers(m, mutated=True)
+    exceptions = {r['family']: r['exception_type'] for r in report['family_runs']
+                  if r['status'] == 'exception'}
     failed = {f: [x.split(':', 1)[1] for x in report['failures'] if x.startswith(f + ':')] for f in families}
     targets = [f for f in (selected or families) if ONLY_FAMILIES is None or f in ONLY_FAMILIES]
     return dict(case=name, standing_check=standing, exit_code=code, status=report['status'],
                 trial_source_sha256=hashlib.sha256(source.encode()).hexdigest(),
                 cases=report['cases'], elapsed_seconds=round(time.monotonic()-started,3),
-                caught=code == 1 and report['status'] == 'fail' and all(failed[f] for f in targets),
-                per_family_failures=failed)
+                caught=code == 1 and report['status'] == 'fail' and all(failed[f] or f in exceptions for f in targets),
+                per_family_failures=failed, family_run_exceptions=exceptions)
 
 
 def inputs(transform):

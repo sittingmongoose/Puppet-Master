@@ -647,8 +647,16 @@
     el.className = 'psx-wline' + (o.sub ? ' is-sub' : '') + (o.inUse ? ' is-inuse' : '') + (o.muted ? ' is-muted' : '');
     el.setAttribute('role', 'group');
     let vtext = o.valueText != null ? o.valueText : vt(id, o.value);
-    /* Jared 2026-11-13: a model row's inherit says which model it is here ("Same as Everyday model (Claude Opus 4)") */
-    if (PSX.isModel(id) && o.value === 'inherit' && PSX.places) { const iw = PSX.places.inheritWords(id, o.level, o.key); if (iw && iw.model && vtext.indexOf(iw.label) >= 0) vtext = vtext.replace(iw.label, `${iw.label} (${iw.model})`); }
+    /* a model row's inherit names the setting it follows and the model that gives at this line's place (Jared's option
+       A, 2026-11-20: "Same as Everyday model · Claude Opus 4") */
+    if (PSX.isModel(id) && o.value === 'inherit' && PSX.places) {
+      const iw = PSX.places.inheritWords(id, o.level, o.key), said = iw && (iw.model ? `${iw.label} · ${iw.model}` : iw.label);
+      // vt() names the model in the context on show; a line names it at its own place
+      const here = vt(id, 'inherit');
+      if (iw && o.valueText == null) vtext = said;
+      else if (iw && vtext.indexOf(here) >= 0) vtext = vtext.replace(here, said);
+      else if (iw && vtext.indexOf(iw.label) >= 0) vtext = vtext.replace(iw.label, said);
+    }
     el.setAttribute('aria-label', `${o.name}: ${vtext}${def.combine === 'computer_ceiling' && o.level === 'computer' ? ', at most' : ''}`);
     el.setAttribute('data-psx-line', k);
     const states = (o.states || []).map((s) => `<div class="psx-wstate${s.muted ? ' is-muted' : ''}">${s.key ? mark(s.key) : ''}<span>${esc(s.text)}</span></div>`).join('');

@@ -1,0 +1,63 @@
+/* Pip's sound, round two (Fable 5.2). The sound menu: a small sheet hung under the speaker, in each look's own
+   surface, line and type (the same tokens the onboarding window uses), laid out the way PMConcept7's theme picker is.
+   Nothing here moves on its own except the three bars beside the song that is playing (transform only). */
+.psm-menu { position: fixed; z-index: 4000; width: 272px; max-width: calc(100vw - 16px); padding: 8px; display: grid; gap: 2px;
+  background: var(--surface); color: var(--text); border: 1px solid var(--line2); border-radius: var(--r); box-shadow: var(--shadow);
+  font: 500 13px/1.3 var(--font); transform-origin: var(--psm-ox, 88%) 0; animation: psmIn .14s ease-out both; }
+.psm-menu[hidden] { display: none; }
+@keyframes psmIn { from { opacity: 0; transform: translateY(-4px) scale(.97); } }
+body[data-fam="glass"] .psm-menu { background: rgba(10, 14, 28, .82); -webkit-backdrop-filter: blur(18px) saturate(1.3); backdrop-filter: blur(18px) saturate(1.3); border-color: var(--edge, var(--line2)); }
+body[data-theme="glass-light"] .psm-menu { background: rgba(255, 255, 255, .86); }
+body[data-fam="retro"] .psm-menu, body[data-fam="nier"] .psm-menu { border-color: var(--hard, var(--line2)); }
+.psm-menu button { font: inherit; color: inherit; cursor: pointer; }
+
+/* sound on or off: the row of choices on top, as the theme picker's Light / Dark / Auto */
+.psm-seg { display: grid; grid-template-columns: 1.5fr 1fr; gap: 2px; padding: 2px; background: var(--surface2); border-radius: var(--r-sm); }
+.psm-seg button { border: 0; background: transparent; padding: 6px 8px; border-radius: max(0px, calc(var(--r-sm) - 2px)); color: var(--muted); font-weight: 600; }
+.psm-seg button:hover { color: var(--text); }
+.psm-seg button[aria-checked="true"] { background: var(--surface); color: var(--text); box-shadow: 0 0 0 1px var(--line2); }
+.psm-divider { height: 1px; background: var(--line); margin: 6px 2px; }
+
+/* the three levels */
+.psm-slider { display: grid; grid-template-columns: 58px 1fr; align-items: center; gap: 10px; padding: 3px 8px; color: var(--muted); }
+.psm-slider input { -webkit-appearance: none; appearance: none; width: 100%; height: 20px; margin: 0; background: transparent; cursor: pointer; }
+.psm-slider input::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: linear-gradient(to right, var(--accent) var(--psm-fill, 50%), var(--line2) var(--psm-fill, 50%)); }
+.psm-slider input::-moz-range-track { height: 4px; border-radius: 2px; background: var(--line2); }
+.psm-slider input::-moz-range-progress { height: 4px; border-radius: 2px; background: var(--accent); }
+.psm-slider input::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 14px; height: 14px; margin-top: -5px; border-radius: 50%; background: var(--text); border: 2px solid var(--surface); box-shadow: 0 0 0 1px var(--line2); }
+.psm-slider input::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: var(--text); border: 2px solid var(--surface); box-shadow: 0 0 0 1px var(--line2); }
+body[data-fam="retro"] .psm-slider input::-webkit-slider-thumb, body[data-fam="nier"] .psm-slider input::-webkit-slider-thumb { border-radius: 0; }
+.psm-slider input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* the look's four songs, and the jukebox */
+.psm-head { display: flex; justify-content: space-between; padding: 2px 8px 4px; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--faint); }
+.psm-item { display: flex; align-items: center; gap: 8px; width: 100%; border: 0; background: transparent; text-align: left; padding: 7px 8px; border-radius: var(--r-sm); }
+.psm-item:hover { background: var(--surface2); }
+.psm-item:focus-visible, .psm-seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.psm-item[aria-checked="true"] { background: var(--sel, var(--surface2)); }
+.psm-item .psm-name { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.psm-item .psm-meta { flex: none; font-size: 11px; color: var(--faint); }
+.psm-item svg { flex: none; }
+.psm-mark { flex: none; width: 14px; height: 14px; display: inline-grid; place-items: center; color: var(--accent); }
+body[data-fam="nier"] .psm-mark { color: var(--text); }
+.psm-juke[aria-checked="true"] .psm-meta { color: var(--accent); font-weight: 700; }
+.psm-skip { color: var(--muted); }
+.psm-skip[hidden] { display: none; }
+.psm-menu[data-off] .psm-slider, .psm-menu[data-off] [data-psm-songs], .psm-menu[data-off] .psm-head, .psm-menu[data-off] .psm-juke, .psm-menu[data-off] .psm-skip { opacity: .5; }
+
+/* three small bars beside the song that is playing */
+.psm-bars { display: inline-flex; align-items: flex-end; gap: 2px; width: 12px; height: 12px; }
+.psm-bars i { flex: 1; height: 100%; background: currentColor; transform-origin: 50% 100%; transform: scaleY(.45); animation: psmBar .9s ease-in-out infinite alternate; }
+.psm-bars i:nth-child(2) { animation-duration: .7s; animation-delay: -.3s; }
+.psm-bars i:nth-child(3) { animation-duration: 1.1s; animation-delay: -.6s; }
+@keyframes psmBar { from { transform: scaleY(.25); } to { transform: scaleY(1); } }
+@media (prefers-reduced-motion: reduce) { .psm-menu { animation: none; } .psm-bars i { animation: none; transform: scaleY(.7); } }
+body[data-reduced="1"] .psm-menu { animation: none; }
+body[data-reduced="1"] .psm-bars i { animation: none; transform: scaleY(.7); }
+
+/* the speaker in the app's own bar, beside the theme picker (the quiet PMConcept7 shell behind the window) */
+.sh-tools { display: inline-flex; align-items: center; gap: 6px; flex: none; }
+.sh-iconbtn { display: inline-flex; align-items: center; justify-content: center; height: 30px; min-width: 30px; padding: 0 6px; border: 0; background: transparent; border-radius: var(--r-sm); color: var(--muted); }
+.sh-iconbtn:hover, .sh-iconbtn[aria-expanded="true"], .ob-sound[aria-expanded="true"] { background: var(--surface2); color: var(--text); }
+.sh-theme { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border: 1px solid var(--line2); border-radius: 999px; font: 600 12px var(--font); color: var(--muted); background: transparent; }
+body[data-fam="retro"] .sh-theme, body[data-fam="nier"] .sh-theme { border-radius: 0; }

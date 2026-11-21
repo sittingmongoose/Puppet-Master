@@ -3100,6 +3100,8 @@ def spec_consistency():
                           spec['checkpoint_family_id'], spec['cv_unit'], spec['sp_unit'], spec['retention_policy']):
                 if token not in sec:
                     problems.append((f, 'section15', token))
+            if admission_modes[f]['mode'] == 'admitted' and not owner_gate().program_owner_admission_is_current(sec, spec):
+                problems.append((f, 'section15_admission_status'))
         cvt = unit_text(cv, spec['cv_unit'])
         for token in (f, spec['payload_schema_id'], 'evt_browser_', 'browser@1:', 'dedupe_by_idempotency_key',
                       'projector_replay_only', 'payload_inline_limit'):

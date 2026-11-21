@@ -3895,9 +3895,9 @@ that would reach an outside computer or service says so and, in the concept, is 
   starts with for host continuation, interruption handling and what it may change, plus GRS-050 evidence; Goal templates and checking
   policies are retired by DL-478. Saved notes have only This project and Every project levels, and private thread records stay internal; one chat's own
   actions, such as Squeeze now, live in that chat's menu.
-- A persona's tuning rows (Creativity, Word choice range, Spending cap) read Same as the project until the persona
-  sets its own value, which is then set with a slider or amount that can go back to the project's; a persona-only row
-  drawn outside its persona is a way to the personas (section 8), reading Set in each persona.
+- Creativity and Word choice range show the current value they follow and where it comes from, such as Model default · from Randomness or Model default · from Word-choice focus.
+  Each lets the persona set its own value with a slider or follow the source again. Spending cap reads No cap until a cap is set and can return to No cap.
+  A persona-only row drawn outside its persona is a way to the personas (section 8), reading Set in each persona.
 - The Git and SSH rows these set-ups write are admitted to `Plans/settings_inventory.json` (user-approved inventory
   wave 2026-09-28, 913 rows): `branching.worktrees.git-author-name`, `git-author-email`, `git-push-method` and
   `git-push-key` (set per code service), `commit-signing`, `commit-signing-key`, `large-file-storage`,
@@ -4139,7 +4139,7 @@ source_lineage:
 - "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "Make a copy"
-  - "Same as the project"
+  - "Model default · from Randomness"
   - "One chat"
 negative_constraints:
   - Do not start, pause, stop or list live Goals or chats from Settings.

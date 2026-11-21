@@ -677,10 +677,15 @@ class BrowserProgramBindingTests(unittest.TestCase):
             path.write_text(text, encoding="utf-8")
         tokens = " ".join(str(spec[k]) for k in ("producer_component", "publication_operation", "consumer_id",
                                                   "checkpoint_family_id", "cv_unit", "sp_unit", "retention_policy"))
+        membership = (
+            f"{spec['event_type']}@{spec['family_revision']} is individually registered in Plans/event_family_registry.json. "
+            "Missing-registration refusal applies only if the exact current family/version/scope registration is absent; "
+            "all other append checks still apply."
+        )
         put("reports/event-authority-20261114/S4B-contracts.json", json.dumps({"families": [spec]}))
         put("Plans/browser_event_admission.json", json.dumps(admission or {"rows": [{"event_type": self.EVENT}]}))
         put("Plans/Section15_MVP_Promoted_Features_Spec.md", s15 if s15 is not None else
-            '<a id="' + spec["semantic_anchor"] + '"></a>\n' + tokens + '\n<a id="other"></a>\nnothing')
+            '<a id="' + spec["semantic_anchor"] + '"></a>\n' + tokens + '\n' + membership + '\n<a id="other"></a>\nnothing')
         put("Plans/Contracts_V0.md", cv if cv is not None else
             "### CV-2500 - x\n" + " ".join([self.EVENT, spec["payload_schema_id"], "evt_browser_", "browser@1:",
                                             "dedupe_by_idempotency_key", "projector_replay_only", "payload_inline_limit"]) + "\n### CV-2501 - y\n")
@@ -763,6 +768,41 @@ class Merge2Fix1BrowserTests(unittest.TestCase):
         result = GATE.validate()
         self.assertEqual(result["failures"], [])
         self.assertEqual(result["status"], "pass")
+
+    def test_all_s4b_admitted_owners_refuse_historical_preparation_claim(self):
+        import pm_s4b_browser_events as s4b
+
+        path = ROOT / "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        current = path.read_text(encoding="utf-8")
+        old_clause = (
+            "Prepared without admission: its row in `Plans/browser_event_admission.json` stays "
+            "`prepared_not_admitted`, the family is absent from `Plans/event_family_registry.json`, "
+            "an append returns `missing_event_registration`, and no checkpoint advances."
+        )
+        self.assertEqual(len(s4b.FAMILIES), 51)
+        self.assertEqual(s4b.spec_consistency(), [])
+        historical = current
+        for family, spec in s4b.FAM.items():
+            with self.subTest(family=family):
+                row = ROWS[family]
+                self.assertEqual(row["admission_status"], "admitted_static_contract")
+                self.assertEqual(GATE.browser_program_binding_failures(row), [])
+                section = GATE._anchor_section(current, spec["semantic_anchor"])
+                original = next(line for line in section.splitlines() if "Preparation outcome" in line)
+                historical = historical.replace(original, original.split("Preparation outcome")[0] + old_clause, 1)
+
+        read_text = Path.read_text
+
+        def historical_owner(target, *args, **kwargs):
+            return historical if target == path else read_text(target, *args, **kwargs)
+
+        with patch.object(Path, "read_text", historical_owner):
+            for family in s4b.FAMILIES:
+                with self.subTest(family=family):
+                    self.assertEqual(GATE.browser_program_binding_failures(ROWS[family]),
+                                     ["browser_program_section15_text"])
+            self.assertEqual(set(s4b.spec_consistency()),
+                             {(family, "section15_admission_status") for family in s4b.FAMILIES})
 
     def test_storage_reference_shape_and_cross_family_refusals(self):
         schema = GATE.load_json("Plans/browser_event_admission.schema.json")

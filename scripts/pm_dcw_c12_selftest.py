@@ -6,15 +6,19 @@ credit it. A tool that credited any of these would make a real check falsely
 pass. Exit 0 only when every test refuses as expected.
 """
 import copy
+import io
 import json
 import sys
+from contextlib import redirect_stdout
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 import pm_dcw_c12 as c12
 import pm_dcw_c12_boundary as boundary
 import pm_dcw_c12_implications as implications
+import pm_dcw_c12_matrix as matrix
 import pm_dcw_c12_retained as retained
 import pm_dcw_event_oracles as m
 import pm_dcw_guard_rows as rows
@@ -170,6 +174,56 @@ def _():
     finally:
         restore()
     assert outcome == ('original_authority', 'N001') and before == after, outcome
+
+
+def shared_credit_case(donors, target_digest):
+    def coverage(family, digest):
+        clause = dict(source='schema.json', schema_pointer='/properties/value', keyword='type')
+        if family == 'target':
+            clause.update(status='unwitnessed')
+        else:
+            clause.update(status='witnessed', witnesses=[family + '/witness'])
+        return [dict(schema='schema.json', definition=None, historical=False, schema_sha256=digest,
+                     controls=[], credited=0, invalid=0, mirror_parity_checks=0, clauses=[clause])]
+
+    inputs = {family: coverage(family, digest) for family, digest in donors.items()}
+    inputs['target'] = coverage('target', target_digest)
+    inputs.update({
+        'guard-results.json': {'rows': []},
+        'boundary-summary.json': {},
+        'implications.json': {'status': 'pass'},
+        'entailments.json': {'rows': [], 'status': 'pass'},
+        'retained-store.json': [],
+        'retained-summary.json': {'status': 'pass'},
+        'datetime-inventory.json': [],
+        'datetime-summary.json': {'status': 'pass'},
+        'number-lane.json': {'results': [], 'status': 'pass'},
+    })
+    argv = ['pm_dcw_c12_matrix.py', '--evidence', 'input', '--out', 'matrix.json']
+    with (patch('sys.argv', argv), patch.object(matrix.c12, 'FAMILIES', list(donors) + ['target']),
+          patch.object(matrix, 'load', side_effect=lambda path: inputs[Path(path).name]),
+          patch.object(matrix, 'coverage_file', side_effect=lambda _, family: Path(family)),
+          patch.object(matrix, 'supplement', return_value={}), patch.object(matrix, 'reached_rows', return_value={}),
+          patch.object(Path, 'rglob', return_value=[]), patch.object(Path, 'write_text') as save,
+          redirect_stdout(io.StringIO())):
+        try:
+            matrix.main()
+        except SystemExit as exc:
+            code = exc.code
+    report = json.loads(save.call_args.args[0])
+    return code, report['families'][-1]['schema_sites'][0]['clauses'][0]
+
+
+@test('schema: an unequal shared witness schema digest is refused')
+def _():
+    code, clause = shared_credit_case({'donor': 'a' * 64}, 'b' * 64)
+    assert code == 1 and clause['status'] == 'unwitnessed', (code, clause)
+
+
+@test('schema: the matched shared witness is used even when a different digest was indexed first')
+def _():
+    code, clause = shared_credit_case({'first': 'a' * 64, 'matched': 'b' * 64}, 'b' * 64)
+    assert code == 0 and clause.get('shared_family') == 'matched', (code, clause)
 
 
 def main():

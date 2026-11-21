@@ -1925,6 +1925,22 @@
  },
  "mutations": [
   {
+   "id": "review-M02-comma-fraction-separator",
+   "module": "pm_event_datetime",
+   "find": "(?:\\.([0-9]+))?",
+   "replace": "(?:[.,]([0-9]+))?",
+   "witness": "check:datetime_eventrecord_comma_fraction_refused",
+   "rule": "predicate.whole-string"
+  },
+  {
+   "id": "review-B03-omit-century",
+   "module": "pm_event_datetime",
+   "find": " + previous // 4 - previous // 100 + previous // 400",
+   "replace": " + previous // 4 + previous // 400",
+   "survives": "The year-dependent ordinal shift cancels for each frozen insertion and every local date close enough to map to it. A check of every four-digit year's ordinal boundaries and the three one-day-neighborhood dates of each of the 27 insertions found identical relative candidate dates. The signed offset is less than one day. Other seconds bypass this arithmetic.",
+   "rule": "predicate.leap-second-instant"
+  },
+  {
    "id": "hw-predicate-prefix-match",
    "module": "pm_event_datetime",
    "find": "match = _DATE_TIME.fullmatch(value)",
@@ -2822,6 +2838,14 @@
    "rule": "composition.storage-utc-z"
   },
   {
+   "id": "review-B16-storage-terminal-z-anchor",
+   "module": "pm_event_datetime",
+   "find": "\"pattern\": r\"Z(?![\\s\\S])\"",
+   "replace": "\"pattern\": r\"Z\"",
+   "witness": "check:datetime_nested_preloaded_terminal_z_diagnostics",
+   "rule": "composition.storage-utc-z"
+  },
+  {
    "id": "hw-fix17-composition-pattern-dropped",
    "module": "pm_event_datetime",
    "find": "\"format\": \"date-time\",\n                                                              \"pattern\": r\"Z(?![\\s\\S])\"},",
@@ -3111,6 +3135,7 @@
    "mutations": [
     "site:datetime:date_time:date_time_syntax#1",
     "hw-predicate-prefix-match",
+    "review-M02-comma-fraction-separator",
     "hw-tb4-unicode-digit-year",
     "hw-tb4-unicode-digit-month",
     "hw-tb4-unicode-digit-day",
@@ -3485,6 +3510,7 @@
     "hw-fix17-B08-composition-type-dropped",
     "hw-fix17-composition-format-dropped",
     "hw-fix17-composition-pattern-dropped",
+    "review-B16-storage-terminal-z-anchor",
     "hw-fix17-composition-descend-dropped"
    ]
   },

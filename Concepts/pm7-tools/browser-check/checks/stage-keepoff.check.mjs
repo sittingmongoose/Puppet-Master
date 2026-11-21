@@ -17,7 +17,9 @@
 //    box (the pane, cut by its clipping parents) when a choice on Away from home is made (the globe hangs at the pane's
 //    right edge; AST4's key ring was cut there).
 // Geometry from the page, not pixels: films cover the motion claims (lane report). Every case also fails if it sampled
-// no frames, or never saw what it is about (a leaving prop, a block, a ring). Both surfaces unless --set sandbox picks one.
+// no frames, or never saw what it is about (a leaving prop, a block, a ring); a case whose sampler saw no leaving prop
+// reruns its whole sequence up to twice more before failing as 'could not judge' (a slow GPU can drop every leaving
+// frame; TOOL-ISSUES F13-NAS1-KEEPOFF-SAMPLES), and an overlap fails at once. Both surfaces unless --set sandbox picks one.
 // --set only=nier|leave|begin|ring runs one group. About 6 minutes per surface.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/stage-keepoff.check.mjs --set page=<build>
 
@@ -105,24 +107,44 @@ async function nameIt(t, f) {
 // Safe's online copy, set below, left the next case's Review unable to create)
 const result = async (t, f) => { const S = await f.evaluate(() => { const S = window.__sk; window.__sk = null; return S; }); await t.app.resetLayout(t); return S; };
 
+// judges one of this file's keep-off assertions, each of which needs the sampler to have seen a leaving prop.
+// A slow GPU can drop every frame of the leaving phase (TOOL-ISSUES F13-NAS1-KEEPOFF-SAMPLES: Nas1 head runs with
+// 0 leaving samples and 0 overlaps), and such an attempt judged nothing: it must not pass, but before it fails the
+// whole sequence reruns from its start, at most twice more, and the attempt that saw a leaving prop is judged. An
+// overlap (S.hits) from any attempt fails the assertion at once; thresholds and the overlap rule are unchanged, and
+// after three attempts with no leaving sample the assertion fails as unjudged rather than as a product defect.
+async function keepoff(t, run, tag, what, fail0 = () => '') {
+	let ok = true, S = null; const frames = [];
+	for (let a = 0; a < 3; a++) {
+		({ ok = true, S } = await run());
+		if (!ok || S.hits.length || S.frames <= 200 || S.leaving > 0) break;
+		frames.push(S.frames);
+	}
+	const title = `${tag}: ${what}`;
+	return frames.length === 3
+		? t.check(title, false, `could not judge: no leaving sample in 3 attempts (${frames.join(', ')} frames each)`)
+		: t.check(title, ok && S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${fail0(ok)}${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps: ${S.hits.slice(0, 3).join(' ; ')}`);
+}
+
 async function nier(t, mode) {
 	for (const look of ['nier-light', 'nier-dark']) {
 		const tag = `${look} 740x768 ${mode}`;
-		let f = await openAt(t, mode, look, [740, 768], 'safe');
-		await point(t, f, mode, 'online', null, false);            // Add one hovered: the cloud's preview comes in
-		await t.page.mouse.move(4, 4, { steps: 3 }); await f.waitForTimeout(2000);
-		await point(t, f, mode, 'online');                        // pressed: Safe's vault leaves, the service's mark comes in
-		await point(t, f, mode, 'back');                          // and back
-		// Safe with an online copy chosen (state: the draft's online copy, as the service screen's Continue leaves it)
-		await f.evaluate(() => { const d = window.O55.S.sess.drafts.main; d.online_mode = 'new'; d.forge = 'github'; window.O55.ui.go('safe', { noHistory: true }); });
-		await f.waitForTimeout(3500);
-		let S = await result(t, f);
-		await t.check(`${tag}: Safe's Add one, Back and the settled cloud: no prop under the box or the PIP tab`, S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps: ${S.hits.slice(0, 3).join(' ; ')}`);
-		f = await openAt(t, mode, look, [740, 768], 'name');
+		await keepoff(t, async () => {
+			const f = await openAt(t, mode, look, [740, 768], 'safe');
+			await point(t, f, mode, 'online', null, false);        // Add one hovered: the cloud's preview comes in
+			await t.page.mouse.move(4, 4, { steps: 3 }); await f.waitForTimeout(2000);
+			await point(t, f, mode, 'online');                    // pressed: Safe's vault leaves, the service's mark comes in
+			await point(t, f, mode, 'back');                      // and back
+			// Safe with an online copy chosen (state: the draft's online copy, as the service screen's Continue leaves it)
+			await f.evaluate(() => { const d = window.O55.S.sess.drafts.main; d.online_mode = 'new'; d.forge = 'github'; window.O55.ui.go('safe', { noHistory: true }); });
+			await f.waitForTimeout(3500);
+			return { S: await result(t, f) };
+		}, tag, `Safe's Add one, Back and the settled cloud: no prop under the box or the PIP tab`);
+		let f = await openAt(t, mode, look, [740, 768], 'name');
 		await nameIt(t, f);
 		const reached = (await next(t, f, 'review')) && (await next(t, f, 'creating'));
 		await f.waitForTimeout(8000);
-		S = await result(t, f);
+		let S = await result(t, f);
 		await t.check(`${tag}: Creating lowers its blocks clear of the box and the PIP tab`, reached && S.blocks > 0 && S.hits.length === 0, `${reached ? 'creating' : 'did not reach Creating'}, ${S.frames} frames, ${S.blocks} block samples, ${S.hits.length} overlaps: ${S.hits.slice(0, 3).join(' ; ')}`);
 		// Creating with four blocks: an online copy, signed in by the concept's stand-in owner (no real account), the whole
 		// route sampled, then the settled stack measured (the onb lane's carried 'box over the top block by 5-7 px')
@@ -149,25 +171,27 @@ async function nier(t, mode) {
 async function leave(t, mode) {
 	for (const look of t.args.leaveLooks ? String(t.args.leaveLooks).split(',') : ['glass-dark', 'basic-light', 'friendly-light', 'retro-light', 'retro-dark']) for (const size of [[1920, 1080], [1390, 900], [860, 768], [740, 768]]) {
 		const tag = `${look} ${size.join('x')} ${mode}`;
-		const f = await openAt(t, mode, look, size, 'name');
-		await nameIt(t, f);
-		const ok = await next(t, f, 'safe');
-		await point(t, f, mode, 'online'); await point(t, f, mode, 'back');
-		await next(t, f, 'review'); await f.waitForTimeout(1500);
-		const S = await result(t, f);
-		await t.check(`${tag}: Name > Safe > Add one > Back > Review: no prop under the bubble`, ok && S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${ok ? '' : 'did not reach Safe; '}${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps: ${S.hits.slice(0, 3).join(' ; ')}`);
+		await keepoff(t, async () => {
+			const f = await openAt(t, mode, look, size, 'name');
+			await nameIt(t, f);
+			const ok = await next(t, f, 'safe');
+			await point(t, f, mode, 'online'); await point(t, f, mode, 'back');
+			await next(t, f, 'review'); await f.waitForTimeout(1500);
+			return { ok, S: await result(t, f) };
+		}, tag, 'Name > Safe > Add one > Back > Review: no prop under the bubble', (ok) => ok ? '' : 'did not reach Safe; ');
 	}
 }
 
 async function begin(t, mode) {
 	for (const look of ['glass-dark', 'basic-light']) for (const size of [[1920, 1080], [1390, 900]]) {
 		const tag = `${look} ${size.join('x')} ${mode}`;
-		const f = await openAt(t, mode, look, size, 'begin');
-		await point(t, f, mode, 'pick', 'existing'); await point(t, f, mode, 'sub', 'folder');
-		await point(t, f, mode, 'pick', 'new'); await point(t, f, mode, 'pick', 'existing'); await point(t, f, mode, 'pick', 'new');
-		await t.page.mouse.move(4, 4, { steps: 3 }); await f.waitForTimeout(1500);
-		const S = await result(t, f);
-		await t.check(`${tag}: Begins as, folder <> New: no prop under the bubble`, S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps: ${S.hits.slice(0, 3).join(' ; ')}`);
+		await keepoff(t, async () => {
+			const f = await openAt(t, mode, look, size, 'begin');
+			await point(t, f, mode, 'pick', 'existing'); await point(t, f, mode, 'sub', 'folder');
+			await point(t, f, mode, 'pick', 'new'); await point(t, f, mode, 'pick', 'existing'); await point(t, f, mode, 'pick', 'new');
+			await t.page.mouse.move(4, 4, { steps: 3 }); await f.waitForTimeout(1500);
+			return { S: await result(t, f) };
+		}, tag, 'Begins as, folder <> New: no prop under the bubble');
 	}
 }
 

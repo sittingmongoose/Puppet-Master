@@ -694,6 +694,26 @@ def _real_envelope(context):
             validator.is_valid({"event": dict(event, occurred_at_utc="2026-01-01t00:00:00+05:30")}))
 
 
+
+@check("datetime_eventrecord_comma_fraction_refused")
+def _eventrecord_comma_fraction(context):
+    """Only the decimal point separates fractional seconds, including in a full EventRecord."""
+    dt, _, _, m = _mods()
+    path = "Plans/event_record.schema.json"
+    schema = json.loads((context.root / path).read_text())
+    event = json.loads((context.root / "Plans/seglog_frame_v2_wire_fixtures.json").read_text())["base_event"]
+    validator = _bound(schema, selection=_selection([(schema, {"": context.row(path, "")})]))
+    field = "occurred_at_utc"
+    good = "2024-04-30T12:00:00.5Z"
+    bad = "2024-04-30T12:00:00,5Z"
+    errors = _refused_at(validator, dict(event, **{field: bad}), field)
+    return (validator.is_valid(dict(event, **{field: good})) and
+            outcome(dt.date_time, good) == ("accept", good) and
+            outcome(dt.date_time, bad) == ("refuse", "date_time_syntax") and
+            errors is not None and any(e.validator == "format" and isinstance(e.cause, m.Refusal)
+                                       and e.cause.reason == "date_time_syntax" for e in errors))
+
+
 def _eventrecord_host_string(field, kind):
     """Sol max gate finding 1 (REAL): datetime_validator over the complete committed EventRecord schema refuses a host
     string-like value (HOST_STRINGS[kind]) at field, the malformed text and base_event's own valid text alike: every
@@ -3241,7 +3261,7 @@ def _detect_listed_survivor(context):
     """Fix round 17: a hand-written declared survivor (V04) names its rule and is listed by none; listing it, or a
     generated declared survivor, is a problem, and so is a witnessed hand-written mutation its rule omits."""
     spec = _gate_bar().load_spec(context.root)
-    survivor = next(m for m in spec["mutations"] if m.get("survives"))
+    survivor = next(m for m in spec["mutations"] if m["id"] == "hw-fix17-V04-automatic-empty-context-only")
     generated = next(k for k, e in spec["generated"]["points"].items() if e.get("survives"))
 
     def list_hand(spec):
@@ -3255,7 +3275,7 @@ def _detect_listed_survivor(context):
         rule["mutations"].remove("hw-fix17-B05-legacy-six-digit-fraction")
 
     quiet = not [p for p in _fresh_problems(context, lambda spec: None) if "survivor" in p]
-    return (quiet and survivor["id"] == "hw-fix17-V04-automatic-empty-context-only" and
+    return (quiet and survivor.get("survives") and
             any(p.endswith("lists the declared survivor %s; declared survivors are never listed" % survivor["id"])
                 for p in _fresh_problems(context, list_hand)) and
             any(("lists the declared survivor %s;" % generated) in p for p in _fresh_problems(context, list_generated)) and
@@ -3639,6 +3659,17 @@ def _composed_alone_check(keyword, hook):
                     return False
         return True
     return run
+
+
+@check("datetime_unit_composition_terminal_z_diagnostics")
+def _composed_terminal_z(context):
+    """The composed pattern and format both diagnose a suffix after Z."""
+    _, validator, _ = _untyped_validators()
+    bad = dict(COMPOSED_GOOD, observed_at_utc="Zbogus")
+    errors = {(e.validator, tuple(e.absolute_path)) for e in validator.iter_errors(bad)}
+    return validator.is_valid(COMPOSED_GOOD) and errors == {
+        ("format", ("observed_at_utc",)), ("pattern", ("observed_at_utc",)),
+    }
 
 
 for _keyword in COMPOSED_ALONE:
@@ -5134,6 +5165,27 @@ def _selected_dch_recipes(context):
                 return False
         return (observed == fixture["recipes"] and observed["raw-v1"] == observed["normalized-v2"] and
                 observed["raw-v1"] != observed["strict-v3"])
+
+
+@check("datetime_nested_preloaded_terminal_z_diagnostics")
+def _nested_terminal_z(context):
+    """Require the terminal-Z diagnostic on preloaded current and retained EventRecords."""
+    with _nested_fixture(context) as (local, rows, _, _):
+        _, current, current_event = _committed_eventrecord(context)
+        _, inv, _, _ = _mods()
+        pointer = "/recipes/strict-v3" + NESTED_SUFFIX
+        row = next(r for r in rows if r["pointer"] == pointer)
+        objects, controls, _ = _node_controls(local)
+        retained = _node_validator(local, row)
+        retained_event = objects[controls[inv.node_key(row)]]["value"]
+        for validator, event in ((current, current_event), (retained, retained_event)):
+            if not validator.is_valid(event):
+                return False
+            bad = dict(event, observed_at_utc="2026-01-01T00:00:00Zx")
+            errors = _refused_at(validator, bad, "observed_at_utc")
+            if errors is None or {e.validator for e in errors} != {"format", "pattern"}:
+                return False
+    return True
 
 
 @check("datetime_nested_scanner_selection_binding_agree")

@@ -137,6 +137,9 @@
        commit +213 ms, title +456 ms on the P1000, F5 editor lane). Without it (an exit, a page's crossfade, a slide that
        starts visible) the moves still wait for the second, so the raster after a long frame does not eat their start. */
     const atCommit = !!(o && o.start === 'commit');
+    // A move over an existing surface can opt to hold its start until two on-time frames.
+    const startHeld = !!(o && o.startHeld);
+    const maxGap = startHeld ? 25 : 40, maxLate = startHeld ? 12 : 40;
     const list = () => { try { return (typeof anims === 'function' ? anims() : anims) || []; } catch (_) { return []; } };
     /* a held move is marked (__pmHeld) while it is held, so PM7_MOTION_FINISH (tools/motion_finish.js) waits for it as
        a move still to come: counted only when running, a hold longer than its deadline (about the move's length plus
@@ -156,7 +159,8 @@
        nothing, so a move begun on the first frame back was still shown in two or three steps (the onboarding window's
        exit at Enter, round 3). The frames themselves stop while that raster runs, so the second on-time frame comes
        after it. */
-    let last = document.timeline.currentTime, n = 0, onTime = 0, long = false;
+    let last = document.timeline.currentTime, n = 0, onTime = 0, long = startHeld;
+    if (startHeld) hold();
     const tick = () => {
       const now = document.timeline.currentTime;
       if (now == null) { release(); return; }
@@ -167,7 +171,7 @@
          frame's time, was over by its first draw */
       const gap = last == null ? Infinity : now - last, late = performance.now() - now;
       last = now;
-      if (gap <= 40 && late <= 40) { onTime++; if (!keep && (!long || onTime >= 2 || atCommit)) { release(); return; } }
+      if (gap <= maxGap && late <= maxLate) { onTime++; if (!keep && (!long || onTime >= 2 || atCommit)) { release(); return; } }
       else { long = true; onTime = 0; }
       if (++n >= max && !keep) { release(); return; }
       hold();

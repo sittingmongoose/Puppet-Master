@@ -337,6 +337,30 @@ class RenamedShardStaleness(unittest.TestCase):
 
     # T63 (REVIEW-etools-tb3-opus findings 7 and 8): the branch left the evidence file alone, in its commits read raw
     # and in the working tree, and the file is no symbolic link
+    def test_clean_crlf_evidence_keeps_the_rename_excuse(self):
+        evidence = self.root / self.EVIDENCE
+        self._git("config", "core.autocrlf", "true")
+        evidence.unlink()
+        self._git("checkout-index", "--index", "--", self.EVIDENCE)
+        self.assertEqual(evidence.read_bytes(), b"{}\r\n")
+        self.assertEqual(self._git("status", "--porcelain", "--", self.EVIDENCE).stdout, b"")
+        self.assertTrue(self.stale(self.ref(self.OLD)), self.context.why)
+        self.assertNotIn(self.EVIDENCE, self.context.why)
+
+    def test_filtered_blob_check_rejects_content_edits_even_when_status_is_clean(self):
+        self._git("config", "core.autocrlf", "true")
+        (self.root / self.EVIDENCE).write_bytes(b'{"edited": true}\r\n')
+        real_git = self.context._git
+
+        def hide_status(*args):
+            if args[0] == "status":
+                return subprocess.CompletedProcess(args, 0, stdout=b"")
+            return real_git(*args)
+
+        with patch.object(self.context, "_git", side_effect=hide_status):
+            self.assertFalse(self.stale(self.ref(self.OLD)))
+        self.assertEqual(self.context.why[self.EVIDENCE], "evidence differs from HEAD on disk")
+
     def test_an_uncommitted_edit_of_the_evidence_keeps_its_class(self):
         (self.root / self.EVIDENCE).write_text('{"edited": true}\n')
         self.assertFalse(self.stale(self.ref(self.OLD)))
@@ -403,6 +427,7 @@ class RenamedShardStaleness(unittest.TestCase):
         context = M.RenameContext(self.root, "base", [self.NEW, self.NEW_SCHEMA])
         self.assertFalse(self.stale(self.ref(self.OLD, source=fresh), context))
         self.assertIn(fresh, context.why)
+        self.assertRegex(context.why[fresh], r"^evidence has working-tree changes: !! ")
 
     def test_an_excluded_untracked_evidence_file_keeps_its_class(self):
         (self.root / ".git/info").mkdir(parents=True, exist_ok=True)
@@ -1941,11 +1966,15 @@ class RuleThreeTimeouts(LandingRun):
     a blocker. Measured case: lint-contractrefs takes about 199 s in the shared checkout on the
     network mount and finds nothing when run alone; the old 180 s bound killed it."""
 
-    def test_the_default_bound_is_600_seconds_above_the_measured_199(self):
+    def test_the_default_bound_matches_the_successful_1800_second_baseline_retry(self):
         self.stub(gates={"verify_spec_lock": [STALE_HASH]})
         self.record()
-        self.assertEqual(self.timeouts, [600, 600, 600])
+        self.assertEqual(self.timeouts, [1800, 1800, 1800])
         self.assertLess(199, self.module.DEFAULT_SUBCHECK_TIMEOUT_SECONDS)
+        self.touch("Plans/Touched.md")
+        _, out = self.compare("--json")
+        self.assertEqual(self.timeouts[3:], [1800, 1800, 1800])
+        self.assertEqual(json.loads(out)["subcheck_timeout_seconds"], 1800)
 
     def test_lint_contractrefs_killed_at_its_bound_is_reported_on_its_own_line(self):
         self.stub(gates={"verify_spec_lock": [STALE_HASH]})
@@ -2226,14 +2255,14 @@ class TimeoutsLiftExitZero(LandingRun):
         return self.compare()
 
     def test_a_timeout_alone_exits_one_because_the_run_was_not_fully_verified(self):
-        code, out = self.run_with(("lint_path_refs", [timeout_row("lint-path-refs", 600)]))
+        code, out = self.run_with(("lint_path_refs", [timeout_row("lint-path-refs", 1800)]))
         self.assertEqual(code, 1, out)
         self.assertIn("not fully verified and exits 1, not 0", out)
         # The timeout line names the subcheck, how long it ran and the limit.
         self.assertIn("[infrastructure] run-gates/lint_path_refs  subprocess_timeout (lint-path-refs)  "
-                      "killed after 600 s, at its limit of 600 s", out)
-        self.assertIn("1 subcheck did not finish within 600 s, the limit (run-gates/lint_path_refs killed after "
-                      "600 s)", out)
+                      "killed after 1800 s, at its limit of 1800 s", out)
+        self.assertIn("1 subcheck did not finish within 1800 s, the limit (run-gates/lint_path_refs killed after "
+                      "1800 s)", out)
         self.assertIn("it cannot exit 0", out)
 
     def test_a_complete_run_with_nothing_to_report_still_exits_zero(self):
@@ -2611,7 +2640,7 @@ class ExportKeyedSubchecks(LandingRun):
         self.assertIn("[blocking    ] run-gates/validate_plan_graph  missing_ref  Plans/storage-plan.md", out)
 
     def test_an_export_that_times_out_or_cannot_be_read_falls_back_and_says_so(self):
-        for export, reason in (("timeout", "did not finish within 600 s"),
+        for export, reason in (("timeout", "did not finish within 1800 s"),
                                ("unreadable", "could not be read: its report is not JSON (stand-in)")):
             with self.subTest(export=export):
                 self.setUp()
@@ -2713,7 +2742,7 @@ class ExportKeyedSubchecks(LandingRun):
         self.exports[self.PRD] = "timeout"
         code, out = self.compare()
         self.assertEqual(code, 1, out)
-        self.assertIn("did not finish within 600 s; the truncated rule applies", out)
+        self.assertIn("did not finish within 1800 s; the truncated rule applies", out)
         self.assertIn("[pre-existing] run-gates/validate_prd_planning_runtime_contracts  unresolved_local_ref  "
                       "Plans/home_layout_event_contracts.schema.json  50 -> 50", out)
         self.assertNotIn("[improved", out)

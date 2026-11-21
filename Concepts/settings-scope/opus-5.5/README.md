@@ -390,6 +390,46 @@ home read (§3.3, §4.2, PS-026, PS-145), a deletion on the remote (PS-146), and
 stays held (PS-144). Nothing YOLO runs without asking becomes an Always rule (PS-144 "YOLO ordinary auto-allow creates
 neither an Always rule nor a FileSafe approved-command entry").
 
+## Jared's review fixes (2026-11-20): the layer on stream F's new base
+
+Jared looked at the 2026-11-14 build again (`BRIEF-jared-1120-fixes.md` in the share folder). Stream F's FO-182 to
+FO-186 (model rows, centred tabs, scroll highlight, the nickname list) fixed his items on PMConcept7, and the same F
+checks failed only on the page with this layer. `JARED-1120-FIX-REPORT.md` there has the runs. The layer's part:
+
+- **The nickname list could not be used.** `world.js` `holds()` read the setting's control word, still the old text
+  box's, so it judged that the page couldn't hold the map and drew "No nicknames yet · Change" in place of F's list (its
+  Add line was `display: none`). `holds()` now knows the rows whose control the page draws itself (`OWN_MAPS`: Model
+  nicknames, while `PM51.modelNicknames` is there), and F's list is used.
+- **A model's thinking depth was lost through a project reload.** The page keeps the depth beside the value, in its own
+  state, and the engine reloads a project from the copy the layer writes at each feed. When only the depth changed, the
+  value didn't move, the layer didn't feed, and a reload restored the old copy. `feed.js` `guardReload` refreshes the
+  copy from the engine's live state before any reload of the project on show; the rows and page state the layer
+  doesn't model survive a reload the same way.
+- **Everyday building listed "GPT-5 · Not in the list now" first.** The demo gave tastebook `openai/gpt-5`, which is not
+  a model this page lists, and F's picker puts an unlisted value first. tastebook's own Everyday building is now
+  `openai-codex/gpt-codex` (Codex coding model; tastebook uses the Codex account), so the inherit choice comes first.
+- **At 740x900 the model controls ran past the window.** The header kept clear of the page's actions by their box's
+  width; in a Settings under 720px the base page makes that box the toolbar's whole width, so the header's padding
+  became 745px, all of Settings grew to 785px in a 673px place, and the header's words were squeezed to nothing. The
+  padding is measured from the buttons shown, and beside the header the actions keep only their buttons' width.
+- **How a model field that follows another reads (Jared's option A).** "Same as Everyday model · Claude Opus 4": the
+  per-place editor's inherit choice names the model under it (no "… here"), a Where it applies line reads the same at its
+  own place (it was "Same as Everyday model (Claude Opus 4)"), and so do the layer's notes and lines (`world.js` `vt`).
+  The layer never says "Same as the project"; Personas (stream F's base) is changed on its own branch.
+- **Abilities' highlight (Jared's screenshot).** On the layered page the index lists the Abilities and Pictures & files
+  tabs; "For the whole project" is no index entry on today's base, and Abilities is lit through the whole tab.
+
+- **Model nicknames' default.** The page's setting still has the old box's `""` as its default, and the layer resolves
+  the map to `{}`, so a fresh page marked the row Changed and removing the last line kept `""` Everywhere. The row's
+  default is the inventory's `{}` whenever the page's own isn't a map (`feed.js` adopt), and the page going back to its
+  own default takes the place's own value away (`feed.js` diff).
+
+Checks: `tools/checks/jared1120.check.mjs` (`--grep J1120-<n>`), one test per item above. J1120-1 to J1120-5 fail on the
+layer at 3af916f4b6 and pass now; J1120-6 walks Abilities by wheel steps under F's settings-index-spy rule and runs on
+plain PMConcept7 too. `feedback.check.mjs --set only=jared1113 --set j1113=objects` now expects a row the page draws
+itself (the layer's `holds()`) to show the page's own control with the value's lines, and keeps the words-and-Change path
+for rows the page can't hold.
+
 ## Jared's review fixes (2026-11-13)
 
 Jared's eight items are in `BRIEF-jared-1113-fixes.md` in the share folder; `CONCEPT-FIX-REPORT-A.md` has the triage,
@@ -406,6 +446,8 @@ happen the same on bare PMConcept7; item 4 waits for Jared; item 8 is the Projec
   thinking depth is inside it (Model's own, Low, Medium, High for a model that reasons); a model with its own depth is
   one atomic value (`{ model, effort }`, SSYS-059), and the engine's row is fed the model. Lines and notes read the
   inventory's words too ("Same as Everyday model (Claude Opus 4)"), never the engine's global "Same as the project".
+  *Since 2026-11-20 (Jared's option A):* "Same as Everyday model · Claude Opus 4", with the model under the inherit
+  choice and no "here".
 - **#3, every Set for… path can set the value.** A key-value map or a list of records opens the row's own editor
   (PMConcept7's, through `open-structured-setting`) loaded with that place's value and a line saying whose value it is;
   its Save goes to that place through the router and the guard, with the note naming the place, and an unchanged Save

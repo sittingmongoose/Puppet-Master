@@ -923,18 +923,23 @@ _STATE = {}
 DATETIME_OPS = ("datetime", "datetime_direct", "envelope_datetime", "inventory_datetime", "family_datetime")
 
 
+def _datetime_cases():
+    if "datetime_cases" not in _STATE:
+        _STATE["datetime_cases"] = {
+            c["id"]: c for c in _corpus()["cases"]
+            if c["op"] in DATETIME_OPS or (c["op"] == "history" and c.get("date_time_profile"))
+        }
+    return _STATE["datetime_cases"]
+
+
 def run_case(case_id):
     """True when one date-time corpus case gives its committed outcome."""
     import pm_event_numbers as m
     import pm_event_numbers_corpus as corpus_module
-    corpus = _corpus()
-    case = next((c for c in corpus["cases"] if c["id"] == case_id), None)
-    if case is None or case["op"] not in DATETIME_OPS:
+    case = _datetime_cases().get(case_id)
+    if case is None:
         raise ValueError("not a date-time corpus case: " + case_id)
-    actual, _ = corpus_module.evaluate(m, case, corpus)
-    expected = ({"outcome": "refusal", "error": case["error"]} if "error" in case
-                else {"outcome": "acceptance", "output": case["output"]})
-    return actual == expected
+    return not corpus_module.case_failures(m, case, _corpus())[1]
 
 
 def run_witness(witness, context):
@@ -975,7 +980,8 @@ def run_witness(witness, context):
             import pm_event_numbers_corpus as corpus
             from pm_event_datetime_inventory import check_inventory
             try:
-                context.integration = corpus.datetime_integration_checks(m, ROOT, check_inventory(ROOT))
+                context.integration = corpus.datetime_integration_checks(
+                    m, ROOT, check_inventory(ROOT), include_regression=False)
             except Exception as error:  # noqa: BLE001
                 context.integration = {"__exception__": "exception:" + type(error).__name__}
         if "__exception__" in context.integration:
@@ -1019,28 +1025,24 @@ def regression_names():
 
 
 def integration_names():
-    """T102 (TOOLBATCH4 pre-check finding 3): the date-time owner checks --scope all runs that are not regression checks:
-    the committed-tree inventory check, the fence-container check, the EventRecord validity check and the nine format
-    checks (datetime_integration_checks less regression_checks), named once from the intact code."""
+    """Names of the non-regression date-time owner checks, cached on the intact tree."""
     if "integration_names" not in _STATE:
         import pm_event_numbers as m
         import pm_event_numbers_corpus as corpus
-        names = corpus.datetime_integration_checks(m, ROOT, {"status": "pass"})
-        _STATE["integration_names"] = sorted(set(names) - set(regression_names()))
+        names = corpus.datetime_integration_checks(m, ROOT, {"status": "pass"}, include_regression=False)
+        _STATE["integration_names"] = sorted(names)
     return _STATE["integration_names"]
 
 
 def survivor_witnesses():
-    """Every check a declared survivor must survive: all self-checks, every date-time corpus case and (T71,
-    REVIEW-numrule-tb3-opus finding 3) every admission regression check, the suite --scope all runs beside them, so
-    the replay and the CLI judge on one suite (DT12 survived the self-checks and the cases, and only these caught it).
-    T102 (TOOLBATCH4 pre-check finding 3): and, last, the other twelve date-time owner checks --scope all runs
-    (integration:), the committed-tree inventory check among them, so the replay judges exactly the --scope all
-    date-time suite (B-DT15 survived the replay and failed only that inventory check). Only a mutant that survives
-    everything before them pays for the committed-tree scan."""
+    """Run self-checks, date-time cases (including profiled history), then owner checks.
+
+    Integration witnesses come last so only a mutant that survives the preceding
+    witnesses pays for the committed-tree inventory scan.
+    """
     import pm_event_datetime_selfcheck as selfcheck
     return (["check:" + name for name in selfcheck.CHECKS] +
-            ["case:" + c["id"] for c in _corpus()["cases"] if c["op"] in DATETIME_OPS] +
+            ["case:" + name for name in _datetime_cases()] +
             ["regression:" + name for name in regression_names()] +
             ["integration:" + name for name in integration_names()])
 
@@ -1295,8 +1297,7 @@ def _entry_problems(name, entry, selfcheck):
     kind, _, target = witness.partition(":")
     if witness and kind == "check" and target not in selfcheck.CHECKS:
         problems.append(name + ": unknown witness check " + target)
-    elif witness and kind == "case" and not any(c["id"] == target and c["op"] in DATETIME_OPS
-                                               for c in _corpus()["cases"]):
+    elif witness and kind == "case" and target not in _datetime_cases():
         problems.append(name + ": unknown date-time corpus case " + target)
     elif witness and kind == "regression" and target not in regression_names():
         problems.append(name + ": unknown admission regression check " + target)
