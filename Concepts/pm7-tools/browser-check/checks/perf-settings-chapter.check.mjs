@@ -33,11 +33,32 @@ const PROBE = () => {
 	if (window.__psc) return true;
 	const root = document.getElementById('pm-settings-root');
 	const sig = () => { const b = root.querySelector('#workspace-stage [data-workspace-block]'); return b ? b.getAttribute('data-workspace-block') : ''; };
-	const P = window.__psc = { on: false, sig, cv: [], saves: [], cleanups: [], loaf: [] };
+	const rows = () => root.querySelectorAll('#workspace-stage .setting-row').length;
+	const P = window.__psc = { on: false, sig, cv: [], saves: [], cleanups: [], loaf: [], frame: 0 };
+	/* SETCHAPTER-ROWCOUNT-FIRST-RAF: the first frame's row count is read after every callback that can still change that
+	   frame, not in this probe's own animation-frame callback, where a page callback queued after it in the same frame
+	   (the chapter is committed in the click task, so anything it asks a frame for runs after this tick) would add rows
+	   that are painted but not counted. A ResizeObserver callback runs after every animation-frame callback of the frame
+	   and after its layout, just before paint, and observers report in the order they were made: so the probe makes a
+	   fresh observer in the first frame's tick (later than any the page made in the commit) on a 1 px mark of its own,
+	   whose first observation reports in that same frame, reads the count there and again in a microtask after it. The
+	   tick's own read is logged only; a frame whose end read is missing is not judged as a first screen. */
+	const mark = document.createElement('div');
+	mark.setAttribute('aria-hidden', 'true');
+	mark.style.cssText = 'position:fixed;left:-4px;top:0;width:1px;height:1px;visibility:hidden;pointer-events:none;contain:strict';
+	document.documentElement.appendChild(mark);
 	const tick = () => {
+		P.frame++;
 		if (P.on && !P.first && sig() !== P.old) {
 			P.first = performance.now();
-			P.rows1 = root.querySelectorAll('#workspace-stage .setting-row').length;
+			P.rowsRaf = rows();
+			const frame = P.frame, ro = new ResizeObserver(() => {
+				ro.disconnect();
+				if (!P.on || P.frame !== frame) return;
+				P.rows1 = rows(); P.rows1At = 'frame end';
+				queueMicrotask(() => { if (P.frame === frame) P.rows1 = rows(); });
+			});
+			ro.observe(mark);
 			const mc = new MessageChannel(); mc.port1.onmessage = () => { P.painted = performance.now(); }; mc.port2.postMessage(0);
 		}
 		requestAnimationFrame(tick);
@@ -67,7 +88,7 @@ const PROBE = () => {
 /* before a press: forget the last switch, remember a few tagged nodes of the chapter that is about to leave */
 const ARM = () => {
 	const P = window.__psc;
-	Object.assign(P, { on: true, cv: [], saves: [], cleanups: [], loaf: [], click: 0, commit: 0, first: 0, painted: 0, old: P.sig() });
+	Object.assign(P, { on: true, cv: [], saves: [], cleanups: [], loaf: [], click: 0, commit: 0, first: 0, painted: 0, rows1: 0, rowsRaf: 0, rows1At: '', old: P.sig() });
 	P.tagged = [...document.querySelectorAll('#workspace-stage [data-pm-hover-bound="true"]')].slice(0, 6);
 	return { old: P.old, tagged: P.tagged.length };
 };
@@ -89,7 +110,8 @@ const COLLECT = () => {
 		savesBeforePaint: P.saves.filter((s) => P.painted && s.t < P.painted).length,
 		savedPlace: P.saves.filter((s) => s.domain === domain).length,
 		cleanupsBeforePaint: P.cleanups.filter((c) => P.painted && c < P.painted).length,
-		rowsFirst: P.rows1 || 0, rowsEnd: stage ? stage.querySelectorAll('.setting-row').length : 0,
+		/* null when the first frame's end read did not happen (SETCHAPTER-ROWCOUNT-FIRST-RAF): not judged as a first screen */
+		rowsFirst: P.rows1At === 'frame end' ? P.rows1 : null, rowsRaf: P.rowsRaf || 0, rowsEnd: stage ? stage.querySelectorAll('.setting-row').length : 0,
 		pendingLeft: document.querySelectorAll('#workspace-stage [data-o55-fill="pending"]').length,
 		/* The rendered workspace model includes both placement and hand-authored rows (R97 check 2). */
 		missing: (() => {
@@ -106,6 +128,17 @@ const COLLECT = () => {
 		tagged: (P.tagged || []).length
 	};
 };
+/* C1's first-screen row over the Code & Tools arrivals (exported for tools/settings-chapter.selftest.mjs). A row whose
+   first-frame count was not read at that frame's end cannot show a first screen (SETCHAPTER-ROWCOUNT-FIRST-RAF). */
+export function firstScreenVerdict(code) {
+	const unread = code.filter((r) => typeof r.rowsFirst !== 'number');
+	const whole = code.filter((r) => typeof r.rowsFirst === 'number' && r.rowsEnd > 0 && r.rowsFirst >= r.rowsEnd);
+	const detail = [
+		...unread.map((r) => `${r.pair}: the first frame's row count was not read at that frame's end (${r.rowsRaf ?? '?'} at its first animation-frame callback)`),
+		...whole.map((r) => `${r.pair}: all ${r.rowsEnd} rows were built for the first frame`)
+	].join('; ');
+	return { ok: code.length > 0 && !unread.length && !whole.length, detail: detail || (code.length ? '' : 'no arrival at Code & Tools'), unread: unread.length, whole: whole.length };
+}
 const ACTIVE = () => (document.querySelector('#pm-settings-root .domain-link.active') || {}).dataset?.domain || '';
 
 async function press(t, f, domain) {
@@ -828,7 +861,7 @@ for (const surface of ['normal', 'sandbox']) {
 					const r = await f.evaluate(COLLECT);
 					r.pair = `${a}->${b}`;
 					rows.push(r);
-					t.log(`${look} ${surface} ${r.pair}: release -> painted ${r.clickToPainted} ms (commit ${r.commit}, build task ${r.build ?? '-'} ms, ${r.elements} elements; rows ${r.rowsFirst} in the first frame of ${r.rowsEnd}); one-frame unlocks ${r.unlocks.length ? r.unlocks.join(',') : 'none'}; saves before paint ${r.savesBeforePaint}, place saved ${r.savedPlace}; tag walks before paint ${r.cleanupsBeforePaint}, old tagged nodes still tagged ${r.taggedStill}/${r.tagged}`);
+					t.log(`${look} ${surface} ${r.pair}: release -> painted ${r.clickToPainted} ms (commit ${r.commit}, build task ${r.build ?? '-'} ms, ${r.elements} elements; rows ${r.rowsFirst ?? '-'} in the first frame (${r.rowsRaf} at its first animation-frame callback) of ${r.rowsEnd}); one-frame unlocks ${r.unlocks.length ? r.unlocks.join(',') : 'none'}; saves before paint ${r.savesBeforePaint}, place saved ${r.savedPlace}; tag walks before paint ${r.cleanupsBeforePaint}, old tagged nodes still tagged ${r.taggedStill}/${r.tagged}`);
 					await t.page.waitForTimeout(500);
 				}
 				const shown = rows.filter((r) => r.clickToPainted !== null && r.to === r.pair.split('->')[1]);
@@ -836,10 +869,8 @@ for (const surface of ['normal', 'sandbox']) {
 				const unlocked = rows.filter((r) => r.unlocks.length);
 				await t.check(`${look} ${surface}: no section of an arrival is laid out for one frame and skipped again`, !unlocked.length,
 					unlocked.map((r) => `${r.pair}: ${r.unlocks.join(', ')}`).join('; '));
-				const code = rows.filter((r) => r.to === 'code');
-				const whole = code.filter((r) => r.rowsEnd > 0 && r.rowsFirst >= r.rowsEnd);
-				if (seq.some(([, to]) => to === 'code')) await t.check(`${look} ${surface}: an arrival at Code & Tools shows its first screen before the rest of its rows`, code.length > 0 && !whole.length,
-					whole.map((r) => `${r.pair}: all ${r.rowsEnd} rows were built for the first frame`).join('; ') || 'no arrival at Code & Tools');
+				const first = firstScreenVerdict(rows.filter((r) => r.to === 'code'));
+				if (seq.some(([, to]) => to === 'code')) await t.check(`${look} ${surface}: an arrival at Code & Tools shows its first screen before the rest of its rows`, first.ok, first.detail);
 				const left = rows.filter((r) => r.pendingLeft > 0 || r.dupIds > 0 || (r.missing && r.missing.gone.length) || (r.to === 'code' && !(r.missing && r.missing.want)));
 				await t.check(`${look} ${surface}: after each arrival every row in the rendered workspace model is drawn, once`, !left.length,
 					left.map((r) => `${r.pair}: ${r.pendingLeft} row lists still pending, ${r.dupIds} duplicate row ids, missing ${r.missing ? r.missing.gone.join(', ') || 'none' : '?'} of ${r.missing ? r.missing.want : '?'} modeled on ${r.missing ? r.missing.ws : '?'}`).join('; '));
