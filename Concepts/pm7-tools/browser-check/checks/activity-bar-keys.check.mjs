@@ -394,7 +394,10 @@ async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
   if (reached) { await kb.press('ContextMenu'); await menuUp(); await f.waitForTimeout(150); }
   const ctxSeen = await f.evaluate(() => window.__fo98ctx.slice());
   t.log(`${at} FO-98: contextmenu events after the Menu key: ${JSON.stringify(ctxSeen)}`);
-  await t.check(`${at} FO-98 ${k}: no contextmenu event from the Menu key reaches the page uncancelled`, ctxSeen.every((e) => e.prevented), JSON.stringify(ctxSeen));
+  const menuKeyResult = ctxSeen.length
+    ? 'every native contextmenu event from the Menu key is cancelled'
+    : 'no native contextmenu emitted by the Menu key (cancellation not exercised)';
+  await t.check(`${at} FO-98 ${k}: ${menuKeyResult}`, ctxSeen.every(e => e.prevented), JSON.stringify(ctxSeen));
   m = await f.evaluate(iconMenu);
   await drain();
   if (m.open) { await kb.press('End'); await kb.press('Enter'); await menuGone(); await settle(); await f.waitForTimeout(120); }
