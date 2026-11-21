@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { runInNewContext } from 'node:vm';
 import { test } from 'node:test';
-import { copiedFullPath, laterContextRows, pathNotePresent, pickEffectRows, shelfReachStatus } from '../checks/shelf-route.check.mjs';
+import { copiedFullPath, foldCensusControls, laterContextRows, pathNotePresent, pickEffectRows, shelfReachStatus } from '../checks/shelf-route.check.mjs';
 
 test('T78 copied path notes name the exact copied value', () => {
   assert.equal(pathNotePresent(['Copied src'], 'src', 'copy'), true);
@@ -87,4 +87,17 @@ test('T98 later context walk includes the middle row of a known route', () => {
   assert.deepEqual(Array.from(read(panel, 'modified file').rows, r => r.which), ['image.rs', 'ci.yml']);
   live.splice(1);
   assert.deepEqual(Array.from(read(panel, 'modified file').rows, r => r.which), ['recipes.rs']);
+});
+
+test('T98 fold guard keeps each census control distinct, even with the same label', () => {
+  const make = (role, shown = true) => ({ role, checkVisibility: () => shown, closest: () => null, matches: sel => sel.includes(role) });
+  const first = make('popup'), second = make('popup'), head = make('accordion'), disclosure = make('disclosure');
+  const row = make('treeitem'), hidden = make('popup', false), knownContextRow = make('known-class');
+  const read = runInNewContext('(' + foldCensusControls.toString() + ')', {
+    __shelf: { rows: () => [knownContextRow], sig: e => e.role },
+  });
+  const region = {
+    querySelectorAll: sel => sel.includes('data-collapse') ? [first, second, head, disclosure, row, hidden] : [first, second, hidden],
+  };
+  assert.deepEqual(Array.from(read(region, ['known-class'])), [first, second, head, disclosure, row, knownContextRow]);
 });

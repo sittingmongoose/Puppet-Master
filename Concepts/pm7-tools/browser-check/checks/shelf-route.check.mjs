@@ -90,6 +90,17 @@ export function laterContextRows(p, sig) {
   };
 }
 
+export function foldCensusControls(region, routeKinds) {
+  const direct = region.querySelectorAll([
+    '[aria-haspopup]:not([aria-haspopup="false"]):not(:disabled, [aria-disabled="true"])',
+    '[data-acc] > [data-collapse]',
+    'button[aria-expanded]:not([role="tab"], [aria-haspopup])',
+    '[role="treeitem"], [role="row"], [role="option"], [role="listitem"], [role="gridcell"]',
+  ].join(','));
+  const context = __shelf.rows(region).filter(e => routeKinds.includes(__shelf.sig(e)));
+  return [...new Set([...direct, ...context])].filter(e => !e.closest('[role="menu"]') && e.checkVisibility());
+}
+
 // A popup trigger opens by every way the owners wire it: a press, and Enter, Space and ArrowDown on the focused trigger.
 const POPUP_INPUTS = ['mouse', 'enter', 'space', 'arrowdown'];
 const PKEY = { enter: 'Enter', space: ' ', arrowdown: 'ArrowDown' };
@@ -660,8 +671,7 @@ export default async function (t) {
     // fold took, and say which control asked for the room. Returns how many folded; a second call finds none.
     // T69 (opus-recheck-kit8 finding B): only the expanded region that holds what covers the control folds (the nearest
     // region actually owned by the expanded control, containing the cover and not the covered control), never every expanded region
-    // of the panel; and a fold that hides a popup trigger the census would press fails by name (hard), so nothing the
-    // census walks is skipped at this size while it is covered at no other.
+    // of the panel. Compare actual census controls across the fold and restore temporary folds before changing pane.
     const makeRoom = async (state, why, targetControl) => {
       folding = true;
       let covered;
@@ -686,7 +696,6 @@ export default async function (t) {
             .map(({ e, region }, i) => { e.setAttribute('data-shelf-fold', String(i)); region.setAttribute('data-shelf-fold-region', String(i));
               return { i, label: (e.getAttribute('aria-label') || e.closest('[class]').className || '').toString().slice(0, 60), region: (region.tagName + '.' + String(region.className?.baseVal ?? region.className).trim().split(/\s+/).slice(0, 2).join('.')).slice(0, 60) }; });
         }, covered);
-        const triggersIn = (i) => panel.evaluate((p, i) => { const r = p.querySelector(`[data-shelf-fold-region="${i}"]`); return r ? [...r.querySelectorAll('[aria-haspopup]:not([aria-haspopup="false"])')].filter(e => e.checkVisibility()).map(e => e.getAttribute('aria-controls') || (e.getAttribute('aria-label') || e.textContent).trim().replace(/\s+/g, ' ').slice(0, 40)) : []; }, i);
         let foldedCount = 0;
         for (const fo of folds) {
           // A preceding fold can hide a queued child. Resolve the locator and its real region again;
@@ -699,23 +708,44 @@ export default async function (t) {
               !!region && !region.contains(covered) && !card?.contains(covered);
           }, covered).catch(() => false);
           if (!await eligible()) continue;
-          const before = await triggersIn(fo.i), fp = await reach(ctl);
+          const fp = await reach(ctl);
           if (!await eligible()) continue;
           await t.check(`${target} ${state} short panel: expanded control (${fo.label}) is on top before folding`, fp.onTop, JSON.stringify(fp), { hard: true });
-          await pressAt(ctl, fp);
-          const folded = await f.waitForFunction(e => e.getAttribute('aria-expanded') === 'false', await ctl.elementHandle(), { timeout: 2000 }).then(() => true, () => false);
-          await t.check(`${target} ${state} short panel: pressing its expanded control (${fo.label}) folds it to make room for the list`, folded,
-            JSON.stringify({ fold: fo, covered: { what: why.what, onTop: why.onTop, hits: why.hits, by: why.coverOf } }), { hard: true });
-          const after = await triggersIn(fo.i), hidden = before.filter(x => !after.includes(x));
-          await t.check(`${target} ${state} short panel: the folded region (${fo.region}) hid no popup trigger the census walks`, !hidden.length, JSON.stringify({ hidden, before }), { hard: true });
+          const routeKinds = ctxKinds.filter(k => k.panel === target && Object.keys(k.got).length).map(k => k.sig);
+          const region = panel.locator(`[data-shelf-fold-region="${fo.i}"]`);
+          const before = await region.evaluateHandle(foldCensusControls, routeKinds);
+          try {
+            await pressAt(ctl, fp);
+            const folded = await f.waitForFunction(e => e.getAttribute('aria-expanded') === 'false', await ctl.elementHandle(), { timeout: 2000 }).then(() => true, () => false);
+            await t.check(`${target} ${state} short panel: pressing its expanded control (${fo.label}) folds it to make room for the list`, folded,
+              JSON.stringify({ fold: fo, covered: { what: why.what, onTop: why.onTop, hits: why.hits, by: why.coverOf } }), { hard: true });
+            await f.waitForTimeout(500);
+            const hidden = await before.evaluate(elements => elements
+              .filter(e => !e.isConnected || !e.checkVisibility())
+              .map(e => (e.getAttribute('aria-controls') || e.getAttribute('aria-label') || e.getAttribute('data-path') || e.textContent || e.tagName)
+                .trim().replace(/\s+/g, ' ').slice(0, 60)));
+            await t.check(`${target} ${state} short panel: the folded region (${fo.region}) hid no census control`, !hidden.length, JSON.stringify(hidden), { hard: true });
+            await ctl.evaluate(e => e.setAttribute('data-shelf-room-folded', ''));
+          } finally { await before.dispose(); }
           foldedCount++;
           // Re-hit-test the original target after every fold instead of acting on the rest of a stale
           // parent/child snapshot. If it still needs room, reach() discovers the next visible control.
           break;
         }
-        if (foldedCount) await f.waitForTimeout(500);
         return foldedCount;
       } finally { if (covered && covered !== targetControl) await covered.dispose(); folding = false; }
+    };
+    const restoreRoom = async () => {
+      const ctl = panel.locator('[data-shelf-room-folded]').last();
+      folding = true;
+      try {
+        while (await ctl.count()) {
+          const expanded = () => ctl.getAttribute('aria-expanded');
+          if (await expanded() === 'false') await pressAt(ctl, await reach(ctl));
+          await t.check(`${target} ${roomState}: temporary fold is restored before changing pane`, await expanded() === 'true', '', { hard: true });
+          await ctl.evaluate(e => e.removeAttribute('data-shelf-room-folded'));
+        }
+      } finally { folding = false; }
     };
     // Every popup trigger the panel shows (PMMenu wrappers and the rail skin's own), by mouse, Enter, Space and ArrowDown.
     const popupCensus = async (state) => {
@@ -928,6 +958,7 @@ export default async function (t) {
             }
           }
         }
+        await restoreRoom();
       }
     };
     // Source Control offers an engine switch; walk each engine it offers, then restore the first.
@@ -1093,6 +1124,7 @@ export default async function (t) {
       await exercise();
       // The panel's first state is one of its tabs; census each tab once.
       if (tab !== null || !tabs.length) { await popupCensus(state); await contextCensus(state, engine, tab); }
+      await restoreRoom();
     }
     }
     await laterWalk();
