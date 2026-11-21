@@ -1382,7 +1382,7 @@
     },
     {
       "anchor_count": 0,
-      "bytes": 531636,
+      "bytes": 531770,
       "contractref_count": 38,
       "gui_related_inferred": true,
       "has_planunits_section": false,
@@ -1392,7 +1392,7 @@
       "plan_unit_count": 62,
       "plan_unit_parse_errors": [],
       "recommended_batch": "pilot_or_early_batch_candidate",
-      "sha256": "9a79203639e78dcf6c025019654f7b97c76780675be9a3f7605dd727af906a30",
+      "sha256": "1deb67ec0a314763bf5980d835c9729df131eaf16d95cf4209a89c4e1728115c",
       "sharded": false,
       "span_count": 120,
       "spec_locked": false
@@ -1637,12 +1637,12 @@
     }
   ],
   "expected_doc_count": 96,
-  "generated_at_utc": "2026-11-20T04:18:04Z",
+  "generated_at_utc": "2026-11-21T07:56:55Z",
   "locked_doc_count": 37,
   "pilot_doc": "Plans/00-plans-index.md",
   "plan_unit_count": 9468,
-  "plans_manifest_sha256": "1bd0782e07ecec03a0ce8801dd365c5dc27f0273fac70659cc7dbe55c41377ad",
-  "run_id": "pds-20261120-001-current-planunit-snapshot",
+  "plans_manifest_sha256": "1e3ca64178fe939ce8ad6d41ca05a8697747d8783e79ccb491c39a517049b858",
+  "run_id": "pds-20261121-002-current-planunit-snapshot",
   "schema_id": "pm.plan_migration.inventory.v1",
   "scope": "exact current top-level Plans/*.md",
   "sharded_doc_count": 74,
@@ -1651,6 +1651,6 @@
   "span_count": 16295,
   "supersedes_run_ids": [
     "pds-20260611-002-atomize-planunits",
-    "pds-20261119-002-current-planunit-snapshot"
+    "pds-20261121-001-current-planunit-snapshot"
   ]
 }
