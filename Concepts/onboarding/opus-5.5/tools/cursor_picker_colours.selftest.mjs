@@ -7,7 +7,7 @@ import { writeFileSync, mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import check, { pageDigest, expected } from './cursor_picker_colours.check.mjs';
+import check, { pageDigest, expected, loadJudgedPage } from './cursor_picker_colours.check.mjs';
 
 const pages = { 'main6.html': '<!doctype html><title>main6</title>', 'm-6.html': '<!doctype html><title>m-6</title>' };
 const sha = (s) => createHash('sha256').update(s).digest('hex');
@@ -126,3 +126,21 @@ await withVaryingServer(async (base, hits) => {
 	await assert.rejects(drive(base, 'http://wrong-server.invalid/main6.html', queried, 'response.body: something else broke'), /something else broke/, 'any other body error still stops the check');
 	console.log('PASS a navigation body the browser no longer holds is hashed from the page\'s own location; other body errors still stop the check');
 });
+
+const edgeBase = 'http://127.0.0.1:1/';
+const edgeUrl = intendedUrl(edgeBase);
+const edgePage = (loaded, status) => {
+	let url = 'about:blank';
+	return {
+		url: () => url,
+		goto: async () => {
+			url = loaded;
+			return status == null ? null : { ok: () => false, status: () => status, body: async () => assert.fail('edge body was read') };
+		},
+	};
+};
+await assert.rejects(loadJudgedPage(edgePage(edgeBase + 'elsewhere.html', 200), edgeBase, 'main6'), /could not judge.*redirect/i);
+await assert.rejects(loadJudgedPage(edgePage(edgeUrl, 304), edgeBase, 'main6'), /could not judge.*304.*cached/i);
+const fileBase = pathToFileURL(tmpdir() + '/').href;
+await assert.rejects(loadJudgedPage(edgePage(intendedUrl(fileBase), null), fileBase, 'main6'), /could not judge.*file:\/\/.*navigation/i);
+console.log('PASS redirect, cached 304 and file navigation with no response each name the edge');

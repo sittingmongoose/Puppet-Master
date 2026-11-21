@@ -39,6 +39,7 @@ export function sameIntendedPage(opened,intended){
 export async function digestOfResponse(response,url){
  if(!response||typeof response.ok!=='function'||!response.ok()){
   const status=response&&typeof response.status==='function'?response.status():'no response';
+  if(status===304)throw Error('could not judge '+url+': HTTP 304 refers to a cached navigation body');
   throw Error(url+': HTTP '+status);
  }
  const buf=Buffer.from(await response.body());
@@ -48,10 +49,12 @@ export async function digestOfResponse(response,url){
 // was already there, fetch the page's own location). Never a URL built only from --set server beside a different page.
 export async function loadJudgedPage(page,server,build){
  const intended=intendedPageUrl(server,build);
+ const navigating=!sameIntendedPage(page.url(),intended);
  let response=null;
- if(!sameIntendedPage(page.url(),intended))response=await page.goto(intended,{waitUntil:'load',timeout:240000});
+ if(navigating)response=await page.goto(intended,{waitUntil:'load',timeout:240000});
  const loaded=String(page.url());
- if(!sameIntendedPage(loaded,intended))throw Error('page '+loaded+' is not the intended page '+intended);
+ if(!sameIntendedPage(loaded,intended))throw Error('could not judge '+intended+': navigation redirected or changed location to '+loaded);
+ if(navigating&&!response&&new URL(intended).protocol==='file:')throw Error('could not judge '+intended+': file navigation provided no response');
  // The real page is 40 MB, and Chrome drops so large a navigation body from its inspector cache: response.body() throws
  // "Request content was evicted from inspector cache" (Alexis, 2026-11-15: the check stopped before it judged anything).
  // The digest is then a fetch of the page's own location: the full URL just verified as the one loaded, never --set
