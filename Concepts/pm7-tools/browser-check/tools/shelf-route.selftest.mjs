@@ -49,7 +49,7 @@ test('T117 rejects an added row even when every live row has data-path', () => {
 function reachStatus({ opacity = '1', filter = 'none', x = 0 } = {}) {
   const slot = {
     parentElement: null,
-    checkVisibility: options => !options?.checkOpacity || Number(opacity) > 0,
+    checkVisibility: options => !options?.opacityProperty || Number(opacity) > 0,
     getBoundingClientRect: () => ({ left: x, right: x + 250, top: 0, bottom: 500 }),
   };
   const view = { ...slot, parentElement: slot, checkVisibility: () => true };
@@ -67,4 +67,10 @@ test('T98 rejects transparent or offscreen panels while their controls are scrol
   assert.equal(reachStatus().slot, true);
   assert.equal(reachStatus({ opacity: '0' }).slot, false);
   assert.equal(reachStatus({ x: -250 }).slot, false);
+});
+
+test('T124 rejects a transparent filter on a hit-testable ancestor', () => {
+  assert.equal(reachStatus({ filter: 'blur(1px) opacity(0.5)' }).shown, true);
+  assert.equal(reachStatus({ filter: 'blur(1px) opacity(0)' }).slot, false);
+  assert.equal(reachStatus({ filter: 'opacity(0%)' }).shown, false);
 });

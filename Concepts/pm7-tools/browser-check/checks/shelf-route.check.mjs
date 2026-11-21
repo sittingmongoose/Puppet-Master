@@ -55,7 +55,15 @@ export function pickEffectRows([p, toks, authored]) {
 export function shelfReachStatus(e) {
   const slot = document.getElementById('sidePanelSlot');
   const view = e.closest('.side-panel-view');
-  const shown = node => !!node && node.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true, contentVisibilityAuto: true });
+  const shown = node => {
+    if (!node?.checkVisibility({ opacityProperty: true, visibilityProperty: true, contentVisibilityAuto: true })) return false;
+    // A fully transparent filter leaves the whole subtree in hit testing.
+    for (let a = node; a; a = a.parentElement) {
+      const filters = getComputedStyle(a).filter.matchAll(/(?:^|\s)opacity\(([^)]+)\)/g);
+      for (const [, value] of filters) if (Number.parseFloat(value) === 0) return false;
+    }
+    return true;
+  };
   const onScreen = node => {
     const r = node.getBoundingClientRect();
     return Math.min(r.right, innerWidth) > Math.max(r.left, 0) &&
