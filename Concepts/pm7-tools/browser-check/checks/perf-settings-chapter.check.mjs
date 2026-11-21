@@ -226,6 +226,18 @@ const ARM_RESTORE = (id) => {
 	mo.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
 	R.stop = () => { mo.disconnect(); tome.save = save; tome.restoreProjectDefaults = restore; };
 };
+/* R93 #4's fling rows (exported for tools/settings-chapter.selftest.mjs). R97 #3: Terminal look must still be pending
+   when the wheel is delivered (the commit's sample is logged only), and the scroll frame's sample must have Terminal look
+   in view, so the empty-list row has the pending target in front of it. */
+export function flingVerdict(r) {
+	return [
+		{ name: 'the wheel was delivered with Terminal look pending', ok: !!r.wheel && r.wheelPending > 0 && r.wheelTargetPending === true,
+			detail: r.wheel ? `at wheel delivery ${r.wheelPending} lists pending, Terminal look pending ${r.wheelTargetPending} (at commit ${r.pending}, ${r.targetPending})` : 'no wheel event was seen after the commit' },
+		{ name: 'a real wheel crossed at least one viewport and brought Terminal look into view', ok: !!r.sampled && r.moved >= r.height && r.targetInView === true,
+			detail: r.sampled ? `moved ${r.moved} px of a ${r.height} px view; Terminal look in view ${!!r.targetInView}` : `no scroll-frame sample with Terminal look in view (${r.framesBefore || 0} scroll frames past one viewport without it)` },
+		{ name: 'no visible list is empty at the scroll frame', ok: !!r.sampled && r.empty.length === 0, detail: (r.empty || []).join(',') || 'no scroll-frame sample' }
+	];
+}
 /* SETCHAPTER-RESTORE-PENDING-AT-TRANSACTION (exported for tools/settings-chapter.selftest.mjs): the restore-all row
    judges a transaction across a chapter change only if, when the transaction starts, Code & Tools is the chapter, still
    has pending row lists (its switch is in flight) and has its place saved. A transaction that runs after the fill has
@@ -670,7 +682,13 @@ for (const surface of ['normal', 'sandbox']) {
 					if(!R.committed||R.sampled||R.armed||sc.id!=='settings-document'||Math.abs(sc.scrollTop-R.start)<R.height)return;
 					R.armed=true;
 					requestAnimationFrame(()=>{
-						const v=sc.getBoundingClientRect();R.top=sc.scrollTop;R.moved=R.top-R.start;
+						const v=sc.getBoundingClientRect();
+						/* R97 #3: the sample is the first scroll frame, past one viewport, with Terminal look in view (an
+						   animated wheel scroll may cross the first viewport before it gets there) */
+						const tb=root.querySelector('#section-editor-terminal-look')?.getBoundingClientRect();
+						R.targetInView=!!tb&&tb.height>0&&tb.bottom>v.top&&tb.top<v.bottom;
+						if(!R.targetInView){R.armed=false;R.framesBefore=(R.framesBefore||0)+1;return;}
+						R.top=sc.scrollTop;R.moved=R.top-R.start;
 						R.empty=[...sc.querySelectorAll('[data-o55-fill="pending"]')].filter(l=>{
 							if(l.closest('details:not([open])'))return false;
 							const b=l.closest('[data-section-id]').getBoundingClientRect();
@@ -680,9 +698,20 @@ for (const surface of ['normal', 'sandbox']) {
 						R.sampled=true;
 					});
 				};
+				/* R97 #3: the precondition is judged when the wheel is delivered, not at the commit: three driver steps lie
+				   between them, and an idle fill that finishes in that gap leaves nothing for the wheel to test. Passive, so
+				   the scroll keeps its own path. */
+				const wheel=()=>{
+					if(!R.committed||R.wheel)return;
+					const sec=root.querySelector('#section-editor-terminal-look');
+					R.wheel=performance.now();R.wheelPending=root.querySelectorAll('[data-o55-fill="pending"]').length;
+					R.wheelTargetPending=!!sec?.querySelector('[data-o55-fill="pending"]');
+					R.wheelTop=root.querySelector('#settings-document')?.scrollTop??null;
+				};
 				mo.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
 				window.addEventListener('scroll',scroll,true);
-				R.stop=()=>{mo.disconnect();window.removeEventListener('scroll',scroll,true);};
+				window.addEventListener('wheel',wheel,{capture:true,passive:true});
+				R.stop=()=>{mo.disconnect();window.removeEventListener('scroll',scroll,true);window.removeEventListener('wheel',wheel,{capture:true,passive:true});};
 			});
 			try {
 				await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
@@ -692,10 +721,8 @@ for (const surface of ['normal', 'sandbox']) {
 				await t.page.mouse.wheel(0,Math.ceil(delta));
 				await f.waitForFunction(()=>window.__pscFling.sampled,null,{timeout:5000}).catch(()=>{});
 				const r=await f.evaluate(()=>{const {stop,...r}=window.__pscFling;return r;});
-				t.log(`${look} ${surface} fling: ${r.pending} lists pending at commit, target pending ${r.targetPending}; moved ${r.moved} px (${r.height} px view); empty visible lists at scroll-frame rAF: ${r.empty.join(',')||'none'}`);
-				await t.check(`${look} ${surface}: fling began with Terminal look pending`,r.pending>0&&r.targetPending,JSON.stringify(r));
-				await t.check(`${look} ${surface}: a real wheel crossed at least one viewport`,r.sampled&&r.moved>=r.height,JSON.stringify(r));
-				await t.check(`${look} ${surface}: no visible list is empty at the scroll frame`,r.sampled&&r.empty.length===0,r.empty.join(',')||'no scroll-frame sample');
+				t.log(`${look} ${surface} fling: ${r.pending} lists pending at commit, target pending ${r.targetPending}; at wheel delivery ${r.wheel?`${r.wheelPending} pending, target pending ${r.wheelTargetPending}`:'no wheel seen'}; moved ${r.moved} px (${r.height} px view), Terminal look in view ${!!r.targetInView}; empty visible lists at scroll-frame rAF: ${r.empty.join(',')||'none'}`);
+				for (const row of flingVerdict(r)) await t.check(`${look} ${surface}: ${row.name}`,row.ok,row.detail);
 			} finally {await f.evaluate(()=>window.__pscFling.stop());}
 		}
 	};

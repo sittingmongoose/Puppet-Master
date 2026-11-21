@@ -2,7 +2,7 @@
 // node tools/settings-chapter.selftest.mjs
 // The page probe itself is tested in a browser on a constructed page: diagnostics/settings-chapter-probe.check.mjs.
 import assert from 'node:assert/strict';
-import { firstScreenVerdict, restoreJudgeable } from '../checks/perf-settings-chapter.check.mjs';
+import { firstScreenVerdict, restoreJudgeable, flingVerdict } from '../checks/perf-settings-chapter.check.mjs';
 
 /* SETCHAPTER-ROWCOUNT-FIRST-RAF: the first-screen row over the Code & Tools arrivals */
 {
@@ -34,4 +34,20 @@ import { firstScreenVerdict, restoreJudgeable } from '../checks/perf-settings-ch
 	assert.equal(restoreJudgeable(at('code', 12, false)).ok, false, 'Code not saved by the transaction');
 	assert.equal(restoreJudgeable({ eagerAtAccept: true }).ok, false, 'no transaction at all');
 	console.log('PASS restore-all: judged at the transaction\'s start (Code, pending row lists, saved), not only at acceptance');
+}
+
+/* R97 #3: the fling's precondition at wheel delivery, and the target in the sampled view */
+{
+	const fling = (o) => ({ committed: true, pending: 33, targetPending: true, wheel: 1200, wheelPending: 30, wheelTargetPending: true, sampled: true, start: 0, top: 2900, moved: 2900, height: 880, targetInView: true, empty: [], ...o });
+	const ok = (r) => flingVerdict(r).map((x) => x.ok);
+	assert.deepEqual(ok(fling({})), [true, true, true], 'pending at the wheel, a viewport crossed onto Terminal look, nothing empty: passes');
+	// R97 #3's case: pending at the commit, but the idle fill finished before the wheel; the old row passed on the commit's sample
+	const filled = flingVerdict(fling({ wheelPending: 0, wheelTargetPending: false }));
+	assert.equal(filled[0].ok, false, 'Terminal look already filled at the wheel: the fling did not test a pending target');
+	assert.match(filled[0].detail, /at wheel delivery 0 lists pending, Terminal look pending false \(at commit 33, true\)/);
+	assert.equal(flingVerdict(fling({ wheel: 0 }))[0].ok, false, 'no wheel seen');
+	// a viewport crossed, but the sample frame has Terminal look out of view
+	assert.equal(flingVerdict(fling({ targetInView: false }))[1].ok, false, 'the target not in the sampled view');
+	assert.equal(flingVerdict(fling({ empty: ['editor-terminal-look'] }))[2].ok, false, 'an empty visible list fails');
+	console.log('PASS fling: pending judged at wheel delivery, and Terminal look in the sampled view');
 }
