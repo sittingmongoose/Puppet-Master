@@ -50,8 +50,9 @@
   outline: none;
 }
 .pmw-tabbody[hidden] { display: none; }
-/* The initial Agents board can lay out at its real size while the user is still on Home. */
-.pmw-tabbody[hidden][data-pmw-prepared] { display: block; opacity: 0; pointer-events: none; }
+/* Raster the prepared board at its real size using one colour level while Home is shown.
+   Selection removes the parked opacity. Animation tooling can safely finish other moves. */
+.pmw-tabbody[hidden][data-pmw-prepared] { display: block; opacity: 0.004; pointer-events: none; }
 /* Prepare the loader's resting drawing along with its row. Only the moving parts resume when shown. */
 .pmw-tabbody[data-pmw-prepared] .pml-ld[data-pml-run="on"] :is(.pml-ctl, .pml-pup, .pml-str, .pml-dot, .pml-fr) {
   animation-play-state: paused;
