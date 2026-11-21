@@ -36,6 +36,7 @@ export default async function(t){
    window.__fo92n1=0;if(!window.__fo92n1Slot){window.__fo92n1Slot=true;window.PM56_EXT.slot('afterRender',(c,i)=>{if(i&&(i.phase==='overlay'||i.phase==='app'))window.__fo92n1++;});}
    await new Promise(r=>setTimeout(r,1200));const settling=window.__fo92n1;window.__fo92n1=0;
    await new Promise(r=>setTimeout(r,3000));const q=PM56_DEMO.getState();return {running:!!q.work.running,rendersAfterHold:settling,rendersIn3s:window.__fo92n1};});
+  t.log('FO92-N1 work clock hold measurements ' + JSON.stringify(held));
   await t.check('FO92-N1 fixture: the work clock held (the primary work record stopped; renders in 3 s logged)',!held.running,JSON.stringify(held));
   const drawer=(want)=>f.evaluate(async want=>{
    const up=()=>!!document.querySelector('[data-ph-resize]')&&(document.body.dataset.phDrawer||'')===want;
