@@ -396,7 +396,7 @@ for (const surface of ['normal', 'sandbox']) {
 			const m = menus.nth(i);
 			const menu = await openMenu(f, m);
 			if (!(await menu.getByText('Replace file', { exact: true }).count())) { await t.page.keyboard.press('Escape'); await t.page.waitForTimeout(250); continue; }
-			await menuItem(t, menu, 'Use for events');
+			await menuItem(t, menu, 'Use for events…');
 			await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
 			const facts = (await drawer(f).locator('.pm51-hero-facts').innerText().catch(() => '')).replace(/\s+/g, ' ');
 			if (/Source\s*Built-in/.test(facts)) { id = await m.getAttribute('data-id'); name = ((await drawer(f).locator('.pm51-panel-title').innerText().catch(() => '')) || '').replace(/^Use\s+|\s+for$/g, '').trim(); }
@@ -411,7 +411,7 @@ for (const surface of ['normal', 'sandbox']) {
 			await f.locator('.overlay .dialog .dialog-footer .btn.primary').last().click();
 			await t.page.waitForTimeout(700);
 			await closeDrawers(t, f);
-			await menuItem(t, await openMenu(f, m), 'Use for events');
+			await menuItem(t, await openMenu(f, m), 'Use for events…');
 			await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
 			const facts = (await drawer(f).locator('.pm51-hero-facts').innerText().catch(() => '')).replace(/\s+/g, ' ');
 			const title = (await drawer(f).locator('.pm51-panel-title').innerText().catch(() => '')).trim();
