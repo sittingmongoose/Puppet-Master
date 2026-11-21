@@ -17,8 +17,8 @@
 //    minResolved resolved pairs is a FAILING "could not judge" row, never a silent pass.
 //
 // Tolerances are hard caps in ms, chosen from measured resolved-pair noise (RN-REPORT.md, 2026-11-11-pm7-performance
-// share). They stay below the bite thresholds so a sustained regression of 50 ms (firstNewMs / retainedMs) or 100 ms
-// (settledMs) always puts the resolved paired median past its tolerance. No run-time noise estimate widens them.
+// share). They stay below the bite thresholds of 50 ms (firstNewMs / retainedMs) and 100 ms (settledMs).
+// No run-time noise estimate widens them.
 // Measured on the Mac (Apple M3, local client, file://), 3 concurrent runs as the load, uncontended (lead rulings
 // 1120225932-bad7, 1121031239-e11a):
 //   clean green max resolved paired median  firstNewMs/settledMs 25.8 ms, retainedMs 16.7 ms
@@ -26,9 +26,8 @@
 // so 30/30/25 ms sit between the green noise and the bite signal, inside the 50/50/100 ms caps: green margin 4.2 ms,
 // bite margin 4.8 ms. The bar puts a false PASS of the real fault first — at 35 ms the 50 ms bite (bite50C-3, 34.8)
 // passed, at 30 ms it fails and every clean green still passes. It is the gap-aware capture marker, NOT the tolerance,
-// that protects saturated runs: under heavy load unresolved pairs and the retained IQR gate read "could not judge"
-// (a failing infrastructure row, never a pass or a numeric false fail) rather than widening the tolerance. Proofs run
-// at 3 concurrent on an uncontended host. See RN-REPORT.md.
+// that protects frame resolution under load. Even when edges resolve, the timing-noise gates can withhold the
+// median verdict. See RN-REPORT.md and RN-SPREAD-REPORT.md.
 export const RASTER_AB_TOL_MS = Object.freeze({firstNewMs: 30, retainedMs: 25, settledMs: 30});
 export const RASTER_AB_BITE_MS = Object.freeze({firstNewMs: 50, retainedMs: 50, settledMs: 100});
 // resolution: an edge gap above R is unresolved. R = min(factor x median frame interval, capMs).
@@ -39,6 +38,10 @@ export const RASTER_AB_RES = Object.freeze({factor: 3, capMs: 50});
 // 50 ms ceiling (2 x the 25 ms tolerance). Lead ruling 1120233156-26c3. Under load the race stretches the IQR past
 // this, so retained reads could-not-judge; the opaque firstNewMs row carries the child-side slowdown under load.
 export const RASTER_AB_RETAINED_IQR_MAX_MS = 25;
+// RN-GREEN and RN-SPREAD: archived delay failures need up to 120.1 ms IQR. Above the 30 ms median tolerance,
+// the most negative resolved pair was -48.4 ms in a real bite and -69.5 ms or lower in the remaining false fails.
+const RASTER_AB_TIMING_IQR_MAX_MS = 125;
+const RASTER_AB_TIMING_REVERSE_MIN_MS = -60;
 
 export const median = a => { const s = [...a].sort((x, y) => x - y); return s.length ? (s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2) : null; };
 export const r1 = v => v == null ? null : Math.round(v * 10) / 10;
@@ -91,9 +94,8 @@ export function shrinkResolution(r, measures) {
 // pairsByMeasure: {firstNewMs: [{diff, resolved}, ...], settledMs: [...], retainedMs?: [...]}. diff is head - control
 // for one balanced-order pair (null when either side was not measured); resolved says both sides' edges were resolved.
 // Returns one verdict per measure: {ok, rule, tolMs, medianDiffMs, iqrMs, diffs, nResolved, nTotal, couldNotJudge}.
-// ok is false when fewer than minResolved pairs are resolved, or (retainedMs only) the resolved paired IQR exceeds
-// retainedIqrMaxMs (clip-race noise) — both named could-not-judge infrastructure rows, never a numeric false fail —
-// or the resolved paired median exceeds the tolerance. firstNewMs/settledMs have no IQR gate.
+// The median is judged only with enough resolved pairs and a bounded IQR. A numeric failure of firstNewMs or
+// settledMs also requires no resolved difference below the reverse bound. Refusals are failing infrastructure rows.
 export function rasterAbVerdict(pairsByMeasure, {tolMs = RASTER_AB_TOL_MS, minResolved = 6, retainedIqrMaxMs = RASTER_AB_RETAINED_IQR_MAX_MS} = {}) {
 	const out = {};
 	for (const [key, raw] of Object.entries(pairsByMeasure)) {
@@ -103,14 +105,24 @@ export function rasterAbVerdict(pairsByMeasure, {tolMs = RASTER_AB_TOL_MS, minRe
 		const med = r1(median(diffs));
 		const spread = iqr(diffs);
 		const tol = tolMs[key];
-		const tooFew = nResolved < minResolved;
-		const noisy = key === 'retainedMs' && !tooFew && spread != null && spread > retainedIqrMaxMs;
-		const couldNotJudge = tooFew || noisy;
+		const withinTolerance = med <= tol;
+		const timing = key === 'firstNewMs' || key === 'settledMs';
+		const resolvedCount = `${nResolved} of ${nTotal} resolved`;
+		let refusal;
+		if (nResolved < minResolved) refusal = `capture gaps, ${nResolved} of ${nTotal} pairs resolved (need ${minResolved})`;
+		else if (key === 'retainedMs' && spread != null && spread > retainedIqrMaxMs) refusal = `clip-race noise, IQR ${spread} ms over ${retainedIqrMaxMs} (${resolvedCount})`;
+		else if (timing && spread > RASTER_AB_TIMING_IQR_MAX_MS) refusal = `timing noise, IQR ${spread} ms over ${RASTER_AB_TIMING_IQR_MAX_MS} (${resolvedCount})`;
+		else if (timing && !withinTolerance) {
+			const reverse = diffs.reduce((lowest, diff) => Math.min(lowest, diff), Infinity);
+			if (reverse < RASTER_AB_TIMING_REVERSE_MIN_MS) {
+				refusal = `timing noise, reverse pair ${reverse} ms below ${RASTER_AB_TIMING_REVERSE_MIN_MS} (${resolvedCount})`;
+			}
+		}
+		const couldNotJudge = refusal != null;
 		let rule;
-		if (tooFew) rule = `could not judge: capture gaps, ${nResolved} of ${nTotal} pairs resolved (need ${minResolved})`;
-		else if (noisy) rule = `could not judge: clip-race noise, IQR ${spread} ms over ${retainedIqrMaxMs} (${nResolved} of ${nTotal} resolved)`;
+		if (couldNotJudge) rule = `could not judge: ${refusal}`;
 		else rule = `paired median(head - control) over ${nResolved} resolved pairs <= ${tol} ms`;
-		out[key] = {ok: couldNotJudge ? false : med <= tol, rule, tolMs: tol, medianDiffMs: med, iqrMs: spread, diffs, nResolved, nTotal, couldNotJudge};
+		out[key] = {ok: !couldNotJudge && withinTolerance, rule, tolMs: tol, medianDiffMs: med, iqrMs: spread, diffs, nResolved, nTotal, couldNotJudge};
 	}
 	return out;
 }

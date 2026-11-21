@@ -5,7 +5,7 @@
 // from the new-check proof runs are appended below once those runs land).
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {rasterAbVerdict, rasterAbStrict, captureResolution, edgeResolution, shrinkResolution, iqr, RASTER_AB_TOL_MS, RASTER_AB_BITE_MS, RASTER_AB_RETAINED_IQR_MAX_MS} from '../helpers/raster-ab-verdict.mjs';
+import {rasterAbVerdict, rasterAbStrict, captureResolution, edgeResolution, shrinkResolution, median, r1, iqr, RASTER_AB_TOL_MS, RASTER_AB_BITE_MS, RASTER_AB_RETAINED_IQR_MAX_MS} from '../helpers/raster-ab-verdict.mjs';
 
 const pairsOf = (head, control) => Object.fromEntries(Object.keys(head).map(k => [k, head[k].map((v, i) => ({diff: v - control[k][i], resolved: true}))]));
 
@@ -224,4 +224,154 @@ test('bite: the 34.8 ms delay50 shift fails at the ruled 30 ms tolerance (passed
 	assert.equal(v35.ok, true, 'at 35 it passed — the false pass the 30 ms ruling fixes');
 	assert.equal(RASTER_AB_TOL_MS.firstNewMs, 30);
 	assert.equal(RASTER_AB_TOL_MS.settledMs, 30);
+});
+
+// RN-SPREAD calibration, archived run.log summaries under pm7-tib-20261121 (paths and hashes in RN-SPREAD-REPORT.md).
+// Each measure carries its expected decision, recorded resolved differences, and attempted count when it differs.
+// Opaque firstNew and settled share the same frame. The 1070ti red records predate resolution logging, so their six
+// diffs are replayed unfiltered as a stress case.
+const TIMING_RECORDS = [
+	["run-baseline-mac", "normal", ["pass", [-16.2, -3.1, -2.3, 6.2, 2.3, -6.5]], ["pass", [-16.2, 13.6, -35.6, 6.2, 2.3, -23.1]]],
+	["run-baseline-mac", "opaque", ["pass", [27.5, -14.9, -8.2, -0.7, -14.5, -16.9]]],
+	["run-greenC-r1-1", "normal", ["pass", [22.2, -89.4, -4.6, 63.5, 14.9, -0.8, 11.6], 8], ["pass", [-44.5, 10.6, -4.5, 14.9, 32.5, -5.1], 8]],
+	["run-greenC-r1-1", "opaque", ["pass", [-26.7, 1.9, -22.2, -31.1, -91.9, -60.6, 110.1], 12]],
+	["run-greenC-r1-2", "normal", ["pass", [-2.3, -35.2, 35, -180.6, -29.4, 74.6], 11], ["pass", [65.1, -18.9, 7.9, -35.2, 12.6, -29.4, -25.4], 11]],
+	["run-greenC-r1-2", "opaque", ["pass", [135, -77.5, -14.1, -66.1, -200.1, 25.1, 1.5, 36.9], 11]],
+	["run-greenC-r1-3", "normal", ["pass", [-22.7, 17.1, -7.4, -13.4, 36.3, -11.3, 81.8, -24.9], 10], ["pass", [50.4, -24, -13.4, 19.6, 181.8, -8.2], 10]],
+	["run-greenC-r1-3", "opaque", ["pass", [67.5, 53, -139, 53.5, -15.6, -1.5], 12]],
+	["run-greenC-r2-1", "normal", ["pass", [16.7, -31.8, -34.1, 18.2, -14.2, -2.5], 11], ["pass", [426.5, -33.3, -48.5, -17.4, 34.9, 35.8], 11]],
+	["run-greenC-r2-1", "opaque", ["pass", [53.2, 36.8, 8.8, -18.6, -117, -48.5]]],
+	["run-greenC-r2-2", "normal", ["pass", [-53.6, -18, 37.2, 8.9, -16.5, 35.7, -0.1, -0.5], 10], ["pass", [20.5, -44.3, 8.9, 19.1, 16.5, -0.5], 10]],
+	["run-greenC-r2-2", "opaque", ["gaps", [-19.9, 14.1, 3.2, 17.1, -14.8], 12]],
+	["run-greenC-r2-3", "normal", ["pass", [8.1, -20, 16.6, -0.7, -2.1, -13.1, 0.5], 10], ["pass", [8.1, 13.4, -0.1, -2.1, 3.6, 0.5], 10]],
+	["run-greenC-r2-3", "opaque", ["pass", [-1.2, 3.2, -7.2, 75.2, -8.7, 5], 9]],
+	["run-bite50-1", "normal", ["pass", [263, 9.4, 27.2, -15.3, -13.3, -35.9]], ["fail", [79.6, 76.1, 60.5, 18, 86.7, 30.7]]],
+	["run-bite50-1", "opaque", ["fail", [70.8, 81.8, 73.9, 9.1, 22, 41.5, 83.2, 58, 66.6], 11]],
+	["run-bite50-2", "normal", ["pass", [36.4, -29.8, -54.9, 26.5, -7.1, 31.7], 9], ["fail", [119.7, 41.4, 86.9, 11.8, 9.5, 81.7], 9]],
+	["run-bite50-2", "opaque", ["fail", [44.7, -8, 48.5, 76.3, 25.9, 166.8], 7]],
+	["run-bite50-3", "normal", ["pass", [-12.7, 19.1, -6.3, 10.6, -138.7, -1.8, 20.4, 17.6, 122.9]], ["fail", [103.9, 28, 64.9, 53.7, 67.6, 22.9], 9]],
+	["run-bite50-3", "opaque", ["fail", [66.3, 42, 125.2, 96.7, 64.4, 73.4, -11.1], 12]],
+	["run-bite50-4", "normal", ["pass", [-46.2, 53.2, -32, -8.9, 11.2, -8.2], 8], ["fail", [37.1, 136.6, 18, 74.4, 44.5, 41.8], 8]],
+	["run-bite50-4", "opaque", ["fail", [101.3, 2.6, 65.7, 60.9, 22.9, 64.9, 68.6, -41.8], 12]],
+	["run-bite50C-1", "normal", ["pass", [33.1, -40.5, 15.1, 2.7, -14.5, -5.6], 12], ["gaps", [133.1, 59.5, 19.4, 35.5, 44.4], 12]],
+	["run-bite50C-1", "opaque", ["fail", [92.8, 2.9, 29.2, 129, 61.9, -48.4, 122.5, 12.3, 185.4], 10]],
+	["run-bite50C-2", "normal", ["pass", [129.9, 10.3, -48.7, 15.9, -47.8, -3.2], 12], ["fail", [29.9, 43.6, 208.8, -15.4, 140.1, -47.8], 12]],
+	["run-bite50C-2", "opaque", ["fail", [13.8, 70.2, 85.3, 113.3, 83, 37.5, 19.4]]],
+	["run-bite50C-3", "normal", ["gaps", [-44.3, -12.3, -5.3, 191.6], 12], ["gaps", [-10.9, -8.5, 52.7, -93.3, 116.2], 12]],
+	["run-bite50C-3", "opaque", ["fail", [29.9, 2.9, 67, 105, 39.6, 9.2], 8]],
+	["run-alone-1", "normal", ["iqr", [32.3, 10.1, -321.4, 36.2, 3.1, -274.1], 7], ["reverse", [32.3, -6.6, 11.9, 186.2, 36.4, -233.6, 125.9]]],
+	["run-alone-1", "opaque", ["iqr", [-47.1, -116, 71.8, 123.8, 135.5, 57.5]]],
+	["run-alone-2", "normal", ["pass", [43.3, 272.8, 1, 3.6, 34.8, -16.8]], ["pass", [26.7, -27.2, -15.7, 3.6, 151.5, -33.5]]],
+	["run-alone-2", "opaque", ["iqr", [-110.3, -213.2, -186.8, 165.6, 108, -22.4, -95.1]]],
+	["run-green3-r2-2", "normal", ["pass", [16.2, 12.6, -29.2, -66.9, -7.6, -18.8], 8], ["reverse", [199.6, 112.6, -12.6, -86.6, 75.7, -18.8], 8]],
+	["run-green3-r2-2", "opaque", ["reverse", [85.9, 0.2, 18.6, 135.3, -69.5, 67.8]]],
+	["run-red-1", "normal", ["iqr", [-217.4, -188.9, -110.5, -70.5, -27.7, -23.8]], ["iqr", [-443.8, -370.6, -5.6, 142.9, 155.6, 265.9]]],
+	["run-red-1", "opaque", ["iqr", [-166.8, -69.5, -38.9, 106.4, 116.4, 162.8]]],
+	["run-red-2", "normal", ["iqr", [-89, -79.8, -5.9, 75.2, 125.8, 143]], ["pass", [-272.5, -89, -40.3, 8.5, 36.8, 109.1]]],
+	["run-red-2", "opaque", ["pass", [-259.6, -114.1, -50.1, -38.7, -1.2, 26.1]]],
+	["run-red-3", "normal", ["pass", [-158.3, -62.7, -26.7, 13.9, 56.2, 92]], ["iqr", [-229.3, -158.3, -26.7, 56.2, 63.9, 108.7]]],
+	["run-red-3", "opaque", ["pass", [-190.1, -12.9, 3.5, 8, 24.1, 63.7]]],
+	["run-red-4", "normal", ["iqr", [-707.1, -240.8, -204.6, -139.4, -78.3, 818.6]], ["iqr", [-457.1, -187.9, -157.5, -44.9, 77.2, 618.7]]],
+	["run-red-4", "opaque", ["iqr", [-383.9, -349.3, -123.7, -16.8, 7.5, 105.8]]],
+];
+
+const resolvedPairs = (diffs, total = diffs.length) => [
+	...diffs.map(diff => ({diff, resolved: true})),
+	...Array.from({length: total - diffs.length}, () => ({diff: null, resolved: false}))
+];
+
+test('timing gate: preserve archived green and bite verdicts and withhold noisy identical-page failures', () => {
+	const expectedRules = {
+		pass: /^paired median/,
+		fail: /^paired median/,
+		gaps: /^could not judge: capture gaps/,
+		iqr: /^could not judge: timing noise, IQR/,
+		reverse: /^could not judge: timing noise, reverse pair/
+	};
+	for (const [run, surface, firstNew, settled = firstNew] of TIMING_RECORDS) {
+		for (const [key, [expected, diffs, total]] of Object.entries({firstNewMs: firstNew, settledMs: settled})) {
+			const verdict = rasterAbVerdict({[key]: resolvedPairs(diffs, total)})[key];
+			const label = run + ' ' + surface + ' ' + key;
+			assert.match(verdict.rule, expectedRules[expected], label);
+			assert.equal(verdict.ok, expected === 'pass', label);
+			assert.equal(verdict.couldNotJudge, expected !== 'pass' && expected !== 'fail', label);
+		}
+	}
+});
+
+test('timing gate: numeric bounds are inclusive, and refusals identify the gate and pair count', () => {
+	const iqrRecord = TIMING_RECORDS.find(([run, surface]) => run === 'run-alone-1' && surface === 'opaque');
+	const reverseRecord = TIMING_RECORDS.find(([run, surface]) => run === 'run-green3-r2-2' && surface === 'opaque');
+	const verdictOf = (diffs, total) => rasterAbVerdict({firstNewMs: resolvedPairs(diffs, total)}).firstNewMs;
+	assert.equal(verdictOf(iqrRecord[2][1]).rule, 'could not judge: timing noise, IQR 131.8 ms over 125 (6 of 6 resolved)');
+	assert.equal(verdictOf(reverseRecord[2][1]).rule, 'could not judge: timing noise, reverse pair -69.5 ms below -60 (6 of 6 resolved)');
+	const boundary = verdictOf([-60, -60, 31, 31, 65, 65]);
+	assert.equal(boundary.iqrMs, 93.8);
+	assert.equal(boundary.couldNotJudge, false, '-60 ms is allowed');
+	assert.equal(boundary.ok, false);
+	const iqrBoundary = verdictOf([-65, -65, -65, 60, 60, 60]);
+	assert.equal(iqrBoundary.iqrMs, 125);
+	assert.equal(iqrBoundary.ok, true, 'IQR 125 is allowed and the reverse gate applies only to numeric failures');
+	assert.equal(verdictOf([-66, -66, -66, 60, 60, 60]).couldNotJudge, true, 'IQR 126 withholds a pass');
+	const ignoredReverse = {diff: -200, resolved: false};
+	const failed = rasterAbVerdict({settledMs: [...resolvedPairs([31, 31, 31, 31, 31, 31]), ignoredReverse]}).settledMs;
+	assert.equal(failed.couldNotJudge, false, 'unresolved reverse pairs do not withhold a failure');
+	assert.equal(failed.ok, false);
+});
+
+// The verdict before RN-SPREAD. The old retained gate is part of the oracle.
+function previousDecision(key, pairs, {minResolved = 6, tolMs = RASTER_AB_TOL_MS, retainedIqrMaxMs = 25} = {}) {
+	const diffs = pairs.filter(pair => pair.resolved && pair.diff != null).map(pair => r1(pair.diff));
+	const couldNotJudge = diffs.length < minResolved || (key === 'retainedMs' && iqr(diffs) > retainedIqrMaxMs);
+	return {couldNotJudge, ok: !couldNotJudge && r1(median(diffs)) <= tolMs[key]};
+}
+
+function assertMonotonic(pairsByMeasure, label, options) {
+	const verdicts = rasterAbVerdict(pairsByMeasure, options);
+	for (const [key, pairs] of Object.entries(pairsByMeasure)) {
+		const before = previousDecision(key, pairs, options);
+		const after = verdicts[key];
+		const detail = label + ' ' + key;
+		if (after.couldNotJudge) assert.equal(after.ok, false, detail);
+		else assert.deepEqual({couldNotJudge: after.couldNotJudge, ok: after.ok}, before, detail);
+		if (after.ok) assert.equal(before.ok, true, detail);
+	}
+}
+
+test('timing gate only withholds old verdicts on real records and 4096 seeded random sets', () => {
+	for (const [run, surface, firstNew, settled = firstNew] of TIMING_RECORDS) {
+		const [, firstDiffs, firstTotal] = firstNew;
+		const [, settledDiffs, settledTotal] = settled;
+		assertMonotonic({firstNewMs: resolvedPairs(firstDiffs, firstTotal), settledMs: resolvedPairs(settledDiffs, settledTotal)}, run + ' ' + surface);
+	}
+	assertMonotonic(pairsOf(PROOF.head, PROOF.control), 'run-macproof');
+	for (const surface of ['normal', 'opaque']) {
+		assertMonotonic(pairsOf(BASELINE[surface].head, BASELINE[surface].control), 'run-baseline ' + surface);
+		assertMonotonic(greenPairs(surface), 'run-baseline-mac ' + surface);
+	}
+	assertMonotonic(retPairs(QUIET_RETAINED), 'quiet retained');
+	assertMonotonic(retPairs(NOISY_RETAINED), 'noisy retained');
+	assertMonotonic(retPairs(BITE50C_1_RETAINED), 'bite50C-1 retained');
+	for (const [index, diffs] of [BITE50C_1_FIRSTNEW, BITE50C_2_FIRSTNEW, BITE50C_3_FIRSTNEW].entries()) {
+		assertMonotonic({firstNewMs: resolvedPairs(diffs)}, 'bite50C-' + (index + 1));
+	}
+
+	let seed = 0xd85be76d;
+	const nextInt = limit => {
+		seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+		return Math.floor(seed / 0x100000000 * limit);
+	};
+	const randomPairs = () => {
+		const attempts = nextInt(15);
+		const centre = nextInt(181) - 90;
+		const amplitude = nextInt(241);
+		return Array.from({length: attempts}, () => ({
+			diff: nextInt(12) === 0 ? null : centre + (nextInt(2001) - 1000) * amplitude / 1000,
+			resolved: nextInt(8) !== 0
+		}));
+	};
+	for (let i = 0; i < 4096; i++) {
+		const options = i % 2 === 0 ? undefined : {minResolved: nextInt(9) + 1};
+		assertMonotonic({firstNewMs: randomPairs(), settledMs: randomPairs(), retainedMs: randomPairs()}, 'random set ' + i, options);
+	}
 });
