@@ -190,7 +190,7 @@ function markOn(k) {
   if (!sym) return { keyFocus: false, any: false };
   const b = sym.getBoundingClientRect(), o = getComputedStyle(sym), near = r => Math.abs((r.left + r.right) / 2 - (b.left + b.right) / 2) <= 3 && Math.abs((r.top + r.bottom) / 2 - (b.top + b.bottom) / 2) <= 3;
   const own = o.outlineStyle !== 'none' && parseFloat(o.outlineWidth) >= 2;
-  const L = [...document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]')].find(x => { const c = getComputedStyle(x); return c.display !== 'none' && parseFloat(c.opacity) > 0.5; });
+  const L = [...document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]')].find(x => { const c = getComputedStyle(x); return c.display !== 'none' && c.visibility === 'visible' && parseFloat(c.opacity) > 0.5; });
   const lens = !!L && near(L.getBoundingClientRect());
   const g = document.getElementById('d-abring'), gc = g && getComputedStyle(g), gr = g && g.getBoundingClientRect();
   const ring = !!g && gc.display !== 'none' && gc.visibility !== 'hidden' && gr.width > 4 && Math.abs(gr.left - b.left) <= 1 && Math.abs(gr.top - b.top) <= 1 && Math.abs(gr.width - b.width) <= 1 && Math.abs(gr.height - b.height) <= 1;
@@ -1011,7 +1011,7 @@ async function run(t, w, h) {
           P.frames++;
           const sym = act.querySelector('.symbol') || act, o = getComputedStyle(sym), b = sym.getBoundingClientRect();
           const own = o.outlineStyle !== 'none' && parseFloat(o.outlineWidth) >= 2;
-          const L = [...document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]')].find(x => { const c = getComputedStyle(x); return c.display !== 'none' && parseFloat(c.opacity) > 0.5; });
+          const L = [...document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]')].find(x => { const c = getComputedStyle(x); return c.display !== 'none' && c.visibility === 'visible' && parseFloat(c.opacity) > 0.5; });
           let onLens = false;
           if (L) { const a = L.getBoundingClientRect(); onLens = Math.abs((a.left + a.right) / 2 - (b.left + b.right) / 2) <= 3 && Math.abs((a.top + a.bottom) / 2 - (b.top + b.bottom) / 2) <= 3; if (!onLens) P.away++; }
           const g = document.getElementById('d-abring'), gc = g && getComputedStyle(g), gr = g && g.getBoundingClientRect();
