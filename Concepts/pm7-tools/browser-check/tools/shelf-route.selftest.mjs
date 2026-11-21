@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { runInNewContext } from 'node:vm';
 import { test } from 'node:test';
-import { copiedFullPath, pathNotePresent, pickEffectRows } from '../checks/shelf-route.check.mjs';
+import { copiedFullPath, pathNotePresent, pickEffectRows, shelfReachStatus } from '../checks/shelf-route.check.mjs';
 
 test('T78 copied path notes name the exact copied value', () => {
   assert.equal(pathNotePresent(['Copied src'], 'src', 'copy'), true);
@@ -44,4 +44,27 @@ test('T117 rejects an added row even when every live row has data-path', () => {
   assert.equal(live[1].getAttribute('data-shelf-fx-want'), null);
   assert.deepEqual(mismatches(['authored.rs', 'second.rs']), []);
   assert.equal(live[0].getAttribute('data-shelf-fx-want'), 'authored.rs');
+});
+
+function reachStatus({ opacity = '1', filter = 'none', x = 0 } = {}) {
+  const slot = {
+    parentElement: null,
+    checkVisibility: options => !options?.checkOpacity || Number(opacity) > 0,
+    getBoundingClientRect: () => ({ left: x, right: x + 250, top: 0, bottom: 500 }),
+  };
+  const view = { ...slot, parentElement: slot, checkVisibility: () => true };
+  const button = { ...view, parentElement: view, closest: () => view, isConnected: true, getAttribute: () => 'More' };
+  const read = runInNewContext('(' + shelfReachStatus.toString() + ')', {
+    document: { getElementById: () => slot },
+    getComputedStyle: el => ({ filter: el === slot ? filter : 'none' }),
+    innerWidth: 1280,
+    innerHeight: 500,
+  });
+  return read(button);
+}
+
+test('T98 rejects transparent or offscreen panels while their controls are scrollable', () => {
+  assert.equal(reachStatus().slot, true);
+  assert.equal(reachStatus({ opacity: '0' }).slot, false);
+  assert.equal(reachStatus({ x: -250 }).slot, false);
 });

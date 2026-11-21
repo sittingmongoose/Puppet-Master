@@ -52,6 +52,23 @@ export function pickEffectRows([p, toks, authored]) {
     return { i, want: o.el.getAttribute('data-shelf-fx-want'), folder: folder(o.el), expandable: o.el.hasAttribute('aria-expanded'), keys: o.el.tabIndex >= 0 && !o.el.closest('[inert]'), group: glabel(o.g) }; }) };
 }
 
+export function shelfReachStatus(e) {
+  const slot = document.getElementById('sidePanelSlot');
+  const view = e.closest('.side-panel-view');
+  const shown = node => !!node && node.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true, contentVisibilityAuto: true });
+  const onScreen = node => {
+    const r = node.getBoundingClientRect();
+    return Math.min(r.right, innerWidth) > Math.max(r.left, 0) &&
+      Math.min(r.bottom, innerHeight) > Math.max(r.top, 0);
+  };
+  return {
+    slot: shown(slot) && onScreen(slot),
+    view: shown(view) && onScreen(view),
+    shown: e.isConnected && shown(e),
+    what: (e.getAttribute('aria-label') || e.textContent || e.className || e.tagName).toString().trim().replace(/\s+/g, ' ').slice(0, 40),
+  };
+}
+
 // A popup trigger opens by every way the owners wire it: a press, and Enter, Space and ArrowDown on the focused trigger.
 const POPUP_INPUTS = ['mouse', 'enter', 'space', 'arrowdown'];
 const PKEY = { enter: 'Enter', space: ' ', arrowdown: 'ArrowDown' };
@@ -522,16 +539,19 @@ export default async function (t) {
     // exposed band), makes room first: the panel's expanded regions outside its scrollers fold (makeRoom), and the
     // control is reached again.
     let roomState = 'panel', folding = false;
+    const assertShown = async (loc, scroll = null) => {
+      const st = await loc.evaluate(shelfReachStatus, undefined, { timeout: 3000 })
+        .catch(e => ({ slot: false, view: false, shown: false, what: 'unavailable', error: String(e.message).split('\n')[0] }));
+      if (!st.slot || !st.view || !st.shown)
+        await t.check(`${target} ${roomState}: the control to reach (${st.what}) is in an open, shown side panel`, false,
+          JSON.stringify({ ...st, scroll }), { hard: true });
+    };
+    await assertShown(panel);
     const reach = async (loc, at = null) => {
-      // T70 (opus-recheck-kit8 finding C): a failed scroll is no longer swallowed silently. A control that cannot be
-      // scrolled to because its side panel (or the folded rail's overlay) closed, or because it is hidden, fails at once
-      // and by name; a control the panel's own layout covers still goes on to the wheel and the fold below.
-      const scrolled = await loc.scrollIntoViewIfNeeded({ timeout: 3000 }).then(() => null, (e) => String(e && e.message || e).split('\n')[0]);
-      if (scrolled !== null) {
-        const st = await loc.evaluate(e => { const slot = document.getElementById('sidePanelSlot'), view = e.closest('.side-panel-view');
-          return { slot: !!slot && slot.checkVisibility(), view: !view || view.checkVisibility(), shown: e.isConnected && e.checkVisibility(), what: (e.getAttribute('aria-label') || e.textContent || e.className || e.tagName).toString().trim().replace(/\s+/g, ' ').slice(0, 40) }; }).catch(() => ({ slot: false, view: false, shown: false, what: 'detached' }));
-        await t.check(`${target} ${roomState}: the control to reach (${st.what}) is in an open, shown side panel when its scroll fails`, st.slot && st.view && st.shown, JSON.stringify({ ...st, scroll: scrolled }), { hard: true });
-      }
+      // Playwright can scroll a control in a transparent or offscreen panel.
+      await assertShown(loc);
+      const scrollError = await loc.scrollIntoViewIfNeeded({ timeout: 3000 }).then(() => null, e => String(e.message).split('\n')[0]);
+      if (scrollError) await assertShown(loc, scrollError);
       let p = null, wheeled = false;
       for (let pass = 0; pass < 3; pass++) {
         await stable(loc);
@@ -578,7 +598,7 @@ export default async function (t) {
     // layout still moves) when the point was on top already; a real press at the point when the wheel had to bring
     // it into a scroller's exposed band, where Playwright's actionability check would wait on the strip above it.
     const pressAt = async (loc, p, opts = {}) => {
-      await t.check(`${target} ${roomState}: control (${p.what}) is still shown before its press`, await loc.isVisible(), JSON.stringify(p), { hard: true });
+      await assertShown(loc);
       if (!p.wheeled && p.onTop) await loc.click(opts.at ? { position: opts.at, button: opts.button } : { button: opts.button });
       else await t.page.mouse.click(off.x + p.x, off.y + p.y, opts.button ? { button: opts.button } : {});
     };
@@ -696,7 +716,7 @@ export default async function (t) {
         const tp = await reach(trig);
         await t.check(`${tag} reachable`, tp.onTop, JSON.stringify(tp), { hard: true });
         const pressTrig = async () => pressAt(trig, await reach(trig));
-        const openBy = async (input) => { if (input === 'mouse') await pressTrig(); else { await trig.focus(); await t.page.keyboard.press(PKEY[input]); } };
+        const openBy = async (input) => { if (input === 'mouse') await pressTrig(); else { await assertShown(trig); await trig.focus(); await t.page.keyboard.press(PKEY[input]); } };
         const got = {};
         for (const input of POPUP_INPUTS) {
           // A wrapper's mouse route is the census above; its keyboard routes are new here.
@@ -792,7 +812,7 @@ export default async function (t) {
         await t.check(`${target} ${state} no menu open before probing ${sig}`, !p.open.length, JSON.stringify(p.open), { hard: true });
         // A key opens the menu with the pointer off the panel: a menu opened by a key must not appear under the point the
         // right-click before it left (a branch would open under it on its own).
-        const keyOpen = async (input) => { await restPointer(); await row.focus(); await t.page.keyboard.press(KEY[input]); };
+        const keyOpen = async (input) => { await restPointer(); await assertShown(row); await row.focus(); await t.page.keyboard.press(KEY[input]); };
         for (const input of CTX_INPUTS) {
           if (input === 'mouse') {
             if (!p.at) { unreachable.push(input); continue; }
