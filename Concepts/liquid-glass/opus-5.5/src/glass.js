@@ -2702,7 +2702,7 @@
     take(T);
     // A cold press uses the selected pane's laid-out box. Once the reveal is painted, the
     // chip runs on the compositor so later main-thread work cannot pin it midway along.
-    if (holdStart) window.PM_START_ON_SHOWN(anims, { startHeld: true, frames: 10 });
+    if (holdStart) window.PM_START_ON_SHOWN(anims, { startHeld: true, frames: cold ? 6 : 10 });
     else requestAnimationFrame(function () {
       /* the first frame callback after the block was made: when it was first drawn (K.drawn), so its age is known before
          the compositor reports its start (its probe, an empty animation, starts in the lifecycle of the frame that first
@@ -3392,9 +3392,14 @@
      the strip's render in the frame after the click). Under Reduce Motion no press moves their chip (the pointerdown
      below steps aside), so the mark is all that does: it syncs after the layout of the frame that sets it, and the chip is
      on the chosen tab in the first frame that paints it chosen. On the lazy sync it stayed on the tab left for the 140 ms
-     timer and the next frame's layout (100-217 ms, 2 to 13 frames, 8 presses of 10 on the 12e page). In motion the press
-     has already moved the chip, and these marks wait as before */
+     timer and the next frame's layout (100-217 ms, 2 to 13 frames, 8 presses of 10 on the 12e page). A cold press also
+     needs this sync because its carry uses the chosen item's laid-out box. Other presses have already moved the chip. */
   var CHOSEN_HOT = '.pmw-tab';
+  function coldChosen(t) {
+    if (!t.hasAttribute('data-active')) return false;
+    var L = lenses.get(t.closest('.pmw-strip'));
+    return !!(L && L.pending && L.pending.cold && L.pending.el === t);
+  }
   function generatedMutation(rec) {
     var t = rec.target;
     if (t.nodeType === 1 && t.closest(GENERATED)) return true;
@@ -3445,7 +3450,8 @@
       /* a <details> opening shows sheets that were not drawn: they are mounted in this frame (inClosedDetails) */
       if (recs[i].attributeName === 'open' && t.tagName === 'DETAILS') { hot = true; dirtyScope(t); if (t.open) bakeSoon(t); }
       if (t.matches(HOT)) { hot = true; if (t.matches(MENU_HOT)) menuHot = true; }
-      else if (recs[i].attributeName === 'data-active' && t.matches(CHOSEN_HOT) && (quiet == null ? (quiet = reduced()) : quiet)) hot = true;
+      else if (recs[i].attributeName === 'data-active' && t.matches(CHOSEN_HOT) &&
+        (coldChosen(t) || (quiet == null ? (quiet = reduced()) : quiet))) hot = true;
       else for (var j = 0; j < recs[i].addedNodes.length; j++) { var nd = recs[i].addedNodes[j]; if (nd.nodeType === 1 && (nd.matches(HOT) || nd.matches('.pmu-card') || (nd.querySelector && nd.querySelector('.pmr-menu-list, .pmu-card, #pm-settings-root .segmented')))) { hot = true; if (area && (nd.matches(MENU_HOT) || (nd.querySelector && nd.querySelector('.pmr-menu-list')))) menuHot = true; break; } }
     }
     if (!relevant) return;
