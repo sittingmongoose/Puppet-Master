@@ -185,17 +185,81 @@ const brief = r => r && { key: r.key, lit: r.lit, focused: r.focused, ...(r.unre
 // A key-focused bar control's mark as the page holds it (not its paint, which the pixel reads judge): the rail's focus
 // ring (.d-abring on its tile's box, F96-1 round 8), its own outline (where anchor positioning is missing), or, on builds
 // before round 8, Liquid Glass's flagged lens painted at rest on it.
-function markOn(k) {
-  const i = document.querySelector(`#activityBar .icon[data-ab-id="${k}"]`), sym = i && (i.querySelector('.symbol') || i);
-  if (!sym) return { keyFocus: false, any: false };
-  const b = sym.getBoundingClientRect(), o = getComputedStyle(sym), near = r => Math.abs((r.left + r.right) / 2 - (b.left + b.right) / 2) <= 3 && Math.abs((r.top + r.bottom) / 2 - (b.top + b.bottom) / 2) <= 3;
-  const own = o.outlineStyle !== 'none' && parseFloat(o.outlineWidth) >= 2;
-  const L = [...document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]')].find(x => { const c = getComputedStyle(x); return c.display !== 'none' && c.visibility === 'visible' && parseFloat(c.opacity) > 0.5; });
-  const lens = !!L && near(L.getBoundingClientRect());
-  const g = document.getElementById('d-abring'), gc = g && getComputedStyle(g), gr = g && g.getBoundingClientRect();
-  const ring = !!g && gc.display !== 'none' && gc.visibility !== 'hidden' && gr.width > 4 && Math.abs(gr.left - b.left) <= 1 && Math.abs(gr.top - b.top) <= 1 && Math.abs(gr.width - b.width) <= 1 && Math.abs(gr.height - b.height) <= 1;
-  const keyFocus = document.activeElement === i && i.matches(':focus-visible');
-  return { keyFocus, ring, own, lens, any: keyFocus && (ring || own || lens) };
+// A key-focused icon can draw its own outline, the anchored ring or the flagged Glass lens.
+function markOn(input) {
+  const { target, ms, ready } = typeof input === 'string' ? { target: input } : input;
+  const visible = c => c.display !== 'none' && c.visibility === 'visible' && parseFloat(c.opacity) > 0;
+  const read = () => {
+    const icon = document.querySelector(`#activityBar .icon[data-ab-id="${target}"]`);
+    const keyFocus = !!icon && document.activeElement === icon && icon.matches(':focus-visible');
+    if (!keyFocus) return { keyFocus, any: false };
+    const sym = icon.querySelector('.symbol') || icon;
+    const b = sym.getBoundingClientRect(), o = getComputedStyle(sym);
+    const own = visible(o) && o.outlineStyle !== 'none' && parseFloat(o.outlineWidth) >= 2;
+    let centered = false, lens = false, away = false;
+    for (const element of document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"]')) {
+      const c = getComputedStyle(element);
+      if (!visible(c) || parseFloat(c.opacity) <= 0.5) continue;
+      const a = element.getBoundingClientRect();
+      const near = Math.abs((a.left + a.right) / 2 - (b.left + b.right) / 2) <= 3
+        && Math.abs((a.top + a.bottom) / 2 - (b.top + b.bottom) / 2) <= 3;
+      centered ||= near;
+      if (element.hasAttribute('data-lg-focus')) {
+        lens ||= near;
+        away ||= !near;
+      }
+    }
+    const g = document.getElementById('d-abring'), gr = g?.getBoundingClientRect();
+    const ring = !!g && visible(getComputedStyle(g)) && gr.width > 4
+      && Math.abs(gr.left - b.left) <= 1 && Math.abs(gr.top - b.top) <= 1
+      && Math.abs(gr.width - b.width) <= 1 && Math.abs(gr.height - b.height) <= 1;
+    return { keyFocus, ring, own, lens, away, centered, any: ring || own || lens };
+  };
+  if (!ms) {
+    const result = read();
+    return ready ? result.any : result;
+  }
+
+  // Change a probe in rAF so ResizeObserver reads the frame after the app's rAF callbacks and layout.
+  const sample = window.__fo96s = { frames: 0, none: 0, away: 0, at: [], arrival: null, handover: null, late: false, done: false };
+  const started = performance.now();
+  const probe = document.createElement('div');
+  Object.assign(probe.style, { position: 'fixed', left: '0', top: '0', width: '1px', height: '1px', opacity: '0', pointerEvents: 'none' });
+  document.body.appendChild(probe);
+  const observer = new ResizeObserver(() => {
+    const mark = read();
+    if (!mark.keyFocus) return;
+    sample.frames++;
+    if (!mark.any) {
+      sample.none++;
+      if (sample.at.length < 4) sample.at.push(Math.round(performance.now() - started));
+    }
+    if (mark.away) sample.away++;
+    if (!mark.centered) {
+      sample.arrival = null;
+      sample.handover = null;
+    } else {
+      sample.arrival ??= sample.frames;
+      if (mark.lens && sample.handover === null) {
+        sample.handover = sample.frames;
+        sample.late ||= sample.handover !== sample.arrival;
+      }
+    }
+  });
+  observer.observe(probe);
+  let flip = false;
+  const step = () => {
+    if (performance.now() - started >= ms) {
+      observer.disconnect();
+      probe.remove();
+      sample.done = true;
+      return;
+    }
+    flip = !flip;
+    probe.style.width = flip ? '2px' : '1px';
+    requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
 }
 
 // Names' letters, every name in view (K-F96b-3: a mark must not cross a neighbour's name either). The letters are found
@@ -776,17 +840,15 @@ async function run(t, w, h) {
     return { key: target, lit: b.lit, focused: !moved, moved, brackets: b.brackets, clip: b.brackets ? null : b.clip,
       ...(b.brackets ? { corners: bestCorners(r0, r1, b, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy, both), sides(r0, r1, b.item, ox, oy, both)) }) };
   };
-  // Frames where the lens carries the mark away from the focused control (F96b-2), sampled every frame from just before
-  // a key until 900 ms after it; only a page whose rail lens can carry the mark (Glass with Liquid Glass on) can count any.
-  const startLensSampler = () => f.evaluate(() => { window.__fo96s = { frames: 0, flagged: 0, away: 0 }; const t0 = performance.now();
-    const step = () => { const s = window.__fo96s; s.frames++;
-      const L = [...document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]')].find(x => { const c = getComputedStyle(x); return c.display !== 'none' && c.visibility !== 'hidden' && parseFloat(c.opacity) > 0.5; }), act = document.activeElement;
-      if (L && act && act.closest && act.closest('#activityBar')) {
-        s.flagged++; const a = L.getBoundingClientRect(), q = (act.querySelector('.symbol') || act).getBoundingClientRect();
-        if (Math.abs((a.left + a.right) / 2 - (q.left + q.right) / 2) > 3 || Math.abs((a.top + a.bottom) / 2 - (q.top + q.bottom) / 2) > 3) s.away++; }
-      if (performance.now() - t0 < 900) requestAnimationFrame(step); };
-    requestAnimationFrame(step); });
-  const lensSamples = () => f.evaluate(() => window.__fo96s);
+  const sampleMark = async (target, act) => {
+    const ready = await f.waitForFunction(markOn, { target, ready: true }, { timeout: 2000 }).then(() => true, () => false);
+    await f.evaluate(markOn, { target, ms: 900 });
+    await act();
+    await f.waitForFunction(() => window.__fo96s?.done, null, { timeout: 5000 }).catch(() => {});
+    const result = await f.evaluate(() => window.__fo96s);
+    return { ready, ...result };
+  };
+  const keptMark = r => !!r && r.ready && r.done && r.frames > 0 && r.none === 0 && r.away === 0;
   const byTab = target => async () => { for (let i = 0; i < controls.length; i++) { await kb.press('Tab'); if ((await key()).key === target) return; } };
   await rest();
   const paint1 = [];
@@ -976,7 +1038,8 @@ async function run(t, w, h) {
     }
     let lens = null;
     if (await tabTo('search')) {
-      await startLensSampler(); await kb.press('Enter'); await f.waitForTimeout(950); lens = await lensSamples();
+      if (look.startsWith('glass-')) lens = await sampleMark('search', () => kb.press('Enter'));
+      else await kb.press('Enter');
       acts.push({ after: 'Enter on Search', ...(await markNow('search')) });
     }
     if (!(await f.evaluate(panelState, 'files')).open && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
@@ -984,7 +1047,10 @@ async function run(t, w, h) {
     const actsRead = acts.filter(a => !a.skipped);
     await t.check(`${at} ${look}: the key focus mark at 3:1 on every side${both3} after Enter, Enter again and a click on the open panel's icon, and after Enter changes the panel`,
       actsRead.length >= 3 && actsRead.every(ok), JSON.stringify(acts.map(a => ({ after: a.after, ...brief(a) }))));
-    await t.check(`${at} ${look}: the lens never carries the mark away from the focused item when Enter changes the panel`, !!lens && lens.away === 0, JSON.stringify(lens));
+    if (look.startsWith('glass-')) {
+      await t.check(`${at} ${look}: Enter on Search keeps a focus mark in every frame and any lens handoff happens on arrival`,
+        keptMark(lens) && !lens.late, JSON.stringify(lens));
+    }
     await rest();
     // the collapsed bar at rest, focus off it: every control on screen (K-F96c-2)
     await f.evaluate(placeSentinel, ['#activityBar', 'before']); await focusQuiet(null); await frames(f, 2);
@@ -1000,29 +1066,6 @@ async function run(t, w, h) {
     // lens and its ring already on Search). Reduced Motion is the app's own setting (data-motion="reduced", as Settings
     // sets it) and the media query, so both surfaces take it; both are put back after.
     if (/^glass-/.test(look)) {
-      // started (and awaited) before the key is sent, so no frame after it is missed; read back once it has run ms
-      const frameRead = ms => f.evaluate(ms => {
-        const P = window.__fo96f = { frames: 0, none: 0, away: 0, at: [], done: false }, t0 = performance.now(), probe = document.createElement('div');
-        Object.assign(probe.style, { position: 'fixed', left: '0', top: '0', width: '1px', height: '1px', opacity: '0', pointerEvents: 'none' });
-        document.body.appendChild(probe);
-        const ro = new ResizeObserver(() => {
-          const act = document.activeElement;
-          if (!act || !act.matches || !act.matches('#activityBar .icon') || !act.matches(':focus-visible')) return;
-          P.frames++;
-          const sym = act.querySelector('.symbol') || act, o = getComputedStyle(sym), b = sym.getBoundingClientRect();
-          const own = o.outlineStyle !== 'none' && parseFloat(o.outlineWidth) >= 2;
-          const L = [...document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]')].find(x => { const c = getComputedStyle(x); return c.display !== 'none' && c.visibility === 'visible' && parseFloat(c.opacity) > 0.5; });
-          let onLens = false;
-          if (L) { const a = L.getBoundingClientRect(); onLens = Math.abs((a.left + a.right) / 2 - (b.left + b.right) / 2) <= 3 && Math.abs((a.top + a.bottom) / 2 - (b.top + b.bottom) / 2) <= 3; if (!onLens) P.away++; }
-          const g = document.getElementById('d-abring'), gc = g && getComputedStyle(g), gr = g && g.getBoundingClientRect();
-          const onRing = !!g && gc.display !== 'none' && gc.visibility !== 'hidden' && gr.width > 4 && Math.abs(gr.left - b.left) <= 1 && Math.abs(gr.top - b.top) <= 1 && Math.abs(gr.width - b.width) <= 1 && Math.abs(gr.height - b.height) <= 1;
-          if (!own && !onLens && !onRing) { P.none++; P.at.push(Math.round(performance.now() - t0)); }
-        });
-        ro.observe(probe);
-        let flip = false;
-        const step = () => { flip = !flip; probe.style.width = flip ? '2px' : '1px'; if (performance.now() - t0 < ms) requestAnimationFrame(step); else { ro.disconnect(); probe.remove(); P.done = true; } };
-        requestAnimationFrame(step);
-      }, ms);
       // the side panel on screen (below 1920 it lies over the page and can be folded away while it keeps its open state)
       const shown = () => f.evaluate(() => { const s = document.getElementById('sidePanelSlot'); return !!s && s.getClientRects().length > 0 && getComputedStyle(s).display !== 'none'; });
       const was = await f.evaluate(() => { const r = document.documentElement, w = r.getAttribute('data-motion'); r.setAttribute('data-motion', 'reduced'); return w; });
@@ -1034,9 +1077,7 @@ async function run(t, w, h) {
       const pre = (await f.evaluate(markOn, 'files')).any;
       const reads = [];
       for (const [k, label] of [['Control+2', 'Ctrl+2, the lens leaves it'], ['Control+1', 'Ctrl+1, the lens comes back']]) {
-        await frameRead(900); await kb.press(k);
-        await f.waitForFunction(() => window.__fo96f && window.__fo96f.done, null, { timeout: 5000 }).catch(() => {});
-        const r = await f.evaluate(() => { const P = window.__fo96f; return { frames: P.frames, none: P.none, away: P.away, at: P.at.slice(0, 4), done: P.done }; });
+        const r = await sampleMark('files', () => kb.press(k));
         reads.push({ key: label, ...r }); await f.waitForTimeout(300);
       }
       await f.evaluate(w => { const r = document.documentElement; if (w === null) r.removeAttribute('data-motion'); else r.setAttribute('data-motion', w); }, was);
@@ -1044,7 +1085,7 @@ async function run(t, w, h) {
       if (!(await f.evaluate(panelState, 'files')).open && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
       t.log(`${at} ${look} Reduced Motion, panel shortcuts with the focus kept on Files: a mark before ${pre}, ${JSON.stringify(reads)}`);
       await t.check(`${at} ${look}: in Reduced Motion, Ctrl+2 and Ctrl+1 with the key focus kept on the open panel's icon leave it a mark in every frame, and no flagged lens away from it`,
-        reached && pre && reads.every(r => r.done && r.frames > 0 && r.none === 0 && r.away === 0), JSON.stringify({ reached, pre, reads }));
+        reached && pre && reads.every(keptMark), JSON.stringify({ reached, pre, reads }));
       // ...and in motion, a real click on the key-focused open icon, with no key in the bar: the panel closes (at 1920) or
       // folds away (below it, where the panel lies over the page and keeps its open state), and the lens hides in one
       // step. 981463667f left one frame with no mark there. The panel is shown again after, by Enter.
@@ -1052,15 +1093,16 @@ async function run(t, w, h) {
       const reachedC = await tabTo('files');
       await f.waitForTimeout(1600);
       const preC = (await f.evaluate(markOn, 'files')).any;
-      await frameRead(900); await f.locator('#activityBar .icon[data-ab-id="files"]').click(); await rest();
-      await f.waitForFunction(() => window.__fo96f && window.__fo96f.done, null, { timeout: 5000 }).catch(() => {});
-      const click = await f.evaluate(() => { const P = window.__fo96f; return { frames: P.frames, none: P.none, away: P.away, at: P.at.slice(0, 4), done: P.done }; });
+      const click = await sampleMark('files', async () => {
+        await f.locator('#activityBar .icon[data-ab-id="files"]').click();
+        await rest();
+      });
       const closed = !(await shown());
       if (closed && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
       if (!(await shown()) && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
       t.log(`${at} ${look} a click on the key-focused open Files: a mark before ${preC}, panel gone ${closed}, ${JSON.stringify(click)}`);
       await t.check(`${at} ${look}: a real click on the key-focused open panel's icon leaves it a mark in every frame as the panel goes and the lens hides`,
-        reachedC && preC && click.done && click.frames > 0 && click.none === 0 && click.away === 0 && closed, JSON.stringify({ reachedC, preC, closed, click }));
+        reachedC && preC && keptMark(click) && closed, JSON.stringify({ reachedC, preC, closed, click }));
     }
     // the bar with its names shown (the toggle)
     await f.evaluate(() => document.getElementById('activityBarToggle').click());
