@@ -9,7 +9,9 @@
 //   screen. settings-index-spy passed: it reads "the section in view" from the same adopted anchors.
 // - Reached by the top tabs (Media & Output, then its Abilities tab), Abilities listed no entries at all: the tab redraw
 //   morphs the page body, the leaving copy still held the adopted anchors, so the arriving copy got none.
-// - pm4-settings-css.css gave .page-index a 1 px right border: drawn in Basic, Retro and NieR, both modes.
+// - pm4-settings-css.css gave .page-index a 1 px right border: drawn in Basic, Friendly, Retro and NieR, both modes.
+// - liquid-glass glass.css coloured the lit entry under an open tab with --pm-switch-ink-on, the ink for words on the
+//   switcher's chip, while drawing no chip there: 1.0-1.3:1 in Basic, Friendly Dark, Retro and NieR (a bare dot).
 // The walk here is judged from the manager's own markup (the "For the whole project" card, .o55-media-switches, and the
 // list/detail block, .pm51-split) and the index entries' labels, never from data-section-id anchors.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-index-anchors.check.mjs --set page=<build>
@@ -110,6 +112,34 @@ export const tests = Object.fromEntries(ROUTES.flatMap((route) => [
 		await t.check(`every judged step lights the card being read (${route}): For the whole project on its card, Media abilities on the list`, wrong.length === 0, wrong.slice(0, 6).join(' | ') + (wrong.length > 6 ? ` and ${wrong.length - 6} more` : ''));
 	}]
 ]).concat([
+	['Jared 2026-11-21 the lit entry under Abilities reads at 4.5:1 or more, in every look', async (t) => {
+		const f = await openAbilities(t, 'side index');
+		await f.locator('#pm-settings-root .page-index-card .pm51-index-sub .index-link[data-section="media-abilities"]:visible').first().click();
+		await t.page.waitForTimeout(900);
+		await still(t, f);
+		const low = [], seen = [];
+		for (const look of LOOKS) {
+			await t.app.look(look);
+			await t.settle();
+			const m = await f.evaluate(() => {
+				const el = document.querySelector('#pm-settings-root .page-index-card .pm51-index-sub > .index-link.is-active');
+				if (!el) return { none: true, theme: document.documentElement.getAttribute('data-theme') };
+				const rgba = (c) => { const m = /rgba?\(([^)]+)\)/.exec(c); if (!m) return null; const p = m[1].split(/[ ,/]+/).filter(Boolean).map(Number); return { c: p.slice(0, 3), a: p.length > 3 ? p[3] : 1 }; };
+				/* the ground under the words: the nearest ancestor fill that is mostly opaque (the entry's own fill counts) */
+				let ground = null;
+				for (let e = el; e && !ground; e = e.parentElement) { const v = rgba(getComputedStyle(e).backgroundColor); if (v && v.a >= 0.5) ground = v.c; }
+				ground = ground || [0, 0, 0];
+				const L = (c) => { const ch = c.map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }); return 0.2126 * ch[0] + 0.7152 * ch[1] + 0.0722 * ch[2]; };
+				const fg = rgba(getComputedStyle(el).color).c, a = L(fg), b = L(ground);
+				return { theme: document.documentElement.getAttribute('data-theme'), label: el.textContent.trim(), ratio: (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05), fg: fg.join(','), ground: ground.join(',') };
+			});
+			seen.push(`${look}=${m.theme}`);
+			if (m.none) { low.push(`${look}: no lit entry under Abilities`); continue; }
+			if (m.label !== 'Media abilities' || m.ratio < 4.5) low.push(`${look} (${m.theme}): "${m.label}" ${m.ratio.toFixed(2)}:1, rgb(${m.fg}) on rgb(${m.ground})`);
+		}
+		t.log('looks measured: ' + seen.join(' '));
+		await t.check('Media abilities is the lit entry and its words read at 4.5:1 or more in all ten looks', low.length === 0, low.join(' | '));
+	}],
 	['Jared 2026-11-21 the side index draws no line on its right, in every look', async (t) => {
 		const f = await t.app.open();
 		await t.viewport(1440, 900);
