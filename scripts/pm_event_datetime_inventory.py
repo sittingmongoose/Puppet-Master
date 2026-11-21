@@ -143,10 +143,6 @@ def adjudicate_snapshot_line(root, path, value, coverage):
 
 
 CURRENT_RUN_POINTER = "Plans/.plan_migration/current_run.json"
-# Repository-location variables a calling git hook can export. They would point the history reader at a
-# repository other than the tree under --root, so the reader never inherits them.
-_GIT_LOCATION_ENV = frozenset(("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_OBJECT_DIRECTORY",
-                               "GIT_ALTERNATE_OBJECT_DIRECTORIES", "GIT_COMMON_DIR", "GIT_NAMESPACE"))
 
 
 def listed_snapshot_runs(root):
@@ -170,12 +166,14 @@ def listed_snapshot_runs(root):
 class SnapshotHistory:
     """Owner bytes as of the commit that last changed a run's span_map.jsonl, read through git objects.
 
-    One reader serves one scan. It starts git only when a copy is not fresh and never writes.
+    One reader serves one scan. It starts git only when a copy is not fresh and never writes. It inherits
+    no GIT_ variable: a calling git hook exports GIT_DIR, GIT_WORK_TREE, GIT_INDEX_FILE and others, which
+    would point it at a repository other than the tree under --root.
     """
 
     def __init__(self, root):
         self.root = Path(root)
-        self.env = {key: value for key, value in os.environ.items() if key not in _GIT_LOCATION_ENV}
+        self.env = {key: value for key, value in os.environ.items() if not key.startswith("GIT_")}
         self.repository, self.runs, self.blobs, self.batch = None, {}, {}, None
 
     def _git(self, *args):
@@ -237,8 +235,9 @@ class SnapshotHistory:
         except OSError:
             return None, "snapshot_history_unverifiable"
         commit = done.stdout.decode("ascii", "replace").strip()
-        if done.returncode or not re.fullmatch(r"[0-9a-f]{40}(?:[0-9a-f]{24})?", commit):
-            return None, "snapshot_history_unverifiable"  # no commit carries the run: it is uncommitted
+        # A SHA-1 or SHA-256 object name, or nothing when no commit carries the run (it is uncommitted).
+        if done.returncode or len(commit) not in (40, 64) or not all(c in "0123456789abcdef" for c in commit):
+            return None, "snapshot_history_unverifiable"
         committed = self.blob(commit, span_map)
         try:
             working = (self.root / span_map).read_bytes()
