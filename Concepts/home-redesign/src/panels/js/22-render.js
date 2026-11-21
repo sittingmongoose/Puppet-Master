@@ -269,6 +269,9 @@ render.bodyOf = function (tabId) { var r = instances[tabId]; return r ? r.host :
 /* ---- tab bodies ---- */
 function syncBodies(panelEl, p, l, panelHidden) {
   var body = panelEl.querySelector('.pmw-body');
+  var nextAgents = instances['dashboard:agents'];
+  var preparedAgents = !panelHidden && !p.collapsed && p.active === 'dashboard:agents' && nextAgents &&
+    nextAgents.host.hasAttribute('data-pmw-prepared') && nextAgents.preparedFor === agentsPreparationKey();
   for (var i = 0; i < p.tabs.length; i++) {
     var tid = p.tabs[i];
     var active = tid === p.active;
@@ -284,6 +287,21 @@ function syncBodies(panelEl, p, l, panelHidden) {
     if (visible && rec.host.hasAttribute('data-pmw-prepared')) {
       if (rec.raster) rec.raster.cancel();
       rec.host.removeAttribute('data-pmw-prepared');
+      rec.host.inert = false;
+    }
+    if (preparedAgents && tid === 'dashboard:home' && rec.visible && !visible) {
+      // Hide Home immediately. Retire its render layer after the first carry has landed.
+      rec.host.setAttribute('data-pmw-retiring', '');
+      rec.host.inert = true;
+      rec.retireTimer = setTimeout(function (retiring) {
+        retiring.host.removeAttribute('data-pmw-retiring');
+        retiring.host.inert = false;
+        retiring.retireTimer = 0;
+      }, 420, rec);
+    } else if (visible && rec.retireTimer) {
+      clearTimeout(rec.retireTimer);
+      rec.retireTimer = 0;
+      rec.host.removeAttribute('data-pmw-retiring');
       rec.host.inert = false;
     }
     setAttr(rec.host, 'hidden', !visible);
@@ -335,7 +353,7 @@ function prepareAgents() {
       // Opacity zero skips raster. As in the look cover, one colour level draws the layer during idle.
       requestAnimationFrame(function () { requestAnimationFrame(function () {
         if (instances[id] !== entry || entry.visible || !homeIsPage()) return;
-        entry.raster = entry.host.animate([{ opacity: 0.004 }, { opacity: 0.004 }], { duration: 160 });
+        entry.raster = entry.host.animate([{ opacity: 0.004 }, { opacity: 0.004 }], { duration: 160, fill: 'forwards' });
       }); });
     }
   }, 1000, { quiet: 160 });
@@ -372,6 +390,7 @@ function unmountTab(tabId) {
   var e = instances[tabId];
   if (!e) return;
   delete instances[tabId];
+  if (e.retireTimer) clearTimeout(e.retireTimer);
   try { if (e.instance && e.instance.unmount) e.instance.unmount(); } catch (err) { try { console.error('[pm-home] unmount failed', err); } catch (_) {} }
   e.off.forEach(function (fn) { try { fn(); } catch (_) {} });
   if (bodyObserver) bodyObserver.unobserve(e.host);

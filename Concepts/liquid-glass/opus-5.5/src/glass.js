@@ -2733,11 +2733,22 @@
         from = from0;
       } else pose = function (t) { return carryPose(motion, ease(Math.min(1, t / dur)), A, B); };
       if (prepare) {
+        var railLanding = filesSwitcher(strip), landingDistance = railLanding ? 1 : 0.01;
         for (var edge = FRAME_MS; edge < dur; edge += FRAME_MS) {
           var p = pose(edge);
-          if (p.lift || Math.abs(p.x - B.x) > 0.01 || Math.abs(p.y - B.y) > 0.01 ||
-              Math.abs(p.sx * p.w - B.w) > 1 || Math.abs(p.sy * p.h - B.h) > 1) continue;
-          end = edge;
+          if (p.lift > (railLanding ? 0.02 : 0) || Math.abs(p.x - B.x) > landingDistance ||
+              Math.abs(p.y - B.y) > landingDistance) continue;
+          // Take the last subpixel of travel with the squash recovery. The rail's
+          // narrow chip resolves the remaining width into one visible frame.
+          var landedAt = edge, landing = p, approach = pose;
+          end = Math.min(dur, landedAt + (railLanding ? 1 : 3) * FRAME_MS);
+          pose = function (t) {
+            if (t < landedAt) return approach(t);
+            var progress = Math.min(1, (t - landedAt) / (end - landedAt));
+            function finish(field) { return landing[field] + (B[field] - landing[field]) * progress; }
+            return { x: finish('x'), y: finish('y'), w: finish('w'), h: finish('h'), lift: landing.lift * (1 - progress),
+              sx: landing.sx + (1 - landing.sx) * progress, sy: landing.sy + (1 - landing.sy) * progress };
+          };
           break;
         }
       }
@@ -2842,7 +2853,7 @@
       anims.forEach(function (a) { a.pause(); a.__pmHeld = true; });
       requestAnimationFrame(function firstAvailable(frame) {
         if (L.carry !== K) return;
-        if (frame - made < 30) { requestAnimationFrame(firstAvailable); return; }
+        if (!filesSwitcher(strip) && frame - made < 30) { requestAnimationFrame(firstAvailable); return; }
         anims.forEach(function (a) { a.__pmHeld = false; a.play(); });
         if (splice) requestAnimationFrame(function positionRestingChip() {
           if (L.carry !== K) return;
