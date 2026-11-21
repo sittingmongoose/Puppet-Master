@@ -317,6 +317,7 @@ The strip under PMConcept7 is for reviewing and is not part of the design.
 | `layer/fix.css` | The fix pass's parts, in the chat's, Home's and Usage's own material. |
 | `concepts/a|b|c.*` | Each concept's layout (C is Split; with `c-v3.*` below it shows as Split v3). |
 | `concepts/c-v3.css`, `concepts/c-v3.js` | Split v3: the stylesheet that sets Split's page for reading, and the script that turns it on at load and marks long values. `PJX.read.get()`; `PJX.read.set('v2' \| 'v3')` shows Split's base layout or v3 again, for the checks only. |
+| [`tools/checks/history.check.mjs`](tools/checks/history.check.mjs) | Presses the visible History row menu item in a controlled scroller. The item stays in place and the Move this chat into a project dialog opens. |
 
 ## What it would touch in Plans
 

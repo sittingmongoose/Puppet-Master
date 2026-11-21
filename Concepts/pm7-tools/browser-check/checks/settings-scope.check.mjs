@@ -637,7 +637,7 @@ export default async function (t) {
 		await t.check('YOLO still asks before FileSafe goes off', y.fsGuard);
 		await t.check('YOLO: a project that can’t take a change still refuses it', y.refuse);
 		await t.check('YOLO still asks which computer keeps your settings', y.join);
-		await t.check('YOLO: Copy applies without the Copy yes and shows its preview as the report', y.copyDone && y.copyWrote === 'openai/gpt-5', JSON.stringify(y));
+		await t.check('YOLO: Copy applies without the Copy yes and shows its preview as the report', y.copyDone && y.copyWrote === 'openai-codex/gpt-codex', JSON.stringify(y));
 		await t.check('YOLO: git push and publish run without asking, and are reported', y.pushRan);
 		await t.check('YOLO still asks for a path outside the project, and makes no Always rule', y.outsideAsks && y.noAlways);
 		await t.check('Regular asks, and offers Always allow', y.regularAsks && y.alwaysOffered);

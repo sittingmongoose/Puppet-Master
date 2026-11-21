@@ -182,7 +182,9 @@
     // only a row the inventory types as a map or a list (a path's structured default, "relative to the computer's home",
     // still reads as the path the page holds)
     const inv = PSX.factsOf && PSX.factsOf(id), invType = PSX.layering && PSX.layering.types[id];
-    if (inv && ['keyvalue', 'list', 'multiselect'].includes(invType) && inv.default && typeof inv.default === 'object' && !(s.value && typeof s.value === 'object') && !PSX.holds(id, inv.default)) DEFAULTS[id] = clone(inv.default);
+    // (Jared 2026-11-20: also where the page now draws its own list for it, F's FO-186 nickname list, whose setting still
+    // has the old box's "" as its default; the row's default is {} either way, or a fresh page marks it Changed)
+    if (inv && ['keyvalue', 'list', 'multiselect'].includes(invType) && inv.default && typeof inv.default === 'object' && !(s.value && typeof s.value === 'object')) DEFAULTS[id] = clone(inv.default);
     if (everywhereValue !== undefined && !same(everywhereValue, s.value)) {
       const seed = rule.home === 'computer' ? { level: 'computer', key: 'here' } : rule.home === 'project' ? { level: 'project', key: 'tastebook' } : { level: 'everywhere', key: null };
       SEED[id] = Object.assign(seed, { value: clone(everywhereValue) });
@@ -276,10 +278,25 @@
     // the title bar's own menu marks the chosen project when it has it
     D.querySelectorAll('#projectMenu .pm6-tb-menu-item[data-project]').forEach((b) => b.classList.toggle('is-selected', b.getAttribute('data-project') === pid));
   }
+  /* Jared 2026-11-20 (FO-186 r2 on the layered page): the engine reloads a project from PM_SETTINGS_PROJECT_SNAPSHOTS,
+     which the layer writes at each feed. A reload the layer didn't start (the page's own, a check's) read the copy from
+     the last feed, so whatever had changed since without a routed value was lost: a model's thinking depth (the page
+     keeps it beside the value, in its own state: state.pm51.o55Depth), and the rows and page state the layer doesn't
+     model. Any reload of the project on show now first refreshes the copy from the engine's live state. */
+  function guardReload(K) {
+    if (!K || K.__psxReload || typeof K.reloadProject !== 'function') return;
+    const reload = K.reloadProject;
+    K.reloadProject = function () {
+      if (!feeding && engineProject() && engineProject() === W.PM_ACTIVE_PROJECT_ID) { try { captureCurrent(); writeSnapshots(); } catch (e) { /* the copy as it was */ } }
+      return reload.apply(this, arguments);
+    };
+    K.__psxReload = true;
+  }
   /* switch the engine to the context's project and feed every snapshot; a context change that keeps the project
      (another device, Home NAS answering or not) pushes only what changed */
   function full(opts) {
     const K = kimi(); if (!K) return false;
+    guardReload(K);
     opts = opts || {};
     feeding++;
     try {
@@ -308,6 +325,7 @@
   /* push only what differs, without a reload (the world changed, or the device changed) */
   function push() {
     const K = kimi(); if (!K) return 0;
+    guardReload(K);
     feeding++;
     let n = 0;
     try {
@@ -385,7 +403,12 @@
     const ids = moved.filter((id) => id !== 'general.visual.theme-mode');
     if (moved.includes('general.visual.theme-mode') && !ids.includes('general.visual.theme')) ids.push('general.visual.theme');
     ids.forEach((id) => {
-      const nv = id === 'general.visual.theme' ? themeOf(st) : clone(st[id]);
+      let nv = id === 'general.visual.theme' ? themeOf(st) : clone(st[id]);
+      /* the page went back to its own default for a row whose default the layer takes from Plans' inventory (Model
+         nicknames: removing the last line restores the page's old "", the inventory's default is {}): that is the
+         row's default, so the place's own value is taken away rather than kept as "" */
+      const s0 = W.PM51 && W.PM51.setting ? W.PM51.setting(id) : null;
+      if (nv !== undefined && s0 && !same(s0.value, DEFAULTS[id]) && same(nv, s0.value) && DEFAULTS[id] && typeof DEFAULTS[id] === 'object') nv = undefined;
       const ov = id === 'general.visual.theme' ? themeOf(PSX.last) : clone(PSX.last[id]);
       route(id, nv, ov, src);
     });
