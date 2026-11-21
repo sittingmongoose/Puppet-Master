@@ -67,6 +67,14 @@ export default async function (t) {
 			return play.call(this);
 		};
 	}, { item, tab, scope: rail ? '#panel-files' : '.pmw-strip' });
+	// Map trusted input timestamps to the host clock used by the recording's sync flash.
+	let clock = null;
+	for (let sample = 0; sample < 5; sample++) {
+		const before = Date.now();
+		const { timeOrigin, now } = await f.evaluate(() => ({ timeOrigin: performance.timeOrigin, now: performance.now() }));
+		const after = Date.now(), rtt = after - before;
+		if (!clock || rtt < clock.rtt) clock = { timeOrigin, offset: (before + after) / 2 - timeOrigin - now, rtt };
+	}
 	await t.page.mouse.move(agentsBox.x + agentsBox.width / 2, agentsBox.y + agentsBox.height / 2);
 	await t.mark(rail ? 'First Explorer to Changed press' : 'First Home to Agents press');
 	await t.page.mouse.down();
@@ -79,5 +87,5 @@ export default async function (t) {
 	const selected = await isSelected(to);
 	const firstPress = clicks.length === 1 && clicks[0].trusted && clicks[0].id === targetId;
 	await t.check(`One trusted press selected ${rail ? 'Changed' : 'Agents'} and had a carried chip`, firstPress && selected && !!animation);
-	writeFileSync(t.run.dir + '/native-press.json', JSON.stringify({ homeBox, agentsBox, agents, pointer, clicks, animation, firstPress, selected, ...(rail ? { route: 'rail' } : {}) }));
+	writeFileSync(t.run.dir + '/native-press.json', JSON.stringify({ homeBox, agentsBox, agents, clock, pointer, clicks, animation, firstPress, selected, ...(rail ? { route: 'rail' } : {}) }));
 }

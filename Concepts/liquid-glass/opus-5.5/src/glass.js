@@ -2421,6 +2421,7 @@
     if (!T.isConnected) { endHop(L); return; }
     var cfg = L.cfg; if (!T.matches(cfg.active || '.active')) return;
     if (T.getAttribute('data-tab') === 'changed' && filesSwitcher(L.strip)) L.filesChangedSeen = true;
+    if (T.getAttribute('data-tab-id') === 'dashboard:agents') L.agentsSeen = true;
     /* (a carried block lands by its own clock, which a long task right after the press may have held back) */
     var K = L.carry, wait = K ? K.dur - carryAge(K) : L.hopEnd - performance.now();
     /* (and not before the compositor has reported the block's start, nor while its change is still to come: until then
@@ -2554,7 +2555,7 @@
   function warmColdCarry(L, cfg, strip, active) {
     if (L.carryWarming || L.carryPreview || L.carry || L.pending || !L.under || reduced() || switchMotion !== 'hop') return;
     var selector = filesSwitcher(strip) && !L.filesChangedSeen && active.getAttribute('data-tab') === 'explorer' ? '[data-tab="changed"]' :
-      cfg.sel === '.pmw-strip' && active.getAttribute('data-tab-id') === 'dashboard:home' ? '[data-tab-id="dashboard:agents"]' : null;
+      cfg.sel === '.pmw-strip' && !L.agentsSeen && active.getAttribute('data-tab-id') === 'dashboard:home' ? '[data-tab-id="dashboard:agents"]' : null;
     var busy = window.PM_BUSY, target = selector && strip.querySelector(selector);
     if (!target || !busy || !busy.idle) return;
     L.carryWarming = true;
@@ -2718,12 +2719,12 @@
     var g0 = go ? go.K.from || 0 : 0;
     var from = go ? g0 + Math.floor(Math.max(0, (zero != null ? Math.min(at, tl - zero) : at) - g0) / FRAME_MS) * FRAME_MS : 0;
     var T = reuse ? preview.trip : plan(at, go ? null : 0, from), start = performance.now() - at;
-    var holdStart = !go && (cold || coldAgents(cfg, target)) && typeof window.PM_START_ON_SHOWN === 'function';
+    var holdStart = !go && (reuse || cold || coldAgents(cfg, target)) && typeof window.PM_START_ON_SHOWN === 'function';
     var parts = [F, G, S].concat(SK), anims = reuse ? preview.anims : [], lead = anims[0] || null;
     if (prepare) [F, S].forEach(function (e) {
       if (e) { e.style.opacity = '0'; e.style.willChange = 'opacity, transform'; e.setAttribute('data-lg-prepared', ''); }
     });
-    if (reuse) anims.forEach(function (a) { a.currentTime = 0; a.play(); });
+    if (reuse) anims.forEach(function (a) { if (a.currentTime !== 0) a.currentTime = 0; if (!holdStart) a.play(); });
     else parts.forEach(function (e, j) {
       if (!e) return;
       var a = e.animate(T.frames[j], { duration: T.span, easing: 'linear', fill: 'forwards' });
@@ -2759,7 +2760,8 @@
     take(T);
     // A cold press uses the selected pane's laid-out box. Once the reveal is painted, the
     // chip runs on the compositor so later main-thread work cannot pin it midway along.
-    if (holdStart) window.PM_START_ON_SHOWN(anims, { startHeld: true, frames: cold ? 6 : 10 });
+    if (holdStart) window.PM_START_ON_SHOWN(anims, reuse ? { startHeld: true, start: 'commit', frames: 6,
+      wait: function () { return performance.now() - made < 30; }, waitCap: 75 } : { startHeld: true, frames: cold ? 6 : 10 });
     else requestAnimationFrame(function () {
       /* the first frame callback after the block was made: when it was first drawn (K.drawn), so its age is known before
          the compositor reports its start (its probe, an empty animation, starts in the lifecycle of the frame that first
