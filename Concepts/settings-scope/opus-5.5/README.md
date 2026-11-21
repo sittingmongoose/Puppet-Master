@@ -419,9 +419,16 @@ checks failed only on the page with this layer. `JARED-1120-FIX-REPORT.md` there
 - **Abilities' highlight (Jared's screenshot).** On the layered page the index lists the Abilities and Pictures & files
   tabs; "For the whole project" is no index entry on today's base, and Abilities is lit through the whole tab.
 
+- **Model nicknames' default.** The page's setting still has the old box's `""` as its default, and the layer resolves
+  the map to `{}`, so a fresh page marked the row Changed and removing the last line kept `""` Everywhere. The row's
+  default is the inventory's `{}` whenever the page's own isn't a map (`feed.js` adopt), and the page going back to its
+  own default takes the place's own value away (`feed.js` diff).
+
 Checks: `tools/checks/jared1120.check.mjs` (`--grep J1120-<n>`), one test per item above. J1120-1 to J1120-5 fail on the
 layer at 3af916f4b6 and pass now; J1120-6 walks Abilities by wheel steps under F's settings-index-spy rule and runs on
-plain PMConcept7 too.
+plain PMConcept7 too. `feedback.check.mjs --set only=jared1113 --set j1113=objects` now expects a row the page draws
+itself (the layer's `holds()`) to show the page's own control with the value's lines, and keeps the words-and-Change path
+for rows the page can't hold.
 
 ## Jared's review fixes (2026-11-13)
 
