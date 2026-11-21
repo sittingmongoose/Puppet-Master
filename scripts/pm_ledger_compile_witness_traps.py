@@ -19,7 +19,7 @@ def exercise(g, *, scratch=None):
         row = {"id": name, "expected_status": status, "expected_exit": exit_code, "caught": False}
         try:
             with tempfile.TemporaryDirectory(prefix="ledger-witness-", dir=scratch) as directory:
-                root = Path(directory)
+                root = Path(directory) / "repo"
                 ledger = root / "ledger"
                 (ledger / "state").mkdir(parents=True)
                 (ledger / "records").mkdir()
@@ -563,5 +563,164 @@ def exercise(g, *, scratch=None):
     case("tb4-token-only-in-html-comment-is-not-prose", lambda f: f.update(owner=owner("AA-001", "Owner text.\n\n<!-- live token -->", ["live token"])),
          status="findings", exit_code=2, verify=lambda r: r["witness_exact_tokens"][0]["fires"] and r["witness_exact_tokens"][0]["units_with_token_in_prose"] == [])
     case("tb4-token-in-prose-beside-a-comment-control", lambda f: f.update(owner=owner("AA-001", "Required live token.\n\n<!-- a note -->", ["live token"])), verify=no_ambiguity)
+    # T86/T135: only open paragraphs can continue outdented, including at columns 1–3.
+    def lazy_fence(prefix, lazy, column=2):
+        example = " " * column + "~~~~\n"
+        return (prefix + lazy + "\n" + example + '## AA-001 — Owner\n\nRequired live token.\n'
+                'preserved_exact_tokens: ["live token"]\n' + example)
+
+    nonparagraph = {
+        "indented-code": "- a\n\n      code\n", "atx": "- # Heading\n",
+        "fence-close": "- ```\n  code\n  ```\n", "empty-item": "-\n",
+        "setext": "- a\n  ---\n", "html": "- <div>\n", "thematic": "- ***\n",
+    }
+    for form, prefix in nonparagraph.items():
+        for indent in (0, 1):
+            case(f"lazy-after-{form}-indent-{indent}-ends-item",
+                 lambda f: f.update(owner=lazy_fence(prefix, " " * indent + "outside")),
+                 status="vacuous_with_findings", exit_code=2, verify=missing_target)
+    for indent in (1, 2):
+        case(f"lazy-after-ordered-fence-indent-{indent}-ends-item",
+             lambda f: f.update(owner=lazy_fence("1. ```\n   code\n   ```\n", " " * indent + "outside", 3)),
+             status="vacuous_with_findings", exit_code=2, verify=missing_target)
+    case("lazy-after-wide-item-indent-3-ends-item",
+         lambda f: f.update(owner=clean + "\n10. # Heading\n   outside\n    ## AA-001 — Code\n"),
+         verify=lambda r: not r["configuration_findings"])
+    for form, prefix, lazy, column in (
+        ("paragraph", "- text\n", " outside", 2),
+        ("ordered-paragraph", "1. text\n", "  outside", 3),
+        ("quoted-paragraph", "- > text\n", "outside", 2),
+        ("setext-lookalike", "- text\n", "===\noutside", 2),
+        ("closed-comment", "- <!-- c -->\n  text\n", "outside", 2),
+        ("closed-pi", "- <?p ?>\n  text\n", "outside", 2),
+        ("closed-script", "- <script>s</script>\n  text\n", "outside", 2),
+        ("closed-multiline-comment", "- <!-- c\n  -->\n  text\n", "outside", 2),
+    ):
+        case("lazy-" + form + "-keeps-item", lambda f: f.update(owner=lazy_fence(prefix, lazy, column)),
+             verify=lambda r: r["witness_exact_tokens"][0]["units_with_both"] == ["AA-001"])
+
+    # SOLMAX-GW-01 and ASTRA-GW-20261107-02: check both witnesses, including the
+    # positive controls where a token is visible next to a comment or quoted as code.
+    def hidden_token(r):
+        token, = r["witness_exact_tokens"]
+        hygiene, = r["witness_registry_hygiene"]
+        return (token["fires"] and not token["units_with_token_in_prose"]
+                and token["units_with_token_in_registry"] == ["AA-001"]
+                and hygiene["fires"] and hygiene["entries_absent_from_unit_text"] == ["live token"])
+
+    for form, body in (
+        ("inline", "Visible text. <!-- live token --> End."),
+        ("multiline-inline", "Visible text. <!-- first line\nlive token\nlast line --> End."),
+        ("block", "<!-- live token -->"),
+        ("unmatched-code-delimiter", "Visible ` <!-- live token --> End."),
+    ):
+        case(form + "-comment-cannot-supply-token",
+             lambda f: f.update(owner=owner("AA-001", body, ["live token"])),
+             status="findings", exit_code=2, verify=hidden_token)
+    for form, body in (
+        ("adjacent-visible", "Visible text. <!-- note --> Required live token."),
+        ("inline-code", "Example: ``<!-- live token -->``."),
+        ("multiline-code-span", "Example: `<!--\nlive token -->`."),
+        ("fenced-code", "~~~text\n<!-- live token -->\n~~~"),
+        ("indented-code", "    <!-- live token -->"),
+        ("escaped", r"Example: \<!-- live token -->"),
+    ):
+        case(form + "-comment-control",
+             lambda f: f.update(owner=owner("AA-001", body, ["live token"])),
+             verify=lambda r: r["witness_exact_tokens"][0]["units_with_both"] == ["AA-001"]
+             and not r["witness_registry_hygiene"][0]["fires"])
+
+    # SOLMAX-GW-03: distinguish the input diagnostics and the token witness
+    # independently from later refusals and registry hygiene.
+    def unknown_atom_with_empty_mapping(f):
+        f["queue"]["items"][0].update(source_atom_ids=["atom-1", "unknown"],
+                                     atom_target_plan_unit_ids={"atom-1": ["AA-001"], "unknown": []})
+
+    case("unknown-atom-in-partial-mapping", unknown_atom_with_empty_mapping, status="error", exit_code=1,
+         verify=lambda r: r["error"] == "queue item names an unknown atom: q-1")
+
+    # The same independently reported mapping guard covers SOLMAX W13 and Astra W11.
+    def out_of_item_target(f):
+        f["owner"] += owner("BB-001", "Required live token.", ["live token"])
+        f["queue"]["items"][0]["atom_target_plan_unit_ids"] = {"atom-1": ["BB-001"]}
+
+    case("mapped-owner-outside-item-targets", out_of_item_target, status="error", exit_code=1,
+         verify=lambda r: r["error"] == "atom targets must be a subset of the queue item's targets: atom-1")
+
+    def external_owner(f):
+        write(f["root"].parent / "outside-owner.md", f["owner"])
+        f["queue"]["canonical_plan_targets"] = ["../outside-owner.md"]
+
+    def external_companion(f):
+        write(f["root"].parent / "outside-output.json", {"value": "live token"})
+        f["queue"]["compiled_plan_outputs"] = ["../outside-output.json"]
+
+    for filename, setup in (("outside-owner.md", external_owner), ("outside-output.json", external_companion)):
+        case("existing-traversal-" + filename, setup, status="error", exit_code=1,
+             verify=lambda r: r["error"] == "path escapes its declared root: ../" + filename)
+
+    def companion_only(f):
+        f["owner"] = owner("AA-001", "Ordinary body.", ["live token"])
+        write(f["root"] / "companion.json", {"value": "live token"})
+        f["queue"]["compiled_plan_outputs"] = ["companion.json"]
+
+    def companion_only_fires(r):
+        token, = r["witness_exact_tokens"]
+        hygiene, = r["witness_registry_hygiene"]
+        return (token["fires"] and token["in_companion_outputs_only"] and not token["units_with_token_in_prose"]
+                and token["units_with_token_in_registry"] == ["AA-001"]
+                and hygiene["entries_absent_from_unit_text"] == ["live token"])
+
+    case("companion-only-token-fires", companion_only, status="findings", exit_code=2, verify=companion_only_fires)
+
+    # An active exemption is rejected at declaration. If that guard regresses,
+    # a cited active disposition or a disposition mismatch still rejects it.
+    case("active-exemption-declaration-rejected-early", lambda f: exempt(f, disposition="active"),
+         status="error", exit_code=1,
+         verify=lambda r: r["error"] == "token exemption needs v1 schema and held/ledger_retired disposition")
+
+    # ASTRA-GW-20261107-01: a quoted comma is part of one registry entry.
+    def flow_registry(f, entries, body, required):
+        f["owner"] = owner("AA-001", body, []).replace("preserved_exact_tokens: []", "preserved_exact_tokens: " + entries)
+        f["atoms"][0]["exact_tokens"] = required
+
+    case("single-quoted-comma-counts-as-one-missing-token",
+         lambda f: flow_registry(f, "[ALPHA, 'comma,token']", "ALPHA and comma token.", ["ALPHA"]),
+         status="findings", exit_code=2,
+         verify=lambda r: r["witness_registry_hygiene"][0]["registry_entries"] == 2
+         and r["witness_registry_hygiene"][0]["entries_absent_from_unit_text"] == ["comma,token"])
+    for form, tokens, entries in (
+        ("single-quoted-escaped-apostrophe", ["chef's, mix"], "[ 'chef''s, mix', ]"),
+        ("double-quoted-escaped-quote", ['say "yes", now'], json.dumps(['say "yes", now'])),
+        ("multiline-mixed", ["comma,token", "plain", "x,y"], "[\n 'comma,token',\n plain,\n \"x,y\"\n]"),
+    ):
+        case(form + "-flow-token-control", lambda f: flow_registry(f, entries, " / ".join(tokens), tokens),
+             verify=lambda r: all(t["units_with_both"] == ["AA-001"] for t in r["witness_exact_tokens"])
+             and r["witness_registry_hygiene"][0]["registry_entries"] == len(tokens))
+    case("malformed-quoted-flow-registry-refused",
+         lambda f: flow_registry(f, "[ALPHA, 'unclosed]", "ALPHA and unclosed.", ["ALPHA"]),
+         status="error", exit_code=1, verify=refused_because("unsupported preserved_exact_tokens flow list"))
+
+    # ASTRA-GW-20261107-03: an atom with no tokens still gets registry hygiene.
+    case("indentless-registry-ghost-fires-with-zero-source-tokens",
+         lambda f: flow_registry(f, "\n- GHOST", "Visible requirement text.", []),
+         status="findings", exit_code=2,
+         verify=lambda r: not r["vacuous"] and not r["witness_exact_tokens"]
+         and r["witness_registry_hygiene"][0]["entries_absent_from_unit_text"] == ["GHOST"])
+    case("indentless-registry-visible-token-control",
+         lambda f: flow_registry(f, '\n- "live token"\n- SECOND', "Required live token and SECOND.", ["live token"]),
+         verify=lambda r: r["witness_exact_tokens"][0]["units_with_both"] == ["AA-001"]
+         and r["witness_registry_hygiene"][0]["registry_entries"] == 2)
+
+    def exemption_for_unmapped_owner(f):
+        exempt(f)
+        f["owner"] = (owner("AA-001", "Required live token and old spelling.", ["live token", "old spelling"])
+                      + owner("BB-001", "Other existing owner.", []))
+        f["exemptions"][0]["target_plan_unit_ids"] = ["BB-001"]
+        f["reviews"][0]["token_dispositions"][0]["target_plan_unit_ids"] = ["BB-001"]
+
+    case("existing-unmapped-owner-exemption-refused", exemption_for_unmapped_owner, status="error", exit_code=1,
+         verify=lambda r: r["error"] == "exemption targets must be existing owner units of that atom: ex-1")
+
     return {"schema_id": "pm.ledger_compile_witness.self_test.v1", "status": "pass" if all(row["caught"] for row in rows) else "findings",
             "caught": sum(row["caught"] for row in rows), "tests": rows}
