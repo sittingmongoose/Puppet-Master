@@ -14,6 +14,7 @@
 //             Shift+Tab then takes the focus out of the panel (to the core), and the pin stays over the next handover.
 //   click     a real click on the panel's words (not a control) leaves the focus on the page; PageDown then scrolls the
 //             panel and pins it, and three handovers keep its node and scroll (F104-1, opus-recheck-act8).
+//   touch     a touch swipe on the panel scrolls and pins it; a handover keeps the node, subject, scroll and pin.
 //   elsewhere a real click on the panel's words, then one outside the chat on no control, then PageDown with the focus
 //             on the page: the panel does not scroll, a scroll of it with no input does not pin it, and the next
 //             handover changes the subject (round 3, F104-2).
@@ -26,7 +27,7 @@
 //             out, so the browser clamps scrollTop and fires scroll, as a patch that shortens it would) pin nothing,
 //             and the next handover changes the subject.
 // Fails group 7 c4ba49b137: the first handover replaces the panel (node, scroll and focus lost), and nothing pins.
-//   --set chat=<path or URL of a 5.6 Pro build (build.py --out)>   --set only=wheel,keys,click,elsewhere,mark,scrollbar,none
+//   --set chat=<path or URL of a 5.6 Pro build (build.py --out)>   --set only=wheel,keys,click,touch,elsewhere,mark,scrollbar,none
 
 // In the app's frame: helpers the steps below read through window.__fo104.
 function install() {
@@ -222,6 +223,38 @@ async function clickKeysCase(t, f, where) {
   await f.waitForTimeout(300);
 }
 
+async function withTouch(t, run) {
+  const cdp = await t.page.context().newCDPSession(t.page);
+  try {
+    await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 1 });
+    await run((type, point) => cdp.send('Input.dispatchTouchEvent', { type, touchPoints: point ? [point] : [] }));
+  } finally {
+    await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: false });
+    await cdp.detach();
+  }
+}
+
+async function touchCase(t, f, where) {
+  const tag = `${where} touch swipe`;
+  await withTouch(t, async send => {
+    const before = await freshWindow(t, f, tag);
+    const a = await f.evaluate(() => window.__fo104.aim());
+    await t.check(`${tag}: the touch starts inside the panel`, !!a?.ok, JSON.stringify(a), { hard: true });
+    const x = OFF.x + a.x, y = OFF.y + a.y;
+    await send('touchStart', { x, y });
+    for (let step = 1; step <= 12; step++) {
+      await f.waitForTimeout(16);
+      await send('touchMove', { x, y: y - step * 8 });
+    }
+    await send('touchEnd');
+    const after = await settled(f);
+    await t.check(`${tag}: the swipe scrolls and pins the same panel before handover`,
+      after.top > before.top && after.pinned === 'node:' + before.uid && after.node === before.node,
+      JSON.stringify({ before, after }));
+    await held(t, `${tag} handover`, after, await nextHandover(f, after, tag));
+  });
+}
+
 // a press on the panel's own scrollbar track (below its thumb) pages it down: a real input that scrolls it, so it pins
 async function scrollbarCase(t, f, where) {
   const tag = `${where} scrollbar`;
@@ -340,10 +373,11 @@ async function run(t, f, where) {
   OFF = await frameOffset(t, f);
   const s = await f.evaluate(() => window.__fo104.snap());
   await t.check(`${where}: a live Working card with the Orbit panel`, !!s, JSON.stringify(s), { hard: true });
-  const only = list(t.args.only, ['wheel', 'keys', 'click', 'elsewhere', 'mark', 'scrollbar', 'none']);
+  const only = list(t.args.only, ['wheel', 'keys', 'click', 'touch', 'elsewhere', 'mark', 'scrollbar', 'none']);
   if (only.includes('wheel')) await wheelCase(t, f, where);
   if (only.includes('keys')) await keysCase(t, f, where);
   if (only.includes('click')) await clickKeysCase(t, f, where);
+  if (only.includes('touch')) await touchCase(t, f, where);
   if (only.includes('elsewhere')) await elsewhereCase(t, f, where);
   if (only.includes('mark')) await markElsewhereCase(t, f, where);
   if (only.includes('scrollbar')) await scrollbarCase(t, f, where);
