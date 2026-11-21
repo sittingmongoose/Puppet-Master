@@ -71,6 +71,7 @@ CONSTRUCTORS = frozenset({'__init__', '__post_init__', '__new__', '__init_subcla
 FACTORIES = frozenset({'create', 'new', 'build', 'build_owners', 'make', 'make_world', 'seed'})
 FIXTURE_CLASSES = ('World', 'Suite', 'Corpus', 'FaultPlan')
 REPORTS = {}   # family -> install report
+REACH_LIMIT = 5_000_000   # objects; a walk that reaches it is truncated, and a truncated walk refuses (fail closed)
 _LIST = []
 
 
@@ -157,7 +158,7 @@ def direct(frame):
     return True, None
 
 
-def _stores(roots, limit=20000):
+def _stores(roots, limit=None):
     """(stores, truncated): every TestOwnerStorage reachable from `roots` (``_reach``): the stores a call through
     these objects can reach."""
     found, _, truncated = _reach(roots, limit)
@@ -200,35 +201,70 @@ def _world(receiver, args, kwargs):
     return None, None
 
 
-def _reach(roots, limit=20000):
+def _reach(roots, limit=None):
     """(stores, reaches_path, truncated): every TestOwnerStorage and whether any filesystem path is reachable from
-    `roots` through instance attributes, lists, tuples, sets and dict values (bounded walk)."""
+    `roots`, through instance attributes (``__dict__`` and ``__slots__``), dict keys and values, lists, tuples, sets,
+    function closures and defaults, bound methods (their ``__self__``) and functools.partial objects. Classes and
+    modules are not followed (module state is the owner-state digest's part). Bounded: at `limit` objects the walk
+    stops and reports itself truncated, which the callers treat as a refusal.
+
+    Addendum 10: the first edition stopped at 20 000 objects, so every direct call of the CA3 d06 case (a world graph
+    of a few hundred thousand objects) was refused as truncated; the full walk takes about 0.5 s there."""
     import pm_goal_test_storage as storage
     from pathlib import PurePath
+    limit = REACH_LIMIT if limit is None else limit
     seen, found, paths, todo = set(), [], False, list(roots)
-    while todo and len(seen) < limit:
+    atoms = (str, bytes, bytearray, int, float, complex, bool, type, types.ModuleType, types.BuiltinFunctionType,
+             types.CodeType)
+    while todo:
         value = todo.pop()
         if isinstance(value, PurePath):
             paths = True
             continue
-        if value is None or id(value) in seen or isinstance(value, (str, bytes, int, float, bool, type,
-                                                                    types.ModuleType, types.FunctionType,
-                                                                    types.MethodType, types.BuiltinFunctionType)):
+        if value is None or isinstance(value, atoms) or id(value) in seen:
             continue
+        if len(seen) >= limit:
+            return found, paths, True
         seen.add(id(value))
         if isinstance(value, storage.TestOwnerStorage):
             found.append(value)
         if isinstance(value, dict):
+            todo.extend(value.keys())
             todo.extend(value.values())
-        elif isinstance(value, (list, tuple, set, frozenset)):
+            continue
+        if isinstance(value, (list, tuple, set, frozenset)):
             todo.extend(value)
-        else:
-            try:
-                attrs = vars(value)
-            except TypeError:
-                continue
-            todo.extend(attrs.values())
-    return found, paths, len(seen) >= limit
+            continue
+        if isinstance(value, types.FunctionType):
+            todo.extend(cell.cell_contents for cell in (value.__closure__ or ()) if _filled(cell))
+            todo.extend(value.__defaults__ or ())
+            todo.extend((value.__kwdefaults__ or {}).values())
+            continue
+        if isinstance(value, types.MethodType):
+            todo.extend((value.__self__, value.__func__))
+            continue
+        if isinstance(value, functools.partial):
+            todo.extend((value.func, *value.args, *value.keywords.values()))
+        try:
+            todo.extend(vars(value).values())
+        except TypeError:
+            pass
+        for klass in type(value).__mro__:
+            slots = vars(klass).get('__slots__', ())
+            for name in (slots,) if isinstance(slots, str) else slots:
+                try:
+                    todo.append(getattr(value, name))
+                except AttributeError:
+                    pass
+    return found, paths, False
+
+
+def _filled(cell):
+    try:
+        cell.cell_contents
+        return True
+    except ValueError:
+        return False
 
 
 class NotShown(Exception):
