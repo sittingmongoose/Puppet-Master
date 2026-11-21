@@ -1060,7 +1060,7 @@ export default async function (t) {
   // On a folder (FO-102), Open expands it in the tree (folded first by the tree's own key; a folder the tree lists without
   // its files says so) and opens no editor, and Open in new panel and Open to the side are unavailable: a press says why
   // (a note naming the folder), opens nothing and leaves the menu open. The fresh open asks the first file row.
-  // Before each case the menu is opened on another row by another input and closed by Escape, rotating, so pointer→key,
+  // Before each case the menu is opened on another row by a rotating input and closed by Escape, so pointer→key,
   // key→pointer and key→key all come before a case. The expected path is the path the page file shows for the row (its
   // own item's .fm-cpath, else its own .fm-path), else its data-path (a tree row's only path): a source the product does
   // not read (it reads data-path, FO-103), and never the running page's text, which the rail skin cuts to fit. Keys only
@@ -1289,7 +1289,7 @@ export default async function (t) {
       await t.check(`${T}: a fresh open and Open act on ${r0.want}`, !e0, JSON.stringify(e0), { hard: true });
       const act = await g.waitForFunction(w => PM_HOME.active && PM_HOME.active()?.tabId === 'file:' + w, r0.want, { timeout: 3000 }).then(() => true, () => false);
       await t.check(`${T}: ${r0.want} becomes the active tab`, act, JSON.stringify(await g.evaluate(() => PM_HOME.active && PM_HOME.active())), { hard: true });
-      // (2) every row asked, every command, each after an open on another row by another input
+      // (2) every row asked, every command, each after an open on another row by a rotating input
       let turn = 0;
       for (const r of rowsI) for (const cmd of FX_CMDS) {
         const others = pick.rows.filter(o => o.i !== r.i);
