@@ -101,6 +101,63 @@ export function foldCensusControls(region, routeKinds) {
   return [...new Set([...direct, ...context])].filter(e => !e.closest('[role="menu"]') && e.checkVisibility());
 }
 
+export async function pressShelfBranch(press, diagnose) {
+  try {
+    await press();
+    return null;
+  } catch (error) {
+    return {
+      error: String(error?.message ?? error).split('\n')[0],
+      trace: await diagnose().catch(err => ({ error: String(err) })),
+    };
+  }
+}
+
+function traceShelfBranch([key, label]) {
+  window.__shelfBranchTrace?.stop();
+  const menu = __shelf.open().find(m => __shelf.key(m) === key);
+  const branch = [...(menu?.querySelectorAll('[role="menu"]') || [])].find(m => m.getAttribute('aria-label') === label);
+  const isOpen = m => !!m?.classList.contains('is-open') && !m.classList.contains('is-closing');
+  const owner = node => {
+    const item = node?.closest('[role="menuitem"]');
+    if (item) return (item.querySelector('.fm-ctx-label') || item).textContent.trim().slice(0, 60);
+    return node ? node.tagName + '.' + String(node.className?.baseVal ?? node.className).split(/\s+/)[0] : null;
+  };
+  const abort = new AbortController(), events = [];
+  const start = performance.now();
+  let current = isOpen(branch), item = null, centre = null, pointer = null;
+  const mark = (event, fields = {}) => {
+    events.push({ event, ms: Math.round(performance.now() - start), ...fields });
+    if (events.length > 24) events.shift();
+  };
+  const trackPointer = e => {
+    pointer = { x: Math.round(e.clientX), y: Math.round(e.clientY), on: owner(e.target) };
+    mark(e.type, { ...pointer, branchOpen: isOpen(branch) });
+  };
+  addEventListener('pointermove', trackPointer, { capture: true, signal: abort.signal });
+  addEventListener('pointerdown', trackPointer, { capture: true, signal: abort.signal });
+  const observer = new MutationObserver(() => {
+    const next = isOpen(branch);
+    if (next !== current) mark(next ? 'branch opened' : 'branch closed', { pointer });
+    current = next;
+  });
+  if (branch) observer.observe(branch, { attributes: true, attributeFilter: ['class', 'style', 'hidden'] });
+  window.__shelfBranchTrace = {
+    target(el) {
+      item = el;
+      const r = el.getBoundingClientRect();
+      centre = { x: r.x + r.width / 2, y: r.y + r.height / 2 };
+      mark('item found', { centre, onTop: owner(document.elementFromPoint(centre.x, centre.y)) });
+    },
+    read() {
+      const hit = centre ? document.elementFromPoint(centre.x, centre.y) : null;
+      return { menuOpen: isOpen(menu), branchOpen: isOpen(branch), itemShown: !!item?.checkVisibility(),
+        centre, onTop: owner(hit), ownItem: !!item?.contains(hit), pointer, events };
+    },
+    stop() { abort.abort(); observer.disconnect(); },
+  };
+}
+
 // A popup trigger opens by every way the owners wire it: a press, and Enter, Space and ArrowDown on the focused trigger.
 const POPUP_INPUTS = ['mouse', 'enter', 'space', 'arrowdown'];
 const PKEY = { enter: 'Enter', space: ' ', arrowdown: 'ArrowDown' };
@@ -1289,18 +1346,20 @@ export default async function (t) {
         return false;
       };
       // a press on an item of the open menu (a branch's item: its branch opened by the pointer first)
-      const clickItem = async (label, prefix, within) => {
-        const ok = await g.evaluate(([k, label, prefix, within]) => {
+      const clickItem = async (label, prefix, branch = null) => {
+        const ok = await g.evaluate(([k, label, prefix, branch]) => {
           document.querySelectorAll('[data-shelf-fx-item]').forEach(x => x.removeAttribute('data-shelf-fx-item'));
           const top = __shelf.open().find(x => __shelf.key(x) === k);
-          const m = within ? [...(top ? top.querySelectorAll('[role="menu"]') : [])].find(s => s.checkVisibility()) : top;
+          const m = branch ? __shelf.open().find(s => top?.contains(s) && s.getAttribute('aria-label') === branch) : top;
           const lab = it => ((it.querySelector('.fm-ctx-label')) || it).textContent.trim().replace(/\s+/g, ' ');
           const it = m && [...m.querySelectorAll('[role="menuitem"]')].find(i => i.closest('[role="menu"]') === m && i.checkVisibility() && (prefix ? lab(i).startsWith(label) : lab(i) === label));
-          it?.setAttribute('data-shelf-fx-item', ''); return !!it;
-        }, [pn.menu, label, prefix, within]);
+          it?.setAttribute('data-shelf-fx-item', '');
+          if (branch && it) window.__shelfBranchTrace?.target(it);
+          return !!it;
+        }, [pn.menu, label, prefix, branch]);
         const it = g.locator('[data-shelf-fx-item]');
-        if (ok && prefix) await it.hover();
-        else if (ok && await it.getAttribute('aria-disabled') !== 'true') await it.click();
+        if (ok && prefix) await it.hover({ timeout: 3000 });
+        else if (ok && await it.getAttribute('aria-disabled') !== 'true') await it.click(branch ? { timeout: 3000 } : {});
         else if (ok) {
           // an unavailable item (FO-102): Playwright's click waits for it to be enabled, so a real press at its centre, once
           // its box holds still for a frame (the menu sprouts open)
@@ -1314,13 +1373,30 @@ export default async function (t) {
         }
         return ok;
       };
+      const tryPointerBranch = async cmd => {
+        await g.evaluate(traceShelfBranch, [pn.menu, cmd.branch]);
+        try {
+          return await pressShelfBranch(async () => {
+            if (!await clickItem(cmd.branch, true)) throw new Error(`no branch trigger ${cmd.branch}`);
+            await g.waitForFunction(([k, branch]) => {
+              const menus = __shelf.open(), top = menus.find(m => __shelf.key(m) === k);
+              return menus.some(m => top?.contains(m) && m.getAttribute('aria-label') === branch);
+            }, [pn.menu, cmd.branch], { timeout: 3000 });
+            if (!await clickItem(cmd.label, false, cmd.branch)) throw new Error(`no ${cmd.label} in ${cmd.branch}`);
+          }, () => g.evaluate(() => window.__shelfBranchTrace.read()));
+        } finally {
+          await g.evaluate(() => window.__shelfBranchTrace?.stop());
+        }
+      };
       const run = async (cmd, how) => {
         if (how === 'mouse') {
           if (cmd.branch) {
-            if (!await clickItem(cmd.branch, true, false)) return `no ${cmd.branch}`;
-            await g.waitForFunction(k => __shelf.open().some(x => x !== __shelf.open().find(y => __shelf.key(y) === k) && __shelf.open().find(y => __shelf.key(y) === k)?.contains(x)), pn.menu, { timeout: 3000 }).catch(() => {});
-            if (!await clickItem(cmd.label, false, true)) return `no ${cmd.label}`;
-          } else if (!await clickItem(cmd.label, false, false)) return `no ${cmd.label}`;
+            const miss = await tryPointerBranch(cmd);
+            if (miss) {
+              t.log('FO93B-BRANCH-MISS ' + JSON.stringify({ pane: pn.state, branch: cmd.branch, item: cmd.label, ...miss }));
+              return miss;
+            }
+          } else if (!await clickItem(cmd.label, false)) return `no ${cmd.label}`;
         } else {
           await t.page.keyboard.press('Home');
           if (cmd.branch) {

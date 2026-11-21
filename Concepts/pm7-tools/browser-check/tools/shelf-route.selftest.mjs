@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { runInNewContext } from 'node:vm';
 import { test } from 'node:test';
-import { copiedFullPath, foldCensusControls, laterContextRows, pathNotePresent, pickEffectRows, shelfReachStatus } from '../checks/shelf-route.check.mjs';
+import { copiedFullPath, foldCensusControls, laterContextRows, pathNotePresent, pickEffectRows, pressShelfBranch, shelfReachStatus } from '../checks/shelf-route.check.mjs';
 
 test('T78 copied path notes name the exact copied value', () => {
   assert.equal(pathNotePresent(['Copied src'], 'src', 'copy'), true);
@@ -100,4 +100,11 @@ test('T98 fold guard keeps each census control distinct, even with the same labe
     querySelectorAll: sel => sel.includes('data-collapse') ? [first, second, head, disclosure, row, hidden] : [first, second, hidden],
   };
   assert.deepEqual(Array.from(read(region, ['known-class'])), [first, second, head, disclosure, row, knownContextRow]);
+});
+
+test('T85 preserves branch closure and hit owner when an actionability wait fails', async () => {
+  const closed = { branchOpen: false, onTop: 'Save local copy', ownItem: false, pointer: { x: 200, y: 80 } };
+  const miss = await pressShelfBranch(async () => { throw new Error('click timed out'); }, async () => closed);
+  assert.deepEqual(miss, { error: 'click timed out', trace: closed });
+  assert.equal(await pressShelfBranch(async () => {}, async () => assert.fail('unexpected failure capture')), null);
 });
