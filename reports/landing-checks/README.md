@@ -18,7 +18,10 @@ From a local topic worktree on the VM, start the lander under `long-job`:
     long-job wait pm-land-my-topic --timeout 1500
 
 Wait again on exit 124. The check itself runs as a separate long-job on the 1070ti. Use
-`--checks-on nas1` for Nas1. The lander prints the check’s original exit code and a share directory
+`--checks-on nas1` for Nas1. After three consecutive SSH transport failures, the runner reports the
+job name and evidence directory and stops. Check the named job on reconnect. You can retry an
+unpublished landing on the other host with `--checks-on nas1` or `--checks-on 1070ti`.
+Recover a saved Plans follow-up under the landing lock before another landing. The lander prints the check’s original exit code and a share directory
 with `landing-check.json`, `record.json`, `verification.json` and the subcheck reports. If it
 asks for a judgment, compare the rows in `review.json` with the baseline and read any timeout
 rerun reports it names. Write `judgment.json` in that run directory with the same
@@ -29,7 +32,7 @@ at fetched main, without acquiring the lock or pushing. If main moves during the
 keeps the verification for the original base, writes `base-moved.json` and exits 3. Run again at
 the new main before relying on the result for a landing. While a remote worktree is still in place,
 `python3 scripts/pm-land.py verify <record.json> --commit <full commit SHA> --base <full origin/main SHA>`
-fetches main and asks the host to rehash the live checkout and shared inputs. It prints whether
+checks the current origin/main and asks the host to rehash the live checkout and shared inputs. It prints whether
 the record matches and returns the landing check’s exit code when it does. A verification failure
 exits 3. The tool removes its temporary remote worktree when the run ends.
 
@@ -615,8 +618,14 @@ index reads. The whole `.audits` folder is about 30 GB.
 
 ## Landing by hand
 
-1. Take the landing lock as described in `AGENTS.md`. Fetch and record the full fetched
-   `origin/main` SHA. Rebase and push the topic branch. Record its full commit and tree SHAs.
+1. Take the landing lock as described in `AGENTS.md`. Save the lander name, branch and UTC time on
+   the first line of `holder.txt`, then `token: <unique token>` on its own line. Use an exclusive
+   `flock` on `pm-land-reap.guard` in the parent of `held` for lock takeover, holder updates and
+   release. Re-read the token under the guard before updating or releasing the holder. Rewrite the
+   holder with an atomic rename and keep its token and any recovery fields. Renew the UTC time
+   before each remote wait and at least every 25 minutes, including during Plans follow-up and
+   while reviewing reports. Stop on lost ownership. Fetch and record the full `origin/main` SHA.
+   Rebase and push the topic branch. Record its full commit and tree SHAs.
 2. SSH to `1070ti` or `nas1-agent`. Fetch the topic and create a temporary, detached worktree at the
    recorded commit in `~/src/PuppetMaster` using `git worktree add --detach <path> <commit>`.
    Confirm `git rev-parse HEAD HEAD^{tree}`, `git status --porcelain`, and
@@ -625,26 +634,65 @@ index reads. The whole `.audits` folder is about 30 GB.
    assume-unchanged entries.
 3. Copy the ignored audit inputs above, the untracked `Plans/.audits/audit-*/FINAL_REPORT.md`
    files, and the readiness audit directory from the shared checkout. Recreate the raw evidence
-   directory link using the resolved shared target. Use the exact raw evidence paths in
-   `tests/fixtures/governance/raw_evidence_capture_modes.json` to hash the files behind the link.
-   Save a manifest with both inventories’ relative paths and SHA-256 values. Compare the inventories
-   by path and hash, including the resolved link target. Record UTC start and end times, host,
-   commit, tree, full base, input manifest and the exit code with the report.
+   directory link using the resolved shared target. Hash the files behind the link at the exact
+   paths in `tests/fixtures/governance/raw_evidence_capture_modes.json`. Save a manifest with both
+   inventories’ relative paths and SHA-256 values. Compare by path and hash, including the resolved
+   link target. Record UTC start and end times, host, full commit, tree, base and input inventory.
 4. Run the shard check in the remote worktree. On the same host, use
-   `long-job start <name> --cwd <worktree> --log <share-log> -- bash <run-script>`.
-   The run script must run
-   `python3 scripts/pm-landing-check.py --base <full base SHA> --subcheck-timeout-seconds 1800 --json --readiness-audit-root <worktree>/Plans/.audits/event-authority-2026-08-13-currentness --keep-check-reports <share-dir>/subchecks`,
-   redirect its JSON and stderr to the share, and save and return its original exit code. Wait
-   with `long-job wait <name> --timeout 1500` and re-arm on 124. Read the report and apply the
-   ordinary rules for unchanged-count rows and timeouts before touching the shared checkout.
-5. Fetch again in the shared checkout. If the base moved, repeat from the rebase. Verify the remote
-   HEAD, tree, clean full checkout and both sets of ignored input hashes against the record.
-   Stop if a file the branch touches has uncommitted changes in the shared checkout. Fast-forward
-   to the recorded commit, confirm its HEAD and tree, run the shared shard check and repeat the
-   input verification. Push main in the same step. If anything fails after the fast-forward,
-   use `git reset --keep origin/main` immediately.
-6. For Plans changes, keep the lock and complete the follow-up below. Remove both temporary
-   worktrees and release the lock when the landing is complete.
+   `long-job start <name> --cwd <worktree> --log <share-log> -- bash <run-script>`. In the run script,
+   run `python3 scripts/pm-landing-check.py --base <full base SHA> --subcheck-timeout-seconds 1800 --json --readiness-audit-root <worktree>/Plans/.audits/event-authority-2026-08-13-currentness --keep-check-reports <share-dir>/subchecks`
+   with JSON and stderr redirected to the share. Capture `$?` immediately, then compute
+   `sha256sum -- <report.json>` after closing its output. Save the exit code, report path and
+   SHA-256 together in one receipt, publish it by atomic rename, and exit with the stored code.
+   Wait with `long-job wait <name> --timeout 1500` and re-arm on 124 after renewing the holder.
+   Read the receipt and apply the existing rules for exit codes, changed baseline rows and timeouts.
+5. Fetch again in the shared checkout. If the base moved, repeat from the rebase. Stop if a file the
+   branch touches has uncommitted changes in the shared checkout. Before the fast-forward and again
+   before the push, confirm the remote HEAD and tree, clean full checkout and both input inventories.
+   Recompute the report SHA-256 and match the receipt. Parse the JSON and match its `commit` and
+   `base` to the full checked candidate and fetched base. Use the bound exit code to judge it.
+6. Before the fast-forward, write the publication marker described below. Confirm the same holder
+   token immediately before each shared mutation. Run `git merge --ff-only <candidate>`, check the
+   resulting HEAD and tree, run the shared shard check, and repeat verification. Confirm ownership
+   and push in the same step. Require the checked base at the server with
+   `git push --force-with-lease=refs/heads/main:<base> origin <candidate>:refs/heads/main` after
+   proving the base is an ancestor of the candidate. If the fast-forward fails to publish, confirm
+   ownership and use `git reset --keep origin/main` to roll it back after establishing the origin
+   state. Reconcile the marker before clearing it.
+7. For Plans changes, keep the lock and complete the follow-up below. Confirm ownership before
+   worktree removal and immediately before releasing the lock. Release only after publication or
+   rollback is reconciled and any Plans follow-up is finished.
+
+### Publication marker and recovery
+
+Keep the owner token and write the following entry as a single line in `holder.txt` before the
+fast-forward. Replace the placeholders with full SHAs. Flush the temporary holder file and its
+directory when replacing the holder so the marker survives interruption.
+
+```text
+publication: {"base": "<fetched main>", "candidate": "<checked commit>", "plans_followup": true, "completes_followup": false}
+```
+
+Use `plans_followup: true` for a topic that changes Plans. For the snapshot follow-up, keep the
+existing `follow-up-owed: <published Plans commit>` line and set `plans_followup` to false and
+`completes_followup` to true. For a topic outside Plans, use false for both.
+
+After a successful push, replace the pending marker and record `follow-up-owed` for a published
+Plans topic. Remove the owed entry only after its follow-up is published. Keep a marker if the
+outcome or rollback is uncertain. When taking over a holder older than 90 minutes, preserve its
+publication and follow-up entries, replace its token under the guard, and reconcile while holding
+the recovered lock:
+
+- **Fetch** main and compare the candidate, the recorded base, shared HEAD and fetched main. Stop
+  for manual recovery if history changed or shared HEAD is neither the recorded candidate nor an
+  ancestor of fetched main.
+- **Published candidate.** If fetched main contains the candidate, record any Plans follow-up
+  owed. If the candidate completed the recorded follow-up, clear that obligation.
+- **Unpublished candidate.** If shared HEAD is the recorded candidate, confirm ownership and run
+  `git reset --keep origin/main`. Confirm the reset reached the fetched SHA. Preserve any
+  earlier Plans follow-up when the interrupted push was the follow-up itself.
+- **Finish recovery.** Clear the pending marker after reconciliation. Complete any owed Plans
+  follow-up at fetched main before another landing.
 
 ## Refreshing it after a Plans landing
 
