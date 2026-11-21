@@ -113,6 +113,21 @@ export async function pressShelfBranch(press, diagnose) {
   }
 }
 
+export async function noteShelfBranchMiss(t, branchViews, entry) {
+  const { panel, state, menu, branch, item, row, error } = entry;
+  t.log('FO93B-BRANCH-MISS ' + JSON.stringify(entry));
+  await t.check(`FO-93b ${panel} ${state} ${branch} first press missed`, true, '', {
+    notice: true, note: `${item} on ${row}: ${error}`,
+  });
+  const key = JSON.stringify([panel, menu, branch]);
+  if (!branchViews.has(key)) branchViews.set(key, new Set());
+  const views = branchViews.get(key);
+  const repeated = views.size === 1 && !views.has(state);
+  views.add(state);
+  if (repeated) await t.check(`FO-93b ${branch} first press misses in multiple views`, false,
+    `${panel} ${menu} missed in ${[...views].join(', ')}`);
+}
+
 function traceShelfBranch([key, label]) {
   window.__shelfBranchTrace?.stop();
   const menu = __shelf.open().find(m => __shelf.key(m) === key);
@@ -125,13 +140,14 @@ function traceShelfBranch([key, label]) {
   };
   const abort = new AbortController(), events = [];
   const start = performance.now();
-  let current = isOpen(branch), item = null, centre = null, pointer = null;
+  let current = isOpen(branch), item = null, centre = null, pointer = null, pressedItem = false;
   const mark = (event, fields = {}) => {
     events.push({ event, ms: Math.round(performance.now() - start), ...fields });
     if (events.length > 24) events.shift();
   };
   const trackPointer = e => {
     pointer = { x: Math.round(e.clientX), y: Math.round(e.clientY), on: owner(e.target) };
+    if (e.type === 'pointerdown' && item?.contains(e.target)) pressedItem = true;
     mark(e.type, { ...pointer, branchOpen: isOpen(branch) });
   };
   addEventListener('pointermove', trackPointer, { capture: true, signal: abort.signal });
@@ -152,7 +168,7 @@ function traceShelfBranch([key, label]) {
     read() {
       const hit = centre ? document.elementFromPoint(centre.x, centre.y) : null;
       return { menuOpen: isOpen(menu), branchOpen: isOpen(branch), itemShown: !!item?.checkVisibility(),
-        centre, onTop: owner(hit), ownItem: !!item?.contains(hit), pointer, events };
+        centre, onTop: owner(hit), ownItem: !!item?.contains(hit), pressedItem, pointer, events };
     },
     stop() { abort.abort(); observer.disconnect(); },
   };
@@ -1264,7 +1280,7 @@ export default async function (t) {
     });
     return out;
   }, [slot.html, pn, toks]);
-  const fxCases = [];
+  const fxCases = [], branchViews = new Map();
   // Read from the walk's own frame before the first fresh page replaces it (on the sandbox surface it goes with it).
   const fxSpecs = [];
   if (t.args.effects !== '0') for (const pn of ctxPanes) {
@@ -1388,13 +1404,23 @@ export default async function (t) {
           await g.evaluate(() => window.__shelfBranchTrace?.stop());
         }
       };
-      const run = async (cmd, how) => {
+      const run = async (cmd, how, row) => {
         if (how === 'mouse') {
           if (cmd.branch) {
             const miss = await tryPointerBranch(cmd);
             if (miss) {
-              t.log('FO93B-BRANCH-MISS ' + JSON.stringify({ pane: pn.state, branch: cmd.branch, item: cmd.label, ...miss }));
-              return miss;
+              await noteShelfBranchMiss(t, branchViews, { panel: pn.panel, state: pn.state, menu: pn.menu,
+                branch: cmd.branch, item: cmd.label, row: row.want, ...miss });
+              // Retry only an undelivered press. Reopen the same row's context menu before hovering the same branch.
+              if (miss.trace.pressedItem) return miss;
+              if (await isOpen()) {
+                await t.page.keyboard.press('Escape');
+                if (!await shut()) return { first: miss, retry: 'menu stayed open after Escape' };
+              }
+              await restPt();
+              if (!await openOn(row, how)) return { first: miss, retry: 'context menu did not reopen' };
+              const retry = await tryPointerBranch(cmd);
+              if (retry) return { first: miss, retry };
             }
           } else if (!await clickItem(cmd.label, false)) return `no ${cmd.label}`;
         } else {
@@ -1458,7 +1484,7 @@ export default async function (t) {
       const r0 = rowsI.find(r => !r.folder) || rowsI[0];
       await clear();
       await t.check(`${T}: a fresh open on ${r0.want}`, await openOn(r0, input), '', { hard: true });
-      const e0 = await run(FX_CMDS[0], input) || await judge(FX_CMDS[0], r0);
+      const e0 = await run(FX_CMDS[0], input, r0) || await judge(FX_CMDS[0], r0);
       await t.check(`${T}: a fresh open and Open act on ${r0.want}`, !e0, JSON.stringify(e0), { hard: true });
       const act = await g.waitForFunction(w => PM_HOME.active && PM_HOME.active()?.tabId === 'file:' + w, r0.want, { timeout: 3000 }).then(() => true, () => false);
       await t.check(`${T}: ${r0.want} becomes the active tab`, act, JSON.stringify(await g.evaluate(() => PM_HOME.active && PM_HOME.active())), { hard: true });
@@ -1478,7 +1504,7 @@ export default async function (t) {
         }
         await clear();
         const up = await openOn(r, input);
-        const err = !up ? 'the menu did not open' : (await run(cmd, input)) || await judge(cmd, r);
+        const err = !up ? 'the menu did not open' : (await run(cmd, input, r)) || await judge(cmd, r);
         fxCases.push({ pane: pn.state, input, row: r.want, cmd: cmd.label, ok: !err });
         await t.check(`${T}: ${cmd.branch ? cmd.branch + ' › ' : ''}${cmd.label} acts on ${r.want}${r.folder ? ' (folder)' : ''}`, !err, JSON.stringify(err), { hard: true });
         if (await isOpen()) { await t.page.keyboard.press('Escape'); await shut(); }

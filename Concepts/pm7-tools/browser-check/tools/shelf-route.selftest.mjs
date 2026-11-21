@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { runInNewContext } from 'node:vm';
 import { test } from 'node:test';
-import { copiedFullPath, foldCensusControls, laterContextRows, pathNotePresent, pickEffectRows, pressShelfBranch, shelfReachStatus } from '../checks/shelf-route.check.mjs';
+import { copiedFullPath, foldCensusControls, laterContextRows, noteShelfBranchMiss, pathNotePresent, pickEffectRows, pressShelfBranch, shelfReachStatus } from '../checks/shelf-route.check.mjs';
 
 test('T78 copied path notes name the exact copied value', () => {
   assert.equal(pathNotePresent(['Copied src'], 'src', 'copy'), true);
@@ -107,4 +107,21 @@ test('T85 preserves branch closure and hit owner when an actionability wait fail
   const miss = await pressShelfBranch(async () => { throw new Error('click timed out'); }, async () => closed);
   assert.deepEqual(miss, { error: 'click timed out', trace: closed });
   assert.equal(await pressShelfBranch(async () => {}, async () => assert.fail('unexpected failure capture')), null);
+});
+
+test('T143 prints first misses in the summary and fails a branch missed in two views', async () => {
+  const checks = [], logs = [], history = new Map();
+  const t = {
+    log: message => logs.push(message),
+    check: async (name, ok, detail, options) => checks.push({ name, ok, detail, options }),
+  };
+  const miss = { panel: 'panel-files', state: 'explorer', menu: 'fileContextMenu', branch: 'Copy path',
+    item: 'Copy relative path', row: 'src/main.rs', error: 'click timed out', trace: { branchOpen: false } };
+  await noteShelfBranchMiss(t, history, miss);
+  assert.ok(checks.some(c => c.options?.notice && c.name.includes('Copy path')));
+  await noteShelfBranchMiss(t, history, { ...miss, item: 'Copy full path' });
+  assert.equal(checks.filter(c => !c.ok).length, 0);
+  await noteShelfBranchMiss(t, history, { ...miss, state: 'open' });
+  assert.deepEqual(checks.filter(c => !c.ok).map(c => c.name), ['FO-93b Copy path first press misses in multiple views']);
+  assert.ok(logs.some(log => log.includes('"branchOpen":false')));
 });
