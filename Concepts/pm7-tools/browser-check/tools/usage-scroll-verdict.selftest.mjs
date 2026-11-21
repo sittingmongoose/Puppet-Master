@@ -10,7 +10,8 @@ import { resolve } from 'node:path';
 const given = process.argv[2];
 const { usageScrollVerdict } = await import(given ? pathToFileURL(resolve(given)).href : '../helpers/usage-scroll-verdict.mjs');
 
-const win = (name, paint, full, rest, extra = {}) => ({ name, scrolls: 48, whole: true, renderer: 1234, lost: [], paint, full, partial: 60, unknown: 0, restFrames: rest, ...extra });
+const travel = { hit: 'button', onPane: true, ticks: 48, turn: 12, positions: [0, 480, 0, 480, 0] };
+const win = (name, paint, full, rest, extra = {}) => ({ name, scrolls: 48, travel, whole: true, renderer: 1234, lost: [], paint, full, partial: 60, unknown: 0, restFrames: rest, ...extra });
 // a composited board on a busy shared host: paint clearly lower, but drops and rest noise past both guards
 const busy = [win('as built', 100, 30, 20), win('control', 150, 5, 2), win('control', 160, 5, 2), win('as built', 110, 30, 20)];
 const v = usageScrollVerdict(busy, { ratio: 0.85 });
@@ -49,4 +50,17 @@ const blindV = usageScrollVerdict(blind, { ratio: 0.85 });
 assert.deepEqual(blindV.rows.map((r) => r.ok), [false], `a renderer-less window stops the verdict at "could not judge", never the ratio: ${JSON.stringify(blindV.rows)}`);
 assert.ok(/could not judge: no renderer thread/.test(blindV.rows[0].detail), `the row says which window and why: ${blindV.rows[0].detail}`);
 assert.equal(blindV.rows.some((r) => /paint/.test(r.name)), false, 'and no paint row is judged from unmeasured windows');
+
+for (const bad of [
+	{ ...travel, positions: [0, 36, 0, 36, 0] },
+	{ ...travel, positions: [0, 480, 0, 250, 0] },
+	{ ...travel, positions: [15, 495, 15, 495, 15] },
+	{ ...travel, positions: [0, 480, 0, 480] },
+	{ ...travel, onPane: false, hit: '#overlay' },
+]) {
+	const wrong = usageScrollVerdict([win('as built', 40, 2, 2, { travel: bad }), ...busy.slice(1)]);
+	assert.deepEqual(wrong.rows.map((r) => r.ok), [false], 'renderer-wide scroll events cannot certify inadequate pane travel or a pointer miss');
+}
+const rounded = { onPane: true, hit: 'button', ticks: 25, turn: 12, positions: [0, 479, 0, 39] };
+assert.equal(usageScrollVerdict(busy.map((w) => ({ ...w, travel: rounded }))).rows[0].ok, true, 'one CSS pixel of rounding and a partial leg are accepted');
 console.log('PASS the two guards are warnings with their numbers, never failed rows (normal and Reduced Motion); the paint ratio still fails origin/main\'s equal arms; a partial window cannot be judged, and a renderer-less window is could not judge instead of halving the ratio');
