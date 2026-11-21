@@ -118,3 +118,23 @@ assert.equal(gapped.maxGapMs, 170);
 assert.equal(appearanceVerdict(gapped, 150), 'sampling gap');
 assert.equal(appearanceVerdict({ ok: true, ms: 180, lastMissMs: 160 }, 150), 'late');
 console.log('PASS first good frame survives driver delay; a frame gap is distinguished from witnessed lateness');
+
+const chain = `<script id="lg-js">
+  let showT;
+  function awaitShow(first) { showT = setTimeout(checkShown, first); }
+  function checkShown() { checkShownNow(); }
+  function checkShownNow() { showT = setTimeout(checkShown, 2000); }
+</script>`;
+const chainSites = showWatchSites(chain, range);
+const windowed = fixture({ ...range, sites: chainSites }, chain);
+windowed.run('awaitShow(1); __swt.arm();');
+await windowed.advance(12002); // Simulate a late driver read of a regular two-second chain.
+const counts = windowed.run('__swt.read()');
+assert.equal(counts.complete, true);
+assert.equal(counts.fired, 5, 'a late read must exclude the sixth and seventh fires beyond the 10 s window');
+assert.equal(counts.asked, 5, 'the in-window re-arm counts even when its fire is outside the window');
+const boundary = fixture({ ...range, sites: chainSites }, chain);
+boundary.run('awaitShow(10000); __swt.arm();');
+await boundary.advance(10000);
+assert.equal(boundary.run('__swt.read().fired'), 0, 'a fire at the exclusive deadline does not belong to the window');
+console.log('PASS late reads and exact deadline events preserve the fixed 10 s window');

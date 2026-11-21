@@ -48,7 +48,8 @@
 //      7-27 ms, the spec's budget kept). The window's exit animation runs before that removal; the wall time from
 //      the close() call is logged, not judged (532-1062 ms seen).
 //   13 resting wake count: with one strip hidden by row 1's method, a setTimeout wrapper installed before the
-//      page's scripts run counts show-watch timer requests by their glass.js call sites at any delay over 10 s,
+//      page's scripts run counts show-watch timer requests by their glass.js call sites at any delay in a fixed
+//      10 s page-clock window (driver read delay cannot extend it),
 //      and counts the callbacks that fire: only 2000 ms is allowed, at most 6 FIRE (the cost: one
 //      tick per 2000 ms is 5, 6 on a window edge) and at most 12 are asked. Requests are not wakes: since
 //      34b45edf15 a sync that lands while a check is queued arms a tick which that check drops, and each wake
@@ -122,9 +123,10 @@ export function restAttribution(c) {
 /* Installed before page scripts. Read the immediate caller, and use the owner's callback name to detect stack
    attribution failures even when they would otherwise produce a plausible zero. */
 export const TIMER_PROBE = (range) => {
-	const P = window.__swt = { armed: false, events: [], seq: 1, byId: new Map(), depth: 0 };
+	const P = window.__swt = { until: 0, events: [], seq: 1, byId: new Map(), depth: 0 };
 	const realSet = window.setTimeout;
 	const realClear = window.clearTimeout;
+	const counting = (now) => now < P.until;
 	const lineOf = () => {
 		const caller = String(new Error().stack || '').split('\n')[3] || '';
 		const match = /:(\d+):\d+\)?$/.exec(caller);
@@ -145,21 +147,22 @@ export const TIMER_PROBE = (range) => {
 		push({ k, at: Math.round(performance.now()), vis: s.vis, op: s.op, t0: window.__gsw ? Math.round(window.__gsw.t0) : 0 });
 	};
 	window.setTimeout = function (fn, delay, ...rest) {
+		const now = performance.now();
 		const l = lineOf();
 		const site = range.sites[l];
 		if (!site || typeof fn !== 'function') {
-			if (P.armed && (site || fn?.name === 'checkShown')) P.unattributed++;
+			if (counting(now) && (site || fn?.name === 'checkShown')) P.unattributed++;
 			return realSet.call(window, fn, delay, ...rest);
 		}
 		const d = Number(delay);
-		const meta = { n: P.seq++, d, asked: Math.round(performance.now()), line: l, g: l - range.from, site, fired: 0 };
+		const meta = { n: P.seq++, d, asked: Math.round(now), line: l, g: l - range.from, site };
 		let id = 0;
 		const wrapped = function (...a) {
-			meta.fired = Math.round(performance.now());
-			if (P.armed) { P.fired++; P.delays.add(d); }
+			const at = performance.now();
+			if (counting(at)) { P.fired++; P.delays.add(d); }
 			P.byId.delete(id);
 			const s = snap();
-			push({ k: 'fire', n: meta.n, d: meta.d, at: meta.fired, asked: meta.asked, g: meta.g, vis: s.vis, op: s.op, hidden: document.hidden });
+			push({ k: 'fire', n: meta.n, d: meta.d, at: Math.round(at), asked: meta.asked, g: meta.g, vis: s.vis, op: s.op, hidden: document.hidden });
 			P.depth++;
 			try { return fn.apply(this, a); }
 			finally { P.depth--; }
@@ -168,7 +171,7 @@ export const TIMER_PROBE = (range) => {
 		P.byId.set(id, meta);
 		const s = snap();
 		push({ k: 'ask', n: meta.n, d, at: meta.asked, g: meta.g, site, vis: s.vis, op: s.op, inFire: P.depth > 0, hidden: document.hidden });
-		if (P.armed) {
+		if (counting(now)) {
 			P.asked++;
 			P.delays.add(d);
 			if (P.sites.length < 14) P.sites.push(d + 'ms@' + l);
@@ -177,17 +180,18 @@ export const TIMER_PROBE = (range) => {
 	};
 	window.clearTimeout = function (id) {
 		const meta = P.byId.get(id);
-		if (meta && !meta.fired) {
+		if (meta) {
 			const s = snap();
 			push({ k: 'clear', n: meta.n, d: meta.d, at: Math.round(performance.now()), asked: meta.asked, g: meta.g, vis: s.vis, op: s.op });
 			P.byId.delete(id);
 		}
 		return realClear.call(window, id);
 	};
-	P.arm = () => { P.asked = 0; P.fired = 0; P.unattributed = 0; P.delays = new Set(); P.sites = []; P.armed = true; };
+	P.arm = (ms = 10000) => { P.asked = 0; P.fired = 0; P.unattributed = 0; P.delays = new Set(); P.sites = []; P.until = performance.now() + ms; };
 	P.read = () => {
-		P.armed = false;
-		return { asked: P.asked, fired: P.fired, unattributed: P.unattributed, delays: [...P.delays], sites: P.sites.slice() };
+		const complete = performance.now() >= P.until;
+		P.until = 0;
+		return { complete, asked: P.asked, fired: P.fired, unattributed: P.unattributed, delays: [...P.delays], sites: P.sites.slice() };
 	};
 	P.between = (a, b) => P.events.filter((e) => e.at >= a && e.at <= b);
 };
@@ -530,8 +534,9 @@ async function cell(t, surface, W, H) {
 			const c = await f.evaluate(() => window.__swt.read());
 			const attribution = restAttribution(c);
 			t.log(`row 13 ${tag}: ${c.asked} show-watch requests [${c.sites.join(', ')}], ${c.fired} fires, ${c.unattributed} unattributed`);
+			await t.check(`row 13: the full 10 s rest window was observed ${tag}`, c.complete, 'the driver read the counter before its page-clock deadline');
 			await t.check(`row 13: show-watch timer activity is attributed ${tag}`, !attribution, attribution);
-			if (!attribution) {
+			if (c.complete && !attribution) {
 				await t.check(`row 13: only 2000 ms show-watch timers are used ${tag}`, c.delays.every((d) => d === 2000), `observed delays: ${c.delays.join(', ')} ms`);
 				await t.check(`row 13: at most 6 show-watch timers fire in 10 s ${tag}`, c.fired <= 6, `${c.fired} fired (the 2000 ms net fires about 5; the old poll about 25)`);
 				await t.check(`row 13: at most 12 show-watch timer requests in 10 s ${tag}`, c.asked <= 12, `${c.asked} requests (one after each tick, and one more for each wake or sync that lands while a check is queued: 5-7 measured)`);
