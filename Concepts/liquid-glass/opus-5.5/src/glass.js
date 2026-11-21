@@ -2788,7 +2788,12 @@
     var holdStart = !go && (reuse || cold || coldAgents(cfg, target)) && typeof window.PM_START_ON_SHOWN === 'function';
     var parts = [F, G, S].concat(SK), anims = reuse ? preview.anims : [], lead = anims[0] || null;
     if (prepare) [F, S].forEach(function (e) {
-      if (e) { e.style.opacity = '0'; e.style.willChange = 'opacity, transform'; e.setAttribute('data-lg-prepared', ''); }
+      if (e) {
+        // Keep the first Files carry raster resident after the warming pulse.
+        e.style.opacity = filesSwitcher(strip) ? '0.004' : '0';
+        e.style.willChange = 'opacity, transform';
+        e.setAttribute('data-lg-prepared', '');
+      }
     });
     if (reuse) anims.forEach(function (a) { if (a.currentTime !== 0) a.currentTime = 0; if (!holdStart) a.play(); });
     else parts.forEach(function (e, j) {

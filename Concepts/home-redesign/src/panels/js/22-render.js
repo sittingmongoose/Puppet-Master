@@ -285,12 +285,8 @@ function syncBodies(panelEl, p, l, panelHidden) {
     if (!rec) continue;
     if (rec.host.parentNode !== body) body.appendChild(rec.host);   // a moved tab keeps its instance
     if (visible && rec.host.hasAttribute('data-pmw-prepared')) {
-      if (rec.raster) rec.raster.finish();
       rec.host.removeAttribute('data-pmw-prepared');
       rec.host.inert = false;
-    } else if (!visible && rec.visible && rec.raster) {
-      rec.raster.cancel();
-      rec.raster = null;
     }
     if (preparedAgents && tid === 'dashboard:home' && rec.visible && !visible) {
       // Hide Home immediately. Retire its render layer after the first carry has landed.
@@ -356,14 +352,6 @@ function prepareAgents() {
       var entry = mountTab(id, el.querySelector('.pmw-body'), false, true);
       if (!entry) return;
       entry.preparedFor = agentsPreparationKey();
-      // Let Chrome raster the live rows at their final size during idle. Reveal through the same layer.
-      requestAnimationFrame(function () { requestAnimationFrame(function () {
-        if (instances[id] !== entry || entry.visible || !homeIsPage()) return;
-        entry.raster = entry.host.animate([{ opacity: 0.004 }, { opacity: 1 }],
-          { duration: 1, easing: 'steps(1, end)', fill: 'both' });
-        entry.raster.pause();
-        entry.raster.currentTime = 0;
-      }); });
     }
   }, 1000, { quiet: 160 });
 }
@@ -399,7 +387,6 @@ function unmountTab(tabId) {
   var e = instances[tabId];
   if (!e) return;
   delete instances[tabId];
-  if (e.raster) e.raster.cancel();
   if (e.retireTimer) clearTimeout(e.retireTimer);
   try { if (e.instance && e.instance.unmount) e.instance.unmount(); } catch (err) { try { console.error('[pm-home] unmount failed', err); } catch (_) {} }
   e.off.forEach(function (fn) { try { fn(); } catch (_) {} });
