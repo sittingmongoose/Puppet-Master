@@ -22,21 +22,40 @@ const bounds = ([x, y, width, height]) => ({ x, y, width, height });
 const marks = json(runDir + '/summary.json').marks || [];
 const timeOf = (m) => m?.video ?? m?.videoAt ?? m?.at;
 const mark = (label) => timeOf(marks.find((m) => m.label === label));
+const holdLimitMs = 1000 / 60;
+const samePose = (a, b) => a.left != null && a.right != null && a.left === b.left && a.right === b.right;
+// Raster rounding on a fixed chip can move a solid edge by one pixel.
+const atRest = (a, b) => a.left != null && a.right != null && b.left != null && b.right != null &&
+	Math.abs(a.left - b.left) <= 1 && Math.abs(a.right - b.right) <= 1;
+
+function travelHolds(frames, first, last) {
+	const holds = [];
+	let start = first;
+	for (let i = first + 1; first >= 0 && i <= last + 1; i++) {
+		if (i <= last && samePose(frames[start], frames[i])) continue;
+		if (i > start + 1) {
+			const from = frames[start], to = frames[i - 1];
+			holds.push({ from, to, ms: (to.pts - from.pts) * 1000, intervals: to.frame - from.frame });
+		}
+		start = i;
+	}
+	return holds;
+}
 
 function firstPress(data) {
 	if (data.animation) {
 		if (!data.firstPress || !data.selected) throw new Error('Missing the trusted first press or its selected destination');
 		const rail = data.route === 'rail';
-		const { frames, dur, width: w, height: h } = data.animation;
-		const kf = frames.map(({ offset: o, transform }) => {
+		const { frames, kf: sampledKeyframes, dur, width: w, height: h } = data.animation;
+		const kf = sampledKeyframes || frames.map(({ offset: o, transform }) => {
 			const m = /^translate\(([-\d.]+)px,\s*([-\d.]+)px\) rotate\(([-\d.]+)deg\) scale\(([-\d.]+),\s*([-\d.]+)\)$/.exec(transform);
 			if (!m) throw new Error('The carry keyframe has no readable transform');
 			const [dx, dy, r, kx, ky] = m.slice(1).map(Number);
 			return { o, dx, dy, r, kx, ky };
 		});
+		const name = data.railTarget === 'open' ? 'Open' : rail ? 'Changed' : 'Agents';
 		return { from: data.homeBox, to: data.agentsBox, rail, rec: { box: { x: 0, y: 0, w, h }, kf, dur },
-			start: mark(rail ? 'First Explorer to Changed press' : 'First Home to Agents press'),
-			end: mark(rail ? 'Changed settled' : 'Agents settled') + 0.05 };
+			start: mark(`First ${rail ? 'Explorer' : 'Home'} to ${name} press`), end: mark(`${name} settled`) + 0.05 };
 	}
 	const eligible = (c) => c.look === 'friendly-dark' && c.mode === 'motion';
 	const cell = data.cells?.find((c) => eligible(c) && c.group === 'home') ||
@@ -120,24 +139,42 @@ function measure() {
 	const allow = nativeStepLimit(rec);
 	const pairs = frames.slice(1).flatMap((to, i) => {
 		const from = frames[i];
-		return from.right == null || to.right == null ? [] : [{ from, to, step: Math.abs(to.right - from.right) }];
+		if (from.left == null || from.right == null || to.left == null || to.right == null) return [];
+		return [{ from, to, step: Math.abs(to.right - from.right), leftStep: Math.abs(to.left - from.left) }];
 	});
 	const worst = pairs.reduce((a, b) => !a || b.step > a.step ? b : a, null);
-	const missing = frames.filter((f) => f.right == null);
+	const worstLeft = pairs.reduce((a, b) => !a || b.leftStep > a.leftStep ? b : a, null);
+	const missing = frames.filter((f) => f.left == null || f.right == null);
 	const anchored = (box, slice) => slice.every((f) => f.right != null && Math.abs(f.right - (box.x + box.width)) <= 5);
 	const complete = anchored(from, frames.slice(0, 2)) && anchored(to, frames.slice(-2));
-	const over = pairs.filter((p) => p.step > allow);
-	const ok = Number.isFinite(allow) && complete && !missing.length && !!worst && !over.length;
-	return { verdict: ok ? 'PASS' : 'FAIL', crop: [x, y, w, h], fill, allow, complete, missing, worst, over, frames };
+	const over = pairs.filter((p) => p.step > allow || p.leftStep > allow);
+	const first = frames.findIndex((f) => !atRest(f, frames[0]));
+	const endpoint = frames.at(-1);
+	const lastMotion = frames.findLastIndex((f) => !atRest(f, endpoint));
+	// Three consecutive frames at the resting pose establish arrival. Use the same
+	// one-pixel raster allowance as the settled ends of the travel window.
+	// Later hover paint still counts for the step bound over the whole recording.
+	const landed = frames.findIndex((f, i) => i >= first && i + 2 < frames.length &&
+		atRest(f, endpoint) && atRest(frames[i + 1], endpoint) && atRest(frames[i + 2], endpoint));
+	const rest = landed < 0 ? lastMotion + 1 : Math.min(landed, lastMotion + 1);
+	const holds = travelHolds(frames, first, rest - 1);
+	// The recorder can express 60 Hz presentation ticks as alternating 16 and 17 ms timestamps.
+	const longHolds = holds.filter((hold) => hold.intervals > 1 || hold.ms > Math.ceil(holdLimitMs) + 1e-6);
+	const longestHold = holds.reduce((worst, hold) => !worst || hold.ms > worst.ms ? hold : worst, null);
+	const ok = Number.isFinite(allow) && complete && !missing.length && !!worst && !over.length && !longHolds.length;
+	return { verdict: ok ? 'PASS' : 'FAIL', crop: [x, y, w, h], fill, allow, complete, missing, worst, worstLeft, over,
+		pressMark: start, firstMoving: frames[first], rest: frames[rest], holdLimitMs, longestHold, longHolds, frames };
 }
 
 function jsonBuffer(buffer) { return JSON.parse(buffer.toString('utf8')); }
 try {
 	const result = measure();
 	writeFileSync(output, JSON.stringify(result, null, 2) + '\n');
-	const p = result.worst;
+	const p = result.worst, left = result.worstLeft, hold = result.longestHold;
 	console.log(`${result.verdict}: ${result.frames.length} native frames, largest right-edge step ${p?.step ?? 'unread'} px` +
 		(p ? ` at F${p.from.frame}→F${p.to.frame}, bound ${result.allow.toFixed(2)} px` : '') +
+		(left ? `; largest left-edge step ${left.leftStep} px at F${left.from.frame}→F${left.to.frame}` : '') +
+		(hold ? `; longest stationary run in travel ${hold.ms.toFixed(2)} ms at F${hold.from.frame}→F${hold.to.frame}` : '; no stationary run in travel') +
 		(!result.complete || result.missing.length ? ' (unread frame or missing settled endpoint)' : ''));
 	process.exitCode = result.verdict === 'PASS' ? 0 : 1;
 } catch (error) {

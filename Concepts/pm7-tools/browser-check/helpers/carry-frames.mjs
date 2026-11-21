@@ -31,12 +31,12 @@ export const RECORD = withPaintedChip((stripSel) => {
 			if (!e || !e.isConnected) { e = W.probeEl = document.createElement('i'); e.setAttribute('aria-hidden', 'true'); e.style.cssText = 'position:fixed;left:0;top:0;width:2px;height:2px;pointer-events:none;background:rgba(0,0,0,0.004);display:block'; document.documentElement.appendChild(e); }
 			W.probes.set(animate.call(e, [{ transform: 'translateX(0px)' }, { transform: 'translateX(0.01px)' }], { duration: 60000 }), { rec, key });
 		};
-		Element.prototype.animate = function (kf, timing) {
-			const a = animate.call(this, kf, timing);
+		const tracked = new WeakSet();
+		const record = (block, a, kf, timing, resumed = false) => {
 			try {
-				if (W.on && this.classList && this.classList.contains('lg-carry') && Array.isArray(kf) && kf.length && kf[0].transform) {
-					const strip = W.strips.find((s) => s.el && s.el.contains(this));
-					const par = this.parentElement, pr = par.getBoundingClientRect(), st = this.style;
+				if (W.on && !tracked.has(a) && block?.classList.contains('lg-carry') && Array.isArray(kf) && kf.length && kf[0].transform) {
+					const strip = W.strips.find((s) => s.el && s.el.contains(block));
+					const par = block.parentElement, pr = par.getBoundingClientRect(), st = block.style;
 					const num = (re, s) => { const m = re.exec(s || ''); return m ? m.slice(1).map(Number) : null; };
 					const rec = {
 						id: W.anims.length, strip: strip ? strip.sel : null, created: performance.now(), dur: typeof timing === 'number' ? timing : timing.duration, fill: typeof timing === 'object' ? timing.fill || 'none' : 'none',
@@ -47,7 +47,11 @@ export const RECORD = withPaintedChip((stripSel) => {
 						const tr = num(/translate\(([-\d.]+)px,\s*([-\d.]+)px\)/, k.transform) || [0, 0], ro = num(/rotate\(([-\d.]+)deg\)/, k.transform) || [0], sc = num(/scale\(([-\d.]+),\s*([-\d.]+)\)/, k.transform) || [1, 1];
 						return { o: k.offset, dx: tr[0], dy: tr[1], r: ro[0], kx: sc[0], ky: sc[1] };
 					});
-					rec.kf = parse(kf);
+					rec.kf = resumed ? kf.map(({ transform, computedOffset: o }) => {
+						const m = new DOMMatrix(transform);
+						return { o, dx: m.e, dy: m.f, r: Math.atan2(m.b, m.a) * 180 / Math.PI,
+							kx: Math.hypot(m.a, m.b), ky: Math.hypot(m.c, m.d) };
+					}) : parse(kf);
 					// (switcher-carry-steps: the block's first keyframes and duration, and the timeline's time when it was made and
 					// when its change was set, which in a frame callback is that frame's own time)
 					rec.kf0 = rec.kf; rec.dur0 = rec.dur; rec.createdTl = document.timeline.currentTime;
@@ -71,12 +75,23 @@ export const RECORD = withPaintedChip((stripSel) => {
 					W.live = W.live || new Map(); W.live.set(rec.id, a);
 					const cancel = a.cancel;
 					a.cancel = function () { if (a.startTime != null) rec.start = a.startTime; if (rec.cancelled == null) { rec.cancelled = performance.now(); rec.lastCt = a.currentTime; } return cancel.call(a); };
-					try { this.__carryRec = rec.id; } catch (e) { /* the sampler names the block by its record */ }
+					try { block.__carryRec = rec.id; } catch (e) { /* the sampler names the block by its record */ }
 					probe(rec, 'drawnAt');
 					W.anims.push(rec);
+					tracked.add(a);
 				}
 			} catch (e) { /* recording must never break the page */ }
+		};
+		Element.prototype.animate = function (kf, timing) {
+			const a = animate.call(this, kf, timing);
+			record(this, a, kf, timing);
 			return a;
+		};
+		const play = Animation.prototype.play;
+		Animation.prototype.play = function () {
+			const result = play.call(this), effect = this.effect, block = effect?.target;
+			if (W.on && block?.__lgWasPrepared && !tracked.has(this)) record(block, this, effect.getKeyframes(), effect.getTiming(), true);
+			return result;
 		};
 		const tick = (ts) => {
 			if (!W.on) return;

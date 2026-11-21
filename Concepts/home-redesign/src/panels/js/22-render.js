@@ -269,14 +269,44 @@ render.bodyOf = function (tabId) { var r = instances[tabId]; return r ? r.host :
 /* ---- tab bodies ---- */
 function syncBodies(panelEl, p, l, panelHidden) {
   var body = panelEl.querySelector('.pmw-body');
+  var nextAgents = instances['dashboard:agents'];
+  var preparedAgents = !panelHidden && !p.collapsed && p.active === 'dashboard:agents' && nextAgents &&
+    nextAgents.host.hasAttribute('data-pmw-prepared') && nextAgents.preparedFor === agentsPreparationKey();
   for (var i = 0; i < p.tabs.length; i++) {
     var tid = p.tabs[i];
     var active = tid === p.active;
     var rec = instances[tid];
     var visible = active && !panelHidden && !p.collapsed;
+    if (rec && rec.host.hasAttribute('data-pmw-prepared') && rec.preparedFor !== agentsPreparationKey()) {
+      unmountTab(tid);
+      rec = null;
+    }
     if (!rec && (active || (kindDef(l.tabs[tid].kind) || {}).eager)) rec = mountTab(tid, body, visible);
     if (!rec) continue;
     if (rec.host.parentNode !== body) body.appendChild(rec.host);   // a moved tab keeps its instance
+    if (visible && rec.host.hasAttribute('data-pmw-prepared')) {
+      if (rec.raster) rec.raster.finish();
+      rec.host.removeAttribute('data-pmw-prepared');
+      rec.host.inert = false;
+    } else if (!visible && rec.visible && rec.raster) {
+      rec.raster.cancel();
+      rec.raster = null;
+    }
+    if (preparedAgents && tid === 'dashboard:home' && rec.visible && !visible) {
+      // Hide Home immediately. Retire its render layer after the first carry has landed.
+      rec.host.setAttribute('data-pmw-retiring', '');
+      rec.host.inert = true;
+      rec.retireTimer = setTimeout(function (retiring) {
+        retiring.host.removeAttribute('data-pmw-retiring');
+        retiring.host.inert = false;
+        retiring.retireTimer = 0;
+      }, 420, rec);
+    } else if (visible && rec.retireTimer) {
+      clearTimeout(rec.retireTimer);
+      rec.retireTimer = 0;
+      rec.host.removeAttribute('data-pmw-retiring');
+      rec.host.inert = false;
+    }
     setAttr(rec.host, 'hidden', !visible);
     if (visible !== rec.visible) {
       rec.visible = visible;
@@ -285,7 +315,10 @@ function syncBodies(panelEl, p, l, panelHidden) {
          (onPageChange, 90-boot.js) and is told onShow when Home is in front again, so a render meanwhile (a Settings
          change re-laying Home out) wakes none of them. The tab's hidden state still follows the layout. */
       if (inst && homeIsPage()) {
-        try { if (visible && inst.onShow) inst.onShow(); else if (!visible && inst.onHide) inst.onHide(); }
+        try {
+          if (visible && inst.onShow) inst.onShow();
+          else if (!visible && inst.onHide) inst.onHide();
+        }
         catch (err) { try { console.error('[pm-home] show/hide failed', err); } catch (_) {} }
       }
       if (visible) queueResize(tid);
@@ -299,18 +332,53 @@ function syncBodies(panelEl, p, l, panelHidden) {
       catch (err) { try { console.error('[pm-home] focus/blur failed', err); } catch (_) {} }
     }
   }
+  if (!panelHidden && !p.collapsed && p.active === 'dashboard:home' && p.tabs.indexOf('dashboard:agents') >= 0) prepareAgents();
+}
+
+var preparingAgents = false;
+function agentsPreparationKey() { return projectId() + '|' + doc.documentElement.getAttribute('data-theme'); }
+function prepareAgents() {
+  var id = 'dashboard:agents', busy = window.PM_BUSY;
+  if (preparingAgents || instances[id] || !homeIsPage() || PMW.reduced() ||
+      !/^friendly/.test(doc.documentElement.getAttribute('data-theme') || '') || !busy || !busy.idle) return;
+  preparingAgents = true;
+  busy.idle(function () {
+    preparingAgents = false;
+    if (instances[id] || doc.hidden || !homeIsPage() || PMW.reduced() ||
+        !/^friendly/.test(doc.documentElement.getAttribute('data-theme') || '')) return;
+    if (busy()) {
+      preparingAgents = true;
+      window.addEventListener('pm-idle', function () { preparingAgents = false; prepareAgents(); }, { once: true });
+      return;
+    }
+    var panel = model.panelOf(state.layout, id), el = panel && panelEls[panel.id];
+    if (el && !el.hidden && !panel.collapsed && panel.active === 'dashboard:home') {
+      var entry = mountTab(id, el.querySelector('.pmw-body'), false, true);
+      if (!entry) return;
+      entry.preparedFor = agentsPreparationKey();
+      // Let Chrome raster the live rows at their final size during idle. Reveal through the same layer.
+      requestAnimationFrame(function () { requestAnimationFrame(function () {
+        if (instances[id] !== entry || entry.visible || !homeIsPage()) return;
+        entry.raster = entry.host.animate([{ opacity: 0.004 }, { opacity: 1 }],
+          { duration: 1, easing: 'steps(1, end)', fill: 'both' });
+        entry.raster.pause();
+        entry.raster.currentTime = 0;
+      }); });
+    }
+  }, 1000, { quiet: 160 });
 }
 
 var tabSeq = 0;
 /* The body is attached to its panel (and sized by it) before mount() runs, so a kind can measure in mount(): a tab
    that will show is laid out at its real size, one that will not (an eager background tab) is hidden already. The
    first onResize, once sizes have settled, is still where precise work belongs (a panel may be mid-glide). */
-function mountTab(tabId, parent, visible) {
+function mountTab(tabId, parent, visible, prepared) {
   var l = state.layout, recd = l.tabs[tabId];
   if (!recd) return null;
   var k = kindDef(recd.kind) || PMW.missingKind;
   tabSeq += 1;
   var host = h('div', { class: 'pmw-tabbody', role: 'tabpanel', id: 'pmw-tp-' + tabSeq, 'data-pmw-tab': tabId, 'data-pmw-kind': recd.kind, tabindex: '-1' });
+  if (prepared) { host.setAttribute('data-pmw-prepared', ''); host.inert = true; }
   if (parent) { if (!visible) host.hidden = true; parent.appendChild(host); }
   var entry = { id: tabId, kind: recd.kind, host: host, instance: null, api: null, visible: false, off: [], size: null };
   instances[tabId] = entry;
@@ -331,6 +399,8 @@ function unmountTab(tabId) {
   var e = instances[tabId];
   if (!e) return;
   delete instances[tabId];
+  if (e.raster) e.raster.cancel();
+  if (e.retireTimer) clearTimeout(e.retireTimer);
   try { if (e.instance && e.instance.unmount) e.instance.unmount(); } catch (err) { try { console.error('[pm-home] unmount failed', err); } catch (_) {} }
   e.off.forEach(function (fn) { try { fn(); } catch (_) {} });
   if (bodyObserver) bodyObserver.unobserve(e.host);
