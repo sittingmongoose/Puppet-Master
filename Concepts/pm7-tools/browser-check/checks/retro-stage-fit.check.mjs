@@ -585,27 +585,130 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 	// first sampled frame, is reported in device px (headTravelPx, handTravelPx) and asserted per awake cell.
 	const STEP_DPX = 1, DPR = window.devicePixelRatio || 1;
 	const NOPAINT = 'defs, clipPath, mask, pattern, marker, symbol';
-	const alphaOf = (col) => { if (!col || col === 'none' || col === 'transparent') return 0; if (/^url\(/.test(col)) return 1; const m = /rgba?\(([^)]*)\)/.exec(col); if (!m) return 1; const v = m[1].split(/[\s,\/]+/).filter(Boolean); if (v.length < 4) return 1; return v[3].endsWith('%') ? parseFloat(v[3]) / 100 : parseFloat(v[3]); };
-	const paints = (c) => (alphaOf(c.fill) * +c.fillOpacity > .05) || (alphaOf(c.stroke) * +c.strokeOpacity > .05 && parseFloat(c.strokeWidth) > 0);
-	// a sub-path with nothing drawn: a moveto with one coordinate pair, followed by another moveto or the end
-	const emptySub = (d) => { const tk = String(d || '').match(/[MmLlHhVvCcSsQqTtAaZz]|[-+]?(?:\d+\.?\d*|\.\d+)(?:[eE][-+]?\d+)?/g) || [];
+	// Normalize CSS colors once per color string, including alpha outside sRGB.
+	const ALPHA = new Map(), cv = document.createElement('canvas'); cv.width = cv.height = 1;
+	const cx2 = cv.getContext('2d', { willReadFrequently: true });
+	const alphaOf = (col) => { if (!col || col === 'none' || col === 'transparent') return 0; if (/^url\(/.test(col)) return 1;
+		let a = ALPHA.get(col); if (a !== undefined) return a;
+		cx2.clearRect(0, 0, 1, 1); cx2.fillStyle = '#000'; cx2.fillStyle = col; cx2.fillRect(0, 0, 1, 1); a = cx2.getImageData(0, 0, 1, 1).data[3] / 255;
+		if (ALPHA.size > 500) ALPHA.clear(); ALPHA.set(col, a); return a; };
+	// A paint server with zero-alpha stops and a butt-capped zero dash draw no ink.
+	const urlOf = (value) => /url\(\s*["']?#([^"')]+)["']?\s*\)/.exec(value || '')?.[1];
+	const paintAlpha = (color) => {
+		const id = urlOf(color);
+		const ref = id && document.getElementById(id);
+		if (!ref || !/^(linearGradient|radialGradient)$/.test(ref.tagName)) return alphaOf(color);
+		const stops = [...ref.querySelectorAll('stop')];
+		if (!stops.length) return alphaOf(color);
+		return Math.max(...stops.map((stop) => {
+			const style = getComputedStyle(stop);
+			return alphaOf(style.stopColor) * Number(style.stopOpacity);
+		}));
+	};
+	const zeroDash = (c) => {
+		if (c.strokeLinecap !== 'butt' || !c.strokeDasharray || c.strokeDasharray === 'none') return false;
+		const dashes = c.strokeDasharray.split(/[, ]+/).map(parseFloat);
+		return dashes.length % 2 === 0 && dashes.some((v) => v > 0)
+			&& dashes.every((v, i) => i % 2 !== 0 || v === 0);
+	};
+	const strokes = (c) => paintAlpha(c.stroke) * +c.strokeOpacity > .05 && parseFloat(c.strokeWidth) > 0 && !zeroDash(c);
+	const paints = (c) => paintAlpha(c.fill) * +c.fillOpacity > .05 || strokes(c);
+	// a sub-path with nothing drawn: a moveto with one coordinate pair, followed by another moveto or the end; T95: or a
+	// sub-path whose every segment ends where it began (M x y l0 0, M x y Z, h0, v0, a line to its own start), which paints
+	// only the caps of a stroke with round or square caps
+	const emptySub = (d, capped) => { const tk = String(d || '').match(/[MmLlHhVvCcSsQqTtAaZz]|[-+]?(?:\d+\.?\d*|\.\d+)(?:[eE][-+]?\d+)?/g) || [];
 		for (let i = 0; i < tk.length; i++) { if (tk[i] !== 'M' && tk[i] !== 'm') continue; let j = i + 1; while (j < tk.length && !/[A-Za-z]/.test(tk[j])) j++; if (j - i - 1 === 2 && (j >= tk.length || tk[j] === 'M' || tk[j] === 'm')) return true; }
-		return false; };
-	const leafShown = (e, top) => { for (let a = e; a && a !== top.parentElement; a = a.parentElement) { const c = getComputedStyle(a); if (c.display === 'none' || c.visibility === 'hidden' || +c.opacity < .05) return false; } return true; };
+		if (capped) return false;
+		let x = 0, y = 0, sx = 0, sy = 0, flat = null, cmd = '';
+		const N = (q) => +q;
+		for (let i = 0; i < tk.length;) {
+			if (/[A-Za-z]/.test(tk[i])) cmd = tk[i++];
+			const rel = cmd === cmd.toLowerCase(), C = cmd.toUpperCase(), take = (n) => { const v = tk.slice(i, i + n).map(N); i += n; return v; };
+			if (C === 'Z') { if (flat === true) return true; x = sx; y = sy; flat = null; continue; }
+			const n = { M: 2, L: 2, H: 1, V: 1, C: 6, S: 4, Q: 4, T: 2, A: 7 }[C]; if (!n || i + n > tk.length) break;
+			const v = take(n);
+			if (C === 'M') { if (flat === true) return true; x = rel ? x + v[0] : v[0]; y = rel ? y + v[1] : v[1]; sx = x; sy = y; flat = true; cmd = rel ? 'l' : 'L'; continue; }
+			const ends = C === 'H' ? [[rel ? x + v[0] : v[0], y]] : C === 'V' ? [[x, rel ? y + v[0] : v[0]]] : C === 'A' ? [[rel ? x + v[5] : v[5], rel ? y + v[6] : v[6]]] : Array.from({ length: n / 2 }, (_, q) => [rel ? x + v[2 * q] : v[2 * q], rel ? y + v[2 * q + 1] : v[2 * q + 1]]);
+			if (ends.some(([a, b]) => Math.abs(a - sx) > 1e-9 || Math.abs(b - sy) > 1e-9)) flat = false;
+			[x, y] = ends[ends.length - 1];
+		}
+		return flat === true; };
+	// Unknown clips and masks cannot supply positive movement evidence. For local SVG
+	// references, measure the bounds of the content that can reveal the leaf.
+	const GEOM = 'path,circle,ellipse,rect,polygon,polyline,line,use,text,image';
+	const limitOf = (e, top, toStage) => {
+		let lim = null;
+		for (let a = e; a && a !== top.parentElement; a = a.parentElement) {
+			const c = getComputedStyle(a);
+			if (c.display === 'none' || c.visibility !== 'visible' || +c.opacity < .05) return false;
+			for (const value of [c.clipPath, c.maskImage]) {
+				if (!value || value === 'none') continue;
+				const id = urlOf(value);
+				const ref = id && document.getElementById(id);
+				if (!ref || !/^(clipPath|mask)$/.test(ref.tagName)) return false;
+				const kids = [...ref.querySelectorAll(GEOM)];
+				let box = null;
+				const am = a.getScreenCTM(); if (!am) return false;
+				const units = ref.getAttribute(ref.tagName === 'mask' ? 'maskContentUnits' : 'clipPathUnits') === 'objectBoundingBox';
+				const ab = units ? a.getBBox() : null;
+				for (const q of kids) {
+					let b = null; try { b = q.getBBox(); } catch (_) { /* not measurable */ }
+					if (!b || !(b.width > 0 && b.height > 0)) continue;
+					const style = getComputedStyle(q);
+					if (style.display === 'none' || style.visibility !== 'visible' || +style.opacity < .05
+						|| (ref.tagName === 'mask' && !paints(style))) continue;
+					const lc = q.transform && q.transform.baseVal.consolidate(), L = lc ? lc.matrix : null;
+					const pts = [[b.x, b.y], [b.x + b.width, b.y], [b.x, b.y + b.height], [b.x + b.width, b.y + b.height]].map(([x, y]) => {
+						let X = L ? L.a * x + L.c * y + L.e : x, Y = L ? L.b * x + L.d * y + L.f : y;
+						if (ab) { X = ab.x + X * ab.width; Y = ab.y + Y * ab.height; }
+						return toStage(am, X, Y); });
+					const bx = [Math.min(...pts.map((z) => z[0])), Math.min(...pts.map((z) => z[1])), Math.max(...pts.map((z) => z[0])), Math.max(...pts.map((z) => z[1]))];
+					box = box ? [Math.min(box[0], bx[0]), Math.min(box[1], bx[1]), Math.max(box[2], bx[2]), Math.max(box[3], bx[3])] : bx;
+				}
+				if (!box) return false;
+				lim = lim ? [Math.max(lim[0], box[0]), Math.max(lim[1], box[1]), Math.min(lim[2], box[2]), Math.min(lim[3], box[3])] : box;
+				if (lim[2] <= lim[0] || lim[3] <= lim[1]) return false;
+			}
+		}
+		return lim;
+	};
+	// T95: a leaf wholly under an opaque leaf of the same part painted after it (later in the document, so above it) paints
+	// no pixel: every point of its outline, pushed out by half its stroke, and its centre, inside the opaque leaf's fill
+	// (isPointInFill in that leaf's own space). Opaque: a fill of alpha .99 or more, nothing above it in the part with
+	// opacity under .99, a filter, a blend mode, a clip or a mask. Cached by the two leaves' relative matrix and geometry.
+	const OCC = new Map();
+	const opaqueOf = (o, top) => { const c = getComputedStyle(o); if (paintAlpha(c.fill) * +c.fillOpacity < .99 || urlOf(c.fill) || (c.mixBlendMode && c.mixBlendMode !== 'normal')) return false;
+		for (let a = o; a && a !== top.parentElement; a = a.parentElement) { const q = getComputedStyle(a); if (+q.opacity < .99 || (q.filter && q.filter !== 'none') || (q.clipPath && q.clipPath !== 'none') || (q.mask && q.mask !== 'none' && q.mask !== 'auto') || (q.maskImage && q.maskImage !== 'none')) return false; }
+		return true; };
+	const geomKey = (e) => e.tagName + ':' + ['d', 'x', 'y', 'width', 'height', 'cx', 'cy', 'r', 'rx', 'ry', 'x1', 'y1', 'x2', 'y2', 'points'].map((a) => e.getAttribute(a) || '').join(',');
+	const covered = (l, o, sw) => {
+		const lm = l.getScreenCTM(), om = o.getScreenCTM(); if (!lm || !om) return false;
+		const rel = om.inverse().multiply(lm), key = [rel.a, rel.b, rel.c, rel.d, rel.e, rel.f].map((v) => v.toFixed(3)).join(',') + '|' + sw + '|' + geomKey(l) + '|' + geomKey(o);
+		const cache = OCC.get(l) || new Map(); if (!OCC.has(l)) OCC.set(l, cache);
+		const hit = cache.get(o); if (hit && hit.key === key) return hit.v;
+		let v = true;
+		try {
+			const len = l.getTotalLength(), n = 16, b = l.getBBox(), pts = [[b.x + b.width / 2, b.y + b.height / 2]], d = sw / 2;
+			for (let i = 0; i < n; i++) { const q = l.getPointAtLength(len * i / n); pts.push([q.x, q.y]); if (d > 0) pts.push([q.x - d, q.y], [q.x + d, q.y], [q.x, q.y - d], [q.x, q.y + d]); }
+			for (const [x, y] of pts) { const X = rel.a * x + rel.c * y + rel.e, Y = rel.b * x + rel.d * y + rel.f; if (!o.isPointInFill(new DOMPoint(X, Y))) { v = false; break; } }
+		} catch (_) { v = false; }
+		cache.set(o, { key, v }); return v; };
 	const painted = (s, g, label) => {
 		const root = s.svg.getScreenCTM();
 		if (!root) throw new Error('stage SVG: no screen matrix');
-		const inv = root.inverse(), k = Math.hypot(root.a, root.b) * DPR, leaves = new Map();
+		const inv = root.inverse(), k = Math.hypot(root.a, root.b) * DPR, leaves = new Map(), order = [];
+		const toStage = (m, x, y) => { const r = inv.multiply(m); return [(r.a * x + r.c * y + r.e) * k, (r.b * x + r.d * y + r.f) * k]; };
 		for (const e of g.querySelectorAll('path,circle,ellipse,rect,polygon,polyline,line')) {
-			if (e.closest(NOPAINT) || !leafShown(e, g)) continue;
+			if (e.closest(NOPAINT)) continue;
 			const c = getComputedStyle(e);
 			if (!paints(c)) continue;
-			const m = e.getScreenCTM(); if (!m) continue;
+			const m = e.getScreenCTM(); if (!m || Math.abs(m.a * m.d - m.b * m.c) < 1e-10) continue;
 			const r = inv.multiply(m), at = (x, y) => [(r.a * x + r.c * y + r.e) * k, (r.b * x + r.d * y + r.f) * k];
+			const capped = strokes(c) && (c.strokeLinecap === 'round' || c.strokeLinecap === 'square');
 			let pts = null;
 			if (e.tagName === 'path') {
 				const cd0 = c.d && c.d !== 'none' ? c.d : e.getAttribute('d'), cd = (/^path\(\s*["']([\s\S]*)["']\s*\)$/.exec(cd0 || '') || [null, cd0])[1];
-				if (emptySub(cd)) {
+				if (emptySub(cd, capped)) {
 					let len = 0; try { len = e.getTotalLength(); } catch (_) { /* not rendered */ }
 					if (!(len > 0)) continue;
 					const n = Math.max(32, Math.min(400, Math.ceil(len * Math.hypot(r.a, r.b) * k)));
@@ -615,11 +718,29 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 			if (!pts) {
 				let b = null; try { b = e.getBBox(); } catch (_) { /* not rendered */ }
 				if (!b || !(b.width > 0 || b.height > 0)) continue;
+				// T95: a box with no width or no height paints nothing unless it is a stroked line or path (a rect, circle or
+				// ellipse of zero size is not drawn at all)
+				if (!(b.width > 0 && b.height > 0) && (/^(rect|circle|ellipse)$/.test(e.tagName) || !strokes(c))) continue;
 				pts = [at(b.x, b.y), at(b.x + b.width, b.y), at(b.x, b.y + b.height), at(b.x + b.width, b.y + b.height)];
 			}
 			if (!pts.every((q) => Number.isFinite(q[0]) && Number.isFinite(q[1]))) continue;
-			const box = [Math.min(...pts.map((q) => q[0])), Math.min(...pts.map((q) => q[1])), Math.max(...pts.map((q) => q[0])), Math.max(...pts.map((q) => q[1]))];
-			leaves.set(e, { box, area: Math.max(box[2] - box[0], 1) * Math.max(box[3] - box[1], 1) });
+			let box = [Math.min(...pts.map((q) => q[0])), Math.min(...pts.map((q) => q[1])), Math.max(...pts.map((q) => q[0])), Math.max(...pts.map((q) => q[1]))];
+			const lim = limitOf(e, g, toStage);
+			if (lim === false) continue;
+			if (lim) { box = [Math.max(box[0], lim[0]), Math.max(box[1], lim[1]), Math.min(box[2], lim[2]), Math.min(box[3], lim[3])]; if (box[2] < box[0] || box[3] < box[1]) continue; }
+			leaves.set(e, { box, area: Math.max(box[2] - box[0], 1) * Math.max(box[3] - box[1], 1), sw: strokes(c) ? parseFloat(c.strokeWidth) || 0 : 0 });
+			order.push(e);
+		}
+		// T95: leaves wholly under an opaque leaf of the same part painted after them are left out (see covered)
+		const opq = new Map();
+		for (let i = 0; i < order.length; i++) {
+			const l = order[i], L = leaves.get(l), pad = L.sw / 2 * k;
+			for (let j = i + 1; j < order.length; j++) {
+				const o = order[j], O = leaves.get(o);
+				if (O.box[0] > L.box[0] - pad || O.box[1] > L.box[1] - pad || O.box[2] < L.box[2] + pad || O.box[3] < L.box[3] + pad) continue;
+				if (!opq.has(o)) opq.set(o, opaqueOf(o, g));
+				if (opq.get(o) && covered(l, o, L.sw)) { leaves.delete(l); break; }
+			}
 		}
 		if (!leaves.size) throw new Error(`${label}: no painted shape`);
 		return leaves;
