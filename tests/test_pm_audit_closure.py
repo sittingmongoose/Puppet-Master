@@ -618,8 +618,8 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
         self.prepare_owner_split(include_decision=False)
         self.assert_owner_split_result("reviews.sol.verdict must equal the record verdict")
 
-    def append(self, *, dry_run: bool = False) -> tuple[int, dict]:
-        args = argparse.Namespace(registry=str(self.registry), records=str(self.records), only="", dry_run=dry_run)
+    def append(self, *, dry_run: bool = False, only: str = "") -> tuple[int, dict]:
+        args = argparse.Namespace(registry=str(self.registry), records=str(self.records), only=only, dry_run=dry_run)
         with contextlib.redirect_stdout(io.StringIO()) as output:
             code = pm_audit_closure.cmd_reaudit_append(args)
         return code, json.loads(output.getvalue())
@@ -678,6 +678,116 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
         proof = self.audit_dir / "proof.json"
         proof.write_text(json.dumps({"evidence": self.target["closure_reason"]}) + "\n", encoding="utf-8")
         return pm_audit_closure.rel(proof) + "#json=/evidence"
+
+    def prepare_registry_pin_batch(self, *, split_only: bool = False) -> list[dict]:
+        """Two audit members, one already protected by a current registry row-set pin."""
+        m = pm_audit_closure
+        original = self.target
+        second = m._self_test_registry_row(
+            **{**original, "closure_id": "closure-second", "detail_keys": ["second"]},
+        )
+        write_jsonl(self.registry, [original, second])
+        self.target = second
+        self.prepare_record(line=2)
+        code, seeded = self.append()
+        self.assertEqual((code, seeded["appended"], seeded["errors"]), (0, 1, []), seeded)
+        prior_pin = json.loads(self.registry.read_bytes().splitlines()[2])
+        records = []
+        for line, target in ((1, original), (3, prior_pin)):
+            self.target = target
+            self.audit_dir = self.audit_dir.parent / f"batch-recheck-{line}"
+            self.audit_dir.mkdir()
+            self.records = self.audit_dir / "records.jsonl"
+            proof = self.proof_anchor()  # Also gives the recheck its own commit.
+            if split_only and line == 3:
+                def bind_set(record: dict, packet: dict) -> None:
+                    anchors = packet["dependency_anchors"] + [
+                        {"ref": self.anchor, "sha256": m.AnchorResolver().sha256(self.anchor)},
+                    ]
+                    self.write_split_rounds(record, self.audit_dir / "set-packet.jsonl",
+                                            [dict(split_id="row-set", anchors_at_R=anchors)],
+                                            {"sol": "row-set", "astra": "row-set"})
+                self.prepare_record(line=line, configure=bind_set, anchor=proof)
+            else:
+                self.prepare_record(line=line)
+            records.append(json.loads(self.records.read_text(encoding="utf-8")))
+        self.records = self.audit_dir / "batch-records.jsonl"
+        write_jsonl(self.records, records)
+        self.commit("two sets of reviewed receipts")
+        return records
+
+    def test_registry_pin_batch_requires_reauditing_the_old_pin(self) -> None:
+        records = self.prepare_registry_pin_batch()
+        before = self.registry.read_bytes()
+        code, report = self.append(dry_run=True, only=records[0]["closure_id"])
+        self.assertEqual((code, report["would_append"], report["moved_since_recheck"]), (1, 0, []), report)
+        self.assertEqual(len(report["errors"]), 1, report)
+        self.assertIn(f"candidate registry would not validate: {self.registry_ref}:3:", report["errors"][0])
+        self.assertIn(f"for {self.anchor} is stale", report["errors"][0])
+        self.assertEqual(self.registry.read_bytes(), before)
+
+    def assert_registry_pin_batch_drifts(self, *, split_only: bool) -> None:
+        m = pm_audit_closure
+        original = self.target
+        self.prepare_registry_pin_batch(split_only=split_only)
+        before = self.registry.read_bytes()
+        code, report = self.append(dry_run=True)
+        self.assertEqual((code, report["would_append"], report["errors"]), (0, 2, []), report)
+        self.assertEqual(self.registry.read_bytes(), before)
+        code, report = self.append()
+        self.assertEqual((code, report["appended"], report["errors"]), (0, 2, []), report)
+        committed = self.registry.read_bytes()
+        self.assertTrue(committed.startswith(before))
+        self.assertEqual(m.validate_registry(self.registry)["errors"], [])
+        code, report = self.append(dry_run=True)
+        self.assertEqual((code, report["already_appended"], report["errors"]), (0, 2, []), report)
+
+        appended = [json.loads(line) for line in committed.splitlines()]
+        later = m._self_test_registry_row(closure_id="closure-later", detail_keys=["later"],
+                                          closure_evidence=original["closure_evidence"], hashes=original["hashes"])
+        altered = copy.deepcopy(appended)
+        altered[3]["closure_reason"] += " Changed after append."
+        group = "split_anchor_hashes" if split_only else "owner_evidence_hashes"
+        for rows in (appended + [later], altered, appended[:3] + appended[4:]):
+            write_jsonl(self.registry, rows)
+            report = m.validate_registry(self.registry)
+            self.assertEqual(report["unsuperseded_stale_hash_count"], 1 if len(rows) == 4 else 2, report)
+            last_line = len(rows) - (rows[-1] is later)
+            self.assertTrue(any(f":{last_line}: {group} for {self.anchor} is stale" in e for e in report["errors"]), report)
+            if len(rows) > 4:
+                self.assertTrue(any(f":4: owner_evidence_hashes for {self.anchor} is stale"
+                                    in e for e in report["errors"]), report)
+        write_jsonl(self.registry, appended + [later])
+        snapshot = self.commit("later registry member")
+        for row in appended[-2:]:
+            expected_group = group if row == appended[-1] else "owner_evidence_hashes"
+            stale = m._target_stale_refs(row, m.CommitResolver(self.root, snapshot))
+            self.assertTrue(any(g == expected_group and ref == self.anchor for g, ref, _ in stale), stale)
+
+    def test_registry_pin_batch_appends_and_later_set_changes_stale_both(self) -> None:
+        self.assert_registry_pin_batch_drifts(split_only=False)
+
+    def test_registry_pin_batch_applies_to_split_only_row_sets(self) -> None:
+        self.assert_registry_pin_batch_drifts(split_only=True)
+
+    def test_registry_pin_batch_refuses_a_live_pin_outside_its_targets(self) -> None:
+        m = pm_audit_closure
+        self.prepare_registry_pin_batch()
+        guard = m._self_test_registry_row(
+            closure_id="closure-guard", detail_keys=["guard"], audit_ids=["audit-guard"], closed_by_audit_id="audit-guard",
+            closure_evidence=[self.anchor],
+            hashes={"hash_scope": m.ANCHOR_SCOPE, "owner_evidence_hashes": {self.anchor: m.AnchorResolver().sha256(self.anchor)}},
+        )
+        with self.registry.open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(guard, sort_keys=True) + "\n")
+        self.assertEqual(m.validate_registry(self.registry)["errors"], [])
+        before = self.registry.read_bytes()
+        code, report = self.append()
+        self.assertEqual((code, report["appended"], report["moved_since_recheck"]), (1, 0, []), report)
+        self.assertEqual(len(report["errors"]), 1, report)
+        self.assertIn(f"candidate registry would not validate: {self.registry_ref}:4:", report["errors"][0])
+        self.assertIn(f"for {self.anchor} is stale", report["errors"][0])
+        self.assertEqual(self.registry.read_bytes(), before)
 
     def test_split_only_anchor_is_current_after_append(self) -> None:
         self.prepare_currentness_split()

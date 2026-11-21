@@ -809,6 +809,13 @@ class AnchorResolver:
 REGISTRY_SELF_ANCHOR_SCOPE = "exclude_self.v1"
 
 
+REGISTRY_BATCH_ANCHOR = "registry_batch_anchor"
+
+
+def _canonical_row_set(rows: list[dict[str, Any]]) -> str:
+    return "[" + ",".join(sorted(canonical_json(row) for row in rows)) + "]"
+
+
 class _RegistryAnchorResolver(AnchorResolver):
     """Read a registry candidate at its real ref; optionally omit one re-audit row.
 
@@ -819,12 +826,14 @@ class _RegistryAnchorResolver(AnchorResolver):
     def __init__(
         self, source: AnchorResolver, registry_ref: str, *,
         registry_bytes: bytes | None = None, exclude_closure_id: str | None = None,
+        batch_anchor: dict[str, Any] | None = None,
     ) -> None:
         super().__init__(source.root)
         self.source = source
         self.registry_ref = registry_ref
         self.registry_bytes = registry_bytes
         self.exclude_closure_id = exclude_closure_id
+        self.batch_anchor = batch_anchor
 
     def read_bytes(self, rel_path: str) -> bytes:
         if rel_path == self.registry_ref and self.registry_bytes is not None:
@@ -837,6 +846,31 @@ class _RegistryAnchorResolver(AnchorResolver):
             return [row for row in rows if row.get("closure_id") != self.exclude_closure_id]
         return rows
 
+    def sha256(self, ref: str) -> str:
+        batch = self.batch_anchor
+        if batch is None or ref not in batch["row_sets"]:
+            return super().sha256(ref)
+
+        # Check the append contribution as well as the reviewed set. The common
+        # marker would be recursive in the contribution digest, so check it by
+        # exact equality and hash every other field of each matching member.
+        _, _, selector = parse_anchor_ref(ref)
+        current = self.source.content(f"{self.registry_ref}#jsonlset={selector}")[0]
+        members = set(batch["members"])
+        appended, reviewed = [], []
+        for row in strict_json_loads(current):
+            hashes = row.get("hashes")
+            if (isinstance(row.get("closure_id"), str) and row["closure_id"] in members
+                    and isinstance(hashes, dict) and hashes.get(REGISTRY_BATCH_ANCHOR) == batch):
+                appended.append({**row, "hashes": {k: v for k, v in hashes.items() if k != REGISTRY_BATCH_ANCHOR}})
+            else:
+                reviewed.append(row)
+        if sha256_text(_canonical_row_set(appended)) != batch["row_sets"][ref]:
+            # A member can disappear while the reviewed portion still matches.
+            # Use a separate domain for that stale result.
+            return sha256_text("registry batch member drift\n" + current)
+        return sha256_text(_canonical_row_set(reviewed))
+
     def is_dir(self, rel_path: str) -> bool:
         return self.source.is_dir(rel_path)
 
@@ -844,18 +878,44 @@ class _RegistryAnchorResolver(AnchorResolver):
 def registry_row_resolver(
     row: dict[str, Any], resolver: AnchorResolver, registry_ref: str | None = None,
 ) -> AnchorResolver:
-    """Apply a row's explicit self-exclusion to currentness checks, never its review snapshot."""
+    """Apply the row's registry pin metadata only to currentness checks."""
     hashes = row.get("hashes") if isinstance(row.get("hashes"), dict) else {}
-    if "registry_self_anchor" not in hashes:
+    marker = hashes.get("registry_self_anchor")
+    batch = hashes.get(REGISTRY_BATCH_ANCHOR)
+    path = None
+    if "registry_self_anchor" in hashes:
+        path = marker.get("path") if isinstance(marker, dict) else None
+        if (not isinstance(path, str) or marker != {"path": path, "scope": REGISTRY_SELF_ANCHOR_SCOPE}
+                or (registry_ref is not None and path != registry_ref) or hashes.get("hash_scope") != ANCHOR_SCOPE
+                or not isinstance(row.get("reaudit"), dict)):
+            raise AnchorError(f"registry_self_anchor must name this registry with scope {REGISTRY_SELF_ANCHOR_SCOPE} on a re-audit row")
+    if REGISTRY_BATCH_ANCHOR in hashes:
+        batch_path = batch.get("path") if isinstance(batch, dict) else None
+        members = batch.get("members") if isinstance(batch, dict) else None
+        row_sets = batch.get("row_sets") if isinstance(batch, dict) else None
+        if (not isinstance(batch_path, str) or (registry_ref is not None and batch_path != registry_ref)
+                or (path is not None and batch_path != path)
+                or set(batch) != {"path", "members", "row_sets"}
+                or not _str_list(members) or len(set(members)) != len(members) or len(members) < 2
+                or row.get("closure_id") not in members
+                or not isinstance(row_sets, dict) or not row_sets
+                or not all(_registry_row_set_ref(ref, batch_path) and _is_sha256(digest) for ref, digest in row_sets.items())
+                or hashes.get("hash_scope") != ANCHOR_SCOPE or not isinstance(row.get("reaudit"), dict)):
+            raise AnchorError("registry_batch_anchor must name this registry, its batch members and row-set hashes on a re-audit row")
+        path = batch_path
+    if path is None:
         return resolver
-    marker = hashes["registry_self_anchor"]
-    path = marker.get("path") if isinstance(marker, dict) else None
-    if not isinstance(path, str) or marker != {"path": path, "scope": REGISTRY_SELF_ANCHOR_SCOPE} \
-            or (registry_ref is not None and path != registry_ref) or hashes.get("hash_scope") != ANCHOR_SCOPE \
-            or not isinstance(row.get("reaudit"), dict):
-        raise AnchorError(f"registry_self_anchor must name this registry with scope {REGISTRY_SELF_ANCHOR_SCOPE} on a re-audit row")
     canonical_rel_path(path)
-    return _RegistryAnchorResolver(resolver, path, exclude_closure_id=row.get("closure_id"))
+    return _RegistryAnchorResolver(resolver, path, exclude_closure_id=row.get("closure_id") if marker else None,
+                                   batch_anchor=batch)
+
+
+def _registry_split_resolver(row: dict[str, Any], resolver: AnchorResolver, registry_ref: str) -> AnchorResolver:
+    """Split-only own row sets use the same batch pins and otherwise exclude the holder."""
+    batch = resolver.batch_anchor if isinstance(resolver, _RegistryAnchorResolver) else None
+    if batch is not None:
+        resolver = resolver.source
+    return _RegistryAnchorResolver(resolver, registry_ref, exclude_closure_id=row.get("closure_id"), batch_anchor=batch)
 
 
 class CommitResolver(AnchorResolver):
@@ -1500,7 +1560,7 @@ def _target_stale_refs(
         resolver = registry_row_resolver(target, resolver)
     except AnchorError:
         pass  # The registry validator reports malformed metadata as a structural error.
-    own_row_sets = _RegistryAnchorResolver(resolver, registry_ref, exclude_closure_id=target.get("closure_id"))
+    own_row_sets = _registry_split_resolver(target, resolver, registry_ref)
     out: set[tuple[str, str, str]] = set()
     groups = {
         "owner_evidence_hashes": hashes.get("owner_evidence_hashes"),
@@ -2503,6 +2563,7 @@ def validate_reaudit_row(
     marker = reaudit_self_anchor(record, registry_ref)
     self_dependent = marker is not None
     marked = "registry_self_anchor" in hashes
+    batch = hashes.get(REGISTRY_BATCH_ANCHOR)
     now = row.get("created_at")
     if self_dependent and not marked and reaudit_record_sha256(record) in LEGACY_UNMARKED_SELF_DEPENDENT_RECORDS:
         marker = None  # a pre-marker row keeps its unmarked form, and its own timestamp as the input
@@ -2512,12 +2573,12 @@ def validate_reaudit_row(
     elif marked and not self_dependent:
         errors.append(f"{label}: registry_self_anchor is set, but its bound record depends on no row set of this registry")
         return None
-    elif marked:
+    if marked:
         now = receipts.author_time(record_commit) if record_commit else None  # type: ignore[union-attr]
         if now is None:
             errors.append(f"{label}: cannot date self-excluding re-audit row: its record has no adding commit")
             return None
-    if self_dependent:
+    if self_dependent or batch is not None:
         try:
             expected = build_reaudit_row(target, line, raw_lines[line], record, record_ref, resolver, now)
         except (AnchorError, KeyError, TypeError) as exc:
@@ -2525,6 +2586,8 @@ def validate_reaudit_row(
             return None
         if marker is not None:
             expected["hashes"]["registry_self_anchor"] = marker
+        if batch is not None:
+            expected["hashes"][REGISTRY_BATCH_ANCHOR] = batch
         differing = sorted(field for field, value in expected.items() if row.get(field) != value)
         if differing:
             errors.append(f"{label}: self-excluding re-audit generated fields differ from bound record and predecessor: {differing}")
@@ -2692,7 +2755,7 @@ def validate_registry(registry_path: Path, *, anchor_registry_path: Path | None 
             validate_anchor_hashes({ref: value for ref, value in split_hashes.items() if ref not in own_sets},
                                    "split_anchor_hashes", label, errors, stale, row_resolver)
             if own_sets:
-                self_resolver = _RegistryAnchorResolver(resolver, registry_ref, exclude_closure_id=row.get("closure_id"))
+                self_resolver = _registry_split_resolver(row, row_resolver, registry_ref)
                 validate_anchor_hashes(own_sets, "split_anchor_hashes", label, errors, stale, self_resolver)
             if stale:
                 stale_by_line.setdefault(line_no, []).extend(stale)
@@ -5125,6 +5188,32 @@ def cmd_reaudit_append(args: argparse.Namespace) -> int:
         return 1
 
 
+def _pin_registry_batch(
+    rows: list[dict[str, Any]], row_sets: dict[str, set[str]], registry_ref: str, resolver: AnchorResolver,
+) -> None:
+    """Pin only row sets whose reviewed contents would move within this append."""
+    if len(rows) < 2 or not row_sets:
+        return
+    pending = _RegistryAnchorResolver(resolver, registry_ref, registry_bytes="".join(
+        canonical_json(row) + "\n" for row in rows
+    ).encode("utf-8"))
+    contributions = {}
+    for ref, holders in sorted(row_sets.items()):
+        _, _, selector = parse_anchor_ref(ref)
+        content = pending.content(f"{registry_ref}#jsonlset={selector}")[0]
+        matching = {row["closure_id"] for row in strict_json_loads(content)}
+        if any(matching - {holder} for holder in holders):
+            contributions[ref] = sha256_text(content)
+    if contributions:
+        batch = {
+            "path": registry_ref,
+            "members": sorted(row["closure_id"] for row in rows),
+            "row_sets": contributions,
+        }
+        for row in rows:
+            row["hashes"][REGISTRY_BATCH_ANCHOR] = batch
+
+
 def _reaudit_append(args: argparse.Namespace) -> int:
     """Migration: append one re-audit row per reviewed record whose anchors have not moved.
 
@@ -5161,6 +5250,7 @@ def _reaudit_append(args: argparse.Namespace) -> int:
     now = utc_now()
     receipts = ReceiptLedger(ROOT)
     new_rows: list[dict[str, Any]] = []
+    row_sets: dict[str, set[str]] = {}
     moved: list[dict[str, Any]] = []
     already_stale_moved: list[dict[str, Any]] = []
     skipped: list[str] = []
@@ -5236,8 +5326,12 @@ def _reaudit_append(args: argparse.Namespace) -> int:
             # A row cannot hash itself recursively. Keep the reviewed pre-append
             # snapshot, excluding just this row from its own registry row-set hash.
             row["hashes"]["registry_self_anchor"] = marker
+        for ref in snapshot.keys() | split_hashes.keys():
+            if _registry_row_set_ref(ref, rel(registry_path)):
+                row_sets.setdefault(ref, set()).add(row["closure_id"])
         new_rows.append(row)
     if not errors and new_rows:
+        _pin_registry_batch(new_rows, row_sets, rel(registry_path), resolver)
         raw = registry_path.read_bytes()
         if raw and not raw.endswith(b"\n"):
             errors.append(f"{rel(registry_path)} does not end with a newline; refusing to append to an unterminated last line")
@@ -6572,6 +6666,47 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         report = validate_rows([legacy_row(), own_set_row, successor])
         check("successor_leaves_predecessor_out_of_its_split_only_registry_row_set", not report["errors"]
               and report["superseded_lines"] == [1, 2], report["errors"])
+
+        # T308: successors can pin the same set if the old live pin is re-audited too.
+        first_target = legacy_row()
+        other_target = legacy_row(closure_id="closure-fixture-other", detail_keys=["other target"])
+        append_with(rows_before=[first_target, other_target], line=2, mutate=bind_registry_set)
+        seed_code, seed = run_append()
+        check("registry_set_batch_seeds_current_pin", seed_code == 0 and seed["appended"] == 1, seed)
+        if seed_code == 0:
+            seed_rows = [json.loads(raw) for raw in raw_registry_lines(registry).values()]
+            append_with(rows_before=seed_rows, mutate=bind_registry_set)
+            append_with(rows_before=seed_rows, line=3, mutate=bind_registry_set, keep_records=True)
+            before_batch = registry.read_bytes()
+            code, single = run_append(only=first_target["closure_id"], dry_run=True)
+            check("registry_set_batch_single_target_refused", code != 0 and single["would_append"] == 0
+                  and has(single, f":3: split_anchor_hashes for {registry_set} is stale")
+                  and registry.read_bytes() == before_batch, single)
+            code, batch = run_append()
+            check("registry_set_batch_two_targets_append", code == 0 and batch["appended"] == 2
+                  and registry.read_bytes().startswith(before_batch), batch)
+            if code == 0:
+                live = validate_registry(registry)
+                check("registry_set_batch_fresh_pins_validate", not live["errors"], live["errors"])
+                later = legacy_row(closure_id="closure-fixture-later", detail_keys=["later target"],
+                                   hashes={"owner_evidence_hashes": {"Plans/Fixture.md": sha256_file(doc)}})
+                with registry.open("a", encoding="utf-8") as output:
+                    output.write(json.dumps(later, sort_keys=True) + "\n")
+                moved = validate_registry(registry)
+                check("registry_set_batch_later_member_stales_both",
+                      all(has(moved, f":{line}: split_anchor_hashes for {registry_set} is stale") for line in (4, 5)),
+                      moved["errors"])
+            write_registry(seed_rows)
+            guard = legacy_row(closure_id="closure-fixture-guard", detail_keys=["guard"],
+                               audit_ids=["audit-guard"], closed_by_audit_id="audit-guard",
+                               hashes={"hash_scope": ANCHOR_SCOPE,
+                                       "owner_evidence_hashes": {registry_set: AnchorResolver(tmp).sha256(registry_set)}})
+            write_registry(seed_rows + [guard])
+            before_guarded = registry.read_bytes()
+            code, guarded = run_append()
+            check("registry_set_batch_unreplaced_pin_refuses_append", code != 0 and guarded["appended"] == 0
+                  and has(guarded, f":4: owner_evidence_hashes for {registry_set} is stale")
+                  and registry.read_bytes() == before_guarded, guarded)
 
         append_with(mutate=lambda rec: rec["reviews"].pop("sol"))
         write_registry([legacy_row()])
