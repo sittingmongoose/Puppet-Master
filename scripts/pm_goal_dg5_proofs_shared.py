@@ -116,7 +116,7 @@ PROOFS = {
     SITE + '1450': dict(
         kind='code-selection',
         families=FAMILIES,
-        depends_on=[SITE + '492'],
+        depends_on=[SITE + '1534'],
         sites=[(ST, 1450), (ST, 1501), (ST, 492), (ST, 1534)],
         argument=(
             'append at :1450 requires durability_class in (ordinary, barrier) before '
@@ -274,19 +274,38 @@ PROOFS = {
             'and pack_absent chains witness exactly this). :1726 selects the precise '
             'unavailable code and never gates acceptance alone; it closes once :1728 '
             'is closed.')),
-    SITE + '1534': dict(
-        kind='entailed-by-canonical-round-trip',
-        families=FAMILIES,
-        depends_on=[],
-        sites=[(ST, 435), (ST, 445), (ST, 512), (ST, 1531), (ST, 1534)],
-        argument=(
-            'append at :1534 requires the readback scan of the bytes just written in '
-            'the same call to end exactly at the new watermark with the identical '
-            'commit dict. The scan decodes frames produced by the canonical encoders '
-            '(:435/:445) with their exact inverses in decode_frame (:512): any byte '
-            'defect refuses at a frame or commit-shape site during the scan, and a '
-            'clean scan returns the identical commit by canonical round-trip. The only '
-            'other scan endings are the injected Crash faults (torn frames), which are '
-            'interruptions, not acceptances. No complete append call can make this row '
-            'refuse alone.')),
+}
+
+
+# Withdrawn written proofs (lead pm-ea-lead 1121101954-8459 (1), after the proof audit of 2026-11-21, and
+# (4): no written proof credits a row until an adversarial probe has been run and recorded with it). They are
+# kept for the record and are deliberately outside PROOFS, so no tool loads them as proofs:
+# pm_goal_dg5_justified.written_proofs and keycheck.py read only PROOFS. Do not move one back without a new
+# argument and a recorded probe whose cut run refuses.
+WITHDRAWN = {
+    'dg5/site/pm_goal_test_storage.py:1534': dict(
+        reason=(
+            'Withdrawn (lead pm-ea-lead 1121101954-8459 (1)) after the proof audit of 2026-11-21 '
+            '(proof-audit/AUDIT.md, audit.json, probes/). Refuted premise: a readback of genuine frames is not always '
+            'clean. The EventRecord event_type pattern admits pm.seglog.group_commit (= CONTROL_TYPE); a plain '
+            'TestOwnerStorage.append of such a candidate fails control_header_mismatch on readback, so :1534 is the '
+            'only refusal (intact: append/readback; cut: IndexError on a fresh segment or index/duplicate_event_id '
+            'after an earlier group; probe_1534.py). Rows held in all four families.'
+        ),
+        proof=dict(
+            kind='entailed-by-canonical-round-trip',
+            families=FAMILIES,
+            depends_on=[],
+            sites=[(ST, 435), (ST, 445), (ST, 512), (ST, 1531), (ST, 1534)],
+            argument=(
+                'append at :1534 requires the readback scan of the bytes just written in '
+                'the same call to end exactly at the new watermark with the identical '
+                'commit dict. The scan decodes frames produced by the canonical encoders '
+                '(:435/:445) with their exact inverses in decode_frame (:512): any byte '
+                'defect refuses at a frame or commit-shape site during the scan, and a '
+                'clean scan returns the identical commit by canonical round-trip. The only '
+                'other scan endings are the injected Crash faults (torn frames), which are '
+                'interruptions, not acceptances. No complete append call can make this row '
+                'refuse alone.')),
+    ),
 }

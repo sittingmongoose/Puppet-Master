@@ -181,18 +181,6 @@ PROOFS.update({
             "operation is created by the single-candidate append at :1020 ([submission]), so a "
             "published start reservation holds exactly one event id. The re-read at :1326 therefore "
             "always finds the published reservation with one event, and the check cannot refuse.")),
-    'dg5/site/pm_goal_dg_s_start.py:1406': dict(
-        kind='entailment', families=['goal_run.started'],
-        depends_on=['dg5/site/pm_goal_dg_s_start.py:1022'],
-        sites=[(START, 1406), (START, 1020), (START, 1022), (STORAGE, 1571), (STORAGE, 1579)],
-        argument=(
-            "commit_original is reached only after :1022 has required the append outcome 'appended' "
-            "for this operation. AppendOwner.append_original then issues first custody for the "
-            "appended reservation, and Storage.issue_first_receipt moves an appended reservation to "
-            "'receipted' before returning (pm_goal_test_storage.py:1571-1581); the first-receipt and "
-            "original_append steps in between perform no reservation transition. The reservation "
-            "commit_original re-reads is therefore still 'receipted', so :1406 cannot be the first "
-            "refusal in a complete commit_start call.")),
 })
 
 PROOFS.update({
@@ -395,3 +383,34 @@ PROOFS.update({
             "ceiling case witnesses the exact :259 refusal, and no cut of :259 alone lets the "
             "advance complete.")),
 })
+
+
+# Withdrawn written proofs (lead pm-ea-lead 1121101954-8459 (1), after the proof audit of 2026-11-21, and
+# (4): no written proof credits a row until an adversarial probe has been run and recorded with it). They are
+# kept for the record and are deliberately outside PROOFS, so no tool loads them as proofs:
+# pm_goal_dg5_justified.written_proofs and keycheck.py read only PROOFS. Do not move one back without a new
+# argument and a recorded probe whose cut run refuses.
+WITHDRAWN = {
+    'dg5/site/pm_goal_dg_s_start.py:1406': dict(
+        reason=(
+            'Withdrawn (lead pm-ea-lead 1121101954-8459 (1)) after the proof audit of 2026-11-21 '
+            '(proof-audit/AUDIT.md, audit.json, probes/). Accepting mutant through the family edit channel: :1405 '
+            "reads the reservation named by the commit record's operation_id, which the publication_union commit edit "
+            '(:1172) can retarget, and nothing before :1406 binds it to op. A commit edit to an operation reserved in '
+            'the same Storage refuses lower/reservation_receipted with :1406 intact; with :1406 cut commit_start is '
+            'accepted and the other reservation goes reserved to published (probe_s1406.py reserved).'
+        ),
+        proof=dict(
+            kind='entailment', families=['goal_run.started'],
+            depends_on=['dg5/site/pm_goal_dg_s_start.py:1022'],
+            sites=[(START, 1406), (START, 1020), (START, 1022), (STORAGE, 1571), (STORAGE, 1579)],
+            argument=(
+                "commit_original is reached only after :1022 has required the append outcome 'appended' "
+                "for this operation. AppendOwner.append_original then issues first custody for the "
+                "appended reservation, and Storage.issue_first_receipt moves an appended reservation to "
+                "'receipted' before returning (pm_goal_test_storage.py:1571-1581); the first-receipt and "
+                "original_append steps in between perform no reservation transition. The reservation "
+                "commit_original re-reads is therefore still 'receipted', so :1406 cannot be the first "
+                "refusal in a complete commit_start call.")),
+    ),
+}
