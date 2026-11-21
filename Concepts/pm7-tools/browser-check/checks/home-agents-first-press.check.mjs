@@ -14,13 +14,15 @@ export default async function (t) {
 	await f.locator('.title-bar nav.page-tabs .page-tab').first().click();
 	await t.page.waitForTimeout(1700);
 
-	const rail = t.args.route === 'rail';
+	const open = t.args.route === 'rail-open';
+	const rail = open || t.args.route === 'rail';
+	const targetName = open ? 'Open' : rail ? 'Changed' : 'Agents';
 	const strip = rail ? f.locator('#panel-files > .pm-segtab:visible')
 		: f.locator('.pmw-strip:visible').filter({ has: f.locator('.pmw-tab[data-tab-id="dashboard:agents"]') }).first();
 	const item = rail ? '.pm-segtab-item' : '.pmw-tab';
 	const tab = rail ? 'data-tab' : 'data-tab-id';
 	const from = strip.locator(`${item}[${tab}="${rail ? 'explorer' : 'dashboard:home'}"]`);
-	const targetId = rail ? 'changed' : 'dashboard:agents';
+	const targetId = open ? 'open' : rail ? 'changed' : 'dashboard:agents';
 	const to = strip.locator(`${item}[${tab}="${targetId}"]`);
 	const homeBox = await from.boundingBox(), agentsBox = await to.boundingBox();
 	const isSelected = async (locator) => rail ? locator.evaluate((e) => e.classList.contains('active'))
@@ -76,16 +78,16 @@ export default async function (t) {
 		if (!clock || rtt < clock.rtt) clock = { timeOrigin, offset: (before + after) / 2 - timeOrigin - now, rtt };
 	}
 	await t.page.mouse.move(agentsBox.x + agentsBox.width / 2, agentsBox.y + agentsBox.height / 2);
-	await t.mark(rail ? 'First Explorer to Changed press' : 'First Home to Agents press');
+	await t.mark(`First ${rail ? 'Explorer' : 'Home'} to ${targetName} press`);
 	await t.page.mouse.down();
 	await t.page.waitForTimeout(90);
 	await t.page.mouse.up();
 	await t.page.waitForTimeout(1400);
-	await t.mark(rail ? 'Changed settled' : 'Agents settled');
+	await t.mark(`${targetName} settled`);
 
 	const { clicks, pointer, animation } = await f.evaluate(() => window.__fo240Native);
 	const selected = await isSelected(to);
 	const firstPress = clicks.length === 1 && clicks[0].trusted && clicks[0].id === targetId;
-	await t.check(`One trusted press selected ${rail ? 'Changed' : 'Agents'} and had a carried chip`, firstPress && selected && !!animation);
-	writeFileSync(t.run.dir + '/native-press.json', JSON.stringify({ homeBox, agentsBox, agents, clock, pointer, clicks, animation, firstPress, selected, ...(rail ? { route: 'rail' } : {}) }));
+	await t.check(`One trusted press selected ${targetName} and had a carried chip`, firstPress && selected && !!animation);
+	writeFileSync(t.run.dir + '/native-press.json', JSON.stringify({ homeBox, agentsBox, agents, clock, pointer, clicks, animation, firstPress, selected, ...(rail ? { route: 'rail', railTarget: targetId } : {}) }));
 }

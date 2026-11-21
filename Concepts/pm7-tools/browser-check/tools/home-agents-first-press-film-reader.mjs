@@ -53,9 +53,9 @@ function firstPress(data) {
 			const [dx, dy, r, kx, ky] = m.slice(1).map(Number);
 			return { o, dx, dy, r, kx, ky };
 		});
+		const name = data.railTarget === 'open' ? 'Open' : rail ? 'Changed' : 'Agents';
 		return { from: data.homeBox, to: data.agentsBox, rail, rec: { box: { x: 0, y: 0, w, h }, kf, dur },
-			start: mark(rail ? 'First Explorer to Changed press' : 'First Home to Agents press'),
-			end: mark(rail ? 'Changed settled' : 'Agents settled') + 0.05 };
+			start: mark(`First ${rail ? 'Explorer' : 'Home'} to ${name} press`), end: mark(`${name} settled`) + 0.05 };
 	}
 	const eligible = (c) => c.look === 'friendly-dark' && c.mode === 'motion';
 	const cell = data.cells?.find((c) => eligible(c) && c.group === 'home') ||
