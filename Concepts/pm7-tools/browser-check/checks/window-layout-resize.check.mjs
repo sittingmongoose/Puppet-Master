@@ -78,6 +78,17 @@ async function wakePip(t, f) {
 	}
 }
 
+async function waitForFrames(f, width, height, count, after = 0) {
+	try {
+		await f.waitForFunction(({ width, height, count, after }) => {
+			return window.__wlr.frames.slice(after).filter((frame) => frame.w === width && frame.h === height).length >= count;
+		}, { width, height, count, after }, { timeout: 8000 });
+	} catch (error) {
+		// The assertions report a missing sample with the frames that did arrive.
+		if (error.name !== 'TimeoutError') throw error;
+	}
+}
+
 async function run(t, mode) {
 	let f, size;
 	if (mode === 'normal') {
@@ -104,16 +115,24 @@ async function run(t, mode) {
 			await wakePip(t, f);
 			await f.evaluate(install);
 			await f.waitForTimeout(150);
+			await waitForFrames(f, 1920, 1080, 1);
 			await t.check(`${tag}: Pip is awake before the shrink`, await f.evaluate(pipAwake), 'requires the stage and pose awake after real pointer travel', { hard: true });
+			const beforeShrink = await f.evaluate(() => window.__wlr.frames.length);
 			await t.mark(`${look} rep ${i} 740`);
 			const sizedAt = await size(740, 768);
 			await f.waitForTimeout(1500);
+			// Loaded renderers can arrive at 740 near the end of the dwell. Keep recording until
+			// the first sample and one more arrive, preserving the first sample for the verdict.
+			await waitForFrames(f, 740, 768, 2, beforeShrink);
+			const beforeReturn = await f.evaluate(() => window.__wlr.frames.length);
 			await t.mark(`${look} rep ${i} 1920`);
 			await size(1920, 1080);
 			await f.waitForTimeout(1200);
+			await waitForFrames(f, 1920, 1080, 1, beforeReturn);
 			const fr = await f.evaluate(() => { const S = window.__wlr; S.on = false; return S.frames; });
-			const before = fr.filter((x) => x.w === 1920), at = fr.filter((x) => x.w === 740), i740 = fr.findIndex((x) => x.w === 740);
-			const back = fr.slice(i740 + 1).filter((x) => x.w === 1920);
+			const before = fr.slice(0, beforeShrink).filter((x) => x.w === 1920 && x.h === 1080);
+			const at = fr.slice(beforeShrink).filter((x) => x.w === 740 && x.h === 768);
+			const back = fr.slice(beforeReturn).filter((x) => x.w === 1920 && x.h === 1080);
 			const wrong = at.filter((x) => x.lay !== 'narrow');
 			/* (and Pip's stage drawn for it in the same frame: the stage's own layout, banner over a narrow window; a redraw a
 			   frame late showed the tall stage's scene in the banner, FO88-N1) */
@@ -126,7 +145,7 @@ async function run(t, mode) {
 			const why = JSON.stringify({ frames: fr.length, at740: at.length, ownFirstMs: ownFirst, first740: at[0] && { lay: at[0].lay, win: at[0].win && at[0].win.map(Math.round), stage: at[0].stage && at[0].stage.map(Math.round) }, wrongLayout: wrong.length, staleStage: stale.length, firstDrawn: at[0] && at[0].drawn, cut: cut.length, worstCut: cut[0] && { stage: Math.round(cut[0].s), button: Math.round(cut[0].b), who: cut[0].who, lay: cut[0].x.lay }, backFirst: back[0] && back[0].lay, footButtons: at[0] ? at[0].foot.map((q) => q.name) : [] });
 			// (preconditions: wide before, frames read at 740, the footer's buttons there)
 			await t.check(`${tag}: wide at 1920x1080 before the resize`, before.length > 0 && before[before.length - 1].lay === 'wide', why);
-			await t.check(`${tag}: frames read at 740x768`, at.length > 1 && at[0].foot.length > 0 && !!at[0].stage, why); /* (a loaded film machine paints few: 2-17 frames in 1.5 s on the VM while it recorded) */
+			await t.check(`${tag}: frames read at 740x768`, at.length > 1 && at[0].foot.length > 0 && !!at[0].stage, why);
 			/* (the claim each surface can make: painted frames in the same process; the page's own frames out of process, where
 			   the browser's clipped old picture, shown until it presents a new frame, is FO-92 and not seen here) */
 			const F = mode === 'normal' ? { first: 'the first frame painted', every: 'every frame painted' } : { first: "the page's own first frame laid out (the clipped old picture the browser shows until it presents a new frame, which can be after this one, is FO-92, not judged)", every: 'every frame the page lays out' };
