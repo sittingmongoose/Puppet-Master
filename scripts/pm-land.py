@@ -451,12 +451,16 @@ def dry_run(args, root, ref):
     try:
         record = checked_remote(folder, args.checks_on, "refs/heads/main" if head == base else ref,
                                 head, tree, base)
-        git(root, "fetch", "origin")
-        if full_main(root) != base:
-            detail = "origin/main moved during the dry-run; run again at the new main"
-            write_json(folder / "verification.json", {"verified_utc": now(), "error": detail})
-            raise Refusal(detail)
+        # Keep the evidence for the fetched base even if the trial becomes stale while checking.
+        # The separate freshness check bars using that evidence for a landing at a different base.
         verify_over_ssh(folder, args.checks_on, head, tree, base)
+        git(root, "fetch", "origin")
+        latest = full_main(root)
+        if latest != base:
+            detail = f"origin/main moved during the dry-run from {base} to {latest}. Run again at the new main."
+            write_json(folder / "base-moved.json", {"detected_utc": now(), "checked_base": base,
+                                                  "fetched_base": latest, "error": detail})
+            raise Refusal(detail)
         return record["exit_code"]
     finally:
         cleanup_over_ssh(folder, args.checks_on)

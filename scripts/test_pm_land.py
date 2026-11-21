@@ -319,5 +319,35 @@ class LandingFixture(unittest.TestCase):
         self.assertEqual(pushes, [("push", f"--force-with-lease={ref}:{self.head}", "origin", f"HEAD:{ref}")])
 
 
+    def test_dry_run_retains_verification_but_refuses_a_moved_base(self):
+        self.git(self.shared, "update-ref", land.ORIGIN_MAIN, self.base)
+        args = argparse.Namespace(branch="main", checks_on="1070ti")
+        record = self.make_record(1)
+        real_git = land.git
+        fetches = 0
+
+        def moving_fetch(root, *argv, **kwargs):
+            nonlocal fetches
+            if argv[:2] == ("fetch", "origin"):
+                fetches += 1
+                if fetches == 2:
+                    real_git(root, "update-ref", land.ORIGIN_MAIN, self.head)
+                return None
+            return real_git(root, *argv, **kwargs)
+
+        with (patch.object(land, "git", side_effect=moving_fetch),
+              patch.object(land, "new_run", return_value=self.folder),
+              patch.object(land, "checked_remote", return_value=record),
+              patch.object(land, "verify_over_ssh") as verify,
+              patch.object(land, "cleanup_over_ssh") as cleanup,
+              self.assertRaisesRegex(land.Refusal, "origin/main moved")):
+            land.dry_run(args, self.shared, land.MAIN_REF)
+        verify.assert_called_once_with(self.folder, "1070ti", self.head, self.tree, self.base)
+        cleanup.assert_called_once()
+        evidence = land.read_json(self.folder / "base-moved.json")
+        self.assertEqual(evidence["checked_base"], self.base)
+        self.assertEqual(evidence["fetched_base"], self.head)
+
+
 if __name__ == "__main__":
     unittest.main()
