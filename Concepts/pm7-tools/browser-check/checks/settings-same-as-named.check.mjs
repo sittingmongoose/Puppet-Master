@@ -14,8 +14,8 @@
 //             persona made through it opens Try with "Model: Everyday model · <that row's own words on Settings ›
 //             Models> (set in Settings › Models)" and no Preferred model line.
 //   named     at 1280x900 and 740x900 (--set sizes=), on Settings UX Reviewer (editable): Creativity and Word choice
-//             range read "<what Randomness / Word-choice focus shows on Models › How models answer> · from <that
-//             row's name>"; What it may do without asking reads "Same as Profile in use · <the profile Permissions ›
+//             range show <what Randomness / Word-choice focus shows on Models › How models answer> with "from <that
+//             row's name>" on its small line; What it may do without asking reads "Same as Profile in use · <the profile Permissions ›
 //             Profiles then shows In use>" (read on Personas first, before Permissions is ever opened); Starts by's
 //             face and its first choice read "Same as new agent runs · <this row's own words for the mode New agent
 //             runs start in holds>", and after a real press of Plan only on that row they read "... · Planning
@@ -120,8 +120,10 @@ async function openPersona(t, f, pid = PID) {
 }
 const rowOf = (f, id) => f.locator(`${BODY} .setting-row[data-setting-id="${id}"]`).first();
 const clean = (s) => String(s || '').replace(/\s+/g, ' ').trim();
-// a slider row's words while it follows (the spark line), and whether a box cuts them
-const followLine = (row) => row.locator('.o55-mgp-own .o55-auto > span:last-child').first();
+// a slider row's words while it follows: the value, and on its small line where it comes from ("Model default",
+// "from Randomness"), read as one "<value> · from <source>"; and whether a box cuts them
+const followLine = (row) => row.locator('.o55-mgp-own .o55-auto > .o55-mgp-follow').first();
+const followText = (row) => followLine(row).evaluate((el) => [el.querySelector(':scope > span'), el.querySelector(':scope > small')].map((x) => (x ? x.textContent.replace(/\s+/g, ' ').trim() : '')).filter(Boolean).join(' · ')).catch(() => '');
 const ddFace = (row) => row.locator('.pm51-dd-value').first();
 const cut = (loc) => loc.evaluate((el) => {
 	const r = el.getBoundingClientRect(), cs = getComputedStyle(el);
@@ -258,8 +260,8 @@ for (const surface of ['normal', 'sandbox']) {
 			const modeFace = clean(await ddFace(rowOf(f, S.mode)).innerText().catch(() => ''));
 			const modeFirst = await rowOf(f, S.mode).evaluate((r) => { const sel = r.querySelector('select'); const o = sel && [...sel.options].find((x) => x.value === 'inherit'); return { inherit: o ? o.textContent.trim() : null, words: sel ? Object.fromEntries([...sel.options].map((x) => [x.value, x.textContent.trim()])) : {} }; });
 			const permChoices = await rowOf(f, S.perms).evaluate((r) => { const sel = r.querySelector('select'); return sel ? [...sel.options].filter((o) => o.value !== 'inherit').map((o) => o.textContent.trim()) : []; });
-			const tempLine = clean(await followLine(rowOf(f, S.temp)).innerText().catch(() => ''));
-			const toppLine = clean(await followLine(rowOf(f, S.topp)).innerText().catch(() => ''));
+			const tempLine = await followText(rowOf(f, S.temp));
+			const toppLine = await followText(rowOf(f, S.topp));
 			const cuts = [];
 			for (const [name, loc] of [['Starts by', ddFace(rowOf(f, S.mode))], ['What it may do', ddFace(rowOf(f, S.perms))], ['Creativity', followLine(rowOf(f, S.temp))], ['Word choice range', followLine(rowOf(f, S.topp))]]) {
 				if (!(await loc.count())) continue;
@@ -325,9 +327,12 @@ for (const surface of ['normal', 'sandbox']) {
 			await t.check(`Set its own offers "${wantBack}" back`, backText === wantBack, `shown "${backText}"`);
 			await back.click();
 			await t.page.waitForTimeout(500);
-			const again = clean(await followLine(rowOf(f, S.temp)).innerText().catch(() => ''));
+			const again = await followText(rowOf(f, S.temp));
 			await t.check('pressing it returns Creativity to following', again === wantTemp, `shown "${again}"`);
 			if (t.args.shots) {
+				// no hover or focus tag over the rows: the pointer leaves and focus drops before the crops
+				await t.page.mouse.move(2, 2);
+				await f.evaluate(() => document.activeElement && document.activeElement.blur && document.activeElement.blur());
 				await t.page.waitForTimeout(2400);
 				const sec = rowOf(f, S.temp).locator('xpath=ancestor::section[1]');
 				await t.crop(`personas-model-and-cost-${w}-${surface}`, sec, 'Model and cost on an editable persona: Creativity and Word choice range name what they follow');

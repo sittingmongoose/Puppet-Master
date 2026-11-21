@@ -135,7 +135,9 @@
   const capOn = v => Number(v) > 0;
   function tuneCtl(p, id) {
     const t = TUNE[id], n = tuneNum(pval(p, id)), d = { id: p.id, setting: id };
-    if (!Number.isFinite(n)) return `<span class="o55-inherit o55-mgp-own"><span class="o55-auto">${icon('spark')}<span>${h(tuneText(id, null))}</span></span><button type="button" class="o55-textbtn" data-action="pm51-personas-own" ${dataAttrs(d)}>Set its own</button></span>`;
+    /* following: the value it uses, and on a small line where it comes from (as the model picker's face does), so the
+       row's words keep their width */
+    if (!Number.isFinite(n)) return `<span class="o55-inherit o55-mgp-own"><span class="o55-auto">${icon('spark')}<span class="o55-mgp-follow"><span>${h(followNow(id))}</span><small>from ${h(followName(id))}</small></span></span><button type="button" class="o55-textbtn" data-action="pm51-personas-own" ${dataAttrs(d)}>Set its own</button></span>`;
     const v = Math.max(t.min, Math.min(t.max, n));
     return `<div class="o55-mgp-tune"><div class="o55-mgp-tune-track"><span class="o55-mgp-tune-end" aria-hidden="true">${h(t.ends[0])}</span><input type="range" min="${t.min}" max="${t.max}" step="${t.step}" value="${v}" data-action="pm51-personas-tune" ${dataAttrs(d)} aria-label="${a(PM51.rowLabel(PM51.setting(id)))}" aria-valuetext="${a(tuneText(id, v))}"><span class="o55-mgp-tune-end" aria-hidden="true">${h(t.ends[1])}</span></div><div class="o55-mgp-tune-foot"><output class="o55-mgp-tune-now">${h(tuneText(id, v))}</output><button type="button" class="o55-textbtn" data-action="pm51-personas-inherit" ${dataAttrs(d)}>${h(`Same as ${followName(id)} · ${followNow(id)}`)}</button></div></div>`;
   }

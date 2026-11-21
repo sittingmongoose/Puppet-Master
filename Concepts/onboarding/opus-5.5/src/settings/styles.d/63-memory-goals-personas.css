@@ -38,6 +38,8 @@ html[data-theme^="retro"] .pm51-popout.o55-mgp-menu.is-described .pm51-menu-item
 
 /* ---- a persona's own number ------------------------------------------------------------------------------------ */
 #panel-settings .o55-mgp-own { flex-wrap: wrap; row-gap: 4px; }
+#panel-settings .o55-mgp-follow { display: grid; line-height: 1.25; }
+#panel-settings .o55-mgp-follow small { font-size: 11px; font-weight: 500; color: var(--k3-text-3); }
 #panel-settings .o55-mgp-tune { display: grid; gap: 4px; width: min(320px, 100%); min-width: 0; }
 #panel-settings .o55-mgp-tune-track { display: grid; grid-template-columns: auto minmax(90px, 1fr) auto; align-items: center; gap: 10px; }
 #panel-settings .o55-mgp-tune-end { font-size: 11.5px; color: var(--k3-text-3); white-space: nowrap; }
