@@ -1680,12 +1680,22 @@ class WholeProducer(IssuingOwner):
             'payload.payload.worknode_receipt_refs': native['decision']['receipt']['worknode_receipt_refs'],
             'payload.actor_ref': asg['assigned_actor']['actor_ref'], 'payload.occurred_at_utc':
                 native['decision']['issued_at_utc'],
+            # Outer/inner joins (GRS-079, GRS-080, Goal_Runtime_System.md payload table and :4073); KeyError = absent.
+            'payload.project_id': scope['project_id'], 'payload.goal_id': scope['goal_id'],
+            'payload.thread_id': goal['thread_id'] if goal['thread_id'] is not None else KeyError,
+            'payload.correlation_id': inv['causal_source']['correlation_id'],
+            'payload.causation_event_ref': (w.values['cause_event_id'] if w.values['cause_event_id'] is not None
+                                            else KeyError),
+            'payload.requested_account_ref': runtime['requested_account'],
+            'payload.effective_account_ref': runtime['effective_account'],
+            'payload.payload.goal_run_id': scope['goal_run_id'],
         }
         for path, value in expected.items():
             actual = event
             for part in path.split('.'):
                 actual = actual.get(part, KeyError) if type(actual) is dict else KeyError
-            A.require('producer/field/' + path, actual is not KeyError and A.same(actual, value))
+            A.require('producer/field/' + path, actual is KeyError if value is KeyError else
+                      (actual is not KeyError and A.same(actual, value)))
         A.require('producer/cause_appended', w.storage.read_event(w.values['cause_event_id'])['event_id'] ==
                   w.values['cause_event_id'])
         try:
