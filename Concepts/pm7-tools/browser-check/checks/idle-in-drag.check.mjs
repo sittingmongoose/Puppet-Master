@@ -99,7 +99,7 @@ async function regionsOf(t) {
 }
 
 // installed before the page's own scripts, in every frame (the sandbox's too)
-const RECORDER = (cfg) => {
+export const RECORDER = (cfg) => {
 	if (window.__pmIdleRec) return;
 	try { localStorage.clear(); } catch (_) { /* opaque surface */ }
 	const R = window.__pmIdleRec = { fired: [], jobs: [], bodies: [], gated: true, hooked: false, armedAt: null, dragOnAt: null, offs: [], ons: [], upAt: null, upDrag: null };
@@ -208,7 +208,7 @@ const RECORDER = (cfg) => {
 				identity = { id: ++seq, stack, owner, editorBuild, via: !!R.admitting || callFrames.some(admitting), token: R.admitting || 0 };
 				identities.set(fn, identity);
 			}
-			const j = { id: identity.id, owner: identity.owner, via: identity.via, token: identity.token, handle: ++handle, fn, options, stack: identity.stack, pending: true, native: 0 };
+			const j = { ...identity, handle: ++handle, fn, options, pending: true, native: 0 };
 			R.jobs.push(j); pending.set(j.handle, j);
 			if (!R.gated) ask(j);
 			return j.handle;
@@ -432,6 +432,22 @@ async function judge(t, f, label, win, owners) {
 	await t.check(`${label}: no timer of those owners does work inside the drag`, timers.length === 0, timers.map((c) => `${nameOf(c.owner)} ${c.ms.toFixed(1)} ms at ${top(c.stack)}`).join('; ') || '0');
 }
 
+export async function waitForResume(t, f, usage, look) {
+	await t.page.waitForTimeout(RESUME_MS);
+	const editorJobs = usage.queued.filter((j) => j.editorBuild).map(({ id, token }) => ({ id, token }));
+	if (editorJobs.length) {
+		t.log(`${look}: extending the resume wait for queued editor build job IDs ${editorJobs.map((j) => j.id).join(', ')} (up to ${EDITOR_BUILD_WAIT_MS / 1000} s total)`);
+		await f.waitForFunction(({ jobs, closed }) => {
+			const rec = window.__pmIdleRec;
+			return jobs.every(({ id, token }) =>
+				rec.fired.some((c) => c.id === id && !c.drag && c.at > closed) &&
+				rec.bodies.some((b) => b.job === id && !b.drag && b.at > closed && (!token || b.token === token)));
+		}, { jobs: editorJobs, closed: usage.closed }, { timeout: EDITOR_BUILD_WAIT_MS - RESUME_MS }).catch((error) => {
+			if (error.name !== 'TimeoutError') throw error;
+		});
+	}
+}
+
 export const tests = {
 	async 'idle work waits out a held drag (SW-17)'(t) {
 		const looks = String(t.args.looks || 'glass-dark,basic-dark').split(',');
@@ -501,18 +517,7 @@ export const tests = {
 				const mine = usage.queued.filter((j) => j.owner === o.key);
 				await t.check(`${look}: ${o.name} has a real idle job pending at the press`, mine.length > 0, mine.length ? brief(mine) : `none; pending ${brief(usage.queued)}`);
 			}
-			await t.page.waitForTimeout(RESUME_MS);
-			const editorJobs = usage.queued.filter((j) => j.editorBuild).map(({ id, token }) => ({ id, token }));
-			if (editorJobs.length) {
-				await f.waitForFunction(({ jobs, closed }) => {
-					const rec = window.__pmIdleRec;
-					return jobs.every(({ id, token }) =>
-						rec.fired.some((c) => c.id === id && !c.drag && c.at > closed) &&
-						rec.bodies.some((b) => b.job === id && !b.drag && b.at > closed && (!token || b.token === token)));
-				}, { jobs: editorJobs, closed: usage.closed }, { timeout: EDITOR_BUILD_WAIT_MS - RESUME_MS }).catch((error) => {
-					if (error.name !== 'TimeoutError') throw error;
-				});
-			}
+			await waitForResume(t, f, usage, look);
 			// T56: the window's end is the final class-off after the release, read after the resume wait
 			usage.end = await windowEnd(t, f, `${look} Usage`, usage, readd && keys.includes(readd.key) ? readd : null);
 			await judge(t, f, `${look} Usage`, usage, owners);
