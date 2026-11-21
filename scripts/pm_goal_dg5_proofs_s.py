@@ -385,6 +385,754 @@ PROOFS.update({
 })
 
 
+# Started proofs admitted through the Started matrix intakes (correction goal_run.started-005 base) and
+# landed here so they load as PROOFS (lead pm-ea-lead 1121094214-9517 (2)). Each entry is the record's
+# kind, families, depends_on, sites and argument verbatim; every cited line is current at the lane head.
+PROOFS.update({
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/cutover/original/append/root/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/cutover/original/root/schema'],
+        sites=[
+            (READERS, 105),
+            (READERS, 253),
+            (READERS, 254),
+            (READERS, 256),
+            (READERS, 710),
+        ],
+        argument=(
+            'The original append document checked at 105 is assigned unchanged as original_append in the '
+            'enclosing object at 254. The schema checked at 256 requires the same append definition. Both '
+            'accepted and refused examples record the same JSON at both sites. Disabling only the early check '
+            'exposes the same first validation message at 256. Restoring the early check restores the '
+            'original refusal.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/d01/current_source/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/issue/current_source/schema'],
+        sites=[
+            (START, 404),
+            (START, 405),
+            (START, 406),
+            ('scripts/pm_goal_test_owner_adapters.py', 460),
+            ('scripts/pm_goal_test_owner_adapters.py', 462),
+        ],
+        argument=(
+            'The same JSON is passed to the original issuer before the caller can return. Both calls reach '
+            'the identical installed schema. The accepted example gives the same document at both checks. '
+            'With only the early check disabled, the same invalid document reaches the issuer with exactly '
+            'the same validation message. Restoration brings back the original early refusal.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/goal/current_argument/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/issue/CurrentGoalArgument/schema'],
+        sites=[
+            (START, 345),
+            (START, 346),
+            (START, 347),
+            ('scripts/pm_goal_test_owner_adapters.py', 460),
+            ('scripts/pm_goal_test_owner_adapters.py', 462),
+        ],
+        argument=(
+            'The same JSON is passed to the original issuer before the caller can return. Both calls reach '
+            'the identical installed schema. The accepted example gives the same document at both checks. '
+            'With only the early check disabled, the same invalid document reaches the issuer with exactly '
+            'the same validation message. Restoration brings back the original early refusal.'
+        ),
+    ),
+    # from inspection_append_intake (methodb-reference goal_run.started-stage2-22/intake-batch-17)
+    'dg5/inspect_original/final/append/root/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/inspect_original/final/root/schema'],
+        sites=[
+            (READERS, 105),
+            (READERS, 253),
+            (READERS, 254),
+            (READERS, 256),
+            (READERS, 883),
+        ],
+        argument=(
+            'The inspection forwards the exact append document validated at line 105 unchanged in the '
+            'required original_append member checked at line 256. That member uses the same installed '
+            'definition. The accepted example supplies identical JSON to both checks. Disabling only the '
+            'first check moves the same validation message to the enclosing check, and restoring the first '
+            'check restores its original refusal.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/inspect_original/final/root/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=[],
+        sites=[
+            (READERS, 94),
+            (READERS, 253),
+            (READERS, 255),
+            (READERS, 256),
+            (READERS, 878),
+            (READERS, 883),
+            (READERS, 884),
+            (READERS, 888),
+            ('scripts/pm_goal_test_owner_adapters.py', 83),
+        ],
+        argument=(
+            'The retained document at 94 is unchanged in the enclosing object at 255–256, whose required '
+            'native_start member uses the same definition. The other copy in the comparison at 884 still '
+            'passes the enclosing schema at 256, and equality requires the same JSON types and values. Each '
+            'test observes the unaffected check or the schema-valid comparison operand while only the '
+            'selected site is disabled and observes the exact original refusal after restoration.'
+        ),
+    ),
+    # from inspection_append_intake (methodb-reference goal_run.started-stage2-22/intake-batch-17)
+    'dg5/inspect_original/original/append/root/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/inspect_original/original/root/schema'],
+        sites=[
+            (READERS, 105),
+            (READERS, 253),
+            (READERS, 254),
+            (READERS, 256),
+            (READERS, 804),
+        ],
+        argument=(
+            'The inspection forwards the exact append document validated at line 105 unchanged in the '
+            'required original_append member checked at line 256. That member uses the same installed '
+            'definition. The accepted example supplies identical JSON to both checks. Disabling only the '
+            'first check moves the same validation message to the enclosing check, and restoring the first '
+            'check restores its original refusal.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/inspect_original/original/root/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=[],
+        sites=[
+            (READERS, 94),
+            (READERS, 253),
+            (READERS, 255),
+            (READERS, 256),
+            (READERS, 878),
+            (READERS, 883),
+            (READERS, 884),
+            (READERS, 888),
+            ('scripts/pm_goal_test_owner_adapters.py', 83),
+        ],
+        argument=(
+            'The retained document at 94 is unchanged in the enclosing object at 255–256, whose required '
+            'native_start member uses the same definition. The other copy in the comparison at 884 still '
+            'passes the enclosing schema at 256, and equality requires the same JSON types and values. Each '
+            'test observes the unaffected check or the schema-valid comparison operand while only the '
+            'selected site is disabled and observes the exact original refusal after restoration.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/project/lower_original/append/root/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/project/lower_original/root/schema'],
+        sites=[
+            (READERS, 105),
+            (READERS, 253),
+            (READERS, 254),
+            (READERS, 256),
+            (READERS, 662),
+        ],
+        argument=(
+            'The original append document checked at 105 is assigned unchanged as original_append in the '
+            'enclosing object at 254. The schema checked at 256 requires the same append definition. Both '
+            'accepted and refused examples record the same JSON at both sites. Disabling only the early check '
+            'exposes the same first validation message at 256. Restoring the early check restores the '
+            'original refusal.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/project/original/append/root/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/project/original/root/schema'],
+        sites=[
+            (READERS, 105),
+            (READERS, 253),
+            (READERS, 254),
+            (READERS, 256),
+            (READERS, 651),
+        ],
+        argument=(
+            'The original append document checked at 105 is assigned unchanged as original_append in the '
+            'enclosing object at 254. The schema checked at 256 requires the same append definition. Both '
+            'accepted and refused examples record the same JSON at both sites. Disabling only the early check '
+            'exposes the same first validation message at 256. Restoring the early check restores the '
+            'original refusal.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/read_current/current_goal/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/issue/CurrentGoalArgument/schema'],
+        sites=[
+            (READERS, 854),
+            (READERS, 855),
+            (READERS, 925),
+            (READERS, 934),
+            (START, 345),
+            (START, 347),
+            ('scripts/pm_goal_test_owner_adapters.py', 83),
+        ],
+        argument=(
+            'The other Goal copy is constructed and validated by the original owner and reader. The final '
+            'comparison at 934 requires type-exact equality with that schema-valid copy. The example records '
+            'both operands and verifies that the original Goal argument issuer and reader use the same '
+            'installed schema. Disabling just this check leaves the bad copy for the comparison, and '
+            'restoring it restores the same early validation message.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/read_current/current_start/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/read_current/root/schema', 'dg5/d01/current_source/schema'],
+        sites=[
+            (START, 404),
+            (START, 405),
+            (START, 406),
+            (READERS, 845),
+            (READERS, 846),
+            (READERS, 848),
+            (READERS, 849),
+            (READERS, 923),
+            (READERS, 933),
+            (READERS, 935),
+            (READERS, 937),
+        ],
+        argument=(
+            'The workflow at 846–847 embeds the unchanged D01 document validated at 404–405. The installed '
+            'CurrentStartSource requires that exact D01 definition and the whole-call tests match both D01 '
+            'documents to their enclosing workflow. The D01 tests exercise all 1,266 rules of the same '
+            'definition; the workflow tests exercise the other 68 against the original installed schema. The '
+            'other workflow copy is acquired again, checked by the same schema, and compared using type-exact '
+            'equality at 933. The final result at 935–937 requires the identical workflow definition. The '
+            'accepted example records the exact document at the result check. With only the selected check '
+            'disabled the final comparison refuses the changed copy. Restoration reproduces the original '
+            'validation message.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/read_current/final/append/root/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/read_current/root/schema'],
+        sites=[
+            (READERS, 105),
+            (READERS, 253),
+            (READERS, 254),
+            (READERS, 256),
+            (READERS, 928),
+            (READERS, 935),
+            (READERS, 937),
+        ],
+        argument=(
+            'The append document checked at 105 goes unchanged into the required original_append member at '
+            '254–256. The current reader result requires the same nested definition and the final comparison '
+            'requires both original documents to be type-exact equal. The valid example records the same JSON '
+            'in the result, and the invalid example gives the same validation message after disabling only '
+            'the early check.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/read_current/final/current_goal/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/issue/CurrentGoalArgument/schema'],
+        sites=[
+            (READERS, 854),
+            (READERS, 855),
+            (READERS, 925),
+            (READERS, 934),
+            (START, 345),
+            (START, 347),
+            ('scripts/pm_goal_test_owner_adapters.py', 83),
+        ],
+        argument=(
+            'The other Goal copy is constructed and validated by the original owner and reader. The final '
+            'comparison at 934 requires type-exact equality with that schema-valid copy. The example records '
+            'both operands and verifies that the original Goal argument issuer and reader use the same '
+            'installed schema. Disabling just this check leaves the bad copy for the comparison, and '
+            'restoring it restores the same early validation message.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/read_current/final/current_start/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/read_current/root/schema', 'dg5/d01/current_source/schema'],
+        sites=[
+            (START, 404),
+            (START, 405),
+            (START, 406),
+            (READERS, 845),
+            (READERS, 846),
+            (READERS, 848),
+            (READERS, 849),
+            (READERS, 923),
+            (READERS, 933),
+            (READERS, 935),
+            (READERS, 937),
+        ],
+        argument=(
+            'The workflow at 846–847 embeds the unchanged D01 document validated at 404–405. The installed '
+            'CurrentStartSource requires that exact D01 definition and the whole-call tests match both D01 '
+            'documents to their enclosing workflow. The D01 tests exercise all 1,266 rules of the same '
+            'definition; the workflow tests exercise the other 68 against the original installed schema. The '
+            'other workflow copy is acquired again, checked by the same schema, and compared using type-exact '
+            'equality at 933. The final result at 935–937 requires the identical workflow definition. The '
+            'accepted example records the exact document at the result check. With only the selected check '
+            'disabled the final comparison refuses the changed copy. Restoration reproduces the original '
+            'validation message.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/read_current/final/root/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/read_current/root/schema'],
+        sites=[
+            (READERS, 94),
+            (READERS, 253),
+            (READERS, 255),
+            (READERS, 256),
+            (READERS, 914),
+            (READERS, 928),
+            (READERS, 935),
+            (READERS, 937),
+        ],
+        argument=(
+            'The retained document at 94 is unchanged in the required native_start member at 255–256. The '
+            'reader requires type-exact equality of the two original documents at 928 and checks the same '
+            'required OriginalStarted object in the result at 935–937. The valid example records the same '
+            'JSON there. Disabling only the retained site produces the same validation message at 256, and '
+            'disabling only the enclosing site causes the comparison to refuse.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/read_current/original/append/root/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/read_current/root/schema'],
+        sites=[
+            (READERS, 105),
+            (READERS, 253),
+            (READERS, 254),
+            (READERS, 256),
+            (READERS, 928),
+            (READERS, 935),
+            (READERS, 937),
+        ],
+        argument=(
+            'The append document checked at 105 goes unchanged into the required original_append member at '
+            '254–256. The current reader result requires the same nested definition and the final comparison '
+            'requires both original documents to be type-exact equal. The valid example records the same JSON '
+            'in the result, and the invalid example gives the same validation message after disabling only '
+            'the early check.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/read_current/original/root/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/read_current/root/schema'],
+        sites=[
+            (READERS, 94),
+            (READERS, 253),
+            (READERS, 255),
+            (READERS, 256),
+            (READERS, 914),
+            (READERS, 928),
+            (READERS, 935),
+            (READERS, 937),
+        ],
+        argument=(
+            'The retained document at 94 is unchanged in the required native_start member at 255–256. The '
+            'reader requires type-exact equality of the two original documents at 928 and checks the same '
+            'required OriginalStarted object in the result at 935–937. The valid example records the same '
+            'JSON there. Disabling only the retained site produces the same validation message at 256, and '
+            'disabling only the enclosing site causes the comparison to refuse.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/read_historical/final/append/root/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/read_historical/root/schema'],
+        sites=[
+            (READERS, 105),
+            (READERS, 253),
+            (READERS, 254),
+            (READERS, 256),
+            (READERS, 895),
+            (READERS, 900),
+            (READERS, 901),
+            (READERS, 905),
+            (READERS, 906),
+        ],
+        argument=(
+            'The append document checked at 105 is inserted as required original_append at 254 and rechecked '
+            'against the same definition at 256. The historical result at 905–906 requires that same nested '
+            'append document. The final read must be type-exact equal to the original read at 901, so the '
+            'result schema covers both append copies on a successful call. The complete call records the '
+            'unchanged valid append at the result check and reproduces the exact first validation message at '
+            '256 with the early check disabled. Restoring the early check restores its original refusal.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/read_historical/final/root/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/read_historical/root/schema'],
+        sites=[
+            (READERS, 94),
+            (READERS, 253),
+            (READERS, 255),
+            (READERS, 256),
+            (READERS, 895),
+            (READERS, 901),
+            (READERS, 902),
+            (READERS, 905),
+            (READERS, 906),
+        ],
+        argument=(
+            'The retained document checked at 94 is inserted unchanged at 255. The enclosing schema at 256 '
+            'requires the same retained definition. The historical output at 905–906 requires the same '
+            'enclosing definition, and the comparison at 902 requires both original copies to be type-exact '
+            'equal. With only the retained site disabled the same invalid document reaches the enclosing '
+            'schema. With only the enclosing site disabled the comparison refuses the changed copy. Both '
+            'original validation messages return when their site is restored.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/read_historical/original/append/root/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/read_historical/root/schema'],
+        sites=[
+            (READERS, 105),
+            (READERS, 253),
+            (READERS, 254),
+            (READERS, 256),
+            (READERS, 895),
+            (READERS, 900),
+            (READERS, 901),
+            (READERS, 905),
+            (READERS, 906),
+        ],
+        argument=(
+            'The append document checked at 105 is inserted as required original_append at 254 and rechecked '
+            'against the same definition at 256. The historical result at 905–906 requires that same nested '
+            'append document. The final read must be type-exact equal to the original read at 901, so the '
+            'result schema covers both append copies on a successful call. The complete call records the '
+            'unchanged valid append at the result check and reproduces the exact first validation message at '
+            '256 with the early check disabled. Restoring the early check restores its original refusal.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/read_historical/original/root/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/read_historical/root/schema'],
+        sites=[
+            (READERS, 94),
+            (READERS, 253),
+            (READERS, 255),
+            (READERS, 256),
+            (READERS, 895),
+            (READERS, 901),
+            (READERS, 902),
+            (READERS, 905),
+            (READERS, 906),
+        ],
+        argument=(
+            'The retained document checked at 94 is inserted unchanged at 255. The enclosing schema at 256 '
+            'requires the same retained definition. The historical output at 905–906 requires the same '
+            'enclosing definition, and the comparison at 902 requires both original copies to be type-exact '
+            'equal. With only the retained site disabled the same invalid document reaches the enclosing '
+            'schema. With only the enclosing site disabled the comparison refuses the changed copy. Both '
+            'original validation messages return when their site is restored.'
+        ),
+    ),
+    # from retained_reader_schema_intake (methodb-reference goal_run.started-stage2-22/intake-batch-16)
+    'dg5/read_retained_native/final/root/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=[],
+        sites=[
+            (READERS, 94),
+            (READERS, 800),
+            (READERS, 867),
+            (READERS, 869),
+            (READERS, 870),
+            ('scripts/pm_goal_test_owner_adapters.py', 83),
+        ],
+        argument=(
+            'Both retained copies pass the same installed validation at line 94. The caller compares the two '
+            'at line 870 using type-exact equality. A schema-invalid copy cannot equal the other schema-valid '
+            'copy. The tests confirm the other copy passed the original validator and reached the comparison '
+            'unchanged. Disabling just the selected validation makes the comparison refuse, and restoration '
+            'repeats the exact original validation message.'
+        ),
+    ),
+    # from retained_reader_schema_intake (methodb-reference goal_run.started-stage2-22/intake-batch-16)
+    'dg5/read_retained_native/retained/root/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=[],
+        sites=[
+            (READERS, 94),
+            (READERS, 800),
+            (READERS, 867),
+            (READERS, 869),
+            (READERS, 870),
+            ('scripts/pm_goal_test_owner_adapters.py', 83),
+        ],
+        argument=(
+            'Both retained copies pass the same installed validation at line 94. The caller compares the two '
+            'at line 870 using type-exact equality. A schema-invalid copy cannot equal the other schema-valid '
+            'copy. The tests confirm the other copy passed the original validator and reached the comparison '
+            'unchanged. Disabling just the selected validation makes the comparison refuse, and restoration '
+            'repeats the exact original validation message.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/representation/record/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/projection/record/schema'],
+        sites=[
+            (READERS, 281),
+            (READERS, 483),
+            (READERS, 484),
+            (READERS, 485),
+            (READERS, 486),
+            ('scripts/pm_goal_test_owner_adapters.py', 83),
+        ],
+        argument=(
+            'The reader validates the reconstructed document at 484. At 485 it derives and validates the '
+            'expected document using the same Projection definition at 281. At 486 it requires type-exact '
+            'equality with the validated document. A successful return can therefore only contain a '
+            'reconstructed document that satisfies the same schema. Disabling the early check leaves the '
+            'invalid document unchanged and produces the exact comparison refusal. Both comparison operands '
+            'and both original validation messages are recorded by the complete-call test.'
+        ),
+    ),
+    # from current_stage7_checker_intake; methodb-pilot b7b7fba92d
+    # scripts/pm_goal_dg5_methodb_stage7_started_dependencies.py PENDING
+    'dg5/site/pm_goal_dg_s_start.py:1004': dict(
+        kind='entailed-by-pending-prepared-check',
+        families=['goal_run.started'],
+        depends_on=['dg5/site/pm_goal_dg_s_start.py:973'],
+        sites=[
+            (START, 965),
+            (START, 969),
+            (START, 971),
+            (START, 972),
+            (START, 973),
+            (START, 1001),
+            (START, 1004),
+        ],
+        argument=(
+            'Both checks use the same local pending and prepared values assigned at :969 and :971. When '
+            'prepared is absent, a nonempty pending fails :973 before reaching :1004. The same '
+            'other-operation request refuses at :973 alone and at :1004 alone, with '
+            'start/pending_other_operation in both cases. Restoration returns to :973.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/start/commit/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/start/retained_native/schema'],
+        sites=[
+            (START, 1172),
+            (START, 1174),
+            (START, 1175),
+            (START, 1269),
+            (START, 1270),
+            (START, 1272),
+        ],
+        argument=(
+            'The StorageCommit document checked at 1174 is placed unchanged in the required '
+            'RetainedNativeStart.commit member at 1269–1270 and checked at 1272 in the same publication '
+            'routine. The selector at 1175 uses the document without changing it. In v3 and native v7 that '
+            'required member resolves to the identical StorageCommit definition. If the complete call reaches '
+            '1272 after bypassing the early check, this same document must satisfy the same definition there. '
+            'The three exact-root replays bind the two checks to the same accepted and invalid documents, the '
+            'same first validation message after bypass, and the restored early refusal.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/start/control/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/start/retained_native/schema'],
+        sites=[
+            (START, 1179),
+            (START, 1269),
+            (START, 1270),
+            (START, 1271),
+            (START, 1272),
+        ],
+        argument=(
+            'The control document checked at 1179 is held unchanged as a required member of '
+            'RetainedNativeStart at 1269–1271. The check at 1272 requires the same schema definition. The '
+            'isolated example records the original message again at the later check, and the early message '
+            'returns when the early check is restored. The accepted call records the same member at both '
+            'sites.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/start/origin/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/start/retained_native/schema'],
+        sites=[
+            (START, 1191),
+            (START, 1192),
+            (START, 1269),
+            (START, 1270),
+            (START, 1272),
+        ],
+        argument=(
+            'The StorageOrigin document checked at 1191 is placed unchanged in the required '
+            'RetainedNativeStart.origin member at 1269–1270 and checked at 1272 in the same publication '
+            'routine. The selector at 1192 uses the document without changing it. In v3 and native v7 that '
+            'required member resolves to the identical StorageOrigin definition. If the complete call reaches '
+            '1272 after bypassing the early check, this same document must satisfy the same definition there. '
+            'The three exact-root replays bind the two checks to the same accepted and invalid documents, the '
+            'same first validation message after bypass, and the restored early refusal.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/start/original_append/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/start/publication_result/schema'],
+        sites=[
+            (START, 1026),
+            (START, 1029),
+            (START, 1030),
+            (START, 1036),
+            (START, 1040),
+            (START, 1042),
+        ],
+        argument=(
+            'The FullOriginalAppend document checked at 1029 is assigned to the required '
+            'PublicationResult.original_append member at 1040 and checked at 1042 in the same commit_start '
+            'call. Publication processing uses this document to build other values, and leaves its JSON '
+            'intact. In v3 and native v7 the required member resolves to the identical FullOriginalAppend '
+            'definition. If the call reaches the result check after bypassing the early one, the same '
+            'document must satisfy that definition. The three exact-root replays record the byte-equal '
+            'documents, exact validation message, and restored early refusal.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/start/original_d01_head/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/start/retained_native/schema'],
+        sites=[
+            (START, 1268),
+            (START, 1269),
+            (START, 1270),
+            (START, 1271),
+            (START, 1272),
+        ],
+        argument=(
+            'The original_d01_head document checked at 1268 is held unchanged as a required member of '
+            'RetainedNativeStart at 1269–1271. The check at 1272 requires the same schema definition. The '
+            'isolated example records the original message again at the later check, and the early message '
+            'returns when the early check is restored. The accepted call records the same member at both '
+            'sites.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/start/original_d01_origin/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/start/retained_native/schema'],
+        sites=[
+            (START, 1268),
+            (START, 1269),
+            (START, 1270),
+            (START, 1271),
+            (START, 1272),
+        ],
+        argument=(
+            'The original_d01_origin document checked at 1268 is held unchanged as a required member of '
+            'RetainedNativeStart at 1269–1271. The check at 1272 requires the same schema definition. The '
+            'isolated example records the original message again at the later check, and the early message '
+            'returns when the early check is restored. The accepted call records the same member at both '
+            'sites.'
+        ),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/start/original_d01_update/schema': dict(
+        kind='entailment',
+        families=['goal_run.started'],
+        depends_on=['dg5/start/retained_native/schema'],
+        sites=[
+            (START, 1268),
+            (START, 1269),
+            (START, 1270),
+            (START, 1271),
+            (START, 1272),
+        ],
+        argument=(
+            'The original_d01_update document checked at 1268 is held unchanged as a required member of '
+            'RetainedNativeStart at 1269–1271. The check at 1272 requires the same schema definition. The '
+            'isolated example records the original message again at the later check, and the early message '
+            'returns when the early check is restored. The accepted call records the same member at both '
+            'sites.'
+        ),
+    ),
+})
+
+
 # Withdrawn written proofs (lead pm-ea-lead 1121101954-8459 (1), after the proof audit of 2026-11-21, and
 # (4): no written proof credits a row until an adversarial probe has been run and recorded with it). They are
 # kept for the record and are deliberately outside PROOFS, so no tool loads them as proofs:
