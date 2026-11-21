@@ -6,8 +6,9 @@ One entry per row the family's complete calls evaluate:
   -> control (accepted complete calls of the family) -> negative (declared-target
   attempts by outcome, best exact witness) -> cut -> restoration.
 
-Status (GH1): CLOSED = gated PASS and a KILLED or DUPLICATE_SET_KILLED witness of
-this family (or a byte-identical cited shared witness under --shared-proof);
+Status (GH1): CLOSED = gated PASS and a KILLED, DUPLICATE_SET_KILLED or KILLED_CODE witness of
+this family (KILLED_CODE, addendum 1 = pm-ea-lead 1121124828-43f4 (1), is counted apart in
+`kills`, in the entry's `closed_by` and in the family's `closed_by` tally) (or a byte-identical cited shared witness under --shared-proof);
 CLOSED_BY_PROOF = a recorded justification (scripts/pm_goal_dg5_justified.py)
 whose dependencies are closed in this family; OPEN otherwise, with its reason.
 A whole-root schema row is CLOSED only if, in addition, every root it validates
@@ -52,6 +53,8 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+# Kill classes that close a row (KILLED_CODE is reported apart: entry `closed_by`, family `closed_by`).
+KILL_CLASSES = ('KILLED', 'DUPLICATE_SET_KILLED', 'KILLED_CODE')
 
 
 def line_text(path, line):
@@ -187,6 +190,7 @@ def _effective_gated(specs):
 
 def _best_attempt(records):
     best = sorted(records, key=lambda r: (r.get('kill') not in ('KILLED', 'DUPLICATE_SET_KILLED'),
+                                          r.get('kill') != 'KILLED_CODE',
                                           r.get('outcome') != 'exact_expected',
                                           r.get('_dg5_proof_index', 0), r['id']))[:1]
     return best[0] if best else None
@@ -469,12 +473,12 @@ def main():
             outcomes = collections.Counter(r.get('outcome') for r in tries)
             kills = collections.Counter(r.get('kill') for r in tries if r.get('kill'))
             witness = _best_attempt(tries)
-            killed = any(r.get('kill') in ('KILLED', 'DUPLICATE_SET_KILLED') for r in tries)
+            killed = any(r.get('kill') in KILL_CLASSES for r in tries)
             gated = _effective_gated(specs)
             shared = _shared_citation(shared_proofs, proofs, name, sites) if shared_proofs else \
                 dict(valid=False, reason=None, records=[], gated=None, specs=[])
             shared_tries = shared['records'] if shared['valid'] else []
-            shared_killed = any(r.get('kill') in ('KILLED', 'DUPLICATE_SET_KILLED') for r in shared_tries)
+            shared_killed = any(r.get('kill') in KILL_CLASSES for r in shared_tries)
             shared_witness = _best_attempt(shared_tries)
             effective_gated = 'PASS' if gated == 'PASS' or (shared['valid'] and shared['gated'] == 'PASS') else gated
             if site_conflict:
@@ -493,6 +497,9 @@ def main():
                 status, reason = 'OPEN', 'conflicting collection sites across proof directories'
             elif effective_gated == 'PASS' and (killed or shared_killed):
                 status, reason = 'CLOSED', None
+                credited = {r.get('kill') for r in list(tries) + list(shared_tries)} & set(KILL_CLASSES)
+                closed_by = 'KILLED_CODE' if credited == {'KILLED_CODE'} else 'KILLED'
+
             elif proof_record and (effective_gated in ('PASS', 'NOT_RUN') or
                                    (effective_gated == 'UNPROVED' and specs and
                                     all(spec.get('table_status') in ('NOT_RUN', 'PASS') for spec in specs))):
@@ -542,7 +549,8 @@ def main():
                 negative=dict(declared_attempts=len(tries), outcomes=dict(outcomes), witness=_witness(witness)),
                 cut=_cut(witness), restoration=_restoration(witness),
                 justification=proof_record if proof_record is not None else bound,
-                schema_closure=schema, kills=dict(kills))
+                schema_closure=schema, kills=dict(kills),
+                closed_by=closed_by if status == 'CLOSED' else None)
             if shared_proofs:
                 entry['shared_negative'] = dict(
                     valid_citation=shared['valid'], rejected_reason=shared['reason'],
@@ -570,7 +578,8 @@ def main():
                 pending = [d for d in (m['justification'] or {}).get('depends_on', []) if d not in closed]
                 m['status'], m['reason'] = 'OPEN', 'justification dependency not closed (or cyclic): ' + ', '.join(pending)
         summary = collections.Counter(m['status'] for m in matrix)
-        out['families'][family] = dict(rows=len(matrix), status=dict(summary),
+        closed_by_tally = dict(collections.Counter(m['closed_by'] for m in matrix if m['status'] == 'CLOSED'))
+        out['families'][family] = dict(rows=len(matrix), status=dict(summary), closed_by=closed_by_tally,
             witness_bound_not_run=sum(1 for m in matrix if m['status'] == 'CLOSED_BY_PROOF'
                                       and (m['justification'] or {}).get('kind') == 'witness_bound_not_run'),
             schema_rows=sum(1 for m in matrix if m['row'].endswith('/schema')),
@@ -578,7 +587,7 @@ def main():
             open=[dict(row=m['row'], reason=m['reason']) for m in matrix if m['status'] == 'OPEN'],
             matrix=matrix)
     args.out.write_text(json.dumps(out, indent=1, default=list) + '\n')
-    print(json.dumps({f: dict(rows=v['rows'], status=v['status'], open=len(v['open']),
+    print(json.dumps({f: dict(rows=v['rows'], status=v['status'], closed_by=v['closed_by'], open=len(v['open']),
                               witness_bound_not_run=v['witness_bound_not_run'])
                       for f, v in out['families'].items()}, indent=1))
     return 0
