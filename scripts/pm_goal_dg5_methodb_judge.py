@@ -33,6 +33,22 @@ complete call ever runs in the judging process:
    joint cut accepts, every member refuses alone with the others cut (stock
    duplicate-set site cuts), every member cut alone still refuses, and the
    restoration refuses at the selected row; every one a separate fork.
+5. After-state (rulings 1121112536-0b66 (3), 1121115610-7650). Every trial
+   child, after its call and before it exits, takes the trial's after-state:
+   the store digest (the copy's manifest on write routes, `store_state` on the
+   others) and the Run Cancelled hook's digest of the owners' in-memory state
+   (pm_goal_dg5_owner_state). A COVERED_LATER route is accepted only when the
+   cut trial's after-state equals the intact defect trial's and the restoration
+   repeats it (`covered_later_check`); otherwise the row is CANNOT_DECIDE and
+   not covered.
+6. KILLED_CODE (addendum 1, pm-ea-lead 1121124828-43f4 (1)), judged before 5:
+   a later refusal is KILLED_CODE, a kill, when the declared target is the
+   row's own guard with its own code (the route's declared refusal code, and
+   `row(code)` is the row), the intact defect trial is exact, the cut refuses
+   with a DIFFERENT owner refusal code, and the uncached restoration repeats
+   the intact result. A different-code refusal missing a condition is
+   CANNOT_DECIDE, never COVERED_LATER. The verdict replaces the source stock
+   judge's COVERED_LATER in the ledger record (`kill`, `killed_code_check`).
 
 Same command line and output folder as W3's run (result.json, closure.json,
 inventory.json, proof/). result.json adds `judge`.
@@ -61,6 +77,7 @@ if str(HERE) not in sys.path:
     sys.path.insert(0, str(HERE))
 
 import pm_goal_dg5_methodb_cancelled as w3  # noqa: E402
+import pm_goal_dg5_owner_state as owner_state  # noqa: E402 - this judge's copy, before --source joins sys.path
 from pm_goal_dg5_methodb_stage3 import require, sha, write  # noqa: E402
 
 FAMILY = w3.FAMILY
@@ -71,7 +88,9 @@ ORIGINAL_FIXTURE = w3.fixture
 STORE_COPIES = count()
 JUDGE = dict(module='scripts/pm_goal_dg5_methodb_judge.py', module_sha256=sha(Path(__file__).resolve()),
              harness='scripts/pm_goal_dg5_methodb_cancelled.py', harness_sha256=sha(Path(w3.__file__).resolve()),
-             mode='fork-per-trial', trials=[])
+             owner_state_module='scripts/pm_goal_dg5_owner_state.py',
+             owner_state_sha256=sha(Path(owner_state.__file__).resolve()),
+             mode='fork-per-trial', trials=[], covered_later=[], later_refusals=[])
 
 
 class IdentityMismatch(ValueError):
@@ -400,6 +419,7 @@ class ForkedExample(w3.OwnerExample):
         self.pin_ids = route.get('pin_ids', route['call'] == 'current_cancelled')
         require(not (self.pin_ids and self.writes), 'write routes pin their IDs in the copy (W3)')
         self.forks = []
+        self.after_states = []  # one per credited trial, parallel to self.trials
         self.digest0 = None
         self.cache_audit = None
         self.joint_report = None
@@ -495,7 +515,8 @@ class ForkedExample(w3.OwnerExample):
                 self.collector.observe(name, holds, site)
         record = dict(route=self.label, kind=kind, edit=edit, cut=cut, pid=pid, cache_inherited=inherited,
                       cache_start=out['cache_start'], cache_end=out['cache_end'], keys=out['keys'],
-                      seconds=round(time.monotonic() - started, 3), credited=credited)
+                      seconds=round(time.monotonic() - started, 3), credited=credited,
+                      after_state=out.get('after_state'))
         for key in ('pre_equals_post', 'returned_marker_paths', 'knob_calls', 'ids_pinned'):
             if key in out:
                 record[key] = out[key]
@@ -511,6 +532,7 @@ class ForkedExample(w3.OwnerExample):
         result = out['result']
         if credited:
             self.trials.append(result)
+            self.after_states.append(out.get('after_state'))
             if edit is None and out.get('observed') is not None:
                 self.rebuild_observed(out['observed'])
         return result, out
@@ -548,6 +570,7 @@ class ForkedExample(w3.OwnerExample):
                     out['result'] = self.call_on_copy(world, action, inputs, edit, initial, store_copy)
                 else:
                     out['result'] = self.call(world, action, inputs, edit)
+            out['after_state'] = self.after_state(world, inputs)
             if edit is None and self.observed is not None:
                 plain, bank, document, binding = self.observed
                 observation = out['result']['observations'][-1]
@@ -566,6 +589,25 @@ class ForkedExample(w3.OwnerExample):
         if self.options['edit_knob']:
             out['knob_calls'] = self.child['knob_calls']
         return out
+
+    def after_state(self, world, inputs):
+        """This trial's store digest and owner in-memory digest, taken in the child after the call."""
+        import pm_goal_dg5_boundaries as bridge
+
+        if self.writes:
+            store = self.child.get('store_after_sha256')
+        else:
+            store = hashlib.sha256(pickle.dumps(self.store_state(world), protocol=5)).hexdigest()
+        saved = bridge.ACTIVE[0]
+        bridge.ACTIVE[0] = False
+        try:
+            owner = owner_state.owner_state_digest(FAMILY, world, inputs)
+        except Exception as error:  # noqa: BLE001 - no digest, never a guess
+            owner = dict(hook=FAMILY, sha256=None, reason=f'owner-state hook raised {type(error).__name__}: {error}'[:240])
+        finally:
+            bridge.ACTIVE[0] = saved
+        return dict(store_sha256=store, owner_sha256=owner.get('sha256'), owner_hook=owner.get('hook'),
+                    owner_reason=owner.get('reason'), owner_objects=owner.get('objects'))
 
     def install_child(self, stack, world, edit, out, identity, site_cut_all):
         import pm_goal_guard_tables as tables
@@ -690,7 +732,10 @@ class ForkedExample(w3.OwnerExample):
         published = current != before
         require(published != bool(result['errors']), 'target publication does not match the verdict')
         result['target_published'] = published
-        result['store_changed'] = bridge.manifest(bridge.file_state(path)) != initial
+        # The copy's whole manifest digest (the after-state), kept beside the result so the
+        # trial results compared below stay the call's own outcome.
+        self.child['store_after_sha256'] = hashlib.sha256(
+            pickle.dumps(bridge.manifest(bridge.file_state(path)), protocol=5)).hexdigest()
         return result
 
     # -- proofs ---------------------------------------------------------------------
@@ -730,8 +775,13 @@ class ForkedExample(w3.OwnerExample):
             require(record['outcome'] == ('exact_expected' if edit else 'control'), record)
             if edit:
                 before, disabled, restored = self.trials[-3:]
+                if record['kill'] == 'COVERED_LATER':   # the source stock judge: any later refusal
+                    verdict = self.later_refusal(record, before, disabled, restored)
+                    record['kill'] = verdict
+                    require(verdict in ('KILLED_CODE', 'COVERED_LATER'),
+                            f"{verdict}: {record.get('cannot_decide_reason')} (route {self.label})")
                 if self.checkpoint and self.route['edition'] == 'integrated_native':
-                    require(record['kill'] == 'COVERED_LATER' and disabled['later_checkpoint_matches']
+                    require(record['kill'] in ('COVERED_LATER', 'KILLED_CODE') and disabled['later_checkpoint_matches']
                             and disabled['refusal'] == 'checkpoint/wrapper/schema/'
                             and disabled['detail'] == before['detail'],
                             'the later checkpoint check must refuse the same invalid afterimage')
@@ -739,7 +789,8 @@ class ForkedExample(w3.OwnerExample):
                     from pm_goal_dg5_proofs_r import RETAINED
 
                     field = self.row.split('/')[-2]
-                    require(record['kill'] == 'COVERED_LATER' and disabled['refusal'] == RETAINED[field].later,
+                    require(record['kill'] in ('COVERED_LATER', 'KILLED_CODE')
+                            and disabled['refusal'] == RETAINED[field].later,
                             'the preserved reader must refuse at its bound original-document check')
                 else:
                     require(record['kill'] == 'KILLED' and not disabled['errors'],
@@ -754,6 +805,44 @@ class ForkedExample(w3.OwnerExample):
                         f"unexpected validation message: {before['refusal']} {before['detail']}")
         require(self.trials[0] == self.trials[-1], 'the restored valid call changed')
         return self.observed, initial, bound_inputs
+
+    def later_refusal(self, record, before, disabled, restored):
+        """KILLED_CODE first, then the after-state rule (rulings 1121112536-0b66 (3), 1121115610-7650, addendum 1)."""
+        import pm_goal_dg5_boundaries as bridge
+
+        intact_code, cut_code = before.get('refusal'), disabled.get('refusal')
+        own = (isinstance(intact_code, str) and intact_code == self.route['refusal']
+               and bridge.row(intact_code) == self.row)
+        different = isinstance(cut_code, str) and bool(cut_code) and cut_code != intact_code
+        repeats = restored == before
+        code = dict(intact_code=intact_code, cut_code=cut_code, restoration_code=restored.get('refusal'),
+                    different_code=different, own_guard=dict(own=own, route_refusal=self.route['refusal']),
+                    restoration_repeats=repeats, exact=record['outcome'] == 'exact_expected')
+        entry = dict(route=self.label, ledger_id=record['id'], killed_code_check=code)
+        if different:
+            if own and repeats and code['exact']:
+                code.update(verdict='KILLED_CODE', reason=None)
+                verdict = 'KILLED_CODE'
+            else:
+                why = ('declared target is not the row guard with its own code' if not own else
+                       'restoration did not repeat the intact result' if not repeats else 'intact run not exact')
+                code.update(verdict=None, reason=why)
+                verdict = 'CANNOT_DECIDE'
+                record['cannot_decide_reason'] = 'different-code later refusal: ' + why
+        else:
+            code.update(verdict=None, reason='same code')
+            intact, cut, again = self.after_states[-3:]
+            check = owner_state.covered_later_check(intact, again, cut)
+            record['covered_later_check'] = check
+            entry['covered_later_check'] = check
+            JUDGE['covered_later'].append(dict(route=self.label, ledger_id=record['id'], **check))
+            verdict = check['verdict']
+            if verdict == 'CANNOT_DECIDE':
+                record['cannot_decide_reason'] = check['reason']
+        record['killed_code_check'] = code
+        entry['verdict'] = verdict
+        JUDGE['later_refusals'].append(entry)
+        return verdict
 
     def prove_joint(self, world, action, inputs):
         import pm_goal_dg5_boundaries as bridge
