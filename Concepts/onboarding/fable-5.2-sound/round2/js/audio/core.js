@@ -124,6 +124,9 @@
       return this.rooms[name].input;
     }
     /* pull the music down a little while Pip talks, so the words stay clear */
+    /* (Tried and dropped, 20 Nov 2026: a low-pass drawn across the song while Retro Dark's chip voice speaks. The
+       song's room return passes neither this duck nor such a filter and carries the song's edge, so it took 4 dB
+       off above 2.5 kHz for a quarter of a second at best; a blind listener preferred the plain, deeper step back.) */
     duck(t0, t1, amount) {
       const g = this.bus.musicDuck.gain, a = amount == null ? 0.62 : amount;
       try { g.cancelScheduledValues(t0); } catch (e) { /* fine */ }

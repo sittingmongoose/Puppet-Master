@@ -154,18 +154,18 @@
      one's Retro Light voice was; Basic and NieR keep round one's voices; Glass and NieR are close by, not down a hall. */
   const VOX = {
     // a triangle and a little saw through three formants, as it is today; consonants only as light as they were
-    friendly: { name: 'Original sound, new phrasing', kind: 'formant', src: 'tri', saw: 0.28, sawFull: true, bands: 3, hp: 0, breath: 0, light: true, q: 7, fs: 1.18, lp: 4300, direct: 0.25, vib: [5.8, 16], gain: 0.26, att: 0.01, cons: 0.35, base: 285, bounce: 2.4, cps: 32, send: 0.18 },
+    friendly: { name: 'Original sound, new phrasing', kind: 'formant', src: 'tri', saw: 0.28, sawFull: true, bands: 3, hp: 0, breath: 0, light: true, q: 7, fs: 1.18, lp: 4300, direct: 0.25, vib: [5.8, 16], gain: 0.26, att: 0.01, cons: 0.26, base: 285, bounce: 2.4, cps: 32, send: 0.18 },
     // struck celesta, one note every few letters, each damped as the next is struck; no key under it
-    glass: { name: 'Struck notes', kind: 'struck', inst: 'celesta', gain: 0.27, root: 74, quant: [0, 2, 4, 7, 9, 12, 14, 16], blip: 3, cps: 32, key: 0, tuneToSong: true, send: 0.1,
+    glass: { name: 'Struck notes', kind: 'struck', inst: 'celesta', gain: 0.27, root: 74, quant: [0, 2, 4, 7, 9, 12, 14, 16], blip: 3, cps: 32, key: 0, tuneToSong: true, send: 0.16,
       // under the notes, today's Glass voice at a murmur: it keeps Pip a talking creature over a song of glass bells
       under: { kind: 'formant', src: 'sine', saw: 0.1, sawFull: true, oct: 0.32, bands: 3, hp: 0, light: true, q: 5, fs: 1.3, lp: 6000, direct: 0.35, vib: [4.6, 12], breath: 0.08, shimmer: 0.04, gain: 0.1, att: 0.016, cons: 0.12, base: 345, bounce: 1.9, legato: 0.15, send: 0.08 } },
     // today's clean chirp, with today's melody of speech and only a trace of round one's fifth
-    basic: { name: 'Original sound, new phrasing', kind: 'chirp', light: true, gain: 0.28, base: 740, bounce: 1.3, att: 0.004, rel: 0.012, maxSyl: 0.075, cons: 0.1, cps: 36, fifth: 0.03, send: 0.18 },
+    basic: { name: 'Original sound, new phrasing', kind: 'chirp', light: true, gain: 0.28, base: 740, bounce: 1.3, att: 0.004, rel: 0.012, maxSyl: 0.075, cons: 0.1, cps: 36, fifth: 0.03, sub: 0.1, send: 0.18 },
     // the terminal's own beep: a 3/8 pulse, low-passed, one oscillator moved from blip to blip
     phosphor: { name: 'Original', kind: 'pulse', orig: true, duty: 0.375, gain: 0.5, root: 72, quant: [0, 2, 4, 7, 9, 12, 14, 16], maxSyl: 0.036, blip: 3, lp: 3000, cps: 50, tuneToSong: true, send: 0.2 },
     // a struck sine with a faint twelfth and the lightest tick of a key
     teletype: { name: 'Original', kind: 'tick', gain: 0.6, root: 74, quant: [0, 2, 4, 5, 7, 9, 11, 12], maxSyl: 0.06, blip: 3, cps: 46, tuneToSong: true, send: 0.18 },
-    nier: { name: 'Round one, closer', kind: 'chirp', w1: 'triangle', harm: 0.14, lp: 3600, gain: 0.33, base: 560, bounce: 0.4, mono: true, step: true, att: 0.003, rel: 0.012, maxSyl: 0.075, cons: 0.06, cps: 50, send: 0.24 }
+    nier: { name: 'Round one, closer', kind: 'chirp', w1: 'triangle', harm: 0.14, lp: 3600, gain: 0.33, base: 560, bounce: 0.4, mono: true, step: true, att: 0.003, rel: 0.012, maxSyl: 0.075, cons: 0.06, cps: 50, send: 0.12 }
   };
   /* other takes of a look's voice, for listening side by side (the listening room): round one's, and where the look's
      own voice is new, today's sound */
@@ -250,7 +250,8 @@
         if (mono && V.kind === 'tick') {
           const f = mf(midi), nx = script[j + 1], cut = nx ? when(nx) - 0.003 : ts + s.d * 2.2;
           mono.env.gain.setTargetAtTime(0, Math.max(t0, ts - 0.003), 0.0008);
-          mono.oscs.forEach(([o, mul]) => o.frequency.setValueAtTime(f * mul, Math.max(t0, ts)));
+          // (each note is reached from just under it, as a spoken syllable is: a hair of a scoop, no more)
+          mono.oscs.forEach(([o, mul]) => { o.frequency.setValueAtTime(f * mul * 0.975, Math.max(t0, ts)); o.frequency.setTargetAtTime(f * mul, Math.max(t0, ts), 0.01); });
           mono.env.gain.setTargetAtTime(g, ts, 0.0012);
           mono.env.gain.setTargetAtTime(0, ts + 0.006, Math.min(0.03, Math.max(0.006, (cut - ts) * 0.35)));
           stops.push(PS.inst.swish(E, out, ts, { d: 0.004, f: 3600, q: 2.5, gain: g * 0.3, white: true, a: 0.3 }));
@@ -295,6 +296,8 @@
       if (V.harm) { const f = c.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = V.lp || 4000; o1.connect(f); f.connect(env); const hg = c.createGain(); hg.gain.value = V.harm; mk('sine', 3).connect(hg); hg.connect(env); }
       else o1.connect(env);
       if (V.fifth) { const g5 = c.createGain(); g5.gain.value = V.fifth; mk('sine', 1.5).connect(g5); g5.connect(env); }
+      // a little body an octave under the chirp, so it is a small creature and not a drop of water
+      if (V.sub) { const gs = c.createGain(); gs.gain.value = V.sub; mk('sine', 0.5).connect(gs); gs.connect(env); }
     }
     if (V.vib) { const l = c.createOscillator(); vibG = c.createGain(); l.frequency.value = V.vib[0]; vibG.gain.setValueAtTime(0, t0); l.connect(vibG); osc.forEach((s) => vibG.connect(s.detune)); l.start(t0); l.stop(stopAt); live.push(l); }
     // the hiss and pop of consonants, beside the voice (not through the mouth's formants)

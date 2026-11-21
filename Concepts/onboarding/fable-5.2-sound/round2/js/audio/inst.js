@@ -233,7 +233,7 @@
     };
   }
   const SYNTH = {
-    chip50: chipVoice(0.5, 4200, 0.18), chip25: chipVoice(0.25, 5200, 0.16), chip12: chipVoice(0.125, 5600, 0.14), chiptri: chipVoice('tri', 2600, 0.24),
+    chip50: chipVoice(0.5, 3500, 0.18), chip25: chipVoice(0.25, 4000, 0.16), chip12: chipVoice(0.125, 4400, 0.14), chiptri: chipVoice('tri', 2600, 0.24),
     // a triangle struck softly and left to fade, like a bell on the same chip: a lullaby's voice
     chipsoft: chipVoice('tri', 1900, 0.5, { att: 0.012, sus: 0.22, rel: 0.07 })
   };

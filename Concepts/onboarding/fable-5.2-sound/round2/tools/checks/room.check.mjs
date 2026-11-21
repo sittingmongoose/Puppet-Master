@@ -2,10 +2,12 @@
 // joins and bring it in; "Walk it for me" walks; the sound menu opens; Pip talks in each take of a voice; a busy click
 // is one sound and then Pip; and the page stays inside the window at a desktop, a tablet and a phone width, with Pip's
 // area upright in each.   --set shots=1 lists frames for viewing.
+// --set page=file:///abs/pip-sound2-room.html checks a single-file build instead; with --sandbox, as T3's viewer shows
+// it (the folder's own pages load their scripts as files, which a sandboxed frame refuses: only the single files open there).
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 export const tests = {
 	async 'room'(t) {
-		await t.goto('index.html');
+		await t.goto(String(t.args.page || 'index.html'));
 		await t.page.waitForFunction(() => !!(window.__room && window.PipSound && window.PipSoundMenu && window.__room.stage()));
 		const before = await t.evaluateNoGesture(() => ({ unlocked: window.PipSound.unlocked, cells: document.querySelectorAll('.rm-cell').length, songs: document.querySelectorAll('#rmSongs .rm-song').length, steps: [...document.querySelectorAll('#rmSteps .rm-step span')].map((n) => n.textContent), dots: document.querySelectorAll('.rm-cell .rm-dot').length }));
 		await t.check('24 songs in the table (6 looks x 4), one marked as each look\'s own; 4 to pick here; silent before a gesture', before.cells === 24 && before.dots === 6 && before.songs === 4 && before.unlocked === false, JSON.stringify(before));

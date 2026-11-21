@@ -1,7 +1,7 @@
 // The onboarding window with round two's sound. It loads clean; sound starts only after a real gesture; the song goes
 // on across every screen and chapter and never starts again; one click never sets off a pile of sounds; the sound menu
 // does what it shows; the stage's additions write next to nothing while they move; Pip's mouth moves when it talks.
-//   browser-check run tools/checks/page.check.mjs [--set looks=friendly-dark,nier-light] [--set shots=1] [--set trace=/abs/walk.json]
+//   browser-check run tools/checks/page.check.mjs [--set looks=friendly-dark,nier-light] [--set shots=1] [--set trace=/abs/walk.json] [--set pace=5]
 // trace: writes the walk it made (every sound the page asked for, with its moment) as a render spec, so
 // render.check.mjs --set trace=... can play the same walk back offline, for measuring and for a listener.
 import fs from 'node:fs';
@@ -10,7 +10,8 @@ const KIT = (look) => (look === 'retro-dark' ? 'phosphor' : look === 'retro-ligh
 export const tests = {
 	async 'onboarding'(t) {
 		const looks = t.args.looks ? String(t.args.looks).split(',') : ['friendly-dark'];
-		await t.goto('onboarding.html');
+		// --set page=file:///abs/pip-sound2-onboarding.html checks a single-file build (with --sandbox, as T3's viewer shows it)
+		await t.goto(String(t.args.page || 'onboarding.html'));
 		await t.page.waitForFunction(() => !!(window.__ob && window.PipSound && window.PipSoundMenu && window.__ob.stage()));
 		const before = await t.evaluateNoGesture(() => ({ unlocked: window.PipSound.unlocked, ctx: !!window.PipSound.ctx }));
 		await t.check('no sound before a gesture (not unlocked, no audio context)', before.unlocked === false && before.ctx === false, JSON.stringify(before));
@@ -30,12 +31,14 @@ export const tests = {
 		await t.page.waitForFunction(() => window.PipSound.transport().playing, null, { timeout: 12000 });
 		const start = await t.page.evaluate(() => { const P = window.PipSound; window.__p0 = P.session.player; window.__starts.length = 0; P.trace = []; return { t0: P.ctx.currentTime, song: P.song().id, bar0: P.session.player.barN, kit: P.kit, index: P.session.index, chapter: P.session.chapter, asleep: P.session.asleep }; });
 		const flow = await t.page.evaluate(() => window.__ob.FLOW);
+		// how long the person stays on a screen: a second and a half to get through quickly; --set pace=5 walks as a person would
+		const pace = t.args.pace ? +t.args.pace * 1000 : 1500;
 		for (const sc of flow) {
 			if (sc === 'look') continue;                              // (choosing another look changes the song, on purpose: checked below)
 			await t.page.evaluate((x) => window.__ob.go(x), sc);
-			await sleep(sc === 'creating' ? 6500 : sc === 'ai' ? 4200 : sc === 'ready' ? 3800 : 1500);
+			await sleep(sc === 'creating' ? 6500 : sc === 'ai' ? 4200 : sc === 'ready' ? 3800 : pace);
 			const choice = t.page.locator('#obMain .ob-choice[aria-checked="false"]').first();
-			if (await choice.count()) { await choice.click(); await sleep(1300); }
+			if (await choice.count()) { await choice.click(); await sleep(Math.max(1300, pace * 0.6)); }
 			if (sc === 'name') { const f = t.page.locator('#obName'); await f.click(); await f.fill(''); await f.pressSequentially('Tastebook two', { delay: 45 }); await sleep(500); }
 		}
 		const walk = await t.page.evaluate(() => { const P = window.PipSound, p = P.session.player; return { same: p === window.__p0, playing: p && p.playing, barN: p ? p.barN : -1, starts: window.__starts.slice(), trace: P.trace.slice(), t1: P.ctx.currentTime, faults: { stage: window.__ppxErrors || [], sound: window.PS5.errors.slice() } }; });
@@ -61,7 +64,7 @@ export const tests = {
 		await t.check(`the speaker drops the menu under itself, on the page (${menu.w} px wide)`, menu.under && menu.inside && menu.expanded === 'true', JSON.stringify(menu));
 		await t.check(`it lists the look's four songs, the default chosen: ${menu.songs.map((s) => s.name + (s.chosen ? '*' : '')).join(', ')}`, menu.songs.length === 4 && menu.songs.filter((s) => s.chosen).length === 1 && menu.songs.find((s) => s.chosen).def, JSON.stringify(menu.songs));
 		await t.check(`three levels: ${menu.sliders.join(', ')}`, menu.sliders.length === 3 && menu.sliders[0] === 'music=50');
-		if (t.args.shots) await t.shot('menu-open', `the sound menu open under the window's speaker (${look0})`);
+		if (t.args.shots) { await sleep(450); /* the menu has finished dropping in */ } if (t.args.shots) await t.shot('menu-open', `the sound menu open under the window's speaker (${look0})`);
 		const other = menu.songs.find((s) => !s.chosen);
 		await t.page.locator(`#psmMenu [data-psm-song="${other.id}"]`).click();
 		await t.page.waitForFunction((id) => window.PipSound.song().id === id && window.PipSound.transport().playing, other.id, { timeout: 12000 });
@@ -70,8 +73,10 @@ export const tests = {
 		await t.check(`choosing “${other.name}” puts it on and marks it`, picked.id === other.id && picked.marked === other.id && picked.bars, JSON.stringify(picked));
 		await t.page.locator('#psmMenu [data-psm-vol="music"]').fill('30');
 		await t.page.locator('#psmMenu [data-psm-juke]').click();
-		const set = await t.page.evaluate(() => ({ vol: window.PipSound.volume('music'), juke: window.PipSound.jukebox, skip: !document.querySelector('#psmMenu [data-psm-skip]').hidden, stored: JSON.parse(localStorage.getItem('pipSound.r2') || '{}') }));
-		await t.check('the music slider and the jukebox switch set what they say, and it is remembered', Math.abs(set.vol - 0.3) < 0.01 && set.juke === true && set.skip && set.stored.jukebox === true && Math.abs(set.stored.vol.music - 0.3) < 0.01, JSON.stringify(set));
+		const set = await t.page.evaluate(() => ({ vol: window.PipSound.volume('music'), juke: window.PipSound.jukebox, skip: !document.querySelector('#psmMenu [data-psm-skip]').hidden, stored: (() => { try { return JSON.parse(localStorage.getItem('pipSound.r2') || '{}'); } catch (e) { return null; } })() }));
+		// (in T3's sandboxed frame there is no storage to remember in: there the choice has to hold for the visit, and nothing may throw)
+		const kept = set.stored === null ? !!t.sandboxed : set.stored.jukebox === true && Math.abs(set.stored.vol.music - 0.3) < 0.01;
+		await t.check(`the music slider and the jukebox switch set what they say, and it is ${set.stored === null ? 'kept for the visit (no storage in a sandboxed frame)' : 'remembered'}`, Math.abs(set.vol - 0.3) < 0.01 && set.juke === true && set.skip && kept, JSON.stringify(set));
 		await t.page.locator('#psmMenu [data-psm-skip]').click();
 		await t.page.waitForFunction((id) => window.PipSound.song().id !== id && window.PipSound.transport().playing, other.id, { timeout: 12000 });
 		await t.check('Next song moves the jukebox on', true);
@@ -88,7 +93,7 @@ export const tests = {
 		await t.page.locator('.sh-tools .ob-sound').click();
 		const app = await t.page.evaluate(() => { const m = document.querySelector('#psmMenu'), r = m.getBoundingClientRect(), a = document.querySelector('.sh-tools .ob-sound').getBoundingClientRect(); return { open: !m.hidden, under: r.top >= a.bottom - 1, right: Math.abs(r.right - a.right) < 40, songs: m.querySelectorAll('[data-psm-song]').length }; });
 		await t.check('in the app\'s bar, beside the theme picker, the speaker opens the same menu', app.open && app.under && app.right && app.songs === 4, JSON.stringify(app));
-		if (t.args.shots) await t.shot('menu-app', 'the sound menu under the app\'s speaker, beside the theme picker');
+		if (t.args.shots) { await sleep(450); } if (t.args.shots) await t.shot('menu-app', 'the sound menu under the app\'s speaker, beside the theme picker');
 		await t.page.keyboard.press('Escape');
 		await t.page.locator('#resumePill').click(); await sleep(1200);
 		await t.page.evaluate(() => { window.PipSound.setSong(window.PS5.DEFAULT_SONG[window.PipSound.kit]); window.PipSound.volume('music', 0.5); });
@@ -120,9 +125,9 @@ export const tests = {
 				// the music box four times over, large, with its crank at four moments of one turn (up, half up, half down, down)
 				await t.page.evaluate(() => {
 					const box = document.querySelector('.ppx-box'), svg = box.ownerSVGElement, NS = 'http://www.w3.org/2000/svg', o = document.createElementNS(NS, 'svg');
-					o.id = 'ppxLook'; o.setAttribute('viewBox', '-45 -50 420 80'); o.setAttribute('style', 'position:fixed;left:20px;top:60px;width:1260px;height:240px;z-index:99999;background:' + getComputedStyle(document.querySelector('#obStage')).backgroundColor);
+					o.id = 'ppxLook'; o.setAttribute('viewBox', '-45 -50 420 80'); o.setAttribute('style', 'position:fixed;left:20px;top:60px;width:1260px;height:240px;z-index:99999;background:' + (getComputedStyle(document.body).getPropertyValue('--bg') || '#222'));
 					const defs = svg.querySelector('defs'); if (defs) o.appendChild(defs.cloneNode(true));
-					[1, 0.5, -0.5, -1].forEach((sy, i) => { const c = box.cloneNode(true); c.setAttribute('transform', 'translate(' + (i * 105) + ' 0)'); const k = c.querySelector('.ppx-crank'); k.getAnimations().forEach((a) => a.cancel()); k.style.transform = 'scaleY(' + sy + ')'; const pl = c.querySelector('.ppx-pulse'); if (pl) pl.style.transform = 'none'; o.appendChild(c); });
+					[1, 0.5, -0.5, -1].forEach((sy, i) => { const c = box.cloneNode(true); c.setAttribute('transform', 'translate(' + (i * 105) + ' 0)'); const k = c.querySelector('.ppx-crank'), kn = c.querySelector('.ppx-knob'); k.getAnimations().forEach((a) => a.cancel()); kn.getAnimations().forEach((a) => a.cancel()); k.style.transform = 'scaleY(' + sy + ')'; kn.style.transform = 'translateY(' + (12 - 12 * sy) + 'px)'; const pl = c.querySelector('.ppx-pulse'); if (pl) pl.style.transform = 'none'; o.appendChild(c); });
 					document.body.appendChild(o);
 				});
 				await t.crop(`${look}-box`, '#ppxLook', `${look}: the music box, its crank at four moments of a turn (up, half up, half down, down)`);

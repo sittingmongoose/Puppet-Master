@@ -27,6 +27,8 @@
     if (q.get('screen')) S.screen = q.get('screen');
     if (q.get('reduced') === '1') S.reduced = true;
     if (/^(full|laptop|narrow|phone)$/.test(q.get('width') || '')) S.width = q.get('width');
+    // on a phone the window starts in its squeezed layout (round two: the page is listened to on a phone too)
+    else if (Math.min(window.innerWidth || 9999, (window.screen && window.screen.width) || 9999) <= 560) S.width = 'phone';
   } catch (e) { /* file:// */ }
   const root = document.documentElement;
   if (root.getAttribute('data-reduced-motion') === '1') S.reduced = true;

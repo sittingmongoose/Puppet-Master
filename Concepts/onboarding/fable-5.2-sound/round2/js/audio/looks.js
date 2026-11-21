@@ -12,6 +12,14 @@
   // Pip and the window's own sounds stay close in the two big rooms; a song keeps the hall it was written for
   const NEAR = { glass: 'glassNear', ruin: 'ruinNear' };
   // the soft pat something makes when it is set down, in each look's material (never a low thud)
+  // how long a click's note may ring where the look's materials ring for seconds (glass, a soft bell): after this it is damped
+  const RING = { glass: 0.6, nier: 0.85 };
+  /* The highest note an effect may play in a look (a MIDI number). Retro Dark's bell is a thin pulse wave: two octaves
+     up, where a sparkle, a cheer and the confetti put it, it pierced. There a note above G6 is played an octave lower. */
+  const TOP = { phosphor: 91 };
+  /* ... and its bell is the square wave there, not the thin pulse: lower alone moved the note and left the sting
+     (a 12.5 % pulse keeps its harmonics; above 2 kHz the sparkle measured the same). */
+  const PALX = { phosphor: { bell: 'chip50' } };
   const PAT = { friendly: 'wood', glass: 'click', basic: 'click', phosphor: 'nztick', teletype: 'key', nier: 'click' };
   // a look that has its own machine plays the plain percussion names on it; nothing here maps to a kick or a space bar
   PS.DRUM_MAPS = {
@@ -23,7 +31,7 @@
   PS.LOOKS = {}; PS.SONGS = {};
   KITS.forEach((kit) => {
     const base = C.c1.looks[kit];
-    PS.LOOKS[kit] = { room: NEAR[base.room] || base.room, pal: Object.assign({ pat: PAT[kit] }, base.pal), sig: base.sig, special: base.special || null };
+    PS.LOOKS[kit] = { room: NEAR[base.room] || base.room, pal: Object.assign({ pat: PAT[kit] }, base.pal, PALX[kit]), sig: base.sig, special: base.special || null, ring: RING[kit] || 0, top: TOP[kit] || 0 };
     PS.SONGS[kit] = FAMILY.map(([id, c, family]) => {
       const L = C[c].looks[kit], song = L.song;
       song.room = song.room || L.room;

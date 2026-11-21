@@ -66,8 +66,10 @@
     // a new chapter: a small fanfare. Three quick notes up the chord, then it lands on the next note of the look's own motif (a step higher each chapter), with a bell above
     chapter: (h) => {
       const P = h.P, land = h.deg(h.K.motif[clamp(h.depth, 1, 4) - 1]);
-      [h.ch[0], h.ch[1], h.ch[2]].forEach((m, i) => h.n(P.lead, m + (m + 12 <= land ? 12 : 0), i * 0.085, 0.36, SHORT));
-      h.n(P.lead, land, 0.3, 0.5); h.n(P.bell, land + 12, 0.31, 0.2);
+      [h.ch[0], h.ch[1], h.ch[2]].forEach((m, i) => h.n(P.lead, m + (m + 12 <= land ? 12 : 0), i * 0.075, 0.36, SHORT));
+      // (it has landed a quarter of a second after the click and the landing note is let go soon after, so there is a
+      // breath between the fanfare and Pip's first syllable: api.js holds a line back 0.56 s after a chapter)
+      h.n(P.lead, land, 0.26, 0.5, { cut: 0.3, rel: 0.22 }); h.n(P.bell, land + 12, 0.27, 0.2, { cut: 0.28, rel: 0.22 });
     },
     tick: (h) => { h.d('click', 0, 0.2); h.n(h.P.lead, h.deg([2, 3, 4, 7][clamp(h.idx, 0, 3)]), 0.03, 0.44, SHORT); if (h.idx >= 3) up(h, h.P.soft, [h.deg(7), h.deg(9), h.deg(11)], 0.05, 0.26, 0.12); },
     block: (h) => { h.d(h.P.pat || 'wood', 0, 0.3, 0.9); h.n(h.P.lead, h.deg([0, 2, 4, 5, 7, 8][clamp(h.idx, 0, 5)]), 0.02, 0.46); if (h.count && h.idx >= h.count - 1) up(h, h.P.lead, [0, 2, 4, 7, 9].map((x) => h.deg(x)), 0.05, 0.4, 0.2); },

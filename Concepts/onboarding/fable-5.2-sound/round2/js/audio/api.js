@@ -86,7 +86,7 @@
         // a string's note: longer strings hang lower and sound lower, on a note of the chord
         strM: (base) => { const want = base - clamp(((op.len == null ? 160 : op.len) - 160) / 380, -0.75, 0.75) * 12; let best = Math.round(want), bd = 99; for (let m = Math.round(want) - 6; m <= Math.round(want) + 6; m++) { if (H.pcs.indexOf(((m % 12) + 12) % 12) < 0) continue; const d = Math.abs(m - want); if (d < bd) { bd = d; best = m; } } return best; },
         rand: () => S.vr(),
-        n: (inst, midi, dt, g, o) => PS.inst.note(E, out, inst, midi, t + (dt || 0), Object.assign({ gain: g }, o || {})),
+        n: (inst, midi, dt, g, o) => { if (L.top) while (midi > L.top) midi -= 12; return PS.inst.note(E, out, inst, midi, t + (dt || 0), Object.assign({ gain: g }, L.ring && !(o && o.cut != null) ? { cut: L.ring, rel: 0.3 } : null, o || {})); },
         d: (dn, dt, g, rate) => PS.inst.drum(E, out, (map && map[dn]) || dn, t + (dt || 0), { gain: g, rate }),
         sw: (o, dt) => PS.inst.swish(E, out, t + (dt || 0), o),
         tone: (o, dt) => PS.inst.tone(E, out, t + (dt || 0), o)
@@ -156,15 +156,15 @@
       this.hush(at);
       if (!text) return tm;
       let t = at == null ? E.now() + 0.02 : at, lead = 0;
-      // a line waits for the click that caused it: the click's answer is heard first (a chapter's sting or the
-      // window opening takes longer than a step), then Pip
-      const U = this.lastUi, wait = U ? (U.pri >= 8 ? 0.46 : 0.2) : 0;
+      // a line waits for the click that caused it: the click's answer is heard first and has a breath after it (a
+      // chapter's fanfare or the window opening takes longer than a step, a step longer than a tick), then Pip
+      const U = this.lastUi, wait = U ? (U.pri >= 8 ? 0.56 : U.pri >= 6 ? 0.32 : 0.2) : 0;
       if (U && t >= U.t - 1e-3 && t - U.t < wait) { lead = U.t + wait - t; t += lead; }
       if (this.vocalH && t < this.vocalUntil) { try { this.vocalH.stop(t); } catch (e) { /* gone */ } this.vocalUntil = t; }
       const r = PS.voice.say(E, V, text, { mood: o.mood, crew: o.crew, music: this.player, pan: o.pan, at: t });
       this.line = r.handle; this.voiceUntil = t + r.ms / 1000;
       // the song steps back under Pip: further for a voice of notes or of a chip, which would otherwise sit in the tune's own place
-      E.duck(t, t + r.ms / 1000, V.kind === 'pulse' ? 0.3 : V.kind === 'struck' || V.kind === 'tick' ? 0.4 : 0.55);
+      E.duck(t, t + r.ms / 1000, V.kind === 'pulse' ? 0.26 : V.kind === 'struck' || V.kind === 'tick' ? 0.34 : 0.55);
       E.emit('say', { ms: r.ms, text }, t);
       if (lead > 0.004) { const shown = r.shown; r.shown = (ms) => shown(ms - lead * 1000); r.ms += Math.round(lead * 1000); }
       return r;

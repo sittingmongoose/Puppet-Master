@@ -6,6 +6,8 @@
 // (60 s, with the clicks a person makes on the way).        full: one song with everything playing (34 s).
 // jam: the look's own song with clicks and a line on top.   busy: the worst moment a click can cause, five times.
 // trace: a walk recorded on the page (page.check.mjs writes one), played back exactly.
+// --set mute=voice,sfx renders with those buses silent: what the song alone does under a line (how far it steps back,
+// whether it is veiled) can then be measured.
 import fs from 'node:fs';
 import path from 'node:path';
 export const KITS = ['friendly', 'glass', 'basic', 'phosphor', 'teletype', 'nier'];
@@ -59,7 +61,9 @@ export const tests = {
 		await t.goto('tools/render.html');
 		await t.page.waitForFunction(() => !!(window.PipSound && window.PS5 && window.PS5.SONGS));
 		let n = 0;
+		const mute = String(t.args.mute || '').split(',').filter(Boolean);
 		const render = async (name, spec) => {
+			if (mute.length) spec = { ...spec, vol: Object.assign({}, spec.vol, Object.fromEntries(mute.map((n) => [n, 0]))) };
 			const r = await t.page.evaluate(async (s) => { const t0 = performance.now(); const b = await PipSound.render(s); return { b64: PipSound.wavBase64(b), ms: Math.round(performance.now() - t0), err: PS5.errors.slice(-3) }; }, spec);
 			fs.writeFileSync(path.join(out, name + '.wav'), Buffer.from(r.b64, 'base64'));
 			n++; t.log(`${name}: ${spec.seconds.toFixed(0)} s rendered in ${r.ms} ms`);

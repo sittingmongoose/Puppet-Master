@@ -139,7 +139,7 @@
       }
       this.wall = div('pst-wall', this.content);
       // Glass stands on PMConcept7's own Ribbons wallpaper (kept with the logo; a standalone build inlines it)
-      if (w.fam === 'glass') root.style.setProperty('--wall', `url(${(G.PIP_WALLS && G.PIP_WALLS[w.scheme]) || `../../Icon-Concepts/Opus5.5icon/wall-ribbons-${w.scheme}.webp`})`);
+      if (w.fam === 'glass') root.style.setProperty('--wall', `url(${(G.PIP_WALLS && G.PIP_WALLS[w.scheme]) || `../../../Icon-Concepts/Opus5.5icon/wall-ribbons-${w.scheme}.webp`})`);
       if (w.fam === 'glass') this.wall.innerHTML = '<i class="pst-caustic c1"></i><i class="pst-caustic c2"></i><i class="pst-caustic c3"></i>';
       const svg = this.svg = el('svg', { class: 'pst-svg', viewBox: `0 0 ${Lay.w} ${Lay.h}`, preserveAspectRatio: this.tube ? 'xMidYMid slice' : 'xMidYMid meet', 'aria-hidden': 'true' }, this.content);
       svg.setAttribute('xmlns', NS);

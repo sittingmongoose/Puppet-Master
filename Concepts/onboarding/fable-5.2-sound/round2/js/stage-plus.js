@@ -39,8 +39,10 @@
        goes round in a plane the eye looks along. From the front that is the arm rising and falling through the axle
        (round one turned it flat on the page, like a clock's hand). The arm is what moves: .ppx-crank, flipped about
        the axle's own line. */
-    axle: (p, h) => `<path d="M-1 0H9" fill="none" stroke="${p.w.ink}" stroke-width="2.8" stroke-linecap="round"/>` + p.circle(0, 0, 3, 'shade', h),
-    arm: (p, h) => `<path d="M9 0V-12H14" fill="none" stroke="${p.w.ink}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>` + p.circle(17, -12, 4.2, 'accent', h)
+    axle: (p, h) => `<path d="M-1 0H9" fill="none" stroke="${(p.w.hues && p.w.hues[h]) || p.w.ink}" stroke-width="2.8" stroke-linecap="round"/>` + p.circle(0, 0, 3, 'shade', h),
+    // the arm is flipped about the axle (it is seen edge on, so it only grows and shrinks); the handle rides its end and stays round
+    arm: (p, h) => `<path d="M9 0V-12" fill="none" stroke="${(p.w.hues && p.w.hues[h]) || p.w.ink}" stroke-width="2.8" stroke-linecap="round"/>`,
+    knob: (p, h) => `<path d="M9 -12H14" fill="none" stroke="${(p.w.hues && p.w.hues.d) || p.w.ink}" stroke-width="2.8" stroke-linecap="round"/>` + p.circle(17, -12, 4.2, 'accent', h)
   };
 
   /* ------------------------------------------------------------------ building the extra layers */
@@ -114,9 +116,10 @@
       s += mark(16, 16) + mark(W - 16, 16) + (small ? '' : mark(16, H - 16));
       if (!small) {
         const bx = W - 166, by = H - 46;
-        s += `<g font-family="'Inter',system-ui,sans-serif" fill="${ln}"><rect x="${bx}" y="${by}" width="154" height="34" fill="${w.bg}" stroke="${ln}" stroke-opacity=".45" stroke-width="1"/><path d="M${bx} ${by + 17}H${bx + 154}M${bx + 106} ${by + 17}V${by + 34}" stroke="${ln}" stroke-opacity=".3" stroke-width="1"/><text x="${bx + 7}" y="${by + 12}" font-size="8" font-weight="700" letter-spacing=".08em" opacity=".72">PIP · STAGE</text><text class="ppx-sheet" x="${bx + 7}" y="${by + 28}" font-size="7.5" opacity=".6">SHEET 01 · WELCOME</text><text class="ppx-tempo" x="${bx + 112}" y="${by + 28}" font-size="7.5" opacity=".6">— BPM</text></g>`;
+        s += `<g font-family="'Inter',system-ui,sans-serif" fill="${ln}"><rect x="${bx}" y="${by}" width="154" height="34" fill="${w.bg}" stroke="${ln}" stroke-opacity=".45" stroke-width="1"/><path d="M${bx} ${by + 17}H${bx + 154}M${bx + 106} ${by + 17}V${by + 34}" stroke="${ln}" stroke-opacity=".3" stroke-width="1"/><text x="${bx + 7}" y="${by + 12}" font-size="8" font-weight="700" letter-spacing=".08em" opacity=".72">PIP · STAGE</text><text class="ppx-sheet" x="${bx + 7}" y="${by + 28}" font-size="7.5" opacity=".6">SHEET 0${Math.max(0, ['welcome', 'computer', 'project', 'ai', 'ready'].indexOf(st.chapter)) + 1} · ${String(st.chapter || 'welcome').toUpperCase()}</text><text class="ppx-tempo" x="${bx + 112}" y="${by + 28}" font-size="7.5" opacity=".6">— BPM</text></g>`;
       }
       X.scope = el('path', { class: 'ppx-scope', fill: 'none', stroke: w.accent, 'stroke-width': '1.4', 'stroke-opacity': '.6', 'stroke-linejoin': 'round' });
+      X.scopeX1 = small ? W - 26 : W - 166 - 14;                 // the line stops short of the drawing's title block
     } else if (st.tube === 'phosphor') {
       for (let g3 = 0; g3 < 3; g3++) { s += `<g class="ppx-star" style="--dl:${R(-g3 * 1.1)}s">`; for (let i = g3; i < 26; i += 3) s += `<rect x="${R((i * 97 + 20) % W)}" y="${R(26 + (i * 61) % (gy * 0.5))}" width="${1.5 + (i % 3) * 0.6}" height="${1.5 + (i % 3) * 0.6}" fill="${w.ink}"/>`; s += '</g>'; }
       X.spec = el('path', { class: 'ppx-spec', fill: w.ink, 'fill-opacity': '.5' });
@@ -141,14 +144,14 @@
   /* the music box on the floor: every song has it (not on NieR's bare floor, and not where the stage is a low strip) */
   function dress(st) {
     const X = st.px, Lay = st.L, w = st.w, W = Lay.w, gy = Lay.ground, k = X.k, p = st.pen, small = Lay.h < 300, fam = st.famName;
-    X.src = null; X.crank = null; X.srcEl = null;
+    X.src = null; X.crank = null; X.knob = null; X.srcEl = null;
     X.gSet.innerHTML = '';
     if (Lay.h < 220 || fam === 'nier') return;
     // (on Retro Dark's tube the terminal's prompt is written at the left of the floor, so the box stands beside it)
     const x = small ? W - 50 : st.tube === 'phosphor' ? W * 0.4 : 54 * k + 6, y = gy - 18 * k, sc = (small ? 0.7 : 1) * Math.max(0.7, k);
     const g = el('g', { class: 'ppx-box', transform: `translate(${R(x)} ${R(y)}) scale(${R(sc)})` }, X.gSet);
-    g.innerHTML = `<ellipse cx="0" cy="20" rx="34" ry="5" fill="${w.shadow || 'rgba(0,0,0,.2)'}" opacity="${fam === 'friendly' || fam === 'glass' ? 1 : 0}"/><g class="ppx-pulse">` + ART.box(p, 'd') + `<g transform="translate(27 2)">${ART.axle(p, 'd')}<g class="ppx-crank">${ART.arm(p, 'c')}</g></g></g>`;
-    X.crank = g.querySelector('.ppx-crank'); X.src = [x, y - 30 * sc]; X.srcEl = g.querySelector('.ppx-pulse');
+    g.innerHTML = `<ellipse cx="0" cy="20" rx="34" ry="5" fill="${w.shadow || 'rgba(0,0,0,.2)'}" opacity="${fam === 'friendly' || fam === 'glass' ? 1 : 0}"/><g class="ppx-pulse">` + ART.box(p, 'd') + `<g transform="translate(27 2)">${ART.axle(p, 'd')}<g class="ppx-crank">${ART.arm(p, 'd')}</g><g class="ppx-knob">${ART.knob(p, 'c')}</g></g></g>`;
+    X.crank = g.querySelector('.ppx-crank'); X.knob = g.querySelector('.ppx-knob'); X.src = [x, y - 30 * sc]; X.srcEl = g.querySelector('.ppx-pulse');
   }
 
   /* ------------------------------------------------------------------ keeping time
@@ -165,6 +168,7 @@
     const go = (node, frames, dur) => { if (!node || !node.animate) return; try { X.anims.push(node.animate(frames, { duration: dur, iterations: Infinity, delay: -(((into % dur) + dur) % dur) })); } catch (e) { /* no web animations */ } };
     // the crank: once round a bar (seen edge on: up through the axle and down again)
     go(X.crank, [{ transform: 'scaleY(1)', easing: SINE }, { transform: 'scaleY(-1)', easing: SINE }, { transform: 'scaleY(1)' }], bar);
+    go(X.knob, [{ transform: 'translateY(0)', easing: SINE }, { transform: 'translateY(24px)', easing: SINE }, { transform: 'translateY(0)' }], bar);
     // the box gives a little on every beat, the pool of light and the glow behind Pip once a bar
     go(X.srcEl, [{ transform: 'scale(1.035, .97)', easing: 'ease-out' }, { transform: 'none', offset: 0.4 }, { transform: 'none' }], beat);
     go(X.pool, [{ transform: 'scaleX(1.1)', easing: 'ease-out' }, { transform: 'none', offset: 0.5 }, { transform: 'none' }], bar);
@@ -250,7 +254,7 @@
     const an = S && S.analyser && S.analyser(); if (!an) return;
     if (X.scope) {
       const n = 48, buf = X.wave || (X.wave = new Uint8Array(an.fftSize)); an.getByteTimeDomainData(buf);
-      const nier = st.famName === 'nier', x0 = 26, x1 = nier ? 112 : W - 26, y = nier ? (Lay.h < 300 ? 38 : 58) : gy + (Lay.h < 300 ? 14 : 38), amp = nier ? 22 : 46; let d = '';
+      const nier = st.famName === 'nier', x0 = 26, x1 = nier ? 112 : (X.scopeX1 || W - 26), y = nier ? (Lay.h < 300 ? 38 : 58) : gy + (Lay.h < 300 ? 14 : 38), amp = nier ? 22 : 46; let d = '';
       for (let i = 0; i < n; i++) { const v = (buf[Math.floor(i * buf.length / n)] - 128) / 128; d += (i ? 'L' : 'M') + Math.round(x0 + (x1 - x0) * i / (n - 1)) + ' ' + Math.round(y + clamp(v * amp, -12, 12)); }
       if (d !== X.scopeD) { X.scopeD = d; X.scope.setAttribute('d', d); }
     }

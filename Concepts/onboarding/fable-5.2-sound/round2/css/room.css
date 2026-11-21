@@ -59,6 +59,8 @@ body.rm[data-fam="retro"] .rm-n, body.rm[data-fam="nier"] .rm-n, body.rm[data-fa
 .rm-song:hover, .rm-step:hover { border-color: var(--accent); }
 .rm-song b, .rm-step b { font-size: 13px; display: flex; align-items: center; gap: 6px; }
 .rm-song span, .rm-step span { font-size: 11.5px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* on a phone the second line wraps instead of being cut ("Marionette Theatre · 138 BPM" did not fit half a phone) */
+@media (max-width: 560px) { .rm-song span, .rm-step span { white-space: normal; } }
 .rm-song[aria-checked="true"], .rm-step[aria-checked="true"] { background: color-mix(in srgb, var(--accent) 22%, var(--panel)); border-color: var(--accent); }
 .rm-song:focus-visible, .rm-step:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .rm-dot { flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }

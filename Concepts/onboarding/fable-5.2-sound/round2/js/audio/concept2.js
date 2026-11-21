@@ -145,12 +145,12 @@
     tracks: {
       lull: { inst: 'chipsoft', gain: 0.3, send: 0.35, role: 'lead', at: [0, 1], hum: 0, gate: 1 },
       bass: { kind: 'bass', inst: 'chiptri', pat: 'r o r o r o r o', lo: 40, gain: 0.36, send: 0.08, role: 'bass', from: 1, hum: 0, gate: 0.7 },
-      mel: { inst: 'chip25', gain: 0.3, send: 0.3, role: 'lead', from: 2, vib: true, hum: 0 },
+      mel: { inst: 'chip25', gain: 0.25, send: 0.3, role: 'lead', from: 2, vib: true, hum: 0 },
       hat: { kind: 'drum', pat: '_ H _ H _ H _ H', gain: 0.14, pan: 0.25, send: 0.1, from: 2, role: 'perc', hum: 0 },
       kick: { kind: 'drum', pat: 'B _ B _ B _ B _', gain: 0.26, send: 0.05, from: 3, role: 'drum', hum: 0 },
       snr: { kind: 'drum', pat: '_ _ S _ _ _ S _', gain: 0.24, send: 0.1, from: 3, hum: 0 },
-      arp: { kind: 'pat', inst: 'chip12', pat: "1 2 3 1' 3 2 1 2 3 1' 3 2 1 2 3 1'", lo: 64, gain: 0.06, pan: -0.3, send: 0.3, role: 'arp', from: 4, hum: 0, gate: 0.5 },
-      echo: { kind: 'pat', inst: 'chip50', pat: '_ _ _ _ x? _ _ _', lo: 64, voices: 3, strum: 0, gain: 0.08, pan: 0.3, send: 0.4, from: 5, hum: 0, gate: 0.3 },
+      arp: { kind: 'pat', inst: 'chip12', pat: "1 2 3 1' 3 2 1 2 3 1' 3 2 1 2 3 1'", lo: 64, gain: 0.045, pan: -0.3, send: 0.3, role: 'arp', from: 4, hum: 0, gate: 0.5 },
+      echo: { kind: 'pat', inst: 'chip50', pat: '_ _ _ _ x? _ _ _', lo: 64, voices: 3, strum: 0, gain: 0.06, pan: 0.3, send: 0.4, from: 5, hum: 0, gate: 0.3 },
       work: { kind: 'drum', pat: 'q q _ q _ q q _', gain: 0.3, pan: -0.2, when: 'work', role: 'perc', hum: 0 },
       power: { kind: 'pat', inst: 'chip12', pat: "1' _ 3 _ 2' _ 3 _", lo: 64, gain: 0.055, pan: 0.3, send: 0.3, when: 'power', role: 'sparkle', hum: 0, gate: 0.5 }
     }

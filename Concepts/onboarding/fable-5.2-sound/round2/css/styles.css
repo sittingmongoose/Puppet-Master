@@ -69,8 +69,8 @@ body[data-fam="retro"] .sh-resume, body[data-fam="nier"] .sh-resume { border-rad
 .sh-chat { border-right: 0; border-left: 1px solid var(--line); }
 .sh-status { display: flex; gap: 18px; align-items: center; padding: 0 12px; font: 500 11px ui-monospace, monospace; color: var(--faint); background: var(--surface); border-top: 1px solid var(--line); }
 body[data-fam="glass"] .frame { background: var(--wall-img) center / cover no-repeat, var(--bg); }
-body[data-theme="glass-dark"] { --wall-img: url(../../../Icon-Concepts/Opus5.5icon/wall-ribbons-dark.webp); }
-body[data-theme="glass-light"] { --wall-img: url(../../../Icon-Concepts/Opus5.5icon/wall-ribbons-light.webp); }
+body[data-theme="glass-dark"] { --wall-img: url(../../../../Icon-Concepts/Opus5.5icon/wall-ribbons-dark.webp); }
+body[data-theme="glass-light"] { --wall-img: url(../../../../Icon-Concepts/Opus5.5icon/wall-ribbons-light.webp); }
 body[data-fam="glass"] .sh-act, body[data-fam="glass"] .sh-status { background: rgba(7, 10, 22, .4); }
 body[data-theme="glass-light"] .sh-act, body[data-theme="glass-light"] .sh-status { background: rgba(255, 255, 255, .4); }
 .scrim { position: absolute; inset: 0; background: rgba(5, 4, 9, .55); backdrop-filter: blur(3px); transition: opacity .3s; }
