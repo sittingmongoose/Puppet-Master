@@ -21,13 +21,15 @@
 //   mark      a real wheel up over the unscrolled panel marks it without scrolling it. With no press after it, a scroll of
 //             the panel with no input inside the 700 ms pins it (the control: the mark was made); after a real click
 //             outside the chat it does not, and the next handover changes the subject (opus-recheck-act8c O1).
+//   mark-touch repeats the mark case with a touch tap outside the chat in place of the click.
 //   scrollbar a real press on the panel's scrollbar track pages it down and pins it; a handover keeps it (skipped where
 //             scrollbars overlay the content and leave no gutter).
 //   no input  scrollTop set by script, then a clamp (the panel scrolled to its end by script and its last rows taken
 //             out, so the browser clamps scrollTop and fires scroll, as a patch that shortens it would) pin nothing,
 //             and the next handover changes the subject.
 // Fails group 7 c4ba49b137: the first handover replaces the panel (node, scroll and focus lost), and nothing pins.
-//   --set chat=<path or URL of a 5.6 Pro build (build.py --out)>   --set only=wheel,keys,click,touch,elsewhere,mark,scrollbar,none
+//   --set chat=<path or URL of a 5.6 Pro build (build.py --out)>
+//   --set only=wheel,keys,click,touch,elsewhere,mark,mark-touch,scrollbar,none
 
 // In the app's frame: helpers the steps below read through window.__fo104.
 function install() {
@@ -315,25 +317,34 @@ async function elsewhereCase(t, f, where) {
 // a press elsewhere also ends a wheel's (or a touch's) 700 ms mark (opus-recheck-act8c O1): a wheel up over the panel at
 // its top marks it and scrolls nothing. The control, with no press after the wheel, shows the mark was made: a scroll of
 // the panel with no input inside the 700 ms pins it. After a real click outside the chat, the same scroll must not.
-async function markElsewhereCase(t, f, where) {
+async function markElsewhereCase(t, f, where, pressOutside, touch = false) {
   for (const press of [false, true]) {
-    const tag = `${where} wheel mark${press ? ' then a press elsewhere' : ' (control, no press)'}`;
+    const tag = `${where} wheel mark${touch ? ' (touch context)' : ''}${press ? ` then a ${touch ? 'touch tap' : 'press'} elsewhere` : ' (control, no press)'}`;
     const s0 = await freshWindow(t, f, tag);
     const a = await f.evaluate(() => window.__fo104.aim('.orbit-panel-title'));
     const o = await f.evaluate(() => window.__fo104.outside());
     await t.check(`${tag}: the panel at its top, its words, and a spot outside the chat that is no control`, !!(a && a.ok && o && s0.top === 0),
       JSON.stringify({ top: s0.top, title: a, outside: o }), { hard: true });
     await t.page.mouse.move(OFF.x + a.x, OFF.y + a.y);
-    const t0 = await f.evaluate(() => performance.now());
+    await f.evaluate(() => {
+      const probe = window.__fo104;
+      probe.wheelAt = null;
+      probe.panel().addEventListener('wheel', () => { probe.wheelAt = performance.now(); }, { once: true, passive: true });
+    });
     await t.page.mouse.wheel(0, -48);
-    if (press) await t.page.mouse.click(OFF.x + o.x, OFF.y + o.y);
-    const r = await f.evaluate(async (t0) => {
-      const p = window.__fo104.panel(), fr = () => new Promise((res) => requestAnimationFrame(() => res()));
+    if (press) await pressOutside({ x: OFF.x + o.x, y: OFF.y + o.y });
+    const r = await f.evaluate(async () => {
+      const probe = window.__fo104, p = probe.panel(), fr = () => new Promise(res => requestAnimationFrame(res));
       const wheelTop = p.scrollTop;
+      let scroll = null;
+      const onScroll = () => { scroll = { top: p.scrollTop, ms: probe.wheelAt === null ? null : Math.round(performance.now() - probe.wheelAt) }; };
+      p.addEventListener('scroll', onScroll, { once: true });
       p.scrollTop = 14; await fr(); await fr(); await fr();
-      return { wheelTop, scriptTop: p.scrollTop, ms: Math.round(performance.now() - t0), pinned: window.__fo104.snap().pinned };
-    }, t0);
-    const inWindow = r.ms < 700 && r.wheelTop === 0 && r.scriptTop > 0;
+      p.removeEventListener('scroll', onScroll);
+      return { wheelTop, scroll, pinned: probe.snap().pinned };
+    });
+    // Read the input and scroll events on the page's clock. Later compositor frames only settle the pin.
+    const inWindow = r.wheelTop === 0 && r.scroll?.top > 0 && r.scroll.ms !== null && r.scroll.ms >= 0 && r.scroll.ms < 700;
     if (!press) {
       await t.check(`${tag}: a scroll with no input inside the wheel's 700 ms pins the panel (the mark was made)`,
         inWindow && r.pinned === 'node:' + s0.uid, JSON.stringify({ ...r, uid: s0.uid }));
@@ -383,15 +394,21 @@ async function run(t, f, where) {
   OFF = await frameOffset(t, f);
   const s = await f.evaluate(() => window.__fo104.snap());
   await t.check(`${where}: a live Working card with the Orbit panel`, !!s, JSON.stringify(s), { hard: true });
-  const only = list(t.args.only, ['wheel', 'keys', 'click', 'touch', 'elsewhere', 'mark', 'scrollbar', 'none']);
+  const only = list(t.args.only, ['wheel', 'keys', 'click', 'touch', 'elsewhere', 'mark', 'mark-touch', 'scrollbar', 'none']);
   if (only.includes('wheel')) await wheelCase(t, f, where);
   if (only.includes('keys')) await keysCase(t, f, where);
   if (only.includes('click')) await clickKeysCase(t, f, where);
-  if (only.includes('touch')) await touchCase(t, f, where);
   if (only.includes('elsewhere')) await elsewhereCase(t, f, where);
-  if (only.includes('mark')) await markElsewhereCase(t, f, where);
+  if (only.includes('mark')) await markElsewhereCase(t, f, where, ({ x, y }) => t.page.mouse.click(x, y));
+  if (only.includes('mark-touch')) await withTouch(t, async send => {
+    await markElsewhereCase(t, f, where, async point => {
+      await send('touchStart', point);
+      await send('touchEnd');
+    }, true);
+  });
   if (only.includes('scrollbar')) await scrollbarCase(t, f, where);
   if (only.includes('none')) await noInputCase(t, f, where);
+  if (only.includes('touch')) await touchCase(t, f, where);
 }
 
 async function home(t, surface) {
