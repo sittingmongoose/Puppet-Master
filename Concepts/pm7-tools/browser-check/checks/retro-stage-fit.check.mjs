@@ -24,8 +24,7 @@ const NAME = 'First cancellation';
 
 // the page, or T3's sandbox at t.openInSandbox's default flags (an opaque origin, no storage, no modals), as the kit opens it
 const frameFor = async (t, mode) => {
-	// T60: --set selftest=late-ready holds the window's first open (95-boot's ?o55=screen= open) back past the ready bound
-	if (t.args.selftest === 'late-ready' && !t.__lateReady) { t.__lateReady = true; await t.page.addInitScript(LATE_READY, LATE_READY_HOLD_MS); }
+	await installBootProbe(t);
 	return t.app.open({ sandbox: mode === 'sandbox', onboarding: true, query: 'o55=screen=welcome', settleMs: 1000 });
 };
 // a case runs on its own surface unless --set sandbox picks the other one
@@ -180,39 +179,109 @@ const OWNER_READY = () => {
 	const O = window.O55, S = O && O.S;
 	return !!(S && S.open && S.sess && S.sess.status === 'active' && S.root && S.root.getAttribute('data-open') === 'true' && O.ui && typeof O.ui.applyLook === 'function' && O.pipStage && O.pipStage.of(S.root.querySelector('.o55-stage')));
 };
-// T60 (TOOLBATCH4; REVIEW-kit-tb3-opus finding 4): the wait is bounded by the product's own ready time, not a flat 15 s,
-// which let a window that opened up to about 16 s late pass with only a log line. The product opens the window from its
-// boot, 140 ms after DOMContentLoaded (95-boot.js, start), and its opening settles within 2800 ms (60-ui-core.js, open:
-// O55.motion.settled's fallback). Those are pinned here with a stated margin of 2000 ms for a loaded host: on a freshly
-// loaded page the window must be ready by DOMContentLoaded + 140 + 2800 + 2000 ms; once the page has been ready before
-// (a window reopened), within 2800 + 2000 ms of the wait starting. Later than that fails by name, with how long it waited.
-const READY_BOOT_MS = 140, READY_OPEN_MS = 2800, READY_MARGIN_MS = 2000;
-const LATE_READY_HOLD_MS = READY_BOOT_MS + READY_OPEN_MS + READY_MARGIN_MS + 1500;
-// --set selftest=late-ready: the first ui.open of the page waits LATE_READY_HOLD_MS (past the bound, well inside 15 s)
-const LATE_READY = (ms) => document.addEventListener('DOMContentLoaded', () => {
-	const ui = window.O55 && window.O55.ui; if (!ui || typeof ui.open !== 'function' || ui.__lateReady) return;
-	const orig = ui.open; let first = true; ui.__lateReady = true;
-	ui.open = function (...a) { if (first) { first = false; setTimeout(() => orig.apply(this, a), ms); return undefined; } return orig.apply(this, a); };
-});
+// 95-boot starts opening at DCL + 140 ms. The window's settled fallback is 2800 ms.
+const READY_OPEN_MS = 2800, READY_MARGIN_MS = 2000;
+const READY_BOOT_MS = 140 + READY_OPEN_MS + READY_MARGIN_MS;
+// The shell and DCL have a separate navigation budget for loading the large local bundle.
+const SHELL_BOOT_MS = 8000;
+
+// Stamp the first ready boundary in the document, before app.open waits on the shell or settles.
+const WATCH_BOOT = ({ readySource, hold, holdShell }) => {
+	if (window.__rsfBoot) return;
+	const ready = (0, eval)(`(${readySource})`);
+	const stamps = window.__rsfBoot = { open: null, shell: null };
+	const read = () => {
+		if (stamps.shell === null && document.documentElement?.getAttribute('data-pmr-ready') === '1') stamps.shell = performance.now();
+		if (stamps.open === null && ready()) stamps.open = performance.now();
+		if (stamps.shell !== null && stamps.open !== null) observer.disconnect();
+	};
+	const observer = new MutationObserver(read);
+	observer.observe(document, { subtree: true, childList: true, attributes: true, attributeFilter: ['data-pmr-ready', 'data-open'] });
+	window.addEventListener('o55:onboarding', read);
+	read();
+
+	if (!hold) return;
+	document.addEventListener('DOMContentLoaded', () => {
+		const ui = window.O55?.ui;
+		if (!ui) return;
+		const open = ui.open;
+		ui.open = function (...args) {
+			ui.open = open;
+			setTimeout(() => open.apply(this, args), hold);
+		};
+	}, { once: true, capture: true });
+	if (!holdShell) return;
+	// Hold the shell marker until the late window really opens, so the self-test always
+	// exercises an already-ready window. The two ready times are still captured independently.
+	const install = () => {
+		const root = document.documentElement;
+		if (!root) return false;
+		const set = root.setAttribute;
+		const delayReady = () => {
+			const value = root.getAttribute('data-pmr-ready');
+			if (value !== '1') return;
+			root.removeAttribute('data-pmr-ready');
+			restoreReady = () => set.call(root, 'data-pmr-ready', value);
+		};
+		let restoreReady = () => {};
+		root.setAttribute = function (name, value) {
+			if (name === 'data-pmr-ready' && value === '1') restoreReady = () => set.call(this, name, value);
+			else set.call(this, name, value);
+		};
+		delayReady();
+		window.addEventListener('o55:onboarding', (e) => {
+			if (e.detail?.type !== 'opened') return;
+			root.setAttribute = set;
+			restoreReady();
+		});
+		return true;
+	};
+	if (!install()) {
+		const rootObserver = new MutationObserver(() => { if (install()) rootObserver.disconnect(); });
+		rootObserver.observe(document, { childList: true });
+	}
+};
+
+const instrumentedPages = new WeakSet();
+const installBootProbe = async (t) => {
+	if (instrumentedPages.has(t.page)) return;
+	await t.page.addInitScript(WATCH_BOOT, {
+		readySource: OWNER_READY.toString(),
+		hold: ['late-ready', 'late-boot'].includes(t.args.selftest) ? READY_BOOT_MS + 1500 : 0,
+		holdShell: t.args.selftest === 'late-boot',
+	});
+	instrumentedPages.add(t.page);
+};
+
 const ownerReady = async (t, f, look) => {
-	const at = await f.evaluate((ready) => { const nav = performance.getEntriesByType('navigation')[0], ok = (0, eval)(`(${ready})`)();
-		const r = { now: performance.now(), dcl: nav ? nav.domContentLoadedEventStart : null, seen: !!window.__rsfReadySeen, ok };
-		if (ok) window.__rsfReadySeen = true; return r; }, OWNER_READY.toString()).catch(() => null);
-	if (at && at.ok) return { ok: true };
-	const fresh = !!at && !at.seen && at.dcl > 0;
-	const bound = !at ? READY_OPEN_MS + READY_MARGIN_MS : fresh ? at.dcl + READY_BOOT_MS + READY_OPEN_MS + READY_MARGIN_MS - at.now : READY_OPEN_MS + READY_MARGIN_MS;
-	const t0 = Date.now(), ok = await f.waitForFunction(OWNER_READY, null, { timeout: Math.max(1, Math.round(bound)) }).then(() => true, () => false);
-	const waited = Date.now() - t0;
-	if (ok) await f.evaluate(() => { window.__rsfReadySeen = true; }).catch(() => {});
-	const since = fresh ? ` (${Math.round(at.now - at.dcl + waited)} ms after DOMContentLoaded; the bound: ${READY_BOOT_MS} + ${READY_OPEN_MS} + ${READY_MARGIN_MS} ms)` : ` (the bound: ${READY_OPEN_MS} + ${READY_MARGIN_MS} ms from the wait's start)`;
-	t.log(`the onboarding window was not ready when ${look} was to be applied: waited ${waited} ms, ${ok ? 'ready' : 'not ready within the product\'s ready time'}${since}`);
-	return { ok, waited, since };
+	const snapshot = (source) => {
+		const ready = (0, eval)(`(${source})`);
+		const nav = performance.getEntriesByType('navigation')[0];
+		return { ok: ready(), now: performance.now(), dcl: nav?.domContentLoadedEventStart,
+			open: window.__rsfBoot?.open, shell: window.__rsfBoot?.shell };
+	};
+	const start = await f.evaluate(snapshot, OWNER_READY.toString());
+	const fresh = start.open == null;
+	const deadline = fresh && start.dcl ? start.dcl + READY_BOOT_MS : start.now + READY_OPEN_MS + READY_MARGIN_MS;
+	if (!start.ok && start.now < deadline) {
+		await f.waitForFunction(OWNER_READY, null, { timeout: Math.max(1, Math.ceil(deadline - start.now)) }).catch(() => {});
+	}
+	const end = await f.evaluate(snapshot, OWNER_READY.toString());
+	const openFromDcl = end.open == null ? null : Math.round(end.open - end.dcl);
+	const since = `window ${openFromDcl ?? 'not observed'} ms after DOMContentLoaded (limit ${READY_BOOT_MS}); `
+		+ `shell ${Math.round(end.shell)} ms and DOMContentLoaded ${Math.round(end.dcl)} ms after navigation (limit ${SHELL_BOOT_MS})`;
+	const branch = start.ok ? 'already ready at first look' : 'waited for readiness';
+	const ok = end.ok && Number.isFinite(end.shell) && end.shell <= SHELL_BOOT_MS && end.dcl > 0 && end.dcl <= SHELL_BOOT_MS
+		&& openFromDcl != null && openFromDcl <= READY_BOOT_MS && (start.ok || fresh || end.now <= deadline);
+	const detail = `${branch}: ${since}`;
+	if (!ok) t.log(`${look}: ${detail}`);
+	return { ok, since: detail };
 };
 
 // the look, as the window's look menu picks it (the page's own theme switch does not reach an open setup window)
 async function stageLook(t, f, look) {
 	const ready = await ownerReady(t, f, look);
-	if (!ready.ok) return t.check(`the onboarding window is open with its session and stage within the product's ready time before ${look} is applied`, false, `waited ${ready.waited} ms${ready.since}; ` + await f.evaluate(() => JSON.stringify({ open: !!(window.O55 && O55.S && O55.S.open), sess: !!(window.O55 && O55.S && O55.S.sess) })).catch((e) => e.message), { hard: true });
+	if (!ready.ok) return t.check(`the onboarding window is open with its session and stage within the product's ready time before ${look} is applied`, false, `${ready.since}; ` + await f.evaluate(() => JSON.stringify({ open: !!(window.O55 && O55.S && O55.S.open), sess: !!(window.O55 && O55.S && O55.S.sess) })).catch((e) => e.message), { hard: true });
 	await f.evaluate(([fam, m]) => window.O55.ui.applyLook(fam, m), look.split('-'));
 	await f.waitForFunction((lk) => { const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')); return !!st && st.theme === lk; }, look, { timeout: 15000 }).catch(() => {});
 	const th = await f.evaluate(() => { const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')); return st ? st.theme : 'no stage'; });
@@ -1110,6 +1179,7 @@ async function bubbleClear(t, mode) {
 // Retro Dark (--set look=retro-light,retro-dark for more), --set reps=3 times; each marked '<look> <route> rep <n>' as the
 // size settles, then judged as above at 2 s and 2.5 s later. With --grep "clear of the bubble" (the other cases are not films).
 async function filmBubble(t, mode) {
+	await installBootProbe(t);
 	let f, size;
 	if (mode === 'normal') {
 		await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });
@@ -1154,6 +1224,7 @@ async function filmBubble(t, mode) {
 //   browser-check run <kit>/checks/retro-stage-fit.check.mjs --set film=1 --set page=<build> --record /abs/film.mp4
 const FILM = [[1920, 1056], [1390, 900], [1024, 768], [860, 768], [740, 768], [1280, 500], [740, 768], [860, 768], [1390, 900], [1920, 1056]];
 async function film(t) {
+	await installBootProbe(t);
 	await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });
 	const href = await t.root.evaluate(() => location.href);
 	const [f] = await t.openSideBySide([{ url: href, width: 1920, height: 1056, label: 'Retro stage fit: the page in a frame resized as a window would be' }]);
@@ -1182,6 +1253,7 @@ async function film(t) {
 // After each, the no-replay measures (no power-on, the line whole and not said again) and the fit are judged; the
 // frames just after each mark are for every-frame review.
 async function filmRelayout(t, mode) {
+	await installBootProbe(t);
 	let f, size;
 	if (mode === 'normal') {
 		await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });
