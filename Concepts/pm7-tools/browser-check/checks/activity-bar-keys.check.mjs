@@ -767,13 +767,22 @@ async function run(t, w, h) {
     const region = { x, y, width: Math.ceil(off.x + u.r) + P + 1 - x, height: Math.min(Math.ceil(off.y + u.b) + P + 1, Math.floor(off.y + h)) - y };
     // with the names shown, every name's letters in the region, its own and its neighbours': an exact mask (below)
     const named = !!b.label;
-    const r0 = await t.pixels(region);
+    const capture = async () => {
+      if (named) {
+        // Tab can queue a tooltip even with the mouse outside the rail. Clear it without moving focus
+        // or sending Escape (which can also close the panel), then let the cleared frame paint.
+        await f.evaluate(() => window.PM_HOVER_TAG_CONTROLLER?.close(true));
+        await frames(f, 2);
+      }
+      return t.pixels(region);
+    };
+    const r0 = await capture();
     let bare = null;
     let nameBoxes = [];
     if (named) {
       nameBoxes = await f.evaluate(() => [...document.querySelectorAll('#activityBar .icon .icon-label')].filter(n => getComputedStyle(n).display !== 'none' && n.getClientRects().length)
         .map(n => { const g = document.createRange(); g.selectNodeContents(n); const q = g.getBoundingClientRect(); return { x: q.x, y: q.y, w: q.width, h: q.height }; }));
-      await f.evaluate(hideNames, true); await frames(f, 2); bare = await t.pixels(region); await f.evaluate(hideNames, false); await frames(f, 2);
+      await f.evaluate(hideNames, true); await frames(f, 2); bare = await capture(); await f.evaluate(hideNames, false); await frames(f, 2);
     }
     await focusQuiet(await before(target));
     await kb.press('Tab');
@@ -788,13 +797,13 @@ async function run(t, w, h) {
       const step = () => { const now = r ? [...r.children].map(i => i.style.transform + getComputedStyle(i).translate).join('|') : ''; still = now === last ? still + 1 : 0; last = now;
         if (still >= 3 || performance.now() - t0 > 1500) done(); else requestAnimationFrame(step); }; requestAnimationFrame(step); }));
     const now = await key();
-    let r1 = await t.pixels(region);
+    let r1 = await capture();
     // a read of NieR's brackets taken while one corner was still on its way in (K-F96c-4, a false stop: tl 0, bl 8 once,
     // passing on a rerun): read once more after 500 ms, the focus unmoved. A corner still short then is a real fault.
     if (b.brackets && !Object.values(bestCorners(r0, r1, b, region.x - off.x, region.y - off.y)).every(n => n >= 6)) {
       t.log(`${target}: NieR's brackets read short ${JSON.stringify(bestCorners(r0, r1, b, region.x - off.x, region.y - off.y))}; read again after 500 ms`);
       await f.waitForTimeout(500);
-      if ((await key()).key === target) r1 = await t.pixels(region);
+      if ((await key()).key === target) r1 = await capture();
     }
     // the item, not its tile, which a focused tile's own style may move by a fraction (Glass's press scale is lifted)
     const moved = await f.evaluate(([k, t0]) => { const el = k === 'activityBarToggle' ? document.getElementById(k) : document.querySelector(`#activityBar .icon[data-ab-id="${k}"]`); const q = el.getBoundingClientRect(); return Math.abs(q.x - t0.x) + Math.abs(q.y - t0.y) > 0.5; }, [target, b.item]);
