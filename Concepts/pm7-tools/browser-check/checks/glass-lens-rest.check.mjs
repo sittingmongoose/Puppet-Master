@@ -32,7 +32,7 @@ const list = (v, all) => (v ? String(v).split(',').map((s) => s.trim()).filter(B
 const VIEWS = { home: 'dashboard', usage: 'usage', settings: 'settings', wizard: 'wizard', orchestrator: 'orchestrator', projects: 'projects' };
 
 /* in the page: the lenses, their strips (glass.js STRIPS, the ones a press can reach) and a per-frame sampler */
-const PROBE = () => {
+export const PROBE = () => {
 	/* the Activity bar icon lens's resting tint (glass.js KINDS.lensIcon.sat, restSat) */
 	const ICON_REST = 'saturate(1.12)';
 	/* the hover bead's while it shows (glass.css .lg-bead.on, KINDS.bead.sat) */
@@ -71,10 +71,16 @@ const PROBE = () => {
 		}
 		return null;
 	};
-	/* a travel, a scrub's return or a bead's flow: a running WAAPI move on the lens itself */
-	const moving = (l) => l.getAnimations().some((a) => (a.playState === 'running' || a.playState === 'pending') && a.effect && !a.effect.pseudoElement &&
-		(a.effect.getComputedTiming().duration || 0) > 150 && a.effect.getKeyframes().some((k) => k.transform != null && k.transform !== ''));
-	const busy = (l) => l.getAnimations().some((a) => a.playState === 'running' || a.playState === 'pending');
+	const running = (a) => a.pending || a.playState === 'running';
+	const busy = (l) => l.getAnimations().some(running);
+	/* glass.js mirrors a ride onto the lens additively. The lens's own transform counts even for a short ride. */
+	const rideMove = (effect) => effect.composite === 'add' &&
+		effect.getKeyframes().some((k) => ['transform', 'translate', 'scale', 'rotate'].some((p) => k[p] != null && k[p] !== '' && k[p] !== 'none'));
+	const rides = (l) => l.getAnimations().some((a) => running(a) && a.effect && !a.effect.pseudoElement && rideMove(a.effect));
+	/* A travel, scrub return, bead flow or mirrored ride. Host animations are outside these reads (K5). */
+	const moving = (l) => l.getAnimations().some((a) => running(a) && a.effect && !a.effect.pseudoElement &&
+		(rideMove(a.effect) || ((a.effect.getComputedTiming().duration || 0) > 150 &&
+			a.effect.getKeyframes().some((k) => k.transform != null && k.transform !== ''))));
 	const desc = (l, i) => ({ i, kind: l.getAttribute('data-lg-lens'), for: l.getAttribute('data-lg-for') || undefined, bead: l.classList.contains('lg-bead') || undefined,
 		layer: (l.parentElement && (l.parentElement.id || l.parentElement.className || l.parentElement.tagName.toLowerCase())) + '', box: box(l) });
 	window.__g = {
@@ -83,11 +89,13 @@ const PROBE = () => {
 		/* every lens at rest: none moving or fading; resolves once that has held for 300 ms (at most ms) */
 		settle(ms = 8000) {
 			return new Promise((resolve) => {
-				const t0 = performance.now(); let still = 0;
-				const tick = (ts) => {
-					const any = this.all().some((l) => busy(l));
-					still = any ? 0 : still || ts;
-					if ((still && ts - still > 300) || performance.now() - t0 > ms) resolve({ settled: !!still, ms: Math.round(performance.now() - t0) }); else requestAnimationFrame(tick);
+				const t0 = performance.now(); let still = null;
+				const tick = () => {
+					const now = performance.now();
+					still = this.all().some(busy) ? null : still ?? now;
+					const settled = still !== null && now - still >= 300;
+					if (settled || now - t0 >= ms) resolve({ settled, ms: Math.round(now - t0) });
+					else requestAnimationFrame(tick);
 				};
 				requestAnimationFrame(tick);
 			});
@@ -95,30 +103,30 @@ const PROBE = () => {
 		/* the resting state of every lens in the page, read over a few frames */
 		rest(frames = 6) {
 			return new Promise((resolve) => {
-				const bad = new Map(), inl = new Map(), icons = new Map(), tints = new Map(); let n = 0, laid = 0, movers = 0;
+				const bad = new Map(), inl = new Map(), icons = new Map(), tints = new Map(), movers = new Set(); let n = 0, laid = 0;
 				const tick = () => {
-					const all = this.all(); laid = 0; movers = 0;
+					const all = this.all(); laid = 0;
 					all.forEach((l, i) => {
-						const mv = busy(l); if (mv) movers++;
+						if (busy(l)) movers.add(l);
 						if (this.laid(l)) {
 							laid++;
-							const f = getComputedStyle(l).backdropFilter, icon = l.getAttribute('data-lg-lens') === 'lensIcon';
-							const want = restWant(l), seen = !mv && +getComputedStyle(l).opacity > 0.5 && getComputedStyle(l).visibility !== 'hidden';
+							const style = getComputedStyle(l), f = style.backdropFilter, icon = l.getAttribute('data-lg-lens') === 'lensIcon';
+							const want = restWant(l), seen = +style.opacity > 0.5 && style.visibility !== 'hidden';
 							/* a shown lens (opaque, visible, on screen) has exactly its tint; a hidden one (glass.js puts a lens out at opacity
 							   0, parks it, or it lies in a parked screen off the window) is never drawn: it may keep its tint or have none, but
 							   never a url() */
 							const r0 = l.getBoundingClientRect(), onScreen = r0.right > 0 && r0.bottom > 0 && r0.left < innerWidth && r0.top < innerHeight;
 							const ok = seen && onScreen ? (f || 'none') === want : !/url\(/.test(f || '') && ((f || 'none') === 'none' || f === want);
-							if (!mv && !ok) bad.set(l, { ...desc(l, i), filter: f, want, strip: stripOf(l), opacity: getComputedStyle(l).opacity, shown: seen && onScreen });
+							if (!ok) bad.set(l, { ...desc(l, i), filter: f, want, strip: stripOf(l), opacity: style.opacity, shown: seen && onScreen });
 							if (icon && seen) icons.set(l, { ...desc(l, i), filter: f });
 							if (seen && want === STRIP_REST) tints.set(l, { ...desc(l, i), strip: stripOf(l), filter: f });
 						}
 						const s = l.style.getPropertyValue('backdrop-filter'), sv = s.replace(/\s/g, '');
 						/* inline: never a url() at rest; a plain saturate only where the rest wants one (the bead's comes from CSS) */
-						if (s && !mv && (/url\(/.test(s) || l.classList.contains('lg-bead') || sv !== restWant(l).replace(/\s/g, ''))) inl.set(l, { ...desc(l, i), inline: s });
+						if (s && (/url\(/.test(s) || l.classList.contains('lg-bead') || sv !== restWant(l).replace(/\s/g, ''))) inl.set(l, { ...desc(l, i), inline: s });
 					});
 					if (++n < frames) requestAnimationFrame(tick);
-					else resolve({ lenses: all.length, laid, movers, bent: [...bad.values()], inline: [...inl.values()], icons: [...icons.values()], tints: [...tints.values()] });
+					else resolve({ lenses: all.length, laid, movers: movers.size, bent: [...bad.values()], inline: [...inl.values()], icons: [...icons.values()], tints: [...tints.values()] });
 				};
 				requestAnimationFrame(tick);
 			});
@@ -159,10 +167,12 @@ const PROBE = () => {
 				document.addEventListener('pointerup', () => { if (this.on) { this.phase = 'released'; this.tUp = Math.round(performance.now()); } }, true);
 			}
 			const which = () => { const c = chosen && document.querySelector(chosen); return c ? (c.getAttribute('data-target') || c.getAttribute('aria-label') || c.textContent || '').trim().slice(0, 24) : ''; };
-			const tick = (ts) => {
+			const tick = () => {
 				if (!this.on) return;
+				// A pointer event may have run since the frame timestamp. Stamp the read on the event clock.
+				const t = Math.round(performance.now());
 				const f = getComputedStyle(l).backdropFilter;
-				this.frames.push({ t: Math.round(ts), ph: this.phase, mv: moving(l), up: l.hasAttribute('data-lg-lifted'), bend: /url\(/.test(f || ''), tint: f === ICON_REST, fl: f && f !== 'none' ? f : '', b: box(l), ch: chosen ? which() : undefined });
+				this.frames.push({ t, ph: this.phase, mv: moving(l), up: l.hasAttribute('data-lg-lifted'), bend: /url\(/.test(f || ''), tint: f === ICON_REST, fl: f && f !== 'none' ? f : '', b: box(l), ch: chosen ? which() : undefined });
 				requestAnimationFrame(tick);
 			};
 			requestAnimationFrame(tick);
@@ -183,9 +193,6 @@ const PROBE = () => {
 		/* every lens in the page each frame (an entrance's rides): its moving frames and those of them that do not bend */
 		watchAll() {
 			this.allOn = true; this.allRows = { frames: 0, moving: 0, riding: 0, rideFlat: 0, flat: [], kinds: {} };
-			/* a ride: glass.js mirrors an entrance onto the lens additively (rideApply, composite 'add'); a travel replaces */
-			const rides = (l) => l.getAnimations().some((a) => (a.playState === 'running' || a.playState === 'pending') && a.effect && !a.effect.pseudoElement && a.effect.composite === 'add' &&
-				a.effect.getKeyframes().some((k) => ['transform', 'translate', 'scale', 'rotate'].some((p) => k[p] != null && k[p] !== '' && k[p] !== 'none')));
 			const tick = (ts) => {
 				if (!this.allOn) return;
 				this.allRows.frames++;
@@ -247,7 +254,7 @@ async function restCheck(t, f, tag, { W, H }) {
 	await parkPointer(t.page, W, H);
 	const s = await f.evaluate(() => window.__g.settle());
 	const r = await f.evaluate(() => window.__g.rest());
-	await t.check(`rest: the page has settled and shows a lens ${tag}`, s.settled && r.laid >= 1, JSON.stringify({ ...s, lenses: r.lenses, laid: r.laid, movers: r.movers }));
+	await t.check(`rest: the page has settled and shows a lens ${tag}`, s.settled && r.laid >= 1 && r.movers === 0, JSON.stringify({ ...s, lenses: r.lenses, laid: r.laid, movers: r.movers }));
 	await t.check(`rest: every shown resting lens has exactly its plain saturate and no url() (1.1, the icon lens 1.12, the bead only while it shows); a hidden one no url() ${tag}`, r.bent.length === 0, JSON.stringify({ laid: r.laid, wrong: r.bent.length, eg: r.bent.slice(0, 4) }));
 	await t.check(`rest: no lens in the page keeps a url() filter inline, nor a tint other than its own, while still ${tag}`, r.inline.length === 0, JSON.stringify({ lenses: r.lenses, inline: r.inline.length, eg: r.inline.slice(0, 3) }));
 	if (r.icons.length) await t.check(`rest: the Activity icon lens rests with its saturate(1.12) and no url() filter ${tag}`, r.icons.every((x) => x.filter === 'saturate(1.12)'), JSON.stringify(r.icons));
