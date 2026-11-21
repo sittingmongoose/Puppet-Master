@@ -33,6 +33,17 @@ export const INSTALL = () => {
 	let board = document.getElementById('pmuBoard');
 	if (!board) return false;
 	const R = window.__uhp = { on: false };
+	const nativeTimeout = globalThis.setTimeout;
+	const timed = function (fn, delay, ...args) {
+		// 42-cards.js arms this named callback for the 150 ms wheel rest.
+		if (typeof fn !== 'function' || fn.name !== 'wheelEnd' || delay !== 150 || !R.probe)
+			return nativeTimeout(fn, delay, ...args);
+		const timer = R.timer = { inputDue: R.probe.due, armed: performance.now(), entered: null };
+		return nativeTimeout(function (...values) {
+			if (R.on && R.timer === timer) timer.entered = performance.now();
+			return Reflect.apply(fn, this, values);
+		}, delay, ...args);
+	};
 	const cardId = (c) => (c ? c.getAttribute('data-id') || c.getAttribute('data-card') || c.id || String([...board.children].indexOf(c)) : null);
 	const cls = (el) => String(el.className && el.className.baseVal !== undefined ? el.className.baseVal : el.className || el.tagName).slice(0, 48);
 	// The last input arms a 150 ms probe of the host's own timer lateness. The page's pause ends at that same rest, so a
@@ -42,7 +53,7 @@ export const INSTALL = () => {
 	// the scroller. Its deadline therefore starts at the input's dispatch, before the page's own handler has run and
 	// before the page re-arms its rest timer, so it fires ahead of that timer: the page's later work (its wheelEnd fit
 	// before the marker's removal) can no longer be read as timer lateness and cannot widen the end allowance.
-	const armProbe = (t) => { R.probe = { due: t + 150, fired: null }; clearTimeout(R.probeTimer); R.probeTimer = setTimeout(() => { R.probe.fired = performance.now(); }, 150); };
+	const armProbe = (t) => { R.probe = { due: t + 150, fired: null }; clearTimeout(R.probeTimer); R.probeTimer = nativeTimeout(() => { R.probe.fired = performance.now(); }, 150); };
 	const onInput = (list) => (e) => {
 		if (!R.on) return;
 		if (!(e.target === sc || (sc.contains && sc.contains(e.target)))) return;
@@ -77,17 +88,20 @@ export const INSTALL = () => {
 		const needsGlow = required && +required.getPropertyValue('--pmh-glow') > 0;
 		const needsFrame = required && +required.getPropertyValue('--pmh-frame') > 0;
 		const target = card?.getBoundingClientRect();
-		const shown = [...document.querySelectorAll('#pmh-glow > i,#pmh-frame')].flatMap((el) => {
+		const layers = [...document.querySelectorAll('#pmh-glow > i,#pmh-frame')].flatMap((el) => {
 			const style = getComputedStyle(el);
-			if (style.visibility !== 'visible' || style.display === 'none' || +style.opacity <= 0.01) return [];
+			if (style.visibility !== 'visible' || style.display === 'none') return [];
+			const visible = +style.opacity > 0.01, armed = el.matches('.pmh-glow-on,.pmh-frame-on');
+			if (!visible && !armed) return [];
 			const box = el.getBoundingClientRect();
 			if (box.width <= 0 || box.height <= 0) return [];
 			const matchesTarget = target && Math.abs(box.left - target.left) <= 8 && Math.abs(box.top - target.top) <= 8;
-			return [{ frame: el.id === 'pmh-frame', matchesTarget }];
+			return [{ frame: el.id === 'pmh-frame', matchesTarget, visible, armed }];
 		});
-		return { proxyLit: shown.length > 0, proxyRequired: !!(needsGlow || needsFrame),
-			proxyBack: (!needsGlow || shown.some((x) => !x.frame && x.matchesTarget)) &&
-				(!needsFrame || shown.some((x) => x.frame && x.matchesTarget)) };
+		const hasProxies = (state) => (!needsGlow || layers.some((x) => !x.frame && x.matchesTarget && x[state])) &&
+			(!needsFrame || layers.some((x) => x.frame && x.matchesTarget && x[state]));
+		return { proxyLit: layers.some((x) => x.visible), proxyRequired: !!(needsGlow || needsFrame),
+			proxyArmed: hasProxies('armed'), proxyBack: hasProxies('visible') };
 	};
 	const frame = () => {
 		if (!R.on) return;
@@ -97,35 +111,63 @@ export const INSTALL = () => {
 		R.frames.push({ t: performance.now(), top: Math.round(sc.scrollTop), card: cardId(hc), tools: tools ? Math.round(parseFloat(getComputedStyle(tools).opacity) * 100) / 100 : null,
 			lit: [...board.querySelectorAll(':scope > .pmu-card.pmh-on')].map(cardId), near: [...board.querySelectorAll(':scope > .pmu-card.pmh-near')].map(cardId),
 			op: board.getAttribute('data-op'), ...proxies(hc), highlights: board.querySelectorAll('.is-hl-on,.is-hl-dim,path[data-mark="arc"].is-dim,.pmu-dl-row.is-hot,.pmu-col.is-hot-col').length });
-		requestAnimationFrame(frame);
+	};
+	// A tiny isolated size change gives one sample during each frame's layout, after all rAF callbacks.
+	const sampleBox = document.createElement('div');
+	sampleBox.style.cssText = 'position:fixed;left:0;top:0;width:1px;height:1px;pointer-events:none;opacity:0;contain:strict';
+	document.body.appendChild(sampleBox);
+	const sampler = new ResizeObserver(frame);
+	let raf, width = 1;
+	const tick = () => {
+		if (!R.on) return;
+		width = width === 1 ? 2 : 1;
+		sampleBox.style.width = width + 'px';
+		raf = requestAnimationFrame(tick);
 	};
 	// frames of 50 ms or more (Chrome's long-animation-frame entries), with their style and layout and their longest
 	// scripts, logged around the pause's end
 	try {
 		new PerformanceObserver((l) => { if (R.on) for (const e of l.getEntries()) R.loaf.push({ t: e.startTime, d: Math.round(e.duration), sl: Math.round(e.styleAndLayoutDuration || 0), scripts: [...(e.scripts || [])].sort((a, b) => b.duration - a.duration).slice(0, 3).map((s) => `${s.invoker || s.invokerType} ${Math.round(s.duration)} ms (forced style/layout ${Math.round(s.forcedStyleAndLayoutDuration || 0)})`) }); }).observe({ type: 'long-animation-frame' });
 	} catch (e) { /* no entries in this browser */ }
-	// when a card takes or drops the engine's light, timed as the class is written (the frame callbacks above run before
-	// the engine's in a frame, so a frame sample sees a light one frame after the frame that drew it)
+	// Reconstruct each write in a mutation batch, including a class-on before a same-task marker release.
+	const hasLight = (value) => (value || '').split(/\s+/).includes('pmh-on');
 	new MutationObserver((ms) => {
-		if (!R.on) return; const now = performance.now(), live = document.getElementById('pmuBoard');
-		const changes = ms.filter((m) => m.target === live && m.attributeName === 'data-op');
-		let next = 0;
-		for (const m of ms) {
-			if (m === changes[next]) {
-				const following = changes[++next];
-				const op = following ? following.oldValue : live.getAttribute('data-op');
-				if (op !== m.oldValue) R.ops.push({ t: now, op });
-			}
-			if(m.attributeName==='class'&&m.target.matches?.('.pmu-irow.is-hl-on,.pmu-dl-row.is-hot'))R.chartRows.add(m.target);
-			if (m.attributeName === 'class' && m.target.parentNode === live && m.target.classList.contains('pmu-card')) R.cls.push({ t: now, card: cardId(m.target), on: m.target.classList.contains('pmh-on') });
+		if (!R.on) return;
+		const now = performance.now(), live = document.getElementById('pmuBoard');
+		const nextValues = new Map(), changes = [];
+		for (let i = ms.length - 1; i >= 0; i--) {
+			const { target, attributeName, oldValue } = ms[i];
+			if (attributeName === 'class' && target.matches?.('.pmu-irow.is-hl-on,.pmu-dl-row.is-hot')) R.chartRows.add(target);
+			const isOp = target === live && attributeName === 'data-op';
+			const isCard = attributeName === 'class' && target.parentNode === live && target.classList.contains('pmu-card');
+			if (!isOp && !isCard) continue;
+			const value = nextValues.has(target) ? nextValues.get(target) : target.getAttribute(attributeName);
+			nextValues.set(target, oldValue);
+			if (isOp && value !== oldValue) changes.push({ op: value });
+			if (isCard && hasLight(value) !== hasLight(oldValue)) changes.push({ card: cardId(target), on: hasLight(value) });
+		}
+		for (const change of changes.reverse()) {
+			const record = { t: now, order: R.order++, ...change };
+			('op' in change ? R.ops : R.cls).push(record);
 		}
 	}).observe(sc, { attributes: true, attributeFilter: ['class','data-op'], attributeOldValue: true, subtree: true });
 	R.start = () => {
 		const tools = document.querySelector('#pmuBoard .pmu-card:hover .pmu-cardtools');
 		const fadeMs = tools ? Math.max(...getComputedStyle(tools).transitionDuration.split(',').map((v) => parseFloat(v) * (v.trim().endsWith('ms') ? 1 : 1000))) : 140;
-		Object.assign(R, { on: true, chartRows:new WeakSet(board.querySelectorAll('.pmu-irow.is-hl-on,.pmu-dl-row.is-hot')), frames: [], wheels: [], scrolls: [], trans: [], loaf: [], cls: [], ops: [], fadeMs, rest: cardId(document.querySelector('#pmuBoard .pmu-card:hover')), t0: performance.now(), probe: null }); requestAnimationFrame(frame);
+		Object.assign(R, { on: true, chartRows:new WeakSet(board.querySelectorAll('.pmu-irow.is-hl-on,.pmu-dl-row.is-hot')), frames: [], wheels: [], scrolls: [], trans: [], loaf: [], cls: [], ops: [], order: 0, fadeMs, rest: cardId(document.querySelector('#pmuBoard .pmu-card:hover')), t0: performance.now(), probe: null, timer: null });
+		globalThis.setTimeout = timed;
+		sampler.observe(sampleBox);
+		raf = requestAnimationFrame(tick);
 	};
-	R.stop = () => { R.on = false; return { t0: R.t0, frames: R.frames, wheels: R.wheels, scrolls: R.scrolls, trans: R.trans, loaf: R.loaf, cls: R.cls, ops: R.ops, fadeMs: R.fadeMs, probe: R.probe }; };
+	R.stop = () => {
+		R.on = false;
+		clearTimeout(R.probeTimer);
+		if (globalThis.setTimeout === timed) globalThis.setTimeout = nativeTimeout;
+		cancelAnimationFrame(raf);
+		sampler.disconnect();
+		return { t0: R.t0, frames: R.frames, wheels: R.wheels, scrolls: R.scrolls, trans: R.trans, loaf: R.loaf,
+			cls: R.cls, ops: R.ops, fadeMs: R.fadeMs, probe: R.probe, timer: R.timer };
+	};
 	R.state = () => { board = document.getElementById('pmuBoard'); const hc = board.querySelector(':scope > .pmu-card:hover'), tools = hc && hc.querySelector('.pmu-cardtools'); return { card: cardId(hc), lit: !!(hc && hc.classList.contains('pmh-on')), tools: tools ? parseFloat(getComputedStyle(tools).opacity) : null }; };
 	return true;
 };
@@ -163,15 +205,22 @@ export function judge(rec, { rest, back }) {
 	// now an early return; the return itself must be seen at or after it.
 	const sinceEnd = (x) => endT != null && x.t >= endT;
 	const early = endT == null ? [] : after.filter((x) => x.t < endT && x.card === target && (x.lit.includes(target) || x.tools > 0.5));
+	const earlyClass = release && (rec.cls || []).some((x) => {
+		const beforeRelease = x.t < endT || (x.t === endT && x.order < release.order);
+		const afterStart = x.t > started.t || (x.t === started.t && x.order > started.order);
+		return x.card === target && x.on && beforeRelease && afterStart;
+	});
 	const lightT = settled?.lit.includes(target) && settled.tools > 0.5 ?
-		(rec.cls || []).find((x) => sinceEnd(x) && x.card === target && x.on)?.t ??
-		after.find((x) => sinceEnd(x) && x.card === target && x.lit.includes(target))?.t : null;
+		after.find((x) => sinceEnd(x) && x.card === target && x.lit.includes(target))?.t ?? null : null;
 	const toolsTr = rec.trans.find((x) => sinceEnd(x) && x.card === target && x.prop === 'opacity' && /pmu-cardtools/.test(x.cls));
 	const toolsFr = after.find((x) => sinceEnd(x) && x.card === target && x.tools > 0.5);
 	const toolsT = toolsFr ? toolsFr.t : Infinity;
+	const targetSamples = after.filter((x) => sinceEnd(x) && x.card === target);
 	const proxyT = settled?.proxyRequired ? (settled.proxyBack ?
-		after.find((x) => sinceEnd(x) && x.card === target && x.proxyBack)?.t ?? Infinity : Infinity) : endT;
-	const backT = coverage && !litFrames.length && !toolFrames.length && !early.length && lightT != null && toolsT !== Infinity && proxyT !== Infinity ? Math.max(lightT, toolsT, proxyT) : null;
+		targetSamples.find((x) => x.proxyBack)?.t ?? Infinity : Infinity) : endT;
+	// A glow starts at zero opacity. Require it armed with the light and tools, plus a separate visible sample by the cap.
+	const proxyStart = settled?.proxyRequired ? targetSamples.find((x) => x.proxyArmed || x.proxyBack)?.t ?? Infinity : endT;
+	const backT = coverage && !litFrames.length && !toolFrames.length && !early.length && !earlyClass && lightT != null && toolsT !== Infinity && proxyStart !== Infinity ? Math.max(lightT, toolsT, proxyStart) : null;
 	// TB6 item 2: (a) the pause ends at the rest, no later than the host's own measured timer lateness (the probe armed
 	// with the last input) plus the page's own bounded return work; (b) the light and tools are back within two drawn
 	// frames of that end (the check's own rAF samples count frames, so a long frame between the end and the return costs
@@ -179,17 +228,21 @@ export function judge(rec, { rest, back }) {
 	const probe = rec.probe && Number.isFinite(rec.probe.due) && Number.isFinite(rec.probe.fired) ? rec.probe : null;
 	const late = probe ? Math.max(0, probe.fired - probe.due) : null;
 	const endDelay = endT != null ? endT - end : null;
-	// R125 #1: product work before the marker's removal is not host lateness, but a correct return does some (wheelEnd's
-	// head fit; 1-8 ms measured on Alexis 2026-11-20). It gets a fixed budget, never the measured work: a page that
-	// spends long there (R125's 80 ms fit) is outside it. `work` is the measured page work, logged in the row.
+	// A shared queue can delay both callbacks. Entry delay beyond the probe is separate from the time in wheelEnd.
 	const work = endDelay != null && late != null ? endDelay - REST_MS - late : null;
-	const endOk = endDelay != null && late != null && endDelay >= REST_MS - 2 && endDelay <= REST_MS + late + RETURN_WORK_MS + 2;
+	const timer = rec.timer;
+	const entry = probe && timer?.inputDue === probe.due && Number.isFinite(timer?.entered) ? timer.entered : null;
+	const entryGap = entry != null ? entry - Math.max(due, probe.fired) : null;
+	const callbackWork = entry != null && endT != null ? endT - entry : null;
+	const endOk = entryGap != null && entryGap <= 2 && entry >= due - 2 &&
+		callbackWork != null && callbackWork >= 0 && callbackWork <= RETURN_WORK_MS &&
+		endDelay >= REST_MS - 2 && endDelay <= REST_MS + late + RETURN_WORK_MS + 2;
 	const backDelay = backT != null && endT != null ? backT - endT : null;
 	// R125 #2: the sample that first shows the return is counted, so a light first seen on the third sample after the
 	// end reads 3 frames and fails; two frames means the return is on the first or the second drawn sample.
 	const backFrames = backT != null && endT != null ? rec.frames.filter((x) => x.t > endT && x.t <= backT).length : null;
 	const backOk = backFrames != null && backFrames <= 2;
-	const capOk = backT != null && backT - end <= back;
+	const capOk = backT != null && Math.max(backT, proxyT) - end <= back;
 	return {
 		r1: { ok: coverage && active.length >= 5 && ins.length === 0 && litFrames.length === 0 && toolFrames.length === 0, toolFrames: toolFrames.length, coverage, pauseEnd: release?.t, ins: ins.length, insCards: [...new Set(ins.map((x) => x.card))], insProps: [...new Set(ins.map((x) => x.prop + ' ' + x.cls.split(' ')[0]))].slice(0, 8), litFrames: litFrames.length, frames: rec.frames.filter(during).length, cardsPassed: [...new Set(rec.frames.filter(during).map((x) => x.card).filter(Boolean))].length },
 		r2: { ok: coverage && !litFrames.length && !toolFrames.length && backT != null && endOk && backOk && capOk,
@@ -197,7 +250,8 @@ export function judge(rec, { rest, back }) {
 			light: lightT != null ? Math.round(lightT - end) : null, tools: toolsT !== Infinity ? Math.round(toolsT - end) : null, toolsTransition: toolsTr ? Math.round(toolsTr.t - end) : null,
 			proxy: settled?.proxyRequired && Number.isFinite(proxyT) ? Math.round(proxyT - end) : null, proxyRequired: !!settled?.proxyRequired,
 			end: endDelay != null ? Math.round(endDelay) : null, late: late != null ? Math.round(late) : null, work: work != null ? Math.round(work) : null,
-			back: backDelay != null ? Math.round(backDelay) : null, backFrames, early: early.length,
+			entryGap: entryGap != null ? Math.round(entryGap) : null, callbackWork: callbackWork != null ? Math.round(callbackWork) : null,
+			back: backDelay != null ? Math.round(backDelay) : null, backFrames, early: early.length, earlyClass: !!earlyClass,
 			long: (rec.loaf || []).filter((x) => x.t + x.d > end && x.t < end + 400).map((x) => `+${Math.round(x.t - end)} ms ${x.d} ms (style/layout ${x.sl}: ${x.scripts.join('; ') || 'no script'})`) },
 		span: { wheel: Math.round(lastWheel - first), tail: Math.round(lastScroll - lastWheel), wheels: rec.wheels.length, scrolls: rec.scrolls.length },
 		burst: burstState(rec.wheels)
@@ -959,7 +1013,7 @@ export default async function (t) {
 				dump.push({ surface, look, window: w + 1, rest, at, judged: j, rec });
 				res.r0.push(!!(rest.card && rest.lit && rest.tools > 0.5));
 				res.r1.push(j.r1); res.r2.push(j.r2); res.burst.push(j.burst);
-				t.log(`${S}window ${w + 1}: at rest card ${rest.card} lit ${rest.lit} tools ${rest.tools} | wheel ${j.span.wheels} events over ${j.span.wheel} ms, scroll ${j.span.scrolls} events ending ${j.span.tail} ms after the last wheel, ${moved} px | during: ${j.r1.cardsPassed} cards under the pointer, ${j.r1.ins} hover-in transitions (${j.r1.insProps.join(', ') || 'none'}) on ${j.r1.insCards.join(',') || 'no card'}, ${j.r1.litFrames} of ${j.r1.frames} frames retain a card engine light, ${j.r1.toolFrames} retain shown tools | after: back in ${j.r2.ms === null ? 'never (800 ms)' : j.r2.ms + ' ms'} on ${j.r2.card} (light ${j.r2.light ?? 'never'}, tools ${j.r2.tools ?? 'never'}; pause end ${j.r2.end ?? 'never'} ms after the rest, host timer late ${j.r2.late ?? '?'} ms, page work ${j.r2.work ?? '?'} ms, back ${j.r2.back ?? 'never'} ms = ${j.r2.backFrames ?? '?'} drawn frames)${j.r2.long.length ? ' | long frames after: ' + j.r2.long.join(' / ') : ''}${short.length ? ' | taken again: ' + short.join('; ') : ''}`);
+				t.log(`${S}window ${w + 1}: at rest card ${rest.card} lit ${rest.lit} tools ${rest.tools} | wheel ${j.span.wheels} events over ${j.span.wheel} ms, scroll ${j.span.scrolls} events ending ${j.span.tail} ms after the last wheel, ${moved} px | during: ${j.r1.cardsPassed} cards under the pointer, ${j.r1.ins} hover-in transitions (${j.r1.insProps.join(', ') || 'none'}) on ${j.r1.insCards.join(',') || 'no card'}, ${j.r1.litFrames} of ${j.r1.frames} frames retain a card engine light or visible proxy, ${j.r1.toolFrames} retain shown tools | after: back in ${j.r2.ms === null ? 'never (800 ms)' : j.r2.ms + ' ms'} on ${j.r2.card} (light ${j.r2.light ?? 'never'}, tools ${j.r2.tools ?? 'never'}; pause end ${j.r2.end ?? 'never'} ms after the rest, host timer late ${j.r2.late ?? '?'} ms, excess ${j.r2.work ?? '?'} ms, timer entry gap ${j.r2.entryGap ?? '?'} ms, callback to marker clear ${j.r2.callbackWork ?? '?'} ms, back ${j.r2.back ?? 'never'} ms = ${j.r2.backFrames ?? '?'} drawn frames)${j.r2.long.length ? ' | long frames after: ' + j.r2.long.join(' / ') : ''}${short.length ? ' | taken again: ' + short.join('; ') : ''}`);
 				if (t.args.dump) writeFileSync(String(t.args.dump), JSON.stringify(dump));
 			}
 			await park();
@@ -979,7 +1033,7 @@ export default async function (t) {
 					res.r1.map((r, i) => `w${i + 1}: ${r.ins} hover-in transitions, ${r.litFrames} lit frames, ${r.toolFrames} shown-tool frames, marker coverage ${r.coverage}, ${r.frames} sampled frames, ${r.cardsPassed} cards passed`).join('; '));
 				await t.check(S + `after the wheel, the pause ends at its ${REST_MS} ms rest and the highlight is back within two frames without a move (outer cap ${BACK} ms)`, !burstBroke && n > 0 && res.r2.every((r) => r.ok),
 					burstBroke ? burstDetail :
-					res.r2.map((r, i) => `w${i + 1}: ${r.ms === null ? 'never' : r.ms + ' ms'} (${r.card}: light ${r.light ?? 'never'}, tools ${r.tools ?? 'never'}; pause end ${r.end ?? 'never'} ms, host timer late ${r.late ?? '?'} ms, page work ${r.work ?? '?'} ms, back ${r.back ?? 'never'} ms = ${r.backFrames ?? '?'} drawn frames${r.early ? `, and ${r.early} samples showed the return before the end` : ''})`).join('; '));
+					res.r2.map((r, i) => `w${i + 1}: ${r.ms === null ? 'never' : r.ms + ' ms'} (${r.card}: light ${r.light ?? 'never'}, tools ${r.tools ?? 'never'}; pause end ${r.end ?? 'never'} ms, host timer late ${r.late ?? '?'} ms, excess ${r.work ?? '?'} ms, entry gap ${r.entryGap ?? '?'} ms, callback work ${r.callbackWork ?? '?'} ms, back ${r.back ?? 'never'} ms = ${r.backFrames ?? '?'} drawn frames${r.early ? `, and ${r.early} samples showed the return before the end` : ''})`).join('; '));
 			}
 
 			// R3: keyboard focus is not paused. The board's first card takes keyboard focus (a key pressed first, so the

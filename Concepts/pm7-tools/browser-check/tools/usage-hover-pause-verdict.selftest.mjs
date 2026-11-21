@@ -16,7 +16,12 @@ const make = () => ({
  trans:[],cls:[{t:680,card:'new',on:true}],loaf:[],
  frames:Array.from({length:112},(_,i)=>{const t=100+i*10;return {t,top:i,card:'new',lit:t>=680?['new']:[],near:[],tools:t>=680?.9:0,op:t<670?'wheel':null,highlights:0};})
 });
-const j = (r) => judge(r,{rest:'old',back:400});
+function withTimer(r) {
+ // Fixtures can set timer explicitly when timing the entry itself.
+ const timer = { inputDue: r.probe.due, armed: r.probe.due - 150, entered: Math.max(r.probe.due, r.probe.fired) };
+ return { timer, ...r };
+}
+const j = (r) => judge(withTimer(r),{rest:'old',back:400});
 test('a sampled quiet pause and visibly restored target pass',()=>{const r=j(make());assert.equal(r.r1.ok,true);assert.equal(r.r2.ok,true);});
 test('an engine light persisting on the starting card fails R1',()=>{const r=make();Object.assign(r.frames.find(f=>f.t===300),{card:'old',lit:['old']});assert.equal(j(r).r1.ok,false);});
 test('ordinary main chart selections are outside the narrowed engine verdict',()=>{const r=make();r.frames.find(f=>f.t===300).highlights=1;assert.equal(j(r).r1.ok,true);});
@@ -69,12 +74,12 @@ test('lighting before the real rest deadline fails both rows even under the mark
 test('TB6 item 2: a late pause end within the host timer lateness passes, with the return counted in frames',()=>{
  const r=make();
  r.ops=[{t:101,op:'wheel'},{t:700,op:null}];
- r.probe={due:650,fired:690};
+ r.probe={due:670,fired:695};
  r.cls=[{t:710,card:'new',on:true}];
  for(const f of r.frames)Object.assign(f,{op:f.t<700?'wheel':null,lit:f.t>=710?['new']:[],tools:f.t>=710?.9:0});
  const v=j(r);
  assert.equal(v.r2.end,180);
- assert.equal(v.r2.late,40);
+ assert.equal(v.r2.late,25);
  assert.equal(v.r2.back,10);
  assert.equal(v.r2.backFrames,1);
  assert.equal(v.r2.ok,true);
@@ -82,7 +87,7 @@ test('TB6 item 2: a late pause end within the host timer lateness passes, with t
 test('TB6 item 2 RED: the same 180 ms end is could-not-judge when the probe shows no timer lateness',()=>{
  const r=make();
  r.ops=[{t:101,op:'wheel'},{t:700,op:null}];
- r.probe={due:650,fired:650};
+ r.probe={due:670,fired:670};
  r.cls=[{t:710,card:'new',on:true}];
  for(const f of r.frames)Object.assign(f,{op:f.t<700?'wheel':null,lit:f.t>=710?['new']:[],tools:f.t>=710?.9:0});
  assert.equal(j(r).r2.end,180);
@@ -169,8 +174,8 @@ test('R125 #4 RED: a 480 ms return passes an unbounded cap and fails the 400 ms 
  r.probe={due:670,fired:970};
  r.cls=[{t:980,card:'new',on:true}];
  for(const f of r.frames)Object.assign(f,{op:f.t<970?'wheel':null,lit:f.t>=980?['new']:[],tools:f.t>=980?.9:0});
- assert.equal(judge(r,{rest:'old',back:500}).r2.ok,true,'480 ms after the last input inside an unbounded cap');
- assert.equal(judge(r,{rest:'old',back:outerCap(500)}).r2.ok,false,'the same record at the clamped ceiling');
+ assert.equal(judge(withTimer(r),{rest:'old',back:500}).r2.ok,true,'480 ms after the last input inside an unbounded cap');
+ assert.equal(judge(withTimer(r),{rest:'old',back:outerCap(500)}).r2.ok,false,'the same record at the clamped ceiling');
 });
 // R125 #6: the fixture models the recorder, whose deadline is the last input plus the rest.
 test('R125 #6: the fixture probe deadline is the last input plus the 150 ms rest, with no credited lateness',()=>{
@@ -236,4 +241,37 @@ test('R117 T3: the card lighting up cannot substitute for a required proxy', () 
  assert.equal(j(r).r2.ok, false);
  for (const f of r.frames) f.proxyBack = f.t >= 690;
  assert.equal(j(r).r2.ok, true);
+});
+
+test('TB7 H1: a late product timer entry cannot spend the return-work budget', () => {
+ const r = make();
+ r.ops = [{t:101,op:'wheel'},{t:685,op:null}];
+ r.timer = { inputDue: 670, armed: 520, entered: 685 };
+ for (const f of r.frames) Object.assign(f, { op: f.t < 685 ? 'wheel' : null, lit: f.t >= 690 ? ['new'] : [], tools: f.t >= 690 ? .9 : 0 });
+ r.cls = [{t:690,card:'new',on:true}];
+ assert.equal(j(r).r2.ok, false);
+});
+test('TB7 H2: a task mutation between samples cannot claim the previous frame', () => {
+ const r = make();
+ r.cls = [{t:692,card:'new',on:true}];
+ for (const f of r.frames) Object.assign(f, { lit: f.t >= 700 ? ['new'] : [], tools: f.t >= 680 ? .9 : 0 });
+ assert.equal(j(r).r2.backFrames, 3);
+ assert.equal(j(r).r2.ok, false);
+});
+test('TB7 H3: class-on before the same-task marker release fails even without a sampled early frame', () => {
+ const r = make();
+ r.ops[1].order = 3;
+ r.cls = [{t:670,order:2,card:'new',on:true}];
+ assert.equal(j(r).r2.ok, false);
+ r.cls[0].order = 4;
+ assert.equal(j(r).r2.ok, true);
+});
+
+test('a glow may start at zero opacity if it visibly returns before the outer cap', () => {
+ const r = make();
+ for (const f of r.frames) Object.assign(f, { proxyRequired: true, proxyArmed: f.t >= 690, proxyBack: f.t >= 700 });
+ assert.equal(j(r).r2.backFrames, 2);
+ assert.equal(j(r).r2.ok, true);
+ for (const f of r.frames) f.proxyBack = f.t >= 930;
+ assert.equal(j(r).r2.ok, false);
 });
