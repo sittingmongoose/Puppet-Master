@@ -139,31 +139,41 @@ function measure() {
 	const allow = nativeStepLimit(rec);
 	const pairs = frames.slice(1).flatMap((to, i) => {
 		const from = frames[i];
-		return from.right == null || to.right == null ? [] : [{ from, to, step: Math.abs(to.right - from.right) }];
+		if (from.left == null || from.right == null || to.left == null || to.right == null) return [];
+		return [{ from, to, step: Math.abs(to.right - from.right), leftStep: Math.abs(to.left - from.left) }];
 	});
 	const worst = pairs.reduce((a, b) => !a || b.step > a.step ? b : a, null);
-	const missing = frames.filter((f) => f.right == null);
+	const worstLeft = pairs.reduce((a, b) => !a || b.leftStep > a.leftStep ? b : a, null);
+	const missing = frames.filter((f) => f.left == null || f.right == null);
 	const anchored = (box, slice) => slice.every((f) => f.right != null && Math.abs(f.right - (box.x + box.width)) <= 5);
 	const complete = anchored(from, frames.slice(0, 2)) && anchored(to, frames.slice(-2));
-	const over = pairs.filter((p) => p.step > allow);
+	const over = pairs.filter((p) => p.step > allow || p.leftStep > allow);
 	const first = frames.findIndex((f) => !atRest(f, frames[0]));
-	const last = frames.findLastIndex((f) => !atRest(f, frames.at(-1)));
-	const holds = travelHolds(frames, first, last);
+	const endpoint = frames.at(-1);
+	const lastMotion = frames.findLastIndex((f) => !atRest(f, endpoint));
+	// Three consecutive frames with both edges at the final pose establish arrival.
+	// A later hover outline can change the fill read after arrival. Those frames
+	// still count for the step bound, but cannot extend an already completed trip.
+	const landed = frames.findIndex((f, i) => i >= first && i + 2 < frames.length &&
+		samePose(f, endpoint) && samePose(frames[i + 1], endpoint) && samePose(frames[i + 2], endpoint));
+	const rest = landed < 0 ? lastMotion + 1 : Math.min(landed, lastMotion + 1);
+	const holds = travelHolds(frames, first, rest - 1);
 	// The recorder can express 60 Hz presentation ticks as alternating 16 and 17 ms timestamps.
 	const longHolds = holds.filter((hold) => hold.intervals > 1 || hold.ms > Math.ceil(holdLimitMs) + 1e-6);
 	const longestHold = holds.reduce((worst, hold) => !worst || hold.ms > worst.ms ? hold : worst, null);
 	const ok = Number.isFinite(allow) && complete && !missing.length && !!worst && !over.length && !longHolds.length;
-	return { verdict: ok ? 'PASS' : 'FAIL', crop: [x, y, w, h], fill, allow, complete, missing, worst, over,
-		pressMark: start, firstMoving: frames[first], rest: frames[last + 1], holdLimitMs, longestHold, longHolds, frames };
+	return { verdict: ok ? 'PASS' : 'FAIL', crop: [x, y, w, h], fill, allow, complete, missing, worst, worstLeft, over,
+		pressMark: start, firstMoving: frames[first], rest: frames[rest], holdLimitMs, longestHold, longHolds, frames };
 }
 
 function jsonBuffer(buffer) { return JSON.parse(buffer.toString('utf8')); }
 try {
 	const result = measure();
 	writeFileSync(output, JSON.stringify(result, null, 2) + '\n');
-	const p = result.worst, hold = result.longestHold;
+	const p = result.worst, left = result.worstLeft, hold = result.longestHold;
 	console.log(`${result.verdict}: ${result.frames.length} native frames, largest right-edge step ${p?.step ?? 'unread'} px` +
 		(p ? ` at F${p.from.frame}→F${p.to.frame}, bound ${result.allow.toFixed(2)} px` : '') +
+		(left ? `; largest left-edge step ${left.leftStep} px at F${left.from.frame}→F${left.to.frame}` : '') +
 		(hold ? `; longest stationary run in travel ${hold.ms.toFixed(2)} ms at F${hold.from.frame}→F${hold.to.frame}` : '; no stationary run in travel') +
 		(!result.complete || result.missing.length ? ' (unread frame or missing settled endpoint)' : ''));
 	process.exitCode = result.verdict === 'PASS' ? 0 : 1;
