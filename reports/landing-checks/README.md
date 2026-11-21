@@ -655,17 +655,14 @@ copy can include tens of gigabytes of unrelated capture data.
    wait. Use the original exit saved by the remote script. Apply the existing rules for changed
    baseline rows and timeouts.
 5. Confirm ownership and fetch again. If the base moved, repeat from the rebase. Before the
-   fast-forward and again before the push, name any staged or unstaged changes and skip-worktree
-   or assume-unchanged entries on the shared branch paths and on checker inputs. This includes
-   all tracked paths under `Plans/` and `reports/landing-checks/`. Inspect
-   `git --no-optional-locks status --porcelain=v1 --untracked-files=all` and
-   `git --no-optional-locks ls-files -v`. Stop on any difference. Verify remote HEAD, tree, full
-   clean checkout, the set and hashes of the ignored inputs, and the hand receipt at both points.
-6. Write the durable publication marker before fast-forward. Confirm ownership, fast-forward
-   and check the resulting HEAD and tree. Run the shared shard check, repeat verification and
-   push against the exact fetched base using the commands below. Reconcile a failed fast-forward
-   against its pre-merge HEAD, index and working tree. Use the rollback procedure for a completed
-   fast-forward that remains unpublished.
+   fast-forward and again before the push, verify remote HEAD, tree, full clean checkout, the set
+   and hashes of the ignored inputs, and the hand receipt.
+6. Run the guarded fast-forward block below. It checks shared inputs and writes the durable
+   marker before merging. Verify the resulting HEAD and tree, run the shared shard check, repeat
+   remote verification, then run the guarded push block against the exact fetched base. Both
+   blocks repeat the shared-input preflight under the guard after verification and any fetch.
+   Reconcile a failed fast-forward against its pre-merge HEAD, index and working tree. Use the
+   rollback procedure for a completed fast-forward that remains unpublished.
 7. For Plans changes, keep the lock and complete the follow-up below. Confirm ownership before
    worktree removal and before release. Release after publication or rollback is reconciled and
    any Plans follow-up is finished.
@@ -772,9 +769,16 @@ PY
 
 In the shared checkout, set `PM_LAND_LOCK` to the absolute `held` directory and
 `PM_LAND_TOKEN` to its token. Set `PM_LAND_PLANS_FOLLOWUP` and `PM_LAND_COMPLETES_FOLLOWUP`
-to `true` or `false` using the rules below. Run both publication blocks in the same Bash session.
-The helper holds the guard across the token check, journal write and Git operation. Use it
-for shared Git mutations, including recovery. Keep remote checks and waits outside the guard.
+to `true` or `false` using the rules below. Set `PM_LAND_SCRIPT` to the absolute path of an
+up-to-date `scripts/pm-land.py` in a trusted local worktree. Run both publication blocks from
+the shared checkout in the same Bash session.
+
+Each block holds the guard across the token check, the shared-input preflight, the journal
+write and Git. The preflight uses the automated lander's check and reports staged or unstaged
+changes and skip-worktree or assume-unchanged flags on the paths being landed or read by the
+checker, including all tracked paths in `Plans/` and `reports/landing-checks/`. Stop when it
+reports a difference. Use the same guard for shared recovery commands. Keep remote checks
+and waits outside the guard.
 
 ```sh
 held_git() (
@@ -838,6 +842,7 @@ fast_forward_checked() {
     pre_merge_head=$(git rev-parse --verify HEAD)
     git merge-base --is-ancestor "$pre_merge_head" "$PM_LAND_BASE"
     git merge-base --is-ancestor "$PM_LAND_BASE" "$PM_LAND_COMMIT"
+    python3 -B "$PM_LAND_SCRIPT" preflight --base "$PM_LAND_BASE" --commit "$PM_LAND_COMMIT"
     save_landing_phase fast-forward-pending "$PM_LAND_BASE" "$PM_LAND_COMMIT" "$pre_merge_head" \
         "${PM_LAND_PLANS_FOLLOWUP:?}" "${PM_LAND_COMPLETES_FOLLOWUP:?}"
     git merge --ff-only --no-overwrite-ignore "$PM_LAND_COMMIT"
@@ -859,6 +864,7 @@ push_checked() {
     test "$(git symbolic-ref HEAD)" = refs/heads/main
     test "$(git rev-parse --verify HEAD)" = "$PM_LAND_COMMIT"
     git merge-base --is-ancestor "$PM_LAND_BASE" "$PM_LAND_COMMIT"
+    python3 -B "$PM_LAND_SCRIPT" preflight --base "$PM_LAND_BASE" --commit "$PM_LAND_COMMIT"
     save_landing_phase push-pending "$PM_LAND_BASE" "$PM_LAND_COMMIT"
     git push --force-with-lease="refs/heads/main:$PM_LAND_BASE" origin "$PM_LAND_COMMIT:refs/heads/main"
 }
@@ -904,9 +910,10 @@ the recovered lock:
 - **Incomplete fast-forward.** If shared HEAD still equals the journaled pre-merge HEAD, compare
   the index and on-disk bytes on every path between that HEAD and the candidate. Restore a path
   only when its staged and working entries are provably the pre-merge or candidate versions.
-  Preserve unrelated staging. Leave ambiguous paths untouched and keep the marker until all
-  affected index and working entries match the pre-merge HEAD. A failed Git exit alone says
-  nothing about those bytes.
+  Use exact index modes and blob IDs. Compare working file bytes by blob hash and apply the shared
+  repository's `core.filemode` setting when checking the executable bit on regular files. Preserve
+  unrelated staging. Leave ambiguous paths untouched and keep the marker until all affected index
+  and working entries match the pre-merge HEAD.
 - **Finish recovery.** Clear the pending marker after reconciliation. Complete any owed Plans
   follow-up at fetched main before another landing.
 
@@ -938,9 +945,12 @@ summary. `git add Plans/.plan_migration` below stages both changes. Git history 
     git push origin HEAD:refs/heads/fix/my-landing-snapshot
 
 From the shared checkout, land that separate commit through the same remote check, fast-forward,
-shard check, verification and main push while holding the same landing lock. If generation or
-validation fails after a Plans landing, keep the lock for recovery and use the saved report to
-finish the follow-up. Remove the temporary worktrees and release the lock when it is published.
+shard check, verification and main push while holding the same landing lock. By hand, set
+`PM_LAND_BASE` and `PM_LAND_COMMIT` to the follow-up's checked base and commit and run both
+guarded publication blocks again. Each runs the shared-input preflight for the follow-up.
+If generation or validation fails after a Plans landing, keep the lock for recovery and use
+the saved report to finish the follow-up. Remove the temporary worktrees and release the lock
+when it is published.
 
 Six things that make the difference between a good baseline and a misleading one:
 

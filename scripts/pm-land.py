@@ -758,6 +758,16 @@ def clean_touched(root, touched):
                       + ", ".join(dirty))
 
 
+def publication_preflight(root, base, candidate):
+    """Check the shared state for either guarded publication step."""
+    touched = changed_paths(root, base, candidate)
+    head = revision(root, "HEAD^{commit}")
+    if head not in (base, candidate):
+        # A shared checkout behind the checked base also fast-forwards through these paths.
+        touched |= changed_paths(root, head, base)
+    clean_touched(root, touched)
+
+
 def shared_shards(folder, touched):
     path = folder / "shards-shared.json"
     code, _ = capture(SHARD, SHARED, path, folder / "shards-shared.stderr")
@@ -1191,6 +1201,14 @@ def partial_checkout_state(changes, object_format):
     return {name: (staged.get(name), working_entry(name, object_format)) for name in changes}
 
 
+def matches_worktree(working, expected, trust_filemode):
+    """Match the blob and type, honoring Git's executable-bit policy for regular files."""
+    return working == expected or (
+        not trust_filemode and isinstance(working, tuple) and isinstance(expected, tuple)
+        and {working[0], expected[0]} == {"100644", "100755"} and working[1] == expected[1]
+    )
+
+
 def repair_failed_fast_forward(lock, marker, upstream):
     """Restore only affected paths whose bytes can be attributed to the failed merge."""
     before = marker.pre_merge_head
@@ -1203,13 +1221,17 @@ def repair_failed_fast_forward(lock, marker, upstream):
             raise Refusal(f"shared main {current} or origin changed after the recorded pre-merge HEAD {before}")
         changes = fast_forward_entries(before, marker.candidate)
         object_format = git(SHARED, "rev-parse", "--show-object-format").stdout.strip()
+        trust_filemode = git(SHARED, "config", "--type=bool", "--default=true",
+                             "--get", "core.filemode").stdout.strip() == "true"
         observed = partial_checkout_state(changes, object_format)
         restore, ambiguous = set(), set()
         for name, (old, new) in changes.items():
             indexed, working = observed[name]
-            if indexed == old and working == old:
+            working_is_old = matches_worktree(working, old, trust_filemode)
+            if indexed == old and working_is_old:
                 continue
-            if (indexed not in (old, new) or working not in (old, new)
+            if (indexed not in (old, new)
+                    or not (working_is_old or matches_worktree(working, new, trust_filemode))
                     or (old is None and indexed is None)):
                 # An untracked candidate-shaped file can predate the merge.
                 ambiguous.add(name)
@@ -1222,7 +1244,8 @@ def repair_failed_fast_forward(lock, marker, upstream):
                 "--staged", "--worktree", "--no-overlay", "--pathspec-from-file=-", "--pathspec-file-nul",
                 input_text="\0".join(sorted(restore)) + "\0", guard_fd=guard_fd)
             observed = partial_checkout_state(changes, object_format)
-        remaining = [name for name, (old, _) in changes.items() if observed[name] != (old, old)]
+        remaining = [name for name, (old, _) in changes.items()
+                     if observed[name][0] != old or not matches_worktree(observed[name][1], old, trust_filemode)]
         if remaining:
             raise Refusal("ambiguous index or working-tree bytes after failed fast-forward: "
                           + ", ".join(sorted(remaining)))
@@ -1285,8 +1308,7 @@ def push_checked_main(folder, host, head, tree, base, touched, lock, plans_follo
     old_head = revision(SHARED, "HEAD^{commit}")
     git(SHARED, "merge-base", "--is-ancestor", old_head, base)
     git(SHARED, "merge-base", "--is-ancestor", base, head)
-    shared_scope = touched | changed_paths(SHARED, old_head, base) if old_head != base else touched
-    clean_touched(SHARED, shared_scope)
+    publication_preflight(SHARED, base, head)
     verify_over_ssh(folder, host, head, tree, base)
     fast_forwarded = False
     attempted_push = False
@@ -1296,7 +1318,7 @@ def push_checked_main(folder, host, head, tree, base, touched, lock, plans_follo
             require_shared_main()
             if revision(SHARED, "HEAD^{commit}") != old_head or full_main(SHARED) != base:
                 raise Refusal("shared HEAD or origin/main changed before fast-forward")
-            clean_touched(SHARED, shared_scope)
+            publication_preflight(SHARED, base, head)
             lock.begin_publication(base, head, plans_followup, completes_followup, old_head)
             git(SHARED, "merge", "--ff-only", "--no-overwrite-ignore", head, guard_fd=guard_fd)
             fast_forwarded = True
@@ -1308,7 +1330,7 @@ def push_checked_main(folder, host, head, tree, base, touched, lock, plans_follo
             require_shared_main()
             if revision(SHARED, "HEAD^{commit}") != head:
                 raise Refusal("shared HEAD changed after the fast-forward")
-            clean_touched(SHARED, touched)
+            publication_preflight(SHARED, base, head)
             lock.mark_push_pending()
             # The lease binds the server's base. The ancestry check makes this a fast-forward.
             attempted_push = True
@@ -1447,7 +1469,7 @@ def live_run(args, root, ref):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    commands = parser.add_subparsers(dest="command", required=True, metavar="{run,verify}")
+    commands = parser.add_subparsers(dest="command", required=True, metavar="{run,verify,preflight}")
     run = commands.add_parser("run", help="check a branch and land it under the landing lock")
     run.add_argument("branch")
     run.add_argument("--checks-on", choices=HOSTS, default=DEFAULT_HOST)
@@ -1459,6 +1481,9 @@ def main():
     verify.add_argument("record", type=Path)
     verify.add_argument("--commit", required=True)
     verify.add_argument("--base", required=True, help="full SHA of freshly fetched origin/main")
+    preflight = commands.add_parser("preflight", help="check the current shared checkout before publication")
+    preflight.add_argument("--commit", required=True, help="full SHA of the checked candidate")
+    preflight.add_argument("--base", required=True, help="full SHA of the checked base")
     remote = commands.add_parser("_remote")
     remote.add_argument("mode", choices=(*JOB_MODES, "verify", "cleanup"))
     remote.add_argument("folder", type=Path)
@@ -1490,6 +1515,9 @@ def main():
                 remote_cleanup(args.folder)
             return 0
         root = Path(git(Path.cwd(), "rev-parse", "--show-toplevel").stdout.strip())
+        if args.command == "preflight":
+            publication_preflight(root, sha(args.base, "checked base"), sha(args.commit, "checked commit"))
+            return 0
         if args.command == "verify":
             if args.record.name != "record.json":
                 raise Refusal("expected the record.json path from the remote run")
