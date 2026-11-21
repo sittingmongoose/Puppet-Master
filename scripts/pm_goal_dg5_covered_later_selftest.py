@@ -15,7 +15,13 @@ Same-code later refusals (the after-state rule):
   inmem_issuance            the cut path issues an owner original (no store write): CANNOT_DECIDE (owner differs)
   no_hook_family            the no-write call in a family with no owner hook: CANNOT_DECIDE
   clock_only                the cut path ticks the Storage clock only: COVERED_LATER, equal digests
-  intact_nondeterministic   the intact trial records a fresh uuid4 each run: CANNOT_DECIDE
+  intact_nondeterministic   the intact trial records a fresh uuid4 each run: CANNOT_DECIDE, for the reason
+                            'intact trial is not deterministic' (the verdict alone also follows from the cut)
+  repeat_differs_only       only the repeated restoration (the fourth trial process) records a uuid4: the cut
+                            equals the first intact run, so only the determinism control can refuse it:
+                            CANNOT_DECIDE, 'intact trial is not deterministic: owner_sha256 ...'
+  repeat_refuses_differently only the repeated restoration refuses at another row (same code, same state):
+                            CANNOT_DECIDE, 'its repeat refused differently'
 Different-code later refusals (KILLED_CODE):
   killed_code               own guard and code, exact, different cut code, restoration repeats: KILLED_CODE
   not_own_code              the declared row's guard code is not the code it refuses with: CANNOT_DECIDE
@@ -105,9 +111,19 @@ DIFFERENT = ('killed_code', 'not_own_code', 'restoration_not_repeating', 'crash_
 def action_for(case, world):
     runs = world.work.parent / (world.work.name + '.runs')   # outside the store: counts the trial processes
 
+    def count():
+        with runs.open('a') as handle:
+            handle.write('x')
+        return runs.stat().st_size   # 1 first call, 2 cut, 3 restoration, 4 its repeat
+
     def action():
         if case == 'intact_nondeterministic':
             world.notes.append(str(uuid.uuid4()))      # differs in every run, cut or not
+        if case == 'repeat_differs_only' and count() == 4:
+            world.notes.append(str(uuid.uuid4()))      # only the determinism repeat differs
+        if case == 'repeat_refuses_differently' and count() == 4:
+            require('selftest/cl/shared', True)        # site:repeat_passes
+            require('selftest/cl/shared', False)       # site:repeat_refuses
         if case == 'not_own_code':
             require('selftest/cl/literal', False, raise_code='selftest/cl/raised')  # site:not_own
         elif case == 'restoration_not_repeating':
@@ -158,6 +174,8 @@ EXPECTED = {
     'no_hook_family': ('CANNOT_DECIDE', NO_HOOK),
     'clock_only': ('COVERED_LATER', FAMILY),
     'intact_nondeterministic': ('CANNOT_DECIDE', FAMILY),
+    'repeat_differs_only': ('CANNOT_DECIDE', FAMILY),
+    'repeat_refuses_differently': ('CANNOT_DECIDE', FAMILY),
     'killed_code': ('KILLED_CODE', FAMILY),
     'not_own_code': ('CANNOT_DECIDE', FAMILY),
     'restoration_not_repeating': ('CANNOT_DECIDE', FAMILY),
@@ -169,8 +187,10 @@ EXPECTED = {
 EVIDENCE = {
     'write_then_later_refusal': ('after', ['store_sha256', 'owner_sha256']),
     'inmem_issuance': ('after', ['owner_sha256']),
-    'no_hook_family': ('after', None),
-    'intact_nondeterministic': ('after', None),
+    'no_hook_family': ('reason', 'has no owner_sha256'),
+    'intact_nondeterministic': ('reason', 'intact trial is not deterministic'),
+    'repeat_differs_only': ('reason', 'intact trial is not deterministic: owner_sha256'),
+    'repeat_refuses_differently': ('reason', 'its repeat refused differently'),
     'killed_code': ('code', 'KILLED_CODE'),
     'not_own_code': ('code', 'not the row guard'),
     'restoration_not_repeating': ('code', 'restoration did not repeat'),
@@ -206,6 +226,8 @@ def run(work):
                     and len({state[n]['owner_sha256'] for n in state}) == 1
             elif kind == 'after':
                 ok = ok and after.get('verdict') == expected and (want is None or after.get('effect') == want)
+            elif kind == 'reason':
+                ok = ok and after.get('verdict') == expected and want in (after.get('reason') or '')
             elif want == 'KILLED_CODE':
                 ok = ok and code.get('verdict') == 'KILLED_CODE' and (code.get('own_guard') or {}).get('own') is True \
                     and (code.get('own_guard') or {}).get('verified_by') == 'origin frame at the row guard'
