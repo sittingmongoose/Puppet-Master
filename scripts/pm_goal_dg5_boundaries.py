@@ -17,6 +17,7 @@ import inspect
 import os
 from pathlib import Path
 import pickle
+import re
 import shutil
 import sys
 import tempfile
@@ -835,8 +836,26 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
                         raise
                     else:
                         code = refusal_code(error)
-                        result = dict(errors=[refusal_row(error)], original_refusal=code)
-                result.update(observations=entries, after=manifest(file_state(work)),
+                        result = dict(errors=[refusal_row(error)], original_refusal=code,
+                                      refusal_origin=refusal_origin(error, code))
+                # The trial's after-state, taken in this child before it exits: the
+                # whole store manifest and the family hook's digest of the owners'
+                # in-memory state (pm_goal_dg5_owner_state). The judge compares both
+                # with the intact trial's before it grants COVERED_LATER.
+                # The owner walk runs only for the judged trials that ask for it.
+                ACTIVE[0] = False
+                import pm_goal_dg5_owner_state as owner_state
+                if not getattr(tables, 'AFTER_STATE', False):
+                    owner = dict(schema=owner_state.SCHEMA, hook=family, sha256=None, reason='not requested')
+                else:
+                    try:
+                        owner = owner_state.owner_state_digest(family, world, arguments)
+                    except Exception as error:  # noqa: BLE001 - no digest, never a guess
+                        owner = dict(schema=owner_state.SCHEMA, hook=family, sha256=None,
+                                     reason='owner-state hook raised %s: %s' % (type(error).__name__,
+                                                                                str(error)[:160]))
+                result.update(observations=entries, after=manifest(file_state(work)), owner_state=owner,
+                              refusing_sites=[(name, list(site)) for name, holds, site in entries if not holds],
                               replay_unknown_rows=sorted(tables.COLLECTOR.replay_unknown_rows))
             except BaseException as error:
                 result = dict(exception=type(error).__name__, detail=str(error),
@@ -860,8 +879,13 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
             where = ' @ ' + ' <- '.join('%s:%s(%s)' % f for f in reversed(frames[-2:])) if frames else ''
             raise RuntimeError(result['exception'] + where + ': ' + result['detail'][:200])
         actual.append(result['original_refusal'])
+        owner = result.get('owner_state') or {}
         return dict(errors=result['errors'], store_snapshot_sha256=store_sha,
-                    store_after_sha256=sweep.digest(result['after']))
+                    refusal_code=result['original_refusal'],
+                    refusal_origin=result.get('refusal_origin'), refusing_sites=result.get('refusing_sites', []),
+                    store_after_sha256=sweep.digest(result['after']),
+                    owner_state_sha256=owner.get('sha256'),
+                    owner_state={k: v for k, v in owner.items() if k in ('schema', 'hook', 'reason', 'objects')})
 
     collector = tables.COLLECTOR
     if collector is None:
@@ -1017,6 +1041,233 @@ def _sealed(action, work, files):
         restore_files(work, files)
         tables.COLLECTOR = parent_collector
     return result
+
+
+GUARD_CODE = re.compile(r"\b(?:require|guard|halt|refuse)\(\s*'([^']+)'")
+# A guard literal with %- or {}-placeholders is a template (addendum 5, pm-ea-lead 1121190253-6a08, option A):
+# each placeholder matches exactly one non-empty code segment (no '/' inside it), anchored at both ends
+# (a wrapper prefix ending in '/' is allowed as for a plain literal). The template match only lets the
+# check go on: the recorded origin frame still decides own-guard (addendum 11), and with no origin a
+# templated literal never credits.
+PERCENT_PLACEHOLDER = re.compile(r"%%|%(?:\([^)]*\))?[-#0 +]*(?:\*|\d+)?(?:\.(?:\*|\d+))?[sdirfFxXeEgGcaou]")
+FORMAT_PLACEHOLDER = re.compile(r"\{\{|\}\}|\{[^{}]*\}")
+_TEMPLATE_SITES = {}
+
+
+def guard_template(literal):
+    """The anchored regex of a templated guard literal, or None when it has no placeholder.
+
+    %-style when the literal has a %-placeholder (then braces are literal), else {}-style
+    (then '%' is literal). '%%', '{{' and '}}' are the literal characters."""
+    if not isinstance(literal, str):
+        return None
+    for pattern, escapes in ((PERCENT_PLACEHOLDER, {'%%': '%'}), (FORMAT_PLACEHOLDER, {'{{': '{', '}}': '}'})):
+        parts, last, holes = [], 0, 0
+        for found in pattern.finditer(literal):
+            parts.append(re.escape(literal[last:found.start()]))
+            token = found.group(0)
+            if token in escapes:
+                parts.append(re.escape(escapes[token]))
+            else:
+                parts.append('[^/]+')
+                holes += 1
+            last = found.end()
+        if holes:
+            parts.append(re.escape(literal[last:]))
+            return re.compile('(?:.*/)?' + ''.join(parts))
+    return None
+
+
+def template_sites(code, also=()):
+    """Every guard line of the owner modules (and of `also`) whose templated literal matches `code`."""
+    names = sorted(p.name for p in (ROOT / 'scripts').glob('*.py') if p.name.startswith(SITE_MODULE_PREFIXES))
+    names += [n for n in also if n not in names]
+    found = []
+    for name in names:
+        if name not in _TEMPLATE_SITES:
+            rows = []
+            try:
+                lines = (ROOT / 'scripts' / name).read_text().splitlines()
+            except OSError:
+                lines = []
+            for number, text in enumerate(lines, 1):
+                literal = GUARD_CODE.search(text)
+                template = guard_template(literal.group(1)) if literal else None
+                if template is not None:
+                    rows.append((number, template))
+            _TEMPLATE_SITES[name] = rows
+        found += ['scripts/%s:%d' % (name, n) for n, t in _TEMPLATE_SITES[name] if t.fullmatch(code)]
+    return found
+# Guard helper functions: a refusal raised inside one of these originates at its caller.
+GUARD_HELPERS = frozenset(('require', 'guard', 'refuse', 'halt', 'shared_require', 'shared_refuse'))
+# A non-site row (schema, number, date-time, boolean) refuses inside a shared checker called at
+# its site: these frames may lie between that site and the raise (NUMRULE, a bank's validate path).
+CHECKER_FILES = ('pm_goal_test_numrule.py',)
+CHECKER_FUNCTIONS = frozenset(('validate', '_checked', 'errors', 'check')) | GUARD_HELPERS
+# Static single-raise-site check (addendum 11 (2)), only the fallback when no origin was recorded.
+# Review (c): it loads only the pinned copy of the admission gate's module in this branch
+# (scripts/dg5_gate_e2/: code_sites.py and the proof_sources.py it loads from its own folder),
+# and only when both files match GATE_E2_PIN; any other bytes fail closed. A new gate edition
+# is a new pin (dg5_gate_e2/README.md).
+GATE_E2 = ROOT / 'scripts' / 'dg5_gate_e2'
+GATE_E2_PIN = {
+    'code_sites.py': '4ffb2b834c95e5e229e66fc0012b8195238a9db4f57bfefee4d1c45f2a37ca2b',
+    'proof_sources.py': '335bbb989dafa21df7510bda9182693a9231cf559d39b646a7752c7b40fd837e',
+}
+_GATE_SITES = []
+
+
+def refusal_origin(error, code):
+    """Where the refusal that ended the call originated (addendum 11 (1)).
+
+    Follows the exception chain (`__cause__`, else `__context__`, also under `from None`)
+    while each earlier exception carries the same refusal code unchanged; the deepest one
+    is the origin. Its innermost traceback frame outside this bridge and outside the guard
+    helpers (`GUARD_HELPERS`) is the origin site. A refusal rebuilt fresh at another site,
+    with no chained original carrying its code, originates at that site.
+    """
+    chain, seen, current = [], set(), error
+    while current is not None and id(current) not in seen:
+        seen.add(id(current))
+        chain.append(current)
+        current = current.__cause__ or current.__context__
+    origin, depth = error, 0
+    for number, earlier in enumerate(chain[1:], 1):
+        try:
+            same = isinstance(earlier, Exception) and refusal_code(earlier) == code
+        except Exception:  # noqa: BLE001
+            same = False
+        if not same:
+            break
+        origin, depth = earlier, number
+    here = str(Path(__file__).resolve())
+    frames = []
+    for frame in traceback.extract_tb(origin.__traceback__):
+        path = Path(frame.filename)
+        try:
+            where = str(path.resolve().relative_to(ROOT))
+        except ValueError:
+            where = str(path)
+        bridge_or_guard = str(path.resolve()) == here or frame.name in GUARD_HELPERS
+        checker = bridge_or_guard or path.name in CHECKER_FILES or frame.name in CHECKER_FUNCTIONS
+        frames.append([where, frame.lineno, frame.name, bridge_or_guard, checker])
+    site = next(([f[0], f[1]] for f in reversed(frames) if not f[3]), None)
+    return dict(site=site, chain_depth=depth, chain_length=len(chain), origin_type=type(origin).__name__,
+                frames=frames[-8:])
+
+
+def static_single_raise_site(code):
+    """Addendum 11 (2) through the pinned gate module; None when it is absent, ok False when it is not the pin."""
+    import importlib.util
+    folder = Path(GATE_E2)
+    module_path = folder / 'code_sites.py'
+    if not module_path.is_file():
+        return None
+    actual = {name: hashlib.sha256((folder / name).read_bytes()).hexdigest() if (folder / name).is_file() else None
+              for name in GATE_E2_PIN}
+    if actual != GATE_E2_PIN:
+        return dict(ok=False, reason='gate-e2 module is not the pinned file (sha256 %s, pinned %s)' % (actual, GATE_E2_PIN))
+    try:
+        if not _GATE_SITES or _GATE_SITES[0][1] != actual['code_sites.py']:
+            spec = importlib.util.spec_from_file_location('dg5_gate_e2_code_sites', module_path)
+            gate = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(gate)
+            files = {str(p.relative_to(ROOT)): p.read_text() for p in sorted((ROOT / 'scripts').glob('*.py'))
+                     if p.name.startswith(SITE_MODULE_PREFIXES)}
+            _GATE_SITES[:] = [(gate.OwnerSites(files), actual['code_sites.py'])]
+        sites, sha = _GATE_SITES[0]
+        ok, evidence = sites.unique(code)
+        return dict(ok=bool(ok), reason=(evidence or {}).get('why'), evidence=evidence, gate_sha256=sha,
+                    gate_pin=dict(GATE_E2_PIN))
+    except Exception as error:  # noqa: BLE001 - an unusable gate is no proof
+        return dict(ok=False, reason='gate-e2 unusable: %s: %s' % (type(error).__name__, str(error)[:200]))
+
+
+def row_code_check(target, code, origin=None, refusing_sites=()):
+    """Is the intact refusal the declared row's own guard with its own code? (KILLED_CODE condition 1.)
+
+    Addendum 1 with addendum 11 (pm-ea-lead 1121131008-95db): the harness's code-matched
+    errors list is not trusted. Method 1 decides whenever the trial recorded an origin;
+    method 2 is the fallback only when it did not (review (a), lead answer 3):
+      (1) the recorded origin (`refusal_origin`) is the row's guard: for a site row
+          `dg5/site/<file>:<line>`, the origin site (innermost frame outside this bridge and
+          the guard helpers) is that line; for any other row (schema, number, date-time,
+          boolean), the site where that row refused in this trial (`refusing_sites`) is in
+          the origin traceback with only checker frames inside it (`CHECKER_FILES`,
+          `CHECKER_FUNCTIONS`: NUMRULE, a bank's validate path, guard helpers). A refusal
+          raised at the row's guard carries that guard's code whatever builds it (a
+          FrameError, a template, a computed name), so a line with no literal code is
+          judged by its origin. A literal guard code that differs from the refusal code
+          (less a wrapper prefix '/' + code) is not the row's own code.
+          A templated literal (%- or {}-placeholders, `guard_template`) must match the
+          refusal code as an anchored template, one code segment per placeholder; the
+          origin still decides, and a templated literal with no origin fails closed
+          (addendum 5).
+      (2) no origin recorded: the code has exactly one raise site in the owner source and
+          that site is the row's (the pinned gate module, `static_single_raise_site`); a
+          code built at run time fails.
+    Neither holds: unverifiable, fails closed (own False). Any non-site row owns a code
+    only when `row(code)` names it. A crash or a missing code owns nothing.
+    """
+    out = dict(row=target, code=code, guard_code=None, own=False, code_matches=False, origin=origin, why=None)
+    if not isinstance(code, str) or not code or code.startswith('crash:'):
+        return dict(out, why='no owner refusal code')
+    prefix = PREFIX + 'site/'
+    site = None
+    if target.startswith(prefix):
+        name, _, line = target[len(prefix):].rpartition(':')
+        try:
+            text = (ROOT / 'scripts' / name).read_text().splitlines()[int(line) - 1]
+        except (OSError, ValueError, IndexError):
+            return dict(out, why='row site line not in this source')
+        found = GUARD_CODE.search(text)
+        guard = found.group(1) if found else None
+        out['guard_code'] = guard
+        template = guard_template(guard)
+        if template is not None:
+            out['guard_template'] = template.pattern
+            if not template.fullmatch(code):
+                return dict(out, why='refusal code does not match the row guard template')
+        elif guard is not None and not (code == guard or code.endswith('/' + guard)):
+            return dict(out, why='refusal code is not the row guard code')
+        site = ['scripts/' + name, int(line)]
+        if template is not None and not origin:
+            # Addendum 5: a template match alone never credits; without the origin frame the
+            # templated literal is unverifiable, however many raise sites the template matches.
+            out['template_sites'] = template_sites(code, also=(name,))
+            return dict(out, code_matches=True, why='templated guard literal and no recorded origin '
+                        '(%d template site(s) match the code); a template match alone never credits'
+                        % len(out['template_sites']))
+    else:
+        out['guard_code'] = target
+        if row(code) != target:
+            return dict(out, why='refusal code maps to another row')
+    out['code_matches'] = True
+    if origin:
+        origin_site = origin.get('site')
+        if site is not None:
+            if origin_site == site:
+                return dict(out, own=True, verified_by='origin frame at the row guard',
+                            template_matched=template is not None)
+            return dict(out, why='origin not at the row guard (origin %s)' % (origin_site,))
+        sites = {tuple(s) for n, s in refusing_sites if n == target}
+        for where, line, _, _, checker in reversed(origin.get('frames') or []):
+            if (where, line) in sites:
+                return dict(out, own=True, verified_by='origin at the row refusing site (only checker frames inside)')
+            if not checker:
+                break
+        return dict(out, why='origin not at the row refusing site (origin %s)' % (origin_site,))
+    static = static_single_raise_site(code)
+    out['static_check'] = static
+    if static and static.get('ok'):
+        const = (static.get('evidence') or {}).get('const_sites') or []
+        allowed = ['%s:%s' % (site[0], site[1])] if site is not None else \
+            ['%s:%s' % (s[0], s[1]) for n, s in refusing_sites if n == target]
+        if len(const) == 1 and const[0] in allowed:
+            return dict(out, own=True, verified_by='single raise site (gate-e2), the row guard')
+        return dict(out, why='no recorded origin; the single raise site %s is not the row guard' % (const,))
+    return dict(out, why='no recorded origin' + ('; gate-e2 not installed' if static is None
+                                                 else '; gate-e2: %s' % static.get('reason')))
 
 
 def refusal_code(error):
