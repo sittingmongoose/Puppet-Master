@@ -334,7 +334,7 @@ async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
   const mustFold = at === '740x900';
   const keptOpen = mustFold ? await f.evaluate(() => { const c = window.PMW && PMW.chatCol; if (!c || !c.keepOpen || !c.keepOpen()) return false; c.setKeepOpen(false); return true; }) : false;
   if (mustFold) await f.waitForFunction(() => { const b = document.getElementById('pmw-chat-strip'); return !!(b && !b.hidden && b.getClientRects().length); }, null, { timeout: 4000 }).catch(() => {});
-  if (keptOpen) t.log(`${at} FO-98: "keep the chat open" was stored by an earlier test; turned off for the strip step`);
+  if (keptOpen) t.log(`${at} FO-98: "keep the chat open" was on; turned off for the strip step`);
   if (await stripOn()) {
     await agree('the chat folded to its strip', s => s.chat.expanded === 'false' && s.chat.lit);
     if (await reach('chat')) { await kb.press('Enter'); await f.waitForTimeout(700); }
