@@ -200,7 +200,7 @@ const brief = r => r && { key: r.key, lit: r.lit, focused: r.focused, ...(r.unre
 // before round 8, Liquid Glass's flagged lens painted at rest on it.
 // A key-focused icon can draw its own outline, the anchored ring or the flagged Glass lens.
 function markOn(input) {
-  const { target, ms, ready } = typeof input === 'string' ? { target: input } : input;
+  const { target, ms, ready, inputKey, click } = typeof input === 'string' ? { target: input } : input;
   const visible = c => c.display !== 'none' && c.visibility === 'visible' && parseFloat(c.opacity) > 0;
   const read = () => {
     const icon = document.querySelector(`#activityBar .icon[data-ab-id="${target}"]`);
@@ -235,13 +235,13 @@ function markOn(input) {
 
   // Change a probe in rAF so ResizeObserver reads the frame after the app's rAF callbacks and layout.
   const sample = window.__fo96s = { frames: 0, none: 0, away: 0, at: [], arrival: null, handover: null, late: false, done: false };
-  const started = performance.now();
+  let started = null;
   const probe = document.createElement('div');
   Object.assign(probe.style, { position: 'fixed', left: '0', top: '0', width: '1px', height: '1px', opacity: '0', pointerEvents: 'none' });
   document.body.appendChild(probe);
   const observer = new ResizeObserver(() => {
+    if (started === null) return;
     const mark = read();
-    if (!mark.keyFocus) return;
     sample.frames++;
     if (!mark.any) {
       sample.none++;
@@ -260,19 +260,41 @@ function markOn(input) {
     }
   });
   observer.observe(probe);
+  const eventName = click ? 'pointerdown' : 'keydown';
+  const onInput = event => {
+    if (click ? !event.target.closest?.(`#activityBar .icon[data-ab-id="${target}"]`) : event.key !== inputKey) return;
+    window.removeEventListener(eventName, onInput, true);
+    clearTimeout(inputTimeout);
+    start();
+  };
+  const finish = () => {
+    observer.disconnect();
+    probe.remove();
+    sample.done = true;
+  };
   let flip = false;
   const step = () => {
     if (performance.now() - started >= ms) {
-      observer.disconnect();
-      probe.remove();
-      sample.done = true;
+      finish();
       return;
     }
     flip = !flip;
     probe.style.width = flip ? '2px' : '1px';
     requestAnimationFrame(step);
   };
-  requestAnimationFrame(step);
+  const start = () => {
+    started = performance.now();
+    requestAnimationFrame(step);
+  };
+  if (!inputKey && !click) {
+    start();
+    return;
+  }
+  const inputTimeout = setTimeout(() => {
+    window.removeEventListener(eventName, onInput, true);
+    finish();
+  }, 5000);
+  window.addEventListener(eventName, onInput, true);
 }
 
 // Names' letters, every name in view (K-F96b-3: a mark must not cross a neighbour's name either). The letters are found
@@ -863,9 +885,9 @@ async function run(t, w, h) {
     return { key: target, lit: b.lit, focused: !moved, moved, brackets: b.brackets, clip: b.brackets ? null : b.clip,
       ...(b.brackets ? { corners: bestCorners(r0, r1, b, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy, bothNeighbours), sides(r0, r1, b.item, ox, oy, bothNeighbours)) }) };
   };
-  const sampleMark = async (target, act) => {
+  const sampleMark = async (target, input, act) => {
     const ready = await f.waitForFunction(markOn, { target, ready: true }, { timeout: 2000 }).then(() => true, () => false);
-    await f.evaluate(markOn, { target, ms: 900 });
+    await f.evaluate(markOn, { target, ms: 900, inputKey: input === 'click' ? null : input.split('+').at(-1), click: input === 'click' });
     await act();
     await f.waitForFunction(() => window.__fo96s?.done, null, { timeout: 5000 }).catch(() => {});
     const result = await f.evaluate(() => window.__fo96s);
@@ -1061,7 +1083,7 @@ async function run(t, w, h) {
     }
     let lens = null;
     if (await tabTo('search')) {
-      if (look.startsWith('glass-')) lens = await sampleMark('search', () => kb.press('Enter'));
+      if (look.startsWith('glass-')) lens = await sampleMark('search', 'Enter', () => kb.press('Enter'));
       else await kb.press('Enter');
       acts.push({ after: 'Enter on Search', ...(await markNow('search')) });
     }
@@ -1096,7 +1118,7 @@ async function run(t, w, h) {
     const focusClick = async label => {
       const opened = await openFiles();
       const reached = await tabTo('files');
-      const click = await sampleMark('files', async () => {
+      const click = await sampleMark('files', 'click', async () => {
         await f.locator('#activityBar .icon[data-ab-id="files"]').click();
         await rest();
       });
@@ -1118,7 +1140,7 @@ async function run(t, w, h) {
         const reached = await tabTo('files');
         const reads = [];
         for (const [key, target] of [['Control+2', 'search'], ['Control+1', 'files']]) {
-          const sample = await sampleMark('files', () => kb.press(key));
+          const sample = await sampleMark('files', key, () => kb.press(key));
           reads.push({ key, panel: target, opened: await showsPanel(target), ...sample });
         }
         await t.check(`${label}: Ctrl+2 then Ctrl+1 switch panels while the focused Files keeps its mark in every frame`,
@@ -1127,7 +1149,7 @@ async function run(t, w, h) {
         const reachedSearch = await tabTo('search');
         if (reachedSearch) { await kb.press('Enter'); await frames(f, 4); }
         const searchOpened = await showsPanel('search');
-        const back = await sampleMark('search', () => kb.press('Control+1'));
+        const back = await sampleMark('search', 'Control+1', () => kb.press('Control+1'));
         const filesOpened = await showsPanel('files');
         await t.check(`${label}: after Enter opens Search, Ctrl+1 opens Files while the focused Search keeps its mark in every frame`,
           reachedSearch && searchOpened && keptMark(back) && filesOpened,
