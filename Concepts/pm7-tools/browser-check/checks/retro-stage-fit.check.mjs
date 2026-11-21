@@ -31,7 +31,7 @@ const frameFor = async (t, mode) => {
 // a case runs on its own surface unless --set sandbox picks the other one
 const on = (mode, fn) => (t) => (t.app.surfaces().includes(mode) ? fn(t, mode) : t.check(`not run: --set sandbox picks the other surface than ${mode}`, true));
 
-// every frame for about 600 ms: the worst of each measure (px; > 0 is wrong)
+// Every frame for at least 600 ms, extending up to 5 s to observe eight resting frames.
 const SAMPLE = async () => {
 	const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
 	if (!st) return { err: 'no stage' };
@@ -40,7 +40,7 @@ const SAMPLE = async () => {
 	const worst = { pip: -1e9, headFoot: -1e9, sign: -1e9, signFoot: -1e9, prop: -1e9, propFoot: -1e9, propOnHead: 0, words: 0 }, seen = { sign: 0, props: 0, colWords: 0, restFrames: 0 }, who = {};
 	let n = 0, last = null;
 	const t0 = performance.now();
-	while (performance.now() - t0 < 600) {
+	while (performance.now() - t0 < 600 || (seen.restFrames < 8 && performance.now() - t0 < 5000)) {
 		await new Promise((r) => requestAnimationFrame(() => r()));
 		n++;
 		// the visible crop: the tube or paper, cut by every box that clips it, and by the window
@@ -116,9 +116,7 @@ const poseAtRest = (f) => f.waitForFunction(() => {
 async function judge(t, f, tag, { sign = true, props = false } = {}) {
 	await settle(t, f);
 	await poseAtRest(f);
-	let r = await f.evaluate(`(${SAMPLE.toString()})()`);
-	// an idle wiggle or swing that began inside the sample left too few resting frames: once Pip rests again, sample again
-	if (!r.err && r.restFrames < 8) { await poseAtRest(f); const r2 = await f.evaluate(`(${SAMPLE.toString()})()`); if (!r2.err && r2.restFrames > r.restFrames) r = r2; }
+	const r = await f.evaluate(SAMPLE);
 	if (r.err) return t.check(`${tag}: the stage`, false, r.err);
 	const at = `${tag} [${r.theme} ${r.layout}${r.asleep ? ', asleep' : ''}${r.low ? ', low-resource' : ''}${r.reduced ? ', reduced' : ''}]`;
 	const why = JSON.stringify(r.last);
@@ -133,13 +131,14 @@ async function judge(t, f, tag, { sign = true, props = false } = {}) {
 		await t.check(`${at}: every resting prop inside the visible crop`, r.prop <= 1, `${r.who.prop} ${r.prop} px outside; ${why}`);
 		await t.check(`${at}: every resting prop above the tube's foot (printer, command line)`, r.propFoot <= 0.5, `${r.who.propFoot} ${r.propFoot} px into it; ${why}`);
 	}
-	await t.check(`${at}: Pip seen at rest (head-overlap frames)`, r.restFrames >= 8, `${r.restFrames}/${r.n} frames in its resting pose`);
 	await t.check(`${at}: no prop over Pip's head`, r.propOnHead <= 1, `${r.who.propOnHead || ''} ${r.propOnHead} px; ${why}${r.who.pipState ? '; pip ' + JSON.stringify(r.who.pipState) : ''}`);
 	await t.check(`${at}: Pip clear of the stage's words (title line, readouts)`, r.words <= 1, `${r.who.words || ''} ${r.words} px; ${why}`);
 	// FO-55, the lead's ruling: Pip is drawn smaller only where the stage's words sit over its column, and never under 80%
 	// of its size (.82 in Retro Light at 740; 1 elsewhere)
 	await t.check(`${at}: Pip drawn at no less than 80% of its size`, r.pipK >= .8, `scale ${r.pipK}`);
 	await t.check(`${at}: Pip drawn smaller only under the stage's words`, r.pipK >= 1 || r.colWords > 0, `scale ${r.pipK}, no words over its column`);
+	await t.check(`${at}: resting head sample complete`, r.restFrames >= 8,
+		`Sampling incomplete: ${r.restFrames}/${r.n} resting frames in 5 s (need 8); the geometry above covers every sampled frame.`);
 	if (r.pipK < 1) t.log(`${at}: Pip drawn at ${r.pipK} of its size`);
 	return r;
 }
