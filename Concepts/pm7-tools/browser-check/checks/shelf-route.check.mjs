@@ -129,6 +129,19 @@ export async function noteShelfBranchMiss(t, branchViews, entry) {
     `${panel} ${menu} missed in ${[...views].join(', ')}`);
 }
 
+export async function retryShelfBranch(miss, { isOpen, escape, shut, reopen, attempt }) {
+  if (miss.trace.pressedItem !== false) return miss;
+  if (await isOpen()) {
+    await escape();
+    // The first Escape can close just the submenu, leaving its parent open.
+    if (await isOpen()) await escape();
+    if (!await shut()) return { first: miss, retry: 'menu stayed open after Escape' };
+  }
+  if (!await reopen()) return { first: miss, retry: 'context menu did not reopen' };
+  const retry = await attempt();
+  return retry ? { first: miss, retry } : null;
+}
+
 function traceShelfBranch([key, label]) {
   window.__shelfBranchTrace?.stop();
   const menu = __shelf.open().find(m => __shelf.key(m) === key);
@@ -1413,15 +1426,13 @@ export default async function (t) {
               await noteShelfBranchMiss(t, branchViews, { panel: pn.panel, state: pn.state, menu: pn.menu,
                 branch: cmd.branch, item: cmd.label, row: row.want, ...miss });
               // Retry only an undelivered press. Reopen the same row's context menu before hovering the same branch.
-              if (miss.trace.pressedItem) return miss;
-              if (await isOpen()) {
-                await t.page.keyboard.press('Escape');
-                if (!await shut()) return { first: miss, retry: 'menu stayed open after Escape' };
-              }
-              await restPt();
-              if (!await openOn(row, how)) return { first: miss, retry: 'context menu did not reopen' };
-              const retry = await tryPointerBranch(cmd);
-              if (retry) return { first: miss, retry };
+              return retryShelfBranch(miss, {
+                isOpen,
+                escape: () => t.page.keyboard.press('Escape'),
+                shut,
+                reopen: async () => { await restPt(); return openOn(row, how); },
+                attempt: () => tryPointerBranch(cmd),
+              });
             }
           } else if (!await clickItem(cmd.label, false)) return `no ${cmd.label}`;
         } else {

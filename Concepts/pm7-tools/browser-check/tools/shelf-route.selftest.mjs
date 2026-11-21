@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { runInNewContext } from 'node:vm';
 import { test } from 'node:test';
-import { copiedFullPath, foldCensusControls, laterContextRows, noteShelfBranchMiss, pathNotePresent, pickEffectRows, pressShelfBranch, shelfReachStatus } from '../checks/shelf-route.check.mjs';
+import { copiedFullPath, foldCensusControls, laterContextRows, noteShelfBranchMiss, pathNotePresent, pickEffectRows, pressShelfBranch, retryShelfBranch, shelfReachStatus } from '../checks/shelf-route.check.mjs';
 
 test('T78 copied path notes name the exact copied value', () => {
   assert.equal(pathNotePresent(['Copied src'], 'src', 'copy'), true);
@@ -124,4 +124,23 @@ test('T143 prints first misses in the summary and fails a branch missed in two v
   await noteShelfBranchMiss(t, history, { ...miss, state: 'open' });
   assert.deepEqual(checks.filter(c => !c.ok).map(c => c.name), ['FO-93b Copy path first press misses in multiple views']);
   assert.ok(logs.some(log => log.includes('"branchOpen":false')));
+});
+
+test('T143 retry closes a still-open submenu and its parent before reopening the same row', async () => {
+  let menus = 2, retries = 0, reopened = 0;
+  const actions = {
+    isOpen: async () => menus > 0,
+    escape: async () => { menus--; },
+    shut: async () => menus === 0,
+    reopen: async () => { reopened++; return true; },
+    attempt: async () => { retries++; return null; },
+  };
+  const miss = { trace: { pressedItem: false } };
+  assert.equal(await retryShelfBranch(miss, actions), null);
+  assert.deepEqual([menus, reopened, retries], [0, 1, 1]);
+  const delivered = { trace: { pressedItem: true } };
+  const unobserved = { trace: { error: 'frame detached' } };
+  assert.equal(await retryShelfBranch(delivered, actions), delivered);
+  assert.equal(await retryShelfBranch(unobserved, actions), unobserved);
+  assert.equal(retries, 1);
 });
