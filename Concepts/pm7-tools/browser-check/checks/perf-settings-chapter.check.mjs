@@ -8,7 +8,8 @@
 //            no section of an arrival turns relevant and is skipped again within a second ("one-frame unlocks").
 //   release  the hover tags of the removed chapter (about 2,000 nodes) were walked in the build task's microtasks.
 //            Judged: the controller's cleanupRemoved does not run before that frame, and the old chapter's tagged nodes
-//            have let go of their tags by that collection (after the initial 2.5 s settle and capped completion wait).
+//            have let go of their tags by that collection (after the initial 2.5 s settle and the wait for the fill's own
+//            completion, R97 #6).
 // "First painted frame": a message posted from the first animation frame that has the new chapter arrives once that
 // frame's style, layout, paint and commit are over on the main thread. Each switch is a real held press on the chapter
 // list (down, 90 ms, up); Settings acts on the click. Logged per switch, not judged: release -> painted, the build task
@@ -236,6 +237,48 @@ const ARM_RESTORE = (id) => {
 	mo.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
 	R.stop = () => { mo.disconnect(); tome.save = save; tome.restoreProjectDefaults = restore; };
 };
+/* R97 #6: after the switch's settle, wait for the fill's own completion, not a fixed cap on the whole sequence. The
+   product starts its idle fill 450 ms after the commit, gives each section its own 1 s timeout and parks the job while a
+   drag is held, so a correct fill on a busy host or behind a long stall can still be pending at any fixed deadline. The
+   wait ends when no row list is pending ('done'); when the pending count has not fallen for `quiet` ms ('stalled': the fill
+   stopped, with `dragged` when a drag class was on the body at any step); or at `cap` ms while still falling ('deadline':
+   the host was too slow to finish, which says nothing about a missing row). Polled on a 100 ms timer, not every frame. */
+const FILL_LIMITS = { quiet: 15000, cap: 90000 };
+const FILL_WAIT = ({ quiet, cap }) => new Promise((done) => {
+	const pending = () => document.querySelectorAll('#workspace-stage [data-o55-fill="pending"]').length;
+	const drag = () => ['pm-resizing', 'pm-ab-dragging', 'pmw-dragging', 'pmu-pointer-op', 'pm7u-pointer-op'].some((c) => document.body && document.body.classList.contains(c));
+	const t0 = performance.now();
+	let n = pending(), last = t0, dragged = drag();
+	const end = (state, now, m) => done({ state, pending: m, waited: Math.round(now - t0), lastProgress: Math.round(last - t0), dragged });
+	const step = () => {
+		const now = performance.now(), m = pending();
+		if (drag()) dragged = true;
+		if (m !== n) { n = m; last = now; }
+		if (m === 0) return end('done', now, m);
+		if (now - last >= quiet) return end('stalled', now, m);
+		if (now - t0 >= cap) return end('deadline', now, m);
+		setTimeout(step, 100);
+	};
+	step();
+});
+/* The completeness rows (exported for tools/settings-chapter.selftest.mjs). R97 #6: an arrival whose fill did not finish
+   is reported as such (stopped, or still filling at the cap), apart from the rows a finished fill left out; row ids drawn
+   twice are wrong either way. */
+export function arrivalVerdict(rows) {
+	const unfinished = rows.filter((r) => r.fill && r.fill.state !== 'done');
+	const finished = rows.filter((r) => !r.fill || r.fill.state === 'done');
+	const left = finished.filter((r) => r.pendingLeft > 0 || (r.missing && r.missing.gone.length) || (r.to === 'code' && !(r.missing && r.missing.want)));
+	const doubled = rows.filter((r) => r.dupIds > 0);
+	const why = (f) => f.state === 'stalled'
+		? `the fill stopped: no list filled for ${Math.round((f.waited - f.lastProgress) / 1000)} s with ${f.pending} still pending${f.dragged ? ' (a drag was held)' : ''}`
+		: `still filling at the ${Math.round(f.waited / 1000)} s cap with ${f.pending} lists pending (a deadline, not a missing row)`;
+	return [
+		{ name: 'each arrival\'s fill finished (no row list left pending)', ok: !unfinished.length, detail: unfinished.map((r) => `${r.pair}: ${why(r.fill)}`).join('; ') },
+		{ name: 'after each arrival every row in the rendered workspace model is drawn, once', ok: !left.length && !doubled.length,
+			detail: [...left.map((r) => `${r.pair}: ${r.pendingLeft} row lists still pending, missing ${r.missing ? r.missing.gone.join(', ') || 'none' : '?'} of ${r.missing ? r.missing.want : '?'} modeled on ${r.missing ? r.missing.ws : '?'}`),
+				...doubled.map((r) => `${r.pair}: ${r.dupIds} duplicate row ids`)].join('; ') + (unfinished.length ? ` (not judged for missing rows: ${unfinished.map((r) => r.pair).join(', ')}, whose fill did not finish)` : '') }
+	];
+}
 /* The release rows (exported for tools/settings-chapter.selftest.mjs). R97 #4: both rows pass vacuously when nothing of
    the leaving chapter was sampled or no walk of it was seen, so each switch must have sampled tagged nodes of the leaving
    chapter and seen at least one walk of that chapter by collection; then no such walk may come before the new chapter's
@@ -249,7 +292,7 @@ export function hoverVerdict(rows) {
 		{ name: 'could judge the old chapter\'s hover tags: every switch sampled tagged nodes of the leaving chapter and saw a walk of it by collection', ok: rows.length > 0 && !unsampled.length && !unwalked.length,
 			detail: [...unsampled.map((r) => `${r.pair}: no tagged node of the leaving chapter was sampled`), ...unwalked.map((r) => `${r.pair}: no walk of the leaving chapter was seen`)].join('; ') || (rows.length ? '' : 'no switch') },
 		{ name: 'the old chapter\'s hover tags are not walked before the new chapter\'s first frame', ok: !walked.length, detail: walked.map((r) => `${r.pair}: ${r.cleanupsBeforePaint} walk(s)`).join('; ') },
-		{ name: 'the old chapter\'s tagged nodes let go of their tags by collection after the capped row-completion wait', ok: !kept.length, detail: kept.map((r) => `${r.pair}: ${r.taggedStill} of ${r.tagged}`).join('; ') }
+		{ name: 'the old chapter\'s tagged nodes let go of their tags by collection after the fill\'s completion wait', ok: !kept.length, detail: kept.map((r) => `${r.pair}: ${r.taggedStill} of ${r.tagged}`).join('; ') }
 	];
 }
 /* R93 #4's fling rows (exported for tools/settings-chapter.selftest.mjs). R97 #3: Terminal look must still be pending
@@ -450,6 +493,7 @@ async function moreOptionsRow(t, f, label, expectedReduced) {
 }
 
 export const tests = {};
+export { FILL_WAIT };
 
 /* R97 check 2: the collector must notice a missing hand-authored Spelling row on the real rendered model. */
 for (const surface of ['normal', 'sandbox']) {
@@ -931,12 +975,13 @@ for (const surface of ['normal', 'sandbox']) {
 					if ((await f.evaluate(ACTIVE)) !== a) { await f.locator(`#pm-settings-root .domain-link[data-domain="${a}"]`).first().click(); await t.page.waitForTimeout(2000); }
 					await press(t, f, b);
 					await t.page.waitForTimeout(2500);
-					/* the rest of the page is filled in idle slices: wait for that, with a generous cap */
-					await f.waitForFunction(() => !document.querySelector('#workspace-stage [data-o55-fill="pending"]'), null, { timeout: 10000 }).catch(() => {});
+					/* the rest of the page is filled in idle slices: wait for the fill's own completion (R97 #6) */
+					const fill = await f.evaluate(FILL_WAIT, FILL_LIMITS);
 					const r = await f.evaluate(COLLECT);
+					r.fill = fill;
 					r.pair = `${a}->${b}`;
 					rows.push(r);
-					t.log(`${look} ${surface} ${r.pair}: release -> painted ${r.clickToPainted} ms (commit ${r.commit}, build task ${r.build ?? '-'} ms, ${r.elements} elements; rows ${r.rowsFirst ?? '-'} in the first frame (${r.rowsRaf} at its first animation-frame callback) of ${r.rowsEnd}); one-frame unlocks ${r.unlocks.length ? r.unlocks.join(',') : 'none'}; saves before paint ${r.savesBeforePaint}, place saved ${r.savedPlace}; tag walks of the old chapter ${r.walks} (before paint ${r.cleanupsBeforePaint}), old tagged nodes ${r.taggedAll} (sampled ${r.tagged}, still tagged ${r.taggedStill})`);
+					t.log(`${look} ${surface} ${r.pair}: fill ${r.fill.state} ${r.fill.waited} ms after the settle (last progress at ${r.fill.lastProgress} ms, ${r.fill.pending} lists pending${r.fill.dragged ? ', a drag was held' : ''}); release -> painted ${r.clickToPainted} ms (commit ${r.commit}, build task ${r.build ?? '-'} ms, ${r.elements} elements; rows ${r.rowsFirst ?? '-'} in the first frame (${r.rowsRaf} at its first animation-frame callback) of ${r.rowsEnd}); one-frame unlocks ${r.unlocks.length ? r.unlocks.join(',') : 'none'}; saves before paint ${r.savesBeforePaint}, place saved ${r.savedPlace}; tag walks of the old chapter ${r.walks} (before paint ${r.cleanupsBeforePaint}), old tagged nodes ${r.taggedAll} (sampled ${r.tagged}, still tagged ${r.taggedStill})`);
 					await t.page.waitForTimeout(500);
 				}
 				const shown = rows.filter((r) => r.clickToPainted !== null && r.to === r.pair.split('->')[1]);
@@ -946,11 +991,9 @@ for (const surface of ['normal', 'sandbox']) {
 					unlocked.map((r) => `${r.pair}: ${r.unlocks.join(', ')}`).join('; '));
 				const first = firstScreenVerdict(rows.filter((r) => r.to === 'code'));
 				if (seq.some(([, to]) => to === 'code')) await t.check(`${look} ${surface}: an arrival at Code & Tools shows its first screen before the rest of its rows`, first.ok, first.detail);
-				const left = rows.filter((r) => r.pendingLeft > 0 || r.dupIds > 0 || (r.missing && r.missing.gone.length) || (r.to === 'code' && !(r.missing && r.missing.want)));
-				await t.check(`${look} ${surface}: after each arrival every row in the rendered workspace model is drawn, once`, !left.length,
-					left.map((r) => `${r.pair}: ${r.pendingLeft} row lists still pending, ${r.dupIds} duplicate row ids, missing ${r.missing ? r.missing.gone.join(', ') || 'none' : '?'} of ${r.missing ? r.missing.want : '?'} modeled on ${r.missing ? r.missing.ws : '?'}`).join('; '));
+				for (const row of arrivalVerdict(rows)) await t.check(`${look} ${surface}: ${row.name}`, row.ok, row.detail);
 				const unsaved = rows.filter((r) => r.savedPlace < 1);
-				await t.check(`${look} ${surface}: the new place is saved by collection after the capped row-completion wait`, !unsaved.length, unsaved.map((r) => r.pair).join(', '));
+				await t.check(`${look} ${surface}: the new place is saved by collection after the fill's completion wait`, !unsaved.length, unsaved.map((r) => r.pair).join(', '));
 				for (const row of hoverVerdict(rows)) await t.check(`${look} ${surface}: ${row.name}`, row.ok, row.detail);
 			});
 		}

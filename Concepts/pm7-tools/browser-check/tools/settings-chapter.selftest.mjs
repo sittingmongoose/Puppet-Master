@@ -2,7 +2,7 @@
 // node tools/settings-chapter.selftest.mjs
 // The page probe itself is tested in a browser on a constructed page: diagnostics/settings-chapter-probe.check.mjs.
 import assert from 'node:assert/strict';
-import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict } from '../checks/perf-settings-chapter.check.mjs';
+import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT } from '../checks/perf-settings-chapter.check.mjs';
 
 /* SETCHAPTER-ROWCOUNT-FIRST-RAF: the first-screen row over the Code & Tools arrivals */
 {
@@ -69,4 +69,48 @@ import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict } from
 	assert.equal(hoverVerdict([sw('general->code', { taggedStill: 2 })])[2].ok, false, 'tags kept fail');
 	assert.equal(hoverVerdict([])[0].ok, false, 'no switch');
 	console.log('PASS hover release: judged only with sampled leaving-chapter tags and a seen walk of that chapter');
+}
+
+/* R97 #6: the wait ends on the fill's own completion, and an unfinished fill is told apart from a missing row */
+{
+	// FILL_WAIT is a page function; here the page is a stub whose pending count follows a script over real time
+	const run = async (script, limits, dragAt = null) => {
+		const t0 = performance.now();
+		const classes = { contains: (c) => c === 'pm-resizing' && dragAt !== null && performance.now() - t0 >= dragAt[0] && performance.now() - t0 < dragAt[1] };
+		globalThis.document = { body: { classList: classes }, querySelectorAll: () => ({ length: script(performance.now() - t0) }) };
+		try { return await FILL_WAIT(limits); } finally { delete globalThis.document; }
+	};
+	const L = { quiet: 600, cap: 3000 };
+	// a fill that ends at 400 ms
+	const quick = await run((ms) => (ms < 400 ? 12 - Math.floor(ms / 40) : 0), L);
+	assert.equal(quick.state, 'done', JSON.stringify(quick));
+	// R97 #6's case: a stall (a held drag parks the fill) of 500 ms, shorter than `quiet`, then the fill finishes at 1.6 s.
+	// A cap on the whole sequence shorter than that (here 1.2 s, as 2.5 s + 10 s was on the page) failed this correct fill.
+	const parked = (ms) => (ms < 300 ? 10 : ms < 800 ? 9 : ms < 1600 ? 9 - Math.floor((ms - 800) / 100) : 0);
+	const stall = await run(parked, L, [300, 800]);
+	assert.equal(stall.state, 'done', `a correct fill behind a short stall finishes: ${JSON.stringify(stall)}`);
+	assert.equal(stall.dragged, true, 'the held drag is noted');
+	assert.ok(stall.waited >= 1500, `it waited for the fill, not a cap: ${stall.waited} ms`);
+	// a fill that stops for good
+	const stopped = await run((ms) => (ms < 200 ? 10 - Math.floor(ms / 50) : 6), L);
+	assert.equal(stopped.state, 'stalled', JSON.stringify(stopped));
+	assert.equal(stopped.pending, 6);
+	// a fill still falling at the cap
+	const slow = await run((ms) => Math.max(1, 1000 - Math.floor(ms / 250)), { quiet: 600, cap: 1500 });
+	assert.equal(slow.state, 'deadline', JSON.stringify(slow));
+
+	const arr = (pair, o) => ({ pair, to: 'code', pendingLeft: 0, dupIds: 0, missing: { ws: 'editor-terminal', want: 133, gone: [] }, fill: { state: 'done', pending: 0, waited: 300, lastProgress: 300, dragged: false }, ...o });
+	assert.deepEqual(arrivalVerdict([arr('general->code'), arr('ai->code')]).map((x) => x.ok), [true, true], 'finished and complete: passes');
+	const unfinished = arrivalVerdict([arr('general->code', { pendingLeft: 4, missing: { ws: 'editor-terminal', want: 133, gone: ['code.a'] }, fill: { state: 'deadline', pending: 4, waited: 90000, lastProgress: 89900, dragged: false } })]);
+	assert.equal(unfinished[0].ok, false, 'an unfinished fill fails its own row');
+	assert.match(unfinished[0].detail, /still filling at the 90 s cap with 4 lists pending \(a deadline, not a missing row\)/);
+	assert.equal(unfinished[1].ok, true, 'and is not reported as a missing row');
+	assert.match(unfinished[1].detail, /not judged for missing rows: general->code/);
+	const stoppedRow = arrivalVerdict([arr('general->code', { pendingLeft: 2, fill: { state: 'stalled', pending: 2, waited: 16000, lastProgress: 1000, dragged: true } })]);
+	assert.match(stoppedRow[0].detail, /the fill stopped: no list filled for 15 s with 2 still pending \(a drag was held\)/);
+	const missing = arrivalVerdict([arr('general->code', { missing: { ws: 'app-input', want: 74, gone: ['general.interaction.spellcheck-words'] } })]);
+	assert.deepEqual(missing.map((x) => x.ok), [true, false], 'a finished fill that left a row out fails completeness');
+	assert.equal(arrivalVerdict([arr('general->code', { dupIds: 1, fill: { state: 'stalled', pending: 1, waited: 16000, lastProgress: 900, dragged: false } })])[1].ok, false, 'a doubled row id fails even on an unfinished fill');
+	assert.equal(arrivalVerdict([arr('ai->code', { missing: { ws: 'x', want: 0, gone: [] } })])[1].ok, false, 'Code with no modeled rows fails');
+	console.log('PASS fill completion: waited on the fill itself (done, stalled, deadline), and an unfinished fill is not a missing row');
 }
