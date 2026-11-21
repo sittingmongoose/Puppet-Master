@@ -156,16 +156,16 @@
     // a triangle and a little saw through three formants, as it is today; consonants only as light as they were
     friendly: { name: 'Original sound, new phrasing', kind: 'formant', src: 'tri', saw: 0.28, sawFull: true, bands: 3, hp: 0, breath: 0, light: true, q: 7, fs: 1.18, lp: 4300, direct: 0.25, vib: [5.8, 16], gain: 0.26, att: 0.01, cons: 0.35, base: 285, bounce: 2.4, cps: 32, send: 0.18 },
     // struck celesta, one note every few letters, each damped as the next is struck; no key under it
-    glass: { name: 'Struck notes', kind: 'struck', inst: 'celesta', gain: 0.34, root: 74, quant: [0, 2, 4, 7, 9, 12, 14, 16], blip: 3, cps: 32, key: 0, tuneToSong: true, send: 0.1,
+    glass: { name: 'Struck notes', kind: 'struck', inst: 'celesta', gain: 0.27, root: 74, quant: [0, 2, 4, 7, 9, 12, 14, 16], blip: 3, cps: 32, key: 0, tuneToSong: true, send: 0.1,
       // under the notes, today's Glass voice at a murmur: it keeps Pip a talking creature over a song of glass bells
-      under: { kind: 'formant', src: 'sine', saw: 0.1, sawFull: true, oct: 0.32, bands: 3, hp: 0, light: true, q: 5, fs: 1.3, lp: 6000, direct: 0.35, vib: [4.6, 12], breath: 0.08, shimmer: 0.04, gain: 0.075, att: 0.016, cons: 0.12, base: 345, bounce: 1.9, legato: 0.15, send: 0.08 } },
+      under: { kind: 'formant', src: 'sine', saw: 0.1, sawFull: true, oct: 0.32, bands: 3, hp: 0, light: true, q: 5, fs: 1.3, lp: 6000, direct: 0.35, vib: [4.6, 12], breath: 0.08, shimmer: 0.04, gain: 0.1, att: 0.016, cons: 0.12, base: 345, bounce: 1.9, legato: 0.15, send: 0.08 } },
     // today's clean chirp, with today's melody of speech and only a trace of round one's fifth
     basic: { name: 'Original sound, new phrasing', kind: 'chirp', light: true, gain: 0.28, base: 740, bounce: 1.3, att: 0.004, rel: 0.012, maxSyl: 0.075, cons: 0.1, cps: 36, fifth: 0.03, send: 0.18 },
     // the terminal's own beep: a 3/8 pulse, low-passed, one oscillator moved from blip to blip
     phosphor: { name: 'Original', kind: 'pulse', orig: true, duty: 0.375, gain: 0.5, root: 72, quant: [0, 2, 4, 7, 9, 12, 14, 16], maxSyl: 0.036, blip: 3, lp: 3000, cps: 50, tuneToSong: true, send: 0.2 },
     // a struck sine with a faint twelfth and the lightest tick of a key
     teletype: { name: 'Original', kind: 'tick', gain: 0.6, root: 74, quant: [0, 2, 4, 5, 7, 9, 11, 12], maxSyl: 0.06, blip: 3, cps: 46, tuneToSong: true, send: 0.18 },
-    nier: { name: 'Round one, closer', kind: 'chirp', w1: 'triangle', harm: 0.14, lp: 3600, gain: 0.33, base: 560, bounce: 0.4, mono: true, step: true, att: 0.003, rel: 0.012, maxSyl: 0.075, cons: 0.06, cps: 50, send: 0.1 }
+    nier: { name: 'Round one, closer', kind: 'chirp', w1: 'triangle', harm: 0.14, lp: 3600, gain: 0.33, base: 560, bounce: 0.4, mono: true, step: true, att: 0.003, rel: 0.012, maxSyl: 0.075, cons: 0.06, cps: 50, send: 0.24 }
   };
   /* other takes of a look's voice, for listening side by side (the listening room): round one's, and where the look's
      own voice is new, today's sound */
@@ -178,7 +178,7 @@
     basic: { round1: { name: 'Round one', kind: 'chirp', light: false, gain: 0.26, base: 740, bounce: 1.3, att: 0.004, rel: 0.014, maxSyl: 0.08, cons: 0.1, cps: 35, fifth: 0.1, send: 0.2 } },
     phosphor: { round1: { name: 'Round one', kind: 'pulse', orig: false, gain: 0.5, maxSyl: 0.04, lp: 3200, cps: 48 } },
     teletype: { round1: { name: 'Round one', kind: 'struck', inst: 'celesta', gain: 0.36, cps: 44, key: 0.5 } },
-    nier: { round1: { name: 'Round one (more room)', send: 0.22 } }
+    nier: { round1: { name: 'Round one (more room)', send: 0.22, room: 'ruin' } }
   };
   const WAVE = new WeakMap();
   // the buzz in the throat: every harmonic, each weaker than the last; "warm" falls off faster than "bright"
@@ -210,7 +210,7 @@
     o = o || {};
     const c = E.ctx, M = MOOD[o.mood] || MOOD.idle, C = CREW[o.crew || 'pip'] || CREW.pip, D = Object.assign({}, V.dress || {}, o.dress || {});
     const t0 = o.at == null ? E.now() + 0.02 : o.at, music = o.music && o.music.playing ? o.music : null;
-    const out = o.out || E.chain('voice', { gain: o.trim != null ? o.trim : (V.trim || 1), pan: o.pan || 0, send: V.send == null ? 0.22 : V.send });
+    const out = o.out || E.chain('voice', { gain: o.trim != null ? o.trim : (V.trim || 1), pan: o.pan || 0, send: V.send == null ? 0.22 : V.send, room: V.room });
     const end = script.reduce((m, s) => Math.max(m, s.t + s.d), 0), stopAt = t0 + end + 0.5, live = [];
     const last = new Map();
     const setT = (p, v, t, tc) => { const lt = last.get(p) || 0; t = Math.max(t, lt + 1e-4, t0); last.set(p, t); p.setTargetAtTime(v, t, Math.max(0.0008, tc)); };
@@ -264,7 +264,7 @@
         mouthTL.push({ t0: ts, t1: ts + Math.min(0.09, s.d), open: s.vow ? 0.9 : 0.55, round: 0 });
       });
       return { end: stopAt, stop(t) {
-        if (mono) { try { mono.env.gain.cancelScheduledValues(t); mono.env.gain.setTargetAtTime(0, t, 0.006); } catch (e) { /* gone */ } live.forEach((n) => { try { n.stop(t + 0.08); } catch (e) { /* stopped */ } }); }
+        if (mono) { try { mono.env.gain.cancelScheduledValues(t); mono.env.gain.setTargetAtTime(0, t, 0.02); } catch (e) { /* gone */ } live.forEach((n) => { try { n.stop(t + 0.15); } catch (e) { /* stopped */ } }); }
         stops.forEach((g) => { if (g) try { g.gain.cancelScheduledValues(t); g.gain.setTargetAtTime(0, t, 0.01); } catch (e) { /* gone */ } }); mouthTL = [];
       } };
     }
@@ -362,9 +362,10 @@
     return {
       end: stopAt,
       stop(t) {
-        try { env.gain.cancelScheduledValues(t); env.gain.setTargetAtTime(0, t, 0.012); } catch (e) { /* already gone */ }
-        if (fg) try { fg.gain.cancelScheduledValues(t); fg.gain.setTargetAtTime(0, t, 0.005); } catch (e) { /* already gone */ }
-        live.forEach((n) => { try { n.stop(t + 0.1); } catch (e) { /* already stopped */ } });
+        // (a line cut short by the next one fades out; it is not chopped)
+        try { env.gain.cancelScheduledValues(t); env.gain.setTargetAtTime(0, t, 0.03); } catch (e) { /* already gone */ }
+        if (fg) try { fg.gain.cancelScheduledValues(t); fg.gain.setTargetAtTime(0, t, 0.01); } catch (e) { /* already gone */ }
+        live.forEach((n) => { try { n.stop(t + 0.2); } catch (e) { /* already stopped */ } });
         mouthTL = mouthTL.filter((m) => m.t0 < t);
       }
     };
@@ -392,7 +393,7 @@
 
   /* ------------------------------------------------------------------ scripted sounds without words */
   const VS = {
-    wake: [{ t: 0, d: 0.34, v: ['a'], p: -3, p2: 4, on: ['H', 'h'], g: 0.8, leg: true }, { t: 0.34, d: 0.42, v: ['o'], p: 4, p2: -6, g: 0.75 }, { t: 0.9, d: 0.09, v: ['e'], p: 5, p2: 7, on: ['P', 'p'] }, { t: 1.0, d: 0.13, v: ['i'], p: 9, p2: 11 }],
+    wake: [{ t: 0, d: 0.34, v: ['a'], p: -1, p2: 4, on: ['H', 'h'], g: 0.75, leg: true }, { t: 0.34, d: 0.4, v: ['o'], p: 4, p2: -2, g: 0.7 }, { t: 0.9, d: 0.09, v: ['e'], p: 5, p2: 7, on: ['P', 'p'] }, { t: 1.0, d: 0.13, v: ['i'], p: 9, p2: 11 }],
     sleep: [{ t: 0, d: 0.5, v: ['a'], p: 1, p2: -6, on: ['H', 'h'], g: 0.7, leg: true }, { t: 0.5, d: 0.42, v: ['m'], p: -6, p2: -9, g: 0.55 }],
     think: [{ t: 0, d: 0.18, v: ['m'], p: 0, p2: 2, g: 0.8, leg: true }, { t: 0.18, d: 0.32, v: ['m'], p: 2, p2: -1, g: 0.8 }],
     happy: [{ t: 0, d: 0.09, v: ['e'], p: 3, p2: 5, on: ['L', 'y'], leg: true }, { t: 0.09, d: 0.17, v: ['a'], p: 7, p2: 10 }, { t: 0.33, d: 0.06, v: ['i'], p: 12, p2: 11, on: ['H', 'h'], g: 0.6 }, { t: 0.41, d: 0.06, v: ['i'], p: 10, p2: 9, on: ['H', 'h'], g: 0.55 }, { t: 0.49, d: 0.07, v: ['i'], p: 8, p2: 6, on: ['H', 'h'], g: 0.5 }],
@@ -435,7 +436,12 @@
     }
     return Object.assign(tm, { handle: h, syllables: R.syl.length });
   }
-  function vocal(E, V, name, o) { const s = scriptOf(V, name); return s ? speak(E, V, s, o || {}) : null; }
+  /* a sound without words. A voice of struck notes makes it with the creature's voice it has underneath (a yawn or a
+     cheer in bells is only an arpeggio), a little closer than it murmurs under a line */
+  function vocal(E, V, name, o) {
+    if (V.under) V = Object.assign({}, V.under, { gain: V.under.gain * 2.4, trim: V.trim });
+    const s = scriptOf(V, name); return s ? speak(E, V, s, o || {}) : null;
+  }
 
   PS.voice = { VOX, ALT, MOOD, CREW, VS, FORM, read, blips, timing, say, vocal, speak, mouthAt, charTimes, clearMouth() { mouthTL = []; } };
 })(window);

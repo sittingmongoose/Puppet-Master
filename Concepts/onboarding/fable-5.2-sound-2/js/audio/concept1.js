@@ -68,8 +68,9 @@
       }
     },
     tracks: {
-      mel: { inst: 'glass', gain: 0.42, pan: 0.05, send: 0.45, role: 'lead', from: 0 },
-      harp: { kind: 'pat', inst: 'harp', pat: "1 2 3 2 1' 2 3 2", lo: 57, gain: 0.2, pan: -0.22, send: 0.4, role: 'arp', from: 1 },
+      mel: { inst: 'glass', gain: 0.5, pan: 0.05, send: 0.45, role: 'lead', from: 0 },
+      // (the harp leaves every other eighth empty: at first it ran without a gap and the tune had to sing through it)
+      harp: { kind: 'pat', inst: 'harp', pat: "1 _ 3 _ 2 _ 3 _ | 1 _ 3 _ 1' _ 3 _", lo: 57, gain: 0.16, pan: -0.22, send: 0.4, role: 'arp', from: 1 },
       bass: { kind: 'bass', inst: 'woodbass', pat: 'r _ _ f _ _ r? _', lo: 45, gain: 0.27, send: 0.12, role: 'bass', from: 2, gate: 0.85 },
       shk: { kind: 'drum', pat: 'm? m? m m? m? m? m m?', gain: 0.07, pan: 0.3, send: 0.3, from: 3, role: 'perc' },
       drops: { kind: 'pat', inst: 'drop', pat: "_ _ _ _ _ _ 3' _ | _ _ _ 2' _ _ _ _", lo: 74, gain: 0.09, pan: 0.4, send: 0.5, from: 3 },

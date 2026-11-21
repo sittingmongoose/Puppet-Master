@@ -1,20 +1,18 @@
-/* The listening room (index.html): every tune, voice and sound of the three concepts, side by side (Fable 5.2). */
+/* The listening room (index.html), round two (Fable 5.2): every look's four songs, Pip's voice and the window's
+   sounds on one page, with the controls saying what they do: 1 pick a song, 2 walk through the onboarding. */
 (function () {
   'use strict';
-  const P = window.PipSound, L = window.PMLogo, TH = L.THEMES, root = document.documentElement, body = document.body;
+  const P = window.PipSound, PS = window.PS5, L = window.PMLogo, TH = L.THEMES, root = document.documentElement, body = document.body;
   const $ = (s) => document.querySelector(s), esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-  const KITS = ['friendly', 'glass', 'basic', 'phosphor', 'teletype', 'nier'], NAME = { friendly: 'Friendly', glass: 'Glass', basic: 'Basic', phosphor: 'Retro Dark', teletype: 'Retro Light', nier: 'NieR' };
+  const KITS = P.KITS, NAME = { friendly: 'Friendly', glass: 'Glass', basic: 'Basic', phosphor: 'Retro Dark', teletype: 'Retro Light', nier: 'NieR' };
   const PART = { lead: 'tune', bass: 'bass', comp: 'chords', arp: 'arpeggio', drum: 'drums', perc: 'percussion', sparkle: 'bells' };
-  const STEPS = [['Asleep', { asleep: true, chapter: 0, index: 0 }], ['Welcome', { asleep: false, chapter: 0, index: 0 }], ['Computer', { asleep: false, chapter: 1, index: 2 }], ['Project', { asleep: false, chapter: 2, index: 5 }], ['AI', { asleep: false, chapter: 3, index: 9 }], ['Ready', { asleep: false, chapter: 4, index: 10 }]];
+  const FAMILY = [['encore', 'Encore'], ['band', 'House Band'], ['waltz', 'Marionette Theatre'], ['original', 'Original']];
+  // where the person is: what the onboarding tells the sound at each of these moments
+  const STEPS = [['Asleep', { asleep: true, chapter: 0, index: 0 }], ['Welcome', { asleep: false, chapter: 0, index: 0 }], ['The computer', { asleep: false, chapter: 1, index: 2 }], ['Project', { asleep: false, chapter: 2, index: 5 }], ['AI', { asleep: false, chapter: 3, index: 9 }], ['Ready', { asleep: false, chapter: 4, index: 10 }]];
   const CHAPTER = ['welcome', 'computer', 'project', 'ai', 'ready'];
-  const LISTEN = {
-    c1: ["Today's tunes, note for note, in a fuller arrangement: a harmony, a bass, an inner part, light percussion.", 'Parts join by chapter; asleep, it is the theme alone, as today.', 'A new bridge makes each one an AABA song.'],
-    c2: ['Each look is a genre: ukulele trio, dream pop, jazz trio, chiptune, typewriter rag, piano and music box.', 'Step through "how far along": a player joins at each step.', 'Clicks are hits from the band, on the beat and in the chord.'],
-    c3: ['Everything is in three: waltzes, and two slow six-eights.', 'Clicks are stage machinery: ratchets, pulleys, a knock, a bell.', 'Typing a name plays the music box; NieR turns to major at Ready.'],
-    orig: ['A quiet eight-bar tune behind the window, with rests.', 'Kept here unchanged, so the three can be judged against it.']
-  };
-  const S = { theme: root.getAttribute('data-theme') || 'friendly-dark', step: 5, playing: false, concept: 'c1' };
+  const S = { theme: root.getAttribute('data-theme') || 'friendly-dark', step: 1, playing: false, walk: 0 };
   const scheme = () => TH[S.theme].scheme, themeOfKit = (k) => ({ phosphor: 'retro-dark', teletype: 'retro-light' }[k] || k + '-' + scheme());
+  const bpmOf = (song) => (song.meter === 6 ? Math.round(song.bpm / 3) : Math.round(song.bpm)), meterOf = (song) => (song.meter === 4 ? 'four' : song.meter === 3 ? 'three' : 'six-eight');
   let stage = null;
 
   function applyTheme(t, fromRoot) {
@@ -26,7 +24,7 @@
     if (stage) { stage.setTheme(t); scene(); }
     P.setTheme(t);
     $('#rmLook').value = t;
-    sync();
+    songs(); steps(); voices(); sync();
   }
   function scene(say) {
     if (!stage) return;
@@ -35,51 +33,88 @@
     stage.direct({ chapter: CHAPTER[st.chapter], props: [], pip: { mood: S.playing ? 'happy' : 'idle' } });
     if (say) stage.sayNow(say[0], say[1]);
   }
-  function setStep(i) {
-    S.step = i; P.progress(STEPS[i][1]);
-    if (stage) { stage.sleepZ = !!STEPS[i][1].asleep; if (stage.px) stage.px.sleep = stage.sleepZ; scene(); }
+  /* the person is here now. sound: also play what the window plays on the way there (the step, or the chapter's sting) */
+  function setStep(i, sound) {
+    const was = STEPS[S.step][1], now = STEPS[i][1];
+    S.step = i;
+    if (sound && S.playing && !now.asleep && i > 0) { if (was.asleep) P.play('wake'); else P.play('next', { chapter: now.chapter }); }
+    P.progress(now);
+    if (stage) { stage.sleepZ = !!now.asleep; if (stage.px) stage.px.sleep = stage.sleepZ; scene(); }
     sync();
   }
-  function play(concept, kit) {
+  function play(id, kit) {
     P.unlock();
-    if (concept) { S.concept = concept; P.setConcept(concept); }
-    if (kit) applyTheme(themeOfKit(kit));
+    if (kit && kit !== P.kit) applyTheme(themeOfKit(kit));
+    if (id) P.setSong(id, kit || P.kit);
     P.progress(STEPS[S.step][1]);
     P.loop('bed', 1); S.playing = true; scene(); sync();
   }
-  function stop() { P.loop('bed', 0); P.hush(); S.playing = false; scene(); sync(); }
+  function stop() { walk(false); P.loop('bed', 0); P.hush(); S.playing = false; scene(); sync(); }
+  /* walk it for me: from Pip asleep to Ready, a step every two bars or so, so the parts are heard joining */
+  function walk(on) {
+    clearTimeout(S.walk); S.walk = 0;
+    $('#rmWalk').setAttribute('aria-pressed', String(!!on));
+    if (!on) return;
+    const next = (i) => {
+      setStep(i, i > 0);
+      if (i >= STEPS.length - 1) { S.walk = setTimeout(() => walk(false), 400); return; }
+      const song = P.song().song, bar = (song.meter || 4) * 60 / song.bpm;
+      S.walk = setTimeout(() => next(i + 1), Math.max(5200, Math.min(9500, bar * 2 * 1000 + 400)));
+    };
+    play(); next(0);
+  }
 
+  /* ------------------------------------------------------------------ what the page shows */
+  // which parts are in at a step, for one song of this look
+  function partsAt(entry, st) {
+    const song = entry.song; if (!song.tracks) return st.asleep || st.chapter < 1 ? ['tune', 'bass'] : ['tune', 'bass', 'fifths'];
+    const I = entry.level(st), out = [];
+    Object.keys(song.tracks).forEach((n) => { const T = song.tracks[n], on = T.when ? false : T.at ? T.at.indexOf(I) >= 0 : I >= (T.from || 0) && I <= (T.to == null ? 99 : T.to), name = PART[T.role]; if (on && name && out.indexOf(name) < 0) out.push(name); });
+    return out;
+  }
+  function songs() {
+    const list = P.songs();
+    $('#rmLookName').textContent = 'in ' + NAME[P.kit];
+    $('#rmSongs').innerHTML = list.map((s) => { const e = PS.SONGS[P.kit].find((x) => x.id === s.id); return `<button type="button" class="rm-song" role="radio" aria-checked="${s.chosen}" data-song="${s.id}"><b>${esc(s.title)}${s.isDefault ? '<i class="rm-dot" title="The song this look starts with"></i>' : ''}</b><span>${s.id === 'original' ? 'The tune of today' : esc(s.family)} · ${bpmOf(e.song)} BPM</span></button>`; }).join('');
+  }
+  function steps() {
+    const e = PS.SONGS[P.kit].find((x) => x.id === P.song().id) || PS.SONGS[P.kit][0]; let before = [];
+    $('#rmSteps').innerHTML = STEPS.map(([n, st], i) => { const now = partsAt(e, st), added = now.filter((x) => before.indexOf(x) < 0), gone = before.filter((x) => now.indexOf(x) < 0); before = now; const note = i === 0 ? now.join(', ') + ' alone' : (added.length ? '+ ' + added.join(', ') : gone.length ? 'fewer parts' : 'the same parts'); return `<button type="button" class="rm-step" role="radio" aria-checked="${i === S.step}" data-step="${i}"><b>${n}</b><span>${esc(note)}</span></button>`; }).join('');
+  }
+  function voices() {
+    const list = P.voices();
+    $('#rmVoices').hidden = list.length < 2;
+    $('#rmVoices').innerHTML = '<span class="rm-vk">Which take</span>' + list.map((v, i) => `<button type="button" class="rm-btn" role="radio" aria-checked="${v.chosen}" data-voice="${v.id || ''}">${i === 0 ? 'Round two: ' : ''}${esc(v.name)}</button>`).join('');
+  }
   function sync() {
-    const c = P.concept, song = P.song(), kit = P.kit, C = P.CONCEPTS().find((x) => x.id === c);
+    const e = P.song(), kit = P.kit, song = e.song;
     $('#rmHint').hidden = P.unlocked;
-    $('#rmSound').setAttribute('aria-pressed', String(!P.muted)); $('#rmSound').textContent = P.muted ? 'Sound off' : 'Sound on';
-    $('#rmTitle').textContent = !S.playing ? 'Nothing playing' : c === 'orig' ? `${NAME[kit]} · PMConcept7 today` : `${NAME[kit]} · “${song.title}”`;
-    $('#rmMeta').textContent = !S.playing ? 'Pick a tune below, or press Play.' : c === 'orig' ? "the tune PMConcept7's onboarding plays now" : `${C.name} · ${song.meter === 6 ? Math.round(song.bpm / 3) : song.bpm} BPM in ${song.meter === 4 ? 'four' : song.meter === 3 ? 'three' : 'six-eight'}`;
-    const seen = {}, rows = c === 'orig' ? [] : P.parts().filter((q) => q.role && PART[q.role]).filter((q) => { if (seen[q.role]) { seen[q.role].on = seen[q.role].on || q.on; return false; } seen[q.role] = q; return true; });
+    $('#rmTitle').textContent = P.muted ? 'Sound is off' : !S.playing ? 'Nothing playing' : `${NAME[kit]} · ${e.id === 'original' ? 'the original tune' : '“' + e.title + '”'}`;
+    $('#rmMeta').textContent = P.muted ? 'Switch it on in the sound menu.' : !S.playing ? 'Pick a song and press Play.' : `${bpmOf(song)} BPM in ${meterOf(song)}${P.jukebox ? ' · jukebox' : ''}`;
+    const seen = {}, rows = !S.playing ? [] : P.parts().filter((q) => q.role && PART[q.role]).filter((q) => { if (seen[q.role]) { seen[q.role].on = seen[q.role].on || q.on; return false; } seen[q.role] = q; return true; });
     $('#rmParts').innerHTML = rows.map((q) => `<i class="${q.on ? 'on' : ''}">${PART[q.role]}</i>`).join('');
-    document.querySelectorAll('#rmSteps button').forEach((b, i) => b.setAttribute('aria-pressed', String(i === S.step)));
-    document.querySelectorAll('.rm-cell').forEach((b) => b.setAttribute('aria-pressed', String(S.playing && b.dataset.c === c && b.dataset.k === kit)));
-    document.querySelectorAll('[data-open-concept]').forEach((a) => { a.href = a.dataset.openConcept + '?theme=' + encodeURIComponent(S.theme); });
+    document.querySelectorAll('#rmSteps .rm-step').forEach((b, i) => b.setAttribute('aria-checked', String(i === S.step)));
+    document.querySelectorAll('#rmSongs .rm-song').forEach((b) => { b.setAttribute('aria-checked', String(b.dataset.song === e.id)); b.toggleAttribute('data-playing', S.playing && !P.muted && b.dataset.song === e.id); });
+    document.querySelectorAll('.rm-cell').forEach((b) => b.setAttribute('aria-pressed', String(S.playing && !P.muted && b.dataset.k === kit && b.dataset.song === e.id)));
+    $('#rmJuke').setAttribute('aria-pressed', String(P.jukebox));
+    $('#rmOpen').href = 'onboarding.html?theme=' + encodeURIComponent(S.theme);
   }
 
   /* ------------------------------------------------------------------ building the page */
   $('#rmLook').innerHTML = L.THEME_ORDER.map((t) => `<option value="${t}">${esc(TH[t].label)}</option>`).join('');
   $('#rmLook').addEventListener('change', (e) => applyTheme(e.target.value));
-  $('#rmSteps').innerHTML = STEPS.map(([n], i) => `<button type="button" class="rm-btn" data-step="${i}" aria-pressed="false">${n}</button>`).join('');
-  $('#rmSteps').addEventListener('click', (e) => { const b = e.target.closest('[data-step]'); if (b) { P.unlock(); setStep(+b.dataset.step); } });
-  $('#rmMix').innerHTML = [['music', 'Music'], ['voice', 'Pip'], ['sfx', 'Effects']].map(([k, l]) => `<label>${l}<input type="range" min="0" max="150" step="5" value="${Math.round(P.volume(k) * 100)}" data-vol="${k}" aria-label="${l} volume"></label>`).join('');
-  $('#rmMix').addEventListener('input', (e) => { const k = e.target.dataset.vol; if (k) P.volume(k, e.target.value / 100); });
+  $('#rmSongs').addEventListener('click', (e) => { const b = e.target.closest('[data-song]'); if (b) play(b.dataset.song); });
+  $('#rmSteps').addEventListener('click', (e) => { const b = e.target.closest('[data-step]'); if (!b) return; P.unlock(); walk(false); if (!S.playing) play(); setStep(+b.dataset.step, true); });
   $('#rmPlay').addEventListener('click', () => play());
   $('#rmStop').addEventListener('click', stop);
-  [['#rmWork', 'work'], ['#rmPower', 'power']].forEach(([id, name]) => $(id).addEventListener('click', (e) => { const on = e.currentTarget.getAttribute('aria-pressed') !== 'true'; e.currentTarget.setAttribute('aria-pressed', String(on)); P.loop(name, on ? 1 : 0); if (stage) { stage.work = name === 'work' ? on : stage.work; } setTimeout(sync, 0); }));
-  $('#rmSound').addEventListener('click', () => { P.toggle(); if (P.muted) S.playing = false; sync(); });
+  $('#rmWalk').addEventListener('click', () => walk($('#rmWalk').getAttribute('aria-pressed') !== 'true'));
+  $('#rmJuke').addEventListener('click', () => { P.unlock(); P.setJukebox(!P.jukebox); if (P.jukebox && !S.playing) play(); sync(); });
+  $('#rmSound').addEventListener('click', (e) => window.PipSoundMenu.toggle(e.currentTarget));
+  [['#rmWork', 'work'], ['#rmPower', 'power']].forEach(([id, name]) => $(id).addEventListener('click', (e) => { const on = e.currentTarget.getAttribute('aria-pressed') !== 'true'; e.currentTarget.setAttribute('aria-pressed', String(on)); P.loop(name, on ? 1 : 0); if (stage && name === 'work') stage.work = on; setTimeout(sync, 0); }));
 
-  const all = P.CONCEPTS(), PAGE = ['concept-1.html', 'concept-2.html', 'concept-3.html'];   // (named whole, so a single-file build can rename them)
-  $('#rmConcepts').innerHTML = all.filter((c) => c.id !== 'orig').map((c, i) => `<div class="rm-card"><h3>${i + 1} · ${esc(c.name)}</h3><p>${esc(c.blurb)}</p><ul>${LISTEN[c.id].map((x) => `<li>${esc(x)}</li>`).join('')}</ul><div class="rm-row"><button type="button" class="rm-btn rm-primary" data-play-concept="${c.id}">Play in this look</button><a class="rm-btn" data-open-concept="${PAGE[i]}" href="${PAGE[i]}">Open the onboarding</a></div></div>`).join('');
-  $('#rmConcepts').addEventListener('click', (e) => { const b = e.target.closest('[data-play-concept]'); if (b) play(b.dataset.playConcept, P.kit); });
-  const cell = (c, k) => { const C = window.PS5.concepts[c], song = C && C.looks[k].song; return `<button type="button" class="rm-cell" data-c="${c}" data-k="${k}" aria-pressed="false" aria-label="${NAME[k]}, ${c === 'orig' ? 'PMConcept7 today' : C.name + ': ' + song.title}"><b><span class="rm-eq" aria-hidden="true"><i></i><i></i><i></i></span>${c === 'orig' ? 'Today\'s tune' : esc(song.title)}</b><span>${c === 'orig' ? 'eight quiet bars' : (song.meter === 6 ? Math.round(song.bpm / 3) : song.bpm) + ' BPM · in ' + (song.meter === 4 ? 'four' : song.meter === 3 ? 'three' : 'six-eight')}</span></button>`; };
-  $('#rmGrid').innerHTML = '<span class="rm-hd"></span>' + all.map((c, i) => `<span class="rm-hd">${c.id === 'orig' ? 'Today' : (i + 1) + ' · ' + esc(c.name)}</span>`).join('') + KITS.map((k) => `<span class="rm-look">${NAME[k]}</span>` + all.map((c) => cell(c.id, k)).join('')).join('');
-  $('#rmGrid').addEventListener('click', (e) => { const b = e.target.closest('.rm-cell'); if (!b) return; if (S.playing && b.getAttribute('aria-pressed') === 'true') { stop(); return; } play(b.dataset.c, b.dataset.k); });
+  const cell = (k, id) => { const e = PS.SONGS[k].find((x) => x.id === id), song = e.song, def = PS.DEFAULT_SONG[k] === id; return `<button type="button" class="rm-cell" data-k="${k}" data-song="${id}" aria-pressed="false" aria-label="${NAME[k]}: ${id === 'original' ? 'the original tune' : esc(song.title)}${def ? ', the song this look starts with' : ''}"><b><span class="rm-eq" aria-hidden="true"><i></i><i></i><i></i></span>${id === 'original' ? 'Original' : esc(song.title)}${def ? '<i class="rm-dot"></i>' : ''}</b><span>${bpmOf(song)} BPM · in ${meterOf(song)}</span></button>`; };
+  $('#rmGrid').innerHTML = '<span class="rm-hd"></span>' + FAMILY.map(([, n]) => `<span class="rm-hd">${n}</span>`).join('') + KITS.map((k) => `<span class="rm-look">${NAME[k]}</span>` + FAMILY.map(([id]) => cell(k, id)).join('')).join('');
+  $('#rmGrid').addEventListener('click', (e) => { const b = e.target.closest('.rm-cell'); if (!b) return; if (S.playing && b.getAttribute('aria-pressed') === 'true') { stop(); return; } play(b.dataset.song, b.dataset.k); });
 
   const MOODS = ['idle', 'happy', 'wonder', 'think', 'alert', 'oops', 'watch', 'sleep'];
   $('#rmMood').innerHTML = MOODS.map((m) => `<option value="${m}">${m[0].toUpperCase() + m.slice(1)}</option>`).join(''); $('#rmMood').value = 'happy';
@@ -89,26 +124,35 @@
   $('#rmSay').addEventListener('click', () => say($('#rmText').value, $('#rmMood').value));
   $('#rmText').addEventListener('keydown', (e) => { if (e.key === 'Enter') say($('#rmText').value, $('#rmMood').value); });
   $('#rmLines').addEventListener('click', (e) => { const b = e.target.closest('[data-line]'); if (b) { const [t, m] = LINES[+b.dataset.line]; $('#rmText').value = t; $('#rmMood').value = m; say(t, m); } });
+  $('#rmVoices').addEventListener('click', (e) => { const b = e.target.closest('[data-voice]'); if (!b) return; P.setVoice(b.dataset.voice || null); voices(); say($('#rmText').value, $('#rmMood').value); });
 
-  const EV = [['The window', [['tap', 'Tap'], ['select', 'Choose'], ['toggleOn', 'Switch on'], ['toggleOff', 'Switch off'], ['next', 'Continue'], ['back', 'Back'], ['open', 'Open'], ['close', 'Close'], ['key', 'Type a letter'], ['warn', 'Something is wrong'], ['tip', 'Ask Pip (?)']]],
+  const EV = [['The window', [['tap', 'Tap'], ['select', 'Choose'], ['toggleOn', 'Switch on'], ['toggleOff', 'Switch off'], ['next', 'Continue'], ['back', 'Back'], ['open', 'Open'], ['close', 'Close'], ['key', 'Type a letter'], ['warn', 'Not allowed'], ['tip', 'Ask Pip (?)'], ['busy', 'A busy click']]],
     ['The stage', [['lower', 'A prop comes down'], ['land', 'It lands'], ['lift', 'It lifts away'], ['hop', 'Pip hops'], ['sparkle', 'Sparkle'], ['rail', 'Pip rides the rail'], ['tick', 'Review tick'], ['block', 'A block is set'], ['power', 'AI connects'], ['chapter', 'New chapter'], ['cheer', 'Cheer'], ['confetti', 'Confetti'], ['crew', 'The crew']]],
     ['Pip, without words', [['wake', 'Wakes'], ['sleep', 'Dozes off'], ['think', 'Thinks'], ['happy', 'Happy'], ['wink', 'Winks'], ['alert', 'Notices']]]];
-  $('#rmEvents').innerHTML = EV.map(([g, list]) => `<span class="rm-evgroup">${g}</span>` + list.map(([id, l]) => `<button type="button" class="rm-ev" data-ev="${id}">${l}</button>`).join('')).join('');
+  $('#rmEvents').innerHTML = EV.map(([g, list]) => `<span class="rm-evgroup">${g}</span>` + list.map(([id, l]) => `<button type="button" class="rm-ev" data-ev="${id}"${id === 'busy' ? ' title="Everything one Continue can set off at once: the step, a new chapter, props leaving and landing, Pip\'s reaction and a line. It is heard as one sound, then Pip."' : ''}>${l}</button>`).join('')).join('');
   const counts = {};
   $('#rmEvents').addEventListener('click', (e) => {
     const b = e.target.closest('[data-ev]'); if (!b) return;
-    P.unlock(); const ev = b.dataset.ev, n = counts[ev] = ((counts[ev] == null ? -1 : counts[ev]) + 1);
-    const op = { index: ev === 'key' ? n : n % 4, count: 4, chapter: STEPS[S.step][1].chapter };
+    P.unlock(); const ev = b.dataset.ev, n = counts[ev] = ((counts[ev] == null ? -1 : counts[ev]) + 1), ch = STEPS[S.step][1].chapter;
+    if (ev === 'busy') {
+      // everything the window and the stage ask for when one Continue opens a new chapter
+      const to = (ch % 4) + 1; P.progress({ chapter: ch }); P.play('next', { chapter: to }); P.play('happy'); P.play('lift'); P.play('lift'); P.play('lower');
+      setTimeout(() => { P.play('lower'); P.play('chapter', { chapter: to }); }, 200); setTimeout(() => { P.play('land'); P.play('land'); P.play('sparkle'); }, 380);
+      setTimeout(() => say('Right here works great.', 'happy'), 120); setTimeout(() => P.progress({ chapter: ch }), 2600);
+      return;
+    }
+    const op = { index: ev === 'key' ? n : n % 4, count: 4, chapter: ch };
     if (ev === 'chapter') op.chapter = (n % 4) + 1;
     P.play(ev, op);
     if (stage && !stage.reduced) { if (ev === 'hop') stage.hop(0.6); if (/cheer|confetti|crew|sparkle/.test(ev)) stage.feel('happy', 1400); if (ev === 'warn') stage.feel('oops', 1400); if (ev === 'confetti' && stage.famName !== 'nier') { const sf = stage.sfx; stage.sfx = () => {}; stage.confetti(40); stage.sfx = sf; } }
   });
 
-  /* ------------------------------------------------------------------ Pip's stage, and the look */
+  /* ------------------------------------------------------------------ Pip's stage, and the look
+     The stage stands in the same upright frame it has in the onboarding window, so every world is laid out as it was
+     drawn for (in round one's wide box the two Retro tubes drew Pip far too large). */
   try {
     stage = new window.PipStage.Stage($('#rmStage'), { theme: S.theme, layout: 'portrait', reduced: root.getAttribute('data-reduced-motion') === '1' });
-    const fit = () => { const w = $('#rmStage').parentNode.getBoundingClientRect().width; stage.setLayout(w < 430 ? 'compact' : 'portrait'); scene(); };
-    new ResizeObserver(fit).observe($('#rmStage').parentNode); fit();
+    new ResizeObserver(() => { stage.setLayout('portrait'); scene(); }).observe($('#rmStage').parentNode);
   } catch (e) { stage = null; }
   new MutationObserver(() => {
     if (applyTheme.self) { applyTheme.self = false; return; }
@@ -118,9 +162,10 @@
   }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-reduced-motion'] });
   const mq = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : null;
   if (mq && mq.matches && stage) { stage.setReduced(true); P.setReduced(true); }
-  ['concept', 'progress', 'unlock', 'mute', 'music', 'orig'].forEach((t) => P.on(t, sync));
+  ['progress', 'unlock', 'mute', 'music', 'jukebox'].forEach((t) => P.on(t, () => setTimeout(sync, 0)));
+  P.on('song', () => setTimeout(() => { songs(); steps(); sync(); }, 0));
   try { const q = new URLSearchParams(location.search); if (TH[q.get('theme')]) S.theme = q.get('theme'); } catch (e) { /* file:// */ }
   applyTheme(S.theme);
-  setStep(5);
-  window.__room = { S, play, stop, stage: () => stage };
+  setStep(1);
+  window.__room = { S, play, stop, walk, setStep, stage: () => stage };
 })();

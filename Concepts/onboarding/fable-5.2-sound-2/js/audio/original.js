@@ -84,7 +84,8 @@
       mel: [[4, _, _, 3, 2, _, _, _], [0, _, _, _, _, _, 2, _], [2, _, _, 3, 4, _, 5, _], [4, _, _, _, _, _, _, _], [_, _, _, _, 0, _, _, _], [7, _, _, 6, 4, _, _, _], [5, _, _, 4, 2, _, 3, _], [2, _, _, _, _, _, _, _]],
       low: [0, _, -2, _, 0, -3, _, -1],
       note: (E, o, t, m) => { const c = E.ctx, f = mf(m); tone(c, o, t, { f, d: 1.7, g: 0.034, a: 0.004 }); tone(c, o, t, { f: f * 2, d: 0.6, g: 0.008, a: 0.003 }); },
-      bass: (E, o, t, m, k) => tone(E.ctx, o, t, { f: mf(m + 12), d: 2, g: 0.02 * (k || 1), a: 0.03 }),
+      // (refined: the bass note is let go a little sooner than today's two seconds, so its tail does not drone under the next bar)
+      bass: (E, o, t, m, k) => tone(E.ctx, o, t, { f: mf(m + 12), d: 1.5, g: 0.02 * (k || 1), a: 0.03 }),
       extra: (E, o, t, P, bar, i) => { if (bar === 0 && i === 0) I.pad(E, o, t, P.chord(), 5, 0.02, 'sine', 1600, 1.8); } }
   };
   const SCALE = { major: [0, 2, 4, 5, 7, 9, 11], minor: [0, 2, 3, 5, 7, 8, 10] };

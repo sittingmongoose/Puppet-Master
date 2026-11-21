@@ -70,8 +70,8 @@
     },
     tracks: {
       // asleep: the tune's own long notes, hummed on a celesta
-      hum: { inst: 'celesta', gain: 0.3, send: 0.5, role: 'lead', at: [0] },
-      mel: { inst: 'vibes', gain: 0.42, pan: 0.08, send: 0.4, role: 'lead', from: 1 },
+      hum: { inst: 'softkeys', oct: -1, gain: 0.34, send: 0.45, role: 'lead', at: [0] },
+      mel: { inst: 'vibes', gain: 0.36, pan: 0.08, send: 0.4, role: 'lead', from: 1, vel: 0.92 },
       keys: { kind: 'pat', inst: 'epiano', pat: 'x. _ _ x. _ _ x? _', lo: 57, voices: 3, strum: 0.008, gain: 0.2, pan: -0.18, send: 0.3, role: 'comp', from: 1 },
       bass: { kind: 'bass', inst: 'upright', pat: 'r _ _ r? f _ _ a', lo: 43, gain: 0.26, send: 0.1, role: 'bass', from: 2, gate: 0.8 },
       brsh: { kind: 'drum', pat: 'b? _ b _ b? _ b _', gain: 0.13, pan: 0.12, send: 0.3, from: 3, role: 'drum' },
@@ -109,7 +109,7 @@
     tracks: {
       mel: { inst: 'vibes', gain: 0.4, pan: 0.1, send: 0.35, role: 'lead', from: 0 },
       // asleep: the tune over soft broken chords on the felt piano
-      lull: { kind: 'pat', inst: 'felt', pat: '1 _ 3 _ 2 _ 3 _', lo: 52, gain: 0.2, pan: -0.15, send: 0.35, role: 'comp', at: [0], gate: 1.3 },
+      lull: { kind: 'pat', inst: 'felt', pat: '1 _ _ _ 3 _ _ _', lo: 52, gain: 0.18, pan: -0.15, send: 0.35, role: 'comp', at: [0], gate: 1.6 },
       keys: { kind: 'pat', inst: 'felt', pat: '_ _ x. _ _ x? _ _', lo: 55, voices: 3, strum: 0.01, gain: 0.2, pan: -0.2, send: 0.3, role: 'comp', from: 1 },
       bass: { kind: 'bass', inst: 'upright', pat: 'r - - - f - - a', lo: 40, gain: 0.24, send: 0.1, role: 'bass', from: 1, gate: 0.85 },
       brsh: { kind: 'drum', pat: 'b? _ b _ b? _ b _', gain: 0.12, pan: 0.1, send: 0.3, from: 2, role: 'drum' },
@@ -146,13 +146,13 @@
       lull: { inst: 'chipsoft', gain: 0.3, send: 0.35, role: 'lead', at: [0, 1], hum: 0, gate: 1 },
       bass: { kind: 'bass', inst: 'chiptri', pat: 'r o r o r o r o', lo: 40, gain: 0.36, send: 0.08, role: 'bass', from: 1, hum: 0, gate: 0.7 },
       mel: { inst: 'chip25', gain: 0.3, send: 0.3, role: 'lead', from: 2, vib: true, hum: 0 },
-      hat: { kind: 'drum', pat: '_ H _ H _ H _ H', gain: 0.2, pan: 0.25, send: 0.1, from: 2, role: 'perc', hum: 0 },
+      hat: { kind: 'drum', pat: '_ H _ H _ H _ H', gain: 0.14, pan: 0.25, send: 0.1, from: 2, role: 'perc', hum: 0 },
       kick: { kind: 'drum', pat: 'B _ B _ B _ B _', gain: 0.26, send: 0.05, from: 3, role: 'drum', hum: 0 },
       snr: { kind: 'drum', pat: '_ _ S _ _ _ S _', gain: 0.24, send: 0.1, from: 3, hum: 0 },
-      arp: { kind: 'pat', inst: 'chip12', pat: "1 2 3 1' 3 2 1 2 3 1' 3 2 1 2 3 1'", lo: 64, gain: 0.08, pan: -0.3, send: 0.3, role: 'arp', from: 4, hum: 0, gate: 0.5 },
+      arp: { kind: 'pat', inst: 'chip12', pat: "1 2 3 1' 3 2 1 2 3 1' 3 2 1 2 3 1'", lo: 64, gain: 0.06, pan: -0.3, send: 0.3, role: 'arp', from: 4, hum: 0, gate: 0.5 },
       echo: { kind: 'pat', inst: 'chip50', pat: '_ _ _ _ x? _ _ _', lo: 64, voices: 3, strum: 0, gain: 0.08, pan: 0.3, send: 0.4, from: 5, hum: 0, gate: 0.3 },
       work: { kind: 'drum', pat: 'q q _ q _ q q _', gain: 0.3, pan: -0.2, when: 'work', role: 'perc', hum: 0 },
-      power: { kind: 'pat', inst: 'chip12', pat: "1'' _ 3' _ 2' _ 3' _", lo: 64, gain: 0.08, pan: 0.3, send: 0.3, when: 'power', role: 'sparkle', hum: 0, gate: 0.5 }
+      power: { kind: 'pat', inst: 'chip12', pat: "1' _ 3 _ 2' _ 3 _", lo: 64, gain: 0.055, pan: 0.3, send: 0.3, when: 'power', role: 'sparkle', hum: 0, gate: 0.5 }
     }
   };
 
@@ -210,13 +210,13 @@
       }
     },
     tracks: {
-      pick: { kind: 'pat', inst: 'felt', pat: "1 - 3 - 2 - 3 -", lo: 48, gain: 0.34, send: 0.5, role: 'comp', at: [0], gate: 1.4 },
+      pick: { kind: 'pat', inst: 'felt', pat: "1 - 3 - 2 - 3 -", lo: 48, gain: 0.28, send: 0.5, role: 'comp', at: [0], gate: 1.4 },
       pno: { kind: 'pat', inst: 'felt', pat: "1 2 3 2 1' 2 3 2", lo: 48, gain: 0.3, pan: -0.15, send: 0.45, role: 'comp', from: 1, gate: 1.5 },
       bass: { kind: 'bass', inst: 'softbass', pat: 'r - - - - - - -', lo: 45, gain: 0.23, send: 0.1, role: 'bass', from: 2 },
-      glim: { kind: 'pat', inst: 'celesta', pat: "_ _ _ _ _ _ 3' _ | _ _ _ _ _ _ _ _", lo: 69, gain: 0.07, pan: 0.2, send: 0.6, role: 'sparkle', at: [0] },
+      glim: { kind: 'pat', inst: 'celesta', pat: "_ _ _ _ _ _ 3' _ | _ _ _ _ _ _ _ _", lo: 69, gain: 0.1, pan: 0.2, send: 0.6, role: 'sparkle', at: [0] },
       harp: { kind: 'pat', inst: 'harp', pat: "_ _ _ _ 1 2 3 1'", lo: 64, gain: 0.16, pan: 0.3, send: 0.6, role: 'arp', from: 3 },
       drum: { kind: 'drum', pat: 'e? _ _ _ _ _ i? _', gain: 0.2, send: 0.4, from: 3, role: 'drum' },
-      mel: { inst: 'musicbox', oct: 1, gain: 0.42, pan: 0.1, send: 0.55, role: 'lead', from: 4, detune: 3 },
+      mel: { inst: 'musicbox', oct: 1, gain: 0.42, pan: 0.1, send: 0.55, role: 'lead', from: 3, detune: 3 },
       cel: { inst: 'celesta', gain: 0.16, pan: -0.3, send: 0.6, from: 5, role: 'sparkle' },
       work: { kind: 'drum', pat: 'i? _ _ i? _ _ i? _', gain: 0.12, pan: 0.2, send: 0.4, when: 'work', role: 'perc' },
       power: { kind: 'pat', inst: 'celesta', pat: "3' _ _ 2' _ _ 1'' _", lo: 69, gain: 0.12, pan: 0.25, send: 0.6, when: 'power', role: 'sparkle' }

@@ -124,13 +124,15 @@
         if (this.foleyAt != null && t >= this.foleyAt && t - this.foleyAt < 0.24) return false;
         if (near < 0.32 && U.pri >= 5) return false;
         if (this.busy(t) >= 3) return false;
-        if (speaking) scale = 0.4;
+        // while Pip speaks the stage moves without a sound: a prop set down never lands on a word
+        if (speaking) return false;
         this.foleyAt = t;
       }
       this.at[rk] = t;
       if (name === 'tryOn' || name === 'sig') { const h = this.helper('tryOn', op, t, kit); h.sw({ d: 0.22, f: 600, f2: 2400, gain: 0.035 }); this.look(kit).sig(h, 0.12); this.lastUi = { t, pri: PRI.sig, out: h.out }; this.recent.push(t); return true; }
       const fn = this.gesture(name, kit);
-      if (VOCAL.has(name) && !(name === 'think' && fn && PS.LOOKS[K].special === 'nier')) {
+      // (NieR thinks and wakes in its own menu's sounds, not in the voice)
+      if (VOCAL.has(name) && !((name === 'think' || name === 'wake') && fn && PS.LOOKS[K].special === 'nier')) {
         // a wordless sound is Pip's voice: one at a time, and never over a line Pip is saying (the line is the reaction)
         const voiced = !speaking && !(t < this.vocalUntil);
         if (voiced) {
@@ -154,12 +156,15 @@
       this.hush(at);
       if (!text) return tm;
       let t = at == null ? E.now() + 0.02 : at, lead = 0;
-      // a line waits for the click that caused it: the click's answer is heard first, then Pip
-      const U = this.lastUi; if (U && t >= U.t - 1e-3 && t - U.t < 0.15) { lead = U.t + 0.17 - t; t += lead; }
+      // a line waits for the click that caused it: the click's answer is heard first (a chapter's sting or the
+      // window opening takes longer than a step), then Pip
+      const U = this.lastUi, wait = U ? (U.pri >= 8 ? 0.46 : 0.2) : 0;
+      if (U && t >= U.t - 1e-3 && t - U.t < wait) { lead = U.t + wait - t; t += lead; }
       if (this.vocalH && t < this.vocalUntil) { try { this.vocalH.stop(t); } catch (e) { /* gone */ } this.vocalUntil = t; }
       const r = PS.voice.say(E, V, text, { mood: o.mood, crew: o.crew, music: this.player, pan: o.pan, at: t });
       this.line = r.handle; this.voiceUntil = t + r.ms / 1000;
-      E.duck(t, t + r.ms / 1000, 0.6);
+      // the song steps back under Pip: further for a voice of notes or of a chip, which would otherwise sit in the tune's own place
+      E.duck(t, t + r.ms / 1000, V.kind === 'pulse' ? 0.3 : V.kind === 'struck' || V.kind === 'tick' ? 0.4 : 0.55);
       E.emit('say', { ms: r.ms, text }, t);
       if (lead > 0.004) { const shown = r.shown; r.shown = (ms) => shown(ms - lead * 1000); r.ms += Math.round(lead * 1000); }
       return r;
@@ -349,14 +354,14 @@
       if (!ready()) return false;
       let ok = false;
       try { ok = sess.play(name, op); } catch (e) { PS.errors.push(name + ': ' + String((e && e.stack) || e)); }
-      if (API.trace) API.trace.push({ t: +E.now().toFixed(3), kind: 'play', name, ok });
+      if (API.trace) API.trace.push({ t: +E.now().toFixed(3), kind: 'play', name, op: { chapter: op.chapter, index: op.index, count: op.count, len: op.len }, ok });
       return ok;
     },
     say(text, o) {
       o = o || {};
       const kit = o.kit ? kitOf(o.kit) : S.kit, alt = S.voice[kit], V = Object.assign({}, PS.voice.VOX[kit], alt && PS.voice.ALT[kit] && PS.voice.ALT[kit][alt] || {});
       if (!audible() || !ensure() || !ready()) { if (sess) sess.hush(); return PS.voice.timing(V, text, o.mood, o.crew); }
-      if (API.trace && text) API.trace.push({ t: +E.now().toFixed(3), kind: 'say', name: String(text).slice(0, 24), ok: true });
+      if (API.trace && text) API.trace.push({ t: +E.now().toFixed(3), kind: 'say', text: String(text), mood: o.mood || null, ok: true });
       return sess.say(text, o);
     },
     hush() { if (sess) sess.hush(); },
@@ -369,7 +374,7 @@
       else if (name === 'swing') swingLoop(level);
     },
     /* where the person is: { index (screen in the flow), chapter 0..4, asleep } */
-    progress(s) { ['index', 'chapter', 'asleep'].forEach((k) => { if (s[k] != null) S[k] = k === 'asleep' ? !!s[k] : s[k] | 0; }); if (sess) sess.progress(S); fire('progress', Object.assign({}, S)); },
+    progress(s) { ['index', 'chapter', 'asleep'].forEach((k) => { if (s[k] != null) S[k] = k === 'asleep' ? !!s[k] : s[k] | 0; }); if (sess) sess.progress(S); if (API.trace && E) API.trace.push({ t: +E.now().toFixed(3), kind: 'progress', index: S.index, chapter: S.chapter, asleep: S.asleep }); fire('progress', Object.assign({}, S)); },
     intensity() { const e = PS.SONGS[S.kit].find((x) => x.id === songOf(S.kit)) || PS.SONGS[S.kit][0]; return e.level(S); },
     /* what is playing: the parts of the song and whether each is in */
     parts() {
@@ -385,6 +390,7 @@
     transport() { const p = sess && sess.player; if (!p || !p.playing) return { playing: false }; const a = p.at(E.now()), pulse = p.pulse || 1; return { playing: true, bpm: p.bpm, meter: p.beats, pulse, bar: a.bar, beat: a.beat, phase: (a.beat / pulse) % 1, song: p.song.id, level: p.intensity, barT: a.barT, beatDur: p.beat }; },
     analyser() { return E && E.analyser; },
     song() { const e = PS.SONGS[S.kit].find((x) => x.id === (sess ? sess.entry().id : songOf(S.kit))) || PS.SONGS[S.kit][0]; return { id: e.id, title: e.id === 'original' ? 'Original' : e.title, family: e.family, song: e.song }; },
+    /* set to [] to keep a record of what the page asks for (the checks replay it offline): { t, kind: 'play' | 'say' | 'progress', ... } */
     trace: null,
     Session, LEVEL, RATE, PRI
   };

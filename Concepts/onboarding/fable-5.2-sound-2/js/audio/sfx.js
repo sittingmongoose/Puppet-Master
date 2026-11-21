@@ -29,39 +29,45 @@
   const SET = {
     tap: (h) => { const P = h.P; h.d(P.tap, 0, 0.5, [1, 1.12, 1.26, 1.5][h.v]); if (P.tapNote) h.n(P.soft, h.ch[h.v % 3] + 12, 0, 0.14); },
     hover: (h) => h.d('click', 0, 0.2, 1.5),
-    /* The everyday answers are short (each note is damped, so none rings on over the music) and each has its own
-       shape, so a choice, a switch and a step are told apart without looking: two notes up for a choice; a small pop
-       up or down with one note for a switch; three quick notes up the chord and a breath of air for a step forward;
-       two down for a step back. */
-    select: (h) => { const P = h.P; h.n(P.lead, h.ch[1] + 12, 0, 0.5, SHORT); h.n(P.lead, h.ch[2] + 12, 0.07, 0.56, SHORT); },
-    toggleOn: (h) => { h.tone({ f: 420, f2: 760, glide: 0.06, d: 0.09, gain: 0.06 }); h.n(h.P.soft, h.ch[2] + 12, 0.05, 0.42, SHORT); },
-    toggleOff: (h) => { h.tone({ f: 700, f2: 400, glide: 0.06, d: 0.09, gain: 0.055 }); h.n(h.P.soft, h.ch[0] + 12, 0.05, 0.36, SHORT); },
-    next: (h) => { [h.ch[0] + 12, h.ch[1] + 12, h.ch[2] + 12].forEach((m, i) => h.n(h.P.lead, m, i * 0.06, 0.42, i < 2 ? SHORT : LONGER)); h.sw({ d: 0.2, f: 700, f2: 2200, gain: 0.022 }); },
-    back: (h) => { h.n(h.P.lead, h.ch[2] + 12, 0, 0.4, SHORT); h.n(h.P.lead, h.ch[0] + 12, 0.075, 0.4, LONGER); },
-    open: (h) => { h.sw({ d: 0.4, f: 400, f2: 1500, gain: 0.04 }); up(h, h.P.soft, [h.ch[0], h.ch[1], h.ch[2], h.ch[0] + 12, h.ch[1] + 12], 0.07, 0.32, 0.05); },
+    /* The everyday answers are short (each note is damped, so none rings on over the music) and each is its own
+       gesture, so a choice, a switch and a step are told apart without looking:
+       a choice is one small chord struck at once; a switch is a click and one note (high for on, low for off);
+       a step forward is a brush of air and a stride up of two notes; a step back is the stride down, no air. */
+    select: (h) => { const P = h.P; h.n(P.lead, h.ch[1] + 12, 0, 0.46, LONGER); h.n(P.lead, h.ch[2] + 12, 0.012, 0.5, LONGER); },
+    toggleOn: (h) => { h.d('click', 0, 0.3, 1.5); h.n(h.P.soft, h.ch[2] + 12, 0.03, 0.44, SHORT); },
+    toggleOff: (h) => { h.d('click', 0, 0.3, 1.05); h.n(h.P.soft, h.ch[0], 0.03, 0.4, SHORT); },
+    next: (h) => { h.sw({ d: 0.16, f: 900, f2: 2600, gain: 0.03, a: 0.5 }); h.n(h.P.lead, h.ch[0] + 12, 0.05, 0.42, SHORT); h.n(h.P.lead, h.ch[2] + 12, 0.15, 0.46, LONGER); },
+    back: (h) => { h.n(h.P.lead, h.ch[2] + 12, 0, 0.4, SHORT); h.n(h.P.lead, h.ch[0] + 12, 0.1, 0.4, LONGER); },
+    // the window opens like a curtain: a long breath of air, and the chord blooms at once, softly (a chapter, below, is a fanfare)
+    open: (h) => { h.sw({ d: 0.5, f: 380, f2: 1600, gain: 0.045, a: 0.6 }); [h.ch[0], h.ch[2], h.ch[1] + 12].forEach((m, i) => h.n(h.P.soft, m, 0.3 + i * 0.016, 0.3)); h.n(h.P.bell, h.ch[0] + 24, 0.42, 0.12); },
     close: (h) => { up(h, h.P.soft, [h.ch[2] + 12, h.ch[1] + 12, h.ch[0] + 12, h.ch[0]], 0.075, 0.32); },
     key: (h) => { h.d(h.P.tap, 0, 0.34, 0.92 + 0.03 * (h.idx % 5)); h.n(h.P.soft, h.deg((h.idx % 8) + 7), 0, 0.15); },
     // not allowed: the third falls a small step, a question more than an alarm
     warn: (h) => { const f = 440 * Math.pow(2, (h.root + h.third - 69) / 12); h.tone({ f, f2: f * 0.89, glide: 0.09, d: 0.13, gain: 0.085 }); h.tone({ f: f * 0.79, f2: f * 0.7, glide: 0.1, d: 0.16, gain: 0.085 }, 0.17); },
-    lower: (h) => { h.n(h.P.string, h.strM(60), 0, 0.3); },
+    // a prop let down on its string: two soft notes falling; lifted away: two rising and a breath
+    lower: (h) => { h.n(h.P.string, h.strM(64), 0, 0.24, SHORT); h.n(h.P.string, h.strM(59), 0.07, 0.28, LONGER); },
     ghost: (h) => { h.n(h.P.string, h.strM(67), 0, 0.14); },
     // something set down: a soft pat and the faintest note, never a thud
-    land: (h) => { h.d(h.P.pat || 'wood', 0, 0.3, 0.84 + 0.07 * h.v); },
-    lift: (h) => { h.sw({ d: 0.26, f: 600, f2: 1700, gain: 0.03 }); },
+    land: (h) => { h.d(h.P.pat || 'wood', 0, 0.26, 1.2 + 0.08 * h.v); h.n(h.P.bell, h.ch[h.v % 3] + 24, 0.014, 0.1, { cut: 0.08, rel: 0.08 }); },
+    lift: (h) => { h.n(h.P.string, h.strM(59), 0, 0.22, SHORT); h.n(h.P.string, h.strM(64), 0.07, 0.24, SHORT); h.sw({ d: 0.2, f: 700, f2: 1900, gain: 0.02 }, 0.04); },
     hop: (h) => { h.tone({ type: 'triangle', f: 260, f2: 560, glide: 0.11, d: 0.18, gain: 0.09 }); },
     swing: (h) => h.sw({ d: 0.42, f: 400, f2: 1100, gain: 0.035, q: 0.8 }),
     tryOn: (h) => { h.sw({ d: 0.22, f: 600, f2: 2400, gain: 0.035 }); h.K.sig(h, 0.12); },
     sparkle: (h) => { for (let i = 0; i < 3; i++) h.n(h.P.bell, h.ch[(i + h.v) % 3] + 24, i * 0.075 + h.rand() * 0.02, 0.2); },
     confetti: (h) => {
       const P = h.P;
+      // a small clean pop to set it off (no hiss), then a little fanfare
+      h.tone({ type: 'triangle', f: 340, f2: 1100, glide: 0.05, d: 0.09, gain: 0.11 }); h.d('click', 0.004, 0.24, 1.3);
       // a little fanfare in the look's own material: up the scale, round the chord, and home
       let t = 0.12; [4, 7, 9, 11, 9, 7, 9, 11, 14].forEach((d, i) => { h.n(P.box || P.lead, h.deg(d), t, 0.42); t += i === 3 || i === 7 ? 0.24 : 0.12; });
       up(h, P.lead, [h.deg(0) - 12, h.deg(2) - 12, h.deg(4) - 12, h.deg(7) - 12], 0.03, 0.4, t - 0.36);
       for (let i = 0; i < 5; i++) h.n(P.bell, h.deg([7, 9, 11, 14][i % 4]) + 12, t - 0.2 + i * 0.08, 0.16);
     },
-    // a new chapter: the look's own motif, a note longer each chapter
+    // a new chapter: a small fanfare. Three quick notes up the chord, then it lands on the next note of the look's own motif (a step higher each chapter), with a bell above
     chapter: (h) => {
-      const P = h.P, m = motif(h, h.depth); m.forEach((x, i) => { const last = i === m.length - 1; h.n(P.lead, x, i * 0.14, 0.46); if (last) h.n(P.soft, x + 12, i * 0.14 + 0.02, 0.2); });
+      const P = h.P, land = h.deg(h.K.motif[clamp(h.depth, 1, 4) - 1]);
+      [h.ch[0], h.ch[1], h.ch[2]].forEach((m, i) => h.n(P.lead, m + (m + 12 <= land ? 12 : 0), i * 0.085, 0.36, SHORT));
+      h.n(P.lead, land, 0.3, 0.5); h.n(P.bell, land + 12, 0.31, 0.2);
     },
     tick: (h) => { h.d('click', 0, 0.2); h.n(h.P.lead, h.deg([2, 3, 4, 7][clamp(h.idx, 0, 3)]), 0.03, 0.44, SHORT); if (h.idx >= 3) up(h, h.P.soft, [h.deg(7), h.deg(9), h.deg(11)], 0.05, 0.26, 0.12); },
     block: (h) => { h.d(h.P.pat || 'wood', 0, 0.3, 0.9); h.n(h.P.lead, h.deg([0, 2, 4, 5, 7, 8][clamp(h.idx, 0, 5)]), 0.02, 0.46); if (h.count && h.idx >= h.count - 1) up(h, h.P.lead, [0, 2, 4, 7, 9].map((x) => h.deg(x)), 0.05, 0.4, 0.2); },
@@ -102,7 +108,9 @@
       next: (h) => { h.d('key', 0, 0.3, 0.9); h.d('key', 0.09, 0.24, 1.03); h.n('bell', h.ch[1] + 12, 0.16, 0.2, SHORT); h.n('bell', h.ch[2] + 12, 0.25, 0.22); },
       decode: (h) => { pins(h, 3, 0.2, 0.14, 0, 0, 'key'); },
       tap: (h) => h.d('key', 0, 0.36, [1, 1.08, 0.95, 1.14][h.v]),
-      land: (h) => { h.d('key', 0, 0.22, 0.8); },
+      lower: (h) => { h.sw({ d: 0.16, f: 2200, f2: 1300, gain: 0.02, q: 1.2 }); h.n('celesta', h.strM(62), 0.1, 0.2, SHORT); },
+      lift: (h) => { h.sw({ d: 0.16, f: 1300, f2: 2400, gain: 0.02, q: 1.2 }); h.n('celesta', h.strM(66), 0.1, 0.2, SHORT); },
+      land: (h) => { h.d('key', 0, 0.22, 0.9); h.n('bell', h.ch[h.v % 3] + 12, 0.014, 0.08, { cut: 0.08, rel: 0.08 }); },
       lock: (h) => { h.d('key', 0, 0.26); h.d('key', 0.08, 0.24, 1.1); }
     },
     nier: {
@@ -114,7 +122,9 @@
       decode: (h) => { let t = 0; for (let i = 0; i < 4; i++) { h.tone({ f: 2000 + h.rand() * 1500, d: 0.015, gain: 0.1, a: 0.003 }, t); t += 0.03 + 0.02 * h.rand(); } },
       ghost: (h) => h.tone({ f: 1760, d: 0.05, gain: 0.07, a: 0.01 }),
       hop: () => {}, swing: () => {},
-      think: (h) => { [0, 0.05, 0.1].forEach((d, i) => h.tone({ f: 2093 + i * 330, d: 0.03, gain: 0.12, a: 0.006 }, d)); }
+      think: (h) => { [0, 0.05, 0.1].forEach((d, i) => h.tone({ f: 2093 + i * 330, d: 0.03, gain: 0.12, a: 0.006 }, d)); },
+      // a unit coming on line: two soft bells rising, not a run of bleeps
+      wake: (h) => { h.n('softbell', h.ch[0] + 12, 0, 0.3); h.n('softbell', h.ch[2] + 12, 0.22, 0.34); }
     }
   };
 

@@ -282,7 +282,7 @@
   const sfx = (ev, o) => { const P = SND(); if (P) try { P.play(ev, o || {}); } catch (e) { /* silent */ } };
   function syncSound() {
     const P = SND(), on = !!(P && !P.muted);
-    $$('[data-act="sound"]').forEach((b) => { b.setAttribute('aria-pressed', String(on)); b.title = on ? 'Sound on' : 'Sound off'; b.setAttribute('aria-label', b.title); b.innerHTML = icon(on ? 'sound' : 'mute', 18) + (b.classList.contains('cc-btn') ? `<span>${on ? 'Sound on' : 'Sound off'}</span>` : ''); });
+    $$('[data-act="sound"]').forEach((b) => { b.title = on ? 'Sound: on' : 'Sound: off'; b.setAttribute('aria-label', b.title); b.innerHTML = icon(on ? 'sound' : 'mute', 18) + (b.classList.contains('cc-btn') ? `<span>${on ? 'Sound on' : 'Sound off'}</span>` : ''); });
   }
   window.addEventListener('pipsound', syncSound);
 
@@ -554,7 +554,7 @@
     else if (act === 'noai') { PROVIDERS.forEach(([k]) => { S.ai[k] = 'off'; }); renderScreen(0); sfx('tap'); }
     else if (act === 'look') go('look');
     else if (act === 'resume') setOpen(true);
-    else if (act === 'sound') { const P = SND(); if (P) { P.toggle(); syncSound(); if (!P.muted) sfx('toggleOn'); } }
+    else if (act === 'sound') { if (window.PipSoundMenu) window.PipSoundMenu.toggle(b); else { const P = SND(); if (P) { P.toggle(); syncSound(); } } }
     else if (b.closest('.ob')) sfx('tap');
   });
   document.addEventListener('change', (e) => {
