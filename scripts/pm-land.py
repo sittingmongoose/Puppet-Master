@@ -856,11 +856,13 @@ def snapshot_followup(host, head, tree, lock, wait_for_review):
     try:
         record = checked_remote(folder, host, ref, candidate, snapshot["tree"], head, lock.heartbeat)
         require_same_inputs(snapshot["ignored_inputs"], record["ignored_inputs"], "after recording baseline")
+        git(SHARED, "fetch", "origin", ref)
+        if ref_at(SHARED, "origin", ref) != candidate:
+            raise Refusal("the published snapshot follow-up branch changed during its check")
         code = check_judgments(folder, host, record, lock.heartbeat, wait_for_review)
         if code in (2, 3):
             say(f"Snapshot follow-up stopped at exit {code}. See {record['report']}.")
             return code
-        git(SHARED, "fetch", "origin", ref)
         git(SHARED, "fetch", "origin")
         if full_main(SHARED) != head:
             raise Refusal("origin/main moved before publishing the snapshot follow-up")
