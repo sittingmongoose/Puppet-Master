@@ -148,7 +148,7 @@ export const tests = {
 					dock: !!(dock && dock.getClientRects().length), line: (d.querySelector('.rf-changed') || {}).textContent || '' };
 			});
 			const top = await read();
-			await t.check(`${name}: the dialog is wide enough for two columns`, !!top && top.width >= 1040, JSON.stringify(top));
+			await t.check(`${name}: the dialog is wide enough for two columns`, !!top && top.width >= 1160, JSON.stringify(top));
 			await t.check(`${name}: the example is in the right column`, !!top && top.right && top.inView);
 			await f.evaluate(() => { const b = document.elementFromPoint(innerWidth / 2, innerHeight / 2).closest('.pmt-cz-dialog').querySelector('.pmt-cz-body'); b.style.scrollBehavior = 'auto'; b.scrollTop = b.scrollHeight; });
 			await sleep(f, 900);
@@ -164,6 +164,54 @@ export const tests = {
 			await t.check(`${name}: the line under the example names what was changed`, !!after && /^Changed/.test(after.line) && after.line.includes(tname), `${tname} / ${after && after.line}`);
 			await closeAll(f); await sleep(f, 600);
 			await t.check(`${name}: closing leaves you in Settings`, (await f.evaluate(() => window.PM_PAGES.current)) === 'settings');
+		}
+	},
+
+	async 'the example is no narrower than it was, and the editor example follows what is typed'(t) {
+		/* Jared, 2026-11-21: "Because you made the boxes narrower for the examples, it cuts off things that are happening on
+		   the right. For one example, typing in the editor." */
+		for (const size of [[1600, 1000], [1280, 800]]) {
+			const f = await openSettings(t, size);
+			await go(f, 'code', 'editor-runtime');
+			const btn = f.locator('#pm-settings-root [data-action="pm51-o55-editor-customize"]').first();
+			await btn.scrollIntoViewIfNeeded(); await btn.click();
+			await f.waitForFunction(() => { const at = document.elementFromPoint(innerWidth / 2, innerHeight / 2); return !!(at && at.closest('.pmt-cz-dialog')); }, null, { timeout: 15000 }); await sleep(f, 1800);
+			const read = () => f.evaluate(() => {
+				const d = document.elementFromPoint(innerWidth / 2, innerHeight / 2).closest('.pmt-cz-dialog');
+				const box = d.querySelector('.pmt-cz-top .pmt-cz-pvbox').getBoundingClientRect();
+				/* the editor draws inside a shadow root: its caret is found there */
+				const hosts = [...d.querySelectorAll('.pmt-cz-top .pmt-cz-pvbox *')].filter((n) => n.shadowRoot);
+				const carets = hosts.flatMap((h) => [...h.shadowRoot.querySelectorAll('.pmw-ed-caret')]).filter((n) => n.getClientRects().length && !n.hidden);
+				const c = carets.length ? carets[0].getBoundingClientRect() : null;
+				return { box: Math.round(box.width), caret: c ? { left: Math.round(c.left - box.left), right: Math.round(box.right - c.right) } : null };
+			});
+			const at = `${size[0]}x${size[1]}`;
+			const rest = await read();
+			await t.check(`${at}: the editor example is at least as wide as it was (about 640 px)`, rest.box >= 630, JSON.stringify(rest));
+			await f.locator('.pmt-cz-dialog [data-act="try-type"]:visible').first().click();
+			await sleep(f, 420);
+			const typing = await read();
+			await t.check(`${at}: while Type runs, the caret is inside the example`, !!typing.caret && typing.caret.left >= 0 && typing.caret.right >= 8, JSON.stringify(typing));
+			await sleep(f, 2600);
+			const after = await read();
+			await t.check(`${at}: afterwards the caret is back at rest, inside the example`, !!after.caret && after.caret.left >= 0 && after.caret.right >= 8, JSON.stringify(after));
+			await closeAll(f); await sleep(f, 500);
+			/* the terminal's example and the two pictures */
+			const tb = f.locator('#pm-settings-root [data-action="pm51-o55-terminal-customize"]').first();
+			await tb.scrollIntoViewIfNeeded(); await tb.click();
+			await f.waitForFunction(() => { const x = document.elementFromPoint(innerWidth / 2, innerHeight / 2); return !!(x && x.closest('.pmt-cz-dialog')); }, null, { timeout: 15000 }); await sleep(f, 1800);
+			const term = await f.evaluate(() => Math.round(document.elementFromPoint(innerWidth / 2, innerHeight / 2).closest('.pmt-cz-dialog').querySelector('.pmt-cz-top .pmt-cz-pvbox').getBoundingClientRect().width));
+			await t.check(`${at}: the terminal example is at least as wide as it was (about 630 px)`, term >= 620, String(term));
+			await closeAll(f); await sleep(f, 500);
+			await go(f, 'general', 'app-input');
+			await f.evaluate(() => window.PM_PIP_EDITOR.open()); await f.waitForSelector('.pipe-panel .pipe', { timeout: 15000 }); await sleep(f, 1000);
+			const pip = await f.evaluate(() => Math.round(document.querySelector('.pipe-panel .pipe-top .pipe-stage').getBoundingClientRect().width));
+			await closeAll(f);
+			await f.evaluate(() => window.PM_NIER_CHIPS.open()); await f.waitForSelector('.o55nc-panel .o55nc', { timeout: 15000 }); await sleep(f, 1000);
+			const nier = await f.evaluate(() => Math.round(document.querySelector('.o55nc-panel .o55nc-top > :first-child').getBoundingClientRect().width));
+			await closeAll(f);
+			await t.check(`${at}: NieR's picture is at least as wide as it was (about 345 px)`, nier >= 340, String(nier));
+			await t.check(`${at}: Pip's team has room for three seats across`, pip >= 340, String(pip));
 		}
 	},
 

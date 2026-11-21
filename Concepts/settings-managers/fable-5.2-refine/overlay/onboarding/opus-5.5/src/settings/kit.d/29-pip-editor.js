@@ -263,7 +263,7 @@
   function open(opts) {
     if (opts && typeof opts === 'object' && (opts.from || opts.returnFocus)) return popup(opts);
     if (!REG()) return false;
-    const wrap = PM51.panel({ title: say('title', 'Customize Pip'), eyebrow: say('kicker', 'Pip'), icon: 'sliders', size: 'wide', width: 860 /* Refine: room for the parts and the picture side by side */, cls: 'pipe-panel', closeLabel: say('done', 'Done'),
+    const wrap = PM51.panel({ title: say('title', 'Customize Pip'), eyebrow: say('kicker', 'Pip'), icon: 'sliders', size: 'wide', width: 960 /* Refine: room for the parts and the picture side by side, the picture no narrower than it was */, cls: 'pipe-panel', closeLabel: say('done', 'Done'),
       summary: say('lead', 'Choose where Pip appears in the chat and in setup, the faces it makes and how it moves. A change applies at once and is saved for this Project.'), body: body() });
     if (!wrap) return false;
     bind(wrap);

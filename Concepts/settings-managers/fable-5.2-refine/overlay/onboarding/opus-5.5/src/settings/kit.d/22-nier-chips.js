@@ -210,7 +210,7 @@
   }
   function open() {
     const store = NIER() ? storeFor('live') : null; if (!store) return false;
-    const wrap = PM51.panel({ title: say('drawerTitle', 'Adjust NieR'), eyebrow: say('kicker', 'Plug-in Chips'), icon: 'sliders', size: 'wide', width: 860 /* Refine: room for the chips and the picture side by side */, cls: 'o55nc-panel', closeLabel: say('done', 'Done'),
+    const wrap = PM51.panel({ title: say('drawerTitle', 'Adjust NieR'), eyebrow: say('kicker', 'Plug-in Chips'), icon: 'sliders', size: 'wide', width: 960 /* Refine: room for the chips and the picture side by side, the picture no narrower than it was */, cls: 'o55nc-panel', closeLabel: say('done', 'Done'),
       summary: leadFor(store), body: body(store) });
     if (!wrap) return false;
     bind(wrap, store);

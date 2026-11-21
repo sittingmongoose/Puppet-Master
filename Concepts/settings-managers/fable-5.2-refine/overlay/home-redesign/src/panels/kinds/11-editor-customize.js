@@ -892,9 +892,9 @@ function* construct(opts) {
     if (placed === placement) return;
     placed = placement;
     var hole = r.width > 0 && r.height > 0;
-    /* Refine: up to 1240 wide, so the options and the example sit side by side and the example never scrolls away
-       (css/27-customize-refine.css) */
-    var M = 12, want = Math.min(1240, W - 2 * M), narrow = W < 720, left, width = want;
+    /* Refine: up to 1400 wide, so the options and the example sit side by side, the example never scrolls away and it is
+       no narrower than it was (css/27-customize-refine.css) */
+    var M = 12, want = Math.min(1400, W - 2 * M), narrow = W < 720, left, width = want;
     if (narrow) { left = 8; width = W - 16; }
     else if (hole && W - r.right - M * 2 >= 560) { left = r.right + M; width = Math.min(want, W - r.right - M * 2); }
     else if (hole && r.left - M * 2 >= 560) { width = Math.min(want, r.left - M * 2); left = r.left - M - width; }
@@ -1050,7 +1050,9 @@ function* construct(opts) {
     if (!preview || !preview.demo) return;
     stopDemo();
     preview.demo.place(9, PV_LINES[9].length);
-    preview.demo.type(' // tidy', function (start) { later(900, function () { preview.demo.erase(start, 8); }); });
+    /* Refine: after the letters come out the caret goes back to where it rests, so the example is not left scrolled
+       to the end of that line */
+    preview.demo.type(' // tidy', function (start) { later(900, function () { preview.demo.erase(start, 8); later(600, function () { preview.demo.place(PV_SEL.r, PV_SEL.b, PV_SEL.r, PV_SEL.a); }); }); });
   }
   function tryProblem() {
     if (!preview || !preview.demo) return;

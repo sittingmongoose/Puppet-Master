@@ -23,9 +23,10 @@ byte-identical to `Concepts/PMConcept7.html` at that commit.
 browser-check run Concepts/settings-managers/fable-5.2-refine/tools --set page=<refined.html> --set before=<PMConcept7.html of the same base>
 ```
 
-Eight tests by real clicks (`tools/refine.check.mjs`): the chapter move and old links; Explain; the centred tab
+Nine tests by real clicks (`tools/refine.check.mjs`): the chapter move and old links; Explain; the centred tab
 strips and the side column, left as they are; Servers' Home tab; the one home of a service's switching rules; the example staying in view in Editor and
-Terminal Customize, Customize Pip and Adjust NieR; and **nothing was dropped**: every setting id and every action of
+Terminal Customize, Customize Pip and Adjust NieR; the examples being as wide as they were and the editor's
+following what is typed; and **nothing was dropped**: every setting id and every action of
 the unchanged page is still on some page of the refined one (920 settings, 73 views, on 2026-11-20).
 
 ## What changed, everywhere
@@ -49,8 +50,8 @@ the unchanged page is still on some page of the refined one (920 settings, 73 vi
 | Servers › Away From Home | One card: the ways in, in the order they are tried, with "right now" and "when away" as facts above them. One filled button (the guided setup); each way in says "Set up". |
 | **Providers** › Services | The list and the service you picked come first; the three whole-list jobs sit under the list as quiet buttons. |
 | Providers › Limits & switching | Each service's own switching rules are on its line here, and only here: on or off, switch at, warn at, rest. |
-| **Editor and Terminal Customize** | Up to 1240 px wide. The options scroll on the left; the example, its meter, the presets and Try it stay on the right at full size. A line under the example names what you just changed. |
-| **Customize Pip, Adjust NieR** | 860 px wide. The parts scroll on the left; the picture, meter, presets and Play stay on the right. The same "Changed" line. |
+| **Editor and Terminal Customize** | Up to 1400 px wide. The options scroll on the left; the example, its meter, the presets and Try it stay on the right. The example is never narrower than it was (about 640 px), and the editor's example follows its caret sideways, so what "Type" types is always in view. A line under the example names what you just changed. |
+| **Customize Pip, Adjust NieR** | 960 px wide. The parts scroll on the left; the picture, meter, presets and Play stay on the right, the picture no narrower than it was. The same "Changed" line. |
 | Customize Pip | Six small scenes under the team show the places Pip appears (sheets, lists, the Orbit, plans, the wand menu, empty lists). Pip is in a scene while that part is on. The team alone could not show these. |
 
 ## Removed because it was there twice, or only led elsewhere

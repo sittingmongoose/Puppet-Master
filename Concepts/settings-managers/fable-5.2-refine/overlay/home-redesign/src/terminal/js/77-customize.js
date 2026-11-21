@@ -1015,8 +1015,9 @@
       var de = document.documentElement, W = de.clientWidth || 1024, H = de.clientHeight || 768;
       var r = v.root && v.root.isConnected ? v.root.getBoundingClientRect() : { left: 0, top: 0, right: 0, bottom: 0, width: 0, height: 0 };
       var hole = r.width > 0 && r.height > 0;
-      /* Refine: up to 1240 wide, so the options and the example sit side by side (css/27-customize-refine.css) */
-      var M = 12, want = Math.min(1240, W - 2 * M), narrow = W < 720, left, width = want;
+      /* Refine: up to 1400 wide, so the options and the example sit side by side and the example is no narrower than it
+         was (css/27-customize-refine.css) */
+      var M = 12, want = Math.min(1400, W - 2 * M), narrow = W < 720, left, width = want;
       if (narrow) { left = 8; width = W - 16; }
       else if (hole && W - r.right - M * 2 >= 540) { left = r.right + M; width = Math.min(want, W - r.right - M * 2); }
       else if (hole && r.left - M * 2 >= 540) { width = Math.min(want, r.left - M * 2); left = r.left - M - width; }

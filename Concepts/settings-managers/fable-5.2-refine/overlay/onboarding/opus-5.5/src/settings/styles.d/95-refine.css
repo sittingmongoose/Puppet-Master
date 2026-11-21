@@ -85,13 +85,15 @@
    parts scroll in the left column and the picture stays in the right one, at full size, in a wider sheet. */
 /* side by side from 900 px of window; below that, one column and the small copy that follows, as before */
 @media (min-width: 900px) {
-  :is(#panel-settings, .pipe-host) .pipe { grid-template-columns: minmax(0, 1fr) minmax(250px, 36%); column-gap: 18px; row-gap: 0; }
+  /* the picture's column is no narrower than the picture was (Jared, 2026-11-21: narrower boxes cut off what happens
+     at the right) */
+  :is(#panel-settings, .pipe-host) .pipe { grid-template-columns: minmax(0, 1fr) minmax(360px, 46%); column-gap: 18px; row-gap: 0; }
   :is(#panel-settings, .pipe-host) .pipe > * { grid-column: 1; }
   :is(#panel-settings, .pipe-host) .pipe > * + * { margin-top: 16px; }
   :is(#panel-settings, .pipe-host) .pipe > .pipe-top { grid-column: 2; grid-row: 1 / span 30; margin-top: 0; position: sticky; top: 0; align-self: start; grid-template-columns: minmax(0, 1fr); }
   :is(#panel-settings, .pipe-host) .pipe > .pipe-dock { display: none; }
   :is(#panel-settings, .pipe-host) .pipe > .pipe-reach { margin-top: 0; }
-  :is(#panel-settings, .o55nc-host) .o55nc { grid-template-columns: minmax(0, 1fr) minmax(250px, 36%); column-gap: 18px; row-gap: 0; }
+  :is(#panel-settings, .o55nc-host) .o55nc { grid-template-columns: minmax(0, 1fr) minmax(360px, 46%); column-gap: 18px; row-gap: 0; }
   :is(#panel-settings, .o55nc-host) .o55nc > * { grid-column: 1; }
   :is(#panel-settings, .o55nc-host) .o55nc > * + * { margin-top: 18px; }
   :is(#panel-settings, .o55nc-host) .o55nc > .o55nc-top { grid-column: 2; grid-row: 1 / span 30; margin-top: 0; position: sticky; top: 0; align-self: start; grid-template-columns: minmax(0, 1fr); }

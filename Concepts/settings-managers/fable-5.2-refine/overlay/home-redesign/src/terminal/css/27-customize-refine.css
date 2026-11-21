@@ -1,10 +1,13 @@
 /* Refine · the Customize screens (editor and terminal): the example never leaves.
    Jared, 2026-11-10: "when you make changes, you cant see the example section as it is all the way at the top".
    The example was the first thing in a scroll of about 6,000 px; a small copy followed it and covered options.
-   In a dialog 1040 px wide or more the options scroll in the left column and the example, its meter, the presets and
-   "Try it" stay in the right column at full size. Narrower dialogs keep the docked copy as before. */
-@container pmt-cz (min-width: 1040px) {
-  .pmt-cz-dialog .pmt-cz-body { grid-template-columns: minmax(0, 1fr) minmax(420px, 42%); column-gap: 22px; row-gap: 0; }
+   In a dialog 1160 px wide or more the options scroll in the left column and the example, its meter, the presets and
+   "Try it" stay in the right column. Narrower dialogs keep the docked copy as before.
+   The example's column is never narrower than the example was before (about 640 px): Jared, 2026-11-21, on the first
+   version of this, where it was about 500: "Because you made the boxes narrower for the examples, it cuts off things
+   that are happening on the right. For one example, typing in the editor." */
+@container pmt-cz (min-width: 1160px) {
+  .pmt-cz-dialog .pmt-cz-body { grid-template-columns: minmax(0, 1fr) minmax(640px, 50%); column-gap: 22px; row-gap: 0; }
   .pmt-cz-dialog .pmt-cz-body > * { grid-column: 1; }
   .pmt-cz-dialog .pmt-cz-body > * + * { margin-top: 22px; }
   .pmt-cz-dialog .pmt-cz-body > .pmt-cz-top { grid-column: 2; grid-row: 1 / span 60; margin-top: 0; position: sticky; top: 0; align-self: start; grid-template-columns: minmax(0, 1fr); }
