@@ -35,6 +35,10 @@ error makes each trial FAIL separately (per-trial red on a base without the coll
   sibling_store_unsealable a listed module function given a world whose second store is a sibling of the sealed root:
                            NOT recorded, counted under unsealable_calls
   stores_under_root        the same world with its second store under the sealed root: recorded
+  closure_sibling          a world whose sibling store is held only in a closure (a callback): NOT recorded, counted
+  large_world_recorded     a world graph of 60 000 objects, every store under the root: recorded (the first edition's
+                           20 000-object walk refused it as truncated, as it refused every CA3 d06 direct call)
+  truncated_walk_refused   the same world call with the walk limit set to 3 objects: NOT recorded, counted
  addendum 10 / the lead's addendum 19 point 4 (no declared purity list; a no-store call is recorded only when shown
  mechanically to leave nothing behind, in both the child and the parent run, with the same result or refusal):
   pure_read_recorded       a pure read (an encode_event_frame-like codec over its argument): recorded, no failure
@@ -166,6 +170,7 @@ TRIALS = ['listed_direct', 'listed_no_case', 'listed_nested_owner', 'listed_insi
           'constructor_not_listed', 'module_function_unsealed', 'store_argument', 'install_report', 'constructor_listed',
           'fixture_class_by_rule', 'pin', 'runner_not_construction', 'oracle_constructor', 'oracle_world_method',
           'oracle_factory_name', 'oracle_plain_helper', 'sibling_store_unsealable', 'stores_under_root',
+          'closure_sibling', 'large_world_recorded', 'truncated_walk_refused',
           'pure_read_recorded', 'pure_refusal_recorded', 'owner_state_change', 'child_parent_differ', 'path_argument']
 
 
@@ -244,6 +249,13 @@ class Env:
             self.world_inner = type('W', (), {})()
             self.world_inner.storage = storage.TestOwnerStorage.create(case_root / 'inner')
             self.world_inner.goal_store = storage.TestOwnerStorage.create(case_root / 'inner' / 'goal-db')
+            hidden = storage.TestOwnerStorage.create(case_root / 'hidden-goal-db')
+            self.world_closure = type('W', (), {})()
+            self.world_closure.storage = storage.TestOwnerStorage.create(case_root / 'closure')
+            self.world_closure.on_commit = lambda: hidden.root      # the sibling store only in a closure cell
+            self.world_large = type('W', (), {})()
+            self.world_large.storage = storage.TestOwnerStorage.create(case_root / 'large')
+            self.world_large.rows = [dict(n=[i]) for i in range(30000)]   # 60 000 containers
             self.ready = True
         except Exception as error:  # noqa: BLE001
             self.error = '%s: %s' % (type(error).__name__, error)
@@ -375,7 +387,28 @@ def checks(env):
         rec = e.run(lambda: e.owner.with_world(e.world_inner, 4))
         return bool(rec) and e.calls[-1]['work'] == str(e.world_inner.storage.root), rec
 
+    def closure_sibling():
+        rec = e.run(lambda: e.owner.with_world(e.world_closure, 4))
+        return not rec and report().get('unsealable_calls', {}).get('pm_goal_dg_dcself_owner:with_world', 0) >= 2, rec
+
+    def large():
+        rec = e.run(lambda: e.owner.with_world(e.world_large, 4))
+        return bool(rec) and e.calls[-1]['work'] == str(e.world_large.storage.root), rec
+
+    def truncated():
+        before = report().get('unsealable_calls', {}).get('pm_goal_dg_dcself_owner:with_world', 0)
+        saved, dc.REACH_LIMIT = dc.REACH_LIMIT, 3
+        try:
+            rec = e.run(lambda: e.owner.with_world(e.world_inner, 4))
+        finally:
+            dc.REACH_LIMIT = saved
+        after = report().get('unsealable_calls', {}).get('pm_goal_dg_dcself_owner:with_world', 0)
+        return not rec and after == before + 1, rec
+
     return {
+        'closure_sibling': closure_sibling,
+        'large_world_recorded': large,
+        'truncated_walk_refused': truncated,
         'listed_direct': listed_direct,
         'listed_no_case': lambda: (not e.run(lambda: e.thing.listed(1), case=False), None),
         'listed_nested_owner': nested,
