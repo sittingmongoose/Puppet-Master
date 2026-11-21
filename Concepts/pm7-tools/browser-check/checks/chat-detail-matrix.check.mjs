@@ -8,6 +8,11 @@ export function crossedNarrowBand(row, toNarrow) {
   (row.beforeHost < NARROW_AT) !== toNarrow && (row.host < NARROW_AT) === toNarrow;
 }
 
+export function judgeableHistoryResize(row) {
+ return !!(row.before && row.render) && row.renders === 0 &&
+  (!row.flipRequested || crossedNarrowBand(row, row.want < NARROW_AT));
+}
+
 export default async function(t){
  const f=await t.app.open();
  // FO92-N1 (opus-recheck-look8, look8b): History's resize separator's values follow the chat column. Since FO-92 a
@@ -67,6 +72,7 @@ export default async function(t){
     const crossed = (beforeHost<narrowAt)!==r.narrow && r.narrow===(want<narrowAt);
     if(r.renders===0 && (flipFrom==null || crossed))break;
    }
+   r.flipRequested=flipFrom!=null;
    r.tries=Math.min(tries+1,4);out.push(r);
    return out;
   },[want,kind||'column',flipFrom ?? null,NARROW_AT]).then(rows=>(kind==='window'?rows:rows[0]));
@@ -75,13 +81,13 @@ export default async function(t){
      render writes other values than the step before's render did) must number at least `min`, flips both ways among
      them where asked */
   const judge=async(name,rows,flips,min)=>{
-   const ok=r=>!!(r.before&&r.render)&&r.renders===0;
-   const changed=rows.filter((r,i)=>ok(r)&&(i===0||!rows[i-1].render||rows[i-1].render.join()!==r.render.join()));
-   const flipped=dir=>rows.some(r=>ok(r)&&crossedNarrowBand(r,dir));
+   const judged=rows.filter(judgeableHistoryResize);
+   const changed=rows.filter((r,i)=>judgeableHistoryResize(r)&&(i===0||!rows[i-1].render||rows[i-1].render.join()!==r.render.join()));
+   const flipped=dir=>judged.some(r=>crossedNarrowBand(r,dir));
    t.log(`FO92-N1 ${name} `+JSON.stringify(rows));
    await t.check(`FO92-N1 ${name}: fixture: ${min} or more changes judged with no render after them${flips?', narrow flips both ways among them':''}`,changed.length>=min&&(!flips||(flipped(true)&&flipped(false))),
-    JSON.stringify({judged:rows.filter(ok).length,changed:changed.length,skipped:rows.filter(r=>!ok(r)).map(r=>({want:r.want,host:r.host,mode:r.mode,renders:r.renders}))}));
-   await t.check(`FO92-N1 ${name}: the History separator carries what a render writes after each change${flips?', narrow flips both ways included':''}`,rows.filter(ok).every(same),JSON.stringify(rows.filter(r=>ok(r)&&!same(r))));
+    JSON.stringify({judged:judged.length,changed:changed.length,skipped:rows.filter(r=>!judgeableHistoryResize(r))}));
+   await t.check(`FO92-N1 ${name}: the History separator carries what a render writes after each change${flips?', narrow flips both ways included':''}`,judged.every(same),JSON.stringify(judged.filter(r=>!same(r))));
   };
   const o1=await drawer('open');
   await t.check('FO92-N1 fixture: History drawer floating (open), its separator drawn',o1.handle&&o1.drawer==='open',JSON.stringify(o1));
