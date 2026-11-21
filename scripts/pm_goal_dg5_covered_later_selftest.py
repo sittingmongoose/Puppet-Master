@@ -37,6 +37,10 @@ Different-code later refusals (KILLED_CODE):
   rebuilt_chained           the same rebuild inside the handler (`raise ... from None`, as cf3_projector.py:329):
                             the chained original carries the code unchanged from the guard: KILLED_CODE
 
+Pin of the static fallback (review (c)), no complete call:
+  gate_pin_pinned           the branch's pinned gate module loads and answers, with its pinned sha256
+  gate_pin_tampered         a copy with one byte changed is refused: 'not the pinned file', no answer
+
 A trial passes only when the kill class is the expected one and the record
 carries the judge's evidence for it (`killed_code_check`, and for same-code
 cases `covered_later_check`). The unfixed judge has neither, so every trial
@@ -263,9 +267,47 @@ def run(work):
                              after_state=record.get('after_state'), passed=bool(ok)))
     finally:
         tables.ACTIVE, tables.DISCOVERY, tables.COLLECTOR = saved
+    rows.extend(gate_pin_cases(Path(work)))
     return dict(status='pass' if all(r['passed'] for r in rows) and not collector.failures else 'fail',
                 judge=dict(guard_sweep=sweep.__file__, boundaries=bridge.__file__),
                 collector_failures=collector.failures, cases=rows)
+
+
+def gate_pin_cases(work):
+    """The static fallback loads only the pinned gate module (review (c))."""
+    import hashlib
+    import shutil
+    rows = []
+    pinned_dir = bridge.ROOT / 'scripts' / 'dg5_gate_e2'
+    pin = getattr(bridge, 'GATE_E2_PIN', None)
+    saved = (bridge.GATE_E2, list(bridge._GATE_SITES))
+    try:
+        bridge.GATE_E2 = pinned_dir
+        bridge._GATE_SITES[:] = []
+        result = bridge.static_single_raise_site('append/durability_class') or {}
+        sha = hashlib.sha256((pinned_dir / 'code_sites.py').read_bytes()).hexdigest() if pinned_dir.is_dir() else None
+        ok = bool(pin) and result.get('gate_sha256') == sha == pin.get('code_sites.py') and 'evidence' in result
+        rows.append(dict(case='gate_pin_pinned', expected='pinned module answers', result=result, passed=bool(ok)))
+        tampered = work / 'gate-tampered'
+        if not tampered.exists():
+            shutil.copytree(pinned_dir if pinned_dir.is_dir() else
+                            Path('/home/sittingmongoose/pm-scratch/ea-c12-dg5/admission-gate/gate-e2'), tampered)
+            with (tampered / 'code_sites.py').open('a') as handle:
+                handle.write('# one changed byte\n')
+        bridge.GATE_E2 = str(tampered)
+        bridge._GATE_SITES[:] = []
+        result = bridge.static_single_raise_site('append/durability_class') or {}
+        ok = result.get('ok') is False and 'not the pinned file' in (result.get('reason') or '') \
+            and 'evidence' not in result
+        rows.append(dict(case='gate_pin_tampered', expected="refused: 'not the pinned file'", result=result,
+                         passed=bool(ok)))
+    finally:
+        bridge.GATE_E2, bridge._GATE_SITES[:] = saved[0], saved[1]
+    for row in rows:
+        row.setdefault('expected_kill', row['expected'])
+        row.setdefault('actual_kill', (row['result'] or {}).get('reason'))
+        row.setdefault('covered_later_check', None)
+    return rows
 
 
 def main():
