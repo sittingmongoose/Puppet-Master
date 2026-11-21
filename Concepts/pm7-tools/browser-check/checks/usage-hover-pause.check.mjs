@@ -71,6 +71,24 @@ export const INSTALL = () => {
 		const chartControlled=(e.propertyName==='opacity'&&t.matches?.('.pmu-mark[data-prov],path[data-mark="arc"],.pmu-colstack'))||(e.propertyName==='transform'&&t.matches?.('.pmu-col'))||(['background-color','background'].includes(e.propertyName)&&R.chartRows?.has(t));
 		R.trans.push({ chartControlled, t: performance.now(), prop: e.propertyName, pseudo: e.pseudoElement, cls: cls(t), card: cardId(card), under: !!under, approved: !!approved, exiting, from, to, self: !!(t.matches && t.matches(':hover')) });
 	}, true);
+	// These fixed layers can remain visible after a card's engine classes have changed.
+	const proxies = (card) => {
+		const required = card && getComputedStyle(card);
+		const needsGlow = required && +required.getPropertyValue('--pmh-glow') > 0;
+		const needsFrame = required && +required.getPropertyValue('--pmh-frame') > 0;
+		const target = card?.getBoundingClientRect();
+		const shown = [...document.querySelectorAll('#pmh-glow > i,#pmh-frame')].flatMap((el) => {
+			const style = getComputedStyle(el);
+			if (style.visibility !== 'visible' || style.display === 'none' || +style.opacity <= 0.01) return [];
+			const box = el.getBoundingClientRect();
+			if (box.width <= 0 || box.height <= 0) return [];
+			const matchesTarget = target && Math.abs(box.left - target.left) <= 8 && Math.abs(box.top - target.top) <= 8;
+			return [{ frame: el.id === 'pmh-frame', matchesTarget }];
+		});
+		return { proxyLit: shown.length > 0, proxyRequired: !!(needsGlow || needsFrame),
+			proxyBack: (!needsGlow || shown.some((x) => !x.frame && x.matchesTarget)) &&
+				(!needsFrame || shown.some((x) => x.frame && x.matchesTarget)) };
+	};
 	const frame = () => {
 		if (!R.on) return;
 		board = document.getElementById('pmuBoard');
@@ -78,7 +96,7 @@ export const INSTALL = () => {
 		const tools = hc && hc.querySelector('.pmu-cardtools');
 		R.frames.push({ t: performance.now(), top: Math.round(sc.scrollTop), card: cardId(hc), tools: tools ? Math.round(parseFloat(getComputedStyle(tools).opacity) * 100) / 100 : null,
 			lit: [...board.querySelectorAll(':scope > .pmu-card.pmh-on')].map(cardId), near: [...board.querySelectorAll(':scope > .pmu-card.pmh-near')].map(cardId),
-			op: board.getAttribute('data-op'), highlights: board.querySelectorAll('.is-hl-on,.is-hl-dim,path[data-mark="arc"].is-dim,.pmu-dl-row.is-hot,.pmu-col.is-hot-col').length });
+			op: board.getAttribute('data-op'), ...proxies(hc), highlights: board.querySelectorAll('.is-hl-on,.is-hl-dim,path[data-mark="arc"].is-dim,.pmu-dl-row.is-hot,.pmu-col.is-hot-col').length });
 		requestAnimationFrame(frame);
 	};
 	// frames of 50 ms or more (Chrome's long-animation-frame entries), with their style and layout and their longest
@@ -133,7 +151,7 @@ export function judge(rec, { rest, back }) {
 		return false;
 	};
 	const ins = rec.trans.filter((x) => during(x) && x.under && !x.approved && !x.chartControlled && !x.exiting && !neutralExit(x));
-	const litFrames = active.filter((x) => x.lit.concat(x.near || []).length > 0);
+	const litFrames = active.filter((x) => x.lit.length || x.near?.length || x.proxyLit);
 	const toolFrames = active.filter((x) => x.t >= firstScroll + (rec.fadeMs ?? 140) + 50 && x.tools > 0.05);
 	// R2 times the first actual return after the pause's real end. An already-lit target is an early return.
 	const after = rec.frames.filter((x) => x.t >= due - 2);
@@ -151,7 +169,9 @@ export function judge(rec, { rest, back }) {
 	const toolsTr = rec.trans.find((x) => sinceEnd(x) && x.card === target && x.prop === 'opacity' && /pmu-cardtools/.test(x.cls));
 	const toolsFr = after.find((x) => sinceEnd(x) && x.card === target && x.tools > 0.5);
 	const toolsT = toolsFr ? toolsFr.t : Infinity;
-	const backT = coverage && !litFrames.length && !toolFrames.length && !early.length && lightT != null && toolsT !== Infinity ? Math.max(lightT, toolsT) : null;
+	const proxyT = settled?.proxyRequired ? (settled.proxyBack ?
+		after.find((x) => sinceEnd(x) && x.card === target && x.proxyBack)?.t ?? Infinity : Infinity) : endT;
+	const backT = coverage && !litFrames.length && !toolFrames.length && !early.length && lightT != null && toolsT !== Infinity && proxyT !== Infinity ? Math.max(lightT, toolsT, proxyT) : null;
 	// TB6 item 2: (a) the pause ends at the rest, no later than the host's own measured timer lateness (the probe armed
 	// with the last input) plus the page's own bounded return work; (b) the light and tools are back within two drawn
 	// frames of that end (the check's own rAF samples count frames, so a long frame between the end and the return costs
@@ -175,12 +195,17 @@ export function judge(rec, { rest, back }) {
 		r2: { ok: coverage && !litFrames.length && !toolFrames.length && backT != null && endOk && backOk && capOk,
 			ms: backT != null ? Math.round(backT - end) : null, card: target,
 			light: lightT != null ? Math.round(lightT - end) : null, tools: toolsT !== Infinity ? Math.round(toolsT - end) : null, toolsTransition: toolsTr ? Math.round(toolsTr.t - end) : null,
+			proxy: settled?.proxyRequired && Number.isFinite(proxyT) ? Math.round(proxyT - end) : null, proxyRequired: !!settled?.proxyRequired,
 			end: endDelay != null ? Math.round(endDelay) : null, late: late != null ? Math.round(late) : null, work: work != null ? Math.round(work) : null,
 			back: backDelay != null ? Math.round(backDelay) : null, backFrames, early: early.length,
 			long: (rec.loaf || []).filter((x) => x.t + x.d > end && x.t < end + 400).map((x) => `+${Math.round(x.t - end)} ms ${x.d} ms (style/layout ${x.sl}: ${x.scripts.join('; ') || 'no script'})`) },
 		span: { wheel: Math.round(lastWheel - first), tail: Math.round(lastScroll - lastWheel), wheels: rec.wheels.length, scrolls: rec.scrolls.length },
 		burst: burstState(rec.wheels)
 	};
+}
+
+export function uninterruptedIntent({ enterIndex, overs, applied }) {
+	return enterIndex != null && overs.slice(enterIndex + 1).every((t) => t > (applied ?? Infinity));
 }
 
 async function providerRace(t, f, label, park) {
@@ -195,18 +220,27 @@ async function providerRace(t, f, label, park) {
 	const y = (top + bottom) / 2;
 	await f.evaluate(() => {
 		// R99's room routes can leave the spare first in DOM order; R4 samples the live board too.
-		const sc = document.getElementById('pmuScroll'), board = document.getElementById('pmuBoard');
-		const r = window.__uhpRace = { enter: null, wheel: null, end: null, pauses: [], during: [], frames: 0, moves: 0, outs: 0, startTop: sc.scrollTop,
+		const sc = document.getElementById('pmuScroll'), board = document.getElementById('pmuBoard'), root = document.getElementById('pmuApp');
+		const r = window.__uhpRace = { enter: null, enterIndex: null, overs: [], applied: null, wheel: null, end: null, pauses: [], during: [], frames: 0, moves: 0, outs: 0, startTop: sc.scrollTop,
 			clean: !board.querySelector('.is-hl-dim, .is-hl-on'), marks: board.querySelectorAll('.pmu-mark[data-prov]').length };
 		let target = null, running = true;
-		const over = (e) => { const el = e.target.closest?.('.pmu-skycol[data-prov]'); if (!target && el && board.contains(el)) { target = el; r.enter = performance.now(); r.id = el.dataset.prov; } };
+		const over = (e) => {
+			const provider = e.target.closest?.('[data-prov]');
+			if (!provider || !root.contains(provider) || provider.closest('.pmu-gallery')) return;
+			const now = performance.now(), column = provider.closest('.pmu-skycol[data-prov]');
+			if (!target && column && board.contains(column)) {
+				target = column; r.enter = now; r.enterIndex = r.overs.length; r.id = provider.dataset.prov;
+			}
+			r.overs.push(now);
+		};
 		const out = (e) => { if (target && target.contains(e.target) && !target.contains(e.relatedTarget)) r.outs++; };
 		const wheel = (e) => { r.wheel = performance.now(); r.wx = e.clientX; r.wy = e.clientY; };
 		const move = (e) => { if (r.wheel != null && (e.clientX !== r.wx || e.clientY !== r.wy)) r.moves++; };
 		const sample = (why) => {
+			const lit = board.querySelectorAll('.is-hl-dim, .is-hl-on');
+			if (lit.length && r.applied == null) r.applied = performance.now();
 			if (board.getAttribute('data-op') !== 'wheel') return;
 			r.frames++;
-			const lit = board.querySelectorAll('.is-hl-dim, .is-hl-on');
 			if (lit.length) r.during.push({ t: performance.now(), why, dim: board.querySelectorAll('.is-hl-dim').length, on: board.querySelectorAll('.is-hl-on').length });
 		};
 		const mo = new MutationObserver((ms) => {
@@ -218,11 +252,11 @@ async function providerRace(t, f, label, park) {
 		});
 		mo.observe(board, { attributes: true, attributeFilter: ['class', 'data-op'], subtree: true });
 		const frame = () => { if (!running) return; sample('frame'); requestAnimationFrame(frame); };
-		board.addEventListener('pointerover', over, true); board.addEventListener('pointerout', out, true);
+		root.addEventListener('pointerover', over, true); board.addEventListener('pointerout', out, true);
 		sc.addEventListener('wheel', wheel, { capture: true, passive: true }); sc.addEventListener('pointermove', move, true);
 		requestAnimationFrame(frame);
 		r.stop = () => {
-			running = false; mo.disconnect(); board.removeEventListener('pointerover', over, true); board.removeEventListener('pointerout', out, true);
+			running = false; mo.disconnect(); root.removeEventListener('pointerover', over, true); board.removeEventListener('pointerout', out, true);
 			sc.removeEventListener('wheel', wheel, true); sc.removeEventListener('pointermove', move, true);
 			const dim = [...board.querySelectorAll('.is-hl-dim')], on = [...board.querySelectorAll('.is-hl-on')];
 			return { ...r, stop: undefined, top: sc.scrollTop, paused: board.getAttribute('data-op') === 'wheel', targetHovered: !!target?.matches(':hover'),
@@ -238,15 +272,17 @@ async function providerRace(t, f, label, park) {
 	const rec = await f.evaluate(() => window.__uhpRace.stop());
 	t.log(label + 'R4 provider race: ' + JSON.stringify(rec));
 	const gap = rec.enter != null && rec.wheel != null ? rec.wheel - rec.enter : null;
-	await t.check(label + 'R4 could judge: enter then wheel within 110 ms, the board scrolls, pointer stays on the same provider',
-		rec.clean && rec.eligibleDim + rec.eligibleOn > 0 && gap != null && gap >= 0 && gap < 110 && rec.top > rec.startTop && rec.targetHovered && !rec.moves && !rec.outs,
-		`enter-to-wheel ${gap} ms, scroll ${rec.top - rec.startTop} px, hovered ${rec.targetHovered}, moves ${rec.moves}, leaves ${rec.outs}, clean ${rec.clean}, eligible dim/on ${rec.eligibleDim}/${rec.eligibleOn}`);
+	const qualified = rec.clean && rec.eligibleDim + rec.eligibleOn > 0 && gap != null && gap >= 0 && gap < 110 &&
+		rec.top > rec.startTop && rec.targetHovered && !rec.moves && !rec.outs && uninterruptedIntent(rec);
+	await t.check(label + 'R4 could judge: enter then wheel within 110 ms, with the same provider intent pending',
+		qualified, `enter-to-wheel ${gap} ms, scroll ${rec.top - rec.startTop} px, hovered ${rec.targetHovered}, moves ${rec.moves}, leaves ${rec.outs}, over ${JSON.stringify(rec.overs)}, applied ${rec.applied}, clean ${rec.clean}, eligible dim/on ${rec.eligibleDim}/${rec.eligibleOn}`);
+	if (!qualified) return rec;
 	if (String(t.args.raceNoPause || '') === '1') {
 		await t.check(label + 'R4 main control has no wheel marker and its ordinary provider intent completes', rec.pauses.length === 0 && rec.correct && rec.dim===rec.eligibleDim && rec.on===rec.eligibleOn && rec.dim+rec.on>0);
 		t.log(label + 'R4 main control: ordinary chart behavior is judged above; marker-only checks are inapplicable');
 		return rec;
 	}
-	await t.check(label + 'R4 main provider intent completes during the wheel hold without being cancelled or rearmed', rec.pauses.length > 0 && rec.frames > 0 && rec.during.some(x=>x.t>=rec.enter+100),
+	await t.check(label + 'R4 main provider intent completes during the wheel hold without being cancelled or rearmed', rec.pauses.length > 0 && rec.frames > 0 && rec.during.some(x=>x.t>=rec.enter+110),
 		`${rec.pauses.length} pauses, ${rec.frames} paused samples, ${rec.during.length} lit samples: ${JSON.stringify(rec.during.slice(0, 3))}`);
 	await t.check(label + 'R4 main provider highlight remains after the hold without a synthetic return', rec.end != null && !rec.paused && rec.targetHovered && rec.eligibleDim + rec.eligibleOn > 0 && rec.dim === rec.eligibleDim && rec.on === rec.eligibleOn && rec.correct,
 		`pause end ${rec.end}, paused ${rec.paused}, hovered ${rec.targetHovered}, dim ${rec.dim}, on ${rec.on}, correct provider ${rec.correct}`);

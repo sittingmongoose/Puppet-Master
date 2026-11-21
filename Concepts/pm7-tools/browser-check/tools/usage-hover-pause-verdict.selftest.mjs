@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
 // node tools/usage-hover-pause-verdict.selftest.mjs [check file]: the argument runs the same assertions against another
 // revision of the check, which is how each item's RED run shows the old verdict misjudging a constructed record.
-const { judge, outerCap } = await import(process.argv[2] ? pathToFileURL(resolve(process.argv[2])).href : '../checks/usage-hover-pause.check.mjs');
+const { judge, outerCap, uninterruptedIntent } = await import(process.argv[2] ? pathToFileURL(resolve(process.argv[2])).href : '../checks/usage-hover-pause.check.mjs');
 // R125 #6: the probe's deadline comes from the record's last input, as the recorder arms it (520 + 150). The old
 // fixture injected 650 and so credited 20 ms of lateness in the nominal control though the probe fired at the real
 // deadline; a control's lateness must be the queue's, not the fixture's.
@@ -204,4 +204,36 @@ test('TB6 item 1: a 258 ms driver gap is reported as a broken burst; a 30 ms cad
  r.wheels=[100,130,160,418,448,478,508];
  assert.deepEqual(j(r).burst,{maxGap:258,rest:150,broke:true});
  assert.equal(j(make()).burst.broke,false);
+});
+
+test('R113 T3: even a momentary marker gap before the first sampled frame fails the hold', () => {
+ const r = make();
+ r.ops = [{t:101,op:'wheel'},{t:124,op:null},{t:124,op:'wheel'},{t:670,op:null}];
+ assert.equal(j(r).r1.ok, false);
+});
+test('R117 T2: an unmarked sampled gap fails even if the recorder missed a marker change', () => {
+ const r = make();
+ r.frames.find(f => f.t === 300).op = null;
+ assert.equal(j(r).r1.ok, false);
+ assert.equal(j(r).r2.ok, false);
+});
+
+test('R100 T8: a delegated pointerover inside the same column rearms the pending intent', () => {
+ const record = { enterIndex: 0, overs: [100], applied: 214 };
+ assert.equal(uninterruptedIntent(record), true);
+ assert.equal(uninterruptedIntent({...record, overs:[100, 107]}), false);
+ assert.equal(uninterruptedIntent({...record, overs:[100, 225]}), true);
+});
+test('R117 T3: a visible proxy during the burst fails even with dark card classes', () => {
+ const r = make();
+ r.frames.find(f => f.t === 300).proxyLit = true;
+ assert.equal(j(r).r1.ok, false);
+ assert.equal(j(r).r2.ok, false);
+});
+test('R117 T3: the card lighting up cannot substitute for a required proxy', () => {
+ const r = make();
+ for (const f of r.frames) Object.assign(f, { proxyRequired: true, proxyBack: false });
+ assert.equal(j(r).r2.ok, false);
+ for (const f of r.frames) f.proxyBack = f.t >= 690;
+ assert.equal(j(r).r2.ok, true);
 });
