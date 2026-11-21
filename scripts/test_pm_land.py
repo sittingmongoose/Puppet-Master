@@ -255,5 +255,42 @@ class LandingFixture(unittest.TestCase):
         fast_forward.assert_not_called()
 
 
+    def test_followup_fetches_the_candidate_before_judging_its_baseline(self):
+        self.git(self.shared, "update-ref", land.ORIGIN_MAIN, self.base)
+        generation = self.folder / "generation"
+        generation.mkdir()
+        land.write_json(generation / "snapshot-record.json",
+                        {"head": self.head, "tree": self.tree, "ignored_inputs": self.manifest})
+        record = self.make_record(1)
+        lock = Mock()
+        real_git = land.git
+        fetched = False
+
+        def fetch(root, *argv, **kwargs):
+            nonlocal fetched
+            if argv[:2] == ("fetch", "origin"):
+                if len(argv) == 3:
+                    self.assertTrue(argv[2].startswith("refs/heads/fix/landing-snapshot-"))
+                    fetched = True
+                return None
+            return real_git(root, *argv, **kwargs)
+
+        def judge(*_):
+            self.assertTrue(fetched)
+            return 1
+
+        with (patch.object(land, "git", side_effect=fetch),
+              patch.object(land, "new_run", side_effect=[generation, self.folder]),
+              patch.object(land, "start_remote_job"),
+              patch.object(land, "checked_remote", return_value=record),
+              patch.object(land, "ref_at", return_value=self.head),
+              patch.object(land, "cleanup_over_ssh"),
+              patch.object(land, "check_judgments", side_effect=judge),
+              patch.object(land, "push_checked_main", return_value=True) as publish):
+            self.assertEqual(land.snapshot_followup("1070ti", self.base, self.tree, lock, False), 1)
+        self.assertEqual(lock.owed, "")
+        publish.assert_called_once()
+
+
 if __name__ == "__main__":
     unittest.main()
