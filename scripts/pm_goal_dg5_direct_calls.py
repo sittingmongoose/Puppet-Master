@@ -13,9 +13,9 @@ Input: dg5_direct_calls/methods.json, the census follow-up's per-method list (ce
 METHODS_SHA256. For a family that is listed and not PENDING, each method under ``owner_methods`` is wrapped, and only
 those; every method under ``excluded_construction`` (constructors, factories, fixture classes) is left alone. A listed
 name the written construction rules C1-C3 exclude (construction-and-owner-methods.md) is not wrapped either: it is
-reported under ``construction_by_rule`` (the final list names three, S1CancelWorld._adopt_closure, ._start and .close:
-the census's FIXTURE_CLASS regex `_?[A-Za-z]*World` does not match a class name with a digit, though C3 reads
-"every method of a class named World, *World"). A name in both lists is refused at install.
+reported under ``construction_by_rule``, a guard kept after the census fix (final/methods.json listed three
+S1CancelWorld methods because its FIXTURE_CLASS regex missed a digit; final-a16b drops them, so the guard skips
+nothing on the pinned list). A name in both lists is refused at install.
 
 A call through the wrapper is recorded (run as a DG5 complete call through bridge.entry_call, exactly as a census
 entry is) only when it is a direct call in the census probe's sense (outside-probe-v5.py):
@@ -46,9 +46,9 @@ import pm_goal_dg5_boundaries as bridge
 
 HERE = Path(__file__).resolve().parent
 METHODS = HERE / 'dg5_direct_calls' / 'methods.json'
-# census-questions/followup-1/final/methods.json: final for every family, Run Cancelled included (DG5, 2026-11-21;
-# it supersedes the top-level followup-1/methods.json, whose Run Cancelled list was partial).
-METHODS_SHA256 = '54d88a4a377746e2ced9255a651d634d3606b857ed288030319d8137af6600be'
+# census-questions/followup-1/final-a16b/methods.json: the census edition with FIXTURE_CLASS fixed (lead's choice after
+# the S1CancelWorld finding; supersedes final/methods.json 54d88a4a, which listed three S1CancelWorld methods).
+METHODS_SHA256 = '4603e2c80a54cf357bc1c361585a8364d1a324d4bbf6fe83e7a1e004f45e663a'
 PENDING = frozenset()
 EXCLUDE_SUFFIX = ('_oracles', '_cases', '_selftest', '_selftest_b2', '_crash', '_inspection_cases')
 EXCLUDE_MODULES = ('pm_goal_test_numrule', 'pm_goal_test_adapters_selftest', 'pm_goal_test_selftest_b2')

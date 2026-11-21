@@ -4452,6 +4452,50 @@
     "module": "pm_goal_dg_ca3_native",
     "refusing_cases": 0
    },
+   "S1CancelWorld._adopt_closure": {
+    "call_sites": {
+     "pm_goal_dg_int_cancel.py:553(_adopt_closure)": 4
+    },
+    "cases": 1,
+    "decided_rows": 5,
+    "example_cases": [
+     "R2/positive/terminal_preserved_projects_no_cancelled_row"
+    ],
+    "kind": "fixture",
+    "module": "pm_goal_dg_int_world",
+    "refusing_cases": 0
+   },
+   "S1CancelWorld._start": {
+    "call_sites": {
+     "pm_goal_dg_int_cancel.py:430(_start)": 1
+    },
+    "cases": 1,
+    "decided_rows": 258,
+    "example_cases": [
+     "R2/positive/terminal_preserved_projects_no_cancelled_row"
+    ],
+    "kind": "fixture",
+    "module": "pm_goal_dg_int_world",
+    "refusing_cases": 0
+   },
+   "S1CancelWorld.close": {
+    "call_sites": {
+     "pm_goal_dg_r_oracles.py:1371(run)": 5,
+     "pm_goal_dg_r_oracles.py:733(run)": 89
+    },
+    "cases": 94,
+    "decided_rows": 0,
+    "example_cases": [
+     "R4/current_d01_head_advanced",
+     "R4/current_d06_control_changed",
+     "R4/current_goal_stop_receipt_substituted",
+     "R4/current_native_advanced",
+     "R4/current_newer_goal_stop"
+    ],
+    "kind": "fixture",
+    "module": "pm_goal_dg_int_world",
+    "refusing_cases": 0
+   },
    "S1D01Owner.__init__": {
     "call_sites": {
      "pm_goal_dg_int_cancel.py:376(build)": 1
@@ -5658,50 +5702,6 @@
     ],
     "kind": "owner",
     "module": "pm_goal_dg_ca_c1",
-    "refusing_cases": 0
-   },
-   "S1CancelWorld._adopt_closure": {
-    "call_sites": {
-     "pm_goal_dg_int_cancel.py:553(_adopt_closure)": 4
-    },
-    "cases": 1,
-    "decided_rows": 5,
-    "example_cases": [
-     "R2/positive/terminal_preserved_projects_no_cancelled_row"
-    ],
-    "kind": "owner",
-    "module": "pm_goal_dg_int_world",
-    "refusing_cases": 0
-   },
-   "S1CancelWorld._start": {
-    "call_sites": {
-     "pm_goal_dg_int_cancel.py:430(_start)": 1
-    },
-    "cases": 1,
-    "decided_rows": 258,
-    "example_cases": [
-     "R2/positive/terminal_preserved_projects_no_cancelled_row"
-    ],
-    "kind": "owner",
-    "module": "pm_goal_dg_int_world",
-    "refusing_cases": 0
-   },
-   "S1CancelWorld.close": {
-    "call_sites": {
-     "pm_goal_dg_r_oracles.py:1371(run)": 5,
-     "pm_goal_dg_r_oracles.py:733(run)": 89
-    },
-    "cases": 94,
-    "decided_rows": 0,
-    "example_cases": [
-     "R4/current_d01_head_advanced",
-     "R4/current_d06_control_changed",
-     "R4/current_goal_stop_receipt_substituted",
-     "R4/current_native_advanced",
-     "R4/current_newer_goal_stop"
-    ],
-    "kind": "owner",
-    "module": "pm_goal_dg_int_world",
     "refusing_cases": 0
    },
    "S1D01Owner.adopt": {
