@@ -67,6 +67,7 @@ html[data-theme^="retro"] .pm51-popout.o55-mgp-menu.is-described .pm51-menu-item
 #panel-settings .o55-tag-sug:hover { border-color: var(--k3-line-strong); color: var(--k3-text-1); }
 html[data-theme^="retro"] #panel-settings .o55-tags-box { border-radius: 2px; }
 html[data-theme^="retro"] #panel-settings :is(.o55-tag-chip, .o55-tag-sug) { border-radius: 2px; }
+html[data-theme^="retro"] #panel-settings .o55-tag-x { box-shadow: none; }
 @container pm51-detail (max-width: 540px) {
   #panel-settings .o55-tags { width: 100%; }
 }
