@@ -1080,52 +1080,72 @@ async function run(t, w, h) {
     const seen6 = await f.evaluate(railAtRest);
     t.log(`${at} ${look} at rest ${JSON.stringify(seen6)}`);
     await t.check(`${at} ${look}: at rest every control of the collapsed rail is on screen`, !!seen6 && seen6.unseen.length === 0 && seen6.below.length === 0, JSON.stringify(seen6));
-    // Reduced Motion, a panel shortcut with the key focus kept on the open panel's icon (K-F96d-1), and in motion a click
-    // on that icon. In Glass the lens
-    // carries the mark on the open panel's icon; Ctrl+2 opens another panel and the lens jumps there in one step, and
-    // Ctrl+1 brings it back. Every frame for 900 ms from each key is read after layout, just before paint (a
-    // ResizeObserver callback): the key-focused icon must have a mark in each (its own outline, or the flagged lens
-    // painted at rest on it), and no flagged lens may be away from it (F96d-1: one frame with neither on 981463667f, the
-    // lens and its ring already on Search). Reduced Motion is the app's own setting (data-motion="reduced", as Settings
-    // sets it) and the media query, so both surfaces take it; both are put back after.
-    if (/^glass-/.test(look)) {
-      // the side panel on screen (below 1920 it lies over the page and can be folded away while it keeps its open state)
-      const shown = () => f.evaluate(() => { const s = document.getElementById('sidePanelSlot'); return !!s && s.getClientRects().length > 0 && getComputedStyle(s).display !== 'none'; });
-      const was = await f.evaluate(() => { const r = document.documentElement, w = r.getAttribute('data-motion'); r.setAttribute('data-motion', 'reduced'); return w; });
-      await t.page.emulateMedia({ reducedMotion: 'reduce' });
-      if (!(await f.evaluate(panelState, 'files')).open && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
-      if (!(await shown()) && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
-      const reached = await tabTo('files');
-      await f.waitForTimeout(1600);
-      const pre = (await f.evaluate(markOn, 'files')).any;
-      const reads = [];
-      for (const [k, label] of [['Control+2', 'Ctrl+2, the lens leaves it'], ['Control+1', 'Ctrl+1, the lens comes back']]) {
-        const r = await sampleMark('files', () => kb.press(k));
-        reads.push({ key: label, ...r }); await f.waitForTimeout(300);
+    const glass = look.startsWith('glass-');
+    const shown = () => f.evaluate(() => {
+      const panel = document.getElementById('sidePanelSlot');
+      return !!panel && panel.getClientRects().length > 0 && getComputedStyle(panel).display !== 'none';
+    });
+    const showsPanel = async target => (await f.evaluate(panelState, target)).open && await shown();
+    const openFiles = async () => {
+      if (!(await showsPanel('files')) && await tabTo('files')) {
+        await kb.press('Enter');
+        await frames(f, 4);
       }
-      await f.evaluate(w => { const r = document.documentElement; if (w === null) r.removeAttribute('data-motion'); else r.setAttribute('data-motion', w); }, was);
-      await t.page.emulateMedia({ reducedMotion: 'no-preference' });
-      if (!(await f.evaluate(panelState, 'files')).open && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
-      t.log(`${at} ${look} Reduced Motion, panel shortcuts with the focus kept on Files: a mark before ${pre}, ${JSON.stringify(reads)}`);
-      await t.check(`${at} ${look}: in Reduced Motion, Ctrl+2 and Ctrl+1 with the key focus kept on the open panel's icon leave it a mark in every frame, and no flagged lens away from it`,
-        reached && pre && reads.every(keptMark), JSON.stringify({ reached, pre, reads }));
-      // ...and in motion, a real click on the key-focused open icon, with no key in the bar: the panel closes (at 1920) or
-      // folds away (below it, where the panel lies over the page and keeps its open state), and the lens hides in one
-      // step. 981463667f left one frame with no mark there. The panel is shown again after, by Enter.
-      if (!(await shown()) && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
-      const reachedC = await tabTo('files');
-      await f.waitForTimeout(1600);
-      const preC = (await f.evaluate(markOn, 'files')).any;
+      return showsPanel('files');
+    };
+    const focusClick = async label => {
+      const opened = await openFiles();
+      const reached = await tabTo('files');
       const click = await sampleMark('files', async () => {
         await f.locator('#activityBar .icon[data-ab-id="files"]').click();
         await rest();
       });
       const closed = !(await shown());
-      if (closed && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
-      if (!(await shown()) && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
-      t.log(`${at} ${look} a click on the key-focused open Files: a mark before ${preC}, panel gone ${closed}, ${JSON.stringify(click)}`);
-      await t.check(`${at} ${look}: a real click on the key-focused open panel's icon leaves it a mark in every frame as the panel goes and the lens hides`,
-        reachedC && preC && keptMark(click) && closed, JSON.stringify({ reachedC, preC, closed, click }));
+      await openFiles();
+      await t.check(`${label}: a real click on the key-focused open Files leaves a mark in every frame as the panel goes`,
+        opened && reached && keptMark(click) && closed, JSON.stringify({ opened, reached, closed, click }));
+    };
+    const checkReducedMotion = async rail => {
+      const label = `${at} ${look}, ${rail}, Reduced Motion`;
+      const was = await f.evaluate(() => {
+        const root = document.documentElement, motion = root.getAttribute('data-motion');
+        root.setAttribute('data-motion', 'reduced');
+        return motion;
+      });
+      await t.page.emulateMedia({ reducedMotion: 'reduce' });
+      try {
+        const opened = await openFiles();
+        const reached = await tabTo('files');
+        const reads = [];
+        for (const [key, target] of [['Control+2', 'search'], ['Control+1', 'files']]) {
+          const sample = await sampleMark('files', () => kb.press(key));
+          reads.push({ key, panel: target, opened: await showsPanel(target), ...sample });
+        }
+        await t.check(`${label}: Ctrl+2 then Ctrl+1 switch panels while the focused Files keeps its mark in every frame`,
+          opened && reached && reads.every(read => read.opened && keptMark(read)), JSON.stringify({ opened, reached, reads }));
+
+        const reachedSearch = await tabTo('search');
+        if (reachedSearch) { await kb.press('Enter'); await frames(f, 4); }
+        const searchOpened = await showsPanel('search');
+        const back = await sampleMark('search', () => kb.press('Control+1'));
+        const filesOpened = await showsPanel('files');
+        await t.check(`${label}: after Enter opens Search, Ctrl+1 opens Files while the focused Search keeps its mark in every frame`,
+          reachedSearch && searchOpened && keptMark(back) && filesOpened,
+          JSON.stringify({ reachedSearch, searchOpened, filesOpened, back }));
+
+        await focusClick(label);
+      } finally {
+        await f.evaluate(motion => {
+          const root = document.documentElement;
+          if (motion === null) root.removeAttribute('data-motion');
+          else root.setAttribute('data-motion', motion);
+        }, was);
+        await t.page.emulateMedia({ reducedMotion: 'no-preference' });
+      }
+    };
+    if (glass) {
+      await checkReducedMotion('collapsed');
+      await focusClick(`${at} ${look}, collapsed, motion`);
     }
     // the bar with its names shown (the toggle)
     await f.evaluate(() => document.getElementById('activityBarToggle').click());
@@ -1140,6 +1160,7 @@ async function run(t, w, h) {
     t.log(`${at} ${look} names shown, marks ${JSON.stringify(wide.map(brief))}`);
     await t.check(`${at} ${look}, names shown: a key focus mark on every side at 3:1 or more${both3} on Chat, lit Files, Search and Pipelines, and no name's letters in view are crossed or touched`,
       wide.every(ok) && wide[1]?.lit && wide.every(r => r && r.names && r.names.letters >= 15 && r.names.crossed === 0), JSON.stringify(wide.map(brief)));
+    if (glass) await checkReducedMotion('names shown');
     // FO-96 NieR tile-anchor witness: retain native narrow-rail names and Pipelines corners on both surfaces.
     if (/^nier-/.test(look) && (w === 1024 || w === 740)) {
       await sentinel('#activityBar'); await byTab('repository_automation')(); await f.waitForTimeout(450);
