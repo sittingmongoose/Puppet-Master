@@ -1070,6 +1070,59 @@ fi
         self.assertIn(f'"pre_merge_head": "{base}"', marker)
         self.assertIn(owner, (self.folder / "publication-recovery.json").read_text())
 
+    def test_failed_fast_forward_preserves_unstaged_save_of_candidate_bytes(self):
+        repo = Path(__file__).resolve().parents[1]
+        evidence = "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        prior = self.git(repo, "show", f"9fa4018fb0:{evidence}", check=False)
+        sealed = self.git(repo, "show", f"35f344d843:{evidence}", check=False)
+        if prior.returncode or sealed.returncode:
+            self.skipTest("historical Q5 evidence is unavailable")
+        self.assertNotEqual(prior.stdout, sealed.stdout)
+        self.git(self.shared, "reset", "--keep", self.base)
+        target = self.put(self.shared, evidence, prior.stdout)
+        self.git(self.shared, "add", "--", evidence)
+        self.git(self.shared, "commit", "-m", "prior Q5 evidence")
+        base = land.revision(self.shared, "HEAD")
+        target.write_text(sealed.stdout, encoding="utf-8")
+        self.git(self.shared, "commit", "-am", "seal Q5 evidence")
+        candidate = land.revision(self.shared, "HEAD")
+        tree = land.revision(self.shared, "HEAD^{tree}")
+        self.git(self.shared, "update-ref", land.ORIGIN_MAIN, base)
+        self.git(self.shared, "reset", "--keep", base)
+        self.git(self.shared, "config", "core.filemode", "false")
+        target.chmod(0o777)
+        real_git = land.git
+        unstaged = f" M {evidence}\n"
+
+        def save_at_merge(root, *argv, **kwargs):
+            self.assertNotEqual(argv[0], "push")
+            if argv[0] != "merge":
+                return real_git(root, *argv, **kwargs)
+            self.assertIn(f'"candidate": "{candidate}"', (self.lock_path / "holder.txt").read_text())
+            self.assertEqual(real_git(root, "status", "--porcelain").stdout, "")
+            target.write_text(sealed.stdout, encoding="utf-8")
+            self.assertEqual(real_git(root, "status", "--porcelain").stdout, unstaged)
+            result = real_git(root, *argv, **{**kwargs, "check": False})
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("would be overwritten by merge", result.stderr)
+            self.assertEqual(real_git(root, "status", "--porcelain").stdout, unstaged)
+            raise land.Refusal(result.stderr)
+
+        with (patch.object(land, "git", side_effect=save_at_merge),
+              patch.object(land, "verify_over_ssh"), self.assertRaises(land.Refusal) as refusal):
+            with land.LandingLock("first", "fix/topic") as lock:
+                land.push_checked_main(self.folder, "1070ti", candidate, tree, base, {evidence}, lock, True)
+        self.assertEqual(land.revision(self.shared, "HEAD"), base)
+        self.assertEqual(self.git(self.shared, "show", f":{evidence}").stdout, prior.stdout)
+        self.assertEqual(self.git(self.shared, "status", "--porcelain").stdout, unstaged)
+        self.assertEqual(target.read_text(encoding="utf-8"), sealed.stdout)
+        self.assertIn(evidence, str(refusal.exception))
+        holder = (self.lock_path / "holder.txt").read_text()
+        marker = land.json.loads(land.holder_field(holder, "publication"))
+        self.assertEqual((marker["candidate"], marker["phase"]), (candidate, "fast-forward-pending"))
+        notice = land.read_json(self.folder / "publication-recovery.json")
+        self.assertIn(f"ambiguous index or working-tree bytes after failed fast-forward: {evidence}", notice["reason"])
+
     def test_recovery_repairs_interrupted_failed_fast_forward_even_if_candidate_reached_origin(self):
         owner, base, candidate, tree = self.rejected_fast_forward_fixture()
         self.git(self.shared, "config", "core.filemode", "false")

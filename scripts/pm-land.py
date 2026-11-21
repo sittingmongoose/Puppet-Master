@@ -1230,10 +1230,9 @@ def repair_failed_fast_forward(lock, marker, upstream):
             working_is_old = matches_worktree(working, old, trust_filemode)
             if indexed == old and working_is_old:
                 continue
-            if (indexed not in (old, new)
-                    or not (working_is_old or matches_worktree(working, new, trust_filemode))
-                    or (old is None and indexed is None)):
-                # An untracked candidate-shaped file can predate the merge.
+            # A concurrent save can match the candidate while Git leaves the index at the base.
+            if (indexed == old or indexed != new
+                    or not (working_is_old or matches_worktree(working, new, trust_filemode))):
                 ambiguous.add(name)
             else:
                 restore.add(name)
