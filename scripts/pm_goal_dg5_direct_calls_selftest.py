@@ -6,7 +6,7 @@ an owner module by the census rule) with a class whose methods are listed or not
 world class. bridge.entry_call is replaced by a recorder, so each trial shows whether the wrapper hands the call
 to the collector (recorded) or runs it unchanged (not recorded).
 
-  listed_direct            a listed method called from case code with a case current: recorded
+  listed_direct            a listed method called from case code with a case current: recorded over its store
   listed_no_case           the same with no case current: not recorded
   listed_nested_owner      the same method called from inside another owner-module function: not recorded
   listed_inside_entry      the same with an entry under way (bridge.PARENT_CALL): not recorded
@@ -14,7 +14,8 @@ to the collector (recorded) or runs it unchanged (not recorded).
   constructor_not_listed   the class's constructor: not wrapped, not recorded
   constructor_listed       a listing that names a constructor: install refuses (construction)
   pin                      a listing that is not the pinned bytes: load refuses
-  module_function          a listed module function, direct: recorded over a fresh folder (no world)
+  module_function_unsealed a listed module function, direct, with no world or store to seal: not recorded, counted
+  store_argument           a listed module function called with a TestOwnerStorage argument: recorded over that store
 
 Usage: python3 -B scripts/pm_goal_dg5_direct_calls_selftest.py --out RESULT.json
 """
@@ -43,6 +44,9 @@ OWNER = textwrap.dedent('''
 
     def pure(x):
         return ('pure', x)
+
+    def with_store(store, x):
+        return ('store', x)
     ''')
 
 
@@ -87,9 +91,13 @@ def main():
     try:
         owner = load_module(folder, 'pm_goal_dg_dcself_owner', OWNER)
         bridge.entry_call = recorder
-        fresh(folder, ['Thing.listed', 'Thing.calls_listed', 'pm_goal_dg_dcself_owner:pure'])
+        fresh(folder, ['Thing.listed', 'Thing.calls_listed', 'pm_goal_dg_dcself_owner:pure',
+                       'pm_goal_dg_dcself_owner:with_store'])
         report = dc.install('selftest.family')
+        import pm_goal_test_storage as storage
+        store = storage.TestOwnerStorage.create(folder / 'store')
         thing = owner.Thing()
+        thing.storage = store          # an owner over one Storage: the store a recorded call seals
 
         def trial(name, run, expect_recorded, case=True, parent=False):
             calls.clear()
@@ -104,16 +112,21 @@ def main():
                              passed=bool(recorded) == expect_recorded))
 
         trial('listed_direct', lambda: thing.listed(1), True)
+        rows[-1]['passed'] = rows[-1]['passed'] and calls[-1]['work'] == str(store.root)
         trial('listed_no_case', lambda: thing.listed(1), False, case=False)
         calls_listed = getattr(owner.Thing.calls_listed, '__wrapped__', owner.Thing.calls_listed)
         trial('listed_nested_owner', lambda: calls_listed(thing, 1), False)
         trial('listed_inside_entry', lambda: thing.listed(1), False, parent=True)
         trial('not_listed', lambda: thing.unlisted(1), False)
         trial('constructor_not_listed', lambda: (owner.Thing().n,), False)
-        trial('module_function', lambda: owner.pure(2), True)
-        rows[-1]['passed'] = rows[-1]['passed'] and Path(calls[-1]['work']).name.startswith('direct-') if calls else False
+        trial('module_function_unsealed', lambda: owner.pure(2), False)
+        rows[-1]['passed'] = rows[-1]['passed'] and \
+            dc.REPORTS['selftest.family'].get('unsealed_calls', {}).get('pm_goal_dg_dcself_owner:pure') == 1
+        trial('store_argument', lambda: owner.with_store(store, 3), True)
+        rows[-1]['passed'] = rows[-1]['passed'] and calls[-1]['work'] == str(store.root)
         rows.append(dict(case='install_report', wrapped=report['wrapped'], passed=sorted(report['wrapped']) ==
-                         ['Thing.calls_listed', 'Thing.listed', 'pm_goal_dg_dcself_owner:pure'] and
+                         ['Thing.calls_listed', 'Thing.listed', 'pm_goal_dg_dcself_owner:pure',
+                          'pm_goal_dg_dcself_owner:with_store'] and
                          not getattr(owner.Thing.unlisted, '_dg5_direct', False) and
                          not getattr(owner.Thing.__init__, '_dg5_direct', False)))
         owner = load_module(folder, 'pm_goal_dg_dcself_owner', OWNER)   # unwrapped again
