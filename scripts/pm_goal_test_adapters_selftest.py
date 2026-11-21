@@ -519,7 +519,7 @@ def test_source(s, work):
         'goal_run.started': 'pm.goal_runtime_event.goal_run_started.schema.v3',
         'goal_run.cancelled': 'pm.goal_runtime_event.goal_run_cancelled.schema.v3',
         'goal_run.certified': 'pm.goal_runtime_event.goal_run_certified.schema.v3',
-        'goal_run.replanned': 'pm.goal_runtime_event.goal_run_replanned.schema.v2',
+        'goal_run.replanned': 'pm.goal_runtime_event.goal_run_replanned.schema.v3',
         'run.started': 'https://puppetmaster.local/schemas/event_payloads/run_started/2.0.0',
         'platform.capability_evaluated': 'https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0',
     }
