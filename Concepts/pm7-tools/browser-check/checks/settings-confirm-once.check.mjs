@@ -246,6 +246,12 @@ async function expand(f, ws) {
 /* Direct buttons (danger, or a confirm-labelled name), then the danger/confirm rows of each "More …" menu. */
 const CONFIRM_IN_PAGE = /^(delete|remove|forget|reset|disconnect|revoke|clear|sign out|turn off|roll back|clean up|claim|restart|rotate|allow|copy settings|copy the recovery|start |move workspace|back up|stop )/i;
 
+// These tabs have no direct confirm candidates on a fresh page. Scan them anyway so new candidates are judged.
+const EMPTY_MANAGER_TABS = {
+	'system/servers/home': 'Home & Location has settings, navigation and a location form',
+	'system/servers/move': 'Move & Copy has wizard entry points and an empty move history',
+};
+
 /* A press that still opens the dialog when Playwright's own click cannot land (a covered or just re-rendered
    control): the page's own click reaches the button's listener, which is what opens the confirm. */
 async function press(f, attr) {
@@ -320,9 +326,11 @@ async function pick(f, ws, tab, kind, seen, attr) {
 }
 
 async function scan(t, f, ws, tab, place, bag, seen, limits) {
+	let candidates = 0;
 	for (let i = 0; i < limits.buttons; i++) {
 		const picked = await pick(f, ws, tab, 'button', [...seen], 'data-fo154btn');
 		if (!picked) break;
+		candidates += 1;
 		seen.add(picked.key);
 		if (!(await press(f, 'data-fo154btn'))) { bag.skipped += 1; t.log(`unvisited confirm: ${place} / ${picked.name.slice(0, 60)}`); break; }
 		if (await dialogShown(f)) await judge(t, f, bag, `${place} / ${picked.name.slice(0, 50)}`);
@@ -344,6 +352,7 @@ async function scan(t, f, ws, tab, place, bag, seen, limits) {
 				.filter((it) => !it.off && (it.danger || rx.test(it.label)));
 		}, { pattern: CONFIRM_IN_PAGE.source, sel: MENU });
 		for (const item of items.slice(0, limits.items)) {
+			candidates += 1;
 			const row = await rowPress(f, 'data-fo154more', item.label);
 			if (!row.ok) { bag.skipped += 1; t.log(`unvisited menu row: ${place} / ${more.name.slice(0, 40)} / ${item.label.slice(0, 40)} (${row.why})`); continue; }
 			if (await dialogShown(f)) await judge(t, f, bag, `${place} / ${more.name.slice(0, 40)} / ${item.label.slice(0, 40)}`);
@@ -352,6 +361,7 @@ async function scan(t, f, ws, tab, place, bag, seen, limits) {
 		await dismiss(f);
 		await closeOpened(t, f, place);
 	}
+	return candidates;
 }
 
 async function openChapter(f, domain) {
@@ -366,11 +376,14 @@ async function openChapter(f, domain) {
 	return false;
 }
 
-async function openManagerTab(f, ws, tab) {
+export async function openManagerTab(f, ws, tab) {
 	const sel = `[data-continuous-workspace-body="${ws}"] .manager-tab[data-tab="${tab}"]`;
-	const oldBody = await f.evaluateHandle((w) => document.querySelector(
-		`[data-continuous-workspace-body="${w}"] .pm51-mgr > .manager-body:not(.o55-leaving)`
-	), ws);
+	const stability = await f.evaluateHandle((w) => ({
+		previous: document.querySelector(`[data-continuous-workspace-body="${w}"] .pm51-mgr > .manager-body:not(.o55-leaving)`),
+		shown: null,
+		signature: null,
+		stableFrames: 0,
+	}), ws);
 	try {
 		await f.locator(sel).scrollIntoViewIfNeeded({ timeout: 2500 }).catch(() => {});
 		try { await f.locator(sel).click({ timeout: 6000 }); } catch (e) {
@@ -384,31 +397,31 @@ async function openManagerTab(f, ws, tab) {
 			}, [ws, tab]).catch(() => false);
 			if (!pressed) return false;
 		}
-		// The active button changes at the start of the swap, while the outgoing body is still present.
-		return await f.waitForFunction(async ([w, id, previous]) => {
-			const read = () => {
-				const body = document.querySelector(`[data-continuous-workspace-body="${w}"]`);
-				const manager = body?.querySelector('.pm51-mgr');
-				const shown = manager?.querySelector(':scope > .manager-body');
-				const active = manager?.querySelector(':scope > .pm51-tabs .manager-tab.active');
-				if (active?.dataset.tab !== id || !shown || shown === previous ||
-					manager.querySelectorAll(':scope > .manager-body').length !== 1 ||
-					shown.getAnimations().some((animation) => animation.pending || animation.playState === 'running')) return null;
+		// The active button changes while the outgoing body is still present. Return a Boolean on
+		// each Playwright animation-frame poll, since a Promise itself would end the poll early.
+		return await f.waitForFunction(([w, id, state]) => {
+			const body = document.querySelector(`[data-continuous-workspace-body="${w}"]`);
+			const manager = body?.querySelector('.pm51-mgr');
+			const shown = manager?.querySelector(':scope > .manager-body');
+			const active = manager?.querySelector(':scope > .pm51-tabs .manager-tab.active');
+			let signature = null;
+			if (active?.dataset.tab === id && shown && shown !== state.previous &&
+				manager.querySelectorAll(':scope > .manager-body').length === 1 &&
+				!shown.getAnimations().some((animation) => animation.pending || animation.playState === 'running')) {
 				const { x, y, width, height } = shown.getBoundingClientRect();
-				if (!width || !height) return null;
-				return { shown, signature: JSON.stringify([shown.textContent, x, y, width, height]) };
-			};
-			const first = read();
-			if (!first) return false;
-			for (let frame = 0; frame < 2; frame++) {
-				await new Promise((resolve) => requestAnimationFrame(resolve));
-				const next = read();
-				if (!next || next.shown !== first.shown || next.signature !== first.signature) return false;
+				if (width && height) signature = JSON.stringify([shown.textContent, x, y, width, height]);
 			}
+			state.stableFrames = signature && shown === state.shown && signature === state.signature
+				? state.stableFrames + 1 : 0;
+			state.shown = shown;
+			state.signature = signature;
+			return state.stableFrames >= 2;
+		}, [ws, tab, stability], { timeout: 6000 }).then(async (ready) => {
+			await ready.dispose();
 			return true;
-		}, [ws, tab, oldBody], { timeout: 6000 }).then(() => true).catch(() => false);
+		}).catch(() => false);
 	} finally {
-		await oldBody.dispose();
+		await stability.dispose();
 	}
 }
 
@@ -446,9 +459,15 @@ export default async function (t) {
 				}
 				const place = `${domain}/${ws}${tab ? `/${tab}` : ''}`;
 				await expand(f, ws);
-				const before = seen.size;
-				await scan(t, f, ws, tab, place, bag, seen, limits);
-				if (tab && seen.size === before) t.log(`no confirm candidates: ${place}`);
+				const before = bag.dialogs;
+				const candidates = await scan(t, f, ws, tab, place, bag, seen, limits);
+				if (tab) {
+					const knownEmpty = EMPTY_MANAGER_TABS[place];
+					let detail = `${candidates} candidates, ${bag.dialogs - before} confirms judged`;
+					if (candidates === 0) detail += `; could not judge: ${knownEmpty || 'the settled tab yielded no confirm candidates'}`;
+					t.log(`manager tab ${place}: ${detail}`);
+					await t.check(`candidate coverage in settled manager tab ${place}`, candidates > 0 || !!knownEmpty, detail);
+				}
 			}
 		}
 	}
