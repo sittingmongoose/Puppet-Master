@@ -1005,8 +1005,44 @@ fi
         self.assertEqual((self.shared / "outside.txt").read_text(), "outside working\n")
         self.assertFalse(self.lock_path.exists())
 
+    def test_failed_fast_forward_repairs_mount_mode_when_git_ignores_it(self):
+        owner, base, candidate, tree = self.rejected_fast_forward_fixture()
+        addition = "Plans/new.md"
+        self.git(self.shared, "config", "core.filemode", "false")
+        (self.shared / owner).chmod(0o777)
+        real_git = land.git
+
+        def mount_modes(root, *argv, **kwargs):
+            if argv[0] == "merge":
+                result = real_git(root, *argv, **{**kwargs, "check": False})
+                self.assertNotEqual(result.returncode, 0)
+                for name in (owner, addition):
+                    self.assertTrue(real_git(root, "ls-files", "--stage", "--", name).stdout.startswith("100644 "))
+                    (root / name).chmod(0o777)
+                raise land.Refusal(result.stderr)
+            result = real_git(root, *argv, **kwargs)
+            if argv[:2] == ("--literal-pathspecs", "restore"):
+                (root / owner).chmod(0o777)
+            return result
+
+        with (patch.object(land, "git", side_effect=mount_modes),
+              patch.object(land, "verify_over_ssh"),
+              self.assertRaisesRegex(land.Refusal, "fixture rejected the main ref transaction")):
+            with land.LandingLock("first", "fix/topic") as lock:
+                land.push_checked_main(self.folder, "1070ti", candidate, tree, base, {owner, addition}, lock, True)
+        self.assertEqual(land.revision(self.shared, "HEAD"), base)
+        self.assertEqual(self.git(self.shared, "status", "--porcelain").stdout, "MM outside.txt\n")
+        self.assertEqual(self.git(self.shared, "show", f":{owner}").stdout, "base edition\n")
+        self.assertEqual((self.shared / owner).read_text(), "base edition\n")
+        self.assertEqual((self.shared / owner).stat().st_mode & 0o777, 0o777)
+        self.assertFalse((self.shared / addition).exists())
+        self.assertEqual(self.git(self.shared, "show", ":outside.txt").stdout, "outside staged\n")
+        self.assertEqual((self.shared / "outside.txt").read_text(), "outside working\n")
+        self.assertFalse(self.lock_path.exists())
+
     def test_failed_fast_forward_retains_journal_for_ambiguous_bytes(self):
         owner, base, candidate, tree = self.rejected_fast_forward_fixture()
+        self.git(self.shared, "config", "core.filemode", "false")
         real_git = land.git
 
         def concurrent_edit(root, *argv, **kwargs):
@@ -1016,6 +1052,7 @@ fi
             self.assertNotEqual(result.returncode, 0)
             self.assertEqual(real_git(root, "show", f":{owner}").stdout, "candidate edition\n")
             self.put(root, owner, "someone else's edit\n")
+            (root / owner).chmod(0o777)
             if kwargs.get("check", True):
                 raise land.Refusal("fixture rejected the main ref transaction")
             return result
@@ -1035,6 +1072,7 @@ fi
 
     def test_recovery_repairs_interrupted_failed_fast_forward_even_if_candidate_reached_origin(self):
         owner, base, candidate, tree = self.rejected_fast_forward_fixture()
+        self.git(self.shared, "config", "core.filemode", "false")
         origin = self.root / "origin.git"
         self.git(self.shared, "clone", "--bare", str(self.shared), str(origin))
         self.git(self.shared, "remote", "add", "origin", str(origin))
@@ -1063,6 +1101,8 @@ fi
         marker = (self.lock_path / "holder.txt").read_text()
         self.assertIn(f'"pre_merge_head": "{base}"', marker)
         self.assertEqual(self.git(self.shared, "show", f":{owner}").stdout, "candidate edition\n")
+        for name in (owner, "Plans/new.md"):
+            (self.shared / name).chmod(0o777)
 
         self.git(origin, "update-ref", land.MAIN_REF, candidate, base)
         with patch.object(land.time, "time", return_value=land.time.time() + 91 * 60):
@@ -1124,7 +1164,8 @@ fi
         with land.LandingLock("hand", "fix/historical") as lock:
             env = {**os.environ, "PM_LAND_LOCK": str(self.lock_path), "PM_LAND_TOKEN": lock.token,
                    "PM_LAND_BASE": base, "PM_LAND_COMMIT": candidate,
-                   "PM_LAND_PLANS_FOLLOWUP": "false", "PM_LAND_COMPLETES_FOLLOWUP": "false"}
+                   "PM_LAND_PLANS_FOLLOWUP": "false", "PM_LAND_COMPLETES_FOLLOWUP": "false",
+                   "PM_LAND_SCRIPT": str(repo / "scripts/pm-land.py")}
             result = subprocess.run(["bash", "-c", recipe], cwd=folder, env=env, capture_output=True, text=True)
             self.assertNotEqual(result.returncode, 0)
             self.assertIn(fixture_path, result.stderr)
@@ -1133,6 +1174,92 @@ fi
             self.assertEqual((marker["pre_merge_head"], marker["phase"]), (base, "fast-forward-pending"))
         self.assertEqual(local_copy.read_text(), "local ignored schema bytes\n")
         self.assertEqual(land.revision(folder, "HEAD"), base)
+
+    def test_hand_publication_rechecks_historical_q5_input_before_each_mutation(self):
+        repo = Path(__file__).resolve().parents[1]
+        evidence = "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        sealed = self.git(repo, "show", f"35f344d843:{evidence}", check=False)
+        prior = self.git(repo, "show", f"9fa4018fb0:{evidence}", check=False)
+        if sealed.returncode or prior.returncode:
+            self.skipTest("historical Q5 evidence is unavailable")
+        self.assertNotEqual(sealed.stdout, prior.stdout)
+        replacement = self.put(self.root, "prior-q5.json", prior.stdout)
+        readme = (repo / "reports/landing-checks/README.md").read_text()
+        fence = chr(96) * 3
+
+        def recipe(title):
+            return re.search(rf"^#### {title}\n.*?^{fence}sh\n(.*?)^{fence}$", readme, re.M | re.S)[1]
+
+        fast_forward = recipe("Guard and fast-forward the checked commit")
+        push = recipe("Push the checked commit")
+        observe_git = """
+git() {
+    if [ "$1" = push ]; then
+        echo 'reached Git push'
+        return 0
+    fi
+    command git "$@" || return "$?"
+    if [ "$1" = fetch ] && [ "$PM_LAND_TEST_PHASE" = push ]; then
+        cp -- "$PM_LAND_TEST_PRIOR" "$PM_LAND_TEST_EVIDENCE"
+    fi
+}
+"""
+        for phase in ("ff", "push"):
+            for followup in (False, True):
+                with self.subTest(phase=phase, followup=followup):
+                    folder = self.root / f"hand-{phase}-{followup}"
+                    origin = self.root / f"hand-origin-{phase}-{followup}.git"
+                    self.git(folder, "init", "-b", "main")
+                    self.git(folder, "config", "user.name", "Landing fixture")
+                    self.git(folder, "config", "user.email", "fixture@example.invalid")
+                    self.git(folder, "config", "core.hooksPath", str(self.root / "no-hooks"))
+                    target = self.put(folder, evidence, sealed.stdout)
+                    self.git(folder, "add", "--", evidence)
+                    self.git(folder, "commit", "-m", "sealed Q5 base")
+                    base = land.revision(folder, "HEAD")
+                    self.git(folder, "clone", "--bare", str(folder), str(origin))
+                    self.git(folder, "remote", "add", "origin", str(origin))
+                    self.git(folder, "fetch", "origin")
+                    topic = "reports/landing-checks/baseline.json" if followup else "topic.txt"
+                    self.put(folder, topic, "candidate edit\n")
+                    self.git(folder, "add", "--", topic)
+                    self.git(folder, "commit", "-m", "candidate")
+                    candidate = land.revision(folder, "HEAD")
+                    self.git(folder, "reset", "--keep", base)
+                    self.assertFalse(self.git(folder, "status", "--porcelain").stdout)
+                    self.assertNotIn(evidence, land.changed_paths(folder, base, candidate))
+
+                    held = self.root / f"hand-lock-{phase}-{followup}" / "held"
+                    held.parent.mkdir()
+                    with patch.object(land, "LOCK", held), land.LandingLock("hand", "fix/q5") as lock:
+                        if followup:
+                            lock.owed = base
+                            lock.heartbeat()
+                        env = {**os.environ, "PM_LAND_LOCK": str(held), "PM_LAND_TOKEN": lock.token,
+                               "PM_LAND_BASE": base, "PM_LAND_COMMIT": candidate,
+                               "PM_LAND_PLANS_FOLLOWUP": "false",
+                               "PM_LAND_COMPLETES_FOLLOWUP": str(followup).lower(),
+                               "PM_LAND_SCRIPT": str(repo / "scripts/pm-land.py"),
+                               "PM_LAND_TEST_PHASE": phase, "PM_LAND_TEST_PRIOR": str(replacement),
+                               "PM_LAND_TEST_EVIDENCE": evidence}
+                        if phase == "ff":
+                            target.write_text(prior.stdout)
+                        command = observe_git + fast_forward + (push if phase == "push" else "")
+                        result = subprocess.run(["bash", "-c", command], cwd=folder, env=env,
+                                                capture_output=True, text=True, check=False)
+                        self.assertNotIn("reached Git push", result.stdout)
+                        self.assertEqual(result.returncode, 3, result.stderr)
+                        self.assertIn(evidence, result.stderr)
+                        body = (held / "holder.txt").read_text()
+                        marker = land.holder_field(body, "publication")
+                        if phase == "push":
+                            self.assertEqual(land.json.loads(marker)["phase"], "fast-forward-pending")
+                        else:
+                            self.assertFalse(marker)
+                        self.assertEqual(land.holder_field(body, "follow-up-owed"), base if followup else "")
+                        self.assertEqual(land.revision(folder, "HEAD"), candidate if phase == "push" else base)
+                    self.assertEqual(land.revision(origin, "HEAD"), base)
+                    self.assertEqual(target.read_text(), prior.stdout)
 
     def test_takeover_between_push_marker_and_git_is_blocked(self):
         self.git(self.shared, "reset", "--keep", self.base)
