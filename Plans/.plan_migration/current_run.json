@@ -2,17 +2,17 @@
   "batch_size": 10,
   "conversion_performed": false,
   "doc_count": 96,
-  "final_validation_summary_sha256": "90f9d7781eac07399ed3e47d3c1ac63622b344a1019f86d3022f633cea3b2324",
-  "generated_at_utc": "2026-11-21T07:56:55Z",
-  "inventory_sha256": "0b5e158e31e8c33050da6a74756ca035ff56227fe85a8a157e01b09117ae72e3",
+  "final_validation_summary_sha256": "76a54faf8a817ecee5b3d50785fec711a8c961bd68fa9e8adea0cc09ed7cb333",
+  "generated_at_utc": "2026-11-21T14:15:21Z",
+  "inventory_sha256": "4bfef9f3538cc3fcd2c3f77b8d459ec6fd4e7542ce7ac2f5bccd1a8e3fd6a656",
   "plans_manifest_sha256": "1e3ca64178fe939ce8ad6d41ca05a8697747d8783e79ccb491c39a517049b858",
-  "run_id": "pds-20261121-002-current-planunit-snapshot",
-  "run_path": "Plans/.plan_migration/pds-20261121-002-current-planunit-snapshot",
+  "run_id": "pds-20261121-003-current-planunit-snapshot",
+  "run_path": "Plans/.plan_migration/pds-20261121-003-current-planunit-snapshot",
   "schema_id": "pm.plan_migration.current_run_pointer.v1",
   "snapshot_mode": "current_planunit_state_snapshot",
   "status": "COMPLETE",
   "supersedes_run_ids": [
     "pds-20260611-002-atomize-planunits",
-    "pds-20261121-001-current-planunit-snapshot"
+    "pds-20261121-002-current-planunit-snapshot"
   ]
 }
