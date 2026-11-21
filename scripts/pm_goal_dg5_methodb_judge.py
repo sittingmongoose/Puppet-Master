@@ -947,10 +947,11 @@ class ForkedExample(w3.OwnerExample):
             code.update(verdict=None, reason='same code')
             states = rerun() if rerun is not None else self.after_states[-3:]
             if states is None:
-                states = (dict(store_sha256=None, owner_sha256=None, owner_reason='a repeated trial returned another '
-                                                                                 'result'),) * 3
-            intact, cut, again = states
-            check = owner_state.covered_later_check(intact, again, cut)
+                check = dict(intact=None, restoration=None, cut=None, verdict='CANNOT_DECIDE',
+                             reason='a repeated trial returned another result than when it was judged')
+            else:
+                intact, cut, again = states
+                check = owner_state.covered_later_check(intact, again, cut)
             record['covered_later_check'] = check
             entry['covered_later_check'] = check
             JUDGE['covered_later'].append(dict(route=self.label, ledger_id=record['id'], **check))
