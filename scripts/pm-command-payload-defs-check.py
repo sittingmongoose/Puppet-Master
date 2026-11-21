@@ -133,15 +133,25 @@ JUDGMENT_WORD_RE = re.compile(r"(?<![A-Za-z])judge?ments?(?![A-Za-z])", re.I)
 # Review and evidence material named inside a definitions block (DL-341, P0c): canon text stands on
 # canon, so a definition never cites review rounds or findings, fix rounds, review files, the
 # owner-answers folder or the evidence share. Only a unit fence's source_lineage cites evidence.
+# This list catches known citation forms. Reviewers check for other references.
 REVIEW_REFERENCE_RE = re.compile(
-    r"(?i:\breview(?:er)?s?[\s-]+r\d+\b"
+    r"(?i:(?P<amendment>\bamended\s+\d{4}-\d{2}-\d{2}"
+    r"(?:,\s*review\s+r\d+|\s+\(r\d+\s+review)(?=\s*[,):;]))"
+    r"|\breview(?:er)?s?[\s-]+r\d+\b"
     r"|\b(?:review|fix)[\s-]+round[\s-]*\d+\b"
     r"|\bround[\s-]*\d+[\s-]+(?:review|finding|fix)"
     r"|\br\d+[\s-]+(?:finding|review)"
     r"|\bfix[\s-]*r\d+\b"
     r"|\bfix[\s-]+round\b"
     r"|\br\d+-(?:opus|sol|astra|sonnet|fable)\b"
-    r"|defs-review|owner-answers/|PuppetMaster-Evidence|closure-reaudit|Plans/ledgers/"
+    r"|\bround[\s-]*\d+\s+S\d+\b"
+    r"|\bS[1-6]\s+(?:finding|map\s+item|[CMUF]\d+)\b"
+    r"|\b(?:Sol|Astra|Opus|Sonnet|Fable)\s+r\d+\b"
+    r"|\bP0[a-c]\b|\bpm-mail\s+\d"
+    r"|\bround[\s-]+(?:one|two|three|four|five|six|seven|eight|nine|ten)[\s-]+(?:review|finding|fix)\b"
+    r"|(?<![\w.-])design\.md\s+\d"
+    r"|defs-review|\bowner-answers\b|PuppetMaster-Evidence|closure-reaudit|Plans/ledgers/"
+    r"|\bledgers/v\d+/|\bpldg-\d{8}-\d{3}\b"
     r"|\bR\d+-DECISIONS\b|-(?:BRIEF|REPORT|NOTE)\.md\b"
     r"|\bcanon\s+conflict\s+C\d+\b)"
     r"|\bDESIGN(?:\.md)?\s+(?:§\s*|section\s+)?\d")
@@ -1066,7 +1076,7 @@ def compute_expected(ctx: Context) -> None:
         if not isinstance(evidence, dict) or not evidence.get("doc") or not evidence.get("quote"):
             rep.add("C04", "map_non_definition_evidence_missing", CATALOG, unit=MAP_UNIT, command_id=token)
             continue
-        if not evidence_found(ctx, evidence):
+        if not evidence_found(ctx, evidence, outside_map=True):
             rep.add("C04", "map_non_definition_evidence_not_found", CATALOG, unit=MAP_UNIT, command_id=token,
                     detail=f"{evidence['doc']} {evidence.get('unit', '')} {evidence.get('field', '')}".strip())
 
@@ -2007,6 +2017,15 @@ def check_definition(ctx: Context, block: Block, owner_unit: str, definition: An
             rep.add("C13", "owner_request_differs_from_wiring", detail=f"wiring {sorted(wired)}", **where)
 
 
+def scalar_value_start(text: str, token: yaml.ScalarToken) -> int:
+    """Skip a block scalar's header, whose comment is outside the value."""
+    start, end = token.start_mark.index, token.end_mark.index
+    if token.style in ("|", ">"):
+        newline = re.search(r"\r\n|[\r\n\x85\u2028\u2029]", text[start:end])
+        return start + newline.end() if newline else end
+    return start
+
+
 def yaml_comments(text: str) -> list[tuple[int, int, str, bool]]:
     """The YAML comments of a well-formed fence as (first line, last line, text, whole-line), 0-based
     lines. A comment is a `#` at a line start or after a space or tab that no scalar token spans, so
@@ -2016,7 +2035,7 @@ def yaml_comments(text: str) -> list[tuple[int, int, str, bool]]:
     try:
         for token in yaml.scan(text, Loader=yaml.SafeLoader):
             if isinstance(token, yaml.ScalarToken):
-                spans.append((token.start_mark.index, token.end_mark.index))
+                spans.append((scalar_value_start(text, token), token.end_mark.index))
     except Exception:  # noqa: BLE001 - malformed YAML is reported as a C14 YAML error
         return []
     spans.sort()
@@ -2105,13 +2124,19 @@ def check_block_comments(ctx: Context, block: Block, base: dict[str, str]) -> No
         ctx.report.add("C11", "yaml_comment_in_definitions_block", command_id=cmd, detail=rep_detail, **base)
 
 
-def review_reference_strings(data: Any) -> list[tuple[str, str, str]]:
-    """(command_id, field path, text) for every string in a parsed definitions block, keys and
+def review_reference_strings(data: Any) -> list[tuple[str, str, list[str]]]:
+    """(command_id, field path, citation names) for every string in a parsed definitions block, keys and
     values, that names review or evidence material (REVIEW_REFERENCE_RE). A string inside a
     definition carries its command_id, one inside a local result `local:<Name>`, any other the
     block's own path."""
-    found: list[tuple[str, str, str]] = []
+    found: list[tuple[str, str, list[str]]] = []
     seen: set[int] = set()
+
+    def record(value: Any, cmd: str, path: str) -> None:
+        if isinstance(value, str):
+            names = sorted({m.group(0) for m in REVIEW_REFERENCE_RE.finditer(value) if m.group("amendment") is None})
+            if names:
+                found.append((cmd, path, names))
 
     def walk(value: Any, cmd: str, path: str) -> None:
         if isinstance(value, (dict, list)):
@@ -2121,22 +2146,20 @@ def review_reference_strings(data: Any) -> list[tuple[str, str, str]]:
         if isinstance(value, dict):
             for key, child in value.items():
                 child_path = f"{path}.{key}" if path else str(key)
-                if isinstance(key, str) and REVIEW_REFERENCE_RE.search(key):
-                    found.append((cmd, child_path, key))
+                record(key, cmd, child_path)
                 walk(child, cmd, child_path)
         elif isinstance(value, list):
             for index, child in enumerate(value):
                 walk(child, cmd, f"{path}[{index}]")
-        elif isinstance(value, str) and REVIEW_REFERENCE_RE.search(value):
-            found.append((cmd, path, value))
+        else:
+            record(value, cmd, path)
 
     body = data.get(DEFS_ROOT_KEY) if isinstance(data, dict) else None
     if not isinstance(body, dict):
         walk(data, "", "")
         return found
     for key, value in body.items():
-        if isinstance(key, str) and REVIEW_REFERENCE_RE.search(key):
-            found.append(("", str(key), key))
+        record(key, "", str(key))
         if key == "definitions" and isinstance(value, list):
             for index, definition in enumerate(value):
                 cmd = definition.get("command_id") if isinstance(definition, dict) else None
@@ -2154,8 +2177,7 @@ def check_review_references(ctx: Context, block: Block, base: dict[str, str]) ->
     evidence material (review rounds and findings, fix rounds, review files, the owner-answers
     folder, the evidence share, the Q5 design's sections or the fix reports' canon-conflict labels)
     is a C11 finding. A unit fence's source_lineage may cite evidence; a definitions block may not."""
-    for cmd, path, text in review_reference_strings(block.data):
-        names = sorted({m.group(0) for m in REVIEW_REFERENCE_RE.finditer(text)})
+    for cmd, path, names in review_reference_strings(block.data):
         ctx.report.add("C11", "review_reference_in_definitions_block", command_id=cmd, field=path,
                        detail=f"line {block.line}: names {', '.join(names)}", **base)
 
@@ -2352,11 +2374,7 @@ class _AliasSpanLoader(yaml.SafeLoader):
         self.scalar_value_starts: dict[int, int] = {}
         for token in yaml.scan(stream):
             if isinstance(token, yaml.tokens.ScalarToken):
-                start, end = token.start_mark.index, token.end_mark.index
-                if token.style in ("|", ">"):
-                    newline = re.search(r"\r\n|[\r\n\x85\u2028\u2029]", stream[start:end])
-                    start = start + newline.end() if newline else end
-                self.scalar_value_starts[end] = start
+                self.scalar_value_starts[token.end_mark.index] = scalar_value_start(stream, token)
 
     def compose_node(self, parent: yaml.Node | None, index: yaml.Node | int | None) -> yaml.Node:
         if self.check_event(yaml.AliasEvent) and isinstance(index, yaml.Node):
@@ -2446,23 +2464,40 @@ def check_evidence_lines(ctx: Context, value: Any = None, doc: str = CATALOG) ->
             spans[key] = allowed
         return spans[key]
 
+    sources: dict[str, tuple[str, list[int]]] = {}
+
+    def matches_hint(evidence: dict[str, Any]) -> bool:
+        line = evidence["line"]
+        words = str(evidence["quote"]).split()
+        if not isinstance(line, int) or isinstance(line, bool) or line < 1 or not words:
+            return False
+        target = str(evidence["doc"])
+        if target not in sources:
+            text = ctx.corpus.text(target) or ""
+            sources[target] = text, [-1, *(m.start() for m in re.finditer("\n", text)), len(text)]
+        text, breaks = sources[target]
+        if line >= len(breaks):
+            return False
+        first, last = breaks[line - 1] + 1, breaks[line]
+        pattern = re.compile(r"\s+".join(re.escape(word) for word in words))
+        for start, end in source_spans(evidence, text):
+            # Start inside both the hinted line and the scalar value. An earlier match
+            # (such as one starting in an anchor name) must not consume an eligible start.
+            start = max(start, first)
+            if start < min(last, end):
+                match = pattern.search(text, start, end)
+                if match is not None and match.start() < last:
+                    return True
+        return False
+
     def walk(value: Any, doc: str) -> None:
         if isinstance(value, list):
             for child in value:
                 walk(child, doc)
         elif isinstance(value, dict):
-            if "line" in value and "doc" in value and "quote" in value:
-                text = ctx.corpus.text(str(value["doc"]))
-                line = value["line"]
-                valid = isinstance(line, int) and not isinstance(line, bool) and line > 0
-                words = str(value["quote"]).split()
-                matches = re.finditer(r"\s+".join(re.escape(word) for word in words), text or "") if words else []
-                allowed = source_spans(value, text or "")
-                if not valid or not any(line_of(text or "", match.start()) == line
-                                        and any(start <= match.start() and match.end() <= end for start, end in allowed)
-                                        for match in matches):
-                    ctx.report.add("C05", "evidence_line_mismatch", path=doc,
-                                   detail=f"{value['doc']}:{line}: {value['quote']}")
+            if "line" in value and "doc" in value and "quote" in value and not matches_hint(value):
+                ctx.report.add("C05", "evidence_line_mismatch", path=doc,
+                               detail=f"{value['doc']}:{value['line']}: {value['quote']}")
             for child in value.values():
                 walk(child, doc)
     walk(ctx.map if value is None else value, doc)
@@ -3119,6 +3154,18 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
     @case("fail C04: non-definition evidence quote not found in canon", 1, {"C04"})
     def _(fx: Fixture) -> None:
         fx.map["non_definition_tokens"][1]["evidence"]["quote"] = "the pane rows stay"
+
+    @case("fail T108: doc-wide non-definition evidence found only in UCC-230", 1, {"C04"},
+          kinds={"map_non_definition_evidence_not_found"})
+    def _(fx: Fixture) -> None:
+        fx.map["non_definition_tokens"][0]["evidence"] = {
+            "doc": CATALOG, "quote": "only the map claims this alias"}
+
+    @case("pass T108: doc-wide non-definition evidence found outside UCC-230", 0, set())
+    def _(fx: Fixture) -> None:
+        evidence = fx.map["non_definition_tokens"][0]["evidence"]
+        del evidence["unit"]
+        del evidence["field"]
 
     @case("fail C05: type str", 1, {"C05"})
     def _(fx: Fixture) -> None:
@@ -3782,6 +3829,17 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
     def _(fx: Fixture) -> None:
         fx.raw_block_replace["CRAU-116"] = [("  definitions:", "  # shared conventions for this block\n  definitions:")]
 
+    for style in (">-", "|"):
+        @case(f"fail T109: YAML comment on a {style} block-scalar header", 1, {"C11"},
+              kinds={"yaml_comment_in_definitions_block"},
+              check=lambda r: len(comment_rows(r)) == 1
+              and comment_rows(r)[0]["command_id"] == "cmd.docker.image.tag"
+              and comment_rows(r)[0]["detail"].endswith("# header comment"))
+        def _(fx: Fixture, style=style) -> None:
+            tag_args(fx)["new_tag"]["gap_note"] = "fixture marker"
+            fx.raw_block_replace["CRAU-115"] = [
+                ("gap_note: fixture marker", f"gap_note: {style} # header comment\n          # literal hash text")]
+
     @case("pass: '# JUDGMENT' inside a quoted scalar and a block scalar of gap fields is not a comment", 0, set())
     def _(fx: Fixture) -> None:
         tag_args(fx)["new_tag"]["gap_note"] = "see note # JUDGMENT inside a quoted string"
@@ -4195,6 +4253,32 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
         def _(fx: Fixture, text=text) -> None:
             tag_args(fx)["new_tag"]["gap_note"] = text
 
+    for reference in ("ledgers/v2/intake/state/matrix.json", "pldg-20260627-001-feature-intake"):
+        @case(f"fail T173: ledger lineage {reference}", 1, {"C11"},
+              kinds={"review_reference_in_definitions_block"})
+        def _(fx: Fixture, reference=reference) -> None:
+            tag_args(fx)["new_tag"]["gap_note"] = f"The field name comes from {reference}"
+
+    @case("pass T173: product ledger names are allowed", 0, set())
+    def _(fx: Fixture) -> None:
+        tag_args(fx)["new_tag"]["gap_note"] = "The ledger_ref may be used by cmd.artifacts.show_in_ledger."
+
+    for reference in ("round 2 S1 finding 6", "Round 1 S4 U1", "S3 finding 7", "S2 map item 1",
+                      "Sol r6", "Astra r1", "P0c worker", "owner-answers q5", "design.md 4.3",
+                      "pm-mail 1107140349-9370", "round-two review", "amended 2026-10-17, review r1 finding 6",
+                      "(amended 2026-10-17, review r1), then see Sol r6"):
+        @case(f"fail T110: review citation {reference}", 1, {"C11"},
+              kinds={"review_reference_in_definitions_block"},
+              check=lambda r: [e.get("field") for e in review_rows(r)] == ["args.new_tag.gap_note"])
+        def _(fx: Fixture, reference=reference) -> None:
+            tag_args(fx)["new_tag"]["gap_note"] = reference
+
+    for quote in ("the pane opens (amended 2026-10-17, review r1: use the picker)",
+                  "Amended 2026-10-10 (R35 review, SMPFS-092): the access policy keeps its rows"):
+        @case(f"pass T110: canon amendment marker in {quote}", 0, set())
+        def _(fx: Fixture, quote=quote) -> None:
+            tag_args(fx)["image_ref"]["source"] = quote
+
     @case("fail C11: a judgment's gap_note names a review finding", 1, {"C11"},
           kinds={"review_reference_in_definitions_block"},
           check=lambda r: [(e.get("command_id"), e.get("field")) for e in review_rows(r)] == [("cmd.docker.image.tag", "judgments[0].gap_note")])
@@ -4583,6 +4667,25 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
                 text = fx.files()[CATALOG]
                 marker = "  " + quote if correct else "- " + header
                 evidence["line"] = line_of(text, text.index(marker, text.index(replacement)))
+
+    for correct in (True, False):
+        @case(f"{'pass' if correct else 'fail'} T255: repeated quote {'inside the value' if correct else 'starts in the anchor'}",
+              0 if correct else 1, set() if correct else {"C05"},
+              kinds=set() if correct else {"evidence_line_mismatch"})
+        def _(fx: Fixture, correct=correct) -> None:
+            external(fx)
+            evidence = fx.map["outside_range_commands"][0]["evidence"]
+            cmd = fx.map["outside_range_commands"][0]["command_id"]
+            quote = f"retry {cmd} retry"
+            if correct:
+                replacement = f"canonical_text: &retry {cmd} {quote}"
+            else:
+                replacement = f"canonical_text:\n- &retry {cmd} retry\n- {quote}"
+            fx.doc_suffix[CATALOG] = fx.doc_suffix[CATALOG].replace(
+                "canonical_text: " + evidence["quote"], replacement, 1)
+            evidence.update(quote=quote, line=1)
+            text = fx.files()[CATALOG]
+            evidence["line"] = line_of(text, text.index("&retry", text.index(replacement)))
 
     @case("fail MAX1: deleted in-record discriminator", 1, {"C05"}, kinds={"typed_discriminator_branch_value_mismatch"})
     def _(fx: Fixture) -> None:
