@@ -16,6 +16,9 @@ the verdict and its evidence:
   same_code_owner_effect    same cut code, the cut left a different owner state: CANNOT_DECIDE
   same_code_nondeterministic same cut code, the two intact runs differ: CANNOT_DECIDE
   same_code_no_owner_digest same cut code, no owner digest (hook reason): CANNOT_DECIDE
+  rebuilt_elsewhere         as killed_code, but the intact refusal's recorded origin is another site
+                            (a same-code refusal rebuilt there; addendum 11): CANNOT_DECIDE
+  no_origin                 as killed_code, with no recorded origin: CANNOT_DECIDE (fails closed)
 
 The unfixed judge has no such verdict (prove() accepted any COVERED_LATER), so
 every trial fails on it. Real-input before/after: REPORT.md.
@@ -35,6 +38,8 @@ import pm_goal_dg5_methodb_judge as J  # noqa: E402
 
 ROW = 'dg5/tuple/preserved/intent/schema'
 CODE = 'tuple/preserved/intent/schema/'
+SITE = ['scripts/pm_goal_dg_r_readers.py', 100]
+AT_SITE, ELSEWHERE = dict(site=SITE), dict(site=['scripts/pm_goal_dg_r_readers.py', 200])
 
 
 def state(store='s0', owner='o0', reason=None):
@@ -57,7 +62,10 @@ CASES = {
     'same_code_nondeterministic': (CODE, CODE, CODE, CODE, (state(), state(), state(owner='o2')), 'CANNOT_DECIDE'),
     'same_code_no_owner_digest': (CODE, CODE, CODE, CODE,
                                   (state(owner=None, reason='unclassified value x'), state(), state()), 'CANNOT_DECIDE'),
+    'rebuilt_elsewhere': (CODE, 'select/unissued_value', CODE, CODE, (state(),) * 3, 'CANNOT_DECIDE'),
+    'no_origin': (CODE, 'select/unissued_value', CODE, CODE, (state(),) * 3, 'CANNOT_DECIDE'),
 }
+ORIGINS = {'rebuilt_elsewhere': [ELSEWHERE, None, ELSEWHERE], 'no_origin': [None, None, None]}
 
 
 def run():
@@ -65,8 +73,9 @@ def run():
     for case, (intact, cut, restoration, declared, states, expected) in CASES.items():
         example = object.__new__(J.ForkedExample)
         example.row, example.label = ROW, '0:selftest/' + case
-        example.route = dict(refusal=declared, detail='d')
+        example.route = dict(refusal=declared, detail='d', site=SITE)
         example.after_states = list(states)  # defect, cut, restoration
+        example.origins = ORIGINS.get(case, [AT_SITE, dict(site=['scripts/pm_goal_dg_r_readers.py', 150]), AT_SITE])
         before, disabled = trial(intact), trial(cut)
         restored = trial(restoration) if restoration != intact else dict(before)
         record = dict(id=1, outcome='exact_expected', kill='COVERED_LATER', errors=before['errors'])

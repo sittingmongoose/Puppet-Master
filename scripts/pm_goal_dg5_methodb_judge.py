@@ -46,7 +46,10 @@ complete call ever runs in the judging process:
    row's own guard with its own code (the route's declared refusal code, and
    `row(code)` is the row), the intact defect trial is exact, the cut refuses
    with a DIFFERENT owner refusal code, and the uncached restoration repeats
-   the intact result. A different-code refusal missing a condition is
+   the intact result. Own guard (addendum 11, pm-ea-lead 1121131008-95db) is
+   not taken from the code-matched errors: the intact trial's refusal origin
+   (`refusal_origin`, recorded in the child where the harness turns the error
+   into its code) must be the route's declared site. A different-code refusal missing a condition is
    CANNOT_DECIDE, never COVERED_LATER. The verdict replaces the source stock
    judge's COVERED_LATER in the ledger record (`kill`, `killed_code_check`).
 
@@ -91,6 +94,50 @@ JUDGE = dict(module='scripts/pm_goal_dg5_methodb_judge.py', module_sha256=sha(Pa
              owner_state_module='scripts/pm_goal_dg5_owner_state.py',
              owner_state_sha256=sha(Path(owner_state.__file__).resolve()),
              mode='fork-per-trial', trials=[], covered_later=[], later_refusals=[])
+
+
+# Frames between the owner's check site and the raise that are this judge, the harness, the
+# bridge, or a schema bank's validate path (the bank raises on the owner's behalf).
+BANK_FILES = ('pm_goal_dg_r_world.py', 'pm_goal_dg_s_world.py', 'pm_goal_own_c_roots.py',
+              'pm_goal_dg_int_schema_cache.py', 'pm_goal_test_owner_adapters.py', 'pm_goal_test_storage.py')
+BANK_FUNCTIONS = ('validate', '_checked', 'check', 'errors', 'require', 'guard', 'refuse', 'halt',
+                  'shared_require', 'shared_refuse')
+
+
+def refusal_origin(error, code, source):
+    """The refusal's origin (addendum 11 (1)): the deepest chained exception carrying `code`
+    unchanged, and its innermost frame outside this judge, the harness, the bridge and a bank's
+    validate path, as [path relative to the owner source, line]."""
+    import pm_goal_dg5_boundaries as bridge
+
+    chain, seen, current = [], set(), error
+    while current is not None and id(current) not in seen:
+        seen.add(id(current))
+        chain.append(current)
+        current = current.__cause__ or current.__context__
+    origin, depth = error, 0
+    for number, earlier in enumerate(chain[1:], 1):
+        try:
+            same = isinstance(earlier, Exception) and bridge.refusal_code(earlier) == code
+        except Exception:  # noqa: BLE001
+            same = False
+        if not same:
+            break
+        origin, depth = earlier, number
+    mine = {Path(__file__).resolve().name, Path(w3.__file__).resolve().name, 'pm_goal_dg5_boundaries.py'}
+    frames = traceback.extract_tb(origin.__traceback__)
+    site = None
+    for frame in reversed(frames):
+        name = Path(frame.filename).name
+        if name in mine or (name in BANK_FILES and frame.name in BANK_FUNCTIONS) or frame.name == '<lambda>':
+            continue
+        try:
+            site = [str(Path(frame.filename).resolve().relative_to(Path(source).resolve())), frame.lineno]
+        except ValueError:
+            site = [frame.filename, frame.lineno]
+        break
+    return dict(site=site, chain_depth=depth, origin_type=type(origin).__name__,
+                frames=[[Path(f.filename).name, f.lineno, f.name] for f in frames[-6:]])
 
 
 class IdentityMismatch(ValueError):
@@ -420,6 +467,7 @@ class ForkedExample(w3.OwnerExample):
         require(not (self.pin_ids and self.writes), 'write routes pin their IDs in the copy (W3)')
         self.forks = []
         self.after_states = []  # one per credited trial, parallel to self.trials
+        self.origins = []       # the refusal origin of each credited trial (None when it accepted)
         self.digest0 = None
         self.cache_audit = None
         self.joint_report = None
@@ -516,7 +564,7 @@ class ForkedExample(w3.OwnerExample):
         record = dict(route=self.label, kind=kind, edit=edit, cut=cut, pid=pid, cache_inherited=inherited,
                       cache_start=out['cache_start'], cache_end=out['cache_end'], keys=out['keys'],
                       seconds=round(time.monotonic() - started, 3), credited=credited,
-                      after_state=out.get('after_state'))
+                      after_state=out.get('after_state'), refusal_origins=out.get('refusal_origins'))
         for key in ('pre_equals_post', 'returned_marker_paths', 'knob_calls', 'ids_pinned'):
             if key in out:
                 record[key] = out[key]
@@ -533,6 +581,7 @@ class ForkedExample(w3.OwnerExample):
         if credited:
             self.trials.append(result)
             self.after_states.append(out.get('after_state'))
+            self.origins.append((out.get('refusal_origins') or [None])[-1])
             if edit is None and out.get('observed') is not None:
                 self.rebuild_observed(out['observed'])
         return result, out
@@ -612,6 +661,16 @@ class ForkedExample(w3.OwnerExample):
     def install_child(self, stack, world, edit, out, identity, site_cut_all):
         import pm_goal_guard_tables as tables
 
+        import pm_goal_dg5_boundaries as bridge
+
+        original_code = bridge.refusal_code
+
+        def recording_code(error):
+            code_of = original_code(error)
+            out.setdefault('refusal_origins', []).append(refusal_origin(error, code_of, self.source))
+            return code_of
+
+        stack.enter_context(patch.object(bridge, 'refusal_code', recording_code))
         module = cache_module()
         code = self.row.removeprefix('dg5/').removesuffix('/schema')
         checks = self.route.get('checks', 1)
@@ -811,12 +870,18 @@ class ForkedExample(w3.OwnerExample):
         import pm_goal_dg5_boundaries as bridge
 
         intact_code, cut_code = before.get('refusal'), disabled.get('refusal')
-        own = (isinstance(intact_code, str) and intact_code == self.route['refusal']
-               and bridge.row(intact_code) == self.row)
+        origin = self.origins[-3] if len(self.origins) >= 3 else None
+        code_matches = (isinstance(intact_code, str) and intact_code == self.route['refusal']
+                        and bridge.row(intact_code) == self.row)
+        origin_at_site = bool(origin) and origin.get('site') == list(self.route['site'])
+        own = code_matches and origin_at_site
         different = isinstance(cut_code, str) and bool(cut_code) and cut_code != intact_code
         repeats = restored == before
         code = dict(intact_code=intact_code, cut_code=cut_code, restoration_code=restored.get('refusal'),
-                    different_code=different, own_guard=dict(own=own, route_refusal=self.route['refusal']),
+                    different_code=different,
+                    own_guard=dict(own=own, code_matches=code_matches, route_refusal=self.route['refusal'],
+                                   route_site=list(self.route['site']), origin=origin,
+                                   verified_by='origin frame at the route site' if own else None),
                     restoration_repeats=repeats, exact=record['outcome'] == 'exact_expected')
         entry = dict(route=self.label, ledger_id=record['id'], killed_code_check=code)
         if different:
@@ -824,7 +889,8 @@ class ForkedExample(w3.OwnerExample):
                 code.update(verdict='KILLED_CODE', reason=None)
                 verdict = 'KILLED_CODE'
             else:
-                why = ('declared target is not the row guard with its own code' if not own else
+                why = (('declared target is not the row guard with its own code' if not code_matches else
+                        f"refusal origin is not the row's guard (origin {(origin or {}).get('site')})") if not own else
                        'restoration did not repeat the intact result' if not repeats else 'intact run not exact')
                 code.update(verdict=None, reason=why)
                 verdict = 'CANNOT_DECIDE'
