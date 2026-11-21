@@ -262,6 +262,11 @@ export default async function (t) {
 	const looks = String(t.args.looks || 'all') === 'all' ? ALL : String(t.args.looks).split(',').filter(Boolean);
 	const views = String(t.args.views || 'settings,dashboard,usage').split(',').filter(Boolean);
 	const after = Number(t.args.after || 3000), ms = Number(t.args.ms || 2000);
+	const toggleWaitArg = String(t.args.toggleWait ?? 8000).trim();
+	const toggleWait = Number(toggleWaitArg);
+	if (!toggleWaitArg || !Number.isFinite(toggleWait) || toggleWait < 0) {
+		throw new Error('--set toggleWait must be a finite nonnegative number of milliseconds');
+	}
 	const drawnMax = Number(t.args.drawn || 15), mainMax = Number(t.args.main || 10), startsMax = Number(t.args.starts || 60);
 	// --set framesBy=1 (diagnosis, logged only): each rest trace also says what asked for its main frame starts
 	const framesBy = String(t.args.framesBy || '0') === '1';
@@ -431,12 +436,11 @@ export default async function (t) {
 				toggleMiss = `the page was already still when the trace was to start${onAt == null ? '' : ` (data-pm-still at ${Math.round(onAt)} ms)`}`;
 			}
 			else {
-				const waitMs = Number(t.args.toggleWait || 8000);
 				tg = await traceToggle({ ms: 0, url, during: async () => {
-					const w = await waitStill(stillNow, { waitMs });
-					if (!w.saw) t.log(`${at}: NOTE the page did not report data-pm-still within ${waitMs} ms of the trace opening`);
+					const w = await waitStill(stillNow, { waitMs: toggleWait });
+					if (!w.saw) t.log(`${at}: NOTE the page did not report data-pm-still within ${toggleWait} ms of the trace opening`);
 				}, ...toggleTraceOptions(look, view, 'on') }, view);
-				if (tg.marks['pm-still:on'] === undefined) toggleMiss = `the pm-still:on mark did not land inside the trace (waited up to ${waitMs} ms from before the toggle)`;
+				if (tg.marks['pm-still:on'] === undefined) toggleMiss = `the pm-still:on mark did not land inside the trace (waited up to ${toggleWait} ms from before the toggle)`;
 			}
 			const on = tg ? tg.after('pm-still:on', 'pm-still:on') : null;
 

@@ -38,4 +38,12 @@ const onTime = await m.waitStill(stillAt(0), { waitMs: 9000, now, sleep });
 assert.equal(onTime.saw, true);
 assert.equal(onTime.sawAfterMs, 0, 'an on-time toggle is seen at once');
 
+// An invalid CLI value must fail before opening a page. Zero is a valid immediate check of the still state.
+const viewportReached = new Error('viewport reached');
+const runWithToggleWait = (toggleWait) => m.default({ args: { toggleWait }, viewport() { throw viewportReached; } });
+for (const input of ['later', '-1', 'Infinity', '']) {
+	await assert.rejects(runWithToggleWait(input), /toggleWait.*finite nonnegative/);
+}
+await assert.rejects(runWithToggleWait('0'), (err) => err === viewportReached);
+
 console.log('PASS the toggle trace is held open until the page reports still: a 900 ms-late toggle is outside the old 1200 ms window and inside the wait, the settle keeps the recalc and its frame, and a miss ends at its cap');
