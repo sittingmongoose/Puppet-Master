@@ -162,7 +162,8 @@ class Example:
         except self.fixture.refusals as error:
             record['code'] = world.code_of(error)
             # Addendum 6: the origin frame of the refusal, as bridge.invoke records it (harness frames transparent).
-            record['refusal_origin'] = export.origin(error, record['code'])
+            record['refusal_origin'] = export.origin(error, record['code'], sites=[
+                tuple(o['site']) for o in record['observations'] if o['errors']])   # addendum 8 (1): the segment
         except Exception as error:
             record['exception'] = f'{type(error).__name__}: {error}'
         record['after'] = store(replay)
