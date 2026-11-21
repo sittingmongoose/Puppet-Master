@@ -30,6 +30,10 @@ Different-code later refusals (KILLED_CODE):
   rebuilt_same_code         the guard's refusal is caught and a fresh refusal with the same code is raised
                             at another site (no chained original): the origin frame is not the row's guard,
                             so CANNOT_DECIDE (addendum 11), although the code-matched errors name the row
+  computed_code_origin      the guard's code is built at run time (no literal on its line, like a FrameError or
+                            template guard): judged by its recorded origin, KILLED_CODE (review (a))
+  templated_code_killed     a templated-code guard whose cut accepts: KILLED, and the record carries the intact
+                            refusal's origin at the guard (the Started-006 row kinds held on 'origin not recorded')
   rebuilt_chained           the same rebuild inside the handler (`raise ... from None`, as cf3_projector.py:329):
                             the chained original carries the code unchanged from the guard: KILLED_CODE
 
@@ -105,7 +109,8 @@ class SyntheticWorld:
 
 
 DIFFERENT = ('killed_code', 'not_own_code', 'restoration_not_repeating', 'crash_cut', 'rebuilt_same_code',
-             'rebuilt_chained')
+             'rebuilt_chained', 'computed_code_origin')
+COMPUTED = 'selftest/cl'   # a code built at run time below: no literal code on the guard's line
 
 
 def action_for(case, world):
@@ -139,6 +144,11 @@ def action_for(case, world):
                 failed = True
             if failed:
                 raise Refusal('selftest/cl/rebuilt')   # rebuilt fresh at another site, same code
+        elif case == 'computed_code_origin':
+            require(COMPUTED + '/computed', False)     # site:computed
+        elif case == 'templated_code_killed':
+            require(COMPUTED + '/templated', False)    # site:templated
+            return 'accepted'                          # nothing later: the cut accepts
         elif case == 'rebuilt_chained':
             try:
                 require('selftest/cl/chained', False)  # site:chained
@@ -162,7 +172,8 @@ def action_for(case, world):
             require('selftest/cl/shared', False)       # site:shared_second
         return 'accepted'
     target = site({'not_own_code': 'not_own', 'restoration_not_repeating': 'flaky', 'rebuilt_same_code': 'rebuilt',
-                   'rebuilt_chained': 'chained'}.get(
+                   'rebuilt_chained': 'chained', 'computed_code_origin': 'computed',
+                   'templated_code_killed': 'templated'}.get(
         case, 'first' if case in DIFFERENT else 'shared_first'))
     return action, target
 
@@ -182,6 +193,8 @@ EXPECTED = {
     'crash_cut': ('CANNOT_DECIDE', FAMILY),
     'rebuilt_same_code': ('CANNOT_DECIDE', FAMILY),
     'rebuilt_chained': ('KILLED_CODE', FAMILY),
+    'computed_code_origin': ('KILLED_CODE', FAMILY),
+    'templated_code_killed': ('KILLED', FAMILY),
 }
 # Which judge evidence each case must carry (what makes the verdict, not only its name).
 EVIDENCE = {
@@ -197,6 +210,8 @@ EVIDENCE = {
     'crash_cut': ('code', 'crash'),
     'rebuilt_same_code': ('code', 'origin not at the row guard'),
     'rebuilt_chained': ('code', 'KILLED_CODE'),
+    'computed_code_origin': ('code', 'KILLED_CODE'),
+    'templated_code_killed': ('origin', None),
 }
 
 
@@ -217,9 +232,13 @@ def run(work):
             after = record.get('covered_later_check') or {}
             code = record.get('killed_code_check') or {}
             state = {name: (after.get(name) or {}) for name in ('intact', 'restoration', 'cut')}
-            ok = record.get('outcome') == 'exact_expected' and record.get('kill') == expected and bool(code)
             kind, want = EVIDENCE.get(case, ('after', None))
-            if expected == 'COVERED_LATER':
+            ok = record.get('outcome') == 'exact_expected' and record.get('kill') == expected and \
+                (bool(code) or kind == 'origin')
+            if kind == 'origin':
+                site_row = 'dg5/site/%s:%s' % tuple((record.get('refusal_origin') or {}).get('site') or ('', ''))
+                ok = ok and site_row.replace('dg5/site/scripts/', 'dg5/site/') == target
+            elif expected == 'COVERED_LATER':
                 ok = ok and after.get('verdict') == 'COVERED_LATER' and code.get('verdict') is None \
                     and all(state[n].get('store_sha256') and state[n].get('owner_sha256') for n in state) \
                     and len({state[n]['store_sha256'] for n in state}) == 1 \
