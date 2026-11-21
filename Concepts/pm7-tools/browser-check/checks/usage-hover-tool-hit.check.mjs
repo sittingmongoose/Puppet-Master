@@ -1,5 +1,13 @@
 // R117 P4: ordinary exit and transparent tools lose hit-testing immediately.
+import { setTimeout as delay } from 'node:timers/promises';
 import { muteSound } from '../helpers/quiet-page.mjs';
+
+export function interruptedFadeQualifies(wheel, down, fadeDuration) {
+	// The press must land while a full-duration hit delay would still be active.
+	return wheel?.trusted && wheel.hover && wheel.hit && wheel.op === null && wheel.opacity > 0 && wheel.opacity <= 0.6 &&
+		down?.trusted && down.hover && down.overMenu && !down.returned && down.top > wheel.top && down.op === 'wheel' && down.opacity === 0 &&
+		down.t > wheel.t && down.t < wheel.t + fadeDuration;
+}
 
 export const tests = {
 	async 'R122 interrupted tool fade drops hits by zero opacity'(t) {
@@ -24,16 +32,21 @@ export const tests = {
 			const plate = await card.boundingBox();
 			await t.page.mouse.move(plate.x + plate.width / 2, plate.y + plate.height / 2);
 			await f.waitForFunction(() => getComputedStyle(document.querySelector('#pmuBoard [data-widget="health"] .pmu-cardtools')).opacity === '1');
+			const fadeDuration = await menu.evaluate((btn) => parseFloat(getComputedStyle(btn.closest('.pmu-cardtools')).transitionDuration) * 1000);
 			const attempts = [];
 			let qualified = false, down;
+			const targetEntryMs = 16;
+			let lead = 0;
 			const cdp = await t.page.context().newCDPSession(t.page);
 			try {
-				for (let trial = 0; trial < 3 && !qualified; trial++) {
+				for (let trial = 0; trial < 6; trial++) {
 					await t.page.mouse.move(1914, 540);
 					await f.waitForFunction(() => {
-						const tools = document.querySelector('#pmuBoard [data-widget="health"] .pmu-cardtools');
+						const board = document.getElementById('pmuBoard');
+						const tools = board.querySelector('[data-widget="health"] .pmu-cardtools');
 						const sc = document.getElementById('pmuScroll');
-						return getComputedStyle(tools).opacity === '0' && sc.scrollHeight - sc.clientHeight > sc.scrollTop + 2;
+						return !board.hasAttribute('data-op') && !board.hasAttribute('data-wheel-handoff') &&
+							getComputedStyle(tools).opacity === '0' && sc.scrollHeight - sc.clientHeight > sc.scrollTop + 2;
 					});
 					const box = await menu.boundingBox();
 					const x = Math.round(box.x + box.width / 2), y = Math.round(box.y + box.height / 2);
@@ -41,56 +54,87 @@ export const tests = {
 						const tools = btn.closest('.pmu-cardtools'), card = btn.closest('.pmu-card');
 						const board = card.parentElement, sc = document.getElementById('pmuScroll');
 						const opacity = () => +getComputedStyle(tools).opacity;
-						const read = (e) => ({ trusted: e.isTrusted, t: performance.now(), top: sc.scrollTop,
-							op: board.getAttribute('data-op'), opacity: opacity(), pointer: getComputedStyle(tools).pointerEvents,
-							hit: btn.contains(e.target), hover: card.matches(':hover'), point: [e.clientX, e.clientY] });
+						const entryTime = () => {
+							const fade = tools.getAnimations().find((animation) => animation.transitionProperty === 'opacity');
+							return typeof fade?.currentTime === 'number' ? fade.currentTime - fade.effect.getTiming().delay : null;
+						};
+						const read = (e) => {
+							const t = performance.now();
+							const box = btn.getBoundingClientRect();
+							const style = getComputedStyle(tools);
+							return { trusted: e.isTrusted, t, top: sc.scrollTop,
+								op: board.getAttribute('data-op'), opacity: +style.opacity, pointer: style.pointerEvents,
+								hit: btn.contains(e.target), hover: card.matches(':hover'), point: [e.clientX, e.clientY],
+								overMenu: e.clientX >= box.left && e.clientX < box.right && e.clientY >= box.top && e.clientY < box.bottom };
+						};
 						const r = window.__r122ToolFade = {};
 						const wait = (predicate, ms) => new Promise((resolve) => {
 							const until = performance.now() + ms;
 							const sample = () => {
-								if (predicate()) resolve(true);
-								else if (performance.now() >= until) resolve(false);
+								const value = predicate();
+								if (value) resolve(value);
+								else if (performance.now() >= until) resolve(null);
 								else requestAnimationFrame(sample);
 							};
 							sample();
 						});
-						const wheel = (e) => { r.wheel = read(e); };
-						const down = (e) => { r.down = read(e); };
+						const wheel = (e) => { r.wheel = { ...read(e), entryMs: entryTime() }; };
+						const down = (e) => { r.down = { ...read(e), returned: !!r.returned }; };
+						const end = (e) => { if (r.wheel && e.detail?.board === board) r.returned = true; };
 						sc.addEventListener('wheel', wheel, { capture: true, once: true, passive: true });
 						document.addEventListener('pointerdown', down, { capture: true, once: true });
-						r.entering = () => wait(() => opacity() > 0, 1000);
-						r.ended = () => wait(() => r.wheel && board.getAttribute('data-op') === 'wheel' &&
-							sc.scrollTop > r.wheel.top && opacity() === 0, 400);
+						document.addEventListener('pmu-op-end', end);
+						r.entry = () => wait(() => {
+							const elapsed = card.matches(':hover') ? entryTime() : null;
+							return elapsed === null ? null : { elapsed };
+						}, 1000);
+						r.ended = (waitMs) => wait(() => !r.returned && r.wheel && board.getAttribute('data-op') === 'wheel' &&
+							sc.scrollTop > r.wheel.top && opacity() === 0, waitMs);
 						r.stop = () => {
 							sc.removeEventListener('wheel', wheel, true);
 							document.removeEventListener('pointerdown', down, true);
+							document.removeEventListener('pmu-op-end', end);
 							return { wheel: r.wheel, down: r.down };
 						};
 					});
-					await cdp.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x, y });
-					const entering = await f.evaluate(() => window.__r122ToolFade.entering());
-					if (entering) {
-						const wheel = () => cdp.send('Input.dispatchMouseEvent', { type: 'mouseWheel', x, y, deltaX: 0, deltaY: 1 });
-						// Keep the marker through a slow frame without moving the menu out from under the pointer.
-						const wheels = Promise.all([wheel(), t.page.waitForTimeout(75).then(wheel)]);
-						const ready = await f.evaluate(() => window.__r122ToolFade.ended());
-						if (ready) await cdp.send('Input.dispatchMouseEvent', { type: 'mousePressed', x, y, button: 'left', clickCount: 1 });
-						await wheels;
-						if (ready) await cdp.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x, y, button: 'left', clickCount: 1 });
-					}
+					const sendWheel = () => cdp.send('Input.dispatchMouseEvent', { type: 'mouseWheel', x, y, deltaX: 0, deltaY: 1 });
+					let entry, wheelAfter;
+					await Promise.all([
+						cdp.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x, y }),
+						(async () => {
+							// Schedule from the renderer's transition clock while opacity is still zero.
+							entry = await f.evaluate(() => window.__r122ToolFade.entry());
+							if (!entry) return;
+							wheelAfter = Math.max(0, targetEntryMs - entry.elapsed - lead);
+							const ready = f.evaluate((waitMs) => window.__r122ToolFade.ended(waitMs), wheelAfter + 400);
+							await Promise.all([
+								delay(wheelAfter).then(sendWheel),
+								delay(wheelAfter + 75).then(sendWheel), // Keep the hold through a slow frame with minimal scroll.
+								ready.then(async (atZero) => {
+									if (!atZero) return;
+									const press = { x, y, button: 'left', clickCount: 1 };
+									await cdp.send('Input.dispatchMouseEvent', { type: 'mousePressed', ...press });
+									await cdp.send('Input.dispatchMouseEvent', { type: 'mouseReleased', ...press });
+								}),
+							]);
+						})(),
+					]);
 					const rec = await f.evaluate(() => window.__r122ToolFade.stop());
 					const wheel = rec.wheel;
 					down = rec.down;
-					attempts.push(rec);
-					qualified = wheel?.trusted && wheel.hover && wheel.hit && wheel.opacity > 0 && wheel.opacity < 1 &&
-						down?.trusted && down.hover && down.top > wheel.top && down.op === 'wheel' && down.opacity === 0;
-					if (!qualified && down?.hit) await t.page.keyboard.press('Escape');
+					attempts.push({ entry, wheelAfter, ...rec });
+					qualified = interruptedFadeQualifies(wheel, down, fadeDuration);
+					if (qualified) break;
+					// Compensate the next dispatch for the lead or lag measured at the real wheel event.
+					if (Number.isFinite(wheel?.entryMs)) lead = Math.max(-160, Math.min(160, lead + wheel.entryMs - targetEntryMs));
+					if (down?.hit) await t.page.keyboard.press('Escape');
 				}
 			} finally {
 				await cdp.detach();
 				await f.evaluate(() => PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Measured'));
 			}
-			const detail = JSON.stringify(attempts);
+			const detail = JSON.stringify({ fadeDuration, attempts });
+			t.log(S + detail);
 			await t.check(S + 'could judge a trusted press at zero opacity during a reversed entry fade', qualified, detail);
 			await t.check(S + 'the invisible cluster cannot take the press', qualified && !down.hit && down.pointer === 'none', detail);
 		}
