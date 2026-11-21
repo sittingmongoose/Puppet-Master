@@ -515,11 +515,14 @@ def test_owners(s, work):
 # --------------------------------------------------------------- source
 
 def test_source(s, work):
+    registered, _unknown = G.event_family_registration()
+    replan_schema, = (schema for event, scope, schema in registered
+                      if (event, scope) == ('goal_run.replanned', 'project'))
     payload_ids = {
         'goal_run.started': 'pm.goal_runtime_event.goal_run_started.schema.v3',
         'goal_run.cancelled': 'pm.goal_runtime_event.goal_run_cancelled.schema.v3',
         'goal_run.certified': 'pm.goal_runtime_event.goal_run_certified.schema.v3',
-        'goal_run.replanned': 'pm.goal_runtime_event.goal_run_replanned.schema.v2',
+        'goal_run.replanned': replan_schema,
         'run.started': 'https://puppetmaster.local/schemas/event_payloads/run_started/2.0.0',
         'platform.capability_evaluated': 'https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0',
     }
@@ -652,11 +655,27 @@ def test_source(s, work):
                'source/qualification')
     s.negative('source', 'project_foreign_snapshot', lambda: G.GenericSource(S.TestOwnerStorage.create(
         work / 'source-foreign')).project(src.acquire(), G.LifecycleReducer(run), select=select), 'project/storage')
-    st2 = S.TestOwnerStorage.create(work / 'source-unsupported')
-    for tag, kind in (('a', 'goal_run.started'), ('x', 'goal_run.replanned'), ('d', 'goal_run.cancelled')):
-        append_one(st2, tag, registered_candidate(tag, event_type=kind, run=run))
-    s.negative('source', 'unsupported_same_run_halts', lambda: _halt(G.GenericSource(st2), select, run),
+    replan = registered_candidate('x', event_type='goal_run.replanned', run=run)
+
+    def selected_replan_preflight():
+        assert replan['scope_kind'] == 'project'
+        assert (replan['event_type'], replan['scope_kind'], replan['payload_schema_id']) in registered
+
+    def replan_source(directory, record):
+        storage = S.TestOwnerStorage.create(work / directory)
+        append_one(storage, 'a', registered_candidate('a', event_type='goal_run.started', run=run))
+        append_one(storage, 'x', record)
+        append_one(storage, 'd', registered_candidate('d', event_type='goal_run.cancelled', run=run))
+        return G.GenericSource(storage)
+
+    s.positive('source', 'replan_project_registration_preflight', selected_replan_preflight)
+    current_replan = replan_source('source-unsupported', replan)
+    s.negative('source', 'unsupported_same_run_halts', lambda: _halt(current_replan, select, run),
                'reducer/unsupported_same_run:goal_run.replanned')
+    historical_replan = replan_source('source-retired-replan', dict(
+        replan, payload_schema_id='pm.goal_runtime_event.goal_run_replanned.schema.v2'))
+    s.negative('source', 'historical_replan_schema_refused_at_registration',
+               lambda: _halt(historical_replan, select, run), 'reducer/unregistered_record')
     st3 = S.TestOwnerStorage.create(work / 'source-dup')
     for tag, kind in (('a', 'goal_run.started'), ('d', 'goal_run.cancelled'), ('e', 'goal_run.certified')):
         append_one(st3, tag, registered_candidate(tag, event_type=kind, run=run))

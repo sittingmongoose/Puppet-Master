@@ -53,7 +53,11 @@ def confirmation_inputs(item,index,old,row,grade):
         require(str(clause.get('path','')).startswith('Plans/')
                 and w.unit_ref(clause.get('unit'))==clause.get('path')+'#'+clause.get('unit',''),
                 'selector map clause must name its own declared PlanUnit')
-    return [w.refresh_evidence(dict(e,line_start=e.get('line_start',e.get('line',1)))) for e in clauses]
+    return [
+        w.refresh_evidence(dict(e, line_start=e.get('line_start', e.get('line', 1))),
+                           event_type=event, criterion='owner_doc')
+        for e in clauses
+    ]
 
 def checkpoint(before,after,event,dl,confirmation=False):
     current=w.read_raw(w.CURRENTNESS)
@@ -272,14 +276,15 @@ def main():
             source=grade['cells'][field]
             if field in activated:
                 basis=activated[field]
-                evidence=[w.refresh_evidence(e) for e in basis['evidence']]
+                evidence=[w.refresh_evidence(e, event_type=event, criterion=field) for e in basis['evidence']]
                 cells[field]=dict(status='PASS',representation='selected_prepared_contract',finding=basis['finding'],
                     evidence=evidence,source_grade=dict(grade_source,field=field,status=source['status'],finding=source['finding']),
                     predicate=basis['predicate'])
             else:
                 require(any(e.get('path','').startswith('Plans/') for e in source['evidence']),field+' lacks Plans evidence')
                 cells[field]=dict(status='PASS',representation=source.get('representation'),finding=source['finding'],
-                    evidence=[w.refresh_evidence(e) for e in source['evidence']],carried_from=dict(grade_source,field=field,status=source['status']))
+                    evidence=[w.refresh_evidence(e, event_type=event, criterion=field) for e in source['evidence']],
+                    carried_from=dict(grade_source,field=field,status=source['status']))
         if a.check_only:
             print(json.dumps(dict(event_type=event,action=action,validated_only=True,row_sha256=w.canonical_sha256(row))),flush=True)
             continue

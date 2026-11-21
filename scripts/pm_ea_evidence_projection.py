@@ -1,9 +1,10 @@
-"""Physical JSON locations for exact family evidence, without sibling-row fallback."""
+"""Physical JSON and Markdown bounds for exact family evidence."""
 
 from __future__ import annotations
 
 import json
 import re
+from functools import lru_cache
 
 _CACHE: dict[int, tuple[str, dict, dict[str, tuple[int, int]]]] = {}
 
@@ -147,3 +148,44 @@ def family_span(text: str, event_type: str, pointer: str | None = None,
         selected += "/cells/" + criterion
     first, last = positions[selected]
     return selected, (text.count("\n", 0, first) + 1, text.count("\n", 0, last - 1) + 1)
+
+
+_EVENT_NAME = r"[a-z][a-z0-9_]*(?:\.[a-z][a-z0-9_]*)+"
+_EVENT_TOKEN = re.compile(r"(?<![\w.])" + _EVENT_NAME + r"(?!\w|\.\w)")
+_MARKDOWN_HEADING = re.compile(r"^#{1,6}\s+(.+)")
+_EXCLUSIVE_OWNER = re.compile(
+    r"(?:source and event custody contract for|exact-family physical source contract for|an exact read-only historical)"
+    r"\s+`?(" + _EVENT_NAME + r")(?!\w|\.\w)"
+)
+_EVENT_TABLE_ROW = re.compile(r"^\s*\|\s*`(" + _EVENT_NAME + r")`\s*\|")
+
+
+@lru_cache(maxsize=1)
+def registered_event_types(registry_text: str) -> frozenset[str]:
+    return frozenset(row["event_type"] for row in json.loads(registry_text)["families"])
+
+
+def markdown_family_span(text: str, span: tuple[int, int], event_type: str, known_events: frozenset[str],
+                         criterion: str | None, quote: str | None) -> tuple[int, int]:
+    """Validate the declared Markdown owner and tighten shared oracle rows before relocation."""
+    lines = text.splitlines()[span[0] - 1:span[1]]
+    heading = next((match[1] for line in lines if (match := _MARKDOWN_HEADING.match(line))), "")
+    subjects = set(_EVENT_TOKEN.findall(heading)) & (known_events | {event_type})
+    if not subjects:
+        # Custody headings can use a display name. Their owner declaration
+        # names the exact event before later cross-references to peer families.
+        subjects = set(_EXCLUSIVE_OWNER.findall("\n".join(lines))) & (known_events | {event_type})
+    if subjects and event_type not in subjects:
+        raise ValueError(f"Markdown evidence subject is {', '.join(sorted(subjects))}, expected {event_type}")
+
+    if heading == "Goal and GoalRun payload minima" and criterion in ("owner_doc", "positive_negative_oracles"):
+        matches = [number for number, line in enumerate(lines, span[0])
+                   if (match := _EVENT_TABLE_ROW.match(line)) and match[1] == event_type]
+    elif heading.endswith("deck-2 owner contract") and criterion == "positive_negative_oracles" and (quote or "").strip() == "Oracles:":
+        matches = [number for number, line in enumerate(lines, span[0])
+                   if line.lstrip().startswith("Oracles:") and event_type in _EVENT_TOKEN.findall(line)]
+    else:
+        return span
+    if len(matches) != 1:
+        raise ValueError(f"Markdown evidence has no unique family-specific subject row for {event_type}")
+    return matches[0], matches[0]
