@@ -36,7 +36,16 @@ in this shared runner (GH2 and GO reuse it; see "Extension points" below):
   COVERED_LATER. A same-code later refusal is COVERED_LATER only when the cut
   trial's after-state equals the intact trial's (store digest and owner
   in-memory digest; the intact trial is the restoration, run a second time as
-  its determinism control), else CANNOT_DECIDE. CANNOT_DECIDE never credits. A declared duplicate set (tuple target) is DUPLICATE_SET_KILLED only
+  its determinism control), else CANNOT_DECIDE. CANNOT_DECIDE never credits.
+  Root-row prefix-equivalence (lead ruling 1121224233-9f91 (1)): two refusal
+  codes are the same code for J2 when the refusal origins are the same source
+  site (file:line) — both the recorded origin site and the innermost
+  non-checker origin frame (the owner guard line; the recorded site alone can
+  be the bank's shared raise line) — the violation suffix after the root-row
+  segment is byte-equal, and the codes are byte-equal after removing the
+  root-row prefix segment (<area>/<kind>/root/ -> <area>/root/); such a pair
+  goes through the same-code after-state rule, never KILLED_CODE. Anything
+  else stays a different code. A declared duplicate set (tuple target) is DUPLICATE_SET_KILLED only
   when its joint cut accepts, each single-site cut still refuses with the peer
   site, and restoration repeats the refusal.
 
@@ -191,7 +200,7 @@ def after_state(result):
     owner = result.get('owner_state') or {}
     return dict(store_sha256=result.get('store_after_sha256'), owner_sha256=result.get('owner_state_sha256'),
                 owner_hook=owner.get('hook'), owner_reason=owner.get('reason'), owner_objects=owner.get('objects'),
-                refusal_code=result.get('refusal_code'))
+                refusal_code=result.get('refusal_code'), refusal_origin=result.get('refusal_origin'))
 
 
 def same_code(intact_code, cut_code):
@@ -200,19 +209,92 @@ def same_code(intact_code, cut_code):
         and intact_code == cut_code
 
 
-def killed_code_check(target, intact_code, restoration_code, cut_code, origin=None, refusing_sites=()):
+def root_row_code_parts(code):
+    """The root-row code grammar: <area>/<kind>/root/<violation suffix>.
+
+    The s_readers root rows validate each root copy at one runtime check
+    (`bank.validate(..., where + '/root')` with where = <area>/<kind>); the bank
+    appends '/schema/<path>:<validator>'. The root-row segment is unambiguous
+    only when 'root' is exactly one segment, at index 2, with a non-empty area,
+    kind and suffix. Returns (area, kind, suffix), or None when the code is not
+    an unambiguous root-row code (the prefix rule then refuses to apply).
+    """
+    if not isinstance(code, str) or not code or code.startswith('crash:'):
+        return None
+    parts = code.split('/')
+    if len(parts) < 4 or parts[2] != 'root' or parts.count('root') != 1 or not all(parts[:2]):
+        return None
+    return parts[0], parts[1], '/'.join(parts[3:])
+
+
+def root_row_prefix_equivalent(intact_code, cut_code, intact_origin=None, cut_origin=None):
+    """Lead ruling 1121224233-9f91 (1): two refusal codes are the same code for J2 when
+    (a) the refusal origins are the same source site (file:line): both the recorded origin
+    site and the innermost non-checker origin frame (the owner guard line, e.g.
+    s_readers.py:94; the recorded site alone can be the bank's shared raise line),
+    (b) the violation suffix after the root-row segment is byte-equal, and (c) the codes
+    are byte-equal after removing the root-row prefix segment (<area>/<kind>/root/ ->
+    <area>/root/). Anything that fails any of (a)-(c) stays a different code.
+    Returns dict(applicable, ...)."""
+    out = dict(applicable=False, intact_code=intact_code, cut_code=cut_code)
+    intact_parts, cut_parts = root_row_code_parts(intact_code), root_row_code_parts(cut_code)
+    if intact_parts is None or cut_parts is None:
+        return dict(out, why='a code is not an unambiguous root-row code')
+    if intact_code == cut_code:
+        return dict(out, why='codes already byte-equal (the same-code rule applies directly)')
+
+    def origin_site(origin):
+        site = origin.get('site') if isinstance(origin, dict) else None
+        return tuple(site) if isinstance(site, (list, tuple)) and len(site) == 2 else None
+
+    def guard_site(origin):
+        # The innermost origin frame outside the checker: the owner guard line that
+        # raised the refusal (frames are [where, line, name, bridge_or_guard, checker]).
+        for frame in reversed((origin.get('frames') or []) if isinstance(origin, dict) else []):
+            if isinstance(frame, (list, tuple)) and len(frame) >= 5 and not frame[4]:
+                return (frame[0], frame[1])
+        return None
+    intact_site, cut_site = origin_site(intact_origin), origin_site(cut_origin)
+    intact_guard, cut_guard = guard_site(intact_origin), guard_site(cut_origin)
+    if intact_site is None or cut_site is None:
+        return dict(out, why='a refusal origin site is not recorded')
+    if intact_site != cut_site:
+        return dict(out, why='refusal origins at different sites: %s vs %s' % (list(intact_site), list(cut_site)))
+    if intact_guard is None or cut_guard is None:
+        return dict(out, why='an origin has no owner guard frame (only checker frames)')
+    if intact_guard != cut_guard:
+        return dict(out, why='refusal origins at different guard sites: %s vs %s' % (list(intact_guard), list(cut_guard)))
+    if intact_parts[0] != cut_parts[0]:
+        return dict(out, why='different area')
+    if intact_parts[2] != cut_parts[2]:
+        return dict(out, why='different violation suffix')
+    return dict(out, applicable=True, site=list(intact_site), guard_site=list(intact_guard), area=intact_parts[0],
+                kinds=[intact_parts[1], cut_parts[1]], suffix=intact_parts[2],
+                normalized_code=intact_parts[0] + '/root/' + intact_parts[2])
+
+
+def killed_code_check(target, intact_code, restoration_code, cut_code, origin=None, refusing_sites=(), cut_origin=None):
     """KILLED_CODE's four conditions (addendum 1); the caller has already found the intact
     run exact (outcome exact_expected), the restoration's errors equal to it and the cut
-    refusing at a later row. Returns dict(verdict=KILLED_CODE|None, different_code, ...)."""
+    refusing at a later row. Returns dict(verdict=KILLED_CODE|None, different_code, ...).
+    Prefix-equivalent root-row codes (lead ruling 1121224233-9f91 (1)) are the same code
+    for J2: they are not a different code and go to the after-state rule."""
     out = dict(intact_code=intact_code, restoration_code=restoration_code, cut_code=cut_code)
     if isinstance(cut_code, str) and cut_code.startswith('crash:'):
         # Addendum 1 and METHOD-RULING addendum C: a crash is never KILLED_CODE and never cover.
         return dict(out, verdict=None, different_code=False, crash=True, reason='cut trial crashed (' + cut_code + ')')
     known = all(isinstance(c, str) and c and not c.startswith('crash:') for c in (intact_code, cut_code))
     different = known and cut_code != intact_code
+    if different:
+        prefix = root_row_prefix_equivalent(intact_code, cut_code, origin, cut_origin)
+        if prefix['applicable']:
+            out['prefix_equivalence'] = prefix
+            different = False
     out['different_code'] = different
     if not different:
-        return dict(out, verdict=None, reason='no different owner refusal code' if not known else 'same code')
+        reason = 'no different owner refusal code' if not known else \
+            ('prefix-equivalent root-row codes: same code for J2' if out.get('prefix_equivalence') else 'same code')
+        return dict(out, verdict=None, reason=reason)
     if not isinstance(target, str):
         return dict(out, verdict=None, reason='declared target is a set, not one guard')
     import pm_goal_dg5_boundaries as bridge
@@ -443,7 +525,8 @@ class Collector:
             # After KILLED (the cut accepts): KILLED_CODE, then the after-state rule.
             code = killed_code_check(record['target'], record.get('refusal_code'),
                                      (restoration_state or {}).get('refusal_code'), (cut_state or {}).get('refusal_code'),
-                                     record.get('refusal_origin'), record.get('refusing_sites'))
+                                     record.get('refusal_origin'), record.get('refusing_sites'),
+                                     cut_origin=(cut_state or {}).get('refusal_origin'))
             record['killed_code_check'] = code
             if code['verdict'] == 'KILLED_CODE':
                 record['kill'] = 'KILLED_CODE'
@@ -454,7 +537,7 @@ class Collector:
             elif code['different_code']:
                 record['kill'] = 'CANNOT_DECIDE'   # a different-code refusal is never COVERED_LATER
                 record['cannot_decide_reason'] = 'different-code later refusal: ' + code['reason']
-            elif not same_code(code['intact_code'], code['cut_code']):
+            elif not same_code(code['intact_code'], code['cut_code']) and not code.get('prefix_equivalence'):
                 # Only a same-code later refusal can be cover (review (b)): both codes must exist and be equal.
                 record['kill'] = 'CANNOT_DECIDE'
                 record['cannot_decide_reason'] = 'not a same-code later refusal: intact %r, cut %r' % (
