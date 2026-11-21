@@ -236,23 +236,33 @@ async function withTouch(t, run) {
 
 async function touchCase(t, f, where) {
   const tag = `${where} touch swipe`;
+  await freshWindow(t, f, tag);
+  // Keep the subject on screen while the gesture is sent. Resume the same run for the handover.
+  const before = await f.evaluate(() => {
+    window.PM56_DEMO.pauseWorking();
+    return window.__fo104.snap();
+  });
   await withTouch(t, async send => {
-    const before = await freshWindow(t, f, tag);
     const a = await f.evaluate(() => window.__fo104.aim());
-    await t.check(`${tag}: the touch starts inside the panel`, !!a?.ok, JSON.stringify(a), { hard: true });
+    await t.check(`${tag}: the touch starts inside an overflowing, unpinned panel`, a?.ok && before.over >= 16 && !before.pinned,
+      JSON.stringify({ a, before }), { hard: true });
     const x = OFF.x + a.x, y = OFF.y + a.y;
     await send('touchStart', { x, y });
-    for (let step = 1; step <= 12; step++) {
+    for (let step = 1; step <= 6; step++) {
       await f.waitForTimeout(16);
-      await send('touchMove', { x, y: y - step * 8 });
+      await send('touchMove', { x, y: y - step * 16 });
     }
     await send('touchEnd');
-    const after = await settled(f);
-    await t.check(`${tag}: the swipe scrolls and pins the same panel before handover`,
-      after.top > before.top && after.pinned === 'node:' + before.uid && after.node === before.node,
-      JSON.stringify({ before, after }));
-    await held(t, `${tag} handover`, after, await nextHandover(f, after, tag));
   });
+  const after = await settled(f);
+  await t.check(`${tag}: the swipe scrolls and pins the same panel before handover`,
+    after.top > before.top && after.pinned === 'node:' + before.uid && after.node === before.node,
+    JSON.stringify({ before, after }));
+  const card = f.locator('.working-card:not(.is-done)').filter({ has: f.locator('.orbit-stage.is-open') });
+  const play = card.locator('[data-action="start-working"]');
+  if (!(await play.isVisible())) await card.locator('[data-action="work-demo-menu"]').click();
+  await play.click();
+  await held(t, `${tag} handover`, after, await nextHandover(f, after, tag));
 }
 
 // a press on the panel's own scrollbar track (below its thumb) pages it down: a real input that scrolls it, so it pins
