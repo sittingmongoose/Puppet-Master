@@ -74,14 +74,14 @@ PROOFS = {
         kind='entailed-by-storage-receipt',
         families=['goal.updated'],
         depends_on=[],
-        sites=[(U, 1804), (U, 1808), ('scripts/pm_goal_test_owner_adapters.py', 629),
+        sites=[(U, 1804), (U, 1808), ('scripts/pm_goal_test_owner_adapters.py', 630),
                ('scripts/pm_goal_test_storage.py', 1544), ('scripts/pm_goal_test_storage.py', 1567),
                ('scripts/pm_goal_test_storage.py', 1631)],
         argument=(
             ':1808 compares the first receipt sequence with the stored event sequence from the '
             'same append: AppendOwner.append_original issues the first receipt for the appended '
             'event and binds the returned OriginalHandle to (event_id, receipt); first_receipt '
-            'and event resolve that one handle (pm_goal_test_owner_adapters.py:623-633) to '
+            'and event resolve that one handle (pm_goal_test_owner_adapters.py:624-634) to '
             'Storage.receipt_of (the custody row _custody_row built from the append frame) and '
             'Storage.read_event (that same frame decoded). Both sequences are the append frame '
             'sequence of one event, so no complete publish call can make them differ; a Storage '
@@ -182,13 +182,13 @@ PROOFS = {
         kind='entailed-by-canonical-decode',
         families=['goal.updated'],
         depends_on=[],
-        sites=[(U, 186), (U, 689), (U, 690), ('scripts/pm_goal_test_owner_adapters.py', 71),
+        sites=[(U, 186), (U, 689), (U, 690), ('scripts/pm_goal_test_owner_adapters.py', 72),
                ('scripts/pm_goal_test_numrule.py', 185), ('scripts/pm_goal_test_numrule.py', 190),
                ('scripts/pm_event_numbers.py', 309), ('scripts/pm_event_numbers.py', 400)],
         argument=(
             'unwrap_row at :689 obtains wrapper only from NR.decode_event_value(raw), whose '
             'N.decode_storage_value returns a value only after requiring '
-            'storage_value_bytes(value, EVENT_VALUE) == raw (pm_event_numbers.py:407-408). '
+            'storage_value_bytes(value, EVENT_VALUE) == raw (pm_event_numbers.py:400-401). '
             'The owner msgpack at :186 is A.canonical, which is NR.event_value_bytes - the same '
             'N.storage_value_bytes(value, EVENT_VALUE) call. So whenever :690 is reached, '
             'msgpack(wrapper) is exactly the byte string decode already required to equal raw; '
