@@ -48,7 +48,7 @@ export default async function (t) {
 		const animate = Element.prototype.animate;
 		Element.prototype.animate = function (frames, timing) {
 			if (!read.animation && this.matches('.lg-carry') && this.closest(scope) && frames?.[0]?.transform) {
-				read.animation = { frames, dur: timing.duration, width: parseFloat(this.style.width), height: parseFloat(this.style.height), at: performance.now() };
+				read.animation = { frames, dur: timing.duration, width: parseFloat(this.style.width), height: parseFloat(this.style.height), at: performance.now(), prepared: !!this.__lgWasPrepared };
 			}
 			return animate.call(this, frames, timing);
 		};

@@ -924,7 +924,7 @@ html:not(#lgz):not(#lgy):not(#lgx) .lg-hop .lg-twin * { color: var(--pm-switch-i
    inverse transform (so they stay on their tabs) and, for the sticker, its hard shadow as a block of its own under it.
    The block's edge is the look's --pm-switch-rim (the sticker's 2 px ink outline); its offset shadow is the shadow
    block, so the block draws none of its own */
-html:not([data-theme^="glass"]):not(#lgz):not(#lgy) lg-over.lg-hops .lg-hop.lg-carry { will-change: transform; box-shadow: var(--pm-switch-rim, 0 0 0 0 transparent); }
+html:not([data-theme^="glass"]):not(#lgz):not(#lgy) lg-over.lg-hops .lg-hop:is(.lg-carry,.lg-carry-prepared) { will-change: transform; box-shadow: var(--pm-switch-rim, 0 0 0 0 transparent); }
 html:not([data-theme^="glass"]):not(#lgz):not(#lgy) lg-over.lg-hops .lg-carry-twins { display: block; position: absolute; left: 0; top: 0; transform-origin: 50% 50%; pointer-events: none; will-change: transform; }
 html:not([data-theme^="glass"]):not(#lgz):not(#lgy) lg-over.lg-hops .lg-carry-shadow { display: block; position: absolute; transform-origin: 50% 50%; pointer-events: none; will-change: transform; background: var(--pm-switch-stick, transparent); }
 /* FO-235: the block's material is two halves, one from each end of the trip, clipped at the block's middle (glass.js

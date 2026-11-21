@@ -2275,6 +2275,7 @@
     }
     if (L.lens.style.opacity) L.lens.style.opacity = '';
     prewarmSoon(L, cfg, strip);
+    if (L.rect) warmColdCarry(L, cfg, strip, target);
     var lay = pre && pre.R && pre.lay, R = lay && L.layer.parentElement === lay.parent && (!lay.usedEl || L.layer === lay.el) ? pre.R : null;
     if (!R) R = rectIn(strip, cfg.box ? cfg.box(target) : target, lensPad(strip, cfg));
     var A = L.rect;
@@ -2543,8 +2544,28 @@
       window.PMW && !window.PMW.instances['dashboard:agents'];
   }
   function coldHop(L, cfg, target) {
+    if (L.carryPreview && L.carryPreview.target === target && L.carryPreview.theme === root.getAttribute('data-theme')) return false;
     return switchMotion === 'hop' && (coldAgents(cfg, target) ||
       (!L.filesChangedSeen && target.getAttribute('data-tab') === 'changed' && filesSwitcher(L.strip)));
+  }
+  function sameCarryBox(a, b) {
+    return Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y), Math.abs(a.w - b.w), Math.abs(a.h - b.h)) < 0.5;
+  }
+  function warmColdCarry(L, cfg, strip, active) {
+    if (L.carryWarming || L.carryPreview || L.carry || L.pending || !L.under || reduced() || switchMotion !== 'hop') return;
+    var selector = filesSwitcher(strip) && !L.filesChangedSeen && active.getAttribute('data-tab') === 'explorer' ? '[data-tab="changed"]' :
+      cfg.sel === '.pmw-strip' && active.getAttribute('data-tab-id') === 'dashboard:home' ? '[data-tab-id="dashboard:agents"]' : null;
+    var busy = window.PM_BUSY, target = selector && strip.querySelector(selector);
+    if (!target || !busy || !busy.idle) return;
+    L.carryWarming = true;
+    busy.idle(function () {
+      L.carryWarming = false;
+      if (!strip.isConnected || !strip.getClientRects().length || !target.isConnected || busy() || document.hidden ||
+          L.carry || L.pending || reduced() || switchMotion !== 'hop' || L.tgt !== active || !L.rect) return;
+      var R = rectIn(strip, cfg.box ? cfg.box(target) : target, lensPad(strip, cfg));
+      if (R.w <= 0 || R.h <= 0) return;
+      carry(L, L.rect, R, strip, cfg, target, !!cfg.vertical || Math.abs(L.rect.y - R.y) > Math.abs(L.rect.x - R.x), null, false, true);
+    }, 900, { quiet: 180 });
   }
   /* go: the trip under way that a new block goes on with ({ K: that trip, at: its age now, zero: when its age was 0, or
      null if no frame has drawn it yet, retarget: its tab changed under it }). Retarget (FO-195): the trip so far stays as
@@ -2586,7 +2607,7 @@
     });
     return out;
   }
-  function carry(L, A, B, strip, cfg, target, vertical, go, cold) {
+  function carry(L, A, B, strip, cfg, target, vertical, go, cold, prepare) {
     if (!L.under || reduced()) { setLensBox(L, B); return; }
     var motion = switchMotion, C = CARRY[motion], ease = bezierEase(C.ease), dur = C.dur, hopping = motion === 'hop';
     var zero = go && go.zero != null ? go.zero : null, liftX, liftY;
@@ -2599,15 +2620,30 @@
     var lo = Math.min.apply(null, ends.map(function (r) { return vertical ? r.y : r.x; })) - CARRY_REACH, hi = Math.max.apply(null, ends.map(function (r) { return vertical ? r.y + r.h : r.x + r.w; })) + CARRY_REACH;
     var crossed = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(visible).map(function (it) { var w = (cfg.twin && cfg.twin(it)) || it; return { it: w, r: rectIn(strip, w, 0) }; })
       .filter(function (s) { var a = vertical ? s.r.y : s.r.x, b = a + (vertical ? s.r.h : s.r.w); return b > lo && a < hi; });
-    var over = overLayer(strip), tag = cfg.tag, box = function (e) { var st = e.style; st.left = B.x + 'px'; st.top = B.y + 'px'; st.width = B.w + 'px'; st.height = B.h + 'px'; };
-    var F = el('i', { class: 'lg-lens lg-hop lg-carry', 'aria-hidden': 'true' }), G = el('i', { class: 'lg-carry-twins', 'aria-hidden': 'true' }), S = null;
-    if (tag) F.setAttribute('data-lg-for', tag);
-    box(F); G.style.width = B.w + 'px'; G.style.height = B.h + 'px';
-    crossed.forEach(function (s) { G.appendChild(twinOf(s.it, { x: s.r.x - B.x, y: s.r.y - B.y, w: s.r.w, h: s.r.h }, weight)); });
-    F.appendChild(G);
-    if (stick) { S = el('i', { class: 'lg-carry-shadow', 'aria-hidden': 'true' }); if (tag) S.setAttribute('data-lg-for', tag); box(S); over.appendChild(S); }
-    over.appendChild(F);
-    var SK = carrySkins(F, S, vertical, Math.ceil(1.1 * Math.max.apply(null, ends.map(function (r) { return vertical ? r.h : r.w; }))) + 8);
+    var preview = L.carryPreview, F, G, S = null, SK;
+    if (preview) {
+      L.carryPreview = null;
+      preview.anims.forEach(function (a) { a.cancel(); });
+      if (!prepare && !go && preview.target === target && preview.theme === root.getAttribute('data-theme') &&
+          sameCarryBox(preview.A, A) && sameCarryBox(preview.B, B)) {
+        F = preview.F; G = preview.G; S = preview.S; SK = preview.SK;
+        [F, S].forEach(function (e) { if (e) { e.style.opacity = ''; e.removeAttribute('data-lg-prepared'); } });
+        F.classList.replace('lg-carry-prepared', 'lg-carry'); F.__lgWasPrepared = true;
+      } else { preview.F.remove(); if (preview.S) preview.S.remove(); }
+    }
+    if (!F) {
+      var over = overLayer(strip), tag = cfg.tag;
+      var box = function (e) { var st = e.style; st.left = B.x + 'px'; st.top = B.y + 'px'; st.width = B.w + 'px'; st.height = B.h + 'px'; };
+      F = el('i', { class: 'lg-lens lg-hop ' + (prepare ? 'lg-carry-prepared' : 'lg-carry'), 'aria-hidden': 'true' });
+      G = el('i', { class: 'lg-carry-twins', 'aria-hidden': 'true' });
+      if (tag) F.setAttribute('data-lg-for', tag);
+      box(F); G.style.width = B.w + 'px'; G.style.height = B.h + 'px';
+      crossed.forEach(function (s) { G.appendChild(twinOf(s.it, { x: s.r.x - B.x, y: s.r.y - B.y, w: s.r.w, h: s.r.h }, weight)); });
+      F.appendChild(G);
+      if (stick) { S = el('i', { class: 'lg-carry-shadow', 'aria-hidden': 'true' }); if (tag) S.setAttribute('data-lg-for', tag); box(S); over.appendChild(S); }
+      over.appendChild(F);
+      SK = carrySkins(F, S, vertical, Math.ceil(1.1 * Math.max.apply(null, ends.map(function (r) { return vertical ? r.h : r.w; }))) + 8);
+    }
     /* the lift stays inside the strip's own box: a strip at the top of a scroller (onboarding's segments, first in their
        pane) clips anything above it, and a sticker lifted 6 px there lost its top edge for six frames (Windows film) */
     if (go) { liftX = go.K.liftX; liftY = go.K.liftY; }
@@ -2680,12 +2716,23 @@
     var T = plan(at, go ? null : 0, from), start = performance.now() - at;
     var holdStart = !go && (cold || coldAgents(cfg, target)) && typeof window.PM_START_ON_SHOWN === 'function';
     var parts = [F, G, S].concat(SK), anims = [], lead = null;
+    if (prepare) [F, S].forEach(function (e) {
+      if (e) { e.style.opacity = '0'; e.style.willChange = 'opacity, transform'; e.setAttribute('data-lg-prepared', ''); }
+    });
     parts.forEach(function (e, j) {
       if (!e) return;
       var a = e.animate(T.frames[j], { duration: T.span, easing: 'linear', fill: 'forwards' });
       if (zero != null) a.startTime = zero + from; else if (at > from) a.currentTime = at - from;
       anims.push(a); if (!lead) lead = a;
     });
+    if (prepare) {
+      // Draw the same carry layers once during idle. A one-level opacity pulse leaves their tiles ready for the press.
+      [F, S].forEach(function (e) {
+        if (e) anims.push(e.animate([{ opacity: 0.004 }, { opacity: 0.004 }], { duration: T.span }));
+      });
+      L.carryPreview = { F: F, G: G, S: S, SK: SK, A: A, B: B, target: target, theme: root.getAttribute('data-theme'), anims: anims };
+      return;
+    }
     var probe = holdStart ? null : F.animate([], { duration: 1000 }), made = performance.now(), inFrame = frameSync > 0 || postRunning;
     setLensBox(L, B);
     /* the chip under the labels stays hidden while the block is up (as for a step's blocks) */
