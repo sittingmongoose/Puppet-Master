@@ -758,8 +758,9 @@ set -eu
 git fetch origin
 PM_LAND_TOPIC_BRANCH="fix/landing-snapshot-$(date -u +%Y%m%d-%H%M%S)"
 git switch -c "$PM_LAND_TOPIC_BRANCH" origin/main
+PM_LAND_SNAP_SEQ="$(python3 -c "import glob,os,re; n=[int(m.group(1)) for p in glob.glob('Plans/.plan_migration/pds-*') for m in [re.match(r'pds-[0-9]{8}-([0-9]{3})-', os.path.basename(p))] if m]; print('%03d' % (max(n, default=0) + 1))")"
 python3 scripts/pm-plan-migration.py snapshot-current \
-    --run-id pds-$(date -u +%Y%m%d)-001-current-planunit-snapshot \
+    --run-id "pds-$(date -u +%Y%m%d)-${PM_LAND_SNAP_SEQ}-current-planunit-snapshot" \
     --expected-doc-count "$(ls Plans/*.md | wc -l)" \
     --supersedes-run-id "$(python3 -c "import json;print(json.load(open('Plans/.plan_migration/current_run.json'))['run_id'])")"
 python3 scripts/pm-landing-check.py --record-baseline \
