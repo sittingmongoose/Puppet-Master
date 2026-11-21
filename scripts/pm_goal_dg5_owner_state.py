@@ -58,11 +58,13 @@ from __future__ import annotations
 import collections
 import functools
 import hashlib
+import json
+import os
 import re
 import sys
 import types
 import weakref
-from pathlib import PurePath
+from pathlib import Path, PurePath
 
 SCHEMA = 'dg5-owner-state-v1'
 
@@ -433,10 +435,33 @@ def covered_later_check(intact, restoration, cut):
 
 
 def owner_state_digest(family, world, arguments=None, inventory=None):
-    """The family hook's digest of the owners' in-memory state, or sha256 None with the reason."""
+    """The family hook's digest of the owners' in-memory state, or sha256 None with the reason.
+
+    With PM_DG5_OWNER_STATE_INVENTORY=<dir> (review aid, no effect on the digest), each
+    digest also writes `<dir>/<family>-<pid>-<n>.json`: every class the walk met with the
+    attributes it digested and excluded, the opaque value counts and the root labels.
+    """
     hook = HOOKS.get(family)
     if hook is None:
         return dict(schema=SCHEMA, hook=None, sha256=None, reason='no owner-state hook for family ' + repr(family))
     if world is None:
         return dict(schema=SCHEMA, hook=family, sha256=None, reason='the call has no bound world')
-    return hook.digest(world, arguments, inventory)
+    where = os.environ.get('PM_DG5_OWNER_STATE_INVENTORY')
+    if not where or inventory is not None:
+        return hook.digest(world, arguments, inventory)
+    inventory = {}
+    out = hook.digest(world, arguments, inventory)
+    target = Path(where)
+    target.mkdir(parents=True, exist_ok=True)
+    _INVENTORY_COUNT[0] += 1
+    record = dict(family=family, world=type(world).__module__ + '.' + type(world).__qualname__,
+                  sha256=out.get('sha256'), reason=out.get('reason'), objects=out.get('objects'),
+                  excluded=out.get('excluded'), opaque=out.get('opaque'),
+                  roots=[label for label, _ in hook.roots(world, arguments)],
+                  classes={name: dict(digested=sorted(v['digested']), excluded=sorted(v['excluded']))
+                           for name, v in sorted(inventory.items())})
+    (target / f'{family}-{os.getpid()}-{_INVENTORY_COUNT[0]}.json').write_text(json.dumps(record, indent=1) + '\n')
+    return out
+
+
+_INVENTORY_COUNT = [0]
