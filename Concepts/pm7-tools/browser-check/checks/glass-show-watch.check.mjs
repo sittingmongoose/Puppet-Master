@@ -51,7 +51,9 @@
 //      page's scripts run counts show-watch timer requests by their glass.js call sites at any delay in a fixed
 //      10 s page-clock window (driver read delay cannot extend it),
 //      and counts the callbacks that fire: only 2000 ms is allowed, at most 6 FIRE (the cost: one
-//      tick per 2000 ms is 5, 6 on a window edge) and at most 12 are asked. Requests are not wakes: since
+//      tick per 2000 ms is 5, 6 on a window edge) and at most 12 are asked. Keep at most one pending tick, account
+//      for fires and cancellations across the window edges, and only accept the wake and queued-check clear sites.
+//      Requests are not wakes: since
 //      34b45edf15 a sync that lands while a check is queued arms a tick which that check drops, and each wake
 //      drops and re-arms one, so the count of requests moves with ambient syncs (5 on the normal surface, 5-7
 //      on the sandboxed one over the lead's runs, where 7 failed the earlier bound of 6 requests on a page that
@@ -104,20 +106,32 @@ const tagOf = (look, surface, rep, reps) => `${look} ${surface}` + (reps > 1 ? `
 
 /* Read call sites from the exact build being tested, including the pre-event 400 ms implementation. */
 export function showWatchSites(src, range) {
-	const sites = {};
+	const asks = {};
+	const clears = {};
 	let owner = '';
 	for (const [offset, line] of src.split('\n').slice(range.from - 1, range.to).entries()) {
 		const declaration = /^  function (\w+)\(/.exec(line);
 		if (declaration) owner = declaration[1];
-		if (/\bshowT\s*=\s*setTimeout\s*\(\s*checkShown\b/.test(line)) sites[range.from + offset] = owner;
+		if (/^  var showWatch\s*=/.test(line)) owner = 'showWatch';
+		if (/\bshowT\s*=\s*setTimeout\s*\(\s*checkShown\b/.test(line)) asks[range.from + offset] = owner;
+		if (/\bclearTimeout\s*\(\s*showT\s*\)/.test(line)) clears[range.from + offset] = owner;
 	}
-	return sites;
+	return { asks, clears };
 }
 
 export function restAttribution(c) {
 	if (c.unattributed) return `${c.unattributed} show-watch timer calls could not be attributed to the built source`;
 	if (!c.asked && !c.fired) return 'no matching show-watch timers were observed';
 	return '';
+}
+
+export function restChurn(c) {
+	const problems = [];
+	if (c.pendingAtStart + c.asked - c.cleared !== c.fired + c.pending) problems.push('timer lifecycle did not balance');
+	if (c.peakPending > 1) problems.push(`${c.peakPending} timers were pending at once`);
+	if (c.badAsks.length) problems.push(`unexpected request sites ${c.badAsks.join(', ')}`);
+	if (c.badClears.length) problems.push(`unexpected cancellation sites ${c.badClears.join(', ')}`);
+	return problems.join('; ');
 }
 
 /* Installed before page scripts. Read the immediate caller, and use the owner's callback name to detect stack
@@ -127,6 +141,8 @@ export const TIMER_PROBE = (range) => {
 	const realSet = window.setTimeout;
 	const realClear = window.clearTimeout;
 	const counting = (now) => now < P.until;
+	const askOwners = new Set(['awaitShow', 'checkShown', 'queueShown', 'checkShownNow']);
+	const clearOwners = new Set(['showWatch', 'queueShown']);
 	const lineOf = () => {
 		const caller = String(new Error().stack || '').split('\n')[3] || '';
 		const match = /:(\d+):\d+\)?$/.exec(caller);
@@ -149,7 +165,7 @@ export const TIMER_PROBE = (range) => {
 	window.setTimeout = function (fn, delay, ...rest) {
 		const now = performance.now();
 		const l = lineOf();
-		const site = range.sites[l];
+		const site = range.asks[l];
 		if (!site || typeof fn !== 'function') {
 			if (counting(now) && (site || fn?.name === 'checkShown')) P.unattributed++;
 			return realSet.call(window, fn, delay, ...rest);
@@ -159,7 +175,7 @@ export const TIMER_PROBE = (range) => {
 		let id = 0;
 		const wrapped = function (...a) {
 			const at = performance.now();
-			if (counting(at)) { P.fired++; P.delays.add(d); }
+			if (counting(at)) { P.fired++; P.pending--; P.delays.add(d); }
 			P.byId.delete(id);
 			const s = snap();
 			push({ k: 'fire', n: meta.n, d: meta.d, at: Math.round(at), asked: meta.asked, g: meta.g, vis: s.vis, op: s.op, hidden: document.hidden });
@@ -173,6 +189,9 @@ export const TIMER_PROBE = (range) => {
 		push({ k: 'ask', n: meta.n, d, at: meta.asked, g: meta.g, site, vis: s.vis, op: s.op, inFire: P.depth > 0, hidden: document.hidden });
 		if (counting(now)) {
 			P.asked++;
+			P.pending++;
+			P.peakPending = Math.max(P.peakPending, P.pending);
+			if (!askOwners.has(site)) P.badAsks.add(`${site}@${l}`);
 			P.delays.add(d);
 			if (P.sites.length < 14) P.sites.push(d + 'ms@' + l);
 		}
@@ -181,17 +200,34 @@ export const TIMER_PROBE = (range) => {
 	window.clearTimeout = function (id) {
 		const meta = P.byId.get(id);
 		if (meta) {
+			const now = performance.now();
+			if (counting(now)) {
+				const l = lineOf();
+				const site = range.clears[l];
+				P.cleared++;
+				P.pending--;
+				if (!clearOwners.has(site)) P.badClears.add(`${site || 'unknown'}@${l}`);
+			}
 			const s = snap();
-			push({ k: 'clear', n: meta.n, d: meta.d, at: Math.round(performance.now()), asked: meta.asked, g: meta.g, vis: s.vis, op: s.op });
+			push({ k: 'clear', n: meta.n, d: meta.d, at: Math.round(now), asked: meta.asked, g: meta.g, vis: s.vis, op: s.op });
 			P.byId.delete(id);
 		}
 		return realClear.call(window, id);
 	};
-	P.arm = (ms = 10000) => { P.asked = 0; P.fired = 0; P.unattributed = 0; P.delays = new Set(); P.sites = []; P.until = performance.now() + ms; };
+	P.arm = (ms = 10000) => {
+		P.asked = 0; P.fired = 0; P.cleared = 0; P.unattributed = 0;
+		P.pendingAtStart = P.pending = P.peakPending = P.byId.size;
+		P.delays = new Set(); P.badAsks = new Set(); P.badClears = new Set(); P.sites = [];
+		P.until = performance.now() + ms;
+	};
 	P.read = () => {
 		const complete = performance.now() >= P.until;
 		P.until = 0;
-		return { complete, asked: P.asked, fired: P.fired, unattributed: P.unattributed, delays: [...P.delays], sites: P.sites.slice() };
+		return {
+			complete, asked: P.asked, fired: P.fired, cleared: P.cleared, unattributed: P.unattributed,
+			pendingAtStart: P.pendingAtStart, pending: P.pending, peakPending: P.peakPending,
+			badAsks: [...P.badAsks], badClears: [...P.badClears], delays: [...P.delays], sites: P.sites.slice(),
+		};
 	};
 	P.between = (a, b) => P.events.filter((e) => e.at >= a && e.at <= b);
 };
@@ -378,9 +414,9 @@ async function cell(t, surface, W, H) {
 	await t.check(`the built page carries the lg-js block ${surface}`, !!lg, lg ? `lines ${lg.from}-${lg.to}` : 'no script#lg-js: glass.js timers cannot be attributed', { hard: true });
 	if (!lg) return;
 	const sites = showWatchSites(src, lg);
-	const knownSites = Object.values(sites);
+	const knownSites = Object.values(sites.asks);
 	await t.check(`show-watch timer attribution is available ${surface}`, knownSites.includes('awaitShow') && knownSites.includes('checkShownNow'), 'expected showT setTimeout sites in awaitShow and checkShownNow', { hard: true });
-	await t.page.addInitScript(TIMER_PROBE, { ...lg, sites });
+	await t.page.addInitScript(TIMER_PROBE, { ...lg, ...sites });
 	const f = await t.app.open({ query: 'pm-warm=0', sandbox: surface === 'sandbox' });
 	await f.evaluate(PROBE);
 	await f.evaluate(() => document.fonts.ready.then(() => true));
@@ -533,13 +569,16 @@ async function cell(t, surface, W, H) {
 			await t.page.waitForTimeout(10000);
 			const c = await f.evaluate(() => window.__swt.read());
 			const attribution = restAttribution(c);
-			t.log(`row 13 ${tag}: ${c.asked} show-watch requests [${c.sites.join(', ')}], ${c.fired} fires, ${c.unattributed} unattributed`);
+			const lifecycle = `${c.pendingAtStart} pending at start, ${c.asked} requests, ${c.cleared} clears, ${c.fired} fires, ${c.pending} pending at end`;
+			t.log(`row 13 ${tag}: ${lifecycle} [${c.sites.join(', ')}]; ${c.unattributed} unattributed`);
 			await t.check(`row 13: the full 10 s rest window was observed ${tag}`, c.complete, 'the driver read the counter before its page-clock deadline');
 			await t.check(`row 13: show-watch timer activity is attributed ${tag}`, !attribution, attribution);
 			if (c.complete && !attribution) {
 				await t.check(`row 13: only 2000 ms show-watch timers are used ${tag}`, c.delays.every((d) => d === 2000), `observed delays: ${c.delays.join(', ')} ms`);
 				await t.check(`row 13: at most 6 show-watch timers fire in 10 s ${tag}`, c.fired <= 6, `${c.fired} fired (the 2000 ms net fires about 5; the old poll about 25)`);
 				await t.check(`row 13: at most 12 show-watch timer requests in 10 s ${tag}`, c.asked <= 12, `${c.asked} requests (one after each tick, and one more for each wake or sync that lands while a check is queued: 5-7 measured)`);
+				const churn = restChurn(c);
+				await t.check(`row 13: show-watch requests and clears follow the timer lifecycle ${tag}`, !churn, churn ? `${churn}; ${lifecycle}` : lifecycle);
 			}
 			const phase = await showTabsLocked(f, 'display', 2040);
 			await t.check(`row 13: the show phase is established ${tag}`, phase.ok, phase.detail);
