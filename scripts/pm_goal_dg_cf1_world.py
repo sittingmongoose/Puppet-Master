@@ -489,7 +489,7 @@ class GoalOwner(IssuingOwner):
             put_all(value, 'goal_run_id', g['bound_goal_run_id'])
             for p in glob_paths(value, '*goal_revision'):
                 if isinstance(get(value, p), int):
-                    put(value, p, b['goal_revision'])
+                    put(value, p, NR.integer(b['goal_revision'], 'goal/goal_revision', minimum=1))
             rvalidate(name, value, 'goal/' + name)
             record = dict(argument=value, goal_body_version=body['version'], goal_control_version=control['version'],
                           goal_binding_version=binding['version'], stop_state=c['stop_state'],
@@ -1109,8 +1109,8 @@ class StandardOwner(IssuingOwner):
 
 def _base_facts(world, scope):
     target = dict(project_id=scope['project_id'], goal_id=scope['goal_id'], goal_run_id=scope['goal_run_id'],
-                  workgraph_id=scope['workgraph_id'], workgraph_revision=world.values['workgraph_revision'],
-                  workgraph_sha256=world.values['workgraph_sha256'])
+                  workgraph_id=scope['workgraph_id'], workgraph_revision=NR.integer(world.values['workgraph_revision'],
+                  'cf1/standard/workgraph_revision', minimum=1), workgraph_sha256=world.values['workgraph_sha256'])
     return {'target': target}
 
 
