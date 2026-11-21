@@ -55,3 +55,9 @@ test('an alpha-only change is still a changed pixel', (t) => {
 	assert.equal(result.status, 1, result.output);
 	assert.match(result.output, /1 px changed/);
 });
+
+test('the producer heatmap is not an orphaned comparison shot', (t) => {
+	const result = run(t, ['A1', 'A2', 'B', 'heat-A1-B'], summary, png(0));
+	assert.equal(result.status, 0, result.output);
+	assert.match(result.output, /1 of 1 states/);
+});

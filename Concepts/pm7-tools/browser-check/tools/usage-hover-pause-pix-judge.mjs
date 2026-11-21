@@ -50,6 +50,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
 	const dir = process.argv[2], out = process.argv.indexOf('--json') > 0 ? process.argv[process.argv.indexOf('--json') + 1] : null;
 	const rows = [], states = new Map(), summaries = new Map();
 	for (const file of readdirSync(dir).sort()) {
+		if (file.endsWith('-heat-A1-B.png')) continue;
 		const shot = /^(.+)-(A1|A2|B)\.png$/.exec(file);
 		if (shot) {
 			if (!states.has(shot[1])) states.set(shot[1], new Set());
