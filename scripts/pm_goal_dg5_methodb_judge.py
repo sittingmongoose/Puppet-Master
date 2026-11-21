@@ -943,6 +943,11 @@ class ForkedExample(w3.OwnerExample):
                 code.update(verdict=None, reason=why)
                 verdict = 'CANNOT_DECIDE'
                 record['cannot_decide_reason'] = 'different-code later refusal: ' + why
+        elif not (isinstance(intact_code, str) and intact_code and intact_code == cut_code):
+            # Only a same-code later refusal can be cover (review (b)): both codes must exist and be equal.
+            code.update(verdict=None, reason='not a same-code later refusal')
+            verdict = 'CANNOT_DECIDE'
+            record['cannot_decide_reason'] = 'not a same-code later refusal: intact %r, cut %r' % (intact_code, cut_code)
         else:
             code.update(verdict=None, reason='same code')
             states = rerun() if rerun is not None else self.after_states[-3:]
