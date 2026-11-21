@@ -16,6 +16,7 @@ import re
 import shlex
 import shutil
 import socket
+import stat
 import subprocess
 import sys
 import time
@@ -29,7 +30,7 @@ LOCK = EVIDENCE / "scratch/landing-lock/held"
 CLONE = Path.home() / "src/PuppetMaster"
 HOSTS = {"1070ti": "1070ti", "nas1": "nas1-agent"}
 MACHINES = {"1070ti": "1070ti", "nas1": "ubuntu-agent-nas1"}
-DEFAULT_HOST = "1070ti"
+DEFAULT_HOST = "nas1"
 SSH_FAILURE_LIMIT = 3
 JOB_MODES = ('check', 'snapshot', 'recheck', 'followup')
 RAW_LINK = "tests/agent_packet_restrictions"
@@ -70,19 +71,21 @@ def say(message: str) -> None:
     print(message, flush=True)
 
 
-def command(argv, *, cwd=None, capture=True, check=True):
+def command(argv, *, cwd=None, capture=True, check=True, input_text=None, pass_fds=()):
     result = subprocess.run(argv, cwd=cwd, check=False, text=True,
                             stdout=subprocess.PIPE if capture else None,
                             stderr=subprocess.PIPE if capture else None,
-                            encoding="utf-8", errors="surrogateescape")
+                            encoding="utf-8", errors="surrogateescape", input=input_text,
+                            pass_fds=pass_fds)
     if check and result.returncode:
         raise Refusal(f"{shlex.join(map(str, argv))} exited {result.returncode}"
                       + (f": {result.stderr.strip()}" if result.stderr else ""))
     return result
 
 
-def git(root, *args, check=True):
-    return command(["git", "--no-optional-locks", "-C", str(root), *args], check=check)
+def git(root, *args, check=True, guard_fd=None, input_text=None):
+    return command(["git", "--no-optional-locks", "-C", str(root), *args], check=check,
+                   input_text=input_text, pass_fds=() if guard_fd is None else (guard_fd,))
 
 
 def revision(root, ref):
@@ -859,6 +862,7 @@ class Publication(NamedTuple):
     plans_followup: bool
     completes_followup: bool
     phase: str = "fast-forward-pending"
+    pre_merge_head: str | None = None
 
 
 def holder_field(body, name):
@@ -874,7 +878,7 @@ def landing_guard():
     # Hand landers use the same guard for holder updates, takeover and release.
     with (LOCK.parent / "pm-land-reap.guard").open("a") as guard:
         fcntl.flock(guard, fcntl.LOCK_EX)
-        yield
+        yield guard.fileno()
 
 
 def sync_directory(path):
@@ -934,11 +938,14 @@ class LandingLock:
         if raw_publication:
             entry = json.loads(raw_publication)
             fields = set(Publication._fields)
-            if not isinstance(entry, dict) or set(entry) not in (fields, fields - {"phase"}):
+            required = fields - {"phase", "pre_merge_head"}
+            if not isinstance(entry, dict) or not required <= entry.keys() <= fields:
                 raise Refusal("invalid publication marker in landing holder")
             publication = Publication(**entry)
             sha(publication.base, "publication base")
             sha(publication.candidate, "publication candidate")
+            if publication.pre_merge_head is not None:
+                sha(publication.pre_merge_head, "pre-merge shared HEAD")
             if (type(publication.plans_followup) is not bool
                     or type(publication.completes_followup) is not bool
                     or publication.phase not in ("fast-forward-pending", "push-pending", "rollback-pending")
@@ -979,18 +986,24 @@ class LandingLock:
             self.require_owner()
             self.write_locked(self.publication, self.owed)
 
-    def begin_publication(self, base, candidate, plans_followup, completes_followup):
-        with landing_guard():
+    @contextmanager
+    def shared_mutation(self):
+        with landing_guard() as guard_fd:
             self.require_owner()
-            if (self.publication or bool(self.owed) != completes_followup
-                    or (plans_followup and completes_followup)):
-                raise Refusal("resolve the previous publication or Plans follow-up first")
-            self.write_locked(Publication(base, candidate, plans_followup, completes_followup), self.owed)
+            # Git inherits the guard until it exits, including after controller loss.
+            yield guard_fd
+
+    def begin_publication(self, base, candidate, plans_followup, completes_followup, pre_merge_head):
+        """Journal a fast-forward while its shared mutation guard is held."""
+        if (self.publication or bool(self.owed) != completes_followup
+                or (plans_followup and completes_followup)):
+            raise Refusal("resolve the previous publication or Plans follow-up first")
+        self.write_locked(Publication(base, candidate, plans_followup, completes_followup,
+                                      pre_merge_head=pre_merge_head), self.owed)
 
     def mark_push_pending(self):
-        with landing_guard():
-            self.require_owner()
-            self.write_locked(self.publication._replace(phase="push-pending"), self.owed)
+        """Update the journal while the push's shared mutation guard is held."""
+        self.write_locked(self.publication._replace(phase="push-pending"), self.owed)
 
     def finish_publication(self, published):
         with landing_guard():
@@ -1062,8 +1075,9 @@ def rebase_and_push(worktree, ref, base):
 
 
 def fetch_shared(lock, *refs):
-    lock.heartbeat()
-    git(SHARED, "fetch", "origin", *refs)
+    with lock.shared_mutation() as guard_fd:
+        lock.write_locked(lock.publication, lock.owed)
+        git(SHARED, "fetch", "origin", *refs, guard_fd=guard_fd)
 
 
 def is_ancestor(root, earlier, later):
@@ -1080,8 +1094,7 @@ def require_shared_main():
 
 def rollback_shared(lock, marker, upstream):
     """Apply a two-tree checkout, then conditionally move main back."""
-    with landing_guard():
-        lock.require_owner()
+    with lock.shared_mutation() as guard_fd:
         require_shared_main()
         shared_head = revision(SHARED, "HEAD^{commit}")
         if shared_head != marker.candidate:
@@ -1091,10 +1104,128 @@ def rollback_shared(lock, marker, upstream):
         lock.write_locked(marker._replace(phase="rollback-pending"), lock.owed)
         # The two-tree checkout carries unrelated staged and unstaged entries
         # forward. Replaying it after interruption is safe.
-        git(SHARED, "read-tree", "-m", "-u", marker.candidate, upstream)
+        git(SHARED, "read-tree", "-m", "-u", marker.candidate, upstream, guard_fd=guard_fd)
         lock.require_owner()
         require_shared_main()
-        git(SHARED, "update-ref", "-m", "recover unpublished landing", MAIN_REF, upstream, marker.candidate)
+        git(SHARED, "update-ref", "-m", "recover unpublished landing", MAIN_REF, upstream,
+            marker.candidate, guard_fd=guard_fd)
+
+
+UNKNOWN_ENTRY = object()
+
+
+def fast_forward_entries(before, candidate):
+    """The old and candidate tree entries on paths a fast-forward can change."""
+    raw = git(SHARED, "diff", "--raw", "--no-abbrev", "--no-ext-diff", "--no-renames",
+              "-z", before, candidate, "--").stdout
+    fields = iter(raw.split("\0"))
+    changes = {}
+    for metadata in fields:
+        if not metadata:
+            break
+        old_mode, new_mode, old_oid, new_oid, _ = metadata[1:].split()
+        name = next(fields)
+        old = (old_mode, old_oid) if old_mode != "000000" else None
+        new = (new_mode, new_oid) if new_mode != "000000" else None
+        changes[name] = (old, new)
+    return changes
+
+
+def partial_checkout_index(paths):
+    staged = {}
+    fields = git(SHARED, "ls-files", "--stage", "-v", "-z").stdout.split("\0")
+    for entry in fields:
+        if not entry:
+            continue
+        metadata, name = entry.split("\t", 1)
+        if name in paths:
+            tag, mode, oid, stage = metadata.split()
+            staged[name] = (mode, oid) if tag == "H" and stage == "0" else UNKNOWN_ENTRY
+    return staged
+
+
+def stat_identity(info):
+    return (info.st_dev, info.st_ino, info.st_mode, info.st_size, info.st_mtime_ns, info.st_ctime_ns)
+
+
+def working_entry(name, object_format):
+    """Read the raw worktree entry without following links or applying clean filters."""
+    relative = PurePosixPath(name)
+    path = SHARED / relative
+    if any((SHARED / parent).is_symlink() for parent in relative.parents if parent != PurePosixPath(".")):
+        return UNKNOWN_ENTRY
+    try:
+        metadata = path.lstat()
+    except FileNotFoundError:
+        return None
+    except OSError:
+        return UNKNOWN_ENTRY
+
+    digest = hashlib.new(object_format, usedforsecurity=False)
+    try:
+        if stat.S_ISLNK(metadata.st_mode):
+            data = os.fsencode(os.readlink(path))
+            digest.update(f"blob {len(data)}\0".encode())
+            digest.update(data)
+            mode = "120000"
+        elif stat.S_ISREG(metadata.st_mode):
+            descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+            with os.fdopen(descriptor, "rb") as stream:
+                if stat_identity(os.fstat(stream.fileno())) != stat_identity(metadata):
+                    return UNKNOWN_ENTRY
+                digest.update(f"blob {metadata.st_size}\0".encode())
+                for block in iter(lambda: stream.read(1024 * 1024), b""):
+                    digest.update(block)
+            mode = "100755" if metadata.st_mode & stat.S_IXUSR else "100644"
+        else:
+            return UNKNOWN_ENTRY
+        if stat_identity(path.lstat()) != stat_identity(metadata):
+            return UNKNOWN_ENTRY
+    except OSError:
+        return UNKNOWN_ENTRY
+    return mode, digest.hexdigest()
+
+
+def partial_checkout_state(changes, object_format):
+    staged = partial_checkout_index(changes)
+    return {name: (staged.get(name), working_entry(name, object_format)) for name in changes}
+
+
+def repair_failed_fast_forward(lock, marker, upstream):
+    """Restore only affected paths whose bytes can be attributed to the failed merge."""
+    before = marker.pre_merge_head
+    if before is None:
+        raise Refusal("publication has no pre-merge shared HEAD. Inspect its index and worktree before clearing it")
+    with lock.shared_mutation() as guard_fd:
+        require_shared_main()
+        current = revision(SHARED, "HEAD^{commit}")
+        if current != before or full_main(SHARED) != upstream or not is_ancestor(SHARED, before, marker.base):
+            raise Refusal(f"shared main {current} or origin changed after the recorded pre-merge HEAD {before}")
+        changes = fast_forward_entries(before, marker.candidate)
+        object_format = git(SHARED, "rev-parse", "--show-object-format").stdout.strip()
+        observed = partial_checkout_state(changes, object_format)
+        restore, ambiguous = set(), set()
+        for name, (old, new) in changes.items():
+            indexed, working = observed[name]
+            if indexed == old and working == old:
+                continue
+            if (indexed not in (old, new) or working not in (old, new)
+                    or (old is None and indexed is None)):
+                # An untracked candidate-shaped file can predate the merge.
+                ambiguous.add(name)
+            else:
+                restore.add(name)
+        restore.difference_update(overlaps(restore, ambiguous))
+        if restore:
+            lock.write_locked(marker, lock.owed)
+            git(SHARED, "--literal-pathspecs", "restore", f"--source={before}",
+                "--staged", "--worktree", "--no-overlay", "--pathspec-from-file=-", "--pathspec-file-nul",
+                input_text="\0".join(sorted(restore)) + "\0", guard_fd=guard_fd)
+            observed = partial_checkout_state(changes, object_format)
+        remaining = [name for name, (old, _) in changes.items() if observed[name] != (old, old)]
+        if remaining:
+            raise Refusal("ambiguous index or working-tree bytes after failed fast-forward: "
+                          + ", ".join(sorted(remaining)))
 
 
 def record_publication_recovery(lock, error, folder):
@@ -1129,6 +1260,8 @@ def settle_publication(lock, upstream, *, require_candidate=False):
     elif not is_ancestor(SHARED, shared_head, upstream):
         raise Refusal(f"shared main {shared_head} is unrelated to fetched main {upstream} "
                       f"and the recorded publication {marker.candidate}")
+    elif shared_head != marker.candidate and marker.phase == "fast-forward-pending":
+        repair_failed_fast_forward(lock, marker, upstream)
     lock.finish_publication(published)
     return published
 
@@ -1155,28 +1288,32 @@ def push_checked_main(folder, host, head, tree, base, touched, lock, plans_follo
     shared_scope = touched | changed_paths(SHARED, old_head, base) if old_head != base else touched
     clean_touched(SHARED, shared_scope)
     verify_over_ssh(folder, host, head, tree, base)
-    clean_touched(SHARED, shared_scope)
-    lock.begin_publication(base, head, plans_followup, completes_followup)
     fast_forwarded = False
     attempted_push = False
     published = False
     try:
-        lock.heartbeat()
-        git(SHARED, "merge", "--ff-only", "--no-overwrite-ignore", head)
-        fast_forwarded = True
+        with lock.shared_mutation() as guard_fd:
+            require_shared_main()
+            if revision(SHARED, "HEAD^{commit}") != old_head or full_main(SHARED) != base:
+                raise Refusal("shared HEAD or origin/main changed before fast-forward")
+            clean_touched(SHARED, shared_scope)
+            lock.begin_publication(base, head, plans_followup, completes_followup, old_head)
+            git(SHARED, "merge", "--ff-only", "--no-overwrite-ignore", head, guard_fd=guard_fd)
+            fast_forwarded = True
         if revision(SHARED, "HEAD^{commit}") != head or revision(SHARED, "HEAD^{tree}") != tree:
             raise Refusal("shared fast-forward did not produce the checked commit and tree")
         shared_shards(folder, touched)
         verify_over_ssh(folder, host, head, tree, base)
-        clean_touched(SHARED, touched)
-        if revision(SHARED, "HEAD^{commit}") != head:
-            raise Refusal("shared HEAD changed after the fast-forward")
-        lock.mark_push_pending()
-        # The lease makes the server require the same base even if its main moved after our fetch.
-        # The ancestry check above makes the update itself a fast-forward.
-        attempted_push = True
-        result = git(SHARED, "push", f"--force-with-lease={MAIN_REF}:{base}", "origin",
-                     f"{head}:{MAIN_REF}", check=False)
+        with lock.shared_mutation() as guard_fd:
+            require_shared_main()
+            if revision(SHARED, "HEAD^{commit}") != head:
+                raise Refusal("shared HEAD changed after the fast-forward")
+            clean_touched(SHARED, touched)
+            lock.mark_push_pending()
+            # The lease binds the server's base. The ancestry check makes this a fast-forward.
+            attempted_push = True
+            result = git(SHARED, "push", f"--force-with-lease={MAIN_REF}:{base}", "origin",
+                         f"{head}:{MAIN_REF}", check=False, guard_fd=guard_fd)
         if not result.returncode:
             lock.finish_publication(True)
             say(f"Pushed main at {head}.")

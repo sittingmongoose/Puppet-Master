@@ -17,15 +17,25 @@ From a local topic worktree on the VM, start the lander under `long-job`:
     long-job start pm-land-my-topic -- python3 scripts/pm-land.py run fix/my-topic --agent my-name --wait-for-review
     long-job wait pm-land-my-topic --timeout 1500
 
-Wait again on exit 124. The check itself runs as a separate long-job on the 1070ti. Use
-`--checks-on nas1` for Nas1. After three consecutive SSH transport failures, the runner reports the
-job name and evidence directory and stops. Check the named job on reconnect. You can retry an
-unpublished landing on the other host with `--checks-on nas1` or `--checks-on 1070ti`.
-Recover a saved Plans follow-up under the landing lock before another landing. The lander prints the check’s original exit code and a share directory
-with `landing-check.json`, `record.json`, `verification.json` and the subcheck reports. If it
+Wait again on exit 124. The check runs as a separate long-job on Nas1 by default. If Nas1 is busy
+or unavailable, use `--checks-on 1070ti` for the 1070ti, which is slower. After three consecutive
+SSH transport failures, the runner reports the job name and evidence directory and stops.
+Check the named job on reconnect. You can retry an
+unpublished landing on the other host with `--checks-on 1070ti` or `--checks-on nas1`.
+Recover a saved Plans follow-up under the landing lock before another landing. The lander prints
+the check’s original exit code and a share directory with `landing-check.json`, `record.json`,
+`verification.json` and the subcheck reports. If it
 asks for a judgment, compare the rows in `review.json` with the baseline and read any timeout
 rerun reports it names. Write `judgment.json` in that run directory with the same
 `report_sha256`, a Boolean `proceed` and a short `judgment` explaining the comparison. Save the complete file with an atomic rename. The lander waits before touching the shared checkout.
+
+The November 21, 2026 dry runs recorded these times. Each run checked the unchanged commit
+listed in its row.
+
+| Host | Checked commit | Landing check | Shard check |
+| --- | --- | --- | --- |
+| Nas1 | `2b83b7143f` | 3,053 s (51 min), exit 0 | 39 s |
+| 1070ti | `b19f171724` | 8,240 s (2 h 17 min), exit 1 | 96 s |
 
 Use `run <branch> --dry-run` to check and verify a published commit, or a local branch pointing
 at fetched main, without acquiring the lock or pushing. If main moves during the dry run, the tool
@@ -628,8 +638,9 @@ copy can include tens of gigabytes of unrelated capture data.
    before each remote wait and at least every 25 minutes, including during Plans follow-up and
    while reviewing reports. Stop on lost ownership. Fetch and record the full `origin/main` SHA.
    Rebase and push the topic branch. Record its full commit and tree SHAs.
-2. SSH to `1070ti` or `nas1-agent`. Fetch the topic and create a temporary, detached worktree at the
-   recorded commit in `~/src/PuppetMaster` using `git worktree add --detach <path> <commit>`.
+2. Use `ssh nas1-agent` for Nas1. If it is busy or unavailable, use `ssh 1070ti` for the 1070ti,
+   which is slower. Fetch the topic and create a temporary, detached worktree at the recorded
+   commit in `~/src/PuppetMaster` using `git worktree add --detach <path> <commit>`.
    Confirm `git rev-parse HEAD HEAD^{tree}`, `git status --porcelain`, and
    `git config --bool --get core.sparseCheckout`. The SHAs must match and the status must be empty.
    The sparse setting must be false or unset. Check `git ls-files -v` for skip-worktree and
@@ -652,8 +663,9 @@ copy can include tens of gigabytes of unrelated capture data.
    clean checkout, the set and hashes of the ignored inputs, and the hand receipt at both points.
 6. Write the durable publication marker before fast-forward. Confirm ownership, fast-forward
    and check the resulting HEAD and tree. Run the shared shard check, repeat verification and
-   push against the exact fetched base using the commands below. If publication fails and the
-   checked candidate is still the unpublished shared HEAD, use the rollback procedure below.
+   push against the exact fetched base using the commands below. Reconcile a failed fast-forward
+   against its pre-merge HEAD, index and working tree. Use the rollback procedure for a completed
+   fast-forward that remains unpublished.
 7. For Plans changes, keep the lock and complete the follow-up below. Confirm ownership before
    worktree removal and before release. Release after publication or rollback is reconciled and
    any Plans follow-up is finished.
@@ -756,12 +768,13 @@ except (OSError, ValueError, KeyError, TypeError) as error:
 PY
 ```
 
-#### Push the checked commit
+#### Guard and fast-forward the checked commit
 
 In the shared checkout, set `PM_LAND_LOCK` to the absolute `held` directory and
-`PM_LAND_TOKEN` to its token. Keep the publication marker and follow-up fields when renewing the
-holder. Use this guarded Git helper for the fetch, fast-forward and push. Run the final block
-after the shard check and the second verification of the remote worktree, inputs and receipt.
+`PM_LAND_TOKEN` to its token. Set `PM_LAND_PLANS_FOLLOWUP` and `PM_LAND_COMPLETES_FOLLOWUP`
+to `true` or `false` using the rules below. Run both publication blocks in the same Bash session.
+The helper holds the guard across the token check, journal write and Git operation. Use it
+for shared Git mutations, including recovery. Keep remote checks and waits outside the guard.
 
 ```sh
 held_git() (
@@ -770,15 +783,88 @@ held_git() (
     test -n "$PM_LAND_TOKEN" || exit 3
     current_token=$(sed -n 's/^token: //p' "$PM_LAND_LOCK/holder.txt") || exit 3
     test "$current_token" = "$PM_LAND_TOKEN" || exit 3
-    git "$@"
+    "$@"
 )
+
+save_landing_phase() {
+    python3 - "$PM_LAND_LOCK/holder.txt" "$@" <<'PY'
+import json
+import os
+from pathlib import Path
+import re
+import sys
+import tempfile
+
+holder, phase, *fields = sys.argv[1:]
+path = Path(holder)
+prefix = "publication: "
+lines = path.read_text().splitlines()
+existing = [line[len(prefix):] for line in lines if line.startswith(prefix)]
+if phase == "fast-forward-pending":
+    base, candidate, pre_merge_head, plans, completes = fields
+    if (existing or base == candidate
+            or any(not re.fullmatch(r"[0-9a-f]{40}", value) for value in (base, candidate, pre_merge_head))
+            or any(value not in ("true", "false") for value in (plans, completes))
+            or (plans == "true" and completes == "true")
+            or (completes == "true") != any(line.startswith("follow-up-owed: ") for line in lines)):
+        raise SystemExit("inconsistent publication or Plans follow-up")
+    marker = dict(base=base, candidate=candidate, pre_merge_head=pre_merge_head,
+                  plans_followup=plans == "true", completes_followup=completes == "true")
+else:
+    base, candidate = fields
+    if len(existing) != 1:
+        raise SystemExit("expected one existing publication marker")
+    marker = json.loads(existing[0])
+    if (marker["base"], marker["candidate"], marker["phase"]) != (base, candidate, "fast-forward-pending"):
+        raise SystemExit("publication marker does not match the checked push")
+marker["phase"] = phase
+with tempfile.NamedTemporaryFile(mode="w", dir=path.parent, delete=False) as temporary:
+    text = [line for line in lines if not line.startswith(prefix)]
+    temporary.write("\n".join([*text, prefix + json.dumps(marker, sort_keys=True)]) + "\n")
+    temporary.flush()
+    os.fsync(temporary.fileno())
+os.replace(temporary.name, path)
+directory = os.open(path.parent, os.O_RDONLY | os.O_DIRECTORY)
+try:
+    os.fsync(directory)
+finally:
+    os.close(directory)
+PY
+}
+
+fast_forward_checked() {
+    test "$(git symbolic-ref HEAD)" = refs/heads/main
+    test "$(git rev-parse --verify refs/remotes/origin/main)" = "$PM_LAND_BASE"
+    pre_merge_head=$(git rev-parse --verify HEAD)
+    git merge-base --is-ancestor "$pre_merge_head" "$PM_LAND_BASE"
+    git merge-base --is-ancestor "$PM_LAND_BASE" "$PM_LAND_COMMIT"
+    save_landing_phase fast-forward-pending "$PM_LAND_BASE" "$PM_LAND_COMMIT" "$pre_merge_head" \
+        "${PM_LAND_PLANS_FOLLOWUP:?}" "${PM_LAND_COMPLETES_FOLLOWUP:?}"
+    git merge --ff-only --no-overwrite-ignore "$PM_LAND_COMMIT"
+}
+
 set -eu
-held_git fetch origin
-test "$(git rev-parse --verify refs/remotes/origin/main)" = "$PM_LAND_BASE"
-test "$(git symbolic-ref HEAD)" = refs/heads/main
-test "$(git rev-parse --verify HEAD)" = "$PM_LAND_COMMIT"
-git merge-base --is-ancestor "$PM_LAND_BASE" "$PM_LAND_COMMIT"
-held_git push --force-with-lease="refs/heads/main:$PM_LAND_BASE" origin "$PM_LAND_COMMIT:refs/heads/main"
+held_git fast_forward_checked
+```
+
+#### Push the checked commit
+
+After the shard check and the second verification of the remote worktree, inputs and
+receipt, use the same helper to record `push-pending` and push with the checked lease.
+
+```sh
+push_checked() {
+    git fetch origin
+    test "$(git rev-parse --verify refs/remotes/origin/main)" = "$PM_LAND_BASE"
+    test "$(git symbolic-ref HEAD)" = refs/heads/main
+    test "$(git rev-parse --verify HEAD)" = "$PM_LAND_COMMIT"
+    git merge-base --is-ancestor "$PM_LAND_BASE" "$PM_LAND_COMMIT"
+    save_landing_phase push-pending "$PM_LAND_BASE" "$PM_LAND_COMMIT"
+    git push --force-with-lease="refs/heads/main:$PM_LAND_BASE" origin "$PM_LAND_COMMIT:refs/heads/main"
+}
+
+set -eu
+held_git push_checked
 ```
 
 ### Publication marker and recovery
@@ -788,7 +874,7 @@ fast-forward. Replace the placeholders with full SHAs. Flush the temporary holde
 directory when replacing the holder so the marker survives interruption.
 
 ```text
-publication: {"base": "<fetched main>", "candidate": "<checked commit>", "plans_followup": true, "completes_followup": false, "phase": "fast-forward-pending"}
+publication: {"base": "<fetched main>", "candidate": "<checked commit>", "pre_merge_head": "<shared HEAD before merging>", "plans_followup": true, "completes_followup": false, "phase": "fast-forward-pending"}
 ```
 
 Use `plans_followup: true` for a topic that changes Plans. For the snapshot follow-up, keep the
@@ -805,7 +891,8 @@ the recovered lock:
   for manual recovery if history changed or shared HEAD is neither the recorded candidate nor an
   ancestor of fetched main.
 - **Published candidate.** If fetched main contains the candidate, record any Plans follow-up
-  owed. If the candidate completed the recorded follow-up, clear that obligation.
+  owed. If the candidate completed the recorded follow-up, clear that obligation. If the shared
+  fast-forward is incomplete, reconcile its local index and working tree first.
 - **Unpublished candidate.** If shared HEAD is the recorded candidate, confirm ownership and
   save `rollback-pending` in the marker. Under the guard, recheck ownership, the exact candidate
   HEAD and the fetched origin SHA. Apply `git read-tree -m -u <candidate> <fetched main>`, then
@@ -814,6 +901,12 @@ the recovered lock:
   main. If ownership or expected HEAD changed, leave the checkout alone and save a recovery
   notice outside the holder for its current owner. Preserve any earlier Plans obligation when
   the interrupted push was the follow-up.
+- **Incomplete fast-forward.** If shared HEAD still equals the journaled pre-merge HEAD, compare
+  the index and on-disk bytes on every path between that HEAD and the candidate. Restore a path
+  only when its staged and working entries are provably the pre-merge or candidate versions.
+  Preserve unrelated staging. Leave ambiguous paths untouched and keep the marker until all
+  affected index and working entries match the pre-merge HEAD. A failed Git exit alone says
+  nothing about those bytes.
 - **Finish recovery.** Clear the pending marker after reconciliation. Complete any owed Plans
   follow-up at fetched main before another landing.
 
