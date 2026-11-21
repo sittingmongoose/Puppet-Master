@@ -4,7 +4,8 @@
 Compares a closure output made with GC's walk at c0482747da (reach contexts keyed by (kind, depth, index)) with one
 made by the GC2 walk (contexts keyed by owner node). For every source and root it lists each clause whose class
 changed (before, after, clause), each clause present in only one run, and the per-source totals (occurrences and
-distinct clauses, ranked as the closure ranks them). Exit 1 when the after run leaves any clause UNCOVERED.
+distinct clauses, ranked as the closure ranks them). Exit 1 when root or clause inventories differ or
+the after run leaves any clause UNCOVERED.
 
 Usage: python3 scripts/pm-goal-gc2-closure-diff.py --before A.json [--before B.json] --after A2.json [--after B2.json] --out FILE
 """
@@ -43,8 +44,11 @@ def main():
     before, after = load(args.before), load(args.after)
     report = dict(sources={})
     uncovered = 0
+    inventory_mismatches = 0
     for source in sorted(set(before) | set(after)):
         b, a = before.get(source, {}).get('roots', {}), after.get(source, {}).get('roots', {})
+        roots_only = [dict(root=root, before=root in b, after=root in a)
+                      for root in sorted(b.keys() ^ a.keys())]
         changes, only = [], []
         for root in sorted(set(b) | set(a)):
             bc, ac = b.get(root, {}).get('clauses', {}), a.get(root, {}).get('clauses', {})
@@ -61,18 +65,21 @@ def main():
         reaches = lambda roots: sum(1 for e in roots.values() for x in e['clauses'].values() if 'reaches' in x)
         left = sorted(c for c, k in da.items() if k == 'UNCOVERED')
         uncovered += len(left)
+        inventory_mismatches += len(roots_only) + len(only)
         report['sources'][source] = dict(
             roots_before=len(b), roots_after=len(a), occurrences_before=occ(b), occurrences_after=occ(a),
             distinct_before=dict(collections.Counter(db.values())), distinct_after=dict(collections.Counter(da.values())),
             occurrence_changes=changes, only_in_one_run=only, distinct_changes=distinct_changes, uncovered_after=left,
             static_entries_with_reach_count=reaches(a))
+        if roots_only:
+            report['sources'][source]['roots_only_in_one_run'] = roots_only
         print(f'{source}: roots {len(b)}->{len(a)}; occurrence changes {len(changes)} '
               f'({sum(1 for c in changes if c["kind"] == "static")} static); only in one run {len(only)}; '
-              f'distinct changes {len(distinct_changes)}; uncovered after {len(left)}')
+              f'unmatched roots {len(roots_only)}; distinct changes {len(distinct_changes)}; uncovered after {len(left)}')
         for c in changes:
             print(f'  {c["before"]:>20} -> {c["after"]:<20} {c["clause"]}  [{c["root"].rsplit("/", 1)[-1]}]')
     args.out.write_text(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
-    return 1 if uncovered else 0
+    return 1 if uncovered or inventory_mismatches else 0
 
 
 if __name__ == '__main__':
