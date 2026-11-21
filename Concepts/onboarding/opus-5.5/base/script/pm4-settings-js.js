@@ -2248,10 +2248,24 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     var k=key(),safe=scrubCredentialSettings(snapshot);safe.settings['general.visual.glass-transparency']=clampGlassAlpha(safe.settings,safe.settings['general.visual.glass-transparency']);var owned={schema_version:'pm7.settings.project_projection.v1',settings:safe.settings,mediaRoutes:clone(snapshot&&snapshot.mediaRoutes||[]),changed:clone(snapshot&&snapshot.changed||{}),domain:snapshot&&snapshot.domain,workspace:snapshot&&snapshot.workspace,activeSection:clone(snapshot&&snapshot.activeSection||{}),transferCategories:clone(snapshot&&snapshot.transferCategories||[]),settingsTransferHistory:clone(snapshot&&snapshot.settingsTransferHistory||[]),settingsTransferRollbacks:clone(snapshot&&snapshot.settingsTransferRollbacks||{}),settingsSourceSnapshot:clone(snapshot&&snapshot.settingsSourceSnapshot||null),o55Migrations:clone(snapshot&&snapshot.o55Migrations||{})};var o55Typed=snapshot&&snapshot.pm51&&snapshot.pm51.o55Custom;if(o55Typed&&typeof o55Typed==='object'){owned.pm51={o55Custom:{}};Object.keys(o55Typed).forEach(function(id){if(!credentialSettingIds.has(id)&&typeof o55Typed[id]==='string')owned.pm51.o55Custom[id]=o55Typed[id];});}
     /* FO-186 r2: the model rows' depth (pm51.o55Depth, {key:{model,effort}}) survives the project round trip beside o55Custom; load's merge restores pm51 wholesale */
     var o55Depths=snapshot&&snapshot.pm51&&snapshot.pm51.o55Depth;if(o55Depths&&typeof o55Depths==='object'&&!Array.isArray(o55Depths)){owned.pm51=owned.pm51||{};owned.pm51.o55Depth={};Object.keys(o55Depths).forEach(function(id){var d=o55Depths[id];if(!credentialSettingIds.has(id)&&d&&typeof d==='object'&&typeof d.model==='string'&&typeof d.effort==='string')owned.pm51.o55Depth[id]={model:d.model,effort:d.effort};});}
-    /* FO-228: an account's model choices live in state.providers (acc.defaultModel, and its own
-       ai.accounts.default-model in acc.props), which the projection does not keep wholesale; keep each account's two
-       choices beside the depth so a reload restores them (the providers manager's migrateAccount reads them back) */
-    var accModels={};((snapshot&&snapshot.providers)||[]).forEach(function(p){((p&&p.accounts)||[]).forEach(function(acc){if(!acc||typeof acc!=='object')return;var rec={};if(typeof acc.defaultModel==='string')rec.model=acc.defaultModel;var pick=acc.props&&acc.props['ai.accounts.default-model'];if(typeof pick==='string')rec.pick=pick;if(rec.model!==undefined||rec.pick!==undefined)accModels[p.id+'/'+acc.id]=rec;});});
+    /* FO-228: keep each account's model flags and defaults beside the depth. The providers manager
+       restores them without persisting the whole providers roster. */
+    var accModels={};
+    for (const p of snapshot?.providers || []) {
+      for (const acc of p?.accounts || []) {
+        if (!acc || typeof acc !== 'object') continue;
+        const rec={};
+        if (typeof acc.defaultModel === 'string') rec.model=acc.defaultModel;
+        const pick=acc.props?.['ai.accounts.default-model'];
+        if (typeof pick === 'string') rec.pick=pick;
+        const models=Array.isArray(acc.models) ? acc.models : [];
+        const enabled=Object.fromEntries(models
+          .filter(m => typeof m?.id === 'string' && typeof m.enabled === 'boolean')
+          .map(m => [m.id, m.enabled]));
+        if (Object.keys(enabled).length) rec.enabled=enabled;
+        if (Object.keys(rec).length) accModels[p.id+'/'+acc.id]=rec;
+      }
+    }
     if(Object.keys(accModels).length)owned.accountModels=accModels;
     if(k&&!window.PM_SETTINGS_REGISTRY&&CONCEPT_FIXTURE_MODE)try{projectStore.setItem(k,JSON.stringify(owned));}catch(_e){}
     if(!bridgeDepth)applyPaint(snapshot);
