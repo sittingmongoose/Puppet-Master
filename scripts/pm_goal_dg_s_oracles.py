@@ -637,7 +637,7 @@ def extra_event(world, tag, *, run=None, project=None, event_type='run.started',
                  correlation_id='TEST_ONLY:correlation:' + tag, causation_event_id=None, parent_event_id=None,
                  idempotency_key='TEST_ONLY:key:' + tag, payload_schema_id={
                      'run.started': 'https://puppetmaster.local/schemas/event_payloads/run_started/2.0.0',
-                     'goal_run.blocked': 'pm.goal_runtime_event.goal_run_blocked.schema.v2',
+                     'goal_run.blocked': 'pm.goal_runtime_event.goal_run_blocked.schema.v3',
                  }[event_type],
                  payload=dict(qualification=QUALIFICATION, tag=tag), payload_ref=None, redaction_profile='no_secrets',
                  replay_policy='dedupe_by_idempotency_key',
