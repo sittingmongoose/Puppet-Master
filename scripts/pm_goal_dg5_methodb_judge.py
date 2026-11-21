@@ -481,6 +481,7 @@ class ForkedExample(w3.OwnerExample):
         self.forks = []
         self.after_states = []  # one per credited trial, parallel to self.trials
         self.origins = []       # the refusal origin of each credited trial (None when it accepted)
+        self.walk_owners = False
         self.digest0 = None
         self.cache_audit = None
         self.joint_report = None
@@ -655,8 +656,10 @@ class ForkedExample(w3.OwnerExample):
     def after_state(self, world, inputs, edit):
         """This trial's store digest and owner in-memory digest, taken in the child after the call.
 
-        Only the judged trials (the defect, its cut and its restoration: edit set) walk the
-        owners; a control trial records its store digest only (owner_reason 'not requested').
+        The owner walk runs only when `self.walk_owners` is set: in the three repeated
+        trials `owner_states()` runs for a same-code later refusal. Every other trial records
+        its store digest only (owner_reason 'not requested'); on the largest worlds (about
+        3 million objects) a walk in every trial does not fit the 2 GiB scope.
         """
         import pm_goal_dg5_boundaries as bridge
 
@@ -664,7 +667,7 @@ class ForkedExample(w3.OwnerExample):
             store = self.child.get('store_after_sha256')
         else:
             store = hashlib.sha256(pickle.dumps(self.store_state(world), protocol=5)).hexdigest()
-        if edit is None:
+        if edit is None or not self.walk_owners:
             return dict(store_sha256=store, owner_sha256=None, owner_hook=FAMILY, owner_reason='not requested',
                         owner_objects=None)
         saved = bridge.ACTIVE[0]
@@ -855,7 +858,8 @@ class ForkedExample(w3.OwnerExample):
             if edit:
                 before, disabled, restored = self.trials[-3:]
                 if record['kill'] == 'COVERED_LATER':   # the source stock judge: any later refusal
-                    verdict = self.later_refusal(record, before, disabled, restored)
+                    verdict = self.later_refusal(record, before, disabled, restored,
+                                                 rerun=lambda: self.owner_states(world, action, inputs, initial))
                     record['kill'] = verdict
                     require(verdict in ('KILLED_CODE', 'COVERED_LATER'),
                             f"{verdict}: {record.get('cannot_decide_reason')} (route {self.label})")
@@ -885,7 +889,31 @@ class ForkedExample(w3.OwnerExample):
         require(self.trials[0] == self.trials[-1], 'the restored valid call changed')
         return self.observed, initial, bound_inputs
 
-    def later_refusal(self, record, before, disabled, restored):
+    def owner_states(self, world, action, inputs, initial):
+        """The defect, its cut and its restoration again, uncredited, each walking the owners.
+
+        Each repeat must return the trial result it returned when judged (else no state is
+        returned and the verdict is CANNOT_DECIDE)."""
+        import pm_goal_guard_tables as tables
+
+        states, same = [], True
+        self.walk_owners = True
+        try:
+            for kind, cut, earlier in (('defect-state', (), -3), ('cut-state', (self.row,), -2),
+                                       ('restoration-state', (), -1)):
+                saved = tables.CUT, tables.NO_CACHE
+                tables.CUT, tables.NO_CACHE = frozenset(cut), True
+                try:
+                    result, out = self.fork_trial(world, action, inputs, MARKER, initial, kind, credited=False)
+                finally:
+                    tables.CUT, tables.NO_CACHE = saved
+                same = same and result == self.trials[earlier]
+                states.append(out.get('after_state'))
+        finally:
+            self.walk_owners = False
+        return states if same else None
+
+    def later_refusal(self, record, before, disabled, restored, rerun=None):
         """KILLED_CODE first, then the after-state rule (rulings 1121112536-0b66 (3), 1121115610-7650, addendum 1)."""
         import pm_goal_dg5_boundaries as bridge
 
@@ -917,7 +945,11 @@ class ForkedExample(w3.OwnerExample):
                 record['cannot_decide_reason'] = 'different-code later refusal: ' + why
         else:
             code.update(verdict=None, reason='same code')
-            intact, cut, again = self.after_states[-3:]
+            states = rerun() if rerun is not None else self.after_states[-3:]
+            if states is None:
+                states = (dict(store_sha256=None, owner_sha256=None, owner_reason='a repeated trial returned another '
+                                                                                 'result'),) * 3
+            intact, cut, again = states
             check = owner_state.covered_later_check(intact, again, cut)
             record['covered_later_check'] = check
             entry['covered_later_check'] = check
