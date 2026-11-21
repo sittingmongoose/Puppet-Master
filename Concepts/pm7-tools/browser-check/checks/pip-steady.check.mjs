@@ -172,7 +172,6 @@ async function surface(t, sandbox) {
 		/* begin: each look again, with the cause asserted per look */
 		if (phases.includes('begin')) {
 			await phase('begin');
-			const cdp = sandbox ? null : await page.context().newCDPSession(page);
 			for (const name of looks) {
 				if ((await current()) !== name) await look(name, 'begin'); else await calibrate(`${name} begin`);
 				const css = await f.evaluate(async (s) => {
@@ -189,17 +188,27 @@ async function surface(t, sandbox) {
 					return out;
 				}, STAGE);
 				await t.check(`${name}: no transition on Pip's rig, no animation on its groups`, !css.length, css.join(' | '));
-				if (cdp) {
+				if (!sandbox) {
+					const cdp = await page.context().newCDPSession(page);
 					const trees = [], on = (e) => { trees.push(e.layers || []); };
 					cdp.on('LayerTree.layerTreeDidChange', on);
 					let head;
 					try {
-						await cdp.send('DOM.enable'); await cdp.send('LayerTree.enable');
-						const doc = await cdp.send('DOM.getDocument', { depth: 0 });
-						const q = await cdp.send('DOM.querySelector', { nodeId: doc.root.nodeId, selector: '#pm-o55-onboarding .pst-pip > g.pst-head' });
-						head = q.nodeId && (await cdp.send('DOM.describeNode', { nodeId: q.nodeId })).node.backendNodeId;
+						await cdp.send('DOM.enable');
+						try {
+							const doc = await cdp.send('DOM.getDocument', { depth: 0 });
+							const q = await cdp.send('DOM.querySelector', { nodeId: doc.root.nodeId, selector: '#pm-o55-onboarding .pst-pip > g.pst-head' });
+							head = q.nodeId && (await cdp.send('DOM.describeNode', { nodeId: q.nodeId })).node.backendNodeId;
+						} finally {
+							// The backend ID survives DOM.disable. Only LayerTree needs to watch the live rig.
+							await cdp.send('DOM.disable');
+						}
+						await cdp.send('LayerTree.enable');
 						await sleep(1500);
-					} finally { cdp.off('LayerTree.layerTreeDidChange', on); await cdp.send('LayerTree.disable'); }
+					} finally {
+						cdp.off('LayerTree.layerTreeDidChange', on);
+						await cdp.detach();
+					}
 					const seen = trees.filter((tr) => tr.some((l) => l.backendNodeId === head)).length;
 					await t.check(`${name}: Pip's head is not a compositor layer of its own`, !!head && trees.length > 0 && !seen, `head in its own layer in ${seen} of ${trees.length} layer-tree updates${head ? '' : ' (head not found)'}`);
 				}
