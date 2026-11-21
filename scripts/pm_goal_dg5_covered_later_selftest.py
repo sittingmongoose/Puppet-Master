@@ -44,6 +44,22 @@ Different-code later refusals (KILLED_CODE):
                             would have to cover 'c/l', across a slash): CANNOT_DECIDE, 'does not match the row
                             guard template'
 
+Prefix-equivalence of root-row codes (lead ruling 1121224233-9f91 (1), the ra-17/21/23 shape):
+  prefixeq_cover            one :94-style check serving two named root rows; with the original-root row cut
+                            the call refuses at the sibling final-root row: same site, same violation, codes
+                            differ only in the root-row prefix: same code for J2, equal after-states:
+                            COVERED_LATER, not KILLED_CODE
+  prefixeq_write            the same, but the cut path commits a Storage cell before the sibling refusal:
+                            CANNOT_DECIDE under the after-state rule (store and owner differ)
+  prefixeq_other_site       the same prefix difference at two different guard lines: stays KILLED_CODE
+  prefixeq_other_suffix     same site, prefix difference plus a different violation suffix: stays KILLED_CODE
+
+Prefix-equivalence unit checks, no complete call:
+  peq_unit_*                the exact normalisation and its refusals (different recorded site or guard site,
+                            suffix or area; two 'root' segments; no kind segment; no origin or guard frame;
+                            byte-equal codes; a crash), and killed_code_check treating an applicable pair as
+                            the same code for J2
+
 Template unit checks (addendum 5), no complete call:
   real_424_row              the real row cb_migration.py:424: its intact code M/capture/goal_unavailable with the
                             origin frame at :424, the cut refusing at :425 (M/capture/goal_body_unavailable):
@@ -86,15 +102,18 @@ class Refusal(Exception):
         self.code = code
 
 
-def require(code, condition, raise_code=None):
-    """One routed guard at its caller's site (the bridge's guard_wrapper contract)."""
+def require(code, condition, raise_code=None, row=None):
+    """One routed guard at its caller's site (the bridge's guard_wrapper contract).
+
+    `row` routes the refusal to a named row instead of the site row (the s_readers root
+    rows: one runtime check serving several named root rows at one line)."""
     frame = inspect.currentframe().f_back
     path = Path(frame.f_code.co_filename)
     try:
         where = str(path.relative_to(bridge.ROOT))
     except ValueError:
         where = path.name
-    name = bridge.site_name(where, frame.f_lineno)
+    name = row or bridge.site_name(where, frame.f_lineno)
     if tables.decide(name, condition, site=(where, frame.f_lineno)) is not None:
         raised = raise_code or code
         bridge.LAST_REFUSAL[0] = (name, raised)
@@ -176,6 +195,20 @@ def action_for(case, world):
             require('selftest/%s/templated_first' % 'cl', False)   # site:templ_first
         elif case == 'templated_not_matching':
             require('selftest/%s/templated_other' % 'cl', False, raise_code='selftest/c/l/templated_other')  # site:templ_other
+        elif case == 'prefixeq_cover':
+            for kind in ('original', 'final'):
+                require('peq/%s/root/schema/v:format' % kind, False, row='dg5/peq/%s/root/schema' % kind)  # site:peq_cover
+        elif case == 'prefixeq_write':
+            for kind in ('original', 'final'):
+                require('peq/%s/root/schema/v:format' % kind, False, row='dg5/peq/%s/root/schema' % kind)  # site:peq_write
+                if kind == 'original':
+                    world.storage.transact([dict(table='selftest_cells', key='k', expected=None, value=dict(n=1))])
+        elif case == 'prefixeq_other_site':
+            require('peq/original/root/schema/v:format', False)  # site:peq_first
+            require('peq/final/root/schema/v:format', False)     # site:peq_second
+        elif case == 'prefixeq_other_suffix':
+            for kind, suffix in (('original', 'v:format'), ('final', 'w:format')):
+                require('peq/%s/root/schema/%s' % (kind, suffix), False, row='dg5/peq/%s/root/schema' % kind)  # site:peq_suffix
         elif case in DIFFERENT:
             require('selftest/cl/first', False)        # site:first
         else:
@@ -193,10 +226,12 @@ def action_for(case, world):
         else:
             require('selftest/cl/shared', False)       # site:shared_second
         return 'accepted'
+    if case in ('prefixeq_cover', 'prefixeq_write', 'prefixeq_other_suffix'):
+        return action, 'dg5/peq/original/root/schema'   # the named root row, as the s_readers root rows are
     target = site({'not_own_code': 'not_own', 'restoration_not_repeating': 'flaky', 'rebuilt_same_code': 'rebuilt',
                    'rebuilt_chained': 'chained', 'computed_code_origin': 'computed',
                    'templated_code_killed': 'templated', 'templated_killed_code': 'templ_first',
-                   'templated_not_matching': 'templ_other'}.get(
+                   'templated_not_matching': 'templ_other', 'prefixeq_other_site': 'peq_first'}.get(
         case, 'first' if case in DIFFERENT else 'shared_first'))
     return action, target
 
@@ -220,6 +255,10 @@ EXPECTED = {
     'templated_code_killed': ('KILLED', FAMILY),
     'templated_killed_code': ('KILLED_CODE', FAMILY),
     'templated_not_matching': ('CANNOT_DECIDE', FAMILY),
+    'prefixeq_cover': ('COVERED_LATER', FAMILY),
+    'prefixeq_write': ('CANNOT_DECIDE', FAMILY),
+    'prefixeq_other_site': ('KILLED_CODE', FAMILY),
+    'prefixeq_other_suffix': ('KILLED_CODE', FAMILY),
 }
 # Which judge evidence each case must carry (what makes the verdict, not only its name).
 EVIDENCE = {
@@ -239,6 +278,10 @@ EVIDENCE = {
     'templated_code_killed': ('origin', None),
     'templated_killed_code': ('code', 'KILLED_CODE_TEMPLATE'),
     'templated_not_matching': ('code', 'does not match the row guard template'),
+    'prefixeq_cover': ('prefixeq', None),
+    'prefixeq_write': ('prefixeq_after', ['store_sha256', 'owner_sha256']),
+    'prefixeq_other_site': ('code', 'KILLED_CODE'),
+    'prefixeq_other_suffix': ('code', 'KILLED_CODE_NAMED'),
 }
 
 
@@ -269,15 +312,20 @@ def run(work):
                 ok = ok and after.get('verdict') == 'COVERED_LATER' and code.get('verdict') is None \
                     and all(state[n].get('store_sha256') and state[n].get('owner_sha256') for n in state) \
                     and len({state[n]['store_sha256'] for n in state}) == 1 \
-                    and len({state[n]['owner_sha256'] for n in state}) == 1
-            elif kind == 'after':
-                ok = ok and after.get('verdict') == expected and (want is None or after.get('effect') == want)
+                    and len({state[n]['owner_sha256'] for n in state}) == 1 \
+                    and (kind != 'prefixeq' or (code.get('prefix_equivalence') or {}).get('applicable') is True)
+            elif kind in ('after', 'prefixeq_after'):
+                ok = ok and after.get('verdict') == expected and (want is None or after.get('effect') == want) \
+                    and (kind != 'prefixeq_after' or (code.get('prefix_equivalence') or {}).get('applicable') is True)
             elif kind == 'reason':
                 ok = ok and after.get('verdict') == expected and want in (after.get('reason') or '')
-            elif want in ('KILLED_CODE', 'KILLED_CODE_TEMPLATE'):
+            elif want in ('KILLED_CODE', 'KILLED_CODE_TEMPLATE', 'KILLED_CODE_NAMED'):
+                verified_by = 'origin at the row refusing site (only checker frames inside)' \
+                    if want == 'KILLED_CODE_NAMED' else 'origin frame at the row guard'
                 ok = ok and code.get('verdict') == 'KILLED_CODE' and (code.get('own_guard') or {}).get('own') is True \
-                    and (code.get('own_guard') or {}).get('verified_by') == 'origin frame at the row guard' \
-                    and (want == 'KILLED_CODE' or (code.get('own_guard') or {}).get('template_matched') is True)
+                    and (code.get('own_guard') or {}).get('verified_by') == verified_by \
+                    and not code.get('prefix_equivalence') \
+                    and (want != 'KILLED_CODE_TEMPLATE' or (code.get('own_guard') or {}).get('template_matched') is True)
             else:
                 ok = ok and code.get('verdict') is None and want in (code.get('reason') or '') + \
                     (record.get('cannot_decide_reason') or '')
@@ -293,6 +341,7 @@ def run(work):
         tables.ACTIVE, tables.DISCOVERY, tables.COLLECTOR = saved
     rows.extend(gate_pin_cases(Path(work)))
     rows.extend(template_unit_cases())
+    rows.extend(prefixeq_unit_cases())
     return dict(status='pass' if all(r['passed'] for r in rows) and not collector.failures else 'fail',
                 judge=dict(guard_sweep=sweep.__file__, boundaries=bridge.__file__),
                 collector_failures=collector.failures, cases=rows)
@@ -302,6 +351,68 @@ def _two_template_sites(kind):
     """Never called: two raise sites whose templates match the same code (template_two_sites_no_origin)."""
     require('selftest/%s/twice' % kind, False)         # site:twice_a
     require('selftest/%s/twice' % kind, False)         # site:twice_b
+
+
+def prefixeq_unit_cases():
+    """Prefix-equivalence (lead ruling 1121224233-9f91 (1)) through root_row_code_parts,
+    root_row_prefix_equivalent and killed_code_check directly, no complete call. On the
+    unfixed judge the functions (and the cut_origin argument) do not exist: red first."""
+    rows = []
+    # The real origin shape: the recorded site is the bank's shared raise line (s_world.py:110);
+    # the owner guard line (s_readers.py:94 in the real case) is the innermost non-checker frame.
+    at = lambda line: dict(site=['scripts/pm_goal_dg_s_world.py', 110],
+                           frames=[['scripts/pm_goal_dg_s_world.py', 110, 'validate', False, True],
+                                   ['scripts/pm_goal_dg_s_readers.py', line, 'retained_native', False, False]])
+    intact = 'peq/original/root/schema/v:format'
+    cut = 'peq/final/root/schema/v:format'
+
+    def trial(name, expected, fn):
+        try:
+            result = fn()
+        except (AttributeError, TypeError) as error:
+            result = dict(missing='%s: %s' % (type(error).__name__, error))
+            ok = False
+        else:
+            ok = result == expected
+        rows.append(dict(case=name, expected=expected, result=result, passed=bool(ok)))
+
+    trial('peq_unit_parts', ('peq', 'original', 'schema/v:format'),
+          lambda: sweep.root_row_code_parts(intact))
+    trial('peq_unit_equivalent', True,
+          lambda: sweep.root_row_prefix_equivalent(intact, cut, at(94), at(94))['applicable'])
+    trial('peq_unit_other_site', False,
+          lambda: sweep.root_row_prefix_equivalent(intact, cut, at(94), at(95))['applicable'])
+    trial('peq_unit_other_guard_site', False,
+          lambda: sweep.root_row_prefix_equivalent(intact, cut, at(94), at(256))['applicable'])
+    trial('peq_unit_other_recorded_site', False,
+          lambda: sweep.root_row_prefix_equivalent(intact, cut, at(94),
+              dict(site=['scripts/pm_goal_dg_s_world.py', 111], frames=at(94)['frames']))['applicable'])
+    trial('peq_unit_no_guard_frame', False,
+          lambda: sweep.root_row_prefix_equivalent(intact, cut, at(94),
+              dict(site=['scripts/pm_goal_dg_s_world.py', 110],
+                   frames=[['scripts/pm_goal_dg_s_world.py', 110, 'validate', False, True]]))['applicable'])
+    trial('peq_unit_other_suffix', False,
+          lambda: sweep.root_row_prefix_equivalent(intact, 'peq/final/root/schema/w:format', at(94), at(94))['applicable'])
+    trial('peq_unit_other_area', False,
+          lambda: sweep.root_row_prefix_equivalent(intact, 'other/final/root/schema/v:format', at(94), at(94))['applicable'])
+    trial('peq_unit_two_roots', False,
+          lambda: sweep.root_row_prefix_equivalent(intact, 'peq/final/root/schema/root/v:format', at(94), at(94))['applicable'])
+    trial('peq_unit_no_kind_segment', None,
+          lambda: sweep.root_row_code_parts('append/root/schema/v:format'))
+    trial('peq_unit_no_origin', False,
+          lambda: sweep.root_row_prefix_equivalent(intact, cut, at(94), None)['applicable'])
+    trial('peq_unit_byte_equal', False,
+          lambda: sweep.root_row_prefix_equivalent(intact, intact, at(94), at(94))['applicable'])
+    trial('peq_unit_crash', False,
+          lambda: sweep.root_row_prefix_equivalent(intact, 'crash:cut', at(94), at(94))['applicable'])
+    trial('peq_unit_killed_check', (None, False, True),
+          lambda: (lambda v: (v['verdict'], v['different_code'], bool(v.get('prefix_equivalence'))))(
+              sweep.killed_code_check('dg5/peq/original/root/schema', intact, intact, cut, at(94), cut_origin=at(94))))
+    for row in rows:
+        row.setdefault('expected_kill', row['expected'])
+        row.setdefault('actual_kill', row['result'].get('verdict') if isinstance(row['result'], dict) else None)
+        row.setdefault('covered_later_check', None)
+    return rows
 
 
 def template_unit_cases():
