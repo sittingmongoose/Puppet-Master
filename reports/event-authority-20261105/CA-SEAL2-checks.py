@@ -25,6 +25,7 @@ COUNT = 'c53e4199ae94ca853a197354f3f9e7f296cf1efc'
 PREVIOUS = '5764ca809c0dcc8a161d4fcd45770abf6355f746'
 SEAL_BASE = '17c842445a2623bb0334ba8d6932e7a6bf088967'
 COVERAGE = 'reports/event-authority-20261105/CA-SEAL2-coverage.json'
+E9_CHECKS = 'reports/event-authority-20261114/seal-check-dl-pattern-checks.py'
 # The frozen validator (round 12, CA2-C12-N01): the second line baseline. Its
 # bytes are read from this commit and must have this digest; the table pins
 # every one of its lines, and every line inserted, changed, deleted or
@@ -1119,6 +1120,7 @@ ALLOWED_DUNDERS = frozenset({'__name__', '__file__', '__new__'})
 NON_MUTATING_CALLS = frozenset({'sorted', 'set', 'frozenset', 'list', 'tuple', 'dict', 'len', 'any', 'all', 'min', 'max',
                                 'sum', 'iter', 'enumerate', 'zip', 'isinstance', 'repr', 'str', 'bool', 'reversed'})
 NON_MUTATING_QUALIFIED = frozenset({'json.dumps'})
+ELEMENT_METHODS = frozenset({'copy', 'get', 'items', 'keys', 'values', 'pop', 'setdefault'})
 READ_ONLY_METHODS = frozenset({'copy', 'count', 'index', 'get', 'items', 'keys', 'values', 'fromkeys',
                                'difference', 'intersection', 'isdisjoint', 'issubset', 'issuperset',
                                'symmetric_difference', 'union'})
@@ -1144,8 +1146,8 @@ def module_scope_problems(tree):
     - mutates_a_module_container: an attribute of a module-level list, dict or
       set (or of an alias or element of one, or of a call's result that is one)
       other than a read-only method; and (T44, cycle-13 H03) a call that receives
-      one, positionally, starred or by keyword, unless the callee is a builtin
-      that only reads its argument (NON_MUTATING_CALLS) or json.dumps:
+      one, positionally, starred or by keyword, unless an approved read
+      returns a scalar or a copy without mutable module elements:
       list.clear(EVIDENCE_FIELDS), dict.update(H, ...), operator.setitem(X, ...)
       and a V function that mutates its parameter are refused. A module-level
       function that returns a module name (directly or through its locals) makes
@@ -1158,10 +1160,13 @@ def module_scope_problems(tree):
       assignment expressions, displays and items of displays ((X or []).clear(),
       [X][0].clear()); and iterating over a display that holds the container
       itself binds the loop target to the container (for x in [X]: list.clear(x)).
+      min and max can return an argument or one of its elements. sum can
+      return its start value unchanged. None qualifies for the copy exemption.
     - reflection: the namespace builtins (globals, vars, locals, setattr,
       delattr, exec, eval, compile, __import__, breakpoint) and every dunder
       name or attribute except those CA-SEAL uses (__name__, __file__,
-      __new__).
+      __new__). The import origin also identifies aliases of sys.modules,
+      including access to sys through the standard os and subprocess modules.
     """
     import builtins
     bindings, parents, owner, imported = scope_analysis(tree)
@@ -1221,14 +1226,76 @@ def module_scope_problems(tree):
     # T89 (TOOLBATCH4 pre-check finding 8, R09 and R10): every function, in any scope, and every lambda bound to a name,
     # keyed by (the scope its name is bound in, its name): a nested def's or a lambda's return refers as a module-level
     # function's does
-    functions = {}
+    functions = set()
+    function_values = {}
+    sys_origins = {}
+    sys_registry_imports = []
     for n in ast.walk(tree):
-        if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and id(n) in owner:
-            functions[(owner[id(n)], n.name)] = n
-        elif isinstance(n, ast.Assign) and isinstance(n.value, ast.Lambda) and id(n) in owner:
-            for t in n.targets:
-                if isinstance(t, ast.Name):
-                    functions[(owner[id(n)], t.id)] = n.value
+        if id(n) not in owner:
+            continue
+        scope = owner[id(n)]
+        if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            function_values.setdefault((scope, n.name), set()).add(n)
+            functions.add(n)
+        elif isinstance(n, ast.Lambda):
+            functions.add(n)
+        elif isinstance(n, ast.Import):
+            for item in n.names:
+                root = item.name.split('.')[0]
+                if root in {'sys', 'os', 'subprocess'}:
+                    sys_origins.setdefault((scope, item.asname or root), set()).add(root)
+        elif isinstance(n, ast.ImportFrom) and n.level == 0:
+            for item in n.names:
+                if n.module in {'os', 'subprocess'} and item.name == 'sys':
+                    sys_origins.setdefault((scope, item.asname or item.name), set()).add('sys')
+                if n.module == 'sys' and item.name == 'modules':
+                    sys_registry_imports.append('sys.modules@' + str(n.lineno))
+
+    def binding_key(value):
+        if isinstance(value, ast.Name) and id(value) in owner:
+            return resolves_to(value.id, owner[id(value)], tree, bindings, parents), value.id
+        return None
+
+    def alternatives(value):
+        if isinstance(value, (ast.List, ast.Tuple, ast.Set)):
+            return value.elts
+        if isinstance(value, ast.Dict):
+            return value.values
+        if isinstance(value, ast.BoolOp):
+            return value.values
+        if isinstance(value, ast.IfExp):
+            return (value.body, value.orelse)
+        if isinstance(value, (ast.NamedExpr, ast.Starred, ast.Subscript)):
+            return (value.value,)
+        if isinstance(value, ast.BinOp):
+            return (value.left, value.right)
+        return ()
+
+    def module_origins(value):
+        if isinstance(value, ast.Name):
+            return sys_origins.get(binding_key(value), set())
+        if isinstance(value, ast.Attribute) and value.attr == 'sys':
+            if module_origins(value.value) & {'os', 'subprocess'}:
+                return {'sys'}
+        return set().union(*(module_origins(part) for part in alternatives(value)))
+
+    def callable_origins(value):
+        if isinstance(value, ast.Name):
+            return function_values.get(binding_key(value), set())
+        if isinstance(value, ast.Lambda):
+            return {value}
+        return set().union(*(callable_origins(part) for part in alternatives(value)))
+
+    def first_origin(origins):
+        # A scalar/module name alongside a container cannot hide that container.
+        found = (False, None)
+        for refers, name in origins:
+            if refers and name in containers:
+                return refers, name
+            if refers and not found[0]:
+                found = refers, name
+        return found
+
     def own_returns(fn):
         if isinstance(fn, ast.Lambda):
             return [fn.body]
@@ -1253,10 +1320,13 @@ def module_scope_problems(tree):
         parts = (value.elts if isinstance(value, (ast.List, ast.Tuple, ast.Set))
                  else value.values if isinstance(value, (ast.Dict, ast.BoolOp))
                  else [value.body, value.orelse] if isinstance(value, ast.IfExp)
-                 else [value.value] if isinstance(value, ast.NamedExpr) else None)
+                 else [value.value] if isinstance(value, (ast.NamedExpr, ast.Starred)) else None)
+        if isinstance(value, ast.BinOp):
+            # Operators on built-in containers create a result. Only nested
+            # references in their elements survive in that result.
+            return elements(value)
         if parts is not None:
-            found = [origin(part, itself) for part in parts if part is not None]
-            return next((f for f in found if f[0]), (False, None))
+            return first_origin(origin(part, itself) for part in parts if part is not None)
         # T89 (R07, R08): a comprehension's or generator's result holds its elements; it refers to a module object only
         # when an element is the object itself ([x for x in (X,)]), never through an element of one, which is immutable
         if isinstance(value, (ast.ListComp, ast.SetComp, ast.GeneratorExp, ast.DictComp)):
@@ -1268,24 +1338,22 @@ def module_scope_problems(tree):
             while isinstance(base, (ast.Attribute, ast.Subscript, ast.Starred)):
                 base = base.value
             if isinstance(base, (ast.List, ast.Tuple, ast.Set, ast.Dict, ast.BoolOp, ast.IfExp, ast.NamedExpr,
-                                 ast.ListComp, ast.SetComp, ast.GeneratorExp, ast.DictComp)):
+                                 ast.ListComp, ast.SetComp, ast.GeneratorExp, ast.DictComp, ast.BinOp, ast.Call)):
                 return origin(base, itself)
+            if isinstance(value, ast.Subscript) and binding_key(base) is not None:
+                held = contained.get(binding_key(base))
+                if held is not None:
+                    return True, held
         if isinstance(value, ast.Call):
             scope, made = owner.get(id(value)), returns_whole if itself else returns
-            # T89 (R09): a lambda called where it is written returns its body
-            if isinstance(value.func, ast.Lambda):
-                return origin(value.func.body, itself)
+            if isinstance(value.func, ast.Attribute) and value.func.attr in ELEMENT_METHODS:
+                return elements(value.func.value)
             # T89 (R07): next(), min() and max() of one iterable hand out one of its elements
             if (isinstance(value.func, ast.Name) and value.func.id in ('next', 'min', 'max') and value.args and scope is not None
                     and value.func.id not in module and resolves_to(value.func.id, scope, tree, bindings, parents) is tree):
-                return elements(value.args[0]) if value.func.id == 'next' or len(value.args) == 1 else next(
-                    (f for f in (origin(a, itself) for a in value.args) if f[0]), (False, None))
-            # T44: the result of a call of a function that returns a module name (T89: in any scope)
-            if isinstance(value.func, ast.Name) and scope is not None:
-                home = resolves_to(value.func.id, scope, tree, bindings, parents)
-                if (home, value.func.id) in made:
-                    return True, made[(home, value.func.id)]
-            return False, None
+                return elements(value.args[0]) if value.func.id == 'next' or len(value.args) == 1 else first_origin(
+                    origin(a, itself) for a in value.args)
+            return first_origin((True, made[fn]) for fn in callable_origins(value.func) if fn in made)
         root = (value.id if isinstance(value, ast.Name) else None) if itself else _pure_root(value)
         scope = owner.get(id(value))
         if root is None or scope is None:
@@ -1300,74 +1368,103 @@ def module_scope_problems(tree):
             return True, known[home][root]
         return False, None
     def elements(value):
-        """T89: whether an element of an iterable is a module object itself: the elements of a display, a comprehension's
-        or a generator's element expression, and the elements of iter(), reversed(), sorted(), list(), tuple(), set() or
-        frozenset() of one"""
         if isinstance(value, (ast.ListComp, ast.SetComp, ast.GeneratorExp)):
             return origin(value.elt, True)
         if isinstance(value, ast.DictComp):
-            return next((f for f in (origin(value.key, True), origin(value.value, True)) if f[0]), (False, None))
-        if isinstance(value, (ast.List, ast.Tuple, ast.Set)):
-            return next((f for f in (origin(e, True) for e in value.elts) if f[0]), (False, None))
-        if (isinstance(value, ast.Call) and isinstance(value.func, ast.Name) and value.args
-                and value.func.id in ('iter', 'reversed', 'sorted', 'list', 'tuple', 'set', 'frozenset')):
-            return elements(value.args[0])
+            return first_origin(origin(part, True) for part in (value.key, value.value))
+        if isinstance(value, (ast.List, ast.Tuple, ast.Set, ast.Dict)):
+            return first_origin(origin(part, True) for part in alternatives(value))
+        if isinstance(value, (ast.BinOp, ast.BoolOp, ast.IfExp, ast.NamedExpr, ast.Starred)):
+            return first_origin(elements(part) for part in alternatives(value))
+        if isinstance(value, ast.Name):
+            key = binding_key(value)
+            if key in contained:
+                return True, contained[key]
+            if key is not None and key[1] in holders[key[0]]:
+                return True, holders[key[0]][key[1]]
+        if isinstance(value, ast.Call):
+            if isinstance(value.func, ast.Name) and value.args and value.func.id in (
+                    'iter', 'reversed', 'sorted', 'list', 'tuple', 'set', 'frozenset'):
+                return elements(value.args[0])
+            if isinstance(value.func, ast.Attribute) and value.func.attr in ELEMENT_METHODS:
+                return elements(value.func.value)
         return False, None
-    def stores(target):
-        return [(x.id, owner[id(x)]) for x in ast.walk(target)
-                if isinstance(x, ast.Name) and isinstance(x.ctx, ast.Store) and id(x) in owner]
+
+    def targets(target):
+        if isinstance(target, (ast.Tuple, ast.List)):
+            for item in target.elts:
+                yield from targets(item)
+        elif isinstance(target, ast.Starred):
+            yield from targets(target.value)
+        else:
+            yield target
+
     sources, held_in = [], []
-    # T89: holders[scope][name]: a local object a module object itself was stored into (d['k'] = X, a class body's
-    # f = X); read only by the mutation rules (d['k'].clear(), C.f.clear()), so a store into the local is no write
+    contained = {}
+    # A local into which a module object was stored may still expose that
+    # object by a later read. The original store itself is allowed.
     holders = {scope: {} for scope in bindings}
+
+    def add_source(value, target, iteration=False):
+        names = []
+        for part in targets(target):
+            if isinstance(part, ast.Name) and id(part) in owner:
+                names.append((owner[id(part)], part.id))
+            elif isinstance(part, (ast.Subscript, ast.Attribute)):
+                root = _pure_root(part.value)
+                scope = owner.get(id(part))
+                if root is not None and scope is not None:
+                    held_in.append((value, root, scope, iteration))
+        sources.append((value, names, iteration))
+
     for node in ast.walk(tree):
         if isinstance(node, ast.Assign):
-            sources += [(node.value, stores(t)) for t in node.targets]
-            # T89 (R05, R06): a module object itself stored into a local object (d['k'] = X, o.f = X) makes that
-            # local refer to it, so d['k'].clear() is a mutation of X
-            for t in node.targets:
-                if isinstance(t, (ast.Subscript, ast.Attribute)):
-                    root = t.value
-                    while isinstance(root, (ast.Subscript, ast.Attribute)):
-                        root = root.value
-                    if isinstance(root, ast.Name) and id(root) in owner:
-                        held_in.append((node.value, root.id, owner[id(root)]))
+            for target in node.targets:
+                add_source(node.value, target)
         elif isinstance(node, ast.AnnAssign) and node.value is not None:
-            sources.append((node.value, stores(node.target)))
+            add_source(node.value, node.target)
         elif isinstance(node, ast.NamedExpr) and id(node.target) in owner:
-            sources.append((node.value, [(node.target.id, owner[id(node.target)])]))
+            add_source(node.value, node.target)
         elif isinstance(node, (ast.For, ast.AsyncFor, ast.comprehension)):
-            sources.append((node.iter, stores(node.target), 'iteration'))
+            add_source(node.iter, node.target, iteration=True)
         elif isinstance(node, (ast.With, ast.AsyncWith)):
-            sources += [(i.context_expr, stores(i.optional_vars)) for i in node.items if i.optional_vars]
+            for item in node.items:
+                if item.optional_vars is not None:
+                    add_source(item.context_expr, item.optional_vars)
         elif isinstance(node, ast.arguments) and id(node) in owner:
             positional = node.posonlyargs + node.args
             pairs = list(zip(positional[len(positional) - len(node.defaults):], node.defaults)) + [
                 (a, d) for a, d in zip(node.kwonlyargs, node.kw_defaults) if d is not None]
-            sources += [(d, [(a.arg, owner[id(node)])]) for a, d in pairs]
+            sources.extend((d, [(owner[id(node)], a.arg)], False) for a, d in pairs)
     grew = True
     while grew:
         grew = False
-        for value, targets, *how in sources:
+        for value, names, iteration in sources:
+            value_modules = module_origins(value)
+            value_functions = callable_origins(value)
+            element, element_name = elements(value)
+            for key in names:
+                for tracked, found in ((sys_origins, value_modules), (function_values, value_functions)):
+                    if found - tracked.get(key, set()):
+                        tracked.setdefault(key, set()).update(found)
+                        grew = True
+                if element and element_name in containers and not iteration and key not in contained:
+                    contained[key] = element_name
+                    grew = True
             for itself, known in ((False, alias), (True, whole)):
-                if itself and how:
-                    # (iterating gives elements, never the object itself; T64: unless the iterable is a display
-                    # whose element is the object itself: for x in [X] binds x to X)
-                    if not isinstance(value, (ast.List, ast.Tuple, ast.Set)):
-                        continue
-                    refers, name = next((f for f in (origin(e, True) for e in value.elts) if f[0]), (False, None))
-                else:
-                    refers, name = origin(value, itself)
+                refers, name = (element, element_name) if itself and iteration else origin(value, itself)
                 if not refers:
                     continue
-                for local, scope in targets:
-                    if scope is not tree and local not in known[scope]:
+                for scope, local in names:
+                    if scope is not tree and (local not in known[scope] or
+                                              name in containers and known[scope][local] not in containers):
                         known[scope][local] = name
                         grew = True
-        for value, local, scope in held_in:
-            refers, name = origin(value, True)
+        for value, local, scope, iteration in held_in:
+            refers, name = elements(value) if iteration else origin(value, True)
             home = resolves_to(local, scope, tree, bindings, parents)
-            if refers and home is not tree and local not in holders[home]:
+            if refers and home is not tree and (local not in holders[home] or
+                                                name in containers and holders[home][local] not in containers):
                 holders[home][local] = name
                 grew = True
         # T89 (R12): a class whose body binds a name to a module object itself refers to it through that attribute
@@ -1377,18 +1474,15 @@ def module_scope_problems(tree):
             if target is not None and home is not tree and cls.name not in holders[home]:
                 holders[home][cls.name] = target
                 grew = True
-        for key, fn in functions.items():
+        for fn in functions:
             for itself, made in ((False, returns), (True, returns_whole)):
-                if key in made:
-                    continue
-                for value in own_returns(fn):
-                    refers, name = origin(value, itself)
-                    if refers and name is not None:
-                        made[key] = name
-                        grew = True
-                        break
+                refers, name = first_origin(origin(v, itself) for v in own_returns(fn))
+                if refers and name is not None and (fn not in made or
+                                                    name in containers and made[fn] not in containers):
+                    made[fn] = name
+                    grew = True
 
-    writes, mutations, reflection = [], [], []
+    writes, mutations, reflection = [], [], sys_registry_imports
     for node in ast.walk(tree):
         scope = owner.get(id(node))
         if scope is None:
@@ -1404,7 +1498,7 @@ def module_scope_problems(tree):
                 mutations.append(node.target.id + ' ' + type(node.op).__name__ + '=@' + str(node.lineno))
         # T89 (R13, R11): sys.modules reaches the module's own namespace (sys.modules[__name__].X), and a match statement's
         # capture patterns bind names the analysis does not follow (V has neither)
-        if isinstance(node, ast.Attribute) and node.attr == 'modules' and isinstance(node.value, ast.Name) and node.value.id == 'sys':
+        if isinstance(node, ast.Attribute) and node.attr == 'modules' and 'sys' in module_origins(node.value):
             reflection.append('sys.modules@' + str(node.lineno))
         if isinstance(node, ast.Match):
             reflection.append('match@' + str(node.lineno))
@@ -1414,23 +1508,14 @@ def module_scope_problems(tree):
             if root is None or home is tree or root in imported[home] or root in alias[home]:
                 writes.append(str(root) + '@' + str(node.lineno))
         if isinstance(node, ast.Attribute) and node.attr not in READ_ONLY_METHODS:
+            _, target = origin(node.value)
             root = _pure_root(node.value)
-            if root is not None:
+            if root is not None and not isinstance(node.value, ast.Name):
                 home = resolves_to(root, scope, tree, bindings, parents)
-                target = root if home is tree else alias[home].get(root) or (holders[home].get(root) if node.value is not None and not isinstance(node.value, ast.Name) else None)
-                if target in containers:
-                    mutations.append(root + '.' + node.attr + '@' + str(node.lineno))
-            elif isinstance(node.value, (ast.BoolOp, ast.IfExp, ast.NamedExpr, ast.List, ast.Tuple, ast.Set, ast.Dict,
-                                         ast.Attribute, ast.Subscript, ast.Starred)):
-                # T64: (X or []).clear(), (X if c else []).clear(), (y := X).clear(), [X][0].clear()
-                refers, target = origin(node.value)
-                if refers and target in containers:
-                    mutations.append(ast.unparse(node.value) + '.' + node.attr + '@' + str(node.lineno))
-            elif isinstance(node.value, ast.Call):
-                # T44: f().clear() where f returns a module container
-                refers, target = origin(node.value)
-                if refers and target in containers:
-                    mutations.append(ast.unparse(node.value) + '.' + node.attr + '@' + str(node.lineno))
+                if target not in containers:
+                    target = holders[home].get(root)
+            if target in containers:
+                mutations.append((root or ast.unparse(node.value)) + '.' + node.attr + '@' + str(node.lineno))
         if isinstance(node, ast.Call):
             # T44 (cycle-13 H03): a call that receives a module container, unless its callee only reads it
             passed = [a.value if isinstance(a, ast.Starred) else a for a in node.args] + [k.value for k in node.keywords]
@@ -1463,9 +1548,9 @@ def module_scope_problems(tree):
                     if isinstance(a, ast.NamedExpr):
                         return itself_only(a.value)
                     return False
-                # (min and max hand back one of their argument's elements, or an argument itself, so they keep the bare-only
-                # rule: max(X or []) stays refused, as batch 4 had it)
-                copies = name in ('tuple', 'list', 'set', 'frozenset', 'sorted', 'dict', 'sum', 'iter', 'reversed', 'enumerate', 'zip')
+                # min and max can return their argument or an element. sum can
+                # return its start value unchanged. Even bare arguments remain refused.
+                copies = name in ('tuple', 'list', 'set', 'frozenset', 'sorted', 'dict', 'iter', 'reversed', 'enumerate', 'zip')
                 wrapped = [] if fresh else [a for a in passed if origin(a, True)[0] and not (copies and itself_only(a))]
                 by_keyword = isinstance(callee, ast.Name) and callee.id == 'dict' and any(origin(k.value, True)[0] for k in node.keywords)
                 if wrapped or by_keyword:
@@ -1640,7 +1725,8 @@ def line_endings(raw):
     return {'crlf': crlf, 'lf': raw.count(b'\n') - crlf, 'cr': raw.count(b'\r') - crlf}
 
 
-def validate_coverage(raw, before, table, test_names, ast_classes=None, frozen=None):
+def validator_source(raw, ast_classes=None):
+    """Check the interpreter and census agree on the validator's source."""
     # T45 (cycle-13 H02): the checker reads V's bytes as the interpreter does. A coding declaration or a byte-order
     # mark would make the AST reviewed here differ from the code a script run or an import executes, so either one
     # is refused before anything is parsed.
@@ -1656,14 +1742,23 @@ def validate_coverage(raw, before, table, test_names, ast_classes=None, frozen=N
     classes = ast_class_problems(tree, ast_classes)
     if not (not any(classes.values())):
         raise AssertionError('ast class table ' + json.dumps(classes, sort_keys=True))
-    if not (table['ast_classes'] == ast_class_summary(ast_classes)):
-        raise AssertionError('changed ast class table summary')
+    return source
+
+
+def check_validator_bindings(source, before):
     # Round 12 (CA2-C12-B01, N02): every module name has one binding, the one
     # the checker reads and the script runs, and module objects are written
     # only by it. Nothing in the table can waive this.
     bindings = binding_problems(source, before)
     if not (not any(bindings.values())):
         raise AssertionError('module-level binding refused ' + json.dumps(bindings, sort_keys=True))
+
+
+def validate_coverage(raw, before, table, test_names, ast_classes=None, frozen=None):
+    source = validator_source(raw, ast_classes)
+    if not (table['ast_classes'] == ast_class_summary(ast_classes)):
+        raise AssertionError('changed ast class table summary')
+    check_validator_bindings(source, before)
     # Round 12 (CA2-C12-N01): the table pins every line of the frozen
     # validator, and every line inserted, changed, deleted or replaced relative
     # to it needs a reviewed record. An edit with the table unchanged stops here.
@@ -2332,7 +2427,7 @@ def edit_probe_source(source, label):
     if label == 'binding_class_attribute_new_function':
         return insert(cards, '    class pm_C:', '        pm_f = EVIDENCE_FIELDS', '    pm_C.pm_f.clear()')
     if label == 'binding_sys_modules_new_function':
-        return insert(cards, '    sys.modules[__name__].EVIDENCE_FIELDS.clear()')
+        return insert(cards, '    os.sys.modules[__name__].EVIDENCE_FIELDS.clear()')
     if label == 'binding_alias_iadd_new_function':
         return insert(cards, '    pm_y = EVIDENCE_FIELDS', '    pm_y += ["pm"]')
     if label == 'binding_alias_ior_new_function':
@@ -2458,10 +2553,16 @@ def edit_probe(raw, before, table_raw, test_names, label, frozen=None):
             old_lines[n - 1] for n in deleted)):
             raise AssertionError((named, deleted))
     elif group == 'frozen_lines':
-        named = sorted(frozen_records)
-        if not (sorted((r['mark'], r['line']) for r in frozen_records.values()) == sorted(
-            [('deleted', n) for n in deleted] + [('inserted', n) for n in edited])):
-            raise AssertionError(frozen_records)
+        # Keep every previously reviewed E9-1 edit in the forged table.
+        # Only the new deletion or insertion should reach the diagnostic.
+        approved = {r['site_id'] for r in table['frozen_lines']}
+        named = sorted(set(frozen_records) - approved)
+        frozen_map = {m.b + i + 1: m.a + i + 1 for m in difflib.SequenceMatcher(
+            None, source_lines(frozen), old_lines, autojunk=False).get_matching_blocks() for i in range(m.size)}
+        observed = sorted((frozen_records[s]['mark'], frozen_records[s]['line']) for s in named)
+        expected_edits = sorted([('deleted', frozen_map[n]) for n in deleted] + [('inserted', n) for n in edited])
+        if observed != expected_edits:
+            raise AssertionError((observed, expected_edits))
     elif group == 'nodes':
         named = sorted(s for s, r in nodes.items() if r['line'] in edited)
         if not (named):
@@ -3035,6 +3136,26 @@ def check_random_edits(repo, test_names, count=RANDOM_EDITS):
     return {'edits': count, 'by_kind': dict(sorted(kinds.items())), 'refused_by': dict(sorted(rules.items()))}
 
 
+def write_result(output, results, custody=None):
+    # T64 (REVIEW-etools-tb3-opus finding 10): the interpreter and its flags, so a run under -O shows it was one
+    import platform
+    interpreter = {'implementation': platform.python_implementation(), 'version': sys.version.split()[0],
+                   'executable': sys.executable, 'optimize': sys.flags.optimize, 'dont_write_bytecode': sys.flags.dont_write_bytecode,
+                   'isolated': sys.flags.isolated, 'hash_randomization': sys.flags.hash_randomization}
+    summary = {'status': 'pass' if all(r['pass'] for r in results) else 'fail', 'checks': len(results),
+               'interpreter': interpreter,
+               'passed': sum(r['pass'] for r in results), 'failed': sum(not r['pass'] for r in results),
+               'real_frozen_source_custody': custody, 'results': results,
+               'limits': ['No final approval, admission, live seal or all-green August main run is claimed.',
+                          'Outcome positives inject the existing admitted set; they do not create or waive admission records.',
+                          'Guard-removal inventory belongs to the shared-tool sweep; no lane-local proof engine is claimed.']}
+    output.write_text(json.dumps(summary, indent=2) + '\n')
+    print(json.dumps({k: summary[k] for k in ['status', 'checks', 'passed', 'failed', 'interpreter']}))
+    for row in results:
+        if not row['pass']: print(json.dumps(row))
+    return 0 if summary['status'] == 'pass' else 1
+
+
 def run(repo, output, source_map, apply_cut=None):
     results = []
     def record(name, action, rejects=False, message=None):
@@ -3076,12 +3197,27 @@ def run(repo, output, source_map, apply_cut=None):
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_bytes(raw)
             return target
-        tested_raw = (repo / REL).read_bytes()
-        tested_sha = sha(tested_raw)    # (T45, H06: the bytes every behavioural test below runs)
-        put(REL, tested_raw)
-        spec = importlib.util.spec_from_file_location('dl451_fixture', root / REL)
-        v = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(v)
+        try:
+            tested_raw = (repo / REL).read_bytes()
+            tested_sha = sha(tested_raw)    # (T45, H06: the bytes every behavioural test below runs)
+            table = json.loads((repo / COVERAGE).read_bytes())
+            if tested_sha != table['validator_sha256']:
+                raise AssertionError('validator bytes do not match the coverage table')
+            source = validator_source(tested_raw)
+            check_validator_bindings(source, git(SEAL_BASE + ':' + REL).decode())
+        except Exception as exc:
+            return write_result(output, [{'name': 'validator_source_preflight', 'pass': False,
+                                          'error': type(exc).__name__ + ': ' + str(exc)}])
+
+        path = put(REL, tested_raw)
+        try:
+            spec = importlib.util.spec_from_file_location('dl451_fixture', path)
+            v = importlib.util.module_from_spec(spec)
+            exec(compile(tested_raw, str(path), 'exec', dont_inherit=True), vars(v))
+        except (Exception, SystemExit) as exc:
+            # A validator may terminate its own import with exit code 0.
+            # The corpus has not run, so record a failed check and exit 1.
+            return write_result(output, [{'name': 'validator_import', 'pass': False, 'error': repr(exc)}])
         def imported_bindings_match():
             # CA2-C12-B01: the corpus runs the one binding the checker reads.
             tree = ast.parse((root / REL).read_bytes().decode())
@@ -3112,10 +3248,24 @@ def run(repo, output, source_map, apply_cut=None):
         change['lander_task'] = 'fixture:lander'
         change['seal_applier_forbidden_tasks'] = sorted({v.RECOUNT_AUTHOR, 'fixture:lander'})
         put(v.RECOUNT_CHANGE, encoded(change))
+        anchor_paths = [v.MULTI_FAMILY_RECEIPT, v.RECOUNT_CHANGE]
+        has_fifth_receipt = hasattr(v, 'DL_PATTERN_CHANGE')
+        if has_fifth_receipt:
+            for path in (v.DL_PATTERN_CARD, v.DL_PATTERN_ANSWER):
+                put(path, (repo / path).read_bytes())
+            fifth = json.loads((repo / v.DL_PATTERN_CHANGE).read_bytes())
+            fifth['lander_task'] = 'fixture:lander'
+            fifth['seal_applier_forbidden_tasks'] = sorted({v.DL_PATTERN_AUTHOR, 'fixture:lander'})
+            anchor_paths.insert(0, v.DL_PATTERN_CHANGE)
+
         def anchors():
+            if has_fifth_receipt:
+                # Each fourth-receipt probe starts with a consistent fifth link.
+                fifth['prior_receipt']['sha256'] = sha((root / v.RECOUNT_CHANGE).read_bytes())
+                put(v.DL_PATTERN_CHANGE, encoded(fifth))
             put('Plans/Spec_Lock.json', encoded({'canonical_ssot_hashes': {'files': [
                 {'path': p, 'sha256': sha((root / p).read_bytes())}
-                for p in [v.MULTI_FAMILY_RECEIPT, v.RECOUNT_CHANGE]]}}))
+                for p in anchor_paths]}}))
         anchors()
         original_env = {k: os.environ.get(k) for k in ['GIT_DIR', 'PM_EA_RECOUNT_SOURCE_MAP']}
         try:
@@ -3915,13 +4065,13 @@ def run(repo, output, source_map, apply_cut=None):
             bad = copy.deepcopy(outcome_doc)
             bad['schema_id'] = 'wrong.schema'
             put(str(v.RECOUNT_OUTCOMES.relative_to(root)), encoded(bad))
-            def aggregate_issue(code, detail):
+            def aggregate_issue(code, detail, additional_issues=()):
                 state, issues = v.recount_validation(set(names))
                 if not (state['complete'] is False):
                     raise AssertionError(state)
                 if not (state['diagnostic_only'] is True):
                     raise AssertionError(state)
-                if not (issues == [{'error': code, 'detail': detail}]):
+                if not (issues == [{'error': code, 'detail': detail}, *additional_issues]):
                     raise AssertionError(issues)
                 if code == 'recount_change_receipt_invalid':
                     if not ('change_receipt_sha256' not in state):
@@ -3953,8 +4103,12 @@ def run(repo, output, source_map, apply_cut=None):
                     raise AssertionError()
                 raw = path.read_bytes()
                 path.unlink()
-                record('negative_' + label, lambda path=path, code=code: aggregate_issue(
-                    code, str(FileNotFoundError(2, 'No such file or directory', str(path)))))
+                detail = str(FileNotFoundError(2, 'No such file or directory', str(path)))
+                additional_issues = (
+                    ({'error': 'dl_pattern_change_receipt_invalid', 'detail': detail},)
+                    if has_fifth_receipt and path == fourth_path else ()
+                )
+                record('negative_' + label, lambda: aggregate_issue(code, detail, additional_issues))
                 path.write_bytes(raw)
 
             # Remaining defensive dispatch alternatives use one explicit
@@ -3998,6 +4152,17 @@ def run(repo, output, source_map, apply_cut=None):
             for key, value in original_env.items():
                 if value is None: os.environ.pop(key, None)
                 else: os.environ[key] = value
+        if has_fifth_receipt:
+            # E9-1 already has receipt and decision-reference probes with
+            # reviewed narrow mutations. Reuse them against these same bytes.
+            spec = importlib.util.spec_from_file_location('ca_seal2_e9_checks', repo / E9_CHECKS)
+            e9 = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(e9)
+            checks = e9.run_checks(repo, root, tested_raw)
+            if set(checks) != set(e9.CHECKS):
+                results.append({'name': 'e9_fixture', 'pass': False, 'error': str(checks)})
+            else:
+                results.extend({'name': 'e9_' + name, **result} for name, result in checks.items())
     record('positive_complete_predicate_coverage', lambda: check_coverage(repo, {r['name'] for r in results}, tested_sha))
     record('positive_ast_class_table', lambda: check_ast_class_table(repo))
     record('positive_exhaustive_node_type_inventory', check_node_types)
@@ -4031,23 +4196,7 @@ def run(repo, output, source_map, apply_cut=None):
         repo, {r['name'] for r in results}))
     record('positive_no_assert_statement_in_the_checker', check_no_asserts)
     record('positive_receipt_writer_runs_the_hashed_bytes', lambda: check_receipt_writer_bytes(repo))
-    # T64 (REVIEW-etools-tb3-opus finding 10): the interpreter and its flags, so a run under -O shows it was one
-    import platform
-    interpreter = {'implementation': platform.python_implementation(), 'version': sys.version.split()[0],
-                   'executable': sys.executable, 'optimize': sys.flags.optimize, 'dont_write_bytecode': sys.flags.dont_write_bytecode,
-                   'isolated': sys.flags.isolated, 'hash_randomization': sys.flags.hash_randomization}
-    summary = {'status': 'pass' if all(r['pass'] for r in results) else 'fail', 'checks': len(results),
-               'interpreter': interpreter,
-               'passed': sum(r['pass'] for r in results), 'failed': sum(not r['pass'] for r in results),
-               'real_frozen_source_custody': custody, 'results': results,
-               'limits': ['No final approval, admission, live seal or all-green August main run is claimed.',
-                          'Outcome positives inject the existing admitted set; they do not create or waive admission records.',
-                          'Guard-removal inventory belongs to the shared-tool sweep; no lane-local proof engine is claimed.']}
-    output.write_text(json.dumps(summary, indent=2) + '\n')
-    print(json.dumps({k: summary[k] for k in ['status', 'checks', 'passed', 'failed', 'interpreter']}))
-    for row in results:
-        if not row['pass']: print(json.dumps(row))
-    return 0 if summary['status'] == 'pass' else 1
+    return write_result(output, results, custody)
 
 
 if __name__ == '__main__':
