@@ -270,13 +270,6 @@ PROOFS = {
         "be indexed.",
         [(ST, 1057), (ST, 1463), (ST, 1466)],
         ['dg5/site/pm_goal_test_storage.py:1463']),
-    'dg5/site/pm_goal_test_storage.py:1564': _p(
-        "The custody row is constructed in _custody_row entirely from the "
-        "schema-validated stored event (validate_event_record at append) "
-        "plus Storage's own digests/ids of fixed formats, then checked "
-        "against the custody schema it was constructed to satisfy; every "
-        "field is copied from an already-validated value.",
-        [(ST, 1544), (ST, 1564)]),
     'dg5/site/pm_goal_test_storage.py:1618': _p(
         "durable_group_value assembles the group value from the commit "
         "record Storage itself wrote at append (commit frame fields and "
@@ -291,26 +284,6 @@ PROOFS = {
         "first with the identical predicate on the identical dict.",
         [(ST, 1622), (ST, 1624), (ST, 1633)],
         ['dg5/site/pm_goal_test_storage.py:1633']),
-    'dg5/site/pm_goal_test_storage.py:440': _p(
-        "The frame header is the 7 short strings of event_header (schema "
-        "consts and owner-minted ids of fixed short format in the validated "
-        "event); measured canonical length is 193 bytes for genuine ids and "
-        "3107 even at a uniform 512 characters per member, under the 4096 cap.",
-        [(ST, 426), (ST, 440)]),
-    'dg5/site/pm_goal_test_storage.py:441': _p(
-        "encode_event_frame is reached in append only after the stored-part "
-        "cap requires canonical(event) <= 16384 at :1487; the frame payload "
-        "is that same canonical event, three orders of magnitude under the "
-        "16777216 payload cap, so the payload cap cannot refuse after the "
-        "stored-part cap passes.",
-        [(ST, 440), (ST, 1487), (ST, 441)]),
-    'dg5/site/pm_goal_test_storage.py:470': _p(
-        "validate_event_record is called only with the event dict append "
-        " itself constructs (dict(candidate, observed/persisted/sequence)) "
-        "or with msgpack-decoded frame values, which decode_event_value "
-        "only returns as dicts for event frames; on every family path the "
-        "argument is a dict by construction at the call site.",
-        [(ST, 470), (ST, 1485)]),
     'dg5/site/pm_goal_test_storage.py:163': _p(
         "k_component is called only from scope_partition (whose project_id "
         "argument is type-checked str at :189 immediately before) and from "
@@ -666,12 +639,6 @@ PROOFS = {
         "presented to msgpack_decode through any stored cell in this "
         "storage model.",
         [(BO, 154), (BO, 169)]),
-    'dg5/site/pm_goal_dg_cb_owners.py:228': _p(
-        "schema_ref_for is called only with the owners' fixed family "
-        "names (image() families from ROLE_FAMILIES and goal families), "
-        "all present in FAMILY_SCHEMAS; no caller passes a caller-supplied "
-        "family string.",
-        [(BO, 228), (BO, 395)]),
     'dg5/site/pm_goal_dg_cb_migration.py:782': _p(
         "Commit writes are the derive() candidate: manifest parts are "
         "grouped by manifest_parts under the same PART_CAP probe size, "
@@ -693,12 +660,6 @@ PROOFS = {
         "bound by the whole-manifest sha check at :844 in the same "
         "predicate; a part over cap cannot have been committed.",
         [('scripts/pm_goal_dg_cb_migration.py', 579), ('scripts/pm_goal_dg_cb_migration.py', 842)]),
-    'dg5/site/pm_goal_dg_cb_migration.py:920': _p(
-        "withdraw re-reads result_selection (the stored result cell) at "
-        "the end of the same synchronous call that read it at entry as "
-        "'original'; no write to the result cell runs between (the only "
-        "writes are the withdrawal record and cutoff, after this check).",
-        [('scripts/pm_goal_dg_cb_migration.py', 920)]),
     'dg5/site/pm_goal_dg_ca3_route.py:799': _p(
         "The route re-checks the d06 control phase/result that "
         "d06.readback has just required at native :1069 (committed phase "
@@ -1010,23 +971,6 @@ WITHDRAWN = {
             "genuine transition in the same process.",
             [(N3, 949)],
             ['dg5/run/revision/number']),
-    ),
-    'dg5/site/pm_goal_test_storage.py:1534': dict(
-        reason=(
-            'Withdrawn (lead pm-ea-lead 1121101954-8459 (1)) after the proof audit of 2026-11-21 '
-            '(proof-audit/AUDIT.md, audit.json, probes/). Refuted premise: a readback of genuine frames is not always '
-            'clean. The EventRecord event_type pattern admits pm.seglog.group_commit (= CONTROL_TYPE); a plain '
-            'TestOwnerStorage.append of such a candidate fails control_header_mismatch on readback, so :1534 is the '
-            'only refusal (intact: append/readback; cut: IndexError on a fresh segment or index/duplicate_event_id '
-            'after an earlier group; probe_1534.py). Duplicate of the proofs_shared entry, withdrawn with it.'
-        ),
-        proof=_p(
-            "append writes the member frames and commit frame, fsyncs, then "
-            "scans the same segment bytes back; the scan's last group commit is "
-            "decoded from the commit frame just written from the in-memory "
-            "commit dict, with no other writer able to interleave (single "
-            "synchronous call, segment truncated to the watermark first).",
-            [(ST, 1509), (ST, 1531), (ST, 1534)]),
     ),
 }
 
