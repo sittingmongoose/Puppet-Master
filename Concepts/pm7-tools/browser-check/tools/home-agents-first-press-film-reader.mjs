@@ -22,6 +22,25 @@ const bounds = ([x, y, width, height]) => ({ x, y, width, height });
 const marks = json(runDir + '/summary.json').marks || [];
 const timeOf = (m) => m?.video ?? m?.videoAt ?? m?.at;
 const mark = (label) => timeOf(marks.find((m) => m.label === label));
+const holdLimitMs = 1000 / 60;
+const samePose = (a, b) => a.left != null && a.right != null && a.left === b.left && a.right === b.right;
+// Raster rounding on a fixed chip can move a solid edge by one pixel.
+const atRest = (a, b) => a.left != null && a.right != null && b.left != null && b.right != null &&
+	Math.abs(a.left - b.left) <= 1 && Math.abs(a.right - b.right) <= 1;
+
+function travelHolds(frames, first, last) {
+	const holds = [];
+	let start = first;
+	for (let i = first + 1; first >= 0 && i <= last + 1; i++) {
+		if (i <= last && samePose(frames[start], frames[i])) continue;
+		if (i > start + 1) {
+			const from = frames[start], to = frames[i - 1];
+			holds.push({ from, to, ms: (to.pts - from.pts) * 1000, intervals: to.frame - from.frame });
+		}
+		start = i;
+	}
+	return holds;
+}
 
 function firstPress(data) {
 	if (data.animation) {
@@ -127,17 +146,25 @@ function measure() {
 	const anchored = (box, slice) => slice.every((f) => f.right != null && Math.abs(f.right - (box.x + box.width)) <= 5);
 	const complete = anchored(from, frames.slice(0, 2)) && anchored(to, frames.slice(-2));
 	const over = pairs.filter((p) => p.step > allow);
-	const ok = Number.isFinite(allow) && complete && !missing.length && !!worst && !over.length;
-	return { verdict: ok ? 'PASS' : 'FAIL', crop: [x, y, w, h], fill, allow, complete, missing, worst, over, frames };
+	const first = frames.findIndex((f) => !atRest(f, frames[0]));
+	const last = frames.findLastIndex((f) => !atRest(f, frames.at(-1)));
+	const holds = travelHolds(frames, first, last);
+	// The recorder can express 60 Hz presentation ticks as alternating 16 and 17 ms timestamps.
+	const longHolds = holds.filter((hold) => hold.intervals > 1 || hold.ms > Math.ceil(holdLimitMs) + 1e-6);
+	const longestHold = holds.reduce((worst, hold) => !worst || hold.ms > worst.ms ? hold : worst, null);
+	const ok = Number.isFinite(allow) && complete && !missing.length && !!worst && !over.length && !longHolds.length;
+	return { verdict: ok ? 'PASS' : 'FAIL', crop: [x, y, w, h], fill, allow, complete, missing, worst, over,
+		pressMark: start, firstMoving: frames[first], rest: frames[last + 1], holdLimitMs, longestHold, longHolds, frames };
 }
 
 function jsonBuffer(buffer) { return JSON.parse(buffer.toString('utf8')); }
 try {
 	const result = measure();
 	writeFileSync(output, JSON.stringify(result, null, 2) + '\n');
-	const p = result.worst;
+	const p = result.worst, hold = result.longestHold;
 	console.log(`${result.verdict}: ${result.frames.length} native frames, largest right-edge step ${p?.step ?? 'unread'} px` +
 		(p ? ` at F${p.from.frame}→F${p.to.frame}, bound ${result.allow.toFixed(2)} px` : '') +
+		(hold ? `; longest stationary run in travel ${hold.ms.toFixed(2)} ms at F${hold.from.frame}→F${hold.to.frame}` : '; no stationary run in travel') +
 		(!result.complete || result.missing.length ? ' (unread frame or missing settled endpoint)' : ''));
 	process.exitCode = result.verdict === 'PASS' ? 0 : 1;
 } catch (error) {

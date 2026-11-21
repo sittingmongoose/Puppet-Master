@@ -1,5 +1,6 @@
 // FO-240. Record this check with --record <film> --no-pointer-marker, then run
 // tools/home-agents-first-press-film-reader.mjs on the film and the run's native-press.json.
+// The recorded check passes only when the reader clears both the step and the mid-travel hold rules.
 import { writeFileSync } from 'node:fs';
 import { setLookBySetting } from '../helpers/settings-look.mjs';
 
@@ -29,15 +30,19 @@ export default async function (t) {
 		!!homeBox && !!agentsBox && cold && await isSelected(from) && !(await isSelected(to))))) return;
 
 	await f.evaluate(({ item, tab, scope }) => {
-		const read = window.__fo240Native = { clicks: [], animation: null };
+		const read = window.__fo240Native = { clicks: [], pointer: [], animation: null };
+		for (const type of ['pointerdown', 'pointerup']) document.addEventListener(type, (e) => {
+			const button = e.target.closest(item);
+			if (button?.closest(scope)) read.pointer.push({ type, id: button.getAttribute(tab), at: e.timeStamp, trusted: e.isTrusted });
+		}, true);
 		document.addEventListener('click', (e) => {
 			const button = e.target.closest(item);
-			if (button?.closest(scope)) read.clicks.push({ id: button.getAttribute(tab), trusted: e.isTrusted });
+			if (button?.closest(scope)) read.clicks.push({ id: button.getAttribute(tab), at: e.timeStamp, trusted: e.isTrusted });
 		}, true);
 		const animate = Element.prototype.animate;
 		Element.prototype.animate = function (frames, timing) {
 			if (!read.animation && this.matches('.lg-carry') && this.closest(scope) && frames?.[0]?.transform) {
-				read.animation = { frames, dur: timing.duration, width: parseFloat(this.style.width), height: parseFloat(this.style.height) };
+				read.animation = { frames, dur: timing.duration, width: parseFloat(this.style.width), height: parseFloat(this.style.height), at: performance.now() };
 			}
 			return animate.call(this, frames, timing);
 		};
@@ -50,9 +55,9 @@ export default async function (t) {
 	await t.page.waitForTimeout(1400);
 	await t.mark(rail ? 'Changed settled' : 'Agents settled');
 
-	const { clicks, animation } = await f.evaluate(() => window.__fo240Native);
+	const { clicks, pointer, animation } = await f.evaluate(() => window.__fo240Native);
 	const selected = await isSelected(to);
 	const firstPress = clicks.length === 1 && clicks[0].trusted && clicks[0].id === targetId;
 	await t.check(`One trusted press selected ${rail ? 'Changed' : 'Agents'} and had a carried chip`, firstPress && selected && !!animation);
-	writeFileSync(t.run.dir + '/native-press.json', JSON.stringify({ homeBox, agentsBox, animation, firstPress, selected, ...(rail ? { route: 'rail' } : {}) }));
+	writeFileSync(t.run.dir + '/native-press.json', JSON.stringify({ homeBox, agentsBox, pointer, clicks, animation, firstPress, selected, ...(rail ? { route: 'rail' } : {}) }));
 }
