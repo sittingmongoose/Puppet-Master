@@ -102,6 +102,9 @@ def install():
                       'inspect_current_event_v1', 'inspect_current'), family)
     plumbing.entries(index_owner.EventIndexOwner,
                      ('publish', 'current', 'read_token', 'verify_token', 'row', 'source_frame'), family)
+    # Addendum 12 point 3: guard decisions inside corpus direct calls to the listed owner methods (pinned list).
+    import pm_goal_dg5_direct_calls as direct_calls
+    direct_calls.install(family, DG5_EVIDENCE)
 
 
 def main():

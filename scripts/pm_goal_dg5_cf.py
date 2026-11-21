@@ -135,6 +135,7 @@ def closure_banks():
 
 
 def main():
+    import pm_goal_dg5_direct_calls as direct_calls
     scratch = Path(os.environ['PM_DG5_SCRATCH'])
     scratch.mkdir(parents=True, exist_ok=True)
     selected = os.environ.get('PM_DG5_CF_SUITES', 'CF1,CF2,CF3').split(',')
@@ -144,11 +145,13 @@ def main():
     try:
         if 'CF1' in selected:
             install_cf1()
+            direct_calls.install(FAMILY, DG5_EVIDENCE)   # addendum 12 point 3
             result = cf1.run(str(scratch / 'certified-cf1-source.json'), only.split(',') if only else None)
             bridge.CASE[0] = None
             results.append(dict(source='CF1', status=result['status']))
         if 'CF2' in selected:
             install_cf2()
+            direct_calls.install(FAMILY, DG5_EVIDENCE)   # addendum 12 point 3
             os.environ['PM_DG_CF2_SCRATCH'] = str(scratch)
             sys.argv = [cf2.__file__, '--output', str(scratch / 'certified-cf2-source.json'), '--no-matrix']
             if only:
@@ -156,6 +159,7 @@ def main():
             results.append(dict(source='CF2', exit=cf2.main()))
         if 'CF3' in selected:
             install_cf3()
+            direct_calls.install(FAMILY, DG5_EVIDENCE)   # addendum 12 point 3
             argv = ['--output', str(scratch / 'certified-cf3-source.json')]
             if only:
                 argv += ['--only', *only.split(',')]

@@ -70,6 +70,9 @@ def install():
     # nested under GenericSource.project entries (and its direct probe calls stay unwrapped).
     for cls in (source.GenericSource, source.EventRecordIndexSource):
         plumbing.entries(cls, public_methods(cls), FAMILY)
+    # Addendum 12 point 3: guard decisions inside corpus direct calls to the listed owner methods (pinned list).
+    import pm_goal_dg5_direct_calls as direct_calls
+    direct_calls.install(FAMILY, DG5_EVIDENCE)
 
 
 def supplements(suite, work):

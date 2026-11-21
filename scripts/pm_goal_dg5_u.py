@@ -39,6 +39,9 @@ def main():
     work = Path(tempfile.mkdtemp(prefix='u-', dir=base))
     cases = []
     bridge.install_u_entries(original.O)
+    # Addendum 12 point 3: guard decisions inside corpus direct calls to the listed owner methods (pinned list).
+    import pm_goal_dg5_direct_calls as direct_calls
+    direct_calls.install('goal.updated', DG5_EVIDENCE)
     import pm_goal_dg5_supplement_u as supplement
     corpus = list(original.CASES) + (supplement.SUPPLEMENT if os.environ.get('PM_DG5_SUPPLEMENT', '1') == '1' else [])
     try:
