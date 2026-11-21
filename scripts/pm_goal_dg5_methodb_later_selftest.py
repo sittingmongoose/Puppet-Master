@@ -16,6 +16,8 @@ the verdict and its evidence:
   same_code_owner_effect    same cut code, the cut left a different owner state: CANNOT_DECIDE
   same_code_nondeterministic same cut code, the two intact runs differ: CANNOT_DECIDE
   same_code_no_owner_digest same cut code, no owner digest (hook reason): CANNOT_DECIDE
+  missing_codes             no refusal code on the intact or cut trial, equal after-states: CANNOT_DECIDE, never
+                            COVERED_LATER (review (b): only a same-code refusal is judged on after-states)
   rebuilt_elsewhere         as killed_code, but the intact refusal's recorded origin is another site
                             (a same-code refusal rebuilt there; addendum 11): CANNOT_DECIDE
   no_origin                 as killed_code, with no recorded origin: CANNOT_DECIDE (fails closed)
@@ -57,6 +59,8 @@ def state(store='s0', owner='o0', reason=None):
 
 
 def trial(refusal):
+    if refusal is None:   # a refusal whose code the trial did not record
+        return dict(errors=['dg5/unrecorded'], refusal=None, detail='d', observations=[])
     return dict(errors=['dg5/' + refusal.split('/schema/')[0] + '/schema' if '/schema/' in refusal else
                         'dg5/' + refusal], refusal=refusal, detail='d', observations=[])
 
@@ -72,6 +76,7 @@ CASES = {
     'same_code_nondeterministic': (CODE, CODE, CODE, CODE, (state(), state(), state(owner='o2')), 'CANNOT_DECIDE'),
     'same_code_no_owner_digest': (CODE, CODE, CODE, CODE,
                                   (state(owner=None, reason='unclassified value x'), state(), state()), 'CANNOT_DECIDE'),
+    'missing_codes': (None, None, None, CODE, (state(), state(), state()), 'CANNOT_DECIDE'),
     'rebuilt_elsewhere': (CODE, 'select/unissued_value', CODE, CODE, (state(),) * 3, 'CANNOT_DECIDE'),
     'no_origin': (CODE, 'select/unissued_value', CODE, CODE, (state(),) * 3, 'CANNOT_DECIDE'),
 }
@@ -101,6 +106,8 @@ def run():
         elif case.startswith('same_code'):
             ok = ok and code.get('reason') == 'same code' and \
                 (record.get('covered_later_check') or {}).get('verdict') == expected
+        elif case == 'missing_codes':
+            ok = ok and code.get('reason') == 'not a same-code later refusal' and not record.get('covered_later_check')
         else:
             ok = ok and code.get('different_code') is True and code.get('verdict') is None
         rows.append(dict(case=case, expected=expected, verdict=verdict, error=error, killed_code_check=code,
