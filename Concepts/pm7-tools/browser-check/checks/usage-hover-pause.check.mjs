@@ -19,10 +19,7 @@ import { muteSound } from '../helpers/quiet-page.mjs';
 import { r113Cases } from '../helpers/usage-hover-pause-r113.mjs';
 import { burstState, burstWhy, REST_MS } from '../helpers/burst-rest.mjs';
 
-// R125 #1: the page's own work between its rest timer and the marker's removal (wheelEnd's head fit) is not host
-// lateness, but a correct return costs a few ms (1-8 ms measured on Alexis 2026-11-20). The end allowance adds this
-// fixed budget, never the measured work, so a long fit (R125's 80 ms scratch case) still fails; the measured work is
-// logged as `work` in the row and in the dump.
+// Fixed budget for the measured interval from wheelEnd entry to the marker-clear observation.
 export const RETURN_WORK_MS = 16;
 
 // the recorder, installed once in the app's frame; __uhp.start() clears it and starts a window, __uhp.stop() ends it
@@ -46,13 +43,9 @@ export const INSTALL = () => {
 	};
 	const cardId = (c) => (c ? c.getAttribute('data-id') || c.getAttribute('data-card') || c.id || String([...board.children].indexOf(c)) : null);
 	const cls = (el) => String(el.className && el.className.baseVal !== undefined ? el.className.baseVal : el.className || el.tagName).slice(0, 48);
-	// The last input arms a 150 ms probe of the host's own timer lateness. The page's pause ends at that same rest, so a
-	// loaded host's late timer is measured here instead of assumed (TB6 item 2: the old wall-clock 200 ms bound read
-	// 197-257 ms on a correct page). 150 is literal: INSTALL is serialised into the page and cannot close over REST_MS.
-	// R125 #1: the probe is armed at the capture phase on window, which runs before any listener the page registered on
-	// the scroller. Its deadline therefore starts at the input's dispatch, before the page's own handler has run and
-	// before the page re-arms its rest timer, so it fires ahead of that timer: the page's later work (its wheelEnd fit
-	// before the marker's removal) can no longer be read as timer lateness and cannot widen the end allowance.
+	// Measure from this window capture callback to the probe callback. Earlier window listeners can have run
+	// already, and both timers share the renderer queue. This capture still precedes the scroller's wheelEnd arm.
+	// 150 is literal because INSTALL is serialized into the page.
 	const armProbe = (t) => { R.probe = { due: t + 150, fired: null }; clearTimeout(R.probeTimer); R.probeTimer = nativeTimeout(() => { R.probe.fired = performance.now(); }, 150); };
 	const onInput = (list) => (e) => {
 		if (!R.on) return;
@@ -172,11 +165,18 @@ export const INSTALL = () => {
 	return true;
 };
 
+// Both trusted wheel delivery and movement of the Usage scroll pane can re-arm the same hold.
+function holdInputs(wheels, scrolls) {
+	const time = (input) => typeof input === 'number' ? input : input.t;
+	const first = wheels.length ? time(wheels[0]) : Infinity;
+	return wheels.concat(scrolls).map(time).filter((t) => Number.isFinite(t) && t >= first).sort((a, b) => a - b);
+}
+
 // R1 and R2 from one window's record (pure, so the verdict can be read back from a dump)
 export function judge(rec, { rest, back }) {
 	const first = rec.wheels[0], lastWheel = rec.wheels.at(-1), firstScroll = rec.scrolls.find((t) => t >= first);
 	const lastScroll = rec.scrolls.at(-1) ?? lastWheel, end = Math.max(lastWheel, lastScroll);
-	// The event recorder follows the app's listener in the same task. Allow 2 ms at expiry for the two clocks in that task.
+	// Allow 2 ms between the window-capture timestamp and the scroller's re-arm in the same task.
 	const due = end + REST_MS, ops = (rec.ops || []).filter((x) => x.t >= first);
 	const startIndex = ops.findIndex((x) => x.op === 'wheel'), started = ops[startIndex];
 	const release = startIndex < 0 ? null : ops.slice(startIndex + 1).find((x) => x.op !== 'wheel');
@@ -221,14 +221,13 @@ export function judge(rec, { rest, back }) {
 	// A glow starts at zero opacity. Require it armed with the light and tools, plus a separate visible sample by the cap.
 	const proxyStart = settled?.proxyRequired ? targetSamples.find((x) => x.proxyArmed || x.proxyBack)?.t ?? Infinity : endT;
 	const backT = coverage && !litFrames.length && !toolFrames.length && !early.length && !earlyClass && lightT != null && toolsT !== Infinity && proxyStart !== Infinity ? Math.max(lightT, toolsT, proxyStart) : null;
-	// TB6 item 2: (a) the pause ends at the rest, no later than the host's own measured timer lateness (the probe armed
-	// with the last input) plus the page's own bounded return work; (b) the light and tools are back within two drawn
-	// frames of that end (the check's own rAF samples count frames, so a long frame between the end and the return costs
-	// one frame, not its milliseconds); (c) a hard outer cap still fails a page that returns very late.
+	// A probe on the last input estimates lateness, the product callback has a bounded return interval, and the
+	// first two sampled frames after marker clear must show the light and tools back. The outer cap covers the whole return.
 	const probe = rec.probe && Number.isFinite(rec.probe.due) && Number.isFinite(rec.probe.fired) ? rec.probe : null;
 	const late = probe ? Math.max(0, probe.fired - probe.due) : null;
 	const endDelay = endT != null ? endT - end : null;
 	// A shared queue can delay both callbacks. Entry delay beyond the probe is separate from the time in wheelEnd.
+	// Report the residual after subtracting the 150 ms rest and observed probe lateness.
 	const work = endDelay != null && late != null ? endDelay - REST_MS - late : null;
 	const timer = rec.timer;
 	const entry = probe && timer?.inputDue === probe.due && Number.isFinite(timer?.entered) ? timer.entered : null;
@@ -254,7 +253,7 @@ export function judge(rec, { rest, back }) {
 			back: backDelay != null ? Math.round(backDelay) : null, backFrames, early: early.length, earlyClass: !!earlyClass,
 			long: (rec.loaf || []).filter((x) => x.t + x.d > end && x.t < end + 400).map((x) => `+${Math.round(x.t - end)} ms ${x.d} ms (style/layout ${x.sl}: ${x.scripts.join('; ') || 'no script'})`) },
 		span: { wheel: Math.round(lastWheel - first), tail: Math.round(lastScroll - lastWheel), wheels: rec.wheels.length, scrolls: rec.scrolls.length },
-		burst: burstState(rec.wheels)
+		burst: burstState(holdInputs(rec.wheels, rec.scrolls)), wheelGap: burstState(rec.wheels).maxGap
 	};
 }
 
@@ -371,11 +370,12 @@ async function roomMountRace(t, f, label, park, rm) {
 		await t.page.waitForTimeout(500);
 		await f.evaluate(({ room, baseline, selector }) => {
 			const sc = document.getElementById('pmuScroll'), old = document.getElementById('pmuBoard');
-			const r = window.__uhpMount = { room, wheels: [], keys: [], samples: [], ends: [], moves: 0, oldPaused: false, swaps: 0 };
+			const r = window.__uhpMount = { room, wheels: [], scrolls: [], keys: [], samples: [], ends: [], moves: 0, oldPaused: false, swaps: 0 };
 			let running = true, last = old, position = null;
 			const live = () => document.getElementById('pmuBoard');
 			const wheel = (e) => { r.wheels.push({ t: performance.now(), trusted: e.isTrusted }); position = [e.clientX, e.clientY]; };
 			// Native input can mount the room before the next paint; witness the initial hold after its wheel handler.
+			const scroll = () => r.scrolls.push(performance.now());
 			const held = () => { if (old.getAttribute('data-op') === 'wheel') r.oldPaused = true; };
 			const keydown = (e) => { if (e.key === 'Enter' || e.key === ' ') r.keys.push({ t: performance.now(), key: e.key, trusted: e.isTrusted, room: e.target.dataset.room }); };
 			const move = (e) => { if (position && (e.clientX !== position[0] || e.clientY !== position[1])) r.moves++; };
@@ -401,11 +401,11 @@ async function roomMountRace(t, f, label, park, rm) {
 				}
 				requestAnimationFrame(sample);
 			};
-			sc.addEventListener('wheel', wheel, { capture: true, passive: true }); sc.addEventListener('wheel', held, { passive: true });
+			sc.addEventListener('wheel', wheel, { capture: true, passive: true }); sc.addEventListener('wheel', held, { passive: true }); sc.addEventListener('scroll', scroll, { passive: true });
 			document.addEventListener('keydown', keydown, true); sc.addEventListener('pointermove', move, true);
 			document.addEventListener('pmu-op-end', end); requestAnimationFrame(sample);
 			r.stop = () => {
-				running = false; sc.removeEventListener('wheel', wheel, true); sc.removeEventListener('wheel', held); document.removeEventListener('keydown', keydown, true);
+				running = false; sc.removeEventListener('wheel', wheel, true); sc.removeEventListener('wheel', held); sc.removeEventListener('scroll', scroll); document.removeEventListener('keydown', keydown, true);
 				sc.removeEventListener('pointermove', move, true); document.removeEventListener('pmu-op-end', end);
 				const b = live(), card = b?.querySelector(':scope > .pmu-card:hover'), tools = card?.querySelector('.pmu-cardtools');
 				const hot = b?.querySelector(selector + ':hover'), id = hot?.dataset.prov;
@@ -419,9 +419,10 @@ async function roomMountRace(t, f, label, park, rm) {
 		}, { room, baseline, selector });
 		// Real inputs at a wall-clock cadence, independent of renderer acknowledgements: serial awaiting lets the
 		// mount stall the test driver and can accidentally create two bursts. Mouse coordinates never change.
-		const INPUTS = 203, inputs = [];
+		const INPUTS = 203, inputs = [], sent = [];
 		for (let i = 0; i < INPUTS; i++) {
 			if (i === 3) inputs.push(t.page.keyboard.press(key));
+			sent.push(performance.now());
 			inputs.push(t.page.mouse.wheel(0, i < 3 || i % 2 ? 1 : -1));
 			await new Promise((resolve) => setTimeout(resolve, 30));
 		}
@@ -430,17 +431,17 @@ async function roomMountRace(t, f, label, park, rm) {
 		const rec = await f.evaluate(() => window.__uhpMount.stop());
 		const first = rec.wheels[0]?.t, last = rec.wheels.at(-1)?.t;
 		const during = rec.samples.filter((s) => s.t >= first && s.t <= last);
-		const gaps = rec.wheels.slice(1).map((w, i) => w.t - rec.wheels[i].t), maxGap = Math.max(...gaps);
-		const burst = burstState(rec.wheels), burstBroke = burst.broke, burstDetail = burstBroke ? burstWhy(burst) : null;
+		const maxGap = burstState(rec.wheels).maxGap, driverGap = burstState(sent).maxGap;
+		const burst = burstState(holdInputs(rec.wheels, rec.scrolls)), burstBroke = burst.broke, burstDetail = burstBroke ? burstWhy(burst) : null;
 		const activated = rec.keys.some((k) => k.trusted && k.room === room && k.t > first && k.t < last);
 		const S = label + `R5 ${room} (${rm ? 'Reduced Motion spare' : 'motion on'}, ${key}): `;
-		const detail = `wheels ${rec.wheels.length}, max gap ${Math.round(maxGap)} ms, samples ${during.length}, swaps ${rec.swaps}, moves ${rec.moves}, target ${rec.targetHovered}, calibration scroll ${destinationTop}`;
+		const detail = `wheels ${rec.wheels.length}, max gap ${burst.maxGap} ms (wheel delivery ${maxGap} ms, driver ${driverGap} ms), samples ${during.length}, swaps ${rec.swaps}, moves ${rec.moves}, target ${rec.targetHovered}, calibration scroll ${destinationTop}`;
 		t.log(S + detail + ' | return ' + JSON.stringify({ ends: rec.ends, op: rec.op, cardLit: rec.cardLit, tools: rec.tools, provider: rec.provider }));
-		records.push({ room, attempt: attempt + 1, at, destinationTop, maxGap, rec });
+		records.push({ room, attempt: attempt + 1, at, destinationTop, maxGap, driverGap, burst, rec });
 		// A busy mount can delay event delivery past 150 ms while the already-queued wheel task precedes the timer.
 		// Chrome may coalesce queued wheel inputs while busy; at least 80% must reach the page. The pause must
 		// actually stay alive: an end before the last tick rejects this run, regardless of that delivery gap, and a
-		// driver gap over the rest (TB6 item 1) is not a stationary burst even when its timer was late.
+		// gap in delivered pause input over the rest is also unqualified.
 		const qualified = (String(t.args.mountNoPause || '') === '1' || rec.oldPaused) && activated && rec.wheels.length >= INPUTS * 0.8 && rec.wheels.every((w) => w.trusted) && !burstBroke && rec.ends.every((e) => e.t > last) && !rec.moves && during.length > 10 && rec.swaps > 0 && rec.liveRoom === room && rec.targetHovered && destinationTop === 0;
 		if (!qualified && attempt < 2) { t.log(S + `unjudgeable attempt ${attempt + 1}; repeat the same input route: ` + detail); continue; }
 		await t.check(S + 'could judge trusted keyboard mount within one stationary wheel burst', qualified, detail);
@@ -885,7 +886,7 @@ async function wheelProxies(t, f, label, park) {
 		const r = await f.evaluate(() => window.__usageProxies.stop());
 		const first = r.wheels[0], moved = r.scrolls.find((s) => s.top > first?.top);
 		const last = Math.max(r.wheels.at(-1)?.t, r.scrolls.at(-1)?.t);
-		const burst = burstState(r.wheels), burstDetail = burst.broke ? burstWhy(burst) : null;
+		const burst = burstState(holdInputs(r.wheels, r.scrolls)), burstDetail = burst.broke ? burstWhy(burst) : null;
 		const held = r.frames.filter((s) => s.top > first?.top && s.t >= moved?.t && s.t < last + 130);
 		const before = first?.layers.filter((l) => l.opacity > 0.05 && l.on === (kind === 'settled glow')) || [];
 		const bright = held.flatMap((s) => s.layers.filter((l) => l.opacity > 0.01).map((l) => ({ ...l, t: s.t, top: s.top })));
@@ -990,7 +991,7 @@ export default async function (t) {
 			const res = { r0: [], r1: [], r2: [], burst: [] };
 			const at0 = await f.evaluate(() => { const p = document.querySelector('.page.active') || document.body, r = p.getBoundingClientRect(); return { x: Math.round(r.left + r.width / 2), y: Math.round(r.top + r.height * 0.55) }; });
 			for (let w = 0; w < TRIES; w++) {
-				let rec, rest, at, j, short = [];
+				let rec, rest, at, j, driverGap, short = [];
 				for (let attempt = 0; attempt < 3; attempt++) {
 					await park();
 					await t.page.waitForTimeout(500);
@@ -1000,7 +1001,13 @@ export default async function (t) {
 					await t.page.waitForTimeout(1200);
 					rest = await f.evaluate(() => window.__uhp.state());
 					await f.evaluate(() => window.__uhp.start());
-					for (let i = 0; i < TICKS; i++) { await t.page.mouse.wheel(0, 40); await t.page.waitForTimeout(GAP); }
+					const sent = [];
+					for (let i = 0; i < TICKS; i++) {
+						sent.push(performance.now());
+						await t.page.mouse.wheel(0, 40);
+						await t.page.waitForTimeout(GAP);
+					}
+					driverGap = burstState(sent).maxGap;
 					await t.page.waitForTimeout(800);
 					rec = await f.evaluate(() => window.__uhp.stop());
 					const moved = rec.frames.length ? rec.frames[rec.frames.length - 1].top - rec.frames[0].top : 0;
@@ -1010,16 +1017,16 @@ export default async function (t) {
 				const moved = rec.frames.length ? rec.frames[rec.frames.length - 1].top - rec.frames[0].top : 0;
 				if (!rec.wheels.length || moved < TICKS * 40 * 0.6) { await t.check(`${S}window ${w + 1}: could judge: the wheel scrolled the board`, false, short.join('; ')); continue; }
 				j = judge(rec, { rest: rest.card, back: BACK });
-				dump.push({ surface, look, window: w + 1, rest, at, judged: j, rec });
+				dump.push({ surface, look, window: w + 1, rest, at, judged: j, driverGap, rec });
 				res.r0.push(!!(rest.card && rest.lit && rest.tools > 0.5));
 				res.r1.push(j.r1); res.r2.push(j.r2); res.burst.push(j.burst);
-				t.log(`${S}window ${w + 1}: at rest card ${rest.card} lit ${rest.lit} tools ${rest.tools} | wheel ${j.span.wheels} events over ${j.span.wheel} ms, scroll ${j.span.scrolls} events ending ${j.span.tail} ms after the last wheel, ${moved} px | during: ${j.r1.cardsPassed} cards under the pointer, ${j.r1.ins} hover-in transitions (${j.r1.insProps.join(', ') || 'none'}) on ${j.r1.insCards.join(',') || 'no card'}, ${j.r1.litFrames} of ${j.r1.frames} frames retain a card engine light or visible proxy, ${j.r1.toolFrames} retain shown tools | after: back in ${j.r2.ms === null ? 'never (800 ms)' : j.r2.ms + ' ms'} on ${j.r2.card} (light ${j.r2.light ?? 'never'}, tools ${j.r2.tools ?? 'never'}; pause end ${j.r2.end ?? 'never'} ms after the rest, host timer late ${j.r2.late ?? '?'} ms, excess ${j.r2.work ?? '?'} ms, timer entry gap ${j.r2.entryGap ?? '?'} ms, callback to marker clear ${j.r2.callbackWork ?? '?'} ms, back ${j.r2.back ?? 'never'} ms = ${j.r2.backFrames ?? '?'} drawn frames)${j.r2.long.length ? ' | long frames after: ' + j.r2.long.join(' / ') : ''}${short.length ? ' | taken again: ' + short.join('; ') : ''}`);
+				t.log(`${S}window ${w + 1}: at rest card ${rest.card} lit ${rest.lit} tools ${rest.tools} | wheel ${j.span.wheels} events over ${j.span.wheel} ms, max gap ${j.burst.maxGap} ms (wheel delivery ${j.wheelGap} ms, driver ${driverGap} ms), scroll ${j.span.scrolls} events ending ${j.span.tail} ms after the last wheel, ${moved} px | during: ${j.r1.cardsPassed} cards under the pointer, ${j.r1.ins} hover-in transitions (${j.r1.insProps.join(', ') || 'none'}) on ${j.r1.insCards.join(',') || 'no card'}, ${j.r1.litFrames} of ${j.r1.frames} frames retain a card engine light or visible proxy, ${j.r1.toolFrames} retain shown tools | after: back in ${j.r2.ms === null ? 'never (800 ms)' : j.r2.ms + ' ms'} on ${j.r2.card} (light ${j.r2.light ?? 'never'}, tools ${j.r2.tools ?? 'never'}, proxy ${j.r2.proxyRequired ? j.r2.proxy ?? 'never' : 'n/a'}; pause end ${j.r2.end ?? 'never'} ms after the rest, host timer late ${j.r2.late ?? '?'} ms, excess ${j.r2.work ?? '?'} ms, timer entry gap ${j.r2.entryGap ?? '?'} ms, callback to marker clear ${j.r2.callbackWork ?? '?'} ms, back ${j.r2.back ?? 'never'} ms = ${j.r2.backFrames ?? '?'} drawn frames)${j.r2.long.length ? ' | long frames after: ' + j.r2.long.join(' / ') : ''}${short.length ? ' | taken again: ' + short.join('; ') : ''}`);
 				if (t.args.dump) writeFileSync(String(t.args.dump), JSON.stringify(dump));
 			}
 			await park();
 			const n = res.r1.length;
 			await t.check(S + `could judge: at rest the card under the pointer is lit and shows its tools (${res.r0.filter(Boolean).length} of ${res.r0.length} windows)`, n === TRIES && res.r0.every(Boolean), `windows judged ${n} of ${TRIES}`);
-			// TB6 item 1: a driver gap longer than the rest lets the pause end correctly mid-burst. The burst row FAILS
+			// A gap in delivered pause inputs longer than the rest lets the pause end correctly mid-burst. The burst row FAILS
 			// (could not judge), and the rows that depend on the pause surviving the whole burst are skipped with the gap
 			// in a SKIP log line, so one host-timing miss reads as one failure, not five.
 			await t.check(S + `could judge: each wheel burst kept the pause alive (no gap over the ${REST_MS} ms rest)`, n === TRIES && res.burst.length === TRIES && res.burst.every((b) => !b.broke),
@@ -1033,7 +1040,7 @@ export default async function (t) {
 					res.r1.map((r, i) => `w${i + 1}: ${r.ins} hover-in transitions, ${r.litFrames} lit frames, ${r.toolFrames} shown-tool frames, marker coverage ${r.coverage}, ${r.frames} sampled frames, ${r.cardsPassed} cards passed`).join('; '));
 				await t.check(S + `after the wheel, the pause ends at its ${REST_MS} ms rest and the highlight is back within two frames without a move (outer cap ${BACK} ms)`, !burstBroke && n > 0 && res.r2.every((r) => r.ok),
 					burstBroke ? burstDetail :
-					res.r2.map((r, i) => `w${i + 1}: ${r.ms === null ? 'never' : r.ms + ' ms'} (${r.card}: light ${r.light ?? 'never'}, tools ${r.tools ?? 'never'}; pause end ${r.end ?? 'never'} ms, host timer late ${r.late ?? '?'} ms, excess ${r.work ?? '?'} ms, entry gap ${r.entryGap ?? '?'} ms, callback work ${r.callbackWork ?? '?'} ms, back ${r.back ?? 'never'} ms = ${r.backFrames ?? '?'} drawn frames${r.early ? `, and ${r.early} samples showed the return before the end` : ''})`).join('; '));
+					res.r2.map((r, i) => `w${i + 1}: ${r.ms === null ? 'never' : r.ms + ' ms'} (${r.card}: light ${r.light ?? 'never'}, tools ${r.tools ?? 'never'}, proxy ${r.proxyRequired ? r.proxy ?? 'never' : 'n/a'}; pause end ${r.end ?? 'never'} ms, host timer late ${r.late ?? '?'} ms, excess ${r.work ?? '?'} ms, entry gap ${r.entryGap ?? '?'} ms, callback work ${r.callbackWork ?? '?'} ms, back ${r.back ?? 'never'} ms = ${r.backFrames ?? '?'} drawn frames${r.early ? `, and ${r.early} samples showed the return before the end` : ''})`).join('; '));
 			}
 
 			// R3: keyboard focus is not paused. The board's first card takes keyboard focus (a key pressed first, so the

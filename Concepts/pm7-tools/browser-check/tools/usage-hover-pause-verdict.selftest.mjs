@@ -207,6 +207,7 @@ test('R125 #1: a few ms of the page\'s own return work pass, a long fit does not
 test('TB6 item 1: a 258 ms driver gap is reported as a broken burst; a 30 ms cadence is not',()=>{
  const r=make();
  r.wheels=[100,130,160,418,448,478,508];
+ r.scrolls=[120,420,520];
  assert.deepEqual(j(r).burst,{maxGap:258,rest:150,broke:true});
  assert.equal(j(make()).burst.broke,false);
 });
@@ -274,4 +275,16 @@ test('a glow may start at zero opacity if it visibly returns before the outer ca
  assert.equal(j(r).r2.ok, true);
  for (const f of r.frames) f.proxyBack = f.t >= 930;
  assert.equal(j(r).r2.ok, false);
+});
+
+test('TB6 follow-up 5: a scroll can bridge the gap between two wheels', () => {
+ const r = make();
+ r.wheels = [100, 130, 160, 320, 420, 500];
+ r.scrolls = [120, 220, 340, 440, 520];
+ const v = j(r);
+ assert.equal(v.r1.ok, true);
+ assert.equal(v.r2.ok, true);
+ assert.equal(v.burst.broke, false);
+ r.scrolls = r.scrolls.filter(t => t !== 220);
+ assert.equal(j(r).burst.broke, true);
 });
