@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
 // node tools/usage-hover-pause-verdict.selftest.mjs [check file]: the argument runs the same assertions against another
 // revision of the check, which is how each item's RED run shows the old verdict misjudging a constructed record.
-const { judge, outerCap, uninterruptedIntent } = await import(process.argv[2] ? pathToFileURL(resolve(process.argv[2])).href : '../checks/usage-hover-pause.check.mjs');
+const { judge, outerCap, uninterruptedIntent, judgeShortHandoff } = await import(process.argv[2] ? pathToFileURL(resolve(process.argv[2])).href : '../checks/usage-hover-pause.check.mjs');
 // R125 #6: the probe's deadline comes from the record's last input, as the recorder arms it (520 + 150). The old
 // fixture injected 650 and so credited 20 ms of lateness in the nominal control though the probe fired at the real
 // deadline; a control's lateness must be the queue's, not the fixture's.
@@ -287,4 +287,24 @@ test('TB6 follow-up 5: a scroll can bridge the gap between two wheels', () => {
  assert.equal(v.burst.broke, false);
  r.scrolls = r.scrolls.filter(t => t !== 220);
  assert.equal(j(r).burst.broke, true);
+});
+
+test('V6 P5: only a witnessed early idle release qualifies, and it must retain the pause', () => {
+ const r = {
+  mode: 'move', focused: 'health', pre: { top: 0 }, wheels: [{t: 101, trusted: true}], moves: 0,
+  scrolls: [{t: 103, top: 1, op: 'wheel'}],
+  keys: [{t: 113, key: 'm', trusted: true, focused: 'health'}, {t: 139, key: 'Escape', trusted: true}],
+  key: 'm', point: [50, 50],
+  markers: [
+   {t: 127, gesture: {kb: true, type: 'move'}, op: 'move', dragHeld: true, handoff: true, hovered: true},
+   {t: 155, op: 'wheel', dragHeld: false, hovered: true}
+  ],
+  frames: [{t: 160, op: 'wheel', hovered: true}],
+  ends: [{t: 253, live: true, gesture: false, op: null, point: [50, 50]}], after: {op: null, hovered: true}
+ };
+ assert.equal(judgeShortHandoff(r).ok, true);
+ r.markers[1].op = null;
+ assert.deepEqual([judgeShortHandoff(r).qualified, judgeShortHandoff(r).ok], [true, false]);
+ r.markers[1].t = 260;
+ assert.equal(judgeShortHandoff(r).qualified, false);
 });

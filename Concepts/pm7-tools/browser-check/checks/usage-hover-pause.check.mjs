@@ -10,7 +10,8 @@
 // R107 retains pointer-departure checks; R112 retains long keyboard M/R ownership and unchanged main provider state.
 // R113 rows cover main's plot-at-limit/readout and pointer-tooltip behavior, ordinary compact donut entry, neutral
 // digit-strip rolls (NieR skip is explicit), released-gesture handoff and natural Live beats after real scroll cleanup.
-// R116 P5's short idle order is covered by tools/usage-hover-pause-handoff.selftest.mjs, which executes authored source.
+// R116 P5: --set shortOnly=1 witnesses trusted M/R and Escape before the original rest expires. The handoff self-test
+// exercises the controlled order in the authored source.
 // --set looks=basic-dark,glass-light --set rm=1 --set chartOnly=1 --set r113Only=1 --set dump=<file.json>
 // Fixed stopping bar: only a real check falsely passing on real input or a demonstrated product bug stops the lane;
 // other tool findings go on TOOL-ISSUES.md. Native input prerequisites and reduced-motion semantics remain explicit.
@@ -688,20 +689,40 @@ async function pointerDeparture(t, f, label, park) {
 }
 
 // R112: keyboard gestures need no pointer press/move, so they can take over an outstanding wheel return.
-async function keyboardPause(t, f, label, park) {
+export function judgeShortHandoff(rec) {
+	const wheel = rec.wheels[0], press = rec.keys.find((k) => k.key === rec.key), escape = rec.keys.find((k) => k.key === 'Escape');
+	const last = rec.scrolls.filter((s) => s.t < press?.t && s.op === 'wheel').at(-1);
+	const due = last ? last.t + REST_MS : null;
+	const entered = rec.markers.find((x) => x.t >= press?.t && x.t < escape?.t &&
+		x.gesture?.kb && x.gesture.type === rec.mode && x.dragHeld && x.op === rec.mode && x.handoff);
+	// The body releases the drag flag at idle sync, independently of what the board writes for data-op.
+	const idle = rec.markers.find((x) => x.t >= escape?.t && !x.gesture && !x.dragHeld);
+	const qualified = !!(wheel?.trusted && rec.wheels.length === 1 && last && last.top > rec.pre.top &&
+		press?.trusted && press.focused === 'health' && escape?.trusted && entered?.hovered &&
+		idle && idle.t < due && !rec.moves);
+	const held = [...rec.markers, ...rec.frames].filter((x) => x.t >= idle?.t && x.t < due - 2);
+	const [end] = rec.ends;
+	const ok = qualified && idle.op === 'wheel' && held.every((x) => x.op === 'wheel' && x.hovered) &&
+		rec.ends.length === 1 && end.live && !end.op && !end.gesture && end.t >= due - 2 && end.t <= due + 250 &&
+		JSON.stringify(end.point) === JSON.stringify(rec.point) && rec.after.hovered && !rec.after.op && !rec.after.gesture;
+	return { qualified, ok, due, entered: entered?.t ?? null, idle: idle?.t ?? null,
+		escape: escape?.t ?? null, press: press?.t ?? null, held: held.length };
+}
+
+async function keyboardPause(t, f, label, park, short = false) {
 	await park();
 	const liveWasOn = await f.evaluate(() => { const on = PMU.live.on(); PMU.live.pause(); PM7_USAGE.setRoomDetail('overview', 'glance'); return on; });
 	await t.page.waitForTimeout(4500);
 	// Keep the gesture's cards and a real provider mark. Laying out unrelated widgets can delay Chrome's second tick.
-	await f.evaluate(() => {
+	await f.evaluate((short) => {
 		const b = PMU.board, board = document.getElementById('pmuBoard');
 		const provider = board.querySelector('.pmu-skycol[data-prov]')?.dataset.prov;
 		const row = [...board.querySelectorAll('.pmu-irow[data-prov]')].find((el) => el.dataset.prov === provider);
 		const mark = [...board.querySelectorAll('.pmu-mark[data-prov]')].find((el) => el.dataset.prov !== provider);
-		const witness = (row || mark)?.closest('.pmu-card')?.dataset.widget;
+		const witness = !short && (row || mark)?.closest('.pmu-card')?.dataset.widget;
 		const keep = new Set(['health', 'ov-skyline', witness]);
 		b.visible().filter((id) => !keep.has(id)).forEach((id) => b.setVisible(id, false));
-	});
+	}, short);
 	await t.page.waitForTimeout(1800);
 	const minHeight = await f.evaluate(() => {
 		const board = document.getElementById('pmuBoard'), pane = document.getElementById('pmuScroll');
@@ -710,8 +731,13 @@ async function keyboardPause(t, f, label, park) {
 		return prior;
 	});
 	const records = [];
-	for (const [key, mode] of [['m', 'move'], ['r', 'resize']]) {
-		const S = label + `R112 ${mode}: `;
+	const tries = short ? 3 : 1;
+	const done = new Set();
+	const cases = [['m', 'move'], ['r', 'resize']].flatMap(([key, mode]) =>
+		Array.from({ length: tries }, (_, attempt) => ({ key, mode, attempt: attempt + 1 })));
+	for (const { key, mode, attempt } of cases) {
+		if (done.has(mode)) continue;
+		const S = label + (short ? 'R116 P5 short ' : 'R112 ') + mode + ': ';
 		await park();
 		await f.evaluate(() => { document.getElementById('pmuScroll').scrollTop = 0; });
 		await f.locator('#pmuBoard > .pmu-card[data-widget="health"]').focus();
@@ -720,35 +746,76 @@ async function keyboardPause(t, f, label, park) {
 		if (!box || !pane) { await t.check(S + 'could judge: Skyline provider and focused card exist', false); continue; }
 		await t.page.mouse.move(box.x + box.width / 2, (Math.max(box.y, pane.y) + Math.min(box.y + box.height, pane.y + pane.height)) / 2);
 		await t.page.waitForTimeout(900);
-		await f.evaluate(({key, mode}) => {
+		await f.evaluate(({ key, mode, short }) => {
 			const sc = document.getElementById('pmuScroll'), board = () => document.getElementById('pmuBoard');
 			const target = board().querySelector('.pmu-card[data-widget="ov-skyline"] .pmu-skycol[data-prov]:hover');
 			const track = target?.querySelector('.pmu-skytrack');
 			const read = () => {
 				const b = board(), dim = [...b.querySelectorAll('.is-hl-dim')], on = [...b.querySelectorAll('.is-hl-on')];
-				return { t: performance.now(), op: b.getAttribute('data-op'), gesture: PMU.board.gesture(), top: sc.scrollTop, shadow: track && getComputedStyle(track).boxShadow,
+				return { t: performance.now(), op: b.getAttribute('data-op'), gesture: PMU.board.gesture(),
+					handoff: b.hasAttribute('data-wheel-handoff'), dragHeld: document.body.classList.contains('pm-resizing'), top: sc.scrollTop, shadow: track && getComputedStyle(track).boxShadow,
 					hovered: !!target?.isConnected && target.closest('.pmu-board') === b && target.matches(':hover'),
 					dim: dim.length, on: on.length, correct: !!target && dim.every((el) => el.dataset.prov !== target.dataset.prov) && on.every((el) => el.dataset.prov === target.dataset.prov),
 					eligibleDim: [...b.querySelectorAll('.pmu-mark[data-prov]')].filter((el) => el.dataset.prov !== target?.dataset.prov).length,
 					eligibleOn: [...b.querySelectorAll('.pmu-irow[data-prov]')].filter((el) => el.dataset.prov === target?.dataset.prov).length };
 			};
 			const r = window.__uhpKeyboard = { key, mode, pre: read(), focused: document.activeElement?.dataset.widget, wheels: [], scrolls: [], keys: [], ends: [], moves: 0, frames: [], markers: [] };
-			let running = true, point = null;
+			let running = true, point = null, notifyScroll, notifyMarker;
+			const shortScroll = short && new Promise((resolve) => { notifyScroll = resolve; });
+			const shortMarker = short && new Promise((resolve) => { notifyMarker = resolve; });
+			if (short) r.wait = (kind) => new Promise((resolve) => {
+				const timeout = setTimeout(() => resolve(false), 150);
+				(kind === 'scroll' ? shortScroll : shortMarker).then(() => { clearTimeout(timeout); resolve(true); });
+			});
 			const wheel = (e) => {
 				point = [e.clientX, e.clientY];
 				r.wheels.push({t: performance.now(), trusted: e.isTrusted, ...read()});
 			};
-			const scroll = () => r.scrolls.push({ t: performance.now(), top: sc.scrollTop, op: board().getAttribute('data-op') });
+			const scroll = () => {
+				const sample = { t: performance.now(), top: sc.scrollTop, op: board().getAttribute('data-op') };
+				r.scrolls.push(sample);
+				if (sample.op === 'wheel' && sample.top > r.pre.top) notifyScroll?.();
+			};
 			const keydown = (e) => { if (e.key === key || e.key === 'Escape') r.keys.push({t: performance.now(), key: e.key, trusted: e.isTrusted, focused: e.target.dataset.widget}); };
 			const move = (e) => { if (point && (e.clientX !== point[0] || e.clientY !== point[1])) r.moves++; };
 			const end = (e) => r.ends.push({t: performance.now(), live: e.detail?.board === board(), gesture: !!PMU.board.gesture(), op: board().getAttribute('data-op'), point: e.detail?.point});
 			const frame = () => { if (!running) return; r.frames.push(read()); requestAnimationFrame(frame); };
 			sc.addEventListener('wheel', wheel, {passive: true}); sc.addEventListener('scroll', scroll, {passive: true}); document.addEventListener('keydown', keydown, true); document.addEventListener('pointermove', move, true); document.addEventListener('pmu-op-end', end);
-			const markers = new MutationObserver(() => r.markers.push(read()));
-			markers.observe(board(), { attributes: true, attributeFilter: ['data-op'] });
+			const markers = new MutationObserver(() => {
+				const sample = read();
+				r.markers.push(sample);
+				if (sample.op === mode && sample.gesture?.kb && sample.handoff) notifyMarker?.();
+			});
+			markers.observe(board(), { attributes: true, attributeFilter: short ? ['data-op', 'data-wheel-handoff'] : ['data-op'] });
+			if (short) markers.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 			requestAnimationFrame(frame);
-			r.stop = () => { running = false; markers.disconnect(); sc.removeEventListener('wheel', wheel); sc.removeEventListener('scroll', scroll); document.removeEventListener('keydown', keydown, true); document.removeEventListener('pointermove', move, true); document.removeEventListener('pmu-op-end', end); return {...r, stop: undefined, point, after: read()}; };
-		}, {key, mode});
+			r.stop = () => { running = false; markers.disconnect(); sc.removeEventListener('wheel', wheel); sc.removeEventListener('scroll', scroll); document.removeEventListener('keydown', keydown, true); document.removeEventListener('pointermove', move, true); document.removeEventListener('pmu-op-end', end); return {...r, stop: undefined, wait: undefined, point, after: read()}; };
+		}, { key, mode, short });
+		if (short) {
+			const [rolled] = await Promise.all([
+				f.evaluate(() => window.__uhpKeyboard.wait('scroll')),
+				t.page.mouse.wheel(0, 1)
+			]);
+			if (rolled) {
+				const marker = f.evaluate(() => window.__uhpKeyboard.wait('marker'));
+				await t.page.keyboard.press(key);
+				await marker;
+				await t.page.keyboard.press('Escape');
+			}
+			await t.page.waitForTimeout(500);
+			const rec = await f.evaluate(() => window.__uhpKeyboard.stop());
+			const verdict = judgeShortHandoff(rec);
+			records.push({ attempt, rec, verdict });
+			const detail = JSON.stringify({ attempt, wheels: rec.wheels.map((x) => x.t), scrolls: rec.scrolls, ...verdict });
+			t.log(S + detail);
+			if (!verdict.qualified && attempt < tries) continue;
+			await t.check(S + 'could judge trusted M/R and idle release before the original wheel deadline', verdict.qualified, detail);
+			if (verdict.qualified) {
+				done.add(mode);
+				await t.check(S + 'wheel suppression survives idle release and ends once at the original deadline', verdict.ok, detail);
+			}
+			continue;
+		}
 		await t.page.mouse.wheel(0, 1);
 		// TB6 item 3: the real VM abort in stream F's batch 13 was this wait (usage-hover-pause.check.mjs:570 then), not
 		// only pointerDeparture's. Catch it, mark the group could not judge, and let the rest of the check run.
@@ -939,6 +1006,12 @@ export default async function (t) {
 			await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 }).catch(() => {});
 			await f.evaluate(() => PM_PAGES.go('usage'));
 			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 8000));
+			if (String(t.args.shortOnly || '') === '1') {
+				const short = await keyboardPause(t, f, S, park, true);
+				dump.push({ surface, look, short });
+				if (t.args.dump) writeFileSync(String(t.args.dump), JSON.stringify(dump));
+				continue;
+			}
 			const proxyOnly = String(t.args.proxyOnly || '') === '1';
 			if (!holdOnly && !rm && /^(basic|friendly|glass)-/.test(look) && (proxyOnly ||
 				!['narrowOnly', 'chartOnly', 'raceOnly', 'mountOnly', 'departureOnly', 'keyboardOnly', 'r113Only'].some((key) => String(t.args[key] || '') === '1'))) {
