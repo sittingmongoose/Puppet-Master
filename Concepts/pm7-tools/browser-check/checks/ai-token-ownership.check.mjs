@@ -6,20 +6,36 @@ const LAYER = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)';
 
 const settled = (f, screen) => f.waitForFunction(([L, s]) => {
  const l = document.querySelector(L);
- return !!l && (!s || l.getAttribute('data-screen') === s) && l.getAttribute('data-screen') === window.O55.S.sess.screen && !document.documentElement.hasAttribute('data-o55-vt') && !l.matches('.o55-hold, .o55-entering');
+ if (!l) return false;
+ const current = l.getAttribute('data-screen');
+ return (!s || (current === s && l.checkVisibility({ visibilityProperty: true, opacityProperty: true })))
+  && current === window.O55.S.sess?.screen
+  && !document.documentElement.hasAttribute('data-o55-vt')
+  && !l.matches('.o55-hold, .o55-entering');
 }, [LAYER, screen], { timeout: 15000 });
 async function openAt(t, f, screen) {
-	await f.evaluate(() => window.O55.studio.open('onboarding'));
-	await f.waitForSelector('#pmds-sheet [data-pmds-do="open-screen"]', { timeout: 15000 });
-	await f.click('#pmds-sheet [data-pmds-do="pick-base"][data-arg="fresh"]');
-	for (let i = 0; i < 12; i++) {
-		const on = f.locator('#pmds-sheet [data-pmds-do="pick-twist"][aria-checked="true"]');
-		if (!(await on.count())) break;
-		await on.first().click(); await t.page.waitForTimeout(150);
+	const failures = [];
+	for (let attempt = 1; attempt <= 2; attempt++) {
+		try {
+			await f.evaluate(() => window.O55.studio.open('onboarding'));
+			await f.waitForSelector('#pmds-sheet [data-pmds-do="open-screen"]', { timeout: 15000 });
+			await f.click('#pmds-sheet [data-pmds-do="pick-base"][data-arg="fresh"]');
+			for (let i = 0; i < 12; i++) {
+				const on = f.locator('#pmds-sheet [data-pmds-do="pick-twist"][aria-checked="true"]');
+				if (!(await on.count())) break;
+				await on.first().click(); await t.page.waitForTimeout(150);
+			}
+			const row = f.locator(`#pmds-sheet [data-pmds-do="open-screen"][data-arg="${screen}"]`);
+			await row.scrollIntoViewIfNeeded(); await row.click();
+			await settled(f, screen);
+			return true;
+		} catch (error) {
+			failures.push(`attempt ${attempt}: ${error.message.split('\n')[0]}`);
+			if (attempt === 1) t.log(`Demo Studio entry for ${screen} did not settle, retrying once: ${failures[0]}`);
+		}
 	}
-	const row = f.locator(`#pmds-sheet [data-pmds-do="open-screen"][data-arg="${screen}"]`);
-	await row.scrollIntoViewIfNeeded(); await row.click();
-	return settled(f, screen).then(() => true, () => false);
+	await t.check(`SETUP: Demo Studio opens ${screen}`, false, failures.join(' | '));
+	return false;
 }
 async function click(t, f, sel) {
 	await settled(f);
@@ -49,7 +65,7 @@ export default async function(t) {
    const f = await t.app.open(); await t.app.look(look);
    await t.emulate({ reducedMotion:t.args.motion === 'reduced' ? 'reduce' : 'no-preference' });
    if(t.args.motion === 'reduced') await t.check('Reduced Motion is applied',await f.evaluate(()=>matchMedia('(prefers-reduced-motion: reduce)').matches));
-   await openAt(t,f,'ai');
+   if (!(await openAt(t,f,'ai'))) return;
    await wording(t,f,mode);
    const row = '[data-key="pv-cursor"] ';
    await f.locator(LAYER+' '+row+'[data-o55-do="key"]').waitFor({state:'visible'});
@@ -133,7 +149,8 @@ export default async function(t) {
    }
   });
   if(t.args.only !== 'ai') await t.step(`${look} w${mode} token abandoned`,async()=>{
-   const f=await t.app.open();await t.app.look(look);await openAt(t,f,'online-service');
+   const f=await t.app.open();await t.app.look(look);
+   if (!(await openAt(t,f,'online-service'))) return;
    await wording(t,f,mode);
    await click(t,f,'[data-o55-do="others"]');await click(t,f,'[data-o55-do="pick"][data-arg="github_enterprise"]');await works(t,f);await click(t,f,'.o55-primary');await f.waitForFunction(()=>O55.S.sess.screen==='online-signin');await settled(f,'online-signin');
    await click(t,f,'[data-o55-do="tokenOn"]');

@@ -69,10 +69,12 @@
  *      starts 5 s late), pod-delay-2s (2 s late), pod-twitch (2 s late, and the Pod jumps off the control for 40 ms
  *      every 400 ms), pod-rolebutton (2 s late, over transcript buttons rebuilt as div[role=button]) and pod-twitch-alone
  *      (no late fade: for 2.4 s after a scroll the Pod jumps off-screen for two frames every 200 ms, its data-shy cleared
- *      and set again 90 ms after it returns) and pod-late-attr (data-shy itself set just past the shy step's allowance, the
- *      check plus its slack and the longest frame gap, by one frame and 40 ms) are real overlaps a person would see, and
- *      must fail it; so must pod-shyhost-typo (the page's SHY_HOST reads 'buton') and
- *      pod-declared-slow (the page declares a 2000 ms fade), which run on an edited copy of the page.
+ *      and set again 90 ms after it returns) must fail it. pod-late-attr holds a single data-shy request until 250 ms
+ *      after a probe control enters the Pod's box. The data-shy deadline must be its only failure.
+ *      The declaration controls pod-shyhost-typo (SHY_HOST reads 'buton') and pod-declared-slow (2000 ms fade)
+ *      must also fail. Both run on an edited copy of the page.
+ *      The overlap monitor also limits the total above-target exposure across episodes in a rolling window.
+ *      18b checks the running clear wait after three confirmed hits under the Pod.
  *      --cpu <rate> throttles the page's CPU (CDP) for check 18.
  *   19 the chat header's status word wears its mark's tone (nine statuses; three themes).
  *   console: no warnings, errors or page errors.
@@ -1721,13 +1723,20 @@ for (const theme of ['basic-dark', 'basic-light', 'retro-light', 'nier-dark'].fi
    Pod for a few frames (at most 150 ms past the deadline at 1x in three clean runs on Nas1, 80 ms at 6x CPU throttling; see KIT-BATCH4). The data-shy step itself keeps
    its per-stretch deadline for the same reason: data-shy is off on a clean page when a control comes under the Pod
    during the clear wait.
-   FO-76: the Activity wrap holds a hidden, inert fit sizer with two copies of every Activity item. A control is counted
-   only when it is live: not inert (inert content is not hit-tested, so the product's own shy test never sees it either)
-   and painted (checkVisibility with visibility and opacity). The copies the broad selector would have found are
-   counted, not judged, and reported (MEASURE). */
+   FO-76: exclude the fit sizer inside the Activity wrap. Painted transcript controls still count when inert;
+   inert content can cover the same pixels even though the product's hit test skips it. The fixed controls keep
+   their reserved space clear of the Pod, including the hidden jump chip's slot.
+   T91/T126: 18b exercises the running clear timer. Consecutive confirmed hits on a control that stays under
+   the Pod must keep data-shy set until the clear wait elapses after the last hit. */
 const POD_SHY_SLACK_MS = 80, POD_FADE_SLACK_MS = 60, POD_TARGET_SLACK = .02;
+// A fixed arrival time: the product's 90 ms check plus 160 ms.
+const POD_LATE_ATTR_MS = 250;
+const POD_CLEAR_EARLY_SLACK_MS = 20, POD_CLEAR_LATE_SLACK_MS = 80;
 /* T58: past the episode's own deadline, how long the Pod may be above its shy target over a control in one episode */
 const POD_EPISODE_ALLOW_MS = 300;
+/* T92/T126: the batch 5 clean baseline peaked at 570 ms in 2 s (Nas1, 6x CPU).
+   Allow 40 ms beyond that recorded worst, about two 60 Hz frames plus rounding. */
+const POD_WINDOW_MS = 2000, POD_WINDOW_ALLOW_MS = 610;
 /* the values the product is meant to have (70-nier-pod-shy.js and nier-parts.js at the time of T57): the controls its shy
    test counts, its check interval, its clear wait, its fade and its shy opacity */
 const POD_EXPECTED = Object.freeze({ shyHost: 'button, a[href], summary, [role="button"], input, select, textarea', checkMs: 90, clearMs: 350, fadeMs: 180, target: .16 });
@@ -1749,14 +1758,172 @@ const POD_DECLARED = (() => {
   }
   return { found, drift };
 })();
+async function measurePodClearWait(page, readyMs) {
+  return page.evaluate(async readyMs => {
+    const pod = document.getElementById('o55np-pod');
+    if (!pod) return { error: 'no Pod' };
+    const waitFor = (pred, ms) => new Promise(resolve => {
+      const start = performance.now();
+      const poll = () => {
+        if (pred()) resolve(true);
+        else if (performance.now() - start >= ms) resolve(false);
+        else requestAnimationFrame(poll);
+      };
+      poll();
+    });
+    const isShy = () => pod.hasAttribute('data-shy');
+    let readySince = null, previousBox = '';
+    const isReady = () => {
+      const r = pod.getBoundingClientRect(), now = performance.now();
+      if (!r.width || !r.height || r.left < 0 || r.top < 0 || r.right > innerWidth || r.bottom > innerHeight || isShy()) {
+        readySince = null;
+        return false;
+      }
+      const signature = [r.left, r.top, r.width, r.height].map(Math.round).join(',');
+      if (readySince === null || signature !== previousBox) readySince = now;
+      previousBox = signature;
+      return now - readySince >= readyMs;
+    };
+    if (!await waitFor(isReady, 3500)) return { error: 'the Pod did not settle in view before the clear-wait probe' };
+
+    const host = PM56_TEST.host, box = pod.getBoundingClientRect();
+    if (!box.width || !box.height) return { error: 'the Pod has no box' };
+    const probe = document.createElement('button');
+    probe.type = 'button';
+    probe.tabIndex = -1;
+    probe.setAttribute('aria-hidden', 'true');
+    probe.style.cssText = 'position:fixed;margin:0;padding:0;border:0;z-index:2147483647;pointer-events:auto;opacity:1;visibility:visible;background:transparent;box-sizing:border-box;';
+    Object.assign(probe.style, {
+      left: box.left + 'px', top: box.top + 'px', width: box.width + 'px', height: box.height + 'px'
+    });
+    host.appendChild(probe);
+    const place = probe.getBoundingClientRect();
+    probe.style.left = (2 * box.left - place.left) + 'px';
+    probe.style.top = (2 * box.top - place.top) + 'px';
+
+    const scroll = () => window.dispatchEvent(new Event('scroll'));
+    const hits = [], requiredHits = 3;
+    let armed = false, on = false, offAt = null;
+    const changes = new MutationObserver(records => {
+      for (let i = 0; i < records.length; i++) {
+        const value = i + 1 < records.length ? records[i + 1].oldValue : pod.getAttribute('data-shy');
+        if (value !== null) on = true;
+        else if (on && offAt === null) offAt = performance.now();
+      }
+    });
+    changes.observe(pod, { attributes: true, attributeFilter: ['data-shy'], attributeOldValue: true });
+    const elementsFromPoint = document.elementsFromPoint;
+    const ownHitTest = Object.getOwnPropertyDescriptor(document, 'elementsFromPoint');
+    // Witness the product's own probe passing over the button. Leave the hit-test results intact.
+    document.elementsFromPoint = function (x, y) {
+      const stack = elementsFromPoint.call(this, x, y);
+      if (armed && stack.includes(probe)) {
+        armed = false;
+        hits.push(performance.now());
+        if (hits.length === requiredHits) queueMicrotask(() => probe.remove());
+      }
+      return stack;
+    };
+    try {
+      const center = elementsFromPoint.call(document, box.left + box.width / 2, box.top + box.height / 2);
+      if (!center.includes(probe)) return { error: 'the probe is outside the Pod hit-test grid' };
+      // Keep the control in place so an unrelated event cannot start the clear timer between hits.
+      for (let i = 0; i < requiredHits; i++) {
+        armed = true;
+        scroll();
+        if (!await waitFor(() => hits.length > i, 1500)) return { error: 'the product did not hit the probe', hit: i + 1 };
+        if (!isShy()) return { error: 'data-shy was absent after a confirmed hit', hit: i + 1 };
+      }
+      const lastHit = hits.at(-1);
+      const hitMs = hits.map(at => Math.round(at - hits[0]));
+      if (offAt !== null && offAt < lastHit) return { hitMs, error: 'data-shy cleared between confirmed hits' };
+      let previous = lastHit, gap = 0;
+      scroll();
+      const released = await waitFor(() => {
+        const now = performance.now();
+        gap = Math.max(gap, now - previous);
+        previous = now;
+        return offAt !== null;
+      }, 3000);
+      return {
+        hitMs,
+        heldMs: released ? Math.round(offAt - lastHit) : null,
+        gap: Math.round(gap)
+      };
+    } finally {
+      changes.disconnect();
+      if (ownHitTest) Object.defineProperty(document, 'elementsFromPoint', ownHitTest);
+      else delete document.elementsFromPoint;
+      probe.remove();
+    }
+  }, readyMs);
+}
+
+async function probeLateShyAttribute(page, holdMs) {
+  return page.evaluate(async holdMs => {
+    const pod = document.getElementById('o55np-pod');
+    const transcript = PM56_TEST.host.querySelector('.transcript');
+    if (!pod || !transcript || pod.hasAttribute('data-shy')) return { error: 'probe requires a resting Pod and transcript' };
+
+    const p = pod.getBoundingClientRect(), t = transcript.getBoundingClientRect();
+    const left = Math.max(p.left, t.left), top = Math.max(p.top, t.top);
+    const width = Math.min(p.right, t.right) - left, height = Math.min(p.bottom, t.bottom) - top;
+    if (width < 8 || height < 8) return { error: 'no room for a probe control under the Pod in the transcript' };
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = 'Late shy probe';
+    button.style.cssText = 'position:fixed;margin:0;padding:0;box-sizing:border-box;visibility:visible;opacity:1;pointer-events:auto;';
+    Object.assign(button.style, { left: left + 'px', top: top + 'px', width: width + 'px', height: height + 'px' });
+    transcript.appendChild(button);
+    const placed = button.getBoundingClientRect();
+    button.style.left = (2 * left - placed.left) + 'px';
+    button.style.top = (2 * top - placed.top) + 'px';
+    const setAttribute = pod.setAttribute;
+    let release, requestMs = null, appliedMs = null;
+    const started = performance.now();
+    pod.setAttribute = function (name, value) {
+      if (name !== 'data-shy') return setAttribute.call(this, name, value);
+      if (requestMs !== null && appliedMs === null) return;
+      if (appliedMs !== null) return setAttribute.call(this, name, value);
+      requestMs = performance.now() - started;
+      release = setTimeout(() => {
+        appliedMs = performance.now() - started;
+        setAttribute.call(this, name, value);
+      }, Math.max(0, holdMs - requestMs));
+    };
+    try {
+      if (!document.elementsFromPoint(left + width / 2, top + height / 2).includes(button)) {
+        return { error: 'probe button did not reach the hit-test grid' };
+      }
+      window.dispatchEvent(new Event('scroll'));
+      // Keep the normal opacity transition and hold the control still for it to finish.
+      await new Promise(resolve => setTimeout(resolve, holdMs + 220));
+      return { requestMs: requestMs === null ? null : Math.round(requestMs),
+        appliedMs: appliedMs === null ? null : Math.round(appliedMs) };
+    } finally {
+      clearTimeout(release);
+      delete pod.setAttribute;
+      button.remove();
+      window.dispatchEvent(new Event('scroll'));
+    }
+  }, holdMs);
+}
+
 if (THEMES.includes('nier-dark')) await sec('pod', async () => {
-  const bad = [], windows = [], unsettled = [], opaque = [], copies = []; let views = 0;
+  const bad = [], windows = [], unsettled = [], opaque = [], copies = [], clears = [], failureKinds = {}; let views = 0, lateProbe = null;
   check(!POD_DECLARED.drift.length, `18a Pod 042: the page declares the shy values pinned in the check (SHY_HOST, a ${POD_EXPECTED.checkMs} ms check, a ${POD_EXPECTED.clearMs} ms clear wait, a ${POD_EXPECTED.fadeMs} ms fade, opacity ${POD_EXPECTED.target}); the product's shy values changed otherwise: update POD_EXPECTED in a reviewed change to the check`, { drift: POD_DECLARED.drift, found: POD_DECLARED.found });
   const HOST = POD_EXPECTED.shyHost;
   for (const [w, h] of [[1440, 900], [1512, 982], [1920, 1100]]) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1, reducedMotion: REDUCED ? 'reduce' : 'no-preference' });
     await ctx.addInitScript(() => { try { localStorage.setItem('pm56-history-w', '320'); } catch (e) {} });
     const p = await ctx.newPage(); p.__ctx = ctx;
+    const recordMonitorFailures = async () => {
+      const late = await p.evaluate(() => window.__nvPodOpaque.over.splice(0));
+      for (const c of late) {
+        failureKinds[c.kind] = (failureKinds[c.kind] || 0) + 1;
+        bad.push(c.phase + ': ' + c.kind + ': ' + c.msg);
+      }
+    };
     try {
       watch(p);
       if (CPU !== null) { const cdp = await ctx.newCDPSession(p); await cdp.send('Emulation.setCPUThrottlingRate', { rate: Number(CPU) }); }
@@ -1770,6 +1937,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
       console.log('MEASURE Pod window ' + JSON.stringify(windows.at(-1)) + (CPU !== null ? ' cpu ' + CPU + 'x' : ''));
       await prepareWideHistory(p);
       await setTheme(p, 'nier-dark');
+      clears.push({ size: w + 'x' + h, ...await measurePodClearWait(p, POD_EXPECTED.clearMs + POD_EXPECTED.fadeMs) });
       await p.evaluate(() => window.PM56_DEMO.setVariant(1, 5));
       /* (the page-edit self-tests, pod-shyhost-typo and pod-declared-slow, add nothing here: their page is the edit) */
       if (SELFTEST && !PAGE_EDITS[SELFTEST]) await p.evaluate(kind => {
@@ -1796,28 +1964,6 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
         /* T58 (the round-2 review's twitch-alone2): no late fade; for 2.4 s after any scroll, every 200 ms the Pod jumps
            off-screen (3000 px right, where no control is under it) for two frames and its data-shy is cleared, and
            data-shy is set again 90 ms after the Pod returns. The 180 ms fade restarts every 200 ms and never ends */
-        /* T59 (the batch-3 worker's stated limit): data-shy itself late, set on the first frame after the shy step's own
-           allowance has run out by 40 ms (the product's check plus the slack and the longest frame gap since the control
-           came under the Pod, read from the check's own monitor), so the trap sits just past the slack, not far beyond
-           it. Removing data-shy cancels a set still held. Nothing else changes: the fade, its timing and the target are
-           the product's own */
-        else if (kind === 'pod-late-attr') {
-          const sa = Element.prototype.setAttribute, ra = Element.prototype.removeAttribute; let held = 0;
-          const isShy = (el, n) => n === 'data-shy' && el && el.id === 'o55np-pod';
-          Element.prototype.setAttribute = function (n, v) {
-            if (!isShy(this, n)) return sa.call(this, n, v);
-            if (held) return undefined;
-            const el = this;
-            const wait = () => { const M = window.__nvPodOpaque, e = M && M.ep;
-              if (!e || !e.under) { held = 0; sa.call(el, n, v); return; }
-              const now = performance.now(), gap = M.gaps.reduce((g, [t, d]) => (t >= e.spanFrom ? Math.max(g, d) : g), 0);
-              if (now - e.spanFrom > M.shyBy(gap) + 40) { held = requestAnimationFrame(() => { held = 0; sa.call(el, n, v); }); return; }
-              held = requestAnimationFrame(wait); };
-            held = requestAnimationFrame(wait);
-            return undefined;
-          };
-          Element.prototype.removeAttribute = function (n) { if (isShy(this, n) && held) { cancelAnimationFrame(held); held = 0; } return ra.call(this, n); };
-        }
         else if (kind === 'pod-twitch-alone') {
           let until = 0, running = false, quiet = false;
           const podEl = () => document.getElementById('o55np-pod');
@@ -1834,23 +1980,26 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
       /* T47 round 2: the fade-back mechanism, frame by frame (see above) */
       await p.evaluate(([HOST, P]) => {
         const M = window.__nvPodOpaque = { phase: '', ep: null, over: [], worst: 0, worstAt: '', worstLate: 0, worstLateAt: '', frames: 0, shyAt: null, shyFade: null, shyTiming: '', lastFrame: null, gaps: [] };
+        const samples = [];
+        let sampleMs = 0, wasOpaque = false, worstWindowMs = 0, worstWindowAt = '';
+        let windowFlaggedPhase = null, offscreenFlaggedPhase = null;
         const fadeOf = pod => { const cs = getComputedStyle(pod), list = v => v.split(',').map(x => x.trim()), ms = x => x.endsWith('ms') ? parseFloat(x) : parseFloat(x) * 1000;
           const props = list(cs.transitionProperty), durs = list(cs.transitionDuration), dels = list(cs.transitionDelay); let worst = 0, txt = 'none';
           props.forEach((pr, i) => { if (pr !== 'opacity' && pr !== 'all') return; const d = ms(durs[i % durs.length]), dl = ms(dels[i % dels.length]); if (d + dl >= worst) { worst = d + dl; txt = `${pr} ${Math.round(dl)} ms delay + ${Math.round(d)} ms`; } });
           return { total: worst, txt }; };
         const gapSince = t0 => M.gaps.reduce((g, [t, d]) => (t >= t0 ? Math.max(g, d) : g), 0);
-        M.shyBy = gap => P.checkMs + P.shySlack + gap;   /* (the shy step's allowance; T59's trap reads it) */
+        const shyBy = gap => P.checkMs + P.shySlack + gap;
         const flag = (kind, msg) => { const e = M.ep; if (!e || e.flagged[kind]) return; e.flagged[kind] = true; M.over.push({ phase: e.phase, kind, msg }); };
-        const underNow = () => {
-          const pod = document.getElementById('o55np-pod'), tr = document.querySelector('.transcript');
+        const underNow = (pod, Pb) => {
+          const tr = document.querySelector('.transcript');
           if (!pod || !tr || getComputedStyle(pod).display === 'none') return null;
-          const Pb = pod.getBoundingClientRect(), T = tr.getBoundingClientRect();
+          const T = tr.getBoundingClientRect();
           for (const e of tr.querySelectorAll(HOST)) {
             const q = e.getBoundingClientRect(); if (q.bottom < T.top || q.top > T.bottom) continue;
             const ix = Math.min(Pb.right, q.right) - Math.max(Pb.left, q.left), iy = Math.min(Pb.bottom, q.bottom) - Math.max(Pb.top, q.top);
             if (ix < 4 || iy < 4) continue;
             const cs = getComputedStyle(e); if (cs.visibility === 'hidden' || +cs.opacity === 0) continue;
-            if (e.closest('[inert]') || !e.checkVisibility({ visibilityProperty: true, opacityProperty: true })) continue; /* FO-76: live controls only */
+            if (e.closest('.activity-wrap .activity-sizer') || !e.checkVisibility({ visibilityProperty: true, opacityProperty: true })) continue;
             return (e.textContent || e.className).trim().slice(0, 24) + ' ' + Math.round(ix) + 'x' + Math.round(iy);
           }
           return null;
@@ -1866,14 +2015,45 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
           const now = performance.now(), pod = document.getElementById('o55np-pod'), dt = M.lastFrame === null ? 0 : now - M.lastFrame;
           if (M.lastFrame !== null) { M.gaps.push([now, now - M.lastFrame]); if (M.gaps.length > 600) M.gaps.splice(0, 300); }
           M.lastFrame = now; M.frames++;
-          const what = underNow(), op = pod ? +getComputedStyle(pod).opacity : 0, shy = !!pod && pod.hasAttribute('data-shy');
+          const bounds = pod?.getBoundingClientRect();
+          // A Pod entirely outside the viewport has left its seat. A brief return can
+          // fit under even a calibrated exposure budget, so report the departure itself.
+          if (M.phase && offscreenFlaggedPhase !== M.phase && bounds?.width > 0 && bounds.height > 0 &&
+              (bounds.right <= 0 || bounds.bottom <= 0 || bounds.left >= innerWidth || bounds.top >= innerHeight)) {
+            offscreenFlaggedPhase = M.phase;
+            M.over.push({ phase: M.phase, kind: 'offscreen', msg: 'the Pod left the viewport during a clearance view' });
+          }
+          const what = underNow(pod, bounds), op = pod ? +getComputedStyle(pod).opacity : 0, shy = !!pod && pod.hasAttribute('data-shy');
+          // A sampled state covers the interval until the next frame. Clip the oldest
+          // interval at the window boundary so a partial frame cannot inflate the sum.
+          if (wasOpaque && dt > 0) {
+            samples.push([now - dt, now]);
+            sampleMs += dt;
+          }
+          wasOpaque = Boolean(what && op > P.target + P.targetSlack);
+          const cutoff = now - P.windowMs;
+          while (samples.length && samples[0][1] <= cutoff) {
+            const [start, end] = samples.shift();
+            sampleMs -= end - start;
+          }
+          const total = sampleMs - (samples.length ? Math.max(0, cutoff - samples[0][0]) : 0);
+          if (total > worstWindowMs) {
+            worstWindowMs = total;
+            worstWindowAt = M.phase;
+          }
+          if (total > P.windowAllowMs && M.phase !== windowFlaggedPhase) {
+            windowFlaggedPhase = M.phase;
+            M.over.push({ phase: M.phase, kind: 'window',
+              msg: 'above-target exposure over transcript controls totaled ' + Math.ceil(total) + ' ms in ' +
+                P.windowMs + ' ms across episodes (allowed ' + P.windowAllowMs + ' ms)' });
+          }
           if (M.ep && !what && now - M.ep.lastUnder >= P.clearMs) M.ep = null;   /* the episode ends after the clear wait */
           if (what) {
             if (!M.ep) M.ep = { phase: M.phase, from: now, what, lastUnder: now, spanFrom: now, under: true, opaqueFor: 0, late: 0, flagged: {} };
             const e = M.ep; if (!e.under) e.spanFrom = now; e.under = true; e.lastUnder = now; e.what = what;
             /* (a) data-shy within the product's check interval of this control lying under the Pod */
-            const shyBy = M.shyBy(gapSince(e.spanFrom));
-            if (!shy && now - e.spanFrom > shyBy) flag('shy', `data-shy not set ${Math.round(now - e.spanFrom)} ms after transcript ${what} came under the Pod (the product's check: ${P.checkMs} ms; allowed ${Math.round(shyBy)} ms with slack and the longest frame gap)`);
+            const allowed = shyBy(gapSince(e.spanFrom));
+            if (!shy && now - e.spanFrom > allowed) flag('shy', `data-shy not set ${Math.round(now - e.spanFrom)} ms after transcript ${what} came under the Pod (the product's check: ${P.checkMs} ms; allowed ${Math.round(allowed)} ms with slack and the longest frame gap)`);
             /* (c) once the fade has had its time, the Pod's opacity is the product's shy target */
             if (shy && M.shyAt !== null) { const by = Math.min(M.shyFade, P.fadeMs) + P.fadeSlack + gapSince(M.shyAt);
               if (now - M.shyAt >= by && op > P.target + P.targetSlack) flag('target', `opacity ${op} ${Math.round(now - M.shyAt)} ms after data-shy went on (the product's shy target ${P.target}; transition ${M.shyTiming}) over transcript ${what}`); }
@@ -1890,8 +2070,9 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
           } else if (M.ep) M.ep.under = false;
           requestAnimationFrame(tick);
         };
+        M.windowStats = () => ({ windowMs: Math.round(worstWindowMs), windowAt: worstWindowAt });
         requestAnimationFrame(tick);
-      }, [HOST, { checkMs: POD_EXPECTED.checkMs, clearMs: POD_EXPECTED.clearMs, fadeMs: POD_EXPECTED.fadeMs, target: POD_EXPECTED.target, shySlack: POD_SHY_SLACK_MS, fadeSlack: POD_FADE_SLACK_MS, targetSlack: POD_TARGET_SLACK, allowMs: POD_EPISODE_ALLOW_MS }]);
+      }, [HOST, { checkMs: POD_EXPECTED.checkMs, clearMs: POD_EXPECTED.clearMs, fadeMs: POD_EXPECTED.fadeMs, target: POD_EXPECTED.target, shySlack: POD_SHY_SLACK_MS, fadeSlack: POD_FADE_SLACK_MS, targetSlack: POD_TARGET_SLACK, allowMs: POD_EPISODE_ALLOW_MS, windowMs: POD_WINDOW_MS, windowAllowMs: POD_WINDOW_ALLOW_MS }]);
       const phase = label => p.evaluate(l => { window.__nvPodOpaque.phase = l; }, label);
       const ids = await p.evaluate(() => [...document.querySelectorAll('.thread-row')].map(r => r.dataset.id));
       for (const id of ids) {
@@ -1945,18 +2126,18 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
             if (!pod || getComputedStyle(pod).display === 'none') return { nopod: true };
             const P = pod.getBoundingClientRect();
             const hit = e => { const q = e.getBoundingClientRect(); if (q.width < 1 || q.height < 1) return 0; const ix = Math.max(0, Math.min(P.right, q.right) - Math.max(P.left, q.left)), iy = Math.max(0, Math.min(P.bottom, q.bottom) - Math.max(P.top, q.top)); return ix * iy > .5 ? Math.round(ix) + 'x' + Math.round(iy) : 0; };
-            /* FO-76: a control counts only when it is live (not inert, and painted); the hidden inert copies are reported */
-            const live = e => !e.closest('[inert]') && e.checkVisibility({ visibilityProperty: true, opacityProperty: true });
-            const all = [...document.querySelectorAll('.activity-item')], dead = all.filter(e => !live(e));
+            const paints = e => e.checkVisibility({ visibilityProperty: true, opacityProperty: true });
+            const inSizer = e => !!e.closest('.activity-wrap .activity-sizer');
+            const all = [...document.querySelectorAll('.activity-item')], dead = all.filter(e => inSizer(e) || !paints(e));
             const copies = { items: all.length, notLive: dead.length, notLiveOverPod: dead.filter(e => hit(e)).length, inert: dead.filter(e => e.closest('[inert]')).length };
             const out = [];
-            for (const e of document.querySelectorAll('.jump-bottom, .activity-wrap > :is(.activity-bar, .pm56-activity-bar) > .activity-item, .send-queue-row button, .decision-host button, .chat-stage > .composer')) { if (!live(e)) continue; const k = hit(e); if (k) out.push(String(e.className).slice(0, 30) + ' ' + k); }
+            for (const e of document.querySelectorAll('.jump-bottom, .activity-wrap > :is(.activity-bar, .pm56-activity-bar) > .activity-item, .send-queue-row button, .decision-host button, .chat-stage > .composer')) { if (inSizer(e)) continue; const k = hit(e); if (k) out.push(String(e.className).slice(0, 30) + ' ' + k); }
             /* transcript controls: none under the Pod at the bottom (its resting place); scrolled up, content passes
                under it, and then the Pod must have faded back (data-shy, opacity <= .2) */
             const tr = document.querySelector('.transcript').getBoundingClientRect(), under = [];
             for (const e of document.querySelector('.transcript').querySelectorAll(HOST)) {
               const q = e.getBoundingClientRect(); if (q.bottom < tr.top || q.top > tr.bottom) continue;
-              const cs = getComputedStyle(e); if (cs.visibility === 'hidden' || +cs.opacity === 0 || !live(e)) continue;
+              const cs = getComputedStyle(e); if (cs.visibility === 'hidden' || +cs.opacity === 0 || !paints(e) || inSizer(e)) continue;
               const q2 = e.getBoundingClientRect(), ix = Math.min(P.right, q2.right) - Math.max(P.left, q2.left), iy = Math.min(P.bottom, q2.bottom) - Math.max(P.top, q2.top);
               if (ix >= 4 && iy >= 4) under.push('transcript ' + (e.textContent || e.className).trim().slice(0, 24) + ' ' + Math.round(ix) + 'x' + Math.round(iy)); /* a sliver under 4 px hides nothing */
             }
@@ -1970,23 +2151,37 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
           }, [pos, HOST]);
           views++;
           if (r.copies) copies.push(r.copies);
-          /* T47 round 2: every step of the fade-back that failed, up to this settled frame (one per kind per episode) */
-          const late = await p.evaluate(() => { const M = window.__nvPodOpaque, x = M.over.slice(); M.over = []; return x; });
-          for (const c of late) bad.push(`${c.phase}: ${c.kind}: ${c.msg}`);
+          await recordMonitorFailures();
           if (!settled.settled) unsettled.push(`${w} ${id} ${pos}`);
           if (r.nopod) bad.push(`${w} ${id}: no Pod`);
           else if (r.out.length) bad.push(`${w} ${id} ${pos}: ${r.out.join(', ')}${settled.settled ? '' : ' (not settled after 3 s; judged as it stood)'}`);
         }
       }
-      const m = await p.evaluate(() => { const M = window.__nvPodOpaque; return { ms: Math.round(M.worst), at: M.worstAt, pastDeadlineMs: Math.round(M.worstLate), pastDeadlineAt: M.worstLateAt, frames: M.frames, longestFrameGap: Math.round(M.gaps.reduce((g, [, d]) => Math.max(g, d), 0)) }; });
+      if (SELFTEST === 'pod-late-attr' && w === 1512) {
+        // Give the one deliberately late write its own exposure window.
+        await p.waitForTimeout(POD_WINDOW_MS);
+        await phase('1512 late attribute probe');
+        lateProbe = await probeLateShyAttribute(p, POD_LATE_ATTR_MS);
+        if (lateProbe.error || lateProbe.appliedMs === null || lateProbe.requestMs >= POD_LATE_ATTR_MS) {
+          bad.push('late attribute probe did not delay a product write: ' + JSON.stringify(lateProbe));
+        }
+      }
+      await recordMonitorFailures();
+      const m = await p.evaluate(() => { const M = window.__nvPodOpaque; return { ms: Math.round(M.worst), at: M.worstAt, pastDeadlineMs: Math.round(M.worstLate), pastDeadlineAt: M.worstLateAt, ...M.windowStats(), frames: M.frames, longestFrameGap: Math.round(M.gaps.reduce((g, [, d]) => Math.max(g, d), 0)) }; });
       opaque.push({ size: `${w}x${h}`, ...m });
-      console.log('MEASURE Pod longest opaque time over a control (measured, not judged) ' + JSON.stringify(opaque.at(-1)));
+      console.log('MEASURE Pod overlap and peak rolling exposure ' + JSON.stringify(opaque.at(-1)));
       { const c = copies.filter(x => x.size === undefined); c.forEach(x => { x.size = `${w}x${h}`; });
         console.log('MEASURE FO-76 Activity items that are not live (hidden or inert copies; counted, never judged) ' + JSON.stringify({ size: `${w}x${h}`, views: c.length, items: Math.max(0, ...c.map(x => x.items)), notLive: Math.max(0, ...c.map(x => x.notLive)), inert: Math.max(0, ...c.map(x => x.inert)), viewsWithACopyOverThePod: c.filter(x => x.notLiveOverPod).length })); }
       if (!(m.frames > 0)) bad.push(`${w}x${h}: the Pod's fade-back monitor saw no frame`);
     } finally { await shut(p); }
   }
-  check(views > 0 && bad.length === 0, `18 Pod 042 clear of the jump chip, the bar, the queue, the decision panel and the composer (${views} views: 3 sizes x every thread x top and bottom, each judged once the Pod has settled; at the bottom no transcript button either; faded back over any it passes, by the product's own steps, at the values pinned in the check: data-shy within ${POD_EXPECTED.checkMs} ms, a fade within ${POD_EXPECTED.fadeMs} ms, then opacity ${POD_EXPECTED.target}; and past each episode's own deadline at most ${POD_EPISODE_ALLOW_MS} ms above it over a control)`, { bad: bad.slice(0, 12), windows, unsettled, opaque, expected: POD_EXPECTED, declared: POD_DECLARED.found, cpu: CPU });
+  const minClear = POD_EXPECTED.clearMs - POD_CLEAR_EARLY_SLACK_MS;
+  const wrongClears = clears.filter(c => c.error || c.heldMs === null || c.heldMs < minClear ||
+    c.heldMs > POD_EXPECTED.clearMs + 10 + POD_CLEAR_LATE_SLACK_MS + c.gap);
+  check(clears.length === windows.length && clears.length > 0 && !wrongClears.length,
+    '18b Pod 042: the clear wait restarts on each confirmed hit and holds data-shy through the wait after the last hit',
+    { clearMs: POD_EXPECTED.clearMs, minClear, clears, wrong: wrongClears });
+  check(views > 0 && bad.length === 0, `18 Pod 042 clear of the jump chip, the bar, the queue, the decision panel and the composer (${views} views: 3 sizes x every thread x top and bottom, each judged once the Pod has settled; at the bottom no transcript button either; faded back over any it passes, by the product's own steps, at the values pinned in the check: data-shy within ${POD_EXPECTED.checkMs} ms, a fade within ${POD_EXPECTED.fadeMs} ms, then opacity ${POD_EXPECTED.target}; and past each episode's own deadline at most ${POD_EPISODE_ALLOW_MS} ms above it over a control, with at most ${POD_WINDOW_ALLOW_MS} ms in any ${POD_WINDOW_MS} ms across episodes)`, { bad: bad.slice(0, 12), failureKinds, lateProbe, windows, unsettled, opaque, expected: POD_EXPECTED, declared: POD_DECLARED.found, cpu: CPU });
 });
 
 /* ------------------------------------------------------------- check 19: the header word wears its mark's tone */

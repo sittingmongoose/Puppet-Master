@@ -257,6 +257,10 @@ const LINES = ([minRatio, only, ws]) => {
 		if (el.closest('[inert], [aria-hidden="true"]')) continue;
 		const text = ownText(el);
 		if (!text) continue;
+		/* The key is the element's own tag and words, never a DOM path: one wrapper more or less in a state moved
+		   every path in round 1's walk, and the words a person reads are what this check is about. */
+		const p = `${el.tagName.toLowerCase()}|${text.slice(0, 90)}`;
+		if (want && !want.has(p)) continue;
 		if (!el.getClientRects().length || getComputedStyle(el).visibility === 'hidden') continue;
 		const rects = rectsOf(el);
 		if (!rects.length) continue;
@@ -264,10 +268,6 @@ const LINES = ([minRatio, only, ws]) => {
 		const width = el.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
 		const fullest = Math.max(...rects.map((r) => r.width));
 		const lines = linesOf(rects);
-		/* The key is the element's own tag and words, never a DOM path: one wrapper more or less in a state moved
-		   every path in round 1's walk, and the words a person reads are what this check is about. */
-		const p = `${el.tagName.toLowerCase()}|${text.slice(0, 90)}`;
-		if (want && !want.has(p)) continue;
 		rows.push({ p, t: text.slice(0, 90), f: +parseFloat(cs.fontSize).toFixed(2), n: lines, w: +width.toFixed(1), r: width > 0 ? +(fullest / width).toFixed(3) : 0 });
 	}
 	return { rows };
@@ -401,6 +401,26 @@ function writeBaseline(path, cells, meta) {
 	fs.writeFileSync(path, JSON.stringify({ v: 1, ...meta, cells }));
 }
 
+/* A fixture's unsuffixed workspace visit measured the tab last selected in that workspace. If its
+   complete recording matches exactly one named tab, compare it to that tab on the head. A cold,
+   single-cell probe otherwise sees the default tab where a full sweep saw the previous cell's tab. */
+function recordedTabs(states) {
+	const tabs = new Map();
+	for (const [where, rows] of Object.entries(states)) {
+		const split = where.lastIndexOf(' › ');
+		if (split < 0 || !rows.length) continue;
+		const parent = where.slice(0, split);
+		if (!states[parent]?.length || JSON.stringify(states[parent]) !== JSON.stringify(rows)) continue;
+		const matches = tabs.get(parent) || [];
+		matches.push(where);
+		tabs.set(parent, matches);
+	}
+	return new Map([...tabs].filter(([, matches]) => matches.length === 1)
+		.map(([where, [tab]]) => [where, tab]));
+}
+
+const rowRuleKey = (where, row) => JSON.stringify([where, row]);
+
 export const tests = {};
 for (const surface of ['normal', 'sandbox']) {
 	tests[`FO-159 Settings text is 11 px or more (${surface})`] = async (t) => {
@@ -530,8 +550,8 @@ for (const surface of ['normal', 'sandbox']) {
 		if (baseline && !baseline.cells) return t.check(`${surface}: the line baseline is readable`, false, `${baselinePath} has no cells`);
 		/* A state of the baseline that no head state matches compares nothing, so a renamed chapter or tab once went
 		   uncompared while the check passed (fo-integ12b, FO-167's Memory rename). Now such a state fails, unless the
-		   committed key map renames it (prefix renames only: rows are never edited) or lists it as retired with its
-		   reason. --set keyMap=<json>|none and --set lineSupplement=<json>|none name other files ('none' turns one off,
+		   committed key map renames it or lists it as retired. Individual row rules give an exact tag and text,
+		   their state (after any state rename), and a reason. --set keyMap=<json>|none and --set lineSupplement=<json>|none name other files ('none' turns one off,
 		   which is how the check's bite is shown). The supplement holds states recorded on a later baseline commit
 		   under the new keys (FO-167's own Memory page at 10.5 px); a supplement state replaces that state. */
 		const sideFile = (arg, name) => {
@@ -543,11 +563,17 @@ for (const surface of ['normal', 'sandbox']) {
 		const mapPath = record ? '' : sideFile('keyMap', 'settings-min-text.keymap.json');
 		const suppPath = record ? '' : sideFile('lineSupplement', 'settings-min-text.lines-fo167.json');
 		const retiredStates = new Set();
+		const rowRenames = new Map();
+		const retiredRows = new Map();
 		let renamed = 0, supplemented = 0;
 		const mapErrors = [];
 		if (baseline && mapPath) {
 			const map = JSON.parse(fs.readFileSync(mapPath, 'utf8'));
 			for (const r of map.retired || []) retiredStates.add(r.state);
+			for (const r of map.rowRenames || []) rowRenames.set(rowRuleKey(r.state, r.from), r.to);
+			for (const r of map.retiredRows || []) {
+				for (const row of r.rows) retiredRows.set(JSON.stringify([r.cell, r.state, row]), r.why);
+			}
 			for (const id of Object.keys(baseline.cells)) {
 				const next = {};
 				for (const [k, rows] of Object.entries(baseline.cells[id])) {
@@ -583,7 +609,7 @@ for (const surface of ['normal', 'sandbox']) {
 		const cells = {};
 		const counters = {};
 		const diffs = [];
-		let cellsRun = 0, cellsWithoutBaseline = 0, unmatchedAll = 0;
+		let cellsRun = 0, cellsWithoutBaseline = 0, unmatchedAll = 0, missingAll = 0;
 		for (const look of looks) {
 			await setLookBySetting(t, f, look);
 			for (const [w, h] of sizes) {
@@ -598,9 +624,19 @@ for (const surface of ['normal', 'sandbox']) {
 					await t.check(`${look} ${w}x${h}: the page is laid out at ${w}x${h}`, Math.abs(vp.iw - w) <= 2 && Math.abs(vp.ih - h) <= 2, `inner ${vp.iw}x${vp.ih}${vp.frame ? `, frame ${vp.frame.join('x')}` : ''}`);
 					await f.evaluate(LAYOUT_ALL);
 					const id = key(surface, look, [w, h]);
+					const base = baseline?.cells[id];
+					const aliases = recordedTabs(base || {});
+					const wants = new Map();
+					const headKey = (where, row) => rowRenames.get(rowRuleKey(where, row)) || row;
+					for (const [where, rows] of Object.entries(base || {})) {
+						const source = aliases.get(where) || where;
+						const keys = wants.get(source) || new Set();
+						for (const [row] of rows) keys.add(headKey(where, row));
+						wants.set(source, keys);
+					}
 					const states = await walkSettings(t, f, async (where, ws) => {
 						await f.evaluate(LAYOUT_ALL);
-						const r = await f.evaluate(LINES, [ratio, baseline && baseline.cells[id] && baseline.cells[id][where] ? baseline.cells[id][where].map((x) => x[0]) : [], ws]);
+						const r = await f.evaluate(LINES, [ratio, [...(wants.get(where) || [])], ws]);
 						return { where, rows: r.rows };
 					});
 					const mine = {};
@@ -612,9 +648,10 @@ for (const surface of ['normal', 'sandbox']) {
 					}
 					if (record) { cells[id] = mine; t.log(`${id}: ${states.length} states, ${measured} text elements, ${Object.values(mine).reduce((a, b) => a + b.length, 0)} recorded`); if (!ok) return; }
 					else {
-						const base = baseline.cells[id];
 						if (!base) { cellsWithoutBaseline++; diffs.push({ id, why: 'no baseline cell' }); return; }
-						let compared = 0, resized = 0, missing = 0, changed = 0;
+						let compared = 0, resized = 0, renamedRows = 0;
+						const byState = new Map(states.map((s) => [s.where, s.rows]));
+						const gone = [];
 						const headStates = new Set(states.filter((s) => s && s.where).map((s) => s.where));
 						const unmatched = Object.keys(base).filter((k) => !headStates.has(k));
 						for (const k of unmatched) diffs.push({ id, where: k, why: 'baseline state with no head match', rows: base[k].length });
@@ -627,21 +664,40 @@ for (const surface of ['normal', 'sandbox']) {
 							   fullest line count on each side is compared, so which of them a state happens to keep
 							   cannot hide a new line or invent one. */
 							const now = new Map();
-							for (const r of s.rows) { const prev = now.get(r.p); if (!prev || r.n > prev.n) now.set(r.p, r); }
+							for (const r of byState.get(aliases.get(s.where) || s.where) || []) {
+								const prev = now.get(r.p);
+								if (!prev || r.n > prev.n) now.set(r.p, r);
+							}
 							const was = new Map();
 							for (const [p, bfs, blines, bwidth] of baseRows) { const prev = was.get(p); if (!prev || blines > prev.blines) was.set(p, { bfs, blines, bwidth }); }
 							for (const [p, b] of was) {
-								const cur = now.get(p);
-								if (!cur) { missing++; if (t.args.probe && missing < 4) t.log(`gone: ${s.where} ${p}`); continue; }
-								if (cur.t !== p.slice(p.indexOf('|') + 1)) { changed++; continue; }
+								const expected = headKey(s.where, p);
+								const cur = now.get(expected);
+								if (!cur) {
+									const reason = retiredRows.get(JSON.stringify([id, s.where, p]));
+									if (reason) {
+										if (t.args.probe) t.log(`retired: ${s.where} ${p} — ${reason}`);
+										continue;
+									}
+									const d = { id, where: s.where, p, expected, why: 'baseline row with no head match' };
+									gone.push(d);
+									if (t.args.probe) t.log(`gone: ${s.where} ${expected}`);
+									continue;
+								}
+								if (expected !== p) renamedRows++;
 								if (Math.abs(b.bfs - 10.5) > 0.02 || cur.f < b.bfs + 0.4) { if (t.args.probe) t.log(`same: ${s.where} ${p} ${b.bfs}->${cur.f}`); continue; }
 								resized++; compared++;
-								if (cur.n > b.blines) diffs.push({ id, where: s.where, p, text: p.slice(p.indexOf('|') + 1), look, size: `${w}x${h}`, base: b.blines, fix: cur.n, from: b.bfs, to: cur.f, width: b.bwidth, nowWidth: cur.w });
+								if (cur.n > b.blines) diffs.push({ id, where: s.where, p: expected, text: cur.t, look, size: `${w}x${h}`, base: b.blines, fix: cur.n, from: b.bfs, to: cur.f, width: b.bwidth, nowWidth: cur.w });
 								if (t.args.probe) t.log(`kept: ${s.where} ${p} ${b.bfs}->${cur.f} ${b.blines}->${cur.n}`);
 							}
 						}
-						counters[id] = { states: states.length, rows: measured, compared, resized, missing, changed, unmatched: unmatched.length };
-						t.log(`${id}: ${states.length} states, ${measured} baseline rows seen, ${compared} of ${resized} resized elements compared, ${missing} gone, ${changed} retexted, ${unmatched.length} baseline states unmatched`);
+						const missing = gone.length;
+						missingAll += missing;
+						diffs.push(...gone);
+						counters[id] = { states: states.length, rows: measured, compared, resized, missing, changed: renamedRows, unmatched: unmatched.length };
+						t.log(`${id}: ${states.length} states, ${measured} baseline rows seen, ${compared} of ${resized} resized elements compared, ${missing} gone, ${renamedRows} retexted, ${unmatched.length} baseline states unmatched`);
+						await t.check(`${id}: every baseline row has its head row (${missing} gone)`, missing === 0,
+							gone.map((d) => `${d.where} ${d.expected}`).join(' | ') || 'every baseline row matched or was explicitly retired');
 						await t.check(`${id}: every resized element keeps its line count (${compared} compared)`, ok && compared > 0 && diffs.filter((d) => d.id === id && d.fix).length === 0, diffs.filter((d) => d.id === id && d.fix).slice(0, 6).map((d) => `${d.where} ${d.text.slice(0, 40)} ${d.base}->${d.fix} lines @${d.width}px`).join(' | ') || 'no element behind the baseline');
 						await t.check(`${id}: every baseline state has its head state (${unmatched.length} unmatched)`, unmatched.length === 0, unmatched.slice(0, 4).map((k) => `${k} (${base[k].length} rows)`).join(' | ') || `${Object.keys(base).length} states matched`);
 					}
@@ -660,6 +716,8 @@ for (const surface of ['normal', 'sandbox']) {
 		await t.check(`${surface}: no element grew a line anywhere in the matrix (${bad.length} new lines)`, bad.length === 0, bad.slice(0, 8).map((d) => `${d.id} ${d.where} ${d.text.slice(0, 40)} ${d.base}->${d.fix}`).join(' | '));
 		await t.check(`${surface}: the line matrix ran its ${cellsRun} cells`, cellsRun === looks.length * sizes.length, `${cellsRun}/${looks.length * sizes.length}`);
 		await t.check(`${surface}: every cell had a main baseline (${cellsRun - cellsWithoutBaseline}/${cellsRun})`, cellsWithoutBaseline === 0, `${cellsWithoutBaseline} cells missing from ${baselinePath}`);
+		await t.check(`${surface}: no baseline row went uncompared (${missingAll} gone)`, missingAll === 0,
+			diffs.filter((d) => d.why === 'baseline row with no head match').slice(0, 8).map((d) => `${d.id} ${d.where} ${d.expected}`).join(' | '));
 		await t.check(`${surface}: no baseline state went uncompared (${unmatchedAll} unmatched)`, unmatchedAll === 0, diffs.filter((x) => x.why === 'baseline state with no head match').slice(0, 6).map((x) => `${x.id} ${x.where}`).join(' | ') || 'every baseline state matched');
 		await t.noConsoleErrors('no console errors');
 	};

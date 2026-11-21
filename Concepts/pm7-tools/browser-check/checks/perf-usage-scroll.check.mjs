@@ -11,8 +11,9 @@
 //      taller than the pane (its scrolled contents). Red on origin/main 1a109a026b (no layer), green after (837x1650).
 //   2. main-thread paint while the wheel turns (the trace's paint + pre-paint + layerize + PAC, ms a second, helpers/
 //      frame-trace.mjs; PAC is PaintArtifactCompositor, its own group since PM7PERF-FRAMETRACE-PAC-AS-PAINT): four windows of real wheel input, each exactly 48 ticks of 40 px (--set ticks=) with the pointer at the
-//      page's centre, starting at the board's top and turning every 12 ticks, traced from the first tick to 400 ms after
-//      the last (at most 8 s): every window scrolls the same way, never sits at an end (frame-cost's 30-tick turns did,
+//      pane's hit-tested centre, starting at the board's top and turning every 12 ticks after the pane reaches each
+//      leg's destination. The trace runs from the first tick to at least 400 ms after the last (at most 8 s):
+//      every window scrolls the same way and turns before the pane's far end (frame-cost's 30-tick turns did not,
 //      and measured almost nothing), and is not diluted by idle time; in the order as built, control, control, as built. The control is the same page with the pane's hint taken away by a trial sheet (will-change: auto), which is
 //      origin/main's scroll. As built must cost at most --set ratio (0.85) of the control. On origin/main both are the same
 //      scroll (the ratio sits near 1); measured with the hint: Alexis Basic Dark 95-132 against 134-203 ms/s. Under
@@ -38,7 +39,7 @@
 // Motion); 3 and 4 are warnings (helpers/usage-scroll-verdict.mjs, tools/usage-scroll-verdict.selftest.mjs).
 import { traceWindow } from '../helpers/frame-trace.mjs';
 import { muteSound } from '../helpers/quiet-page.mjs';
-import { usageScrollVerdict } from '../helpers/usage-scroll-verdict.mjs';
+import { paneTravel, SCROLL_TOLERANCE_PX, usageScrollVerdict, WHEEL_STEP_PX } from '../helpers/usage-scroll-verdict.mjs';
 
 const CONTROL = '#panel-usage .pmu-scroll { will-change: auto !important; }';
 
@@ -71,8 +72,9 @@ export default async function (t) {
 			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 8000));
 			const pane = await f.evaluate(() => { const s = document.getElementById('pmuScroll'); return s ? { client: s.clientHeight, scroll: s.scrollHeight } : null; });
 			// turn before the end: 40 px ticks, at most 12 (480 px), fewer on a shorter board
-			const turn = pane ? Math.max(3, Math.min(12, Math.floor((pane.scroll - pane.client) / 40) - 2)) : 12;
+			const turn = pane ? Math.max(3, Math.min(12, Math.floor((pane.scroll - pane.client) / WHEEL_STEP_PX) - 2)) : 12;
 			if (!pane || pane.scroll - pane.client < 200) { await t.check(S + 'could judge: Usage\'s board pane is there and can scroll', false, JSON.stringify(pane)); continue; }
+			if (!(await t.check(S + 'wheel ticks are a positive whole number', Number.isInteger(TICKS) && TICKS > 0, String(TICKS)))) continue;
 
 			// 1. the pane's own scrolling layer
 			const layer = await (async () => {
@@ -102,29 +104,79 @@ export default async function (t) {
 				// a window whose trace lost data (Chrome's dataLossOccurred), or that drew under 10 frames a second while the wheel
 				// turned (broken traces drew about 1; Reduced Motion's instant steps draw about one frame a tick, 20 to 50), is taken
 				// again, twice at most
-				let x, at, top, lost = [], ticks = 0;
+				let x, travel, elapsed, ticks;
+				const lost = [];
 				for (let attempt = 0; attempt < 3; attempt++) {
 					// every window starts at the board's top: one that began near the end spent most of its ticks pinned there and
 					// measured almost nothing (main 94 ms/s against 644 for the next one)
-					at = await f.evaluate(() => { const s = document.getElementById('pmuScroll'); s.scrollTop = 0; const p = document.querySelector('.page.active') || document.body, r = p.getBoundingClientRect(); return { x: Math.round(r.left + r.width / 2), y: Math.round(r.top + r.height * 0.55), top: s.scrollTop, range: s.scrollHeight - s.clientHeight }; });
+					const at = await f.evaluate(() => {
+						const s = document.getElementById('pmuScroll');
+						s.scrollTo({ top: 0, behavior: 'instant' });
+						const r = s.getBoundingClientRect();
+						return {
+							x: Math.round((Math.max(0, r.left) + Math.min(innerWidth, r.right)) / 2),
+							y: Math.round((Math.max(0, r.top) + Math.min(innerHeight, r.bottom)) / 2),
+						};
+					});
 					await t.page.waitForTimeout(400);
-					await t.page.mouse.move(at.x, at.y);
+					const frameBox = f === t.page.mainFrame() ? { x: 0, y: 0 } : await (await f.frameElement()).boundingBox();
+					await t.page.mouse.move(frameBox.x + at.x, frameBox.y + at.y);
 					await t.page.waitForTimeout(600);
+					const readPane = () => f.evaluate(({ x, y }) => {
+						const s = document.getElementById('pmuScroll'), hit = document.elementFromPoint(x, y);
+						return {
+							top: s.scrollTop, onPane: hit === s || s.contains(hit),
+							hit: hit ? hit.localName + (hit.id ? '#' + hit.id : '') : 'nothing',
+						};
+					}, at);
+					const first = await readPane();
+					travel = { onPane: first.onPane, hit: first.hit, ticks: TICKS, turn, positions: [first.top] };
+					ticks = 0;
 					x = await traceWindow(cdp, {
 						ms: 1, url: f.url(), keep: t.args.keep ? `${t.args.keep}/${surface}-${look}-${windows.length}-${attempt}.json` : undefined,
-						// frame-cost's ticks (40 px every 14 ms), the direction turning every TURN ticks so the board never sits at an end
-						during: async () => { const until = Date.now() + MS; let i = 0; while (i < TICKS && Date.now() < until) { await t.page.mouse.wheel(0, (Math.floor(i++ / turn) % 2 ? -1 : 1) * 40); await new Promise((r) => setTimeout(r, 14)); } ticks = i; await new Promise((r) => setTimeout(r, TAIL)); }
+						during: async () => {
+							const start = Date.now(), until = start + MS;
+							let target = 0;
+							for (let leg = 0; ticks < TICKS && travel.onPane && Date.now() < until; leg++) {
+								const end = Math.min(TICKS, ticks + turn), delta = (leg % 2 ? -1 : 1) * WHEEL_STEP_PX;
+								target += (end - ticks) * delta;
+								while (ticks < end && Date.now() < until) {
+									await t.page.mouse.wheel(0, delta);
+									ticks++;
+									await new Promise((resolve) => setTimeout(resolve, 14));
+								}
+								const final = ticks === TICKS;
+								if (final) await new Promise((resolve) => setTimeout(resolve, TAIL));
+								else if (ticks === end) {
+									await f.waitForFunction(({ target, tolerance }) =>
+										Math.abs(document.getElementById('pmuScroll').scrollTop - target) <= tolerance,
+									{ target, tolerance: SCROLL_TOLERANCE_PX },
+									{ polling: 20, timeout: Math.max(1, Math.min(TAIL, until - Date.now())) }).catch((error) => {
+										if (error.name !== 'TimeoutError') throw error;
+									});
+								}
+								const landed = await readPane();
+								travel.positions.push(landed.top);
+								if (!landed.onPane) {
+									travel.onPane = false;
+									travel.hit = landed.hit;
+								}
+							}
+							elapsed = Date.now() - start;
+						},
 					});
-					top = await f.evaluate(() => document.getElementById('pmuScroll').scrollTop);
-					if (!x.dataLoss && x.drawn.perSec >= 10 && ticks === TICKS) break;
-					lost.push(x.dataLoss ? 'trace lost data' : ticks < TICKS ? `only ${ticks} of ${TICKS} ticks in ${MS} ms` : `drew ${x.drawn.perSec}/s`);
+					if (!x.dataLoss && x.drawn.perSec >= 10 && ticks === TICKS && elapsed <= MS && paneTravel(travel)) break;
+					if (!travel.onPane) lost.push(`pointer hit ${travel.hit} outside the Usage pane`);
+					else if (elapsed > MS || ticks < TICKS) lost.push(`${ticks} of ${TICKS} ticks in ${elapsed} ms (cap ${MS} ms)`);
+					else if (!paneTravel(travel)) lost.push(`pane traveled ${travel.positions.join(' -> ')} px across wheel legs`);
+					else lost.push(x.dataLoss ? 'trace lost data' : `drew ${x.drawn.perSec}/s`);
 					await park(); await t.page.waitForTimeout(1500);
 				}
-				const whole = !x.dataLoss && x.drawn.perSec >= 10 && ticks === TICKS;
+				const whole = !x.dataLoss && x.drawn.perSec >= 10 && ticks === TICKS && elapsed <= MS && paneTravel(travel);
 				const paint = (x.split.paint || 0) + (x.split.prepaint || 0) + (x.split.layerize || 0) + (x.split.pac || 0);
-				const w = { name, whole, lost, ticks, secs: x.secs, renderer: x.renderer ? x.renderer.pid : null, frames: x.mainFrames.perSec, paint: Math.round(paint), main: Math.round(x.cost.main), dropped: x.frames.droppedPerSec, full: x.frames.notPresentedPerSec, partial: x.frames.partialPerSec, unknown: x.frames.presentationUnknownPerSec, drawn: x.drawn.perSec, scrolls: x.dispatched.scroll || 0, restFrames: rest.mainFrames.renderedPerSec, restLost: !!rest.dataLoss, from: at.top, to: top };
+				const w = { name, whole, lost, ticks, travel, secs: x.secs, renderer: x.renderer ? x.renderer.pid : null, frames: x.mainFrames.perSec, paint: Math.round(paint), main: Math.round(x.cost.main), dropped: x.frames.droppedPerSec, full: x.frames.notPresentedPerSec, partial: x.frames.partialPerSec, unknown: x.frames.presentationUnknownPerSec, drawn: x.drawn.perSec, scrolls: x.dispatched.scroll || 0, restFrames: rest.mainFrames.renderedPerSec, restLost: !!rest.dataLoss };
 				windows.push(w);
-				t.log(`${S}${name}: paint ${w.paint} ms/s, main ${w.main} ms/s, dropped ${w.dropped}/s (not presented ${w.full}, partial ${w.partial}, presentation unknown ${w.unknown}), drawn ${w.drawn}/s over ${w.secs} s, main frames ${w.frames}/s (renderer ${w.renderer}), ${w.ticks} ticks, ${w.scrolls} scroll events (${w.from} -> ${w.to} px) | at rest ${w.restFrames} rendered main frames/s${lost.length ? ' | taken again: ' + lost.join(', ') : ''}`);
+				t.log(`${S}${name}: paint ${w.paint} ms/s, main ${w.main} ms/s, dropped ${w.dropped}/s (not presented ${w.full}, partial ${w.partial}, presentation unknown ${w.unknown}), drawn ${w.drawn}/s over ${w.secs} s, main frames ${w.frames}/s (renderer ${w.renderer}), ${w.ticks} ticks, pointer hit ${w.travel.hit}, pane ${w.travel.positions.join(' -> ')} px, ${w.scrolls} renderer scroll events | at rest ${w.restFrames} rendered main frames/s${lost.length ? ' | taken again: ' + lost.join(', ') : ''}`);
 			}
 			await trial('');
 			await park();

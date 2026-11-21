@@ -10,9 +10,12 @@
 // - the title bar's menus and panels (theme, project, notifications, search), the chat popped out and one of its sheets;
 // - Settings: a setup window (Source Control, Add account) and a dialog (Add a service).
 // What each click opens is found, not named: every floating box on screen after it that was not before is measured.
+import { freemem } from 'node:os';
 import { decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 
 const LOOKS = ['glass-dark', 'glass-light'];
+const GIB = 1024 ** 3;
+const WINDOWS_MEMORY_FLOOR = 4; // The Windows RTX 3090 false fails occurred below about 4 GiB free.
 const THRESHOLD = 12;       // a channel change above this is the page reading through, even dimmed; a blur's mottle stays under it
 const MAX_SHARE = 0.002;    // at most 0.2 % of the surface's pixels may change that much (anti-aliased edges, a caret)
 
@@ -31,7 +34,7 @@ function grow(m, w, h, k) { const o = new Uint8Array(m.length); for (let y = 0; 
 function motionMask(a, b) { const m = new Uint8Array(a.data.length / 4); for (let i = 0, p = 0; i < a.data.length; i += 4, p++) if (Math.max(Math.abs(a.data[i] - b.data[i]), Math.abs(a.data[i + 1] - b.data[i + 1]), Math.abs(a.data[i + 2] - b.data[i + 2])) > THRESHOLD / 2) m[p] = 1; return m; }
 
 // how much of the page's content reads through the surface sel (null when it isn't on screen)
-async function readThrough(t, f, sel) {
+async function readThrough(t, f, sel, { rerenderAgents = false } = {}) {
 	const r = await f.evaluate((s) => {
 		const e = document.querySelector(s); if (!e) return null;
 		const b = e.getBoundingClientRect(), x = Math.max(0, b.left), y = Math.max(0, b.top);
@@ -43,36 +46,85 @@ async function readThrough(t, f, sel) {
 	const a1 = await shot(t, r); await f.waitForTimeout(300); const a2 = await shot(t, r);
 	const mask = motionMask(a1, a2);
 	await f.evaluate((s) => {
-		// the surface and all it holds are marked one by one: the text of everything else goes transparent
-		// the properties set below are inherited: the surface keeps its own, so what it holds keeps theirs
-		const e = document.querySelector(s), c = getComputedStyle(e); e.__bcStyle = e.getAttribute('style');
-		e.style.setProperty('color', c.color, 'important'); e.style.setProperty('-webkit-text-fill-color', c.webkitTextFillColor, 'important');
-		e.style.setProperty('text-shadow', c.textShadow, 'important'); e.style.setProperty('caret-color', c.caretColor, 'important');
-		[e, ...e.querySelectorAll('*')].forEach((n) => n.setAttribute('data-bc-in', ''));
-		const st = document.createElement('style'); st.id = 'bc-through';
-		st.textContent = 'body *:not([data-bc-in]) { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; transition: none !important; caret-color: transparent !important; }';
+		const e = document.querySelector(s);
+		let oldStyle = e.getAttribute('style');
+		const c = getComputedStyle(e);
+		for (const property of ['color', '-webkit-text-fill-color', 'text-shadow', 'caret-color']) {
+			e.style.setProperty(property, c.getPropertyValue(property), 'important');
+		}
+		const st = document.createElement('style');
+		st.id = 'bc-through';
+		// Match the live subtree so text added between shots still belongs to the surface (T71).
+		const transparent = '{ color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; transition: none !important; caret-color: transparent !important; }';
+		st.textContent = `body *:not(:is(${s}, ${s} *)) ${transparent}`;
+		st.__bcRestore = () => {
+			if (oldStyle === undefined) return;
+			if (oldStyle === null) e.removeAttribute('style');
+			else e.setAttribute('style', oldStyle);
+			oldStyle = undefined;
+		};
+		st.__bcHideSurface = () => {
+			st.__bcRestore();
+			st.textContent += ` ${s}, ${s} * ${transparent}`;
+		};
 		document.head.appendChild(st);
 	}, sel);
-	await f.waitForTimeout(350);
-	const b = await shot(t, r);
-	// the surface's own text: where it is drawn, its re-rasterised glyphs differ a little whatever is behind; those pixels
-	// (grown by 2 px) are not counted
-	await f.evaluate((s) => { const e = document.querySelector(s); ['color', '-webkit-text-fill-color', 'text-shadow'].forEach((k) => e.style.removeProperty(k)); document.getElementById('bc-through').textContent += ' [data-bc-in] { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; transition: none !important; }'; }, sel);
-	await f.waitForTimeout(350);
-	const c = await shot(t, r);
-	const own = grow(motionMask(b, c), r.width, r.height, 2);
-	for (let i = 0; i < own.length; i++) if (own[i]) mask[i] = 1;
-	await f.evaluate((s) => { const st = document.getElementById('bc-through'); if (st) st.remove(); document.querySelectorAll('[data-bc-in]').forEach((n) => n.removeAttribute('data-bc-in')); const e = document.querySelector(s); if (e) { if (e.__bcStyle == null) e.removeAttribute('style'); else e.setAttribute('style', e.__bcStyle); } }, sel);
-	const counted = mask.reduce((s, v) => s + (v ? 0 : 1), 0);
-	const m = changed(a2, b, mask);
-	return { rect: r, n: m.n, mx: m.mx, share: m.n / Math.max(1, counted), motion: 1 - counted / mask.length };
+	try {
+		if (rerenderAgents) {
+			// Replace text leaves only. Rewriting the list's HTML also rebuilt its animated and painted descendants (T142).
+			const replaced = await f.evaluate(() => {
+				const labels = [...document.querySelectorAll('#panel-agents [data-work-rail] :is(.sh-hlabel, .wk-copy strong, .wk-copy .wk-sub, .wk-right b)')]
+					.filter((n) => n.childElementCount === 0 && n.textContent.trim() && n.checkVisibility({ visibilityProperty: true }));
+				for (const label of labels) label.replaceWith(label.cloneNode(true));
+				return labels.length;
+			});
+			if (replaced === 0) throw new Error('Glass backing rerender did not find visible Agents text leaves');
+			t.log(`Glass backing rerender: replaced ${replaced} Agents text elements before shot b`);
+		}
+		await f.waitForTimeout(350);
+		const b = await shot(t, r);
+		// Exclude the surface's own glyphs, grown by 2 px to cover re-rasterisation against another backdrop.
+		await f.evaluate(() => document.getElementById('bc-through').__bcHideSurface());
+		await f.waitForTimeout(350);
+		const c = await shot(t, r);
+		const own = grow(motionMask(b, c), r.width, r.height, 2);
+		for (let i = 0; i < own.length; i++) if (own[i]) mask[i] = 1;
+		const counted = mask.reduce((s, v) => s + (v ? 0 : 1), 0);
+		const m = changed(a2, b, mask);
+		return { rect: r, n: m.n, mx: m.mx, share: m.n / Math.max(1, counted), motion: 1 - counted / mask.length };
+	} finally {
+		await f.evaluate(() => {
+			const st = document.getElementById('bc-through');
+			st.remove();
+			st.__bcRestore();
+		});
+	}
 }
 
 export default async function (t) {
+	const local = !t.run.host && t.run.session?.kind !== 'cdp';
+	let minFreeGiB = Infinity;
+	const sampleMemory = (phase) => {
+		if (!local) return;
+		const freeGiB = freemem() / GIB;
+		minFreeGiB = Math.min(minFreeGiB, freeGiB);
+		if (process.platform === 'win32' && freeGiB < WINDOWS_MEMORY_FLOOR) {
+			throw new Error(`Glass backing inconclusive ${phase}: Windows has ${freeGiB.toFixed(2)} GiB free (floor ${WINDOWS_MEMORY_FLOOR} GiB). Rerun when memory is available.`);
+		}
+	};
+	sampleMemory('before opening the page');
+	t.log(local ? `Glass backing: local host has ${minFreeGiB.toFixed(2)} GiB free before the run`
+		: 'Glass backing: free memory on the remote or attached browser host is unavailable');
 	// --set lgtier=cpu: Glass's low-power tier (no live blur; the floating tint is heavier there)
 	const tierQuery = t.args.lgtier ? `lgtier=${t.args.lgtier}` : '';
 	let f = await t.app.open({ query: tierQuery });
 	const rows = [], bad = [];
+	const measure = async (sel, options) => {
+		sampleMemory(`before measuring ${sel}`);
+		const result = await readThrough(t, f, sel, options);
+		sampleMemory(`after measuring ${sel}`);
+		return result;
+	};
 	const judge = (look, name, m) => {
 		if (!m) { bad.push(`${look} ${name}: not on screen`); rows.push(`${look} ${name}: not on screen`); return; }
 		const pct = (m.share * 100).toFixed(2);
@@ -103,6 +155,15 @@ export default async function (t) {
 		const before = new Set(await floating());
 		if ((await open()) === false) { bad.push(`${look} ${name}: could not open`); return; }
 		await f.waitForTimeout(900); await t.page.mouse.move(2, 2);
+		if (name === 'notifications') {
+			// The stage can place a toast late, and the inbox can start its own opening animation on a delayed frame.
+			await f.waitForFunction(() => {
+				const stageMoving = document.querySelector('#rsStage .pmn-toast:is(.pmn-entering, .pmn-leaving, .pmn-flying)');
+				const panel = document.querySelector('#pmnPanel[data-open]');
+				return !stageMoving && panel && !panel.getAnimations({ subtree: true }).some((a) =>
+					(a.pending || a.playState === 'running') && Number.isFinite(a.effect?.getComputedTiming().endTime));
+			}, null, { timeout: 5000 });
+		}
 		const now = (await floating()).filter((id) => !before.has(id));
 		// the outermost new ones only (a sheet's own inner boxes are part of it)
 		// a box over most of the window is a backdrop that dims the page on purpose: the surfaces are the painted boxes in it
@@ -123,7 +184,7 @@ export default async function (t) {
 			return out;
 		}, now);
 		if (!top.length) { bad.push(`${look} ${name}: nothing new on screen`); rows.push(`${look} ${name}: nothing new on screen`); return; }
-		for (const x of top) judge(look, `${name} (${x.label})`, await readThrough(t, f, `[data-bc-float="${x.id}"]`));
+		for (const x of top) judge(look, `${name} (${x.label})`, await measure(`[data-bc-float="${x.id}"]`));
 	};
 	const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;   // --set looks=glass-dark: one look per run
 	for (const look of looks) {
@@ -140,7 +201,8 @@ export default async function (t) {
 				await f.waitForTimeout(800);
 				const fold = await f.evaluate(() => document.getElementById('sidePanelSlot').getAttribute('data-pm-rail-fold') || 'docked');
 				if ((mode === 'overlay') !== (fold === 'overlay')) { rows.push(`${look} rail ${target} (${mode}): the rail is ${fold}`); if (mode === 'overlay') bad.push(`${look} rail ${target}: no overlay at ${w}x${h} (${fold})`); continue; }
-				judge(look, `rail ${target.replace('panel-', '')} (${mode})`, await readThrough(t, f, '#sidePanelSlot'));
+				const rerenderAgents = t.args.selftest === 'rerender' && target === 'panel-agents';
+				judge(look, `rail ${target.replace('panel-', '')} (${mode})`, await measure('#sidePanelSlot', { rerenderAgents }));
 			}
 		}
 		await t.viewport(1390, 900);
@@ -172,6 +234,7 @@ export default async function (t) {
 		await f.waitForTimeout(1200);
 	}
 	await t.viewport(1920, 1080);
+	if (local) t.log(`Glass backing: lowest sampled local free memory ${minFreeGiB.toFixed(2)} GiB`);
 	rows.forEach((r) => t.log(r));
 	await t.check(`no Glass window or floating surface lets the page read through it (${rows.length} surfaces, ${looks.join(', ')}${tierQuery ? ', ' + tierQuery : ''})`, bad.length === 0, bad.slice(0, 12).join('; ') + (bad.length > 12 ? ` (+${bad.length - 12} more)` : ''));
 }

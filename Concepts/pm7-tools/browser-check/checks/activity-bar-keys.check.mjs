@@ -55,8 +55,8 @@ function railControls() {
 // (overflow-y auto or scroll, with something to scroll), where scrolling it must bring the tile in (F96b-3). A Tab walk
 // proves none of this, as a focus scrolls the bar to it: Glass's collapsed rail at 1280x500 held 528 px in 411, with
 // Artifacts, More and the toggle below the fold and no scrollbar to say so (F96c-2). `below` lists the controls seen only
-// by scrolling; `trimmed`, the tiles in view whose edge the box cuts by more than 1 px (Friendly's toggle at 1280x500,
-// 5 px, on b622109459 as well: logged, not failed).
+// by scrolling. Every visible tile must keep at least three quarters of its width and height within the clip box.
+// Log smaller cuts (such as Friendly's 5 px toggle trim at 1280x500).
 function railAtRest() {
   const bar = document.getElementById('activityBar');
   if (!bar) return null;
@@ -68,16 +68,21 @@ function railAtRest() {
     return { x0: Math.max(0, x0), y0: Math.max(0, y0), x1: Math.min(innerWidth, x0 + bar.clientWidth), y1: Math.min(innerHeight, y0 + bar.clientHeight) }; };
   const inside = (q, c) => { const x = (q.left + q.right) / 2, y = (q.top + q.bottom) / 2; return y >= c.y0 && y <= c.y1 && x >= c.x0 && x <= c.x1; };
   const cut = (q, c) => Math.round(Math.max(0, c.y0 - q.top, q.bottom - c.y1, c.x0 - q.left, q.right - c.x1));
+  const enough = (q, c) => {
+    const width = Math.min(q.right, c.x1) - Math.max(q.left, c.x0);
+    const height = Math.min(q.bottom, c.y1) - Math.max(q.top, c.y0);
+    return q.width > 0 && q.height > 0 && width >= 0.75 * q.width && height >= 0.75 * q.height;
+  };
   const hits = (e, q) => { const h = document.elementFromPoint((q.left + q.right) / 2, (q.top + q.bottom) / 2); return !!h && (h === e || e.contains(h)); };
   const rows = [...document.querySelectorAll('#activityBar .icon[data-ab-id], #activityBar > .activity-bar-toggle')].filter(shown).map(e => {
     const s = e.querySelector(':scope > .symbol') || e, key = e.getAttribute('data-ab-id') || e.id;
     let q = s.getBoundingClientRect(), c = clipBox();
-    if (inside(q, c) && hits(e, q)) return cut(q, c) > 1 ? { key, seen: 'at rest', cut: cut(q, c) } : { key, seen: 'at rest' };
-    const row = { key, bottom: Math.round(q.bottom), top: Math.round(q.top), box: [Math.round(c.y0), Math.round(c.y1)] };
+    if (enough(q, c) && inside(q, c) && hits(e, q)) return cut(q, c) > 1 ? { key, seen: 'at rest', cut: cut(q, c) } : { key, seen: 'at rest' };
+    const row = { key, bottom: Math.round(q.bottom), top: Math.round(q.top), box: [Math.round(c.y0), Math.round(c.y1)], cut: cut(q, c) };
     if (!scrolls) return { ...row, seen: false };
     bar.scrollTop += q.bottom > c.y1 ? q.bottom - c.y1 + 2 : q.top < c.y0 ? q.top - c.y0 - 2 : 0;
     q = s.getBoundingClientRect(); c = clipBox();
-    const ok = inside(q, c) && hits(e, q);
+    const ok = enough(q, c) && inside(q, c) && hits(e, q);
     bar.scrollTop = 0;
     return { ...row, seen: ok ? 'by scrolling the bar' : false };
   });
@@ -172,25 +177,124 @@ function corners(rest, focus, item, ox, oy) {
   return { tl: corner(L, T, 1, 1), tr: corner(Rr, T, -1, 1), bl: corner(L, B, 1, -1), br: corner(Rr, B, -1, -1) };
 }
 // a mark passes when every side (every corner for NieR) is there at 3:1
+// The reticle root has zero width even while its four absolutely positioned children paint.
+function reticleClear({ x, y, width, height }) {
+  const reticle = document.getElementById('o55np-reticle');
+  if (!reticle) return true;
+  const style = getComputedStyle(reticle);
+  if (style.display === 'none' || Number(style.opacity) === 0) return true;
+  return [...reticle.children].every(corner => {
+    const rect = corner.getBoundingClientRect();
+    return getComputedStyle(corner).visibility !== 'visible' || !rect.width || !rect.height
+      || rect.right <= x || rect.left >= x + width || rect.bottom <= y || rect.top >= y + height;
+  });
+}
+
 const markOk = r => !!r && r.focused && (r.brackets ? Object.values(r.corners).every(n => n >= 6)
   : Object.values(r.sides).every(sd => sd.share >= 0.9) && (!r.clip || Object.values(r.clip).every(v => v <= 1)));
-const brief = r => r && { key: r.key, lit: r.lit, focused: r.focused, ...(r.unreached ? { unreached: true } : {}), ...(r.skipped ? { skipped: r.skipped } : {}), ...(r.moved ? { moved: true } : {}), ...(r.clip && Object.values(r.clip).some(v => v > 1) ? { clip: r.clip } : {}),
+const brief = r => r && { key: r.key, lit: r.lit, focused: r.focused, ...(r.unreached ? { unreached: true } : {}), ...(r.skipped ? { skipped: r.skipped } : {}), ...(r.restBlocked ? { restBlocked: r.restBlocked } : {}), ...(r.moved ? { moved: true } : {}), ...(r.clip && Object.values(r.clip).some(v => v > 1) ? { clip: r.clip } : {}),
   ...(r.corners ? { corners: r.corners } : {}), ...(r.sides ? { sides: Object.fromEntries(Object.entries(r.sides).map(([k, v]) => [k, `${v.share} ${v.worst}-${v.median}`])) } : {}), ...(r.names ? { names: r.names } : {}) };
 
 // A key-focused bar control's mark as the page holds it (not its paint, which the pixel reads judge): the rail's focus
 // ring (.d-abring on its tile's box, F96-1 round 8), its own outline (where anchor positioning is missing), or, on builds
 // before round 8, Liquid Glass's flagged lens painted at rest on it.
-function markOn(k) {
-  const i = document.querySelector(`#activityBar .icon[data-ab-id="${k}"]`), sym = i && (i.querySelector('.symbol') || i);
-  if (!sym) return { keyFocus: false, any: false };
-  const b = sym.getBoundingClientRect(), o = getComputedStyle(sym), near = r => Math.abs((r.left + r.right) / 2 - (b.left + b.right) / 2) <= 3 && Math.abs((r.top + r.bottom) / 2 - (b.top + b.bottom) / 2) <= 3;
-  const own = o.outlineStyle !== 'none' && parseFloat(o.outlineWidth) >= 2;
-  const L = [...document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]')].find(x => { const c = getComputedStyle(x); return c.display !== 'none' && parseFloat(c.opacity) > 0.5; });
-  const lens = !!L && near(L.getBoundingClientRect());
-  const g = document.getElementById('d-abring'), gc = g && getComputedStyle(g), gr = g && g.getBoundingClientRect();
-  const ring = !!g && gc.display !== 'none' && gc.visibility !== 'hidden' && gr.width > 4 && Math.abs(gr.left - b.left) <= 1 && Math.abs(gr.top - b.top) <= 1 && Math.abs(gr.width - b.width) <= 1 && Math.abs(gr.height - b.height) <= 1;
-  const keyFocus = document.activeElement === i && i.matches(':focus-visible');
-  return { keyFocus, ring, own, lens, any: keyFocus && (ring || own || lens) };
+// A key-focused icon can draw its own outline, the anchored ring or the flagged Glass lens.
+function markOn(input) {
+  const { target, ms, ready, inputKey, click } = typeof input === 'string' ? { target: input } : input;
+  const visible = c => c.display !== 'none' && c.visibility === 'visible' && parseFloat(c.opacity) > 0;
+  const read = () => {
+    const icon = document.querySelector(`#activityBar .icon[data-ab-id="${target}"]`);
+    const keyFocus = !!icon && document.activeElement === icon && icon.matches(':focus-visible');
+    if (!keyFocus) return { keyFocus, any: false };
+    const sym = icon.querySelector('.symbol') || icon;
+    const b = sym.getBoundingClientRect(), o = getComputedStyle(sym);
+    const own = visible(o) && o.outlineStyle !== 'none' && parseFloat(o.outlineWidth) >= 2;
+    let centered = false, lens = false, away = false;
+    for (const element of document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"]')) {
+      const c = getComputedStyle(element);
+      if (!visible(c) || parseFloat(c.opacity) <= 0.5) continue;
+      const a = element.getBoundingClientRect();
+      const near = Math.abs((a.left + a.right) / 2 - (b.left + b.right) / 2) <= 3
+        && Math.abs((a.top + a.bottom) / 2 - (b.top + b.bottom) / 2) <= 3;
+      centered ||= near;
+      if (element.hasAttribute('data-lg-focus')) {
+        lens ||= near;
+        away ||= !near;
+      }
+    }
+    const g = document.getElementById('d-abring'), gr = g?.getBoundingClientRect();
+    const ring = !!g && visible(getComputedStyle(g)) && gr.width > 4
+      && Math.abs(gr.left - b.left) <= 1 && Math.abs(gr.top - b.top) <= 1
+      && Math.abs(gr.width - b.width) <= 1 && Math.abs(gr.height - b.height) <= 1;
+    return { keyFocus, ring, own, lens, away, centered, any: ring || own || lens };
+  };
+  if (!ms) {
+    const result = read();
+    return ready ? result.any : result;
+  }
+
+  // Change a probe in rAF so ResizeObserver reads the frame after the app's rAF callbacks and layout.
+  const sample = window.__fo96s = { frames: 0, none: 0, away: 0, at: [], arrival: null, handover: null, late: false, done: false };
+  let started = null;
+  const probe = document.createElement('div');
+  Object.assign(probe.style, { position: 'fixed', left: '0', top: '0', width: '1px', height: '1px', opacity: '0', pointerEvents: 'none' });
+  document.body.appendChild(probe);
+  const observer = new ResizeObserver(() => {
+    if (started === null) return;
+    const mark = read();
+    sample.frames++;
+    if (!mark.any) {
+      sample.none++;
+      if (sample.at.length < 4) sample.at.push(Math.round(performance.now() - started));
+    }
+    if (mark.away) sample.away++;
+    if (!mark.centered) {
+      sample.arrival = null;
+      sample.handover = null;
+    } else {
+      sample.arrival ??= sample.frames;
+      if (mark.lens && sample.handover === null) {
+        sample.handover = sample.frames;
+        sample.late ||= sample.handover !== sample.arrival;
+      }
+    }
+  });
+  observer.observe(probe);
+  const eventName = click ? 'pointerdown' : 'keydown';
+  const onInput = event => {
+    if (click ? !event.target.closest?.(`#activityBar .icon[data-ab-id="${target}"]`) : event.key !== inputKey) return;
+    window.removeEventListener(eventName, onInput, true);
+    clearTimeout(inputTimeout);
+    start();
+  };
+  const finish = () => {
+    observer.disconnect();
+    probe.remove();
+    sample.done = true;
+  };
+  let flip = false;
+  const step = () => {
+    if (performance.now() - started >= ms) {
+      finish();
+      return;
+    }
+    flip = !flip;
+    probe.style.width = flip ? '2px' : '1px';
+    requestAnimationFrame(step);
+  };
+  const start = () => {
+    started = performance.now();
+    requestAnimationFrame(step);
+  };
+  if (!inputKey && !click) {
+    start();
+    return;
+  }
+  const inputTimeout = setTimeout(() => {
+    window.removeEventListener(eventName, onInput, true);
+    finish();
+  }, 5000);
+  window.addEventListener(eventName, onInput, true);
 }
 
 // Names' letters, every name in view (K-F96b-3: a mark must not cross a neighbour's name either). The letters are found
@@ -324,7 +428,11 @@ async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
   }
   // the chat folded to its strip ("Open the chat"): Chat is not expanded; Enter on it opens the chat over the centre,
   // which expands it, and Escape folds it back (round 2, F98-1)
-  const stripOn = () => f.evaluate(() => { const b = document.getElementById('pmw-chat-strip'); return !!(b && !b.hidden && b.getClientRects().length); });
+  const stripOn = () => {
+    const strip = document.getElementById('pmw-chat-strip');
+    return !!strip && !strip.hidden && strip.getClientRects().length > 0;
+  };
+  const waitForStrip = () => f.waitForFunction(stripOn, null, { timeout: 4000 }).catch(() => {});
   const peeking = () => f.evaluate(() => !!document.querySelector('.main-area')?.hasAttribute('data-pmw-chat-peek'));
   // At 740 the step is required, whatever ran before (round 3, K8b-1): section 5's 1920 test stores "Keep the chat open
   // in narrow windows" on the normal page, and the 740 test that follows then never folded the chat, so the step only
@@ -333,9 +441,9 @@ async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
   if (await peeking() && await reach('chat')) { await kb.press('Escape'); await f.waitForTimeout(500); }
   const mustFold = at === '740x900';
   const keptOpen = mustFold ? await f.evaluate(() => { const c = window.PMW && PMW.chatCol; if (!c || !c.keepOpen || !c.keepOpen()) return false; c.setKeepOpen(false); return true; }) : false;
-  if (mustFold) await f.waitForFunction(() => { const b = document.getElementById('pmw-chat-strip'); return !!(b && !b.hidden && b.getClientRects().length); }, null, { timeout: 4000 }).catch(() => {});
-  if (keptOpen) t.log(`${at} FO-98: "keep the chat open" was stored by an earlier test; turned off for the strip step`);
-  if (await stripOn()) {
+  if (mustFold) await waitForStrip();
+  if (keptOpen) t.log(`${at} FO-98: "keep the chat open" was on; turned off for the strip step`);
+  if (await f.evaluate(stripOn)) {
     await agree('the chat folded to its strip', s => s.chat.expanded === 'false' && s.chat.lit);
     if (await reach('chat')) { await kb.press('Enter'); await f.waitForTimeout(700); }
     await agree('after Enter opens the chat over the centre', s => s.chat.expanded === 'true');
@@ -346,9 +454,22 @@ async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
   if (keptOpen) { await f.evaluate(() => PMW.chatCol.setKeepOpen(true)); await f.waitForTimeout(500); }
   // across the fold in one session (round 2, K-act8-3): the state is read again after the window narrows and widens
   if (full) {
-    await t.viewport(740, 900); await f.waitForTimeout(1200);
-    await agree('the same session narrowed to 740x900');
-    await t.viewport(1920, 1100); await f.waitForTimeout(1200);
+    const keepOpen = await f.evaluate(() => {
+      const wasOn = PMW.chatCol.keepOpen();
+      if (wasOn) PMW.chatCol.setKeepOpen(false);
+      return wasOn;
+    });
+    try {
+      await t.viewport(740, 900);
+      await waitForStrip();
+      const folded = await f.evaluate(stripOn);
+      await t.check(`${at} FO-98: narrowing the same session to 740x900 folds Chat to its strip`, folded);
+      await agree('the same session narrowed to 740x900', s => !s.chat.open && s.chat.expanded === 'false');
+    } finally {
+      await t.viewport(1920, 1100);
+      if (keepOpen) await f.evaluate(() => PMW.chatCol.setKeepOpen(true));
+    }
+    await f.waitForTimeout(1200);
     await agree('the same session back at 1920x1100', s => s.files.expanded === 'true');
   }
   if (!full && at !== '740x900') return;
@@ -394,7 +515,10 @@ async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
   if (reached) { await kb.press('ContextMenu'); await menuUp(); await f.waitForTimeout(150); }
   const ctxSeen = await f.evaluate(() => window.__fo98ctx.slice());
   t.log(`${at} FO-98: contextmenu events after the Menu key: ${JSON.stringify(ctxSeen)}`);
-  await t.check(`${at} FO-98 ${k}: no contextmenu event from the Menu key reaches the page uncancelled`, ctxSeen.every((e) => e.prevented), JSON.stringify(ctxSeen));
+  const menuKeyResult = ctxSeen.length
+    ? 'every native contextmenu event from the Menu key is cancelled'
+    : 'no native contextmenu emitted by the Menu key (cancellation not exercised)';
+  await t.check(`${at} FO-98 ${k}: ${menuKeyResult}`, ctxSeen.every(e => e.prevented), JSON.stringify(ctxSeen));
   m = await f.evaluate(iconMenu);
   await drain();
   if (m.open) { await kb.press('End'); await kb.press('Enter'); await menuGone(); await settle(); await f.waitForTimeout(120); }
@@ -665,13 +789,22 @@ async function run(t, w, h) {
     const region = { x, y, width: Math.ceil(off.x + u.r) + P + 1 - x, height: Math.min(Math.ceil(off.y + u.b) + P + 1, Math.floor(off.y + h)) - y };
     // with the names shown, every name's letters in the region, its own and its neighbours': an exact mask (below)
     const named = !!b.label;
-    const r0 = await t.pixels(region);
+    const capture = async () => {
+      if (named) {
+        // Tab can queue a tooltip even with the mouse outside the rail. Clear it without moving focus
+        // or sending Escape (which can also close the panel), then let the cleared frame paint.
+        await f.evaluate(() => window.PM_HOVER_TAG_CONTROLLER?.close(true));
+        await frames(f, 2);
+      }
+      return t.pixels(region);
+    };
+    const r0 = await capture();
     let bare = null;
     let nameBoxes = [];
     if (named) {
       nameBoxes = await f.evaluate(() => [...document.querySelectorAll('#activityBar .icon .icon-label')].filter(n => getComputedStyle(n).display !== 'none' && n.getClientRects().length)
         .map(n => { const g = document.createRange(); g.selectNodeContents(n); const q = g.getBoundingClientRect(); return { x: q.x, y: q.y, w: q.width, h: q.height }; }));
-      await f.evaluate(hideNames, true); await frames(f, 2); bare = await t.pixels(region); await f.evaluate(hideNames, false); await frames(f, 2);
+      await f.evaluate(hideNames, true); await frames(f, 2); bare = await capture(); await f.evaluate(hideNames, false); await frames(f, 2);
     }
     await focusQuiet(await before(target));
     await kb.press('Tab');
@@ -686,13 +819,13 @@ async function run(t, w, h) {
       const step = () => { const now = r ? [...r.children].map(i => i.style.transform + getComputedStyle(i).translate).join('|') : ''; still = now === last ? still + 1 : 0; last = now;
         if (still >= 3 || performance.now() - t0 > 1500) done(); else requestAnimationFrame(step); }; requestAnimationFrame(step); }));
     const now = await key();
-    let r1 = await t.pixels(region);
+    let r1 = await capture();
     // a read of NieR's brackets taken while one corner was still on its way in (K-F96c-4, a false stop: tl 0, bl 8 once,
     // passing on a rerun): read once more after 500 ms, the focus unmoved. A corner still short then is a real fault.
     if (b.brackets && !Object.values(bestCorners(r0, r1, b, region.x - off.x, region.y - off.y)).every(n => n >= 6)) {
       t.log(`${target}: NieR's brackets read short ${JSON.stringify(bestCorners(r0, r1, b, region.x - off.x, region.y - off.y))}; read again after 500 ms`);
       await f.waitForTimeout(500);
-      if ((await key()).key === target) r1 = await t.pixels(region);
+      if ((await key()).key === target) r1 = await capture();
     }
     // the item, not its tile, which a focused tile's own style may move by a fraction (Glass's press scale is lifted)
     const moved = await f.evaluate(([k, t0]) => { const el = k === 'activityBarToggle' ? document.getElementById(k) : document.querySelector(`#activityBar .icon[data-ab-id="${k}"]`); const q = el.getBoundingClientRect(); return Math.abs(q.x - t0.x) + Math.abs(q.y - t0.y) > 0.5; }, [target, b.item]);
@@ -720,7 +853,7 @@ async function run(t, w, h) {
   // under a key focus). Read first with the focus where the action left it, then at rest with the focus stepped off
   // without scrolling; the key focus is then given back by a real Tab. A control the action left without a key focus
   // (:focus-visible off) is skipped, as no mark is due.
-  const markNow = async (target) => {
+  const markNow = async (target, bothNeighbours = both) => {
     const st = await f.evaluate(k => { const el = document.querySelector(`#activityBar .icon[data-ab-id="${k}"]`); return { fv: !!el && document.activeElement === el && el.matches(':focus-visible') }; }, target);
     if (!st.fv) return { key: target, focused: false, skipped: 'no key focus after the action' };
     await f.waitForTimeout(450);
@@ -740,28 +873,27 @@ async function run(t, w, h) {
     const r1 = await t.pixels(region);
     if (t.args.debug && b.brackets) t.log(`debug markNow ${target} reticle at focus ` + JSON.stringify(await f.evaluate(() => { const r = document.getElementById('o55np-reticle'); return r ? { on: r.hasAttribute('data-on'), kids: [...r.children].map(i => (q => [q.left, q.top].map(Math.round))(i.getBoundingClientRect())) } : null; })) + ' item ' + JSON.stringify(b.item));
     await f.evaluate(placeSentinel, ['#activityBar', 'before']); await focusQuiet(null); await f.waitForTimeout(350);
-    // NieR locks its brackets on a clicked (or Enter-pressed) item for 1.2 s (19-nier-parts.js retChoose): the rest is
-    // read once they have left it
-    if (b.brackets) await f.waitForFunction(() => { const r = document.getElementById('o55np-reticle'); return !r || !r.hasAttribute('data-on') || r.getBoundingClientRect().width === 0 || [...r.children].every(i => i.getBoundingClientRect().top < -50); }, null, { timeout: 2000 }).catch(() => f.waitForTimeout(1300));
-    const r0 = await t.pixels(region);
+    // Wait through the press lock and opacity fade if the painted corners still overlap the rest capture.
+    const clear = !b.brackets || await f.waitForFunction(reticleClear,
+      { ...region, x: region.x - off.x, y: region.y - off.y }, { timeout: 2500 }).then(() => true, () => false);
+    const r0 = clear ? await t.pixels(region) : null;
     if (t.args.debug && b.brackets) t.log(`debug markNow ${target} reticle at rest ` + JSON.stringify(await f.evaluate(() => { const r = document.getElementById('o55np-reticle'); return r ? { on: r.hasAttribute('data-on'), kids: [...r.children].map(i => (q => [q.left, q.top].map(Math.round))(i.getBoundingClientRect())), act: document.activeElement?.id || document.activeElement?.tagName } : null; })));
     const moved = await f.evaluate(([k, t0]) => { const q = document.querySelector(`#activityBar .icon[data-ab-id="${k}"]`).getBoundingClientRect(); return Math.abs(q.x - t0.x) + Math.abs(q.y - t0.y) > 0.5; }, [target, b.item]);
     await focusQuiet(await before(target)); await kb.press('Tab'); await f.waitForTimeout(150);
+    if (!clear) return { key: target, focused: false, restBlocked: 'NieR brackets still overlap the rest capture' };
     const ox = region.x - off.x, oy = region.y - off.y;
     return { key: target, lit: b.lit, focused: !moved, moved, brackets: b.brackets, clip: b.brackets ? null : b.clip,
-      ...(b.brackets ? { corners: bestCorners(r0, r1, b, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy, both), sides(r0, r1, b.item, ox, oy, both)) }) };
+      ...(b.brackets ? { corners: bestCorners(r0, r1, b, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy, bothNeighbours), sides(r0, r1, b.item, ox, oy, bothNeighbours)) }) };
   };
-  // Frames where the lens carries the mark away from the focused control (F96b-2), sampled every frame from just before
-  // a key until 900 ms after it; only a page whose rail lens can carry the mark (Glass with Liquid Glass on) can count any.
-  const startLensSampler = () => f.evaluate(() => { window.__fo96s = { frames: 0, flagged: 0, away: 0 }; const t0 = performance.now();
-    const step = () => { const s = window.__fo96s; s.frames++;
-      const L = [...document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]')].find(x => { const c = getComputedStyle(x); return c.display !== 'none' && c.visibility !== 'hidden' && parseFloat(c.opacity) > 0.5; }), act = document.activeElement;
-      if (L && act && act.closest && act.closest('#activityBar')) {
-        s.flagged++; const a = L.getBoundingClientRect(), q = (act.querySelector('.symbol') || act).getBoundingClientRect();
-        if (Math.abs((a.left + a.right) / 2 - (q.left + q.right) / 2) > 3 || Math.abs((a.top + a.bottom) / 2 - (q.top + q.bottom) / 2) > 3) s.away++; }
-      if (performance.now() - t0 < 900) requestAnimationFrame(step); };
-    requestAnimationFrame(step); });
-  const lensSamples = () => f.evaluate(() => window.__fo96s);
+  const sampleMark = async (target, input, act) => {
+    const ready = await f.waitForFunction(markOn, { target, ready: true }, { timeout: 2000 }).then(() => true, () => false);
+    await f.evaluate(markOn, { target, ms: 900, inputKey: input === 'click' ? null : input.split('+').at(-1), click: input === 'click' });
+    await act();
+    await f.waitForFunction(() => window.__fo96s?.done, null, { timeout: 5000 }).catch(() => {});
+    const result = await f.evaluate(() => window.__fo96s);
+    return { ready, ...result };
+  };
+  const keptMark = r => !!r && r.ready && r.done && r.frames > 0 && r.none === 0 && r.away === 0;
   const byTab = target => async () => { for (let i = 0; i < controls.length; i++) { await kb.press('Tab'); if ((await key()).key === target) return; } };
   await rest();
   const paint1 = [];
@@ -951,7 +1083,8 @@ async function run(t, w, h) {
     }
     let lens = null;
     if (await tabTo('search')) {
-      await startLensSampler(); await kb.press('Enter'); await f.waitForTimeout(950); lens = await lensSamples();
+      if (look.startsWith('glass-')) lens = await sampleMark('search', 'Enter', () => kb.press('Enter'));
+      else await kb.press('Enter');
       acts.push({ after: 'Enter on Search', ...(await markNow('search')) });
     }
     if (!(await f.evaluate(panelState, 'files')).open && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
@@ -959,83 +1092,82 @@ async function run(t, w, h) {
     const actsRead = acts.filter(a => !a.skipped);
     await t.check(`${at} ${look}: the key focus mark at 3:1 on every side${both3} after Enter, Enter again and a click on the open panel's icon, and after Enter changes the panel`,
       actsRead.length >= 3 && actsRead.every(ok), JSON.stringify(acts.map(a => ({ after: a.after, ...brief(a) }))));
-    await t.check(`${at} ${look}: the lens never carries the mark away from the focused item when Enter changes the panel`, !!lens && lens.away === 0, JSON.stringify(lens));
+    if (look.startsWith('glass-')) {
+      await t.check(`${at} ${look}: Enter on Search keeps a focus mark in every frame and any lens handoff happens on arrival`,
+        keptMark(lens) && !lens.late, JSON.stringify(lens));
+    }
     await rest();
     // the collapsed bar at rest, focus off it: every control on screen (K-F96c-2)
     await f.evaluate(placeSentinel, ['#activityBar', 'before']); await focusQuiet(null); await frames(f, 2);
     const seen6 = await f.evaluate(railAtRest);
     t.log(`${at} ${look} at rest ${JSON.stringify(seen6)}`);
     await t.check(`${at} ${look}: at rest every control of the collapsed rail is on screen`, !!seen6 && seen6.unseen.length === 0 && seen6.below.length === 0, JSON.stringify(seen6));
-    // Reduced Motion, a panel shortcut with the key focus kept on the open panel's icon (K-F96d-1), and in motion a click
-    // on that icon. In Glass the lens
-    // carries the mark on the open panel's icon; Ctrl+2 opens another panel and the lens jumps there in one step, and
-    // Ctrl+1 brings it back. Every frame for 900 ms from each key is read after layout, just before paint (a
-    // ResizeObserver callback): the key-focused icon must have a mark in each (its own outline, or the flagged lens
-    // painted at rest on it), and no flagged lens may be away from it (F96d-1: one frame with neither on 981463667f, the
-    // lens and its ring already on Search). Reduced Motion is the app's own setting (data-motion="reduced", as Settings
-    // sets it) and the media query, so both surfaces take it; both are put back after.
-    if (/^glass-/.test(look)) {
-      // started (and awaited) before the key is sent, so no frame after it is missed; read back once it has run ms
-      const frameRead = ms => f.evaluate(ms => {
-        const P = window.__fo96f = { frames: 0, none: 0, away: 0, at: [], done: false }, t0 = performance.now(), probe = document.createElement('div');
-        Object.assign(probe.style, { position: 'fixed', left: '0', top: '0', width: '1px', height: '1px', opacity: '0', pointerEvents: 'none' });
-        document.body.appendChild(probe);
-        const ro = new ResizeObserver(() => {
-          const act = document.activeElement;
-          if (!act || !act.matches || !act.matches('#activityBar .icon') || !act.matches(':focus-visible')) return;
-          P.frames++;
-          const sym = act.querySelector('.symbol') || act, o = getComputedStyle(sym), b = sym.getBoundingClientRect();
-          const own = o.outlineStyle !== 'none' && parseFloat(o.outlineWidth) >= 2;
-          const L = [...document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]')].find(x => { const c = getComputedStyle(x); return c.display !== 'none' && parseFloat(c.opacity) > 0.5; });
-          let onLens = false;
-          if (L) { const a = L.getBoundingClientRect(); onLens = Math.abs((a.left + a.right) / 2 - (b.left + b.right) / 2) <= 3 && Math.abs((a.top + a.bottom) / 2 - (b.top + b.bottom) / 2) <= 3; if (!onLens) P.away++; }
-          const g = document.getElementById('d-abring'), gc = g && getComputedStyle(g), gr = g && g.getBoundingClientRect();
-          const onRing = !!g && gc.display !== 'none' && gc.visibility !== 'hidden' && gr.width > 4 && Math.abs(gr.left - b.left) <= 1 && Math.abs(gr.top - b.top) <= 1 && Math.abs(gr.width - b.width) <= 1 && Math.abs(gr.height - b.height) <= 1;
-          if (!own && !onLens && !onRing) { P.none++; P.at.push(Math.round(performance.now() - t0)); }
-        });
-        ro.observe(probe);
-        let flip = false;
-        const step = () => { flip = !flip; probe.style.width = flip ? '2px' : '1px'; if (performance.now() - t0 < ms) requestAnimationFrame(step); else { ro.disconnect(); probe.remove(); P.done = true; } };
-        requestAnimationFrame(step);
-      }, ms);
-      // the side panel on screen (below 1920 it lies over the page and can be folded away while it keeps its open state)
-      const shown = () => f.evaluate(() => { const s = document.getElementById('sidePanelSlot'); return !!s && s.getClientRects().length > 0 && getComputedStyle(s).display !== 'none'; });
-      const was = await f.evaluate(() => { const r = document.documentElement, w = r.getAttribute('data-motion'); r.setAttribute('data-motion', 'reduced'); return w; });
-      await t.page.emulateMedia({ reducedMotion: 'reduce' });
-      if (!(await f.evaluate(panelState, 'files')).open && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
-      if (!(await shown()) && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
-      const reached = await tabTo('files');
-      await f.waitForTimeout(1600);
-      const pre = (await f.evaluate(markOn, 'files')).any;
-      const reads = [];
-      for (const [k, label] of [['Control+2', 'Ctrl+2, the lens leaves it'], ['Control+1', 'Ctrl+1, the lens comes back']]) {
-        await frameRead(900); await kb.press(k);
-        await f.waitForFunction(() => window.__fo96f && window.__fo96f.done, null, { timeout: 5000 }).catch(() => {});
-        const r = await f.evaluate(() => { const P = window.__fo96f; return { frames: P.frames, none: P.none, away: P.away, at: P.at.slice(0, 4), done: P.done }; });
-        reads.push({ key: label, ...r }); await f.waitForTimeout(300);
+    const glass = look.startsWith('glass-');
+    const shown = () => f.evaluate(() => {
+      const panel = document.getElementById('sidePanelSlot');
+      return !!panel && panel.getClientRects().length > 0 && getComputedStyle(panel).display !== 'none';
+    });
+    const showsPanel = async target => (await f.evaluate(panelState, target)).open && await shown();
+    const openFiles = async () => {
+      if (!(await showsPanel('files')) && await tabTo('files')) {
+        await kb.press('Enter');
+        await frames(f, 4);
       }
-      await f.evaluate(w => { const r = document.documentElement; if (w === null) r.removeAttribute('data-motion'); else r.setAttribute('data-motion', w); }, was);
-      await t.page.emulateMedia({ reducedMotion: 'no-preference' });
-      if (!(await f.evaluate(panelState, 'files')).open && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
-      t.log(`${at} ${look} Reduced Motion, panel shortcuts with the focus kept on Files: a mark before ${pre}, ${JSON.stringify(reads)}`);
-      await t.check(`${at} ${look}: in Reduced Motion, Ctrl+2 and Ctrl+1 with the key focus kept on the open panel's icon leave it a mark in every frame, and no flagged lens away from it`,
-        reached && pre && reads.every(r => r.done && r.frames > 0 && r.none === 0 && r.away === 0), JSON.stringify({ reached, pre, reads }));
-      // ...and in motion, a real click on the key-focused open icon, with no key in the bar: the panel closes (at 1920) or
-      // folds away (below it, where the panel lies over the page and keeps its open state), and the lens hides in one
-      // step. 981463667f left one frame with no mark there. The panel is shown again after, by Enter.
-      if (!(await shown()) && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
-      const reachedC = await tabTo('files');
-      await f.waitForTimeout(1600);
-      const preC = (await f.evaluate(markOn, 'files')).any;
-      await frameRead(900); await f.locator('#activityBar .icon[data-ab-id="files"]').click(); await rest();
-      await f.waitForFunction(() => window.__fo96f && window.__fo96f.done, null, { timeout: 5000 }).catch(() => {});
-      const click = await f.evaluate(() => { const P = window.__fo96f; return { frames: P.frames, none: P.none, away: P.away, at: P.at.slice(0, 4), done: P.done }; });
+      return showsPanel('files');
+    };
+    const focusClick = async label => {
+      const opened = await openFiles();
+      const reached = await tabTo('files');
+      const click = await sampleMark('files', 'click', async () => {
+        await f.locator('#activityBar .icon[data-ab-id="files"]').click();
+        await rest();
+      });
       const closed = !(await shown());
-      if (closed && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
-      if (!(await shown()) && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
-      t.log(`${at} ${look} a click on the key-focused open Files: a mark before ${preC}, panel gone ${closed}, ${JSON.stringify(click)}`);
-      await t.check(`${at} ${look}: a real click on the key-focused open panel's icon leaves it a mark in every frame as the panel goes and the lens hides`,
-        reachedC && preC && click.done && click.frames > 0 && click.none === 0 && click.away === 0 && closed, JSON.stringify({ reachedC, preC, closed, click }));
+      await openFiles();
+      await t.check(`${label}: a real click on the key-focused open Files leaves a mark in every frame as the panel goes`,
+        opened && reached && keptMark(click) && closed, JSON.stringify({ opened, reached, closed, click }));
+    };
+    const checkReducedMotion = async rail => {
+      const label = `${at} ${look}, ${rail}, Reduced Motion`;
+      const was = await f.evaluate(() => {
+        const root = document.documentElement, motion = root.getAttribute('data-motion');
+        root.setAttribute('data-motion', 'reduced');
+        return motion;
+      });
+      await t.page.emulateMedia({ reducedMotion: 'reduce' });
+      try {
+        const opened = await openFiles();
+        const reached = await tabTo('files');
+        const reads = [];
+        for (const [key, target] of [['Control+2', 'search'], ['Control+1', 'files']]) {
+          const sample = await sampleMark('files', key, () => kb.press(key));
+          reads.push({ key, panel: target, opened: await showsPanel(target), ...sample });
+        }
+        await t.check(`${label}: Ctrl+2 then Ctrl+1 switch panels while the focused Files keeps its mark in every frame`,
+          opened && reached && reads.every(read => read.opened && keptMark(read)), JSON.stringify({ opened, reached, reads }));
+
+        const reachedSearch = await tabTo('search');
+        if (reachedSearch) { await kb.press('Enter'); await frames(f, 4); }
+        const searchOpened = await showsPanel('search');
+        const back = await sampleMark('search', 'Control+1', () => kb.press('Control+1'));
+        const filesOpened = await showsPanel('files');
+        await t.check(`${label}: after Enter opens Search, Ctrl+1 opens Files while the focused Search keeps its mark in every frame`,
+          reachedSearch && searchOpened && keptMark(back) && filesOpened,
+          JSON.stringify({ reachedSearch, searchOpened, filesOpened, back }));
+
+        await focusClick(label);
+      } finally {
+        await f.evaluate(motion => {
+          const root = document.documentElement;
+          if (motion === null) root.removeAttribute('data-motion');
+          else root.setAttribute('data-motion', motion);
+        }, was);
+        await t.page.emulateMedia({ reducedMotion: 'no-preference' });
+      }
+    };
+    if (glass) {
+      await checkReducedMotion('collapsed');
+      await focusClick(`${at} ${look}, collapsed, motion`);
     }
     // the bar with its names shown (the toggle)
     await f.evaluate(() => document.getElementById('activityBarToggle').click());
@@ -1050,6 +1182,7 @@ async function run(t, w, h) {
     t.log(`${at} ${look} names shown, marks ${JSON.stringify(wide.map(brief))}`);
     await t.check(`${at} ${look}, names shown: a key focus mark on every side at 3:1 or more${both3} on Chat, lit Files, Search and Pipelines, and no name's letters in view are crossed or touched`,
       wide.every(ok) && wide[1]?.lit && wide.every(r => r && r.names && r.names.letters >= 15 && r.names.crossed === 0), JSON.stringify(wide.map(brief)));
+    if (glass) await checkReducedMotion('names shown');
     // FO-96 NieR tile-anchor witness: retain native narrow-rail names and Pipelines corners on both surfaces.
     if (/^nier-/.test(look) && (w === 1024 || w === 740)) {
       await sentinel('#activityBar'); await byTab('repository_automation')(); await f.waitForTimeout(450);
@@ -1067,14 +1200,14 @@ async function run(t, w, h) {
       await t.crop(`${at}-files-${surface}-${look}`, f.locator('#activityBar'), `${at} ${look}: lit Files with the key focus mark`);
     }
     // A family change with the key focus kept on the open panel's icon (K-F96c-1). In Glass the lens carries the mark;
-    // in the look it changes to (Basic, then Retro, each from this Glass look) the icon draws its own at once, with no
+    // in the look it changes to (Basic, Retro and Friendly, each from this Glass look) the icon draws its own, with no
     // focus flag left behind (F96c-1). The change is made with the rail idle (1.6 s on the icon: no sync of the lens
     // still queued, which on b622109459 could clear the flag by chance). Last in the look, as the next look is set by
     // the loop.
     if (/^glass-/.test(look)) {
       const flags = async () => ({ ...(await f.evaluate(() => { const i = document.querySelector('#activityBar .icon[data-ab-id="files"]'), L = document.querySelector('.lg-lens[data-lg-for="rail-icons"]');
         return { theme: document.documentElement.getAttribute('data-theme'), iconFlag: !!i && i.hasAttribute('data-lg-focus'), lensFlag: !!L && L.hasAttribute('data-lg-focus'), keyFocus: !!i && document.activeElement === i && i.matches(':focus-visible') }; })), mark: (await f.evaluate(markOn, 'files')).any });
-      for (const fam of ['basic', 'retro']) {
+      for (const fam of ['basic', 'retro', 'friendly']) {
         if (fam !== 'basic') {
           await t.app.look(look);
           await f.waitForFunction(() => !window.PM_THEME_TRANSITION?.busy?.() && !window.PM_LOOK_COVERED?.(), null, { timeout: 20000 }).catch(() => {});
@@ -1084,13 +1217,15 @@ async function run(t, w, h) {
         const reached = await tabTo('files');
         await f.waitForTimeout(1600);
         const pre = await flags();
+        const destination = look.replace('glass', fam);
         await f.evaluate(fam => PM_THEME.setFamily(fam, { persist: false }), fam);
-        await f.waitForFunction(fam => (document.documentElement.getAttribute('data-theme') || '').startsWith(fam + '-') && !window.PM_THEME_TRANSITION?.busy?.() && !window.PM_LOOK_COVERED?.(), fam, { timeout: 20000 }).catch(() => {});
+        await f.waitForFunction(theme => document.documentElement.getAttribute('data-theme') === theme
+          && !window.PM_THEME_TRANSITION?.busy?.() && !window.PM_LOOK_COVERED?.(), destination, { timeout: 20000 }).catch(() => {});
         await frames(f, 4);
-        const post = await flags(), r = await markNow('files');
-        t.log(`${at} ${look} -> ${fam} with the focus kept: before ${JSON.stringify(pre)}, after ${JSON.stringify(post)}, mark ${JSON.stringify(brief(r))}`);
-        await t.check(`${at} ${look}: a change to ${fam} with the key focus kept on the open panel's icon leaves it its own mark at 3:1 on every side and no focus flag`,
-          reached && pre.keyFocus && pre.mark && post.keyFocus && !post.iconFlag && !post.lensFlag && !r.skipped && markOk(r), JSON.stringify({ pre, post, mark: brief(r) }));
+        const post = await flags(), r = await markNow('files', destination === 'friendly-light');
+        t.log(`${at} ${look} -> ${destination} with the focus kept: before ${JSON.stringify(pre)}, after ${JSON.stringify(post)}, mark ${JSON.stringify(brief(r))}`);
+        await t.check(`${at} ${look}: a change to ${destination} with the key focus kept on the open panel's icon leaves it its own mark at 3:1 on every side and no focus flag`,
+          reached && pre.keyFocus && pre.mark && post.theme === destination && post.keyFocus && !post.iconFlag && !post.lensFlag && !r.skipped && markOk(r), JSON.stringify({ pre, post, mark: brief(r) }));
       }
     }
   }

@@ -25,7 +25,8 @@
 //    until the new picture shows: on film the new picture can appear 1-14 frames after the page's own first frame (opus-recheck-g6fix). Native proof of the sandbox's first painted frame
 //    needs a film and its frames (tools/stale88b.py in the retro-c6 evidence), and fails on FO-92 until it is fixed.
 // Both surfaces (--set sandbox picks one); --set looks=, --set reps=. Headless or --record (the frames are resized, not
-// the window, so a film shows each resize; each is marked).
+// the window, so a film shows each resize; each is marked). Use --set film=1 --no-pointer-marker with --record,
+// then run tools/window-layout-film-reader.py <film> <run folder> <out.json> to judge the presented pixels.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/window-layout-resize.check.mjs --set page=<build>
 const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
 const on = (mode, fn) => (t) => (t.app.surfaces().includes(mode) ? fn(t, mode) : t.check(`not run: --set sandbox picks the other surface than ${mode}`, true));
@@ -56,6 +57,39 @@ const past = (f, r) => {
 	return Math.max(0, v[0] - r[0], r[2] - v[2], v[1] - r[1], r[3] - v[3]);
 };
 
+function pipAwake() {
+	const root = window.O55?.S?.root;
+	const stage = root && O55.pipStage.of(root.querySelector('.o55-stage'));
+	return !!stage?.ps && !stage.sleepZ && !stage.ps.asleep;
+}
+
+async function wakePip(t, f) {
+	if (await f.evaluate(pipAwake)) return;
+	const box = await f.locator('.o55-stage').boundingBox({ timeout: 3000 });
+	if (!box) return;
+	const y = box.y + box.height / 2;
+	for (let i = 0; i < 9; i++) {
+		await t.page.mouse.move(box.x + box.width * (0.3 + i * 0.05), y + (i % 2) * 4);
+		await f.waitForTimeout(60);
+	}
+	try {
+		await f.waitForFunction(pipAwake, null, { timeout: 6000 });
+	} catch (error) {
+		if (error.name !== 'TimeoutError') throw error;
+	}
+}
+
+async function waitForFrames(f, width, height, count, after = 0) {
+	try {
+		await f.waitForFunction(({ width, height, count, after }) => {
+			return window.__wlr.frames.slice(after).filter((frame) => frame.w === width && frame.h === height).length >= count;
+		}, { width, height, count, after }, { timeout: 8000 });
+	} catch (error) {
+		// The assertions report a missing sample with the frames that did arrive.
+		if (error.name !== 'TimeoutError') throw error;
+	}
+}
+
 async function run(t, mode) {
 	let f, size;
 	if (mode === 'normal') {
@@ -78,18 +112,35 @@ async function run(t, mode) {
 		await f.evaluate(() => window.O55.ui.open({ fresh: true, screen: 'c-ready' }));
 		await f.waitForTimeout(2500);
 		for (let i = 1; i <= reps; i++) {
+			const cell = `${mode} ${look} rep ${i}`;
 			const tag = `${mode} ${look} c-ready rep ${i}`;
+			if (String(t.args.film) === '1') {
+				const box = await (await f.frameElement()).boundingBox();
+				const dpr = await t.window.evaluate(() => devicePixelRatio);
+				await t.check(`${tag}: film has a frame origin at DPR 1`, dpr === 1 && !!box, { dpr, box }, { hard: true });
+				t.log('WLR-FILM ' + JSON.stringify({ label: `${cell} 740`, x: Math.round(box.x), y: Math.round(box.y) }));
+			}
+			await wakePip(t, f);
 			await f.evaluate(install);
 			await f.waitForTimeout(150);
-			await t.mark(`${look} rep ${i} 740`);
+			await waitForFrames(f, 1920, 1080, 1);
+			await t.check(`${tag}: Pip is awake before the shrink`, await f.evaluate(pipAwake), 'requires the stage and pose awake after real pointer travel', { hard: true });
+			const beforeShrink = await f.evaluate(() => window.__wlr.frames.length);
+			await t.mark(`${cell} 740`);
 			const sizedAt = await size(740, 768);
 			await f.waitForTimeout(1500);
-			await t.mark(`${look} rep ${i} 1920`);
+			// Loaded renderers can arrive at 740 near the end of the dwell. Keep recording until
+			// the first sample and one more arrive, preserving the first sample for the verdict.
+			await waitForFrames(f, 740, 768, 2, beforeShrink);
+			const beforeReturn = await f.evaluate(() => window.__wlr.frames.length);
+			await t.mark(`${cell} 1920`);
 			await size(1920, 1080);
 			await f.waitForTimeout(1200);
+			await waitForFrames(f, 1920, 1080, 1, beforeReturn);
 			const fr = await f.evaluate(() => { const S = window.__wlr; S.on = false; return S.frames; });
-			const before = fr.filter((x) => x.w === 1920), at = fr.filter((x) => x.w === 740), i740 = fr.findIndex((x) => x.w === 740);
-			const back = fr.slice(i740 + 1).filter((x) => x.w === 1920);
+			const before = fr.slice(0, beforeShrink).filter((x) => x.w === 1920 && x.h === 1080);
+			const at = fr.slice(beforeShrink).filter((x) => x.w === 740 && x.h === 768);
+			const back = fr.slice(beforeReturn).filter((x) => x.w === 1920 && x.h === 1080);
 			const wrong = at.filter((x) => x.lay !== 'narrow');
 			/* (and Pip's stage drawn for it in the same frame: the stage's own layout, banner over a narrow window; a redraw a
 			   frame late showed the tall stage's scene in the banner, FO88-N1) */
@@ -102,7 +153,7 @@ async function run(t, mode) {
 			const why = JSON.stringify({ frames: fr.length, at740: at.length, ownFirstMs: ownFirst, first740: at[0] && { lay: at[0].lay, win: at[0].win && at[0].win.map(Math.round), stage: at[0].stage && at[0].stage.map(Math.round) }, wrongLayout: wrong.length, staleStage: stale.length, firstDrawn: at[0] && at[0].drawn, cut: cut.length, worstCut: cut[0] && { stage: Math.round(cut[0].s), button: Math.round(cut[0].b), who: cut[0].who, lay: cut[0].x.lay }, backFirst: back[0] && back[0].lay, footButtons: at[0] ? at[0].foot.map((q) => q.name) : [] });
 			// (preconditions: wide before, frames read at 740, the footer's buttons there)
 			await t.check(`${tag}: wide at 1920x1080 before the resize`, before.length > 0 && before[before.length - 1].lay === 'wide', why);
-			await t.check(`${tag}: frames read at 740x768`, at.length > 1 && at[0].foot.length > 0 && !!at[0].stage, why); /* (a loaded film machine paints few: 2-17 frames in 1.5 s on the VM while it recorded) */
+			await t.check(`${tag}: frames read at 740x768`, at.length > 1 && at[0].foot.length > 0 && !!at[0].stage, why);
 			/* (the claim each surface can make: painted frames in the same process; the page's own frames out of process, where
 			   the browser's clipped old picture, shown until it presents a new frame, is FO-92 and not seen here) */
 			const F = mode === 'normal' ? { first: 'the first frame painted', every: 'every frame painted' } : { first: "the page's own first frame laid out (the clipped old picture the browser shows until it presents a new frame, which can be after this one, is FO-92, not judged)", every: 'every frame the page lays out' };

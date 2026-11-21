@@ -7,13 +7,21 @@
 // innerHTML, 54-art-nier.js). Each is one childList record that removes the old words and adds the new text node in
 // the same record; the old row counted both and read "2 nodes created". Those added text nodes do not count. Added
 // elements always count, and text added without the words changing in the same record counts.
-// record: { wordReset, added: [{ text, seen, desc }] } — seen: the node was in the stage when the window began;
-// desc: for the failure log. Returns the added nodes that count, in order.
+//
+// R124 F4-1: "without the words changing" is compared, not assumed. The record used to carry a boolean set from the
+// removal alone, so a page that re-created the label's same text every frame was excused (exactly the per-frame
+// innerHTML fault 54-art-nier.js:101-102 guards against). `reset` now carries the removed and added text, and a
+// reset excuses its text nodes only when those differ.
+// record: { reset: { removedText, addedText } | null, added: [{ text, seen, desc }] } — reset is the record's removal
+// of text under the bracket label or the target word; seen: the node was in the stage when the window began; desc:
+// for the failure log. Returns the added nodes that count, in order.
 export function createdAdded(record) {
+	const reset = record.reset;
+	const wordsChanged = !!(reset && reset.removedText !== reset.addedText);
 	const out = [];
 	for (const n of record.added) {
 		if (n.seen) continue;
-		if (record.wordReset && n.text) continue;
+		if (wordsChanged && n.text) continue;
 		out.push(n);
 	}
 	return out;

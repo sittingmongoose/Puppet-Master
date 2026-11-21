@@ -7,7 +7,7 @@ import { writeFileSync, mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import check, { pageDigest, expected } from './cursor_picker_colours.check.mjs';
+import check, { pageDigest, expected, loadJudgedPage } from './cursor_picker_colours.check.mjs';
 
 const pages = { 'main6.html': '<!doctype html><title>main6</title>', 'm-6.html': '<!doctype html><title>m-6</title>' };
 const sha = (s) => createHash('sha256').update(s).digest('hex');
@@ -38,12 +38,12 @@ function intendedUrl(base) {
 	u.searchParams.set('pm-warm', '0');
 	return u.href;
 }
-async function withVaryingServer(run) {
+async function withVaryingServer(run, firstBody = queried) {
 	const hits = { unqueried: 0, query: 0 };
 	const varying = createServer((req, res) => {
 		const query = req.url.includes('?');
 		hits[query ? 'query' : 'unqueried']++;
-		const body = query ? queried : (req.url.split('?')[0] === '/main6.html' ? unqueried : null);
+		const body = query ? (hits.query === 1 ? firstBody : queried) : (req.url.split('?')[0] === '/main6.html' ? unqueried : null);
 		res.writeHead(body != null ? 200 : 404); res.end(body || '');
 	});
 	await new Promise((r) => varying.listen(0, '127.0.0.1', r));
@@ -54,11 +54,34 @@ async function withVaryingServer(run) {
 async function drive(base, startUrl, expectBody, bodyError) {
 	const navs = [];
 	let url = startUrl;
+	let handler, fulfilled;
+	const browser = {
+		route: async (match, capture) => { handler = capture; },
+		unroute: async () => { handler = null; },
+	};
 	const page = {
 		url: () => url,
+		page: () => browser,
 		addInitScript: async () => {},
 		goto: async (u) => {
 			navs.push(u); url = u;
+			if (handler) {
+				await handler({
+					request: () => ({ isNavigationRequest: () => true, frame: () => page }),
+					fetch: async ({ maxRedirects }) => {
+						assert.equal(maxRedirects, 0);
+						const response = await fetch(u, { redirect: 'manual' });
+						return {
+							ok: () => response.ok, status: () => response.status,
+							headers: () => Object.fromEntries(response.headers),
+							body: async () => Buffer.from(await response.arrayBuffer()), dispose: async () => {},
+						};
+					},
+					fulfill: async ({ body }) => { fulfilled = body; },
+					abort: async () => {},
+				});
+				return { body: async () => { if (bodyError) throw new Error(bodyError); return fulfilled; } };
+			}
 			const r = await fetch(u);
 			const buf = Buffer.from(await r.arrayBuffer());
 			return { ok: () => r.ok, status: () => r.status, body: async () => { if (bodyError) throw new Error(bodyError); return buf; } };
@@ -77,7 +100,7 @@ async function drive(base, startUrl, expectBody, bodyError) {
 	try { await check(t); }
 	catch (e) { if (!/STOP_AFTER_IDENTITY/.test(String(e))) throw e; stopped = true; }
 	finally { rmSync(dirname(out), { recursive: true, force: true }); }
-	return { navs, checks, stopped, url: page.url() };
+	return { navs, checks, stopped, url: page.url(), fulfilled };
 }
 await withVaryingServer(async (base, hits) => {
 	const intended = intendedUrl(base);
@@ -99,16 +122,14 @@ await withVaryingServer(async (base, hits) => {
 	assert.equal(bound.checks[0].details.sha256, sha(queried));
 	assert.equal(bound.stopped, true, 'a matching page is the one the rest of the check would judge');
 	const already = await drive(base, intended, unqueried);
-	assert.deepEqual(already.navs, [], 'the full intended URL does not navigate again');
-	assert.equal(already.checks[0].ok, false, 'a fetch of the page\'s own location, not the unqueried URL');
+	assert.deepEqual(already.navs, [intended], 'even a matching URL receives a new, witnessed navigation');
+	assert.equal(already.checks[0].ok, false, 'the same URL does not permit guessing the document identity');
 	assert.equal(already.checks[0].details.sha256, sha(queried));
 	assert.equal(already.checks[0].details.url, intended);
-	console.log('PASS the default check navigates unless the full intended URL is already open, and hashes that document');
+	console.log('PASS the default check always witnesses a navigation and hashes the fulfilled document');
 });
 
-// The real page is 40 MB and Chrome drops so large a navigation body from its inspector cache: response.body() throws
-// "Request content was evicted from inspector cache" (Alexis, 2026-11-15, the integration page: the check stopped
-// before it judged anything). The digest is then a fetch of the page's own location, the full URL that was loaded.
+// The browser's inspector may evict a 40 MB document, but the fulfilled bytes remain the source of its identity.
 const EVICTED = 'response.body: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache';
 await withVaryingServer(async (base, hits) => {
 	const intended = intendedUrl(base);
@@ -116,13 +137,53 @@ await withVaryingServer(async (base, hits) => {
 	assert.equal(big.navs.length, 1);
 	assert.equal(big.url, intended);
 	assert.equal(big.checks.length, 1, 'an evicted body is not the end of the check');
-	assert.equal(big.checks[0].ok, true, 'the loaded document is hashed from its own location');
+	assert.equal(big.checks[0].ok, true, 'the loaded document is hashed from the fulfilled response');
+	assert.equal(big.checks[0].details.sha256, sha(big.fulfilled), 'the digest describes exactly the body passed to the browser');
 	assert.equal(big.checks[0].details.sha256, sha(queried));
 	assert.equal(big.checks[0].details.url, intended);
 	assert.equal(hits.unqueried, 0, 'still not a fetch of --set server without the query');
 	const wrongBig = await drive(base, 'http://wrong-server.invalid/main6.html', unqueried, EVICTED);
 	assert.equal(wrongBig.checks[0].ok, false, 'the unqueried right-server hash still does not pass');
 	assert.equal(hits.unqueried, 0);
-	await assert.rejects(drive(base, 'http://wrong-server.invalid/main6.html', queried, 'response.body: something else broke'), /something else broke/, 'any other body error still stops the check');
-	console.log('PASS a navigation body the browser no longer holds is hashed from the page\'s own location; other body errors still stop the check');
+	assert.equal(hits.query, 2, 'each navigation makes one request regardless of inspector eviction');
+	console.log('PASS the fulfilled response still proves the navigation when the inspector has evicted it');
 });
+
+const edgeBase = 'http://127.0.0.1:1/';
+const edgeUrl = intendedUrl(edgeBase);
+const edgePage = (loaded, status) => {
+	let url = 'about:blank';
+	let capture;
+	const browser = { route: async (match, handler) => { capture = handler; }, unroute: async () => {} };
+	const frame = {
+		url: () => url,
+		page: () => browser,
+		goto: async () => {
+			url = loaded;
+			if (status != null) await capture({
+				request: () => ({ isNavigationRequest: () => true, frame: () => frame }),
+				fetch: async () => ({
+					ok: () => false, status: () => status, headers: () => ({ location: loaded }),
+					body: async () => assert.fail('edge body was read'), dispose: async () => {},
+				}),
+				abort: async () => {},
+			});
+		},
+	};
+	return frame;
+};
+await assert.rejects(loadJudgedPage(edgePage(edgeBase + 'elsewhere.html', 302), edgeBase, 'main6'), /could not judge.*302 redirect/i);
+await assert.rejects(loadJudgedPage(edgePage(edgeUrl, 304), edgeBase, 'main6'), /could not judge.*304.*cached/i);
+const fileBase = pathToFileURL(tmpdir() + '/').href;
+await assert.rejects(loadJudgedPage(edgePage(intendedUrl(fileBase), null), fileBase, 'main6'), /could not judge.*file:\/\/.*navigation/i);
+console.log('PASS redirect, cached 304 and file navigation with no response each name the edge');
+
+await withVaryingServer(async (base, hits) => {
+	const varying = await drive(base, 'about:blank', queried, EVICTED);
+	assert.equal(varying.checks[0].ok, false, 'the second response cannot certify the bytes the browser loaded');
+	assert.equal(varying.checks[0].details.sha256, sha(varying.fulfilled), 'the identity row sees the same bytes as the browser');
+	assert.equal(varying.fulfilled.toString(), unqueried, 'the browser received the first response');
+	assert.equal(hits.query, 1, 'the tested navigation reads the server once');
+	assert.equal(varying.stopped, false, 'picker judging does not start for a mismatched body');
+	console.log('PASS an evicted browser body cannot be certified by a different second response');
+}, unqueried);
