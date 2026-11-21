@@ -562,9 +562,44 @@ def refresh_evidence(item: dict, *, digest_convention: str = "whole_line", sourc
     if rel.startswith("Plans/") and rel.endswith(".md") and span is None:
         if unit or _split_and_spans(text)[1]:
             raise Gap(f"canonical Markdown evidence needs a resolvable unit or heading bound: {rel}#{unit}")
+    owner_span = span
+    want = item.get("line_start") if isinstance(item.get("line_start"), int) else 1
+
+    def strict_subject(quote):
+        """T265: locate the quotation and adjudicate its family subject within the declared owner span."""
+        located, bound = None, owner_span
+        if owner_span is not None and rel.startswith("Plans/") and rel.endswith(".md") and event_type:
+            from pm_ea_evidence_projection import markdown_family_span, registered_semantic_owners
+            owners = registered_semantic_owners(file_text(REGISTRY))
+            goal_owner_anchor = "#goal-and-goalrun-payload-minima"
+            selected_semantic_owner = (
+                criterion == "owner_doc"
+                and owners.get(event_type) == rel + goal_owner_anchor
+                and heading_span(text, goal_owner_anchor) == owner_span
+            )
+            # Localize a retention assignment or owner routing note before
+            # adjudicating its subject within the declared owner span.
+            if (criterion == "retention" or selected_semantic_owner) and isinstance(quote, str) and quote:
+                located = relocate(text, quote, want, owner_span)
+            try:
+                bound = markdown_family_span(
+                    text, owner_span, event_type, owners.keys(), criterion, quote,
+                    quote_lines=located[:2] if located else None,
+                    selected_semantic_owner=selected_semantic_owner,
+                )
+            except ValueError as exc:
+                raise Gap(f"{rel}#{unit}: {exc}") from exc
+        return located, bound
+
     if (criterion == "retention" and event_type and rel.startswith("Plans/")
             and rel.endswith(".md") and span and isinstance(quote, str)
             and quote.lstrip().startswith("Current selected assignment")):
+        # T265 judges the citation as given before MERGE3 finding 4 may expand
+        # it: union_range selects this family's assignment by event type, not by
+        # the cited line, so in a unit shared by two families a citation of the
+        # sibling's assignment would otherwise be re-targeted to this family's
+        # paragraph and accepted.
+        strict_subject(quote)
         # MERGE3 finding 4: a wrapped membership line is not retention proof.
         # The replacement remains inside the cited unit and needs actual policy,
         # anchor and count values; no sibling fallback or verdict change.
@@ -579,30 +614,8 @@ def refresh_evidence(item: dict, *, digest_convention: str = "whole_line", sourc
                 new_line_start=replacement["line_start"], new_line_end=replacement["line_end"],
                 reason="Expand the exact current assignment through its policy, scope, anchor and effective count in its own cited unit.")
             quote = out["quote"] = replacement["quote"]
-    owner_span = span
-    want = item.get("line_start") if isinstance(item.get("line_start"), int) else 1
-    located = None
-    if span is not None and rel.startswith("Plans/") and rel.endswith(".md") and event_type:
-        from pm_ea_evidence_projection import markdown_family_span, registered_semantic_owners
-        owners = registered_semantic_owners(file_text(REGISTRY))
-        goal_owner_anchor = "#goal-and-goalrun-payload-minima"
-        selected_semantic_owner = (
-            criterion == "owner_doc"
-            and owners.get(event_type) == rel + goal_owner_anchor
-            and heading_span(text, goal_owner_anchor) == span
-        )
-        # Localize a retention assignment or owner routing note before
-        # adjudicating its subject within the declared owner span.
-        if (criterion == "retention" or selected_semantic_owner) and isinstance(quote, str) and quote:
-            located = relocate(text, quote, want, span)
-        try:
-            span = markdown_family_span(
-                text, span, event_type, owners.keys(), criterion, quote,
-                quote_lines=located[:2] if located else None,
-                selected_semantic_owner=selected_semantic_owner,
-            )
-        except ValueError as exc:
-            raise Gap(f"{rel}#{unit}: {exc}") from exc
+    # T265 judges the final quotation, the one this evidence object carries.
+    located, span = strict_subject(quote)
     if isinstance(quote, str) and quote:
         found = (located if located and span[0] <= located[0] <= located[1] <= span[1]
                  else relocate(text, quote, want, span))
