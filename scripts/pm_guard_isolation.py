@@ -20,10 +20,12 @@ import hashlib
 import importlib.util
 import json
 import math
+import operator
 from pathlib import Path
 import resource
 import re
 import struct
+import string
 import symtable
 import sys
 import sysconfig
@@ -131,7 +133,7 @@ def _certified_module_value(value, root):
             value.__defaults__ is None or all(_immutable_literal(v) for v in value.__defaults__)) and (
             not value.__kwdefaults__ or all(_immutable_literal(v) for v in value.__kwdefaults__.values())):
         return ('stdlib-function', value.__qualname__)
-    if type(value) is type and value.__flags__ & _IMMUTABLE_TYPE_FLAG:
+    if _immutable_type(value) and value not in (operator.attrgetter, operator.methodcaller):
         return ('immutable-type', value.__qualname__)
     return _certified_external(value, root)
 
@@ -194,10 +196,49 @@ class StaticStopBeforeImport(IsolationError):
 # (the names static_scan's dynamic-code rule reads, less compile, which it exempts for the standard library's own)
 _PRESCAN_SENSITIVE = frozenset({'eval', 'exec', '__import__', 'getattr', 'globals', 'locals', 'vars', 'import_module',
                                 'spec_from_file_location', 'settrace', 'setprofile', 'run_module', 'run_path', 'gettrace',
-                                'getprofile', '__builtins__'})
+                                'getprofile', '__builtins__', 'attrgetter', 'methodcaller'})
+_REFLECTIVE_ATTRIBUTES = frozenset({'import_module', 'spec_from_file_location', 'settrace', 'setprofile',
+                                    'run_module', 'run_path', 'gettrace', 'getprofile', '__import__',
+                                    '__builtins__', 'attrgetter', 'methodcaller'})
+_NAMESPACE_ATTRIBUTES = frozenset({
+    '__globals__', '__closure__', '__dict__', '__getattribute__', '__getattr__', '__traceback__',
+    '__func__', '__self__', '__wrapped__', '__defaults__', '__kwdefaults__', '__annotations__',
+    'gi_frame', 'cr_frame', 'ag_frame', 'tb_frame', 'tb_next', 'f_globals', 'f_locals',
+    'f_back', 'f_builtins', 'f_code', 'gi_code', 'cr_code', 'ag_code', 'f_trace',
+})
+_FORMATTER = string.Formatter()
 
 
-def prescan_sources(start, *, search=None, reset_seams=()):
+def _reflective_attribute(node, parent, *, namespaces):
+    if not isinstance(node.ctx, ast.Load):
+        return False
+    if node.attr in _REFLECTIVE_ATTRIBUTES:
+        return True
+    if not namespaces:
+        return False
+    if node.attr in _NAMESPACE_ATTRIBUTES:
+        return True
+    if node.attr not in ('format', 'format_map'):
+        return False
+    if not (isinstance(parent, ast.Call) and parent.func is node and
+            isinstance(node.value, ast.Constant) and type(node.value.value) is str):
+        return True
+    # A field can contain attribute/item lookups, including in nested format specs.
+    templates = [node.value.value]
+    try:
+        while templates:
+            for _, field, spec, _ in _FORMATTER.parse(templates.pop()):
+                if field is not None:
+                    if any(token in field for token in '.[]'):
+                        return True
+                    if spec:
+                        templates.append(spec)
+    except ValueError:
+        return True
+    return False
+
+
+def prescan_sources(start, *, search=None, reset_seams=(), trusted_setup_sources=()):
     """T61 (REVIEW-etools-tb3-opus finding 2): before a checker module is imported (the adapter command line, the trap
     loader), its text and the text of every repository module it imports (found from the import statements, resolved
     without executing anything outside the standard library) are scanned for the table-independent stop errors the text
@@ -210,7 +251,8 @@ def prescan_sources(start, *, search=None, reset_seams=()):
     module at any hop as external_binding_chain_read. reset_seams, the declared sources of the start file's reset seams
     when they are known before the import (the trap loader knows them), are held to static_scan's rule: a seam naming a
     certified binding is reset_seam_certified_write. The full static scan still runs after the import; this one can only
-    stop a run, never credit one. Returns the errors (empty when the closure is clean)."""
+    stop a run, never credit one. A reviewed setup source may be excluded only across a function-local import
+    edge. The full checker scan follows those imports regardless of this option. Returns the prescan errors."""
     start = Path(start).resolve()
     trusted = {Path(__file__).resolve()}
     search = [str(start.parent), *(search if search is not None else sys.path)]
@@ -218,6 +260,10 @@ def prescan_sources(start, *, search=None, reset_seams=()):
     # the repository the checker lives in: the nearest directory above it holding .git, else its own directory; only
     # modules inside it are followed (third-party code, wherever it is installed, is the full scan's to resolve)
     home = next((d for d in [start.parent, *start.parents] if (d / '.git').exists()), start.parent)
+    setup_sources = {Path(path).resolve() for path in trusted_setup_sources}
+    for path in setup_sources:
+        if path == start or not path.is_relative_to(home) or path.suffix != '.py' or not path.is_file():
+            raise IsolationError('trusted setup source must be a local dependency .py file: ' + str(path))
     def local(spec):
         origin = getattr(spec, 'origin', None)
         if not origin or origin in ('built-in', 'frozen') or not origin.endswith('.py'):
@@ -226,6 +272,23 @@ def prescan_sources(start, *, search=None, reset_seams=()):
         if location in trusted or not location.is_relative_to(home) or _stdlib_path(str(location)) or any(location.is_relative_to(d) for d in _SITE_DIRS):
             return None
         return location
+
+    def resolve(dotted, locations):
+        # Walk the package's actual search locations without importing its initializer.
+        for part in dotted.split('.'):
+            try:
+                spec = importlib.machinery.PathFinder.find_spec(part, locations)
+            except (ImportError, ValueError):
+                break
+            if spec is None:
+                break
+            found = local(spec)
+            if found is not None:
+                yield found
+            locations = spec.submodule_search_locations
+            if locations is None:
+                break
+
     while pending:
         path = pending.pop()
         if path in seen:
@@ -237,7 +300,21 @@ def prescan_sources(start, *, search=None, reset_seams=()):
             errors.append({'kind': 'unscannable_module', 'path': str(path), 'reason': type(exc).__name__ + ': ' + str(exc)})
             continue
         parents = {child: node for node in ast.walk(tree) for child in ast.iter_child_nodes(node)}
-        certified = {}
+        def function_local(node):
+            scope = parents.get(node)
+            while scope is not None:
+                # Defaults and decorators run in the enclosing scope.
+                if isinstance(scope, (ast.FunctionDef, ast.AsyncFunctionDef)) and node in scope.body:
+                    return True
+                node, scope = scope, parents.get(scope)
+            return False
+
+        def follow_import(dotted, locations, node):
+            for found in resolve(dotted, locations):
+                if found not in setup_sources or not function_local(node):
+                    pending.append(found)
+
+        certified, engine_bindings = {}, set()
         for node in ast.walk(tree):
             if isinstance(node, ast.Import):
                 for alias in node.names:
@@ -245,29 +322,19 @@ def prescan_sources(start, *, search=None, reset_seams=()):
                     bound = alias.asname or top
                     if (alias.asname and alias.name in STDLIB_IMMUTABLE_MODULES) or (not alias.asname and top in STDLIB_IMMUTABLE_MODULES):
                         certified[bound] = alias.name if alias.asname else top
-                    for name in [alias.name] + ['.'.join(alias.name.split('.')[:i]) for i in range(1, alias.name.count('.') + 1)]:
-                        try:
-                            spec = importlib.machinery.PathFinder.find_spec(name, search)
-                        except (ImportError, ValueError):
-                            spec = None
-                        found = local(spec)
-                        if found:
-                            pending.append(found)
+                    if alias.name == 'pm_guard_isolation' and not function_local(node):
+                        engine_bindings.add(bound)
+                    follow_import(alias.name, search, node)
             elif isinstance(node, ast.ImportFrom):
                 if any(alias.name == '*' for alias in node.names):
                     errors.append({'kind': 'star_import', 'path': str(path), 'line': node.lineno, 'source': ast.unparse(node)})
                 base = node.module or ''
-                where = [str(path.parent)] if node.level else search
-                for name in [base] + [base + '.' + alias.name for alias in node.names if base]:
-                    if not name:
-                        continue
-                    try:
-                        spec = importlib.machinery.PathFinder.find_spec(name, where)
-                    except (ImportError, ValueError):
-                        spec = None
-                    found = local(spec)
-                    if found:
-                        pending.append(found)
+                where = [str(path.parents[node.level - 1])] if 0 < node.level <= len(path.parents) else search
+                if base:
+                    follow_import(base, where, node)
+                for alias in node.names:
+                    if alias.name != '*':
+                        follow_import((base + '.' if base else '') + alias.name, where, node)
                 if not node.level and base in STDLIB_IMMUTABLE_MODULES:
                     for alias in node.names:
                         try:
@@ -287,6 +354,12 @@ def prescan_sources(start, *, search=None, reset_seams=()):
         for node in ast.walk(tree):
             if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and node.id in _PRESCAN_SENSITIVE:
                 errors.append({'kind': 'dynamic_code_or_import', 'path': str(path), 'line': node.lineno, 'source': node.id})
+            if isinstance(node, ast.Attribute):
+                if _reflective_attribute(node, parents.get(node), namespaces=not function_local(node)):
+                    errors.append({'kind': 'dynamic_code_or_import', 'path': str(path), 'line': node.lineno, 'source': ast.unparse(node)})
+                if (isinstance(node.value, ast.Name) and node.value.id in engine_bindings and
+                        node.attr.startswith('_') and not function_local(node)):
+                    errors.append({'kind': 'table_private_state', 'path': str(path), 'line': node.lineno, 'source': ast.unparse(node)})
             if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in ('setattr', 'delattr') and node.args:
                 first = node.args[0]
                 while isinstance(first, (ast.Attribute, ast.Subscript)):
@@ -407,6 +480,21 @@ def digest(value: Any) -> str:
     return hashlib.sha256(encoded(evidence_value(value)).encode()).hexdigest()
 
 
+def _integer_text(value: int) -> str:
+    try:
+        return str(value)
+    except ValueError:
+        # Keep existing decimal fingerprints across interpreter digit limits.
+        # Each group stays below CPython's smallest configurable limit.
+        base = 10**500
+        groups = []
+        remaining = abs(value)
+        while remaining >= base:
+            remaining, group = divmod(remaining, base)
+            groups.append(f'{group:0500d}')
+        return ('-' if value < 0 else '') + str(remaining) + ''.join(reversed(groups))
+
+
 def evidence_value(value):
     """Typed DIAGNOSTIC fingerprints, never an event/identity/storage serializer.
 
@@ -419,7 +507,7 @@ def evidence_value(value):
     if kind is bool:
         return ["boolean", value]
     if kind is int:
-        return ["integer", str(value)]
+        return ["integer", _integer_text(value)]
     if kind is float:
         return ["float64-bits", struct.pack(">d", value).hex()]
     if kind is str:
@@ -450,30 +538,19 @@ class _DataSnapshot:
         return self.signature == other.signature
 
 
-def _data_snapshot(*roots, codes=None):
+def _data_snapshot(*roots):
     """Purity witness for the supported, original data graph (never a serializer).
 
     Retain order, aliases, cycles, physical scalar bits AND object identities.
     No hooks, descriptors, equality overloads or user iterators are invoked.
     Context sets are observed in their original order; they are never copied.
-
-    codes (C8-U1): a run's cache of immutable scalar encodings, keyed by identity
-    and holding the scalar itself, so an id cannot be recycled while its entry
-    lives. An immutable scalar's encoding cannot change, so a cached code is the
-    code this walk would compute: the signature is identical with or without it.
     """
     seen, nodes, keepalive = {}, [], []
     def visit(value):
         kind = type(value)
         if kind in (type(None), bool, int, float, str, bytes):
-            if codes is None:
-                keepalive.append(value)  # no recycled IDs after a detached node dies
-                return ('scalar', id(value), encoded(evidence_value(value)))
-            # the run's cache holds the scalar itself, so its identity cannot be recycled while either lives
-            entry = codes.get(id(value))
-            if entry is None or entry[0] is not value:
-                entry = codes[id(value)] = (value, encoded(evidence_value(value)))
-            return ('scalar', id(value), entry[1])
+            keepalive.append(value)  # no recycled IDs after a detached node dies
+            return ('scalar', id(value), encoded(evidence_value(value)))
         keepalive.append(value)  # no recycled IDs after a detached node dies
         if kind not in (dict, list, tuple, bytearray, set, frozenset):
             raise IsolationError('predicate purity cannot certify data type: ' + kind.__name__)
@@ -488,6 +565,47 @@ def _data_snapshot(*roots, codes=None):
         return ('ref', index)
     references = tuple(visit(value) for value in roots)
     return _DataSnapshot((references, tuple(nodes)), tuple(keepalive))
+
+
+class _PuritySnapshot:
+    """Exact input edges, with only mutable containers revisited at checkpoints.
+
+    Every original object stays alive, so equal ids imply the same object.
+    Exact scalar, tuple and frozenset instances cannot change in place. A
+    mutable child is watched even when reached only through immutable parents.
+    """
+
+    def __init__(self, *roots):
+        self.objects = {}
+        self.containers = []
+        pending = list(roots)
+        while pending:
+            value = pending.pop()
+            identity = id(value)
+            if identity in self.objects:
+                continue
+            self.objects[identity] = value
+            kind = type(value)
+            if kind in (dict, list, set, bytearray):
+                self.containers.append((value, self.contents(value)))
+            if kind is dict:
+                pending.extend(value)
+                pending.extend(value.values())
+            elif kind in (list, set, tuple, frozenset):
+                pending.extend(value)
+            elif kind not in (type(None), bool, int, float, str, bytes, bytearray):
+                raise IsolationError('predicate purity cannot certify data type: ' + kind.__name__)
+
+    @staticmethod
+    def contents(value):
+        if type(value) is dict:
+            return tuple(map(id, value)), tuple(map(id, value.values()))
+        if type(value) is bytearray:
+            return bytes(value)
+        return tuple(map(id, value))
+
+    def unchanged(self):
+        return all(self.contents(value) == before for value, before in self.containers)
 
 
 def pointer(parts: tuple) -> str:
@@ -572,6 +690,8 @@ class Duplicate:
     sites: tuple[str, ...]
     invariant: Invariant
     evidence: str
+    # Required when different enforcement sites report different refusal codes.
+    codes: dict[str, str] | None = None
 
 
 @dataclass(frozen=True)
@@ -686,6 +806,8 @@ class SchemaCatalog:
         self.bindings = []
         self._make_registry()
         self._inventory()
+        self._format_free = format_checker is None and not any(
+            type(node) is dict and 'format' in node for node in self.nodes.values())
 
     def _make_registry(self):
         resources = []
@@ -1152,14 +1274,20 @@ class SchemaCatalog:
                 polarity *= -1
         return "guard", "", polarity
 
-    def bind(self, guard_id: str, invariant: Invariant, evidence: str):
-        """Declare an owner-proved alias (e.g. repeated copies of one input field)."""
+    def bind(self, guard_id: str, invariant: Invariant, evidence: str, *, refusal_code: str | None = None):
+        """Bind one schema occurrence to an owner invariant and optional boundary code."""
         if not evidence.strip():
             raise IsolationError("invariant binding requires evidence")
-        self.guards[guard_id] = replace(self.guards[guard_id], invariant=invariant, evidence=evidence)
-        self.bindings.append({"guard": guard_id, "invariant": asdict(invariant), "evidence": evidence})
+        guard = self.guards[guard_id]
+        code_binding = {}
+        if refusal_code is not None:
+            if guard.classification != 'guard' or type(refusal_code) is not str or not refusal_code.strip():
+                raise IsolationError("refusal code binding requires an atomic guard and a nonempty code")
+            code_binding['refusal_code'] = refusal_code
+        self.guards[guard_id] = replace(guard, invariant=invariant, evidence=evidence, **code_binding)
+        self.bindings.append({"guard": guard_id, "invariant": asdict(invariant), "evidence": evidence, **code_binding})
 
-    def mutated(self, cuts: frozenset[str]):
+    def mutated(self, cuts: frozenset[str], *, view_cache=None):
         docs, frames, aliases = self._reference_frames()
         for gid in sorted(cuts):
             guard = self.guards.get(gid)
@@ -1210,7 +1338,16 @@ class SchemaCatalog:
                 # Only single-atom negative contexts reach this point. Compound
                 # negative contexts are unclassified, never broad false cuts.
                 node.setdefault("allOf", []).append(False)
-        return SchemaView(docs, self.roots, self.formats, aliases, self.approved_entries)
+        if view_cache is None or not self._format_free:
+            return SchemaView(docs, self.roots, self.formats, aliases, self.approved_entries)
+        # Key the prepared view, including resolved occurrence mappings. Never
+        # reuse a validator containing a caller-supplied format callback.
+        key = (cuts, digest(docs), self.roots, tuple(aliases.items()), tuple(self.approved_entries.items()))
+        if key not in view_cache:
+            view_cache[key] = SchemaView(docs, self.roots, self.formats, aliases, self.approved_entries)
+            if len(view_cache) > 32:
+                del view_cache[next(iter(view_cache))]
+        return view_cache[key]
 
 
 class SchemaView:
@@ -1408,7 +1545,6 @@ class GuardTable:
         self._bound = False
         self._in_predicate = False
         self._purity_before = None
-        self._purity_codes = None
         self._matrix_frame = None
         self._schema = None
 
@@ -1416,16 +1552,15 @@ class GuardTable:
     def guards(self):
         return types.MappingProxyType(self._original)
 
-    def _bind(self, value, context, cuts):
+    def _bind(self, value, context, cuts, *, view_cache=None):
         if self._bound or not set(cuts) <= self._original.keys():
             raise IsolationError('table reused or unknown guard cut')
         self._root, self._context, self._bound = value, context, True
-        self._purity_codes = {}  # C8-U1: immutable scalar encodings, once per run
         # The sole Python cut operation. All function/code/state objects remain original.
         self._entries = {name: replace(row, predicate=_always_pass) if name in cuts else row
                          for name, row in self._original.items()}
         if self._schema:
-            self._schema.bind(cuts)
+            self._schema.bind(cuts, view_cache)
 
     def _test(self, row, value, context):
         caller = sys._getframe(1)
@@ -1440,11 +1575,10 @@ class GuardTable:
             raise IsolationError('guard predicates cannot invoke guards')
         self._in_predicate = True
         try:
-            self._purity_before = _data_snapshot(value, context, codes=self._purity_codes)
+            self._purity_before = _PuritySnapshot(value, context)
             result = row.predicate(value, context)
             if result is not None and (type(result) is not str or result != row.refusal_code):
                 raise IsolationError('predicate must return None or its exact refusal code: ' + row.name)
-            self._check_purity(value, context)
             return result
         except BaseException as exc:
             self._errors.append(type(exc).__name__ + ': ' + str(exc))
@@ -1453,13 +1587,13 @@ class GuardTable:
             # Even a caught/translated predicate exception cannot hide a mutation.
             try:
                 if self._purity_before is not None:
-                    self._check_purity(value, context)
+                    self._check_purity()
             finally:
                 self._purity_before = None
                 self._in_predicate = False
 
-    def _check_purity(self, value, context):
-        if _data_snapshot(value, context, codes=self._purity_codes) != self._purity_before:
+    def _check_purity(self):
+        if not self._purity_before.unchanged():
             error = 'guard predicate mutated input/context'
             self._errors.append(error)
             raise IsolationError(error)
@@ -1495,12 +1629,15 @@ class GuardTable:
 
     def _restore(self):
         self._entries = dict(self._original)
-        self._purity_codes = None
         self._bound = False
         self._root = self._context = None
         self._issued.clear()
         self._errors.clear()
         _GUARD_TRACES[self] = {'calls': [], 'refused_at': None}
+        if self._schema:
+            self._schema.view = None
+            self._schema.view_cache = None
+            self._schema.consumed.clear()
 
 
 @dataclass
@@ -1508,6 +1645,34 @@ class Case:
     table: GuardTable
     check: Callable[[Any], bool]
     context: Any = None
+
+
+def run_case(case: Case, value: Any) -> tuple[str, str] | None:
+    """Run one original case and return its issued refusal, or None for acceptance."""
+    if type(case) is not Case or type(case.table) is not GuardTable or not callable(case.check):
+        raise IsolationError('expected Case with a GuardTable and callable check')
+    table = case.table
+    if table._bound:
+        raise IsolationError('table is already bound to a case')
+    try:
+        table._bind(value, case.context, frozenset())
+        try:
+            result = case.check(value)
+        except GuardRefusal as exc:
+            if table._errors:
+                raise IsolationError(table._errors[0]) from exc
+            if len(table._issued) != 1 or table._issued[0] is not exc:
+                raise IsolationError('table did not issue the propagated refusal') from exc
+            return exc.guard, exc.code
+        if table._errors:
+            raise IsolationError(table._errors[0])
+        if table._issued:
+            raise IsolationError('check swallowed a table refusal')
+        if result is not True:
+            raise IsolationError('case check must return True on acceptance')
+        return None
+    finally:
+        table._restore()
 
 
 @dataclass(frozen=True)
@@ -1540,6 +1705,9 @@ class Suite:
     reset_seams: list[NonGuard] = field(default_factory=list)
     # C8-G3: extra uncut baseline runs per case, each compared with the baseline outcome and trace.
     baseline_repeats: int = 0
+    # Source-backed module predicates registered by another suite in the same checker closure.
+    # Their bodies undergo predicate purity review and may not execute in this suite's checker.
+    other_suite_predicates: tuple[Callable[..., str | None], ...] = ()
 
 
 # Every form the outside-predicate scan accepts without a declaration, with its
@@ -1638,6 +1806,7 @@ def static_scan(suite, table):
     """Conservative census only. Nothing here authorizes a Python cut."""
     root = Path(suite.repository_root).resolve()
     trusted = Path(__file__).resolve()
+    declared_paths = {(root / p).resolve() for p in suite.checker_modules}
     pending = [(root / p).resolve() for p in suite.checker_modules]
     if not pending:
         raise IsolationError('checker_modules must name the complete source closure')
@@ -1645,6 +1814,16 @@ def static_scan(suite, table):
     if suite.reset:
         pending.append(Path(_function_key(suite.reset)[0]))
     predicate_functions = {_function_key(fn): fn.__func__ if inspect.ismethod(fn) else fn for fn in _predicate_functions(table)}
+    active_keys = set(predicate_functions)
+    inactive_keys = set()
+    for fn in suite.other_suite_predicates:
+        key = _function_key(fn)
+        if (type(fn) is not types.FunctionType or fn.__qualname__ != fn.__name__ or
+                fn.__globals__.get(fn.__name__) is not fn or Path(key[0]) not in declared_paths or
+                key in predicate_functions):
+            raise IsolationError('other suite predicate must be a distinct module function in checker_modules')
+        predicate_functions[key] = fn
+        inactive_keys.add(key)
     predicate_keys = set(predicate_functions)
     located_predicates = set()
     files, sites, imports, errors = {}, [], [], []
@@ -1832,9 +2011,66 @@ def static_scan(suite, table):
                 return data_expression(part.value, names, calls)
             if isinstance(part, ast.Constant):
                 return True
+            if isinstance(part, (ast.Tuple, ast.List, ast.Set)):
+                return all(data_expression(element, names, calls) for element in part.elts)
             if isinstance(part, ast.Call):
-                return isinstance(part.func, ast.Name) and part.func.id in calls - shadowed and not origins(part.func) and all(data_expression(a, names, calls) for a in part.args)
+                callee = part.func
+                if isinstance(callee, ast.Name):
+                    pure = callee.id in calls - shadowed - {'type'} and not origins(callee)
+                else:
+                    pure = (isinstance(callee, ast.Attribute) and callee.attr in pure_methods and
+                            data_expression(callee.value, names, calls))
+                return pure and all(data_expression(a, names, calls) for a in part.args) and all(
+                    kw.arg is not None and data_expression(kw.value, names, calls) for kw in part.keywords)
             return False
+
+        def data_target_names(target):
+            return {part.id for part in ast.walk(target)
+                    if isinstance(part, ast.Name) and isinstance(part.ctx, ast.Store)}
+
+        def predicate_data_names(node, calls):
+            # A name must have data provenance at every binding site. Starting with all candidate locals
+            # and removing uncertain binders supports rebinding within a loop without trusting a global,
+            # a pattern capture or an assignment with an unreviewed source.
+            parameters = {*node.args.posonlyargs, *node.args.args, *node.args.kwonlyargs}
+            sources, uncertain = {arg.arg: [] for arg in parameters}, set()
+            reviewed = set(parameters)
+
+            def bind(target, source, unpack_literal):
+                reviewed.add(target)
+                if isinstance(target, ast.Name):
+                    sources.setdefault(target.id, []).append(source)
+                elif isinstance(target, ast.Starred):
+                    bind(target.value, source, False)
+                elif isinstance(target, (ast.Tuple, ast.List)):
+                    if unpack_literal and isinstance(source, (ast.Tuple, ast.List)) and len(target.elts) == len(source.elts) and not any(
+                            isinstance(part, ast.Starred) for part in target.elts):
+                        for item, expression in zip(target.elts, source.elts):
+                            bind(item, expression, True)
+                    else:
+                        for item in target.elts:
+                            bind(item, source, False)
+
+            parts = list(ast.walk(node))
+            for part in parts:
+                if isinstance(part, (ast.Assign, ast.AnnAssign)):
+                    targets = part.targets if isinstance(part, ast.Assign) else [part.target]
+                    for target in targets:
+                        bind(target, part.value, True)
+                elif isinstance(part, ast.For):
+                    bind(part.target, part.iter, False)
+                elif isinstance(part, ast.comprehension):
+                    # Comprehension targets live in their own lexical scope.
+                    reviewed.update(ast.walk(part.target))
+            for part in parts:
+                if part is not node and part not in reviewed:
+                    uncertain.update(_names_bound_by(part))
+            names = sources.keys() - uncertain
+            while True:
+                reduced = {name for name in names if all(data_expression(expr, names, calls) for expr in sources[name])}
+                if reduced == names:
+                    return names
+                names = reduced
         def immutable_data_import(node):
             """C8-U2: `from m import A, B` at module scope, where m is one repository module (not a package) and each
             name is, in m's own source, bound exactly once by a top-level `NAME = literal` of immutable literals (no
@@ -2050,21 +2286,34 @@ def static_scan(suite, table):
                     function = predicate_functions[key]
                     certified_calls = {name for name, binding in pure_builtins.items()
                                        if function.__globals__.get(name, function.__builtins__.get(name)) is binding}
-                    data_names = {a.arg for a in [*node.args.posonlyargs, *node.args.args, *node.args.kwonlyargs]}
-                    for part in ast.walk(node):
-                        if isinstance(part, ast.Assign) and data_expression(part.value, data_names, certified_calls):
-                            data_names.update(t.id for t in part.targets if isinstance(t, ast.Name))
+                    data_names = predicate_data_names(node, certified_calls)
                     # Only the predicate body; defaults/decorators are not predicates.
-                    def predicate_body(part):
+                    def predicate_body(part, names):
                         if isinstance(part, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Lambda)):
                             errors.append({'kind': 'nested_predicate_code', 'path': _relative(path, root), 'line': part.lineno})
                             return
                         exempt.add(part)
-                        predicate_data[part] = (data_names, certified_calls)
-                        for child in ast.iter_child_nodes(part):
-                            predicate_body(child)
+                        predicate_data[part] = (names, certified_calls)
+                        if isinstance(part, (ast.ListComp, ast.SetComp, ast.DictComp, ast.GeneratorExp)):
+                            for generator in part.generators:
+                                exempt.add(generator)
+                                predicate_body(generator.iter, names)
+                                target_names = data_target_names(generator.target)
+                                if data_expression(generator.iter, names, certified_calls):
+                                    names = names | target_names
+                                else:
+                                    names = names - target_names
+                                predicate_body(generator.target, names)
+                                for test in generator.ifs:
+                                    predicate_body(test, names)
+                            expressions = (part.key, part.value) if isinstance(part, ast.DictComp) else (part.elt,)
+                            for expression in expressions:
+                                predicate_body(expression, names)
+                        else:
+                            for child in ast.iter_child_nodes(part):
+                                predicate_body(child, names)
                     for statement in node.body:
-                        predicate_body(statement)
+                        predicate_body(statement, data_names)
         for node in ast.walk(tree):
             if isinstance(node, ast.stmt) and type(node).__name__ not in {
                 'AnnAssign', 'Assert', 'Assign', 'AsyncFor', 'AsyncFunctionDef', 'AsyncWith', 'AugAssign', 'Break',
@@ -2116,8 +2365,9 @@ def static_scan(suite, table):
                 errors.append({'kind': 'table_private_state', 'path': _relative(path, root), 'line': node.lineno, 'source': repr(node.value)})
             # C8-G2: harness detection names join the dynamic set: gettrace and getprofile tell the tool's own run
             # (a trace hook is always set) from production (none is), so a gate on them is non-causal by construction.
-            sensitive = {'eval', 'exec', 'compile', '__import__', 'getattr', 'globals', 'locals', 'vars', 'import_module', 'spec_from_file_location', 'settrace', 'setprofile', 'run_module', 'run_path',
-                         'gettrace', 'getprofile'}
+            sensitive = _PRESCAN_SENSITIVE | {'compile'}
+            if isinstance(node, ast.Attribute) and _reflective_attribute(node, parents.get(node), namespaces=True):
+                errors.append({'kind': 'dynamic_code_or_import', 'path': _relative(path, root), 'line': node.lineno, 'source': ast.unparse(node)})
             # Any read of a sensitive name, or of __builtins__, can carry the function to a call the scan cannot see.
             if (isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and (node.id in sensitive or node.id == '__builtins__') and
                     not (isinstance(parents.get(node), ast.Call) and parents[node].func is node)):
@@ -2739,7 +2989,8 @@ def static_scan(suite, table):
             errors.append({'kind': 'predicate_source_not_found', 'path': path, 'line': line, 'function': function})
     return {'status': 'FAIL' if errors or any(not s['non_guard'] for s in sites) else 'PASS',
             'files': sorted(files.values(), key=lambda f: f['path']), 'imports': imports,
-            'sites': sites, 'errors': errors, 'predicate_functions': sorted([list(k) for k in predicate_keys]),
+            'sites': sites, 'errors': errors, 'predicate_functions': sorted([list(k) for k in active_keys]),
+            **({'other_suite_predicates': sorted([list(k) for k in inactive_keys])} if inactive_keys else {}),
             'automatic_totals': {form: {'count': automatic[form], 'reason': TOTAL_FORMS[form]} for form in sorted(automatic)},
             'review': 'Every non-guard reason and each predicate body versus its declared field/predicate needs review.'}
 
@@ -2865,7 +3116,7 @@ def _certified_snapshot(roots, root, *, identities, namespaces=True, input_roots
     engine = Path(__file__).resolve()
     seen, nodes, keepalive = {}, [], []
     immutable_builtins = (len, type, isinstance, bool, str, int, float, bytes,
-                          dict, list, tuple, set, frozenset, range, enumerate, zip,
+                          dict, list, tuple, set, frozenset, range, enumerate, zip, reversed,
                           abs, all, any, min, max, sum, id, object,
                           BaseException, Exception, ValueError, TypeError, KeyError,
                           AssertionError, RuntimeError, SystemExit)
@@ -2915,6 +3166,11 @@ def _certified_snapshot(roots, root, *, identities, namespaces=True, input_roots
         if kind in (dict, list, tuple, set, frozenset, bytearray):
             content = (tuple((visit(k), visit(v)) for k, v in obj.items()) if kind is dict else
                        bytes(obj) if kind is bytearray else tuple(visit(v) for v in obj))
+        elif kind is slice:
+            parts = (obj.start, obj.stop, obj.step)
+            if not all(_immutable_literal(part) for part in parts):
+                unsupported(obj, 'mutable slice components')
+            content = tuple(visit(part) for part in parts)
         elif kind is types.FunctionType:
             source = Path(obj.__code__.co_filename).resolve()
             if source == engine:
@@ -3074,7 +3330,7 @@ class _SchemaPredicate:
     def __call__(self, value, context):
         # Preserve applicators and selectors; weaken only the OTHER supported
         # assertions. Unknown forms never reach PASS or grant any cut credit.
-        view = self.binding.catalog.mutated(frozenset(self.binding.active - {self.guard.id}))
+        view = self.binding.mutated(frozenset(self.binding.active - {self.guard.id}))
         selected = self.binding.selectors[self.guard.entry_uri](value, context)
         return None if view.validator(self.guard.entry_uri).is_valid(selected) else self.guard.refusal_code or self.guard.id
 
@@ -3085,11 +3341,17 @@ class _SchemaBinding:
         if set(selectors) != set(catalog.roots):
             raise IsolationError('schema selectors must bind every complete consumed root exactly once')
         self.active = {g.id for g in catalog.guards.values() if g.classification == 'guard'}
-        self.view = None
+        self.view = self.view_cache = None
         self.consumed = set()
 
-    def bind(self, cuts):
-        self.view = self.catalog.mutated(frozenset(set(cuts) & self.active))
+    def mutated(self, cuts):
+        if type(self.catalog) is SchemaCatalog and self.view_cache is not None:
+            return self.catalog.mutated(cuts, view_cache=self.view_cache)
+        return self.catalog.mutated(cuts)
+
+    def bind(self, cuts, view_cache):
+        self.view_cache = view_cache
+        self.view = self.mutated(frozenset(set(cuts) & self.active))
 
     def validate(self, table, entry, value, context):
         if entry not in self.selectors:
@@ -3198,6 +3460,18 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
     shared_certified = True
     case_snapshots, anchored_snapshots = {}, {}
     last_trace = {}             # guard-call trace of the latest full checker run
+    schema_views, schema_library_files = {}, {}
+    inactive_codes = set()
+    schema_library_roots = tuple(Path(sys.modules[name].__file__).resolve().parent
+                                 for name in ('jsonschema', 'referencing'))
+
+    def schema_library_file(filename):
+        if filename not in schema_library_files:
+            source = Path(filename)
+            resolved = source.resolve() if source.is_absolute() else None
+            schema_library_files[filename] = (resolved is not None and not resolved.is_relative_to(root) and
+                any(resolved.is_relative_to(directory) for directory in schema_library_roots))
+        return schema_library_files[filename]
     def certify_shared(*, reset=False):
         nonlocal shared_snapshot, shared_certified
         if reset and suite.reset:
@@ -3300,7 +3574,9 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
         certify_shared(reset=True)
         report['evaluations'] += 1
         table = case.table
-        table._bind(value, case.context, cuts)
+        table._bind(value, case.context, cuts, view_cache=schema_views)
+        format_free_schema = (table._schema is not None and type(table._schema.catalog) is SchemaCatalog and
+                              table._schema.catalog._format_free)
         events, exceptions = [], {}
         instructions, opnames = {}, {}
         predicates = [fn.__func__ if inspect.ismethod(fn) else fn for fn in _predicate_functions(table)]
@@ -3308,9 +3584,15 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
         path_cache = {}
         engine_name = str(engine)
         # C8-U1: a purity checkpoint is due after any instruction outside PURITY_SAFE_OPCODES, and at every
-        # call, return and exception event. pending[0] carries "an instruction that may have changed the graph ran".
+        # untrusted call, return and exception event. Format-free validation's engine and library
+        # plumbing can defer the checkpoint to the next checker event or _test's final comparison.
+        # pending[0] carries "an instruction that may have changed the graph ran".
         pending = [True]
         def trace(frame, event, arg):
+            if event == 'call' and frame.f_code in inactive_codes:
+                error = 'other suite predicate entered this checker: ' + frame.f_code.co_name
+                table._errors.append(error)
+                raise IsolationError(error)
             if event == 'call' and frame.f_code in predicate_codes:
                 parent = frame.f_back
                 row = parent.f_locals.get('row') if parent else None
@@ -3326,10 +3608,16 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
                     error = 'registered predicate entered outside its engine evaluation: ' + frame.f_code.co_name
                     table._errors.append(error)
                     raise IsolationError(error)
+            filename = frame.f_code.co_filename
+            if filename == engine_name:
+                # Engine bookkeeping and the purity witness itself cannot mutate predicate data.
+                return None
             if table._in_predicate and table._purity_before is not None:
-                if event in ('opcode', 'line'):
+                if format_free_schema and schema_library_file(filename):
+                    pending[0] = True
+                elif event in ('opcode', 'line'):
                     if pending[0]:
-                        table._check_purity(value, case.context)
+                        table._check_purity()
                         pending[0] = False
                     if event == 'opcode':
                         names = opnames.get(frame.f_code)
@@ -3339,14 +3627,13 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
                         pending[0] = names.get(frame.f_lasti) not in PURITY_SAFE_OPCODES
                 else:
                     # call, return and exception: always, and an untraced callee's work stays pending for its caller.
-                    table._check_purity(value, case.context)
+                    table._check_purity()
                 frame.f_trace_opcodes = True
-            filename = frame.f_code.co_filename
-            if filename == engine_name:
-                return None
             if filename not in path_cache:
-                resolved = Path(filename).resolve()
-                path_cache[filename] = resolved if resolved != engine and resolved.is_relative_to(root) else None
+                # Generated library frames such as <string> have no file origin.
+                # Resolving these labels would place them under the caller's cwd.
+                resolved = None if filename.startswith('<') and filename.endswith('>') else Path(filename).resolve()
+                path_cache[filename] = resolved if resolved is not None and resolved != engine and resolved.is_relative_to(root) else None
             path = path_cache[filename]
             if path is None:
                 return None
@@ -3358,6 +3645,17 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
                     if frame.f_code not in instructions:
                         instructions[frame.f_code] = list(dis.get_instructions(frame.f_code))
                     instruction = next((i for i in reversed(instructions[frame.f_code]) if i.offset <= frame.f_lasti), None)
+                    parent = frame.f_back
+                    if (type(exc) is GeneratorExit and traceback.tb_next is None and instruction is not None and
+                            frame.f_code.co_name == '<genexpr>' and table._in_predicate and parent is not None and
+                            parent.f_code in predicate_codes and any(code is frame.f_code for code in parent.f_code.co_consts)):
+                        # Closing a suspended generator reports YIELD_VALUE or its following RESUME,
+                        # depending on the CPython version. An explicit raise reports its own site.
+                        suspended_at = instruction
+                        if instruction.opname == 'RESUME':
+                            suspended_at = next((i for i in reversed(instructions[frame.f_code]) if i.offset < instruction.offset), None)
+                        if suspended_at is not None and suspended_at.opname == 'YIELD_VALUE':
+                            return trace
                     position = instruction.positions if instruction else None
                     site = (str(path), instruction.opname if instruction else '',
                             (position.lineno, position.end_lineno, position.col_offset, position.end_col_offset) if position else ())
@@ -3452,6 +3750,7 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
             fail('hidden_static_sites', sites=[], errors=stops)
             fail('static_error_stop', stage='before the factory', errors=sorted({e['kind'] for e in stops}))
             raise _StaticStop()
+        inactive_codes.update(fn.__code__ for fn in suite.other_suite_predicates)
         initial = fresh(_fixture_copy(suite.controls[0].value))
         guards = dict(initial.table.guards)
         report['inventory'] = signature
@@ -3481,19 +3780,25 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
                 if name not in guards or guards[name].invariant != duplicate.invariant or name in membership:
                     raise IsolationError('duplicate merges different fields/predicates or overlapping sets: ' + duplicate.id)
                 membership[name] = duplicate.id
-            if len({guards[name].refusal_code for name in duplicate.sites}) != 1:
-                raise IsolationError('duplicate sites must refuse the same defect code')
+            codes = {name: guards[name].refusal_code for name in duplicate.sites}
+            if duplicate.codes is None:
+                if len(set(codes.values())) != 1:
+                    raise IsolationError('duplicate sites must refuse the same defect code or declare their exact codes')
+            elif type(duplicate.codes) is not dict or duplicate.codes != codes:
+                raise IsolationError('duplicate code mapping differs from its exact table guards: ' + duplicate.id)
         for negative in negatives.values():
             if negative.control not in controls or negative.target not in guards.keys() | duplicates.keys() or not negative.defect.strip():
                 raise IsolationError('negative has a missing table guard/control/defect: ' + negative.id)
             targets = duplicates[negative.target].sites if negative.target in duplicates else (negative.target,)
-            if any(guards[t].refusal_code != negative.code for t in targets):
+            if negative.code not in {guards[t].refusal_code for t in targets}:
                 raise IsolationError('negative code differs from its table guard: ' + negative.id)
             if negative.target in membership:
                 raise IsolationError('duplicate negatives must target their declared set')
         def expected(negative, got, cuts=frozenset()):
             names = set(duplicates[negative.target].sites) if negative.target in duplicates else {negative.target}
-            return got.get('accepted') is False and got.get('guard') in names - set(cuts) and got.get('code') == negative.code and 'error' not in got
+            tag = got.get('guard')
+            code = guards[tag].refusal_code if cuts and tag in names else negative.code
+            return got.get('accepted') is False and tag in names - cuts and got.get('code') == code and 'error' not in got
         baseline, baseline_trace = {}, {}
         for control in controls.values():
             got, baseline_trace[control.id] = traced(control.value)
@@ -3611,9 +3916,10 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
                         report['masked_negatives'].append(item)
                         fail('masked_negative', row=label, **item)
                 else:
-                    # A duplicate's tag can move to its remaining site, while
-                    # preserving the exact defect code. All other tags are exact.
-                    okay = (expected(negative, got, cuts) if negative.target in duplicates else got == baseline[negative.id])
+                    # Cutting a duplicate's baseline site may expose its peer and that site's exact code.
+                    uncut = baseline[negative.id]
+                    okay = (expected(negative, got, cuts) if negative.target in duplicates and uncut['guard'] in cuts
+                            else got == uncut)
                     if not okay:
                         row['unrelated_changes'].append({'negative': negative.id, 'before': baseline[negative.id], 'after': got})
                         fail('unrelated_result_changed', row=label, negative=negative.id, actual=got)
@@ -3646,6 +3952,8 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
         for duplicate in duplicates.values():
             own = {n.id for n in negatives.values() if n.target == duplicate.id}
             proof = {**asdict(duplicate), 'per_site': [], 'proved': False}
+            if duplicate.codes is None:
+                del proof['codes']
             for name in duplicate.sites:
                 # Prove each site really enforces the invariant, not just a
                 # weaker third row hidden by stronger peers.
@@ -3720,6 +4028,8 @@ def main(argv=None):
     sys.modules.setdefault('pm_guard_isolation', sys.modules[__name__])
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--adapter', help='Python file:factory returning Method B Suite')
+    parser.add_argument('--trusted-setup-source', type=Path, action='append', default=[],
+                        help='reviewed Python dependency to exclude from pre-import scanning at function-local imports only')
     parser.add_argument('--self-test', action='store_true')
     parser.add_argument('--scratch', type=Path, help='self-test scratch parent (default: operating system temporary directory)')
     parser.add_argument('--json', type=Path)
@@ -3732,6 +4042,8 @@ def main(argv=None):
     args = parser.parse_args(argv)
     if args.self_test == bool(args.adapter):
         parser.error('choose exactly one of --self-test or --adapter')
+    if args.self_test and args.trusted_setup_source:
+        parser.error('--trusted-setup-source requires --adapter')
     try:
         memory = MemoryGate(args.max_rss, args.pause_when_low, args.resume_at, args.pause_poll, args.low_timeout)
         memory.check()
@@ -3743,7 +4055,8 @@ def main(argv=None):
             if not sep:
                 raise IsolationError('--adapter requires file:factory')
             # T61: the adapter's source closure is scanned from its text before anything of it is imported
-            stops = [e for e in prescan_sources(Path(path)) if e['kind'] in STATIC_STOP_KINDS]
+            stops = [e for e in prescan_sources(Path(path), trusted_setup_sources=args.trusted_setup_source)
+                     if e['kind'] in STATIC_STOP_KINDS]
             if stops:
                 report = prescan_report(stops)
             else:
@@ -3754,6 +4067,8 @@ def main(argv=None):
                 report = run(getattr(module, factory)(), memory=memory)
     except BaseException as exc:
         report = {'version': 2, 'status': 'FAIL', 'failures': [{'kind': 'setup', 'error': type(exc).__name__ + ': ' + str(exc)}]}
+    if args.trusted_setup_source:
+        report['trusted_setup_sources'] = sorted({str(path.resolve()) for path in args.trusted_setup_source})
     body = json.dumps(report, indent=2, sort_keys=True) + '\n'
     if args.json:
         args.json.write_text(body)
