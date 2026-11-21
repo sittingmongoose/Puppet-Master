@@ -14,6 +14,7 @@
 // index entry. Asserted: every judged step lights the section in view, and Answers is lit on at least one step.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-index-spy.check.mjs --set page=<build> --set sandbox=0
 // --set step=90 --set size=1920x1080 --set chapter=ai change the walk.
+// The 740x900 Abilities walk also judges whether the lit link fits inside the horizontal index strip.
 
 const VIEW = () => {
 	const sc = document.querySelector('#settings-document');
@@ -52,6 +53,29 @@ const VIEW = () => {
 	return { top: Math.round(sc.scrollTop), max, atEnd, want: want && want.id, wantWs: want && want.ws, near, lit, listed, mid: { x: b.left + b.width / 2, y: b.top + b.height / 2 } };
 };
 
+const INDEX_BOUNDS = () => {
+	const card = document.querySelector('#pm-settings-root .page-index-card');
+	const hit = card.querySelector('.index-link.is-active');
+	const abilities = card.querySelector('.pm51-index-tab.is-open[data-workspace="media"][data-tab="abilities"]');
+	const strip = card.getBoundingClientRect();
+	const left = strip.left + card.clientLeft, top = strip.top + card.clientTop;
+	const right = left + card.clientWidth, bottom = top + card.clientHeight;
+	const r = hit?.getBoundingClientRect();
+	return {
+		label: hit?.textContent.trim(),
+		inAbilities: !!abilities && (hit === abilities || hit?.closest('.pm51-index-sub')?.previousElementSibling === abilities),
+		horizontal: card.scrollWidth > card.clientWidth && getComputedStyle(card).flexDirection === 'row',
+		visible: !!r && r.width > 0 && r.height > 0 && r.left >= left - 1 && r.right <= right + 1 && r.top >= top - 1 && r.bottom <= bottom + 1,
+		strip: [left, right], link: r && [r.left, r.right], scrollLeft: card.scrollLeft
+	};
+};
+
+async function wheelPoint(t, f, mid) {
+	const frame = f === t.page.mainFrame() ? null : await f.frameElement();
+	const box = frame && await frame.boundingBox();
+	await t.page.mouse.move(mid.x + (box?.x ?? 0), mid.y + (box?.y ?? 0));
+}
+
 export const tests = {
 	'FO-185 the index lights the section in view while scrolling': async (t) => {
 		const [w, h] = String(t.args.size || '1920x1080').split('x').map(Number);
@@ -78,13 +102,10 @@ export const tests = {
 		/* the walk starts at the chapter's top */
 		await f.evaluate(() => { const sc = document.querySelector('#settings-document'); if (sc) sc.scrollTo({ top: 0, behavior: 'instant' }); });
 		await t.page.waitForTimeout(800);
-		/* the frame's own offset in the window (the sandbox), for the wheel's position */
-		let ox = 0, oy = 0;
-		if (f !== t.page.mainFrame()) { const el = await f.frameElement().catch(() => null); const fb = el && (await el.boundingBox()); if (fb) { ox = fb.x; oy = fb.y; } }
 		const v0 = await f.evaluate(VIEW);
 		await t.check('the Settings page and its index are drawn', !!v0 && v0.lit.length >= 0, 'no #settings-document');
 		if (!v0) return;
-		await t.page.mouse.move(v0.mid.x + ox, v0.mid.y + oy);
+		await wheelPoint(t, f, v0.mid);
 		let judged = 0, wrong = [], answers = false, last = -1, n = 0;
 		for (n = 0; n < 200; n++) {
 			await t.page.mouse.wheel(0, step);
@@ -104,5 +125,35 @@ export const tests = {
 		t.log(`walk: ${n + 1} steps of ${step} px, ${judged} judged`);
 		await t.check(`FO-185 every judged step lights the section in view (${judged - wrong.length} of ${judged}, ${n + 1} steps of ${step} px)`, judged >= 20 && wrong.length === 0, wrong.slice(0, 6).join(' | ') + (wrong.length > 6 ? ` and ${wrong.length - 6} more` : ''));
 		if (chapter === 'ai') await t.check('FO-185 Answers, the short last section of Providers & Accounts, is lit on the way down', answers, 'never lit');
+	},
+	'FO-185 the lit entry stays inside the horizontal index at 740x900': async (t) => {
+		const f = await t.app.open();
+		await t.emulate({ reducedMotion: t.args.motion || 'no-preference' });
+		await f.locator('#tab-settings').click();
+		await f.locator('#pm-settings-root [data-action="navigate-domain"][data-domain="ai"]:visible').first().click();
+		await t.viewport(740, 900);
+		await t.settle();
+		await f.locator('#pm-settings-root .workspace-tabs [data-workspace="media"]:visible').first().click();
+		await t.settle();
+		await f.locator('#pm-settings-root [data-workspace-block="media"] .pm51-tabs [data-tab="abilities"]:visible').first().click();
+		await t.settle();
+		const scroller = f.locator('#settings-document');
+		const start = await scroller.evaluate(el => {
+			const r = el.getBoundingClientRect();
+			return { scroll: el.scrollTop, x: r.left + r.width / 2, y: r.top + r.height * .6 };
+		});
+		await wheelPoint(t, f, start);
+		const steps = [];
+		for (let i = 0; i < 4; i++) {
+			await t.page.mouse.wheel(0, 135);
+			await t.settle();
+			// Let the index finish its own smooth scroll after the document and scroll spy have settled.
+			await f.waitForFunction(`(${INDEX_BOUNDS})().visible`, null, { timeout: 1000 }).catch(() => {});
+			steps.push(await f.evaluate(INDEX_BOUNDS));
+		}
+		const end = await scroller.evaluate(el => el.scrollTop);
+		await t.check('the wheel walk moved Settings with an active Abilities entry at every step', end > start.scroll && steps.every(s => s.horizontal && s.inAbilities), JSON.stringify({ start: start.scroll, end, steps }));
+		const clipped = steps.filter(s => !s.visible);
+		await t.check(`the lit entry fits in the visible strip at every step (${steps.length - clipped.length} of ${steps.length})`, clipped.length === 0, JSON.stringify(clipped));
 	}
 };
