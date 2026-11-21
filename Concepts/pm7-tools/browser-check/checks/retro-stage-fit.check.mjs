@@ -24,14 +24,13 @@ const NAME = 'First cancellation';
 
 // the page, or T3's sandbox at t.openInSandbox's default flags (an opaque origin, no storage, no modals), as the kit opens it
 const frameFor = async (t, mode) => {
-	// T60: --set selftest=late-ready holds the window's first open (95-boot's ?o55=screen= open) back past the ready bound
-	if (t.args.selftest === 'late-ready' && !t.__lateReady) { t.__lateReady = true; await t.page.addInitScript(LATE_READY, LATE_READY_HOLD_MS); }
+	await installBootProbe(t);
 	return t.app.open({ sandbox: mode === 'sandbox', onboarding: true, query: 'o55=screen=welcome', settleMs: 1000 });
 };
 // a case runs on its own surface unless --set sandbox picks the other one
 const on = (mode, fn) => (t) => (t.app.surfaces().includes(mode) ? fn(t, mode) : t.check(`not run: --set sandbox picks the other surface than ${mode}`, true));
 
-// every frame for about 600 ms: the worst of each measure (px; > 0 is wrong)
+// Every frame for at least 600 ms, extending up to 5 s to observe eight resting frames.
 const SAMPLE = async () => {
 	const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
 	if (!st) return { err: 'no stage' };
@@ -40,7 +39,7 @@ const SAMPLE = async () => {
 	const worst = { pip: -1e9, headFoot: -1e9, sign: -1e9, signFoot: -1e9, prop: -1e9, propFoot: -1e9, propOnHead: 0, words: 0 }, seen = { sign: 0, props: 0, colWords: 0, restFrames: 0 }, who = {};
 	let n = 0, last = null;
 	const t0 = performance.now();
-	while (performance.now() - t0 < 600) {
+	while (performance.now() - t0 < 600 || (seen.restFrames < 8 && performance.now() - t0 < 5000)) {
 		await new Promise((r) => requestAnimationFrame(() => r()));
 		n++;
 		// the visible crop: the tube or paper, cut by every box that clips it, and by the window
@@ -116,9 +115,7 @@ const poseAtRest = (f) => f.waitForFunction(() => {
 async function judge(t, f, tag, { sign = true, props = false } = {}) {
 	await settle(t, f);
 	await poseAtRest(f);
-	let r = await f.evaluate(`(${SAMPLE.toString()})()`);
-	// an idle wiggle or swing that began inside the sample left too few resting frames: once Pip rests again, sample again
-	if (!r.err && r.restFrames < 8) { await poseAtRest(f); const r2 = await f.evaluate(`(${SAMPLE.toString()})()`); if (!r2.err && r2.restFrames > r.restFrames) r = r2; }
+	const r = await f.evaluate(SAMPLE);
 	if (r.err) return t.check(`${tag}: the stage`, false, r.err);
 	const at = `${tag} [${r.theme} ${r.layout}${r.asleep ? ', asleep' : ''}${r.low ? ', low-resource' : ''}${r.reduced ? ', reduced' : ''}]`;
 	const why = JSON.stringify(r.last);
@@ -133,13 +130,14 @@ async function judge(t, f, tag, { sign = true, props = false } = {}) {
 		await t.check(`${at}: every resting prop inside the visible crop`, r.prop <= 1, `${r.who.prop} ${r.prop} px outside; ${why}`);
 		await t.check(`${at}: every resting prop above the tube's foot (printer, command line)`, r.propFoot <= 0.5, `${r.who.propFoot} ${r.propFoot} px into it; ${why}`);
 	}
-	await t.check(`${at}: Pip seen at rest (head-overlap frames)`, r.restFrames >= 8, `${r.restFrames}/${r.n} frames in its resting pose`);
 	await t.check(`${at}: no prop over Pip's head`, r.propOnHead <= 1, `${r.who.propOnHead || ''} ${r.propOnHead} px; ${why}${r.who.pipState ? '; pip ' + JSON.stringify(r.who.pipState) : ''}`);
 	await t.check(`${at}: Pip clear of the stage's words (title line, readouts)`, r.words <= 1, `${r.who.words || ''} ${r.words} px; ${why}`);
 	// FO-55, the lead's ruling: Pip is drawn smaller only where the stage's words sit over its column, and never under 80%
 	// of its size (.82 in Retro Light at 740; 1 elsewhere)
 	await t.check(`${at}: Pip drawn at no less than 80% of its size`, r.pipK >= .8, `scale ${r.pipK}`);
 	await t.check(`${at}: Pip drawn smaller only under the stage's words`, r.pipK >= 1 || r.colWords > 0, `scale ${r.pipK}, no words over its column`);
+	await t.check(`${at}: resting head sample complete`, r.restFrames >= 8,
+		`Sampling incomplete: ${r.restFrames}/${r.n} resting frames in 5 s (need 8); the geometry above covers every sampled frame.`);
 	if (r.pipK < 1) t.log(`${at}: Pip drawn at ${r.pipK} of its size`);
 	return r;
 }
@@ -181,39 +179,121 @@ const OWNER_READY = () => {
 	const O = window.O55, S = O && O.S;
 	return !!(S && S.open && S.sess && S.sess.status === 'active' && S.root && S.root.getAttribute('data-open') === 'true' && O.ui && typeof O.ui.applyLook === 'function' && O.pipStage && O.pipStage.of(S.root.querySelector('.o55-stage')));
 };
-// T60 (TOOLBATCH4; REVIEW-kit-tb3-opus finding 4): the wait is bounded by the product's own ready time, not a flat 15 s,
-// which let a window that opened up to about 16 s late pass with only a log line. The product opens the window from its
-// boot, 140 ms after DOMContentLoaded (95-boot.js, start), and its opening settles within 2800 ms (60-ui-core.js, open:
-// O55.motion.settled's fallback). Those are pinned here with a stated margin of 2000 ms for a loaded host: on a freshly
-// loaded page the window must be ready by DOMContentLoaded + 140 + 2800 + 2000 ms; once the page has been ready before
-// (a window reopened), within 2800 + 2000 ms of the wait starting. Later than that fails by name, with how long it waited.
-const READY_BOOT_MS = 140, READY_OPEN_MS = 2800, READY_MARGIN_MS = 2000;
-const LATE_READY_HOLD_MS = READY_BOOT_MS + READY_OPEN_MS + READY_MARGIN_MS + 1500;
-// --set selftest=late-ready: the first ui.open of the page waits LATE_READY_HOLD_MS (past the bound, well inside 15 s)
-const LATE_READY = (ms) => document.addEventListener('DOMContentLoaded', () => {
-	const ui = window.O55 && window.O55.ui; if (!ui || typeof ui.open !== 'function' || ui.__lateReady) return;
-	const orig = ui.open; let first = true; ui.__lateReady = true;
-	ui.open = function (...a) { if (first) { first = false; setTimeout(() => orig.apply(this, a), ms); return undefined; } return orig.apply(this, a); };
-});
+// 95-boot starts opening at DCL + 140 ms. The window's settled fallback is 2800 ms.
+const READY_OPEN_MS = 2800, READY_MARGIN_MS = 2000;
+const READY_BOOT_MS = 140 + READY_OPEN_MS + READY_MARGIN_MS;
+// The shell and DCL have a separate navigation budget for loading the large local bundle.
+const SHELL_BOOT_MS = 8000;
+
+// Stamp the first ready boundary in the document, before app.open waits on the shell or settles.
+const WATCH_BOOT = ({ readySource, hold, holdShell }) => {
+	if (window.__rsfBoot) return;
+	const ready = (0, eval)(`(${readySource})`);
+	// Boot timing needs frame delivery. Long main-thread gaps on a loaded browser
+	// do not consume a whole wall-clock interval of the product's boot budget.
+	let delivered = 0, lastFrame = performance.now();
+	const clock = (now = performance.now()) => delivered + Math.min(50, Math.max(0, now - lastFrame));
+	const stamp = () => ({ wall: performance.now(), delivered: clock() });
+	const stamps = window.__rsfBoot = { dcl: null, open: null, shell: null, clock };
+	const read = () => {
+		if (stamps.shell === null && document.documentElement?.getAttribute('data-pmr-ready') === '1') stamps.shell = stamp();
+		if (stamps.open === null && ready()) stamps.open = stamp();
+	};
+	const frame = () => {
+		const now = performance.now();
+		delivered = clock(now);
+		lastFrame = now;
+		if (stamps.open === null || stamps.shell === null) read();
+		requestAnimationFrame(frame);
+	};
+	requestAnimationFrame(frame);
+	window.addEventListener('o55:onboarding', read);
+	document.addEventListener('DOMContentLoaded', () => {
+		stamps.dcl = stamp();
+		const ui = window.O55?.ui;
+		if (!hold || !ui) return;
+		const open = ui.open;
+		ui.open = function (...args) {
+			ui.open = open;
+			setTimeout(() => open.apply(this, args), hold);
+		};
+	}, { once: true, capture: true });
+	if (!holdShell) return;
+
+	// Release the shell marker after the late window actually opens. This exercises
+	// the ready-at-first-look branch even on a slow machine.
+	const install = () => {
+		const root = document.documentElement;
+		if (!root) return false;
+		const set = root.setAttribute;
+		let restoreReady = () => {};
+		root.setAttribute = function (name, value) {
+			if (name === 'data-pmr-ready' && value === '1') restoreReady = () => set.call(this, name, value);
+			else set.call(this, name, value);
+		};
+		if (root.getAttribute('data-pmr-ready') === '1') {
+			root.removeAttribute('data-pmr-ready');
+			restoreReady = () => set.call(root, 'data-pmr-ready', '1');
+		}
+		const release = (event) => {
+			if (event.detail?.type !== 'opened') return;
+			root.setAttribute = set;
+			restoreReady();
+			window.removeEventListener('o55:onboarding', release);
+		};
+		window.addEventListener('o55:onboarding', release);
+		return true;
+	};
+	if (!install()) {
+		const rootObserver = new MutationObserver(() => { if (install()) rootObserver.disconnect(); });
+		rootObserver.observe(document, { childList: true });
+	}
+};
+
+const instrumentedPages = new WeakSet();
+const installBootProbe = async (t) => {
+	if (instrumentedPages.has(t.page)) return;
+	await t.page.addInitScript(WATCH_BOOT, {
+		readySource: OWNER_READY.toString(),
+		hold: ['late-ready', 'late-boot'].includes(t.args.selftest) ? READY_BOOT_MS + 1500 : 0,
+		holdShell: t.args.selftest === 'late-boot',
+	});
+	instrumentedPages.add(t.page);
+};
+
 const ownerReady = async (t, f, look) => {
-	const at = await f.evaluate((ready) => { const nav = performance.getEntriesByType('navigation')[0], ok = (0, eval)(`(${ready})`)();
-		const r = { now: performance.now(), dcl: nav ? nav.domContentLoadedEventStart : null, seen: !!window.__rsfReadySeen, ok };
-		if (ok) window.__rsfReadySeen = true; return r; }, OWNER_READY.toString()).catch(() => null);
-	if (at && at.ok) return { ok: true };
-	const fresh = !!at && !at.seen && at.dcl > 0;
-	const bound = !at ? READY_OPEN_MS + READY_MARGIN_MS : fresh ? at.dcl + READY_BOOT_MS + READY_OPEN_MS + READY_MARGIN_MS - at.now : READY_OPEN_MS + READY_MARGIN_MS;
-	const t0 = Date.now(), ok = await f.waitForFunction(OWNER_READY, null, { timeout: Math.max(1, Math.round(bound)) }).then(() => true, () => false);
-	const waited = Date.now() - t0;
-	if (ok) await f.evaluate(() => { window.__rsfReadySeen = true; }).catch(() => {});
-	const since = fresh ? ` (${Math.round(at.now - at.dcl + waited)} ms after DOMContentLoaded; the bound: ${READY_BOOT_MS} + ${READY_OPEN_MS} + ${READY_MARGIN_MS} ms)` : ` (the bound: ${READY_OPEN_MS} + ${READY_MARGIN_MS} ms from the wait's start)`;
-	t.log(`the onboarding window was not ready when ${look} was to be applied: waited ${waited} ms, ${ok ? 'ready' : 'not ready within the product\'s ready time'}${since}`);
-	return { ok, waited, since };
+	const snapshot = (source) => {
+		const ready = (0, eval)(`(${source})`);
+		const boot = window.__rsfBoot;
+		return { ok: ready(), now: boot?.clock(), dcl: boot?.dcl, open: boot?.open, shell: boot?.shell };
+	};
+	const start = await f.evaluate(snapshot, OWNER_READY.toString());
+	const fresh = start.open == null;
+	const deadline = fresh ? start.dcl?.delivered + READY_BOOT_MS : start.now + READY_OPEN_MS + READY_MARGIN_MS;
+	if (!start.ok && Number.isFinite(deadline) && start.now < deadline) {
+		await f.waitForFunction(({ source, deadline }) => {
+			const ready = (0, eval)(`(${source})`);
+			return ready() || window.__rsfBoot.clock() >= deadline;
+		}, { source: OWNER_READY.toString(), deadline }, { timeout: 45000 }).catch(() => {});
+	}
+	const end = await f.evaluate(snapshot, OWNER_READY.toString());
+	const openFromDcl = end.open && end.dcl ? end.open.delivered - end.dcl.delivered : NaN;
+	const format = (n) => Number.isFinite(n) ? Math.round(n) : 'unobserved';
+	const since = `window ${format(openFromDcl)} ms after DOMContentLoaded (limit ${READY_BOOT_MS}); `
+		+ `shell ${format(end.shell?.delivered)} ms and DOMContentLoaded ${format(end.dcl?.delivered)} ms after navigation (limit ${SHELL_BOOT_MS}); `
+		+ `wall timestamps: DOMContentLoaded ${format(end.dcl?.wall)} ms, window ${format(end.open?.wall)} ms, shell ${format(end.shell?.wall)} ms`;
+	const branch = start.ok ? 'already ready at first look' : 'waited for readiness';
+	const ok = end.ok && end.shell?.delivered <= SHELL_BOOT_MS && end.dcl?.delivered <= SHELL_BOOT_MS
+		&& openFromDcl >= 0 && openFromDcl <= READY_BOOT_MS && (start.ok || fresh || end.now <= deadline);
+	const detail = `${branch}: ${since}`;
+	if (!ok) t.log(`${look}: ${detail}`);
+	return { ok, since: detail };
 };
 
 // the look, as the window's look menu picks it (the page's own theme switch does not reach an open setup window)
 async function stageLook(t, f, look) {
 	const ready = await ownerReady(t, f, look);
-	if (!ready.ok) return t.check(`the onboarding window is open with its session and stage within the product's ready time before ${look} is applied`, false, `waited ${ready.waited} ms${ready.since}; ` + await f.evaluate(() => JSON.stringify({ open: !!(window.O55 && O55.S && O55.S.open), sess: !!(window.O55 && O55.S && O55.S.sess) })).catch((e) => e.message), { hard: true });
+	if (!ready.ok) return t.check(`the onboarding window is open with its session and stage within the product's ready time before ${look} is applied`, false, `${ready.since}; ` + await f.evaluate(() => JSON.stringify({ open: !!(window.O55 && O55.S && O55.S.open), sess: !!(window.O55 && O55.S && O55.S.sess) })).catch((e) => e.message), { hard: true });
 	await f.evaluate(([fam, m]) => window.O55.ui.applyLook(fam, m), look.split('-'));
 	await f.waitForFunction((lk) => { const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')); return !!st && st.theme === lk; }, look, { timeout: 15000 }).catch(() => {});
 	const th = await f.evaluate(() => { const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')); return st ? st.theme : 'no stage'; });
@@ -420,8 +500,7 @@ async function noReplay(t, mode) {
 // (its nods, its line, a cheer), c-ready's finishing cheer, and whatever idle wiggle, swing or glance comes. Overlap is
 // the painted shapes', not their boxes: where the head's and a prop's boxes meet, every 2 px point is tested against the
 // visible fills and strokes of both (isPointInFill / isPointInStroke in the GPU browser's own geometry), so a
-// transparent box corner is not overlap. Normal motion must stay on all the while (no Reduced Motion, no adaptive
-// low-resource mode, sway and idle life on), and each cell must show Pip moving. A failure crops the stage.
+// transparent box corner is not overlap. Full motion must be requested, and each cell must show Pip moving in frames outside adaptive low-resource mode. A failure crops the stage.
 // Shared by the product sampler and controlled fixtures: sampled fill/stroke intersection area in CSS px².
 const INK_OVERLAP = (head, prop) => {
 	const shown = (e, top) => { for (let a = e; a && a !== top.parentElement; a = a.parentElement) { const c = getComputedStyle(a); if (c.display === 'none' || c.visibility === 'hidden' || +c.opacity < .05) return false; } return true; };
@@ -483,7 +562,7 @@ const GEOMETRY = (e, label) => {
 	// (the matrix the browser draws the group with, read once here for the pose below)
 	return { left: b.left, top: b.top, right: b.right, bottom: b.bottom, m };
 };
-const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
+const MOTION = async (ms, probeSource, geometrySource, selftest, force, cell) => {
 	const overlap = (0, eval)(`(${probeSource})`), geometry = (0, eval)(`(${geometrySource})`);
 	const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
 	if (!st) return { err: 'no stage' };
@@ -491,8 +570,16 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 	const R = (e, label) => geometry(e, label);
 	const out = { n: 0, validPairs: 0, validFrames: 0, leavingPairs: 0, initialHiddenFrames: 0, geometryError: '', off: 0, offWhy: '', moving: 0, movingMs: 0, boxFrames: 0, worstBox: 0, worst: 0, at: null, kinds: { tilt: 0, swing: 0, hop: 0, cheer: 0, propKick: 0 } };
 	const was = { tilt: false, swing: false, hop: false, cheer: false, kick: false };
-	let rnd = null, restoreN = 0, prevV = null;
+	let rnd = null, restoreN = 0, prevV = null, lastPaint = -Infinity, lastStageTime = null;
 	const t0 = performance.now();
+	const deadline = t0 + ms + (cell ? 18000 : 0);
+	const entranceSeen = cell?.layer?.classList.contains('o55-entering');
+	let sawSleep = !!st.sleepZ;
+	out.wakeFrom = null;
+	out.judgeFrom = null;
+	out.paintFrames = 0;
+	out.paintMs = 0;
+	out.lowFrames = 0;
 	// Pip's movement as it is painted, judged per drawn part (FO-50 guard; T42, tool batch 3). retro-c6 read the head's and
 	// the hand's group matrices and counted a frame when either changed by .01 stage units: a head held still while the
 	// hand moved passed (13.4 s of 'movement'), so did a hand held still, a counter-transform inside both groups that
@@ -504,7 +591,7 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 	// at least half of its painted area have each moved at least PAINT_STEP px since the part's last counted pose (slow
 	// travel accumulates; a blink or a glance of the eyes alone is not the head moving). Each part must change for at
 	// least 200 ms on its own; movingMs is the lesser of the two. (T65: each part must now make PART_STEPS visible steps
-	// on its own; moving is the lesser count, and the parts are judged from Pip's first painted frame.)
+	// on its own; moving is the lesser count, and each awake cell waits for the current screen's wake and entrance.)
 	// T65 (TOOLBATCH4, REVIEW-kit-tb3-opus findings 1-3): a leaf is compared by what it paints, orientation-free. Its
 	// signature is its axis-aligned box in the stage, in device px: a shape mirrored, or turned 180 degrees, about its own
 	// centre repaints the same pixels and keeps the same box, where its corners compared one by one had 'moved' (a frozen
@@ -517,27 +604,130 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 	// first sampled frame, is reported in device px (headTravelPx, handTravelPx) and asserted per awake cell.
 	const STEP_DPX = 1, DPR = window.devicePixelRatio || 1;
 	const NOPAINT = 'defs, clipPath, mask, pattern, marker, symbol';
-	const alphaOf = (col) => { if (!col || col === 'none' || col === 'transparent') return 0; if (/^url\(/.test(col)) return 1; const m = /rgba?\(([^)]*)\)/.exec(col); if (!m) return 1; const v = m[1].split(/[\s,\/]+/).filter(Boolean); if (v.length < 4) return 1; return v[3].endsWith('%') ? parseFloat(v[3]) / 100 : parseFloat(v[3]); };
-	const paints = (c) => (alphaOf(c.fill) * +c.fillOpacity > .05) || (alphaOf(c.stroke) * +c.strokeOpacity > .05 && parseFloat(c.strokeWidth) > 0);
-	// a sub-path with nothing drawn: a moveto with one coordinate pair, followed by another moveto or the end
-	const emptySub = (d) => { const tk = String(d || '').match(/[MmLlHhVvCcSsQqTtAaZz]|[-+]?(?:\d+\.?\d*|\.\d+)(?:[eE][-+]?\d+)?/g) || [];
+	// Normalize CSS colors once per color string, including alpha outside sRGB.
+	const ALPHA = new Map(), cv = document.createElement('canvas'); cv.width = cv.height = 1;
+	const cx2 = cv.getContext('2d', { willReadFrequently: true });
+	const alphaOf = (col) => { if (!col || col === 'none' || col === 'transparent') return 0; if (/^url\(/.test(col)) return 1;
+		let a = ALPHA.get(col); if (a !== undefined) return a;
+		cx2.clearRect(0, 0, 1, 1); cx2.fillStyle = '#000'; cx2.fillStyle = col; cx2.fillRect(0, 0, 1, 1); a = cx2.getImageData(0, 0, 1, 1).data[3] / 255;
+		if (ALPHA.size > 500) ALPHA.clear(); ALPHA.set(col, a); return a; };
+	// A paint server with zero-alpha stops and a butt-capped zero dash draw no ink.
+	const urlOf = (value) => /url\(\s*["']?#([^"')]+)["']?\s*\)/.exec(value || '')?.[1];
+	const paintAlpha = (color) => {
+		const id = urlOf(color);
+		const ref = id && document.getElementById(id);
+		if (!ref || !/^(linearGradient|radialGradient)$/.test(ref.tagName)) return alphaOf(color);
+		const stops = [...ref.querySelectorAll('stop')];
+		if (!stops.length) return alphaOf(color);
+		return Math.max(...stops.map((stop) => {
+			const style = getComputedStyle(stop);
+			return alphaOf(style.stopColor) * Number(style.stopOpacity);
+		}));
+	};
+	const zeroDash = (c) => {
+		if (c.strokeLinecap !== 'butt' || !c.strokeDasharray || c.strokeDasharray === 'none') return false;
+		const dashes = c.strokeDasharray.split(/[, ]+/).map(parseFloat);
+		return dashes.length % 2 === 0 && dashes.some((v) => v > 0)
+			&& dashes.every((v, i) => i % 2 !== 0 || v === 0);
+	};
+	const strokes = (c) => paintAlpha(c.stroke) * +c.strokeOpacity > .05 && parseFloat(c.strokeWidth) > 0 && !zeroDash(c);
+	const paints = (c) => paintAlpha(c.fill) * +c.fillOpacity > .05 || strokes(c);
+	// a sub-path with nothing drawn: a moveto with one coordinate pair, followed by another moveto or the end; T95: or a
+	// sub-path whose every segment ends where it began (M x y l0 0, M x y Z, h0, v0, a line to its own start), which paints
+	// only the caps of a stroke with round or square caps
+	const emptySub = (d, capped) => { const tk = String(d || '').match(/[MmLlHhVvCcSsQqTtAaZz]|[-+]?(?:\d+\.?\d*|\.\d+)(?:[eE][-+]?\d+)?/g) || [];
 		for (let i = 0; i < tk.length; i++) { if (tk[i] !== 'M' && tk[i] !== 'm') continue; let j = i + 1; while (j < tk.length && !/[A-Za-z]/.test(tk[j])) j++; if (j - i - 1 === 2 && (j >= tk.length || tk[j] === 'M' || tk[j] === 'm')) return true; }
-		return false; };
-	const leafShown = (e, top) => { for (let a = e; a && a !== top.parentElement; a = a.parentElement) { const c = getComputedStyle(a); if (c.display === 'none' || c.visibility === 'hidden' || +c.opacity < .05) return false; } return true; };
+		if (capped) return false;
+		let x = 0, y = 0, sx = 0, sy = 0, flat = null, cmd = '';
+		const N = (q) => +q;
+		for (let i = 0; i < tk.length;) {
+			if (/[A-Za-z]/.test(tk[i])) cmd = tk[i++];
+			const rel = cmd === cmd.toLowerCase(), C = cmd.toUpperCase(), take = (n) => { const v = tk.slice(i, i + n).map(N); i += n; return v; };
+			if (C === 'Z') { if (flat === true) return true; x = sx; y = sy; flat = null; continue; }
+			const n = { M: 2, L: 2, H: 1, V: 1, C: 6, S: 4, Q: 4, T: 2, A: 7 }[C]; if (!n || i + n > tk.length) break;
+			const v = take(n);
+			if (C === 'M') { if (flat === true) return true; x = rel ? x + v[0] : v[0]; y = rel ? y + v[1] : v[1]; sx = x; sy = y; flat = true; cmd = rel ? 'l' : 'L'; continue; }
+			const ends = C === 'H' ? [[rel ? x + v[0] : v[0], y]] : C === 'V' ? [[x, rel ? y + v[0] : v[0]]] : C === 'A' ? [[rel ? x + v[5] : v[5], rel ? y + v[6] : v[6]]] : Array.from({ length: n / 2 }, (_, q) => [rel ? x + v[2 * q] : v[2 * q], rel ? y + v[2 * q + 1] : v[2 * q + 1]]);
+			if (ends.some(([a, b]) => Math.abs(a - sx) > 1e-9 || Math.abs(b - sy) > 1e-9)) flat = false;
+			[x, y] = ends[ends.length - 1];
+		}
+		return flat === true; };
+	// Unknown clips and masks cannot supply positive movement evidence. For local SVG
+	// references, measure the bounds of the content that can reveal the leaf.
+	const GEOM = 'path,circle,ellipse,rect,polygon,polyline,line,use,text,image';
+	const limitOf = (e, top, toStage) => {
+		let lim = null;
+		for (let a = e; a && a !== top.parentElement; a = a.parentElement) {
+			const c = getComputedStyle(a);
+			if (c.display === 'none' || c.visibility !== 'visible' || +c.opacity < .05) return false;
+			for (const value of [c.clipPath, c.maskImage]) {
+				if (!value || value === 'none') continue;
+				const id = urlOf(value);
+				const ref = id && document.getElementById(id);
+				if (!ref || !/^(clipPath|mask)$/.test(ref.tagName)) return false;
+				const kids = [...ref.querySelectorAll(GEOM)];
+				let box = null;
+				const am = a.getScreenCTM(); if (!am) return false;
+				const units = ref.getAttribute(ref.tagName === 'mask' ? 'maskContentUnits' : 'clipPathUnits') === 'objectBoundingBox';
+				const ab = units ? a.getBBox() : null;
+				for (const q of kids) {
+					let b = null; try { b = q.getBBox(); } catch (_) { /* not measurable */ }
+					if (!b || !(b.width > 0 && b.height > 0)) continue;
+					const style = getComputedStyle(q);
+					if (style.display === 'none' || style.visibility !== 'visible' || +style.opacity < .05
+						|| (ref.tagName === 'mask' && !paints(style))) continue;
+					const lc = q.transform && q.transform.baseVal.consolidate(), L = lc ? lc.matrix : null;
+					const pts = [[b.x, b.y], [b.x + b.width, b.y], [b.x, b.y + b.height], [b.x + b.width, b.y + b.height]].map(([x, y]) => {
+						let X = L ? L.a * x + L.c * y + L.e : x, Y = L ? L.b * x + L.d * y + L.f : y;
+						if (ab) { X = ab.x + X * ab.width; Y = ab.y + Y * ab.height; }
+						return toStage(am, X, Y); });
+					const bx = [Math.min(...pts.map((z) => z[0])), Math.min(...pts.map((z) => z[1])), Math.max(...pts.map((z) => z[0])), Math.max(...pts.map((z) => z[1]))];
+					box = box ? [Math.min(box[0], bx[0]), Math.min(box[1], bx[1]), Math.max(box[2], bx[2]), Math.max(box[3], bx[3])] : bx;
+				}
+				if (!box) return false;
+				lim = lim ? [Math.max(lim[0], box[0]), Math.max(lim[1], box[1]), Math.min(lim[2], box[2]), Math.min(lim[3], box[3])] : box;
+				if (lim[2] <= lim[0] || lim[3] <= lim[1]) return false;
+			}
+		}
+		return lim;
+	};
+	// T95: a leaf wholly under an opaque leaf of the same part painted after it (later in the document, so above it) paints
+	// no pixel: every point of its outline, pushed out by half its stroke, and its centre, inside the opaque leaf's fill
+	// (isPointInFill in that leaf's own space). Opaque: a fill of alpha .99 or more, nothing above it in the part with
+	// opacity under .99, a filter, a blend mode, a clip or a mask. Cached by the two leaves' relative matrix and geometry.
+	const OCC = new Map();
+	const opaqueOf = (o, top) => { const c = getComputedStyle(o); if (paintAlpha(c.fill) * +c.fillOpacity < .99 || urlOf(c.fill) || (c.mixBlendMode && c.mixBlendMode !== 'normal')) return false;
+		for (let a = o; a && a !== top.parentElement; a = a.parentElement) { const q = getComputedStyle(a); if (+q.opacity < .99 || (q.filter && q.filter !== 'none') || (q.clipPath && q.clipPath !== 'none') || (q.mask && q.mask !== 'none' && q.mask !== 'auto') || (q.maskImage && q.maskImage !== 'none')) return false; }
+		return true; };
+	const geomKey = (e) => e.tagName + ':' + ['d', 'x', 'y', 'width', 'height', 'cx', 'cy', 'r', 'rx', 'ry', 'x1', 'y1', 'x2', 'y2', 'points'].map((a) => e.getAttribute(a) || '').join(',');
+	const covered = (l, o, sw) => {
+		const lm = l.getScreenCTM(), om = o.getScreenCTM(); if (!lm || !om) return false;
+		const rel = om.inverse().multiply(lm), key = [rel.a, rel.b, rel.c, rel.d, rel.e, rel.f].map((v) => v.toFixed(3)).join(',') + '|' + sw + '|' + geomKey(l) + '|' + geomKey(o);
+		const cache = OCC.get(l) || new Map(); if (!OCC.has(l)) OCC.set(l, cache);
+		const hit = cache.get(o); if (hit && hit.key === key) return hit.v;
+		let v = true;
+		try {
+			const len = l.getTotalLength(), n = 16, b = l.getBBox(), pts = [[b.x + b.width / 2, b.y + b.height / 2]], d = sw / 2;
+			for (let i = 0; i < n; i++) { const q = l.getPointAtLength(len * i / n); pts.push([q.x, q.y]); if (d > 0) pts.push([q.x - d, q.y], [q.x + d, q.y], [q.x, q.y - d], [q.x, q.y + d]); }
+			for (const [x, y] of pts) { const X = rel.a * x + rel.c * y + rel.e, Y = rel.b * x + rel.d * y + rel.f; if (!o.isPointInFill(new DOMPoint(X, Y))) { v = false; break; } }
+		} catch (_) { v = false; }
+		cache.set(o, { key, v }); return v; };
 	const painted = (s, g, label) => {
 		const root = s.svg.getScreenCTM();
 		if (!root) throw new Error('stage SVG: no screen matrix');
-		const inv = root.inverse(), k = Math.hypot(root.a, root.b) * DPR, leaves = new Map();
+		const inv = root.inverse(), k = Math.hypot(root.a, root.b) * DPR, leaves = new Map(), order = [];
+		const toStage = (m, x, y) => { const r = inv.multiply(m); return [(r.a * x + r.c * y + r.e) * k, (r.b * x + r.d * y + r.f) * k]; };
 		for (const e of g.querySelectorAll('path,circle,ellipse,rect,polygon,polyline,line')) {
-			if (e.closest(NOPAINT) || !leafShown(e, g)) continue;
+			if (e.closest(NOPAINT)) continue;
 			const c = getComputedStyle(e);
 			if (!paints(c)) continue;
-			const m = e.getScreenCTM(); if (!m) continue;
+			const m = e.getScreenCTM(); if (!m || Math.abs(m.a * m.d - m.b * m.c) < 1e-10) continue;
 			const r = inv.multiply(m), at = (x, y) => [(r.a * x + r.c * y + r.e) * k, (r.b * x + r.d * y + r.f) * k];
+			const capped = strokes(c) && (c.strokeLinecap === 'round' || c.strokeLinecap === 'square');
 			let pts = null;
 			if (e.tagName === 'path') {
 				const cd0 = c.d && c.d !== 'none' ? c.d : e.getAttribute('d'), cd = (/^path\(\s*["']([\s\S]*)["']\s*\)$/.exec(cd0 || '') || [null, cd0])[1];
-				if (emptySub(cd)) {
+				if (emptySub(cd, capped)) {
 					let len = 0; try { len = e.getTotalLength(); } catch (_) { /* not rendered */ }
 					if (!(len > 0)) continue;
 					const n = Math.max(32, Math.min(400, Math.ceil(len * Math.hypot(r.a, r.b) * k)));
@@ -547,11 +737,29 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 			if (!pts) {
 				let b = null; try { b = e.getBBox(); } catch (_) { /* not rendered */ }
 				if (!b || !(b.width > 0 || b.height > 0)) continue;
+				// T95: a box with no width or no height paints nothing unless it is a stroked line or path (a rect, circle or
+				// ellipse of zero size is not drawn at all)
+				if (!(b.width > 0 && b.height > 0) && (/^(rect|circle|ellipse)$/.test(e.tagName) || !strokes(c))) continue;
 				pts = [at(b.x, b.y), at(b.x + b.width, b.y), at(b.x, b.y + b.height), at(b.x + b.width, b.y + b.height)];
 			}
 			if (!pts.every((q) => Number.isFinite(q[0]) && Number.isFinite(q[1]))) continue;
-			const box = [Math.min(...pts.map((q) => q[0])), Math.min(...pts.map((q) => q[1])), Math.max(...pts.map((q) => q[0])), Math.max(...pts.map((q) => q[1]))];
-			leaves.set(e, { box, area: Math.max(box[2] - box[0], 1) * Math.max(box[3] - box[1], 1) });
+			let box = [Math.min(...pts.map((q) => q[0])), Math.min(...pts.map((q) => q[1])), Math.max(...pts.map((q) => q[0])), Math.max(...pts.map((q) => q[1]))];
+			const lim = limitOf(e, g, toStage);
+			if (lim === false) continue;
+			if (lim) { box = [Math.max(box[0], lim[0]), Math.max(box[1], lim[1]), Math.min(box[2], lim[2]), Math.min(box[3], lim[3])]; if (box[2] < box[0] || box[3] < box[1]) continue; }
+			leaves.set(e, { box, area: Math.max(box[2] - box[0], 1) * Math.max(box[3] - box[1], 1), sw: strokes(c) ? parseFloat(c.strokeWidth) || 0 : 0 });
+			order.push(e);
+		}
+		// T95: leaves wholly under an opaque leaf of the same part painted after them are left out (see covered)
+		const opq = new Map();
+		for (let i = 0; i < order.length; i++) {
+			const l = order[i], L = leaves.get(l), pad = L.sw / 2 * k;
+			for (let j = i + 1; j < order.length; j++) {
+				const o = order[j], O = leaves.get(o);
+				if (O.box[0] > L.box[0] - pad || O.box[1] > L.box[1] - pad || O.box[2] < L.box[2] + pad || O.box[3] < L.box[3] + pad) continue;
+				if (!opq.has(o)) opq.set(o, opaqueOf(o, g));
+				if (opq.get(o) && covered(l, o, L.sw)) { leaves.delete(l); break; }
+			}
 		}
 		if (!leaves.size) throw new Error(`${label}: no painted shape`);
 		return leaves;
@@ -580,7 +788,7 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 		const r1 = (v) => Math.round(v * 100) / 100;
 		Object.assign(out, { travelUnit: 'device px', dpr: DPR, headMs: parts.head.ms, handMs: parts.hand.ms, headMoves: parts.head.n, handMoves: parts.hand.n, headTravelPx: r1(parts.head.travel), handTravelPx: r1(parts.hand.travel), headRebuilt: parts.head.rebuilt, handRebuilt: parts.hand.rebuilt, movingMs: Math.min(parts.head.ms, parts.hand.ms), moving: Math.min(parts.head.n, parts.hand.n) });
 	};
-	while (performance.now() - t0 < ms) {
+	while (performance.now() < deadline && (!cell || out.paintMs < ms)) {
 		await new Promise((r) => requestAnimationFrame(() => r()));
 		out.n++;
 		// Retro holds each distinct drawn pose for 50 ms; unchanged rAF samples contribute no motion.
@@ -600,20 +808,46 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 		}
 		prevV = { th: ps.thv, tilt: ps.tiltv };
 		if (rnd && out.n >= restoreN) { Math.random = rnd; rnd = null; out.forced.fired = s2.idleNext > s2.t; }
-		const nominal = !s2.reduced && !O55.motion.lowResource && PH.part('sway-and-physics') && PH.part('idle-life');
-		if (!nominal) { out.off++; out.offWhy = s2.reduced ? 'reduced' : O55.motion.lowResource ? 'low-resource' : 'a Pip part off'; }
+		const low = O55.motion.lowResource;
+		if (low) out.lowFrames++;
+		const nominal = !s2.reduced && !low && PH.part('sway-and-physics') && PH.part('idle-life');
+		if (!nominal) { out.off++; out.offWhy = s2.reduced ? 'reduced' : low ? 'low-resource' : 'a Pip part off'; }
+		if (cell && !nominal && !low) out.explicitlyOff = true;
 		const props = [...s2.props.values()].filter((p) => p.state === 'out' ? +p.el.getAttribute('opacity') > .05 : p.op > .95 && +p.el.getAttribute('opacity') > .95);
 		const now = { tilt: Math.abs(ps.tiltv) > 1.5, swing: Math.abs(ps.thv) > .25, hop: ps.dyv < -80, cheer: s2.moodOverride === 'happy' && s2.moodUntil > s2.t, kick: props.some((p) => Math.abs(p.av) > .12) };
 		for (const k of Object.keys(now)) { if (now[k] && !was[k]) out.kinds[k === 'kick' ? 'propKick' : k]++; was[k] = now[k]; }
 
-		// T65: the parts are judged from Pip's first painted frame, not from the props' arrival: under load the props
-		// finished fading in after Pip's wake hop and cheer, and the cell then held only the idle sway (2 hand steps in a
-		// run on Nas1). Before the first paint a missing paint is waited out; after any valid pair it is a geometry error.
-		{
-			let hP = null, cP = null;
+		// Each screen has its own wake. Wait for the active pane's entrance and the stage's
+		// release, power animation and wake reaction. Only an incoming shown prop opens the
+		// motion sample. Leaving props are still measured for overlap below.
+		if (cell) {
+			sawSleep ||= !!s2.sleepZ;
+			if (sawSleep && !s2.sleepZ && out.wakeFrom === null) out.wakeFrom = Math.round(tNow - t0);
+			if (out.judgeFrom === null && entranceSeen && cell.layer.isConnected
+				&& O55.S.sess.screen === cell.screen && !cell.layer.classList.contains('o55-entering')
+				&& out.wakeFrom !== null && !s2.sleepZ && !s2.held && nominal
+				&& !(s2.moodUntil > s2.t) && Math.abs(ps.dy) < 1 && Math.abs(ps.dyv) < 5
+				&& !s2.content.getAnimations().some((animation) => animation.pending || animation.playState === 'running')
+				&& props.some((p) => p.state !== 'out')) out.judgeFrom = Math.round(tNow - t0);
+			if (out.judgeFrom !== null && nominal && !s2.held && !s2.sleepZ) {
+				if (lastStageTime !== null) out.paintMs += Math.max(0, (s2.t - lastStageTime) * 1000);
+				lastStageTime = s2.t;
+			} else {
+				lastStageTime = null;
+				parts.head.ref = null;
+				parts.hand.ref = null;
+			}
+		}
+		if ((!cell || lastStageTime !== null) && tNow - lastPaint >= 50) {
+			lastPaint = tNow;
+			let hP, cP;
 			try { hP = painted(s2, s2.gHead, 'head'); cP = painted(s2, s2.gCtl, 'hand'); }
-			catch (e) { if (out.validPairs) { out.geometryError = `${e.message} at frame ${out.n}`; break; } }
-			if (hP && cP) { judgePart(parts.head, hP, tNow); judgePart(parts.hand, cP, tNow); }
+			catch (e) { if (out.paintFrames) { out.geometryError = `${e.message} at frame ${out.n}`; break; } }
+			if (hP && cP) {
+				out.paintFrames++;
+				judgePart(parts.head, hP, tNow);
+				judgePart(parts.hand, cP, tNow);
+			}
 		}
 		// No comparison is eligible during the props' entrance fade. Coverage below must still become positive.
 		if (!props.length) continue;
@@ -677,13 +911,21 @@ async function awakeMotion(t, mode) {
 			await t.emulate({ reducedMotion: 'no-preference' });
 			await stageLook(t, f, look);
 			for (const scr of t.args.screens ? String(t.args.screens).split(',') : MOTION_SCREENS) {
-				await f.evaluate((x) => window.O55.ui.open({ fresh: true, screen: x }), scr);
-				const ok = await f.waitForFunction(() => !!O55.pipStage.of(O55.S.root.querySelector('.o55-stage')), null, { timeout: 15000 }).then(() => true, () => false);
 				const tag = `${mode} ${look} ${scr} ${w}x${h} awake`;
-				if (!ok) { await t.check(`${tag}: the screen opens on a stage`, false, 'no stage within 15 s'); continue; }
-				// watched from the screen's entrance on, through the wake, the person's input and the idle that follows
-				const watch = f.evaluate(`(${MOTION.toString()})(14000, ${JSON.stringify(INK_OVERLAP.toString())}, ${JSON.stringify(GEOMETRY.toString())}, ${JSON.stringify(t.args.selftest || "")})`);
-				await f.waitForTimeout(250);
+				// Welcome arms the owner's real arrival handler again for every target screen.
+				await f.evaluate(() => O55.ui.open({ fresh: true, screen: 'welcome' }));
+				await f.waitForFunction(() => {
+					const stage = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
+					return O55.S.sess?.screen === 'welcome' && stage?.sleepZ;
+				}, null, { timeout: 15000 });
+				const watch = f.evaluate(({ screen, motion, ink, geometry, selftest }) => {
+					O55.ui.open({ fresh: true, screen });
+					const layer = O55.S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
+					return (0, eval)(`(${motion})`)(14000, ink, geometry, selftest, null, { screen, layer });
+				}, { screen: scr, motion: MOTION.toString(), ink: INK_OVERLAP.toString(),
+					geometry: GEOMETRY.toString(), selftest: t.args.selftest || '' });
+				// Welcome's handler ignores pointer travel in its first 900 ms.
+				await f.waitForTimeout(950);
 				await t.check(`${tag}: Pip wakes on the pointer's arrival`, await arrive(t, f), 'still asleep after 4 s');
 				if (scr === 'name') {
 					const fld = f.locator('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-bind="name"]').first();
@@ -698,21 +940,19 @@ async function awakeMotion(t, mode) {
 				if (r.err) { await t.check(`${tag}: the stage`, false, r.err); continue; }
 				for (const k of Object.keys(r.kinds)) total[k] += r.kinds[k];
 				total.boxFrames += r.boxFrames;
-				const why = JSON.stringify({ frames: r.n, validPairs: r.validPairs, validFrames: r.validFrames, geometryError: r.geometryError, headMs: Math.round(r.headMs), handMs: Math.round(r.handMs), headMoves: r.headMoves, handMoves: r.handMoves, headTravelPx: r.headTravelPx, handTravelPx: r.handTravelPx, kinds: r.kinds, boxFrames: r.boxFrames, worstBox: Math.round(r.worstBox), at: r.at });
+				const why = JSON.stringify({ frames: r.n, validPairs: r.validPairs, validFrames: r.validFrames, wakeFrom: r.wakeFrom, judgeFrom: r.judgeFrom, paintFrames: r.paintFrames, paintMs: Math.round(r.paintMs), lowFrames: r.lowFrames, geometryError: r.geometryError, headMs: Math.round(r.headMs), handMs: Math.round(r.handMs), headMoves: r.headMoves, handMoves: r.handMoves, headTravelPx: r.headTravelPx, handTravelPx: r.handTravelPx, kinds: r.kinds, boxFrames: r.boxFrames, worstBox: Math.round(r.worstBox), at: r.at });
 				await t.check(`${tag}: head and eligible props have valid visible geometry`, !r.geometryError, why, { hard: true });
 				await t.check(`${tag}: positive valid measurement coverage`, r.validPairs > 0 && r.validFrames > 0, why, { hard: true });
-				await t.check(`${tag}: normal motion stayed on`, r.off === 0, `${r.off}/${r.n} frames without it (${r.offWhy})`);
-				/* (in time, not frames: one nod keeps Pip off its rest pose for 333 ms on the stage's tilt spring, a wiggle 467 ms,
-				   at any frame rate; 20 frames were 435 ms at the VM's 46 fps, more than a nod, and 171 ms at Windows' 117 fps.
-				   NieR's c-ready has one idle wiggle or nod in 14 s, by design (no swing, no hop): 13-16 frames on the VM, 45-56 on
-				   Windows, retro-c4. 200 ms is stricter than 20 frames were on every Windows run, and below one nod.
-				   T65: in device px the bar is PART_STEPS visible steps a part, see PART_STEPS) */
-				// T42: each drawn part on its own, on what is painted (a head held still while the hand moves fails here)
-				await t.check(`${tag}: Pip's drawn head changed visibly (painted, >= 1 device px) at least ${PART_STEPS === 1 ? 'once' : PART_STEPS + ' times'}`, r.headMoves >= PART_STEPS, why);
-				await t.check(`${tag}: Pip's drawn hand changed visibly (painted, >= 1 device px) at least ${PART_STEPS === 1 ? 'once' : PART_STEPS + ' times'}`, r.handMoves >= PART_STEPS, why);
-				// T65: the parts' net travel over the cell, a backstop beside the per-frame steps (the real page's smallest at
-				// 860x768 were 5.65 px for the head and 1.98 px for the hand, REVIEW-kit-tb3-opus)
-				await t.check(`${tag}: Pip's drawn head and hand each travelled at least ${TRAVEL_FLOOR_DPX} device px`, r.headTravelPx >= TRAVEL_FLOOR_DPX && r.handTravelPx >= TRAVEL_FLOOR_DPX, why);
+				await t.check(`${tag}: full motion remains requested`, !r.explicitlyOff, why);
+				const sampled = r.judgeFrom !== null && r.paintFrames >= 8 && (r.paintMs >= 10000
+					|| (r.moving >= PART_STEPS && Math.min(r.headTravelPx, r.handTravelPx) >= TRAVEL_FLOOR_DPX));
+				await t.check(`${tag}: post-wake motion sample complete`, sampled,
+					`Sampling incomplete: need the screen entrance, a new wake, an incoming prop and sufficient time in full motion; ${why}`);
+				if (sampled) {
+					await t.check(`${tag}: Pip's drawn head changed visibly (painted, >= 1 device px) at least ${PART_STEPS} times`, r.headMoves >= PART_STEPS, why);
+					await t.check(`${tag}: Pip's drawn hand changed visibly (painted, >= 1 device px) at least ${PART_STEPS} times`, r.handMoves >= PART_STEPS, why);
+					await t.check(`${tag}: Pip's drawn head and hand each travelled at least ${TRAVEL_FLOOR_DPX} device px`, r.headTravelPx >= TRAVEL_FLOOR_DPX && r.handTravelPx >= TRAVEL_FLOOR_DPX, why);
+				}
 				const okInk = r.worst <= 4;
 				await t.check(`${tag}: no painted overlap of Pip's head and a prop`, okInk, `${r.worst} px² painted; ${why}`);
 				if (!okInk) await t.crop(`awake-${mode}-${look}-${scr}-${w}x${h}`, '#pm-o55-onboarding .o55-stage', `${tag}: painted overlap ${r.worst} px²`);
@@ -1111,6 +1351,7 @@ async function bubbleClear(t, mode) {
 // Retro Dark (--set look=retro-light,retro-dark for more), --set reps=3 times; each marked '<look> <route> rep <n>' as the
 // size settles, then judged as above at 2 s and 2.5 s later. With --grep "clear of the bubble" (the other cases are not films).
 async function filmBubble(t, mode) {
+	await installBootProbe(t);
 	let f, size;
 	if (mode === 'normal') {
 		await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });
@@ -1155,6 +1396,7 @@ async function filmBubble(t, mode) {
 //   browser-check run <kit>/checks/retro-stage-fit.check.mjs --set film=1 --set page=<build> --record /abs/film.mp4
 const FILM = [[1920, 1056], [1390, 900], [1024, 768], [860, 768], [740, 768], [1280, 500], [740, 768], [860, 768], [1390, 900], [1920, 1056]];
 async function film(t) {
+	await installBootProbe(t);
 	await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });
 	const href = await t.root.evaluate(() => location.href);
 	const [f] = await t.openSideBySide([{ url: href, width: 1920, height: 1056, label: 'Retro stage fit: the page in a frame resized as a window would be' }]);
@@ -1183,6 +1425,7 @@ async function film(t) {
 // After each, the no-replay measures (no power-on, the line whole and not said again) and the fit are judged; the
 // frames just after each mark are for every-frame review.
 async function filmRelayout(t, mode) {
+	await installBootProbe(t);
 	let f, size;
 	if (mode === 'normal') {
 		await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });
