@@ -542,16 +542,21 @@ def refresh_evidence(item: dict, *, digest_convention: str = "whole_line", sourc
         if unit or _split_and_spans(text)[1]:
             raise Gap(f"canonical Markdown evidence needs a resolvable unit or heading bound: {rel}#{unit}")
     owner_span = span
+    want = item.get("line_start") if isinstance(item.get("line_start"), int) else 1
+    retention_location = None
     if span is not None and rel.startswith("Plans/") and rel.endswith(".md") and event_type:
         from pm_ea_evidence_projection import markdown_family_span, registered_event_types
+        # In a shared owner unit the located retention paragraph may name a
+        # different subject from the heading. Use the same location for the receipt.
+        if criterion == "retention" and isinstance(quote, str) and quote:
+            retention_location = relocate(text, quote, want, span)
         try:
             span = markdown_family_span(text, span, event_type, registered_event_types(file_text(REGISTRY)),
-                                        criterion, quote)
+                                        criterion, quote, quote_lines=retention_location[:2] if retention_location else None)
         except ValueError as exc:
             raise Gap(f"{rel}#{unit}: {exc}") from exc
     if isinstance(quote, str) and quote:
-        want = item.get("line_start") if isinstance(item.get("line_start"), int) else 1
-        found = relocate(text, quote, want, span)
+        found = retention_location or relocate(text, quote, want, span)
         if found is None:
             if span != owner_span:
                 raise Gap(f"{rel}#{unit}: Markdown evidence quotation is outside the subject row for {event_type}")

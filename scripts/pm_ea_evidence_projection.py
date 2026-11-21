@@ -159,16 +159,56 @@ _EXCLUSIVE_OWNER = re.compile(
 )
 _EVENT_TABLE_ROW = re.compile(r"^\s*\|\s*`(" + _EVENT_NAME + r")`\s*\|")
 
+_RETENTION_ASSIGNMENT_START = "Current selected assignment ("
+_RETENTION_ASSIGNMENT = re.compile(
+    r"Current selected assignment \(\d{4}-\d{2}-\d{2}\): (" + _EVENT_NAME + r")@\d+\.\d+\.\d+"
+    r" is registered for \w+ in Plans/event_family_registry\.json, as recorded by "
+    r"Plans/Decision_Log\.md#DL-\d+\. Its event history selects RP-[A-Z0-9-]+@\d+\.\d+\.\d+\b"
+)
+_PARAGRAPH_BREAK = re.compile(r"^\s*(?:$|```|#{1,6}\s|[a-z][\w-]*:\s|Current selected assignment \()")
+
 
 @lru_cache(maxsize=1)
 def registered_event_types(registry_text: str) -> frozenset[str]:
     return frozenset(row["event_type"] for row in json.loads(registry_text)["families"])
 
 
+def _retention_assignment_at(lines: list[str], first_line: int, quote_lines: tuple[int, int],
+                             event_type: str) -> tuple[int, int] | None:
+    """Verify the assignment paragraph containing the located retention quotation."""
+    quote_start, quote_end = quote_lines
+    for start, line in enumerate(lines, first_line):
+        if start > quote_end:
+            break
+        if not line.lstrip().startswith(_RETENTION_ASSIGNMENT_START):
+            continue
+        stop = start - first_line + 1
+        while stop < len(lines) and not _PARAGRAPH_BREAK.match(lines[stop]):
+            stop += 1
+        end = first_line + stop - 1
+        if end < quote_start:
+            continue
+        paragraph = " ".join(" ".join(lines[start - first_line:stop]).split())
+        match = _RETENTION_ASSIGNMENT.match(paragraph)
+        if match is None:
+            continue
+        if not start <= quote_start <= quote_end <= end:
+            raise ValueError(f"Markdown evidence crosses a retention assignment subject boundary for {event_type}")
+        if match[1] != event_type:
+            raise ValueError(f"Markdown evidence subject is {match[1]}, expected {event_type}")
+        return start, end
+    return None
+
+
 def markdown_family_span(text: str, span: tuple[int, int], event_type: str, known_events: frozenset[str],
-                         criterion: str | None, quote: str | None) -> tuple[int, int]:
-    """Validate the declared Markdown owner and tighten shared oracle rows before relocation."""
+                         criterion: str | None, quote: str | None, *,
+                         quote_lines: tuple[int, int] | None = None) -> tuple[int, int]:
+    """Bind proof to a family-specific paragraph, owner heading, or oracle row."""
     lines = text.splitlines()[span[0] - 1:span[1]]
+    if criterion == "retention" and quote_lines is not None:
+        assignment = _retention_assignment_at(lines, span[0], quote_lines, event_type)
+        if assignment is not None:
+            return assignment
     heading = next((match[1] for line in lines if (match := _MARKDOWN_HEADING.match(line))), "")
     subjects = set(_EVENT_TOKEN.findall(heading)) & (known_events | {event_type})
     if not subjects:

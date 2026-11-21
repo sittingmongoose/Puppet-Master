@@ -71,6 +71,31 @@ class MarkdownSubjectTests(unittest.TestCase):
         with patch.object(WRITER, 'file_text', side_effect=replaced_line):
             self.assert_wrong_subject(item, event, criterion)
 
+    def test_memory_retention_binds_the_assignment_inside_each_shared_unit(self):
+        criterion = 'retention'
+        for action, unit in (('completed', 'SP-636'), ('started', 'SP-637')):
+            prune = f'memory.prune_archive.{action}'
+            sweep = f'memory.verification_sweep.{action}'
+            prune_items = [item for item in citations('depth', prune, criterion) if item['unit'] == unit]
+            sweep_items = [item for item in citations('depth', sweep, criterion) if item['unit'] == unit]
+            for event, items, sibling in ((prune, prune_items, sweep), (sweep, sweep_items, prune)):
+                self.assertTrue(items)
+                for item in items:
+                    with self.subTest(event=event, line=item['line_start']):
+                        self.assert_own_subject(item, event, criterion)
+                    with self.subTest(event=sibling, sibling_line=item['line_start']):
+                        self.assert_wrong_subject(item, sibling, criterion)
+
+            # The policy phrase occurs in both paragraphs. The located line
+            # must still belong to the cited family.
+            shared_quote = 'Its event history selects RP-OPERATIONAL-2555D@1.0.0'
+            for event, item, sibling in ((prune, prune_items[0], sweep), (sweep, sweep_items[0], prune)):
+                self.assertIn(shared_quote, item['quote'])
+                excerpt = dict(item, quote=shared_quote)
+                with self.subTest(event=event, shared_quote=True):
+                    self.assert_own_subject(excerpt, event, criterion)
+                    self.assert_wrong_subject(excerpt, sibling, criterion)
+
     def test_goal_revision_custody_rejects_other_family_owners(self):
         criterion = 'redaction_custody'
         for event in ('goal.blocked', 'goal.completed'):
