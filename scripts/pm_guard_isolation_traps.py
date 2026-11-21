@@ -13,6 +13,8 @@ from pathlib import Path
 import random
 import sys
 import tempfile
+from types import SimpleNamespace
+from unittest.mock import patch
 
 
 def _load(path, name, private_builtins=False):
@@ -75,6 +77,139 @@ def _code_suite(g, trap, root):
     return suite
 
 
+
+def _single_guard_trap(trap_id, expected, failure, **overrides):
+    source = '''import pm_guard_isolation as g
+
+def px(value, context):
+    return 'bad_x' if value['x'] < 0 else None
+
+def factory():
+    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])
+    context = None
+    def check(value):
+        table.require('x', value, context)
+        return True
+    return g.Case(table, check, context)
+'''
+    return dict({
+        'id': trap_id, 'kind': 'code', 'expected': expected, 'failure_kinds': [failure],
+        'source': source,
+        'controls': [{'id': 'valid', 'value': {'x': 0}}],
+        'negatives': [{'id': 'bad-x', 'value': {'x': -1}, 'target': 'x', 'code': 'bad_x'}],
+    }, **overrides)
+
+
+def _review_sites(function, reason, **sites):
+    return [dict(path='subject.py', function=function, kind=kind, source=source, reason=reason)
+            for kind, sources in sites.items() for source in sources]
+
+
+def _census_traps(traps):
+    fixtures = {trap['id']: trap for trap in traps}
+    source = _single_guard_trap('inventory-checker-switch', 'Refuse a checker source change between cases.',
+                                'infrastructure_or_declaration', static_pass=True, error_contains='checker source changed between cases')
+    source['source'] = source['source'].replace('def check(value):', 'def positive(value):').replace(
+        '    return g.Case(table, check, context)', '''    def negative(value):
+        table.require('x', value, context)
+        return True
+    check = positive if value['x'] >= 0 else negative
+    return g.Case(table, check, context)''').replace('def factory():', 'def factory(value):')
+    source['non_guards'] = _review_sites('factory', 'Select between two equivalent, complete checkers.',
+        data_operation=["positive if value['x'] >= 0 else negative", "value['x'] >= 0", "value['x']"])
+    for name in ('positive', 'negative'):
+        source['non_guards'] += _review_sites('factory.' + name, 'Delegate to the same registered guard.',
+            call_review=["table.require('x', value, context)"])
+
+    metadata = _single_guard_trap('inventory-metadata-switch', 'Refuse changed invariant metadata between cases.',
+                                  'infrastructure_or_declaration', static_pass=True, error_contains='guard table declaration changed between cases')
+    metadata['source'] = metadata['source'].replace('def factory():', '''def factory(value):
+    wording = 'nonnegative' if value['x'] >= 0 else 'at least zero'\n'''.rstrip()).replace(
+        "g.Invariant('/x', 'nonnegative')", "g.Invariant('/x', wording)")
+    metadata['non_guards'] = _review_sites('factory', 'Choose between equivalent invariant descriptions.',
+        data_operation=["'nonnegative' if value['x'] >= 0 else 'at least zero'", "value['x'] >= 0", "value['x']"],
+        call_review=["g.Invariant('/x', wording)"])
+
+    repeated = _single_guard_trap('additional-uncut-trace-change', 'The extra uncut valid run accepts with a different trace.',
+                                  'baseline_nondeterministic', clock=True, baseline_repeats=1,
+                                  observed_uncut_at_least=2, static_pass=True)
+    repeated['source'] = repeated['source'].replace('    def check(value):', '''    def check(value):
+        if g.time.monotonic() == 3:
+            return True''')
+    repeated['non_guards'] = _review_sites('factory.check', 'The test clock skips the guard only on the extra valid run.',
+        call_review=['g.time.monotonic()'],
+        data_operation=['if g.time.monotonic() == 3:\n    return True', 'g.time.monotonic() == 3', 'g.time.monotonic', 'g.time'])
+
+    # SOLMAX G02: _test still rejects the foreign root after the require check is removed.
+    # Assert the earlier protocol diagnosis separately.
+    wrong_root = dict(id='require-foreign-root', kind='require-foreign-root',
+                      expected='Require explicitly refuses an equal but foreign root.')
+    # SOLMAX G19: dropping the per-site conjunction leaves the only-site failures and final
+    # failure clearing in place. Require the aggregate diagnostic as well.
+    duplicate = dict(fixtures['genuine-duplicate'],
+        id='duplicate-unused-third-site', status='FAIL', duplicate_proved=False,
+        expected='An uncalled third duplicate member prevents credit despite a successful joint cut.',
+        failure_kinds=['unrelated_result_changed', 'duplicate_unproved'])
+    duplicate['source'] = duplicate['source'].replace('def upper(v, context):',
+        "def pc(v, context):\n    return 'low' if v['x'] < 0 else None\ndef upper(v, context):").replace(
+        "g.Guard('upper',", "g.Guard('c',g.Invariant('/x','nonnegative'),'low',pc),g.Guard('upper',")
+    duplicate['duplicates'] = [dict(duplicate['duplicates'][0], sites=['a', 'b', 'c'],
+        evidence='All three predicates test the same field, and each site must independently refuse.')]
+    # SOLMAX G10 / ASTRA G11: the joined snapshot still detects this discrepancy
+    # without the case-only comparison. Require the case-only diagnostic.
+    graph = _single_guard_trap('per-input-case-graph-change', 'Fresh cases for identical inputs must have equal graphs.',
+                               'factory_nondeterministic', clock=True, static_pass=True,
+                               error_contains='same input produced a different table/context/checker closure graph')
+    graph['source'] = graph['source'].replace('context = None', 'context = g.time.monotonic() == 2')
+    graph['non_guards'] = _review_sites('factory', 'The test clock varies one case context for the same input.',
+        call_review=['g.time.monotonic()'],
+        data_operation=['g.time.monotonic() == 2', 'g.time.monotonic', 'g.time'])
+    constructor = dict(id='guard-table-invalid-rows', kind='guard-table-invalid-rows',
+                       expected='GuardTable refuses both duplicate names and a non-Guard row.')
+    restoration = _single_guard_trap('restoration-outcome-change', 'The restored negative must refuse again.',
+                                     'restoration_failed', clock=True, static_pass=True)
+    # Calls 1–4 are the baselines and cuts. Calls 5 and 6 restore the control
+    # and negative respectively. Skipping here changes the outcome as well as the trace.
+    restoration['source'] = restoration['source'].replace('    def check(value):', '''    def check(value):
+        if g.time.monotonic() == 6:
+            return True''')
+    restoration['non_guards'] = _review_sites('factory.check', 'Skip the guard only on the restored negative.',
+        call_review=['g.time.monotonic()'],
+        data_operation=['if g.time.monotonic() == 6:\n    return True', 'g.time.monotonic() == 6', 'g.time.monotonic', 'g.time'])
+    tracing = _single_guard_trap('preexisting-trace-hook', 'Refuse to use a trace hook that is already occupied.',
+                                 'untracked_refusal', occupied_trace=True, static_pass=True,
+                                 error_contains='runtime requires an exclusive trace hook')
+    invariants = dict(fixtures['genuine-duplicate'],
+        id='duplicate-equivalent-predicates-different-invariants', status='FAIL', duplicate_proved=False,
+        expected='Equivalent predicates and refusal codes cannot override different declared invariants.',
+        failure_kinds=['infrastructure_or_declaration'], static_pass=True,
+        error_contains='duplicate merges different fields/predicates or overlapping sets')
+    invariants['source'] = invariants['source'].replace(
+        "g.Guard('b',g.Invariant('/x','nonnegative')", "g.Guard('b',g.Invariant('/x','at least zero')")
+    # The final uncovered-guard check clears every proof. Observe the vector
+    # before that cleanup so a false intermediate proof cannot be hidden.
+    unwitnessed = dict(fixtures['missing-negative'], id='unwitnessed-vector-proof', static_pass=True,
+        expected='A vector without any own negative remains unproved before final failure clearing.',
+        vector_proofs={'x': True, 'y': False})
+    root = 'https://pm.invalid/method-b/schema.json'
+    unused = 'https://pm.invalid/method-b/unused.json'
+    schema = dict(fixtures['schema-independent-bounds'],
+        id='declared-schema-root-unused', status='FAIL', proved_rows=0, static_pass=True,
+        expected='A declared schema root must be consumed even when it adds no guards.',
+        failure_kinds=['declared_schema_root_not_consumed'],
+        roots=[root, unused], documents={root: fixtures['schema-independent-bounds']['schema'], unused: {}},
+        validate_first_root_only=True)
+    control = _single_guard_trap('guard-refuses-skipped-control', 'A guard must accept the control even on a path that skips it.',
+                                 'predicate_refuses_control', static_pass=True)
+    control['source'] = control['source'].replace("value['x'] < 0", "value['x'] <= 0").replace(
+        "        table.require('x', value, context)", '''        if value['x'] != 0:
+            table.require('x', value, context)''')
+    control['non_guards'] = _review_sites('factory.check', 'Use the zero path to isolate the individual control check.',
+        data_operation=["if value['x'] != 0:\n    table.require('x', value, context)", "value['x'] != 0", "value['x']"])
+    return [source, metadata, repeated, wrong_root, duplicate, graph, constructor,
+            restoration, tracing, invariants, unwitnessed, schema, control]
+
+
 def _schema_suite(g, trap, root):
     # No synthetic acceptance callback: this source calls the actual complete
     # JSON Schema validator via the table's runtime tagging boundary.
@@ -99,7 +234,8 @@ def factory():
     return g.Case(table, check, context)
 '''
     path = root / 'subject.py'
-    path.write_text(source)
+    entries = '(ROOTS[0],)' if trap.get('validate_first_root_only') else 'ROOTS'
+    path.write_text(source.replace('for entry in ROOTS:', f'for entry in {entries}:'))
     module = _load(path, '_method_b_schema')
     uri = 'https://pm.invalid/method-b/schema.json'
     module.DOCUMENTS = trap.get('documents', {uri: trap['schema']})
@@ -125,14 +261,46 @@ def factory():
         _allow(g, 'subject.py', 'factory', 'call_review', 'g.schema_table(catalog, {entry: selected for entry in ROOTS})', 'Engine schema/table plumbing; no adapter-issued refusal.'),
         _allow(g, 'subject.py', 'factory.check', 'call_review', 'table.validate(entry, value)', 'Complete schema boundary for a declared root; a refusal stays tagged by the table and an unattributable refusal fails the run.')]
     suite.non_guards += [
-        _allow(g, 'subject.py', 'factory.check', 'data_operation', 'for entry in ROOTS:\n    table.validate(entry, value)', 'Iterate the declared immutable tuple of schema-root strings; each complete validation stays tagged.'),
+        _allow(g, 'subject.py', 'factory.check', 'data_operation', f'for entry in {entries}:\n    table.validate(entry, value)', 'Iterate the declared immutable tuple of schema-root strings; each complete validation stays tagged.'),
         _allow(g, 'subject.py', 'factory', 'data_operation', ' for entry in ROOTS', 'Construct selector bindings over the declared immutable tuple of roots.')]
     suite.non_guards.append(_allow(g, 'subject.py', 'factory', 'data_operation', '{entry: selected for entry in ROOTS}', 'Build a dictionary keyed only by the declared immutable root strings.'))
+    if trap.get('validate_first_root_only'):
+        suite.non_guards += [g.NonGuard(**site) for site in _review_sites('factory.check',
+            'Deliberately validate only the first declared root.', data_operation=['ROOTS[0]'])]
     return suite
 
 
 def _special(g, trap, memory):
     kind = trap['kind']
+    if kind == 'require-foreign-root':
+        def predicate(value, context):
+            return None
+        table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', predicate)])
+        value = {'x': 0}
+        table._bind(value, None, frozenset())
+        try:
+            table.require('x', dict(value))
+        except g.IsolationError as exc:
+            error = str(exc)
+        else:
+            error = None
+        finally:
+            table._restore()
+        return error == 'require must use the complete bound value and context', {'error': error}
+    if kind == 'guard-table-invalid-rows':
+        def predicate(value, context):
+            return None
+        guard = g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', predicate)
+        rejected = {}
+        for label, rows in (('duplicate name', [guard, replace(guard, refusal_code='other_x')]),
+                            ('non-Guard row', [guard, SimpleNamespace(name='y')])):
+            try:
+                g.GuardTable(rows)
+            except g.IsolationError as exc:
+                rejected[label] = str(exc)
+            else:
+                rejected[label] = None
+        return all(error == 'duplicate guard name or invalid Guard row' for error in rejected.values()), rejected
     if kind == 'snapshot-scalar-topology':
         left = bytearray(b'a noninterned scalar identity').decode()
         right = bytearray(b'a noninterned scalar identity').decode()
@@ -254,7 +422,7 @@ def exercise(g, memory, *, scratch=None):
         raise RuntimeError('expected Method B trap corpus')
     report = {'version': 2, 'method': 'B: guard tables', 'status': 'FAIL', 'caught': 0, 'skipped': 0, 'traps': []}
     scratch = _scratch_parent(scratch)
-    for trap in corpus['traps']:
+    for trap in [*corpus['traps'], *_census_traps(corpus['traps'])]:
         memory.check()
         row = {'id': trap['id'], 'expected': trap['expected'], 'caught': False}
         if tuple(trap.get('min_python', ())) > sys.version_info[:2]:
@@ -274,16 +442,38 @@ def exercise(g, memory, *, scratch=None):
                     untouched = {name: getattr(importlib.import_module(name.rpartition('.')[0]), name.rpartition('.')[2]) for name in trap.get('stdlib_untouched', [])}
                     try:
                         suite = _code_suite(g, trap, root) if trap['kind'] == 'code' else _schema_suite(g, trap, root)
+                        run_options = dict(memory=memory, demonstrate_runtime=bool(trap.get('runtime_behind_static')))
+                        if 'vector_proofs' in trap:
+                            row['vector_proofs'] = {}
+                            def record_progress(partial):
+                                vector = partial['rows'][-1]
+                                row['vector_proofs'][vector['id']] = vector['proved']
+                            run_options['progress'] = record_progress
                         if trap.get('random_seed') is not None:
                             # The global generator is external state no snapshot watches; seed it for a fixed schedule.
                             saved_random = random.getstate()
                             random.seed(trap['random_seed'])
                             try:
-                                result = g.run(suite, memory=memory, demonstrate_runtime=bool(trap.get('runtime_behind_static')))
+                                result = g.run(suite, **run_options)
                             finally:
                                 random.setstate(saved_random)
+                        elif trap.get('occupied_trace'):
+                            def existing_trace(frame, event, arg):
+                                return None
+                            previous = sys.gettrace()
+                            try:
+                                sys.settrace(existing_trace)
+                                result = g.run(suite, **run_options)
+                                row['trace_preserved'] = sys.gettrace() is existing_trace
+                            finally:
+                                sys.settrace(previous)
+                        elif trap.get('clock'):
+                            # MemoryGate already holds its real clock. Only the fixture consumes these ticks.
+                            ticks = iter(range(1, sys.maxsize))
+                            with patch.object(g.time, 'monotonic', lambda: next(ticks)):
+                                result = g.run(suite, **run_options)
                         else:
-                            result = g.run(suite, memory=memory, demonstrate_runtime=bool(trap.get('runtime_behind_static')))
+                            result = g.run(suite, **run_options)
                         if trap.get('repeat'):
                             row['repeat_report'] = g.run(suite, memory=memory, demonstrate_runtime=bool(trap.get('runtime_behind_static')))
                         if trap.get('state_observation'):
@@ -319,6 +509,12 @@ def exercise(g, memory, *, scratch=None):
                         row['caught'] = row['caught'] and any(trap['failure_reason'] in f.get('reasons', []) for f in result['failures'])
                     if trap.get('error_contains'):
                         row['caught'] = row['caught'] and any(trap['error_contains'] in f.get('error', '') for f in result['failures'])
+                    if 'vector_proofs' in trap:
+                        row['caught'] = row['caught'] and row['vector_proofs'] == trap['vector_proofs']
+                    if trap.get('occupied_trace'):
+                        row['caught'] = row['caught'] and row.get('trace_preserved') is True
+                    if trap.get('static_pass'):
+                        row['caught'] = row['caught'] and result.get('static', {}).get('status') == 'PASS'
                     if trap.get('static_kind'):
                         row['caught'] = row['caught'] and any(s['kind'] == trap['static_kind'] and not s['non_guard'] for s in result.get('static', {}).get('sites', []))
                     if trap.get('static_error_kind'):
