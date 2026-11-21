@@ -471,8 +471,18 @@ def clean_touched(root, touched):
                       + ", ".join(dirty))
 
 
+def require_clean_shared_index(root):
+    # reset --keep can discard staged bytes even outside the topic and checker paths.
+    output = git(root, "diff", "--cached", "--name-only", "--no-renames", "--no-ext-diff",
+                 "--ignore-submodules=none", "--ita-visible-in-index", "-z", "HEAD", "--").stdout
+    staged = sorted(set(output.split("\0")) - {""})
+    if staged:
+        raise Refusal("shared checkout has staged changes: " + ", ".join(staged))
+
+
 def publication_preflight(root, base, candidate, expected_inputs):
     """Re-read shared checker inputs at the guarded publication boundary."""
+    require_clean_shared_index(root)
     touched = changed_paths(root, base, candidate)
     head = revision(root, "HEAD^{commit}")
     if head not in (base, candidate):
@@ -495,6 +505,7 @@ def publication_preflight(root, base, candidate, expected_inputs):
             if any(collisions):
                 raise Refusal("candidate would overwrite ignored files: " + ", ".join(sorted(filter(None, collisions))))
     require_same_inputs(expected_inputs, guarded_input_manifest(root, candidate), "shared publication")
+    require_clean_shared_index(root)
 
 
 def is_ancestor(root, earlier, later):

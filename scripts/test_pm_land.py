@@ -4,7 +4,9 @@ from contextlib import redirect_stdout
 import importlib.util
 import io
 import json
+import os
 from pathlib import Path
+import re
 import socket
 import subprocess
 import tempfile
@@ -368,13 +370,150 @@ class LandingFixture(unittest.TestCase):
                         self.git(self.shared, "add", "--", name)
                 else:
                     self.git(self.shared, "update-index", "--" + state, "--", name)
-                with self.assertRaisesRegex(land.Refusal, f"uncommitted changes or hidden index flags.*{name}"):
+                reason = "has staged changes" if state == "staged" else "uncommitted changes or hidden index flags"
+                with self.assertRaisesRegex(land.Refusal, f"{reason}.*{name}"):
                     self.verify()
                 if state in ("unstaged", "staged"):
                     self.git(self.shared, "restore", "--source=HEAD", "--staged", "--worktree", "--", name)
                 else:
                     self.git(self.shared, "update-index", "--no-" + state, "--", name)
                 self.assertEqual(land.revision(self.shared, "HEAD"), self.base)
+
+    def test_verify_preserves_unrelated_staged_and_working_edits_from_the_review(self):
+        repo = Path(__file__).resolve().parents[1]
+        readme = "README.md"
+        rules = ".claude/CLAUDE.md"
+        readme_base = self.git(repo, "show", f"b19f171724:{readme}").stdout
+        readme_staged = self.git(repo, "show", f"83de797cb7:{readme}").stdout
+        rules_base = self.git(repo, "show", f"b19f171724:{rules}").stdout
+        rules_topic = self.git(repo, "show", f"22a1e3b754:{rules}").stdout
+        self.assertNotEqual(readme_base, readme_staged)
+        self.assertNotEqual(rules_base, rules_topic)
+
+        previous_base, previous_tip = self.base, self.head
+        target = self.put(self.shared, readme, readme_base)
+        self.put(self.shared, rules, rules_base)
+        self.git(self.shared, "add", "--", readme, rules)
+        self.git(self.shared, "commit", "-m", "review base")
+        self.base = land.revision(self.shared, "HEAD")
+        self.put(self.shared, rules, rules_topic)
+        self.git(self.shared, "commit", "-am", "topic changes only Claude rules")
+        self.head = land.revision(self.shared, "HEAD")
+        self.tree = land.revision(self.shared, "HEAD^{tree}")
+        self.git(self.origin, "fetch", str(self.shared), land.MAIN_REF)
+        self.git(self.origin, "update-ref", land.MAIN_REF, self.base, previous_base)
+        self.git(self.origin, "update-ref", self.ref, self.head, previous_tip)
+        self.git(self.shared, "fetch", "origin")
+        self.git(self.shared, "reset", "--keep", self.base)
+        self.cleanup()
+        self.remote, self.manifest = land.prepare_remote(self.folder, self.ref, self.head, self.tree, self.base)
+        self.make_record(0)
+        self.assertEqual(land.changed_paths(self.shared, self.base, self.head), {rules})
+        target.write_text(readme_staged, encoding="utf-8")
+        self.git(self.shared, "add", "--", readme)
+        target.write_text(readme_base, encoding="utf-8")
+
+        for shared_head in (self.base, self.head):
+            with self.subTest(shared_head=shared_head):
+                if shared_head == self.head:
+                    self.git(self.shared, "merge", "--ff-only", "--no-overwrite-ignore", self.head)
+                index = self.shared / ".git/index"
+                before = (index.read_bytes(), index.stat().st_mtime_ns, target.read_bytes())
+                self.assertEqual(self.git(self.shared, "status", "--porcelain").stdout, "MM README.md\n")
+                with self.assertRaisesRegex(land.Refusal, "shared checkout has staged changes: README.md"):
+                    self.verify()
+                self.assertEqual((index.read_bytes(), index.stat().st_mtime_ns, target.read_bytes()), before)
+                self.assertEqual(self.git(self.shared, "show", ":README.md").stdout, readme_staged)
+                self.assertEqual(land.revision(self.shared, "HEAD"), shared_head)
+
+    def test_verify_names_all_staged_paths_including_intent_to_add(self):
+        self.put(self.shared, "extra-a.txt", "staged")
+        self.put(self.shared, "extra-b.txt", "intent to add")
+        self.git(self.shared, "add", "--", "extra-a.txt")
+        self.git(self.shared, "add", "-N", "--", "extra-b.txt")
+        with self.assertRaisesRegex(land.Refusal, r"shared checkout has staged changes: extra-a\.txt, extra-b\.txt"):
+            self.verify()
+
+    def test_documented_followup_creates_and_checks_the_same_local_branch(self):
+        repo = Path(__file__).resolve().parents[1]
+        readme = (repo / "reports/landing-checks/README.md").read_text()
+        fence = chr(96) * 3
+        recipe = re.search(rf"^## Refreshing it after a Plans landing\n.*?^{fence}sh\n(.*?)^{fence}$",
+                           readme, re.MULTILINE | re.DOTALL)[1]
+        branch_commands = ("git fetch origin", 'PM_LAND_TOPIC_BRANCH="fix/landing-snapshot-$(date -u +%Y%m%d-%H%M%S)"',
+                           'git switch -c "$PM_LAND_TOPIC_BRANCH" origin/main',
+                           'git push origin "HEAD:refs/heads/$PM_LAND_TOPIC_BRANCH"',
+                           'long-job start "pm-${PM_LAND_TOPIC_BRANCH#fix/}" -- python3 -B "$PM_LAND_SCRIPT" check "$PM_LAND_TOPIC_BRANCH"',
+                           'long-job wait "pm-${PM_LAND_TOPIC_BRANCH#fix/}" --timeout 1500')
+        for path in (repo / "AGENTS.md", repo / ".claude/CLAUDE.md"):
+            section = path.read_text().split("### How to land on main\n")[1].split("### Never\n")[0]
+            for command in branch_commands:
+                self.assertIn(command, recipe)
+                self.assertIn(command, section)
+
+        self.put(self.shared, "Plans/owner.md", "test plan\n")
+        self.put(self.shared, "Plans/.plan_migration/current_run.json", '{"run_id":"previous"}')
+        self.put(self.shared, "scripts/pm-plan-migration.py", """import json, sys
+from pathlib import Path
+assert sys.argv[1] == "snapshot-current"
+assert sys.argv[-2:] == ["--supersedes-run-id", "previous"]
+assert "--expected-doc-count" in sys.argv
+Path("Plans/.plan_migration/current_run.json").write_text(json.dumps({"run_id": sys.argv[3]}))
+""")
+        self.put(self.shared, "scripts/pm-landing-check.py", """import json, sys
+from pathlib import Path
+assert sys.argv[1] == "--record-baseline"
+report = Path("reports/landing-checks/baseline.json")
+report.parent.mkdir(parents=True, exist_ok=True)
+report.write_text(json.dumps({"baseline": "fixture"}))
+""")
+        self.git(self.shared, "add", "--", "Plans", "scripts")
+        self.git(self.shared, "commit", "-m", "fixture at published main")
+        published = land.revision(self.shared, "HEAD")
+        self.git(self.origin, "fetch", str(self.shared), land.MAIN_REF)
+        self.git(self.origin, "update-ref", land.MAIN_REF, published, self.base)
+        self.git(self.clone, "config", "user.email", "fixture@example.invalid")
+        self.git(self.clone, "config", "user.name", "Landing fixture")
+        self.git(self.clone, "fetch", "origin")
+        scratch = self.root / "detached-followup"
+        self.git(self.clone, "worktree", "add", "--detach", str(scratch), published)
+
+        observed = self.root / "observed-check.json"
+        runner = self.put(self.root, "fixture-pm-land.py", f"""import importlib.util, json
+from pathlib import Path
+spec = importlib.util.spec_from_file_location("pm_land", {str(repo / 'scripts/pm-land.py')!r})
+land = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(land)
+
+def at_remote_boundary(branch, head):
+    Path({str(observed)!r}).write_text(json.dumps({{"branch": branch, "head": head}}))
+    raise SystemExit(0)
+
+land.new_run = at_remote_boundary
+raise SystemExit(land.main())
+""")
+        launcher = self.put(self.root, "bin/long-job", """#!/bin/sh
+set -eu
+mode=$1
+name=$2
+shift 2
+case "$mode" in
+    start) test "$1" = --; shift; printf '%s\\n' "$name" >"$TEST_JOB"; "$@" ;;
+    wait) test "$name" = "$(cat "$TEST_JOB")"; test "$*" = "--timeout 1500" ;;
+    *) exit 2 ;;
+esac
+""")
+        launcher.chmod(0o700)
+        env = {**os.environ, "PATH": f"{launcher.parent}:{os.environ['PATH']}", "PM_LAND_SCRIPT": str(runner),
+               "TEST_JOB": str(self.root / "started-job")}
+        result = subprocess.run(["bash", "-c", recipe], cwd=scratch, env=env, capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        branch = self.git(scratch, "symbolic-ref", "--short", "HEAD").stdout.strip()
+        tip = land.revision(scratch, "HEAD")
+        self.assertRegex(branch, r"^fix/landing-snapshot-\d{8}-\d{6}$")
+        self.assertEqual(land.revision(scratch, "HEAD^"), published)
+        self.assertEqual(land.revision(self.origin, f"refs/heads/{branch}"), tip)
+        self.assertEqual(land.read_json(observed), {"branch": branch, "head": tip})
 
     def test_ignored_input_membership_and_bytes_must_match_on_either_side(self):
         path = "Plans/.audits/usage-successor/governance/auto-decision-receipt.json"
