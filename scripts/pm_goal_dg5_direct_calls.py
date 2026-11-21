@@ -23,8 +23,11 @@ entry is) only when it is a direct call in the census probe's sense (outside-pro
 Any other call runs the original method unchanged and unrecorded (a nested call stays nested).
 
 The complete call needs a store to seal: the receiver's world or Storage, found as a census entry finds it, or
-(for a module function or a receiver without one) the first argument that is a TestOwnerStorage or holds one; a
-pure call with none of these runs over a fresh empty folder under PM_DG5_SCRATCH. A wrapped method whose module is
+(for a module function or a receiver without one) the first argument that is a TestOwnerStorage or holds one. A
+direct call with none of these is NOT recorded: the bridge runs every recorded call twice (a sealed child, then the
+parent), and only the found store is restored between them, so a call that writes elsewhere (for example
+ca3_route:workflow_world, which creates a store) would run its writes twice. Such calls run unchanged and are
+counted per method under ``unsealed_calls`` (no credit either way). A wrapped method whose module is
 not imported when install() runs is not wrapped (listed under ``not_loaded``); install() is idempotent and a family
 source calls it after each of its entry installs.
 """
@@ -33,10 +36,8 @@ import hashlib
 import importlib
 import inspect
 import json
-import os
 from pathlib import Path
 import sys
-import tempfile
 
 import pm_goal_dg5_boundaries as bridge
 
@@ -153,10 +154,10 @@ def _wrap(family, key, owner, name, raw):
         receiver = args[0] if bound_kind in ('method', 'class') and args else None
         rest = args[1:] if receiver is not None else args
         world, root = _world(receiver if bound_kind == 'method' else None, rest, kwargs)
-        if root is None:
-            base = Path(os.environ.get('PM_DG5_SCRATCH') or tempfile.gettempdir())
-            base.mkdir(parents=True, exist_ok=True)
-            root = Path(tempfile.mkdtemp(prefix='direct-', dir=base))   # a pure call: nothing to seal
+        if root is None:   # nothing to seal: not recorded, counted
+            unsealed = REPORTS[family].setdefault('unsealed_calls', {})
+            unsealed[key] = unsealed.get(key, 0) + 1
+            return original(*args, **kwargs)
         case = bridge.CASE[0]
         from pm_goal_dg5_declarations import target
         label = case['id'] + '/direct/' + key
