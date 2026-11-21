@@ -39,7 +39,9 @@ import pm_goal_dg5_methodb_judge as J  # noqa: E402
 ROW = 'dg5/tuple/preserved/intent/schema'
 CODE = 'tuple/preserved/intent/schema/'
 SITE = ['scripts/pm_goal_dg_r_readers.py', 100]
-AT_SITE, ELSEWHERE = dict(site=SITE), dict(site=['scripts/pm_goal_dg_r_readers.py', 200])
+AT_SITE = dict(site=SITE, frames=[SITE + ['check', False], ['scripts/pm_goal_dg_r_world.py', 176, 'validate', True]])
+ELSEWHERE = dict(site=['scripts/pm_goal_dg_r_readers.py', 200],
+                 frames=[SITE + ['check', False], ['scripts/pm_goal_dg_r_readers.py', 200, 'rebuild', False]])
 
 
 def state(store='s0', owner='o0', reason=None):

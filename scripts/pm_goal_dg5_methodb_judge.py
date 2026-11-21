@@ -124,20 +124,33 @@ def refusal_origin(error, code, source):
         if not same:
             break
         origin, depth = earlier, number
-    mine = {Path(__file__).resolve().name, Path(w3.__file__).resolve().name, 'pm_goal_dg5_boundaries.py'}
-    frames = traceback.extract_tb(origin.__traceback__)
-    site = None
-    for frame in reversed(frames):
-        name = Path(frame.filename).name
-        if name in mine or (name in BANK_FILES and frame.name in BANK_FUNCTIONS) or frame.name == '<lambda>':
-            continue
+    frames = []
+    for frame in traceback.extract_tb(origin.__traceback__):
         try:
-            site = [str(Path(frame.filename).resolve().relative_to(Path(source).resolve())), frame.lineno]
+            where = str(Path(frame.filename).resolve().relative_to(Path(source).resolve()))
         except ValueError:
-            site = [frame.filename, frame.lineno]
-        break
-    return dict(site=site, chain_depth=depth, origin_type=type(origin).__name__,
-                frames=[[Path(f.filename).name, f.lineno, f.name] for f in frames[-6:]])
+            where = frame.filename
+        frames.append([where, frame.lineno, frame.name, _helper_frame(frame)])
+    site = next(([f[0], f[1]] for f in reversed(frames) if not f[3]), None)
+    return dict(site=site, chain_depth=depth, origin_type=type(origin).__name__, frames=frames[-8:])
+
+
+def _helper_frame(frame):
+    """A frame between the owner's check and the raise: this judge, the harness, the bridge, or a bank's validate path."""
+    name = Path(frame.filename).name
+    mine = {Path(__file__).resolve().name, Path(w3.__file__).resolve().name, 'pm_goal_dg5_boundaries.py'}
+    return name in mine or (name in BANK_FILES and frame.name in BANK_FUNCTIONS) or frame.name == '<lambda>'
+
+
+def origin_at(origin, site):
+    """Addendum 11 (1) for a Method B route: the declared site is in the origin traceback, and only
+    helper frames (judge, harness, bridge, bank validate path) lie between it and the raise."""
+    for where, line, _, helper in reversed((origin or {}).get('frames') or []):
+        if [where, line] == list(site):
+            return True
+        if not helper:
+            return False
+    return False
 
 
 class IdentityMismatch(ValueError):
@@ -880,7 +893,7 @@ class ForkedExample(w3.OwnerExample):
         origin = self.origins[-3] if len(self.origins) >= 3 else None
         code_matches = (isinstance(intact_code, str) and intact_code == self.route['refusal']
                         and bridge.row(intact_code) == self.row)
-        origin_at_site = bool(origin) and origin.get('site') == list(self.route['site'])
+        origin_at_site = origin_at(origin, self.route['site'])
         own = code_matches and origin_at_site
         different = isinstance(cut_code, str) and bool(cut_code) and cut_code != intact_code
         repeats = restored == before
