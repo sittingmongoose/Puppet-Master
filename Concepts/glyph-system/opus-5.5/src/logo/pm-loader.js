@@ -70,7 +70,8 @@
   const isNier = (look) => L.family(look) === 'nier';
   function draw(el) {
     const look = L.look();
-    el.innerHTML = isNier(look) ? NIER : L.mark({ px: pxOf(el), motion: motionOf(el), mood: motionOf(el) === 'think' ? 'working' : 'idle', look, decorative: true });
+    el.innerHTML = isNier(look) ? NIER : L.mark({ px: pxOf(el), motion: motionOf(el), mood: motionOf(el) === 'think' ? 'working' : 'idle',
+      look, decorative: true, compactPixels: el.hasAttribute('data-pml-compact') });
     el.setAttribute('data-pml-look', look);
   }
   const drawn = (el) => el.getAttribute('data-pml-look') === L.look() && el.firstElementChild && el.firstElementChild.classList.contains(isNier(L.look()) ? 'pml-nier' : 'pml');
@@ -221,8 +222,10 @@
     o = o || {};
     const motion = MOTIONS.indexOf(o.motion) >= 0 ? o.motion : 'swing', px = +o.px > 0 ? +o.px : 16, look = L.look();
     const size = o.size ? ` style="--pml-size:${esc(o.size)}"` : '';
-    return `<span class="pml-ld${o.className ? ' ' + esc(o.className) : ''}" data-pip-loader="${motion}" data-pip-px="${px}" data-pml-look="${look}" aria-hidden="true"${size}>` +
-      (isNier(look) ? NIER : L.mark({ px, motion, mood: motion === 'think' ? 'working' : 'idle', look, decorative: true })) + '</span>';
+    const compact = o.compactPixels ? ' data-pml-compact' : '';
+    return `<span class="pml-ld${o.className ? ' ' + esc(o.className) : ''}" data-pip-loader="${motion}" data-pip-px="${px}" data-pml-look="${look}" aria-hidden="true"${size}${compact}>` +
+      (isNier(look) ? NIER : L.mark({ px, motion, mood: motion === 'think' ? 'working' : 'idle', look, decorative: true,
+        compactPixels: o.compactPixels })) + '</span>';
   }
   /* A host waiting: aria-busy on the host and a loader in it (first, or o.slot: 'end' or an element). The host's own
      words say what it waits for; o.status adds role="status" for a wait with no words of its own. */

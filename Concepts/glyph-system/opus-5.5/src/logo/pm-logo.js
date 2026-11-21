@@ -586,8 +586,9 @@
     [16, 24, 32].forEach((Gs) => { const k = Math.floor(px / Gs); if (k >= 1 && Gs * k >= cover) { best = Gs; cover = Gs * k; } });
     return best;
   }
-  function pixelRects(rows, colors) {
+  function pixelRects(rows, colors, compact) {
     let s = '';
+    const paths = compact ? new Map() : null;
     const Gs = rows.length;
     rows.forEach((row, y) => {
       let x = 0;
@@ -596,11 +597,13 @@
         if (ch === '.' || ch === 'e' || !colors[ch]) { x++; continue; }
         let w = 1;
         while (x + w < Gs && row[x + w] === ch) w++;
-        s += `<rect x="${x}" y="${y}" width="${w}" height="1" fill="${colors[ch]}"/>`;
+        const fill = colors[ch];
+        if (paths) paths.set(fill, (paths.get(fill) || '') + `M${x} ${y}h${w}v1h-${w}z`);
+        else s += `<rect x="${x}" y="${y}" width="${w}" height="1" fill="${fill}"/>`;
         x += w;
       }
     });
-    return s;
+    return paths ? [...paths].map(([fill, d]) => `<path d="${d}" fill="${fill}"/>`).join('') : s;
   }
 
   /* --------------------------------------------------------------- the rig */
@@ -731,6 +734,7 @@
         return { vb: 16, defs: '', crisp: true, body: pixelRects(nier16(nm === 'idle' && o.eyes === false ? 'band' : nm), col) };
       }
       const Gs = tier === 'micro' ? 16 : spriteGrid(o.px);
+      const pixels = (rows, palette) => pixelRects(rows, palette, o.compactPixels);
       if (anim) {
         // Retro's snap motion: eight flipped frames (four for think and hop); strings drawn again in every frame.
         // Frame 0 is the rest pose and the only one shown without CSS (the still pose is the base markup).
@@ -739,16 +743,16 @@
           : o.motion === 'hop' ? [{}, { dy: -Math.ceil(n / 2) }, { dy: -n - 1 }, { dy: -Math.ceil(n / 2) }]
           : [0, 1, 2, 3, 4, 5, 6, 7].map((i) => { const dx = Math.round(Math.sin(2 * Math.PI * i / 8) * n); return { dx, eyeDx: Math.sign(dx) }; });
         const fm = o.motion === 'think' ? 'dots' : mood;
-        let body = plan.map((f, i) => `<g class="${cls.fr} ${cls.fr}${i}"${i ? ' opacity="0"' : ''}>${pixelRects(spriteRows(Gs, fm, f), colors)}</g>`).join('');
+        let body = plan.map((f, i) => `<g class="${cls.fr} ${cls.fr}${i}"${i ? ' opacity="0"' : ''}>${pixels(spriteRows(Gs, fm, f), colors)}</g>`).join('');
         /* Reduced Motion's rest pose, drawn apart and shown only by the reduced rules (L3, X2): Pip and the strings
            still, the control on its own so it alone breathes, and lids in the head's colour over the eyes so Pip
            blinks. A sprite's eyes are holes, so the blink closes them rather than fading them. */
         const restF = o.motion === 'think' ? {} : plan[0], rest = spriteRows(Gs, fm, restF), lids = lidRects(Gs, fm, restF, colors.h);
-        body += `<g class="${cls.fr}-rest" opacity="0"><g>${pixelRects(rest, Object.assign({}, colors, { c: null, b: null }))}</g>` +
-          `<g class="${cls.fr}-rctl">${pixelRects(rest, { c: colors.c, b: colors.b })}</g>${lids ? `<g class="${cls.fr}-rlid" opacity="0">${lids}</g>` : ''}</g>`;
+        body += `<g class="${cls.fr}-rest" opacity="0"><g>${pixels(rest, Object.assign({}, colors, { c: null, b: null }))}</g>` +
+          `<g class="${cls.fr}-rctl">${pixels(rest, { c: colors.c, b: colors.b })}</g>${lids ? `<g class="${cls.fr}-rlid" opacity="0">${lids}</g>` : ''}</g>`;
         return { vb: Gs, defs: '', crisp: true, body, frames: plan.length };
       }
-      return { vb: Gs, defs: '', crisp: true, body: pixelRects(spriteRows(Gs, mood), colors) };
+      return { vb: Gs, defs: '', crisp: true, body: pixels(spriteRows(Gs, mood), colors) };
     }
 
     const g = GEO[tier === 'small' ? 'small' : 'full'];
