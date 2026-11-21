@@ -26,6 +26,9 @@ from uuid import UUID
 
 HERE = Path(__file__).resolve().parent
 PREFIX = 'pm_goal_dg5_methodb_pilot_phase_'
+# Addendum 8 (2): routes whose defect is applied before the owner call, through an owner edit channel, so the
+# validator observer only reads (the producer route: WholeProducer.prepare's candidate_edit).
+PRE_CALL_EDIT = frozenset({'producer_prepare'})
 
 
 def require(condition, detail):
@@ -486,9 +489,15 @@ def certified_producer_fixture(path):
         'the original producer no longer checks the payload integer and timestamp fields')
     stamp = time.time_ns()
 
-    def prepare():
+    def prepare(candidate_edit=None):
+        # Addendum 8 (2): the defect goes in through the CF1 corpus's own edit channel (WholeProducer.prepare's
+        # candidate_edit, which CF1 negatives use), before the owner's check() reaches the validation site.
+        call_kwargs = dict(kwargs)
+        if candidate_edit is not None:
+            require(call_kwargs.get('candidate_edit') is None, 'the captured producer call already edits its candidate')
+            call_kwargs['candidate_edit'] = candidate_edit
         with patch.object(time, 'time_ns', return_value=stamp):
-            return owner.prepare(*args, **kwargs)
+            return owner.prepare(*args, **call_kwargs)
 
     return owner.world, prepare
 
@@ -845,6 +854,8 @@ class OwnerCheck:
                     record['same_projected_request'] = True
                 return original(bank, *args)
             frame = sys._getframe(1)
+            if frame.f_code is observe_editing.__code__:
+                frame = frame.f_back
             site = [str(Path(frame.f_code.co_filename).relative_to(self.source)), frame.f_lineno]
             require(site == self.site, f'owner call source changed: {site}')
             if prefix_store is not None and not record['observations']:
@@ -852,15 +863,10 @@ class OwnerCheck:
                 record['realm_ref'] = list(args[:-2])
             document = args[-2]
             if edit is not None:
-                require(isinstance(document, dict), 'complete-call extra-member example needs an object')
-                member = edit['member'][1]
-                if repeated_evidence and changed:
-                    require(changed[0][0] is document and document[member] == 'gc',
-                            'the repeated F5d check received a different document')
-                else:
-                    require(member not in document, 'test document already has the extra member')
-                    changed.append((document, member))
-                    document[member] = 'gc'
+                # Addendum 8: this observer never writes. The defect is either already in the document (applied
+                # before the owner call, PRE_CALL_EDIT routes) or written by observe_editing before it calls here.
+                require(isinstance(document, dict) and document.get(edit['member'][1]) == 'gc',
+                        'the defect did not reach the owner validator')
             if projection or terminal_result or self.declare['route'] in (
                     'receipt_recheck', 'input_recheck', 'inspect_receipt_recheck'):
                 request_validation.append((bank, args[0], copy.deepcopy(document)))
@@ -897,6 +903,34 @@ class OwnerCheck:
                 return original(bank, *validator_args, args[-1])
             return document
 
+        def observe_editing(bank, *args):
+            """The guard-entry edit (routes outside PRE_CALL_EDIT): writes the extra member into the owner's
+            document, then validates through observe. It writes, so it is NOT on the export's pure-observer list:
+            a refusal through it is never own (addendum 8 (1)), and those rows read CANNOT_DECIDE."""
+            if args[-1] == self.code:
+                document = args[-2]
+                require(isinstance(document, dict), 'complete-call extra-member example needs an object')
+                member = edit['member'][1]
+                if repeated_evidence and changed:
+                    require(changed[0][0] is document and document[member] == 'gc',
+                            'the repeated F5d check received a different document')
+                else:
+                    require(member not in document, 'test document already has the extra member')
+                    changed.append((document, member))
+                    document[member] = 'gc'
+            return observe(bank, *args)
+
+        pre_call_edit = edit is not None and self.declare['route'] in PRE_CALL_EDIT
+        validator = observe if edit is None or pre_call_edit else observe_editing
+
+        def candidate_edit(event):
+            """Applied by the owner's own candidate_edit channel before its check(): a copy with the extra member."""
+            event = copy.deepcopy(event)
+            member = edit['member'][1]
+            require(member not in event['payload'], 'test payload already has the extra member')
+            event['payload'][member] = 'gc'
+            return event
+
         # Storage issues transient snapshot IDs on each read. Keep the IDs
         # distinct within an action and repeat their sequence for each trial.
         snapshots = count(1)
@@ -910,7 +944,7 @@ class OwnerCheck:
 
         try:
             with ExitStack() as changes:
-                changes.enter_context(patch.object(self.bank_class, 'validate', observe))
+                changes.enter_context(patch.object(self.bank_class, 'validate', validator))
                 if self.declare['route'] == 'producer_prepare':
                     import pm_goal_dg_cf1_world as world
 
@@ -927,7 +961,7 @@ class OwnerCheck:
                 for method in ('snapshot', 'acquire_source'):
                     current = getattr(storage.TestOwnerStorage, method)
                     changes.enter_context(patch.object(storage.TestOwnerStorage, method, preserve_ids(current)))
-                result = action()
+                result = action(candidate_edit=candidate_edit) if pre_call_edit else action()
             record['result_sha256'] = self.result_digest(result)
         except Exception as error:
             if type(error).__name__ not in bridge.REFUSAL_CLASSES:
@@ -937,7 +971,7 @@ class OwnerCheck:
             # Addendum 6: the refusal's origin frame (harness frames transparent, owner paths relative to the
             # installed owner source), as bridge.invoke records it.
             import pm_goal_dg5_methodb_export as export
-            record['refusal_origin'] = export.origin(error, record['refusal'], self.source)
+            record['refusal_origin'] = export.origin(error, record['refusal'], self.source, sites=[tuple(self.site)])
         finally:
             for document, member in changed:
                 document.pop(member)
