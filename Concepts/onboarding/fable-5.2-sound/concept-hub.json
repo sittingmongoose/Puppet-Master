@@ -13,16 +13,49 @@
     "previewWidth": 1440
   },
   "workspace": {
-    "title": "Pip's sound · listening room",
-    "path": "index.html",
-    "openPath": "index.html",
+    "title": "Pip's sound, round two · listening room",
+    "path": "round2/index.html",
+    "openPath": "round2/index.html",
     "controlMode": "standard",
     "openActions": "both"
   },
   "entries": [
     {
+      "id": "sound-round-2-onboarding",
+      "title": "Round two · the onboarding window, with the sound menu",
+      "path": "round2/onboarding.html",
+      "openPath": "round2/onboarding.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "onboarding",
+        "pip",
+        "sound",
+        "music",
+        "voice",
+        "stage",
+        "sound-menu"
+      ],
+      "order": 5
+    },
+    {
+      "id": "sound-round-1-room",
+      "title": "Round one · listening room (three concepts)",
+      "path": "index.html",
+      "openPath": "index.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "onboarding",
+        "pip",
+        "sound",
+        "music"
+      ],
+      "order": 8
+    },
+    {
       "id": "sound-1-encore",
-      "title": "Sound 1 · Encore",
+      "title": "Round one · Sound 1 · Encore",
       "path": "concept-1.html",
       "openPath": "concept-1.html",
       "openActions": "both",
@@ -39,7 +72,7 @@
     },
     {
       "id": "sound-2-house-band",
-      "title": "Sound 2 · House Band",
+      "title": "Round one · Sound 2 · House Band",
       "path": "concept-2.html",
       "openPath": "concept-2.html",
       "openActions": "both",
@@ -56,7 +89,7 @@
     },
     {
       "id": "sound-3-marionette-theatre",
-      "title": "Sound 3 · Marionette Theatre",
+      "title": "Round one · Sound 3 · Marionette Theatre",
       "path": "concept-3.html",
       "openPath": "concept-3.html",
       "openActions": "both",
