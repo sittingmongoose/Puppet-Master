@@ -35,7 +35,8 @@ What a hook excludes, and why (the only exclusions)
   owner effect): `CLOCK_ATTRIBUTES` below, the clock field of each clock object
   and nothing else of that object.
 * Harness-only state: `HARNESS_ATTRIBUTES` (the test method recorder's call
-  log, which only test oracles read), harness modules (the DG5 bridge, the
+  log, which only test oracles read), `HARNESS_GLOBALS` (guard-coverage
+  registries that only oracle reports read), harness modules (the DG5 bridge, the
   collector, the gated tables, test suites and oracles; `HARNESS_MODULE_PATTERNS`).
 * Values that cannot hold owner state, digested by name only, never skipped
   silently: modules, classes (their attributes are walked under 3. when an
@@ -90,6 +91,14 @@ HARNESS_ATTRIBUTES = {
     ('pm_goal_test_owner_adapters', 'MethodRecorder'): {
         'calls': 'test recorder call log, read only by test oracles (assert_order/sequence)',
         '_stack': 'test recorder open-call stack (empty between calls)'},
+}
+
+# (module, global) -> reason: owner-module globals that are harness-only state.
+HARNESS_GLOBALS = {
+    ('pm_goal_dg_r_world', 'GUARDS'): 'guard-coverage registry: guard() records each code it reaches; read only by '
+                                      'the DG-R oracle report (pm_goal_dg_r_oracles: sorted(W.GUARDS))',
+    ('pm_goal_dg_u_owners', 'HITS'): 'guard-coverage registry (code -> caller lines); read only by DG-U oracle '
+                                     'reports (no goal.updated hook yet; listed for when one is added)',
 }
 
 _OPAQUE_TYPES = (types.FrameType, types.TracebackType, types.GeneratorType, types.CoroutineType,
@@ -380,6 +389,9 @@ class Hook:
         for name, module in owner_modules():
             for key, item in sorted(vars(module).items()):
                 if key.startswith('__') or isinstance(item, types.ModuleType):
+                    continue
+                if (name, key) in HARNESS_GLOBALS:
+                    roots.append(('excluded-global:' + name + '.' + key, 'harness-only'))
                     continue
                 if isinstance(item, type):
                     if item.__module__ != name:
