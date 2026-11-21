@@ -34,6 +34,24 @@ async function tab(t, f, ws, name) {
 	if (await b.count()) { await b.click(); await t.settle(); await t.page.waitForTimeout(300); }
 }
 
+export function retentionViewport(doc = document) {
+	const row = doc.getElementById('setting-code.terminal.transcript-retention');
+	const scroller = row?.closest('#settings-document');
+	if (!scroller) return { inside: false, reason: 'row or Settings scroller missing' };
+	const viewport = scroller.getBoundingClientRect();
+	const left = viewport.left + scroller.clientLeft;
+	const top = viewport.top + scroller.clientTop;
+	const clip = {
+		left: Math.max(0, left), top: Math.max(0, top),
+		right: Math.min(doc.documentElement.clientWidth, left + scroller.clientWidth),
+		bottom: Math.min(doc.documentElement.clientHeight, top + scroller.clientHeight),
+	};
+	const { left: x, right, top: y, bottom, width, height } = row.getBoundingClientRect();
+	const inside = width > 0 && height > 0 &&
+		x >= clip.left - 1 && y >= clip.top - 1 && right <= clip.right + 1 && bottom <= clip.bottom + 1;
+	return { inside, clip, row: { left: x, right, top: y, bottom }, scrollTop: scroller.scrollTop };
+}
+
 export const tests = {};
 for (const surface of ['normal', 'sandbox']) {
 	const skip = async (t) => { if (t.app.surfaces().includes(surface)) return false; await t.check(`${surface} surface not asked for`, true); return true; };
@@ -43,8 +61,25 @@ for (const surface of ['normal', 'sandbox']) {
 		const f = await settings(t, surface);
 		await go(t, f, 'code', 'editor-runtime');
 		// Editor & Terminal can mount with the Terminal output rows still pending.
-		await f.locator('#pm-settings-root .index-link[data-action="scroll-section"][data-section="editor-terminal-output"]').click();
-		await f.locator('[id="setting-code.terminal.transcript-retention"]').waitFor({ state: 'visible', timeout: 15000 });
+		const scroll = await f.locator('#settings-document').evaluateHandle((scroller) => {
+			const state = { scroller, startedAt: scroller.scrollTop, ended: false, abort: new AbortController() };
+			scroller.addEventListener('scrollend', () => { state.ended = true; }, { signal: state.abort.signal });
+			return state;
+		});
+		try {
+			await f.locator('#pm-settings-root .index-link[data-action="scroll-section"][data-section="editor-terminal-output"]').click();
+			await f.locator('[id="setting-code.terminal.transcript-retention"]').waitFor({ state: 'visible', timeout: 15000 });
+			const ended = await f.waitForFunction((state) => state.ended, scroll, { timeout: 8000 }).then(() => true, (error) => {
+				if (error.name !== 'TimeoutError') throw error;
+				return false;
+			});
+			const view = await f.evaluate(retentionViewport);
+			const stayed = await scroll.evaluate((state) => state.scroller.scrollTop === state.startedAt);
+			await t.check('terminal retention row is inside the settled Settings viewport', (ended || stayed) && view.inside, JSON.stringify({ ended, stayed, ...view }));
+		} finally {
+			await scroll.evaluate((state) => state.abort.abort());
+			await scroll.dispose();
+		}
 		const keep = await f.evaluate(() => {
 			const row = document.getElementById('setting-code.terminal.transcript-retention'); if (!row) return null;
 			const sel = row.querySelector('select');
