@@ -11,6 +11,10 @@ Every row a family's complete calls evaluate is classified by its best evidence 
   PRESENCE_CANDIDATE CUT_EXCEPTION with the raising frame recorded; closes only by a presence
                     justification bound to the exact source bytes
   COVERED_LATER     a later refusal, no accepting chain: needs a new single-defect negative or a proof
+  CUT_LEFT_EFFECT   a later refusal whose cut trial left a store or owner state the intact trial did not:
+                    the later check does not cover the row; needs a kill (no credit)
+  CANNOT_DECIDE     a later refusal whose after-state could not be compared (no owner-state hook, a
+                    missing digest, or an intact trial that does not repeat itself): no credit
   NEEDS_NEGATIVE    no declared negative targets the site: needs a new authored negative
   SCHEMA_ROOT       a whole-root schema row: closes by clause closure (GC) plus its gated row
 
@@ -28,7 +32,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 RANK = {'KILLED': 0, 'DUP_KILLED': 1, 'PRESENCE_CANDIDATE': 3, 'DUP_CANDIDATE': 2, 'COVERED_LATER': 4,
-        'NEEDS_NEGATIVE': 6}
+        'CUT_LEFT_EFFECT': 5, 'CANNOT_DECIDE': 5, 'NEEDS_NEGATIVE': 6}
 
 
 def source_line(path, line):
@@ -67,6 +71,8 @@ def main():
                 cls = 'DUP_KILLED'
             elif kill == 'COVERED_LATER':
                 cls = 'DUP_CANDIDATE' if (record.get('dg5_chain') or {}).get('result') == 'accepts' else 'COVERED_LATER'
+            elif kill in ('CUT_LEFT_EFFECT', 'CANNOT_DECIDE'):
+                cls = kill
             elif kill == 'CUT_EXCEPTION':
                 cls = 'PRESENCE_CANDIDATE'
             else:
