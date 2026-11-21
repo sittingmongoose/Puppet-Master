@@ -31,18 +31,15 @@
      Studio's resets); a new run of setup keeps them. A record from before it (the Projects only in the onboarding
      record's finished / commit) is still read below. */
   const MADE = 'pm7:shell:setup-projects:v1';
-  /* (FO-230: a page with no storage — T3's sandboxed preview, an opaque origin — keeps the record in memory for the
-     visit, as O55.store keeps its own (20-store.js): a Project made during the visit is still setup's, and forgetSetup
-     must see it. madeLive mirrors every write; madeGet reads the stored record and the visit's own as one list) */
-  let madeLive = [];
+  /* FO-230: O55.store uses shared storage when available and keeps the record in visit memory on opaque previews. */
   const madeGet = () => {
-    let stored = [];
-    try { const v = JSON.parse(window.localStorage.getItem(MADE) || '[]'); stored = Array.isArray(v) ? v.filter((p) => p && typeof p.id === 'string' && p.id) : []; } catch (_) { /* no storage */ }
-    const out = stored.slice();
-    madeLive.forEach((p) => { if (!out.some((q) => q.id === p.id)) out.push(p); });
-    return out;
+    const list = O55.store.get(MADE, []);
+    return Array.isArray(list) ? list.filter((p) => p && typeof p.id === 'string' && p.id) : [];
   };
-  const madeSet = (list) => { madeLive = list.slice(); try { if (list.length) window.localStorage.setItem(MADE, JSON.stringify(list)); else window.localStorage.removeItem(MADE); } catch (_) { /* no storage */ } };
+  const madeSet = (list) => {
+    if (list.length) O55.store.set(MADE, list);
+    else O55.store.clear(MADE);
+  };
   function madeKeep(id, name, info) {
     const list = madeGet(), was = list.find((p) => p.id === id);
     const next = { id, name: name || (was && was.name) || id, info: (info && (info.path || info.branch)) ? info : ((was && was.info) || info || null) };

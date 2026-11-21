@@ -3,8 +3,8 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 export const pagePath = (t) => path.resolve(t.args.page || fileURLToPath(new URL('../../../PMConcept7.html', import.meta.url)));
-export function onboardingApp(t) {
-  const sandbox = t.app.sandboxed(true);
+export function onboardingApp(t, { sandboxDefault = true } = {}) {
+  const sandbox = t.app.sandboxed(sandboxDefault);
   let f = null;
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const LAYER = '.o55-layer:not(.o55-out)';
