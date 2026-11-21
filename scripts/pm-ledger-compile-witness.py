@@ -25,6 +25,7 @@ Exit 0 for pass or explicit --allow-empty, 2 for findings/vacuity, 1 for input/r
 from __future__ import annotations
 
 import argparse
+from itertools import groupby
 import json
 import re
 import subprocess
@@ -151,32 +152,79 @@ def _item_content_column(item, line: str) -> int:
     return len(item.group(1)) + len(item.group(2)) + gap
 
 
+def _item_continues(lines: list[str], marker: int, stop: int, column: int) -> bool:
+    """Check that outdented lines between an item marker and a candidate continuation are lazy paragraph lines."""
+    paragraph = False
+    fence = html_end = None
+    html_to_blank = False
+    for index in range(marker, stop):
+        raw = lines[index].expandtabs(4)
+        if not raw.strip():
+            paragraph = html_to_blank = False
+            continue
+        if index != marker and _indent(raw) < column:
+            # A setext underline cannot be lazy. Outdented equals signs are paragraph
+            # text, and outdented dashes are already covered by the thematic break rule.
+            if not paragraph or _block_start(raw):
+                return False
+            continue
+        line = raw[column:]
+        while QUOTE_MARK.match(line):
+            line = QUOTE_MARK.sub("", line, count=1)
+        if fence is not None:
+            if fence.fullmatch(line):
+                fence = None
+            continue
+        if html_end is not None:
+            if html_end.search(line):
+                html_end = None
+            continue
+        if html_to_blank:
+            continue
+        if _indent(line) >= 4:
+            continue
+        opening = FENCE_OPEN.match(line)
+        if opening and not (opening[2][0] == "`" and "`" in opening[3]):
+            fence = re.compile(r" {0,3}" + re.escape(opening[2][0]) + "{" + str(len(opening[2])) + r",}[ \t]*")
+            paragraph = False
+            continue
+        ended = next((done for begin, done in HTML_ENDED if begin.match(line)), None)
+        if ended is not None:
+            html_end = None if ended.search(line) else ended
+            paragraph = False
+            continue
+        if HTML_BLANK_ENDED.match(line) or (not paragraph and HTML_TAG_LINE.match(line)):
+            paragraph, html_to_blank = False, True
+            continue
+        paragraph = bool(line.strip() and not any_head(line) and not THEMATIC.match(line)
+                         and not (paragraph and SETEXT_UNDER.match(line)))
+    return True
+
+
 def list_item_column(lines: list[str], i: int):
-    """The content column of the list item line i continues, or None (T49). Walks back over blank lines and lines
-    indented past column 0 to the nearest list-item marker line; line i continues that item only when it is indented
-    to at least the item's content column. T62 (REVIEW-etools-tb3-opus findings 3 and 4): any line between the item
-    and line i that comes right after a blank line and sits left of the item's content column has ended the item
-    (CommonMark: ' b' after a blank line under '- a' is a new paragraph, so a fence after it is top-level); a column-0
-    line right after a non-blank line that opens no block of its own is a lazy continuation of the item's paragraph
-    and does not end the walk; any other non-marker line at column 0 ends it. Tabs count to 4-column stops."""
+    """Return the content column of the list item continued by line i, if any.
+
+    A nonblank line before the candidate can be outdented only while it continues
+    an open paragraph. Tabs count to four-column stops.
+    """
     ind = _indent(lines[i])
     if ind == 0:
         return None
     for j in range(i - 1, -1, -1):
-        line = lines[j]
+        line = lines[j].expandtabs(4)
         if not line.strip():
             continue
-        item = LIST_ITEM.match(line.expandtabs(4))
-        if item:
-            column = _item_content_column(item, line.expandtabs(4))
+        item = LIST_ITEM.match(line)
+        if item and not THEMATIC.match(line):
+            column = _item_content_column(item, line)
             if column > ind:
                 return None
-            if any(lines[k].strip() and not lines[k - 1].strip() and _indent(lines[k]) < column for k in range(j + 1, i + 1)):
-                return None
+            # Replay the item's blocks only if a line could have ended the item.
+            if any(line.strip() and _indent(line) < column for line in lines[j + 1:i]):
+                if not _item_continues(lines, j, i, column):
+                    return None
             return column
-        if _indent(line) == 0:
-            if j > 0 and lines[j - 1].strip() and not _block_start(line):
-                continue
+        if _indent(line) == 0 and _block_start(line):
             return None
     return None
 
@@ -195,7 +243,7 @@ def blocks_in(lines: list[str]) -> dict:
     html: (start, end), both lines included. An HTML block starts outside any fence (kind 7 not inside a paragraph)
     and runs to its end condition: kinds 1-5 the line holding the end marker, kinds 6 and 7 the line before the next
     blank line. It holds no fence and no heading."""
-    fences, html, outdented = [], [], []
+    fences, html, outdented, indented_code = [], [], [], set()
     lines = [line.expandtabs(4) for line in lines]   # (T62: tabs to 4-column stops, as CommonMark counts them)
     i, paragraph = 0, False
     while i < len(lines):
@@ -244,12 +292,14 @@ def blocks_in(lines: list[str]) -> dict:
             html.append((i, k))
             i, paragraph = k + 1, False
             continue
+        if line.strip() and not paragraph and _indent(line) >= 4:
+            indented_code.add(i)
         # (T62, finding 3: only paragraph text keeps a paragraph open for kind 7's rule: a thematic break, an indented
         # code line outside a paragraph, a heading and a setext underline leave it closed)
         paragraph = bool(line.strip()) and not any_head(line) and not SETEXT_UNDER.match(line) and not THEMATIC.match(line) and (
             paragraph or _indent(line) < 4)
         i += 1
-    return {"fences": fences, "html": html, "outdented_closers": outdented}
+    return {"fences": fences, "html": html, "outdented_closers": outdented, "indented_code": indented_code}
 
 
 def fences_in(lines: list[str]) -> list[tuple[int, int]]:
@@ -421,6 +471,34 @@ def units_in(text: str) -> dict[str, dict]:
     return out
 
 
+FLOW_REGISTRY = re.compile(r"^[ \t]*preserved_exact_tokens:[ \t\r\n]*\[", re.M)
+FLOW_TOKEN = re.compile(
+    r'''[ \t\r\n]*("(?:[^"\\\r\n]|\\.)*"|'(?:[^'\r\n]|'')*'|[^'"\[\],\s][^\[\],\r\n]*?)[ \t\r\n]*(?=[,\]])'''
+)
+FLOW_CLOSE = re.compile(r"[ \t\r\n]*\][ \t]*$", re.M)
+
+
+def _flow_tokens(block: str, pos: int) -> list[str]:
+    tokens = []
+    while not FLOW_CLOSE.match(block, pos):
+        match = FLOW_TOKEN.match(block, pos)
+        if not match:
+            raise ValueError("unsupported preserved_exact_tokens flow list")
+        token = match[1]
+        if token.startswith('"'):
+            try:
+                token = json.loads(token)
+            except json.JSONDecodeError as exc:
+                raise ValueError("unsupported preserved_exact_tokens flow list escape") from exc
+        elif token.startswith("'"):
+            token = token[1:-1].replace("''", "'")
+        tokens.append(token)
+        pos = match.end()
+        if block[pos] == ",":
+            pos += 1
+    return tokens
+
+
 def registry(block: str) -> list[str]:
     """preserved_exact_tokens as inline flow lists or block lists: every occurrence in the unit, in order.
 
@@ -428,20 +506,63 @@ def registry(block: str) -> list[str]:
     is checked as well instead of hiding behind the first.
     """
     found = []
-    for m in re.finditer(r"^\s*preserved_exact_tokens:\s*\[(.*?)\]\s*$", block, flags=re.S | re.M):
-        parts = re.split(r",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", m.group(1))
-        found.extend(p.strip().strip('"').strip("'") for p in parts if p.strip())
-    for m in re.finditer(r"^\s*preserved_exact_tokens:\s*\n((?:\s+-\s.*\n?)+)", block, flags=re.M):
-        found.extend(re.sub(r"^\s*-\s*", "", l).strip().strip('"').strip("'") for l in m.group(1).splitlines() if l.strip())
+    for match in FLOW_REGISTRY.finditer(block):
+        found.extend(_flow_tokens(block, match.end()))
+    # YAML allows a sequence at the key's own indentation as well as deeper.
+    for match in re.finditer(r"^([ \t]*)preserved_exact_tokens:[ \t]*\r?\n"
+                             r"((?:(?:[ \t]*\r?\n)*\1[ \t]*-[ \t]+[^\r\n]+(?:\r?\n|$))+)", block, re.M):
+        found.extend(re.sub(r"^[ \t]*-[ \t]+", "", line).strip().strip('"').strip("'")
+                     for line in match[2].splitlines() if line.strip())
     return list(dict.fromkeys(found))
 
 
+INLINE_MARKER = re.compile(r"\\[\\<`]|`+|<!--")
+
+
+def _strip_inline_comments(text: str) -> str:
+    """Remove closed inline HTML comments while preserving escapes and matched code spans."""
+    if "<!--" not in text:
+        return text
+    parts, cursor, kept = [], 0, 0
+    while (match := INLINE_MARKER.search(text, cursor)) is not None:
+        marker = match[0]
+        cursor = match.end()
+        if marker.startswith("`"):
+            end = re.search(r"(?<!`)" + marker + r"(?!`)", text[cursor:])
+            if end is not None:
+                cursor += end.end()
+        elif marker == "<!--":
+            end = text.find("-->", cursor)
+            if end != -1:
+                parts.append(text[kept:match.start()])
+                cursor = kept = end + 3
+    return "".join(parts) + text[kept:]
+
+
 def prose(block: str) -> str:
-    """Exclude the entire inline/block token registry from token evidence, and (T62, REVIEW-etools-tb3-opus finding 6)
-    the lines of every HTML block or comment: CommonMark renders nothing of them, so a token only there is no prose."""
+    """Exclude token registries, HTML blocks and inline HTML comments from token evidence.
+
+    Markdown code examples, including literal comment syntax, count as evidence.
+    """
     raw = block.splitlines(keepends=True)
-    html = html_lines_in([line.rstrip("\r\n") for line in raw])
-    lines = [line for k, line in enumerate(raw) if k not in html]
+    blocks = blocks_in([line.rstrip("\r\n") for line in raw])
+    html = {i for start, end in blocks["html"] for i in range(start, end + 1)}
+    code = blocks["indented_code"] | {i for start, stop, close in blocks["fences"]
+                                      for i in range(start, close + 1 if close is not None else stop)}
+
+    def context(i):
+        if i in html:
+            return "html"
+        if i in code or not raw[i].strip():
+            return "literal"
+        return "inline"
+
+    lines = []
+    for kind, indexes in groupby(range(len(raw)), key=context):
+        if kind != "html":
+            text = "".join(raw[i] for i in indexes)
+            lines.extend(text.splitlines(keepends=True) if kind == "literal"
+                         else _strip_inline_comments(text).splitlines(keepends=True))
     out, index = [], 0
     while index < len(lines):
         match = re.match(r"^[ \t]*preserved_exact_tokens:[ \t]*(.*)$", lines[index].rstrip("\r\n"))
