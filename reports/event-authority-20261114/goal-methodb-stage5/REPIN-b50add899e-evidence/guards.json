@@ -1,0 +1,1682 @@
+{
+ "certified-append-guard": {
+  "verdict": "stays on 76e7a4f279 (fails the conditions); certified-guard-result.json is restored to 76e7a4f279 too, so it stays loadable",
+  "differs": [
+   "scripts/pm_goal_dg5_closure.py",
+   "scripts/pm_goal_dg5_collector_selftest.py"
+  ],
+  "recorded_files": [
+   {
+    "path": "scripts/pm_goal_dg5_adapter.py",
+    "orphan_recorded": "c63b8251d3942711506655f6b093cc67e43cb3390f79ceebba4558e3edb1f3ba",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "c63b8251d3942711506655f6b093cc67e43cb3390f79ceebba4558e3edb1f3ba",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_ca.py",
+    "orphan_recorded": "e8cfb80487e297bf2f50c1dcb55444fdebbd29bd4b46db3d9898ddc690818628",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "e8cfb80487e297bf2f50c1dcb55444fdebbd29bd4b46db3d9898ddc690818628",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_cf.py",
+    "orphan_recorded": "52b06e408393994d5c833c8ca864525ee58d26c9886662a05981e06177974501",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "52b06e408393994d5c833c8ca864525ee58d26c9886662a05981e06177974501",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_closure.py",
+    "orphan_recorded": "29dccc549a2fa3b10b1898502af9cab240bb5f43d77e750c2353f7b2b49c5afa",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "f19f588efa3728a3326733c854c6be3ac549b1fd0d40953563e8e0200e7c45a9",
+    "equal": false
+   },
+   {
+    "path": "scripts/pm_goal_dg5_closure_selftest.py",
+    "orphan_recorded": "d7afa78ee93a527937bbcb5c8459c115db54e1b9fad6d99f639ac181c8be9ed2",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "d7afa78ee93a527937bbcb5c8459c115db54e1b9fad6d99f639ac181c8be9ed2",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_collector_selftest.py",
+    "orphan_recorded": "5a36c9d13a2559cab168f851ea05f6c8996055608cfbbc04378bc8c8433229be",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "9c31ba23d6dddee3de601715b6f25330ddce10acb8d62872202c670b049efc9a",
+    "equal": false
+   },
+   {
+    "path": "scripts/pm_goal_dg5_declarations.py",
+    "orphan_recorded": "b1a761354c7465174bf903aceb3c1860c1904587c70c46a6d815b92c5dd973f6",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "b1a761354c7465174bf903aceb3c1860c1904587c70c46a6d815b92c5dd973f6",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_declarations_ca.py",
+    "orphan_recorded": "d83c04972379b3e12a13de27f3c00128bb812c93b68a9b88f63475690dc2ce07",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "d83c04972379b3e12a13de27f3c00128bb812c93b68a9b88f63475690dc2ce07",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_declarations_s.py",
+    "orphan_recorded": "c7c256536489650046d03d1ef884985f5950876563ad142548e8462b7bd46cdb",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "c7c256536489650046d03d1ef884985f5950876563ad142548e8462b7bd46cdb",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_duplicates.py",
+    "orphan_recorded": "6d2837f117a22d9ac4b9db4f5d3ecaa462844d4e497d97b963503653f7b15c6a",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "6d2837f117a22d9ac4b9db4f5d3ecaa462844d4e497d97b963503653f7b15c6a",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_entries.py",
+    "orphan_recorded": "69a7ee77abd02a93256afc6369b9bc1dfe41968e3379ca0aff402608ba5decca",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "69a7ee77abd02a93256afc6369b9bc1dfe41968e3379ca0aff402608ba5decca",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_format_probe.py",
+    "orphan_recorded": "cc86451b05a331640b8477443a2a29b873ec184fd7f9b65a40a0d4a59cb10169",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "cc86451b05a331640b8477443a2a29b873ec184fd7f9b65a40a0d4a59cb10169",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_justified.py",
+    "orphan_recorded": "0fa4da4a878bf67cf513f0ae223347d9a7cda55ccce3f79fd19d345f2f7f10df",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "0fa4da4a878bf67cf513f0ae223347d9a7cda55ccce3f79fd19d345f2f7f10df",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_matrix_selftest.py",
+    "orphan_recorded": "e9d92e49d05f131f047301536beb833f3f633d1cfc925af74ab00f6306e57c4b",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "e9d92e49d05f131f047301536beb833f3f633d1cfc925af74ab00f6306e57c4b",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_number_probe.py",
+    "orphan_recorded": "ac65fc9874b9fc3a367abe5cb76d36096d271d3bb09fe835d80504d7c1e74330",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "ac65fc9874b9fc3a367abe5cb76d36096d271d3bb09fe835d80504d7c1e74330",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_pattern_probe.py",
+    "orphan_recorded": "0c5e09de4798020f09afb6ebe92c29815bad9086d758ca54ddba62929ca939e7",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "0c5e09de4798020f09afb6ebe92c29815bad9086d758ca54ddba62929ca939e7",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_ca.py",
+    "orphan_recorded": "07987dddbe3c7c7411d56336f754e9886bcbc826401f5e163d219318163634d6",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "07987dddbe3c7c7411d56336f754e9886bcbc826401f5e163d219318163634d6",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_s.py",
+    "orphan_recorded": "e659f934b6523a76377cb0ee310adc3a3bc9fe6600323000a3f616c71425431f",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "e659f934b6523a76377cb0ee310adc3a3bc9fe6600323000a3f616c71425431f",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_shared.py",
+    "orphan_recorded": "23f9eea81f2dad931983549d395e5242f191a47ed2fe83d3a41096cfb308606c",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "23f9eea81f2dad931983549d395e5242f191a47ed2fe83d3a41096cfb308606c",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_u.py",
+    "orphan_recorded": "f6fffb492d586822a2453b351856e41573b0b918c4adb47af3a206f16eec9c07",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "f6fffb492d586822a2453b351856e41573b0b918c4adb47af3a206f16eec9c07",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_r.py",
+    "orphan_recorded": "270297571162cb93cbd5c6ca1c1443da676f88c42e43fc3d9ab7b90ab38dd047",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "270297571162cb93cbd5c6ca1c1443da676f88c42e43fc3d9ab7b90ab38dd047",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_reverify.py",
+    "orphan_recorded": "9816146bb5d7240f3f5fe5a8a4ec354aed6ae6ed3a85ec6c449c6413223f120d",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "9816146bb5d7240f3f5fe5a8a4ec354aed6ae6ed3a85ec6c449c6413223f120d",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_s.py",
+    "orphan_recorded": "d716d6493f7540d392667b1239e1025ab9af85b48ff924a41f94f4b1e7e38e10",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "d716d6493f7540d392667b1239e1025ab9af85b48ff924a41f94f4b1e7e38e10",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_s5b_map.py",
+    "orphan_recorded": "859b58c2d92eb8f051d91837370290564c7181e1dcfb11542fec4bd97b64d40c",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "859b58c2d92eb8f051d91837370290564c7181e1dcfb11542fec4bd97b64d40c",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_supplement_ca.py",
+    "orphan_recorded": "d022f4a13dfdc69456d9f3c23450072b42a165350452a2f075252628ad0cdeec",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "d022f4a13dfdc69456d9f3c23450072b42a165350452a2f075252628ad0cdeec",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_supplement_s.py",
+    "orphan_recorded": "12749111921bd36f4ca9d73178cc8726088a6e98930ba2203fa14798f9d9ee9f",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "12749111921bd36f4ca9d73178cc8726088a6e98930ba2203fa14798f9d9ee9f",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_supplement_u.py",
+    "orphan_recorded": "27152a7894b3688f571e01531d62553ee942453bf207cb601e198170216bdfec",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "27152a7894b3688f571e01531d62553ee942453bf207cb601e198170216bdfec",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_u.py",
+    "orphan_recorded": "7f2bfd5889fea5a6ed09e8aed932ae7032fae000792c1dc6d8426875ff250e9c",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "7f2bfd5889fea5a6ed09e8aed932ae7032fae000792c1dc6d8426875ff250e9c",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg_cf2_world.py",
+    "orphan_recorded": "07b89aec9771c2f52c125e1a867a8c4ad340b46674ece4e8ad01112a653765e8",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "07b89aec9771c2f52c125e1a867a8c4ad340b46674ece4e8ad01112a653765e8",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_go_schema_closure.py",
+    "orphan_recorded": "c6a2dcf8280126ded138308640fe071e544d288d245c41856e5513b00b923344",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "c6a2dcf8280126ded138308640fe071e544d288d245c41856e5513b00b923344",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_guard_tables.py",
+    "orphan_recorded": "4cec911eed72b607d97c3f4692debf4a912466fa0b767a86454230b88c513c79",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "4cec911eed72b607d97c3f4692debf4a912466fa0b767a86454230b88c513c79",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_oracle_common.py",
+    "orphan_recorded": "cd08c2c5666643e576a319ca3b1cbd677761039f63d3146ef09f36ed055c7bd5",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "cd08c2c5666643e576a319ca3b1cbd677761039f63d3146ef09f36ed055c7bd5",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_guard_isolation.py",
+    "orphan_recorded": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-guard/proof/source-bindings.json",
+    "b50": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+    "equal": true
+   }
+  ]
+ },
+ "certified-arm-guard": {
+  "verdict": "stays on 76e7a4f279 (fails the conditions); certified-guard-result.json is restored to 76e7a4f279 too, so it stays loadable",
+  "differs": [
+   "scripts/pm_goal_dg5_closure.py",
+   "scripts/pm_goal_dg5_collector_selftest.py"
+  ],
+  "recorded_files": [
+   {
+    "path": "scripts/pm_goal_dg5_adapter.py",
+    "orphan_recorded": "c63b8251d3942711506655f6b093cc67e43cb3390f79ceebba4558e3edb1f3ba",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "c63b8251d3942711506655f6b093cc67e43cb3390f79ceebba4558e3edb1f3ba",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_ca.py",
+    "orphan_recorded": "e8cfb80487e297bf2f50c1dcb55444fdebbd29bd4b46db3d9898ddc690818628",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "e8cfb80487e297bf2f50c1dcb55444fdebbd29bd4b46db3d9898ddc690818628",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_cf.py",
+    "orphan_recorded": "52b06e408393994d5c833c8ca864525ee58d26c9886662a05981e06177974501",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "52b06e408393994d5c833c8ca864525ee58d26c9886662a05981e06177974501",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_closure.py",
+    "orphan_recorded": "29dccc549a2fa3b10b1898502af9cab240bb5f43d77e750c2353f7b2b49c5afa",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "f19f588efa3728a3326733c854c6be3ac549b1fd0d40953563e8e0200e7c45a9",
+    "equal": false
+   },
+   {
+    "path": "scripts/pm_goal_dg5_closure_selftest.py",
+    "orphan_recorded": "d7afa78ee93a527937bbcb5c8459c115db54e1b9fad6d99f639ac181c8be9ed2",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "d7afa78ee93a527937bbcb5c8459c115db54e1b9fad6d99f639ac181c8be9ed2",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_collector_selftest.py",
+    "orphan_recorded": "5a36c9d13a2559cab168f851ea05f6c8996055608cfbbc04378bc8c8433229be",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "9c31ba23d6dddee3de601715b6f25330ddce10acb8d62872202c670b049efc9a",
+    "equal": false
+   },
+   {
+    "path": "scripts/pm_goal_dg5_declarations.py",
+    "orphan_recorded": "b1a761354c7465174bf903aceb3c1860c1904587c70c46a6d815b92c5dd973f6",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "b1a761354c7465174bf903aceb3c1860c1904587c70c46a6d815b92c5dd973f6",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_declarations_ca.py",
+    "orphan_recorded": "d83c04972379b3e12a13de27f3c00128bb812c93b68a9b88f63475690dc2ce07",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "d83c04972379b3e12a13de27f3c00128bb812c93b68a9b88f63475690dc2ce07",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_declarations_s.py",
+    "orphan_recorded": "c7c256536489650046d03d1ef884985f5950876563ad142548e8462b7bd46cdb",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "c7c256536489650046d03d1ef884985f5950876563ad142548e8462b7bd46cdb",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_duplicates.py",
+    "orphan_recorded": "6d2837f117a22d9ac4b9db4f5d3ecaa462844d4e497d97b963503653f7b15c6a",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "6d2837f117a22d9ac4b9db4f5d3ecaa462844d4e497d97b963503653f7b15c6a",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_entries.py",
+    "orphan_recorded": "69a7ee77abd02a93256afc6369b9bc1dfe41968e3379ca0aff402608ba5decca",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "69a7ee77abd02a93256afc6369b9bc1dfe41968e3379ca0aff402608ba5decca",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_format_probe.py",
+    "orphan_recorded": "cc86451b05a331640b8477443a2a29b873ec184fd7f9b65a40a0d4a59cb10169",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "cc86451b05a331640b8477443a2a29b873ec184fd7f9b65a40a0d4a59cb10169",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_justified.py",
+    "orphan_recorded": "0fa4da4a878bf67cf513f0ae223347d9a7cda55ccce3f79fd19d345f2f7f10df",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "0fa4da4a878bf67cf513f0ae223347d9a7cda55ccce3f79fd19d345f2f7f10df",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_matrix_selftest.py",
+    "orphan_recorded": "e9d92e49d05f131f047301536beb833f3f633d1cfc925af74ab00f6306e57c4b",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "e9d92e49d05f131f047301536beb833f3f633d1cfc925af74ab00f6306e57c4b",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_number_probe.py",
+    "orphan_recorded": "ac65fc9874b9fc3a367abe5cb76d36096d271d3bb09fe835d80504d7c1e74330",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "ac65fc9874b9fc3a367abe5cb76d36096d271d3bb09fe835d80504d7c1e74330",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_pattern_probe.py",
+    "orphan_recorded": "0c5e09de4798020f09afb6ebe92c29815bad9086d758ca54ddba62929ca939e7",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "0c5e09de4798020f09afb6ebe92c29815bad9086d758ca54ddba62929ca939e7",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_ca.py",
+    "orphan_recorded": "07987dddbe3c7c7411d56336f754e9886bcbc826401f5e163d219318163634d6",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "07987dddbe3c7c7411d56336f754e9886bcbc826401f5e163d219318163634d6",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_s.py",
+    "orphan_recorded": "e659f934b6523a76377cb0ee310adc3a3bc9fe6600323000a3f616c71425431f",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "e659f934b6523a76377cb0ee310adc3a3bc9fe6600323000a3f616c71425431f",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_shared.py",
+    "orphan_recorded": "23f9eea81f2dad931983549d395e5242f191a47ed2fe83d3a41096cfb308606c",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "23f9eea81f2dad931983549d395e5242f191a47ed2fe83d3a41096cfb308606c",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_u.py",
+    "orphan_recorded": "f6fffb492d586822a2453b351856e41573b0b918c4adb47af3a206f16eec9c07",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "f6fffb492d586822a2453b351856e41573b0b918c4adb47af3a206f16eec9c07",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_r.py",
+    "orphan_recorded": "270297571162cb93cbd5c6ca1c1443da676f88c42e43fc3d9ab7b90ab38dd047",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "270297571162cb93cbd5c6ca1c1443da676f88c42e43fc3d9ab7b90ab38dd047",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_reverify.py",
+    "orphan_recorded": "9816146bb5d7240f3f5fe5a8a4ec354aed6ae6ed3a85ec6c449c6413223f120d",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "9816146bb5d7240f3f5fe5a8a4ec354aed6ae6ed3a85ec6c449c6413223f120d",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_s.py",
+    "orphan_recorded": "d716d6493f7540d392667b1239e1025ab9af85b48ff924a41f94f4b1e7e38e10",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "d716d6493f7540d392667b1239e1025ab9af85b48ff924a41f94f4b1e7e38e10",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_s5b_map.py",
+    "orphan_recorded": "859b58c2d92eb8f051d91837370290564c7181e1dcfb11542fec4bd97b64d40c",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "859b58c2d92eb8f051d91837370290564c7181e1dcfb11542fec4bd97b64d40c",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_supplement_ca.py",
+    "orphan_recorded": "d022f4a13dfdc69456d9f3c23450072b42a165350452a2f075252628ad0cdeec",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "d022f4a13dfdc69456d9f3c23450072b42a165350452a2f075252628ad0cdeec",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_supplement_s.py",
+    "orphan_recorded": "12749111921bd36f4ca9d73178cc8726088a6e98930ba2203fa14798f9d9ee9f",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "12749111921bd36f4ca9d73178cc8726088a6e98930ba2203fa14798f9d9ee9f",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_supplement_u.py",
+    "orphan_recorded": "27152a7894b3688f571e01531d62553ee942453bf207cb601e198170216bdfec",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "27152a7894b3688f571e01531d62553ee942453bf207cb601e198170216bdfec",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_u.py",
+    "orphan_recorded": "7f2bfd5889fea5a6ed09e8aed932ae7032fae000792c1dc6d8426875ff250e9c",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "7f2bfd5889fea5a6ed09e8aed932ae7032fae000792c1dc6d8426875ff250e9c",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg_cf2_world.py",
+    "orphan_recorded": "07b89aec9771c2f52c125e1a867a8c4ad340b46674ece4e8ad01112a653765e8",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "07b89aec9771c2f52c125e1a867a8c4ad340b46674ece4e8ad01112a653765e8",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_go_schema_closure.py",
+    "orphan_recorded": "c6a2dcf8280126ded138308640fe071e544d288d245c41856e5513b00b923344",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "c6a2dcf8280126ded138308640fe071e544d288d245c41856e5513b00b923344",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_guard_tables.py",
+    "orphan_recorded": "4cec911eed72b607d97c3f4692debf4a912466fa0b767a86454230b88c513c79",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "4cec911eed72b607d97c3f4692debf4a912466fa0b767a86454230b88c513c79",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_oracle_common.py",
+    "orphan_recorded": "cd08c2c5666643e576a319ca3b1cbd677761039f63d3146ef09f36ed055c7bd5",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "cd08c2c5666643e576a319ca3b1cbd677761039f63d3146ef09f36ed055c7bd5",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_guard_isolation.py",
+    "orphan_recorded": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-arm-guard/proof/source-bindings.json",
+    "b50": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+    "equal": true
+   }
+  ]
+ },
+ "certified-commit-guard": {
+  "verdict": "stays on 76e7a4f279 (fails the conditions); certified-guard-result.json is restored to 76e7a4f279 too, so it stays loadable",
+  "differs": [
+   "scripts/pm_goal_dg5_closure.py",
+   "scripts/pm_goal_dg5_collector_selftest.py"
+  ],
+  "recorded_files": [
+   {
+    "path": "scripts/pm_goal_dg5_adapter.py",
+    "orphan_recorded": "c63b8251d3942711506655f6b093cc67e43cb3390f79ceebba4558e3edb1f3ba",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "c63b8251d3942711506655f6b093cc67e43cb3390f79ceebba4558e3edb1f3ba",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_ca.py",
+    "orphan_recorded": "e8cfb80487e297bf2f50c1dcb55444fdebbd29bd4b46db3d9898ddc690818628",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "e8cfb80487e297bf2f50c1dcb55444fdebbd29bd4b46db3d9898ddc690818628",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_cf.py",
+    "orphan_recorded": "52b06e408393994d5c833c8ca864525ee58d26c9886662a05981e06177974501",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "52b06e408393994d5c833c8ca864525ee58d26c9886662a05981e06177974501",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_closure.py",
+    "orphan_recorded": "29dccc549a2fa3b10b1898502af9cab240bb5f43d77e750c2353f7b2b49c5afa",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "f19f588efa3728a3326733c854c6be3ac549b1fd0d40953563e8e0200e7c45a9",
+    "equal": false
+   },
+   {
+    "path": "scripts/pm_goal_dg5_closure_selftest.py",
+    "orphan_recorded": "d7afa78ee93a527937bbcb5c8459c115db54e1b9fad6d99f639ac181c8be9ed2",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "d7afa78ee93a527937bbcb5c8459c115db54e1b9fad6d99f639ac181c8be9ed2",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_collector_selftest.py",
+    "orphan_recorded": "5a36c9d13a2559cab168f851ea05f6c8996055608cfbbc04378bc8c8433229be",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "9c31ba23d6dddee3de601715b6f25330ddce10acb8d62872202c670b049efc9a",
+    "equal": false
+   },
+   {
+    "path": "scripts/pm_goal_dg5_declarations.py",
+    "orphan_recorded": "b1a761354c7465174bf903aceb3c1860c1904587c70c46a6d815b92c5dd973f6",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "b1a761354c7465174bf903aceb3c1860c1904587c70c46a6d815b92c5dd973f6",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_declarations_ca.py",
+    "orphan_recorded": "d83c04972379b3e12a13de27f3c00128bb812c93b68a9b88f63475690dc2ce07",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "d83c04972379b3e12a13de27f3c00128bb812c93b68a9b88f63475690dc2ce07",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_declarations_s.py",
+    "orphan_recorded": "c7c256536489650046d03d1ef884985f5950876563ad142548e8462b7bd46cdb",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "c7c256536489650046d03d1ef884985f5950876563ad142548e8462b7bd46cdb",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_duplicates.py",
+    "orphan_recorded": "6d2837f117a22d9ac4b9db4f5d3ecaa462844d4e497d97b963503653f7b15c6a",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "6d2837f117a22d9ac4b9db4f5d3ecaa462844d4e497d97b963503653f7b15c6a",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_entries.py",
+    "orphan_recorded": "69a7ee77abd02a93256afc6369b9bc1dfe41968e3379ca0aff402608ba5decca",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "69a7ee77abd02a93256afc6369b9bc1dfe41968e3379ca0aff402608ba5decca",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_format_probe.py",
+    "orphan_recorded": "cc86451b05a331640b8477443a2a29b873ec184fd7f9b65a40a0d4a59cb10169",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "cc86451b05a331640b8477443a2a29b873ec184fd7f9b65a40a0d4a59cb10169",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_justified.py",
+    "orphan_recorded": "0fa4da4a878bf67cf513f0ae223347d9a7cda55ccce3f79fd19d345f2f7f10df",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "0fa4da4a878bf67cf513f0ae223347d9a7cda55ccce3f79fd19d345f2f7f10df",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_matrix_selftest.py",
+    "orphan_recorded": "e9d92e49d05f131f047301536beb833f3f633d1cfc925af74ab00f6306e57c4b",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "e9d92e49d05f131f047301536beb833f3f633d1cfc925af74ab00f6306e57c4b",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_number_probe.py",
+    "orphan_recorded": "ac65fc9874b9fc3a367abe5cb76d36096d271d3bb09fe835d80504d7c1e74330",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "ac65fc9874b9fc3a367abe5cb76d36096d271d3bb09fe835d80504d7c1e74330",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_pattern_probe.py",
+    "orphan_recorded": "0c5e09de4798020f09afb6ebe92c29815bad9086d758ca54ddba62929ca939e7",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "0c5e09de4798020f09afb6ebe92c29815bad9086d758ca54ddba62929ca939e7",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_ca.py",
+    "orphan_recorded": "07987dddbe3c7c7411d56336f754e9886bcbc826401f5e163d219318163634d6",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "07987dddbe3c7c7411d56336f754e9886bcbc826401f5e163d219318163634d6",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_s.py",
+    "orphan_recorded": "e659f934b6523a76377cb0ee310adc3a3bc9fe6600323000a3f616c71425431f",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "e659f934b6523a76377cb0ee310adc3a3bc9fe6600323000a3f616c71425431f",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_shared.py",
+    "orphan_recorded": "23f9eea81f2dad931983549d395e5242f191a47ed2fe83d3a41096cfb308606c",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "23f9eea81f2dad931983549d395e5242f191a47ed2fe83d3a41096cfb308606c",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_u.py",
+    "orphan_recorded": "f6fffb492d586822a2453b351856e41573b0b918c4adb47af3a206f16eec9c07",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "f6fffb492d586822a2453b351856e41573b0b918c4adb47af3a206f16eec9c07",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_r.py",
+    "orphan_recorded": "270297571162cb93cbd5c6ca1c1443da676f88c42e43fc3d9ab7b90ab38dd047",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "270297571162cb93cbd5c6ca1c1443da676f88c42e43fc3d9ab7b90ab38dd047",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_reverify.py",
+    "orphan_recorded": "9816146bb5d7240f3f5fe5a8a4ec354aed6ae6ed3a85ec6c449c6413223f120d",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "9816146bb5d7240f3f5fe5a8a4ec354aed6ae6ed3a85ec6c449c6413223f120d",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_s.py",
+    "orphan_recorded": "d716d6493f7540d392667b1239e1025ab9af85b48ff924a41f94f4b1e7e38e10",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "d716d6493f7540d392667b1239e1025ab9af85b48ff924a41f94f4b1e7e38e10",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_s5b_map.py",
+    "orphan_recorded": "859b58c2d92eb8f051d91837370290564c7181e1dcfb11542fec4bd97b64d40c",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "859b58c2d92eb8f051d91837370290564c7181e1dcfb11542fec4bd97b64d40c",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_supplement_ca.py",
+    "orphan_recorded": "d022f4a13dfdc69456d9f3c23450072b42a165350452a2f075252628ad0cdeec",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "d022f4a13dfdc69456d9f3c23450072b42a165350452a2f075252628ad0cdeec",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_supplement_s.py",
+    "orphan_recorded": "12749111921bd36f4ca9d73178cc8726088a6e98930ba2203fa14798f9d9ee9f",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "12749111921bd36f4ca9d73178cc8726088a6e98930ba2203fa14798f9d9ee9f",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_supplement_u.py",
+    "orphan_recorded": "27152a7894b3688f571e01531d62553ee942453bf207cb601e198170216bdfec",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "27152a7894b3688f571e01531d62553ee942453bf207cb601e198170216bdfec",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_u.py",
+    "orphan_recorded": "7f2bfd5889fea5a6ed09e8aed932ae7032fae000792c1dc6d8426875ff250e9c",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "7f2bfd5889fea5a6ed09e8aed932ae7032fae000792c1dc6d8426875ff250e9c",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg_cf2_world.py",
+    "orphan_recorded": "07b89aec9771c2f52c125e1a867a8c4ad340b46674ece4e8ad01112a653765e8",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "07b89aec9771c2f52c125e1a867a8c4ad340b46674ece4e8ad01112a653765e8",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_go_schema_closure.py",
+    "orphan_recorded": "c6a2dcf8280126ded138308640fe071e544d288d245c41856e5513b00b923344",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "c6a2dcf8280126ded138308640fe071e544d288d245c41856e5513b00b923344",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_guard_tables.py",
+    "orphan_recorded": "4cec911eed72b607d97c3f4692debf4a912466fa0b767a86454230b88c513c79",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "4cec911eed72b607d97c3f4692debf4a912466fa0b767a86454230b88c513c79",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_oracle_common.py",
+    "orphan_recorded": "cd08c2c5666643e576a319ca3b1cbd677761039f63d3146ef09f36ed055c7bd5",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "cd08c2c5666643e576a319ca3b1cbd677761039f63d3146ef09f36ed055c7bd5",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_guard_isolation.py",
+    "orphan_recorded": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-commit-guard/proof/source-bindings.json",
+    "b50": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+    "equal": true
+   }
+  ]
+ },
+ "certified-consumer-current-final-guard": {
+  "verdict": "stays on 76e7a4f279 (fails the conditions); certified-guard-result.json is restored to 76e7a4f279 too, so it stays loadable",
+  "differs": [
+   "scripts/pm_goal_dg5_closure.py",
+   "scripts/pm_goal_dg5_collector_selftest.py"
+  ],
+  "recorded_files": [
+   {
+    "path": "scripts/pm_goal_dg5_adapter.py",
+    "orphan_recorded": "c63b8251d3942711506655f6b093cc67e43cb3390f79ceebba4558e3edb1f3ba",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "c63b8251d3942711506655f6b093cc67e43cb3390f79ceebba4558e3edb1f3ba",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_ca.py",
+    "orphan_recorded": "e8cfb80487e297bf2f50c1dcb55444fdebbd29bd4b46db3d9898ddc690818628",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "e8cfb80487e297bf2f50c1dcb55444fdebbd29bd4b46db3d9898ddc690818628",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_cf.py",
+    "orphan_recorded": "52b06e408393994d5c833c8ca864525ee58d26c9886662a05981e06177974501",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "52b06e408393994d5c833c8ca864525ee58d26c9886662a05981e06177974501",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_closure.py",
+    "orphan_recorded": "29dccc549a2fa3b10b1898502af9cab240bb5f43d77e750c2353f7b2b49c5afa",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "f19f588efa3728a3326733c854c6be3ac549b1fd0d40953563e8e0200e7c45a9",
+    "equal": false
+   },
+   {
+    "path": "scripts/pm_goal_dg5_closure_selftest.py",
+    "orphan_recorded": "d7afa78ee93a527937bbcb5c8459c115db54e1b9fad6d99f639ac181c8be9ed2",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "d7afa78ee93a527937bbcb5c8459c115db54e1b9fad6d99f639ac181c8be9ed2",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_collector_selftest.py",
+    "orphan_recorded": "5a36c9d13a2559cab168f851ea05f6c8996055608cfbbc04378bc8c8433229be",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "9c31ba23d6dddee3de601715b6f25330ddce10acb8d62872202c670b049efc9a",
+    "equal": false
+   },
+   {
+    "path": "scripts/pm_goal_dg5_declarations.py",
+    "orphan_recorded": "b1a761354c7465174bf903aceb3c1860c1904587c70c46a6d815b92c5dd973f6",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "b1a761354c7465174bf903aceb3c1860c1904587c70c46a6d815b92c5dd973f6",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_declarations_ca.py",
+    "orphan_recorded": "d83c04972379b3e12a13de27f3c00128bb812c93b68a9b88f63475690dc2ce07",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "d83c04972379b3e12a13de27f3c00128bb812c93b68a9b88f63475690dc2ce07",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_declarations_s.py",
+    "orphan_recorded": "c7c256536489650046d03d1ef884985f5950876563ad142548e8462b7bd46cdb",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "c7c256536489650046d03d1ef884985f5950876563ad142548e8462b7bd46cdb",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_duplicates.py",
+    "orphan_recorded": "6d2837f117a22d9ac4b9db4f5d3ecaa462844d4e497d97b963503653f7b15c6a",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "6d2837f117a22d9ac4b9db4f5d3ecaa462844d4e497d97b963503653f7b15c6a",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_entries.py",
+    "orphan_recorded": "69a7ee77abd02a93256afc6369b9bc1dfe41968e3379ca0aff402608ba5decca",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "69a7ee77abd02a93256afc6369b9bc1dfe41968e3379ca0aff402608ba5decca",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_format_probe.py",
+    "orphan_recorded": "cc86451b05a331640b8477443a2a29b873ec184fd7f9b65a40a0d4a59cb10169",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "cc86451b05a331640b8477443a2a29b873ec184fd7f9b65a40a0d4a59cb10169",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_justified.py",
+    "orphan_recorded": "0fa4da4a878bf67cf513f0ae223347d9a7cda55ccce3f79fd19d345f2f7f10df",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "0fa4da4a878bf67cf513f0ae223347d9a7cda55ccce3f79fd19d345f2f7f10df",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_matrix_selftest.py",
+    "orphan_recorded": "e9d92e49d05f131f047301536beb833f3f633d1cfc925af74ab00f6306e57c4b",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "e9d92e49d05f131f047301536beb833f3f633d1cfc925af74ab00f6306e57c4b",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_number_probe.py",
+    "orphan_recorded": "ac65fc9874b9fc3a367abe5cb76d36096d271d3bb09fe835d80504d7c1e74330",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "ac65fc9874b9fc3a367abe5cb76d36096d271d3bb09fe835d80504d7c1e74330",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_pattern_probe.py",
+    "orphan_recorded": "0c5e09de4798020f09afb6ebe92c29815bad9086d758ca54ddba62929ca939e7",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "0c5e09de4798020f09afb6ebe92c29815bad9086d758ca54ddba62929ca939e7",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_ca.py",
+    "orphan_recorded": "07987dddbe3c7c7411d56336f754e9886bcbc826401f5e163d219318163634d6",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "07987dddbe3c7c7411d56336f754e9886bcbc826401f5e163d219318163634d6",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_s.py",
+    "orphan_recorded": "e659f934b6523a76377cb0ee310adc3a3bc9fe6600323000a3f616c71425431f",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "e659f934b6523a76377cb0ee310adc3a3bc9fe6600323000a3f616c71425431f",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_shared.py",
+    "orphan_recorded": "23f9eea81f2dad931983549d395e5242f191a47ed2fe83d3a41096cfb308606c",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "23f9eea81f2dad931983549d395e5242f191a47ed2fe83d3a41096cfb308606c",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_u.py",
+    "orphan_recorded": "f6fffb492d586822a2453b351856e41573b0b918c4adb47af3a206f16eec9c07",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "f6fffb492d586822a2453b351856e41573b0b918c4adb47af3a206f16eec9c07",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_r.py",
+    "orphan_recorded": "270297571162cb93cbd5c6ca1c1443da676f88c42e43fc3d9ab7b90ab38dd047",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "270297571162cb93cbd5c6ca1c1443da676f88c42e43fc3d9ab7b90ab38dd047",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_reverify.py",
+    "orphan_recorded": "9816146bb5d7240f3f5fe5a8a4ec354aed6ae6ed3a85ec6c449c6413223f120d",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "9816146bb5d7240f3f5fe5a8a4ec354aed6ae6ed3a85ec6c449c6413223f120d",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_s.py",
+    "orphan_recorded": "d716d6493f7540d392667b1239e1025ab9af85b48ff924a41f94f4b1e7e38e10",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "d716d6493f7540d392667b1239e1025ab9af85b48ff924a41f94f4b1e7e38e10",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_s5b_map.py",
+    "orphan_recorded": "859b58c2d92eb8f051d91837370290564c7181e1dcfb11542fec4bd97b64d40c",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "859b58c2d92eb8f051d91837370290564c7181e1dcfb11542fec4bd97b64d40c",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_supplement_ca.py",
+    "orphan_recorded": "d022f4a13dfdc69456d9f3c23450072b42a165350452a2f075252628ad0cdeec",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "d022f4a13dfdc69456d9f3c23450072b42a165350452a2f075252628ad0cdeec",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_supplement_s.py",
+    "orphan_recorded": "12749111921bd36f4ca9d73178cc8726088a6e98930ba2203fa14798f9d9ee9f",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "12749111921bd36f4ca9d73178cc8726088a6e98930ba2203fa14798f9d9ee9f",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_supplement_u.py",
+    "orphan_recorded": "27152a7894b3688f571e01531d62553ee942453bf207cb601e198170216bdfec",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "27152a7894b3688f571e01531d62553ee942453bf207cb601e198170216bdfec",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_u.py",
+    "orphan_recorded": "7f2bfd5889fea5a6ed09e8aed932ae7032fae000792c1dc6d8426875ff250e9c",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "7f2bfd5889fea5a6ed09e8aed932ae7032fae000792c1dc6d8426875ff250e9c",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg_cf2_world.py",
+    "orphan_recorded": "07b89aec9771c2f52c125e1a867a8c4ad340b46674ece4e8ad01112a653765e8",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "07b89aec9771c2f52c125e1a867a8c4ad340b46674ece4e8ad01112a653765e8",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_go_schema_closure.py",
+    "orphan_recorded": "c6a2dcf8280126ded138308640fe071e544d288d245c41856e5513b00b923344",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "c6a2dcf8280126ded138308640fe071e544d288d245c41856e5513b00b923344",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_guard_tables.py",
+    "orphan_recorded": "4cec911eed72b607d97c3f4692debf4a912466fa0b767a86454230b88c513c79",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "4cec911eed72b607d97c3f4692debf4a912466fa0b767a86454230b88c513c79",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_oracle_common.py",
+    "orphan_recorded": "cd08c2c5666643e576a319ca3b1cbd677761039f63d3146ef09f36ed055c7bd5",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "cd08c2c5666643e576a319ca3b1cbd677761039f63d3146ef09f36ed055c7bd5",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_guard_isolation.py",
+    "orphan_recorded": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-consumer-current-final-guard/proof/source-bindings.json",
+    "b50": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+    "equal": true
+   }
+  ]
+ },
+ "certified-current-final-guard": {
+  "verdict": "stays on 76e7a4f279 (fails the conditions); certified-guard-result.json is restored to 76e7a4f279 too, so it stays loadable",
+  "differs": [
+   "scripts/pm_goal_dg5_closure.py",
+   "scripts/pm_goal_dg5_collector_selftest.py"
+  ],
+  "recorded_files": [
+   {
+    "path": "scripts/pm_goal_dg5_adapter.py",
+    "orphan_recorded": "c63b8251d3942711506655f6b093cc67e43cb3390f79ceebba4558e3edb1f3ba",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "c63b8251d3942711506655f6b093cc67e43cb3390f79ceebba4558e3edb1f3ba",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_ca.py",
+    "orphan_recorded": "e8cfb80487e297bf2f50c1dcb55444fdebbd29bd4b46db3d9898ddc690818628",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "e8cfb80487e297bf2f50c1dcb55444fdebbd29bd4b46db3d9898ddc690818628",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_cf.py",
+    "orphan_recorded": "52b06e408393994d5c833c8ca864525ee58d26c9886662a05981e06177974501",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "52b06e408393994d5c833c8ca864525ee58d26c9886662a05981e06177974501",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_closure.py",
+    "orphan_recorded": "29dccc549a2fa3b10b1898502af9cab240bb5f43d77e750c2353f7b2b49c5afa",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "f19f588efa3728a3326733c854c6be3ac549b1fd0d40953563e8e0200e7c45a9",
+    "equal": false
+   },
+   {
+    "path": "scripts/pm_goal_dg5_closure_selftest.py",
+    "orphan_recorded": "d7afa78ee93a527937bbcb5c8459c115db54e1b9fad6d99f639ac181c8be9ed2",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "d7afa78ee93a527937bbcb5c8459c115db54e1b9fad6d99f639ac181c8be9ed2",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_collector_selftest.py",
+    "orphan_recorded": "5a36c9d13a2559cab168f851ea05f6c8996055608cfbbc04378bc8c8433229be",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "9c31ba23d6dddee3de601715b6f25330ddce10acb8d62872202c670b049efc9a",
+    "equal": false
+   },
+   {
+    "path": "scripts/pm_goal_dg5_declarations.py",
+    "orphan_recorded": "b1a761354c7465174bf903aceb3c1860c1904587c70c46a6d815b92c5dd973f6",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "b1a761354c7465174bf903aceb3c1860c1904587c70c46a6d815b92c5dd973f6",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_declarations_ca.py",
+    "orphan_recorded": "d83c04972379b3e12a13de27f3c00128bb812c93b68a9b88f63475690dc2ce07",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "d83c04972379b3e12a13de27f3c00128bb812c93b68a9b88f63475690dc2ce07",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_declarations_s.py",
+    "orphan_recorded": "c7c256536489650046d03d1ef884985f5950876563ad142548e8462b7bd46cdb",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "c7c256536489650046d03d1ef884985f5950876563ad142548e8462b7bd46cdb",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_duplicates.py",
+    "orphan_recorded": "6d2837f117a22d9ac4b9db4f5d3ecaa462844d4e497d97b963503653f7b15c6a",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "6d2837f117a22d9ac4b9db4f5d3ecaa462844d4e497d97b963503653f7b15c6a",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_entries.py",
+    "orphan_recorded": "69a7ee77abd02a93256afc6369b9bc1dfe41968e3379ca0aff402608ba5decca",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "69a7ee77abd02a93256afc6369b9bc1dfe41968e3379ca0aff402608ba5decca",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_format_probe.py",
+    "orphan_recorded": "cc86451b05a331640b8477443a2a29b873ec184fd7f9b65a40a0d4a59cb10169",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "cc86451b05a331640b8477443a2a29b873ec184fd7f9b65a40a0d4a59cb10169",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_justified.py",
+    "orphan_recorded": "0fa4da4a878bf67cf513f0ae223347d9a7cda55ccce3f79fd19d345f2f7f10df",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "0fa4da4a878bf67cf513f0ae223347d9a7cda55ccce3f79fd19d345f2f7f10df",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_matrix_selftest.py",
+    "orphan_recorded": "e9d92e49d05f131f047301536beb833f3f633d1cfc925af74ab00f6306e57c4b",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "e9d92e49d05f131f047301536beb833f3f633d1cfc925af74ab00f6306e57c4b",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_number_probe.py",
+    "orphan_recorded": "ac65fc9874b9fc3a367abe5cb76d36096d271d3bb09fe835d80504d7c1e74330",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "ac65fc9874b9fc3a367abe5cb76d36096d271d3bb09fe835d80504d7c1e74330",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_pattern_probe.py",
+    "orphan_recorded": "0c5e09de4798020f09afb6ebe92c29815bad9086d758ca54ddba62929ca939e7",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "0c5e09de4798020f09afb6ebe92c29815bad9086d758ca54ddba62929ca939e7",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_ca.py",
+    "orphan_recorded": "07987dddbe3c7c7411d56336f754e9886bcbc826401f5e163d219318163634d6",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "07987dddbe3c7c7411d56336f754e9886bcbc826401f5e163d219318163634d6",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_s.py",
+    "orphan_recorded": "e659f934b6523a76377cb0ee310adc3a3bc9fe6600323000a3f616c71425431f",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "e659f934b6523a76377cb0ee310adc3a3bc9fe6600323000a3f616c71425431f",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_shared.py",
+    "orphan_recorded": "23f9eea81f2dad931983549d395e5242f191a47ed2fe83d3a41096cfb308606c",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "23f9eea81f2dad931983549d395e5242f191a47ed2fe83d3a41096cfb308606c",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_u.py",
+    "orphan_recorded": "f6fffb492d586822a2453b351856e41573b0b918c4adb47af3a206f16eec9c07",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "f6fffb492d586822a2453b351856e41573b0b918c4adb47af3a206f16eec9c07",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_r.py",
+    "orphan_recorded": "270297571162cb93cbd5c6ca1c1443da676f88c42e43fc3d9ab7b90ab38dd047",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "270297571162cb93cbd5c6ca1c1443da676f88c42e43fc3d9ab7b90ab38dd047",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_reverify.py",
+    "orphan_recorded": "9816146bb5d7240f3f5fe5a8a4ec354aed6ae6ed3a85ec6c449c6413223f120d",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "9816146bb5d7240f3f5fe5a8a4ec354aed6ae6ed3a85ec6c449c6413223f120d",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_s.py",
+    "orphan_recorded": "d716d6493f7540d392667b1239e1025ab9af85b48ff924a41f94f4b1e7e38e10",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "d716d6493f7540d392667b1239e1025ab9af85b48ff924a41f94f4b1e7e38e10",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_s5b_map.py",
+    "orphan_recorded": "859b58c2d92eb8f051d91837370290564c7181e1dcfb11542fec4bd97b64d40c",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "859b58c2d92eb8f051d91837370290564c7181e1dcfb11542fec4bd97b64d40c",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_supplement_ca.py",
+    "orphan_recorded": "d022f4a13dfdc69456d9f3c23450072b42a165350452a2f075252628ad0cdeec",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "d022f4a13dfdc69456d9f3c23450072b42a165350452a2f075252628ad0cdeec",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_supplement_s.py",
+    "orphan_recorded": "12749111921bd36f4ca9d73178cc8726088a6e98930ba2203fa14798f9d9ee9f",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "12749111921bd36f4ca9d73178cc8726088a6e98930ba2203fa14798f9d9ee9f",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_supplement_u.py",
+    "orphan_recorded": "27152a7894b3688f571e01531d62553ee942453bf207cb601e198170216bdfec",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "27152a7894b3688f571e01531d62553ee942453bf207cb601e198170216bdfec",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_u.py",
+    "orphan_recorded": "7f2bfd5889fea5a6ed09e8aed932ae7032fae000792c1dc6d8426875ff250e9c",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "7f2bfd5889fea5a6ed09e8aed932ae7032fae000792c1dc6d8426875ff250e9c",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg_cf2_world.py",
+    "orphan_recorded": "07b89aec9771c2f52c125e1a867a8c4ad340b46674ece4e8ad01112a653765e8",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "07b89aec9771c2f52c125e1a867a8c4ad340b46674ece4e8ad01112a653765e8",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_go_schema_closure.py",
+    "orphan_recorded": "c6a2dcf8280126ded138308640fe071e544d288d245c41856e5513b00b923344",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "c6a2dcf8280126ded138308640fe071e544d288d245c41856e5513b00b923344",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_guard_tables.py",
+    "orphan_recorded": "4cec911eed72b607d97c3f4692debf4a912466fa0b767a86454230b88c513c79",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "4cec911eed72b607d97c3f4692debf4a912466fa0b767a86454230b88c513c79",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_oracle_common.py",
+    "orphan_recorded": "cd08c2c5666643e576a319ca3b1cbd677761039f63d3146ef09f36ed055c7bd5",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "cd08c2c5666643e576a319ca3b1cbd677761039f63d3146ef09f36ed055c7bd5",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_guard_isolation.py",
+    "orphan_recorded": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-current-final-guard/proof/source-bindings.json",
+    "b50": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+    "equal": true
+   }
+  ]
+ },
+ "certified-prepare-guard": {
+  "verdict": "stays on 76e7a4f279 (fails the conditions); certified-guard-result.json is restored to 76e7a4f279 too, so it stays loadable",
+  "differs": [
+   "scripts/pm_goal_dg5_closure.py",
+   "scripts/pm_goal_dg5_collector_selftest.py"
+  ],
+  "recorded_files": [
+   {
+    "path": "scripts/pm_goal_dg5_adapter.py",
+    "orphan_recorded": "c63b8251d3942711506655f6b093cc67e43cb3390f79ceebba4558e3edb1f3ba",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "c63b8251d3942711506655f6b093cc67e43cb3390f79ceebba4558e3edb1f3ba",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_ca.py",
+    "orphan_recorded": "e8cfb80487e297bf2f50c1dcb55444fdebbd29bd4b46db3d9898ddc690818628",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "e8cfb80487e297bf2f50c1dcb55444fdebbd29bd4b46db3d9898ddc690818628",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_cf.py",
+    "orphan_recorded": "52b06e408393994d5c833c8ca864525ee58d26c9886662a05981e06177974501",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "52b06e408393994d5c833c8ca864525ee58d26c9886662a05981e06177974501",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_closure.py",
+    "orphan_recorded": "29dccc549a2fa3b10b1898502af9cab240bb5f43d77e750c2353f7b2b49c5afa",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "f19f588efa3728a3326733c854c6be3ac549b1fd0d40953563e8e0200e7c45a9",
+    "equal": false
+   },
+   {
+    "path": "scripts/pm_goal_dg5_closure_selftest.py",
+    "orphan_recorded": "d7afa78ee93a527937bbcb5c8459c115db54e1b9fad6d99f639ac181c8be9ed2",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "d7afa78ee93a527937bbcb5c8459c115db54e1b9fad6d99f639ac181c8be9ed2",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_collector_selftest.py",
+    "orphan_recorded": "5a36c9d13a2559cab168f851ea05f6c8996055608cfbbc04378bc8c8433229be",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "9c31ba23d6dddee3de601715b6f25330ddce10acb8d62872202c670b049efc9a",
+    "equal": false
+   },
+   {
+    "path": "scripts/pm_goal_dg5_declarations.py",
+    "orphan_recorded": "b1a761354c7465174bf903aceb3c1860c1904587c70c46a6d815b92c5dd973f6",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "b1a761354c7465174bf903aceb3c1860c1904587c70c46a6d815b92c5dd973f6",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_declarations_ca.py",
+    "orphan_recorded": "d83c04972379b3e12a13de27f3c00128bb812c93b68a9b88f63475690dc2ce07",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "d83c04972379b3e12a13de27f3c00128bb812c93b68a9b88f63475690dc2ce07",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_declarations_s.py",
+    "orphan_recorded": "c7c256536489650046d03d1ef884985f5950876563ad142548e8462b7bd46cdb",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "c7c256536489650046d03d1ef884985f5950876563ad142548e8462b7bd46cdb",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_duplicates.py",
+    "orphan_recorded": "6d2837f117a22d9ac4b9db4f5d3ecaa462844d4e497d97b963503653f7b15c6a",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "6d2837f117a22d9ac4b9db4f5d3ecaa462844d4e497d97b963503653f7b15c6a",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_entries.py",
+    "orphan_recorded": "69a7ee77abd02a93256afc6369b9bc1dfe41968e3379ca0aff402608ba5decca",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "69a7ee77abd02a93256afc6369b9bc1dfe41968e3379ca0aff402608ba5decca",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_format_probe.py",
+    "orphan_recorded": "cc86451b05a331640b8477443a2a29b873ec184fd7f9b65a40a0d4a59cb10169",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "cc86451b05a331640b8477443a2a29b873ec184fd7f9b65a40a0d4a59cb10169",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_justified.py",
+    "orphan_recorded": "0fa4da4a878bf67cf513f0ae223347d9a7cda55ccce3f79fd19d345f2f7f10df",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "0fa4da4a878bf67cf513f0ae223347d9a7cda55ccce3f79fd19d345f2f7f10df",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_matrix_selftest.py",
+    "orphan_recorded": "e9d92e49d05f131f047301536beb833f3f633d1cfc925af74ab00f6306e57c4b",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "e9d92e49d05f131f047301536beb833f3f633d1cfc925af74ab00f6306e57c4b",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_number_probe.py",
+    "orphan_recorded": "ac65fc9874b9fc3a367abe5cb76d36096d271d3bb09fe835d80504d7c1e74330",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "ac65fc9874b9fc3a367abe5cb76d36096d271d3bb09fe835d80504d7c1e74330",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_pattern_probe.py",
+    "orphan_recorded": "0c5e09de4798020f09afb6ebe92c29815bad9086d758ca54ddba62929ca939e7",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "0c5e09de4798020f09afb6ebe92c29815bad9086d758ca54ddba62929ca939e7",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_ca.py",
+    "orphan_recorded": "07987dddbe3c7c7411d56336f754e9886bcbc826401f5e163d219318163634d6",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "07987dddbe3c7c7411d56336f754e9886bcbc826401f5e163d219318163634d6",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_s.py",
+    "orphan_recorded": "e659f934b6523a76377cb0ee310adc3a3bc9fe6600323000a3f616c71425431f",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "e659f934b6523a76377cb0ee310adc3a3bc9fe6600323000a3f616c71425431f",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_shared.py",
+    "orphan_recorded": "23f9eea81f2dad931983549d395e5242f191a47ed2fe83d3a41096cfb308606c",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "23f9eea81f2dad931983549d395e5242f191a47ed2fe83d3a41096cfb308606c",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_u.py",
+    "orphan_recorded": "f6fffb492d586822a2453b351856e41573b0b918c4adb47af3a206f16eec9c07",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "f6fffb492d586822a2453b351856e41573b0b918c4adb47af3a206f16eec9c07",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_r.py",
+    "orphan_recorded": "270297571162cb93cbd5c6ca1c1443da676f88c42e43fc3d9ab7b90ab38dd047",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "270297571162cb93cbd5c6ca1c1443da676f88c42e43fc3d9ab7b90ab38dd047",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_reverify.py",
+    "orphan_recorded": "9816146bb5d7240f3f5fe5a8a4ec354aed6ae6ed3a85ec6c449c6413223f120d",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "9816146bb5d7240f3f5fe5a8a4ec354aed6ae6ed3a85ec6c449c6413223f120d",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_s.py",
+    "orphan_recorded": "d716d6493f7540d392667b1239e1025ab9af85b48ff924a41f94f4b1e7e38e10",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "d716d6493f7540d392667b1239e1025ab9af85b48ff924a41f94f4b1e7e38e10",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_s5b_map.py",
+    "orphan_recorded": "859b58c2d92eb8f051d91837370290564c7181e1dcfb11542fec4bd97b64d40c",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "859b58c2d92eb8f051d91837370290564c7181e1dcfb11542fec4bd97b64d40c",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_supplement_ca.py",
+    "orphan_recorded": "d022f4a13dfdc69456d9f3c23450072b42a165350452a2f075252628ad0cdeec",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "d022f4a13dfdc69456d9f3c23450072b42a165350452a2f075252628ad0cdeec",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_supplement_s.py",
+    "orphan_recorded": "12749111921bd36f4ca9d73178cc8726088a6e98930ba2203fa14798f9d9ee9f",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "12749111921bd36f4ca9d73178cc8726088a6e98930ba2203fa14798f9d9ee9f",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_supplement_u.py",
+    "orphan_recorded": "27152a7894b3688f571e01531d62553ee942453bf207cb601e198170216bdfec",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "27152a7894b3688f571e01531d62553ee942453bf207cb601e198170216bdfec",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_u.py",
+    "orphan_recorded": "7f2bfd5889fea5a6ed09e8aed932ae7032fae000792c1dc6d8426875ff250e9c",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "7f2bfd5889fea5a6ed09e8aed932ae7032fae000792c1dc6d8426875ff250e9c",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg_cf2_world.py",
+    "orphan_recorded": "07b89aec9771c2f52c125e1a867a8c4ad340b46674ece4e8ad01112a653765e8",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "07b89aec9771c2f52c125e1a867a8c4ad340b46674ece4e8ad01112a653765e8",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_go_schema_closure.py",
+    "orphan_recorded": "c6a2dcf8280126ded138308640fe071e544d288d245c41856e5513b00b923344",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "c6a2dcf8280126ded138308640fe071e544d288d245c41856e5513b00b923344",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_guard_tables.py",
+    "orphan_recorded": "4cec911eed72b607d97c3f4692debf4a912466fa0b767a86454230b88c513c79",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "4cec911eed72b607d97c3f4692debf4a912466fa0b767a86454230b88c513c79",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_oracle_common.py",
+    "orphan_recorded": "cd08c2c5666643e576a319ca3b1cbd677761039f63d3146ef09f36ed055c7bd5",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "cd08c2c5666643e576a319ca3b1cbd677761039f63d3146ef09f36ed055c7bd5",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_guard_isolation.py",
+    "orphan_recorded": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-prepare-guard/proof/source-bindings.json",
+    "b50": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+    "equal": true
+   }
+  ]
+ },
+ "certified-release-guard": {
+  "verdict": "stays on 76e7a4f279 (fails the conditions); certified-guard-result.json is restored to 76e7a4f279 too, so it stays loadable",
+  "differs": [
+   "scripts/pm_goal_dg5_closure.py",
+   "scripts/pm_goal_dg5_collector_selftest.py"
+  ],
+  "recorded_files": [
+   {
+    "path": "scripts/pm_goal_dg5_adapter.py",
+    "orphan_recorded": "c63b8251d3942711506655f6b093cc67e43cb3390f79ceebba4558e3edb1f3ba",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "c63b8251d3942711506655f6b093cc67e43cb3390f79ceebba4558e3edb1f3ba",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_ca.py",
+    "orphan_recorded": "e8cfb80487e297bf2f50c1dcb55444fdebbd29bd4b46db3d9898ddc690818628",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "e8cfb80487e297bf2f50c1dcb55444fdebbd29bd4b46db3d9898ddc690818628",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_cf.py",
+    "orphan_recorded": "52b06e408393994d5c833c8ca864525ee58d26c9886662a05981e06177974501",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "52b06e408393994d5c833c8ca864525ee58d26c9886662a05981e06177974501",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_closure.py",
+    "orphan_recorded": "29dccc549a2fa3b10b1898502af9cab240bb5f43d77e750c2353f7b2b49c5afa",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "f19f588efa3728a3326733c854c6be3ac549b1fd0d40953563e8e0200e7c45a9",
+    "equal": false
+   },
+   {
+    "path": "scripts/pm_goal_dg5_closure_selftest.py",
+    "orphan_recorded": "d7afa78ee93a527937bbcb5c8459c115db54e1b9fad6d99f639ac181c8be9ed2",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "d7afa78ee93a527937bbcb5c8459c115db54e1b9fad6d99f639ac181c8be9ed2",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_collector_selftest.py",
+    "orphan_recorded": "5a36c9d13a2559cab168f851ea05f6c8996055608cfbbc04378bc8c8433229be",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "9c31ba23d6dddee3de601715b6f25330ddce10acb8d62872202c670b049efc9a",
+    "equal": false
+   },
+   {
+    "path": "scripts/pm_goal_dg5_declarations.py",
+    "orphan_recorded": "b1a761354c7465174bf903aceb3c1860c1904587c70c46a6d815b92c5dd973f6",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "b1a761354c7465174bf903aceb3c1860c1904587c70c46a6d815b92c5dd973f6",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_declarations_ca.py",
+    "orphan_recorded": "d83c04972379b3e12a13de27f3c00128bb812c93b68a9b88f63475690dc2ce07",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "d83c04972379b3e12a13de27f3c00128bb812c93b68a9b88f63475690dc2ce07",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_declarations_s.py",
+    "orphan_recorded": "c7c256536489650046d03d1ef884985f5950876563ad142548e8462b7bd46cdb",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "c7c256536489650046d03d1ef884985f5950876563ad142548e8462b7bd46cdb",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_duplicates.py",
+    "orphan_recorded": "6d2837f117a22d9ac4b9db4f5d3ecaa462844d4e497d97b963503653f7b15c6a",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "6d2837f117a22d9ac4b9db4f5d3ecaa462844d4e497d97b963503653f7b15c6a",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_entries.py",
+    "orphan_recorded": "69a7ee77abd02a93256afc6369b9bc1dfe41968e3379ca0aff402608ba5decca",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "69a7ee77abd02a93256afc6369b9bc1dfe41968e3379ca0aff402608ba5decca",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_format_probe.py",
+    "orphan_recorded": "cc86451b05a331640b8477443a2a29b873ec184fd7f9b65a40a0d4a59cb10169",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "cc86451b05a331640b8477443a2a29b873ec184fd7f9b65a40a0d4a59cb10169",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_justified.py",
+    "orphan_recorded": "0fa4da4a878bf67cf513f0ae223347d9a7cda55ccce3f79fd19d345f2f7f10df",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "0fa4da4a878bf67cf513f0ae223347d9a7cda55ccce3f79fd19d345f2f7f10df",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_matrix_selftest.py",
+    "orphan_recorded": "e9d92e49d05f131f047301536beb833f3f633d1cfc925af74ab00f6306e57c4b",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "e9d92e49d05f131f047301536beb833f3f633d1cfc925af74ab00f6306e57c4b",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_number_probe.py",
+    "orphan_recorded": "ac65fc9874b9fc3a367abe5cb76d36096d271d3bb09fe835d80504d7c1e74330",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "ac65fc9874b9fc3a367abe5cb76d36096d271d3bb09fe835d80504d7c1e74330",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_pattern_probe.py",
+    "orphan_recorded": "0c5e09de4798020f09afb6ebe92c29815bad9086d758ca54ddba62929ca939e7",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "0c5e09de4798020f09afb6ebe92c29815bad9086d758ca54ddba62929ca939e7",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_ca.py",
+    "orphan_recorded": "07987dddbe3c7c7411d56336f754e9886bcbc826401f5e163d219318163634d6",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "07987dddbe3c7c7411d56336f754e9886bcbc826401f5e163d219318163634d6",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_s.py",
+    "orphan_recorded": "e659f934b6523a76377cb0ee310adc3a3bc9fe6600323000a3f616c71425431f",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "e659f934b6523a76377cb0ee310adc3a3bc9fe6600323000a3f616c71425431f",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_shared.py",
+    "orphan_recorded": "23f9eea81f2dad931983549d395e5242f191a47ed2fe83d3a41096cfb308606c",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "23f9eea81f2dad931983549d395e5242f191a47ed2fe83d3a41096cfb308606c",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_proofs_u.py",
+    "orphan_recorded": "f6fffb492d586822a2453b351856e41573b0b918c4adb47af3a206f16eec9c07",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "f6fffb492d586822a2453b351856e41573b0b918c4adb47af3a206f16eec9c07",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_r.py",
+    "orphan_recorded": "270297571162cb93cbd5c6ca1c1443da676f88c42e43fc3d9ab7b90ab38dd047",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "270297571162cb93cbd5c6ca1c1443da676f88c42e43fc3d9ab7b90ab38dd047",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_reverify.py",
+    "orphan_recorded": "9816146bb5d7240f3f5fe5a8a4ec354aed6ae6ed3a85ec6c449c6413223f120d",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "9816146bb5d7240f3f5fe5a8a4ec354aed6ae6ed3a85ec6c449c6413223f120d",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_s.py",
+    "orphan_recorded": "d716d6493f7540d392667b1239e1025ab9af85b48ff924a41f94f4b1e7e38e10",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "d716d6493f7540d392667b1239e1025ab9af85b48ff924a41f94f4b1e7e38e10",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_s5b_map.py",
+    "orphan_recorded": "859b58c2d92eb8f051d91837370290564c7181e1dcfb11542fec4bd97b64d40c",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "859b58c2d92eb8f051d91837370290564c7181e1dcfb11542fec4bd97b64d40c",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_supplement_ca.py",
+    "orphan_recorded": "d022f4a13dfdc69456d9f3c23450072b42a165350452a2f075252628ad0cdeec",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "d022f4a13dfdc69456d9f3c23450072b42a165350452a2f075252628ad0cdeec",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_supplement_s.py",
+    "orphan_recorded": "12749111921bd36f4ca9d73178cc8726088a6e98930ba2203fa14798f9d9ee9f",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "12749111921bd36f4ca9d73178cc8726088a6e98930ba2203fa14798f9d9ee9f",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_supplement_u.py",
+    "orphan_recorded": "27152a7894b3688f571e01531d62553ee942453bf207cb601e198170216bdfec",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "27152a7894b3688f571e01531d62553ee942453bf207cb601e198170216bdfec",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg5_u.py",
+    "orphan_recorded": "7f2bfd5889fea5a6ed09e8aed932ae7032fae000792c1dc6d8426875ff250e9c",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "7f2bfd5889fea5a6ed09e8aed932ae7032fae000792c1dc6d8426875ff250e9c",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_dg_cf2_world.py",
+    "orphan_recorded": "07b89aec9771c2f52c125e1a867a8c4ad340b46674ece4e8ad01112a653765e8",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "07b89aec9771c2f52c125e1a867a8c4ad340b46674ece4e8ad01112a653765e8",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_go_schema_closure.py",
+    "orphan_recorded": "c6a2dcf8280126ded138308640fe071e544d288d245c41856e5513b00b923344",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "c6a2dcf8280126ded138308640fe071e544d288d245c41856e5513b00b923344",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_guard_tables.py",
+    "orphan_recorded": "4cec911eed72b607d97c3f4692debf4a912466fa0b767a86454230b88c513c79",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "4cec911eed72b607d97c3f4692debf4a912466fa0b767a86454230b88c513c79",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_goal_oracle_common.py",
+    "orphan_recorded": "cd08c2c5666643e576a319ca3b1cbd677761039f63d3146ef09f36ed055c7bd5",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "cd08c2c5666643e576a319ca3b1cbd677761039f63d3146ef09f36ed055c7bd5",
+    "equal": true
+   },
+   {
+    "path": "scripts/pm_guard_isolation.py",
+    "orphan_recorded": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+    "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-release-guard/proof/source-bindings.json",
+    "b50": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+    "equal": true
+   }
+  ]
+ }
+}

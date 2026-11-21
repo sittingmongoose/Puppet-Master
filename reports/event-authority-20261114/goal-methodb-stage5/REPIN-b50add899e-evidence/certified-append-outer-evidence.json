@@ -1,0 +1,249 @@
+{
+ "row": "certified-append-outer-evidence",
+ "verdict": "HOLD (CANNOT_DECIDE)",
+ "files": 22,
+ "recorded": 7,
+ "no_recorded_hash": [
+  "scripts/pm_event_datetime.py",
+  "scripts/pm_event_index_binding.py",
+  "scripts/pm_event_numbers.py",
+  "scripts/pm_goal_bank_diagnostics.py",
+  "scripts/pm_goal_dg_cf2_consumer.py",
+  "scripts/pm_goal_dg_cf2_native.py",
+  "scripts/pm_goal_dg_cf2_oracles.py",
+  "scripts/pm_goal_go2_closure.py",
+  "scripts/pm_goal_own_c3_w5_oracles.py",
+  "scripts/pm_goal_own_c3_w5_successor_oracles.py",
+  "scripts/pm_goal_test_demo_cf01.py",
+  "scripts/pm_goal_test_numrule.py",
+  "scripts/pm_goal_test_owner_adapters.py",
+  "scripts/pm_goal_test_source.py",
+  "scripts/pm_goal_test_storage.py"
+ ],
+ "differs": [
+  "scripts/pm_goal_dg5_closure.py"
+ ],
+ "supporting_all_equal": false,
+ "evidence": [
+  {
+   "path": "scripts/pm_event_datetime.py",
+   "kind": "owner source",
+   "orphan_recorded": null,
+   "orphan_recorded_source": null,
+   "now": "e09d1a18b8c198dc4fc54d9b7017aff47eeaf3a02366c61c64c61e6df3b7995e",
+   "now_source": "b50add899e blob",
+   "equal": false,
+   "supporting_orphan_tree_blob": "e09d1a18b8c198dc4fc54d9b7017aff47eeaf3a02366c61c64c61e6df3b7995e"
+  },
+  {
+   "path": "scripts/pm_event_index_binding.py",
+   "kind": "owner source",
+   "orphan_recorded": null,
+   "orphan_recorded_source": null,
+   "now": "8e2c243f24e401e125e0af321cbb8dd76e2eca86742db84f2acafd91dc263e2f",
+   "now_source": "b50add899e blob",
+   "equal": false,
+   "supporting_orphan_tree_blob": "8e2c243f24e401e125e0af321cbb8dd76e2eca86742db84f2acafd91dc263e2f"
+  },
+  {
+   "path": "scripts/pm_event_numbers.py",
+   "kind": "owner source",
+   "orphan_recorded": null,
+   "orphan_recorded_source": null,
+   "now": "31ae47086bacad7f078239baa9e9ec3a5118472298a9e26e878dcf2534819444",
+   "now_source": "b50add899e blob",
+   "equal": false,
+   "supporting_orphan_tree_blob": "31ae47086bacad7f078239baa9e9ec3a5118472298a9e26e878dcf2534819444"
+  },
+  {
+   "path": "scripts/pm_goal_bank_diagnostics.py",
+   "kind": "owner source",
+   "orphan_recorded": null,
+   "orphan_recorded_source": null,
+   "now": "25dbca54ce22e47afd14a71c8f8aea267fed4117448d4dccd6577655c9181194",
+   "now_source": "b50add899e blob",
+   "equal": false,
+   "supporting_orphan_tree_blob": "25dbca54ce22e47afd14a71c8f8aea267fed4117448d4dccd6577655c9181194"
+  },
+  {
+   "path": "scripts/pm_goal_dg5_closure.py",
+   "kind": "owner source",
+   "orphan_recorded": "29dccc549a2fa3b10b1898502af9cab240bb5f43d77e750c2353f7b2b49c5afa",
+   "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-outer-evidence/proof/source-bindings.json",
+   "now": "f19f588efa3728a3326733c854c6be3ac549b1fd0d40953563e8e0200e7c45a9",
+   "now_source": "b50add899e blob",
+   "equal": false,
+   "supporting_orphan_tree_blob": "29dccc549a2fa3b10b1898502af9cab240bb5f43d77e750c2353f7b2b49c5afa"
+  },
+  {
+   "path": "scripts/pm_goal_dg5_methodb_pilot_phase_f459c3e5697485a9.py",
+   "kind": "harness table (written into the source)",
+   "orphan_recorded": "a15a951fa7439ea3f91122d261954bf5e2efba2c03536e4be3e02b378cd15b0b",
+   "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-outer-evidence/proof/source-bindings.json",
+   "now": "a15a951fa7439ea3f91122d261954bf5e2efba2c03536e4be3e02b378cd15b0b",
+   "now_source": "file used by the re-judge",
+   "equal": true,
+   "supporting_orphan_tree_blob": null
+  },
+  {
+   "path": "scripts/pm_goal_dg_cf2_consumer.py",
+   "kind": "owner source",
+   "orphan_recorded": null,
+   "orphan_recorded_source": null,
+   "now": "672dcd7df992526838a92d6791287f61d5b6290455e6f697d975568224927fe0",
+   "now_source": "b50add899e blob",
+   "equal": false,
+   "supporting_orphan_tree_blob": "672dcd7df992526838a92d6791287f61d5b6290455e6f697d975568224927fe0"
+  },
+  {
+   "path": "scripts/pm_goal_dg_cf2_native.py",
+   "kind": "owner source",
+   "orphan_recorded": null,
+   "orphan_recorded_source": null,
+   "now": "111f2709ccb29d6ac03d092e9f6be92da9839bef5eaccd9661f1f76df50a81c7",
+   "now_source": "b50add899e blob",
+   "equal": false,
+   "supporting_orphan_tree_blob": "111f2709ccb29d6ac03d092e9f6be92da9839bef5eaccd9661f1f76df50a81c7"
+  },
+  {
+   "path": "scripts/pm_goal_dg_cf2_oracles.py",
+   "kind": "owner source",
+   "orphan_recorded": null,
+   "orphan_recorded_source": null,
+   "now": "06829f08df2927f5c6570c8b55c84be4eee22d50c03e00eb9eb79430d469c5e4",
+   "now_source": "b50add899e blob",
+   "equal": false,
+   "supporting_orphan_tree_blob": "06829f08df2927f5c6570c8b55c84be4eee22d50c03e00eb9eb79430d469c5e4"
+  },
+  {
+   "path": "scripts/pm_goal_dg_cf2_world.py",
+   "kind": "owner source",
+   "orphan_recorded": "07b89aec9771c2f52c125e1a867a8c4ad340b46674ece4e8ad01112a653765e8",
+   "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-outer-evidence/proof/source-bindings.json",
+   "now": "07b89aec9771c2f52c125e1a867a8c4ad340b46674ece4e8ad01112a653765e8",
+   "now_source": "b50add899e blob",
+   "equal": true,
+   "supporting_orphan_tree_blob": "07b89aec9771c2f52c125e1a867a8c4ad340b46674ece4e8ad01112a653765e8"
+  },
+  {
+   "path": "scripts/pm_goal_go2_closure.py",
+   "kind": "owner source",
+   "orphan_recorded": null,
+   "orphan_recorded_source": null,
+   "now": "d8076347472ff40e2e6f210f74d0209f9f594f8e4cdcf550fd5d7b8b73e10085",
+   "now_source": "b50add899e blob",
+   "equal": false,
+   "supporting_orphan_tree_blob": "d8076347472ff40e2e6f210f74d0209f9f594f8e4cdcf550fd5d7b8b73e10085"
+  },
+  {
+   "path": "scripts/pm_goal_go_schema_closure.py",
+   "kind": "owner source",
+   "orphan_recorded": "c6a2dcf8280126ded138308640fe071e544d288d245c41856e5513b00b923344",
+   "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-outer-evidence/proof/source-bindings.json",
+   "now": "c6a2dcf8280126ded138308640fe071e544d288d245c41856e5513b00b923344",
+   "now_source": "b50add899e blob",
+   "equal": true,
+   "supporting_orphan_tree_blob": "c6a2dcf8280126ded138308640fe071e544d288d245c41856e5513b00b923344"
+  },
+  {
+   "path": "scripts/pm_goal_guard_tables.py",
+   "kind": "owner source",
+   "orphan_recorded": "4cec911eed72b607d97c3f4692debf4a912466fa0b767a86454230b88c513c79",
+   "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-outer-evidence/proof/source-bindings.json",
+   "now": "4cec911eed72b607d97c3f4692debf4a912466fa0b767a86454230b88c513c79",
+   "now_source": "b50add899e blob",
+   "equal": true,
+   "supporting_orphan_tree_blob": "4cec911eed72b607d97c3f4692debf4a912466fa0b767a86454230b88c513c79"
+  },
+  {
+   "path": "scripts/pm_goal_oracle_common.py",
+   "kind": "owner source",
+   "orphan_recorded": "cd08c2c5666643e576a319ca3b1cbd677761039f63d3146ef09f36ed055c7bd5",
+   "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-outer-evidence/proof/source-bindings.json",
+   "now": "cd08c2c5666643e576a319ca3b1cbd677761039f63d3146ef09f36ed055c7bd5",
+   "now_source": "b50add899e blob",
+   "equal": true,
+   "supporting_orphan_tree_blob": "cd08c2c5666643e576a319ca3b1cbd677761039f63d3146ef09f36ed055c7bd5"
+  },
+  {
+   "path": "scripts/pm_goal_own_c3_w5_oracles.py",
+   "kind": "owner source",
+   "orphan_recorded": null,
+   "orphan_recorded_source": null,
+   "now": "9304568333876047b077b0c6811e633f536d23a6fab8f426714c7b0371fc33c5",
+   "now_source": "b50add899e blob",
+   "equal": false,
+   "supporting_orphan_tree_blob": "9304568333876047b077b0c6811e633f536d23a6fab8f426714c7b0371fc33c5"
+  },
+  {
+   "path": "scripts/pm_goal_own_c3_w5_successor_oracles.py",
+   "kind": "owner source",
+   "orphan_recorded": null,
+   "orphan_recorded_source": null,
+   "now": "711711f53e2f9c71d3cbf2d3b6bac6f8f36898d36d445295a13218fb0342d456",
+   "now_source": "b50add899e blob",
+   "equal": false,
+   "supporting_orphan_tree_blob": "711711f53e2f9c71d3cbf2d3b6bac6f8f36898d36d445295a13218fb0342d456"
+  },
+  {
+   "path": "scripts/pm_goal_test_demo_cf01.py",
+   "kind": "owner source",
+   "orphan_recorded": null,
+   "orphan_recorded_source": null,
+   "now": "ec3f8dd3e7df579235f300958a750894106e8f06a3f351b9f6a7b3990f1994e8",
+   "now_source": "b50add899e blob",
+   "equal": false,
+   "supporting_orphan_tree_blob": "ec3f8dd3e7df579235f300958a750894106e8f06a3f351b9f6a7b3990f1994e8"
+  },
+  {
+   "path": "scripts/pm_goal_test_numrule.py",
+   "kind": "owner source",
+   "orphan_recorded": null,
+   "orphan_recorded_source": null,
+   "now": "14909c75db33e23137e76abd24893fa80ca247184a150ffa81907f483df06368",
+   "now_source": "b50add899e blob",
+   "equal": false,
+   "supporting_orphan_tree_blob": "14909c75db33e23137e76abd24893fa80ca247184a150ffa81907f483df06368"
+  },
+  {
+   "path": "scripts/pm_goal_test_owner_adapters.py",
+   "kind": "owner source",
+   "orphan_recorded": null,
+   "orphan_recorded_source": null,
+   "now": "707094ca7bdb7054fd5938c9f6cd462b6e47faf7dad9c76e7c19aedfbd586314",
+   "now_source": "b50add899e blob",
+   "equal": false,
+   "supporting_orphan_tree_blob": "707094ca7bdb7054fd5938c9f6cd462b6e47faf7dad9c76e7c19aedfbd586314"
+  },
+  {
+   "path": "scripts/pm_goal_test_source.py",
+   "kind": "owner source",
+   "orphan_recorded": null,
+   "orphan_recorded_source": null,
+   "now": "72db3db5387f0334c6ae15b513209403e1d0168e05d8731194ec89db25d2e832",
+   "now_source": "b50add899e blob",
+   "equal": false,
+   "supporting_orphan_tree_blob": "72db3db5387f0334c6ae15b513209403e1d0168e05d8731194ec89db25d2e832"
+  },
+  {
+   "path": "scripts/pm_goal_test_storage.py",
+   "kind": "owner source",
+   "orphan_recorded": null,
+   "orphan_recorded_source": null,
+   "now": "389457a3132d0a2bd172c526b63e1f5e8dcec88843b40c66e16970935c995c13",
+   "now_source": "b50add899e blob",
+   "equal": false,
+   "supporting_orphan_tree_blob": "389457a3132d0a2bd172c526b63e1f5e8dcec88843b40c66e16970935c995c13"
+  },
+  {
+   "path": "scripts/pm_guard_isolation.py",
+   "kind": "owner source",
+   "orphan_recorded": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+   "orphan_recorded_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/stage-5/certified-append-outer-evidence/proof/source-bindings.json",
+   "now": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+   "now_source": "b50add899e blob",
+   "equal": true,
+   "supporting_orphan_tree_blob": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8"
+  }
+ ]
+}
