@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+from collections.abc import Set
 from functools import lru_cache
 
 _CACHE: dict[int, tuple[str, dict, dict[str, tuple[int, int]]]] = {}
@@ -159,6 +160,11 @@ _EXCLUSIVE_OWNER = re.compile(
 )
 _EVENT_TABLE_ROW = re.compile(r"^\s*\|\s*`(" + _EVENT_NAME + r")`\s*\|")
 
+_GOAL_OWNER_ROUTING = re.compile(
+    r"Routing note, \d{4}-\d{2}-\d{2}: the `(" + _EVENT_NAME + r")` row of "
+    r"`Plans/event_family_registry\.json` keeps this section as its `semantic_owner_doc`"
+)
+
 _RETENTION_ASSIGNMENT_START = "Current selected assignment ("
 _RETENTION_ASSIGNMENT = re.compile(
     r"Current selected assignment \(\d{4}-\d{2}-\d{2}\): (" + _EVENT_NAME + r")@\d+\.\d+\.\d+"
@@ -169,8 +175,8 @@ _PARAGRAPH_BREAK = re.compile(r"^\s*(?:$|```|#{1,6}\s|[a-z][\w-]*:\s|Current sel
 
 
 @lru_cache(maxsize=1)
-def registered_event_types(registry_text: str) -> frozenset[str]:
-    return frozenset(row["event_type"] for row in json.loads(registry_text)["families"])
+def registered_semantic_owners(registry_text: str) -> dict[str, str | None]:
+    return {row["event_type"]: row.get("semantic_owner_doc") for row in json.loads(registry_text)["families"]}
 
 
 def _retention_assignment_at(lines: list[str], first_line: int, quote_lines: tuple[int, int],
@@ -200,16 +206,20 @@ def _retention_assignment_at(lines: list[str], first_line: int, quote_lines: tup
     return None
 
 
-def markdown_family_span(text: str, span: tuple[int, int], event_type: str, known_events: frozenset[str],
+def markdown_family_span(text: str, span: tuple[int, int], event_type: str, known_events: Set[str],
                          criterion: str | None, quote: str | None, *,
-                         quote_lines: tuple[int, int] | None = None) -> tuple[int, int]:
+                         quote_lines: tuple[int, int] | None = None,
+                         selected_semantic_owner: bool = False) -> tuple[int, int]:
     """Bind proof to a family-specific paragraph, owner heading, or oracle row."""
     lines = text.splitlines()[span[0] - 1:span[1]]
     if criterion == "retention" and quote_lines is not None:
         assignment = _retention_assignment_at(lines, span[0], quote_lines, event_type)
         if assignment is not None:
             return assignment
-    heading = next((match[1] for line in lines if (match := _MARKDOWN_HEADING.match(line))), "")
+    heading_number, heading = next(
+        ((number, match[1]) for number, line in enumerate(lines, span[0]) if (match := _MARKDOWN_HEADING.match(line))),
+        (span[0], ""),
+    )
     subjects = set(_EVENT_TOKEN.findall(heading)) & (known_events | {event_type})
     if not subjects:
         # Custody headings can use a display name. Their owner declaration
@@ -219,8 +229,19 @@ def markdown_family_span(text: str, span: tuple[int, int], event_type: str, know
         raise ValueError(f"Markdown evidence subject is {', '.join(sorted(subjects))}, expected {event_type}")
 
     if heading == "Goal and GoalRun payload minima" and criterion in ("owner_doc", "positive_negative_oracles"):
+        if selected_semantic_owner and criterion == "owner_doc" and quote_lines is not None:
+            first, last = quote_lines
+            match = _GOAL_OWNER_ROUTING.match(lines[first - span[0]].lstrip())
+            if (first == last and match and match[1] == event_type
+                    and match[0] in " ".join((quote or "").split())):
+                return first, last
         matches = [number for number, line in enumerate(lines, span[0])
                    if (match := _EVENT_TABLE_ROW.match(line)) and match[1] == event_type]
+        if (criterion == "owner_doc" and len(matches) == 1
+                and (quote or "").strip() == lines[heading_number - span[0]].strip()):
+            # The heading is the cited anchor when its table explicitly names
+            # this family, including a historical selector superseded in the registry.
+            return heading_number, heading_number
     elif heading.endswith("deck-2 owner contract") and criterion == "positive_negative_oracles" and (quote or "").strip() == "Oracles:":
         matches = [number for number, line in enumerate(lines, span[0])
                    if line.lstrip().startswith("Oracles:") and event_type in _EVENT_TOKEN.findall(line)]
