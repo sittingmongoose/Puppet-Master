@@ -31,10 +31,18 @@
 //            (PM7PERF-ONBREST-NO-RENDERER-READS-ZERO; helpers/onb-rest-rows.mjs);
 //   counts   the kept nodes stay in step with the stage: Friendly's and Glass's shadows are Pip's and one per placed prop,
 //            Basic's protractor its seven parts, NieR's brackets 6 to 9 parts with a target and none without.
+// Before each sample (the trace, then the observer) the cell must be at rest as it says (PM7PERF-ONBREST-AWAKE-NOT-
+// ASSERTED): Pip awake past Welcome (the stage's sleepZ off and its pose not asleep) and asleep on Welcome; its line typed
+// and every prop in and settled; and its pose settled: no hop under way, no passing feeling on show (the wake's alert and
+// happy), the hand within its sway (and NieR's bob) of its spot, not still rising from the floor. The stage is polled for
+// that (up to 10 s before the trace, 5 s before the observer); a cell that never gets there FAILS as could not judge
+// and is not measured, and after the observer Pip must still be as it was asked. --set journey=0 leaves out the
+// pointer journey (a negative: Pip sleeps on past Welcome and those cells must fail).
 // Logged per cell: main thread ms a second, style elements a second, layouts and forced layouts a second, forced style
 // recalcs a second, main frames a second, the stage's draws a second and its writes by group.
 // --set looks= (default all ten; `dark` the five Dark looks) --set screens= (default welcome,where,ready)
 // --set settle= (default 20000) --set viewSettle= (default 6000) --set ms= --set same= --set writes= --set forced=
+// --set journey=0
 // Both surfaces. About 7 minutes with the defaults.
 import { traceEvents, summarise } from '../helpers/frame-trace.mjs';
 import { muteSound } from '../helpers/quiet-page.mjs';
@@ -153,14 +161,51 @@ const COUNTS = () => {
 	return { what: 'nothing kept (Retro)', ok: true, got: 0, want: '0' };
 };
 
-// Pip's line typed, every prop in and settled
-const SETTLED = () => {
+// In the page: is Pip asleep, its line typed, its props settled, and its pose at rest (exported for
+// tools/onb-rest-pose.selftest.mjs, which runs it against a stub stage). The hand's spot is where Stage.step springs it
+// (58-rig.js): ps.Ct, less the lift, plus a sway of up to fam.sway across and NieR's bob of up to 0.6 fam.bob; a hand
+// further off than its sway and bob and 3 units is still on its way there (rising as Pip wakes, or a move).
+export const POSE = () => {
 	const host = document.querySelector('#pm-o55-onboarding .o55-stage'), st = host && host.__pipStage;
-	if (!st) return false;
-	if (st.bubble && st.bubble.classList.contains('typing')) return false;
-	for (const p of st.props.values()) if (p.state === 'out' || !p.settled) return false;
-	return true;
+	if (!st || !st.ps || !st.ps.C || !st.ps.Ct) return null;
+	const ps = st.ps, F = st.fam || {}, num = (v) => (typeof v === 'number' && isFinite(v) ? v : 0), r2 = (v) => Math.round(v * 100) / 100;
+	let propsOut = 0; for (const p of st.props ? st.props.values() : []) if (p.state === 'out' || !p.settled) propsOut++;
+	const dx = num(ps.C.x) - num(ps.Ct.x), dy = num(ps.C.y) - (num(ps.Ct.y) - num(ps.lift));
+	const band = [Math.abs(num(F.sway)) + 3, Math.abs(num(F.bob)) * .6 + 3];
+	const feeling = !st.moodOverride || num(st.t) > num(st.moodUntil);
+	return {
+		asleep: !!st.sleepZ || !!ps.asleep, sleepZ: !!st.sleepZ, poseAsleep: !!ps.asleep,
+		line: !(st.bubble && st.bubble.classList && st.bubble.classList.contains('typing')), propsOut,
+		hop: Math.abs(num(ps.dy)) < 1 && Math.abs(num(ps.dyv)) < 20, dyHop: r2(num(ps.dy)), dyv: r2(num(ps.dyv)),
+		feeling, mood: feeling ? null : String(st.moodOverride),
+		hand: Math.abs(dx) <= band[0] && Math.abs(dy) <= band[1], off: [r2(dx), r2(dy)], band: band.map(r2),
+		t: r2(num(st.t))
+	};
 };
+
+// A POSE reading against what the cell wants (want: 'asleep' on Welcome, else 'awake'): { ok, why }
+export function restVerdict(r, want) {
+	if (!r) return { ok: false, why: 'no stage to read (#pm-o55-onboarding .o55-stage with its __pipStage and its pose)' };
+	const why = [];
+	if (want === 'awake' && r.asleep) why.push(`Pip asleep, want awake (sleepZ ${r.sleepZ}, pose asleep ${r.poseAsleep})`);
+	if (want === 'asleep' && !r.asleep) why.push('Pip awake, want asleep (Welcome before any arrival)');
+	if (!r.line) why.push("Pip's line still typing");
+	if (r.propsOut) why.push(`${r.propsOut} prop(s) not in and settled`);
+	if (!r.hop) why.push(`a hop under way (dy ${r.dyHop}, dyv ${r.dyv})`);
+	if (!r.feeling) why.push(`a passing feeling on show (${r.mood})`);
+	if (!r.hand) why.push(`the hand ${r.off.join(', ')} from its spot, more than its sway and bob (${r.band.join(', ')})`);
+	return { ok: !why.length, why: why.length ? why.join('; ') : `${r.asleep ? 'asleep' : 'awake'} and settled (hand ${r.off.join(', ')} within ${r.band.join(', ')}, t ${r.t})` };
+}
+
+// Poll POSE until restVerdict holds or ms pass; the last reading and its verdict
+async function restWait(f, want, ms) {
+	const end = Date.now() + ms; let r = null, v = null;
+	for (;;) {
+		r = await f.evaluate(POSE).catch(() => null); v = restVerdict(r, want);
+		if (v.ok || Date.now() >= end) return { r, v };
+		await new Promise((res) => setTimeout(res, 250));
+	}
+}
 
 export default async function (t) {
 	const lookArg = String(t.args.looks || 'all');
@@ -189,24 +234,34 @@ export default async function (t) {
 			if (at !== screen) { await t.check(`${look} ${screen}: the screen opened`, false, String(at)); continue; }
 			/* Welcome puts Pip to sleep until a real arrival (59-cheer.js wake), and it sleeps on through the later screens
 			   until one: past Welcome a pointer journey over the window wakes it, then the pointer rests off the window */
-			if (screen !== 'welcome') {
+			const want = screen === 'welcome' ? 'asleep' : 'awake';
+			if (screen !== 'welcome' && t.args.journey !== '0' && t.args.journey !== 0) {
 				await t.page.waitForTimeout(1200);
 				for (let i = 0; i < 12; i++) await t.page.mouse.move(700 + i * 30, 500 + (i % 2) * 40);
 				await t.page.mouse.move(W - 6, Math.round(H / 2));
 			}
 			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 6000));
-			const settled = await f.waitForFunction(SETTLED, null, { timeout: 10000, polling: 250 }).then(() => true, () => false);
-			if (!settled) t.log(`${look} ${screen}: NOTE Pip's line or a prop had not settled 16 s after the screen opened; measured as it was`);
 			const cell = `${look} ${screen}`;
+			// Pip as the cell says (awake past Welcome, asleep on it) and at rest, before the trace
+			const pre = await restWait(f, want, 10000);
+			t.log(`${cell}: before the trace: ${pre.v.why}`);
+			if (!pre.v.ok) { await t.check(`${cell}: Pip ${want} and at rest before the trace sample`, false, `${pre.v.why} 16 s after the screen opened: could not judge`); continue; }
 			// the trace first, with nothing of the check's in the page
 			let x = null, fw = null, err = '';
 			try { const ev = await traceEvents(cdp, { ms }); x = summarise(ev, { url: f.url() }); fw = forcedWork(ev, x.renderer); } catch (e) { err = String(e && e.message || e); }
-			// then the observer, with the stage's draws counted
+			// then the observer, with the stage's draws counted: Pip still as the cell says and at rest first
+			const mid = await restWait(f, want, 5000);
+			t.log(`${cell}: before the observer: ${mid.v.why}`);
+			if (!mid.v.ok) { await t.check(`${cell}: Pip ${want} and at rest before each sample`, false, `before the observer: ${mid.v.why}: could not judge`); continue; }
 			const armed = await f.evaluate(ARM);
 			if (armed) { await t.check(`${cell}: the stage could be watched`, false, armed + ': could not judge'); continue; }
 			await t.page.waitForTimeout(ms);
 			const r = await f.evaluate(READ);
 			const counts = await f.evaluate(COUNTS);
+			const post = await f.evaluate(POSE).catch(() => null);
+			const stayed = !!post && post.asleep === (want === 'asleep');
+			await t.check(`${cell}: Pip ${want} and at rest before each sample, and still ${want} after`, stayed, `before the trace and the observer: ${want} and at rest; after: ${post ? (post.asleep ? 'asleep' : 'awake') : 'no stage'}${stayed ? '' : ': could not judge'}`);
+			if (!stayed) continue;
 			if (!r || !(r.secs > 1)) { await t.check(`${cell}: the stage was watched`, false, 'no reading: could not judge'); continue; }
 			const per = (n) => (n / r.secs).toFixed(1), sum = (m, skip) => Object.entries(m).filter(([g]) => !skip.includes(g)).reduce((a, [, v]) => a + v, 0);
 			const list = (m) => Object.entries(m).sort((a, b) => b[1] - a[1]).map(([g, v]) => `${g} ${per(v)}`).join(', ') || 'none';
