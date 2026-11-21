@@ -109,6 +109,21 @@ def supplement(evidence, family):
     return out
 
 
+def shared_witnesses(evidence):
+    shared = {}
+    for family in c12.FAMILIES:
+        for site in load(coverage_file(evidence, family)):
+            key = (site['schema'], site['definition'], site['historical'])
+            for clause in site['clauses']:
+                if clause['status'] == 'witnessed':
+                    ident = (clause['source'], clause['schema_pointer'], clause['keyword'])
+                    shared.setdefault((key, ident, site['schema_sha256']),
+                                      dict(family=family, witnesses=clause['witnesses']))
+        for (key, ident), hit in supplement(evidence, family).items():
+            shared.setdefault((key, ident, hit['schema_sha256']), dict(family=family, witnesses=hit['witnesses']))
+    return shared
+
+
 def schema_family(evidence, family, shared):
     sites = load(coverage_file(evidence, family))
     extra = supplement(evidence, family)
@@ -124,10 +139,11 @@ def schema_family(evidence, family, shared):
                 hit = extra[(key, ident)]
                 entry.update(status='witnessed_supplement', witnesses=hit['witnesses'], clause_cut=hit['clause_cut'])
             elif status == 'unwitnessed':
-                other = shared.get((key, ident))
+                digest = site['schema_sha256']
+                other = shared.get((key, ident, digest)) if digest else None
                 if other:
                     entry.update(status='witnessed_by_shared_site', shared_family=other['family'],
-                                 shared_witnesses=other['witnesses'], shared_schema_sha256=other['schema_sha256'])
+                                 shared_witnesses=other['witnesses'], shared_schema_sha256=digest)
             counts[entry['status']] += 1
             clauses.append(entry)
         out.append(dict(schema=site['schema'], definition=site['definition'], historical=site['historical'],
@@ -159,16 +175,7 @@ def main():
     accepting = {r['id'] for r in guard['rows'] if any(x['cut'] == 'accept' for x in r['full_path_cuts'])}
     entailed_rows = {r['row']: r for r in entail['rows']}
 
-    shared = {}
-    for family in c12.FAMILIES:
-        for site in load(coverage_file(ev, family)):
-            key = (site['schema'], site['definition'], site['historical'])
-            for clause in site['clauses']:
-                if clause['status'] == 'witnessed':
-                    shared.setdefault((key, (clause['source'], clause['schema_pointer'], clause['keyword'])),
-                                      dict(family=family, witnesses=clause['witnesses'], schema_sha256=site['schema_sha256']))
-        for (key, ident), hit in supplement(ev, family).items():
-            shared.setdefault((key, ident), dict(family=family, witnesses=hit['witnesses'], schema_sha256=hit['schema_sha256']))
+    shared = shared_witnesses(ev)
 
     matrix, problems, totals = [], [], Counter()
     for family in c12.FAMILIES:
