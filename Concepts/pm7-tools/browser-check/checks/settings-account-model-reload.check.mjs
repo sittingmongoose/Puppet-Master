@@ -4,7 +4,7 @@
 // shared picker's "Default model for this account" loses its model while its separate depth record is kept.
 // Cause: the project projection (the Settings engine's save) keeps settings, mediaRoutes and pm51.o55Custom/o55Depth,
 // never the providers list, so a reload rebuilds every account from the fixture (acc.defaultModel claude-sonnet,
-// acc.props without ai.accounts.default-model). The fix keeps each account's two model choices in the projection
+// acc.props without ai.accounts.default-model). The fix keeps each account's model choices and flags in the projection
 // (accountModels, beside the depth) and the providers migration reads them back.
 // At 1920x1080, by real presses, both surfaces (--set sandbox=0 and =1):
 //   dropdown  the account's "Default model" dropdown picks Claude Opus; after reloadProject the dropdown and
@@ -12,6 +12,7 @@
 //   picker    the account's shared picker picks Claude Opus at Max depth; after reloadProject the row still names
 //             Claude Opus · Max depth, acc.props keeps the pick and pm51.o55Depth keeps the record
 //   Qwen CN   only its enabled Qwen Coder is offered; a saved Qwen Vision choice resolves to inherit on reload
+//   toggles   turn off a selected Work Claude model, reload, and check the toggle, picker and inherited default
 //   reset     Reset services (its confirm accepted) still returns the account's model choices to the example
 //             defaults: the saved choices must not leak back through the migration after a reset
 //   shots     --set shots=1 writes original-size (1920x1080) screenshots of the fixed screen after the reload in
@@ -33,7 +34,7 @@ const ACCOUNT_STATE = () => {
 	const p = st && (st.providers || []).find((x) => x.id === 'claude-code');
 	const acc = p && (p.accounts || []).find((x) => x.id === 'work-claude');
 	if (!acc) return null;
-	return { defaultModel: acc.defaultModel, pick: (acc.props || {})['ai.accounts.default-model'], depth: ((st.pm51 || {}).o55Depth || {})['ai.accounts.default-model|claude-code|work-claude'] || null };
+	return { defaultModel: acc.defaultModel, pick: (acc.props || {})['ai.accounts.default-model'], depth: ((st.pm51 || {}).o55Depth || {})['ai.accounts.default-model|claude-code|work-claude'] || null, enabled: acc.models.filter(m => m.enabled).map(m => m.id) };
 };
 const DROPDOWN_FACE = () => {
 	const el = document.querySelector('.pm51-acc-item[data-acc="acc-claude-code-work-claude"] select[data-action="pm51-providers-account-model-default"]');
@@ -76,7 +77,7 @@ const QWEN_CN_STATE = () => {
 		pick: account.props['ai.accounts.default-model'],
 	};
 };
-const qwenPicker = item => item.locator(`.o55-msel[data-o55-msel="${PICK_ID}"]`);
+const accountPicker = item => item.locator(`.o55-msel[data-o55-msel="${PICK_ID}"]`);
 
 export const tests = {
 	'FO-228 the account Default model dropdown keeps its choice through a project reload': async (t) => {
@@ -143,7 +144,7 @@ export const tests = {
 		await t.viewport(1920, 1080);
 		await f.locator('#tab-settings').click();
 		await t.settle();
-		const picker = qwenPicker(await toQwenCN(t, f));
+		const picker = accountPicker(await toQwenCN(t, f));
 		const initial = await f.evaluate(QWEN_CN_STATE);
 		await t.check('Qwen CN has only Coder enabled while Qwen Global has Vision', initial.enabled.join() === 'qwen-coder' && initial.otherHasVision, JSON.stringify(initial), { hard: true });
 
@@ -160,7 +161,7 @@ export const tests = {
 		await t.check('A real press saves Qwen Coder', picked.pick === 'qwen-coding/qwen-coder', JSON.stringify(picked));
 		await f.evaluate(() => PM12_KIMI.reloadProject());
 		await t.settle();
-		const reloadedPicker = qwenPicker(await toQwenCN(t, f));
+		const reloadedPicker = accountPicker(await toQwenCN(t, f));
 		const reloaded = await f.evaluate(QWEN_CN_STATE);
 		await t.check('Qwen Coder survives the Project reload', reloaded.pick === 'qwen-coding/qwen-coder' && (await reloadedPicker.getByRole('combobox').locator('strong').textContent()).trim() === 'Qwen Coder', JSON.stringify(reloaded));
 
@@ -176,10 +177,65 @@ export const tests = {
 		await t.check('The Project projection contains the old unavailable choice before reload', seeded === 'qwen-coding/qwen-vision', String(seeded), { hard: true });
 		await f.evaluate(() => PM12_KIMI.reloadProject());
 		await t.settle();
-		const restoredPicker = qwenPicker(await toQwenCN(t, f));
+		const restoredPicker = accountPicker(await toQwenCN(t, f));
 		const restored = await f.evaluate(QWEN_CN_STATE);
 		const face = (await restoredPicker.getByRole('combobox').locator('strong').textContent()).trim();
 		await t.check('Project reload falls back to the inherited choice', restored.pick == null && face === 'Use the normal defaults list' && await restoredPicker.locator('select').inputValue() === 'inherit', JSON.stringify({ restored, face }));
+	},
+	'FO-228 turning off Haiku for Work Claude survives Project reload': async (t) => {
+		const f = await t.app.open();
+		await t.viewport(1920, 1080);
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		const item = await toWorkClaude(t, f);
+		const toggle = item.locator('[data-action="pm51-providers-account-model"][data-model="claude-haiku"]');
+		const picker = accountPicker(item).getByRole('combobox');
+		const choices = f.locator('.o55-pick-pop.is-open [role="option"]');
+		const openChoices = async () => {
+			await picker.click();
+			await choices.first().waitFor({ state: 'visible' });
+		};
+		const choiceNames = async () => {
+			await openChoices();
+			const labels = await choices.allTextContents();
+			await t.page.keyboard.press('Escape');
+			await t.settle();
+			return labels;
+		};
+
+		await openChoices();
+		await choices.filter({ hasText: 'Claude Haiku' }).click();
+		await f.getByRole('listbox', { name: /^Thinking depth/ }).getByRole('option', { name: /Model default/ }).click();
+		const selected = await f.evaluate(ACCOUNT_STATE);
+		await t.check('A real press makes Haiku the scoped default', selected.pick === 'claude-code/claude-haiku', JSON.stringify(selected), { hard: true });
+		await toggle.click();
+		await t.settle();
+		const before = await f.evaluate(ACCOUNT_STATE);
+		await t.check('Turning off Haiku updates the account toggle', !before.enabled.includes('claude-haiku') && await toggle.getAttribute('aria-checked') === 'false', JSON.stringify(before), { hard: true });
+		const beforeLabels = await choiceNames();
+		await t.check('The account picker removes Haiku immediately', beforeLabels.some(label => label.includes('Claude Opus')) && beforeLabels.every(label => !label.includes('Claude Haiku')), JSON.stringify(beforeLabels));
+
+		await f.evaluate(() => PM12_KIMI.reloadProject());
+		await t.settle();
+		await toWorkClaude(t, f);
+		const after = await f.evaluate(ACCOUNT_STATE);
+		const checked = await toggle.getAttribute('aria-checked');
+		await t.check('Haiku is still switched off after Project reload', checked === 'false' && after.enabled.join() === 'claude-opus,claude-sonnet', JSON.stringify({ after, checked }));
+		const afterLabels = await choiceNames();
+		await t.check('The reloaded picker offers Opus and Sonnet without Haiku', afterLabels.some(label => label.includes('Claude Opus')) && afterLabels.some(label => label.includes('Claude Sonnet')) && afterLabels.every(label => !label.includes('Claude Haiku')), JSON.stringify(afterLabels));
+		const face = await f.evaluate(PICKER_FACE);
+		await t.check('The disabled default falls back to inheritance after reload', after.pick == null && face.name === 'Use the normal defaults list', JSON.stringify({ after, face }));
+
+		await f.locator('#pm-settings-root [data-action="pm51-providers-reset"]').first().click();
+		await f.locator('.dialog-footer .btn.primary').filter({ hasText: 'Reset' }).first().click();
+		await t.settle();
+		await toWorkClaude(t, f);
+		await t.check('Reset services turns Haiku back on', await toggle.getAttribute('aria-checked') === 'true');
+		await f.evaluate(() => PM12_KIMI.reloadProject());
+		await t.settle();
+		await toWorkClaude(t, f);
+		const reset = await f.evaluate(ACCOUNT_STATE);
+		await t.check('The reset Haiku toggle stays on after another reload', await toggle.getAttribute('aria-checked') === 'true' && reset.enabled.includes('claude-haiku'), JSON.stringify(reset));
 	},
 	'FO-228 Reset services still returns the account model choices to the example defaults': async (t) => {
 		const f = await t.app.open();

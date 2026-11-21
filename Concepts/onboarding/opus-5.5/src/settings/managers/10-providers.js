@@ -189,16 +189,24 @@
     if (typeof acc.usage.text !== 'string') acc.usage.text = acc.usage.text == null ? '' : String(acc.usage.text);
     if (!acc.usage.windows || typeof acc.usage.windows !== 'object' || Array.isArray(acc.usage.windows)) acc.usage.windows = {};
     if (!Array.isArray(acc.models)) acc.models = (p.models || []).map(m => ({ id: m.id, enabled: !!m.enabled }));
-    if (typeof acc.defaultModel !== 'string') { const want = (p.routing || {}).defaultModel; acc.defaultModel = accModelOn(acc, want) ? want : ((acc.models.find(m => m.enabled) || {}).id || ''); }
     if (!acc.props || typeof acc.props !== 'object' || Array.isArray(acc.props)) acc.props = {};
-    /* FO-228: a reload rebuilds the accounts from the fixture, and the project projection keeps only each account's
-       model choices beside the depth (the engine's save writes accountModels); read them back here, the same round
-       trip the depth record makes. A model no longer on the account keeps the migration's own default. */
+    /* FO-228: replay saved flags for models still on the account before checking either default. */
     const savedModel = (state.accountModels || {})[`${p.id}/${acc.id}`];
+    const flags = savedModel?.enabled;
+    if (flags && typeof flags === 'object' && !Array.isArray(flags)) {
+      for (const m of acc.models) {
+        if (Object.hasOwn(flags, m.id) && typeof flags[m.id] === 'boolean') m.enabled = flags[m.id];
+      }
+    }
+    if (typeof savedModel?.model === 'string' && accModelOn(acc, savedModel.model)) {
+      acc.defaultModel = savedModel.model;
+    } else if (typeof acc.defaultModel !== 'string' || (acc.defaultModel && !accModelOn(acc, acc.defaultModel))) {
+      const want = p.routing?.defaultModel;
+      acc.defaultModel = accModelOn(acc, want) ? want : (accEnabled(p, acc)[0]?.id || '');
+    }
     const pick = savedModel?.pick ?? acc.props[ACCOUNT_MODEL];
     if (accountModelPickAllowed(p, acc, pick)) acc.props[ACCOUNT_MODEL] = pick;
     else delete acc.props[ACCOUNT_MODEL];
-    if (typeof savedModel?.model === 'string' && accModelOn(acc, savedModel.model)) acc.defaultModel = savedModel.model;
     /* USG-1 (Jared 2026-10-10): an account's own switch level is ai.accounts.hard-switch-level at scope account and
        ai.accounts.account-threshold-override is retired. A value saved under the old id is read once and carried to the
        new one (an own value already there wins), held under the warn level that applies to the account; then the old
