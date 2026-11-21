@@ -15,10 +15,10 @@
 #panel-settings .domain-list .domain-link { align-items: center; min-height: 36px; }
 #panel-settings .rf-rail-count { margin-left: auto; min-width: 18px; height: 18px; padding: 0 5px; display: inline-grid; place-items: center; border-radius: 9px; background: color-mix(in srgb, var(--k3-warn, #f7bd63) 26%, transparent); color: color-mix(in srgb, var(--k3-warn, #f7bd63) 45%, var(--k3-text-1)); font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums; }
 
-/* ---- a manager's heading: its name, at the left, once ---- */
-#panel-settings .workspace-separator { text-align: left; padding: 14px 4px 10px; margin: 0; border-bottom: 0; }
+/* ---- a manager's heading: its name, once (centred, as the tab strips are: Jared's FO-184) ---- */
+#panel-settings .workspace-separator { padding: 14px 4px 10px; margin: 0; border-bottom: 0; }
 #panel-settings .workspace-separator h2 { margin: 0; font-size: 17px; font-weight: 720; letter-spacing: -.015em; }
-#panel-settings .workspace-separator > p { margin: 4px 0 0; max-width: 72ch; }
+#panel-settings .workspace-separator > p { margin: 4px auto 0; max-width: 72ch; }
 
 /* ---- rows: one line each ---- */
 #panel-settings > #pm-settings-root:not([data-rf-explain="on"]) .setting-row.o55-row { min-height: 42px; padding-top: 6px; padding-bottom: 6px; }
@@ -26,19 +26,11 @@
 #panel-settings > #pm-settings-root:not([data-rf-explain="on"]) .pm51-section-head { padding: 11px 16px 9px; }
 #panel-settings > #pm-settings-root:not([data-rf-explain="on"]) .o55-group-head { padding-top: 12px; padding-bottom: 2px; }
 
-/* ---- one tab strip per level, at the left ---- */
-#panel-settings .workspace-tabs > .workspace-tab:first-of-type { margin-inline-start: 0; }
-#panel-settings .workspace-tabs > .workspace-tab:last-of-type { margin-inline-end: 0; }
+/* ---- one tab strip per level: a chapter with one manager shows no chapter strip (the strips stay centred) ---- */
 #panel-settings .workspace-tabs.rf-one { display: none; }
-#panel-settings .workspace-block .pm51-mgr.has-manager-tabs > .manager-tabs.pm51-tabs { align-self: flex-start; justify-content: flex-start; }
 /* the first manager's name is already lit in the strip above it */
 #panel-settings .workspace-separator > .rf-first-title { display: none; }
 #panel-settings > #pm-settings-root:not([data-rf-explain="on"]) .workspace-separator.rf-first { padding: 0; }
-
-/* ---- "On this page": only for a long page, and only that page ---- */
-#panel-settings > #pm-settings-root[data-rf-index="off"] .document-layout { grid-template-columns: minmax(0, 1fr); }
-#panel-settings > #pm-settings-root[data-rf-index="off"] .page-index { display: none; }
-#panel-settings .page-index-card .pm51-index-group:not(.rf-here) { display: none; }
 
 /* ---- facts: what is true right now ---- */
 #panel-settings .rf-facts { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; min-height: 34px; padding: 2px 4px; font-size: 12.5px; color: var(--k3-text-2); }
@@ -117,11 +109,10 @@
 /* the columns are the row's own: a 44 px switch and three 196 px fields, 12 px apart (61-providers.css) */
 #panel-settings .rf-policy-head { display: grid; grid-template-columns: 44px repeat(3, 196px); gap: 12px; justify-content: end; padding: 0 60px 2px 0; font-size: 11px; font-weight: 600; color: var(--k3-text-3); }
 
-/* ---- Settings Home: the search box leads, then what needs you ----
+/* ---- Settings Home: the search box leads ----
    The headline and its paragraph said what the search box already says; the paragraph shows with Explain on. */
 #panel-settings .home-hero > :is(.home-eyebrow, .home-title) { display: none; }
 #panel-settings > #pm-settings-root:not([data-rf-explain="on"]) .home-hero > .home-lede { display: none; }
-#panel-settings .home-grid > .home-panel:nth-child(2) { order: -1; }
 #panel-settings .domain-rail .side-link.active .rf-rail-count { background: color-mix(in srgb, currentColor 20%, transparent); color: inherit; }
 
 /* ---- Customize Pip: the six places Pip appears, each a small scene (kit.d/29-pip-editor.js whereScenes) ----
@@ -130,7 +121,7 @@
 :is(#panel-settings, .pipe-host) .rf-where { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
 :is(#panel-settings, .pipe-host) .rf-where-tile { margin: 0; display: grid; justify-items: center; gap: 2px; padding: 7px 4px 5px; border: 1px solid var(--k3-line); border-radius: 10px; opacity: .5; }
 :is(#panel-settings, .pipe-host) .rf-where-tile.is-on { opacity: 1; }
-:is(#panel-settings, .pipe-host) .rf-where-tile figcaption { font-size: 10.5px; line-height: 1.3; color: var(--k3-text-3); }
+:is(#panel-settings, .pipe-host) .rf-where-tile figcaption { font-size: 11px; line-height: 1.3; color: var(--k3-text-3); }
 :is(#panel-settings, .pipe-host) .rf-where-tile.is-on figcaption { color: var(--k3-text-2); }
 :is(#panel-settings, .pipe-host) .rf-where-art { position: relative; width: 66px; height: 42px; --rf-ink: color-mix(in srgb, var(--k3-text-1) 46%, transparent); }
 :is(#panel-settings, .pipe-host) .rf-where-art::before, :is(#panel-settings, .pipe-host) .rf-where-art::after { content: ''; position: absolute; box-sizing: border-box; }

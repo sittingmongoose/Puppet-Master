@@ -8,6 +8,8 @@
      "Explain" is on (one button beside Page options, remembered) and in the row's own About panel as before.
    - The rail lists the chapters by name. Its "Essential setup" and "Settings health" boxes repeated Settings Home,
      so the rail keeps one count beside Settings Home instead.
+   - Left as they are, because Jared asked for them: the centred tab strips (FO-184) and the side column with its
+     scroll highlight (FO-185).
    This file loads after every manager (managers/ is read in name order), so its wrappers see the final markup. */
 (function rfFrame() {
   const h = PM51.h, a = PM51.a;
@@ -80,38 +82,11 @@
     return html.replace('<header class="workspace-separator"><h2>', '<header class="workspace-separator rf-first"><h2 class="rf-first-title">');
   };
 
-  /* ---- 5. "On this page" only where a page is long ------------------------------------------------------------
-     The column listed every manager of the chapter and every tab of each, which the two tab strips already do.
-     It now lists the groups of the page in view, and only for a page without tabs that has four groups or more
-     (App & Input, Editor & Terminal, Containers...). Elsewhere the page takes the column's width. */
-  const rfIndexWanted = () => {
-    if (state.home) return false;
-    const w = getDomain().workspaces.find(x => x.id === state.workspace);
-    if (!w || pm51HasTabs(w)) return false;
-    return (domainSectionMap[w.id] || []).filter(s => !s.advanced && !pm51IsMain(w.id, s.id)).length >= 4;
-  };
-  /* What is not shown is not in the page: a hidden column still held a link for every tab of every manager, and
-     anything that looks for "the first control of tab X" (stream F's checks do) met the unseen link first. The column
-     draws the page in view only, and nothing when it is not wanted. */
-  const rfInner = pm51IndexGroupInner;
-  pm51IndexGroupInner = function (w) {
-    if (!w || w.id !== state.workspace || !rfIndexWanted()) return '';
-    return rfInner.apply(this, arguments);
-  };
-  let rfIndexFor = null, rfIndexBusy = false;
-  const rfPaintIndex = () => {
-    root.setAttribute('data-rf-index', rfIndexWanted() ? 'on' : 'off');
-    root.querySelectorAll('.pm51-index-group').forEach(g => g.classList.toggle('rf-here', g.dataset.indexWs === state.workspace));
-    /* the page in view changed (a jump, or the scroll crossed into the next manager): draw its entries, drop the others' */
-    const key = `${state.home ? '' : state.domain}/${state.workspace}/${rfIndexWanted()}`;
-    if (key === rfIndexFor || rfIndexBusy || !PM51.syncIndex) return;
-    const was = rfIndexFor ? rfIndexFor.split('/')[1] : null; rfIndexFor = key; rfIndexBusy = true;
-    try { if (was && was !== state.workspace) PM51.syncIndex(was); PM51.syncIndex(state.workspace); } finally { rfIndexBusy = false; }
-  };
-  const rfMark = pm51MarkIndex;
-  pm51MarkIndex = function () { const r = rfMark.apply(this, arguments); rfPaintIndex(); return r; };
+  /* ---- 5. The side column ("On this page") is left exactly as it is. A first pass hid it on managers with tabs;
+     Jared had asked for its highlight to follow the scroll (FO-185, 2026-11-13), so it is his, not a repeat to cut.
+     The same goes for the centred tab strips (FO-184). ---- */
   const rfRender = renderApp;
-  renderApp = function () { const r = rfRender.apply(this, arguments); paintExplain(); rfPaintIndex(); return r; };
+  renderApp = function () { const r = rfRender.apply(this, arguments); paintExplain(); return r; };
 
   /* ---- 6. Facts: what is true right now, on one line (not rows that look like settings) ----------------------- */
   PM51.facts = (items, { action } = {}) => `<div class="rf-facts">${items.filter(Boolean).map(f => `<span class="rf-fact${f.tone ? ' tone-' + a(f.tone) : ''}">${f.pill || ''}${f.label ? `<span class="rf-fact-label">${h(f.label)}</span>` : ''}${f.value != null ? `<span class="rf-fact-value">${h(String(f.value))}</span>` : ''}${f.end || ''}</span>`).join('')}${action ? `<span class="rf-facts-end">${typeof action === 'string' ? action : PM51.btn(Object.assign({ small: true }, action))}</span>` : ''}</div>`;

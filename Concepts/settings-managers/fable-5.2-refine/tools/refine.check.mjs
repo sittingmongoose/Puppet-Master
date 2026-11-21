@@ -84,16 +84,21 @@ export const tests = {
 		await t.check('the row\'s own About button is still there', (await shown(f, `${block('app-input')} .o55-about`)) > 10);
 	},
 
-	async '"On this page" shows only on a long page, and lists only that page'(t) {
-		const f = await openSettings(t);
-		await go(f, 'servers-access', 'servers');
-		await t.check('a manager with tabs has no side column', (await shown(f, '#pm-settings-root .page-index')) === 0);
-		await go(f, 'general', 'app-input');
-		await t.check('a long page without tabs has it', (await shown(f, '#pm-settings-root .page-index')) === 1);
-		const groups = await f.evaluate(() => [...document.querySelectorAll('#pm-settings-root .page-index .pm51-index-group')].filter((n) => n.getClientRects().length).map((n) => n.dataset.indexWs));
-		await t.check('it lists this page only', groups.join('|') === 'app-input', groups.join('|'));
-		const links = await shown(f, '#pm-settings-root .page-index .index-link');
-		await t.check('with a link per group', links >= 4, String(links));
+	async 'left as Jared asked: the tab strips are centred and the side column lists the chapter'(t) {
+		const f = await openSettings(t, [1920, 1080]);
+		await go(f, 'ai', 'providers');
+		const got = await f.evaluate((sel) => {
+			const mid = (r) => r.left + r.width / 2;
+			const strip = document.querySelector('#pm-settings-root .workspace-tabs'), tabs = [...strip.querySelectorAll('.workspace-tab')];
+			const first = tabs[0].getBoundingClientRect(), last = tabs[tabs.length - 1].getBoundingClientRect(), sr = strip.getBoundingClientRect();
+			const page = document.querySelector(`${sel} .pm51-mgr > .pm51-tabs`), body = document.querySelector(`${sel} .pm51-mgr`);
+			const index = document.querySelector('#pm-settings-root .page-index');
+			return { top: Math.round((first.left + last.right) / 2 - mid(sr)), page: Math.round(mid(page.getBoundingClientRect()) - mid(body.getBoundingClientRect())),
+				index: !!index && index.getClientRects().length > 0, groups: [...document.querySelectorAll('#pm-settings-root .page-index .pm51-index-group')].filter((n) => n.getClientRects().length).length };
+		}, block('providers'));
+		await t.check('the chapter\'s tab strip is centred (FO-184)', Math.abs(got.top) <= 3, `${got.top} px off`);
+		await t.check('the manager\'s tab strip is centred (FO-184)', Math.abs(got.page) <= 3, `${got.page} px off`);
+		await t.check('the side column is there on a manager with tabs, with every manager of the chapter (FO-185)', got.index && got.groups === 4, JSON.stringify(got));
 	},
 
 	async 'Servers › Home & Location: facts on one line, then the three choices'(t) {

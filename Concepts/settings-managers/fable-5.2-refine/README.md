@@ -23,8 +23,8 @@ byte-identical to `Concepts/PMConcept7.html` at that commit.
 browser-check run Concepts/settings-managers/fable-5.2-refine/tools --set page=<refined.html> --set before=<PMConcept7.html of the same base>
 ```
 
-Eight tests by real clicks (`tools/refine.check.mjs`): the chapter move and old links; Explain; the "On this page"
-column; Servers' Home tab; the one home of a service's switching rules; the example staying in view in Editor and
+Eight tests by real clicks (`tools/refine.check.mjs`): the chapter move and old links; Explain; the centred tab
+strips and the side column, left as they are; Servers' Home tab; the one home of a service's switching rules; the example staying in view in Editor and
 Terminal Customize, Customize Pip and Adjust NieR; and **nothing was dropped**: every setting id and every action of
 the unchanged page is still on some page of the refined one (920 settings, 73 views, on 2026-11-20).
 
@@ -33,8 +33,7 @@ the unchanged page is still on some page of the refined one (920 settings, 73 vi
 | Change | Where it is made |
 |---|---|
 | **A row is its name and its control.** The sentence under a row, a section, a tab or a page shows when **Explain** is on (one button beside Page options, remembered) and in the row's "?" as before. | `styles.d/95-refine.css`, `managers/90-refine-frame.js` |
-| **One way to move, shown once.** The chapter list names the chapters. A chapter with one manager has no tab strip above it. The first manager's name is not repeated under its own tab. Tab strips sit at the left. | same |
-| **"On this page" only on long pages.** The side column listed every manager of the chapter and every tab, which the tab strips already do. It now lists the groups of the page in view, on pages without tabs that have four groups or more. | same |
+| **Less repeated around a manager.** The chapter list names the chapters. A chapter with one manager has no tab strip above it. The first manager's name is not repeated under its own tab. | same |
 | **A page is a column you can read** (at most 1080 px wide), so a row's name and its control stay within reach. | `95-refine.css` |
 | **Status is one line of facts**, not rows that look like settings (`PM51.facts`). | `90-refine-frame.js` |
 | **Nothing here yet** is one line, not a tall box. **More options** is a quiet line, not a dashed box. Counters are one line. A list's add button says what it adds. | `95-refine.css` |
@@ -82,7 +81,28 @@ Nothing a person can do was removed. Each line says where the same thing still i
 
 ## Left alone on purpose
 
+- **The centred tab strips and the side column with its scroll highlight.** Jared asked for both (2026-11-13, and
+  again on 2026-11-20). A first pass of this work moved the tabs to the left and hid the side column on managers with
+  tabs; stream F's own checks caught it and both are back exactly as PMConcept7 has them.
+
 - Personas' model lines, tag input, details line and list filter; every "Same as the project" line; every model
   field; the Abilities "For the whole project" highlight; account-model persistence in the Models manager. Streams F
   and P are changing those.
 - Browser & SCM › "Depends on": a check of stream F's kit names it.
+
+## Stream F's checks that need a small change when this is merged
+
+Run on 2026-11-20 against this build and against the unchanged page, the same way on the same computer. These fail
+only here, and each for a change made on purpose:
+
+| Check | Why it fails here | What it should read instead |
+|---|---|---|
+| `servers-manager` (N-1) | It reads the "Role" row of a server | The line under the server's name, which says the role |
+| `settings-look-editors` (B-16) | It expects the small docked copy of Pip's team | The team itself, which now stays in view |
+| `settings-menus-customize` (N-4) | After "Update…" it looks for the server's menu on the same page | Servers is its own chapter, so "Update…" leaves it; go back first |
+| `settings-providers-truth` (A2 B-3) | It reads the rail's health box | The count beside Settings Home |
+| `settings-detail-values`, `settings-dialog-lines`, `settings-confirm-once`, `settings-min-text` | Their walkers open Servers as `system/servers` and wait for the System chapter to be the open one, or stay on Servers after "Update…" | The chapter is `servers-access` |
+
+Failing on the unchanged page too (not this work): `own-servers`, `servers-away-guide`, `settings-base-words`,
+`settings-folder-rows`.
+
