@@ -55,10 +55,10 @@ globalThis.MutationObserver = function (callback) { observeMutations = callback;
 globalThis.requestAnimationFrame = () => 0;
 globalThis.cancelAnimationFrame = () => {};
 globalThis.ResizeObserver = function () { this.observe = () => {}; this.disconnect = () => {}; };
-const dispatch = (type) => {
-	const e = { type, target: sc };
+const dispatch = (type, target = sc) => {
+	const e = { type, target, composedPath: () => [target, sc, windowStub] };
 	for (const fn of listeners.window.capture[type] || []) fn(e);
-	for (const l of listeners.sc) if (l.type === type) l.fn(e);
+	for (const l of listeners.sc) if (l.type === type && (type !== 'scroll' || target === sc || l.capture)) l.fn(e);
 	for (const fn of listeners.window.bubble[type] || []) fn(e);
 };
 
@@ -88,6 +88,8 @@ dispatch('wheel');   // the burst's first tick
 ops.push({ t: clock, op: 'wheel' }); // the marker's mutation is observed after the dispatch (MutationObserver microtask)
 dispatch('scroll');  // its scroll, the last input
 const scrollAt = clock;
+dispatch('scroll', {});
+assert.equal(R.scrolls.length, 1, 'a descendant scroll does not re-arm the Usage pane hold');
 runDue();
 const recorded = R.stop();
 assert.equal(recorded.timer.entered, recorded.probe.fired + 2, 'capture the actual entry before the page fit');

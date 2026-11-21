@@ -49,7 +49,7 @@ export const INSTALL = () => {
 	const armProbe = (t) => { R.probe = { due: t + 150, fired: null }; clearTimeout(R.probeTimer); R.probeTimer = nativeTimeout(() => { R.probe.fired = performance.now(); }, 150); };
 	const onInput = (list) => (e) => {
 		if (!R.on) return;
-		if (!(e.target === sc || (sc.contains && sc.contains(e.target)))) return;
+		if (list === 'scrolls' ? e.target !== sc : !e.composedPath().includes(sc)) return;
 		const t = performance.now();
 		R[list].push(t); armProbe(t);
 	};
