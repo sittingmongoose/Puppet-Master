@@ -803,7 +803,10 @@ PM51.on('toggle-roster', el => { state.resourceRosterOpen = !state.resourceRoste
 const applyRosterFilter = el => {
   const roster = el.closest('.resource-roster'), list = roster?.querySelector('.roster-list'); if (!list) return;
   const q = String(el.value || '').toLowerCase(), rows = [...list.querySelectorAll('.resource-row')];
-  rows.forEach(row => { row.hidden = !!q && !row.textContent.toLowerCase().includes(q); });
+  rows.forEach(row => {
+    const extra = row.dataset.filterText || '';
+    row.hidden = !!q && !row.textContent.toLowerCase().includes(q) && !extra.toLowerCase().includes(q);
+  });
   const empty = !!q && !rows.some(row => !row.hidden);
   let message = roster.querySelector('.pm51-filter-empty');
   if (!message) {

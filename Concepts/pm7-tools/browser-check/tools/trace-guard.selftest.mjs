@@ -57,12 +57,27 @@ assert.ok(blind.mainFrames.renderedPerSec <= 10, 'OLD: Settings rendered frames 
 assert.ok(blind.mainFrames.perSec <= startCap, `OLD: Settings starts passed at 0/s against ${startCap}`);
 assert.equal(tg.traceJudgeable(blind).ok, false, 'NEW: perf-still-page cannot judge its main-frame rows from it');
 
+// TB6 item 4: perf-stop-chip-beat's dispatch count and perf-stage-observers' script time. Both read 0 on a
+// renderer-less trace and passed their bounds; the guard makes them could not judge.
+const oldStopChip = (x) => (x && x.dispatched ? (x.dispatched.animationiteration || 0) : null) === 0;
+const oldStageObs = (x, max) => 0 <= max;
+assert.equal(blind.dispatched.animationiteration || 0, 0, 'a renderer-less trace reports 0 dispatched animationiteration events');
+assert.equal(oldStopChip(blind), true, 'OLD: perf-stop-chip-beat passed "no animationiteration dispatched" without a renderer');
+assert.equal(oldStageObs(blind, 7), true, 'OLD: perf-stage-observers passed "at most 7 ms/s" at 0 without a renderer');
+assert.equal(tg.traceJudgeable(blind).ok, false, 'NEW: both checks refuse that trace as could not judge');
+const newStopChip = (x) => tg.traceJudgeable(x).ok && ((x.dispatched.animationiteration || 0) === 0);
+const newStageObs = (x, max) => tg.traceJudgeable(x).ok && 0 <= max;
+assert.equal(newStopChip(blind), false, 'NEW: perf-stop-chip-beat fails the renderer-less trace as could not judge');
+assert.equal(newStageObs(blind, 7), false, 'NEW: perf-stage-observers fails the renderer-less trace as could not judge');
+
 // a measured trace carries the renderer and both flags; a renderer without the Layout category fails only where layouts are judged
 const measured = ft.summarise([...base, meta(20, 2, 'CrRendererMain'),
 	{ name: 'ProxyMain::BeginMainFrame', ph: 'X', ts: 200000, dur: 2000, pid: 20, tid: 2, cat: 'devtools.timeline' },
 	{ name: 'Layout', ph: 'X', ts: 210000, dur: 1000, pid: 20, tid: 2, cat: 'devtools.timeline', args: { beginData: { partialLayout: false } } }], { url: page });
 assert.deepEqual(measured.renderer, { pid: 20, tid: 2 }, 'a measured trace names its renderer');
 assert.deepEqual(tg.traceJudgeable(measured, { layouts: true }), { ok: true, why: '' }, 'and can be judged');
+assert.equal(newStopChip(measured), true, 'a measured trace still judges no dispatch as a pass');
+assert.equal(newStageObs({ ...measured, scripts: [] }, 7), true, 'and a measured trace still judges its script time');
 const noCat = ft.summarise([...base.filter((e) => e.cat !== 'devtools.timeline'), meta(20, 2, 'CrRendererMain'),
 	{ name: 'ProxyMain::BeginMainFrame', ph: 'X', ts: 200000, dur: 2000, pid: 20, tid: 2 }], { url: page });
 assert.equal(noCat.renderer !== null, true, 'a trace can name the renderer without the Layout category');
