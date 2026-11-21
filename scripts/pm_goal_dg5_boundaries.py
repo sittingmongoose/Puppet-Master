@@ -1084,6 +1084,10 @@ def _sealed(action, work, files):
 GUARD_CODE = re.compile(r"\b(?:require|guard|halt|refuse)\(\s*'([^']+)'")
 # Guard helper functions: a refusal raised inside one of these originates at its caller.
 GUARD_HELPERS = frozenset(('require', 'guard', 'refuse', 'halt', 'shared_require', 'shared_refuse'))
+# A non-site row (schema, number, date-time, boolean) refuses inside a shared checker called at
+# its site: these frames may lie between that site and the raise (NUMRULE, a bank's validate path).
+CHECKER_FILES = ('pm_goal_test_numrule.py',)
+CHECKER_FUNCTIONS = frozenset(('validate', '_checked', 'errors', 'check')) | GUARD_HELPERS
 # Static single-raise-site check (addendum 11 (2)): the admission-gate worker's importable module
 # (admission-gate/gate-e2/code_sites.py: OwnerSites({path: text}).unique(code) -> (ok, evidence)),
 # loaded by path from PM_DG5_GATE_E2 or the default below, built once per run over this source's
@@ -1116,20 +1120,19 @@ def refusal_origin(error, code):
             break
         origin, depth = earlier, number
     here = str(Path(__file__).resolve())
-    frames = traceback.extract_tb(origin.__traceback__)
-    site = None
-    for frame in reversed(frames):
-        if str(Path(frame.filename).resolve()) == here or frame.name in GUARD_HELPERS:
-            continue
+    frames = []
+    for frame in traceback.extract_tb(origin.__traceback__):
         path = Path(frame.filename)
         try:
             where = str(path.resolve().relative_to(ROOT))
         except ValueError:
             where = str(path)
-        site = [where, frame.lineno]
-        break
+        bridge_or_guard = str(path.resolve()) == here or frame.name in GUARD_HELPERS
+        checker = bridge_or_guard or path.name in CHECKER_FILES or frame.name in CHECKER_FUNCTIONS
+        frames.append([where, frame.lineno, frame.name, bridge_or_guard, checker])
+    site = next(([f[0], f[1]] for f in reversed(frames) if not f[3]), None)
     return dict(site=site, chain_depth=depth, chain_length=len(chain), origin_type=type(origin).__name__,
-                frames=[[Path(f.filename).name, f.lineno, f.name] for f in frames[-5:]])
+                frames=frames[-8:])
 
 
 def static_single_raise_site(code):
@@ -1160,9 +1163,11 @@ def row_code_check(target, code, origin=None, refusing_sites=()):
     errors list is not trusted. The code must be the row's own guard code, and its
     origin must be verified:
       (1) the recorded origin frame (`refusal_origin`) is the row's guard: for a site row
-          `dg5/site/<file>:<line>`, the origin site is that line; for any other row
-          (schema, number, date-time, boolean), the origin traceback passes through the
-          site where that row refused in this trial (`refusing_sites`); or
+          `dg5/site/<file>:<line>`, the origin site (innermost frame outside this bridge and
+          the guard helpers) is that line; for any other row (schema, number, date-time,
+          boolean), the site where that row refused in this trial (`refusing_sites`) is in
+          the origin traceback with only checker frames inside it (`CHECKER_FILES`,
+          `CHECKER_FUNCTIONS`: NUMRULE, a bank's validate path, guard helpers); or
       (2) the code has exactly one raise site in the owner source (the admission gate's
           static check, `static_single_raise_site`), which a run-time-built code fails.
     Neither holds: unverifiable, fails closed (own False).
@@ -1199,10 +1204,12 @@ def row_code_check(target, code, origin=None, refusing_sites=()):
     if site is not None and origin_site == site:
         return dict(out, own=True, verified_by='origin frame at the row guard')
     if site is None and origin:
-        sites = [list(s) for n, s in refusing_sites if n == target]
-        through = {(Path(f[0]).name, f[1]) for f in origin.get('frames', [])}
-        if any((Path(s[0]).name, s[1]) in through for s in sites):
-            return dict(out, own=True, verified_by='origin traceback passes through the row refusing site')
+        sites = {tuple(s) for n, s in refusing_sites if n == target}
+        for where, line, _, _, checker in reversed(origin.get('frames') or []):
+            if (where, line) in sites:
+                return dict(out, own=True, verified_by='origin at the row refusing site (only checker frames inside)')
+            if not checker:
+                break
     static = static_single_raise_site(code)
     out['static_check'] = static
     if static and static.get('ok'):
