@@ -292,9 +292,25 @@ def tracklist(worktree, commit=None):
     return set(paths.split("\0")) - {""}
 
 
-def input_manifest(root, worktree, tracked, commit=None):
-    manifest = {name: regular_hash(root, name) for name in sorted(copies(root, worktree, tracked, commit))}
+def input_stat(path):
+    try:
+        info = path.lstat()
+    except (FileNotFoundError, NotADirectoryError):
+        return None
+    return info.st_size, info.st_mtime_ns, info.st_ino
+
+
+def input_manifest(root, worktree, tracked, commit=None, *, before_hash=None):
+    def remember(name):
+        if before_hash is not None:
+            before_hash[name] = input_stat(root / name)
+
+    manifest = {}
+    for name in sorted(copies(root, worktree, tracked, commit)):
+        remember(name)
+        manifest[name] = regular_hash(root, name)
     link = root / RAW_LINK
+    remember(RAW_LINK)
     if not link.is_symlink() or not link.is_dir():
         raise Refusal(f"missing or invalid raw evidence link: {link}")
     target = link.resolve(strict=True)
@@ -302,8 +318,26 @@ def input_manifest(root, worktree, tracked, commit=None):
         raise Refusal(f"raw evidence link leaves the evidence share: {link} -> {target}")
     manifest[RAW_LINK] = f"symlink:{target}"
     for name in sorted(raw_paths(worktree, tracked, commit)):
+        remember(name)
         manifest[name] = regular_hash(root, name, through_raw_link=True)
     return manifest
+
+
+def guarded_input_manifest(root, candidate):
+    tracked = tracklist(root, candidate)
+    for attempt in range(2):
+        before_hash = {}
+        try:
+            manifest = input_manifest(root, root, tracked, candidate, before_hash=before_hash)
+        except (OSError, Refusal):
+            if attempt == 0 and any(input_stat(root / name) != saved for name, saved in before_hash.items()):
+                continue
+            raise
+        # Revisit earlier files too: a writer can replace one after it was hashed.
+        changed = sorted(name for name, saved in before_hash.items() if input_stat(root / name) != saved)
+        if not changed:
+            return manifest
+    raise Refusal("shared publication ignored inputs changed during the re-scan: " + ", ".join(changed))
 
 
 def require_same_inputs(expected, actual, label):
@@ -836,8 +870,7 @@ def publication_preflight(root, base, candidate, expected_inputs):
                              "-z", "--", *sorted(present)).stdout.split("\0")
             if any(collisions):
                 raise Refusal("candidate would overwrite ignored files: " + ", ".join(sorted(filter(None, collisions))))
-    tracked = tracklist(root, candidate)
-    require_same_inputs(expected_inputs, input_manifest(root, root, tracked, candidate), "shared publication")
+    require_same_inputs(expected_inputs, guarded_input_manifest(root, candidate), "shared publication")
 
 
 def shared_shards(folder, touched):
@@ -942,16 +975,22 @@ class Topic(NamedTuple):
     worktree: str
     branch: str
     tip: str
+    git_common_dir: str | None = None
 
 
 def parse_topic(raw):
-    if not isinstance(raw, dict) or raw.keys() != set(Topic._fields):
+    fields = set(Topic._fields)
+    if not isinstance(raw, dict) or raw.keys() not in (fields, fields - {"git_common_dir"}):
         raise Refusal("invalid topic cleanup identity in landing holder")
     topic = Topic(**raw)
     if not isinstance(topic.worktree, str) or not Path(topic.worktree).is_absolute():
         raise Refusal("topic cleanup worktree must be an absolute path")
     if not isinstance(topic.branch, str):
         raise Refusal("topic cleanup branch must be a branch name")
+    if topic.git_common_dir is not None and (
+        not isinstance(topic.git_common_dir, str) or not Path(topic.git_common_dir).is_absolute()
+    ):
+        raise Refusal("topic cleanup Git directory must be an absolute path")
     check_ref(topic.branch)
     sha(topic.tip, "topic cleanup tip")
     return topic
@@ -1413,7 +1452,12 @@ def push_checked_main(folder, host, head, tree, base, touched, lock, plans_follo
         if full_main(SHARED) != base:
             return False
         if topic:
-            require_topic(Path(topic.worktree), check_ref(topic.branch), topic.tip)
+            worktree = Path(topic.worktree)
+            require_topic(worktree, check_ref(topic.branch), topic.tip)
+            common = str(common_git_dir(worktree))
+            if topic.git_common_dir not in (None, common):
+                raise Refusal(f"topic worktree's Git directory changed: {worktree}")
+            topic = topic._replace(git_common_dir=common)
         publication_preflight(SHARED, base, head, inputs)
         lock.begin_publication(base, head, plans_followup or reseal, completes_followup, old_head, reseal, topic)
         merge = git(SHARED, "merge", "--ff-only", "--no-overwrite-ignore", head, check=False, guard_fd=guard_fd)
@@ -1464,19 +1508,50 @@ def push_checked_main(folder, host, head, tree, base, touched, lock, plans_follo
     raise Refusal(f"primary main push failed: {result.stderr.strip()}")
 
 
-def remove_topic(worktree, branch, head, *, guard_fd=None):
+def common_git_dir(worktree):
+    return Path(git(worktree, "rev-parse", "--path-format=absolute", "--git-common-dir").stdout.strip()).resolve()
+
+
+def remove_topic(worktree, branch, head, *, guard_fd=None, recorded_git_dir=None):
     ref = check_ref(branch)
+    common = common_git_dir(worktree)
+    if recorded_git_dir is not None and common != Path(recorded_git_dir):
+        raise Refusal(f"topic worktree's Git directory changed: {worktree}")
     fetch_primary(worktree, guard_fd)
     fetched_main = full_main(worktree)
     git(worktree, "merge-base", "--is-ancestor", head, fetched_main)
     if (git(worktree, "symbolic-ref", "HEAD").stdout.strip() != ref
             or revision(worktree, ref + "^{commit}") != head or status_paths(worktree)):
         raise Refusal(f"topic worktree changed during landing. Inspect before removing {worktree}")
-    common = Path(git(worktree, "rev-parse", "--path-format=absolute", "--git-common-dir").stdout.strip())
     git(common, "worktree", "remove", str(worktree), guard_fd=guard_fd)
     # Git's checked-out branch in this clone can lag fetched main. Delete only
     # the proven tip, even if another writer updates the ref after worktree removal.
     git(common, "update-ref", "-d", ref, head, guard_fd=guard_fd)
+
+
+def finish_absent_topic_cleanup(topic, guard_fd):
+    if topic.git_common_dir is None:
+        raise Refusal("the original topic worktree is absent and its Git directory was not recorded")
+    common = Path(topic.git_common_dir)
+    if common_git_dir(common) != common:
+        raise Refusal(f"the recorded Git directory changed: {common}")
+    fetch_primary(common, guard_fd)
+    ref = check_ref(topic.branch)
+    if revision(common, ref) != topic.tip:
+        raise Refusal(f"the topic branch changed: {ref}")
+    if not is_ancestor(common, topic.tip, full_main(common)):
+        raise Refusal(f"the topic tip is not in fetched primary main: {topic.tip}")
+    worktree = Path(topic.worktree)
+    resolved_worktree = worktree.resolve()
+    registry = git(common, "worktree", "list", "--porcelain", "-z").stdout
+    for row in registry.split("\0\0"):
+        fields = row.split("\0")
+        path = fields[0].removeprefix("worktree ")
+        if f"branch {ref}" in fields or (path and Path(path).resolve() == resolved_worktree):
+            raise Refusal(f"the worktree or its branch is still registered: {worktree}")
+    if os.path.lexists(worktree):
+        raise Refusal(f"the topic worktree reappeared: {worktree}")
+    git(common, "update-ref", "--no-deref", "-d", ref, topic.tip, guard_fd=guard_fd)
 
 
 def complete_topic_cleanup(lock):
@@ -1486,9 +1561,12 @@ def complete_topic_cleanup(lock):
         topic = lock.cleanup
         worktree = Path(topic.worktree)
         try:
-            if not worktree.is_dir() or worktree.is_symlink() or worktree.resolve() == SHARED.resolve():
-                raise Refusal("the original topic worktree is absent or moved")
-            remove_topic(worktree, topic.branch, topic.tip, guard_fd=guard_fd)
+            if worktree.is_symlink() or worktree.resolve() == SHARED.resolve():
+                raise Refusal("the original topic worktree is moved or unsafe")
+            if worktree.is_dir():
+                remove_topic(worktree, topic.branch, topic.tip, guard_fd=guard_fd, recorded_git_dir=topic.git_common_dir)
+            else:
+                finish_absent_topic_cleanup(topic, guard_fd)
         except (Refusal, OSError) as exc:
             raise Refusal(f"cleanup owed for {topic.branch} at {topic.tip} in {worktree}. "
                           f"Inspect it before removing the worktree or deleting the branch: {exc}") from exc
@@ -1549,17 +1627,17 @@ def live_run(args, root, ref):
     host = args.checks_on
     worktree = branch_worktree(root, ref)
     expected = require_topic(worktree, ref)
+    current_topic = Topic(str(worktree), args.branch, expected, str(common_git_dir(worktree)))
     agent = args.agent or os.environ.get("USER")
     if not agent or not re.fullmatch(r"[A-Za-z0-9_.-]+", agent):
         raise Refusal("supply your landing name with --agent")
     with LandingLock(agent, args.branch) as lock:
         require_topic(worktree, ref, expected)
-        current_topic = Topic(str(worktree), args.branch, expected)
         recovering_topic = lock.cleanup or (lock.publication.topic if lock.publication else None)
         recovered_code = recover_pending_landing(host, lock, args.wait_for_review)
         if recovered_code in (2, 3):
             return recovered_code
-        if recovering_topic == current_topic and not worktree.exists():
+        if recovering_topic in (current_topic, current_topic._replace(git_common_dir=None)) and not worktree.exists():
             return recovered_code
         while True:
             fetch_shared(lock)
@@ -1594,7 +1672,7 @@ def live_run(args, root, ref):
                     continue
                 touched = changed_paths(SHARED, base, head)
                 followup = any(name.startswith("Plans/") for name in touched)
-                topic = Topic(str(worktree), args.branch, head)
+                topic = current_topic._replace(tip=head)
                 if not push_checked_main(folder, host, head, tree, base, touched, lock, followup, topic=topic):
                     say("origin/main moved during the push. Fetching, rebasing and checking again.")
                     continue

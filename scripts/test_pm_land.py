@@ -246,6 +246,48 @@ raise SystemExit(land.main())
         marker = land.json.loads(land.holder_field((self.lock_path / "holder.txt").read_text(), "publication"))
         self.assertEqual(marker["phase"], "fast-forward-pending")
 
+    def test_guarded_push_rescans_when_an_already_hashed_receipt_is_replaced(self):
+        name = f"{land.READINESS}/VALIDATOR_RECEIPT.json"
+        later_name = f"{land.READINESS}/ZZ_LAST.json"
+        approved = Path("/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261114/currentness-final")
+        receipt = approved / "VALIDATOR_RECEIPT.json"
+        original = receipt.read_text() if receipt.is_file() else '{"generated_at_utc":"previous"}\n'
+        reissued = land.json.loads(original)
+        reissued["generated_at_utc"] = "2026-11-21T20:49:00+00:00"
+        target = self.put(self.shared, name, original)
+        self.put(self.shared, later_name, "{}\n")
+        replacement = self.put(self.root, "reissued.json", land.json.dumps(reissued))
+        self.git(self.shared, "reset", "--keep", self.base)
+        self.git(self.shared, "update-ref", land.ORIGIN_MAIN, self.base)
+        inputs = land.input_manifest(self.shared, self.shared, land.tracklist(self.shared, self.head), self.head)
+        record = {**self.record, "ignored_inputs": inputs}
+        real_hash = land.regular_hash
+        push_receipt_hashes = []
+
+        def replace_during_scan(root, path, **kwargs):
+            digest = real_hash(root, path, **kwargs)
+            if land.revision(self.shared, "HEAD") == self.head:
+                if path == name:
+                    push_receipt_hashes.append(digest)
+                elif path == later_name and replacement.exists():
+                    self.assertEqual(push_receipt_hashes, [inputs[name]])
+                    replacement.replace(target)
+            return digest
+
+        with (patch.object(land, "verify_over_ssh", return_value=record),
+              patch.object(land, "shared_shards"),
+              patch.object(land, "regular_hash", side_effect=replace_during_scan),
+              patch.object(land, "push_main", return_value=subprocess.CompletedProcess([], 0, "", "")) as push,
+              self.assertRaisesRegex(land.Refusal, f"shared publication ignored input mismatch: {name}")):
+            with land.LandingLock("first", "fix/topic") as lock:
+                land.push_checked_main(self.folder, "nas1", self.head, self.tree, self.base,
+                                       {"tracked.txt"}, lock, False)
+        push.assert_not_called()
+        self.assertEqual(push_receipt_hashes, [inputs[name], land.file_hash(target)])
+        self.assertEqual(land.revision(self.shared, "HEAD"), self.head)
+        marker = land.json.loads(land.holder_field((self.lock_path / "holder.txt").read_text(), "publication"))
+        self.assertEqual(marker["phase"], "fast-forward-pending")
+
     def test_shared_new_globbed_report_refused(self):
         self.put(self.shared, "Plans/.audits/audit-new/FINAL_REPORT.md", "new")
         with self.assertRaisesRegex(land.Refusal, "shared checkout ignored input mismatch:.*audit-new"):
@@ -653,7 +695,7 @@ raise SystemExit(land.main())
     def test_interrupted_push_finishes_original_topic_cleanup(self):
         branch = "fix/interrupted"
         self.git(self.remote, "switch", "-c", branch)
-        topic = land.Topic(str(self.remote), branch, self.head)
+        topic = land.Topic(str(self.remote), branch, self.head, str(land.common_git_dir(self.remote)))
         marker = self.interrupt_publication("push", primary_plans=False, topic=topic)
         self.assertEqual(land.json.loads(land.holder_field(marker, "publication"))["topic"], topic._asdict())
         with patch.object(land.time, "time", return_value=land.time.time() + 91 * 60):
@@ -663,6 +705,72 @@ raise SystemExit(land.main())
         self.assertNotEqual(self.git(self.shared, "show-ref", "--verify", land.check_ref(branch),
                                     check=False).returncode, 0)
         self.assertFalse(self.lock_path.exists())
+
+    def parked_topic_cleanup(self):
+        branch = "fix/interrupted"
+        self.git(self.remote, "switch", "-c", branch)
+        topic = land.Topic(str(self.remote), branch, self.head)
+        self.interrupt_publication("push", primary_plans=False, topic=topic)
+        with patch.object(land.time, "time", return_value=land.time.time() + 91 * 60):
+            with land.LandingLock("first-recovery", "fix/other-topic") as lock:
+                self.assertTrue(land.reconcile_publication(lock))
+                self.assertIsNotNone(lock.cleanup)
+        return land.check_ref(branch)
+
+    def test_cleanup_finishes_after_interruption_between_worktree_removal_and_ref_deletion(self):
+        ref = self.parked_topic_cleanup()
+        self.git(self.shared, "worktree", "remove", str(self.remote))
+        self.assertFalse(self.remote.exists())
+        self.assertEqual(land.revision(self.shared, ref), self.head)
+        self.assertNotIn(str(self.remote), self.git(self.shared, "worktree", "list", "--porcelain").stdout)
+
+        with patch.object(land.time, "time", return_value=land.time.time() + 91 * 60):
+            with land.LandingLock("next", "fix/next") as lock:
+                self.assertEqual(land.recover_pending_landing("nas1", lock, False), 0)
+                self.assertIsNone(lock.cleanup)
+        self.assertNotEqual(self.git(self.shared, "show-ref", "--verify", ref, check=False).returncode, 0)
+        self.assertFalse(self.lock_path.exists())
+
+    def test_absent_worktree_cleanup_keeps_a_still_registered_checkout(self):
+        ref = self.parked_topic_cleanup()
+        self.remote.rename(self.root / "moved-topic")
+        self.assertIn(str(self.remote), self.git(self.shared, "worktree", "list", "--porcelain").stdout)
+        self.assert_absent_cleanup_refused(ref, self.head, "still registered")
+
+    def test_absent_worktree_cleanup_keeps_a_changed_branch(self):
+        ref = self.parked_topic_cleanup()
+        self.git(self.shared, "worktree", "remove", str(self.remote))
+        self.git(self.shared, "update-ref", ref, self.base, self.head)
+        self.assert_absent_cleanup_refused(ref, self.base, "topic branch changed")
+
+    def test_absent_worktree_cleanup_does_not_delete_an_intervening_ref_update(self):
+        ref = self.parked_topic_cleanup()
+        self.git(self.shared, "worktree", "remove", str(self.remote))
+        real_git = land.git
+
+        def update_before_deletion(root, *args, **kwargs):
+            if args[:4] == ("update-ref", "--no-deref", "-d", ref):
+                self.assertEqual(args[4:], (self.head,))
+                real_git(root, "update-ref", ref, self.base, self.head)
+            return real_git(root, *args, **kwargs)
+
+        with patch.object(land, "git", side_effect=update_before_deletion):
+            self.assert_absent_cleanup_refused(ref, self.base, "but expected")
+
+    def test_absent_worktree_cleanup_keeps_tip_missing_from_fresh_primary_main(self):
+        ref = self.parked_topic_cleanup()
+        self.git(self.shared, "worktree", "remove", str(self.remote))
+        self.assertEqual(land.full_main(self.shared), self.head)
+        self.git(self.root / "origin.git", "update-ref", land.MAIN_REF, self.base, self.head)
+        self.assert_absent_cleanup_refused(ref, self.head, "not in fetched primary main")
+
+    def assert_absent_cleanup_refused(self, ref, tip, reason):
+        with (patch.object(land.time, "time", return_value=land.time.time() + 91 * 60),
+              self.assertRaisesRegex(land.Refusal, reason)):
+            with land.LandingLock("next", "fix/next") as lock:
+                land.recover_pending_landing("nas1", lock, False)
+        self.assertEqual(land.revision(self.shared, ref), tip)
+        self.assertTrue(land.holder_field((self.lock_path / "holder.txt").read_text(), "cleanup-owed"))
 
     def test_resume_of_same_published_topic_finishes_after_cleanup(self):
         branch = "fix/interrupted"
@@ -680,7 +788,7 @@ raise SystemExit(land.main())
     def test_interrupted_push_hands_off_a_changed_original_worktree(self):
         branch = "fix/interrupted"
         self.git(self.remote, "switch", "-c", branch)
-        topic = land.Topic(str(self.remote), branch, self.head)
+        topic = land.Topic(str(self.remote), branch, self.head, str(land.common_git_dir(self.remote)))
         self.interrupt_publication("push", primary_plans=False, topic=topic)
         changed = self.put(self.remote, "tracked.txt", "another thread's work")
         with (patch.object(land.time, "time", return_value=land.time.time() + 91 * 60),
