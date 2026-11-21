@@ -768,7 +768,10 @@ def rebase_and_push(worktree, ref, base):
     original_head = revision(worktree, "HEAD^{commit}")
     if existing and git(worktree, "merge-base", "--is-ancestor", existing, original_head,
                         check=False).returncode:
-        raise Refusal(f"published topic branch contains work absent from the local branch: {ref}")
+        # A failed push can leave the previously published tip in the local branch's reflog after rebase.
+        prior_tips = git(worktree, "reflog", "show", "--format=%H", ref).stdout.splitlines()
+        if existing not in prior_tips:
+            raise Refusal(f"published topic branch contains work absent from the local branch: {ref}")
     git(worktree, "rebase", base)
     head = revision(worktree, "HEAD^{commit}")
     if head == base:
