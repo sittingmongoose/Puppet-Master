@@ -284,7 +284,10 @@ function syncBodies(panelEl, p, l, panelHidden) {
     if (!rec && (active || (kindDef(l.tabs[tid].kind) || {}).eager)) rec = mountTab(tid, body, visible);
     if (!rec) continue;
     if (rec.host.parentNode !== body) body.appendChild(rec.host);   // a moved tab keeps its instance
+    var firstAgentsCarry = null;
     if (visible && rec.host.hasAttribute('data-pmw-prepared')) {
+      var agentsButton = panelEl.querySelector('.pmw-tab[data-tab-id="dashboard:agents"]');
+      firstAgentsCarry = agentsButton && agentsButton.__lgFirstCarryShown;
       if (rec.raster) rec.raster.cancel();
       rec.host.removeAttribute('data-pmw-prepared');
       rec.host.inert = false;
@@ -312,7 +315,11 @@ function syncBodies(panelEl, p, l, panelHidden) {
          (onPageChange, 90-boot.js) and is told onShow when Home is in front again, so a render meanwhile (a Settings
          change re-laying Home out) wakes none of them. The tab's hidden state still follows the layout. */
       if (inst && homeIsPage()) {
-        try { if (visible && inst.onShow) inst.onShow(); else if (!visible && inst.onHide) inst.onHide(); }
+        try {
+          if (visible && inst.onShow) {
+            if (firstAgentsCarry) inst.onShow(firstAgentsCarry); else inst.onShow();
+          } else if (!visible && inst.onHide) inst.onHide();
+        }
         catch (err) { try { console.error('[pm-home] show/hide failed', err); } catch (_) {} }
       }
       if (visible) queueResize(tid);
@@ -353,7 +360,7 @@ function prepareAgents() {
       // Opacity zero skips raster. As in the look cover, one colour level draws the layer during idle.
       requestAnimationFrame(function () { requestAnimationFrame(function () {
         if (instances[id] !== entry || entry.visible || !homeIsPage()) return;
-        entry.raster = entry.host.animate([{ opacity: 0.004 }, { opacity: 0.004 }], { duration: 160, fill: 'forwards' });
+        entry.raster = entry.host.animate([{ opacity: 0.004 }, { opacity: 0.004 }], { duration: 160 });
       }); });
     }
   }, 1000, { quiet: 160 });

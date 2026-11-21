@@ -2847,8 +2847,21 @@
       L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, Math.max(0, start + P.end - performance.now()) + 1);
     }
     take(T);
-    // A cold press uses the selected pane's laid-out box. Once the reveal is painted, the
-    // chip runs on the compositor so later main-thread work cannot pin it midway along.
+    if (splice && (filesSwitcher(strip) ||
+        (cfg.sel === '.pmw-strip' && target.getAttribute('data-tab-id') === 'dashboard:agents'))) {
+      var afterCarry = function () {
+        return new Promise(function (resolve) {
+          requestAnimationFrame(function () { requestAnimationFrame(resolve); });
+        });
+      };
+      var shown = lead.finished.then(afterCarry, afterCarry);
+      target.__lgFirstCarryShown = shown;
+      shown.then(function () {
+        if (target.__lgFirstCarryShown === shown) target.__lgFirstCarryShown = null;
+      });
+    }
+    // A prepared carry can run on the compositor while the pane is still settling.
+    // Its moving layers take over from the original chip at the first advancing pose.
     if (holdStart && reuse) {
       anims.forEach(function (a) { a.pause(); a.__pmHeld = true; });
       var railPress = filesSwitcher(strip);

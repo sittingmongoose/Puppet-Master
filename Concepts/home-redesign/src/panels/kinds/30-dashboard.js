@@ -199,15 +199,20 @@ function mountAgents(rec) {
   var list = h('div', { class: 'pmw-dash-agent-list' });
   var scroll = h('div', { class: 'pmw-dash-agents' }, [list]);
   rec.stage.appendChild(scroll);
-  var U = WORK();
-  if (!U) { list.appendChild(h('p', { class: 'pmw-dash-agent-empty', text: 'Agents show here once the work projection is running.' })); return; }
-  rec.work = U.list(list, {
-    label: 'Agents at work', empty: 'No agents match this filter.', where: true,
-    filter: function (it) { var f = rec.filter || 'all'; return it.kind === 'agent' && (f === 'all' || U.agentGroup(it) === f); },
-    active: function () { return !rec.gone && (rec.shown || rec.host.hasAttribute('data-pmw-prepared')); },
-    onPaint: function () { if (rec.paintLeft) rec.paintLeft(); }
-  });
-  rec.filterAgents = function () { rec.work.refresh(); };
+  // The work subscription and Pip loaders begin when the first selection shows the list.
+  rec.mountAgentRows = function () {
+    rec.mountAgentRows = null;
+    var U = WORK();
+    if (!U) { list.appendChild(h('p', { class: 'pmw-dash-agent-empty', text: 'Agents show here once the work projection is running.' })); return; }
+    rec.work = U.list(list, {
+      label: 'Agents at work', empty: 'No agents match this filter.', where: true,
+      filter: function (it) { var f = rec.filter || 'all'; return it.kind === 'agent' && (f === 'all' || U.agentGroup(it) === f); },
+      active: function () { return !rec.gone && rec.shown; },
+      onPaint: function () { if (rec.paintLeft) rec.paintLeft(); }
+    });
+  };
+  if (!rec.host.hasAttribute('data-pmw-prepared')) rec.mountAgentRows();
+  rec.filterAgents = function () { if (rec.work) rec.work.refresh(); };
 }
 function setFilter(rec, f) {
   rec.filter = f;
@@ -1051,11 +1056,16 @@ PM_HOME.registerKind('dashboard', {
         if (type === 'agents' && rec.filter !== 'all') o.filter = rec.filter;
         return o;
       },
-      onShow: function () {
+      onShow: function (firstCarry) {
         rec.shown = true;
         if (rec.b) { if (pageActive()) rec.b.show(); }
-        // the agents list repaints only while shown (its own PM_WORK subscription idles while hidden); catch up now
-        else if (type === 'agents' && rec.work) rec.work.refresh();
+        else if (type === 'agents') {
+          function showRows() {
+            if (rec.gone || !rec.shown) return;
+            if (rec.mountAgentRows) rec.mountAgentRows(); else if (rec.work) rec.work.refresh();
+          }
+          if (firstCarry) firstCarry.then(showRows); else showRows();
+        }
         rec.paintLeft();
       },
       onHide: function () {
