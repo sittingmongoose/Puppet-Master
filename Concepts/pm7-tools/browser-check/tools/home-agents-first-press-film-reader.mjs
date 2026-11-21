@@ -16,7 +16,8 @@
 //          11 %, video noise and a hover transition still running stayed under 6 % on Alexis films; 3 % on the rail,
 //          whose Changed tab shows only its icon then: its ink is 4.6 %, its noise 0). The chip's first moving frame may
 //          come at most one frame after that one.
-// An optional fifth argument names another run's judgment (landed main's, say): the result then also says how many
+// Onset is judged on the first-press check's output only (its pointer rests on the tab before the press); for a
+// switcher-carry-steps dump it is reported. An optional fifth argument names another run's judgment (landed main's, say): the result then also says how many
 // frames after the press mark each chip started, and onsetVsReference fails when this chip starts more than one frame
 // later than that one.
 import { spawnSync } from 'node:child_process';
@@ -53,7 +54,7 @@ function firstPress(data) {
 			const [dx, dy, r, kx, ky] = m.slice(1).map(Number);
 			return { o, dx, dy, r, kx, ky };
 		});
-		return { from: data.homeBox, to: data.agentsBox, rail, rec: { box: { x: 0, y: 0, w, h }, kf, dur },
+		return { from: data.homeBox, to: data.agentsBox, rail, rested: true, rec: { box: { x: 0, y: 0, w, h }, kf, dur },
 			start: mark(rail ? 'First Explorer to Changed press' : 'First Home to Agents press'),
 			end: mark(rail ? 'Changed settled' : 'Agents settled') + 0.05 };
 	}
@@ -73,7 +74,7 @@ function firstPress(data) {
 }
 
 function measure() {
-	const { from, to, rail, rec, start, end } = firstPress(json(observations));
+	const { from, to, rail, rested, rec, start, end } = firstPress(json(observations));
 	if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start || !(rec.dur > 0) || rec.kf?.length < 2) {
 		throw new Error('Missing press marks or a readable motion reference');
 	}
@@ -186,7 +187,10 @@ function measure() {
 		markFrame: frames[Math.max(0, at0)]?.frame ?? null, response: responseAt < 0 ? null : frames[responseAt].frame, firstMove: moveAt < 0 ? null : frames[moveAt].frame,
 		responseMs: since(responseAt), firstMoveMs: since(moveAt), frames: responseAt < 0 || moveAt < 0 ? null : moveAt - responseAt
 	};
-	const onsetOk = onset.frames != null && onset.frames <= ONSET_FRAMES;
+	// (judged on the first-press check's output, whose pointer rests on the tab before the press; a switcher-carry-steps
+	// dump's press comes with its pointer's arrival, so its first change can be the hover's: reported, not judged)
+	const onsetOk = !rested || (onset.frames != null && onset.frames <= ONSET_FRAMES);
+	onset.judged = !!rested;
 	let vsReference = null;
 	if (reference) {
 		const ref = json(reference), refMove = ref.onset?.firstMoveMs;
@@ -243,7 +247,7 @@ try {
 		`; tab response F${o.response ?? '?'} (+${o.responseMs ?? '?'} ms), chip moves F${o.firstMove ?? '?'} (+${o.firstMoveMs ?? '?'} ms), onset ${o.frames ?? '?'} frame(s)` +
 		`; view shows F${result.pane?.frame ?? '?'} (+${result.pane?.ms ?? '?'} ms)` +
 		(result.vsReference ? `; reference chip +${result.vsReference.referenceFirstMoveMs ?? '?'} ms, view +${result.vsReference.referencePaneMs ?? '?'} ms` : '') +
-		` [step ${result.rules.step ? 'ok' : 'FAIL'}, hold ${result.rules.hold ? 'ok' : 'FAIL'}, onset ${result.rules.onset ? 'ok' : 'FAIL'}` +
+		` [step ${result.rules.step ? 'ok' : 'FAIL'}, hold ${result.rules.hold ? 'ok' : 'FAIL'}, onset ${!o.judged ? 'not judged (no rest before the press)' : result.rules.onset ? 'ok' : 'FAIL'}` +
 		(result.vsReference ? `, chip vs reference ${result.rules.onsetVsReference ? 'ok' : 'FAIL'}, view vs reference ${result.rules.paneVsReference ? 'ok' : 'FAIL'}` : '') + ']');
 	process.exitCode = result.verdict === 'PASS' ? 0 : 1;
 } catch (error) {
