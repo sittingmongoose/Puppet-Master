@@ -311,11 +311,17 @@ PROOFS = {
         [(R3, 797), (N3, 944), (N3, 1069)],
         ['dg5/site/pm_goal_dg_ca3_native.py:1069']),
     'dg5/site/pm_goal_dg_ca3_route.py:801': _p(
-        "owners_native compares the stored result cell with the result "
-        "record from d06.readback, which reads that same cell (w.value) "
-        "moments earlier in the same synchronous settle call; no write to "
-        "the result cell runs between the two reads.",
-        [(R3, 801), (N3, 1066)]),
+        "owners_native compares the cell named by the d06 control's result "
+        "selector with the result record from d06.readback, which reads "
+        "the result by the run dict's result_key (native :1066). The two "
+        "are bound by the control_result hash and verify_custody, not by "
+        "being the same cell: d06.readback requires at native :1069 that "
+        "the control's result selector digest equals the row hash of the "
+        "record it read, and verify_custody (route :788, its hash check at "
+        "native :140) requires, before :801 in the same synchronous settle "
+        "call, that the cell the selector names carries that digest. No "
+        "write to the result cell runs between these reads and :801.",
+        [(R3, 801), (N3, 1066), (N3, 1069), (R3, 788), (N3, 140)]),
     'dg5/site/pm_goal_dg_ca3_route.py:812': _p(
         "The safe-stop scope join compares the d05 readback's scopes with "
         "the route run scope; the d05 result/origin are bound together by "
@@ -445,7 +451,7 @@ PROOFS = {
         "and the token from index.read_token(), which itself calls current() "
         "again with no index publish in between (readback performs no index "
         "write), so token, checkpoint and generation name the same generation.",
-        [(R3, 1086), (IX, 185)]),
+        [(R3, 1086), (IX, 186)]),
     'dg5/site/pm_goal_dg_ca3_route.py:1089': _p(
         "frame['event'] is Storage's decode of the exact frame bytes whose "
         "hash read_frame has just verified, and stored_event is read_event's "
@@ -502,8 +508,14 @@ PROOFS = {
         "d06.readback, whose safe-stop seed status is the literal "
         "'bounded_original_safe_stop_resolved' set when the aggregate "
         "resolved (an unresolved aggregate refuses inside readback at "
-        "native :870/:876 before any disposition is returned).",
-        [(R3, 807), (N3, 870)],
+        "native :870/:876 before any disposition is returned). The "
+        "stored-result conjunct (original_result.disposition) is held by "
+        "the SuccessfulReadback whole root d05.readback composes through "
+        "make() (native :896): make refuses a stored result whose "
+        "disposition is not resolved at native :211 "
+        "(native/seed_not_preserved) before owners_native. :870 holds "
+        "only the in-memory resolved flag.",
+        [(R3, 807), (N3, 870), (N3, 896), (N3, 211)],
         ['dg5/site/pm_goal_dg_ca3_native.py:870']),
     'dg5/site/pm_goal_dg_ca3_route.py:817': _p(
         "native_after/unchanged body+control in the disposition are the "
@@ -516,7 +528,7 @@ PROOFS = {
         "storage.read_event of the same event id the route re-reads here, "
         "and its type/payload goal_run_id are the frozen producer's, "
         "bound by the append custody checks at C1 :628 (proof).",
-        [(R3, 822), (N3, 1095)],
+        [(R3, 822), (N3, 1082)],
         ['dg5/site/pm_goal_dg_ca_c1.py:628']),
     'dg5/site/pm_goal_dg_ca3_route.py:827': _p(
         "mutation_started in the frozen producer payload is computed at "
@@ -527,12 +539,18 @@ PROOFS = {
         [(R3, 827), (N3, 874)],
         ['dg5/site/pm_goal_dg_ca3_native.py:874']),
     'dg5/site/pm_goal_dg_cb_owners.py:154': _p(
-        "CB Storage cells hold decoded dict values and every read path "
-        "re-encodes them with S.canonical (the one canonical MessagePack "
-        "encoder), so a non-canonical MessagePack byte string cannot be "
-        "presented to msgpack_decode through any stored cell in this "
-        "storage model.",
-        [(BO, 154), (BO, 169)]),
+        "msgpack_decode decodes with S.decode_canonical (:151), which is "
+        "pm_event_numbers.decode_storage_value under the EVENT_VALUE "
+        "profile: it re-encodes the decoded value and refuses "
+        "physical_noncanonical (pm_event_numbers.py:401) unless that "
+        "equals the raw bytes, which surfaces as codec/msgpack_decode at "
+        ":153. S.canonical at :154 is the identical encoder "
+        "(storage_value_bytes, EVENT_VALUE; pm_goal_test_storage.py:205), "
+        "so every raw that passes :151 already equals S.canonical(value) "
+        "and :154 cannot refuse alone. This holds for any bytes presented, "
+        "including a stored carrier with codec_id MSGPACK, whose bytes "
+        "physical() (:169) passes through unchanged.",
+        [(BO, 154), (BO, 151), ('scripts/pm_event_numbers.py', 401), (ST, 205), (BO, 169)]),
     'dg5/site/pm_goal_dg_ca3_route.py:799': _p(
         "The route re-checks the d06 control phase/result that "
         "d06.readback has just required at native :1069 (committed phase "
