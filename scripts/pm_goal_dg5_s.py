@@ -142,6 +142,9 @@ def main():
                      family)
     plumbing.entries(world.WholeSourceOwner, ('issue_whole',), family)
     plumbing.entries(start.DescriptorOwner, ('install',), family)
+    # Addendum 12 point 3: guard decisions inside corpus direct calls to the listed owner methods (pinned list).
+    import pm_goal_dg5_direct_calls as direct_calls
+    direct_calls.install(family, DG5_EVIDENCE)
     scratch = Path(os.environ['PM_DG5_SCRATCH'])
     scratch.mkdir(parents=True, exist_ok=True)
     output = scratch / 'started-source.json'
