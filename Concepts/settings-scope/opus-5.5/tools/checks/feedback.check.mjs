@@ -1912,7 +1912,7 @@ export default async function (t) {
 		// two of everywhere's own lines, so a map isn't only the empty one
 		const mism = await run(t, () => {
 			const P = window.PSX, out = [];
-			for (const id of Object.keys(P.DEF)) { const s = P.engineSetting(id), r = P.resolve(id, P.S.ctx), d = r && (r.asked !== undefined ? r.asked : r.value); if (!s || !d || typeof d !== 'object' || P.layering.types[id] === 'model_picker') continue; const map = !Array.isArray(d); if ((map && s.control !== 'keyvalue') || (!map && !['list', 'multiselect', 'reorder', 'keyvalue'].includes(s.control))) out.push({ id, control: s.control, map }); }
+			for (const id of Object.keys(P.DEF)) { const s = P.engineSetting(id), r = P.resolve(id, P.S.ctx), d = r && (r.asked !== undefined ? r.asked : r.value); if (!s || !d || typeof d !== 'object' || P.layering.types[id] === 'model_picker') continue; const map = !Array.isArray(d); if ((map && s.control !== 'keyvalue') || (!map && !['list', 'multiselect', 'reorder', 'keyvalue'].includes(s.control))) out.push({ id, control: s.control, map, own: P.holds(id, d) }); }
 			return out;
 		});
 		const R = '#pm-settings-root';
@@ -1936,8 +1936,17 @@ export default async function (t) {
 			}
 		}
 		await t.check(`${pages} Settings pages and tabs opened with real presses: no control shows “[object Object]”${mism.length ? ` (rows whose control can’t hold Plans’ type: ${mism.map((m) => `${m.id}, a ${m.map ? 'map' : 'list'} in a ${m.control} control`).join('; ')})` : ''}`, pages > 40 && seen.size === 0, [...seen].slice(0, 8).join(' | '));
-		// each such row says its value in words, and its Change opens the per-place editor where the value comes from
-		for (const m of mism) {
+		/* Jared 2026-11-20: a row whose control word can't hold Plans' type but whose control the page now draws itself
+		   (stream F's FO-186 nickname list; world.js OWN_MAPS) shows that control with the value's lines, never the words */
+		for (const m of mism.filter((x) => x.own)) {
+			const lines = await run(t, (i) => { const P = window.PSX; if (i === 'ai.models.model-alias') P.setOwn(i, { level: 'everywhere', key: null }, { quick: 'anthropic/claude-sonnet-4', deep: 'anthropic/claude-opus-4' }, { quiet: true, confirmed: true }); window.PM51.revealSetting(i); return i === 'ai.models.model-alias' ? ['quick', 'deep'] : []; }, m.id);
+			await settle(t, 1200);
+			const row = await run(t, ([i, want]) => { const r = document.getElementById('setting-' + i); if (!r) return null; window.__psxScrollTo(r, 'center'); const c = r.querySelector(':scope > .setting-control'); const own = c && [...c.children].find((k) => !k.classList.contains('psx-devval') && k.getClientRects().length); return { words: !!r.querySelector('.psx-valwords'), own: own ? own.className : null, lines: want.filter((n) => !!r.querySelector(`.o55-nick-line[data-nick="${CSS.escape(n)}"]`)) }; }, [m.id, lines]);
+			await t.check(`${m.id}: the page draws its own control for it (${row && row.own}), with the value’s lines (${row && row.lines.join(', ')}), not the layer’s words`, !!row && !row.words && !!row.own && row.lines.length === lines.length, JSON.stringify(row));
+			await run(t, (i) => { const P = window.PSX; P.setOwn(i, { level: 'everywhere', key: null }, undefined, { quiet: true, confirmed: true }); }, m.id);
+		}
+		// each row the page can't hold says its value in words, and its Change opens the per-place editor where the value comes from
+		for (const m of mism.filter((x) => !x.own)) {
 			await run(t, (i) => { const P = window.PSX; const d = P.resolve(i, P.S.ctx).value; if (!Array.isArray(d)) { const v = i === 'ai.models.model-alias' ? { quick: 'anthropic/claude-sonnet-4', deep: 'anthropic/claude-opus-4' } : null; if (v) P.setOwn(i, { level: 'everywhere', key: null }, v, { quiet: true, confirmed: true }); } window.PM51.revealSetting(i); }, m.id);
 			await settle(t, 1200);
 			const row = await run(t, (i) => { const r = document.getElementById('setting-' + i); if (!r) return null; window.__psxScrollTo(r, 'center'); const w = r.querySelector('.psx-valwords'); return { words: w ? w.textContent.trim() : null, boxShown: [...r.querySelectorAll('.setting-control input, .setting-control textarea')].some((x) => x.getClientRects().length), resolved: window.PSX.vt(i, window.PSX.resolve(i, window.PSX.S.ctx).value) }; }, m.id);
