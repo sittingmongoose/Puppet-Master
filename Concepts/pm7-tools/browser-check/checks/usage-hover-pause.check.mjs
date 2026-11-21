@@ -468,38 +468,51 @@ async function appliedHighlights(t, f, label, park) {
 			const wheel = (e) => { r.wheels.push({ t: performance.now(), trusted: e.isTrusted }); pos = [e.clientX,e.clientY]; point = pos; };
 			const scroll = () => r.scrolls.push({ t: performance.now(), top: sc.scrollTop });
 			const move = (e) => { point = [e.clientX,e.clientY]; if (pos && (e.clientX !== pos[0] || e.clientY !== pos[1])) r.moves++; };
+			const start = (e) => { if (e.detail?.board === b && b.getAttribute('data-op') === 'wheel') r.marked = true; };
 			const end = (e) => { if (e.detail?.board === b) r.ends.push(performance.now()); };
 			const sample = () => { if (!running) return; if (kind === 'engine' || b.getAttribute('data-op') === 'wheel') r.frames.push(read()); requestAnimationFrame(sample); };
 			sc.addEventListener('wheel', wheel, { capture:true, passive:true }); sc.addEventListener('scroll',immediate,{passive:true}); sc.addEventListener('scroll', scroll, { passive:true }); sc.addEventListener('pointermove', move, true);
-			document.addEventListener('pmu-op-end', end); requestAnimationFrame(sample);
+			document.addEventListener('pmu-op-start', start); document.addEventListener('pmu-op-end', end); requestAnimationFrame(sample);
 			r.read = read;
-			r.stop = () => { running=false; sc.removeEventListener('wheel',wheel,true); sc.removeEventListener('scroll',immediate); sc.removeEventListener('scroll',scroll); sc.removeEventListener('pointermove',move,true); document.removeEventListener('pmu-op-end',end); return { ...r, read:undefined, stop:undefined, after:read() }; };
+			r.stop = () => { running=false; sc.removeEventListener('wheel',wheel,true); sc.removeEventListener('scroll',immediate); sc.removeEventListener('scroll',scroll); sc.removeEventListener('pointermove',move,true); document.removeEventListener('pmu-op-start',start); document.removeEventListener('pmu-op-end',end); if (r.pressListener) document.removeEventListener('pointerdown',r.pressListener,true); delete r.pressListener; return { ...r, read:undefined, stop:undefined, after:read() }; };
 		}, { kind, selector, reducedTool });
 		await t.page.mouse.move(at.x, at.y, { steps: 4 });
 		await t.page.waitForTimeout(kind === 'engine' ? 4000 : 900);
 		if (kind === 'tool') {
 			const menu = target.locator('.pmu-cardmenu').first(), mb = await menu.boundingBox();
-			if (!mb) { await t.check(label + 'R100 tool: menu button exists', false); continue; }
+			if (!mb) { await f.evaluate(() => window.__uhpApplied.stop()); await t.check(label + 'R100 tool: menu button exists', false); continue; }
 			at = { x: mb.x + mb.width / 2, y: mb.y + mb.height / 2 };
 			await t.page.mouse.move(at.x, at.y); await t.page.waitForTimeout(600);
 			if(!reducedTool) await f.evaluate(() => {
 				const r = window.__uhpApplied;
 				const down = (e) => { document.removeEventListener('pointerdown',down,true); const c = e.target.closest('.pmu-card'); const tools = c?.querySelector('.pmu-cardtools'); r.press={ trusted:e.isTrusted, tool:e.target.closest('[data-tool]')?.dataset.tool, opacity:tools ? parseFloat(getComputedStyle(tools).opacity) : null, paused:document.getElementById('pmuBoard').getAttribute('data-op') === 'wheel' }; };
+				r.pressListener = down;
 				document.addEventListener('pointerdown',down,true);
 			});
 		}
+		const S = label + 'R100 ' + kind + (rm && kind === 'tool' ? (reducedTool ? ' (Reduced Motion)' : ' (motion enabled)') : '') + ': ';
 		const pre = await f.evaluate(() => window.__uhpApplied.read());
 		if (kind === 'tool') {
 			await t.page.mouse.wheel(0, 1);
 			if (!reducedTool) {
-				await f.waitForFunction(() => document.getElementById('pmuBoard').getAttribute('data-op') === 'wheel');
+				try {
+					await f.waitForFunction(() => window.__uhpApplied.marked, null, { timeout: 10000 });
+				} catch (error) {
+					if (error.name !== 'TimeoutError') throw error;
+					const rec = await f.evaluate(() => window.__uhpApplied.stop());
+					records.push({ kind, attempt, pre, rec });
+					await t.check(S + 'could judge the fading-tool press: no pause marker within 10 s', false,
+						JSON.stringify({ wheels: rec.wheels, scrolls: rec.scrolls }));
+					await park();
+					continue;
+				}
 				await t.page.mouse.down(); await t.page.mouse.up();
 			}
 		}
 		else for(let i=0;i<18;i++){await t.page.mouse.wheel(0,kind==='engine'?-1:i%2?-1:1);await t.page.waitForTimeout(30);}
 		await t.page.waitForTimeout(900);
 		const rec = await f.evaluate(() => { const r=window.__uhpApplied.stop(); r.menuOpen=!!PMU.menu.current(); return r; });
-		const S=label+`R100 ${kind}${rm&&kind==='tool'?(reducedTool?' (Reduced Motion)':' (motion enabled)'):''}: `, last=rec.wheels.at(-1)?.t, marked=rec.frames.filter((x) => x.t >= rec.wheels[0]?.t+50);
+		const last=rec.wheels.at(-1)?.t, marked=rec.frames.filter((x) => x.t >= rec.wheels[0]?.t+50);
 		records.push({kind,attempt,pre,rec});
 		t.log(S+JSON.stringify({pre, neutral:rec.neutral, frames:marked.length, ends:rec.ends, press:rec.press, after:rec.after}));
 		if (kind === 'tool' && reducedTool) {
