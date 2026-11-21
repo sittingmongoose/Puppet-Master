@@ -36,6 +36,20 @@ Different-code later refusals (KILLED_CODE):
                             refusal's origin at the guard (the Started-006 row kinds held on 'origin not recorded')
   rebuilt_chained           the same rebuild inside the handler (`raise ... from None`, as cf3_projector.py:329):
                             the chained original carries the code unchanged from the guard: KILLED_CODE
+  templated_killed_code     a %-template guard literal ('selftest/%s/templated_first', as cb_migration.py:424's
+                            'M/%s/goal_unavailable') refusing with a code its template matches, origin at the
+                            guard: KILLED_CODE with template_matched (addendum 5; the unfixed check read the
+                            literal as the code: 'refusal code is not the row guard code')
+  templated_not_matching    a %-template guard whose refusal code the template does not match (the placeholder
+                            would have to cover 'c/l', across a slash): CANNOT_DECIDE, 'does not match the row
+                            guard template'
+
+Template unit checks (addendum 5), no complete call:
+  real_424_row              the real row cb_migration.py:424: its intact code M/capture/goal_unavailable with the
+                            origin frame at :424, the cut refusing at :425 (M/capture/goal_body_unavailable):
+                            KILLED_CODE; the same code with the origin at :425 is not own
+  template_two_sites_no_origin  a template that matches two raise sites, no origin recorded: fails closed
+                            (own False, both sites listed); a template match alone never credits
 
 Pin of the static fallback (review (c)), no complete call:
   gate_pin_pinned           the branch's pinned gate module loads and answers, with its pinned sha256
@@ -113,7 +127,7 @@ class SyntheticWorld:
 
 
 DIFFERENT = ('killed_code', 'not_own_code', 'restoration_not_repeating', 'crash_cut', 'rebuilt_same_code',
-             'rebuilt_chained', 'computed_code_origin')
+             'rebuilt_chained', 'computed_code_origin', 'templated_killed_code', 'templated_not_matching')
 COMPUTED = 'selftest/cl'   # a code built at run time below: no literal code on the guard's line
 
 
@@ -158,6 +172,10 @@ def action_for(case, world):
                 require('selftest/cl/chained', False)  # site:chained
             except Refusal as error:
                 raise Refusal(error.code) from None    # rebuilt in the handler (the original stays on __context__)
+        elif case == 'templated_killed_code':
+            require('selftest/%s/templated_first' % 'cl', False)   # site:templ_first
+        elif case == 'templated_not_matching':
+            require('selftest/%s/templated_other' % 'cl', False, raise_code='selftest/c/l/templated_other')  # site:templ_other
         elif case in DIFFERENT:
             require('selftest/cl/first', False)        # site:first
         else:
@@ -177,7 +195,8 @@ def action_for(case, world):
         return 'accepted'
     target = site({'not_own_code': 'not_own', 'restoration_not_repeating': 'flaky', 'rebuilt_same_code': 'rebuilt',
                    'rebuilt_chained': 'chained', 'computed_code_origin': 'computed',
-                   'templated_code_killed': 'templated'}.get(
+                   'templated_code_killed': 'templated', 'templated_killed_code': 'templ_first',
+                   'templated_not_matching': 'templ_other'}.get(
         case, 'first' if case in DIFFERENT else 'shared_first'))
     return action, target
 
@@ -199,6 +218,8 @@ EXPECTED = {
     'rebuilt_chained': ('KILLED_CODE', FAMILY),
     'computed_code_origin': ('KILLED_CODE', FAMILY),
     'templated_code_killed': ('KILLED', FAMILY),
+    'templated_killed_code': ('KILLED_CODE', FAMILY),
+    'templated_not_matching': ('CANNOT_DECIDE', FAMILY),
 }
 # Which judge evidence each case must carry (what makes the verdict, not only its name).
 EVIDENCE = {
@@ -216,6 +237,8 @@ EVIDENCE = {
     'rebuilt_chained': ('code', 'KILLED_CODE'),
     'computed_code_origin': ('code', 'KILLED_CODE'),
     'templated_code_killed': ('origin', None),
+    'templated_killed_code': ('code', 'KILLED_CODE_TEMPLATE'),
+    'templated_not_matching': ('code', 'does not match the row guard template'),
 }
 
 
@@ -251,9 +274,10 @@ def run(work):
                 ok = ok and after.get('verdict') == expected and (want is None or after.get('effect') == want)
             elif kind == 'reason':
                 ok = ok and after.get('verdict') == expected and want in (after.get('reason') or '')
-            elif want == 'KILLED_CODE':
+            elif want in ('KILLED_CODE', 'KILLED_CODE_TEMPLATE'):
                 ok = ok and code.get('verdict') == 'KILLED_CODE' and (code.get('own_guard') or {}).get('own') is True \
-                    and (code.get('own_guard') or {}).get('verified_by') == 'origin frame at the row guard'
+                    and (code.get('own_guard') or {}).get('verified_by') == 'origin frame at the row guard' \
+                    and (want == 'KILLED_CODE' or (code.get('own_guard') or {}).get('template_matched') is True)
             else:
                 ok = ok and code.get('verdict') is None and want in (code.get('reason') or '') + \
                     (record.get('cannot_decide_reason') or '')
@@ -268,9 +292,46 @@ def run(work):
     finally:
         tables.ACTIVE, tables.DISCOVERY, tables.COLLECTOR = saved
     rows.extend(gate_pin_cases(Path(work)))
+    rows.extend(template_unit_cases())
     return dict(status='pass' if all(r['passed'] for r in rows) and not collector.failures else 'fail',
                 judge=dict(guard_sweep=sweep.__file__, boundaries=bridge.__file__),
                 collector_failures=collector.failures, cases=rows)
+
+
+def _two_template_sites(kind):
+    """Never called: two raise sites whose templates match the same code (template_two_sites_no_origin)."""
+    require('selftest/%s/twice' % kind, False)         # site:twice_a
+    require('selftest/%s/twice' % kind, False)         # site:twice_b
+
+
+def template_unit_cases():
+    """Addendum 5 (pm-ea-lead 1121190253-6a08): templated guard literals through row_code_check and
+    killed_code_check directly (the real row :424, and a template with two raise sites and no origin)."""
+    rows = []
+    real = 'dg5/site/pm_goal_dg_cb_migration.py:424'
+    at = lambda line: dict(site=['scripts/pm_goal_dg_cb_migration.py', line], chain_depth=0, chain_length=1,
+                           origin_type='Refusal', frames=[])
+    intact, cut = 'M/capture/goal_unavailable', 'M/capture/goal_body_unavailable'
+    verdict = sweep.killed_code_check(real, intact, intact, cut, at(424))
+    elsewhere = bridge.row_code_check(real, intact, at(425))
+    own = verdict.get('own_guard') or {}
+    ok = verdict.get('verdict') == 'KILLED_CODE' and own.get('own') is True and own.get('template_matched') is True \
+        and elsewhere.get('own') is False and 'origin not at the row guard' in (elsewhere.get('why') or '')
+    rows.append(dict(case='real_424_row', expected='KILLED_CODE (origin at :424); not own with the origin at :425',
+                     result=dict(killed_code_check=verdict, origin_at_425=elsewhere), passed=bool(ok)))
+    first, second = site('twice_a'), site('twice_b')
+    check = bridge.row_code_check(first, 'selftest/cl/twice', None)
+    verdict = sweep.killed_code_check(first, 'selftest/cl/twice', 'selftest/cl/twice', 'selftest/cl/later', None)
+    lines = {s.rpartition(':')[2] for s in check.get('template_sites') or []}
+    ok = check.get('own') is False and 'templated guard literal and no recorded origin' in (check.get('why') or '') \
+        and {first.rpartition(':')[2], second.rpartition(':')[2]} <= lines and verdict.get('verdict') is None
+    rows.append(dict(case='template_two_sites_no_origin', expected='fails closed (own False, both sites listed)',
+                     result=dict(row_code_check=check, killed_code_check=verdict), passed=bool(ok)))
+    for row in rows:
+        row.setdefault('expected_kill', row['expected'])
+        row.setdefault('actual_kill', (row['result'].get('killed_code_check') or {}).get('verdict'))
+        row.setdefault('covered_later_check', None)
+    return rows
 
 
 def gate_pin_cases(work):

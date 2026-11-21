@@ -1082,6 +1082,60 @@ def _sealed(action, work, files):
 
 
 GUARD_CODE = re.compile(r"\b(?:require|guard|halt|refuse)\(\s*'([^']+)'")
+# A guard literal with %- or {}-placeholders is a template (addendum 5, pm-ea-lead 1121190253-6a08, option A):
+# each placeholder matches exactly one non-empty code segment (no '/' inside it), anchored at both ends
+# (a wrapper prefix ending in '/' is allowed as for a plain literal). The template match only lets the
+# check go on: the recorded origin frame still decides own-guard (addendum 11), and with no origin a
+# templated literal never credits.
+PERCENT_PLACEHOLDER = re.compile(r"%%|%(?:\([^)]*\))?[-#0 +]*(?:\*|\d+)?(?:\.(?:\*|\d+))?[sdirfFxXeEgGcaou]")
+FORMAT_PLACEHOLDER = re.compile(r"\{\{|\}\}|\{[^{}]*\}")
+_TEMPLATE_SITES = {}
+
+
+def guard_template(literal):
+    """The anchored regex of a templated guard literal, or None when it has no placeholder.
+
+    %-style when the literal has a %-placeholder (then braces are literal), else {}-style
+    (then '%' is literal). '%%', '{{' and '}}' are the literal characters."""
+    if not isinstance(literal, str):
+        return None
+    for pattern, escapes in ((PERCENT_PLACEHOLDER, {'%%': '%'}), (FORMAT_PLACEHOLDER, {'{{': '{', '}}': '}'})):
+        parts, last, holes = [], 0, 0
+        for found in pattern.finditer(literal):
+            parts.append(re.escape(literal[last:found.start()]))
+            token = found.group(0)
+            if token in escapes:
+                parts.append(re.escape(escapes[token]))
+            else:
+                parts.append('[^/]+')
+                holes += 1
+            last = found.end()
+        if holes:
+            parts.append(re.escape(literal[last:]))
+            return re.compile('(?:.*/)?' + ''.join(parts))
+    return None
+
+
+def template_sites(code, also=()):
+    """Every guard line of the owner modules (and of `also`) whose templated literal matches `code`."""
+    names = sorted(p.name for p in (ROOT / 'scripts').glob('*.py') if p.name.startswith(SITE_MODULE_PREFIXES))
+    names += [n for n in also if n not in names]
+    found = []
+    for name in names:
+        if name not in _TEMPLATE_SITES:
+            rows = []
+            try:
+                lines = (ROOT / 'scripts' / name).read_text().splitlines()
+            except OSError:
+                lines = []
+            for number, text in enumerate(lines, 1):
+                literal = GUARD_CODE.search(text)
+                template = guard_template(literal.group(1)) if literal else None
+                if template is not None:
+                    rows.append((number, template))
+            _TEMPLATE_SITES[name] = rows
+        found += ['scripts/%s:%d' % (name, n) for n, t in _TEMPLATE_SITES[name] if t.fullmatch(code)]
+    return found
 # Guard helper functions: a refusal raised inside one of these originates at its caller.
 GUARD_HELPERS = frozenset(('require', 'guard', 'refuse', 'halt', 'shared_require', 'shared_refuse'))
 # A non-site row (schema, number, date-time, boolean) refuses inside a shared checker called at
@@ -1183,6 +1237,10 @@ def row_code_check(target, code, origin=None, refusing_sites=()):
           FrameError, a template, a computed name), so a line with no literal code is
           judged by its origin. A literal guard code that differs from the refusal code
           (less a wrapper prefix '/' + code) is not the row's own code.
+          A templated literal (%- or {}-placeholders, `guard_template`) must match the
+          refusal code as an anchored template, one code segment per placeholder; the
+          origin still decides, and a templated literal with no origin fails closed
+          (addendum 5).
       (2) no origin recorded: the code has exactly one raise site in the owner source and
           that site is the row's (the pinned gate module, `static_single_raise_site`); a
           code built at run time fails.
@@ -1203,9 +1261,21 @@ def row_code_check(target, code, origin=None, refusing_sites=()):
         found = GUARD_CODE.search(text)
         guard = found.group(1) if found else None
         out['guard_code'] = guard
-        if guard is not None and not (code == guard or code.endswith('/' + guard)):
+        template = guard_template(guard)
+        if template is not None:
+            out['guard_template'] = template.pattern
+            if not template.fullmatch(code):
+                return dict(out, why='refusal code does not match the row guard template')
+        elif guard is not None and not (code == guard or code.endswith('/' + guard)):
             return dict(out, why='refusal code is not the row guard code')
         site = ['scripts/' + name, int(line)]
+        if template is not None and not origin:
+            # Addendum 5: a template match alone never credits; without the origin frame the
+            # templated literal is unverifiable, however many raise sites the template matches.
+            out['template_sites'] = template_sites(code, also=(name,))
+            return dict(out, code_matches=True, why='templated guard literal and no recorded origin '
+                        '(%d template site(s) match the code); a template match alone never credits'
+                        % len(out['template_sites']))
     else:
         out['guard_code'] = target
         if row(code) != target:
@@ -1215,7 +1285,8 @@ def row_code_check(target, code, origin=None, refusing_sites=()):
         origin_site = origin.get('site')
         if site is not None:
             if origin_site == site:
-                return dict(out, own=True, verified_by='origin frame at the row guard')
+                return dict(out, own=True, verified_by='origin frame at the row guard',
+                            template_matched=template is not None)
             return dict(out, why='origin not at the row guard (origin %s)' % (origin_site,))
         sites = {tuple(s) for n, s in refusing_sites if n == target}
         for where, line, _, _, checker in reversed(origin.get('frames') or []):
