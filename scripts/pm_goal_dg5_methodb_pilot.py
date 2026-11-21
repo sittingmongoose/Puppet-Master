@@ -45,7 +45,8 @@ SITES = {
 PREFIX = 'pm_goal_dg5_methodb_pilot_phase_'
 MATRIX_SHA = '235c91905d72deb3359e56f844b15183623118ab51d1219b04a1ed3684098c78'
 TOOL_PINS = {
-    'scripts/pm_goal_dg5_matrix.py': 'a43fa71e43e4e57aa001c44b07bcbaaae7af220a1d6b881fbfe352932d18e4a4',
+    # Addendum 6: the stock judge port (KILLED_CODE tallies) changed the matrix tool; pinned to the ported file.
+    'scripts/pm_goal_dg5_matrix.py': '9114e749122800a7b4e602fb94f332edba084c2b6258ae362a4f5b8d602b547d',
     'scripts/pm_guard_isolation.py': 'e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8',
     'scripts/pm_goal_dg_s_readers.py': '0898885a8c8240c917ca1483293b866e54f6756e8c20164038e1443ab07e22c1',
     'scripts/pm_goal_dg_s_start.py': '4e9232b6d298869c993a85f1c67e00936919a5ef515211d0f8d99928c8279203',

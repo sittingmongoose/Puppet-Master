@@ -15,6 +15,7 @@ import sys
 import time
 from unittest.mock import patch
 
+import pm_goal_dg5_methodb_export as export
 import pm_goal_dg5_methodb_pilot as pilot
 from pm_goal_own_c_oracles import exact_pattern, uuid_string
 from pm_goal_dg5_methodb_pilot import (
@@ -160,9 +161,15 @@ class Example:
             record['result_sha256'] = self.fixture.result_digest(result)
         except self.fixture.refusals as error:
             record['code'] = world.code_of(error)
+            # Addendum 6: the origin frame of the refusal, as bridge.invoke records it (harness frames transparent).
+            record['refusal_origin'] = export.origin(error, record['code'])
         except Exception as error:
             record['exception'] = f'{type(error).__name__}: {error}'
         record['after'] = store(replay)
+        # Addendum 6: the trial's after-state (store manifest digest, owner-state digest when the judge asks) and
+        # the row's refusing sites, taken in this child after the call, as bridge.invoke's child does.
+        export.export(record, after=record['after'], family=FAMILY, world=self.fixture.world,
+                      refusing_sites=[(self.row, tuple(o['site'])) for o in record['observations'] if o['errors']])
         sender.send(record)
         sender.close()
 
@@ -188,7 +195,7 @@ class Example:
                 if not collector.replaying:
                     require(record['code'] == expected,
                             f"expected complete-call validation code {expected!r}, got {record['code']!r}")
-                return {'errors': [bridge.row(record['code'])] if record['code'] else []}
+                return export.evaluate_result(record, [bridge.row(record['code'])] if record['code'] else [])
 
             collector.invoke(label + ('/valid' if valid else '/invalid'), evaluate, value, valid,
                              target=None if valid else self.row, family=FAMILY)
