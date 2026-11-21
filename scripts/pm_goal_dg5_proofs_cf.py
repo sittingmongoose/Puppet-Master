@@ -47,7 +47,8 @@ PROOFS = {
     'dg5/f5a/control/schema': dict(
         kind='entailed-by-validated-arm-control',
         families=['goal_run.certified'],
-        depends_on=['dg5/arm/control/schema'],
+        depends_on=['dg5/arm/control/schema', 'dg5/site/pm_goal_dg_cf2_world.py:823',
+                    'dg5/site/pm_goal_dg_cf2_world.py:796'],
         sites=[
             (WORLD, 65),
             (WORLD, 130),
@@ -60,6 +61,7 @@ PROOFS = {
             (WORLD, 791),
             (WORLD, 795),
             (WORLD, 796),
+            (WORLD, 823),
             ('scripts/pm_goal_test_owner_adapters.py', 74),
             ('scripts/pm_goal_test_numrule.py', 187),
             ('scripts/pm_event_numbers.py', 309),
@@ -75,8 +77,9 @@ PROOFS = {
         argument=(
             'Arm validates StorageControl before storing the armed document. F5a applies the same schema, '
             'then compares the canonical bytes against that control cell. The encoding preserves JSON values '
-            'and types. With the schema check disabled the invalid document still fails f5a/control_bytes and '
-            'restoring the schema check repeats the original message.'
+            'and types. With the schema check disabled the invalid document still fails f5a/control_bytes '
+            '(796) and restoring the schema check repeats the original message. A rewrite of the control cell '
+            'after arm moves CURRENT/manifest, so f5a/preappend_source (823) refuses it before any effect.'
         ),
     ),
     'dg5/f5d/evidence/schema': dict(

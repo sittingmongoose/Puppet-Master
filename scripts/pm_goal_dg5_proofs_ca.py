@@ -30,10 +30,12 @@ PROOFS = {
         "wrapper() requires a non-empty str key only when the selected def requires "
         "physical_key. Every call site that passes such a def supplies a formatted "
         "non-empty key (route.wrap with selection_key/audit key from key(), and "
-        "C1.wrapper in issue_assignment_audit with assigner.audit_key); call sites "
-        "passing key=None use wrapper defs without physical_key, so the branch is "
-        "never taken with an empty or non-str key.",
-        [(C1, 45), (C1, 56), (C1, 201), (C1, 390), (AS, 644)]),
+        "C1.wrapper in issue_assignment_audit with assigner.audit_key, and in C2 "
+        "C1.wrapper with the formatted binding_key at C2 :479 and wrap with "
+        "selection_key at C2 :666); call sites passing key=None use wrapper defs "
+        "without physical_key, so the branch is never taken with an empty or "
+        "non-str key.",
+        [(C1, 45), (C1, 56), (C1, 201), (C1, 390), (AS, 644), (C2, 479), (C2, 666)]),
     'dg5/site/pm_goal_dg_ca_c1.py:59': _p(
         "wrapper() fills every required field other than record/storage_instance_id/"
         "physical_key from the schema's const. The producer bank is the hash-pinned "
@@ -131,13 +133,18 @@ PROOFS = {
         "so the readback bytes are the bytes just packed.",
         [(AS, 414), (AS, 416), (ST, 1711), (ST, 1723)]),
     'dg5/site/pm_goal_dg_ca_assignment.py:377': _p(
-        "evaluate() is only ever called on the audit's exact_event_encoding_template "
-        "after resolve_audit schema-checks the whole StorageAssignmentAudit; that "
-        "schema closes EncodingTerm source_slot to the slots append binds "
-        "(observed/persisted timestamps and cancellation_receipt_sha256 - a bogus "
-        "slot is schema-refused at resolve, witnessed in the supplement smoke), "
-        "and append passes exactly those slots at both evaluate calls.",
-        [(AS, 377), (AS, 438), (AS, 713), (AS, 731)]),
+        "evaluate() has two callers. C4A calls it on the audit's "
+        "exact_event_encoding_template after resolve_audit schema-checks the whole "
+        "StorageAssignmentAudit; that schema closes EncodingTerm source_slot to the "
+        "slots append binds (observed/persisted timestamps and "
+        "cancellation_receipt_sha256 - a bogus slot is schema-refused at resolve, "
+        "witnessed in the supplement smoke), and append passes exactly those slots "
+        "at both evaluate calls. The second caller is ca3_route late_evaluate "
+        "(C3 issue_assignment_audit, route :994-1003), which hands evaluate the "
+        "leaves of the code-built late_template(), whose only source_slot values "
+        "are cancellation_receipt_sha256 and the two event timestamps, and binds "
+        "all of them (route :1035-1036).",
+        [(AS, 377), (AS, 438), (AS, 713), (AS, 731), (R3, 994), (R3, 1003), (R3, 1035)]),
     'dg5/site/pm_goal_dg_ca_assignment.py:733': _p(
         "The stored event is super().append's encoding of the frozen producer, "
         "already required at :716 to equal the template evaluated with the "
@@ -154,10 +161,16 @@ PROOFS = {
         "segment it appended to - the selected segment held under the fence "
         "(:196) - and reservation_source recorded selected_segment_name from "
         "that same segment record at reserve time; the segment record is not "
-        "renamed between reserve and append. Post-append, so no preserved-"
-        "effects suite negative can target it either.",
-        [(AS, 461), (AS, 196), (AS, 745)],
-        ['dg5/site/pm_goal_dg_ca_assignment.py:196']),
+        "renamed between reserve and append. A fenced reserved append can "
+        "still rotate (storage :1493 passes allow_rotation=fenced is None, "
+        "true under the assignment fence) and "
+        "so land outside the segment :196 checked; that append is refused at "
+        ":205 (assignment/assigned_offset), which requires the appended event's "
+        "offset and segment generation to equal the reservation's, before :745 "
+        "runs. Post-append, so no preserved-effects suite negative can target "
+        "it either.",
+        [(AS, 461), (AS, 196), (AS, 205), (AS, 745), (ST, 1493)],
+        ['dg5/site/pm_goal_dg_ca_assignment.py:196', 'dg5/site/pm_goal_dg_ca_assignment.py:205']),
     'dg5/site/pm_goal_dg_ca_assignment.py:750': _p(
         "check_domain_membership tests the receipt's sequence/offset/durable "
         "end/manifest/segment generations against the numeric domains derived "
@@ -527,9 +540,13 @@ PROOFS = {
         "The disposition event is built in d06.readback from "
         "storage.read_event of the same event id the route re-reads here, "
         "and its type/payload goal_run_id are the frozen producer's, "
-        "bound by the append custody checks at C1 :628 (proof).",
-        [(R3, 822), (N3, 1082)],
-        ['dg5/site/pm_goal_dg_ca_c1.py:628']),
+        "bound on the D06 path: the candidate's event_type literal (the "
+        "event dict at native :923-924) and payload goal_run_id from "
+        "run_scope (native :920), and the "
+        "custody producer digest required equal to the stored candidate's "
+        "at append (native :1006, proof).",
+        [(R3, 822), (N3, 1082), (N3, 920), (N3, 923), (N3, 924), (N3, 1006)],
+        ['dg5/site/pm_goal_dg_ca3_native.py:1006']),
     'dg5/site/pm_goal_dg_ca3_route.py:827': _p(
         "mutation_started in the frozen producer payload is computed at "
         "freeze from the same safe-stop settlements list the disposition "
@@ -597,12 +614,16 @@ PROOFS = {
         [('scripts/pm_goal_dg_cb_migration.py', 532), (BO, 1083)],
         ['dg5/site/pm_goal_dg_cb_migration.py:521']),
     'dg5/site/pm_goal_dg_ca_owners.py:176': _p(
-        "World.selection is called only from install_writer_domain (with the "
-        "domain wrapper it has just written in the same call) and from "
-        "PermissionOwner.selection (with the value current() has just read "
-        "from that exact cell); in both, the compared stored value is the "
-        "value passed, read back synchronously with no intervening write.",
-        [(OWN, 176), (OWN, 239), (OWN, 541)]),
+        "Within goal.cancelled, World.selection is called only from "
+        "install_writer_domain (with the domain wrapper it has just written in "
+        "the same call) and from PermissionOwner.selection (with the value "
+        "current() has just read from that exact cell); in both, the compared "
+        "stored value is the value passed, read back synchronously with no "
+        "intervening write. Its one other caller, pm_goal_dg_int_goal.py:612 "
+        "(psel), passes w.value(), which can be None for an absent cell; it is "
+        "a DG-INT caller outside goal.cancelled and does not bear on this "
+        "goal.cancelled proof.",
+        [(OWN, 176), (OWN, 239), (OWN, 541), ('scripts/pm_goal_dg_int_goal.py', 612)]),
 }
 
 

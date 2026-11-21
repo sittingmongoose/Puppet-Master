@@ -535,19 +535,24 @@ PROOFS.update({
     'dg5/read_current/current_goal/schema': dict(
         kind='entailment',
         families=['goal_run.started'],
-        depends_on=['dg5/issue/CurrentGoalArgument/schema'],
+        depends_on=['dg5/issue/CurrentGoalArgument/schema', 'dg5/goal/current_argument/schema'],
         sites=[
             (READERS, 854),
             (READERS, 855),
             (READERS, 925),
             (READERS, 934),
             (START, 345),
+            (START, 346),
             (START, 347),
             ('scripts/pm_goal_test_owner_adapters.py', 83),
         ],
         argument=(
-            'The other Goal copy is constructed and validated by the original owner and reader. The final '
-            'comparison at 934 requires type-exact equality with that schema-valid copy. The example records '
+            'h_current_goal (854-855) validates the object current_argument() has just returned, and '
+            'current_argument validated that identical object against the same CurrentGoalArgument '
+            'definition in the same goal bank at s_start 345-346 (goal/current_argument) and issued it at '
+            '347; nothing changes it before 855, so that owner check is the decisive cover. The other Goal '
+            'copy is constructed and validated by the original owner and reader. The final comparison at '
+            '934 requires type-exact equality with that schema-valid copy, a second cover. The example records '
             'both operands and verifies that the original Goal argument issuer and reader use the same '
             'installed schema. Disabling just this check leaves the bad copy for the comparison, and '
             'restoring it restores the same early validation message.'
@@ -589,7 +594,7 @@ PROOFS.update({
     'dg5/read_current/final/append/root/schema': dict(
         kind='entailment',
         families=['goal_run.started'],
-        depends_on=['dg5/read_current/root/schema'],
+        depends_on=['dg5/read_current/root/schema', 'dg5/read_current/final/root/schema'],
         sites=[
             (READERS, 105),
             (READERS, 253),
@@ -601,7 +606,9 @@ PROOFS.update({
         ],
         argument=(
             'The append document checked at 105 goes unchanged into the required original_append member at '
-            '254–256. The current reader result requires the same nested definition and the final comparison '
+            '254 and is checked again against the same definition at 256 (read_current/final/root) with no '
+            'code between that reads it; that is the immediate cover. The current reader result also '
+            'requires the same nested definition and the final comparison '
             'requires both original documents to be type-exact equal. The valid example records the same JSON '
             'in the result, and the invalid example gives the same validation message after disabling only '
             'the early check.'
@@ -635,7 +642,8 @@ PROOFS.update({
     'dg5/read_current/final/current_start/schema': dict(
         kind='entailment',
         families=['goal_run.started'],
-        depends_on=['dg5/read_current/root/schema', 'dg5/d01/current_source/schema'],
+        depends_on=['dg5/read_current/root/schema', 'dg5/d01/current_source/schema',
+                    'dg5/site/pm_goal_dg_s_readers.py:933'],
         sites=[
             (START, 404),
             (START, 405),
@@ -690,7 +698,7 @@ PROOFS.update({
     'dg5/read_current/original/append/root/schema': dict(
         kind='entailment',
         families=['goal_run.started'],
-        depends_on=['dg5/read_current/root/schema'],
+        depends_on=['dg5/read_current/original/root/schema'],
         sites=[
             (READERS, 105),
             (READERS, 253),
@@ -702,7 +710,9 @@ PROOFS.update({
         ],
         argument=(
             'The append document checked at 105 goes unchanged into the required original_append member at '
-            '254–256. The current reader result requires the same nested definition and the final comparison '
+            '254 and is checked again against the same definition at 256 (read_current/original/root) with '
+            'no code between that reads it; that is the immediate cover. The current reader result also '
+            'requires the same nested definition and the final comparison '
             'requires both original documents to be type-exact equal. The valid example records the same JSON '
             'in the result, and the invalid example gives the same validation message after disabling only '
             'the early check.'
@@ -737,7 +747,7 @@ PROOFS.update({
     'dg5/read_historical/final/append/root/schema': dict(
         kind='entailment',
         families=['goal_run.started'],
-        depends_on=['dg5/read_historical/root/schema'],
+        depends_on=['dg5/read_historical/final/root/schema'],
         sites=[
             (READERS, 105),
             (READERS, 253),
@@ -751,7 +761,8 @@ PROOFS.update({
         ],
         argument=(
             'The append document checked at 105 is inserted as required original_append at 254 and rechecked '
-            'against the same definition at 256. The historical result at 905–906 requires that same nested '
+            'against the same definition at 256 (read_historical/final/root), the immediate cover. The '
+            'historical result at 905–906 requires that same nested '
             'append document. The final read must be type-exact equal to the original read at 901, so the '
             'result schema covers both append copies on a successful call. The complete call records the '
             'unchanged valid append at the result check and reproduces the exact first validation message at '
@@ -789,7 +800,7 @@ PROOFS.update({
     'dg5/read_historical/original/append/root/schema': dict(
         kind='entailment',
         families=['goal_run.started'],
-        depends_on=['dg5/read_historical/root/schema'],
+        depends_on=['dg5/read_historical/original/root/schema'],
         sites=[
             (READERS, 105),
             (READERS, 253),
@@ -803,7 +814,8 @@ PROOFS.update({
         ],
         argument=(
             'The append document checked at 105 is inserted as required original_append at 254 and rechecked '
-            'against the same definition at 256. The historical result at 905–906 requires that same nested '
+            'against the same definition at 256 (read_historical/original/root), the immediate cover. The '
+            'historical result at 905–906 requires that same nested '
             'append document. The final read must be type-exact equal to the original read at 901, so the '
             'result schema covers both append copies on a successful call. The complete call records the '
             'unchanged valid append at the result check and reproduces the exact first validation message at '
@@ -840,7 +852,7 @@ PROOFS.update({
     'dg5/read_retained_native/final/root/schema': dict(
         kind='entailment',
         families=['goal_run.started'],
-        depends_on=[],
+        depends_on=['dg5/site/pm_goal_dg_s_readers.py:870'],
         sites=[
             (READERS, 94),
             (READERS, 800),
@@ -861,7 +873,7 @@ PROOFS.update({
     'dg5/read_retained_native/retained/root/schema': dict(
         kind='entailment',
         families=['goal_run.started'],
-        depends_on=[],
+        depends_on=['dg5/site/pm_goal_dg_s_readers.py:870', 'dg5/read_retained_native/final/root/schema'],
         sites=[
             (READERS, 94),
             (READERS, 800),
@@ -871,9 +883,12 @@ PROOFS.update({
             ('scripts/pm_goal_test_owner_adapters.py', 83),
         ],
         argument=(
-            'Both retained copies pass the same installed validation at line 94. The caller compares the two '
-            'at line 870 using type-exact equality. A schema-invalid copy cannot equal the other schema-valid '
-            'copy. The tests confirm the other copy passed the original validator and reached the comparison '
+            'Both retained copies pass the same installed validation at line 94: this first copy through '
+            'h_retained (867, 800), the final copy at 869 (read_retained_native/final/root). With this check '
+            'disabled, an invalid value already stored before the call is refused by the final '
+            "acquisition's own line 94 check, a different code, and a copy that changed between the two "
+            'acquisitions is refused by the type-exact comparison at line 870. The tests confirm the other '
+            'copy passed the original validator and reached the comparison '
             'unchanged. Disabling just the selected validation makes the comparison refuse, and restoration '
             'repeats the exact original validation message.'
         ),
@@ -883,7 +898,7 @@ PROOFS.update({
     'dg5/representation/record/schema': dict(
         kind='entailment',
         families=['goal_run.started'],
-        depends_on=['dg5/projection/record/schema'],
+        depends_on=['dg5/site/pm_goal_dg_s_readers.py:486'],
         sites=[
             (READERS, 281),
             (READERS, 483),
