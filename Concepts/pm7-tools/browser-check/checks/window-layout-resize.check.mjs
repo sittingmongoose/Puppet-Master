@@ -25,7 +25,8 @@
 //    until the new picture shows: on film the new picture can appear 1-14 frames after the page's own first frame (opus-recheck-g6fix). Native proof of the sandbox's first painted frame
 //    needs a film and its frames (tools/stale88b.py in the retro-c6 evidence), and fails on FO-92 until it is fixed.
 // Both surfaces (--set sandbox picks one); --set looks=, --set reps=. Headless or --record (the frames are resized, not
-// the window, so a film shows each resize; each is marked).
+// the window, so a film shows each resize; each is marked). Use --set film=1 --no-pointer-marker with --record,
+// then run tools/window-layout-film-reader.py <film> <run folder> <out.json> to judge the presented pixels.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/window-layout-resize.check.mjs --set page=<build>
 const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
 const on = (mode, fn) => (t) => (t.app.surfaces().includes(mode) ? fn(t, mode) : t.check(`not run: --set sandbox picks the other surface than ${mode}`, true));
@@ -111,21 +112,28 @@ async function run(t, mode) {
 		await f.evaluate(() => window.O55.ui.open({ fresh: true, screen: 'c-ready' }));
 		await f.waitForTimeout(2500);
 		for (let i = 1; i <= reps; i++) {
+			const cell = `${mode} ${look} rep ${i}`;
 			const tag = `${mode} ${look} c-ready rep ${i}`;
+			if (String(t.args.film) === '1') {
+				const box = await (await f.frameElement()).boundingBox();
+				const dpr = await t.window.evaluate(() => devicePixelRatio);
+				await t.check(`${tag}: film has a frame origin at DPR 1`, dpr === 1 && !!box, { dpr, box }, { hard: true });
+				t.log('WLR-FILM ' + JSON.stringify({ label: `${cell} 740`, x: Math.round(box.x), y: Math.round(box.y) }));
+			}
 			await wakePip(t, f);
 			await f.evaluate(install);
 			await f.waitForTimeout(150);
 			await waitForFrames(f, 1920, 1080, 1);
 			await t.check(`${tag}: Pip is awake before the shrink`, await f.evaluate(pipAwake), 'requires the stage and pose awake after real pointer travel', { hard: true });
 			const beforeShrink = await f.evaluate(() => window.__wlr.frames.length);
-			await t.mark(`${look} rep ${i} 740`);
+			await t.mark(`${cell} 740`);
 			const sizedAt = await size(740, 768);
 			await f.waitForTimeout(1500);
 			// Loaded renderers can arrive at 740 near the end of the dwell. Keep recording until
 			// the first sample and one more arrive, preserving the first sample for the verdict.
 			await waitForFrames(f, 740, 768, 2, beforeShrink);
 			const beforeReturn = await f.evaluate(() => window.__wlr.frames.length);
-			await t.mark(`${look} rep ${i} 1920`);
+			await t.mark(`${cell} 1920`);
 			await size(1920, 1080);
 			await f.waitForTimeout(1200);
 			await waitForFrames(f, 1920, 1080, 1, beforeReturn);
