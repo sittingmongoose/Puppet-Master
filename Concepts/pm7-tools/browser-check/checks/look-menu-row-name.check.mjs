@@ -5,8 +5,9 @@
 // hovered row's with the pointer on its name, drew ink on the bar. For every row with a name and a ?, the chosen one
 // included (and Adjust NieR's under NieR), in six states (at rest; pointer on its name; held on its name; pointer on its
 // ?; held on its ?; keyboard focus on its ?, reached by Tab), the row's name and its ? are read from painted pixels:
-// each must show strokes standing off its ground (at least 3% of its box more than 60 luminance levels from the box's
-// most common level); t.painted must find the name drawn while the ? is held. Held presses' clicks are held back from
+// each must show strokes standing off its ground (at least 3% of its text box more than 60 luminance levels from the
+// box's most common level). The ? reading uses its glyph span, excluding the button's border and focus ring.
+// t.painted must find the name drawn while the ? is held. Held presses' clicks are held back from
 // the page, so nothing is picked and no note opens. Ten looks, 1920x1080 and 740x768, both motion preferences, both
 // surfaces; the editor closed, and under NieR once more over Adjust NieR's editor.
 //   --set size=1920x1080   --set look=nier-light   --set motion=no-preference
@@ -47,9 +48,16 @@ async function cell(t, surface, w, h) {
 				/* every row with a name and a ?, the chosen one included (Adjust NieR's under NieR); the mode row is not a bar */
 				const rows = await f.evaluate(() => [...document.querySelectorAll('#pm-o55-onboarding .o55-lookmenu .o55-opt-menu:not(.o55-lookmoderow)')].map((r, i) => { r.__fo90 = i; return { i, arg: r.querySelector('.o55-lookopt')?.getAttribute('data-arg') || '', chosen: r.classList.contains('o55-opt-on'), hasQ: !!r.querySelector(':scope > .o55-tipq') }; }).filter((r) => r.hasQ));
 				/* the row's name and ? as window rects (pixels are read from the window) */
-				const rects = (i) => f.evaluate((i) => { const r = [...document.querySelectorAll('#pm-o55-onboarding .o55-lookmenu .o55-opt-menu')].find((n) => n.__fo90 === i); r.scrollIntoView({ block: 'nearest' }); const box = (e) => { const q = e.getBoundingClientRect(); return { x: q.x, y: q.y, width: q.width, height: q.height }; }; const n = r.querySelector('.o55-lookname'), q = r.querySelector(':scope > .o55-tipq'); return { name: box(n), q: box(q), opt: box(r.querySelector('.o55-lookopt')) }; }, i);
+				const rects = (i) => f.evaluate((i) => {
+					const row = [...document.querySelectorAll('#pm-o55-onboarding .o55-lookmenu .o55-opt-menu')].find((n) => n.__fo90 === i);
+					row.scrollIntoView({ block: 'nearest' });
+					const box = (el) => { const r = el.getBoundingClientRect(); return { x: r.x, y: r.y, width: r.width, height: r.height }; };
+					const q = row.querySelector(':scope > .o55-tipq');
+					const glyph = q.querySelector(':scope > span');
+					return { name: box(row.querySelector('.o55-lookname')), q: box(q), qGlyph: glyph ? box(glyph) : null };
+				}, i);
 				const win = (b) => ({ x: off.x + b.x, y: off.y + b.y, width: b.width, height: b.height });
-				const read = async (rc) => ({ name: strokes(await t.pixels(win(rc.name))), q: strokes(await t.pixels(win(rc.q))) });
+				const read = async (rc) => ({ name: strokes(await t.pixels(win(rc.name))), q: rc.qGlyph?.width >= 1 && rc.qGlyph.height >= 1 ? strokes(await t.pixels(win(rc.qGlyph))) : { share: 0, px: 0 } });
 				const bad = [], seen = [];
 				for (const row of rows) {
 					const rc = await rects(row.i), at = (b, dx) => ({ x: off.x + b.x + (dx == null ? b.width / 2 : dx), y: off.y + b.y + b.height / 2 });
