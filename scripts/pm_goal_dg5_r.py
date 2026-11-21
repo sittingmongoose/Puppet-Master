@@ -41,7 +41,7 @@ def install():
     plumbing.entries(projector.Projector, ('project', 'cutover', 'read_historical', 'read_current_cancelled',
                                            'read_current_started'), FAMILY)
     plumbing.entries(readers.Consumer, ('check', 'read_preserved', 'read_retained_native', 'inspect_original'), FAMILY)
-    # Addendum 12 point 3: guard decisions inside corpus direct calls to the listed owner methods (pinned list; Run Cancelled is PENDING until its final list lands, so nothing is wrapped yet).
+    # Addendum 12 point 3: guard decisions inside corpus direct calls to the listed owner methods (pinned list).
     import pm_goal_dg5_direct_calls as direct_calls
     direct_calls.install(FAMILY, DG5_EVIDENCE)
 

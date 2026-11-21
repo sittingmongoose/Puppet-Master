@@ -12,7 +12,8 @@ to the collector (recorded) or runs it unchanged (not recorded).
   listed_inside_entry      the same with an entry under way (bridge.PARENT_CALL): not recorded
   not_listed               a method that is not on the list: not wrapped, not recorded
   constructor_not_listed   the class's constructor: not wrapped, not recorded
-  constructor_listed       a listing that names a constructor: install refuses (construction)
+  constructor_listed       a listing that names a method in both owner_methods and excluded_construction: refused
+  fixture_class_by_rule    a listed method of a *World class (C3) the list calls owner: not wrapped, reported
   pin                      a listing that is not the pinned bytes: load refuses
   module_function_unsealed a listed module function, direct, with no world or store to seal: not recorded, counted
   store_argument           a listed module function called with a TestOwnerStorage argument: recorded over that store
@@ -133,9 +134,15 @@ def main():
         fresh(folder, ['Thing.__init__', 'Thing.listed'])
         try:
             dc.install('selftest.family')
-            rows.append(dict(case='constructor_listed', passed=False, why='install accepted a constructor'))
+            rows.append(dict(case='constructor_listed', passed=False, why='install accepted a name in both lists'))
         except ValueError as error:
             rows.append(dict(case='constructor_listed', passed='construction' in str(error), why=str(error)))
+        owner = load_module(folder, 'pm_goal_dg_dcself_owner', OWNER + '\nclass S1Thing' + 'World:\n    def close(self):\n        return 1\n')
+        fresh(folder, ['Thing.listed', 'S1ThingWorld.close'])
+        report = dc.install('selftest.family')
+        rows.append(dict(case='fixture_class_by_rule', passed=report['construction_by_rule'] == ['S1ThingWorld.close'] and
+                         'S1ThingWorld.close' not in report['wrapped'] and
+                         not getattr(owner.S1ThingWorld.close, '_dg5_direct', False), report=report))
         fresh(folder, ['Thing.listed'], pin=False)
         try:
             dc.install('selftest.family')
