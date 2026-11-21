@@ -49,13 +49,16 @@ const windowStub = {
 	addEventListener(type, fn, opts) { const phase = opts && opts.capture ? listeners.window.capture : listeners.window.bubble; (phase[type] ||= []).push(fn); }
 };
 globalThis.window = windowStub;
-globalThis.document = { getElementById: (id) => (id === 'pmuScroll' ? sc : id === 'pmuBoard' ? board : null), querySelector: () => null, querySelectorAll: () => [] };
-globalThis.MutationObserver = function () { this.observe = () => {}; this.disconnect = () => {}; this.takeRecords = () => []; };
+globalThis.document = { body: { appendChild() {} }, createElement: () => ({ style: {} }), getElementById: (id) => (id === 'pmuScroll' ? sc : id === 'pmuBoard' ? board : null), querySelector: () => null, querySelectorAll: () => [] };
+let observeMutations;
+globalThis.MutationObserver = function (callback) { observeMutations = callback; this.observe = () => {}; this.disconnect = () => {}; this.takeRecords = () => []; };
 globalThis.requestAnimationFrame = () => 0;
-const dispatch = (type) => {
-	const e = { type, target: sc };
+globalThis.cancelAnimationFrame = () => {};
+globalThis.ResizeObserver = function () { this.observe = () => {}; this.disconnect = () => {}; };
+const dispatch = (type, target = sc) => {
+	const e = { type, target, composedPath: () => [target, sc, windowStub] };
 	for (const fn of listeners.window.capture[type] || []) fn(e);
-	for (const l of listeners.sc) if (l.type === type) l.fn(e);
+	for (const l of listeners.sc) if (l.type === type && (type !== 'scroll' || target === sc || l.capture)) l.fn(e);
 	for (const fn of listeners.window.bubble[type] || []) fn(e);
 };
 
@@ -80,18 +83,23 @@ sc.addEventListener('scroll', () => {
 
 assert.equal(INSTALL(), true, 'INSTALL finds the scroller and the board');
 const R = globalThis.window.__uhp;
-R.on = true; R.wheels = []; R.scrolls = [];
+R.start();
 dispatch('wheel');   // the burst's first tick
 ops.push({ t: clock, op: 'wheel' }); // the marker's mutation is observed after the dispatch (MutationObserver microtask)
 dispatch('scroll');  // its scroll, the last input
 const scrollAt = clock;
+dispatch('scroll', {});
+assert.equal(R.scrolls.length, 1, 'a descendant scroll does not re-arm the Usage pane hold');
 runDue();
+const recorded = R.stop();
+assert.equal(recorded.timer.entered, recorded.probe.fired + 2, 'capture the actual entry before the page fit');
+assert.equal(recorded.timer.inputDue, recorded.probe.due, 'the observed entry is tied to the last input');
 
 const frames = Array.from({ length: 16 }, (_, i) => {
 	const t = i * 20;
 	return { t, top: 0, card: 'c', lit: t > 213 ? ['c'] : [], near: [], tools: t > 213 ? 0.9 : 0, op: t <= 213 ? 'wheel' : null, highlights: 0 };
 });
-const rec = { wheels: R.wheels, scrolls: R.scrolls, ops, probe: R.probe, trans: [], cls, loaf: [], fadeMs: 140, frames };
+const rec = { wheels: R.wheels, scrolls: R.scrolls, ops, probe: R.probe, timer: recorded.timer, trans: [], cls, loaf: [], fadeMs: 140, frames };
 const v = judge(rec, { rest: 'c', back: 400 });
 const release = ops.find((x) => x.op !== 'wheel');
 
@@ -109,6 +117,16 @@ assert.equal(v.r2.end, release.t - Math.max(...R.wheels, ...R.scrolls), 'sanity:
 assert.ok(v.r2.end >= 200, `the pause ended ${v.r2.end} ms after the last input`);
 assert.ok(v.r2.late <= 2, `the host was not late (${v.r2.late} ms); the page's fit is not queue delay (${summary})`);
 assert.equal(v.r2.ok, false, 'a page that returns 60 ms after its own rest is late, not excused by that work');
+
+// The observer receives a single batch for two marker transitions with the same final DOM value.
+board.getAttribute = () => 'wheel';
+R.start();
+observeMutations([
+	{ target: board, attributeName: 'data-op', oldValue: 'wheel' },
+	{ target: board, attributeName: 'data-op', oldValue: null }
+]);
+assert.deepEqual(R.ops.map(({ op }) => op), [null, 'wheel'], 'a clear and re-arm within one task cannot hide the gap');
+R.stop();
 
 globalThis.setTimeout = realSetTimeout;
 globalThis.clearTimeout = realClearTimeout;
