@@ -1,10 +1,12 @@
 """Remote landing witness tests using real Git repositories and worktrees."""
 
 import argparse
+import ast
 import importlib.util
 import os
 import subprocess
 from pathlib import Path
+import re
 import socket
 import tempfile
 import unittest
@@ -32,8 +34,7 @@ class LandingFixture(unittest.TestCase):
         self.audit_child = f"{self.ignore_directory}/included.json"
         self.raw_capture = f"{land.RAW_LINK}/capture.jsonl"
         patches = patch.multiple(
-            land, EVIDENCE=self.evidence, SHARED=self.shared, LOCK=self.lock_path,
-            AUDIT_FILES=(self.ignore_file,), AUDIT_DIRS=(self.ignore_directory,))
+            land, EVIDENCE=self.evidence, SHARED=self.shared, LOCK=self.lock_path)
         patches.start()
         self.addCleanup(patches.stop)
 
@@ -139,7 +140,7 @@ class LandingFixture(unittest.TestCase):
 
     def test_missing_remote_ignored_input_refused(self):
         (self.remote / self.ignore_file).unlink()
-        with self.assertRaisesRegex(land.Refusal, "ignored input:.*ignored.txt"):
+        with self.assertRaisesRegex(land.Refusal, "ignored input mismatch:.*ignored.txt"):
             self.verify()
 
     def test_changed_remote_ignored_input_refused(self):
@@ -205,12 +206,13 @@ class LandingFixture(unittest.TestCase):
         cleanup.assert_called_once()
 
 
-    def test_shared_failure_after_fast_forward_resets_keep_and_preserves_unrelated_edit(self):
+    def test_shared_failure_after_fast_forward_preserves_unrelated_edit(self):
         self.git(self.shared, "reset", "--keep", self.base)
         self.git(self.shared, "update-ref", land.ORIGIN_MAIN, self.base)
-        self.put(self.shared, ".gitignore", "/Plans/.audits/\n/tests/agent_packet_restrictions\n/local-only\n")
         def stop_shards(*_):
             self.assertEqual(land.revision(self.shared, "HEAD"), self.head)
+            path = self.shared / ".gitignore"
+            path.write_text(path.read_text() + "/local-only\n")
             raise land.Refusal("a blocking shard failure")
 
         with (patch.object(land, "verify_over_ssh") as verify,
@@ -381,12 +383,12 @@ class LandingFixture(unittest.TestCase):
               patch.object(land, "new_run", return_value=self.folder),
               patch.object(land, "ssh", side_effect=[ssh_failure] * 3) as ssh,
               patch.object(land.time, "sleep"),
-              self.assertRaisesRegex(land.Refusal, r"pm-check-run.*--checks-on nas1")):
+              self.assertRaisesRegex(land.Refusal, rf"{land.job_name(self.folder, 'check')}.*--checks-on nas1")):
             land.live_run(args, self.shared, land.check_ref(args.branch))
         self.assertEqual(ssh.call_count, 3)
         self.assertFalse(self.lock_path.exists())
         data = land.read_json(self.folder / "transport-failure.json")
-        self.assertEqual(data["job"], "pm-check-run")
+        self.assertEqual(data["job"], land.job_name(self.folder, "check"))
         self.assertEqual(data["host"], "1070ti")
 
     def test_remote_transport_failure_keeps_followup_owed(self):
@@ -394,7 +396,7 @@ class LandingFixture(unittest.TestCase):
         with (patch.object(land, "new_run", return_value=self.folder),
               patch.object(land, "ssh", side_effect=[ssh_failure] * 3),
               patch.object(land.time, "sleep"),
-              self.assertRaisesRegex(land.Refusal, r"pm-snapshot-run.*--checks-on 1070ti")):
+              self.assertRaisesRegex(land.Refusal, rf"{land.job_name(self.folder, 'snapshot')}.*--checks-on 1070ti")):
             with land.LandingLock("fixture", "fix/fixture") as lock:
                 lock.owed = self.head
                 lock.heartbeat()
@@ -484,6 +486,7 @@ class LandingFixture(unittest.TestCase):
     def test_interrupted_fast_forward_rolls_back_under_the_recovered_lock(self):
         marker = self.interrupt_publication("ff")
         self.assertIn('"plans_followup": true', marker)
+        self.assertIn('"phase": "fast-forward-pending"', marker)
         with patch.object(land.time, "time", return_value=land.time.time() + 91 * 60):
             with land.LandingLock("next", "fix/next") as lock:
                 self.assertFalse(land.reconcile_publication(lock))
@@ -494,6 +497,7 @@ class LandingFixture(unittest.TestCase):
     def test_interrupted_push_recovers_the_owed_plans_followup(self):
         marker = self.interrupt_publication("push")
         self.assertIn('"plans_followup": true', marker)
+        self.assertIn('"phase": "push-pending"', marker)
         with patch.object(land.time, "time", return_value=land.time.time() + 91 * 60):
             with land.LandingLock("next", "fix/next") as lock:
                 self.assertTrue(land.reconcile_publication(lock))
@@ -583,6 +587,347 @@ class LandingFixture(unittest.TestCase):
                                         {"tracked.txt"}, lock, False)
         self.assertEqual(len(verifications), 2)
         self.assertEqual(pushes, [])
+        recovery = land.read_json(self.folder / "publication-recovery.json")
+        self.assertEqual(recovery["candidate"], self.head)
+        self.assertIn("changed owners", recovery["reason"])
+
+
+    def test_extra_ignored_contract_input_on_either_side_is_refused(self):
+        path = "Plans/.audits/usage-successor/governance/auto-decision-receipt.json"
+        for root, label in ((self.shared, "shared checkout"), (self.remote, "remote checkout")):
+            with self.subTest(label=label):
+                added = self.put(root, path, '{"ref": "ContractName:Plans/Fixture.md"}')
+                self.assertTrue(self.git(root, "check-ignore", path).stdout)
+                with self.assertRaisesRegex(land.Refusal, rf"{label}.*auto-decision-receipt"):
+                    self.verify()
+                added.unlink()
+
+    def test_copy_discovers_nested_ignored_contract_inputs(self):
+        self.put(self.shared, "Plans/.audits/later/new-notes.MD", "ContractName:Plans/Fixture.md")
+        self.put(self.shared, "Plans/.audits/later/unused.mp4", "unread artifact")
+        fresh = self.root / "fresh"
+        self.git(self.shared, "worktree", "add", "--detach", str(fresh), self.head)
+        manifest = land.copy_inputs(self.shared, fresh)
+        self.assertIn("Plans/.audits/later/new-notes.MD", manifest)
+        self.assertEqual((fresh / "Plans/.audits/later/new-notes.MD").read_text(),
+                         "ContractName:Plans/Fixture.md")
+        self.assertNotIn("Plans/.audits/later/unused.mp4", manifest)
+
+    def test_inventory_includes_exact_artifacts_declared_by_validators(self):
+        custody = "Plans/.audits/older/frozen.bin"
+        lock_input = "Plans/.audits/lock-files/generated.bin"
+        closure_input = "Plans/.audits/closure/generated.bin"
+        evidence_input = "Plans/.audits/evidence/generated.bin"
+        paths = (custody, lock_input, closure_input, evidence_input)
+        for name in paths:
+            self.put(self.shared, name, "ignored artifact with a non-text extension")
+        declarations = {
+            "Plans/.audits/_legacy_format_inventory.json": {"directories": {
+                "older": {"files": {"frozen.bin": {"sha256": "x"}}}}},
+            "Plans/.audits/_semantic_closure_registry.jsonl": {"hashes": {
+                "owner_evidence_hashes": {closure_input + ":12": "x"}}},
+            "Plans/Spec_Lock.json": {"canonical_ssot_hashes": {"files": [{"path": lock_input}]}},
+            "Plans/.evidence/topic/evidence.json": {"artifacts": [{"path": evidence_input, "sha256": "x"}]},
+        }
+        for name, document in declarations.items():
+            self.put(self.shared, name, land.json.dumps(document) + "\n")
+        self.git(self.shared, "add", "--", "Plans/Spec_Lock.json", "Plans/.evidence/topic/evidence.json")
+        self.git(self.shared, "commit", "-m", "declare exact artifacts")
+        fresh = self.root / "fresh"
+        self.git(self.shared, "worktree", "add", "--detach", str(fresh), "HEAD")
+        manifest = land.copy_inputs(self.shared, fresh)
+        for name in paths:
+            self.assertEqual(manifest[name], land.file_hash(fresh / name))
+
+    def test_counted_gui_fixture_membership_covers_other_extensions(self):
+        self.put(self.shared, ".git/info/exclude", "/tests/fixtures/usage_gui/\n/tests/fixtures/pm7_shared/\n")
+        names = ("tests/fixtures/usage_gui/cases/extra.bin", "tests/fixtures/pm7_shared/extra.bin")
+        for name in names:
+            self.put(self.shared, name, "fixture membership counts this file")
+        fresh = self.root / "fresh"
+        self.git(self.shared, "worktree", "add", "--detach", str(fresh), self.head)
+        manifest = land.copy_inputs(self.shared, fresh)
+        for name in names:
+            self.assertEqual(manifest[name], land.file_hash(fresh / name))
+
+    def tracked_decision_input(self):
+        name = "Plans/.evidence/q5/evidence.json"
+        self.git(self.shared, "reset", "--keep", self.base)
+        target = self.put(self.shared, name, '{"version": "base"}')
+        self.git(self.shared, "add", "--", name)
+        self.git(self.shared, "commit", "-m", "tracked referring evidence")
+        base = land.revision(self.shared, "HEAD")
+        self.put(self.shared, "tracked.txt", "candidate")
+        self.git(self.shared, "commit", "-am", "topic")
+        head = land.revision(self.shared, "HEAD")
+        tree = land.revision(self.shared, "HEAD^{tree}")
+        self.git(self.shared, "reset", "--keep", base)
+        return name, target, base, head, tree
+
+    def test_shared_q5_working_state_stops_before_ff(self):
+        name, target, base, head, tree = self.tracked_decision_input()
+        self.git(self.shared, "update-ref", land.ORIGIN_MAIN, base)
+        for mode in ("unstaged", "staged", "assume-unchanged", "skip-worktree"):
+            with self.subTest(mode=mode):
+                if mode in ("unstaged", "staged"):
+                    target.write_text('{"version": "local"}')
+                    if mode == "staged":
+                        self.git(self.shared, "add", "--", name)
+                else:
+                    self.git(self.shared, "update-index", f"--{mode}", "--", name)
+                with (patch.object(land, "verify_over_ssh") as verify,
+                      patch.object(land, "shared_shards", side_effect=land.Refusal("unexpected fast-forward")),
+                      land.LandingLock("first", "fix/topic") as lock,
+                      self.assertRaisesRegex(land.Refusal, "Plans/.evidence/q5/evidence.json")):
+                    land.push_checked_main(self.folder, "1070ti", head, tree, base, {"tracked.txt"}, lock, False)
+                self.assertEqual(land.revision(self.shared, "HEAD"), base)
+                verify.assert_not_called()
+                if mode in ("unstaged", "staged"):
+                    self.git(self.shared, "restore", "--source=HEAD", "--staged", "--worktree", "--", name)
+                else:
+                    self.git(self.shared, "update-index", f"--no-{mode}", "--", name)
+
+    def test_all_job_ids_match_installed_long_job_rule(self):
+        rule = re.compile(r"^[a-z0-9][a-z0-9_.-]{0,63}$")
+        installed = Path("/mnt/Cursor/Tools/long-job/long-job")
+        if installed.is_file():
+            declaration = next(row for row in ast.parse(installed.read_text()).body
+                               if isinstance(row, ast.Assign) and any(
+                                   isinstance(name, ast.Name) and name.id == "NAME_OK" for name in row.targets))
+            self.assertEqual(rule.pattern, ast.literal_eval(declaration.value.args[0]))
+        branches = ("fix/landing-check-closure-stale-20261121-rebased",
+                    "fix/Landing-Snapshot-Capitalized-Topic", "fix/" + "X" * 150)
+        with patch.object(land, "RUNS", self.evidence):
+            for branch in branches:
+                folder = land.new_run(branch, self.head)
+                for mode in ("check", "snapshot", "recheck", "followup"):
+                    with self.subTest(branch=branch, mode=mode):
+                        self.assertRegex(land.job_name(folder, mode), rule)
+
+    def test_cleanup_only_queries_started_job_and_recognizes_installed_absence(self):
+        worktree = self.remote
+        land.write_json(self.folder / "check-job.json", {"job": land.job_name(self.folder, "check")})
+        name = land.job_name(self.folder, "check")
+        status = subprocess.CompletedProcess([], 2, "", f"long-job: no job named {name} on this machine")
+        with (patch.object(land, "worktree_path", return_value=worktree),
+              patch.object(land, "command", return_value=status) as command,
+              patch.object(land, "git") as git):
+            land.remote_cleanup(self.folder)
+        command.assert_called_once_with(["long-job", "status", land.job_name(self.folder, "check"), "--json"],
+                                        check=False)
+        git.assert_called_once_with(land.CLONE, "worktree", "remove", "--force", str(worktree))
+
+    def test_cleanup_defers_while_job_is_starting_running_or_partial(self):
+        land.write_json(self.folder / "snapshot-job.json", {"job": land.job_name(self.folder, "snapshot")})
+        for state in ("starting", "running", "partial"):
+            with self.subTest(state=state):
+                name = land.job_name(self.folder, "snapshot")
+                status = subprocess.CompletedProcess([], 0, land.json.dumps([{"name": name, "state": state}]), "")
+                with (patch.object(land, "worktree_path", return_value=self.remote),
+                      patch.object(land, "command", return_value=status),
+                      patch.object(land, "git") as git,
+                      self.assertRaisesRegex(land.Refusal, "still in use")):
+                    land.remote_cleanup(self.folder)
+                git.assert_not_called()
+
+    def test_cleanup_failure_cannot_mask_dry_run_exit_two_or_success(self):
+        self.git(self.shared, "update-ref", land.ORIGIN_MAIN, self.head)
+        args = argparse.Namespace(branch="main", checks_on="1070ti")
+        real_git = land.git
+
+        def fixture_git(root, *argv, **kwargs):
+            if argv[:2] == ("fetch", "origin"):
+                return None
+            return real_git(root, *argv, **kwargs)
+
+        for code in (0, 2):
+            with (self.subTest(code=code), patch.object(land, "git", side_effect=fixture_git),
+                  patch.object(land, "new_run", return_value=self.folder),
+                  patch.object(land, "checked_remote", return_value=self.make_record(code)),
+                  patch.object(land, "verify_over_ssh"),
+                  patch.object(land, "cleanup_over_ssh", side_effect=land.Refusal("worktree in use"))):
+                self.assertEqual(land.dry_run(args, self.shared, land.MAIN_REF), code)
+                self.assertIn("worktree in use",
+                              (self.folder / "cleanup-failure.json").read_text())
+
+    def test_cleanup_failure_does_not_report_failure_after_live_publication(self):
+        self.git(self.shared, "update-ref", land.ORIGIN_MAIN, self.base)
+        args = argparse.Namespace(branch="fix/fixture", checks_on="1070ti", agent="fixture", wait_for_review=False)
+        real_git = land.git
+
+        def fixture_git(root, *argv, **kwargs):
+            if argv[0] == "fetch":
+                return None
+            return real_git(root, *argv, **kwargs)
+
+        with (patch.object(land, "git", side_effect=fixture_git),
+              patch.object(land, "branch_worktree", return_value=self.remote),
+              patch.object(land, "rebase_and_push", return_value=self.head),
+              patch.object(land, "ref_at", return_value=self.head),
+              patch.object(land, "new_run", return_value=self.folder),
+              patch.object(land, "checked_remote", return_value=self.make_record(1)),
+              patch.object(land, "check_judgments", return_value=1),
+              patch.object(land, "push_checked_main", return_value=True) as publish,
+              patch.object(land, "remove_topic") as remove_topic,
+              patch.object(land, "cleanup_over_ssh", side_effect=land.Refusal("remote cleanup disconnected"))):
+            self.assertEqual(land.live_run(args, self.shared, land.check_ref(args.branch)), 1)
+        publish.assert_called_once()
+        remove_topic.assert_called_once()
+        self.assertIn("remote cleanup disconnected", (self.folder / "cleanup-failure.json").read_text())
+
+    def test_rollback_keeps_edits_staged_during_verification(self):
+        self.git(self.shared, "reset", "--keep", self.base)
+        self.git(self.shared, "update-ref", land.ORIGIN_MAIN, self.base)
+        path = self.shared / ".gitignore"
+        original = path.read_text()
+        staged = original + "/staged-only\n"
+        unstaged = original + "/worktree-only\n"
+
+        def edits_during_verification(*_):
+            self.assertEqual(land.revision(self.shared, "HEAD"), self.head)
+            path.write_text(staged)
+            self.git(self.shared, "add", "--", ".gitignore")
+            path.write_text(unstaged)
+            raise land.Refusal("shards refused")
+
+        with (patch.object(land, "verify_over_ssh"),
+              patch.object(land, "shared_shards", side_effect=edits_during_verification),
+              self.assertRaisesRegex(land.Refusal, "shards refused")):
+            with land.LandingLock("first", "fix/topic") as lock:
+                land.push_checked_main(self.folder, "1070ti", self.head, self.tree, self.base,
+                                       {"tracked.txt"}, lock, False)
+        self.assertEqual(land.revision(self.shared, "HEAD"), self.base)
+        self.assertEqual(self.git(self.shared, "show", ":.gitignore").stdout, staged)
+        self.assertEqual(path.read_text(), unstaged)
+        self.assertIn("MM .gitignore", self.git(self.shared, "status", "--porcelain").stdout)
+
+    def test_recovery_replays_two_tree_checkout_if_ref_update_was_interrupted(self):
+        self.interrupt_publication("ff")
+        gitignore = self.shared / ".gitignore"
+        original = gitignore.read_text()
+        staged, unstaged = original + "/staged\n", original + "/unstaged\n"
+        gitignore.write_text(staged)
+        self.git(self.shared, "add", "--", ".gitignore")
+        gitignore.write_text(unstaged)
+        real_git = land.git
+
+        def before_ref_update(root, *argv, **kwargs):
+            if argv[:3] == ("update-ref", "-m", "recover unpublished landing"):
+                raise land.Refusal("interruption before updating the main ref")
+            return real_git(root, *argv, **kwargs)
+
+        with (patch.object(land.time, "time", return_value=land.time.time() + 91 * 60),
+              self.assertRaisesRegex(land.Refusal, "interruption before updating")):
+            with land.LandingLock("second", "fix/next") as lock:
+                with patch.object(land, "git", side_effect=before_ref_update):
+                    land.reconcile_publication(lock)
+
+        self.assertEqual(land.revision(self.shared, "HEAD"), self.head)
+        self.assertEqual((self.shared / "tracked.txt").read_text(), "first")
+        self.assertIn('"phase": "rollback-pending"', (self.lock_path / "holder.txt").read_text())
+        with patch.object(land.time, "time", return_value=land.time.time() + 91 * 60):
+            with land.LandingLock("third", "fix/next") as lock:
+                self.assertFalse(land.reconcile_publication(lock))
+        self.assertEqual(land.revision(self.shared, "HEAD"), self.base)
+        self.assertEqual(self.git(self.shared, "show", ":.gitignore").stdout, staged)
+        self.assertEqual(gitignore.read_text(), unstaged)
+
+    def test_wrong_unpublished_head_keeps_recovery_record(self):
+        self.git(self.shared, "reset", "--keep", self.base)
+        self.git(self.shared, "update-ref", land.ORIGIN_MAIN, self.base)
+        alternate = None
+
+        def lose_expected_head(*_):
+            nonlocal alternate
+            self.assertEqual(land.revision(self.shared, "HEAD"), self.head)
+            self.put(self.shared, "unrelated.txt", "new shared commit")
+            self.git(self.shared, "add", "--", "unrelated.txt")
+            self.git(self.shared, "commit", "-m", "somebody else moved shared HEAD")
+            alternate = land.revision(self.shared, "HEAD")
+            raise land.Refusal("checker stopped")
+
+        with (patch.object(land, "verify_over_ssh"), patch.object(land, "shared_shards", side_effect=lose_expected_head),
+              self.assertRaisesRegex(land.Refusal, "shared main")):
+            with land.LandingLock("first", "fix/topic") as lock:
+                land.push_checked_main(self.folder, "1070ti", self.head, self.tree, self.base,
+                                       {"tracked.txt"}, lock, False)
+        self.assertEqual(land.revision(self.shared, "HEAD"), alternate)
+        recovery = land.read_json(self.folder / "publication-recovery.json")
+        self.assertEqual(recovery["candidate"], self.head)
+        self.assertIn(alternate, recovery["reason"])
+
+    def test_already_moved_head_is_handed_to_the_current_owner(self):
+        self.git(self.shared, "reset", "--keep", self.base)
+        self.git(self.shared, "update-ref", land.ORIGIN_MAIN, self.base)
+
+        def concurrent_head_move(*_):
+            self.assertEqual(land.revision(self.shared, "HEAD"), self.head)
+            self.git(self.shared, "reset", "--keep", self.base)
+            raise land.Refusal("the shard check was interrupted")
+
+        with (patch.object(land, "verify_over_ssh"),
+              patch.object(land, "shared_shards", side_effect=concurrent_head_move),
+              self.assertRaisesRegex(land.Refusal, "shared main changed")):
+            with land.LandingLock("first", "fix/topic") as lock:
+                land.push_checked_main(self.folder, "1070ti", self.head, self.tree, self.base,
+                                       {"tracked.txt"}, lock, False)
+        self.assertEqual(land.revision(self.shared, "HEAD"), self.base)
+        self.assertIn(self.base, land.read_json(self.folder / "publication-recovery.json")["reason"])
+        self.assertIn(self.head, (self.lock_path / "holder.txt").read_text())
+
+    def test_hand_receipt_recipe_preserves_exit_and_verifies_identity(self):
+        readme = (Path(__file__).resolve().parents[1] / "reports/landing-checks/README.md").read_text()
+
+        def recipe(title):
+            fence = chr(96) * 3
+            match = re.search(rf"^#### {title}\n.*?^{fence}sh\n(.*?)^{fence}$", readme, re.MULTILINE | re.DOTALL)
+            self.assertIsNotNone(match, title)
+            return match[1]
+
+        capture = recipe("Save the checker receipt")
+        verify = recipe("Verify the hand receipt")
+        self.put(self.remote, "scripts/pm-landing-check.py", """
+import json, os
+code = int(os.environ["PM_LAND_TEST_EXIT"])
+if code != 3:
+    print(json.dumps({"schema_id": "pm.landing_check.report.v1",
+                      "commit": os.environ.get("PM_LAND_TEST_BAD_COMMIT", os.environ["PM_LAND_COMMIT"]),
+                      "base": os.environ.get("PM_LAND_TEST_BAD_BASE", os.environ["PM_LAND_BASE"]),
+                      "subcheck_timeout_seconds": 1800}))
+raise SystemExit(code)
+""")
+        environ = {**os.environ, "PM_LAND_COMMIT": self.head, "PM_LAND_BASE": self.base,
+                   "PM_LAND_RECEIPT_DIR": str(self.folder)}
+
+        def shell(snippet, **extra):
+            return subprocess.run(["bash", "-c", snippet], cwd=self.remote,
+                                  env={**environ, **extra}, capture_output=True, text=True, check=False)
+
+        for code in range(4):
+            with self.subTest(code=code):
+                generated = shell(capture, PM_LAND_TEST_EXIT=str(code))
+                self.assertEqual(generated.returncode, code, generated.stderr)
+                self.assertEqual((self.folder / "checker.exit").read_text().strip(), str(code))
+                checked = shell(verify)
+                self.assertEqual(checked.returncode, code if code in (2, 3) else 0, checked.stderr)
+                self.assertIn(f"Original checker exit {code}", checked.stdout)
+        for field in ("COMMIT", "BASE"):
+            with self.subTest(field=field):
+                self.assertEqual(shell(capture, **{"PM_LAND_TEST_EXIT": "0",
+                                                    f"PM_LAND_TEST_BAD_{field}": "0" * 40}).returncode, 0)
+                checked = shell(verify)
+                self.assertEqual(checked.returncode, 3)
+                self.assertIn("report commit or base", checked.stderr)
+        self.assertEqual(shell(capture, PM_LAND_TEST_EXIT="0").returncode, 0)
+        self.report.write_text(self.report.read_text() + " ")
+        self.assertIn("report SHA-256", shell(verify).stderr)
+        self.assertEqual(shell(capture, PM_LAND_TEST_EXIT="0").returncode, 0)
+        (self.folder / "checker.exit").write_text("1\n")
+        self.assertIn("original exit and receipt disagree", shell(verify).stderr)
+        self.assertEqual(shell(capture, PM_LAND_TEST_EXIT="0").returncode, 0)
+        receipt = self.folder / "hand-receipt.json"
+        receipt.write_text(receipt.read_text() + " ")
+        self.assertIn("hand receipt SHA-256 changed", shell(verify).stderr)
 
 
 if __name__ == "__main__":

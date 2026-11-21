@@ -31,6 +31,7 @@ HOSTS = {"1070ti": "1070ti", "nas1": "nas1-agent"}
 MACHINES = {"1070ti": "1070ti", "nas1": "ubuntu-agent-nas1"}
 DEFAULT_HOST = "1070ti"
 SSH_FAILURE_LIMIT = 3
+JOB_MODES = ('check', 'snapshot', 'recheck', 'followup')
 RAW_LINK = "tests/agent_packet_restrictions"
 RAW_MANIFEST = "tests/fixtures/governance/raw_evidence_capture_modes.json"
 READINESS = "Plans/.audits/event-authority-2026-08-13-currentness"
@@ -43,21 +44,14 @@ EXIT_LABELS = {0: "clear", 1: "findings to read", 2: "landing blocked", 3: "chec
 CHECK = ("python3", "-B", "scripts/pm-landing-check.py")
 SHARD = ("python3", "-B", "scripts/pm-shard-plans.py", "--check", "--config",
          "Plans/sharding_config.json")
-AUDIT_FILES = (
-    "Plans/.audits/audit-20260827-001-pmconcept7-usage-recovery/FINAL_REPORT.md",
-    "Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/FINAL_REPORT.md",
-    "Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/FINAL_REPORT.md",
-    "Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json",
-    "Plans/.audits/event-authority-2026-08-12/NEXT_STEPS_20260910.md",
-    "Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_SHEET_ANSWERS_20260910.json",
-    "Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_SHEET_PLAIN_20260909.md",
-)
-AUDIT_DIRS = (
-    "Plans/.audits/audit-20260828-002-settings-tome-tabs-preport",
-    "Plans/.audits/audit-20260828-003-chat-56-fast-lane",
-    "Plans/.audits/audit-20260830-001-pmconcept7-live-resize-preview",
-    READINESS,
-)
+# Roots used by the aggregates, the separate migration check, and the PM7 build check.
+# json-syntax gets its ordinary inputs from Git, with raw captures selected by the manifest.
+IGNORED_INPUT_ROOTS = ("Plans", "reports", "scripts", "Concepts", "tests/fixtures", ".puppet-master/project")
+SHARED_INPUT_ROOTS = (*IGNORED_INPUT_ROOTS, "tests")
+PLAN_INPUT_EXTENSIONS = {".md", ".json", ".jsonl", ".yaml", ".yml", ".schema", ".py"}
+FIXTURE_INPUT_EXTENSIONS = PLAN_INPUT_EXTENSIONS | {".txt", ".csv", ".tsv", ".html", ".css", ".js", ".svg"}
+CONCEPT_ASSET_EXTENSIONS = {".gif", ".jpeg", ".jpg", ".otf", ".png", ".ttf", ".webp", ".woff", ".woff2"}
+PM7_SOURCE = "Concepts/onboarding/opus-5.5/src"
 
 
 class Refusal(RuntimeError):
@@ -129,21 +123,123 @@ def raw_paths(worktree):
     return {safe_relative(row["path"], RAW_LINK) for row in manifest["entries"]}
 
 
-def copies(root, tracked):
-    """Find the ordinary ignored inputs, including every untracked audit report the index globs."""
-    paths = set(AUDIT_FILES)
-    paths.update(path.relative_to(root).as_posix()
-                 for path in (root / "Plans/.audits").glob("audit-*/FINAL_REPORT.md"))
-    for name in AUDIT_DIRS:
-        path = root / name
-        if not path.is_dir() or path.is_symlink():
-            raise Refusal(f"missing or non-directory ignored input: {path}")
-        for child in path.rglob("*"):
-            if child.is_symlink():
-                raise Refusal(f"unexpected symlink in ignored inputs: {child}")
-            if child.is_file():
-                paths.add(child.relative_to(root).as_posix())
-    return paths - tracked
+def within(name, root):
+    return name == root or name.startswith(root + "/")
+
+
+def selected_ignored_input(name):
+    """Union of filesystem scans, fixture reads and typed reference targets."""
+    path = PurePosixPath(name)
+    suffix = path.suffix.lower()
+    if within(name, READINESS):
+        return True
+    if within(name, "scripts") or within(name, PM7_SOURCE):
+        # The landing checker digests its validator tree, and the PM7 build lints its sources.
+        return "__pycache__" not in path.parts
+    if within(name, "tests/fixtures/usage_gui") or path.parent.as_posix() == "tests/fixtures/pm7_shared":
+        # The PM7 fixture gate counts these paths before loading their JSON.
+        return True
+    if within(name, "Plans"):
+        # plan_text_files, active_usage_source_confidence_paths, web capability and
+        # migration each select a different subset. Also retain file targets admitted
+        # by contract references and the audit/currentness validators.
+        return suffix in PLAN_INPUT_EXTENSIONS | {".txt", ".tsv"} or ".schema." in path.name.lower()
+    if within(name, "Concepts"):
+        return suffix in FIXTURE_INPUT_EXTENSIONS | CONCEPT_ASSET_EXTENSIONS
+    return suffix in FIXTURE_INPUT_EXTENSIONS or ".schema." in path.name.lower()
+
+
+def declared_refs(document):
+    if not document.is_file():
+        return {}
+    try:
+        content = read_json(document)
+    except (ValueError, UnicodeError):
+        # The validator reports malformed bytes from the bound input itself.
+        return {}
+    return content if isinstance(content, dict) else {}
+
+
+def closure_inputs(document):
+    """The registry names decision inputs through whole-file and anchored references."""
+    if not document.is_file():
+        return set()
+    refs = set()
+    with document.open(encoding="utf-8", errors="surrogateescape") as stream:
+        for line in stream:
+            try:
+                row = json.loads(line)
+            except ValueError:
+                continue
+            if not isinstance(row, dict):
+                continue
+            hashes = row.get("hashes")
+            if isinstance(hashes, dict):
+                for key in ("owner_evidence_hashes", "closure_evidence_hashes"):
+                    group = hashes.get(key)
+                    if isinstance(group, dict):
+                        refs.update(group)
+            evidence = row.get("closure_evidence")
+            if isinstance(evidence, list):
+                refs.update(ref for ref in evidence if isinstance(ref, str))
+    return {ref.split("#", 1)[0].split(":", 1)[0] for ref in refs}
+
+
+def declared_input_paths(root, worktree, ignored, tracked):
+    """Find exact hash targets, including artifacts whose extension is not scanned."""
+    targets = set()
+
+    def declaration(name):
+        return (root if name in ignored else worktree) / name
+
+    readiness = declared_refs(root / READINESS / "VALIDATOR_RECEIPT.json").get("artifact_hashes")
+    if isinstance(readiness, dict):
+        targets.update(readiness)
+
+    lock = declared_refs(declaration("Plans/Spec_Lock.json")).get("canonical_ssot_hashes")
+    if isinstance(lock, dict) and isinstance(lock.get("files"), list):
+        targets.update(row["path"] for row in lock["files"]
+                       if isinstance(row, dict) and isinstance(row.get("path"), str))
+
+    legacy = declared_refs(declaration("Plans/.audits/_legacy_format_inventory.json")).get("directories")
+    if isinstance(legacy, dict):
+        for name, entry in legacy.items():
+            if isinstance(entry, dict) and isinstance(entry.get("files"), dict):
+                targets.update(f"Plans/.audits/{name}/{filename}" for filename in entry["files"])
+
+    targets.update(closure_inputs(declaration("Plans/.audits/_semantic_closure_registry.jsonl")))
+    evidence = set((worktree / "Plans/.evidence").glob("**/evidence.json"))
+    evidence.update(root / name for name in ignored
+                    if within(name, "Plans/.evidence") and PurePosixPath(name).name == "evidence.json")
+    for document in evidence:
+        artifacts = declared_refs(document).get("artifacts")
+        if isinstance(artifacts, list):
+            targets.update(row["path"] for row in artifacts if isinstance(row, dict)
+                           and isinstance(row.get("path"), str) and row.get("sha256"))
+    return {name for name in targets - tracked
+            if name and not PurePosixPath(name).is_absolute() and ".." not in PurePosixPath(name).parts
+            and PurePosixPath(name).as_posix() == name and not within(name, RAW_LINK)
+            and (root / name).is_file()}
+
+
+def ignored_reference_paths(root, refs):
+    if not refs:
+        return set()
+    result = subprocess.run(["git", "--no-optional-locks", "-C", str(root), "check-ignore", "-z", "--stdin"],
+                            input=os.fsencode("\0".join(sorted(refs)) + "\0"), capture_output=True, check=False)
+    if result.returncode not in (0, 1):
+        raise Refusal(f"cannot classify ignored artifact paths in {root}: {os.fsdecode(result.stderr).strip()}")
+    return set(os.fsdecode(result.stdout).split("\0")) - {""}
+
+
+def copies(root, worktree, tracked):
+    found = git(root, "ls-files", "--others", "--ignored", "--exclude-standard",
+                "-z", "--", *IGNORED_INPUT_ROOTS).stdout
+    ignored = set(found.split("\0")) - {""} - tracked
+    selected = {name for name in ignored if selected_ignored_input(name)}
+    references = declared_input_paths(root, worktree, ignored, tracked)
+    selected.update(ignored_reference_paths(root, references))
+    return selected
 
 
 def regular_hash(root, name, *, through_raw_link=False):
@@ -161,12 +257,12 @@ def regular_hash(root, name, *, through_raw_link=False):
 
 
 def tracklist(worktree):
-    paths = git(worktree, "ls-files", "-z", "--", "Plans/.audits", RAW_LINK).stdout
-    return set(paths.split("\0"))
+    paths = git(worktree, "ls-files", "-z").stdout
+    return set(paths.split("\0")) - {""}
 
 
 def input_manifest(root, worktree, tracked):
-    manifest = {name: regular_hash(root, name) for name in sorted(copies(root, tracked))}
+    manifest = {name: regular_hash(root, name) for name in sorted(copies(root, worktree, tracked))}
     link = root / RAW_LINK
     if not link.is_symlink() or not link.is_dir():
         raise Refusal(f"missing or invalid raw evidence link: {link}")
@@ -189,8 +285,6 @@ def require_same_inputs(expected, actual, label):
 def copy_inputs(shared, worktree):
     tracked = tracklist(worktree)
     expected = input_manifest(shared, worktree, tracked)
-    for name in AUDIT_DIRS:
-        (worktree / name).mkdir(parents=True, exist_ok=True)
     for name in expected:
         if name.startswith(RAW_LINK + "/"):
             continue
@@ -358,17 +452,27 @@ def remote_cleanup(folder):
     root = worktree_path(folder)
     if not root.exists():
         return
-    for mode in ("check", "snapshot", "recheck"):
-        result = command(["long-job", "status", job_name(folder, mode), "--json"], check=False)
-        if result.returncode and not result.stdout:
-            # Older long-job versions use exit 1 for a name that doesn't exist.
-            if result.returncode == 1 and "no job named" in result.stderr.lower():
-                continue
-            raise Refusal(f"cannot establish remote job state: {result.stderr.strip()}")
+    known = [mode for mode in JOB_MODES if job_receipt(folder, mode).is_file()]
+    if not known:
+        raise Refusal(f"cannot establish which jobs used {root}")
+    for mode in known:
+        name = job_name(folder, mode)
+        if read_json(job_receipt(folder, mode)).get("job") != name:
+            raise Refusal(f"unexpected job identity for {mode} at {folder}")
+        result = command(["long-job", "status", name, "--json"], check=False)
+        if result.returncode in (1, 2) and f"no job named {name} " in result.stderr:
+            continue
+        if result.returncode:
+            raise Refusal(f"cannot establish remote job state for {name}: {result.stderr.strip()}")
         states = json.loads(result.stdout)
-        if any(job["state"] in ("running", "partial") for job in states):
-            raise Refusal(f"remote job is still in use: {job_name(folder, mode)}")
-    # Only the uniquely named disposable worktree this run created is removed.
+        if (not isinstance(states, list) or len(states) != 1
+                or not isinstance(states[0], dict) or states[0].get("name") != name):
+            raise Refusal(f"unexpected status for remote job {name}")
+        state = states[0].get("state")
+        if state in ("starting", "running", "partial"):
+            raise Refusal(f"remote job is still in use: {name} ({state})")
+        if state not in ("done", "failed", "stopped", "lost"):
+            raise Refusal(f"unknown state for remote job {name}: {state}")
     git(CLONE, "worktree", "remove", "--force", str(root))
 
 
@@ -384,8 +488,7 @@ def helper(folder, host, mode, *args):
 
 def new_run(branch, commit):
     RUNS.mkdir(parents=True, exist_ok=True)
-    # The longest prefix is pm-snapshot-. Leave room for both 12-digit ids and their separators.
-    slug = re.sub(r"[^A-Za-z0-9_.-]", "-", branch)
+    slug = re.sub(r"[^a-z0-9_.-]", "-", branch.lower())
     digest = hashlib.sha256(os.fsencode(branch)).hexdigest()[:8]
     label = f"{slug[:17]}-{digest}"
     folder = RUNS / f"{label}-{commit[:12]}-{uuid.uuid4().hex[:12]}"
@@ -395,7 +498,18 @@ def new_run(branch, commit):
 
 
 def job_name(folder, mode):
-    return f"pm-{mode}-{folder.name}"
+    if mode not in JOB_MODES:
+        raise Refusal(f"unknown remote job mode: {mode}")
+    run_id = hashlib.sha256(os.fsencode(folder.name)).hexdigest()[:20]
+    return f"pm-{mode}-{run_id}"
+
+
+def job_receipt(folder, mode):
+    return folder / f"{mode}-job.json"
+
+
+def remember_job(folder, mode):
+    write_json(job_receipt(folder, mode), {"job": job_name(folder, mode)})
 
 
 def transport_failure(folder, host, mode, failures):
@@ -420,6 +534,9 @@ def start_remote_job(folder, host, mode, *args, heartbeat=lambda: None):
         say(f"SSH disconnected while starting {name}. Checking the job on reconnect.")
     elif launch.returncode:
         raise Refusal(f"could not start {host} long-job {name} (exit {launch.returncode})")
+    else:
+        # This acknowledges jobs in the starting state, before the worker first runs.
+        remember_job(folder, mode)
     say(f"Waiting for {host} long-job {name}. Evidence: {folder}")
     while True:
         heartbeat()
@@ -440,8 +557,8 @@ def start_remote_job(folder, host, mode, *args, heartbeat=lambda: None):
         return
 
 
-def checked_remote(folder, host, ref, head, tree, base, heartbeat=lambda: None):
-    start_remote_job(folder, host, "check", ref, head, tree, base, heartbeat=heartbeat)
+def checked_remote(folder, host, ref, head, tree, base, heartbeat=lambda: None, *, mode="check"):
+    start_remote_job(folder, host, mode, ref, head, tree, base, heartbeat=heartbeat)
     record = read_json(folder / "record.json")
     code = record["exit_code"]
     say(f"Landing check exit {code} ({EXIT_LABELS[code]}) in {record['check_seconds']} s. "
@@ -452,7 +569,8 @@ def checked_remote(folder, host, ref, head, tree, base, heartbeat=lambda: None):
 def verify_over_ssh(folder, host, head, tree, base):
     result = ssh(host, *helper(folder, host, "verify", head, tree, base), capture_output=False, check=False)
     if result.returncode == 255:
-        raise transport_failure(folder, host, "check", 1)
+        mode = "followup" if job_receipt(folder, "followup").is_file() else "check"
+        raise transport_failure(folder, host, mode, 1)
     if result.returncode:
         raise Refusal(f"verification on {host} exited {result.returncode}. See {folder / 'verification.json'}")
 
@@ -463,19 +581,24 @@ def cleanup_over_ssh(folder, host):
 
 @contextmanager
 def remote_worktree(folder, host):
+    cleanup = True
     try:
         yield
     except TransportFailure:
         # A lost SSH connection cannot establish whether the worker is still active.
+        cleanup = False
         raise
-    except BaseException:
-        try:
-            cleanup_over_ssh(folder, host)
-        except (Refusal, OSError) as exc:
-            say(f"Remote worktree cleanup needs attention for {folder}. {exc}")
-        raise
-    else:
-        cleanup_over_ssh(folder, host)
+    finally:
+        if cleanup:
+            try:
+                cleanup_over_ssh(folder, host)
+            except Exception as exc:
+                # Cleanup warnings must not replace the checker or publication outcome.
+                try:
+                    write_json(folder / "cleanup-failure.json", {"host": host, "error": str(exc), "utc": now()})
+                except OSError as record_error:
+                    say(f"Could not save the cleanup warning at {folder}: {record_error}")
+                say(f"Remote worktree cleanup needs attention for {folder}. {exc}")
 
 
 def full_main(root):
@@ -596,8 +719,9 @@ def changed_paths(root, base, head):
                    "-z", base, head, "--").stdout.rstrip("\0").split("\0")) - {""}
 
 
-def status_paths(root):
-    fields = iter(git(root, "status", "--porcelain=v1", "-z", "--untracked-files=normal").stdout.split("\0"))
+def status_paths(root, *, untracked="normal"):
+    fields = iter(git(root, "status", "--porcelain=v1", "-z", "--ignore-submodules=none",
+                      f"--untracked-files={untracked}").stdout.split("\0"))
     paths = set()
     for entry in fields:
         if entry:
@@ -613,12 +737,21 @@ def overlaps(changed, touched):
         str(parent) in touched for parent in PurePosixPath(name).parents))
 
 
+def affects_shared_check(name):
+    # The aggregates also parse tracked and visible JSON/JSONL outside these roots.
+    return (any(within(name, root) for root in SHARED_INPUT_ROOTS)
+            or PurePosixPath(name).suffix.lower() in {".json", ".jsonl"}
+            or name in {".gitignore", ".gitattributes", "AGENTS.md"})
+
+
 def clean_touched(root, touched):
     hidden = {entry[2:] for entry in git(root, "ls-files", "-v", "-z").stdout.split("\0")
               if entry and (entry[0] == "S" or entry[0].islower())}
-    dirty = overlaps(status_paths(root) | hidden, touched)
+    changed = status_paths(root, untracked="all") | hidden
+    tracked_input_changes = {name for name in changed if affects_shared_check(name)}
+    dirty = sorted(tracked_input_changes | set(overlaps(changed, touched)))
     if dirty:
-        raise Refusal("shared checkout has uncommitted changes or hidden index flags in landing paths: "
+        raise Refusal("shared checkout has uncommitted changes or hidden index flags in landing or check inputs: "
                       + ", ".join(dirty))
 
 
@@ -725,6 +858,7 @@ class Publication(NamedTuple):
     candidate: str
     plans_followup: bool
     completes_followup: bool
+    phase: str = "fast-forward-pending"
 
 
 def holder_field(body, name):
@@ -799,13 +933,15 @@ class LandingLock:
         publication = None
         if raw_publication:
             entry = json.loads(raw_publication)
-            if not isinstance(entry, dict) or set(entry) != set(Publication._fields):
+            fields = set(Publication._fields)
+            if not isinstance(entry, dict) or set(entry) not in (fields, fields - {"phase"}):
                 raise Refusal("invalid publication marker in landing holder")
             publication = Publication(**entry)
             sha(publication.base, "publication base")
             sha(publication.candidate, "publication candidate")
             if (type(publication.plans_followup) is not bool
                     or type(publication.completes_followup) is not bool
+                    or publication.phase not in ("fast-forward-pending", "push-pending", "rollback-pending")
                     or publication.base == publication.candidate
                     or publication.completes_followup != bool(owed)
                     or (publication.plans_followup and publication.completes_followup)):
@@ -850,6 +986,11 @@ class LandingLock:
                     or (plans_followup and completes_followup)):
                 raise Refusal("resolve the previous publication or Plans follow-up first")
             self.write_locked(Publication(base, candidate, plans_followup, completes_followup), self.owed)
+
+    def mark_push_pending(self):
+        with landing_guard():
+            self.require_owner()
+            self.write_locked(self.publication._replace(phase="push-pending"), self.owed)
 
     def finish_publication(self, published):
         with landing_guard():
@@ -937,19 +1078,53 @@ def require_shared_main():
         raise Refusal("shared checkout must be on main")
 
 
-def settle_publication(lock, upstream):
+def rollback_shared(lock, marker, upstream):
+    """Apply a two-tree checkout, then conditionally move main back."""
+    with landing_guard():
+        lock.require_owner()
+        require_shared_main()
+        shared_head = revision(SHARED, "HEAD^{commit}")
+        if shared_head != marker.candidate:
+            raise Refusal(f"shared main changed to {shared_head} before rolling back {marker.candidate}")
+        if full_main(SHARED) != upstream or is_ancestor(SHARED, marker.candidate, upstream):
+            raise Refusal(f"origin/main changed before rolling back {marker.candidate}")
+        lock.write_locked(marker._replace(phase="rollback-pending"), lock.owed)
+        # The two-tree checkout carries unrelated staged and unstaged entries
+        # forward. Replaying it after interruption is safe.
+        git(SHARED, "read-tree", "-m", "-u", marker.candidate, upstream)
+        lock.require_owner()
+        require_shared_main()
+        git(SHARED, "update-ref", "-m", "recover unpublished landing", MAIN_REF, upstream, marker.candidate)
+
+
+def record_publication_recovery(lock, error, folder):
+    marker = lock.publication
+    if marker is None:
+        return
+    path = (folder / "publication-recovery.json" if folder is not None
+            else LOCK.parent / f"recovery-{marker.candidate}.json")
+    try:
+        write_json(path, {**marker._asdict(), "follow_up_owed": lock.owed,
+                          "reason": str(error), "utc": now(), "holder": str(LOCK / "holder.txt")})
+    except OSError as record_error:
+        say(f"Could not save the recovery notice at {path}: {record_error}")
+    say(f"Publication needs the current lock owner's attention. Recovery notice: {path}.")
+
+
+def settle_publication(lock, upstream, *, require_candidate=False):
     """Resolve a journaled fast-forward against a known origin tip."""
     require_shared_main()
     marker = lock.publication
     if not is_ancestor(SHARED, marker.base, upstream) or not is_ancestor(SHARED, marker.base, marker.candidate):
         raise Refusal("publication history changed. Inspect the marker before touching shared main")
     shared_head = revision(SHARED, "HEAD^{commit}")
+    if require_candidate and shared_head != marker.candidate:
+        raise Refusal(f"shared main changed to {shared_head} after fast-forwarding {marker.candidate}")
     published = is_ancestor(SHARED, marker.candidate, upstream)
     if shared_head == marker.candidate and not published:
-        lock.heartbeat()
-        git(SHARED, "reset", "--keep", "origin/main")
+        rollback_shared(lock, marker, upstream)
         if revision(SHARED, "HEAD^{commit}") != upstream:
-            raise Refusal("shared main did not reset to the origin tip in the recovery check")
+            raise Refusal("shared main did not return to the origin tip in the recovery check")
         say(f"Rolled the unpublished fast-forward back to {upstream}.")
     elif not is_ancestor(SHARED, shared_head, upstream):
         raise Refusal(f"shared main {shared_head} is unrelated to fetched main {upstream} "
@@ -958,9 +1133,16 @@ def settle_publication(lock, upstream):
     return published
 
 
-def reconcile_publication(lock):
-    fetch_shared(lock)
-    return settle_publication(lock, full_main(SHARED))
+def reconcile_publication(lock, folder=None, *, refresh=True, require_candidate=False):
+    try:
+        if refresh:
+            fetch_shared(lock)
+        else:
+            lock.heartbeat()
+        return settle_publication(lock, full_main(SHARED), require_candidate=require_candidate)
+    except (Refusal, OSError, ValueError) as exc:
+        record_publication_recovery(lock, exc, folder)
+        raise
 
 
 def push_checked_main(folder, host, head, tree, base, touched, lock, plans_followup, *,
@@ -970,16 +1152,18 @@ def push_checked_main(folder, host, head, tree, base, touched, lock, plans_follo
     old_head = revision(SHARED, "HEAD^{commit}")
     git(SHARED, "merge-base", "--is-ancestor", old_head, base)
     git(SHARED, "merge-base", "--is-ancestor", base, head)
-    if old_head != base:
-        clean_touched(SHARED, changed_paths(SHARED, old_head, base))
-    clean_touched(SHARED, touched)
+    shared_scope = touched | changed_paths(SHARED, old_head, base) if old_head != base else touched
+    clean_touched(SHARED, shared_scope)
     verify_over_ssh(folder, host, head, tree, base)
+    clean_touched(SHARED, shared_scope)
     lock.begin_publication(base, head, plans_followup, completes_followup)
+    fast_forwarded = False
     attempted_push = False
     published = False
     try:
         lock.heartbeat()
         git(SHARED, "merge", "--ff-only", "--no-overwrite-ignore", head)
+        fast_forwarded = True
         if revision(SHARED, "HEAD^{commit}") != head or revision(SHARED, "HEAD^{tree}") != tree:
             raise Refusal("shared fast-forward did not produce the checked commit and tree")
         shared_shards(folder, touched)
@@ -987,7 +1171,7 @@ def push_checked_main(folder, host, head, tree, base, touched, lock, plans_follo
         clean_touched(SHARED, touched)
         if revision(SHARED, "HEAD^{commit}") != head:
             raise Refusal("shared HEAD changed after the fast-forward")
-        lock.heartbeat()
+        lock.mark_push_pending()
         # The lease makes the server require the same base even if its main moved after our fetch.
         # The ancestry check above makes the update itself a fast-forward.
         attempted_push = True
@@ -999,11 +1183,10 @@ def push_checked_main(folder, host, head, tree, base, touched, lock, plans_follo
             return True
     finally:
         if lock.publication:
-            if attempted_push:
-                published = reconcile_publication(lock)
-            else:
-                # No push was attempted. Roll back immediately to the last fetched origin/main.
-                settle_publication(lock, full_main(SHARED))
+            # After attempting a push, ask the primary before deciding whether to roll back.
+            # With no attempt, the still-owned lock and last fetch establish that it is unpublished.
+            published = reconcile_publication(lock, folder, refresh=attempted_push,
+                                              require_candidate=fast_forwarded)
     if published:
         say(f"Primary main reached {head}, but the push reported an error. "
             f"Check the configured push mirrors: {result.stderr.strip()}")
@@ -1038,7 +1221,8 @@ def snapshot_followup(host, head, tree, lock, wait_for_review):
     folder = new_run(branch, candidate)
     ref = check_ref(branch)
     with remote_worktree(folder, host):
-        record = checked_remote(folder, host, ref, candidate, snapshot["tree"], head, lock.heartbeat)
+        record = checked_remote(folder, host, ref, candidate, snapshot["tree"], head, lock.heartbeat,
+                                mode="followup")
         require_same_inputs(snapshot["ignored_inputs"], record["ignored_inputs"], "after recording baseline")
         fetch_shared(lock, ref)
         if ref_at(SHARED, "origin", ref) != candidate:
@@ -1139,7 +1323,7 @@ def main():
     verify.add_argument("--commit", required=True)
     verify.add_argument("--base", required=True, help="full SHA of freshly fetched origin/main")
     remote = commands.add_parser("_remote")
-    remote.add_argument("mode", choices=("check", "verify", "cleanup", "snapshot", "recheck"))
+    remote.add_argument("mode", choices=(*JOB_MODES, "verify", "cleanup"))
     remote.add_argument("folder", type=Path)
     remote.add_argument("host", choices=HOSTS)
     remote.add_argument("values", nargs="*")
@@ -1154,7 +1338,10 @@ def main():
             if (args.folder.is_symlink() or folder.parent != RUNS.resolve(strict=True)
                     or args.folder.parent != RUNS):
                 raise Refusal(f"worker path is outside the remote landing evidence directory: {folder}")
-            if args.mode == "check":
+            if args.mode in JOB_MODES:
+                # The worker itself records its identity when SSH dropped during launch.
+                remember_job(args.folder, args.mode)
+            if args.mode in ("check", "followup"):
                 remote_run(args.folder, args.host, *args.values)
             elif args.mode == "verify":
                 remote_verify(args.folder, args.host, *args.values)

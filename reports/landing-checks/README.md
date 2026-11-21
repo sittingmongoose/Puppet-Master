@@ -34,7 +34,7 @@ the new main before relying on the result for a landing. While a remote worktree
 `python3 scripts/pm-land.py verify <record.json> --commit <full commit SHA> --base <full origin/main SHA>`
 checks the current origin/main and asks the host to rehash the live checkout and shared inputs. It prints whether
 the record matches and returns the landing check’s exit code when it does. A verification failure
-exits 3. The tool removes its temporary remote worktree when the run ends.
+exits 3. The tool removes the temporary remote worktree after its recorded jobs stop. It saves cleanup warnings separately from the check or publication result.
 
 Both hand the aggregate checks `--subcheck-timeout-seconds`, 1800 by default; see "Subchecks that
 time out" below.
@@ -594,27 +594,29 @@ someone names it. The seventh, the
 tree that records a baseline; the runbook below does that. The baseline records what it was taken
 with, in `untracked_inputs`.
 
-The `Plans/.audits` inputs need copying too, and the recipe above does not cover them. Most of that
-directory is tracked; these inputs are gitignored and exist only in the shared checkout. A fresh
-worktree without them records four phantom rows the shared checkout never has: `stale_audit_status_index`
-in each aggregate, because the tracked `_audit_status_index.json` names `FINAL_REPORT.md` files the tree
-does not have, and `missing_ref` on `Plans/00-plans-index.md` line 135 in each aggregate, because that
-line names the widget-followup `audit_report.json`. A phantom row in a baseline excuses a later real
-failure of the same key as pre-existing. Copy from the shared checkout:
+Both aggregate checks walk files on disk. The contract-reference linter reads every eligible
+Markdown and JSON file under `Plans/`, including ignored files in `Plans/.audits/`. The usage,
+web and migration checks also select JSONL, YAML and schema inputs. Discover these inputs in
+both checkouts with the same Git inventory:
 
-    Plans/.audits/audit-20260827-001-pmconcept7-usage-recovery/FINAL_REPORT.md
-    Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/FINAL_REPORT.md
-    Plans/.audits/audit-20260828-002-settings-tome-tabs-preport/        (whole dir)
-    Plans/.audits/audit-20260828-003-chat-56-fast-lane/                 (whole dir)
-    Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/FINAL_REPORT.md
-    Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json
-    Plans/.audits/audit-20260830-001-pmconcept7-live-resize-preview/    (whole dir)
-    Plans/.audits/event-authority-2026-08-12/NEXT_STEPS_20260910.md
-    Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_SHEET_ANSWERS_20260910.json
-    Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_SHEET_PLAIN_20260909.md
+```sh
+git ls-files --others --ignored --exclude-standard -z -- \
+    Plans reports scripts Concepts tests/fixtures .puppet-master/project
+```
 
-Copy these paths, the ignored readiness directory and any other untracked final reports the audit
-index reads. The whole `.audits` folder is about 30 GB.
+Apply the checks' file selection to that list. Keep the Plan text and reference types
+(`.md`, `.json`, `.jsonl`, `.yaml`, `.yml`, `.schema`, `.py`, `.txt`, `.tsv`, and files
+whose name contains `.schema.`), the readiness audit directory, and the validator tree under
+`scripts/` outside Python caches. Keep fixture text and source files under the other listed
+roots and assets read by the PM7 concept. Include explicitly declared evidence and readiness
+hash targets from the Spec Lock, evidence records, audit closure registry, legacy audit
+inventory and readiness receipt even if their extensions differ. The raw-capture manifest supplies the exact
+files to hash behind `tests/agent_packet_restrictions`.
+
+Copy the selected files from the shared checkout and preserve their relative paths. Compare
+the set of paths and each SHA-256 before checking. Repeat both comparisons before fast-forward
+and before push. A file visible on only one side invalidates the receipt. A full audit-folder
+copy can include tens of gigabytes of unrelated capture data.
 
 ## Landing by hand
 
@@ -632,36 +634,152 @@ index reads. The whole `.audits` folder is about 30 GB.
    `git config --bool --get core.sparseCheckout`. The SHAs must match and the status must be empty.
    The sparse setting must be false or unset. Check `git ls-files -v` for skip-worktree and
    assume-unchanged entries.
-3. Copy the ignored audit inputs above, the untracked `Plans/.audits/audit-*/FINAL_REPORT.md`
-   files, and the readiness audit directory from the shared checkout. Recreate the raw evidence
+3. Discover and copy the ignored inputs above from the shared checkout. Recreate the raw evidence
    directory link using the resolved shared target. Hash the files behind the link at the exact
    paths in `tests/fixtures/governance/raw_evidence_capture_modes.json`. Save a manifest with both
    inventories’ relative paths and SHA-256 values. Compare by path and hash, including the resolved
    link target. Record UTC start and end times, host, full commit, tree, base and input inventory.
-4. Run the shard check in the remote worktree. On the same host, use
-   `long-job start <name> --cwd <worktree> --log <share-log> -- bash <run-script>`. In the run script,
-   run `python3 scripts/pm-landing-check.py --base <full base SHA> --subcheck-timeout-seconds 1800 --json --readiness-audit-root <worktree>/Plans/.audits/event-authority-2026-08-13-currentness --keep-check-reports <share-dir>/subchecks`
-   with JSON and stderr redirected to the share. Capture `$?` immediately, then compute
-   `sha256sum -- <report.json>` after closing its output. Save the exit code, report path and
-   SHA-256 together in one receipt, publish it by atomic rename, and exit with the stored code.
-   Wait with `long-job wait <name> --timeout 1500` and re-arm on 124 after renewing the holder.
-   Read the receipt and apply the existing rules for exit codes, changed baseline rows and timeouts.
-5. Fetch again in the shared checkout. If the base moved, repeat from the rebase. Stop if a file the
-   branch touches has uncommitted changes in the shared checkout. Before the fast-forward and again
-   before the push, confirm the remote HEAD and tree, clean full checkout and both input inventories.
-   Recompute the report SHA-256 and match the receipt. Parse the JSON and match its `commit` and
-   `base` to the full checked candidate and fetched base. Use the bound exit code to judge it.
-6. Before the fast-forward, write the publication marker described below. Confirm the same holder
-   token immediately before each shared mutation. Run `git merge --ff-only <candidate>`, check the
-   resulting HEAD and tree, run the shared shard check, and repeat verification. Confirm ownership
-   and push in the same step. Require the checked base at the server with
-   `git push --force-with-lease=refs/heads/main:<base> origin <candidate>:refs/heads/main` after
-   proving the base is an ancestor of the candidate. If the fast-forward fails to publish, confirm
-   ownership and use `git reset --keep origin/main` to roll it back after establishing the origin
-   state. Reconcile the marker before clearing it.
+4. Run the shard check in the remote worktree and use the executable receipt steps below for the
+   landing check. Wait on the remote job in 25-minute intervals and renew the holder before each
+   wait. Use the original exit saved by the remote script. Apply the existing rules for changed
+   baseline rows and timeouts.
+5. Confirm ownership and fetch again. If the base moved, repeat from the rebase. Before the
+   fast-forward and again before the push, name any staged or unstaged changes and skip-worktree
+   or assume-unchanged entries on the shared branch paths and on checker inputs. This includes
+   all tracked paths under `Plans/` and `reports/landing-checks/`. Inspect
+   `git --no-optional-locks status --porcelain=v1 --untracked-files=all` and
+   `git --no-optional-locks ls-files -v`. Stop on any difference. Verify remote HEAD, tree, full
+   clean checkout, the set and hashes of the ignored inputs, and the hand receipt at both points.
+6. Write the durable publication marker before fast-forward. Confirm ownership, fast-forward
+   and check the resulting HEAD and tree. Run the shared shard check, repeat verification and
+   push against the exact fetched base using the commands below. If publication fails and the
+   checked candidate is still the unpublished shared HEAD, use the rollback procedure below.
 7. For Plans changes, keep the lock and complete the follow-up below. Confirm ownership before
-   worktree removal and immediately before releasing the lock. Release only after publication or
-   rollback is reconciled and any Plans follow-up is finished.
+   worktree removal and before release. Release after publication or rollback is reconciled and
+   any Plans follow-up is finished.
+
+### Hand check receipt and publication
+
+Set `PM_LAND_BASE` and `PM_LAND_COMMIT` to the full checked SHAs. Set `PM_LAND_RECEIPT_DIR` to a
+unique absolute directory on the evidence share outside the checkout. Export these variables on
+the idle host, and run the following scripts from the checked worktree.
+
+#### Save the checker receipt
+
+Save this block as a run script and start it on the idle host with
+`long-job start <name> --cwd <worktree> --log <share-log> -- bash <run-script>`. Wait using
+`long-job wait <name> --timeout 1500` and repeat on 124 after renewing the lock. A wait result
+of 1 can come from checker exit 2 or 3. Read `checker.exit` for the original number.
+
+```sh
+set -eu
+mkdir -p -- "$PM_LAND_RECEIPT_DIR"
+report="$PM_LAND_RECEIPT_DIR/landing-check.json"
+code=0
+python3 scripts/pm-landing-check.py --base "$PM_LAND_BASE" --subcheck-timeout-seconds 1800 --json \
+    --readiness-audit-root "$PWD/Plans/.audits/event-authority-2026-08-13-currentness" \
+    --keep-check-reports "$PM_LAND_RECEIPT_DIR/subchecks" \
+    >"$report" 2>"$PM_LAND_RECEIPT_DIR/landing-check.stderr" || code=$?
+python3 - "$report" "$code" "$PM_LAND_COMMIT" "$PM_LAND_BASE" "$(git rev-parse --absolute-git-dir)" <<'PY'
+import hashlib
+import json
+from pathlib import Path
+import sys
+
+name, code, commit, base, git_dir = sys.argv[1:]
+report = Path(name)
+exit_file = report.with_name("checker.exit")
+receipt = report.with_name("hand-receipt.json")
+record = {"exit_code": int(code), "report": str(report), "report_sha256": hashlib.sha256(report.read_bytes()).hexdigest(),
+          "commit": commit, "base": base}
+payload = (json.dumps(record, sort_keys=True) + "\n").encode()
+for path, data in ((exit_file, (code + "\n").encode()), (receipt, payload)):
+    temporary = path.with_suffix(".tmp")
+    temporary.write_bytes(data)
+    temporary.replace(path)
+(Path(git_dir) / "pm-land-hand-receipt.sha256").write_text(hashlib.sha256(payload).hexdigest() + "\n")
+PY
+exit "$code"
+```
+
+#### Verify the hand receipt
+
+Run this block on the idle host from the same worktree before fast-forward and again before
+push. It verifies the separate exit file, receipt digest and report hash. It stops for checker
+exit 2 or 3. For exit 0 or 1 it also checks the report's full commit and base, then leaves any
+landing judgment to the lander.
+
+```sh
+set -eu
+test "$(git rev-parse HEAD)" = "$PM_LAND_COMMIT"
+python3 - "$PM_LAND_RECEIPT_DIR" "$PM_LAND_COMMIT" "$PM_LAND_BASE" "$(git rev-parse --absolute-git-dir)" <<'PY'
+import hashlib
+import json
+from pathlib import Path
+import re
+import sys
+
+name, commit, base, git_dir = sys.argv[1:]
+root = Path(name)
+
+def refuse(message):
+    print(message, file=sys.stderr)
+    raise SystemExit(3)
+
+try:
+    payload = (root / "hand-receipt.json").read_bytes()
+    witness = (Path(git_dir) / "pm-land-hand-receipt.sha256").read_text().strip()
+    if hashlib.sha256(payload).hexdigest() != witness:
+        refuse("hand receipt SHA-256 changed")
+    receipt = json.loads(payload)
+    code = int((root / "checker.exit").read_text())
+    if type(receipt["exit_code"]) is not int or receipt["exit_code"] != code or code not in (0, 1, 2, 3):
+        refuse("original exit and receipt disagree")
+    if any(not re.fullmatch(r"[0-9a-f]{40}", item) for item in (commit, base)):
+        refuse("expected full commit and base SHAs")
+    if (receipt["commit"], receipt["base"]) != (commit, base):
+        refuse("receipt commit or base does not match")
+    report_path = root / "landing-check.json"
+    raw = report_path.read_bytes()
+    if receipt["report"] != str(report_path) or receipt["report_sha256"] != hashlib.sha256(raw).hexdigest():
+        refuse("report SHA-256 or path does not match")
+    print(f"Original checker exit {code}")
+    if code in (2, 3):
+        raise SystemExit(code)
+    report = json.loads(raw)
+    if (report["commit"], report["base"]) != (commit, base):
+        refuse("report commit or base does not match")
+    if report["schema_id"] != "pm.landing_check.report.v1" or report["subcheck_timeout_seconds"] != 1800:
+        refuse("report format or timeout does not match")
+except (OSError, ValueError, KeyError, TypeError) as error:
+    refuse(str(error))
+PY
+```
+
+#### Push the checked commit
+
+In the shared checkout, set `PM_LAND_LOCK` to the absolute `held` directory and
+`PM_LAND_TOKEN` to its token. Keep the publication marker and follow-up fields when renewing the
+holder. Use this guarded Git helper for the fetch, fast-forward and push. Run the final block
+after the shard check and the second verification of the remote worktree, inputs and receipt.
+
+```sh
+held_git() (
+    exec 9>>"$(dirname "$PM_LAND_LOCK")/pm-land-reap.guard"
+    flock -x 9 || exit 3
+    test -n "$PM_LAND_TOKEN" || exit 3
+    current_token=$(sed -n 's/^token: //p' "$PM_LAND_LOCK/holder.txt") || exit 3
+    test "$current_token" = "$PM_LAND_TOKEN" || exit 3
+    git "$@"
+)
+set -eu
+held_git fetch origin
+test "$(git rev-parse --verify refs/remotes/origin/main)" = "$PM_LAND_BASE"
+test "$(git symbolic-ref HEAD)" = refs/heads/main
+test "$(git rev-parse --verify HEAD)" = "$PM_LAND_COMMIT"
+git merge-base --is-ancestor "$PM_LAND_BASE" "$PM_LAND_COMMIT"
+held_git push --force-with-lease="refs/heads/main:$PM_LAND_BASE" origin "$PM_LAND_COMMIT:refs/heads/main"
+```
 
 ### Publication marker and recovery
 
@@ -670,12 +788,12 @@ fast-forward. Replace the placeholders with full SHAs. Flush the temporary holde
 directory when replacing the holder so the marker survives interruption.
 
 ```text
-publication: {"base": "<fetched main>", "candidate": "<checked commit>", "plans_followup": true, "completes_followup": false}
+publication: {"base": "<fetched main>", "candidate": "<checked commit>", "plans_followup": true, "completes_followup": false, "phase": "fast-forward-pending"}
 ```
 
 Use `plans_followup: true` for a topic that changes Plans. For the snapshot follow-up, keep the
 existing `follow-up-owed: <published Plans commit>` line and set `plans_followup` to false and
-`completes_followup` to true. For a topic outside Plans, use false for both.
+`completes_followup` to true. For a topic outside Plans, use false for both. Change the phase to `push-pending` just before pushing.
 
 After a successful push, replace the pending marker and record `follow-up-owed` for a published
 Plans topic. Remove the owed entry only after its follow-up is published. Keep a marker if the
@@ -688,9 +806,14 @@ the recovered lock:
   ancestor of fetched main.
 - **Published candidate.** If fetched main contains the candidate, record any Plans follow-up
   owed. If the candidate completed the recorded follow-up, clear that obligation.
-- **Unpublished candidate.** If shared HEAD is the recorded candidate, confirm ownership and run
-  `git reset --keep origin/main`. Confirm the reset reached the fetched SHA. Preserve any
-  earlier Plans follow-up when the interrupted push was the follow-up itself.
+- **Unpublished candidate.** If shared HEAD is the recorded candidate, confirm ownership and
+  save `rollback-pending` in the marker. Under the guard, recheck ownership, the exact candidate
+  HEAD and the fetched origin SHA. Apply `git read-tree -m -u <candidate> <fetched main>`, then
+  `git update-ref refs/heads/main <fetched main> <candidate>`. The two-tree operation preserves
+  unrelated staged and unstaged edits, including partial staging. Verify HEAD reached fetched
+  main. If ownership or expected HEAD changed, leave the checkout alone and save a recovery
+  notice outside the holder for its current owner. Preserve any earlier Plans obligation when
+  the interrupted push was the follow-up.
 - **Finish recovery.** Clear the pending marker after reconciliation. Complete any owed Plans
   follow-up at fetched main before another landing.
 
