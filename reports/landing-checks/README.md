@@ -44,7 +44,9 @@ the new main before relying on the result for a landing. While a remote worktree
 `python3 scripts/pm-land.py verify <record.json> --commit <full commit SHA> --base <full origin/main SHA>`
 checks the current origin/main and asks the host to rehash the live checkout and shared inputs. It prints whether
 the record matches and returns the landing check’s exit code when it does. A verification failure
-exits 3. The tool removes the temporary remote worktree after its recorded jobs stop. It saves cleanup warnings separately from the check or publication result.
+exits 3. The tool removes the temporary remote worktree after its recorded jobs stop. It reports
+the job and preserves the worktree when long-job reports `lost` and the worker may still be running.
+Cleanup warnings are saved separately from the check or publication result.
 
 Both hand the aggregate checks `--subcheck-timeout-seconds`, 1800 by default; see "Subchecks that
 time out" below.
@@ -611,14 +613,15 @@ both checkouts with the same Git inventory:
 
 ```sh
 git ls-files --others --ignored --exclude-standard -z -- \
-    Plans reports scripts Concepts tests/fixtures .puppet-master/project
+    Plans reports scripts Concepts tests .puppet-master/project
 ```
 
 Apply the checks' file selection to that list. Keep the Plan text and reference types
 (`.md`, `.json`, `.jsonl`, `.yaml`, `.yml`, `.schema`, `.py`, `.txt`, `.tsv`, and files
 whose name contains `.schema.`), the readiness audit directory, and the validator tree under
 `scripts/` outside Python caches. Keep fixture text and source files under the other listed
-roots and assets read by the PM7 concept. Include explicitly declared evidence and readiness
+roots and assets read by the PM7 concept. Under `tests/`, also use the checked GUI asset policy's
+source extensions and exclusions. Include explicitly declared evidence and readiness
 hash targets from the Spec Lock, evidence records, audit closure registry, legacy audit
 inventory and readiness receipt even if their extensions differ. The raw-capture manifest supplies the exact
 files to hash behind `tests/agent_packet_restrictions`.
@@ -661,8 +664,8 @@ copy can include tens of gigabytes of unrelated capture data.
    marker before merging. Verify the resulting HEAD and tree, run the shared shard check, repeat
    remote verification, then run the guarded push block against the exact fetched base. Both
    blocks repeat the shared-input preflight under the guard after verification and any fetch.
-   Reconcile a failed fast-forward against its pre-merge HEAD, index and working tree. Use the
-   rollback procedure for a completed fast-forward that remains unpublished.
+   If Git refuses the fast-forward, keep the lock and journal and use the manual recovery
+   instructions. Use the rollback procedure for a completed fast-forward that remains unpublished.
 7. For Plans changes, keep the lock and complete the follow-up below. Confirm ownership before
    worktree removal and before release. Release after publication or rollback is reconciled and
    any Plans follow-up is finished.
@@ -670,8 +673,9 @@ copy can include tens of gigabytes of unrelated capture data.
 ### Hand check receipt and publication
 
 Set `PM_LAND_BASE` and `PM_LAND_COMMIT` to the full checked SHAs. Set `PM_LAND_RECEIPT_DIR` to a
-unique absolute directory on the evidence share outside the checkout. Export these variables on
-the idle host, and run the following scripts from the checked worktree.
+unique absolute directory on the evidence share outside the checkout. Set `PM_LAND_SCRIPT` to the
+absolute path of the current lander script in a trusted local worktree on each host. Export these
+variables on the idle host, and run the following scripts from the checked worktree.
 
 #### Save the checker receipt
 
@@ -684,11 +688,14 @@ of 1 can come from checker exit 2 or 3. Read `checker.exit` for the original num
 set -eu
 mkdir -p -- "$PM_LAND_RECEIPT_DIR"
 report="$PM_LAND_RECEIPT_DIR/landing-check.json"
+python3 -B "$PM_LAND_SCRIPT" inventory >"$PM_LAND_RECEIPT_DIR/hand-inputs-before.json"
 code=0
 python3 scripts/pm-landing-check.py --base "$PM_LAND_BASE" --subcheck-timeout-seconds 1800 --json \
     --readiness-audit-root "$PWD/Plans/.audits/event-authority-2026-08-13-currentness" \
     --keep-check-reports "$PM_LAND_RECEIPT_DIR/subchecks" \
     >"$report" 2>"$PM_LAND_RECEIPT_DIR/landing-check.stderr" || code=$?
+printf '%s\n' "$code" >"$PM_LAND_RECEIPT_DIR/checker.exit"
+python3 -B "$PM_LAND_SCRIPT" inventory >"$PM_LAND_RECEIPT_DIR/hand-inputs-after.json"
 python3 - "$report" "$code" "$PM_LAND_COMMIT" "$PM_LAND_BASE" "$(git rev-parse --absolute-git-dir)" <<'PY'
 import hashlib
 import json
@@ -699,8 +706,14 @@ name, code, commit, base, git_dir = sys.argv[1:]
 report = Path(name)
 exit_file = report.with_name("checker.exit")
 receipt = report.with_name("hand-receipt.json")
+before = json.loads(report.with_name("hand-inputs-before.json").read_bytes())
+after = json.loads(report.with_name("hand-inputs-after.json").read_bytes())
+changed = sorted(name for name in before.keys() | after.keys() if before.get(name) != after.get(name))
+if changed:
+    print("Remote ignored inputs changed during the check: " + ", ".join(changed), file=sys.stderr)
+    raise SystemExit(3)
 record = {"exit_code": int(code), "report": str(report), "report_sha256": hashlib.sha256(report.read_bytes()).hexdigest(),
-          "commit": commit, "base": base}
+          "commit": commit, "base": base, "ignored_inputs": before}
 payload = (json.dumps(record, sort_keys=True) + "\n").encode()
 for path, data in ((exit_file, (code + "\n").encode()), (receipt, payload)):
     temporary = path.with_suffix(".tmp")
@@ -716,11 +729,13 @@ exit "$code"
 Run this block on the idle host from the same worktree before fast-forward and again before
 push. It verifies the separate exit file, receipt digest and report hash. It stops for checker
 exit 2 or 3. For exit 0 or 1 it also checks the report's full commit and base, then leaves any
-landing judgment to the lander.
+landing judgment to the lander. Bring the printed verified digest back to the shared checkout
+as `PM_LAND_RECEIPT_SHA256` for the corresponding publication step.
 
 ```sh
 set -eu
 test "$(git rev-parse HEAD)" = "$PM_LAND_COMMIT"
+python3 -B "$PM_LAND_SCRIPT" inventory >"$PM_LAND_RECEIPT_DIR/hand-inputs-verify.json"
 python3 - "$PM_LAND_RECEIPT_DIR" "$PM_LAND_COMMIT" "$PM_LAND_BASE" "$(git rev-parse --absolute-git-dir)" <<'PY'
 import hashlib
 import json
@@ -760,6 +775,13 @@ try:
         refuse("report commit or base does not match")
     if report["schema_id"] != "pm.landing_check.report.v1" or report["subcheck_timeout_seconds"] != 1800:
         refuse("report format or timeout does not match")
+    expected = receipt["ignored_inputs"]
+    actual = json.loads((root / "hand-inputs-verify.json").read_bytes())
+    changed = sorted(name for name in expected.keys() | actual.keys()
+                     if expected.get(name) != actual.get(name))
+    if changed:
+        refuse("remote ignored inputs changed after checking: " + ", ".join(changed))
+    print(f"Verified hand receipt SHA-256 {witness}")
 except (OSError, ValueError, KeyError, TypeError) as error:
     refuse(str(error))
 PY
@@ -771,14 +793,17 @@ In the shared checkout, set `PM_LAND_LOCK` to the absolute `held` directory and
 `PM_LAND_TOKEN` to its token. Set `PM_LAND_PLANS_FOLLOWUP` and `PM_LAND_COMPLETES_FOLLOWUP`
 to `true` or `false` using the rules below. Set `PM_LAND_SCRIPT` to the absolute path of an
 up-to-date `scripts/pm-land.py` in a trusted local worktree. Run both publication blocks from
-the shared checkout in the same Bash session.
+the shared checkout in the same Bash session. For the initial topic, set
+`PM_LAND_TOPIC_WORKTREE` to the original absolute topic worktree and `PM_LAND_TOPIC_BRANCH`
+to the topic name. Set `PM_LAND_RESEAL` to `true` if the topic includes a reseal path.
 
 Each block holds the guard across the token check, the shared-input preflight, the journal
 write and Git. The preflight uses the automated lander's check and reports staged or unstaged
 changes and skip-worktree or assume-unchanged flags on the paths being landed or read by the
-checker, including all tracked paths in `Plans/` and `reports/landing-checks/`. Stop when it
-reports a difference. Use the same guard for shared recovery commands. Keep remote checks
-and waits outside the guard.
+checker, including all tracked paths in `Plans/` and `reports/landing-checks/`. It detects
+ignored files at new tracked paths and compares the entire ignored path set and SHA-256 values
+against the verified receipt. Stop when it names a difference. Use the same guard for shared
+recovery commands. Keep remote checks and waits outside the guard.
 
 ```sh
 held_git() (
@@ -805,15 +830,19 @@ prefix = "publication: "
 lines = path.read_text().splitlines()
 existing = [line[len(prefix):] for line in lines if line.startswith(prefix)]
 if phase == "fast-forward-pending":
-    base, candidate, pre_merge_head, plans, completes = fields
+    base, candidate, pre_merge_head, plans, completes, reseal, worktree, branch = fields
     if (existing or base == candidate
             or any(not re.fullmatch(r"[0-9a-f]{40}", value) for value in (base, candidate, pre_merge_head))
-            or any(value not in ("true", "false") for value in (plans, completes))
+            or any(value not in ("true", "false") for value in (plans, completes, reseal))
+            or (reseal == "true" and plans != "true")
+            or (completes != "true" and (not Path(worktree).is_absolute() or not branch))
             or (plans == "true" and completes == "true")
             or (completes == "true") != any(line.startswith("follow-up-owed: ") for line in lines)):
         raise SystemExit("inconsistent publication or Plans follow-up")
     marker = dict(base=base, candidate=candidate, pre_merge_head=pre_merge_head,
-                  plans_followup=plans == "true", completes_followup=completes == "true")
+                  plans_followup=plans == "true", completes_followup=completes == "true",
+                  reseal=reseal == "true",
+                  topic=dict(worktree=worktree, branch=branch, tip=candidate) if completes == "false" else None)
 else:
     base, candidate = fields
     if len(existing) != 1:
@@ -836,16 +865,29 @@ finally:
 PY
 }
 
+shared_preflight() {
+    python3 -B "$PM_LAND_SCRIPT" preflight --base "$PM_LAND_BASE" --commit "$PM_LAND_COMMIT" \
+        --receipt "$PM_LAND_RECEIPT_DIR/hand-receipt.json" --receipt-sha256 "$PM_LAND_RECEIPT_SHA256"
+}
+
 fast_forward_checked() {
+    python3 -B "$PM_LAND_SCRIPT" fetch-main --guard-fd 9
     test "$(git symbolic-ref HEAD)" = refs/heads/main
     test "$(git rev-parse --verify refs/remotes/origin/main)" = "$PM_LAND_BASE"
     pre_merge_head=$(git rev-parse --verify HEAD)
     git merge-base --is-ancestor "$pre_merge_head" "$PM_LAND_BASE"
     git merge-base --is-ancestor "$PM_LAND_BASE" "$PM_LAND_COMMIT"
-    python3 -B "$PM_LAND_SCRIPT" preflight --base "$PM_LAND_BASE" --commit "$PM_LAND_COMMIT"
+    shared_preflight
     save_landing_phase fast-forward-pending "$PM_LAND_BASE" "$PM_LAND_COMMIT" "$pre_merge_head" \
-        "${PM_LAND_PLANS_FOLLOWUP:?}" "${PM_LAND_COMPLETES_FOLLOWUP:?}"
-    git merge --ff-only --no-overwrite-ignore "$PM_LAND_COMMIT"
+        "${PM_LAND_PLANS_FOLLOWUP:?}" "${PM_LAND_COMPLETES_FOLLOWUP:?}" "${PM_LAND_RESEAL:-false}" \
+        "${PM_LAND_TOPIC_WORKTREE:-}" "${PM_LAND_TOPIC_BRANCH:-}"
+    if ! git merge --ff-only --no-overwrite-ignore "$PM_LAND_COMMIT"; then
+        save_landing_phase fast-forward-failed "$PM_LAND_BASE" "$PM_LAND_COMMIT"
+        python3 -B "$PM_LAND_SCRIPT" failed-ff-state --before "$pre_merge_head" --commit "$PM_LAND_COMMIT" \
+            | tee "$PM_LAND_RECEIPT_DIR/failed-fast-forward.json"
+        echo 'Keep the lock and holder. Follow the manual failed fast-forward reconciliation below.' >&2
+        return 3
+    fi
 }
 
 set -eu
@@ -856,17 +898,20 @@ held_git fast_forward_checked
 
 After the shard check and the second verification of the remote worktree, inputs and
 receipt, use the same helper to record `push-pending` and push with the checked lease.
+The first configured push URL is primary. The helper pushes mirrors only after primary success
+and writes each result to `publication-push.json`. The primary determines publication.
 
 ```sh
 push_checked() {
-    git fetch origin
+    python3 -B "$PM_LAND_SCRIPT" fetch-main --guard-fd 9
     test "$(git rev-parse --verify refs/remotes/origin/main)" = "$PM_LAND_BASE"
     test "$(git symbolic-ref HEAD)" = refs/heads/main
     test "$(git rev-parse --verify HEAD)" = "$PM_LAND_COMMIT"
     git merge-base --is-ancestor "$PM_LAND_BASE" "$PM_LAND_COMMIT"
-    python3 -B "$PM_LAND_SCRIPT" preflight --base "$PM_LAND_BASE" --commit "$PM_LAND_COMMIT"
+    shared_preflight
     save_landing_phase push-pending "$PM_LAND_BASE" "$PM_LAND_COMMIT"
-    git push --force-with-lease="refs/heads/main:$PM_LAND_BASE" origin "$PM_LAND_COMMIT:refs/heads/main"
+    python3 -B "$PM_LAND_SCRIPT" push-main --guard-fd 9 --base "$PM_LAND_BASE" --commit "$PM_LAND_COMMIT" \
+        --results "$PM_LAND_RECEIPT_DIR/publication-push.json"
 }
 
 set -eu
@@ -880,26 +925,30 @@ fast-forward. Replace the placeholders with full SHAs. Flush the temporary holde
 directory when replacing the holder so the marker survives interruption.
 
 ```text
-publication: {"base": "<fetched main>", "candidate": "<checked commit>", "pre_merge_head": "<shared HEAD before merging>", "plans_followup": true, "completes_followup": false, "phase": "fast-forward-pending"}
+publication: {"base": "<fetched main>", "candidate": "<checked commit>", "pre_merge_head": "<shared HEAD before merging>", "plans_followup": true, "completes_followup": false, "phase": "fast-forward-pending", "reseal": false, "topic": {"worktree": "<original absolute path>", "branch": "<topic branch>", "tip": "<checked commit>"}}
 ```
 
 Use `plans_followup: true` for a topic that changes Plans. For the snapshot follow-up, keep the
-existing `follow-up-owed: <published Plans commit>` line and set `plans_followup` to false and
-`completes_followup` to true. For a topic outside Plans, use false for both. Change the phase to `push-pending` just before pushing.
+existing `follow-up-owed: <published Plans commit>` line, use `topic: null`, set `plans_followup`
+to false and `completes_followup` to true. For a topic without Plans changes or a reseal, use
+false for both flags. Set `plans_followup` to true when `reseal` is true.
+Change the phase to `push-pending` just before pushing.
 
-After a successful push, replace the pending marker and record `follow-up-owed` for a published
-Plans topic. Remove the owed entry only after its follow-up is published. Keep a marker if the
-outcome or rollback is uncertain. When taking over a holder older than 90 minutes, preserve its
-publication and follow-up entries, replace its token under the guard, and reconcile while holding
-the recovered lock:
+After a successful primary push, replace the pending marker and record `follow-up-owed` for a
+published Plans topic and `follow-up-kind: reseal` when applicable. Carry the original topic
+record forward as `cleanup-owed` until its worktree and verified branch tip are removed.
+Remove the follow-up entry only after that follow-up is published. Keep a marker if the outcome
+or rollback is uncertain. When taking over a holder older than 90 minutes, preserve these entries,
+replace its token under the guard, and reconcile while holding the recovered lock:
 
-- **Fetch** main and compare the candidate, the recorded base, shared HEAD and fetched main. Stop
+- **Fetch** primary main and compare the candidate, the recorded base, shared HEAD and fetched main. Stop
   for manual recovery if history changed or shared HEAD is neither the recorded candidate nor an
   ancestor of fetched main.
 - **Published candidate.** If fetched main contains the candidate, record any Plans follow-up
   owed. If the candidate completed the recorded follow-up, clear that obligation. If the shared
   fast-forward is incomplete, reconcile its local index and working tree first.
-- **Unpublished candidate.** If shared HEAD is the recorded candidate, confirm ownership and
+- **Unpublished completed fast-forward.** If shared HEAD is the recorded candidate and the
+  fast-forward completed, confirm ownership and
   save `rollback-pending` in the marker. Under the guard, recheck ownership, the exact candidate
   HEAD and the fetched origin SHA. Apply `git read-tree -m -u <candidate> <fetched main>`, then
   `git update-ref refs/heads/main <fetched main> <candidate>`. The two-tree operation preserves
@@ -907,26 +956,35 @@ the recovered lock:
   main. If ownership or expected HEAD changed, leave the checkout alone and save a recovery
   notice outside the holder for its current owner. Preserve any earlier Plans obligation when
   the interrupted push was the follow-up.
-- **Incomplete fast-forward.** If shared HEAD still equals the journaled pre-merge HEAD, compare
-  the index and on-disk bytes on every path between that HEAD and the candidate. Restore a path
-  only when its staged and working entries are provably the pre-merge or candidate versions.
-  Use exact index modes and blob IDs. Compare working file bytes by blob hash and apply the shared
-  repository's `core.filemode` setting when checking the executable bit on regular files. Preserve
-  unrelated staging. Leave ambiguous paths untouched and keep the marker until all affected index
-  and working entries match the pre-merge HEAD.
+- **Failed or incomplete fast-forward.** Leave every path untouched and keep the lock and marker.
+  Save HEAD, porcelain status, index entries and per-path working hashes using `failed-ff-state`
+  or the run's recovery notice. Under the recovered guard, fetch primary main and compare the
+  recorded pre-merge HEAD and candidate with the live index and working files. Preserve other
+  writers' changes. Reconcile only confirmed candidate changes by hand. If primary contains the
+  candidate, record its follow-up and original checkout cleanup before clearing the journal.
 - **Finish recovery.** Clear the pending marker after reconciliation. Complete any owed Plans
-  follow-up at fetched main before another landing.
+  follow-up at fetched main before another landing. Check the original worktree and branch
+  against the saved tip and fresh primary ancestry before removal. If the checkout has moved or
+  changed, keep the cleanup identity and hand it off for inspection.
 
 ## Refreshing it after a Plans landing
 
 After a landing that changes any `Plans/` path passes its landing check and pushes `main`, the
 landing agent keeps the same landing lock and refreshes the migration snapshot and baseline as one
-separate follow-up commit. A landing with no `Plans/` paths refreshes neither artifact. Never
+separate follow-up commit. An ordinary landing with no `Plans/` paths refreshes neither artifact. Never
 refresh the baseline to make a landing pass: that excuses exactly the failure it was meant to show.
 
+Changes to `Plans/Spec_Lock.json`, `Plans/.evidence/**`, `Plans/auto_decisions.jsonl` or a
+currentness edition require the assigned reseal agent. The lander stops after the primary
+publication with `reseal: follow the reseal-record hand procedure` and keeps the follow-up
+and cleanup entries under the lock. The assigned agent follows the latest
+`reports/governance-reseal-*/reseal-record.md`, including approved currentness installation,
+validation and recording after the installation.
+
 Working directory: a fresh full worktree on the idle machine at the newly pushed `main`. Use
-the same copied inputs and hashes as for the landing. Run the two generation commands together
-under `long-job` on that host. If a snapshot for this UTC day already exists, use the next
+the current copied edition for this ordinary follow-up. Save the complete inventory used to
+record the baseline and compare it with the follow-up check's receipt. Run the two generation
+commands together under `long-job` on that host. If a snapshot for this UTC day already exists, use the next
 three-digit sequence in its run ID. The snapshot writes a new tracked run
 directory and removes snapshot runs older than the one it replaces, which is why it cannot run where
 branches land. The replaced run stays because the new run declares it and validation reads its
@@ -934,12 +992,14 @@ summary. `git add Plans/.plan_migration` below stages both changes. Git history 
 
     cd ~/pm-worktrees/snapshot-$(date -u +%Y%m%d)
     git fetch origin
+    python3 -B "$PM_LAND_SCRIPT" inventory >"$PM_LAND_SNAPSHOT_INPUTS"
     python3 scripts/pm-plan-migration.py snapshot-current \
         --run-id pds-$(date -u +%Y%m%d)-001-current-planunit-snapshot \
         --expected-doc-count "$(ls Plans/*.md | wc -l)" \
         --supersedes-run-id "$(python3 -c "import json;print(json.load(open('Plans/.plan_migration/current_run.json'))['run_id'])")"
     python3 scripts/pm-landing-check.py --record-baseline \
         --readiness-audit-root "$PWD/Plans/.audits/event-authority-2026-08-13-currentness"
+    python3 -B "$PM_LAND_SCRIPT" inventory | cmp - "$PM_LAND_SNAPSHOT_INPUTS"
     git add Plans/.plan_migration reports/landing-checks/baseline.json
     git commit -m "plans: refresh the plan-migration snapshot and the landing-check baseline"
     git push origin HEAD:refs/heads/fix/my-landing-snapshot
@@ -947,7 +1007,9 @@ summary. `git add Plans/.plan_migration` below stages both changes. Git history 
 From the shared checkout, land that separate commit through the same remote check, fast-forward,
 shard check, verification and main push while holding the same landing lock. By hand, set
 `PM_LAND_BASE` and `PM_LAND_COMMIT` to the follow-up's checked base and commit and run both
-guarded publication blocks again. Each runs the shared-input preflight for the follow-up.
+guarded publication blocks again. Set `PM_LAND_SNAPSHOT_INPUTS` to an absolute file outside the
+worktree before generation. Compare it with the follow-up receipt's `hand-inputs-before.json`
+using `cmp` before the fast-forward. Each block runs the shared-input preflight for the follow-up.
 If generation or validation fails after a Plans landing, keep the lock for recovery and use
 the saved report to finish the follow-up. Remove the temporary worktrees and release the lock
 when it is published.
