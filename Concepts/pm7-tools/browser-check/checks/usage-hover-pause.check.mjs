@@ -694,7 +694,7 @@ export function judgeShortHandoff(rec) {
 	const last = rec.scrolls.filter((s) => s.t < press?.t && s.op === 'wheel').at(-1);
 	const due = last ? last.t + REST_MS : null;
 	const entered = rec.markers.find((x) => x.t >= press?.t && x.t < escape?.t &&
-		x.gesture?.kb && x.gesture.type === rec.mode && x.dragHeld && x.op === rec.mode && x.handoff);
+		x.gesture?.kb && x.gesture.type === rec.mode && x.dragHeld && x.op === rec.mode);
 	// The body releases the drag flag at idle sync, independently of what the board writes for data-op.
 	const idle = rec.markers.find((x) => x.t >= escape?.t && !x.gesture && !x.dragHeld);
 	const qualified = !!(wheel?.trusted && rec.wheels.length === 1 && last && last.top > rec.pre.top &&
@@ -702,7 +702,7 @@ export function judgeShortHandoff(rec) {
 		idle && idle.t < due && !rec.moves);
 	const held = [...rec.markers, ...rec.frames].filter((x) => x.t >= idle?.t && x.t < due - 2);
 	const [end] = rec.ends;
-	const ok = qualified && idle.op === 'wheel' && held.every((x) => x.op === 'wheel' && x.hovered) &&
+	const ok = qualified && entered.handoff && idle.op === 'wheel' && held.every((x) => x.op === 'wheel' && x.hovered) &&
 		rec.ends.length === 1 && end.live && !end.op && !end.gesture && end.t >= due - 2 && end.t <= due + 250 &&
 		JSON.stringify(end.point) === JSON.stringify(rec.point) && rec.after.hovered && !rec.after.op && !rec.after.gesture;
 	return { qualified, ok, due, entered: entered?.t ?? null, idle: idle?.t ?? null,
@@ -751,10 +751,14 @@ async function keyboardPause(t, f, label, park, short = false) {
 			const target = board().querySelector('.pmu-card[data-widget="ov-skyline"] .pmu-skycol[data-prov]:hover');
 			const track = target?.querySelector('.pmu-skytrack');
 			const read = () => {
-				const b = board(), dim = [...b.querySelectorAll('.is-hl-dim')], on = [...b.querySelectorAll('.is-hl-on')];
-				return { t: performance.now(), op: b.getAttribute('data-op'), gesture: PMU.board.gesture(),
-					handoff: b.hasAttribute('data-wheel-handoff'), dragHeld: document.body.classList.contains('pm-resizing'), top: sc.scrollTop, shadow: track && getComputedStyle(track).boxShadow,
-					hovered: !!target?.isConnected && target.closest('.pmu-board') === b && target.matches(':hover'),
+				const b = board();
+				const sample = { t: performance.now(), op: b.getAttribute('data-op'), gesture: PMU.board.gesture(),
+					handoff: b.hasAttribute('data-wheel-handoff'), dragHeld: document.body.classList.contains('pm-resizing'), top: sc.scrollTop,
+					hovered: !!target?.isConnected && target.closest('.pmu-board') === b && target.matches(':hover') };
+				// The short native route needs the idle mutation. Continuous style reads consume its idle time.
+				if (short) return sample;
+				const dim = [...b.querySelectorAll('.is-hl-dim')], on = [...b.querySelectorAll('.is-hl-on')];
+				return { ...sample, shadow: track && getComputedStyle(track).boxShadow,
 					dim: dim.length, on: on.length, correct: !!target && dim.every((el) => el.dataset.prov !== target.dataset.prov) && on.every((el) => el.dataset.prov === target.dataset.prov),
 					eligibleDim: [...b.querySelectorAll('.pmu-mark[data-prov]')].filter((el) => el.dataset.prov !== target?.dataset.prov).length,
 					eligibleOn: [...b.querySelectorAll('.pmu-irow[data-prov]')].filter((el) => el.dataset.prov === target?.dataset.prov).length };
@@ -781,14 +785,17 @@ async function keyboardPause(t, f, label, park, short = false) {
 			const end = (e) => r.ends.push({t: performance.now(), live: e.detail?.board === board(), gesture: !!PMU.board.gesture(), op: board().getAttribute('data-op'), point: e.detail?.point});
 			const frame = () => { if (!running) return; r.frames.push(read()); requestAnimationFrame(frame); };
 			sc.addEventListener('wheel', wheel, {passive: true}); sc.addEventListener('scroll', scroll, {passive: true}); document.addEventListener('keydown', keydown, true); document.addEventListener('pointermove', move, true); document.addEventListener('pmu-op-end', end);
-			const markers = new MutationObserver(() => {
+			let dragHeld = r.pre.dragHeld;
+			const markers = new MutationObserver((changes) => {
 				const sample = read();
+				if (changes.every((change) => change.target === document.body) && sample.dragHeld === dragHeld) return;
+				dragHeld = sample.dragHeld;
 				r.markers.push(sample);
-				if (sample.op === mode && sample.gesture?.kb && sample.handoff) notifyMarker?.();
+				if (sample.op === mode && sample.gesture?.kb) notifyMarker?.();
 			});
 			markers.observe(board(), { attributes: true, attributeFilter: short ? ['data-op', 'data-wheel-handoff'] : ['data-op'] });
 			if (short) markers.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-			requestAnimationFrame(frame);
+			else requestAnimationFrame(frame);
 			r.stop = () => { running = false; markers.disconnect(); sc.removeEventListener('wheel', wheel); sc.removeEventListener('scroll', scroll); document.removeEventListener('keydown', keydown, true); document.removeEventListener('pointermove', move, true); document.removeEventListener('pmu-op-end', end); return {...r, stop: undefined, wait: undefined, point, after: read()}; };
 		}, { key, mode, short });
 		if (short) {

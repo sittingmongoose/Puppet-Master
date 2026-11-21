@@ -303,6 +303,9 @@ test('V6 P5: only a witnessed early idle release qualifies, and it must retain t
   ends: [{t: 253, live: true, gesture: false, op: null, point: [50, 50]}], after: {op: null, hovered: true}
  };
  assert.equal(judgeShortHandoff(r).ok, true);
+ r.markers[0].handoff = false;
+ assert.deepEqual([judgeShortHandoff(r).qualified, judgeShortHandoff(r).ok], [true, false]);
+ r.markers[0].handoff = true;
  r.markers[1].op = null;
  assert.deepEqual([judgeShortHandoff(r).qualified, judgeShortHandoff(r).ok], [true, false]);
  r.markers[1].t = 260;
