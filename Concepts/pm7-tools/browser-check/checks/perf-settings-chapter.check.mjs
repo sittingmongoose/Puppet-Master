@@ -199,6 +199,14 @@ const ARM_RESTORE = (id) => {
 	const save = tome.save, restore = tome.restoreProjectDefaults;
 	tome.save = function (snap) { R.saves.push(snap && snap.domain); return save.apply(this, arguments); };
 	tome.restoreProjectDefaults = function () {
+		/* SETCHAPTER-RESTORE-PENDING-AT-TRANSACTION: acceptance reaches the transaction through o55AfterPaint (a frame,
+		   then a timer), so what the row needs is judged here, at the transaction's start, not only at acceptance: Code
+		   is still the chapter, its rows are still pending (the switch has not finished), and its place is saved. */
+		R.atTransaction = {
+			domain: root.querySelector('.domain-link.active')?.dataset.domain || '',
+			pending: root.querySelectorAll('#workspace-stage [data-o55-fill="pending"]').length,
+			saved: R.saves.includes('code')
+		};
 		R.before = tome.projectSnapshot(tome.project().id);
 		R.result = restore.apply(this, arguments);
 		R.restored = tome.projectSnapshot(tome.project().id);
@@ -218,6 +226,17 @@ const ARM_RESTORE = (id) => {
 	mo.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
 	R.stop = () => { mo.disconnect(); tome.save = save; tome.restoreProjectDefaults = restore; };
 };
+/* SETCHAPTER-RESTORE-PENDING-AT-TRANSACTION (exported for tools/settings-chapter.selftest.mjs): the restore-all row
+   judges a transaction across a chapter change only if, when the transaction starts, Code & Tools is the chapter, still
+   has pending row lists (its switch is in flight) and has its place saved. A transaction that runs after the fill has
+   finished would pass the row without crossing the change. */
+export function restoreJudgeable(r) {
+	const a = r && r.atTransaction;
+	if (!a) return { ok: false, detail: 'the restore transaction never started', log: 'no transaction' };
+	const ok = a.domain === 'code' && a.pending > 0 && a.saved === true;
+	const log = `chapter ${a.domain || 'none'}, ${a.pending} row lists pending, Code saved ${a.saved}`;
+	return { ok, log, detail: ok ? log : [a.domain !== 'code' && `the chapter was ${a.domain || 'none'}, not Code & Tools`, !(a.pending > 0) && 'no row list was pending: the switch had finished before the transaction', a.saved !== true && 'Code was not saved yet'].filter(Boolean).join('; ') };
+}
 const RESTORE_RECORD = () => {
 	const tome = window.PM7_SETTINGS_TOME;
 	try { return { source: 'stored', record: JSON.parse(localStorage.getItem('pm7:settings:tome-tabs:v1:' + encodeURIComponent(tome.project().id)) || 'null') }; }
@@ -237,6 +256,9 @@ async function restoreAllRow(t, f, surface) {
 		t.log(`${surface} R90 P1: Code already saved eagerly at acceptance ${!!r.eagerAtAccept}; place ${JSON.stringify(r.place)}`);
 		await t.check(`${surface}: could judge restore-all: changed Text Size and accepted the existing confirmation`, r.accepted && r.changedAtAccept, JSON.stringify(r));
 		await t.check(`${surface}: could judge restore-all: Code was already saved eagerly at acceptance, as on main`, r.eagerAtAccept === true, JSON.stringify(r));
+		const judge = restoreJudgeable(r);
+		t.log(`${surface} R90 P1 at the transaction's start: ${judge.log}`);
+		await t.check(`${surface}: could judge restore-all: the transaction started while Code & Tools was still arriving (row lists pending) and saved`, judge.ok, judge.detail);
 		await t.check(`${surface}: restore-all returned an accepted rollback receipt`, r.result?.ok === true && !!r.result.rollback_ref, JSON.stringify(r.result));
 		await t.page.waitForTimeout(2500);
 		const { source, record: s } = await f.evaluate(RESTORE_RECORD);
