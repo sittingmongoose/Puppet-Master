@@ -151,11 +151,11 @@ function measure() {
 	const first = frames.findIndex((f) => !atRest(f, frames[0]));
 	const endpoint = frames.at(-1);
 	const lastMotion = frames.findLastIndex((f) => !atRest(f, endpoint));
-	// Three consecutive frames with both edges at the final pose establish arrival.
-	// A later hover outline can change the fill read after arrival. Those frames
-	// still count for the step bound, but cannot extend an already completed trip.
+	// Three consecutive frames at the resting pose establish arrival. Use the same
+	// one-pixel raster allowance as the settled ends of the travel window.
+	// Later hover paint still counts for the step bound over the whole recording.
 	const landed = frames.findIndex((f, i) => i >= first && i + 2 < frames.length &&
-		samePose(f, endpoint) && samePose(frames[i + 1], endpoint) && samePose(frames[i + 2], endpoint));
+		atRest(f, endpoint) && atRest(frames[i + 1], endpoint) && atRest(frames[i + 2], endpoint));
 	const rest = landed < 0 ? lastMotion + 1 : Math.min(landed, lastMotion + 1);
 	const holds = travelHolds(frames, first, rest - 1);
 	// The recorder can express 60 Hz presentation ticks as alternating 16 and 17 ms timestamps.
