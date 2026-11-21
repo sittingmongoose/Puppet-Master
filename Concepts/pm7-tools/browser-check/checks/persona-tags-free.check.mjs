@@ -14,6 +14,7 @@ const LOOKS = ['basic-dark', 'glass-light', 'nier-dark', 'retro-light'];
 const SIZES = [[1280, 900], [740, 900]];
 const SHOT_LOOKS = ['basic-dark', 'glass-light', 'nier-dark'];
 const LAYOUT_LOOKS = ['retro-light', 'basic-dark'];
+const MATERIAL_LOOKS = ['glass-dark', 'glass-light', 'retro-dark', 'retro-light'];
 const TAGS = 'personas.library.persona-tags';
 const PID = 'custom-ux';                    // Settings UX Reviewer, a seeded custom persona
 const FREE = 'release-notes';               // not a suggested kind
@@ -247,7 +248,7 @@ for (const surface of ['normal', 'sandbox']) {
 			};
 		}
 	}
-	for (const look of LAYOUT_LOOKS) {
+	for (const look of new Set([...LAYOUT_LOOKS, ...MATERIAL_LOOKS])) {
 		tests[`tag input layout (${surface}, ${look}, 1280x900)`] = async (t) => {
 			if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
 			const f = await settings(t, surface, [1280, 900]);
@@ -257,13 +258,17 @@ for (const surface of ['normal', 'sandbox']) {
 			const row = tagsRow(f);
 			await row.scrollIntoViewIfNeeded();
 			const input = row.locator('.o55-tags-in');
+			if (await input.count() !== 1) {
+				await t.check('the three-chip fixture has a tag input', false);
+				return;
+			}
 			await input.fill('release-readiness');
 			await input.press('Enter');
 			await row.getByRole('button', { name: 'Framework', exact: true }).click();
 			await input.fill('hotfix');
 			await input.press('Enter');
 			await t.equal('the layout fixture has three chips', shown(await chipTexts(row)), shown(['release-readiness', 'Framework', 'hotfix']));
-			const layout = await input.evaluate(el => {
+			const layout = LAYOUT_LOOKS.includes(look) ? await input.evaluate(el => {
 				const box = el.closest('.o55-tags-box');
 				const chips = [...box.querySelectorAll('.o55-tag-chip')];
 				const last = chips.at(-1);
@@ -284,12 +289,39 @@ for (const surface of ['normal', 'sandbox']) {
 				const center = node => node.offsetTop + node.offsetHeight / 2;
 				const sameLine = chips.every(chip => Math.abs(center(chip) - center(el)) <= 1);
 				return { sameLine, remainingWidth, requiredWidth, inputWidth: el.clientWidth };
-			});
-			await t.check('Add a tag stays on the chips line when the placeholder fits',
+			}) : null;
+			if (layout) await t.check('Add a tag stays on the chips line when the placeholder fits',
 				layout.remainingWidth >= layout.requiredWidth && layout.sameLine && layout.inputWidth >= layout.requiredWidth, shown(layout));
+			const box = row.locator('.o55-tags-box');
+			if (look.startsWith('glass')) {
+				const paint = await input.evaluate(el => {
+					const wrapper = el.closest('.o55-tags-box');
+					const sample = document.createElement('span');
+					sample.style.cssText = 'display:none;color:var(--lg-fill)';
+					wrapper.append(sample);
+					const glassFill = getComputedStyle(sample).color;
+					sample.remove();
+					const style = getComputedStyle(el);
+					const { theme, lg } = document.documentElement.dataset;
+					return { theme, lg, glassFill, boxFill: getComputedStyle(wrapper).backgroundColor,
+						inputFill: style.backgroundColor, inputImage: style.backgroundImage };
+				});
+				const transparent = 'rgba(0, 0, 0, 0)';
+				await t.check('Glass tag input shows only the box fill',
+					paint.theme === look && paint.lg === 'on' && paint.boxFill === paint.glassFill &&
+					paint.boxFill !== transparent && paint.inputFill === transparent && paint.inputImage === 'none', shown(paint));
+			} else if (look.startsWith('retro')) {
+				const paint = await box.evaluate(el => ({
+					theme: document.documentElement.dataset.theme,
+					shadows: [...el.querySelectorAll('.o55-tag-x')].map(button => getComputedStyle(button).boxShadow),
+				}));
+				await t.check('Retro tag remove buttons have no box shadow',
+					paint.theme === look && paint.shadows.length === 3 && paint.shadows.every(shadow => shadow === 'none'), shown(paint));
+			}
 			if (t.args.shots) {
 				await t.page.waitForTimeout(2400);
-				await t.crop(`tags-layout-${look}-${surface}`, aboutSection(row), 'three chips and the Add a tag placeholder at 1280×900');
+				if (layout) await t.crop(`tags-layout-${look}-${surface}`, aboutSection(row), 'three chips and the Add a tag placeholder at 1280×900');
+				if (MATERIAL_LOOKS.includes(look)) await t.crop(`tags-material-${look}-${surface}`, box, 'tag box with three chips, remove buttons and the Add a tag placeholder at 1280×900');
 			}
 		};
 	}
