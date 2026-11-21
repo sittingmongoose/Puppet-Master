@@ -73,19 +73,6 @@ PROOFS.update({
             "committed_start=None (pm_goal_dg_s_start.py:185), and :847's base nulls only "
             "pending_candidate, so a non-None committed_start refuses at :847 before :849 is evaluated. "
             "With :847 passing, committed_start is None and :849 cannot refuse through commit_start.")),
-    'dg5/native/body_revision/number': dict(
-        kind='entailment', families=['goal_run.started'],
-        depends_on=['dg5/producer/goal_run_revision/number'],
-        sites=[(START, 240), (START, 931), (START, 977), (START, 1000), (START, 826)],
-        argument=(
-            "Every complete call that reaches NativeOwner.after_images does so inside commit_start: "
-            "producer_submission (called at :977) first computes goal_run_revision as NR.uint64 of the "
-            "same native before revision + 1 at :931, and only then candidate() (:1000) calls "
-            "after_images, whose :240 computes NR.uint64 of that identical value. The prepared-submission "
-            "path skips producer_submission only for an operation whose earlier commit_start already ran "
-            "it at the same before revision, which :826 re-binds to the birth body on the retry. So "
-            "whenever :240 runs, before + 1 is already known uint64-representable and :240 cannot be the "
-            "first refusal.")),
     'dg5/projector/now/date-time': dict(
         kind='construction', families=['goal_run.started'],
         depends_on=[],
@@ -127,19 +114,6 @@ PROOFS.update({
             "which relations (:258) binds, the retained map is keyed by that event id, and the reducer "
             "sets state['started'] for exactly that row (readers:321). A complete projection therefore "
             "always has a started state, and :655 cannot be the first refusal in replay.")),
-    'dg5/site/pm_goal_dg_s_readers.py:792': dict(
-        kind='construction', families=['goal_run.started'],
-        depends_on=[],
-        sites=[(READERS, 792), (READERS, 783), (READERS, 763)],
-        argument=(
-            "In every reader body, Storage generations move only inside the named synchronous hooks: "
-            "the helpers acquire, read, decode and issue in-memory originals, and perform no Storage "
-            "transaction. StartedReaders._hook brackets each hook call with the exact commit-generation "
-            "and cell-generation deltas and adds them to self._delta (readers:763-769), and _passive "
-            "snapshots both generations before the body runs (readers:783-784). The finally comparison "
-            "at :792 is therefore an identity over the modeled hook transitions of this family: the "
-            "measured generation movement is exactly the sum the hooks were charged, so it cannot "
-            "refuse in a complete reader call.")),
 })
 
 PROOFS.update({
@@ -170,17 +144,6 @@ PROOFS.update({
             "validations at :980-983, so every field is a plain JSON value preserved byte-for-byte by "
             "the canonical frame encoding. producer25(stored) is therefore the submission by "
             "construction, and :1025 cannot refuse in a complete commit_start call.")),
-    'dg5/site/pm_goal_dg_s_start.py:1326': dict(
-        kind='construction', families=['goal_run.started'],
-        depends_on=[],
-        sites=[(START, 1326), (START, 959), (START, 1020)],
-        argument=(
-            "dedupe() is entered only from commit_start's head, which has just read the same "
-            "reservation and required its state to be 'published' (:959-961); the only intervening "
-            "step is request-schema validation, which writes nothing. The reservation for a start "
-            "operation is created by the single-candidate append at :1020 ([submission]), so a "
-            "published start reservation holds exactly one event id. The re-read at :1326 therefore "
-            "always finds the published reservation with one event, and the check cannot refuse.")),
 })
 
 PROOFS.update({
@@ -233,21 +196,6 @@ PROOFS.update({
             "the following line subscripts the None selector. The ef0 discovery chain for "
             "S4/retained_before_any_start stops exactly there (exception after widening to :458), so "
             ":77 cannot be the sole refusal of a complete retained acquisition.")),
-    'dg5/site/pm_goal_dg_s_readers.py:917': dict(
-        kind='entailment', families=['goal_run.started'],
-        depends_on=['dg5/site/pm_goal_dg_s_readers.py:812', 'dg5/site/pm_goal_dg_s_readers.py:920'],
-        sites=[(READERS, 917), (READERS, 812), (READERS, 920), (SOURCE, 283), (SOURCE, 293)],
-        argument=(
-            "An incomplete generic snapshot in read_current carries a defect recorded by acquire: a "
-            "custody defect on a row returns the snapshot before that row is appended "
-            "(pm_goal_test_source.py:283-286) and a scan tail returns it at the defective segment "
-            "(:293-297). If the defect is at or before the start row, the start row is absent and "
-            ":812 refuses inside h_generic before :917 is reached. If the defect is after the start "
-            "row, the snapshot rows and coverage stop short of the projected generation's processed "
-            "prefix or its token has since moved, so the stale-generic-token comparison at :920 "
-            "refuses later in the same call. The segment-tail shape of this argument is exactly why "
-            "the garbage-tail supplement case was withdrawn: bytes past the segment watermark are "
-            "not part of the snapshot at all. Hence :917 has no single-defect witness.")),
 })
 
 PROOFS.update({
@@ -1045,30 +993,6 @@ PROOFS.update({
     ),
     # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
     # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
-    'dg5/start/original_append/schema': dict(
-        kind='entailment',
-        families=['goal_run.started'],
-        depends_on=['dg5/start/publication_result/schema'],
-        sites=[
-            (START, 1026),
-            (START, 1029),
-            (START, 1030),
-            (START, 1036),
-            (START, 1040),
-            (START, 1042),
-        ],
-        argument=(
-            'The FullOriginalAppend document checked at 1029 is assigned to the required '
-            'PublicationResult.original_append member at 1040 and checked at 1042 in the same commit_start '
-            'call. Publication processing uses this document to build other values, and leaves its JSON '
-            'intact. In v3 and native v7 the required member resolves to the identical FullOriginalAppend '
-            'definition. If the call reaches the result check after bypassing the early one, the same '
-            'document must satisfy that definition. The three exact-root replays record the byte-equal '
-            'documents, exact validation message, and restored early refusal.'
-        ),
-    ),
-    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
-    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
     'dg5/start/original_d01_head/schema': dict(
         kind='entailment',
         families=['goal_run.started'],
@@ -1160,5 +1084,121 @@ WITHDRAWN = {
                 "original_append steps in between perform no reservation transition. The reservation "
                 "commit_original re-reads is therefore still 'receipted', so :1406 cannot be the first "
                 "refusal in a complete commit_start call.")),
+    ),
+    # Round 3 (pm-ea-lead 1121124828-43f4 (b)): moved here unchanged from PROOFS; each reason names its final list, the reviews and
+    # the route by which the row now closes (a kill or OPEN). Withdrawn proofs never credit.
+    'dg5/native/body_revision/number': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 1 shard0 UNSOUND, '
+            'shard3 SOUND; round 2 ADJ UNSOUND (refuted premise). 113.r2 route: kill: a negative expecting the '
+            "guard's own code (rule C)."
+        ),
+        proof=dict(
+            kind='entailment', families=['goal_run.started'],
+            depends_on=['dg5/producer/goal_run_revision/number'],
+            sites=[(START, 240), (START, 931), (START, 977), (START, 1000), (START, 826)],
+            argument=(
+                "Every complete call that reaches NativeOwner.after_images does so inside commit_start: "
+                "producer_submission (called at :977) first computes goal_run_revision as NR.uint64 of the "
+                "same native before revision + 1 at :931, and only then candidate() (:1000) calls "
+                "after_images, whose :240 computes NR.uint64 of that identical value. The prepared-submission "
+                "path skips producer_submission only for an operation whose earlier commit_start already ran "
+                "it at the same before revision, which :826 re-binds to the birth body on the retry. So "
+                "whenever :240 runs, before + 1 is already known uint64-representable and :240 cannot be the "
+                "first refusal.")),
+    ),
+    'dg5/site/pm_goal_dg_s_readers.py:792': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 1 shard2 UNSOUND, '
+            'shard3 UNSOUND; round 2 ADJ UNSOUND (accepting mutant). 113.r2 route: kill: the mutant becomes a '
+            'single-defect negative.'
+        ),
+        proof=dict(
+            kind='construction', families=['goal_run.started'],
+            depends_on=[],
+            sites=[(READERS, 792), (READERS, 783), (READERS, 763)],
+            argument=(
+                "In every reader body, Storage generations move only inside the named synchronous hooks: "
+                "the helpers acquire, read, decode and issue in-memory originals, and perform no Storage "
+                "transaction. StartedReaders._hook brackets each hook call with the exact commit-generation "
+                "and cell-generation deltas and adds them to self._delta (readers:763-769), and _passive "
+                "snapshots both generations before the body runs (readers:783-784). The finally comparison "
+                "at :792 is therefore an identity over the modeled hook transitions of this family: the "
+                "measured generation movement is exactly the sum the hooks were charged, so it cannot "
+                "refuse in a complete reader call.")),
+    ),
+    'dg5/site/pm_goal_dg_s_readers.py:917': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 2 M-B-1 UNSOUND '
+            "(refuted premise), M-B-2 SOUND. 113.r2 route: kill: a negative expecting the guard's own code (rule C)."
+        ),
+        proof=dict(
+            kind='entailment', families=['goal_run.started'],
+            depends_on=['dg5/site/pm_goal_dg_s_readers.py:812', 'dg5/site/pm_goal_dg_s_readers.py:920'],
+            sites=[(READERS, 917), (READERS, 812), (READERS, 920), (SOURCE, 283), (SOURCE, 293)],
+            argument=(
+                "An incomplete generic snapshot in read_current carries a defect recorded by acquire: a "
+                "custody defect on a row returns the snapshot before that row is appended "
+                "(pm_goal_test_source.py:283-286) and a scan tail returns it at the defective segment "
+                "(:293-297). If the defect is at or before the start row, the start row is absent and "
+                ":812 refuses inside h_generic before :917 is reached. If the defect is after the start "
+                "row, the snapshot rows and coverage stop short of the projected generation's processed "
+                "prefix or its token has since moved, so the stale-generic-token comparison at :920 "
+                "refuses later in the same call. The segment-tail shape of this argument is exactly why "
+                "the garbage-tail supplement case was withdrawn: bytes past the segment watermark are "
+                "not part of the snapshot at all. Hence :917 has no single-defect witness.")),
+    ),
+    'dg5/site/pm_goal_dg_s_start.py:1326': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-113.r2. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 1 shard2 UNSOUND, '
+            'shard3 UNSOUND; round 2 ADJ UNSOUND (refuted premise). 113.r2 route: OPEN (rule 3): re-close only on a '
+            'KILLED later check.'
+        ),
+        proof=dict(
+            kind='construction', families=['goal_run.started'],
+            depends_on=[],
+            sites=[(START, 1326), (START, 959), (START, 1020)],
+            argument=(
+                "dedupe() is entered only from commit_start's head, which has just read the same "
+                "reservation and required its state to be 'published' (:959-961); the only intervening "
+                "step is request-schema validation, which writes nothing. The reservation for a start "
+                "operation is created by the single-candidate append at :1020 ([submission]), so a "
+                "published start reservation holds exactly one event id. The re-read at :1326 therefore "
+                "always finds the published reservation with one event, and the check cannot refuse.")),
+    ),
+    # from current_reference_row_intake; argument and sites verbatim in the start-argument overlay
+    # goal-methodb-w2/stage-5/argument-rule-groups/overlay/pm_goal_dg5_proofs_s.py (sha256 369e0fdf94e1...)
+    'dg5/start/original_append/schema': dict(
+        reason=(
+            'Withdrawn in proof maintenance round 3 (pm-ea-lead 1121124828-43f4 (b)), on the final list '
+            'FINAL-LIST-R2B. Reviews (event-authority-20261104/reviews/PROOF-REVIEW-R2): round 2b P-B-1 '
+            "CANNOT_DECIDE, P-B-2 UNSOUND. R2B route: kill: Method B's negative under rule C (addendum 9)."
+        ),
+        proof=dict(
+            kind='entailment',
+            families=['goal_run.started'],
+            depends_on=['dg5/start/publication_result/schema'],
+            sites=[
+                (START, 1026),
+                (START, 1029),
+                (START, 1030),
+                (START, 1036),
+                (START, 1040),
+                (START, 1042),
+            ],
+            argument=(
+                'The FullOriginalAppend document checked at 1029 is assigned to the required '
+                'PublicationResult.original_append member at 1040 and checked at 1042 in the same commit_start '
+                'call. Publication processing uses this document to build other values, and leaves its JSON '
+                'intact. In v3 and native v7 the required member resolves to the identical FullOriginalAppend '
+                'definition. If the call reaches the result check after bypassing the early one, the same '
+                'document must satisfy that definition. The three exact-root replays record the byte-equal '
+                'documents, exact validation message, and restored early refusal.'
+            ),
+        ),
     ),
 }
