@@ -775,6 +775,39 @@ def install():
                 setattr(module, key, originals[value])
 
 
+# Passive refusal rule (lead decision 1121000124-5847). The original C4I inspection owner's passive reads
+# (scripts/pm_goal_dg_ca3_inspection.py:78, Inspector.passive) return a typed UnavailableRead instead of raising
+# when one of their invariants refuses. Only for the four entries below is such a return recorded as that call's
+# refusal. The code is the receiver's last_code, which counts only when this very call set it: a sentinel is put on
+# the receiver before every recorded call, and passive() itself resets last_code at its start, so a code left by an
+# earlier call never counts. Any other entry that returns instead of raising stays an accepted call.
+PASSIVE_ENTRIES = frozenset({
+    ('pm_goal_dg_ca3_inspection', 'Inspector.read_original_inspection_custody'),
+    ('pm_goal_dg_ca3_inspection', 'Inspector.inspect_current_event_v2'),
+    ('pm_goal_dg_ca3_inspection', 'Inspector.inspect_current_event_v1'),
+    ('pm_goal_dg_ca3_inspection', 'Inspector.inspect_current'),
+})
+PASSIVE_OWNER = 'scripts/pm_goal_dg_ca3_inspection.py:78 (Inspector.passive)'
+_PASSIVE_UNSET = object()
+
+
+def passive_entry(original):
+    return original is not None and (getattr(original, '__module__', None),
+                                     getattr(original, '__qualname__', None)) in PASSIVE_ENTRIES
+
+
+def passive_call(original, receiver, run):
+    """Run one call; return (returned, code) where code is this call's own passive refusal code or None."""
+    if not passive_entry(original):
+        return run(), None
+    receiver.last_code = _PASSIVE_UNSET
+    returned = run()
+    code = getattr(receiver, 'last_code', _PASSIVE_UNSET)
+    if isinstance(returned, dict) and returned.get('kind') == 'unavailable' and isinstance(code, str) and code:
+        return returned, code
+    return returned, None
+
+
 def invoke(label, family, action, work, *, world=None, arguments=None, original=None, valid=True, target=None,
            pending=False):
     """One actual complete action, including its immutable issuer context.
@@ -821,8 +854,13 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
             ACTIVE[0] = True
             try:
                 try:
-                    action()
-                    result = dict(errors=[], original_refusal=None)
+                    receiver = (arguments or {}).get('receiver')
+                    _returned, passive_code = passive_call(original, receiver, action)
+                    if passive_code is None:
+                        result = dict(errors=[], original_refusal=None)
+                    else:
+                        result = dict(errors=[refusal_row(SimpleNamespace(code=passive_code))],
+                                      original_refusal=passive_code)
                 except BaseException as error:  # Storage's injected Crash is a BaseException
                     # Only owner refusal classes qualify. AssertionError,
                     # import/setup errors and arbitrary exceptions never do.
@@ -1053,7 +1091,7 @@ def entry_call(case, label, family, action, work, *, world, arguments, original,
     PARENT_CALL[0] = True
     try:
         try:
-            returned = action()
+            returned, passive_code = passive_call(original, arguments.get('receiver'), action)
         except BaseException as error:  # Storage's injected Crash is a BaseException
             if type(error).__name__ == 'Crash':
                 code = 'crash:' + (getattr(error, 'point', None) or str(error))
@@ -1064,8 +1102,8 @@ def entry_call(case, label, family, action, work, *, world, arguments, original,
             if code != child:
                 FAILURES.append(dict(kind='child_parent_disagree', label=label, child=child, parent=code))
             raise
-        if child is not None:
-            FAILURES.append(dict(kind='child_parent_disagree', label=label, child=child, parent=None))
+        if child != passive_code:
+            FAILURES.append(dict(kind='child_parent_disagree', label=label, child=child, parent=passive_code))
         return returned
     finally:
         PARENT_CALL[0] = False
