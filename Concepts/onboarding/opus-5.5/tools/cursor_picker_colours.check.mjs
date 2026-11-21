@@ -4,9 +4,7 @@
 // --set expect=<build>:<sha256 or a prefix of it>,...  each judged page must be the one named (PM7PERF-PICKER-PAGE-HASH,
 // R26 F4: the pages came from a hard-coded server and no record said which bytes were judged; now every build's URL,
 // size and SHA-256 are logged and written to out.pages, and a page that is not the expected one fails before it is judged).
-// PM7PERF-PICKER-DIGEST-UNBOUND (R51 F4): that digest is the response of the full intended URL the check navigates to,
-// not a separate fetch of --set server while a same-named page on another origin is judged.
-// A body too large for the browser to hold (the real page) is hashed from a fetch of that same loaded URL instead.
+// Hash the same bytes that fulfill the intended navigation, including when Chrome would evict the 40 MB body.
 import {readFileSync,writeFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {installOriginalSelectorProbe} from './rail_expanded_states.mjs';
@@ -36,34 +34,58 @@ export function sameIntendedPage(opened,intended){
  try{const a=new URL(String(opened)),b=new URL(String(intended));a.hash='';b.hash='';return a.href===b.href;}
  catch{return false;}
 }
-export async function digestOfResponse(response,url){
- if(!response||typeof response.ok!=='function'||!response.ok()){
-  const status=response&&typeof response.status==='function'?response.status():'no response';
-  if(status===304)throw Error('could not judge '+url+': HTTP 304 refers to a cached navigation body');
-  throw Error(url+': HTTP '+status);
- }
- const buf=Buffer.from(await response.body());
- return {url,bytes:buf.length,sha256:createHash('sha256').update(buf).digest('hex')};
-}
-// Navigate unless the page is already the full intended URL, then hash the response it was loaded from (or, when it
-// was already there, fetch the page's own location). Never a URL built only from --set server beside a different page.
-export async function loadJudgedPage(page,server,build){
+export async function loadJudgedPage(frame,server,build){
  const intended=intendedPageUrl(server,build);
- const navigating=!sameIntendedPage(page.url(),intended);
- let response=null;
- if(navigating)response=await page.goto(intended,{waitUntil:'load',timeout:240000});
- const loaded=String(page.url());
- if(!sameIntendedPage(loaded,intended))throw Error('could not judge '+intended+': navigation redirected or changed location to '+loaded);
- if(navigating&&!response&&new URL(intended).protocol==='file:')throw Error('could not judge '+intended+': file navigation provided no response');
- // The real page is 40 MB, and Chrome drops so large a navigation body from its inspector cache: response.body() throws
- // "Request content was evicted from inspector cache" (Alexis, 2026-11-15: the check stopped before it judged anything).
- // The digest is then a fetch of the page's own location: the full URL just verified as the one loaded, never --set
- // server alone. Any other error of the body, and a response that is not ok, still stops the check.
- let digest;
- if(response&&typeof response.body==='function'){
-  try{digest=await digestOfResponse(response,loaded);}
-  catch(e){if(!/evicted from inspector cache|Response body is not available/i.test(String(e&&e.message||e)))throw e;digest=await pageDigest(loaded);digest.from='a fetch of the loaded URL (the navigation body was no longer held)';}
- }else digest=await pageDigest(loaded);
+ const protocol=new URL(intended).protocol;
+ const couldNotJudge=(why)=>Error('could not judge '+intended+': '+why);
+ if(!['http:','https:','file:'].includes(protocol))throw couldNotJudge('unsupported navigation protocol '+protocol);
+
+ const page=frame.page();
+ const matches=(url)=>sameIntendedPage(url,intended);
+ const wait=240000;
+ let digest, failure;
+ const capture=async(route)=>{
+  const request=route.request();
+  if(!request.isNavigationRequest()||request.frame()!==frame)return route.fallback();
+  try{
+   let status=200,headers={'content-type':'text/html'},body;
+   if(protocol==='file:'){
+    body=readFileSync(new URL(intended));
+   }else{
+    // One request. Feed its decoded body into the intercepted navigation and hash those exact bytes.
+    const response=await route.fetch({maxRedirects:0,timeout:wait});
+    try{
+     status=response.status();
+     headers=response.headers();
+     if(status===304)throw couldNotJudge('HTTP 304 refers to a cached navigation body');
+     if(status>=300&&status<400)throw couldNotJudge('HTTP '+status+' redirect to '+(headers.location||'(missing location)'));
+     if(!response.ok()||status===204||status===205||status===206)throw couldNotJudge('HTTP '+status+' did not supply a whole document');
+     body=await response.body();
+    }finally{await response.dispose();}
+    // Playwright has decoded the body. Let fulfillment supply its length for the browser.
+    delete headers['content-encoding'];
+    delete headers['content-length'];
+    delete headers['transfer-encoding'];
+   }
+   digest={url:intended,bytes:body.length,sha256:createHash('sha256').update(body).digest('hex'),from:'intercepted navigation body'};
+   await route.fulfill({status,headers,body});
+  }catch(error){
+   failure=error;
+   await route.abort().catch(()=>{});
+  }
+ };
+ await page.route(matches,capture);
+ try{
+  await frame.goto(intended,{waitUntil:'load',timeout:wait}).catch((error)=>{
+   throw failure||couldNotJudge(protocol+' navigation failed: '+error.message.split('\n')[0]);
+  });
+ }finally{
+  await page.unroute(matches,capture);
+ }
+ if(failure)throw failure;
+ const loaded=String(frame.url());
+ if(!sameIntendedPage(loaded,intended))throw couldNotJudge('navigation redirected or changed location to '+loaded);
+ if(!digest)throw couldNotJudge(protocol+' navigation did not supply an intercepted response');
  return {intended,digest};
 }
 export default async function(t){
