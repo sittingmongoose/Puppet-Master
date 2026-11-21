@@ -55,8 +55,8 @@ function railControls() {
 // (overflow-y auto or scroll, with something to scroll), where scrolling it must bring the tile in (F96b-3). A Tab walk
 // proves none of this, as a focus scrolls the bar to it: Glass's collapsed rail at 1280x500 held 528 px in 411, with
 // Artifacts, More and the toggle below the fold and no scrollbar to say so (F96c-2). `below` lists the controls seen only
-// by scrolling; `trimmed`, the tiles in view whose edge the box cuts by more than 1 px (Friendly's toggle at 1280x500,
-// 5 px, on b622109459 as well: logged, not failed).
+// by scrolling. Every visible tile must keep at least three quarters of its width and height within the clip box.
+// Log smaller cuts (such as Friendly's 5 px toggle trim at 1280x500).
 function railAtRest() {
   const bar = document.getElementById('activityBar');
   if (!bar) return null;
@@ -68,16 +68,21 @@ function railAtRest() {
     return { x0: Math.max(0, x0), y0: Math.max(0, y0), x1: Math.min(innerWidth, x0 + bar.clientWidth), y1: Math.min(innerHeight, y0 + bar.clientHeight) }; };
   const inside = (q, c) => { const x = (q.left + q.right) / 2, y = (q.top + q.bottom) / 2; return y >= c.y0 && y <= c.y1 && x >= c.x0 && x <= c.x1; };
   const cut = (q, c) => Math.round(Math.max(0, c.y0 - q.top, q.bottom - c.y1, c.x0 - q.left, q.right - c.x1));
+  const enough = (q, c) => {
+    const width = Math.min(q.right, c.x1) - Math.max(q.left, c.x0);
+    const height = Math.min(q.bottom, c.y1) - Math.max(q.top, c.y0);
+    return q.width > 0 && q.height > 0 && width >= 0.75 * q.width && height >= 0.75 * q.height;
+  };
   const hits = (e, q) => { const h = document.elementFromPoint((q.left + q.right) / 2, (q.top + q.bottom) / 2); return !!h && (h === e || e.contains(h)); };
   const rows = [...document.querySelectorAll('#activityBar .icon[data-ab-id], #activityBar > .activity-bar-toggle')].filter(shown).map(e => {
     const s = e.querySelector(':scope > .symbol') || e, key = e.getAttribute('data-ab-id') || e.id;
     let q = s.getBoundingClientRect(), c = clipBox();
-    if (inside(q, c) && hits(e, q)) return cut(q, c) > 1 ? { key, seen: 'at rest', cut: cut(q, c) } : { key, seen: 'at rest' };
-    const row = { key, bottom: Math.round(q.bottom), top: Math.round(q.top), box: [Math.round(c.y0), Math.round(c.y1)] };
+    if (enough(q, c) && inside(q, c) && hits(e, q)) return cut(q, c) > 1 ? { key, seen: 'at rest', cut: cut(q, c) } : { key, seen: 'at rest' };
+    const row = { key, bottom: Math.round(q.bottom), top: Math.round(q.top), box: [Math.round(c.y0), Math.round(c.y1)], cut: cut(q, c) };
     if (!scrolls) return { ...row, seen: false };
     bar.scrollTop += q.bottom > c.y1 ? q.bottom - c.y1 + 2 : q.top < c.y0 ? q.top - c.y0 - 2 : 0;
     q = s.getBoundingClientRect(); c = clipBox();
-    const ok = inside(q, c) && hits(e, q);
+    const ok = enough(q, c) && inside(q, c) && hits(e, q);
     bar.scrollTop = 0;
     return { ...row, seen: ok ? 'by scrolling the bar' : false };
   });
