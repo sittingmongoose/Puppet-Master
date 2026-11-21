@@ -23,8 +23,9 @@ shared inputs and writes its evidence and its own remote checkout. It checks the
 named topic at its exact published tip and uses a full, freshly fetched `origin/main` SHA as the
 base. On repeated SSH failures it prints the remote job and evidence directory. Reconnect to
 that job or retry on the other host. The checker removes its own temporary remote worktree only
-after confirming the job ended. If the job is lost or its state cannot be proved, it reports and
-preserves the worktree.
+after confirming the job ended. After a failed or signalled worker exit it also checks the host's
+process working directories and open files for use of that tree. If it cannot establish the job
+ended or that a failed job's tree is free, it reports the job and preserves the worktree.
 
 `check` returns 0 when the checker ran and the result was recorded, including a recorded checker
 exit of 2 or 3. It prints the separate checker exit and the `record.json` receipt path on the
@@ -39,10 +40,10 @@ Under the hand lander's guard, immediately before fast-forward and again before 
 commit and base default to the receipt's full SHAs. Fetch `origin/main` in the shared checkout
 first. `verify` reads the receipt, report, shared checkout and current origin refs. It checks the
 check host's independent receipt witness, which attests to a clean full remote checkout and
-survives its removal. If the checkout was preserved, verification inspects it again. In the
-shared checkout it refuses any staged change anywhere in the repository and names the paths.
-It also checks the full ignored inventory by path and SHA-256, tracked changes, hidden index
-flags and ignored collisions at newly tracked paths. File metadata changes during the
+survives its removal. If the checkout was preserved, verification inspects it again. The shared
+checkout is for landing only. Verification names and refuses any tracked change or hidden index
+flag anywhere in the checkout. It also checks the full ignored inventory by path and SHA-256 and
+ignored collisions at newly tracked paths. File metadata changes during the
 inventory trigger one re-scan. Verification exits 0 when the receipt matches and reports the
 original checker exit. A mismatch is named and returns nonzero. The checker exit still governs
 the landing judgment.
@@ -661,6 +662,9 @@ Anyone who writes a checker input in the shared checkout, including readiness re
    rule to the remote shard result too.
 4. In the shared checkout, set `PM_LAND_RECEIPT` to the receipt and `PM_LAND_COMMIT` and
    `PM_LAND_BASE` to its full `head` and `base` SHAs. Fetch and run `verify` under the guard.
+   The shared checkout is for landing only. Verification refuses any staged or unstaged tracked
+   change, including deletions, and any skip-worktree or assume-unchanged flag anywhere in the
+   checkout. It names the affected paths.
    If the base or the branch moved, repeat the rebase, push and check.
 5. With the same guard held, fast-forward only after `verify` passes immediately beforehand.
    Run `git merge --ff-only --no-overwrite-ignore "$PM_LAND_COMMIT"`.
@@ -675,11 +679,12 @@ Anyone who writes a checker input in the shared checkout, including readiness re
 8. Push the exact checked commit to primary main with a lease on the checked base. After a
    completed fast-forward fails publication, use freshly fetched primary main. If a push
    returned an uncertain result, check primary first and reconcile against what it accepted.
-   For an unpublished candidate, confirm the index still matches HEAD under the owned guard
-   with `git diff --cached --quiet --no-ext-diff --ignore-submodules=none --ita-visible-in-index HEAD --`.
-   If it passes, run `git reset --keep origin/main` immediately under the same guard. If anyone
-   staged changes in the meantime, ownership was lost, or a safe reset cannot be established,
-   stop and hand off the state. Keep other writers' edits.
+   For an unpublished candidate, run `held_git rollback_unpublished` below. Under the owned
+   guard it confirms the index still matches HEAD and checks the reverse transition for ignored
+   or untracked files, including parent-file and directory collisions. Run `reset --keep` only
+   immediately after both checks pass. If either refuses, keep the lock and hand off the candidate,
+   fetched target, HEAD, `git status --porcelain` and the refusal paths without resetting. If
+   ownership was lost, hand off to the current holder. Never use `--hard` in the shared checkout.
 9. Complete the Plans follow-up below under the same logical lock. Reseals follow the assigned
    reseal record.
 10. Confirm primary main contains the exact topic tip, then check the original worktree and
@@ -695,7 +700,7 @@ Anyone who writes a checker input in the shared checkout, including readiness re
     and hand it off. Never use `git branch -D` or `git update-ref -d` here.
     Recheck your token under the guard and release your holder.
 
-### Guarded fast-forward and push commands
+### Guarded fast-forward, push and rollback commands
 
 Set `PM_LAND_LOCK` to the absolute `held` directory, `PM_LAND_TOKEN` to its token and
 `PM_LAND_SCRIPT` to the absolute trusted script path. Run these functions from the shared
@@ -729,6 +734,15 @@ push_checked() {
     git push --force-with-lease="refs/heads/main:$PM_LAND_BASE" \
         "$primary" "$PM_LAND_COMMIT:refs/heads/main"
 }
+
+rollback_unpublished() {
+    git fetch origin || return
+    PM_LAND_ROLLBACK_BASE=$(git rev-parse --verify 'origin/main^{commit}') || return
+    git diff --cached --quiet --no-ext-diff --ignore-submodules=none --ita-visible-in-index HEAD -- || return
+    python3 -B "$PM_LAND_SCRIPT" verify --rollback-check \
+        --from "$PM_LAND_COMMIT" --to "$PM_LAND_ROLLBACK_BASE" || return
+    git reset --keep "$PM_LAND_ROLLBACK_BASE"
+}
 ```
 
 Run `held_git fast_forward_checked` after judging the remote result. After the shared shard
@@ -760,11 +774,24 @@ declares it and validation reads its summary. Git history keeps the removed byte
 ```sh
 set -eu
 git fetch origin
-PM_LAND_TOPIC_BRANCH="fix/landing-snapshot-$(date -u +%Y%m%d-%H%M%S)"
+PM_LAND_TIMESTAMP=$(date -u +%Y%m%d-%H%M%S)
+PM_LAND_TOPIC_BRANCH="fix/landing-snapshot-$PM_LAND_TIMESTAMP"
 git switch -c "$PM_LAND_TOPIC_BRANCH" origin/main
-PM_LAND_SNAP_SEQ="$(python3 -c "import glob,os,re; n=[int(m.group(1)) for p in glob.glob('Plans/.plan_migration/pds-*') for m in [re.match(r'pds-[0-9]{8}-([0-9]{3})-', os.path.basename(p))] if m]; print('%03d' % (max(n, default=0) + 1))")"
+PM_LAND_SNAP_DATE=${PM_LAND_TIMESTAMP%%-*}
+PM_LAND_SNAP_SEQ=$(python3 - "$PM_LAND_SNAP_DATE" <<'PY'
+from pathlib import Path
+import sys
+
+date = sys.argv[1]
+runs = Path("Plans/.plan_migration").glob(f"pds-{date}-[0-9][0-9][0-9]-*")
+next_number = max((int(run.name.split("-")[2]) for run in runs if run.is_dir()), default=0) + 1
+if next_number > 999:
+    sys.exit(f"No three-digit snapshot sequence remains for {date}")
+print(f"{next_number:03d}")
+PY
+)
 python3 scripts/pm-plan-migration.py snapshot-current \
-    --run-id "pds-$(date -u +%Y%m%d)-${PM_LAND_SNAP_SEQ}-current-planunit-snapshot" \
+    --run-id "pds-$PM_LAND_SNAP_DATE-$PM_LAND_SNAP_SEQ-current-planunit-snapshot" \
     --expected-doc-count "$(ls Plans/*.md | wc -l)" \
     --supersedes-run-id "$(python3 -c "import json;print(json.load(open('Plans/.plan_migration/current_run.json'))['run_id'])")"
 python3 scripts/pm-landing-check.py --record-baseline \
