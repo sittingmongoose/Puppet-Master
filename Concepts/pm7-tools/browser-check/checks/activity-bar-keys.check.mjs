@@ -324,7 +324,11 @@ async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
   }
   // the chat folded to its strip ("Open the chat"): Chat is not expanded; Enter on it opens the chat over the centre,
   // which expands it, and Escape folds it back (round 2, F98-1)
-  const stripOn = () => f.evaluate(() => { const b = document.getElementById('pmw-chat-strip'); return !!(b && !b.hidden && b.getClientRects().length); });
+  const stripOn = () => {
+    const strip = document.getElementById('pmw-chat-strip');
+    return !!strip && !strip.hidden && strip.getClientRects().length > 0;
+  };
+  const waitForStrip = () => f.waitForFunction(stripOn, null, { timeout: 4000 }).catch(() => {});
   const peeking = () => f.evaluate(() => !!document.querySelector('.main-area')?.hasAttribute('data-pmw-chat-peek'));
   // At 740 the step is required, whatever ran before (round 3, K8b-1): section 5's 1920 test stores "Keep the chat open
   // in narrow windows" on the normal page, and the 740 test that follows then never folded the chat, so the step only
@@ -333,9 +337,9 @@ async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
   if (await peeking() && await reach('chat')) { await kb.press('Escape'); await f.waitForTimeout(500); }
   const mustFold = at === '740x900';
   const keptOpen = mustFold ? await f.evaluate(() => { const c = window.PMW && PMW.chatCol; if (!c || !c.keepOpen || !c.keepOpen()) return false; c.setKeepOpen(false); return true; }) : false;
-  if (mustFold) await f.waitForFunction(() => { const b = document.getElementById('pmw-chat-strip'); return !!(b && !b.hidden && b.getClientRects().length); }, null, { timeout: 4000 }).catch(() => {});
+  if (mustFold) await waitForStrip();
   if (keptOpen) t.log(`${at} FO-98: "keep the chat open" was on; turned off for the strip step`);
-  if (await stripOn()) {
+  if (await f.evaluate(stripOn)) {
     await agree('the chat folded to its strip', s => s.chat.expanded === 'false' && s.chat.lit);
     if (await reach('chat')) { await kb.press('Enter'); await f.waitForTimeout(700); }
     await agree('after Enter opens the chat over the centre', s => s.chat.expanded === 'true');
@@ -346,9 +350,22 @@ async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
   if (keptOpen) { await f.evaluate(() => PMW.chatCol.setKeepOpen(true)); await f.waitForTimeout(500); }
   // across the fold in one session (round 2, K-act8-3): the state is read again after the window narrows and widens
   if (full) {
-    await t.viewport(740, 900); await f.waitForTimeout(1200);
-    await agree('the same session narrowed to 740x900');
-    await t.viewport(1920, 1100); await f.waitForTimeout(1200);
+    const keepOpen = await f.evaluate(() => {
+      const wasOn = PMW.chatCol.keepOpen();
+      if (wasOn) PMW.chatCol.setKeepOpen(false);
+      return wasOn;
+    });
+    try {
+      await t.viewport(740, 900);
+      await waitForStrip();
+      const folded = await f.evaluate(stripOn);
+      await t.check(`${at} FO-98: narrowing the same session to 740x900 folds Chat to its strip`, folded);
+      await agree('the same session narrowed to 740x900', s => !s.chat.open && s.chat.expanded === 'false');
+    } finally {
+      await t.viewport(1920, 1100);
+      if (keepOpen) await f.evaluate(() => PMW.chatCol.setKeepOpen(true));
+    }
+    await f.waitForTimeout(1200);
     await agree('the same session back at 1920x1100', s => s.files.expanded === 'true');
   }
   if (!full && at !== '740x900') return;
