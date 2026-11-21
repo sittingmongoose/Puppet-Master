@@ -38,7 +38,7 @@
 // fresh open at 1092 kept Back's word with both labels on two lines in every painted frame, Friendly Light and Dark, both
 // surfaces. And c-ready reached by Back (on to Create a new Project, then Back) at either side of that footer's own
 // change. --set fresh=0 skips the opens, freshRm=0 their Reduced Motion ones, backRoute=0 the Back route; --set
-// freshAt=<w,...> opens only at those widths, no sweep (for a film: with --record --set film=1).
+// freshAt=<w,...> opens only at those widths, skipping the sweep and Back route (for a film: with --record --set film=1).
 // Both surfaces (--set sandbox picks one). Headless, or --record with --set looks=<one> --set screens=c-ready for a film
 // of the sweep (the window's size stays, the page is held in a frame; each width and open is marked).
 //   browser-check run Concepts/pm7-tools/browser-check/checks/window-footer-fit.check.mjs --set page=<build>
@@ -262,6 +262,10 @@ async function fresh(t, f, tag, look, screen, cases, samples, flips) {
 	await t.check(`${tag}: Q4-2 opened fresh at each width where the footer changes and a pixel either side (motion on; Reduced Motion too where Back's word changes): every painted frame shows the footer it settles on, none Back's word beside a wrapped label, and it settles exactly, as the resized window does`,
 		cases.length > 0 && bad.length === 0, JSON.stringify({ opens: cases.length, failures: bad.length, first: bad.slice(0, 4) }));
 	if (screen !== 'c-ready' || t.args.backRoute === '0') return;
+	if (t.args.freshAt) {
+		t.log(`${tag}: Q4-2 Back route skipped for freshAt (no width sweep)`);
+		return;
+	}
 	/* the Back route: where its footer's one-line width falls against the room the sweep read (the same footer as opened
 	   fresh, or another: then its own change, found from the rooms read at each width), and a pixel or two either side */
 	const flip = (flips || []).find((x) => x.lay === 'wide->wide' && x.gap === 1);
