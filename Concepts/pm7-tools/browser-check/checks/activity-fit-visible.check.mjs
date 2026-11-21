@@ -170,10 +170,23 @@ export default async function(t) {
   // the host or the CSSOM). Each change is made and the live boxes are read again in the same task, before any
   // observer can run, to show the box did not move; the strip must take the fitting tier within three frames and
   // keep it through a 500 ms hold.
-  const cssCase = async (name, width, setup, change, expectBefore, expectAfter, cleanup) => {
+  const cssCase = async (name, width, setup, change, expectBefore, expectAfter, cleanup, requireSetup = false) => {
     await setWidth(width); await f.waitForTimeout(300);
     await f.evaluate(setup); await frames(f);
-    const before = await readFit(f);
+    let before = await readFit(f);
+    if (requireSetup) {
+      const ready = () => before.tier === expectBefore && valid(before);
+      for (let poll = 0; poll < 10 && !ready(); poll++) {
+        await f.waitForTimeout(50);
+        before = await readFit(f);
+      }
+      const detail = `expected inflated tier ${expectBefore}: ${strip(before)}`;
+      t.log(`css-only ${name} setup: ${detail}`);
+      if (!await t.check(`css-only ${name} setup: inflated count reaches a fitting tier ${expectBefore}`, ready(), detail)) {
+        await f.evaluate(cleanup); await rerender(f); await t.settle();
+        return;
+      }
+    }
     // The page's CSP has no unsafe-eval: install the change as a function through the harness, then run it between
     // two box reads in one task.
     await f.evaluate(`window.__fo76Change = ${change.toString()}`);
@@ -193,6 +206,7 @@ export default async function(t) {
   const selfTest = await f.evaluate(() => { const bar = document.querySelector('#pmRoot .activity-bar, #pmRoot .pm56-activity-bar');
     return [460, 520, 580, 640].map(X => ({ X, ...__fo76.needsAt(bar.parentElement, X) })); });
   await t.check('oracle measures the intrinsic row, not the clone width', selfTest.every(r => Math.abs(r.need - selfTest[0].need) < 0.01 && r.need > 460), JSON.stringify(selfTest));
+  const restoreHostCount = () => { __fo76.host().style.setProperty('--ab-add', window.__fo76Add); };
   for (let rep = 0; rep < 2; rep++) {
     await cssCase(`hidden-label suffix removed ${rep}`, 800,
       () => { let s = document.getElementById('fo76-pseudo'); if (!s) { s = document.createElement('style'); s.id = 'fo76-pseudo'; document.head.append(s); } s.textContent = '#pmRoot .activity-item .label::after{content:" additional actions"}'; },
@@ -200,8 +214,7 @@ export default async function(t) {
       1, 0, () => document.getElementById('fo76-pseudo')?.remove());
     await cssCase(`host count restored ${rep}`, 560,
       () => { const h = __fo76.host(); window.__fo76Add = h.style.getPropertyValue('--ab-add'); h.style.setProperty('--ab-add', '"+123456789123456789123456789"'); },
-      () => { __fo76.host().style.setProperty('--ab-add', window.__fo76Add); },
-      2, 1, () => {});
+      restoreHostCount, 2, 1, restoreHostCount, true);
     await cssCase(`hidden-label font stack ${rep}`, 660, () => {},
       () => { const s = document.createElement('style'); s.id = 'fo76-font'; s.textContent = '#pmRoot .activity-item .label{font-family:Arial,sans-serif!important;letter-spacing:-1px!important;font-size:8px!important}'; document.head.append(s); },
       1, 0, () => document.getElementById('fo76-font')?.remove());

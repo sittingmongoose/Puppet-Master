@@ -1,13 +1,27 @@
 // Activity Detail layout across shared looks, host widths and reduced motion.
 import {LOOKS} from '../browser-check.config.mjs';
+
+const NARROW_AT = 560;
+export function crossedNarrowBand(row, toNarrow) {
+ return row.renders === 0 &&
+  Number.isFinite(row.beforeHost) && Number.isFinite(row.host) &&
+  (row.beforeHost < NARROW_AT) !== toNarrow && (row.host < NARROW_AT) === toNarrow;
+}
+
+export function judgeableHistoryResize(row) {
+ return !!(row.before && row.render) && row.renders === 0 &&
+  (!row.flipRequested || crossedNarrowBand(row, row.want < NARROW_AT));
+}
+
 export default async function(t){
  const f=await t.app.open();
  // FO92-N1 (opus-recheck-look8, look8b): History's resize separator's values follow the chat column. Since FO-92 a
  // narrow flip (the column crossing 560 px) no longer re-renders the chat, and a column or window resize never did: after
  // each change the separator must already carry what a render writes (aria-valuemax, aria-valuenow). The work clock is
  // held (PM56_DEMO.setWorkStep) and every render counted (the afterRender slot). The hold stops the primary work record
- // only (other running records keep the 500 ms tick), so a change a render followed is made again from 9 px away, up to
- // four times; one still followed by a render (the drawer closing or coming back) is not judged, and each group must
+ // only (other running records keep the 500 ms tick), so a change a render followed is made again, up to four times.
+ // Flip retries start at the prior band's target width. Other retries start 9 px away. A change still followed
+ // by a render (the drawer closing or coming back) is not judged, and each group must
  // still judge enough changes, so no redraw can refresh the values for the build under test. Floating (open), the column aimed at host widths across 560 both ways and
  // at plain widths; pinned, where the separator is what screen readers reach (the pinned column stops at about 639
  // px, so plain widths only); then window resizes while pinned, the column wide and the window narrowed under it, and
@@ -22,6 +36,7 @@ export default async function(t){
    window.__fo92n1=0;if(!window.__fo92n1Slot){window.__fo92n1Slot=true;window.PM56_EXT.slot('afterRender',(c,i)=>{if(i&&(i.phase==='overlay'||i.phase==='app'))window.__fo92n1++;});}
    await new Promise(r=>setTimeout(r,1200));const settling=window.__fo92n1;window.__fo92n1=0;
    await new Promise(r=>setTimeout(r,3000));const q=PM56_DEMO.getState();return {running:!!q.work.running,rendersAfterHold:settling,rendersIn3s:window.__fo92n1};});
+  t.log('FO92-N1 work clock hold measurements ' + JSON.stringify(held));
   await t.check('FO92-N1 fixture: the work clock held (the primary work record stopped; renders in 3 s logged)',!held.running,JSON.stringify(held));
   const drawer=(want)=>f.evaluate(async want=>{
    const up=()=>!!document.querySelector('[data-ph-resize]')&&(document.body.dataset.phDrawer||'')===want;
@@ -33,10 +48,14 @@ export default async function(t){
    return {drawer:document.body.dataset.phDrawer||'',handle:!!document.querySelector('[data-ph-resize]')};},want);
   /* one change (the column aimed so the host width reads about `want`, the column has padding of its own; or the window
      already resized), then its read, a render's, and the renders between */
-  const step=(want,kind)=>f.evaluate(async([want,kind])=>{
+  const step=(want,kind,flipFrom)=>f.evaluate(async([want,kind,flipFrom,narrowAt])=>{
    const H=window.PM56_HOST, two=()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))), settle=async()=>{await two();await new Promise(r=>setTimeout(r,300));await two();};
    const h=()=>document.querySelector('[data-ph-resize]'),read=()=>{const e=h();return e?[e.getAttribute('aria-valuemax'),e.getAttribute('aria-valuenow')]:null;};
-   const row=(want,renders)=>{const before=read();window.PM56_EXT.ctx().renderOverlays();const render=read();return {kind,want,host:Math.round(H.width()),narrow:H.width()<560,mode:document.body.dataset.phDrawer||'',renders,before,render};};
+   const row=(want,renders,beforeHost=null)=>{
+    const before=read(), host=H.width();
+    window.PM56_EXT.ctx().renderOverlays();
+    return {kind,want,beforeHost,host,narrow:host<narrowAt,mode:document.body.dataset.phDrawer||'',renders,before,render:read()};
+   };
    const aim=async w=>{let set=w;for(let i=0;i<4;i++){PMW.chatCol.setWidth(set);await two();set+=w-H.width();}await settle();};
    const out=[];
    /* (after a window resize, counted since before it: the window's own change, read once its renders have stopped for
@@ -45,26 +64,41 @@ export default async function(t){
     while(performance.now()-t0<3000&&performance.now()-since<1000){await new Promise(r=>setTimeout(r,100));if(window.__fo92n1!==last){last=window.__fo92n1;since=performance.now();}}
     out.push(row(null,window.__fo92n1));}
    let r=null,tries=0;
-   for(;tries<4;tries++){if(tries)await aim(want+9);window.__fo92n1=0;await aim(want);r=row(want,window.__fo92n1);if(r.renders===0)break;}
+   for(;tries<4;tries++){
+    if(tries)await aim(flipFrom ?? want+9);
+    const beforeHost=H.width();
+    window.__fo92n1=0;
+    await aim(want);
+    r=row(want,window.__fo92n1,beforeHost);
+    const crossed = (beforeHost<narrowAt)!==r.narrow && r.narrow===(want<narrowAt);
+    if(r.renders===0 && (flipFrom==null || crossed))break;
+   }
+   r.flipRequested=flipFrom!=null;
    r.tries=Math.min(tries+1,4);out.push(r);
    return out;
-  },[want,kind||'column']).then(rows=>(kind==='window'?rows:rows[0]));
+  },[want,kind||'column',flipFrom ?? null,NARROW_AT]).then(rows=>(kind==='window'?rows:rows[0]));
   const same=r=>!!(r.before&&r.render&&r.before.join()===r.render.join());
   /* judged: the steps with a separator and no render after the change; of those, the ones whose values changed (a
      render writes other values than the step before's render did) must number at least `min`, flips both ways among
      them where asked */
   const judge=async(name,rows,flips,min)=>{
-   const ok=r=>!!(r.before&&r.render)&&r.renders===0;
-   const changed=rows.filter((r,i)=>ok(r)&&(i===0||!rows[i-1].render||rows[i-1].render.join()!==r.render.join()));
-   const flipped=(dir)=>rows.some((r,i)=>i>0&&ok(r)&&r.narrow===dir&&rows[i-1].narrow!==dir);
+   const judged=rows.filter(judgeableHistoryResize);
+   const changed=rows.filter((r,i)=>judgeableHistoryResize(r)&&(i===0||!rows[i-1].render||rows[i-1].render.join()!==r.render.join()));
+   const flipped=dir=>judged.some(r=>crossedNarrowBand(r,dir));
    t.log(`FO92-N1 ${name} `+JSON.stringify(rows));
    await t.check(`FO92-N1 ${name}: fixture: ${min} or more changes judged with no render after them${flips?', narrow flips both ways among them':''}`,changed.length>=min&&(!flips||(flipped(true)&&flipped(false))),
-    JSON.stringify({judged:rows.filter(ok).length,changed:changed.length,skipped:rows.filter(r=>!ok(r)).map(r=>({want:r.want,host:r.host,mode:r.mode,renders:r.renders}))}));
-   await t.check(`FO92-N1 ${name}: the History separator carries what a render writes after each change${flips?', narrow flips both ways included':''}`,rows.filter(ok).every(same),JSON.stringify(rows.filter(r=>ok(r)&&!same(r))));
+    JSON.stringify({judged:judged.length,changed:changed.length,skipped:rows.filter(r=>!judgeableHistoryResize(r))}));
+   await t.check(`FO92-N1 ${name}: the History separator carries what a render writes after each change${flips?', narrow flips both ways included':''}`,judged.every(same),JSON.stringify(judged.filter(r=>!same(r))));
   };
   const o1=await drawer('open');
   await t.check('FO92-N1 fixture: History drawer floating (open), its separator drawn',o1.handle&&o1.drawer==='open',JSON.stringify(o1));
-  const fl=[];for(const w of [530,600,545,580,640,520,700]) fl.push(await step(w));
+  const fl=[];
+  let previousWidth=760;
+  for(const width of [530,600,545,580,640,520,700]){
+   const flipFrom=(previousWidth<NARROW_AT)!==(width<NARROW_AT) ? previousWidth : null;
+   fl.push(await step(width,'column',flipFrom));
+   previousWidth=width;
+  }
   await judge('floating, column resizes',fl,true,5);
   await step(900);
   const o2=await drawer('pinned');

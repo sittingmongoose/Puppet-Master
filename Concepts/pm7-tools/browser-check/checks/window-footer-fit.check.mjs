@@ -38,7 +38,7 @@
 // fresh open at 1092 kept Back's word with both labels on two lines in every painted frame, Friendly Light and Dark, both
 // surfaces. And c-ready reached by Back (on to Create a new Project, then Back) at either side of that footer's own
 // change. --set fresh=0 skips the opens, freshRm=0 their Reduced Motion ones, backRoute=0 the Back route; --set
-// freshAt=<w,...> opens only at those widths, no sweep (for a film: with --record --set film=1).
+// freshAt=<w,...> opens only at those widths, skipping the sweep and Back route (for a film: with --record --set film=1).
 // Both surfaces (--set sandbox picks one). Headless, or --record with --set looks=<one> --set screens=c-ready for a film
 // of the sweep (the window's size stays, the page is held in a frame; each width and open is marked).
 //   browser-check run Concepts/pm7-tools/browser-check/checks/window-footer-fit.check.mjs --set page=<build>
@@ -250,7 +250,11 @@ const firstPainted = (o) => { const x = o.rec.frames.find((y) => !y.held); retur
 
 // Q4-2: the opens at each [width, motion], judged (judgeOpen), with the first painted footer of each logged; and for
 // c-ready, the same reached by Back from the screen after it (opus-recheck-look8b: never reached), at its own change
-async function fresh(t, f, tag, look, screen, cases, samples, flips) {
+async function fresh(t, f, tag, look, screen, cases, samples, flips, bounded = false) {
+	if (bounded && samples.size && !cases.length) {
+		t.log(`${tag}: Q4-2 no footer change in the sampled range; no fresh opens scheduled`);
+		return;
+	}
 	const bad = [], log = [];
 	for (const [w, motion] of cases) {
 		const o = await openAt(t, f, screen, w, motion);
@@ -262,6 +266,10 @@ async function fresh(t, f, tag, look, screen, cases, samples, flips) {
 	await t.check(`${tag}: Q4-2 opened fresh at each width where the footer changes and a pixel either side (motion on; Reduced Motion too where Back's word changes): every painted frame shows the footer it settles on, none Back's word beside a wrapped label, and it settles exactly, as the resized window does`,
 		cases.length > 0 && bad.length === 0, JSON.stringify({ opens: cases.length, failures: bad.length, first: bad.slice(0, 4) }));
 	if (screen !== 'c-ready' || t.args.backRoute === '0') return;
+	if (t.args.freshAt) {
+		t.log(`${tag}: Q4-2 Back route skipped for freshAt (no width sweep)`);
+		return;
+	}
 	/* the Back route: where its footer's one-line width falls against the room the sweep read (the same footer as opened
 	   fresh, or another: then its own change, found from the rooms read at each width), and a pixel or two either side */
 	const flip = (flips || []).find((x) => x.lay === 'wide->wide' && x.gap === 1);
@@ -289,6 +297,7 @@ async function fresh(t, f, tag, look, screen, cases, samples, flips) {
 
 async function run(t, mode) {
 	const from = +t.args.from || 1280, to = +t.args.to || 380, step = +t.args.step || 10;
+	const bounded = from < 1280 || to > 380;
 	const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
 	await t.viewport(from, 900);
 	let f = await t.app.open({ sandbox: mode === 'sandbox', onboarding: true, query: 'o55=screen=welcome', settleMs: 1000 });
@@ -401,7 +410,7 @@ async function run(t, mode) {
 					if (x && y && x.word !== y.word) near.forEach((w) => flipAt.add(w));
 				}
 				const cases = [...at].sort((p, q) => q - p).map((w) => [w, 'no-preference']).concat(t.args.freshRm === '0' ? [] : [...flipAt].sort((p, q) => q - p).map((w) => [w, 'reduce']));
-				await fresh(t, f, tag, look, screen, cases, samples, flips);
+				await fresh(t, f, tag, look, screen, cases, samples, flips, bounded && seq.length > 0);
 			}
 		}
 	}
