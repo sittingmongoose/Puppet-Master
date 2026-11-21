@@ -8,7 +8,9 @@ import subprocess
 from pathlib import Path
 import re
 import socket
+import sys
 import tempfile
+import threading
 import unittest
 from unittest.mock import Mock, patch
 
@@ -266,7 +268,6 @@ class LandingFixture(unittest.TestCase):
         land.write_json(generation / "snapshot-record.json",
                         {"head": self.head, "tree": self.tree, "ignored_inputs": self.manifest})
         record = self.make_record(1)
-        lock = Mock()
         real_git = land.git
         fetched = False
 
@@ -283,7 +284,8 @@ class LandingFixture(unittest.TestCase):
             self.assertTrue(fetched)
             return 1
 
-        with (patch.object(land, "git", side_effect=fetch),
+        with (land.LandingLock("fixture", "fix/topic") as lock,
+              patch.object(land, "git", side_effect=fetch),
               patch.object(land, "new_run", side_effect=[generation, self.folder]),
               patch.object(land, "start_remote_job"),
               patch.object(land, "checked_remote", return_value=record),
@@ -717,6 +719,31 @@ class LandingFixture(unittest.TestCase):
                                         check=False)
         git.assert_called_once_with(land.CLONE, "worktree", "remove", "--force", str(worktree))
 
+    def test_cleanup_after_completed_check_skips_unstarted_snapshot(self):
+        check_name = land.job_name(self.folder, "check")
+        land.write_json(self.folder / "check-job.json", {"job": check_name})
+
+        def status(argv, **_):
+            name = argv[2]
+            if name == check_name:
+                return subprocess.CompletedProcess(argv, 0, land.json.dumps([{"name": name, "state": "done"}]), "")
+            return subprocess.CompletedProcess(argv, 2, "", f"long-job: no job named {name} on this machine")
+
+        with (patch.object(land, "worktree_path", return_value=self.remote),
+              patch.object(land, "command", side_effect=status) as command,
+              patch.object(land, "git") as git):
+            land.remote_cleanup(self.folder)
+        command.assert_called_once_with(["long-job", "status", check_name, "--json"], check=False)
+        git.assert_called_once_with(land.CLONE, "worktree", "remove", "--force", str(self.remote))
+
+    def test_nas1_is_the_cli_default_and_1070ti_remains_available(self):
+        for flags, host in (((), "nas1"), (("--checks-on", "1070ti"), "1070ti")):
+            with (self.subTest(host=host),
+                  patch.object(sys, "argv", ["pm-land.py", "run", "main", "--dry-run", *flags]),
+                  patch.object(land, "dry_run", return_value=0) as dry_run):
+                self.assertEqual(land.main(), 0)
+            self.assertEqual(dry_run.call_args.args[0].checks_on, host)
+
     def test_cleanup_defers_while_job_is_starting_running_or_partial(self):
         land.write_json(self.folder / "snapshot-job.json", {"job": land.job_name(self.folder, "snapshot")})
         for state in ("starting", "running", "partial"):
@@ -928,6 +955,232 @@ raise SystemExit(code)
         receipt = self.folder / "hand-receipt.json"
         receipt.write_text(receipt.read_text() + " ")
         self.assertIn("hand receipt SHA-256 changed", shell(verify).stderr)
+
+    def rejected_fast_forward_fixture(self):
+        self.git(self.shared, "reset", "--keep", self.base)
+        owner = "Plans/owner.md"
+        self.put(self.shared, owner, "base edition\n")
+        self.put(self.shared, "outside.txt", "base outside\n")
+        self.git(self.shared, "add", "--", owner, "outside.txt")
+        self.git(self.shared, "commit", "-m", "base with owner")
+        base = land.revision(self.shared, "HEAD")
+        self.put(self.shared, owner, "candidate edition\n")
+        self.put(self.shared, "Plans/new.md", "candidate addition\n")
+        self.git(self.shared, "add", "--", owner, "Plans/new.md")
+        self.git(self.shared, "commit", "-m", "candidate with Plans changes")
+        candidate = land.revision(self.shared, "HEAD")
+        tree = land.revision(self.shared, "HEAD^{tree}")
+        self.git(self.shared, "update-ref", land.ORIGIN_MAIN, base)
+        self.git(self.shared, "reset", "--keep", base)
+        self.put(self.shared, "outside.txt", "outside staged\n")
+        self.git(self.shared, "add", "--", "outside.txt")
+        self.put(self.shared, "outside.txt", "outside working\n")
+
+        hook = self.put(self.root, "reject-hooks/reference-transaction", """#!/bin/sh
+if [ "$1" = prepared ]; then
+    while read -r old new ref; do
+        if [ "$ref" = refs/heads/main ]; then
+            echo 'fixture rejected the main ref transaction' >&2
+            exit 1
+        fi
+    done
+fi
+""")
+        hook.chmod(0o700)
+        self.git(self.shared, "config", "core.hooksPath", str(hook.parent))
+        return owner, base, candidate, tree
+
+    def test_failed_git_ref_transaction_repairs_candidate_checkout(self):
+        owner, base, candidate, tree = self.rejected_fast_forward_fixture()
+        with (patch.object(land, "verify_over_ssh"),
+              self.assertRaisesRegex(land.Refusal, "fixture rejected the main ref transaction")):
+            with land.LandingLock("first", "fix/topic") as lock:
+                land.push_checked_main(self.folder, "1070ti", candidate, tree, base,
+                                       {owner, "Plans/new.md"}, lock, True)
+        self.assertEqual(land.revision(self.shared, "HEAD"), base)
+        self.assertEqual(self.git(self.shared, "show", f":{owner}").stdout, "base edition\n")
+        self.assertEqual((self.shared / owner).read_text(), "base edition\n")
+        self.assertFalse((self.shared / "Plans/new.md").exists())
+        self.assertEqual(self.git(self.shared, "show", ":outside.txt").stdout, "outside staged\n")
+        self.assertEqual((self.shared / "outside.txt").read_text(), "outside working\n")
+        self.assertFalse(self.lock_path.exists())
+
+    def test_failed_fast_forward_retains_journal_for_ambiguous_bytes(self):
+        owner, base, candidate, tree = self.rejected_fast_forward_fixture()
+        real_git = land.git
+
+        def concurrent_edit(root, *argv, **kwargs):
+            if argv[0] != "merge":
+                return real_git(root, *argv, **kwargs)
+            result = real_git(root, *argv, **{**kwargs, "check": False})
+            self.assertNotEqual(result.returncode, 0)
+            self.assertEqual(real_git(root, "show", f":{owner}").stdout, "candidate edition\n")
+            self.put(root, owner, "someone else's edit\n")
+            if kwargs.get("check", True):
+                raise land.Refusal("fixture rejected the main ref transaction")
+            return result
+
+        with (patch.object(land, "git", side_effect=concurrent_edit),
+              patch.object(land, "verify_over_ssh"), self.assertRaisesRegex(land.Refusal, "fixture|ambiguous")):
+            with land.LandingLock("first", "fix/topic") as lock:
+                land.push_checked_main(self.folder, "1070ti", candidate, tree, base,
+                                       {owner, "Plans/new.md"}, lock, True)
+        self.assertEqual(land.revision(self.shared, "HEAD"), base)
+        self.assertEqual((self.shared / owner).read_text(), "someone else's edit\n")
+        self.assertEqual(self.git(self.shared, "show", f":{owner}").stdout, "candidate edition\n")
+        self.assertFalse((self.shared / "Plans/new.md").exists())
+        marker = (self.lock_path / "holder.txt").read_text()
+        self.assertIn(f'"pre_merge_head": "{base}"', marker)
+        self.assertIn(owner, (self.folder / "publication-recovery.json").read_text())
+
+    def test_recovery_repairs_interrupted_failed_fast_forward_even_if_candidate_reached_origin(self):
+        owner, base, candidate, tree = self.rejected_fast_forward_fixture()
+        origin = self.root / "origin.git"
+        self.git(self.shared, "clone", "--bare", str(self.shared), str(origin))
+        self.git(self.shared, "remote", "add", "origin", str(origin))
+        # The local clone copied the candidate object without advancing its main.
+        self.git(origin, "cat-file", "-e", f"{candidate}^{{commit}}")
+        real_git = land.git
+
+        def interrupt_after_merge(root, *argv, **kwargs):
+            if argv[0] != "merge":
+                return real_git(root, *argv, **kwargs)
+            result = real_git(root, *argv, **{**kwargs, "check": False})
+            os._exit(76 if result.returncode else 77)
+
+        pid = os.fork()
+        if pid == 0:
+            try:
+                with (patch.object(land, "git", side_effect=interrupt_after_merge),
+                      patch.object(land, "verify_over_ssh"), land.LandingLock("first", "fix/interrupted") as lock):
+                    land.push_checked_main(self.folder, "1070ti", candidate, tree, base,
+                                           {owner, "Plans/new.md"}, lock, True)
+            except BaseException:
+                os._exit(78)
+            os._exit(79)
+        _, status = os.waitpid(pid, 0)
+        self.assertEqual(os.waitstatus_to_exitcode(status), 76)
+        marker = (self.lock_path / "holder.txt").read_text()
+        self.assertIn(f'"pre_merge_head": "{base}"', marker)
+        self.assertEqual(self.git(self.shared, "show", f":{owner}").stdout, "candidate edition\n")
+
+        self.git(origin, "update-ref", land.MAIN_REF, candidate, base)
+        with patch.object(land.time, "time", return_value=land.time.time() + 91 * 60):
+            with land.LandingLock("next", "fix/next") as lock:
+                self.assertTrue(land.reconcile_publication(lock))
+                self.assertEqual(lock.owed, candidate)
+                self.assertIsNone(lock.publication)
+        self.assertEqual(land.revision(self.shared, "HEAD"), base)
+        self.assertEqual(self.git(self.shared, "show", f":{owner}").stdout, "base edition\n")
+        self.assertEqual((self.shared / owner).read_text(), "base edition\n")
+        self.assertEqual(self.git(self.shared, "show", ":outside.txt").stdout, "outside staged\n")
+        self.assertEqual((self.shared / "outside.txt").read_text(), "outside working\n")
+        self.assertFalse((self.shared / "Plans/new.md").exists())
+
+    def test_hand_fast_forward_protects_historical_ignored_fixture(self):
+        repo = Path(__file__).resolve().parents[1]
+        fixture_path = "tests/fixtures/governance/raw_evidence_capture_modes.schema.json"
+        history = "289983decc7bbecb595d5de767647eb8c8bc4c8c"
+        historic = self.git(repo, "show", f"{history}:{fixture_path}", check=False)
+        if historic.returncode:
+            self.skipTest("fixture-promotion history is unavailable")
+        folder = self.root / "historic"
+        self.git(folder, "init", "-b", "main")
+        self.git(folder, "config", "user.name", "Landing fixture")
+        self.git(folder, "config", "user.email", "fixture@example.invalid")
+        self.git(folder, "config", "core.hooksPath", str(self.root / "no-hooks"))
+        self.put(folder, ".gitignore", self.git(repo, "show", f"{history}^:.gitignore").stdout)
+        self.git(folder, "add", "--", ".gitignore")
+        self.git(folder, "commit", "-m", "historic base")
+        base = land.revision(folder, "HEAD")
+        self.git(folder, "update-ref", land.ORIGIN_MAIN, base)
+        self.put(folder, ".gitignore", self.git(repo, "show", f"{history}:.gitignore").stdout)
+        self.put(folder, fixture_path, historic.stdout)
+        self.git(folder, "add", "--", ".gitignore", fixture_path)
+        self.git(folder, "commit", "-m", "promote fixture")
+        candidate = land.revision(folder, "HEAD")
+        self.git(folder, "reset", "--keep", base)
+        local_copy = self.put(folder, fixture_path, "local ignored schema bytes\n")
+        self.assertEqual(self.git(folder, "check-ignore", fixture_path).stdout.strip(), fixture_path)
+        self.assertFalse(self.git(folder, "status", "--porcelain").stdout)
+
+        rules = (repo / "AGENTS.md").read_text()
+        command = re.search(r"(git merge --ff-only [^" + chr(96) + "]+)", rules)[1]
+        command = command.replace("<checked commit>", '"$PM_LAND_COMMIT"')
+        result = subprocess.run(["bash", "-c", command], cwd=folder,
+                                env={**os.environ, "PM_LAND_COMMIT": candidate},
+                                capture_output=True, text=True, check=False)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(local_copy.read_text(), "local ignored schema bytes\n")
+        self.assertEqual(land.revision(folder, "HEAD"), base)
+        for path in ("AGENTS.md", ".claude/CLAUDE.md", "reports/landing-checks/README.md"):
+            self.assertIn('git merge --ff-only --no-overwrite-ignore "$PM_LAND_COMMIT"',
+                          (repo / path).read_text())
+
+        readme = (repo / "reports/landing-checks/README.md").read_text()
+        fence = chr(96) * 3
+        recipe = re.search(rf"^#### Guard and fast-forward the checked commit\n.*?^{fence}sh\n(.*?)^{fence}$",
+                           readme, re.MULTILINE | re.DOTALL)[1]
+        with land.LandingLock("hand", "fix/historical") as lock:
+            env = {**os.environ, "PM_LAND_LOCK": str(self.lock_path), "PM_LAND_TOKEN": lock.token,
+                   "PM_LAND_BASE": base, "PM_LAND_COMMIT": candidate,
+                   "PM_LAND_PLANS_FOLLOWUP": "false", "PM_LAND_COMPLETES_FOLLOWUP": "false"}
+            result = subprocess.run(["bash", "-c", recipe], cwd=folder, env=env, capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(fixture_path, result.stderr)
+            body = (self.lock_path / "holder.txt").read_text()
+            marker = land.json.loads(land.holder_field(body, "publication"))
+            self.assertEqual((marker["pre_merge_head"], marker["phase"]), (base, "fast-forward-pending"))
+        self.assertEqual(local_copy.read_text(), "local ignored schema bytes\n")
+        self.assertEqual(land.revision(folder, "HEAD"), base)
+
+    def test_takeover_between_push_marker_and_git_is_blocked(self):
+        self.git(self.shared, "reset", "--keep", self.base)
+        self.git(self.shared, "update-ref", land.ORIGIN_MAIN, self.base)
+        actual_transition = land.LandingLock.mark_push_pending
+        real_git = land.git
+        outcomes = []
+        push_tokens = []
+
+        def attempt_takeover():
+            with (self.lock_path.parent / "pm-land-reap.guard").open("a") as probe:
+                try:
+                    land.fcntl.flock(probe, land.fcntl.LOCK_EX | land.fcntl.LOCK_NB)
+                except BlockingIOError:
+                    outcomes.append("guard held")
+                    return
+            with patch.object(land.time, "time", return_value=land.time.time() + 91 * 60):
+                replacement = land.LandingLock("next", "fix/next")
+                replacement.__enter__()
+                outcomes.append(replacement.token)
+
+        def after_transition(first):
+            actual_transition(first)
+            contender = threading.Thread(target=attempt_takeover, daemon=True)
+            contender.start()
+            contender.join(timeout=3)
+            self.assertFalse(contender.is_alive())
+
+        def fixture_git(root, *argv, **kwargs):
+            if argv[0] == "push":
+                push_tokens.append(land.holder_field((self.lock_path / "holder.txt").read_text(), "token"))
+                return subprocess.CompletedProcess([], 0)
+            return real_git(root, *argv, **kwargs)
+
+        with (patch.object(land.LandingLock, "mark_push_pending", new=after_transition),
+              patch.object(land, "git", side_effect=fixture_git),
+              patch.object(land, "verify_over_ssh"), patch.object(land, "shared_shards")):
+            first = land.LandingLock("first", "fix/topic")
+            try:
+                with first:
+                    self.assertTrue(land.push_checked_main(self.folder, "1070ti", self.head, self.tree,
+                                                          self.base, {"tracked.txt"}, first, False))
+            except land.Refusal:
+                # Preserve the observed token for the failing pre-fix reproduction.
+                pass
+        self.assertEqual(push_tokens, [first.token])
+        self.assertEqual(outcomes, ["guard held"])
+
 
 
 if __name__ == "__main__":
