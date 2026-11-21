@@ -109,6 +109,44 @@ class MarkdownSubjectTests(unittest.TestCase):
                 self.assert_own_subject(selected, event, criterion)
                 self.assert_wrong_subject(selected, sibling, criterion)
 
+    def test_goal_semantic_owner_accepts_its_row_and_explicit_routing_note(self):
+        event = 'goal_run.certified'
+        grade = ASSESSMENTS.parent.parent / 'event-authority-20261105/DG-OWN-C3-W5-part3-self-grade.json'
+        row = json.loads(grade.read_text())['rows'][0]
+        self.assertEqual(row['event_type'], event)
+        for index in (2, 3):
+            item = row['cells']['owner_doc']['evidence'][index]
+            with self.subTest(index=index):
+                result = WRITER.refresh_evidence(item, event_type=event, criterion='owner_doc')
+                self.assertEqual(result['quote'], item['quote'])
+                self.assertEqual(result['unit'], item['unit'])
+                text = (ROOT / item['path']).read_text().splitlines()
+                self.assertIn(item['quote'], '\n'.join(text[result['line_start'] - 1:result['line_end']]))
+        routing_note = row['cells']['owner_doc']['evidence'][3]
+        self.assert_wrong_subject(routing_note, event, 'positive_negative_oracles')
+        self.assert_wrong_subject(routing_note, 'goal_run.stopped', 'owner_doc')
+        sibling_clause = dict(routing_note, quote='the `goal_run.started` and `goal_run.cancelled` rows name theirs')
+        self.assert_wrong_subject(sibling_clause, event, 'owner_doc')
+
+        read_text = WRITER.file_text
+        registry = json.loads(read_text(WRITER.REGISTRY))
+        family = next(row for row in registry['families'] if row['event_type'] == event)
+        family['semantic_owner_doc'] = 'Plans/Goal_Runtime_System.md#GRS-084'
+        with patch.object(WRITER, 'file_text', side_effect=lambda path: (
+                json.dumps(registry) if path == WRITER.REGISTRY else read_text(path))):
+            self.assert_wrong_subject(routing_note, event, 'owner_doc')
+
+    def test_goal_historical_owner_accepts_its_section_heading(self):
+        event = 'goal_run.replanned'
+        grade = ROOT / 'reports/event-authority-20261104/DG-self-grade.json'
+        row = json.loads(grade.read_text())['rows'][3]
+        self.assertEqual(row['event_type'], event)
+        item = row['cells']['owner_doc']['evidence'][2]
+        result = WRITER.refresh_evidence(item, event_type=event, criterion='owner_doc')
+        self.assertEqual(result['quote'], item['quote'])
+        self.assertEqual(result['unit'], item['unit'])
+        self.assert_wrong_subject(item, event, 'positive_negative_oracles')
+
     def test_goal_shared_heading_binds_the_exact_oracle_table_row(self):
         criterion = 'positive_negative_oracles'
         stopped, = citations('revisions', 'goal_run.stopped', criterion)

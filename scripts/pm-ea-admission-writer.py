@@ -543,20 +543,31 @@ def refresh_evidence(item: dict, *, digest_convention: str = "whole_line", sourc
             raise Gap(f"canonical Markdown evidence needs a resolvable unit or heading bound: {rel}#{unit}")
     owner_span = span
     want = item.get("line_start") if isinstance(item.get("line_start"), int) else 1
-    retention_location = None
+    located = None
     if span is not None and rel.startswith("Plans/") and rel.endswith(".md") and event_type:
-        from pm_ea_evidence_projection import markdown_family_span, registered_event_types
-        # In a shared owner unit the located retention paragraph may name a
-        # different subject from the heading. Use the same location for the receipt.
-        if criterion == "retention" and isinstance(quote, str) and quote:
-            retention_location = relocate(text, quote, want, span)
+        from pm_ea_evidence_projection import markdown_family_span, registered_semantic_owners
+        owners = registered_semantic_owners(file_text(REGISTRY))
+        goal_owner_anchor = "#goal-and-goalrun-payload-minima"
+        selected_semantic_owner = (
+            criterion == "owner_doc"
+            and owners.get(event_type) == rel + goal_owner_anchor
+            and heading_span(text, goal_owner_anchor) == span
+        )
+        # Localize a retention assignment or owner routing note before
+        # adjudicating its subject within the declared owner span.
+        if (criterion == "retention" or selected_semantic_owner) and isinstance(quote, str) and quote:
+            located = relocate(text, quote, want, span)
         try:
-            span = markdown_family_span(text, span, event_type, registered_event_types(file_text(REGISTRY)),
-                                        criterion, quote, quote_lines=retention_location[:2] if retention_location else None)
+            span = markdown_family_span(
+                text, span, event_type, owners.keys(), criterion, quote,
+                quote_lines=located[:2] if located else None,
+                selected_semantic_owner=selected_semantic_owner,
+            )
         except ValueError as exc:
             raise Gap(f"{rel}#{unit}: {exc}") from exc
     if isinstance(quote, str) and quote:
-        found = retention_location or relocate(text, quote, want, span)
+        found = (located if located and span[0] <= located[0] <= located[1] <= span[1]
+                 else relocate(text, quote, want, span))
         if found is None:
             if span != owner_span:
                 raise Gap(f"{rel}#{unit}: Markdown evidence quotation is outside the subject row for {event_type}")
