@@ -4,3 +4,5 @@
 §R #sidePanelSlot.d-has-leaving { position: relative; }
 §R #sidePanelSlot > .side-panel-view.d-leaving { display: flex; position: absolute; inset: 0; z-index: 3; pointer-events: none; }
 § .sh-scroll > [data-pane].d-leaving { position: absolute; z-index: 3; pointer-events: none; }
+/* FO-240 round 6b: a pane laid out but not drawn while the switcher carries its tab's chip (31-tabs.js carryHold) */
+§ .sh-scroll > [data-pane][data-d-held] { visibility: hidden !important; }

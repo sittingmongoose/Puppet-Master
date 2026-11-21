@@ -32,6 +32,34 @@ let tabsWired = false;
 
 const tabItems = st => Array.from(st.querySelectorAll(':scope > .pm-segtab-item'));
 const tabActive = st => st.querySelector(':scope > .pm-segtab-item.active');
+/* FO-240 round 6b: the box a tab will have once it is chosen, for the page's switcher (glass.js, the rail strip's
+   predict), read on the press. A strip whose chosen tab alone shows its word ('active' mode) gives the pressed tab its
+   word and folds the one it leaves when the app chooses it, in the click's frame; the chip's hop, sent on the press to
+   the tab's box as it was, had come down there before that frame (Changed, 16 px narrower) and stood until the trip
+   was over, then went on: a stop of 150-430 ms in every first Explorer > Changed press, landed main's too. The strip
+   is put in its chosen state (the class the shell moves, and the mode fitTabs would give it), measured by measure()
+   (the switcher's own read), and put back, all in this one task: no frame draws it, and with its transitions held
+   through both restyles none starts. */
+window.PM_RAIL_CHOSEN_BOX = function (item, measure) {
+  if (!D.on || !item || !inPanels(item) || item.classList.contains('active')) return null;
+  const st = item.parentElement;
+  if (!st || !st.classList.contains('pm-segtab') || !st.offsetWidth) return null;
+  const items = tabItems(st), was = tabActive(st), mode = st.getAttribute('data-d-tabs');
+  st.setAttribute('data-d-measure', '');
+  if (was) was.classList.remove('active');
+  item.classList.add('active');
+  const next = tabMode(st, items);
+  if (next !== mode) st.setAttribute('data-d-tabs', next);
+  let box = null;
+  try { box = measure(); } finally {
+    item.classList.remove('active');
+    if (was) was.classList.add('active');
+    if (next !== mode) { if (mode == null) st.removeAttribute('data-d-tabs'); else st.setAttribute('data-d-tabs', mode); }
+    void st.offsetWidth;
+    st.removeAttribute('data-d-measure');
+  }
+  return box;
+};
 /* el's box in the strip's own coordinates (the ink's containing block), undoing any transform on the way (a panel
    entrance may be scaling the strip) */
 function stripBox(st, el) {
@@ -171,13 +199,34 @@ function tabChanged(tab) {
   if (st) fitTabs(st);
   const shown = activePane(panel);
   const left = fromPane && fromPane.box && fromPane.pane !== shown && fromPane.pane.isConnected ? holdLeaving(fromPane.pane, fromPane.box) : null;
-  playTabs(st, from, now > was ? 1 : -1, () => activePane(panel), null, left);
+  playTabs(st, from, now > was ? 1 : -1, () => activePane(panel), null, left, left && shown ? carryHold(tab, shown) : null);
+}
+/* FO-240 round 6b: a pane shown for the first time by a press whose chip the page's switcher is still carrying to its
+   tab (glass.js carryRest) is laid out at once but not drawn (data-d-held: visibility hidden) until that chip has come
+   down on the tab, and the pane it replaces stays held where it was (holdLeaving) until then; the change then plays as
+   before, from that frame. Drawn with the click, the Changed pane's rows (each dealt in on a layer of its own) were
+   rastered mid-trip and held the display 50 ms on Alexis, the chip standing, then 20 px at once. Only a pane's first
+   showing waits, never past a second. Returns the frame test playTabs waits on, or null */
+function carryHold(tab, pane) {
+  const lg = window.PM_LG, rest = () => { try { return lg && typeof lg.carryRest === 'function' ? lg.carryRest(tab) || 0 : 0; } catch (e) { return 0; } };
+  if (pane._dDrawn || !(rest() > performance.now())) { pane._dDrawn = true; return null; }
+  pane._dDrawn = true;
+  pane.setAttribute('data-d-held', '');
+  const since = performance.now();
+  return () => {
+    const t = performance.now();
+    if (pane.isConnected && rest() > t && t - since < 1000) return true;
+    pane.removeAttribute('data-d-held');
+    return false;
+  };
 }
 /* one frame callback makes every animation of a change, and startTogether starts them all on the next frame: the ink,
    the icons, the inverse tick and the rows share one clock, whatever the shell's fit pass costs this frame. paneOf: the
    view that comes in (read in that frame); after(pane): a strip's own fitting of that view */
-function playTabs(st, from, dir, paneOf, after, left) {
-  requestAnimationFrame(() => {
+function playTabs(st, from, dir, paneOf, after, left, wait) {
+  requestAnimationFrame(function step() {
+    /* (a pane held for the switcher's carry: the change waits, frame by frame, until its chip has landed: carryHold) */
+    if (wait && D.on && wait()) { requestAnimationFrame(step); return; }
     if (!D.on) { if (left) releaseLeaving(left); return; }
     const anims = [];
     if (st) moveTabs(st, from, dir, anims);

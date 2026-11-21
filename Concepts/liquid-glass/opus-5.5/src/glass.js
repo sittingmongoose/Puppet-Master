@@ -1410,7 +1410,10 @@
     { sel: '#pmuNav', items: '.pmu-navbtn', vertical: true, kind: 'lensRow' },
     /* tag: the rail's tab strips' lenses carry data-lg-for="rail-tabs", so the rail skin can shape them (concept D,
        22-tabs.src.css: the chosen tab's own box, rounded to its track's inner radius) */
-    { sel: '#sidePanelSlot .pm-segtab', items: '.pm-segtab-item', many: true, scrub: true, kind: 'lens', tag: 'rail-tabs' },
+    { sel: '#sidePanelSlot .pm-segtab', items: '.pm-segtab-item', many: true, scrub: true, kind: 'lens', tag: 'rail-tabs',
+      /* FO-240 round 6b: a pressed tab's box once chosen (the rail's 'active' strips give the chosen tab its word: concept
+         D, 31-tabs.js PM_RAIL_CHOSEN_BOX), so the chip is sent there on the press */
+      predict: function (item, measure) { return typeof window.PM_RAIL_CHOSEN_BOX === 'function' ? window.PM_RAIL_CHOSEN_BOX(item, measure) : null; } },
     { sel: '#activityBar', items: '.icon[data-target]', vertical: true, kind: 'lensIcon', pick: railIcon, tag: 'rail-icons',
       box: function (i) { return i.querySelector('.symbol') || i; }, label: function (i) { return i.querySelector('.symbol'); } },
     /* press: false - a progress rail, not a choice: its steps have no click, so the lens moves only when the step does */
@@ -2264,9 +2267,6 @@
     var pre = m && m.target === target ? m : null;
     if (!target || !(pre ? pre.shown : visible(target) && visible(strip))) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); return; }
     hiddenLenses.delete(L); showUnwatch(L);
-    if (!L.carryFrame && switchMotion === 'hop' &&
-        ((cfg.sel === '.pmw-strip' && target.getAttribute('data-tab-id') === 'dashboard:home') ||
-         (filesSwitcher(strip) && target.getAttribute('data-tab') === 'explorer'))) sampleCarryFrame(L);
     if (L.scroller && L.scroller.isConnected) {
       var out;
       if (pre && pre.scroller === L.scroller && pre.out !== undefined) out = pre.out;
@@ -2278,7 +2278,16 @@
     }
     if (L.lens.style.opacity) L.lens.style.opacity = '';
     prewarmSoon(L, cfg, strip);
+    carryWarmSoon(L, cfg, strip);
     var lay = pre && pre.R && pre.lay, R = lay && L.layer.parentElement === lay.parent && (!lay.usedEl || L.layer === lay.el) ? pre.R : null;
+    /* a press on a tab not chosen yet goes to the box the tab will have once chosen, when the strip can say (predict):
+       read once for the press, and used by every sync until the app has chosen (a batched sync's own read is the box
+       as it is, which sent the chip back to it 60 ms into the trip) */
+    if (cfg.predict && L.pending && L.pending.el === target && !target.matches(cfg.items + (cfg.active || '.active'))) {
+      var PP = L.pending;
+      if (PP.box === undefined) { try { PP.box = cfg.predict(target, function () { return rectIn(strip, cfg.box ? cfg.box(target) : target, lensPad(strip, cfg)); }) || null; } catch (e) { PP.box = null; } }
+      if (PP.box) R = PP.box;
+    }
     if (!R) R = rectIn(strip, cfg.box ? cfg.box(target) : target, lensPad(strip, cfg));
     var A = L.rect;
     if (L.dragging) return;
@@ -2403,7 +2412,29 @@
     c.style.cssText = css.join(';') + ';font-weight:' + weight + ';position:absolute;margin:0;left:' + box.x + 'px;top:' + box.y + 'px;width:' + box.w + 'px;height:' + box.h + 'px';
     return c;
   }
+  /* FO-240 round 6b: when the chip a press is carrying to el has come down on it (a performance.now() time: landOf in
+     carry; only its landing squash, under 4 px an edge, is left after it), or 0 when no carry a press started is on its
+     way to el. Home keeps a tab body it is about to show for the first time unshown until then (22-render.js
+     syncBodies), so that body's first style, layout, paint and raster never share a frame with the trip: drawn during
+     it, the Agents list held the GPU 44-60 ms twice on the VM and 123 ms on Windows, and the chip stood still or jumped
+     meanwhile. The lens also says when its block goes with 'lg-carry-rest' on the document (detail.target: the tab;
+     endHop), as does a carry cut short by another press */
+  function carryRest(el) {
+    var t = 0;
+    lenses.forEach(function (L) {
+      var K = L.carry; if (!L.hopFrames || !K || !L.hopPress || L.hopTarget !== el) return;
+      /* (on the trip's own clock once the compositor has reported it: it starts with the frame that first draws it) */
+      var z = carryZero(K), land = z != null && K.landT != null ? z + K.landT : L.hopLand;
+      if (land > t) t = land;
+    });
+    return t;
+  }
   function endHop(L) {
+    var restAt = L.carry && L.hopTarget;
+    endHopNow(L);
+    if (restAt) { try { document.dispatchEvent(new CustomEvent('lg-carry-rest', { detail: { target: restAt } })); } catch (_) {} }
+  }
+  function endHopNow(L) {
     if (L.hopT) { clearTimeout(L.hopT); L.hopT = 0; }
     if (L.hopSafety) { clearTimeout(L.hopSafety); L.hopSafety = 0; }
     if (L.hopFrames) { L.hopFrames.forEach(function (F) { F.getAnimations({ subtree: true }).forEach(function (a) { a.cancel(); }); F.remove(); }); L.hopFrames = null; }
@@ -2422,13 +2453,12 @@
     var T = L.hopTarget; if (!T || !L.hopFrames) return;
     if (!T.isConnected) { endHop(L); return; }
     var cfg = L.cfg; if (!T.matches(cfg.active || '.active')) return;
-    if (T.getAttribute('data-tab') === 'changed' && filesSwitcher(L.strip)) L.filesChangedSeen = true;
     /* (a carried block lands by its own clock, which a long task right after the press may have held back) */
     var K = L.carry, wait = K ? K.dur - carryAge(K) : L.hopEnd - performance.now();
     /* (and not before the compositor has reported the block's start, nor while its change is still to come: until then
        its age is an estimate, or its end is not its tab's, and a block cut short lands the chip under the labels a step
        ahead of it, 14 px in Basic Light on Alexis) */
-    if (K && ((!K.framePaced && K.anim && K.anim.startTime == null && K.anim.playState !== 'finished') || K.change || K.due)) wait = Math.max(wait, 16);
+    if (K && ((K.anim && K.anim.startTime == null && K.anim.playState !== 'finished') || K.change || K.due)) wait = Math.max(wait, 16);
     if (wait > 0) { if (!L.hopT) L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, wait + 1); return; }
     endHop(L);
   }
@@ -2437,10 +2467,7 @@
        go), on its clock, so the chip is not set back to where it was when the press came while the compositor carried
        it on until the new block was drawn (9 px, Friendly Light on Alexis, 88 ms between the two) */
     var K = L.carry, go = null;
-    if (K && K.pose && L.hopFrames && CARRY[switchMotion]) {
-      var KA = carryAge(K), zero = carryZero(K);
-      if (KA < K.dur && (K.framePaced || zero != null)) go = { K: K, at: KA, zero: zero };
-    }
+    if (K && K.pose && L.hopFrames && CARRY[switchMotion] && carryZero(K) != null) { var KA = carryAge(K); if (KA < K.dur) go = { K: K, at: KA, zero: carryZero(K) }; }
     stopLensTravel(L);
     if (switchMotion === 'cut' || !A) { setLensBox(L, B); return; }
     if (CARRY[switchMotion]) { carry(L, A, B, strip, cfg, target, vertical, go); return; }
@@ -2510,7 +2537,6 @@
      waits to start at the age it is to be drawn at (its hold: its current time while it waits) */
   function carryAge(K) {
     var a = K.anim, f = K.from || 0;
-    if (a && a.__pmHeld) return f + (a.currentTime || 0);
     if (a && a.startTime != null) return Math.max(0, performance.now() - a.startTime + f);
     /* drawn, but its start not reported yet (the compositor reports it to a main thread that may still be busy): from
        when its first frame was drawn, at the age it was held at. A block made again from a reported age of 0 began its
@@ -2519,7 +2545,7 @@
     return !a ? f : f + (a.currentTime || 0);
   }
   /* when the trip's age was 0, on the wall clock; null until a frame has drawn it */
-  function carryZero(K) { var a = K.anim; if (a && a.__pmHeld) return null; return a && a.startTime != null ? a.startTime - (K.from || 0) : K.drawn != null ? K.drawn - K.at : null; }
+  function carryZero(K) { var a = K.anim; return a && a.startTime != null ? a.startTime - (K.from || 0) : K.drawn != null ? K.drawn - K.at : null; }
   /* a carried block whose start the compositor has not reported yet (one made late in a long frame: the report comes with
      the next frame) has no clock the main thread can read, and a block made to go on from it now has only a guess at its
      age: held at the age the main thread last knew while the compositor had carried the trip on for 150 ms, it was drawn
@@ -2528,7 +2554,7 @@
      frames, then as before) */
   function startUnknown(L, strip) {
     var K = L.carry, a = K && K.anim;
-    if (!K || !K.pose || !L.hopFrames || K.framePaced || !a || a.startTime != null || a.playState === 'finished') return false;
+    if (!K || !K.pose || !L.hopFrames || !a || a.startTime != null || a.playState === 'finished') return false;
     if ((K.waits = (K.waits || 0) + 1) > 30) return false;
     /* (and the block does not land meanwhile: landed at its own box while its tab had grown, the chip under the labels
        would take the tab's new box at once) */
@@ -2540,19 +2566,6 @@
   var CARRY_FOLLOW = 0.5, CARRY_FOLLOW_MS = 110;   /* the least time a carried chip takes to follow its tab to a new box: half
                                                      its trip, never under 110 ms (Basic's snap is 110 ms, Friendly's hop 440) */
   var FRAME_MS = 1000 / 60;
-  function filesSwitcher(strip) { return strip.matches('#panel-files > .pm-segtab'); }
-  /* Measure the starting strip's refresh before a cold carry. At 120 Hz a 16.7 ms allowance per
-     callback would spend two refreshes of travel in a single commit after even a short missed frame. */
-  function sampleCarryFrame(L) {
-    var last = null, count = 0;
-    L.carryFrame = FRAME_MS;
-    function sample(now) {
-      if (last != null && now > last && now - last < FRAME_MS * 0.75) L.carryFrame = FRAME_MS / 2;
-      last = now;
-      if (++count < 12 && L.carryFrame === FRAME_MS) requestAnimationFrame(sample);
-    }
-    requestAnimationFrame(sample);
-  }
   /* go: the trip under way that a new block goes on with ({ K: that trip, at: its age now, zero: when its age was 0, or
      null if no frame has drawn it yet, retarget: its tab changed under it }). Retarget (FO-195): the trip so far stays as
      it was, its lift, tilt and squash included, and the change of box is added to it from the new block's first frame
@@ -2593,33 +2606,106 @@
     });
     return out;
   }
-  function carry(L, A, B, strip, cfg, target, vertical, go) {
-    if (!L.under || reduced()) { setLensBox(L, B); return; }
-    var motion = switchMotion, C = CARRY[motion], ease = bezierEase(C.ease), dur = C.dur, hopping = motion === 'hop';
-    var zero = go && go.zero != null ? go.zero : null, liftX, liftY;
+  /* the carried block of a trip that ends at B: boxed at B, its copies of every label it can cross (ends: the boxes
+     along its way), its sticker's shadow (Friendly) and the skins of its material (carrySkins), put in the strip's
+     layer above the labels. carry draws a trip with it; warmCarry draws one once ahead of the first press */
+  function carryBlock(strip, cfg, target, B, ends, vertical, hopping, warm) {
     var now = strip.querySelector(cfg.items + (cfg.active || '.active')), weight = getComputedStyle(now || target).fontWeight;
     var stick = hopping ? getComputedStyle(strip).getPropertyValue('--pm-switch-stick').trim() : '';
     if (stick === 'transparent' || stick === 'none') stick = '';
     /* every label the chip can cross: along the strip, between the trip's ends (and the box it was bound for, when it
        goes on with a trip) and a little past them */
-    var ends = go ? [A, B, go.K.A, go.K.B] : [A, B];
     var lo = Math.min.apply(null, ends.map(function (r) { return vertical ? r.y : r.x; })) - CARRY_REACH, hi = Math.max.apply(null, ends.map(function (r) { return vertical ? r.y + r.h : r.x + r.w; })) + CARRY_REACH;
     var crossed = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(visible).map(function (it) { var w = (cfg.twin && cfg.twin(it)) || it; return { it: w, r: rectIn(strip, w, 0) }; })
       .filter(function (s) { var a = vertical ? s.r.y : s.r.x, b = a + (vertical ? s.r.h : s.r.w); return b > lo && a < hi; });
     var over = overLayer(strip), tag = cfg.tag, box = function (e) { var st = e.style; st.left = B.x + 'px'; st.top = B.y + 'px'; st.width = B.w + 'px'; st.height = B.h + 'px'; };
-    var F = el('i', { class: 'lg-lens lg-hop lg-carry', 'aria-hidden': 'true' }), G = el('i', { class: 'lg-carry-twins', 'aria-hidden': 'true' }), S = null;
-    if (tag) F.setAttribute('data-lg-for', tag);
+    var F = el('i', { class: 'lg-lens lg-hop ' + (warm ? 'lg-carry-warm' : 'lg-carry'), 'aria-hidden': 'true' }), G = el('i', { class: 'lg-carry-twins', 'aria-hidden': 'true' }), S = null;
+    if (tag && !warm) F.setAttribute('data-lg-for', tag);
     box(F); G.style.width = B.w + 'px'; G.style.height = B.h + 'px';
     crossed.forEach(function (s) { G.appendChild(twinOf(s.it, { x: s.r.x - B.x, y: s.r.y - B.y, w: s.r.w, h: s.r.h }, weight)); });
     F.appendChild(G);
-    if (stick) { S = el('i', { class: 'lg-carry-shadow', 'aria-hidden': 'true' }); if (tag) S.setAttribute('data-lg-for', tag); box(S); over.appendChild(S); }
+    if (stick) { S = el('i', { class: 'lg-carry-shadow' + (warm ? ' lg-carry-warm' : ''), 'aria-hidden': 'true' }); if (tag && !warm) S.setAttribute('data-lg-for', tag); box(S); over.appendChild(S); }
     over.appendChild(F);
     var SK = carrySkins(F, S, vertical, Math.ceil(1.1 * Math.max.apply(null, ends.map(function (r) { return vertical ? r.h : r.w; }))) + 8);
+    return { F: F, G: G, S: S, SK: SK, over: over };
+  }
+  /* one pose's transforms for the block's parts: the block (about its centre: translate, tilt, scale), its copies'
+     exact inverse, the shadow's (the block's, pushed out by the sticker's rest offset, 2 px, growing to 4 x 6 px at the
+     top of the hop) and the skins' undoing of the block's scale along the trip (carrySkins). A vertical strip lifts the
+     sticker toward the light (up and left) instead of up its own path */
+  function carryTransforms(P, B, liftX, liftY, hopping, vertical) {
+    var cB = { x: B.x + B.w / 2, y: B.y + B.h / 2 };
+    var lx = hopping ? -liftX * P.lift : 0, ly = hopping ? -liftY * P.lift : 0, rot = hopping ? -2 * P.lift : 0;
+    var dx = P.x + P.w / 2 - cB.x + lx, dy = P.y + P.h / 2 - cB.y + ly, kx = P.sx * P.w / B.w, ky = P.sy * P.h / B.h;
+    var ox = 2 + 2 * P.lift, oy = 2 + 4 * P.lift;
+    return {
+      f: 'translate(' + dx.toFixed(2) + 'px,' + dy.toFixed(2) + 'px) rotate(' + rot.toFixed(3) + 'deg) scale(' + kx.toFixed(4) + ',' + ky.toFixed(4) + ')',
+      g: 'scale(' + (1 / kx).toFixed(5) + ',' + (1 / ky).toFixed(5) + ') rotate(' + (-rot).toFixed(3) + 'deg) translate(' + (-dx).toFixed(2) + 'px,' + (-dy).toFixed(2) + 'px)',
+      s: 'translate(' + (dx + ox).toFixed(2) + 'px,' + (dy + oy).toFixed(2) + 'px) rotate(' + rot.toFixed(3) + 'deg) scale(' + kx.toFixed(4) + ',' + ky.toFixed(4) + ')',
+      h: vertical ? 'scale(1,' + (1 / +ky.toFixed(4)).toFixed(5) + ')' : 'scale(' + (1 / +kx.toFixed(4)).toFixed(5) + ',1)'
+    };
+  }
+  /* FO-240 round 6b: a strip's first carried block was the first draw of its layers (the copies of the labels, the
+     skins of the material, the sticker's shadow), made by the press itself: on Windows its first raster held the GPU
+     114-122 ms right after the press while it compiled a program it had not needed before
+     (RasterDecoderImpl::DoEndRasterCHROMIUM::Flush, a GpuPersistentCache miss and store, no frame drawn), on the VM 18-26
+     ms, and the trip either waited at its start or, on the compositor's clock, jumped 23-82 px when frames came back.
+     So a strip of a carrying look draws one block when it is shown (the first sync that finds its chip on screen, at
+     rest, in that look and motion): a trip to the next tab, made exactly as carry makes one, at a fifth of a percent
+     opacity (.lg-carry-warm, glass.css), held at its start for three frames and taken away. Its keyframes span the
+     trip, so its layers are rastered at the scales the trip asks for. It goes with the strip's own arrival (a page or
+     look shown), whose first frame is drawn from nothing anyway; the page's idle warm queue (PM_WARM) admits nothing
+     while Home's finite animations run, and in the first-press check it had not run 1.7 s after Home was shown. A press
+     meanwhile takes it away at once (dropWarmBlock) */
+  var carryWarmKeys = Object.create(null);
+  function carryWarmSoon(L, cfg, strip) {
+    if (!CARRY[switchMotion] || isGlass() || !L.under || cfg.press === false || reduced() || !gpu()) return;
+    var key = switchMotion + '|' + (root.getAttribute('data-theme') || '') + '|' + (cfg.tag || cfg.sel);
+    if (carryWarmKeys[key]) return;
+    carryWarmKeys[key] = 1;
+    requestAnimationFrame(function () {
+      if (lenses.get(strip) !== L || !strip.isConnected || !L.rect || L.hopFrames || L.pending || L.dragging || L.warmBlock) { carryWarmKeys[key] = 0; return; }
+      warmCarry(L, cfg, strip);
+    });
+  }
+  function warmCarry(L, cfg, strip) {
+    var cur = strip.querySelector(cfg.items + (cfg.active || '.active'));
+    if (!cur || !L.rect || L.hopFrames || !CARRY[switchMotion]) return;
+    var items = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(function (it) { return visible(it) && choosable(it, cfg); });
+    var i = items.indexOf(cur), other = i < 0 ? null : items[i + 1] || items[i - 1];
+    if (!other) return;
+    var A = L.rect, B = rectIn(strip, cfg.box ? cfg.box(other) : other, lensPad(strip, cfg));
+    var vertical = !!cfg.vertical || Math.abs(A.y - B.y) > Math.abs(A.x - B.x), hopping = switchMotion === 'hop';
+    var blk = carryBlock(strip, cfg, other, B, [A, B], vertical, hopping, true);
+    var roomX = Math.max(0, Math.min(A.x, B.x)), roomY = Math.max(0, Math.min(A.y, B.y)), liftX = vertical ? Math.min(2, roomX) : 0, liftY = Math.min(vertical ? 2 : 6, roomY);
+    var X0 = carryTransforms(carryPose(switchMotion, 0, A, B), B, liftX, liftY, hopping, vertical);
+    var X1 = carryTransforms(carryPose(switchMotion, hopping ? 0.45 : 0.5, A, B), B, liftX, liftY, hopping, vertical);
+    var X2 = carryTransforms(carryPose(switchMotion, 1, A, B), B, liftX, liftY, hopping, vertical);
+    [[blk.F, 'f'], [blk.G, 'g'], [blk.S, 's']].concat(blk.SK.map(function (e) { return [e, 'h']; })).forEach(function (p) {
+      if (p[0]) p[0].animate([{ transform: X0[p[1]] }, { offset: 1e-9, transform: X0[p[1]] }, { offset: 0.5, transform: X1[p[1]] }, { transform: X2[p[1]] }], { duration: 1e9, fill: 'both' });
+    });
+    var W = L.warmBlock = { parts: [blk.S, blk.F], strip: strip }, n = 0;
+    var later = function () { if (L.warmBlock !== W) return; if (++n < 3) requestAnimationFrame(later); else dropWarmBlock(L); };
+    requestAnimationFrame(later);
+  }
+  function dropWarmBlock(L) {
+    var W = L.warmBlock; if (!W) return;
+    L.warmBlock = null;
+    W.parts.forEach(function (e) { if (!e) return; e.getAnimations({ subtree: true }).forEach(function (a) { a.cancel(); }); e.remove(); });
+    var strip = W.strip, over = strip && strip.__lgOver;
+    if (over && !over.children.length && !L.hopFrames) { over.remove(); strip.__lgOver = null; if (strip.__lgPosOver && !strip.__lgUnder) strip.style.removeProperty('position'); strip.__lgPosOver = false; }
+  }
+  function carry(L, A, B, strip, cfg, target, vertical, go) {
+    if (!L.under || reduced()) { setLensBox(L, B); return; }
+    var motion = switchMotion, C = CARRY[motion], ease = bezierEase(C.ease), dur = C.dur, hopping = motion === 'hop';
+    var zero = go && go.zero != null ? go.zero : null, liftX, liftY;
+    dropWarmBlock(L);
+    var ends = go ? [A, B, go.K.A, go.K.B] : [A, B];
+    var blk = carryBlock(strip, cfg, target, B, ends, vertical, hopping), F = blk.F, G = blk.G, S = blk.S, SK = blk.SK;
     /* the lift stays inside the strip's own box: a strip at the top of a scroller (onboarding's segments, first in their
        pane) clips anything above it, and a sticker lifted 6 px there lost its top edge for six frames (Windows film) */
     if (go) { liftX = go.K.liftX; liftY = go.K.liftY; }
     else { var roomX = Math.max(0, Math.min(A.x, B.x)), roomY = Math.max(0, Math.min(A.y, B.y)); liftX = vertical ? Math.min(2, roomX) : 0; liftY = Math.min(vertical ? 2 : 6, roomY); }
-    var cB = { x: B.x + B.w / 2, y: B.y + B.h / 2 };
     /* the trip from its age at, with the change (a retarget's new box, a new trip's hop) from tC on: its pose at any age,
        its end, the box it ends on, and the frames from the last whole frame before at. With no tC it is the trip under
        way alone. The frames: the block's transform (about its centre: translate, tilt, scale), its copies' exact inverse,
@@ -2654,14 +2740,12 @@
       } else pose = function (t) { return carryPose(motion, ease(Math.min(1, t / dur)), A, B); };
       var span = end - from, fF = [], fG = [], fS = [], fH = [], rects = [], n = Math.max(2, Math.ceil(span / FRAME_MS));
       for (var i = 0; i <= n; i++) {
-        var t = Math.min(end, from + i * FRAME_MS), o = (t - from) / span, P = pose(t);
-        var lx = hopping ? -liftX * P.lift : 0, ly = hopping ? -liftY * P.lift : 0, rot = hopping ? -2 * P.lift : 0;
-        var dx = P.x + P.w / 2 - cB.x + lx, dy = P.y + P.h / 2 - cB.y + ly, kx = P.sx * P.w / B.w, ky = P.sy * P.h / B.h;
-        fF.push({ offset: o, transform: 'translate(' + dx.toFixed(2) + 'px,' + dy.toFixed(2) + 'px) rotate(' + rot.toFixed(3) + 'deg) scale(' + kx.toFixed(4) + ',' + ky.toFixed(4) + ')' });
-        fG.push({ offset: o, transform: 'scale(' + (1 / kx).toFixed(5) + ',' + (1 / ky).toFixed(5) + ') rotate(' + (-rot).toFixed(3) + 'deg) translate(' + (-dx).toFixed(2) + 'px,' + (-dy).toFixed(2) + 'px)' });
-        if (S) { var ox = 2 + 2 * P.lift, oy = 2 + 4 * P.lift; fS.push({ offset: o, transform: 'translate(' + (dx + ox).toFixed(2) + 'px,' + (dy + oy).toFixed(2) + 'px) rotate(' + rot.toFixed(3) + 'deg) scale(' + kx.toFixed(4) + ',' + ky.toFixed(4) + ')' }); }
+        var t = Math.min(end, from + i * FRAME_MS), o = (t - from) / span, P = pose(t), X = carryTransforms(P, B, liftX, liftY, hopping, vertical);
+        fF.push({ offset: o, transform: X.f });
+        fG.push({ offset: o, transform: X.g });
+        if (S) fS.push({ offset: o, transform: X.s });
         /* (the halves of its material undo the block's own scale along the trip, as the block draws it: carrySkins) */
-        fH.push({ offset: o, transform: vertical ? 'scale(1,' + (1 / +ky.toFixed(4)).toFixed(5) + ')' : 'scale(' + (1 / +kx.toFixed(4)).toFixed(5) + ',1)' });
+        fH.push({ offset: o, transform: X.h });
         rects.push({ t: t, x: P.x, y: P.y, w: P.w, h: P.h });
         if (t >= end) break;
       }
@@ -2685,57 +2769,38 @@
     var g0 = go ? go.K.from || 0 : 0;
     var from = go ? g0 + Math.floor(Math.max(0, (zero != null ? Math.min(at, tl - zero) : at) - g0) / FRAME_MS) * FRAME_MS : 0;
     var T = plan(at, go ? null : 0, from), start = performance.now() - at;
-    var coldAgents = !go && cfg.sel === '.pmw-strip' &&
-      target.getAttribute('data-tab-id') === 'dashboard:agents' && window.PMW && !window.PMW.instances['dashboard:agents'];
-    var coldChanged = !go && !L.filesChangedSeen && target.getAttribute('data-tab') === 'changed' && filesSwitcher(strip);
-    var framePaced = go ? go.K.framePaced : (coldAgents || coldChanged) && hopping;
     var parts = [F, G, S].concat(SK), anims = [], lead = null;
     parts.forEach(function (e, j) {
       if (!e) return;
       var a = e.animate(T.frames[j], { duration: T.span, easing: 'linear', fill: 'forwards' });
-      if (framePaced) {
-        a.__pmFramePaced = true;
-        a.__pmHeld = true;
-        a.pause();
-        a.currentTime = at - from;
-      } else if (zero != null) a.startTime = zero + from; else if (at > from) a.currentTime = at - from;
+      if (zero != null) a.startTime = zero + from; else if (at > from) a.currentTime = at - from;
       anims.push(a); if (!lead) lead = a;
     });
-    var probe = framePaced ? null : F.animate([], { duration: 1000 }), made = performance.now(), inFrame = frameSync > 0 || postRunning;
+    var probe = F.animate([], { duration: 1000 }), made = performance.now(), inFrame = frameSync > 0 || postRunning;
     setLensBox(L, B);
     /* the chip under the labels stays hidden while the block is up (as for a step's blocks) */
     var hide = L.anim = L.hopHide = L.lens.animate([{ opacity: 0 }, { opacity: 0 }], { duration: 600000 });
     if (!L.hopMarks) L.hopMarks = new Map();
     L.hopFrames = S ? [S, F] : [F]; L.hopTarget = target;
-    var K = L.carry = { A: A, B: B, vertical: vertical, anim: lead, liftX: liftX, liftY: liftY, change: !!go, framePaced: framePaced };
+    var K = L.carry = { A: A, B: B, vertical: vertical, anim: lead, liftX: liftX, liftY: liftY, change: !!go };
+    /* the age at which the trip has come down on its tab: its box is the tab's and it is not lifted. What is left of a
+       hop then is its landing squash (1.06 x 0.9 at most, about 3 px an edge, unwinding), so a tab body held for the
+       trip (carryRest) can show from here */
+    function landOf(P) {
+      for (var i = 0; i < P.rects.length; i++) {
+        var r = P.rects[i], E = P.to;
+        if (Math.abs(r.x - E.x) < 0.5 && Math.abs(r.y - E.y) < 0.5 && Math.abs(r.x + r.w - E.x - E.w) < 0.5 && Math.abs(r.y + r.h - E.y - E.h) < 0.5 && !(P.pose(r.t).lift > 0.001)) return r.t;
+      }
+      return P.end;
+    }
     function take(P) {
       K.t0 = start; K.dur = P.end; K.from = P.from; K.pose = P.pose; K.at = P.at; K.B = P.to;
-      L.path = { t0: start, dur: P.end, rects: P.rects }; L.hopEnd = start + P.end;
+      L.path = { t0: start, dur: P.end, rects: P.rects }; L.hopEnd = start + P.end; K.landT = landOf(P); L.hopLand = start + K.landT;
       if (L.hopT) clearTimeout(L.hopT);
       L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, Math.max(0, start + P.end - performance.now()) + 1);
     }
     take(T);
-    if (coldAgents && !framePaced && typeof window.PM_START_ON_SHOWN === 'function') window.PM_START_ON_SHOWN(anims, { startHeld: true, frames: 10 });
-    if (framePaced) {
-      // The carry can start on pointerdown, before the click renders Agents or fits the Changed pane.
-      // Advance all parts together and leave out time from frames missed during that work.
-      var last = null;
-      var advance = function (now) {
-        if (L.carry !== K) return;
-        var end = K.dur - K.from, time = Math.min(end, lead.currentTime + (last == null ? 0 : Math.min(now - last, L.carryFrame || FRAME_MS)));
-        // Once the cold hop has run for its nominal duration and landed, its remaining squash can
-        // finish as soon as both edges are within a pixel of rest.
-        if (!go && time > 0 && now - made >= end) {
-          var P = K.pose(K.from + time);
-          if (!P.lift && (P.sx - 1) * P.w < 2 && (1 - P.sy) * P.h < 2) time = end;
-        }
-        last = now;
-        anims.forEach(function (a) { a.currentTime = time; });
-        if (time < end || K.change) requestAnimationFrame(advance);
-        else requestAnimationFrame(function () { if (L.carry === K) hopSettle(L); });
-      };
-      requestAnimationFrame(advance);
-    } else requestAnimationFrame(function () {
+    requestAnimationFrame(function () {
       /* the first frame callback after the block was made: when it was first drawn (K.drawn), so its age is known before
          the compositor reports its start (its probe, an empty animation, starts in the lifecycle of the frame that first
          draws it: started means drawn in the frame it was made in, at its own layout; waiting means drawn once this frame
@@ -2744,7 +2809,7 @@
          drawn in that frame whatever its probe says). A block that goes on with a drawn trip has the trip's start time
          from the moment it is made, so its age never needs this */
       var drawn = inFrame || probe.startTime != null || lead.startTime != null; probe.cancel();
-      if (L.carry !== K || coldAgents) return;
+      if (L.carry !== K) return;
       if (drawn) { K.drawn = made; return; }
       setTimeout(function () { if (K.drawn == null) K.drawn = performance.now(); }, 0);
     });
@@ -2775,21 +2840,24 @@
         if (L.carry !== K) return;
         var age = Math.max(at, carryAge(K)), rest = age >= go.K.dur;
         var tl1 = document.timeline && document.timeline.currentTime != null ? document.timeline.currentTime : null;
-        if (!rest && tl1 != null && performance.now() - tl1 > 12) { requestAnimationFrame(change); return; }
-        var P = plan(at, age, rest ? age : from);
-        if (rest && !framePaced) {
+        var late = !rest && tl1 != null && performance.now() - tl1 > 12;
+        /* FO-240 round 6b: a retarget (its tab grew or moved under it) no longer waits for a frame on time. The rail's
+           Changed tab shows its word when the app chooses it, inside the click's long frames, and on the VM no frame
+           after the click was on time before the trip ended: the chip came down on the tab's old box, stood there for
+           the rest of the trip (300 ms), then went 16 px on. A retarget only bends the trip toward the new box (smoothstep,
+           from tC on), so one written late begins its bend two frames on, past when this frame can be drawn: until then
+           its frames are the trip's own, and what the compositor has drawn meanwhile stays true */
+        if (late && !go.retarget) { requestAnimationFrame(change); return; }
+        var P = plan(at, late ? age + 2 * FRAME_MS : age, rest ? age : from);
+        if (rest) {
           anims = anims.map(function (a) { var e = a.effect.target, b; a.cancel(); b = e.animate(P.frames[parts.indexOf(e)], { duration: P.span, easing: 'linear', fill: 'forwards' }); return b; });
           lead = K.anim = anims[0]; K.drawn = null;
-        } else anims.forEach(function (a) {
-          a.effect.setKeyframes(P.frames[parts.indexOf(a.effect.target)]);
-          a.effect.updateTiming({ duration: P.span });
-          if (rest) a.currentTime = 0;
-        });
+        } else anims.forEach(function (a) { a.effect.setKeyframes(P.frames[parts.indexOf(a.effect.target)]); a.effect.updateTiming({ duration: P.span }); });
         K.change = false; take(P);
       };
       var change = function () {
         if (L.carry !== K) return;
-        if (((!framePaced && lead.startTime == null) || (hide.startTime == null && hide.playState !== 'finished')) && ++tries < 30) { requestAnimationFrame(change); return; }
+        if ((lead.startTime == null || (hide.startTime == null && hide.playState !== 'finished')) && ++tries < 30) { requestAnimationFrame(change); return; }
         if (!afterLayout(apply)) apply();
       };
       requestAnimationFrame(change);
@@ -3972,6 +4040,7 @@
     dirtyScope(el); syncPending();
   }
   window.PM_LG = { version: 'v3-2026-10-13', sync: syncAll, syncScope: syncScope, materialize: function () { materialize(Array.from(glassSet)); }, kinds: KINDS, count: function () { return glassSet.size; },
+    carryRest: carryRest,
     set: function (o) { for (var k in o) { if (k === 'data-lg') root.setAttribute(k, 'on'); else if (o[k] == null) root.removeAttribute(k); else root.setAttribute(k, o[k]); } syncAll(); },
     /* Decode and bake through the same bounded caches as visible sheets. Preparation changes no visible pixels. */
     /* opts.canRun (optional): asked again once the print is decoded, before its frost is encoded; false resolves false

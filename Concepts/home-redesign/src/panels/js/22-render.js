@@ -267,17 +267,82 @@ render.panelEl = function (id) { return panelEls[id] || null; };
 render.bodyOf = function (tabId) { var r = instances[tabId]; return r ? r.host : null; };
 
 /* ---- tab bodies ---- */
+/* FO-240 round 6b: a body shown for the first time by a press whose chip is still being carried to its tab (Friendly's
+   hop, Basic's snap: glass.js carryRest) is mounted, shown to its kind, styled and laid out in the click's frame, as
+   before, but on a layer of its own that is not drawn (data-pmw-held: opacity 0; data-pmw-layer keeps the layer, as
+   taking it away laid the whole list out again, 54 ms), while the body that was on screen stays there; both change in
+   the first frame after the chip has come down on its tab (its landing squash, under 4 px an edge, is all that is left
+   of the trip then). Drawn with the click, the new body's first paint and raster were frames the trip missed: on the
+   VM the Agents list's first raster held the display 60 and 44 ms in the last third of the trip, on Windows its first
+   GPU paint held it 123 ms, and the chip stood still, then jumped. The chip runs on the compositor's own clock, so the
+   mount's script and layout cannot hold it; only the screen not being drawn can. Only a first show waits (a body
+   drawn before has been rastered), only for a press (a key's focus moves into the body at once), and never past a
+   second (carryHoldMax), whatever the lens reports. */
+var carryHolds = {}, carryHoldMax = 1000;
+function carryRestOf(tabEl) {
+  var lg = window.PM_LG;
+  try { return tabEl && lg && typeof lg.carryRest === 'function' ? lg.carryRest(tabEl) || 0 : 0; } catch (_) { return 0; }
+}
+function carryHeld(tid, panelEl, rec) {
+  var h = carryHolds[tid];
+  if (h) return true;
+  if (rec && (rec.drawn || rec.carryReleased)) return false;
+  var tabEl = panelEl.querySelector('.pmw-tab[data-tab-id="' + (window.CSS && CSS.escape ? CSS.escape(tid) : tid) + '"]');
+  var now = performance.now(), until = carryRestOf(tabEl);
+  if (!(until > now)) return false;
+  h = carryHolds[tid] = { tabEl: tabEl, since: now, after: [] };
+  /* looked at in every frame callback, and shown in the first one after the landing, in that frame: let wait for a
+     later render, the body waited behind the app's next task (a 48 ms work tick and the restyle it asked for), a whole
+     frame after the landing, while the main page's body had been drawn in the click's own frame */
+  var check = function () {
+    h.frame = 0;
+    if (carryHolds[tid] !== h) return;
+    var t = performance.now();
+    if (carryRestOf(h.tabEl) > t && t - h.since < carryHoldMax) { h.frame = requestAnimationFrame(check); return; }
+    releaseCarryHold(tid, true);
+  };
+  /* (the lens reports its block's end; a press that sends the chip on before it lands reports one too, and its new
+     trip is made in that same task, so the hold looks again in the next frame, as it does anyway) */
+  h.onRest = function (e) { if (e.detail && e.detail.target === h.tabEl && !h.frame) h.frame = requestAnimationFrame(check); };
+  doc.addEventListener('lg-carry-rest', h.onRest);
+  h.frame = requestAnimationFrame(check);
+  return true;
+}
+function releaseCarryHold(tid, now) {
+  var h = carryHolds[tid];
+  if (!h) return;
+  delete carryHolds[tid];
+  if (instances[tid]) instances[tid].carryReleased = true;
+  if (h.frame) cancelAnimationFrame(h.frame);
+  doc.removeEventListener('lg-carry-rest', h.onRest);
+  if (now) render.now({ animate: false }); else render.schedule({ animate: false });
+  /* what waited for the body to be drawn (a press's focus, 26-actions.js) runs once it is */
+  if (h.after.length) nextFrame(function () { h.after.forEach(function (fn) { try { fn(); } catch (_) {} }); });
+}
+/* fn runs once tid's held body has shown; false when nothing holds it */
+render.afterCarryHold = function (tid, fn) { var h = carryHolds[tid]; if (!h) return false; h.after.push(fn); return true; };
 function syncBodies(panelEl, p, l, panelHidden) {
   var body = panelEl.querySelector('.pmw-body');
+  var showing = !panelHidden && !p.collapsed;
+  /* (while the chosen body is held, the body on screen stays on screen, so the panel never shows empty and nothing
+     under it is drawn again during the trip; both change in the one frame the held body shows) */
+  var hold = showing && carryHeld(p.active, panelEl, instances[p.active]);
   for (var i = 0; i < p.tabs.length; i++) {
     var tid = p.tabs[i];
     var active = tid === p.active;
     var rec = instances[tid];
-    var visible = active && !panelHidden && !p.collapsed;
+    var visible = active && showing;
+    if (hold && !active && rec && rec.visible) visible = true;
+    else if (!hold && carryHolds[tid]) releaseCarryHold(tid);
     if (!rec && (active || (kindDef(l.tabs[tid].kind) || {}).eager)) rec = mountTab(tid, body, visible);
     if (!rec) continue;
     if (rec.host.parentNode !== body) body.appendChild(rec.host);   // a moved tab keeps its instance
     setAttr(rec.host, 'hidden', !visible);
+    var held = hold && active;
+    setAttr(rec.host, 'data-pmw-held', held);
+    /* (the body keeps the layer it was held on: taking it away at the swap laid the whole list out again, 54 ms) */
+    if (held) setAttr(rec.host, 'data-pmw-layer', true);
+    if (visible && !held) rec.drawn = true;
     if (visible !== rec.visible) {
       rec.visible = visible;
       var inst = rec.instance;

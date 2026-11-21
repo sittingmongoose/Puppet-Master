@@ -109,6 +109,8 @@
 
 /* reduced motion: the strip changes in one step and nothing in it moves (the script makes no animation either) */
 §R[data-motion="reduced"] #sidePanelSlot .pm-segtab *, §R[data-reduced-motion="1"] #sidePanelSlot .pm-segtab * { transition: none !important; }
+/* FO-240 round 6b: a strip measured in its chosen state on a press (31-tabs.js PM_RAIL_CHOSEN_BOX) starts no transition */
+§R #sidePanelSlot .pm-segtab[data-d-measure], §R #sidePanelSlot .pm-segtab[data-d-measure] * { transition: none !important; }
 @media (prefers-reduced-motion: reduce) {
   §R #sidePanelSlot .pm-segtab * { transition: none !important; }
 }

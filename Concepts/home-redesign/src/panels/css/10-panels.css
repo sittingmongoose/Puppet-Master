@@ -50,6 +50,10 @@
   outline: none;
 }
 .pmw-tabbody[hidden] { display: none; }
+/* FO-240 round 6b: laid out, on a layer of its own that is not drawn, until the press's carried chip has landed on its
+   tab (22-render.js carryHeld) */
+.pmw-tabbody[data-pmw-layer] { will-change: transform; }
+.pmw-tabbody[data-pmw-held] { opacity: 0; }
 .pmw-tab-error, .pmw-empty-note { padding: 24px; color: var(--pmw-text-2); font-size: 13px; }
 
 /* focus between panels: contrast plus a quiet inner outline of the focused panel's silhouette (research 9.2) */

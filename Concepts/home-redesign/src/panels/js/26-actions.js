@@ -94,13 +94,16 @@ PMW.activateTab = function (tabId, opts) {
     nextFrame(function () {
       // Let the newly shown body finish layout and paint before native focus can flush its layout.
       var from = doc.activeElement;
-      setTimeout(function () {
+      var go = function () {
         var e = instances[tabId], panel = model.panelOf(L(), tabId);
+        // A first show held undrawn until the press's chip has landed (22-render.js) takes the focus once it is drawn.
+        if (render.afterCarryHold(tabId, function () { setTimeout(go, 0); })) return;
         if (!e || !e.visible || !panel || panel.active !== tabId ||
             L().view.focus !== focusPanelId || doc.activeElement !== from) return;
         if (e.instance && e.instance.focus) { try { e.instance.focus(); } catch (_) {} }
         else e.host.focus({ preventScroll: true });
-      }, 0);
+      };
+      setTimeout(go, 0);
     });
   }
   if (PMW.strip.reveal) PMW.strip.reveal(tabId);

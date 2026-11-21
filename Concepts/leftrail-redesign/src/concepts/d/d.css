@@ -370,6 +370,8 @@
 
 /* reduced motion: the strip changes in one step and nothing in it moves (the script makes no animation either) */
 [data-rail-skin="d"][data-motion="reduced"] #sidePanelSlot .pm-segtab *, [data-rail-skin="d"][data-reduced-motion="1"] #sidePanelSlot .pm-segtab * { transition: none !important; }
+/* FO-240 round 6b: a strip measured in its chosen state on a press (31-tabs.js PM_RAIL_CHOSEN_BOX) starts no transition */
+[data-rail-skin="d"] #sidePanelSlot .pm-segtab[data-d-measure], [data-rail-skin="d"] #sidePanelSlot .pm-segtab[data-d-measure] * { transition: none !important; }
 @media (prefers-reduced-motion: reduce) {
   [data-rail-skin="d"] #sidePanelSlot .pm-segtab * { transition: none !important; }
 }
@@ -419,6 +421,8 @@
 [data-rail-skin="d"] #sidePanelSlot.d-has-leaving { position: relative; }
 [data-rail-skin="d"] #sidePanelSlot > .side-panel-view.d-leaving { display: flex; position: absolute; inset: 0; z-index: 3; pointer-events: none; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-scroll > [data-pane].d-leaving { position: absolute; z-index: 3; pointer-events: none; }
+/* FO-240 round 6b: a pane laid out but not drawn while the switcher carries its tab's chip (31-tabs.js carryHold) */
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-scroll > [data-pane][data-d-held] { visibility: hidden !important; }
 
 /* ---- 3. Shelves: the coloured boxes that group the rail -------------------------------------------------------------
    The shelf is the only box. Its head is a band flush with the shelf's top (the shelf clips, so the band always has
