@@ -147,7 +147,7 @@ def install(prove):
             if record.get('kill') == 'CUT_EXCEPTION' and evaluate is not None:
                 record['cut_exception_site'] = cut_site(self, evaluate, value, record['target'])
             if record.get('kill') in sweep.LATER_REFUSAL_CLASSES and evaluate is not None:
-                # Evidence only, for every later-refusal class (COVERED_LATER, CUT_LEFT_EFFECT, CANNOT_DECIDE).
+                # Evidence only, for every non-credit later-refusal class (COVERED_LATER, CANNOT_DECIDE).
                 record['dg5_chain'] = chain(self, evaluate, value, record['target'])
         sweep.Collector._judge = judged
         sweep.Collector._go_cut_sites = True
@@ -370,7 +370,7 @@ def main():
         with gzip.open(args.out / 'invalid-mutations.json.gz', 'wt') as handle:
             json.dump(invalid, handle, default=list)
         outcomes = collections.Counter(r.get('outcome') for r in collector.ledger)
-        kills = collections.Counter(r.get('kill') for r in collector.ledger if r.get('kill'))
+        kills = collections.Counter(r.get('kill') for r in collector.ledger if r.get('kill'))  # KILLED_CODE apart
         print(json.dumps(dict(calls=collector.calls, guards=len(collector.rows), tables=len(reports),
             proved=sum(len(r['proved']) for r in reports),
             unproved_with_proof=sum(1 for r in rows if r['status'] != 'PASS' and r.get('proof')),

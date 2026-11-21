@@ -17,6 +17,7 @@ import inspect
 import os
 from pathlib import Path
 import pickle
+import re
 import shutil
 import sys
 import tempfile
@@ -878,13 +879,18 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
                 # whole store manifest and the family hook's digest of the owners'
                 # in-memory state (pm_goal_dg5_owner_state). The judge compares both
                 # with the intact trial's before it grants COVERED_LATER.
+                # The owner walk runs only for the judged trials that ask for it.
                 ACTIVE[0] = False
                 import pm_goal_dg5_owner_state as owner_state
-                try:
-                    owner = owner_state.owner_state_digest(family, world, arguments)
-                except Exception as error:  # noqa: BLE001 - no digest, never a guess
-                    owner = dict(schema=owner_state.SCHEMA, hook=family, sha256=None,
-                                 reason='owner-state hook raised %s: %s' % (type(error).__name__, str(error)[:160]))
+                if not getattr(tables, 'AFTER_STATE', False):
+                    owner = dict(schema=owner_state.SCHEMA, hook=family, sha256=None, reason='not requested')
+                else:
+                    try:
+                        owner = owner_state.owner_state_digest(family, world, arguments)
+                    except Exception as error:  # noqa: BLE001 - no digest, never a guess
+                        owner = dict(schema=owner_state.SCHEMA, hook=family, sha256=None,
+                                     reason='owner-state hook raised %s: %s' % (type(error).__name__,
+                                                                                str(error)[:160]))
                 result.update(observations=entries, after=manifest(file_state(work)), owner_state=owner,
                               replay_unknown_rows=sorted(tables.COLLECTOR.replay_unknown_rows))
             except BaseException as error:
@@ -911,6 +917,7 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
         actual.append(result['original_refusal'])
         owner = result.get('owner_state') or {}
         return dict(errors=result['errors'], store_snapshot_sha256=store_sha,
+                    refusal_code=result['original_refusal'],
                     store_after_sha256=sweep.digest(result['after']),
                     owner_state_sha256=owner.get('sha256'),
                     owner_state={k: v for k, v in owner.items() if k in ('schema', 'hook', 'reason', 'objects')})
@@ -1069,6 +1076,41 @@ def _sealed(action, work, files):
         restore_files(work, files)
         tables.COLLECTOR = parent_collector
     return result
+
+
+GUARD_CODE = re.compile(r"\b(?:require|guard|halt|refuse)\(\s*'([^']+)'")
+
+
+def row_code_check(target, code):
+    """Is `code` the declared row's own guard code? (KILLED_CODE condition 1, addendum 1.)
+
+    The row's guard identity is its name: a site row `dg5/site/<file>:<line>` is the
+    guard statement at that line of this run's source, and its code is the literal
+    first argument of that require/guard/halt/refuse call (keycheck.py check (iii)'s
+    guard_code, widened from require to the four routed guard calls). A routed
+    refusal may carry a wrapper prefix (`refusal_row`'s own rule), so the code may
+    also end with '/' + the guard code. Any other row (schema, number, date-time,
+    boolean) owns a code when `row(code)` names it. A crash or a missing code owns
+    nothing.
+    """
+    out = dict(row=target, code=code, guard_code=None, own=False, why=None)
+    if not isinstance(code, str) or not code or code.startswith('crash:'):
+        return dict(out, why='no owner refusal code')
+    prefix = PREFIX + 'site/'
+    if target.startswith(prefix):
+        name, _, line = target[len(prefix):].rpartition(':')
+        try:
+            text = (ROOT / 'scripts' / name).read_text().splitlines()[int(line) - 1]
+        except (OSError, ValueError, IndexError):
+            return dict(out, why='row site line not in this source')
+        found = GUARD_CODE.search(text)
+        if not found:
+            return dict(out, why='row site line has no literal guard code: ' + text.strip()[:120])
+        guard = found.group(1)
+        own = code == guard or code.endswith('/' + guard)
+        return dict(out, guard_code=guard, own=own, why=None if own else 'refusal code is not the row guard code')
+    own = row(code) == target
+    return dict(out, guard_code=target, own=own, why=None if own else 'refusal code maps to another row')
 
 
 def refusal_code(error):
