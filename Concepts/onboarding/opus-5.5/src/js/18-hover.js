@@ -207,6 +207,14 @@
     var px = 0, py = 0, have = false, buttons = 0, hit = null, want = null, moved = false;
     var lastHitEl = null, lastHitT = null, lastHitAt = 0;
     var hover = null, springs = new Set(), lit = new Set();
+    var chipIntent = null, chipIntentAt = 0;
+
+    function enteringFriendlySwitcher(next, from) {
+      if (!next || next === from || family() !== 'friendly') return false;
+      if (!next.matches('.pmw-tab, .pm-segtab-item')) return false;
+      var strip = next.closest('.pmw-strip, #panel-files > .pm-segtab');
+      return !!strip && (!from || !strip.contains(from));
+    }
     var running = false, lastT = 0, wasRest = false, bodyRest = false, visCache = null;
     var recheck = false, popupOpen = false;
     /* A popup open anywhere holds the hover. The popups are kept as a set: found once, then from the elements the
@@ -556,6 +564,13 @@
       var next = rest || !have || popupOpen ? null : (calm ? hover : want);
       if (!next && hover && have && !rest && hover.isConnected && inHoldBand(hover)) next = hover;
       if (next && !next.isConnected) next = null;
+      if (enteringFriendlySwitcher(next, hover)) {
+        if (chipIntent !== next) { chipIntent = next; chipIntentAt = now; }
+        if (now - chipIntentAt < 33) {
+          next = hover;
+          moved = true;
+        }
+      } else chipIntent = null;
       var enter = next !== hover;
       if (next) {
         if (enter || scopeDirty || scopeMode !== 'hover' || !candOf(next)) {

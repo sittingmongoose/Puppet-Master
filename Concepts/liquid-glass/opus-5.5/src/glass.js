@@ -1850,6 +1850,7 @@
     e.remove();
   }
   function disposeLens(L, keepMark) {
+    if (L.carryPreviews) { L.carryPreviews.forEach(removeCarryPreview); L.carryPreviews.clear(); }
     var carried = false;
     L.held = null;
     if (L.under && L.rect && L.strip.isConnected && !L.lens.isConnected) {
@@ -2289,14 +2290,19 @@
        their label) kept the chip at its unchosen width for a lazy sync, its chosen words running off the chip onto bare
        ground ("Curren", 2026-10-28 review, astra R4) */
     if (L.hopFrames && L.hopTarget === target) {
+      if (L.pending && L.pending.el === target && L.carry && L.carry.selectedRailBox && !target.matches('.active')) return;
       /* a carried chip whose tab changed size or place under it (the rail's tabs show the chosen tab's word and fold the
          others to icons when the app chooses, often after the chip has landed): the block is made again for the new box
          with fresh copies, so it lands on the tab as it is now with the words as they are now, and it goes on from where
          it is drawn (carry's go, below). Until FO-195 it began again from the trip's first box toward the new one at the
          same age, which put it at once where that other trip would have been (19 px left in Friendly Light, Jared
          2026-11-13: "it almost jumps twice"), and a chip that had landed snapped to the new box. */
-      var K = L.carry;
-      if (K && K.pose && L.rect && Math.max(Math.abs(L.rect.x - R.x), Math.abs(L.rect.y - R.y), Math.abs(L.rect.w - R.w), Math.abs(L.rect.h - R.h)) > 0.5) {
+      var K = L.carry, destination = K && K.paintedSource ? K.B : L.rect;
+      if (K && K.selectedTwins && target.matches('.active') && sameCarryBox(destination, R)) {
+        K.selectedTwins();
+        K.selectedTwins = null;
+      }
+      if (K && K.pose && destination && !sameCarryBox(destination, R)) {
         if (startUnknown(L, strip)) return;
         var go = { K: K, at: carryAge(K), zero: carryZero(K), retarget: true };
         endHop(L); carry(L, K.A, R, strip, cfg, target, K.vertical, go); return;
@@ -2420,7 +2426,10 @@
     var T = L.hopTarget; if (!T || !L.hopFrames) return;
     if (!T.isConnected) { endHop(L); return; }
     var cfg = L.cfg; if (!T.matches(cfg.active || '.active')) return;
-    if (T.getAttribute('data-tab') === 'changed' && filesSwitcher(L.strip)) L.filesChangedSeen = true;
+    if (filesSwitcher(L.strip)) {
+      var chosen = T.getAttribute('data-tab');
+      if (chosen === 'open' || chosen === 'changed') (L.filesCarrySeen || (L.filesCarrySeen = new Set())).add(chosen);
+    }
     if (T.getAttribute('data-tab-id') === 'dashboard:agents') L.agentsSeen = true;
     /* (a carried block lands by its own clock, which a long task right after the press may have held back) */
     var K = L.carry, wait = K ? K.dur - carryAge(K) : L.hopEnd - performance.now();
@@ -2429,6 +2438,7 @@
        ahead of it, 14 px in Basic Light on Alexis) */
     if (K && ((K.anim && K.anim.startTime == null && K.anim.playState !== 'finished') || K.change || K.due)) wait = Math.max(wait, 16);
     if (wait > 0) { if (!L.hopT) L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, wait + 1); return; }
+    if (K && K.paintedSource) setLensBox(L, K.B);
     endHop(L);
   }
   function hop(L, A, B, strip, cfg, target, vertical, cold) {
@@ -2544,19 +2554,52 @@
     return cfg.sel === '.pmw-strip' && target.getAttribute('data-tab-id') === 'dashboard:agents' &&
       window.PMW && !window.PMW.instances['dashboard:agents'];
   }
+  function unseenFilesCarry(L, target) {
+    var name = target.getAttribute('data-tab');
+    return filesSwitcher(L.strip) && (name === 'changed' || name === 'open') && !L.filesCarrySeen?.has(name);
+  }
   function coldHop(L, cfg, target) {
-    if (L.carryPreview && L.carryPreview.target === target && L.carryPreview.theme === root.getAttribute('data-theme')) return false;
-    return switchMotion === 'hop' && (coldAgents(cfg, target) ||
-      (!L.filesChangedSeen && target.getAttribute('data-tab') === 'changed' && filesSwitcher(L.strip)));
+    var preview = L.carryPreviews?.get(target);
+    if (preview && preview.theme === root.getAttribute('data-theme')) return false;
+    return switchMotion === 'hop' && (coldAgents(cfg, target) || unseenFilesCarry(L, target));
+  }
+  function removeCarryPreview(preview) {
+    preview.pulses.forEach(function (a) { a.cancel(); });
+    preview.anims.forEach(function (a) { a.cancel(); });
+    preview.F.remove();
+    if (preview.S) preview.S.remove();
   }
   function sameCarryBox(a, b) {
     return Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y), Math.abs(a.w - b.w), Math.abs(a.h - b.h)) < 0.5;
   }
+  function measuredSelectedRailBox(strip, cfg, target) {
+    if (!filesSwitcher(strip) || strip.getAttribute('data-d-tabs') !== 'active') return null;
+    var rail = strip.cloneNode(false), choice = null;
+    rail.setAttribute('data-o55-foreign', '');
+    rail.inert = true;
+    rail.style.cssText = 'position:absolute;left:0;top:0;margin:0!important;visibility:hidden;pointer-events:none;width:' +
+      getComputedStyle(strip).width;
+    Array.prototype.forEach.call(strip.querySelectorAll(cfg.items), function (item) {
+      var button = item.cloneNode(true);
+      if (item === target) choice = button;
+      button.classList.toggle('active', item === target);
+      button.removeAttribute('id');
+      rail.appendChild(button);
+    });
+    if (!choice) return null;
+    strip.parentElement.insertBefore(rail, strip);
+    var base = rail.getBoundingClientRect(), next = choice.getBoundingClientRect(), scale = stripScale(rail, base);
+    rail.remove();
+    return { x: (next.left - base.left) / scale - strip.clientLeft, y: (next.top - base.top) / scale - strip.clientTop,
+             w: next.width / scale, h: next.height / scale };
+  }
   function warmColdCarry(L, cfg, strip, active) {
-    if (L.carryWarming || L.carryPreview || L.carry || L.pending || !L.under || reduced() || switchMotion !== 'hop') return;
-    var selector = filesSwitcher(strip) && !L.filesChangedSeen && active.getAttribute('data-tab') === 'explorer' ? '[data-tab="changed"]' :
+    if (L.carryWarming || L.carry || L.pending || !L.under || reduced() || switchMotion !== 'hop') return;
+    var selector = filesSwitcher(strip) && active.getAttribute('data-tab') === 'explorer' ? '[data-tab="changed"], [data-tab="open"]' :
       cfg.sel === '.pmw-strip' && !L.agentsSeen && active.getAttribute('data-tab-id') === 'dashboard:home' ? '[data-tab-id="dashboard:agents"]' : null;
-    var busy = window.PM_BUSY, target = selector && strip.querySelector(selector);
+    var busy = window.PM_BUSY, target = selector && Array.prototype.find.call(strip.querySelectorAll(selector), function (item) {
+      return !L.carryPreviews?.has(item) && (!filesSwitcher(strip) || unseenFilesCarry(L, item));
+    });
     if (!target || !busy || !busy.idle) return;
     L.carryWarming = true;
     busy.idle(function () {
@@ -2565,7 +2608,8 @@
           L.carry || L.pending || reduced() || switchMotion !== 'hop' || L.tgt !== active || !L.rect) return;
       var R = rectIn(strip, cfg.box ? cfg.box(target) : target, lensPad(strip, cfg));
       if (R.w <= 0 || R.h <= 0) return;
-      carry(L, L.rect, R, strip, cfg, target, !!cfg.vertical || Math.abs(L.rect.y - R.y) > Math.abs(L.rect.x - R.x), null, false, true);
+      var chosenBox = measuredSelectedRailBox(strip, cfg, target);
+      carry(L, L.rect, chosenBox || R, strip, cfg, target, !!cfg.vertical || Math.abs(L.rect.y - R.y) > Math.abs(L.rect.x - R.x), null, false, true, R);
     }, 900, { quiet: 180 });
   }
   /* go: the trip under way that a new block goes on with ({ K: that trip, at: its age now, zero: when its age was 0, or
@@ -2608,7 +2652,7 @@
     });
     return out;
   }
-  function carry(L, A, B, strip, cfg, target, vertical, go, cold, prepare) {
+  function carry(L, A, B, strip, cfg, target, vertical, go, cold, prepare, initialBox) {
     if (!L.under || reduced()) { setLensBox(L, B); return; }
     var motion = switchMotion, C = CARRY[motion], ease = bezierEase(C.ease), dur = C.dur, hopping = motion === 'hop';
     var zero = go && go.zero != null ? go.zero : null, liftX, liftY;
@@ -2621,20 +2665,22 @@
     var lo = Math.min.apply(null, ends.map(function (r) { return vertical ? r.y : r.x; })) - CARRY_REACH, hi = Math.max.apply(null, ends.map(function (r) { return vertical ? r.y + r.h : r.x + r.w; })) + CARRY_REACH;
     var crossed = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(visible).map(function (it) { var w = (cfg.twin && cfg.twin(it)) || it; return { it: w, r: rectIn(strip, w, 0) }; })
       .filter(function (s) { var a = vertical ? s.r.y : s.r.x, b = a + (vertical ? s.r.h : s.r.w); return b > lo && a < hi; });
-    var preview = L.carryPreview, reuse = false, F, G, S = null, SK;
+    var previews = L.carryPreviews || (L.carryPreviews = new Map()), preview = previews.get(target);
+    var reuse = false, F, G, S = null, SK;
+    if (!prepare) previews.forEach(function (entry, item) {
+      if (entry !== preview) { previews.delete(item); removeCarryPreview(entry); }
+    });
     if (preview) {
-      L.carryPreview = null;
+      previews.delete(target);
       preview.pulses.forEach(function (a) { a.cancel(); });
       if (!prepare && !go && preview.target === target && preview.theme === root.getAttribute('data-theme') &&
-          sameCarryBox(preview.A, A) && sameCarryBox(preview.B, B)) {
+          sameCarryBox(preview.A, A) && (sameCarryBox(preview.B, B) || sameCarryBox(preview.initialBox, B))) {
         reuse = true;
+        B = preview.B;
         F = preview.F; G = preview.G; S = preview.S; SK = preview.SK;
         [F, S].forEach(function (e) { if (e) { e.style.opacity = '0.999'; e.removeAttribute('data-lg-prepared'); } });
         F.classList.replace('lg-carry-prepared', 'lg-carry'); F.__lgWasPrepared = true;
-      } else {
-        preview.anims.forEach(function (a) { a.cancel(); });
-        preview.F.remove(); if (preview.S) preview.S.remove();
-      }
+      } else removeCarryPreview(preview);
     }
     if (!F) {
       var over = overLayer(strip), tag = cfg.tag;
@@ -2686,9 +2732,18 @@
         }
         from = from0;
       } else pose = function (t) { return carryPose(motion, ease(Math.min(1, t / dur)), A, B); };
+      if (prepare) {
+        for (var edge = FRAME_MS; edge < dur; edge += FRAME_MS) {
+          var p = pose(edge);
+          if (p.lift || Math.abs(p.x - B.x) > 0.01 || Math.abs(p.y - B.y) > 0.01 ||
+              Math.abs(p.sx * p.w - B.w) > 1 || Math.abs(p.sy * p.h - B.h) > 1) continue;
+          end = edge;
+          break;
+        }
+      }
       var span = end - from, fF = [], fG = [], fS = [], fH = [], rects = [], n = Math.max(2, Math.ceil(span / FRAME_MS));
       for (var i = 0; i <= n; i++) {
-        var t = Math.min(end, from + i * FRAME_MS), o = (t - from) / span, P = pose(t);
+        var t = Math.min(end, from + i * FRAME_MS), o = (t - from) / span, P = prepare && t >= end ? pose(dur) : pose(t);
         var lx = hopping ? -liftX * P.lift : 0, ly = hopping ? -liftY * P.lift : 0, rot = hopping ? -2 * P.lift : 0;
         var dx = P.x + P.w / 2 - cB.x + lx, dy = P.y + P.h / 2 - cB.y + ly, kx = P.sx * P.w / B.w, ky = P.sy * P.h / B.h;
         fF.push({ offset: o, transform: 'translate(' + dx.toFixed(2) + 'px,' + dy.toFixed(2) + 'px) rotate(' + rot.toFixed(3) + 'deg) scale(' + kx.toFixed(4) + ',' + ky.toFixed(4) + ')' });
@@ -2737,20 +2792,43 @@
       [F, S].forEach(function (e) {
         if (e) pulses.push(e.animate([{ opacity: 0.004 }, { opacity: 0.004 }], { duration: T.span }));
       });
-      var cached = L.carryPreview = { F: F, G: G, S: S, SK: SK, A: A, B: B, target: target,
+      var cached = { F: F, G: G, S: S, SK: SK, A: A, B: B, target: target, initialBox: initialBox || B,
         theme: root.getAttribute('data-theme'), anims: anims, pulses: pulses, trip: T };
+      previews.set(target, cached);
       Promise.all(pulses.map(function (a) { return a.finished; })).then(function () {
-        if (L.carryPreview === cached) anims.forEach(function (a) { a.pause(); a.currentTime = 0; });
+        if (previews.get(target) !== cached) return;
+        anims.forEach(function (a) { a.pause(); a.currentTime = 0; });
+        if (filesSwitcher(strip) && L.tgt) warmColdCarry(L, cfg, strip, L.tgt);
       }, function () { /* consumed by a press */ });
       return;
     }
     var probe = holdStart ? null : F.animate([], { duration: 1000 }), made = performance.now(), inFrame = frameSync > 0 || postRunning;
-    setLensBox(L, B);
-    /* the chip under the labels stays hidden while the block is up (as for a step's blocks) */
-    var hide = L.anim = L.hopHide = L.lens.animate([{ opacity: 0 }, { opacity: 0 }], { duration: 600000 });
+    var splice = holdStart && reuse;
+    if (!splice) setLensBox(L, B);
+    /* Keep the original chip drawn until the carry's first advancing pose. */
+    function edgeVisibility(el, before, after) {
+      var anim = el.animate([ { opacity: before, offset: 0, easing: 'steps(1, end)' },
+        { opacity: after, offset: Math.min(0.5, 8 / T.span) }, { opacity: after, offset: 1 }],
+        { duration: T.span, fill: 'both' });
+      anim.pause(); anim.currentTime = 0;
+      anims.push(anim);
+      return anim;
+    }
+    if (splice) [F, S].forEach(function (e) { if (e) edgeVisibility(e, 0, 0.999); });
+    var hide = L.anim = L.hopHide = splice ? edgeVisibility(L.lens, 1, 0) :
+      L.lens.animate([{ opacity: 0 }, { opacity: 0 }], { duration: 600000 });
     if (!L.hopMarks) L.hopMarks = new Map();
     L.hopFrames = S ? [S, F] : [F]; L.hopTarget = target;
     var K = L.carry = { A: A, B: B, vertical: vertical, anim: lead, liftX: liftX, liftY: liftY, change: !!go };
+    K.selectedRailBox = reuse && !sameCarryBox(preview.initialBox, preview.B);
+    K.paintedSource = splice;
+    if (splice && filesSwitcher(strip)) K.selectedTwins = function () {
+      var nodes = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(visible).map(function (item) {
+        var r = rectIn(strip, item, 0);
+        return twinOf(item, { x: r.x - B.x, y: r.y - B.y, w: r.w, h: r.h }, weight);
+      });
+      G.replaceChildren.apply(G, nodes);
+    };
     function take(P) {
       K.t0 = start; K.dur = P.end; K.from = P.from; K.pose = P.pose; K.at = P.at; K.B = P.to;
       L.path = { t0: start, dur: P.end, rects: P.rects }; L.hopEnd = start + P.end;
@@ -2760,8 +2838,20 @@
     take(T);
     // A cold press uses the selected pane's laid-out box. Once the reveal is painted, the
     // chip runs on the compositor so later main-thread work cannot pin it midway along.
-    if (holdStart) window.PM_START_ON_SHOWN(anims, reuse ? { startHeld: true, start: 'commit', frames: 6,
-      wait: function () { return performance.now() - made < 30; }, waitCap: 75 } : { startHeld: true, frames: cold ? 6 : 10 });
+    if (holdStart && reuse) {
+      anims.forEach(function (a) { a.pause(); a.__pmHeld = true; });
+      requestAnimationFrame(function firstAvailable(frame) {
+        if (L.carry !== K) return;
+        if (frame - made < 30) { requestAnimationFrame(firstAvailable); return; }
+        anims.forEach(function (a) { a.__pmHeld = false; a.play(); });
+        if (splice) requestAnimationFrame(function positionRestingChip() {
+          if (L.carry !== K) return;
+          if (lead.currentTime < 9) { requestAnimationFrame(positionRestingChip); return; }
+          // By this point the actual lens is hidden by the paired visibility animation.
+          setLensBox(L, B);
+        });
+      });
+    } else if (holdStart) window.PM_START_ON_SHOWN(anims, { startHeld: true, frames: cold ? 6 : 10 });
     else requestAnimationFrame(function () {
       /* the first frame callback after the block was made: when it was first drawn (K.drawn), so its age is known before
          the compositor reports its start (its probe, an empty animation, starts in the lifecycle of the frame that first
