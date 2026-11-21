@@ -774,6 +774,7 @@ class OwnerCheck:
         self.capture = None
         self.request_projection = None
         self.probe_root = False
+        self.later_kill = None
 
     def call(self, action, edit, *, require_exact=False, prefix_store=None):
         import pm_goal_dg5_boundaries as bridge
@@ -1037,20 +1038,30 @@ class OwnerCheck:
                 require(bridge.manifest(bridge.file_state(self.scratch)) == initial, 'passive call changed the store')
                 return result
 
+            first_run = len(self.runs)
             self.collector.invoke('Method B/' + self.declare['route'], evaluate, value, change is None,
                                   target=self.row if change else None, family=self.declare['family'])
             record = self.collector.ledger[-1]
+            trials = self.runs[first_run:]
             require(not self.collector.failures, self.collector.failures)
             require(record['outcome'] == ('exact_expected' if change else 'control'), record)
             if change:
                 later = self.declare.get('later_refusal')
+                # Addendum 6: the fixed stock judge decides a later refusal (KILLED_CODE, COVERED_LATER only on
+                # equal after-states, else CANNOT_DECIDE); the trials are the defect run, the cut run (the only
+                # one with the row cut) and the restoration after it, whatever repeats the judge adds.
+                cuts = [index for index, run in enumerate(trials) if run.get('cut')]
+                require(len(trials) >= 3 and cuts and cuts[0] == 1, f'unexpected judged trial sequence: {len(trials)}')
                 if later is None:
                     require(record['kill'] == 'KILLED',
                             f"complete-call cut result {record['kill']}: {record.get('cut_errors')}")
                 else:
-                    require(record['kill'] == 'COVERED_LATER' and self.runs[-2].get('refusal') == later,
-                            f"expected later validation {later!r}, got {self.runs[-2].get('refusal')!r}")
-                before, cut, restored = self.runs[-3:]
+                    require(record['kill'] in ('KILLED_CODE', 'COVERED_LATER', 'CANNOT_DECIDE') and
+                            trials[1].get('refusal') == later,
+                            f"expected later validation {later!r}, got {trials[1].get('refusal')!r}")
+                    self.later_kill = record['kill']
+                before, cut, restored = trials[0], trials[1], trials[2]
+                same = lambda run: {k: v for k, v in run.items() if k != 'owner_state'}
                 if self.declare['route'] == 'receipt_recheck':
                     require(cut.get('same_final_receipt_request'), 'final validator did not check the original request')
                 if self.declare['route'] == 'input_recheck':
@@ -1068,7 +1079,7 @@ class OwnerCheck:
                     require(cut.get('same_submission_payload'), 'the submission did not get the original payload')
                 if self.declare['route'] in TERMINAL_RESULT_ROUTES:
                     require(cut.get('same_terminal_result'), 'storage did not get the original terminal result')
-                require(before == restored and before['observations'][0] == cut['observations'][0] and
+                require(same(before) == same(restored) and before['observations'][0] == cut['observations'][0] and
                         bool(cut['errors']) == bool(later),
                         'the complete call did not restore the same document and validation message')
         require(self.runs[0] == self.runs[-1], 'the restored accepted control changed')
@@ -2461,7 +2472,10 @@ def main():
                 'shared GuardReadResult examples require the same root, source and family')
         declare.update(examples=shared['examples'], accepted_branches=shared['accepted_branches'])
     revision = subprocess.check_output(['git', '-C', str(source), 'rev-parse', 'HEAD'], text=True).strip()
-    require(revision == declare['source'], f'wrong original source revision: {revision}')
+    # Addendum 6: this harness judges with the owner source's own collector, so a re-judge source is the
+    # declared revision plus the fixed stock judge, byte-identical (pm_goal_dg5_methodb_export.fixed_judge_source).
+    import pm_goal_dg5_methodb_export as export
+    judge_source = None if revision == declare['source'] else export.fixed_judge_source(source, declare['source'])
     require(sha(args.census) == declare['census_sha256'], 'census bytes changed')
     with gzip.open(args.census, 'rt') as stream:
         census = json.load(stream)
@@ -2573,7 +2587,13 @@ def main():
     except ValueError as error:
         report['reason'] = str(error)
     finally:
-        report.update(seconds=round(time.monotonic() - started, 3), owner_calls=check.runs)
+        # Addendum 6: the fixed judge's class for the row and its judged record, whatever the later steps did.
+        keys = ('id', 'label', 'target', 'outcome', 'kill', 'errors', 'cut_errors', 'restoration_errors',
+                'restoration_repeat_errors', 'joint_cut', 'refusal_code', 'refusal_origin', 'refusing_sites',
+                'after_state', 'killed_code_check', 'covered_later_check', 'cannot_decide_reason')
+        report.update(seconds=round(time.monotonic() - started, 3), owner_calls=check.runs, judge_source=judge_source,
+                      later_refusal_kill=check.later_kill,
+                      judged=[{k: r.get(k) for k in keys} for r in collector.ledger if r.get('target') == row])
         write(args.out / 'result.json', report)
         print(json.dumps({k: report[k] for k in ('row', 'status', 'reason', 'seconds')}), flush=True)
     return int(report['status'] != 'COVERED')
