@@ -70,9 +70,9 @@ test('T98 rejects transparent or offscreen panels while their controls are scrol
 });
 
 test('T124 rejects a transparent filter on a hit-testable ancestor', () => {
-  assert.equal(reachStatus({ filter: 'blur(1px) opacity(0.5)' }).shown, true);
+  assert.equal(reachStatus({ filter: 'blur(1px) opacity(0.5)' }).view, true);
   assert.equal(reachStatus({ filter: 'blur(1px) opacity(0)' }).slot, false);
-  assert.equal(reachStatus({ filter: 'opacity(0%)' }).shown, false);
+  assert.equal(reachStatus({ filter: 'opacity(0%)' }).view, false);
 });
 
 test('T98 later context walk includes the middle row of a known route', () => {

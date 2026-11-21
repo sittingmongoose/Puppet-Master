@@ -72,7 +72,8 @@ export function shelfReachStatus(e) {
   return {
     slot: shown(slot) && onScreen(slot),
     view: shown(view) && onScreen(view),
-    shown: e.isConnected && shown(e),
+    // A control can be outside the scroller's rendered band until reach scrolls it in.
+    shown: e.isConnected && e.checkVisibility(),
     what: (e.getAttribute('aria-label') || e.textContent || e.className || e.tagName).toString().trim().replace(/\s+/g, ' ').slice(0, 40),
   };
 }
