@@ -692,14 +692,18 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
         code, seeded = self.append()
         self.assertEqual((code, seeded["appended"], seeded["errors"]), (0, 1, []), seeded)
         prior_pin = json.loads(self.registry.read_bytes().splitlines()[2])
+        return self.prepare_pin_batch_records([(1, original), (3, prior_pin)], split_line=3 if split_only else None)
+
+    def prepare_pin_batch_records(self, targets: list[tuple[int, dict]], *, split_line: int | None = None) -> list[dict]:
+        m = pm_audit_closure
         records = []
-        for line, target in ((1, original), (3, prior_pin)):
+        for line, target in targets:
             self.target = target
             self.audit_dir = self.audit_dir.parent / f"batch-recheck-{line}"
             self.audit_dir.mkdir()
             self.records = self.audit_dir / "records.jsonl"
             proof = self.proof_anchor()  # Also gives the recheck its own commit.
-            if split_only and line == 3:
+            if line == split_line:
                 def bind_set(record: dict, packet: dict) -> None:
                     anchors = packet["dependency_anchors"] + [
                         {"ref": self.anchor, "sha256": m.AnchorResolver().sha256(self.anchor)},
@@ -715,6 +719,14 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
         write_jsonl(self.records, records)
         self.commit("two sets of reviewed receipts")
         return records
+
+    def append_pin_batch(self) -> list[dict]:
+        code, report = self.append()
+        self.assertEqual((code, report["appended"], report["errors"]), (0, 2, []), report)
+        rows = [json.loads(raw) for raw in self.registry.read_bytes().splitlines()]
+        self.assertEqual(pm_audit_closure.validate_registry(self.registry)["errors"], [])
+        self.commit("appended pin batch")
+        return rows
 
     def test_registry_pin_batch_requires_reauditing_the_old_pin(self) -> None:
         records = self.prepare_registry_pin_batch()
@@ -741,6 +753,7 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
         self.assertEqual(m.validate_registry(self.registry)["errors"], [])
         code, report = self.append(dry_run=True)
         self.assertEqual((code, report["already_appended"], report["errors"]), (0, 2, []), report)
+        self.commit("appended pin batch")
 
         appended = [json.loads(line) for line in committed.splitlines()]
         later = m._self_test_registry_row(closure_id="closure-later", detail_keys=["later"],
@@ -748,15 +761,19 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
         altered = copy.deepcopy(appended)
         altered[3]["closure_reason"] += " Changed after append."
         group = "split_anchor_hashes" if split_only else "owner_evidence_hashes"
-        for rows in (appended + [later], altered, appended[:3] + appended[4:]):
+        for rows in (appended + [later], altered):
             write_jsonl(self.registry, rows)
             report = m.validate_registry(self.registry)
-            self.assertEqual(report["unsuperseded_stale_hash_count"], 1 if len(rows) == 4 else 2, report)
-            last_line = len(rows) - (rows[-1] is later)
-            self.assertTrue(any(f":{last_line}: {group} for {self.anchor} is stale" in e for e in report["errors"]), report)
-            if len(rows) > 4:
-                self.assertTrue(any(f":4: owner_evidence_hashes for {self.anchor} is stale"
-                                    in e for e in report["errors"]), report)
+            self.assertEqual(report["unsuperseded_stale_hash_count"], 2, report)
+            self.assertTrue(any(f":5: {group} for {self.anchor} is stale" in e for e in report["errors"]), report)
+            self.assertTrue(any(f":4: owner_evidence_hashes for {self.anchor} is stale"
+                                in e for e in report["errors"]), report)
+        # Without one member, the other no longer matches the batch rebuilt from its committed
+        # records file. It supersedes nothing, so the old pin on line 3 is live again, and stale.
+        write_jsonl(self.registry, appended[:3] + appended[4:])
+        report = m.validate_registry(self.registry)
+        self.assertTrue(any(e.startswith(f"{self.registry_ref}:4: registry_batch_anchor differs") for e in report["errors"]), report)
+        self.assertTrue(any(f":3: owner_evidence_hashes for {self.anchor} is stale" in e for e in report["errors"]), report)
         write_jsonl(self.registry, appended + [later])
         snapshot = self.commit("later registry member")
         for row in appended[-2:]:
@@ -769,6 +786,154 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
 
     def test_registry_pin_batch_applies_to_split_only_row_sets(self) -> None:
         self.assert_registry_pin_batch_drifts(split_only=True)
+
+    def test_registry_pin_batch_marker_rewrite_cannot_hide_a_later_member(self) -> None:
+        """Review H1: rewriting the shared marker on every row, committed, must not move a later set member
+        out of the reviewed part of the pins. The batch is rebuilt from its committed records file."""
+        m = pm_audit_closure
+        original = self.target
+        second, third = [
+            m._self_test_registry_row(**{**original, "closure_id": f"closure-{name}", "detail_keys": [name]})
+            for name in ("second", "third")
+        ]
+        write_jsonl(self.registry, [original, second, third])
+        self.target = second
+        self.prepare_record(line=2)
+        code, report = self.append()
+        self.assertEqual((code, report["appended"]), (0, 1), report)
+        prior_pin = json.loads(self.registry.read_bytes().splitlines()[3])
+        self.prepare_pin_batch_records([(1, original), (4, prior_pin)])
+        rows = self.append_pin_batch()
+
+        self.target = third
+        self.audit_dir = self.audit_dir.parent / "later-recheck"
+        self.audit_dir.mkdir()
+        self.records = self.audit_dir / "records.jsonl"
+        self.prepare_record(line=3, anchor=self.proof_anchor())
+        code, report = self.append(dry_run=True)
+        self.assertEqual((code, report["would_append"]), (1, 0), report)
+        self.assertTrue(any(f":6: owner_evidence_hashes for {self.anchor} is stale" in e for e in report["errors"]), report)
+
+        record = json.loads(self.records.read_bytes())
+        later = m.build_reaudit_row(third, 3, m.raw_registry_lines(self.registry)[3], record, m.rel(self.records),
+                                    m.AnchorResolver(), m.utc_now())
+        marker_key = m.REGISTRY_BATCH_ANCHOR
+        marker = copy.deepcopy(rows[5]["hashes"][marker_key])
+        marker["members"] = sorted([*marker["members"], later["closure_id"]])
+        marker["row_sets"][self.anchor] = m.sha256_text(m._canonical_row_set([
+            {**row, "hashes": {key: value for key, value in row["hashes"].items() if key != marker_key}}
+            for row in [*rows[-2:], later]
+        ]))
+        for row in [*rows[-2:], later]:
+            row["hashes"][marker_key] = marker
+        write_jsonl(self.registry, [*rows, later])
+        snapshot = self.commit("later member with altered batch markers")
+        validation = m.validate_registry(self.registry)
+        for line in (5, 6, 7):
+            self.assertIn(f"{self.registry_ref}:{line}: registry_batch_anchor differs from the batch rebuilt from "
+                          "the rows of its committed records file", validation["errors"])
+        for line in (5, 6):
+            self.assertTrue(any(f":{line}: owner_evidence_hashes for {self.anchor} is stale" in e
+                                for e in validation["errors"]), validation)
+            stale = m._target_stale_refs(rows[line - 1], m.CommitResolver(self.root, snapshot))
+            self.assertIn(self.anchor, {ref for _, ref, _ in stale}, stale)
+
+    def test_registry_pin_batch_reports_marker_edits(self) -> None:
+        m = pm_audit_closure
+        self.prepare_registry_pin_batch()
+        rows = self.append_pin_batch()
+        key = m.REGISTRY_BATCH_ANCHOR
+        for change in ("reorder one", "reorder all", "change hash", "copy", "copy to re-audit", "remove", "duplicate id"):
+            with self.subTest(change=change):
+                changed = copy.deepcopy(rows)
+                marker = changed[3]["hashes"][key]
+                if change == "reorder one":
+                    marker["members"].reverse()
+                elif change == "reorder all":
+                    for row in changed[-2:]:
+                        row["hashes"][key]["members"].reverse()
+                elif change == "change hash":
+                    for row in changed[-2:]:
+                        row["hashes"][key]["row_sets"][self.anchor] = "0" * 64
+                elif change == "copy":
+                    changed[0]["hashes"][key] = marker
+                elif change == "copy to re-audit":
+                    changed[2]["hashes"][key] = marker
+                elif change == "remove":
+                    for row in changed[-2:]:
+                        row["hashes"].pop(key)
+                else:
+                    marker["members"].append(marker["members"][0])
+                write_jsonl(self.registry, changed)
+                report = m.validate_registry(self.registry)
+                self.assertTrue(any(f"for {self.anchor} is stale" in e for e in report["errors"]), report)
+                lines = {"reorder one": [4], "reorder all": [4, 5], "change hash": [4, 5], "copy": [1],
+                         "copy to re-audit": [3], "remove": [], "duplicate id": [4]}[change]
+                for line in lines:
+                    self.assertTrue(any(e.startswith(f"{self.registry_ref}:{line}: {key}") for e in report["errors"]), report)
+
+    def test_registry_pin_batch_dates_its_rows_by_the_records_commit(self) -> None:
+        """A batch member that pins no set of its own has no self-exclusion date. It is dated by the commit
+        that added its records file, so a later edit of its timestamps cannot be hidden by rehashing the markers."""
+        m = pm_audit_closure
+        stamp = "2001-02-03T04:05:06Z"
+        with patch.dict(os.environ, {"GIT_AUTHOR_DATE": "@981173106 +0000"}):  # the same instant
+            self.prepare_registry_pin_batch(split_only=True)
+        rows = self.append_pin_batch()
+        key = m.REGISTRY_BATCH_ANCHOR
+        adding = self.git("log", "--diff-filter=A", "--format=%H", "--", m.rel(self.records))
+        self.assertEqual(m.ReceiptLedger(self.root).author_time(adding), stamp)
+        self.assertNotIn("registry_self_anchor", rows[4]["hashes"])
+        self.assertEqual({row[field] for row in rows[3:] for field in ("created_at", "updated_at")}, {stamp})
+        edited = copy.deepcopy(rows)
+        edited[4].update(created_at="2099-01-01T00:00:00Z", updated_at="2099-01-01T00:00:00Z")
+        digest = m.sha256_text(m._canonical_row_set([
+            {**row, "hashes": {k: v for k, v in row["hashes"].items() if k != key}} for row in edited[3:]
+        ]))
+        for row in edited[3:]:
+            row["hashes"][key]["row_sets"][self.anchor] = digest
+        write_jsonl(self.registry, edited)
+        report = m.validate_registry(self.registry)
+        self.assertTrue(any(e.startswith(f"{self.registry_ref}:5: self-excluding re-audit generated fields differ")
+                            and "'created_at'" in e for e in report["errors"]), report)
+        for line in (4, 5):
+            self.assertTrue(any(e.startswith(f"{self.registry_ref}:{line}: {key} differs") for e in report["errors"]), report)
+        self.assertTrue(any(f"for {self.anchor} is stale" in e for e in report["errors"]), report)
+
+    def test_registry_pin_batch_reports_a_duplicate_member_row(self) -> None:
+        m = pm_audit_closure
+        self.prepare_registry_pin_batch()
+        rows = self.append_pin_batch()
+        write_jsonl(self.registry, [*rows, rows[3]])
+        report = m.validate_registry(self.registry)
+        self.assertTrue(any("duplicate closure_id" in e for e in report["errors"]), report)
+        for line in (4, 5, 6):
+            self.assertTrue(any(e.startswith(f"{self.registry_ref}:{line}: registry_batch_anchor cannot be rebuilt")
+                                for e in report["errors"]), report)
+        for line in (4, 5):
+            self.assertTrue(any(f":{line}: owner_evidence_hashes for {self.anchor} is stale" in e
+                                for e in report["errors"]), report)
+
+    def test_registry_pin_batch_appends_and_replays_a_second_batch(self) -> None:
+        m = pm_audit_closure
+        self.prepare_registry_pin_batch()
+        first = self.append_pin_batch()
+        self.prepare_pin_batch_records(list(enumerate(first[-2:], 4)))
+        second = self.append_pin_batch()
+        key = m.REGISTRY_BATCH_ANCHOR
+        self.assertNotEqual(first[-1]["hashes"][key]["members"], second[-1]["hashes"][key]["members"])
+        before = self.registry.read_bytes()
+        code, replay = self.append(dry_run=True)
+        self.assertEqual((code, replay["already_appended"], replay["would_append"], replay["errors"]), (0, 2, 0, []), replay)
+        self.assertEqual(self.registry.read_bytes(), before)
+        later = m._self_test_registry_row(closure_id="closure-later", detail_keys=["later"],
+                                          closure_evidence=first[0]["closure_evidence"], hashes=first[0]["hashes"])
+        write_jsonl(self.registry, [*second, later])
+        report = m.validate_registry(self.registry)
+        self.assertEqual(report["unsuperseded_stale_hash_count"], 2, report)
+        for line in (6, 7):
+            self.assertTrue(any(f":{line}: owner_evidence_hashes for {self.anchor} is stale" in e
+                                for e in report["errors"]), report)
 
     def test_registry_pin_batch_refuses_a_live_pin_outside_its_targets(self) -> None:
         m = pm_audit_closure
