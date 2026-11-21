@@ -92,8 +92,10 @@ Nothing a person can do was removed. Each line says where the same thing still i
 
 ## Stream F's checks that need a small change when this is merged
 
-Run on 2026-11-20 against this build and against the unchanged page, the same way on the same computer. These fail
-only here, and each for a change made on purpose:
+All 40 of stream F's Settings checks were run on 2026-11-21 against this build (on main `56f82e6dae`), and every one
+that failed was run against the unchanged page the same way on the same computer. **27 pass.** Four fail on the
+unchanged page too (`own-servers`, `servers-away-guide`, `settings-base-words`, `settings-safety-source`), so they
+are not this work. The rest fail only here, each for a change made on purpose:
 
 | Check | Why it fails here | What it should read instead |
 |---|---|---|
@@ -101,8 +103,14 @@ only here, and each for a change made on purpose:
 | `settings-look-editors` (B-16) | It expects the small docked copy of Pip's team | The team itself, which now stays in view |
 | `settings-menus-customize` (N-4) | After "Update…" it looks for the server's menu on the same page | Servers is its own chapter, so "Update…" leaves it; go back first |
 | `settings-providers-truth` (A2 B-3) | It reads the rail's health box | The count beside Settings Home |
-| `settings-detail-values`, `settings-dialog-lines`, `settings-confirm-once`, `settings-min-text` | Their walkers open Servers as `system/servers` and wait for the System chapter to be the open one, or stay on Servers after "Update…" | The chapter is `servers-access` |
+| `settings-detail-values` | It opens Servers as `system/servers` and waits for the System chapter to be the open one | The chapter is `servers-access` |
+| `settings-dialog-lines`, `settings-confirm-once` | Their walker presses every item of a server's menu; "Update…" and "Back up this server…" leave the Servers chapter, so its next tabs are not there | Open the chapter again after an item that leaves it |
+| `settings-min-text` | It matches each page by the chapter's line in the rail, summary included; the rail now shows the name only, so none of its 2,730 saved pages is matched | The chapter names; and the Servers chapter |
 
-Failing on the unchanged page too (not this work): `own-servers`, `servers-away-guide`, `settings-base-words`,
-`settings-folder-rows`.
+Two things failed once and passed when run again: `settings-inspector-fit` (a notice hung over the button it
+clicks; two more runs pass) and the Adjust NieR part of `settings-look-editors` in the sandbox view.
 
+**Not proven by stream F's kit on this build:** `settings-min-text`'s "no label wraps to more lines" comparison could
+not run, for the reason in the table. What stands in for it: this work only removes text or leaves it as it is (no
+size grows), nothing in the Settings styles is under 11 px, and at 740 and 860 px wide none of the 74 views has
+anything spilling sideways, the same as the unchanged page (measured 2026-11-21).
