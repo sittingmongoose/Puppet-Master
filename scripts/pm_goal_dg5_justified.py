@@ -103,11 +103,122 @@ def _refuse_withdrawn(label, row, withdrawn):
                      + '; remove the definition (scripts/pm_goal_dg5_withdrawn_proofs.json)')
 
 
+class ProofDuplicateError(ValueError):
+    """A written-proof key is defined more than once (TOOL-ISSUES T316): fail closed, nothing judged."""
+
+
+def _proof_key_occurrences(module, label):
+    """Every PROOFS key occurrence in the module's source, by AST.
+
+    A repeated dict-literal key is silently dropped by Python (the second wins), so the loaded
+    dict cannot show it: the source is parsed. Supports exactly the forms the proof modules use —
+    `PROOFS = {literal}` and `PROOFS.update({literal})` — with keys folded from string constants
+    and module-level string constants bound once (SITE + '517'). Any other form (rebind,
+    comprehension, subscript write, del, other mutator, non-constant or non-string key, ** spread)
+    is unanalyzable and fails closed. Returns [(key, line)]."""
+    import ast
+    source = getattr(module, '__dg5_source__', None)
+    if source is None:
+        path = getattr(module, '__file__', None)
+        if path is None:
+            raise ProofDuplicateError(f'{label}: loaded without readable source (set __dg5_source__)')
+        source = Path(path).read_text()
+    tree = ast.parse(source, filename=label)
+    namespace = vars(module)
+
+    # Module-level literal dicts bound once: the sources a PROOFS comprehension may iterate
+    # (pm_goal_dg5_proofs_r.py builds PROOFS over RETAINED.items()).
+    stores = {}
+    for n in ast.walk(tree):
+        if isinstance(n, ast.Name) and isinstance(n.ctx, (ast.Store, ast.Del)):
+            stores[n.id] = stores.get(n.id, 0) + 1
+    literal_dicts = {}
+    for n in tree.body:
+        if isinstance(n, ast.Assign) and len(n.targets) == 1 and isinstance(n.targets[0], ast.Name) \
+                and isinstance(n.value, ast.Dict) and n.targets[0].id != 'PROOFS':
+            literal_dicts[n.targets[0].id] = n.value
+
+    def fold(key, extra=None):
+        if isinstance(key, ast.Constant) and isinstance(key.value, str):
+            return key.value
+        if isinstance(key, ast.Name):
+            value = extra[key.id] if extra and key.id in extra else namespace.get(key.id)
+            if isinstance(value, str):
+                return value
+            raise ProofDuplicateError(f'{label}:{key.lineno}: PROOFS key {key.id} is not a string constant')
+        if isinstance(key, ast.BinOp) and isinstance(key.op, ast.Add):
+            return fold(key.left, extra) + fold(key.right, extra)
+        raise ProofDuplicateError(f'{label}:{key.lineno}: non-constant PROOFS key')
+
+    occurrences, handled = [], set()
+
+    def comprehension_keys(node, where):
+        gen = node.generators[0] if len(node.generators) == 1 else None
+        if gen is None or gen.ifs or gen.is_async:
+            raise ProofDuplicateError(f'{label}:{where.lineno}: PROOFS comprehension with filters or several loops')
+        it = gen.iter
+        method = it.func.attr if isinstance(it, ast.Call) and isinstance(it.func, ast.Attribute) and not it.args else None
+        src = it.func.value if method in ('items', 'keys') else it
+        target = gen.target
+        if isinstance(target, ast.Tuple) and method == 'items' and len(target.elts) == 2:
+            target = target.elts[0]
+        if not (isinstance(src, ast.Name) and src.id in literal_dicts and stores.get(src.id) == 1
+                and isinstance(target, ast.Name) and method in ('items', 'keys', None)
+                and (method == 'items') == isinstance(gen.target, ast.Tuple)):
+            raise ProofDuplicateError(f'{label}:{where.lineno}: PROOFS comprehension over a non-literal source')
+        source_dict = literal_dicts[src.id]
+        for skey, svalue in zip(source_dict.keys, source_dict.values):
+            if skey is None:
+                raise ProofDuplicateError(f'{label}:{svalue.lineno}: ** spread into {src.id}')
+            occurrences.append((fold(node.key, {target.id: fold(skey)}), skey.lineno))
+
+    def literal_keys(node, where):
+        if isinstance(node, ast.DictComp):
+            return comprehension_keys(node, where)
+        if not isinstance(node, ast.Dict):
+            raise ProofDuplicateError(f'{label}:{where.lineno}: PROOFS built from a non-literal '
+                                      f'({type(node).__name__})')
+        for key, value in zip(node.keys, node.values):
+            if key is None:
+                raise ProofDuplicateError(f'{label}:{value.lineno}: ** spread into PROOFS')
+            occurrences.append((fold(key), key.lineno))
+
+    assigns = 0
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Assign) and len(node.targets) == 1 \
+                and isinstance(node.targets[0], ast.Name) and node.targets[0].id == 'PROOFS':
+            handled.add(id(node.targets[0]))
+            assigns += 1
+            literal_keys(node.value, node)
+        elif isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) \
+                and isinstance(node.func.value, ast.Name) and node.func.value.id == 'PROOFS':
+            handled.add(id(node.func.value))
+            if node.func.attr == 'update':
+                if len(node.args) != 1 or node.keywords:
+                    raise ProofDuplicateError(f'{label}:{node.lineno}: PROOFS.update needs one literal dict argument')
+                literal_keys(node.args[0], node)
+            elif node.func.attr not in ('get', 'items', 'keys', 'values', 'copy'):
+                raise ProofDuplicateError(f'{label}:{node.lineno}: PROOFS.{node.func.attr}(...) may change PROOFS')
+        elif isinstance(node, ast.Subscript) and isinstance(node.value, ast.Name) and node.value.id == 'PROOFS' \
+                and isinstance(node.ctx, (ast.Store, ast.Del)):
+            raise ProofDuplicateError(f'{label}:{node.lineno}: PROOFS[...] write or delete')
+    if assigns > 1:
+        raise ProofDuplicateError(f'{label}: PROOFS rebound {assigns} times (earlier keys discarded)')
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Name) and node.id == 'PROOFS' \
+                and isinstance(node.ctx, (ast.Store, ast.Del)) and id(node) not in handled:
+            raise ProofDuplicateError(f'{label}:{node.lineno}: PROOFS bound by an unsupported statement')
+    return occurrences
+
+
 def written_proofs():
     """Per-family written proofs: PROOFS = {row: dict(kind, argument, depends_on, sites=[(path, line)])}.
-    Each proof is re-bound here to the exact source bytes of its cited sites."""
+    Each proof is re-bound here to the exact source bytes of its cited sites. One definition per key:
+    any key defined twice — within a module's source (a repeated dict-literal key Python would
+    silently drop) or across modules — raises ProofDuplicateError before anything is returned
+    (TOOL-ISSUES T316, lead ruling 1121224233-9f91 (2); fail closed, nothing judged)."""
     import importlib
-    out, withdrawn = {}, withdrawn_proofs()
+    out, seen, withdrawn = {}, {}, withdrawn_proofs()
     for name in PROOF_MODULES:
         for stem in ('pm_goal_dg5_proofs_', 'pm_goal_dg5_justified_'):  # either per-family file name
             try:
@@ -117,6 +228,15 @@ def written_proofs():
                     raise
                 continue
             label = 'scripts/%s%s.py' % (stem, name)
+            for key, line in _proof_key_occurrences(module, label):
+                if key in seen:
+                    first_label, first_line = seen[key]
+                    where = 'within' if first_label == label else 'across'
+                    raise ProofDuplicateError(
+                        f'written-proof key {key} defined more than once (TOOL-ISSUES T316): '
+                        f'{first_label}:{first_line} and {label}:{line} ({where}, definitions may differ); '
+                        f'fail closed, nothing judged')
+                seen[key] = (label, line)
             for row, proof in getattr(module, 'PROOFS', {}).items():
                 _refuse_withdrawn(label, row, withdrawn)
                 out[row] = dict(proof, module=label,
