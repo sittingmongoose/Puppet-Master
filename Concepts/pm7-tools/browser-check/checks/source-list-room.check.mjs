@@ -78,7 +78,7 @@ async function cell(t, surface, w, h, fixture = null) {
 	// F3-447 permits a settled staged notice to cover controls. File it through its real dismiss button; never
 	// click through a failed ownership test. Unknown covers still fail. A narrow Source panel may fold on the
 	// outside dismiss press, so restore it and finish its existing entrance before measuring the intended control.
-	const press = async (loc) => {
+	const press = async (loc, tabSelector) => {
 		const inspect = () => loc.evaluate((e) => {
 			const b = e.getBoundingClientRect(), x = b.left + b.width / 2, y = b.top + b.height / 2, h = document.elementFromPoint(x, y);
 			const describe = (n) => n ? { tag: n.tagName, id: n.id, cls: String(n.className?.baseVal ?? n.className), label: (n.getAttribute('aria-label') || n.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 80) } : null;
@@ -100,9 +100,28 @@ async function cell(t, surface, w, h, fixture = null) {
 		}
 		pressDetail = { ...state, dismissed };
 		if (!state.ok || !state.hasBox) return false;
-		// The hit-test and click share one frame-local point; the old separate bounding-box read could drift.
-		const o = await off(); await t.page.mouse.click(o.x + state.x, o.y + state.y);
-		return true;
+		// The hit-test and click share one frame-local point. Tabs also verify where the native click was delivered.
+		if (tabSelector) await f.evaluate((selector) => {
+			const controller = new AbortController();
+			const receipt = window.__sourceTabPress = { controller, landed: false, hit: null };
+			window.addEventListener('click', (event) => {
+				if (!event.isTrusted) return;
+				receipt.landed = event.composedPath().some((el) => el instanceof Element && el.matches(selector));
+				receipt.hit = event.target instanceof Element ? event.target.outerHTML.slice(0, 160) : null;
+			}, { capture: true, signal: controller.signal });
+		}, tabSelector);
+		try {
+			const o = await off();
+			await t.page.mouse.click(o.x + state.x, o.y + state.y);
+		} finally {
+			if (tabSelector) pressDetail.native = await f.evaluate(() => {
+				const { controller, landed, hit } = window.__sourceTabPress;
+				controller.abort();
+				delete window.__sourceTabPress;
+				return { landed, hit };
+			});
+		}
+		return !tabSelector || pressDetail.native.landed;
 	};
 	for (const look of looks) {
 		await t.app.look(look);
@@ -127,8 +146,14 @@ async function cell(t, surface, w, h, fixture = null) {
 			if (tall) await t.check(`${T}: a tall panel shows the footer's whole card (nothing to scroll in the footer or the card)`, lay.footScroll <= 0, JSON.stringify(lay));
 			// clearance and reach, in every tab
 			for (const tab of tabs) {
-				await press(f.locator(`${P.tabs}[${P.tabKey}="${tab}"]`));
-				await f.waitForFunction((s) => { const p = document.querySelector(s); return !!p && p.checkVisibility(); }, paneOf(P, tab), { timeout: 3000 });
+				const selector = `${P.tabs}[${P.tabKey}="${tab}"]`;
+				const pressed = await press(f.locator(selector), selector);
+				if (!await t.check(`${T} ${tab}: the trusted click reaches the tab`, pressed, JSON.stringify(pressDetail))) continue;
+				const selected = await f.waitForFunction(([tab, pane]) =>
+					document.querySelector(tab)?.getAttribute('aria-selected') === 'true' &&
+					document.querySelector(pane)?.checkVisibility(),
+				[selector, paneOf(P, tab)], { timeout: 3000 }).catch(() => false);
+				if (!await t.check(`${T} ${tab}: the selected tab shows its pane`, !!selected, JSON.stringify(pressDetail))) continue;
 				await settle();
 				const res = await f.evaluate(([P, pane, ROWS]) => {
 					const sc = document.querySelector(P.scroll), stripB = document.querySelector(P.strip).getBoundingClientRect().bottom;
