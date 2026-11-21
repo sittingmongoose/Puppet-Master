@@ -103,6 +103,12 @@
     if (own && !own.classList.contains('is-selected')) own.classList.add('is-selected');
   })();
 
+  function addSetupRow(box, project) {
+    if (rowOfFixtureAtLoad.has(project.id)) return;
+    const row = box.add(project.id, Object.assign({}, project.info || {}, { name: project.name || project.id }));
+    if (row && !row.hasAttribute('data-o55-added')) row.setAttribute('data-o55-added', '');
+  }
+
   /* Shell helpers: select a Project in the title-bar menu (adding it when the app doesn't list it yet). The project box
      owns the menu's rows (PM_PROJECT_BOX, pm6-js-panels.js: one row renderer, the label stays the bare name). The Settings
      owner watches the menu and reloads that Project's settings. */
@@ -125,7 +131,7 @@
     restoreProject() {
       /* (every Project setup made or opened is listed again while its record lasts, the active one or not) */
       const box = window.PM_PROJECT_BOX;
-      if (box) setupProjects().forEach((p) => { if (!rowOf(p.id)) { const row = box.add(p.id, Object.assign({}, p.info || {}, { name: p.name || p.id })); if (row) row.setAttribute('data-o55-added', ''); } });
+      if (box) setupProjects().forEach((p) => { if (!rowOf(p.id)) addSetupRow(box, p); });
       if (restoring && box) { const r = restoring; restoring = null; O55.shell.selectProject(r.id, r.name || r.id, r.info || undefined); }
       /* (a setup row restoreEarly put in the page before the load's labelling pass (wireTitles: every menu row present
          then gets its text as a title, which the hover tag reads first) is the row the box adds, which has none) */
@@ -134,8 +140,44 @@
       const menu = document.getElementById('projectMenu');
       if (!menu || menu.__pmActive) return;
       menu.__pmActive = true;
-      const note = () => { const sel = menu.querySelector('.pm6-tb-menu-item.is-selected[data-project]'), id = sel ? sel.getAttribute('data-project') : ''; if (id && id !== lsGet()) lsSet(id); };
+      const selectedId = () => menu.querySelector('.pm6-tb-menu-item.is-selected[data-project]')?.getAttribute('data-project') || '';
+      let lastSelected = selectedId();
+      const note = () => {
+        const id = selectedId();
+        if (id === lastSelected) return;
+        lastSelected = id;
+        if (id && id !== lsGet()) lsSet(id);
+      };
       new MutationObserver(note).observe(menu, { attributes: true, subtree: true, attributeFilter: ['class'] });
+
+      if (!box || !O55.store.persistent) return;
+      window.addEventListener('storage', (event) => {
+        if (event.storageArea !== window.localStorage) return;
+        /* Old setup records can still list a Project. Reset clears onboarding separately from the roster. */
+        const clearedSetup = event.key === O55.store.KEYS.onboarding && event.newValue === null;
+        if (event.key !== MADE && event.key !== ACTIVE && event.key !== null && !clearedSetup) return;
+
+        const projects = setupProjects();
+        const ids = new Set(projects.map((p) => p.id));
+        projects.forEach((p) => { if (event.key === MADE || !rowOf(p.id)) addSetupRow(box, p); });
+
+        const sharedId = lsGet();
+        const id = sharedId && (ids.has(sharedId) || rowOfFixtureAtLoad.has(sharedId)) ? sharedId : defaultProject;
+        const focused = document.activeElement;
+        if (id && (selectedId() !== id || window.PM_ACTIVE_PROJECT_ID !== id)) {
+          window.PM_ACTIVE_PROJECT_ID = id;
+          box.select(id);
+        }
+        /* Applying a peer's selection (including the fallback for a cleared key) never writes it back. */
+        lastSelected = selectedId();
+        menu.querySelectorAll('[data-o55-added][data-project]').forEach((row) => {
+          if (!ids.has(row.getAttribute('data-project'))) {
+            const restoreFocus = row === focused;
+            row.remove();
+            if (restoreFocus) rowOf(id)?.focus({ preventScroll: true });
+          }
+        });
+      });
     },
     /* a new install or a reset of setup's progress (FO-222 round 2, F3, F4): the Projects setup made go, and an active id
        naming one of them; with all, any active id (a new install opens in the page's own Project). Called before every
