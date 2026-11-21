@@ -111,6 +111,11 @@ are not this work. The rest fail only here, each for a change made on purpose:
 Two things failed once and passed when run again: `settings-inspector-fit` (a notice hung over the button it
 clicks; two more runs pass) and the Adjust NieR part of `settings-look-editors` in the sandbox view.
 
+After the examples were made as wide as they were (the same day, later), the seven checks that touch the Customize
+dialogs or the editor were run again on that build. `settings-sheet-in-view`, `editor-build-completion`,
+`editor-build-input`, `editor-style-scope` and `look-menu-over-editor` pass. `settings-look-editors` and
+`settings-menus-customize` fail only on the rows in the table above, and the second passes on the unchanged page.
+
 **Not proven by stream F's kit on this build:** `settings-min-text`'s "no label wraps to more lines" comparison could
 not run, for the reason in the table. What stands in for it: this work only removes text or leaves it as it is (no
 size grows), nothing in the Settings styles is under 11 px, and at 740 and 860 px wide none of the 74 views has
