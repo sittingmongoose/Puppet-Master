@@ -142,14 +142,25 @@ async function rig(t) {
   if (!cdp) t.log('the Mac recorder freezes screencast frames: the mark is not judged on pixels on this run');
   let frames = null;
   if (cdp) cdp.on('Page.screencastFrame', e => { cdp.send('Page.screencastFrameAck', { sessionId: e.sessionId }).catch(() => {}); if (frames) frames.push({ wall: e.metadata.timestamp * 1000, data: e.data }); });
-  const film = async act => {
+  const film = async (act, { shiftTab = false } = {}) => {
     if (!cdp) { await act(); await f.waitForTimeout(1200); return null; }
+    if (shiftTab) await f.evaluate(() => {
+      window.__fo96ShiftTabAt = null;
+      window.addEventListener('keydown', function stamp(e) {
+        if (!e.isTrusted || e.key !== 'Tab' || !e.shiftKey) return;
+        window.__fo96ShiftTabAt = performance.timeOrigin + e.timeStamp;
+        window.removeEventListener('keydown', stamp, true);
+      }, true);
+    });
     frames = []; await cdp.send('Page.startScreencast', { format: 'png', everyNthFrame: 1, maxWidth: 1920, maxHeight: 1080 });
     for (let i = 0; i < 60 && !frames.length; i++) await f.waitForTimeout(25);
     const at = Date.now(); await act(); await f.waitForTimeout(1200);
     /* in frame order: screencast frames can arrive out of it, and a late frame from before the press, read after one from
        after it, would end the Shift+Tab lead-in early and count as a missing ring (a film showed the ring move in one frame) */
-    await cdp.send('Page.stopScreencast').catch(() => {}); const got = frames.sort((p, q) => p.wall - q.wall); frames = null; return { at, got };
+    await cdp.send('Page.stopScreencast').catch(() => {}); const got = frames.sort((p, q) => p.wall - q.wall); frames = null;
+    const keyAt = shiftTab ? await f.evaluate(() => window.__fo96ShiftTabAt) : null;
+    if (shiftTab && !Number.isFinite(keyAt)) throw new Error('Shift+Tab keydown did not reach the app frame');
+    return { at, keyAt, got };
   };
   const boxOf = async sel => { const l = f.locator(sel); return (await l.count()) ? l.first().boundingBox() : null; };
   // the accent as the tile resolves it, in 8-bit sRGB (the canvas converts any CSS colour)
@@ -159,9 +170,8 @@ async function rig(t) {
     c.fillStyle = col; c.fillRect(0, 0, 1, 1); return Array.from(c.getImageData(0, 0, 1, 1).data); }, k);
   // every frame of a press, judged: the tile is still (a focused tile stands still), the lens's resting box is read after
   let crops = 0;   /* the first 24 failing frames of a test are cropped */
-  // from: the control the key focus left, when a press moves it (Shift+Tab): the frames before the press shows, which
-  // still hold that control's whole ring and not yet this one's, are passed over, only while they lead (a ring that goes
-  // missing later still fails)
+  // Shift+Tab can leave the previous ring on leading frames before keydown and on the first frame within one 60 Hz
+  // interval after it. Use the key event's epoch time, on the same clock as the compositor frame timestamps.
   const frameFaults = async (look, label, k, cap, from = null) => {
     const tile = await boxOf(`#activityBar .icon[data-ab-id="${k}"] .symbol`), lens = await boxOf('#lg-lenses .lg-lens[data-lg-for="rail-icons"]'), ink = await inkOf(k);
     const prev = from ? await boxOf(`#activityBar .icon[data-ab-id="${from}"] .symbol`) : null;
@@ -171,15 +181,19 @@ async function rig(t) {
     for (const fr of cap.got) {
       const im = decodeTop(Buffer.from(fr.data, 'base64'), rows), sd = better(ringSides(im, tile, ink), near && ringSides(im, near, ink));
       const whole = Object.values(sd).every(v => v.share >= 0.9);
-      if (lead && !whole && Object.values(ringSides(im, prev, ink)).every(v => v.share >= 0.9)) { passed++; continue; }
+      if (lead && fr.wall <= cap.keyAt + 1000 / 60 && !whole && Object.values(ringSides(im, prev, ink)).every(v => v.share >= 0.9)) {
+        lead = fr.wall < cap.keyAt;
+        passed++;
+        continue;
+      }
       lead = false;
       if (whole) continue;
-      const ms = Math.round(fr.wall - cap.at);
+      const ms = Math.round(fr.wall - (cap.keyAt ?? cap.at));
       bad.push({ ms, sides: Object.fromEntries(Object.entries(sd).map(([q, v]) => [q, `${v.share} ${v.median}`])) });
       const span = prev ? { x: Math.min(tile.x, prev.x), y: Math.min(tile.y, prev.y), width: Math.max(tile.x + tile.width, prev.x + prev.width) - Math.min(tile.x, prev.x), height: Math.max(tile.y + tile.height, prev.y + prev.height) - Math.min(tile.y, prev.y) } : tile;
       if (bad.length <= 4 && crops++ < 24 && t.run?.dir) { const dir = join(t.run.dir, 'ring-frames'); mkdirSync(dir, { recursive: true }); cropPng(im, span, join(dir, `${look}-${label.replace(/[^a-z0-9]+/gi, '-')}-${ms}ms.png`)); }
     }
-    t.log(`${look} ${label}: ${seen} frames on pixels${passed ? ` (${passed} leading frames still before the press)` : ''}, ink ${ink.slice(0, 3)}, ${bad.length} without the ring at 3:1 on every side${bad.length ? ' ' + JSON.stringify(bad.slice(0, 6)) : ''}`);
+    t.log(`${look} ${label}: ${seen} frames on pixels${passed ? ` (${passed} leading frames with the previous ring)` : ''}, ink ${ink.slice(0, 3)}, ${bad.length} without the ring at 3:1 on every side${bad.length ? ' ' + JSON.stringify(bad.slice(0, 6)) : ''}`);
     return { seen: seen - passed, bad };
   };
   const judge = async (look, label, k, cap) => {
@@ -359,7 +373,7 @@ async function pointerRoutes(t) {
         await ready(look);
         if (r.pre) await r.pre();
         if (r.load) { await f.evaluate(ms => { window.__fo96Stall.arm = ms; }, r.load); armed++; }
-        const cap = await film(async () => { await t.mark(`${look}: ${r.name} ${i + 1}`); await r.act(); });
+        const cap = await film(async () => { await t.mark(`${look}: ${r.name} ${i + 1}`); await r.act(); }, { shiftTab: r.from === 'search' });
         if (r.after) await r.after();
         const s = await state('files');
         const ok = s.active === 'files' && s.keyFocus === true && (r.end === 'files' ? s.files : s.search);
