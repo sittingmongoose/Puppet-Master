@@ -558,7 +558,7 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force, cell) =>
 	const R = (e, label) => geometry(e, label);
 	const out = { n: 0, validPairs: 0, validFrames: 0, leavingPairs: 0, initialHiddenFrames: 0, geometryError: '', off: 0, offWhy: '', moving: 0, movingMs: 0, boxFrames: 0, worstBox: 0, worst: 0, at: null, kinds: { tilt: 0, swing: 0, hop: 0, cheer: 0, propKick: 0 } };
 	const was = { tilt: false, swing: false, hop: false, cheer: false, kick: false };
-	let rnd = null, restoreN = 0, prevV = null, lastPaint = -Infinity;
+	let rnd = null, restoreN = 0, prevV = null, lastPaint = -Infinity, lastStageTime = null;
 	const t0 = performance.now();
 	const deadline = t0 + ms + (cell ? 18000 : 0);
 	const entranceSeen = cell?.layer?.classList.contains('o55-entering');
@@ -566,6 +566,7 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force, cell) =>
 	out.wakeFrom = null;
 	out.judgeFrom = null;
 	out.paintFrames = 0;
+	out.paintMs = 0;
 	out.lowFrames = 0;
 	// Pip's movement as it is painted, judged per drawn part (FO-50 guard; T42, tool batch 3). retro-c6 read the head's and
 	// the hand's group matrices and counted a frame when either changed by .01 stage units: a head held still while the
@@ -775,7 +776,7 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force, cell) =>
 		const r1 = (v) => Math.round(v * 100) / 100;
 		Object.assign(out, { travelUnit: 'device px', dpr: DPR, headMs: parts.head.ms, handMs: parts.hand.ms, headMoves: parts.head.n, handMoves: parts.hand.n, headTravelPx: r1(parts.head.travel), handTravelPx: r1(parts.hand.travel), headRebuilt: parts.head.rebuilt, handRebuilt: parts.hand.rebuilt, movingMs: Math.min(parts.head.ms, parts.hand.ms), moving: Math.min(parts.head.n, parts.hand.n) });
 	};
-	while (performance.now() < deadline && (cell ? out.judgeFrom === null || performance.now() - t0 - out.judgeFrom < ms : performance.now() - t0 < ms)) {
+	while (performance.now() < deadline && (!cell || out.paintMs < ms)) {
 		await new Promise((r) => requestAnimationFrame(() => r()));
 		out.n++;
 		// Retro holds each distinct drawn pose for 50 ms; unchanged rAF samples contribute no motion.
@@ -816,12 +817,16 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force, cell) =>
 				&& !(s2.moodUntil > s2.t) && Math.abs(ps.dy) < 1 && Math.abs(ps.dyv) < 5
 				&& !s2.content.getAnimations().some((animation) => animation.pending || animation.playState === 'running')
 				&& props.some((p) => p.state !== 'out')) out.judgeFrom = Math.round(tNow - t0);
-			if (!nominal) {
+			if (out.judgeFrom !== null && nominal && !s2.held && !s2.sleepZ) {
+				if (lastStageTime !== null) out.paintMs += Math.max(0, (s2.t - lastStageTime) * 1000);
+				lastStageTime = s2.t;
+			} else {
+				lastStageTime = null;
 				parts.head.ref = null;
 				parts.hand.ref = null;
 			}
 		}
-		if ((!cell || (out.judgeFrom !== null && nominal)) && tNow - lastPaint >= 50) {
+		if ((!cell || lastStageTime !== null) && tNow - lastPaint >= 50) {
 			lastPaint = tNow;
 			let hP, cP;
 			try { hP = painted(s2, s2.gHead, 'head'); cP = painted(s2, s2.gCtl, 'hand'); }
@@ -923,13 +928,14 @@ async function awakeMotion(t, mode) {
 				if (r.err) { await t.check(`${tag}: the stage`, false, r.err); continue; }
 				for (const k of Object.keys(r.kinds)) total[k] += r.kinds[k];
 				total.boxFrames += r.boxFrames;
-				const why = JSON.stringify({ frames: r.n, validPairs: r.validPairs, validFrames: r.validFrames, wakeFrom: r.wakeFrom, judgeFrom: r.judgeFrom, paintFrames: r.paintFrames, lowFrames: r.lowFrames, geometryError: r.geometryError, headMs: Math.round(r.headMs), handMs: Math.round(r.handMs), headMoves: r.headMoves, handMoves: r.handMoves, headTravelPx: r.headTravelPx, handTravelPx: r.handTravelPx, kinds: r.kinds, boxFrames: r.boxFrames, worstBox: Math.round(r.worstBox), at: r.at });
+				const why = JSON.stringify({ frames: r.n, validPairs: r.validPairs, validFrames: r.validFrames, wakeFrom: r.wakeFrom, judgeFrom: r.judgeFrom, paintFrames: r.paintFrames, paintMs: Math.round(r.paintMs), lowFrames: r.lowFrames, geometryError: r.geometryError, headMs: Math.round(r.headMs), handMs: Math.round(r.handMs), headMoves: r.headMoves, handMoves: r.handMoves, headTravelPx: r.headTravelPx, handTravelPx: r.handTravelPx, kinds: r.kinds, boxFrames: r.boxFrames, worstBox: Math.round(r.worstBox), at: r.at });
 				await t.check(`${tag}: head and eligible props have valid visible geometry`, !r.geometryError, why, { hard: true });
 				await t.check(`${tag}: positive valid measurement coverage`, r.validPairs > 0 && r.validFrames > 0, why, { hard: true });
 				await t.check(`${tag}: full motion remains requested`, !r.explicitlyOff, why);
-				const sampled = r.judgeFrom !== null && r.paintFrames >= 8;
+				const sampled = r.judgeFrom !== null && r.paintFrames >= 8 && (r.paintMs >= 10000
+					|| (r.moving >= PART_STEPS && Math.min(r.headTravelPx, r.handTravelPx) >= TRAVEL_FLOOR_DPX));
 				await t.check(`${tag}: post-wake motion sample complete`, sampled,
-					`Sampling incomplete: need the screen entrance, a new wake, an incoming prop and at least eight non-adaptive paint samples; ${why}`);
+					`Sampling incomplete: need the screen entrance, a new wake, an incoming prop and sufficient time in full motion; ${why}`);
 				if (sampled) {
 					await t.check(`${tag}: Pip's drawn head changed visibly (painted, >= 1 device px) at least ${PART_STEPS} times`, r.headMoves >= PART_STEPS, why);
 					await t.check(`${tag}: Pip's drawn hand changed visibly (painted, >= 1 device px) at least ${PART_STEPS} times`, r.handMoves >= PART_STEPS, why);
