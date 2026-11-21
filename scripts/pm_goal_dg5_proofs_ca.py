@@ -62,7 +62,7 @@ PROOFS = {
         "payload_schema_id. Source custody (_require_progress) proves the metadata "
         "is the captured original, so the equality is fixed before freeze_event.",
         [(C1, 40), (C1, 358), (C1, 573), (OWN, 113),
-         ('Plans/event_family_registry.json', 497)],
+         ('Plans/event_family_registry.json', 589)],
         ['dg5/site/pm_goal_dg_ca_c1.py:436']),
     'dg5/site/pm_goal_dg_ca_c1.py:823': _p(
         "replay captures the Storage cell generation, then only sir.accept runs "
@@ -174,14 +174,6 @@ PROOFS = {
         [(AS, 522), (AS, 750)],
         ['dg5/site/pm_goal_dg_ca_assignment.py:204',
          'dg5/site/pm_goal_dg_ca_assignment.py:205']),
-    'dg5/site/pm_goal_test_owner_adapters.py:481': _p(
-        "type(handle) is OriginalHandle is entailed by the next check "
-        "handle in self._handles (:399): handles enter _handles only through "
-        "_issue, which mints OriginalHandle instances, so anything passing "
-        ":399 has the exact type, and anything failing :398 also fails :399. "
-        ":398 can therefore never refuse alone; :399 closes by presence.",
-        [(AD, 480), (AD, 481)],
-        ['dg5/site/pm_goal_test_owner_adapters.py:482']),
     'dg5/site/pm_goal_dg_ca_assignment.py:600': _p(
         "The header measured is S.event_header of the expected producer: exactly "
         "seven short strings (event_id, event_type, schema_id/version, "
@@ -228,14 +220,6 @@ PROOFS = {
         "sole refusal, and :587 is witnessed by a single-defect negative.",
         [(C1, 644), (C1, 646), (C1, 587), (ST, 1638)],
         ['dg5/site/pm_goal_dg_ca_c1.py:587']),
-    'dg5/site/pm_goal_dg_ca_owners.py:524': _p(
-        "domain_generation is set to 1 in the same install_writer_domain call "
-        "that writes the domain cell, and never reset; a second install that "
-        "somehow passed :524 would put the domain cell with expected=None "
-        "and refuse at the Storage CAS-absent check. The in-memory flag and "
-        "the stored cell are the same fact fixed by the first install.",
-        [(OWN, 524), (OWN, 540), (OWN, 546)],
-        ['dg5/site/pm_goal_test_storage.py:1654']),
     'dg5/site/pm_goal_test_storage.py:1602': _p(
         "authenticate_receipt compares the presented first-append receipt "
         "with the custody row's receipt; publish_control then recomputes the "
@@ -269,22 +253,6 @@ PROOFS = {
         "check can never refuse after the issuer check passes.",
         [(ST, 1253), (ST, 1271), (ST, 1261)],
         ['dg5/site/pm_goal_test_storage.py:1260']),
-    'dg5/site/pm_goal_test_owner_adapters.py:625': _p(
-        "AppendOwner.event checks type(handle) is OriginalHandle immediately "
-        "before the _events membership check at :543; _events is a "
-        "WeakKeyDictionary keyed only by OriginalHandle('event') instances "
-        "minted in append_original, so any handle passing :543 has the exact "
-        "type, and the type check can never refuse alone.",
-        [(AD, 624), (AD, 625), (AD, 602)],
-        ['dg5/site/pm_goal_test_owner_adapters.py:626']),
-    'dg5/site/pm_goal_test_owner_adapters.py:631': _p(
-        "AppendOwner.first_receipt checks type(handle) is OriginalHandle "
-        "immediately before the _events membership check at :549; _events is "
-        "keyed only by OriginalHandle('event') instances minted in "
-        "append_original, so any handle passing :549 has the exact type, "
-        "and the type check can never refuse alone.",
-        [(AD, 630), (AD, 631), (AD, 602)],
-        ['dg5/site/pm_goal_test_owner_adapters.py:632']),
     'dg5/site/pm_goal_test_storage.py:1056': _p(
         "_index_group indexes one durable group's frames; on the append "
         "path the group's event ids were required fresh and group-unique "
@@ -302,13 +270,6 @@ PROOFS = {
         "be indexed.",
         [(ST, 1057), (ST, 1463), (ST, 1466)],
         ['dg5/site/pm_goal_test_storage.py:1463']),
-    'dg5/site/pm_goal_test_storage.py:1534': _p(
-        "append writes the member frames and commit frame, fsyncs, then "
-        "scans the same segment bytes back; the scan's last group commit is "
-        "decoded from the commit frame just written from the in-memory "
-        "commit dict, with no other writer able to interleave (single "
-        "synchronous call, segment truncated to the watermark first).",
-        [(ST, 1509), (ST, 1531), (ST, 1534)]),
     'dg5/site/pm_goal_test_storage.py:1564': _p(
         "The custody row is constructed in _custody_row entirely from the "
         "schema-validated stored event (validate_event_record at append) "
@@ -357,26 +318,6 @@ PROOFS = {
         "events; no family path passes a non-str component.",
         [(ST, 163), (ST, 189)],
         ['dg5/site/pm_goal_test_storage.py:189']),
-    'dg5/site/pm_goal_test_owner_adapters.py:321': _p(
-        "register is called only from TestOwner.__init__ with the owner's "
-        "class-level role literal (every owner class in the DG lanes declares "
-        "a non-empty str role, and AssociationOwner receives one of the three "
-        "literal association roles from World), so role is always a "
-        "non-empty str at registration.",
-        [(AD, 320), (OWN, 154)]),
-    'dg5/site/pm_goal_test_owner_adapters.py:322': _p(
-        "owner_id is minted per TestOwner instance at construction (uuid-"
-        "based TEST_ONLY id) and register is called once per instance from "
-        "__init__; two live owners cannot present the same id to one "
-        "registry through any family construction path.",
-        [(AD, 321)]),
-    'dg5/site/pm_goal_test_owner_adapters.py:466': _p(
-        "Every _issue ref is either freshly minted by uid() (decision, "
-        "registration, dispatch, member, receipt refs) or the sequence-"
-        "formatted TEST_ONLY:original ref with a per-issue incrementing "
-        "uint64 sequence, so a ref cannot already be in _originals when "
-        "issued through any family owner call.",
-        [(AD, 465), (AD, 462)]),
     'dg5/C3/control_epoch/number': _p(
         "The latch control_epoch increment is unreachable at the ceiling: "
         "before_stop_entry (called at latch before the increment) builds the "
@@ -446,13 +387,6 @@ PROOFS = {
         "(witnessed: tampering the result scope refuses at :874 first).",
         [(R3, 812), (N3, 874)],
         ['dg5/site/pm_goal_dg_ca3_native.py:874']),
-    'dg5/site/pm_goal_dg_ca3_native.py:803': _p(
-        "aggregate is called only from run_native, which is the only caller that "
-        "sets run['d05'] (at the end of aggregate itself); a second aggregate "
-        "through run_native is refused earlier by the scheduler-stop store CAS "
-        "on its fixed key, so 'd05' in run with aggregate re-entered cannot "
-        "arise through any route call.",
-        [(N3, 803), (N3, 805), (N3, 850)]),
     'dg5/site/pm_goal_dg_ca3_native.py:805': _p(
         "aggregate reads run['scheduler_stop_key'] only after scheduler.stop "
         "in the same run_native call has set it unconditionally (:635) before "
@@ -658,11 +592,6 @@ PROOFS = {
         "check can reach transact, and no write runs between the final "
         "derive and the transaction in the same call.",
         [(BO, 291), ('scripts/pm_goal_dg_cb_migration.py', 778)]),
-    'dg5/site/pm_goal_dg_cb_owners.py:286': _p(
-        "Every transact check in the family is constructed in derive() as "
-        "dict(table=..., key=..., expected=...) - exactly the required key "
-        "set - so the shape check cannot refuse on any family path.",
-        [(BO, 286), ('scripts/pm_goal_dg_cb_migration.py', 613)]),
     'dg5/site/pm_goal_dg_cb_owners.py:289': _p(
         "Derive builds checks only with expected=<captured version> (never "
         "None), so the expected-is-None absent branch of MigrationStorage."
@@ -743,14 +672,6 @@ PROOFS = {
         "all present in FAMILY_SCHEMAS; no caller passes a caller-supplied "
         "family string.",
         [(BO, 228), (BO, 395)]),
-    'dg5/site/pm_goal_dg_cb_owners.py:230': _p(
-        "The schema ids lookup values are the stored wrappers' own "
-        "schema_id fields, written by the issuing owners from the same "
-        "FAMILY_SCHEMAS table (wrap/store_form at issuance), so a stored "
-        "original's schema_id is always a table key for its family; a "
-        "tampered wrapper is refused by its issuance-origin sha binding "
-        "before any schema_ref_for call in capture authentication.",
-        [(BO, 230), (BO, 395)]),
     'dg5/site/pm_goal_dg_cb_migration.py:782': _p(
         "Commit writes are the derive() candidate: manifest parts are "
         "grouped by manifest_parts under the same PART_CAP probe size, "
@@ -840,29 +761,11 @@ PROOFS = {
         "cannot differ.",
         [('scripts/pm_goal_dg_cb_migration.py', 920)],
         ['dg5/site/pm_goal_dg_cb_migration.py:868']),
-    'dg5/site/pm_goal_dg_cb_migration.py:922': _p(
-        "The withdrawal value is the scope + three ids + the stored "
-        "original result + fenced domain selection + preserved pending "
-        "ids; the original result is itself a commit write already bounded "
-        "by stored_part_cap as a stored part, and the remaining fields are "
-        "fixed-size ids, so the operation measure cannot reach PART_CAP "
-        "for any result commit could have written.",
-        [('scripts/pm_goal_dg_cb_migration.py', 922), ('scripts/pm_goal_dg_cb_migration.py', 782)],
-        ['dg5/site/pm_goal_dg_cb_migration.py:782']),
     'dg5/site/pm_goal_dg_cb_owners.py:228': _p(
         "schema_ref_for is called only from image()/physical issuance "
         "paths with the owners' fixed family names, every one a key of "
         "FAMILY_SCHEMAS; no caller passes a caller-supplied family.",
         [(BO, 228), (BO, 395)]),
-    'dg5/d06/revision/number': _p(
-        "after_rev is computed only in d06.prepare, whose every refusal is "
-        "caught by run_native and recorded as d06_refusal (the route entry "
-        "accepts), so the overflow can never be the refusal of a family "
-        "entry; and the body revision it increments is the run revision "
-        "counter (see run/revision), starting at 1 and advancing once per "
-        "genuine transition in the same process.",
-        [(N3, 949)],
-        ['dg5/run/revision/number']),
     'dg5/site/pm_goal_dg_ca3_native.py:947': _p(
         "Same prepare-only argument as d06/revision: unsupported_status is "
         "checked only in d06.prepare, whose refusals run_native catches and "
@@ -904,4 +807,225 @@ PROOFS = {
         "from that exact cell); in both, the compared stored value is the "
         "value passed, read back synchronously with no intervening write.",
         [(OWN, 176), (OWN, 239), (OWN, 541)]),
+}
+
+
+# Withdrawn written proofs (lead pm-ea-lead 1121094214-9517 (1)). They are kept for the record with the
+# sites the re-bind patch gave them, and are deliberately outside PROOFS so no tool loads them as proofs:
+# pm_goal_dg5_justified.written_proofs and keycheck.py read only PROOFS. Do not move them back without a new
+# argument that survives the cited kills.
+WITHDRAWN = {
+    'dg5/site/pm_goal_test_owner_adapters.py:481': dict(
+        reason=(
+            'Contradicted at the current line: goal_run.started/stage7/wrong-handle-type/invalid is KILLED at '
+            ':481 (stage-8 calls.json on adapter 707094ca: with :481 cut the call is accepted), so the type '
+            'check does refuse alone and is not entailed by :482. Goal Cancelled :481 credits only by its own '
+            'kill (lead pm-ea-lead 1121094214-9517 (1)).'
+        ),
+        proof=_p(
+            "type(handle) is OriginalHandle is entailed by the next check "
+            "handle in self._handles (:482): handles enter _handles only through "
+            "_issue, which mints OriginalHandle instances, so anything passing "
+            ":482 has the exact type, and anything failing :481 also fails :482. "
+            ":481 can therefore never refuse alone; :482 closes by presence.",
+            [(AD, 481), (AD, 482)],
+            ['dg5/site/pm_goal_test_owner_adapters.py:482']),
+    ),
+    'dg5/site/pm_goal_test_owner_adapters.py:625': dict(
+        reason=(
+            'Contradicted at the current line: the shared re-check witness event_subclass_handle:624 puts a '
+            'subclass handle into appender._events (a sealed stored-cell rewrite) and is KILLED at :625, so '
+            'the type check refuses alone. The row closes by that kill (goal.cancelled-009.06), not by this '
+            'proof (lead pm-ea-lead 1121094214-9517 (1)).'
+        ),
+        proof=_p(
+            "AppendOwner.event checks type(handle) is OriginalHandle immediately "
+            "before the _events membership check at :626; _events is a "
+            "WeakKeyDictionary keyed only by OriginalHandle('event') instances "
+            "minted in append_original, so any handle passing :626 has the exact "
+            "type, and the type check can never refuse alone.",
+            [(AD, 625), (AD, 626), (AD, 603)],
+            ['dg5/site/pm_goal_test_owner_adapters.py:626']),
+    ),
+    'dg5/site/pm_goal_test_owner_adapters.py:631': dict(
+        reason=(
+            'Contradicted at the current line: the shared re-check witness first_receipt_subclass_handle:630 '
+            'is KILLED at :631, so the type check refuses alone. The row closes by that kill '
+            '(goal.cancelled-009.07), not by this proof (lead pm-ea-lead 1121094214-9517 (1)).'
+        ),
+        proof=_p(
+            "AppendOwner.first_receipt checks type(handle) is OriginalHandle "
+            "immediately before the _events membership check at :632; _events is "
+            "keyed only by OriginalHandle('event') instances minted in "
+            "append_original, so any handle passing :632 has the exact type, "
+            "and the type check can never refuse alone.",
+            [(AD, 631), (AD, 632), (AD, 603)],
+            ['dg5/site/pm_goal_test_owner_adapters.py:632']),
+    ),
+    'dg5/site/pm_goal_test_owner_adapters.py:321': dict(
+        reason=(
+            'Re-judged (lead pm-ea-lead 1121094214-9517 (1)): the premise that register is only reached from '
+            "TestOwner.__init__ with a class-level role does not hold at the adapter's surface. "
+            "OwnerRegistry.register is a public method; the original call world.registry.register(owner, '') "
+            'on a Goal Cancelled World refuses at :321 alone and is accepted with :321 cut (proof-maint '
+            "rejudge registry-role-type, gated table 3cad9059233418d7 PASS), as Started's "
+            'goal_run.started/stage7/registry-role-type showed. The row closes by that kill.'
+        ),
+        proof=_p(
+            "register is called only from TestOwner.__init__ with the owner's "
+            "class-level role literal (every owner class in the DG lanes declares "
+            "a non-empty str role, and AssociationOwner receives one of the three "
+            "literal association roles from World), so role is always a "
+            "non-empty str at registration.",
+            [(AD, 321), (OWN, 154)]),
+    ),
+    'dg5/site/pm_goal_test_owner_adapters.py:322': dict(
+        reason=(
+            'Re-judged (lead pm-ea-lead 1121094214-9517 (1)): register is public, so a live owner can be '
+            'presented twice. world.registry.register(world.goal, world.goal.role) on a Goal Cancelled World '
+            'refuses at :322 alone and is accepted with :322 cut (proof-maint rejudge registry-duplicate, '
+            'gated table 1aa7962f2279b9b0 PASS). The row closes by that kill.'
+        ),
+        proof=_p(
+            "owner_id is minted per TestOwner instance at construction (uuid-"
+            "based TEST_ONLY id) and register is called once per instance from "
+            "__init__; two live owners cannot present the same id to one "
+            "registry through any family construction path.",
+            [(AD, 322)]),
+    ),
+    'dg5/site/pm_goal_test_owner_adapters.py:466': dict(
+        reason=(
+            'Re-judged (lead pm-ea-lead 1121094214-9517 (1)): TestOwner.issue accepts a caller-supplied ref, '
+            'so a ref can already be in _originals. world.goal.issue(None, {...}, ref=<an issued ref>) on a '
+            'Goal Cancelled World refuses at :466 alone and is accepted with :466 cut (proof-maint rejudge '
+            'issue-immutable, gated table 03aaf3d2a5c115dd PASS). The row closes by that kill.'
+        ),
+        proof=_p(
+            "Every _issue ref is either freshly minted by uid() (decision, "
+            "registration, dispatch, member, receipt refs) or the sequence-"
+            "formatted TEST_ONLY:original ref with a per-issue incrementing "
+            "uint64 sequence, so a ref cannot already be in _originals when "
+            "issued through any family owner call.",
+            [(AD, 466), (AD, 463)]),
+    ),
+    'dg5/site/pm_goal_dg_cb_migration.py:922': dict(
+        reason=(
+            'Withdrawn (lead pm-ea-lead 1121101954-8459 (1)) after the proof audit of 2026-11-21 '
+            '(proof-audit/AUDIT.md, audit.json, probes/). Accepting mutant on a plain schema-valid request: the '
+            'premise that the remaining fields are fixed-size ids is false. withdrawal_id has no maxLength and '
+            "appears hex-doubled in the key, while Storage caps only the value. withdrawal_id='W'*6000 (key 12279 "
+            'chars, stored value 7552 B) refuses M/withdraw/operation_cap with :922 intact and is accepted with :922 '
+            'cut (probe_gc_b.py cb_migration922).'
+        ),
+        proof=_p(
+            "The withdrawal value is the scope + three ids + the stored "
+            "original result + fenced domain selection + preserved pending "
+            "ids; the original result is itself a commit write already bounded "
+            "by stored_part_cap as a stored part, and the remaining fields are "
+            "fixed-size ids, so the operation measure cannot reach PART_CAP "
+            "for any result commit could have written.",
+            [('scripts/pm_goal_dg_cb_migration.py', 922), ('scripts/pm_goal_dg_cb_migration.py', 782)],
+            ['dg5/site/pm_goal_dg_cb_migration.py:782']),
+    ),
+    'dg5/site/pm_goal_dg_cb_owners.py:286': dict(
+        reason=(
+            'Withdrawn (lead pm-ea-lead 1121101954-8459 (1)) after the proof audit of 2026-11-21 '
+            '(proof-audit/AUDIT.md, audit.json, probes/). Accepting mutant: the premise that every transact check is '
+            'built in derive() is false; the C5 owner negatives call MigrationStorage.transact directly with '
+            'fixture-built checks. A direct transact whose absent-check dict carries one extra key refuses '
+            'tx/check_shape with :286 intact and commits with :286 cut (probe_gc_b.py cb_owners286).'
+        ),
+        proof=_p(
+            "Every transact check in the family is constructed in derive() as "
+            "dict(table=..., key=..., expected=...) - exactly the required key "
+            "set - so the shape check cannot refuse on any family path.",
+            [(BO, 286), ('scripts/pm_goal_dg_cb_migration.py', 613)]),
+    ),
+    'dg5/site/pm_goal_dg_ca3_native.py:803': dict(
+        reason=(
+            'Withdrawn (lead pm-ea-lead 1121101954-8459 (1)) after the proof audit of 2026-11-21 '
+            '(proof-audit/AUDIT.md, audit.json, probes/). Accepting mutant: "d05 in run with aggregate re-entered '
+            'cannot arise" is false under the supplement\'s in-memory run-dict edits. With r.wf_run[\'d05\'] = {} before '
+            'the first run_native, :803 refuses d05/already_aggregated intact, and with :803 cut run_native is '
+            'accepted (probe_gc_a.py native803).'
+        ),
+        proof=_p(
+            "aggregate is called only from run_native, which is the only caller that "
+            "sets run['d05'] (at the end of aggregate itself); a second aggregate "
+            "through run_native is refused earlier by the scheduler-stop store CAS "
+            "on its fixed key, so 'd05' in run with aggregate re-entered cannot "
+            "arise through any route call.",
+            [(N3, 803), (N3, 805), (N3, 850)]),
+    ),
+    'dg5/site/pm_goal_dg_cb_owners.py:230': dict(
+        reason=(
+            'Withdrawn (lead pm-ea-lead 1121101954-8459 (1)) after the proof audit of 2026-11-21 '
+            '(proof-audit/AUDIT.md, audit.json, probes/). Accepting mutant: "the origin binding refuses first" is '
+            "false; schema_ref_for (:398) runs before the origin lookup (:400-402), and the supplement's "
+            'cb_edit_reissue writes a matching origin. Reissuing the workflow body with an unknown schema_id, then '
+            'image(), refuses family/unsupported_schema intact and is accepted with schema_ref None with :230 cut '
+            '(probe_gc_b.py cb_owners230).'
+        ),
+        proof=_p(
+            "The schema ids lookup values are the stored wrappers' own "
+            "schema_id fields, written by the issuing owners from the same "
+            "FAMILY_SCHEMAS table (wrap/store_form at issuance), so a stored "
+            "original's schema_id is always a table key for its family; a "
+            "tampered wrapper is refused by its issuance-origin sha binding "
+            "before any schema_ref_for call in capture authentication.",
+            [(BO, 230), (BO, 395)]),
+    ),
+    'dg5/site/pm_goal_dg_ca_owners.py:524': dict(
+        reason=(
+            'Withdrawn (lead pm-ea-lead 1121101954-8459 (1)) after the proof audit of 2026-11-21 '
+            '(proof-audit/AUDIT.md, audit.json, probes/). Accepting mutant: "the in-memory flag and the stored cell '
+            'are the same fact" is false under the supplement\'s drop() fixture. With both writer-domain cells '
+            'dropped, a second install refuses domain/not_installed with :524 intact and is accepted with :524 cut '
+            '(probe_gc_b.py ca_owners524).'
+        ),
+        proof=_p(
+            "domain_generation is set to 1 in the same install_writer_domain call "
+            "that writes the domain cell, and never reset; a second install that "
+            "somehow passed :524 would put the domain cell with expected=None "
+            "and refuse at the Storage CAS-absent check. The in-memory flag and "
+            "the stored cell are the same fact fixed by the first install.",
+            [(OWN, 524), (OWN, 540), (OWN, 546)],
+            ['dg5/site/pm_goal_test_storage.py:1654']),
+    ),
+    'dg5/d06/revision/number': dict(
+        reason=(
+            'Withdrawn (lead pm-ea-lead 1121101954-8459 (1)) after the proof audit of 2026-11-21 '
+            '(proof-audit/AUDIT.md, audit.json, probes/). Refuted premise: "every refusal in prepare is caught by '
+            'run_native" is false; run_native catches only AdapterRefusal (route.py:774) and NR.uint64 raises '
+            'NumruleRefusal. With the revision at 2^64-2 plus one genuine transition, run_native refuses '
+            'd06/revision/numrule/integer_range intact; with the check cut a later StorageRefusal follows, so the row '
+            'is the only refusal of its kind and rests only on this false proof (probe_gc_a.py d06rev).'
+        ),
+        proof=_p(
+            "after_rev is computed only in d06.prepare, whose every refusal is "
+            "caught by run_native and recorded as d06_refusal (the route entry "
+            "accepts), so the overflow can never be the refusal of a family "
+            "entry; and the body revision it increments is the run revision "
+            "counter (see run/revision), starting at 1 and advancing once per "
+            "genuine transition in the same process.",
+            [(N3, 949)],
+            ['dg5/run/revision/number']),
+    ),
+    'dg5/site/pm_goal_test_storage.py:1534': dict(
+        reason=(
+            'Withdrawn (lead pm-ea-lead 1121101954-8459 (1)) after the proof audit of 2026-11-21 '
+            '(proof-audit/AUDIT.md, audit.json, probes/). Refuted premise: a readback of genuine frames is not always '
+            'clean. The EventRecord event_type pattern admits pm.seglog.group_commit (= CONTROL_TYPE); a plain '
+            'TestOwnerStorage.append of such a candidate fails control_header_mismatch on readback, so :1534 is the '
+            'only refusal (intact: append/readback; cut: IndexError on a fresh segment or index/duplicate_event_id '
+            'after an earlier group; probe_1534.py). Duplicate of the proofs_shared entry, withdrawn with it.'
+        ),
+        proof=_p(
+            "append writes the member frames and commit frame, fsyncs, then "
+            "scans the same segment bytes back; the scan's last group commit is "
+            "decoded from the commit frame just written from the in-memory "
+            "commit dict, with no other writer able to interleave (single "
+            "synchronous call, segment truncated to the watermark first).",
+            [(ST, 1509), (ST, 1531), (ST, 1534)]),
+    ),
 }
