@@ -27,14 +27,16 @@ PROOFS = {
     SITE + '520': dict(
         kind='code-selection',
         families=FAMILIES,
-        depends_on=[SITE + '539'],
-        sites=[(ST, 520), (ST, 539)],
+        depends_on=[SITE + '525', SITE + '530'],
+        sites=[(ST, 520), (ST, 525), (ST, 530)],
         argument=(
-            'decode_frame at :520 requires at least PREFIX (48) bytes; :539 requires '
-            'end-offset-PREFIX >= header_len+payload_len with both lengths unsigned, hence '
-            '>= 0. Any buffer failing :520 has end-offset-PREFIX negative, so :539 always '
-            'refuses next (the truncated_prefix chain witnesses this). :520 selects the exact '
-            'prefix_truncated code and never gates acceptance alone.')),
+            'decode_frame at :520 requires at least PREFIX (48) bytes. With :520 cut a '
+            'shorter buffer gives a prefix shorter than 48 bytes, and :539 is never '
+            'reached: a genuine truncation fails the prefix CRC at :525, and a buffer '
+            'whose CRC was forged to match still refuses at :530, because prefix[44:48] '
+            'of a short prefix can never be four bytes (every 8..47-byte truncation and '
+            'every resealed 44..47-byte prefix refused at :525 or :530). :520 selects the '
+            'exact prefix_truncated code and never gates acceptance alone.')),
     SITE + '537': dict(
         kind='entailed-by-genuine-frame-bounds',
         families=FAMILIES,
@@ -55,13 +57,14 @@ PROOFS = {
     SITE + '577': dict(
         kind='code-selection',
         families=FAMILIES,
-        depends_on=[SITE + '581'],
-        sites=[(ST, 577), (ST, 581), (ST, 468)],
+        depends_on=[SITE + '470'],
+        sites=[(ST, 577), (ST, 581), (ST, 468), (ST, 470)],
         argument=(
             'decode_frame at :577 requires the decoded data payload to be a dict; the next '
             'statement validates it as an event record (validate_event_record, '
-            'pm_goal_test_storage.py:468), whose schema type is object, and converts any '
-            'refusal at :581. A non-dict payload therefore still refuses at :581 with :577 '
+            'pm_goal_test_storage.py:468), whose first check at :470 refuses any '
+            'non-dict, and converts that refusal at :581. A non-dict payload therefore '
+            'still refuses at :470 (surfacing at :581) with :577 '
             'cut (the decode_payload_shape chain witnesses exactly this), so :577 selects '
             'the exact payload_shape code and never gates acceptance alone.')),
     OSITE + '303': dict(
@@ -119,19 +122,23 @@ PROOFS = {
     SITE + '1564': dict(
         kind='entailed-by-custody-construction',
         families=FAMILIES,
-        depends_on=[],
-        sites=[(ST, 1544), (ST, 1564), ('Plans/event_append_receipt_contracts.schema.json', 492)],
+        depends_on=[SITE + '1426'],
+        sites=[(ST, 1544), (ST, 1564), ('Plans/event_append_receipt_contracts.schema.json', 492), (ST, 1426)],
         argument=(
             '_custody_row (:1544-1564) builds the custody_v2 row only from an event just '
             'returned by read_event (frame-validated against the whole EventRecord root: '
-            'event_id, event_type, idempotency_key and redaction_profile already satisfy '
-            'the identical string bounds), the indexed scope partition and group digest, '
+            'event_id, event_type and idempotency_key already satisfy the identical '
+            'string bounds; redaction_profile does not, since EventRecord admits three '
+            'values and custody_v2 only no_secrets, but every append path required the '
+            'candidate redaction_profile to be no_secrets at :1426, '
+            'append/candidate/redaction_profile, before the event was stored), the '
+            'indexed scope partition and group digest, '
             'the verbatim first_append_receipt (constructed in the AppendReceipt shape '
             'custody_v2 references), a computed segment-ref binding, and digests computed '
             'by NR.producer_digest / NR.full_value_commitment over that same event '
             '(custody_v2, event_append_receipt_contracts.schema.json:492). Every field is '
             'a schema constant, a computed digest, or a verbatim copy already bounded '
-            'identically at its source, so no complete issue_first_receipt call can make '
+            'at its source (redaction_profile by :1426), so no complete issue_first_receipt call can make '
             'this row refuse alone.')),
     SITE + '1633': dict(
         kind='code-selection',
