@@ -619,7 +619,7 @@ class ForkedExample(w3.OwnerExample):
                     out['result'] = self.call_on_copy(world, action, inputs, edit, initial, store_copy)
                 else:
                     out['result'] = self.call(world, action, inputs, edit)
-            out['after_state'] = self.after_state(world, inputs)
+            out['after_state'] = self.after_state(world, inputs, edit)
             if edit is None and self.observed is not None:
                 plain, bank, document, binding = self.observed
                 observation = out['result']['observations'][-1]
@@ -639,14 +639,21 @@ class ForkedExample(w3.OwnerExample):
             out['knob_calls'] = self.child['knob_calls']
         return out
 
-    def after_state(self, world, inputs):
-        """This trial's store digest and owner in-memory digest, taken in the child after the call."""
+    def after_state(self, world, inputs, edit):
+        """This trial's store digest and owner in-memory digest, taken in the child after the call.
+
+        Only the judged trials (the defect, its cut and its restoration: edit set) walk the
+        owners; a control trial records its store digest only (owner_reason 'not requested').
+        """
         import pm_goal_dg5_boundaries as bridge
 
         if self.writes:
             store = self.child.get('store_after_sha256')
         else:
             store = hashlib.sha256(pickle.dumps(self.store_state(world), protocol=5)).hexdigest()
+        if edit is None:
+            return dict(store_sha256=store, owner_sha256=None, owner_hook=FAMILY, owner_reason='not requested',
+                        owner_objects=None)
         saved = bridge.ACTIVE[0]
         bridge.ACTIVE[0] = False
         try:
