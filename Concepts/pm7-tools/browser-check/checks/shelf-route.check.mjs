@@ -77,6 +77,19 @@ export function shelfReachStatus(e) {
   };
 }
 
+export function laterContextRows(p, sig) {
+  p.querySelectorAll('[data-shelf-later]').forEach(e => e.removeAttribute('data-shelf-later'));
+  const all = __shelf.rows(p).filter(e => __shelf.sig(e) === sig);
+  return {
+    n: all.length,
+    rows: all.slice(all.length > 1 ? 1 : 0).map((e, i) => {
+      e.setAttribute('data-shelf-later', String(i));
+      const which = (e.getAttribute('data-path') || e.getAttribute('aria-label') || e.textContent).trim().replace(/\s+/g, ' ').slice(0, 40);
+      return { i, which };
+    }),
+  };
+}
+
 // A popup trigger opens by every way the owners wire it: a press, and Enter, Space and ArrowDown on the focused trigger.
 const POPUP_INPUTS = ['mouse', 'enter', 'space', 'arrowdown'];
 const PKEY = { enter: 'Enter', space: ' ', arrowdown: 'ArrowDown' };
@@ -763,7 +776,7 @@ export default async function (t) {
     // file and folder rows apart, and apart by git status). Row kinds that share an explicit role, a box (__shelf.box) and a
     // class are one route kind: once one of them opens a menu, every other one must open that menu by every input (a
     // route that stops working fails; it does not look like a row that never had one). What each row kind opened is
-    // remembered for the later walk, which asks another row of every kind that opened a menu again after the whole panel.
+    // remembered for the later walk, which probes the remaining rows of that kind after the whole panel.
     const ruleDone = new Set();
     // T68 (opus-recheck-kit8 finding A): row kinds that live only inside collapsed tree folders (this fixture's modified
     // and added files, all below a collapsed folder) were never probed, so a dead File actions route on them passed whole.
@@ -868,9 +881,8 @@ export default async function (t) {
         }
       }
     };
-    // The later walk: after the whole panel, every pane where a row kind opened a menu is shown again, and another row of
-    // each such kind (the last one in the pane; the same one when the kind has one row) must open the same menu by every
-    // input and close on Escape.
+    // Revisit each pane with a known context menu. Ask every row beyond the first (or revisit the singleton) for
+    // the same menu by every input, and close it on Escape.
     const laterWalk = async () => {
       const kinds = ctxKinds.filter(k => k.panel === target && CTX_INPUTS.some(i => k.got[i]));
       for (const st of [...new Set(kinds.map(k => k.state))]) {
@@ -895,24 +907,25 @@ export default async function (t) {
         }
         for (const k of ks) {
           const menu = CTX_INPUTS.map(i => k.got[i]).find(Boolean);
-          const { n, which } = await panel.evaluate((p, s) => {
-            document.querySelectorAll('[data-shelf-later]').forEach(e => e.removeAttribute('data-shelf-later'));
-            const all = __shelf.rows(p).filter(e => __shelf.sig(e) === s), e = all[all.length - 1];
-            e?.setAttribute('data-shelf-later', '');
-            return { n: all.length, which: e ? (e.getAttribute('data-path') || e.getAttribute('aria-label') || e.textContent).trim().replace(/\s+/g, ' ').slice(0, 40) : null };
-          }, k.sig);
+          const { n, rows } = await panel.evaluate(laterContextRows, k.sig);
           await t.check(`${target} ${st} later walk: a ${k.sig} row is still there`, n > 0, '', { hard: true });
-          const row = panel.locator('[data-shelf-later]');
-          for (const input of CTX_INPUTS) {
-            await restPointer();
-            if (input === 'mouse') { const q = await reach(row); await t.page.mouse.click(off.x + q.x, off.y + q.y, { button: 'right' }); }
-            else { await row.focus(); await t.page.keyboard.press(KEY[input]); }
-            const got = await f.waitForFunction(m => __shelf.keys().includes(m), menu, { timeout: 3000 }).then(() => menu, () => f.evaluate(() => __shelf.keys()[0] || null));
-            await t.check(`${target} ${st} later walk: another ${k.sig} row (${which}, ${n} of the kind) opens ${menu} by ${input}`, got === menu,
-              JSON.stringify({ got, blocked: await f.evaluate(() => (window.__blockedContext || 0) + (window.__blockedContextOn || 0)) }), { hard: true });
-            await t.page.keyboard.press('Escape');
-            const shut = await f.waitForFunction(() => !__shelf.keys().length, null, { timeout: 5000 }).then(() => true, () => false);
-            await t.check(`${target} ${st} later walk: ${k.sig} by ${input} closes on Escape and leaves the side panel open`, shut && await f.locator('#sidePanelSlot').isVisible(), '', { hard: true });
+          for (const { i, which } of rows) {
+            const row = panel.locator(`[data-shelf-later="${i}"]`);
+            for (const input of CTX_INPUTS) {
+              await restPointer();
+              if (input === 'mouse') {
+                const q = await reach(row);
+                await t.check(`${target} ${st} later walk: ${which} is on top at its press point`, q.onTop, JSON.stringify(q), { hard: true });
+                await t.page.mouse.click(off.x + q.x, off.y + q.y, { button: 'right' });
+              }
+              else { await assertShown(row); await row.focus(); await t.page.keyboard.press(KEY[input]); }
+              const got = await f.waitForFunction(m => __shelf.keys().includes(m), menu, { timeout: 3000 }).then(() => menu, () => f.evaluate(() => __shelf.keys()[0] || null));
+              await t.check(`${target} ${st} later walk: ${k.sig} row (${which}, ${n === 1 ? 1 : i + 2}/${n}) opens ${menu} by ${input}`, got === menu,
+                JSON.stringify({ got, blocked: await f.evaluate(() => (window.__blockedContext || 0) + (window.__blockedContextOn || 0)) }), { hard: true });
+              await t.page.keyboard.press('Escape');
+              const shut = await f.waitForFunction(() => !__shelf.keys().length, null, { timeout: 5000 }).then(() => true, () => false);
+              await t.check(`${target} ${st} later walk: ${k.sig} row (${which}) by ${input} closes on Escape and leaves the side panel open`, shut && await f.locator('#sidePanelSlot').isVisible(), '', { hard: true });
+            }
           }
         }
       }

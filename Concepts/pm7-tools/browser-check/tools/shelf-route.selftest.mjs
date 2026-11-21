@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { runInNewContext } from 'node:vm';
 import { test } from 'node:test';
-import { copiedFullPath, pathNotePresent, pickEffectRows, shelfReachStatus } from '../checks/shelf-route.check.mjs';
+import { copiedFullPath, laterContextRows, pathNotePresent, pickEffectRows, shelfReachStatus } from '../checks/shelf-route.check.mjs';
 
 test('T78 copied path notes name the exact copied value', () => {
   assert.equal(pathNotePresent(['Copied src'], 'src', 'copy'), true);
@@ -73,4 +73,18 @@ test('T124 rejects a transparent filter on a hit-testable ancestor', () => {
   assert.equal(reachStatus({ filter: 'blur(1px) opacity(0.5)' }).shown, true);
   assert.equal(reachStatus({ filter: 'blur(1px) opacity(0)' }).slot, false);
   assert.equal(reachStatus({ filter: 'opacity(0%)' }).shown, false);
+});
+
+test('T98 later context walk includes the middle row of a known route', () => {
+  const live = ['recipes.rs', 'image.rs', 'ci.yml'].map(path => ({
+    getAttribute: () => path,
+    setAttribute: () => {},
+  }));
+  const read = runInNewContext('(' + laterContextRows.toString() + ')', {
+    __shelf: { rows: () => live, sig: () => 'modified file' },
+  });
+  const panel = { querySelectorAll: () => [] };
+  assert.deepEqual(Array.from(read(panel, 'modified file').rows, r => r.which), ['image.rs', 'ci.yml']);
+  live.splice(1);
+  assert.deepEqual(Array.from(read(panel, 'modified file').rows, r => r.which), ['recipes.rs']);
 });
