@@ -153,19 +153,44 @@ def origin_at(origin, site):
     return False
 
 
+# The stock bridge's frame constants, verbatim (stock pm_goal_dg5_boundaries.py:1102-1106 at
+# 2bfc3b9c0e): this forked bridge edition does not define them, and _stock_origin must apply the
+# stock's exact flag computation, not the harness's helper flag (N5 E2).
+STOCK_GUARD_HELPERS = frozenset(('require', 'guard', 'refuse', 'halt', 'shared_require', 'shared_refuse'))
+STOCK_CHECKER_FILES = ('pm_goal_test_numrule.py',)
+STOCK_CHECKER_FUNCTIONS = frozenset(('validate', '_checked', 'errors', 'check')) | STOCK_GUARD_HELPERS
+
+
 def _stock_origin(origin):
-    """Adapt the forked harness's refusal origin to the frame shape the shared prefix-equivalence
-    rule reads. The harness records [where, line, name, helper]; the stock bridge records
-    [where, line, name, bridge_or_guard, checker]. For root-row schema refusals the helper flag
-    marks exactly the frames the stock checker flag marks (this judge, the harness, the bridge,
-    a bank's validate path), so it maps to both; the rule functions themselves are byte-identical
-    to the stock judge's. A malformed frame list yields no guard frame: the rule fails closed."""
+    """Adapt the forked harness's refusal origin to the origin the stock judge records, so the
+    shared prefix-equivalence rule (byte-identical to the stock judge's) decides identically
+    (N5 E2, lead 1122004535-9d63).
+
+    The stock bridge (pm_goal_dg5_boundaries.refusal_origin) records five-field frames
+    [where, line, name, bridge_or_guard, checker] with bridge_or_guard = the frame is the
+    judge's own bridge file or its name in GUARD_HELPERS, checker = bridge_or_guard or the
+    file in CHECKER_FILES or the name in CHECKER_FUNCTIONS, and site = the innermost frame
+    with bridge_or_guard False: the raise line (e.g. the bank's s_world.py:110), not the owner
+    guard line. The forked harness's helper flag also marks the bank's validate path and its
+    recorded site is the innermost non-helper frame (the guard line); copying that site would
+    compare the guard line twice and never the raise line. So the stock flags are recomputed
+    here from each frame's file and function with the stock constants (this judge, the harness
+    and the bridge standing in for the stock bridge file), and the site is derived by the
+    stock's exact frame selection. A malformed frame list yields no site and no frames: the
+    rule fails closed."""
     if not isinstance(origin, dict):
         return origin
     frames = origin.get('frames') or []
     if not all(isinstance(f, (list, tuple)) and len(f) == 4 for f in frames):
-        return dict(origin, frames=[])
-    return dict(origin, frames=[[f[0], f[1], f[2], f[3], f[3]] for f in frames])
+        return dict(origin, site=None, frames=[])
+    mine = {Path(__file__).resolve().name, Path(w3.__file__).resolve().name, 'pm_goal_dg5_boundaries.py'}
+    stock_frames = []
+    for where, line, name, _helper in frames:
+        bridge_or_guard = Path(where).name in mine or name in STOCK_GUARD_HELPERS
+        checker = bridge_or_guard or Path(where).name in STOCK_CHECKER_FILES or name in STOCK_CHECKER_FUNCTIONS
+        stock_frames.append([where, line, name, bridge_or_guard, checker])
+    site = next(([f[0], f[1]] for f in reversed(stock_frames) if not f[3]), None)
+    return dict(origin, site=site, frames=stock_frames)
 
 
 class IdentityMismatch(ValueError):
