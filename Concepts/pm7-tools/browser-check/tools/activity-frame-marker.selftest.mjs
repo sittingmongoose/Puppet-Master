@@ -1,8 +1,10 @@
 // Contract tests for helpers/activity-frame-marker.mjs (PM7PERF-SHIFTTAB-PREKEY-SCREENCAST, TB9 round 2): no browser,
 // no film. The in-page counter and its capture-phase keydown are exercised by the check's own runs on the Mac.
-// Run: node tools/activity-frame-marker.selftest.mjs
+// Run: node tools/activity-frame-marker.selftest.mjs [helper.mjs]
 import assert from 'node:assert/strict';
-import { MARKER_BOX, COUNTER_BITS, markerReading, keyFrames, handoverFault, whole } from '../helpers/activity-frame-marker.mjs';
+import { pathToFileURL } from 'node:url';
+import { resolve } from 'node:path';
+const { MARKER_BOX, COUNTER_BITS, markerReading, keyFrames, handoverFault, whole } = await import(process.argv[2] ? pathToFileURL(resolve(process.argv[2])).href : '../helpers/activity-frame-marker.mjs');
 
 const box = { x: 10, y: 10, width: 108, height: 14 };
 const WHITE = [255, 255, 255], BLACK = [0, 0, 0], GREY = [128, 128, 128];
@@ -50,6 +52,7 @@ eq(markerReading(edges, box), { count: 0b01010101, key: 0 }, 'painted corners do
 const rd = (count, key) => ({ count, key });
 eq(keyFrames([rd(10, 0), rd(11, 1), rd(12, 1)], 10), { at: 1, pre: 0, count: 11, preCount: 10 }, 'K, K+1 is judged');
 eq(keyFrames([rd(10, 0), rd(11, 1), rd(12, 1)], 11), { at: 1, pre: 0, count: 11, preCount: 10 }, 'a key that landed after the frame rAF (recorded C) is judged');
+eq(keyFrames([rd(0, 0), rd(0, 0), rd(1, 1), rd(2, 1)], 0), { at: 2, pre: 1, count: 1, preCount: 0 }, 'a duplicated pre-key frame (the static page captured twice) is judged on the copy beside the key frame');
 eq(keyFrames([rd(10, 0), null, rd(11, 1)], 10).pre, -1, 'an unreadable frame before the key frame is unjudged');
 ax(/unreadable, so counter 10 cannot be checked/.test(keyFrames([rd(10, 0), null, rd(11, 1)], 10).why), 'an unreadable pre-key frame says so');
 eq(keyFrames([rd(10, 0), rd(12, 1), rd(13, 1)], 10).pre, -1, 'a dropped key frame is unjudged');
@@ -82,4 +85,4 @@ ax(/still shows the old control's ring/.test(handoverFault({ preFiles: lost, pre
 // the default box is over the header, clear of the Activity bar's tiles (x 13..45, y 113..189 at 1920x1080)
 ax(MARKER_BOX.y + MARKER_BOX.height <= 113 || MARKER_BOX.x + MARKER_BOX.width <= 13 || MARKER_BOX.x >= 45, 'the marker does not overlap the rail');
 ax(MARKER_BOX.x + MARKER_BOX.width <= 1920, 'the marker fits the widest tested viewport');
-console.log(`PASS ${checks}: counter round-trips, key band, unreadable bands, judged K/K+1 pair, dropped key frame, missing K, unreadable K, foreign key, wrap, same-frame handover, 1-frame and 2-frame late handovers, early paint, old ring kept, 0.89 side not whole, marker clear of the rail`);
+console.log(`PASS ${checks}: counter round-trips, key band, unreadable bands, judged K/K+1 pair, duplicated pre-key frame, dropped key frame, missing K, unreadable K, foreign key, wrap, same-frame handover, 1-frame and 2-frame late handovers, early paint, old ring kept, 0.89 side not whole, marker clear of the rail`);
