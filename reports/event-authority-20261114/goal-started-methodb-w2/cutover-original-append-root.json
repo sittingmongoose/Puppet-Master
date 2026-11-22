@@ -1,0 +1,25 @@
+{
+  "row": "dg5/cutover/original/append/root/schema",
+  "fixtures": [
+    {
+      "route": "read_append/cutover/original/append",
+      "edition": "v3",
+      "root": "dg5:22761dd9bd8eeecb",
+      "hash_seed": 6,
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [
+          "full_value_result"
+        ],
+        "additionalProperties"
+      ]
+    }
+  ]
+}
