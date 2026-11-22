@@ -188,6 +188,35 @@ try {
 		ok('PIXEL-MIX: an unfrozen capture missing from the changed run fails (exit 1)', r2.code === 1 && /MISSING basic-dark\/02-ready-unfrozen \(changed/.test(r2.out), `exit ${r2.code}: ${r2.out.trim()}`);
 	}
 
+	// -- PM7PERF-STAGEFRAMES-SAMEBUILD-UNFROZEN / R135-F1 / F's H1: a capture whose own two frozen pictures differ in
+	// EITHER run was not frozen by the harness, so the pair cannot be pixel-judged. Every could-not-judge row is a
+	// failing row (17-MAX-ITEMS.md:63): NOT FROZEN fails the compare always — there is no --strict switch for it and no
+	// weaker pass. The OR over the two runs is safe once both sides fail, which is what these cases pin: a frozen RED
+	// base against a moving BLUE head (F's OR-hole: 35c2e1745f exited 0 here), a moving base against a frozen head, and
+	// a fully frozen equal pair that still passes.
+	{
+		const RED = [200, 30, 30], BLUE = [30, 30, 200];
+		const block = (bx, by, c) => png(8, 6, (x, y) => (x >= bx && x < bx + 5 && y >= by && y < by + 4 ? c : [40, 40, 40]));
+		const one = { ...matrix, variants: ['base'], screens: ['ready'], expected: [E('basic-dark', '01-ready-base', 'ready', 'base')] };
+		const frozen = (c) => () => ({ a: block(1, 1, c), b: block(1, 1, c) });  // one picture twice: the harness froze it
+		const moving = (c) => () => ({ a: block(0, 0, c), b: block(3, 3, c) });   // its own two pictures differ: it did not
+		const a = compare(run({ matrix: one, pics: frozen(RED) }), run({ matrix: one, pics: moving(BLUE) }));
+		ok('R135-H1: a frozen base against a moving changed run fails (exit 1) with a NOT FROZEN could-not-judge row', a.code === 1 && /^NOT FROZEN basic-dark\/01-ready-base: could not judge/m.test(a.out), `exit ${a.code}: ${a.out.trim()}`);
+		ok('R135-H1: the verdict line of that failure names the not-frozen capture and says FAIL', /^VERDICT: FAIL: 1 of 1 captures .*not frozen 1/m.test(a.out), a.out.trim().split('\n').filter((l) => l.startsWith('VERDICT:')).join(' | '));
+		const b = compare(run({ matrix: one, pics: moving(RED) }), run({ matrix: one, pics: frozen(RED) }));
+		ok('R135-H1: a moving base against a frozen changed run fails (exit 1) with a NOT FROZEN row', b.code === 1 && /^NOT FROZEN basic-dark\/01-ready-base: could not judge/m.test(b.out), `exit ${b.code}: ${b.out.trim()}`);
+		const st = compare(run({ matrix: one, pics: frozen(RED) }), run({ matrix: one, pics: moving(BLUE) }), '--strict');
+		ok('R135-H1: it is not --strict that fails a not-frozen capture (same exit either way)', st.code === 1 && /^NOT FROZEN basic-dark\/01-ready-base: could not judge/m.test(st.out) && !/NOT FROZEN[^\n]*--strict/.test(st.out), `exit ${st.code}: ${st.out.trim()}`);
+		const c = compare(run({ matrix: one, pics: frozen(RED) }), run({ matrix: one, pics: frozen(RED) }));
+		ok('R135-H1: a fully frozen equal pair still passes (exit 0), with no NOT FROZEN row', c.code === 0 && /^VERDICT: PASS: every capture equal to one base picture/m.test(c.out) && !/^NOT FROZEN/m.test(c.out), `exit ${c.code}: ${c.out.trim()}`);
+		// a level or two of compositor variation in a run's own two pictures is not motion (the threshold is 8 levels)
+		const noise = compare(run({ matrix: one, pics: () => ({ a: block(1, 1, RED), b: png(8, 6, (x, y) => (x >= 1 && x < 6 && y >= 1 && y < 5 ? [202, 31, 31] : [41, 40, 40])) }) }), run({ matrix: one, pics: frozen(RED) }));
+		ok('R135-H1: compositor-level noise in a run\'s own two pictures is not NOT FROZEN (still a pass)', noise.code === 0 && !/^NOT FROZEN/m.test(noise.out), `exit ${noise.code}: ${noise.out.trim()}`);
+		// the DOM is judged on a not-frozen capture too
+		const dm = compare(run({ matrix: one, pics: frozen(RED) }), run({ matrix: one, pics: moving(BLUE), dom: () => '<g transform="1">' }));
+		ok('R135-H1: the DOM is still judged on a not-frozen capture', dm.code === 1 && /^DOM    basic-dark\/01-ready-base/m.test(dm.out), `exit ${dm.code}: ${dm.out.trim()}`);
+	}
+
 	// -- R132-FOLLOWUPS 2: the freeze parks nextBlink/idleNext at 1e9 and THAW never restored them, so the
 	// "unfrozen" capture after the walk showed a stage that never blinks and has no idle life, not the stage as a
 	// person sees it. THAW must reschedule both as the product itself does (58-rig.js:1249 and :1106).
