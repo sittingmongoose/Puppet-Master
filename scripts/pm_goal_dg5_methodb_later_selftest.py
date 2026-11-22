@@ -21,6 +21,13 @@ the verdict and its evidence:
   rebuilt_elsewhere         as killed_code, but the intact refusal's recorded origin is another site
                             (a same-code refusal rebuilt there; addendum 11): CANNOT_DECIDE
   no_origin                 as killed_code, with no recorded origin: CANNOT_DECIDE (fails closed)
+Root-row prefix-equivalence (lead ruling 1121224233-9f91 (1), Job E; the ra-17/21/23 shape). The route is
+the s_readers :94 root row; intact and cut codes differ only in the root-row kind segment:
+  prefixeq_cover            same site, same violation, prefix-only difference, equal after-states:
+                            COVERED_LATER (the same-code after-state rule), not KILLED_CODE
+  prefixeq_write            the same, but the cut left a different store: CANNOT_DECIDE (store effect)
+  prefixeq_other_site       the same prefix difference, but the cut origin is another site: stays KILLED_CODE
+  prefixeq_other_suffix     same site, prefix difference plus a different violation suffix: stays KILLED_CODE
 Through the re-run (`prove()`'s path: `rerun=lambda: self.owner_states(...)`, with `fork_trial` stubbed to
 return each repeated trial's result and after-state; review R2):
   rerun_equal               same code; the three repeats return the judged results and equal states: COVERED_LATER,
@@ -53,6 +60,19 @@ AT_SITE = dict(site=SITE, frames=[SITE + ['check', False], ['scripts/pm_goal_dg_
 ELSEWHERE = dict(site=['scripts/pm_goal_dg_r_readers.py', 200],
                  frames=[SITE + ['check', False], ['scripts/pm_goal_dg_r_readers.py', 200, 'rebuild', False]])
 
+# The s_readers :94 root-row shape (ra-17): one runtime check serving the original and final root rows.
+ROOT_ROW = 'dg5/inspect_original/original/root/schema'
+ROOT_INTACT = 'inspect_original/original/root/schema/initial_control_origin/record/issued_at_utc:format'
+ROOT_CUT = 'inspect_original/final/root/schema/initial_control_origin/record/issued_at_utc:format'
+ROOT_SUFFIX_OTHER = 'inspect_original/final/root/schema/initial_control_origin/record/issued_at_utc:minimum'
+ROOT_SITE = ['scripts/pm_goal_dg_s_readers.py', 94]
+ROOT_AT_SITE = dict(site=ROOT_SITE, frames=[ROOT_SITE + ['retained_native', False],
+                                            ['scripts/pm_goal_dg_s_world.py', 110, 'validate', True]])
+ROOT_ELSEWHERE = dict(site=['scripts/pm_goal_dg_s_readers.py', 256],
+                      frames=[['scripts/pm_goal_dg_s_readers.py', 256, 'original_started', False],
+                              ['scripts/pm_goal_dg_s_world.py', 110, 'validate', True]])
+ROOT_CASES = {'prefixeq_cover', 'prefixeq_write', 'prefixeq_other_site', 'prefixeq_other_suffix'}
+
 
 def state(store='s0', owner='o0', reason=None):
     return dict(store_sha256=store, owner_sha256=owner, owner_hook=J.FAMILY, owner_reason=reason)
@@ -79,16 +99,25 @@ CASES = {
     'missing_codes': (None, None, None, CODE, (state(), state(), state()), 'CANNOT_DECIDE'),
     'rebuilt_elsewhere': (CODE, 'select/unissued_value', CODE, CODE, (state(),) * 3, 'CANNOT_DECIDE'),
     'no_origin': (CODE, 'select/unissued_value', CODE, CODE, (state(),) * 3, 'CANNOT_DECIDE'),
+    'prefixeq_cover': (ROOT_INTACT, ROOT_CUT, ROOT_INTACT, ROOT_INTACT, (state(), state(), state()), 'COVERED_LATER'),
+    'prefixeq_write': (ROOT_INTACT, ROOT_CUT, ROOT_INTACT, ROOT_INTACT, (state(), state(store='s1'), state()),
+                       'CANNOT_DECIDE'),
+    'prefixeq_other_site': (ROOT_INTACT, ROOT_CUT, ROOT_INTACT, ROOT_INTACT, (state(),) * 3, 'KILLED_CODE'),
+    'prefixeq_other_suffix': (ROOT_INTACT, ROOT_SUFFIX_OTHER, ROOT_INTACT, ROOT_INTACT, (state(),) * 3, 'KILLED_CODE'),
 }
-ORIGINS = {'rebuilt_elsewhere': [ELSEWHERE, None, ELSEWHERE], 'no_origin': [None, None, None]}
+ORIGINS = {'rebuilt_elsewhere': [ELSEWHERE, None, ELSEWHERE], 'no_origin': [None, None, None],
+           'prefixeq_cover': [ROOT_AT_SITE, ROOT_AT_SITE, ROOT_AT_SITE],
+           'prefixeq_write': [ROOT_AT_SITE, ROOT_AT_SITE, ROOT_AT_SITE],
+           'prefixeq_other_site': [ROOT_AT_SITE, ROOT_ELSEWHERE, ROOT_AT_SITE],
+           'prefixeq_other_suffix': [ROOT_AT_SITE, ROOT_AT_SITE, ROOT_AT_SITE]}
 
 
 def run():
     rows = []
     for case, (intact, cut, restoration, declared, states, expected) in CASES.items():
         example = object.__new__(J.ForkedExample)
-        example.row, example.label = ROW, '0:selftest/' + case
-        example.route = dict(refusal=declared, detail='d', site=SITE)
+        example.row, example.label = (ROOT_ROW if case in ROOT_CASES else ROW), '0:selftest/' + case
+        example.route = dict(refusal=declared, detail='d', site=ROOT_SITE if case in ROOT_CASES else SITE)
         example.after_states = list(states)  # defect, cut, restoration
         example.origins = ORIGINS.get(case, [AT_SITE, dict(site=['scripts/pm_goal_dg_r_readers.py', 150]), AT_SITE])
         before, disabled = trial(intact), trial(cut)
@@ -103,6 +132,13 @@ def run():
         ok = verdict == expected and bool(code)
         if expected == 'KILLED_CODE':
             ok = ok and code.get('verdict') == 'KILLED_CODE'
+            if case in ROOT_CASES:
+                ok = ok and not code.get('prefix_equivalence') and code.get('different_code') is True
+        elif case in ROOT_CASES:
+            ok = ok and (code.get('prefix_equivalence') or {}).get('applicable') is True \
+                and code.get('different_code') is False \
+                and code.get('reason') == 'prefix-equivalent root-row codes: same code for J2' \
+                and (record.get('covered_later_check') or {}).get('verdict') == expected
         elif case.startswith('same_code'):
             ok = ok and code.get('reason') == 'same code' and \
                 (record.get('covered_later_check') or {}).get('verdict') == expected
