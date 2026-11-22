@@ -5494,6 +5494,12 @@ def _derive_registry_batches(
             out[line_no] = f"registry_batch_anchor cannot be rebuilt: {exc}"
             continue
         appends[line_no] = commit
+        if commit is not None and commit != adding and not _is_git_ancestor(root, adding, commit):
+            # The append that wrote the row could not have read a records file first committed
+            # after it (T334); a pending append keeps the dry-run path, its records are at HEAD.
+            out[line_no] = (f"registry_batch_anchor cannot be rebuilt: {record_ref} was first committed at "
+                            f"{adding[:12]}, after the append at {commit[:12]} that added this row")
+            continue
         by_append.setdefault(commit, []).append((line_no, row))
     for commit, members in by_append.items():
         try:

@@ -1297,6 +1297,24 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, text)
 
+    def test_registry_pin_batch_requires_its_records_committed_before_its_rows(self) -> None:
+        """T334 (Astra medium 3): a committed batch cannot validate when its records file was first
+        committed after the append that added its rows: the append could not have read it."""
+        m = pm_audit_closure
+        self.prepare_same_file_records()
+        code, report = self.append()
+        self.assertEqual((code, report["appended"], report["errors"]), (0, 3, []), report)
+        ordered = self.commit("one append of all three")
+        records_commit = self.git("rev-parse", f"{ordered}^")
+        # Rebuild the history with the registry append before the records commit, author dates kept.
+        self.git("checkout", "-q", "-b", "records-later", f"{records_commit}^")
+        self.git("cherry-pick", ordered)
+        self.git("cherry-pick", records_commit)
+        validation = m.validate_registry(self.registry)
+        for line in (4, 5, 6):
+            self.assertTrue(any(e.startswith(f"{self.registry_ref}:{line}: registry_batch_anchor cannot be rebuilt")
+                                and "was first committed at" in e for e in validation["errors"]), validation)
+
     def test_registry_pin_batch_cannot_rebind_to_a_copy_of_its_records_file(self) -> None:
         """T331 (Astra high 2): committed batch rows cannot be re-pointed at a byte-identical copy of
         their records file so that they absorb a later append as one batch. The append that first
