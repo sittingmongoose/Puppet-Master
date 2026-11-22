@@ -228,6 +228,34 @@ export const tests = Object.fromEntries(ROUTES.flatMap((route) => [
 	}
 	await t.check(`a click on each entry listed under ${c.to} after the search stays on ${c.to} and lights itself`, bad.length === 0, bad.join(' | '));
 }])).concat([
+	['Neon 2026-11-22 Web & Research › Search services lands on its services card and lights it', async (t) => {
+		/* neon-max-16 (low): the group was anchored on its first listed row (provider-order), drawn in the second card,
+		   ~580 px below the services accordion the entry is named after */
+		const f = await openDomain(t, 'ai');
+		await openTab(t, f, 'web', 'services');
+		const link = f.locator('#pm-settings-root .page-index-card .pm51-index-tab.is-open[data-workspace="web"][data-tab="services"] + .pm51-index-sub .index-link', { hasText: 'Search services' }).first();
+		await t.check('Search services is listed under the open Search services tab', (await link.count()) > 0, '');
+		if (!(await link.count())) return;
+		await link.click();
+		await t.page.waitForTimeout(900);
+		await still(t, f);
+		const m = await f.evaluate(() => {
+			const sc = document.querySelector('#settings-document'), b = sc.getBoundingClientRect();
+			let readTop = b.top;
+			for (const s of document.querySelectorAll('#settings-document .pm51-mgr.has-manager-tabs > .pm51-tabs')) {
+				if (!s.checkVisibility()) continue;
+				const r = s.getBoundingClientRect();
+				if (r.top <= b.top + 2 && r.bottom > b.top) readTop = Math.max(readTop, r.bottom);
+			}
+			const body = document.querySelector('[data-continuous-workspace-body="web"]');
+			const acc = body && [...body.querySelectorAll('.o55-web-services')].find((el) => !el.closest('.o55-leaving'));
+			const card = acc && acc.closest('.pm51-section, .settings-section');
+			const lit = [...document.querySelectorAll('#pm-settings-root .page-index-card .index-link.is-active')].map((l) => l.textContent.trim());
+			return { card: card ? Math.round(card.getBoundingClientRect().top - readTop) : null, lit };
+		});
+		await t.check('the jump puts the services card at the top of the page, under the tabs (0-160 px below them)', m.card !== null && m.card >= -8 && m.card <= 160, JSON.stringify(m));
+		await t.check('Search services is lit after the jump', m.lit.includes('Search services'), JSON.stringify(m.lit));
+	}],
 	['Jared 2026-11-21 the lit entry under Abilities reads at 4.5:1 or more, in every look', async (t) => {
 		const f = await openAbilities(t, 'side index');
 		await f.locator('#pm-settings-root .page-index-card .pm51-index-sub .index-link[data-section="media-abilities"]:visible').first().click();

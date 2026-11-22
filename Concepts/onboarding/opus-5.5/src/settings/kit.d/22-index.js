@@ -65,7 +65,11 @@ function pm51AdoptAnchors(ws, body) {
     if (!s.inline || s.advanced || (cur && s.tab && s.tab !== cur) || pm51Live(body, `[data-section-id="${cssEscape(s.id)}"]`)) continue;
     const owner = pm51OwnerOf(body, s.id);
     const split = owner && pm51Live(owner, '.pm51-split:not([data-section-id])');
-    const row = split ? null : (s.settings || []).map(st => pm51Live(body, `#setting-${cssEscape(st.id)}, [data-setting-id="${cssEscape(st.id)}"]`)).find(Boolean);
+    /* the group's first row as drawn, not as listed: Search services lists web.providers.provider-order first, drawn in
+       its second card ("When an ability has no order of its own", ~580 px down), while provider-status heads the
+       services accordion it is named after (neon-max-16, low) */
+    const row = split ? null : (s.settings || []).map(st => pm51Live(body, `#setting-${cssEscape(st.id)}, [data-setting-id="${cssEscape(st.id)}"]`))
+      .reduce((a, b) => (b && (!a || (b.compareDocumentPosition(a) & Node.DOCUMENT_POSITION_FOLLOWING)) ? b : a), null);
     if (!split && !row) continue;
     const card = split || row.closest('.pm51-section, .settings-section');
     const host = card && !card.hasAttribute('data-section-id') ? card : (row.hasAttribute('data-section-id') ? null : row);
