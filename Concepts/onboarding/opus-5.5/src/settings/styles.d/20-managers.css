@@ -78,6 +78,15 @@ html[data-motion="reduced"] #panel-settings .pm51-mgr > .pm51-tabs .tab-ink { tr
 #panel-settings .pm51-mgr .pm51-roster .resource-avatar { width: 32px; height: 32px; border-radius: 9px; font-size: 11px; }
 #panel-settings .pm51-mgr .pm51-detail-head { padding: 16px 20px 12px; border-bottom: 1px solid var(--k3-line); background: none; }
 #panel-settings .pm51-mgr .pm51-detail-title { font-size: 17px; }
+/* A list/detail head whose item shows a primary button only in some states keeps that button's room while it is
+   hidden (the manager passes primarySpace; kit.js draws it inert and aria-hidden). Its head then wraps the same way in
+   both states. Web & Research shows Turn on only while an ability is off: at 860x900 the 337 px detail fit the title
+   beside the More button, Turn on (90 px) dropped the buttons to a second line and the head grew 44 px, moving
+   everything above the switch just pressed (FO-130 settings-save-still; on main too, measured below the head there). */
+#panel-settings .pm51-mgr .pm51-detail-space { display: inline-flex; visibility: hidden; }
+/* when such a head's buttons wrap to their own line they sit at its end in both states, so More stays put and the
+   room kept for Turn on reads as space, not as a gap before More */
+#panel-settings .pm51-mgr .pm51-detail-actions.has-space { margin-left: auto; }
 #panel-settings .workspace-block .pm51-mgr .pm51-detail-content { padding: 4px 20px 18px; }
 
 /* ---- More options -------------------------------------------------------------------------------------------- */
