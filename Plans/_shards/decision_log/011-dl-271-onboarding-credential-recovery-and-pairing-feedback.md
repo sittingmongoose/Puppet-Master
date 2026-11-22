@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L63613
+Source lines: L28747-L63678
 
-Source SHA256: `a8e0c3cd5f035f0036840dbf1f6d8723ba97b746b5fad36fad864cf572c67a31`
+Source SHA256: `89b333446946b23ff759a8f4af1e0a867d44f11453ffad90ef435bc4474e8188`
 
 ---
 
@@ -34549,6 +34549,71 @@ preserved_exact_tokens:
 - the Project count applies only when there is a real Project
 negative_constraints:
 - No new admission, policy decision, verdict change, producer adoption or governance seal.
+```
+
+### DL-2600: Event Authority records a documented gap for goal.cancelled's schema-roots row
+
+```yaml
+plan_unit_id: DL-2600
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  On 2026-11-22 at 2:56 PM EST (19:56Z), Jared answered card E-GC-GAP ("How should we finish the last Goal Cancelled checks?") in chat with "this is ok", quoting option B, "Record the gap now, finish the slow root later". pm7-build relayed the answer in pm-mail 1122195635-0112, and the card was withdrawn at agent-report seq 1794501342233. The answer is recorded in ANSWERS_E-GC-GAP_20261122.md, with the card as presented in E-GC-GAP.as-presented-5c0d74a7.md.
+
+  The decision covers exactly one row of one family: row dg5/roots/schema of goal.cancelled, the whole-root schema row of its criterion-12 coverage matrix. The coordinator's reading, attributed to pm-ea-lead rather than quoted as Jared's words, is that the gap is the clauses exhausted under the pinned route on a completed walk of a root on that row, plus the named unsearched remainder of the slow root ca-root-109; that it does not cover roots that were never walked, and any root still unwalked at merge time comes back to Jared before it is listed; and that it does not loosen any other row, family or criterion.
+
+  GAP-LIST v1.1, /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/gap-list-v1.1-20261122/GAP-LIST-v1.1.json (SHA256SUMS SHA-256 3080977bf01fc59d2f4be272f773c9171e4b9528e76d0442b847061fbac8f8fd), names those clauses by canonical id, each on its own root. Its definition, word for word: "The gap is (A) clauses left UNCOVERED by a completed, search-exhausted walk on this row, and (B) the named slow-root remainder: root 109 (dg5:87291d8293370997) clauses not yet closed by a published, verified 109 report. Nothing else is in the gap. Roots never walked are not in it (they are tracked in NOT-WALKED-v1.1, unsigned) and join A only when their walks complete and exhaust them." Section A holds 2,080 entries and section B 3,309, all on root 109 (dg5:87291d8293370997). Section T371 carries 79 credited structural closures provisionally until the T371 audit clears them. Entries marked T360 re-run pending, M proof pending review, carry pending review or T371 audit pending stay on the list with their mark until it clears.
+
+  scripts/pm_goal_dg5_matrix_gap_v1.py reports goal.cancelled's dg5/roots/schema row as DOCUMENTED_GAP only when its checker verdict is closed, every root has a clause-closure report and no error, and every UNCOVERED clause is on the list under its own root. A clause or root the list does not record, a root error or an open checker verdict keeps the row OPEN. goal.cancelled's criterion-12 cell may then be graded PASS citing this entry and the signed list as a documented partial, once every other criterion-12 requirement holds. That PASS rests on a named, reopenable gap: the listed clauses have no test or proof, and the cell does not claim full coverage. The frozen validator, its specification and the seal rule are unchanged; the seal no longer waits on the listed clauses.
+
+  The list's reopen rule, word for word: "Any new search tool, search-tool edition or authored-case batch that could reach a listed clause re-searches the list. Each verified kill, each accepted proof, and each pending mark that clears removes its entry in the next edition. An entry leaves the list only by such a published, verified result. The list never grows except by a reviewed correction." Root 109 keeps running, and the next edition follows when it finishes. A later edition takes effect only through its own reviewed pin in the edition script.
+
+  Nothing else is relaxed. No other row of goal.cancelled, other family, other criterion, seal condition or clause outside the list changes. Full inherited-root instantiation stays required everywhere else (ATS-1117). This entry grants no admission, registry change, producer adoption, native execution claim, readiness clearance or governance seal. Native execution stays NOT_RUN.
+gui_related: false
+gui_classification_reason: Records how one test-coverage row of one event family is judged; no visual presentation changes.
+depends_on: [DL-039, DL-045, DL-400]
+unblocks: []
+acceptance_criteria:
+- "scripts/pm_goal_dg5_matrix_gap_v1.py marks goal.cancelled dg5/roots/schema DOCUMENTED_GAP only when every UNCOVERED clause of that row is on GAP-LIST v1.1 under its own root, and leaves every other row and family unchanged."
+- "A clause not on the list under its own root, a root error, an open checker verdict or a gap list whose SHA256SUMS does not match the pinned SHA-256 keeps the row OPEN or refuses."
+- "goal.cancelled's criterion-12 PASS cites this entry and the list as a documented partial, never as full coverage; an entry leaves the list only by a published, verified result."
+validation_surfaces:
+- python3 -B scripts/pm_goal_dg5_matrix_gap_v1_selftest.py
+- python3 scripts/pm_goal_dg5_matrix_gap_v1.py apply --matrix <goal.cancelled matrix> --out <matrix.json>
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/gap-list-v1.1-20261122/GAP-LIST-v1.1.json
+risk_class: event_authority_documented_gap
+reasoning_tier: high
+context_scope: event_authority_pnc019_goal_five_merge
+implementation_surfaces:
+- scripts/pm_goal_dg5_matrix_gap_v1.py
+- scripts/pm_goal_dg5_matrix_gap_v1_selftest.py
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-GC-GAP_20261122.md (SHA-256 904c6e3c7d705f7cec180e662c8d04ff31e378a56a7e8b376cc18378df86ef16)"
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-GC-GAP.as-presented-5c0d74a7.md (SHA-256 5c0d74a72795dbfe9b6b1a5309974d6ecdd66408f623fb98e5b6d553dd35a90d)"
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/gap-list-v1.1-20261122/SHA256SUMS (SHA-256 3080977bf01fc59d2f4be272f773c9171e4b9528e76d0442b847061fbac8f8fd)"
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/gap-list-v1.1-20261122/GAP-LIST-v1.1.json (SHA-256 059dd2c04e2fc05261a217ba8791fe5f1523635171b7c7bd5038ecf56218f2cf)"
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/ESTIMATE-20261122-v2.md (SHA-256 546b26aabe8dd770f75986093181d99239ac13e602db49a88436251d3f934150)"
+preserved_exact_tokens:
+- E-GC-GAP
+- this is ok
+- Record the gap now, finish the slow root later
+- 1122195635-0112
+- goal.cancelled
+- dg5/roots/schema
+- DOCUMENTED_GAP
+- GAP-LIST v1.1
+- dg5:87291d8293370997
+- 3080977bf01fc59d2f4be272f773c9171e4b9528e76d0442b847061fbac8f8fd
+negative_constraints:
+- No other row, family, criterion, seal condition or clause outside the list is relaxed.
+- The criterion-12 PASS is a documented partial resting on a named, reopenable gap, never a claim of full coverage.
+- No admission, registry change, producer adoption, native execution claim, readiness clearance or governance seal.
 ```
 
 ### DL-2601 - Rust Markdown Pipeline, Streaming Correctness, Sanitization, Math, Previews, And Testing Gates

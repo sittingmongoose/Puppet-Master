@@ -5042,6 +5042,7 @@
     "DL-2442",
     "DL-2443",
     "DL-2444",
+    "DL-2600",
     "DL-412",
     "DL-413",
     "DL-520",
@@ -54164,6 +54165,21 @@
       "edge_type": "depends_on",
       "from": "DL-260",
       "to": "DL-259"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2600",
+      "to": "DL-039"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2600",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2600",
+      "to": "DL-400"
     },
     {
       "edge_type": "depends_on",
@@ -165321,7 +165337,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-27T06:21:18Z",
+  "generated_at_utc": "2026-11-27T06:24:00Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -180276,8 +180292,8 @@
       "source_location": {
         "heading": "ATS-086 - Markdown Streaming, Provenance, Preview, And Benchmark Calibration Oracles",
         "heading_level": 3,
-        "heading_line": 16338,
-        "line": 16340,
+        "heading_line": 16340,
+        "line": 16342,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180429,8 +180445,8 @@
       "source_location": {
         "heading": "ATS-1118 - Three exact GoalRun producer and projector oracle suites",
         "heading_level": 3,
-        "heading_line": 13309,
-        "line": 13311,
+        "heading_line": 13311,
+        "line": 13313,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180463,8 +180479,8 @@
       "source_location": {
         "heading": "ATS-1120 - W3 and W4 original-path reference successor qualification",
         "heading_level": 3,
-        "heading_line": 13367,
-        "line": 13369,
+        "heading_line": 13369,
+        "line": 13371,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180480,8 +180496,8 @@
       "source_location": {
         "heading": "ATS-1121 - Certified reference successor and full original tuple acceptance",
         "heading_level": 3,
-        "heading_line": 13426,
-        "line": 13428,
+        "heading_line": 13428,
+        "line": 13430,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180497,8 +180513,8 @@
       "source_location": {
         "heading": "ATS-1200 - Forge W3A oracle plan prepared contract",
         "heading_level": 3,
-        "heading_line": 13491,
-        "line": 13493,
+        "heading_line": 13493,
+        "line": 13495,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180514,8 +180530,8 @@
       "source_location": {
         "heading": "ATS-1210 — Source Control phase-1 oracle plans 1",
         "heading_level": 3,
-        "heading_line": 13562,
-        "line": 13564,
+        "heading_line": 13564,
+        "line": 13566,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180531,8 +180547,8 @@
       "source_location": {
         "heading": "ATS-1211 — Source Control phase-1 oracle plans 2",
         "heading_level": 3,
-        "heading_line": 13623,
-        "line": 13625,
+        "heading_line": 13625,
+        "line": 13627,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180548,8 +180564,8 @@
       "source_location": {
         "heading": "ATS-1212 — Source Control phase-1 oracle plans 3",
         "heading_level": 3,
-        "heading_line": 13684,
-        "line": 13686,
+        "heading_line": 13686,
+        "line": 13688,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180565,8 +180581,8 @@
       "source_location": {
         "heading": "ATS-1213 — Source Control phase-1 oracle plans 4",
         "heading_level": 3,
-        "heading_line": 13745,
-        "line": 13747,
+        "heading_line": 13747,
+        "line": 13749,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180582,8 +180598,8 @@
       "source_location": {
         "heading": "ATS-1214 — Source Control phase-1 oracle plans 5",
         "heading_level": 3,
-        "heading_line": 13806,
-        "line": 13808,
+        "heading_line": 13808,
+        "line": 13810,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180599,8 +180615,8 @@
       "source_location": {
         "heading": "ATS-1215 — Source Control phase-1 oracle plans 6",
         "heading_level": 3,
-        "heading_line": 13867,
-        "line": 13869,
+        "heading_line": 13869,
+        "line": 13871,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180616,8 +180632,8 @@
       "source_location": {
         "heading": "ATS-1216 — Source Control phase-1 oracle plans 7",
         "heading_level": 3,
-        "heading_line": 13928,
-        "line": 13930,
+        "heading_line": 13930,
+        "line": 13932,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180633,8 +180649,8 @@
       "source_location": {
         "heading": "ATS-1217 — Source Control phase-1 oracle plans 8",
         "heading_level": 3,
-        "heading_line": 13989,
-        "line": 13991,
+        "heading_line": 13991,
+        "line": 13993,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180650,8 +180666,8 @@
       "source_location": {
         "heading": "ATS-1218 — Source Control phase-1 oracle plans 9",
         "heading_level": 3,
-        "heading_line": 14050,
-        "line": 14052,
+        "heading_line": 14052,
+        "line": 14054,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180667,8 +180683,8 @@
       "source_location": {
         "heading": "ATS-1219 — Source Control phase-1 oracle plans 10",
         "heading_level": 3,
-        "heading_line": 14111,
-        "line": 14113,
+        "heading_line": 14113,
+        "line": 14115,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180684,8 +180700,8 @@
       "source_location": {
         "heading": "ATS-1220 - testing.runtime_enabled_for_adapter prepared owner contract",
         "heading_level": 3,
-        "heading_line": 14175,
-        "line": 14177,
+        "heading_line": 14177,
+        "line": 14179,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180701,8 +180717,8 @@
       "source_location": {
         "heading": "ATS-1221 - W3C phase-1 per-family oracle plan",
         "heading_level": 3,
-        "heading_line": 14366,
-        "line": 14368,
+        "heading_line": 14368,
+        "line": 14370,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180718,8 +180734,8 @@
       "source_location": {
         "heading": "ATS-1222 - testing.receipt.recorded owner investigation boundary",
         "heading_level": 3,
-        "heading_line": 14478,
-        "line": 14480,
+        "heading_line": 14480,
+        "line": 14482,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180735,8 +180751,8 @@
       "source_location": {
         "heading": "ATS-1230 - BSD W3D phase-1 oracle plan",
         "heading_level": 3,
-        "heading_line": 15302,
-        "line": 15304,
+        "heading_line": 15304,
+        "line": 15306,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "draft",
@@ -180752,8 +180768,8 @@
       "source_location": {
         "heading": "ATS-1240 - W3E phase-1 per-family oracle plan",
         "heading_level": 3,
-        "heading_line": 14538,
-        "line": 14540,
+        "heading_line": 14540,
+        "line": 14542,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180769,8 +180785,8 @@
       "source_location": {
         "heading": "ATS-1241 - W3E phase-2 guard isolation and shared profile gate",
         "heading_level": 3,
-        "heading_line": 14596,
-        "line": 14598,
+        "heading_line": 14598,
+        "line": 14600,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180786,8 +180802,8 @@
       "source_location": {
         "heading": "ATS-1250 - W3F Per-Family Oracle Plan And Phase Boundary",
         "heading_level": 3,
-        "heading_line": 14662,
-        "line": 14664,
+        "heading_line": 14664,
+        "line": 14666,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180803,8 +180819,8 @@
       "source_location": {
         "heading": "ATS-1260 - W3G APR per-family oracle plans",
         "heading_level": 3,
-        "heading_line": 14717,
-        "line": 14719,
+        "heading_line": 14719,
+        "line": 14721,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180820,8 +180836,8 @@
       "source_location": {
         "heading": "ATS-1261 - W3G ERS per-family oracle plans",
         "heading_level": 3,
-        "heading_line": 14784,
-        "line": 14786,
+        "heading_line": 14786,
+        "line": 14788,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180837,8 +180853,8 @@
       "source_location": {
         "heading": "ATS-1262 - W3G GRS per-family oracle plans",
         "heading_level": 3,
-        "heading_line": 14847,
-        "line": 14849,
+        "heading_line": 14849,
+        "line": 14851,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180854,8 +180870,8 @@
       "source_location": {
         "heading": "ATS-1263 - W3G WN per-family oracle plans",
         "heading_level": 3,
-        "heading_line": 14903,
-        "line": 14905,
+        "heading_line": 14905,
+        "line": 14907,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180871,8 +180887,8 @@
       "source_location": {
         "heading": "ATS-1270 — W3H per-family phase-1 oracle plans (newly authored, no execution)",
         "heading_level": 2,
-        "heading_line": 14966,
-        "line": 14968,
+        "heading_line": 14968,
+        "line": 14970,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180888,8 +180904,8 @@
       "source_location": {
         "heading": "ATS-1280 — `continuity.actor_identified` criterion-12 oracle plan",
         "heading_level": 3,
-        "heading_line": 15089,
-        "line": 15099,
+        "heading_line": 15091,
+        "line": 15101,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180905,8 +180921,8 @@
       "source_location": {
         "heading": "ATS-1281 — `continuity.provenance_recorded` criterion-12 oracle plan",
         "heading_level": 3,
-        "heading_line": 15142,
-        "line": 15152,
+        "heading_line": 15144,
+        "line": 15154,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180922,8 +180938,8 @@
       "source_location": {
         "heading": "ATS-1282 — `continuity.redaction_applied` criterion-12 oracle plan",
         "heading_level": 3,
-        "heading_line": 15195,
-        "line": 15205,
+        "heading_line": 15197,
+        "line": 15207,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -180939,8 +180955,8 @@
       "source_location": {
         "heading": "ATS-1283 — `continuity.replay_checkpointed` criterion-12 oracle plan",
         "heading_level": 3,
-        "heading_line": 15248,
-        "line": 15258,
+        "heading_line": 15250,
+        "line": 15260,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -181024,8 +181040,8 @@
       "source_location": {
         "heading": "ATS-2200 - storage.deletion_lifecycle_changed oracle plan",
         "heading_level": 3,
-        "heading_line": 15483,
-        "line": 15491,
+        "heading_line": 15485,
+        "line": 15493,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -181041,8 +181057,8 @@
       "source_location": {
         "heading": "ATS-2201 - storage.value_quarantine_changed oracle plan",
         "heading_level": 3,
-        "heading_line": 15521,
-        "line": 15528,
+        "heading_line": 15523,
+        "line": 15530,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -181058,8 +181074,8 @@
       "source_location": {
         "heading": "ATS-2202 - restore_point.applied oracle plan",
         "heading_level": 3,
-        "heading_line": 15558,
-        "line": 15565,
+        "heading_line": 15560,
+        "line": 15567,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -181075,8 +181091,8 @@
       "source_location": {
         "heading": "ATS-2203 - restore_point.corrupt oracle plan",
         "heading_level": 3,
-        "heading_line": 15595,
-        "line": 15599,
+        "heading_line": 15597,
+        "line": 15601,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -181092,8 +181108,8 @@
       "source_location": {
         "heading": "ATS-2204 - safe_point.recovery_unavailable oracle plan",
         "heading_level": 3,
-        "heading_line": 15629,
-        "line": 15633,
+        "heading_line": 15631,
+        "line": 15635,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -181109,8 +181125,8 @@
       "source_location": {
         "heading": "ATS-2205 - Boot, compaction, recovery, hold, platform and seglog oracle plan",
         "heading_level": 3,
-        "heading_line": 15663,
-        "line": 15673,
+        "heading_line": 15665,
+        "line": 15675,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -181126,8 +181142,8 @@
       "source_location": {
         "heading": "ATS-2206 - Executable s3bo contract checks and remaining criterion-12 boundaries",
         "heading_level": 2,
-        "heading_line": 15939,
-        "line": 15953,
+        "heading_line": 15941,
+        "line": 15955,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -181160,8 +181176,8 @@
       "source_location": {
         "heading": "ATS-2300 - Executable oracles of the five DS families (post-August repair register)",
         "heading_level": 3,
-        "heading_line": 15369,
-        "line": 15371,
+        "heading_line": 15371,
+        "line": 15373,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -181177,8 +181193,8 @@
       "source_location": {
         "heading": "ATS-2301 - Executable oracle of the three DL-300 families (PNC-019 S2)",
         "heading_level": 3,
-        "heading_line": 15422,
-        "line": 15424,
+        "heading_line": 15424,
+        "line": 15426,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -181517,8 +181533,8 @@
       "source_location": {
         "heading": "ATS-2500 - Browser Program prepared families criterion-12 oracles (s4b)",
         "heading_level": 3,
-        "heading_line": 15712,
-        "line": 15724,
+        "heading_line": 15714,
+        "line": 15726,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -182061,8 +182077,8 @@
       "source_location": {
         "heading": "ATS-3100 - goal_run.replanned v3 owner and family oracle suite",
         "heading_level": 3,
-        "heading_line": 15868,
-        "line": 15870,
+        "heading_line": 15870,
+        "line": 15872,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -182129,8 +182145,8 @@
       "source_location": {
         "heading": "ATS-3200 — config.validation.passed: prepared setup-history oracle obligations",
         "heading_level": 3,
-        "heading_line": 15772,
-        "line": 15778,
+        "heading_line": 15774,
+        "line": 15780,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -182146,8 +182162,8 @@
       "source_location": {
         "heading": "ATS-3201 — config.validation.warning: prepared setup-history oracle obligations",
         "heading_level": 3,
-        "heading_line": 15819,
-        "line": 15825,
+        "heading_line": 15821,
+        "line": 15827,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -182452,8 +182468,8 @@
       "source_location": {
         "heading": "ATS-3880 - Executable s3bo family boundaries for the restore-point and recovery-unavailable families (C12-SR)",
         "heading_level": 2,
-        "heading_line": 16015,
-        "line": 16035,
+        "heading_line": 16017,
+        "line": 16037,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -182469,8 +182485,8 @@
       "source_location": {
         "heading": "ATS-3900 - Executable s3bo family boundaries for the platform, seglog and Storage recovery families (C12-SS)",
         "heading_level": 2,
-        "heading_line": 16244,
-        "line": 16260,
+        "heading_line": 16246,
+        "line": 16262,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -182486,8 +182502,8 @@
       "source_location": {
         "heading": "ATS-3920 - Executable s3bo family boundaries for the Storage compaction, deletion, hold and quarantine families (C12-SL)",
         "heading_level": 2,
-        "heading_line": 16105,
-        "line": 16166,
+        "heading_line": 16107,
+        "line": 16168,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -182503,8 +182519,8 @@
       "source_location": {
         "heading": "ATS-401 - The Build Runs Rule Fixtures And Reports Unrecorded Needs",
         "heading_level": 3,
-        "heading_line": 16496,
-        "line": 16498,
+        "heading_line": 16498,
+        "line": 16500,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -218908,6 +218924,23 @@
       "unit_type": "decision_record"
     },
     {
+      "context_scope": "event_authority_pnc019_goal_five_merge",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2600",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_documented_gap",
+      "source_location": {
+        "heading": "DL-2600: Event Authority records a documented gap for goal.cancelled's schema-roots row",
+        "heading_level": 3,
+        "heading_line": 63290,
+        "line": 63292,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
       "context_scope": "markdown_streaming_and_preview_hardening_20261123",
       "gui_related": true,
       "owner_doc": "Plans/Decision_Log.md",
@@ -218917,8 +218950,8 @@
       "source_location": {
         "heading": "DL-2601 - Rust Markdown Pipeline, Streaming Correctness, Sanitization, Math, Previews, And Testing Gates",
         "heading_level": 3,
-        "heading_line": 63290,
-        "line": 63292,
+        "heading_line": 63355,
+        "line": 63357,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -218934,8 +218967,8 @@
       "source_location": {
         "heading": "DL-2602 - C-FIX79: Jared takes the recommended answers to eleven closure plan questions",
         "heading_level": 3,
-        "heading_line": 63410,
-        "line": 63412,
+        "heading_line": 63475,
+        "line": 63477,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -218951,8 +218984,8 @@
       "source_location": {
         "heading": "DL-2603 - C-FIX79: how DL-2602 answer 9 (Free Models top-10) is applied",
         "heading_level": 3,
-        "heading_line": 63505,
-        "line": 63507,
+        "heading_line": 63570,
+        "line": 63572,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -218968,8 +219001,8 @@
       "source_location": {
         "heading": "DL-2604 - C-FIX79B: Jared takes the recommended answers to three more closure plan questions",
         "heading_level": 3,
-        "heading_line": 63554,
-        "line": 63556,
+        "heading_line": 63619,
+        "line": 63621,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -329108,10 +329141,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27901,
+    "depends_on_edge_count": 27904,
     "downstream_blocked_node_count": 0,
-    "edge_count": 31136,
-    "node_count": 9634,
+    "edge_count": 31139,
+    "node_count": 9635,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3235,
     "unresolved_reference_count": 0
