@@ -271,9 +271,7 @@ PROOFS = {
         kind='entailed-by-producer-construction',
         families=['goal.updated'],
         depends_on=[],
-        sites=[(U, 1469), (U, 1490), (U, 1752), (U, 1770), (U, 1777), (U, 1778), (U, 1779),
-               ('Plans/goal_update_command_custody.schema.json', 755),
-               ('Plans/goal_update_command_custody.schema.json', 1711)],
+        sites=[(U, 1752), (U, 1770), ('Plans/goal_update_command_custody.schema.json', 755)],
         argument=(
             'freeze (:1752-1770) validates a ProducerInput whose metadata half is the stored '
             'progress producer_metadata verbatim (validated as ProducerMetadata when the '
@@ -282,35 +280,26 @@ PROOFS = {
             'pattern hashes), the read-validated accepted revision, and acceptance fields of '
             'the read-validated source record, each bounded identically in ProducerInput '
             '(:755). The event_identity join (:1765) has already refused any metadata/payload '
-            'identity mismatch before validation. The unchanged candidate becomes the required '
-            'producer_input in event_ready Progress, which uses the same ProducerInput '
-            'definition. Disabling only the first schema check reached this exact later '
-            'Progress validation. Restoration repeated the original refusal.')),
+            'identity mismatch before validation. No complete freeze call can make this row '
+            'refuse alone.')),
     'dg5/dgu/producer/publish/producer_input/schema': dict(
         kind='entailed-by-producer-construction',
         families=['goal.updated'],
-        depends_on=['dg5/dgu/producer/freeze/producer_input/schema'],
-        sites=[(U, 1460), (U, 1461), (U, 1788), (U, 1792), (U, 1793), (U, 1794), (U, 1800),
-               ('Plans/goal_update_command_custody.schema.json', 755),
-               ('Plans/goal_update_command_custody.schema.json', 1711),
-               ('Plans/goal_update_command_custody.schema.json', 1797),
-               ('Plans/goal_update_command_custody.schema.json', 2385)],
+        depends_on=[],
+        sites=[(U, 1793), (U, 1794), ('Plans/goal_update_command_custody.schema.json', 755)],
         argument=(
             'publish (:1793-1794) validates a verbatim deepcopy of the frozen progress '
             'producer_input, which freeze already validated against the identical '
             'ProducerInput definition (:755) before the snapshot was written and which every '
             'progress read revalidates under the StorageProgress root. The identical value '
-            'cannot newly fail the identical root. The final candidate equality check '
-            'also compares its unchanged type-exact value against the read-validated frozen '
-            'input. It refused the same invalid document with only the schema check disabled.')),
+            'cannot newly fail the identical root, so no complete publish call can make this '
+            'row refuse alone; it re-asserts the frozen candidate at the publish boundary.')),
     'dg5/dgu/producer/publish/publication/schema': dict(
         kind='entailed-by-producer-construction',
         families=['goal.updated'],
         depends_on=[],
-        sites=[(U, 1469), (U, 1490), (U, 1805), (U, 1809), (U, 1814), (U, 1815), (U, 1816),
-               ('scripts/pm_goal_test_owner_adapters.py', 630), ('scripts/pm_goal_test_storage.py', 598),
-               ('Plans/goal_update_command_custody.schema.json', 151),
-               ('Plans/goal_update_command_custody.schema.json', 1886)],
+        sites=[(U, 1805), (U, 1809), (U, 1814), ('scripts/pm_goal_test_storage.py', 598),
+               ('Plans/goal_update_command_custody.schema.json', 151)],
         argument=(
             'publish (:1809-1814) validates an OriginalPublication assembled only from the '
             'append result the same call just read back: event_id from the frame-validated '
@@ -319,16 +308,13 @@ PROOFS = {
             'pm_goal_test_storage.py:598, in exactly the AppendReceipt/commitment shapes '
             'OriginalPublication references, :151), and original_append_result copied from '
             'that receipt plus the stored sequence. Every field is either a constant-shape '
-            'storage output or copied verbatim from it. During the original recovery call '
-            'after the first receipt, disabling only this check sends the unchanged invalid '
-            'publication to Progress. That schema requires the identical OriginalPublication '
-            'definition in its event_issued branch. The original refusal returns on restoration.')),
+            'storage output or copied verbatim from it, so no complete publish call can make '
+            'this row refuse alone.')),
     'dg5/dgu/inspect/event/schema': dict(
         kind='code-selection',
         families=['goal.updated'],
-        depends_on=['dg5/dgu/producer/freeze/producer_input/schema'],
-        sites=[(U, 1871), (U, 1874), (U, 1876), (U, 1891), ('scripts/pm_goal_test_storage.py', 580),
-               ('scripts/pm_goal_test_storage.py', 1861), ('scripts/pm_goal_test_owner_adapters.py', 83),
+        depends_on=[SITE + '1891'],
+        sites=[(U, 1874), (U, 1876), (U, 1891), ('scripts/pm_goal_test_storage.py', 1861),
                ('Plans/goal_updated_consumer_contracts.schema.json', 497)],
         argument=(
             'inspect validates the selected event against SelectedActiveEvent (:1876: the '
@@ -339,9 +325,9 @@ PROOFS = {
             'verbatim at :1891 (producer25 of the whole event minus storage-assigned fields '
             'against the frozen ProducerInput, pm_goal_test_storage.py:1861): a producer-issued '
             'event carries the freeze-validated payload, and any other event differs from the '
-            'frozen input and refuses there. The complete call with the selected-event schema '
-            'disabled reaches that type-exact comparison with the extra event field and refuses '
-            'at :1891. Restoring the check repeats the earlier exact validation message.')),
+            'frozen input and refuses there. With this row cut, no event that would fail it '
+            'is accepted; it selects the consumer-schema code and never gates acceptance '
+            'alone. It closes by this proof once :1891 is closed.')),
     'dg5/dgu/inspect/observation/schema': dict(
         kind='entailed-by-inspect-construction',
         families=['goal.updated'],
