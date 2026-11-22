@@ -233,8 +233,13 @@ export function judge(rec, { rest, back }) {
 	const timer = rec.timer;
 	const entry = probe && timer?.inputDue === probe.due && Number.isFinite(timer?.entered) ? timer.entered : null;
 	const entryGap = entry != null ? entry - Math.max(due, probe.fired) : null;
+	// R132-FOLLOWUPS 6: the probe and the product's wheelEnd are separate timer callbacks sharing the renderer
+	// queue. When the product armed its 150 ms timeout at the input (armed within the same-task 2 ms of
+	// inputDue - 150), a gap between the callbacks is queue scheduling, not product work, and no longer fails on
+	// its own. A late arm, an early entry, work past RETURN_WORK_MS and the total endDelay bound still fail.
+	const armedAtInput = timer != null && Number.isFinite(timer.armed) && timer.armed <= timer.inputDue - REST_MS + 2;
 	const callbackWork = entry != null && endT != null ? endT - entry : null;
-	const endOk = entryGap != null && entryGap <= 2 && entry >= due - 2 &&
+	const endOk = entryGap != null && (entryGap <= 2 || armedAtInput) && entry >= due - 2 &&
 		callbackWork != null && callbackWork >= 0 && callbackWork <= RETURN_WORK_MS &&
 		endDelay >= REST_MS - 2 && endDelay <= REST_MS + late + RETURN_WORK_MS + 2;
 	const backDelay = backT != null && endT != null ? backT - endT : null;

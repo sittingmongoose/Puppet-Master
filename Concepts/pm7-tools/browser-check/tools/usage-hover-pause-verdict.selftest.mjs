@@ -244,12 +244,23 @@ test('R117 T3: the card lighting up cannot substitute for a required proxy', () 
  assert.equal(j(r).r2.ok, true);
 });
 
-test('TB7 H1: a late product timer entry cannot spend the return-work budget', () => {
+test('TB7 H1 (R132-6): a correctly armed callback keeps its prompt clear across a queue gap; a late arm cannot spend the return-work budget', () => {
  const r = make();
  r.ops = [{t:101,op:'wheel'},{t:685,op:null}];
  r.timer = { inputDue: 670, armed: 520, entered: 685 };
  for (const f of r.frames) Object.assign(f, { op: f.t < 685 ? 'wheel' : null, lit: f.t >= 690 ? ['new'] : [], tools: f.t >= 690 ? .9 : 0 });
  r.cls = [{t:690,card:'new',on:true}];
+ // R132-6: armed at the input, the 15 ms probe-to-callback gap is queue scheduling; the clear at entry is prompt
+ // (callbackWork 0) and the total endDelay 165 ms is inside rest + probe lateness + work + 2.
+ assert.equal(j(r).r2.ok, true);
+ // a late arm is the product's own delay: the same entry now fails
+ r.timer = { inputDue: 670, armed: 560, entered: 685 };
+ assert.equal(j(r).r2.ok, false);
+ // entry delay still cannot spend the return-work budget: work past RETURN_WORK_MS fails even armed right
+ r.timer = { inputDue: 670, armed: 520, entered: 685 };
+ r.ops = [{t:101,op:'wheel'},{t:702,op:null}];
+ for (const f of r.frames) Object.assign(f, { op: f.t < 702 ? 'wheel' : null, lit: f.t >= 706 ? ['new'] : [], tools: f.t >= 706 ? .9 : 0 });
+ r.cls = [{t:706,card:'new',on:true}];
  assert.equal(j(r).r2.ok, false);
 });
 test('TB7 H2: a task mutation between samples cannot claim the previous frame', () => {
@@ -357,4 +368,31 @@ test('R5: an intact 203-wheel burst keeps its qualification and judges', () => {
 });
 test('R5: a broke burst keeps the R5-CASCADE skip, not a second failing row', () => {
 	assert.equal(r5BurstGate({ qualified: false, burstBroke: true }), 'skip');
+});
+
+// R132-FOLLOWUPS 6 (R132-REPORT.md): a 4 ms unrelated task between the probe callback and the product's correctly
+// armed wheelEnd callback failed a prompt marker clear at :235. The gap between separate timer callbacks is queue
+// scheduling when timer.armed shows the product requested its 150 ms timeout at the input.
+test('R132-6: a 4 ms queue gap between the probe and a correctly armed product callback passes', () => {
+	const r = make();
+	r.ops = [{t:101,op:'wheel'},{t:676,op:null}];
+	r.timer = { inputDue: 670, armed: 520, entered: 674 };
+	for (const f of r.frames) Object.assign(f, { op: f.t < 676 ? 'wheel' : null });
+	assert.equal(j(r).r2.entryGap, 4);
+	assert.equal(j(r).r2.ok, true);
+});
+test('R132-6: a late arm with the same entry still fails', () => {
+	const r = make();
+	r.ops = [{t:101,op:'wheel'},{t:676,op:null}];
+	r.timer = { inputDue: 670, armed: 560, entered: 674 };
+	for (const f of r.frames) Object.assign(f, { op: f.t < 676 ? 'wheel' : null });
+	assert.equal(j(r).r2.ok, false);
+});
+test('R132-6: a correctly armed callback whose return exceeds the total endDelay bound still fails', () => {
+	const r = make();
+	r.ops = [{t:101,op:'wheel'},{t:700,op:null}];
+	r.timer = { inputDue: 670, armed: 520, entered: 698 };
+	for (const f of r.frames) Object.assign(f, { op: f.t < 700 ? 'wheel' : null, lit: f.t >= 700 ? ['new'] : [], tools: f.t >= 700 ? .9 : 0 });
+	r.cls = [{t:700,card:'new',on:true}];
+	assert.equal(j(r).r2.ok, false);
 });
