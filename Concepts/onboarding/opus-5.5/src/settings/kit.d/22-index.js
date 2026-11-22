@@ -32,15 +32,38 @@ const pm51TabLabel = (ws, t) => (((PLACEMENT && PLACEMENT.managers[ws]) || {}).t
    entries: a row of another tab's group can be drawn on this one (Image Generation's Defaults card shows "Saves to",
    media.io.artifacts-location, of Pictures & files' "Where results go"), and adopting it there lit "Where results go"
    over the last third of the abilities list and listed it under Abilities, where a click set the tab without redrawing
-   the page (neon-max-16, 2026-11-22; Services listed Limits & switching's "Moving between accounts" the same way). */
+   the page (neon-max-16, 2026-11-22; Services listed Limits & switching's "Moving between accounts" the same way).
+   An adopted anchor counts only while it still holds its group. A redraw in place (28-in-place.js, which keeps
+   data-o55-adopted on the nodes it reuses) after Settings Search or Delivery history changed the tab left the old tab's
+   anchors on the new tab's cards: Commands listed Shortcuts' "Keyboard shortcuts" and "Hints and clashes", Events
+   listed Destinations' "Notifications", and a click on one sent the page back (neon-p-recheck-r2 F1). So an anchor of
+   another tab, or one whose card no longer holds a row of its group (nor is its owner's list/detail block), is
+   dropped before the open tab's groups are adopted. */
 const pm51Live = (scope, sel) => [...scope.querySelectorAll(sel)].find(el => !el.closest('.o55-leaving'));
+const pm51RowSel = s => (s.settings || []).map(st => `#setting-${cssEscape(st.id)}, [data-setting-id="${cssEscape(st.id)}"]`).join(', ');
+const pm51OwnerOf = (scope, id) => [...scope.querySelectorAll('[data-pm51-owns]')].find(p => (p.dataset.pm51Owns || '').split(' ').includes(id));
+function pm51DropStaleAnchors(w, body, cur) {
+  const byId = new Map(w.sections.map(s => [s.id, s]));
+  body.querySelectorAll('[data-o55-adopted]').forEach(el => {
+    if (el.closest('.o55-leaving')) return;
+    const id = el.dataset.sectionId, s = byId.get(id);
+    if (s && !(cur && s.tab && s.tab !== cur)) {
+      const owner = el.matches('.pm51-split') && pm51OwnerOf(body, id);
+      const sel = pm51RowSel(s);
+      if ((owner && owner.contains(el)) || (sel && (el.matches(sel) || el.querySelector(sel)))) return;
+    }
+    if (el.id === `section-${id}`) el.removeAttribute('id');
+    el.removeAttribute('data-section-id'); el.removeAttribute('data-o55-adopted');
+  });
+}
 function pm51AdoptAnchors(ws, body) {
   const w = getDomain().workspaces.find(x => x.id === ws);
   if (!w || !body || !Array.isArray(w.sections)) return;
   const cur = pm51HasTabs(w) ? pm51IndexCurTab(ws) : null;
+  pm51DropStaleAnchors(w, body, cur);
   for (const s of w.sections) {
     if (!s.inline || s.advanced || (cur && s.tab && s.tab !== cur) || pm51Live(body, `[data-section-id="${cssEscape(s.id)}"]`)) continue;
-    const owner = [...body.querySelectorAll('[data-pm51-owns]')].find(p => (p.dataset.pm51Owns || '').split(' ').includes(s.id));
+    const owner = pm51OwnerOf(body, s.id);
     const split = owner && pm51Live(owner, '.pm51-split:not([data-section-id])');
     const row = split ? null : (s.settings || []).map(st => pm51Live(body, `#setting-${cssEscape(st.id)}, [data-setting-id="${cssEscape(st.id)}"]`)).find(Boolean);
     if (!split && !row) continue;

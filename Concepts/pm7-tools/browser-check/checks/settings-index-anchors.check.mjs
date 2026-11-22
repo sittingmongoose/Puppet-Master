@@ -15,6 +15,9 @@
 //   Abilities while the index opened Pictures & files; Providers & Accounts › Services listed "Moving between accounts"
 //   (Limits & switching) the same way. The walk now wants Media abilities lit for the whole list, and a click on any entry
 //   under an open tab must leave the page and the index on that tab.
+// - Round 3 (neon-p-recheck-r2 F1, on dc227633a8): Settings Search to another tab redraws the page in place and kept
+//   the old tab's adopted anchors on the reused cards (Commands listed Keyboard shortcuts; Events listed Notifications);
+//   the search tests compare the new tab's entries with those it lists when opened from the index.
 // - Reached by the top tabs (Media & Output, then its Abilities tab), Abilities listed no entries at all: the tab redraw
 //   morphs the page body, the leaving copy still held the adopted anchors, so the arriving copy got none.
 // - pm4-settings-css.css gave .page-index a 1 px right border: drawn in Basic, Friendly, Retro and NieR, both modes.
@@ -106,6 +109,37 @@ async function openTab(t, f, ws, tab) {
 	await still(t, f);
 }
 const TABBED = { media: ['abilities', 'files'], providers: ['services', 'models', 'limits', 'usage'] };
+/* Settings Search to a setting on another tab redraws the page in place (PM51.refresh, 28-in-place.js), unlike a tab
+   click (PM51.switchTab, a fresh body): neon-p-recheck-r2 F1 found the old tab's adopted anchors kept on the reused
+   cards, listed under the new tab, and a click on one sending the page back to the old tab. */
+const SEARCHES = [
+	{ domain: 'code', ws: 'commands', from: 'shortcuts', to: 'commands', query: 'Custom Slash Commands' },
+	{ domain: 'general', ws: 'notifications', from: 'destinations', to: 'events', query: 'Alert Me About' }
+];
+async function openDomain(t, domain) {
+	const [w, h] = String(t.args.size || '1440x900').split('x').map(Number);
+	const f = await t.app.open();
+	await t.emulate({ reducedMotion: 'no-preference' });
+	await t.viewport(w, h);
+	await f.locator('#tab-settings').click();
+	await t.settle();
+	await f.locator(`#pm-settings-root [data-action="navigate-domain"][data-domain="${domain}"]:visible`).first().click();
+	await t.settle();
+	return f;
+}
+async function searchJump(t, f, query) {
+	const input = f.locator('#pm-settings-root [data-global-search]:visible').first();
+	await input.click();
+	await input.fill('');
+	await input.type(query, { delay: 15 });
+	/* the best match (titles are the row's words, not the query); the list opens in the app's portal, outside #pm-settings-root */
+	const hit = f.locator('.search-results[data-mode="rail"] .search-result').first();
+	await hit.waitFor({ state: 'visible', timeout: 5000 });
+	await hit.click();
+	await t.settle();
+	await t.page.waitForTimeout(900);
+	await still(t, f);
+}
 
 const ROUTES = ['top tabs', 'side index'];
 export const tests = Object.fromEntries(ROUTES.flatMap((route) => [
@@ -169,6 +203,30 @@ export const tests = Object.fromEntries(ROUTES.flatMap((route) => [
 	}
 	t.log(`${ws} entries: ${seen.join(' | ')}`);
 	await t.check(`every entry under an open tab of ${ws} lands on that tab, on the page and in the index, and lights itself`, bad.length === 0, bad.slice(0, 8).join(' | ') + (bad.length > 8 ? ` and ${bad.length - 8} more` : ''));
+}])).concat(SEARCHES.map((c) => [`Neon 2026-11-22 Settings Search from ${c.ws} › ${c.from} to a setting on ${c.to} lists only ${c.to}'s entries, and each stays on ${c.to}`, async (t) => {
+	const f = await openDomain(t, c.domain);
+	await openTab(t, f, c.ws, c.to);
+	const own = await f.evaluate(SUB, [c.ws, c.to]);
+	await openTab(t, f, c.ws, c.from);
+	await searchJump(t, f, c.query);
+	const a0 = await f.evaluate(AFTER, c.ws), listed = await f.evaluate(SUB, [c.ws, c.to]);
+	t.log(`${c.ws}: ${c.to} opened from the index lists ${own.join(', ') || 'none'}; after the search it lists ${listed.join(', ') || 'none'} (page on ${a0.pageTab}, index on ${a0.indexTab})`);
+	await t.check(`the search lands on ${c.to}, on the page and in the index`, a0.pageTab === c.to && a0.indexTab === c.to, JSON.stringify(a0));
+	await t.check(`after the search, ${c.to} lists the entries it lists when opened from the index (${own.join(', ')})`, own.length > 0 && JSON.stringify(listed) === JSON.stringify(own), `listed ${JSON.stringify(listed)}`);
+	const bad = [];
+	for (const label of listed) {
+		await openTab(t, f, c.ws, c.from);
+		await searchJump(t, f, c.query);
+		const link = f.locator(`#pm-settings-root .page-index-card .pm51-index-tab.is-open[data-workspace="${c.ws}"][data-tab="${c.to}"] + .pm51-index-sub .index-link`, { hasText: label }).first();
+		if (!(await link.count())) { bad.push(`"${label}" not listed after the search`); continue; }
+		await link.click();
+		await t.page.waitForTimeout(900);
+		await still(t, f);
+		const a = await f.evaluate(AFTER, c.ws);
+		if (a.pageTab !== c.to || a.indexTab !== c.to) bad.push(`"${label}": page on ${a.pageTab}, index open on ${a.indexTab}`);
+		else if (!a.lit.includes(label)) bad.push(`"${label}": lit ${a.lit.join(',') || 'none'}`);
+	}
+	await t.check(`a click on each entry listed under ${c.to} after the search stays on ${c.to} and lights itself`, bad.length === 0, bad.join(' | '));
 }])).concat([
 	['Jared 2026-11-21 the lit entry under Abilities reads at 4.5:1 or more, in every look', async (t) => {
 		const f = await openAbilities(t, 'side index');
