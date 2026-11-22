@@ -80,7 +80,10 @@ const o55AfterPaint = fn => requestAnimationFrame(() => setTimeout(fn, 0));
 PM51.switchTab = function (wsId, tab) {
   const body = root.querySelector(`[data-continuous-workspace-body="${cssEscape(wsId)}"]`);
   const page = body && body.querySelector('.pm51-mgr');
-  const oldBody = page && page.querySelector(':scope > .manager-body');
+  /* The in-flow body, never the .o55-leaving copy of an interrupted morph: that copy precedes the arriving body in
+     document order, and morphing it again would remove it (the interrupted morph's own oldEl) before the fresh body
+     is placed, dropping the arriving tab's body. */
+  const oldBody = page && page.querySelector(':scope > .manager-body:not(.o55-leaving)');
   const tabs = page ? [...page.querySelectorAll(':scope > .pm51-tabs .manager-tab')] : [];
   const from = tabs.findIndex(t => t.classList.contains('active')), to = tabs.findIndex(t => t.dataset.tab === tab);
   PM51.setTab(wsId, tab);
