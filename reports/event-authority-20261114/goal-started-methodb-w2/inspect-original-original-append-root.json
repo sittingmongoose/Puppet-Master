@@ -1,0 +1,71 @@
+{
+  "row": "dg5/inspect_original/original/append/root/schema",
+  "fixtures": [
+    {
+      "route": "read_append/inspect_original/original/append",
+      "edition": "v3",
+      "root": "dg5:22761dd9bd8eeecb",
+      "hash_seed": 6,
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [
+          "full_value_result"
+        ],
+        "additionalProperties"
+      ],
+      "enclosing_test_row": "dg5/inspect_original/original/root/schema",
+      "enclosing_test_root": "dg5:525e53cd7926ee62"
+    },
+    {
+      "route": "read_append/inspect_original/original/append",
+      "edition": "v7",
+      "root": "dg5:512fe609dc5f59fb",
+      "hash_seed": 6,
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [
+          "full_value_result"
+        ],
+        "additionalProperties"
+      ],
+      "enclosing_test_row": "dg5/inspect_original/original/root/schema",
+      "enclosing_test_root": "dg5:6c637862cfc208c8"
+    },
+    {
+      "route": "read_append/inspect_original/original/append",
+      "edition": "v7",
+      "root": "dg5:4ff6c92976ff3386",
+      "hash_seed": 8,
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [
+          "full_value_result"
+        ],
+        "additionalProperties"
+      ],
+      "enclosing_test_row": "dg5/inspect_original/original/root/schema",
+      "enclosing_test_root": "dg5:cdc43088b78d9d9d"
+    }
+  ]
+}
