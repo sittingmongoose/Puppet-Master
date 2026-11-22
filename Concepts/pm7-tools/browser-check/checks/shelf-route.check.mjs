@@ -9,6 +9,7 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { press as nativePress } from '../helpers/press.mjs';
 
 const INPUTS = ['mouse', 'shift-f10', 'menu-key'];
 const KEY = { 'shift-f10': 'Shift+F10', 'menu-key': 'ContextMenu' };
@@ -1054,7 +1055,10 @@ export default async function (t) {
     for (const engine of (engines.length ? engines : [null])) {
     if (engine !== null) {
       const sw = panel.locator(`[data-pm7-scm-engine="${engine}"]`);
-      await sw.click();
+      // R133-FOLLOWUPS 1: the native press helper (fresh center hit-test, no Playwright stability wait); a
+      // rejected press reports its hit witness and sends nothing.
+      const hit = await nativePress(f, sw);
+      await t.check(`${target} engine ${engine} switch press reached its target`, hit.ok, JSON.stringify(hit), { hard: true });
       await t.check(`${target} engine ${engine} selected`, await panel.evaluate((p, en) => p.dataset.scmEngine === en, engine), '', { hard: true });
       await f.waitForTimeout(400);
     }
