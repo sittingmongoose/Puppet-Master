@@ -24,11 +24,11 @@ import { join } from 'node:path';
 import { inflateSync } from 'node:zlib';
 import { encodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 import { nierReticleEscape } from '../helpers/nier-reticle-escape.mjs';
-import { installKeyMarker, removeKeyMarker, armKeyMarker, disarmKeyMarker, markerReading, keyFrames, handoverFault, whole, MARKER_ID } from '../helpers/activity-frame-marker.mjs';
+import { installKeyMarker, removeKeyMarker, armKeyMarker, disarmKeyMarker, markerReading, keyFrames, handoverFault, whole, ringSpan, MARKER_ID } from '../helpers/activity-frame-marker.mjs';
 const LOOKS_FILM = ['glass-dark', 'glass-light'];
 
-// The ring on pixels, with no picture of the tile without it to compare against (the lens moves): across each side, 6 px
-// either side of the edge, through the side's middle 60%, a scanline counts when it holds a run of the mark's ink (each
+// The ring on pixels, with no picture of the tile without it to compare against (the lens moves): across each side, 6 CSS
+// px either side of the edge (ringSpan scales that with the capture), through the side's middle 60%, a scanline counts when it holds a run of the mark's ink (each
 // channel within 48 levels of the accent, the run's pixels within 32 of one another) standing at 3:1 or more against
 // the 1 or 2 px just beyond it, the better of its two sides (as activity-bar-keys judges a two-tone ring); a side holds
 // when 90% of its scanlines count. A ring washed by glass over it is either no longer the accent's ink or no longer at
@@ -50,10 +50,10 @@ function ringLine(im, pts, ink) {
   const beside = (from, step) => { let m = 0; for (let k = 1; k <= 2; k++) { const j = from + step * k; if (j < 0 || j >= px.length || px[j] == null) break; m = Math.max(m, ratio(lc, lumP(D, px[j]))); } return m; };
   return Math.max(beside(a, -1), beside(b, 1));
 }
-function ringSides(im, box, ink) {
+export function ringSides(im, box, ink, scale = 1) {
   const L = Math.round(box.x), T = Math.round(box.y), R = Math.round(box.x + box.width), B = Math.round(box.y + box.height);
   const mid = (p, q) => { const o = []; for (let v = Math.round(p + (q - p) * 0.2); v < Math.round(p + (q - p) * 0.8); v++) o.push(v); return o; };
-  const span = e => { const o = []; for (let v = e - 6; v < e + 6; v++) o.push(v); return o; };
+  const span = e => ringSpan(e, scale);
   const side = lines => { const got = lines.map(pts => ringLine(im, pts, ink)).sort((p, q) => p - q), n = got.length;
     return { share: n ? +(got.filter(v => v >= 3).length / n).toFixed(2) : 0, median: n ? +got[Math.floor(n / 2)].toFixed(2) : 0 }; };
   return { top: side(mid(L, R).map(x => span(T).map(y => [x, y]))), bottom: side(mid(L, R).map(x => span(B).map(y => [x, y]))),
@@ -188,8 +188,9 @@ async function rig(t) {
         t.log(`${look} ${label}: could not judge the handover: ${why}`);
         return { seen, bad, judged: false, why };
       }
-      /* The marker route's film is 960x540 (see film): every box below is scaled to the frame it is read in, so the ring
-         rule still measures the capture's own pixels (the 3:1 every-side rule, on half-size scanlines). */
+      /* The marker route's film is 960x540 (see film): every box below is scaled to the frame it is read in, and the
+         scanline span with it (ringSpan), so the ring rule still measures the capture's own pixels at the same 6 CSS px
+         either side of the edge (the 3:1 every-side rule, on half-size scanlines). */
       const nativeRows = Math.max(tile.y + tile.height, near ? near.y + near.height : 0, prev ? prev.y + prev.height : 0, marker.box.y + marker.box.height) + 32;
       const firstIm = decodeTop(Buffer.from(cap.got[0].data, 'base64'), Math.ceil(nativeRows));
       const scale = firstIm.width / 1920, rows = Math.ceil(nativeRows * scale);
@@ -204,8 +205,8 @@ async function rig(t) {
         return { seen, bad, judged: false, why };
       }
       const atIm = decodeTop(Buffer.from(cap.got[at].data, 'base64'), rows), preIm = decodeTop(Buffer.from(cap.got[pre].data, 'base64'), rows);
-      const atFiles = better(ringSides(atIm, tileS, ink), nearS && ringSides(atIm, nearS, ink)), preFiles = better(ringSides(preIm, tileS, ink), nearS && ringSides(preIm, nearS, ink));
-      const atSearch = ringSides(atIm, prevS, ink), preSearch = ringSides(preIm, prevS, ink);
+      const atFiles = better(ringSides(atIm, tileS, ink, scale), nearS && ringSides(atIm, nearS, ink, scale)), preFiles = better(ringSides(preIm, tileS, ink, scale), nearS && ringSides(preIm, nearS, ink, scale));
+      const atSearch = ringSides(atIm, prevS, ink, scale), preSearch = ringSides(preIm, prevS, ink, scale);
       const fault = handoverFault({ preFiles, preSearch, atFiles, atSearch });
       t.log(`${look} ${label}: ${seen} frames on pixels at ${Math.round(1920 * scale)} px wide, K ${(count - 1) & 255} at frame ${pre + 1} of ${seen}, K+1 ${count} (the key frame) at ${at + 1}, recorded ${marker.key}, ink ${ink.slice(0, 3)}, ${fault ? 'fails: ' + fault.why : 'the handover is in frame K+1'}`);
       if (fault) {
@@ -214,7 +215,7 @@ async function rig(t) {
         cropM(atIm, `K1-${at + 1}`);
       }
       for (let j = at + 1; j < cap.got.length; j++) {
-        const im = decodeTop(Buffer.from(cap.got[j].data, 'base64'), rows), sd = better(ringSides(im, tileS, ink), nearS && ringSides(im, nearS, ink));
+        const im = decodeTop(Buffer.from(cap.got[j].data, 'base64'), rows), sd = better(ringSides(im, tileS, ink, scale), nearS && ringSides(im, nearS, ink, scale));
         if (whole(sd)) continue;
         bad.push({ after: j - at, counter: readings[j] && readings[j].count, sides: sideText(sd) });
         if (bad.length <= 4) cropM(im, `after-${j - at}`);
@@ -226,7 +227,7 @@ async function rig(t) {
     const span = prev ? { x: Math.min(tile.x, prev.x), y: Math.min(tile.y, prev.y), width: Math.max(tile.x + tile.width, prev.x + prev.width) - Math.min(tile.x, prev.x), height: Math.max(tile.y + tile.height, prev.y + prev.height) - Math.min(tile.y, prev.y) } : tile;
     const crop = (im, tag) => { if (crops++ < 24 && t.run?.dir) { const dir = join(t.run.dir, 'ring-frames'); mkdirSync(dir, { recursive: true }); cropPng(im, span, join(dir, `${look}-${label.replace(/[^a-z0-9]+/gi, '-')}-${tag}.png`)); } };
     for (const fr of cap.got) {
-      const im = decodeTop(Buffer.from(fr.data, 'base64'), rows), sd = better(ringSides(im, tile, ink), near && ringSides(im, near, ink));
+      const im = decodeTop(Buffer.from(fr.data, 'base64'), rows), sd = better(ringSides(im, tile, ink, im.width / 1920), near && ringSides(im, near, ink, im.width / 1920));
       if (whole(sd)) continue;
       const ms = Math.round(fr.wall - cap.at);
       bad.push({ ms, sides: sideText(sd) });

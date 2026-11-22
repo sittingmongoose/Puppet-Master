@@ -149,6 +149,15 @@ export function keyFrames(readings, recorded) {
 // The check's ring-side rule: a side holds when 90% of its scanlines hold the mark's ink at 3:1 (see ringSides).
 export const whole = sides => Object.values(sides).every(v => v.share >= 0.9);
 
+// The ring judge's scanline span (the check's ringSides): 6 CSS px either side of the edge, in the capture's own image
+// pixels. The marker route captures at 960x540, half of 1920x1080: an unscaled ±6 image-px span there reads ±12 CSS px
+// and credits a ring 6-7 CSS px off the tile's edge as on it (PM7PERF-SHIFTTAB-MARKER-R2-NOTES 4). Scaled with the
+// capture, and never under 1 image px each side, so a small capture still reads one pixel either side of the edge.
+export function ringSpan(e, scale = 1) {
+  const r = Math.max(1, Math.round(6 * scale));
+  const o = []; for (let v = e - r; v < e + r; v++) o.push(v); return o;
+}
+
 // The handover on the two judged frames. Null when the key's paint is in one frame; otherwise which frame broke it and
 // why, so the failing row names the frame it judged.
 export function handoverFault({ preFiles, preSearch, atFiles, atSearch }) {
