@@ -572,7 +572,11 @@ populateDetailInspector = function () {
   if (!found) return false;
   const tpl = document.createElement('template'); tpl.innerHTML = `<div class="o55-insp-page">${renderDetailInspectorBody(found.setting, found.section, found.workspace)}</div>`;
   const next = tpl.content.firstElementChild;
-  let current = inspector.querySelector(':scope > .o55-insp-page');
+  /* The in-flow page, never the .o55-leaving copy of an interrupted morph: that copy precedes the arriving page in
+     document order, and morphing it again would remove it (the interrupted morph's own oldEl) before the fresh page
+     is placed, dropping the arriving setting's Details (FO-S1b's inspector twin; syncInspector below already reads
+     the in-flow page the same way). */
+  let current = inspector.querySelector(':scope > .o55-insp-page:not(.o55-leaving)');
   if (!current) { current = document.createElement('div'); current.className = 'o55-insp-page'; while (inspector.firstChild) current.appendChild(inspector.firstChild); inspector.appendChild(current); }
   o55Morph(current, next, { host: inspector, dir: 0, dur: 240 });
   return true;

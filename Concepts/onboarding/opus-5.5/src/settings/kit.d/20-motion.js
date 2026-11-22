@@ -23,9 +23,14 @@ function o55Morph(oldEl, newEl, { host, dir = 0, dur = 300 } = {}) {
   host = host || oldEl.parentNode;
   if (!oldEl || !oldEl.isConnected) { return; }
   if (o55Still()) { oldEl.replaceWith(newEl); return; }
+  /* A morph that interrupts another inherits the host's position from before the chain: the interrupted morph's
+     inline position:relative is still on the host, and reading it back would make this morph's cleanup leave it
+     there for good (FO-S1b: the split kept position:relative after a rapid second item swap). */
+  const chained = host.dataset.o55Morph != null;
+  const hostPos = chained ? (host.dataset.o55MorphPos || getComputedStyle(host).position) : getComputedStyle(host).position;
   const seq = ++o55MorphSeq; host.dataset.o55Morph = String(seq);
+  if (!chained) host.dataset.o55MorphPos = hostPos;
   host.querySelectorAll(':scope > .o55-leaving').forEach(n => n.remove()); /* a morph interrupted by another */
-  const hostPos = getComputedStyle(host).position;
   if (hostPos === 'static') host.style.position = 'relative'; /* before measuring: offsets are relative to it */
   const h0 = host.getBoundingClientRect().height;
   const top = oldEl.offsetTop, left = oldEl.offsetLeft, width = oldEl.offsetWidth;
@@ -43,7 +48,7 @@ function o55Morph(oldEl, newEl, { host, dir = 0, dur = 300 } = {}) {
   if (Math.abs(h1 - h0) > 2) { host.style.overflow = 'clip'; grow = host.animate([{ height: h0 + 'px' }, { height: h1 + 'px' }], { duration: dur, easing: ease }); }
   const done = () => {
     if (host.dataset.o55Morph !== String(seq)) return;
-    oldEl.remove(); if (hostPos === 'static') host.style.position = ''; host.style.overflow = ''; delete host.dataset.o55Morph;
+    oldEl.remove(); if (hostPos === 'static') host.style.position = ''; host.style.overflow = ''; delete host.dataset.o55Morph; delete host.dataset.o55MorphPos;
   };
   (grow || out).finished.then(done, done);
   window.setTimeout(done, dur + 200);
@@ -216,7 +221,13 @@ document.addEventListener('scroll', e => {
 PM51.swapDetail = function (wsId, sel) {
   const body = root.querySelector(`[data-continuous-workspace-body="${cssEscape(wsId)}"]`);
   const page = body && body.querySelector('.pm51-mgr');
-  const oldDetail = page && page.querySelector('.resource-detail');
+  /* The detail in the LIVE manager-body, never a leaving copy. Two interruptions leave a stale match behind: a
+     detail morph marks the outgoing .resource-detail itself .o55-leaving, and a tab morph marks the whole outgoing
+     .manager-body .o55-leaving while the detail inside it is not — so '.resource-detail:not(.o55-leaving)' alone
+     still matched a detail in the leaving tab body. Scope to the in-flow body first, then the in-flow detail within
+     it (FO-S1b: both the detail-morph path and Astra's tab-then-item path). */
+  const liveBody = page && page.querySelector(':scope > .manager-body:not(.o55-leaving)');
+  const oldDetail = liveBody && liveBody.querySelector('.resource-detail:not(.o55-leaving)');
   if (!oldDetail) { PM51.refresh(wsId, { swap: false }); return; }
   const fresh = o55Fresh(wsId); const nextDetail = fresh && fresh.querySelector('.resource-detail');
   if (!nextDetail) { PM51.refresh(wsId, { swap: false }); return; }
@@ -224,8 +235,8 @@ PM51.swapDetail = function (wsId, sel) {
   o55PostMount(nextDetail);
   o55Morph(oldDetail, nextDetail, { host: oldDetail.parentNode, dir: 0, dur: 260 });
   /* the item's own More options lives in the view's More options (kit.js pm51OneMore): it changes with the detail */
-  const oldMore = page.querySelector('[data-o55-item-more]'), nextMore = fresh.querySelector('[data-o55-item-more]');
-  const moreBody = page.querySelector(':scope > .manager-body > .pm51-scroll > details.pm51-advanced > .pm51-advanced-body');
+  const oldMore = liveBody && liveBody.querySelector('[data-o55-item-more]'), nextMore = fresh.querySelector('[data-o55-item-more]');
+  const moreBody = liveBody && liveBody.querySelector(':scope > .pm51-scroll > details.pm51-advanced > .pm51-advanced-body');
   if (nextMore) o55PostMount(nextMore);
   if (oldMore && nextMore) oldMore.replaceWith(nextMore);
   else if (oldMore) oldMore.remove();
