@@ -1297,6 +1297,41 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, text)
 
+    def test_registry_pin_batch_cannot_rebind_to_a_copy_of_its_records_file(self) -> None:
+        """T331 (Astra high 2): committed batch rows cannot be re-pointed at a byte-identical copy of
+        their records file so that they absorb a later append as one batch. The append that first
+        added the rows decides their batch, never the records path they carry now."""
+        m = pm_audit_closure
+        key = m.REGISTRY_BATCH_ANCHOR
+        records = self.prepare_same_file_records()
+        a, b, c = (record["closure_id"] for record in records)
+        records_copy = self.audit_dir / "all-copy.jsonl"
+        records_copy.write_bytes(self.records.read_bytes())
+        with patch.dict(os.environ, {"GIT_AUTHOR_DATE": self.STAMP_DATE}):
+            self.commit("a byte-identical copy of the records file")
+        before = self.registry.read_bytes()
+        original_records = self.records
+        self.records = records_copy
+        code, report = self.append()
+        self.assertEqual((code, report["appended"], report["errors"]), (0, 3, []), report)
+        attack = [json.loads(line) for line in self.registry.read_bytes().splitlines()]
+        marker = copy.deepcopy(attack[3]["hashes"][key])
+        self.assertEqual(marker["members"], sorted(row["closure_id"] for row in attack[3:]))
+        self.registry.write_bytes(before)
+        self.records = original_records
+        code, report = self.append(only=f"{a},{b}")
+        self.assertEqual((code, report["appended"], report["errors"]), (0, 2, []), report)
+        self.commit("append a and b from the first copy")
+        for row in attack[3:]:
+            row["hashes"][key] = copy.deepcopy(marker)
+        write_jsonl(self.registry, attack)
+        self.commit("repoint the committed rows at the copy")
+        validation = m.validate_registry(self.registry)
+        for line in (4, 5, 6):
+            self.assertIn(f"{self.registry_ref}:{line}: registry_batch_anchor differs from the batch rebuilt "
+                          "from the append that committed the row", validation["errors"])
+        self.assertEqual(validation["superseded_lines"], [], validation)
+
     def test_split_only_anchor_is_current_after_append(self) -> None:
         self.prepare_currentness_split()
         code, appended = self.append()

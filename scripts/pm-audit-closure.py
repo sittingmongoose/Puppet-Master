@@ -5284,16 +5284,18 @@ def _git_bytes(root: Path, *args: str) -> bytes | None:
     return proc.stdout if proc.returncode == 0 else None
 
 
-def _reaudit_row_identity(row: Any) -> tuple[str, str, str] | None:
-    """A re-audit row's closure_id with the records file and record it is bound to."""
+def _reaudit_row_identity(row: Any) -> tuple[str, str] | None:
+    """A re-audit row's closure_id with the record it is bound to. The records path is not part of
+    it: re-pointing a committed row at another copy of the same records file edits the row, it does
+    not write it a second time, so the row keeps the append that first added it (T331)."""
     reaudit = row.get("reaudit") if isinstance(row, dict) else None
     if not isinstance(reaudit, dict):
         return None
-    identity = (row.get("closure_id"), reaudit.get("record"), reaudit.get("record_sha256"))
+    identity = (row.get("closure_id"), reaudit.get("record_sha256"))
     return identity if all(isinstance(part, str) for part in identity) else None  # type: ignore[return-value]
 
 
-def _registry_introductions(root: Path, registry_ref: str, base: str) -> dict[tuple[str, str, str], list[str]]:
+def _registry_introductions(root: Path, registry_ref: str, base: str) -> dict[tuple[str, str], list[str]]:
     """Re-audit row identity -> the ordinary commits in the history of `base`, oldest first, whose change
     to the registry adds a row with that identity (T308). Rows are never edited and history is never
     rewritten, so the first of them is a permanent record of the append that wrote the row."""
