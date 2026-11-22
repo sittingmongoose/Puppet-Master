@@ -107,7 +107,7 @@
     },
     {
       "anchor_count": 5,
-      "bytes": 1574360,
+      "bytes": 1574937,
       "contractref_count": 67,
       "gui_related_inferred": true,
       "has_planunits_section": false,
@@ -117,7 +117,7 @@
       "plan_unit_count": 207,
       "plan_unit_parse_errors": [],
       "recommended_batch": "governance_seal_needed",
-      "sha256": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
+      "sha256": "eb4a9e10a80cc73e94ade88cd2fa4494dc396127505d2ea0529a526542ed37c8",
       "sharded": true,
       "span_count": 299,
       "spec_locked": true
@@ -328,17 +328,17 @@
     },
     {
       "anchor_count": 6,
-      "bytes": 4995541,
+      "bytes": 4996729,
       "contractref_count": 325,
       "gui_related_inferred": true,
       "has_planunits_section": true,
       "heading_count": 1001,
-      "line_count": 57763,
+      "line_count": 57766,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 785,
       "plan_unit_parse_errors": [],
       "recommended_batch": "governance_seal_needed",
-      "sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+      "sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
       "sharded": true,
       "span_count": 1001,
       "spec_locked": true
@@ -379,19 +379,19 @@
     },
     {
       "anchor_count": 0,
-      "bytes": 5154943,
+      "bytes": 5657743,
       "contractref_count": 276,
       "gui_related_inferred": true,
       "has_planunits_section": true,
-      "heading_count": 1092,
-      "line_count": 54008,
+      "heading_count": 1241,
+      "line_count": 63172,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 852,
+      "plan_unit_count": 1001,
       "plan_unit_parse_errors": [],
       "recommended_batch": "governance_seal_needed",
-      "sha256": "7da54f8f4338fe41e5b24a5d9b72112e09d64d7df774cd47c1cc03063900c645",
+      "sha256": "f3d5dadc3d0167515e273c4168fd817c62c31565daa1f5044e6fdcb450029fea",
       "sharded": true,
-      "span_count": 1092,
+      "span_count": 1241,
       "spec_locked": false
     },
     {
@@ -532,7 +532,7 @@
     },
     {
       "anchor_count": 2,
-      "bytes": 3606595,
+      "bytes": 3607067,
       "contractref_count": 201,
       "gui_related_inferred": true,
       "has_planunits_section": true,
@@ -542,7 +542,7 @@
       "plan_unit_count": 680,
       "plan_unit_parse_errors": [],
       "recommended_batch": "governance_seal_needed",
-      "sha256": "73d2fdbe5d89e1c00d558530c568133646e6c4496956e28ca59efbe50391faa3",
+      "sha256": "b8f3716574ec58d25116d0f986d378f01086f979e61556cc9661c483ff61e899",
       "sharded": true,
       "span_count": 1062,
       "spec_locked": true
@@ -940,7 +940,7 @@
     },
     {
       "anchor_count": 1,
-      "bytes": 2066035,
+      "bytes": 2066310,
       "contractref_count": 219,
       "gui_related_inferred": true,
       "has_planunits_section": true,
@@ -950,7 +950,7 @@
       "plan_unit_count": 472,
       "plan_unit_parse_errors": [],
       "recommended_batch": "governance_seal_needed",
-      "sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+      "sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
       "sharded": true,
       "span_count": 720,
       "spec_locked": true
@@ -1450,19 +1450,19 @@
     },
     {
       "anchor_count": 16,
-      "bytes": 8686664,
+      "bytes": 8690213,
       "contractref_count": 377,
       "gui_related_inferred": true,
       "has_planunits_section": true,
-      "heading_count": 1320,
-      "line_count": 79091,
+      "heading_count": 1321,
+      "line_count": 79101,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 804,
       "plan_unit_parse_errors": [],
       "recommended_batch": "governance_seal_needed",
-      "sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+      "sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
       "sharded": true,
-      "span_count": 1320,
+      "span_count": 1321,
       "spec_locked": true
     },
     {
@@ -1637,20 +1637,20 @@
     }
   ],
   "expected_doc_count": 96,
-  "generated_at_utc": "2026-11-21T20:04:02Z",
+  "generated_at_utc": "2026-11-22T20:24:26Z",
   "locked_doc_count": 37,
   "pilot_doc": "Plans/00-plans-index.md",
-  "plan_unit_count": 9468,
-  "plans_manifest_sha256": "1e3ca64178fe939ce8ad6d41ca05a8697747d8783e79ccb491c39a517049b858",
-  "run_id": "pds-20261121-004-current-planunit-snapshot",
+  "plan_unit_count": 9617,
+  "plans_manifest_sha256": "4485a26d353b77b59e04187c7559529373690a40f8286c3cf68914c7c4901a9c",
+  "run_id": "pds-20261122-002-current-planunit-snapshot",
   "schema_id": "pm.plan_migration.inventory.v1",
   "scope": "exact current top-level Plans/*.md",
   "sharded_doc_count": 74,
   "snapshot_mode": "current_planunit_state_snapshot",
   "snapshot_operation": "verification_only_no_conversion",
-  "span_count": 16295,
+  "span_count": 16445,
   "supersedes_run_ids": [
     "pds-20260611-002-atomize-planunits",
-    "pds-20261121-003-current-planunit-snapshot"
+    "pds-20261122-001-current-planunit-snapshot"
   ]
 }
