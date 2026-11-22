@@ -154,6 +154,76 @@ export function scrollMovedOk({ scroller, range, travel }) {
 	return !!scroller && range > 0 && travel > 0;
 }
 
+// R135-F7: the scroll window with nothing but the wheel inside the trace (frame-trace.mjs measures "with nothing
+// added to the page"). Discovery, marking, scrollTop = 0 and the pointer aim run BEFORE traceWindow; a passive
+// scroll listener installed before it accumulates the travel and pushes the live top through a CDP binding, so
+// the wheel loop turns at the bounds (scrollStep) without one f.evaluate per tick; cleanup and the moved verdict
+// run AFTER the trace. PM7-FRAMECOST-SCROLL-START / HOME-NOSCROLL: the walk still starts at the scroller's top,
+// aims at the scroller itself (Home's divider line scrolls nothing) and fails when nothing moved. Exported for
+// tools/frame-cost-scroll.selftest.mjs, which drives it with a fake trace, CDP session and page.
+export async function measureScroll(cdp, f, t, { ms, url, keep, label, trace = traceWindow }) {
+	const cands = await f.evaluate(() => {
+		const root = document.querySelector('#pm-o55-onboarding .o55-pane') || document.querySelector('.page.active') || document.body;
+		const out = [];
+		for (const el of [root, ...root.querySelectorAll('*')]) {
+			const cs = getComputedStyle(el);
+			if (!/(auto|scroll)/.test(cs.overflowY)) continue;
+			const range = el.scrollHeight - el.clientHeight;
+			if (range <= 0) continue;
+			const r = el.getBoundingClientRect();
+			if (r.height <= 0 || r.width <= 0) continue;
+			const i = out.length;
+			el.setAttribute('data-fc-cand', String(i));
+			out.push({ i, range, h: r.height, area: r.width * r.height, x: r.left + r.width / 2, y: r.top + r.height / 2, name: el.id || String(el.className).slice(0, 40) });
+		}
+		return out;
+	});
+	const best = pickScroller(cands);
+	let liveTop = 0, onBinding = null;
+	if (best) {
+		await cdp.send('Runtime.enable');
+		await cdp.send('Runtime.addBinding', { name: '__fcTop' });
+		onBinding = (e) => { if (e.name === '__fcTop') liveTop = Number(e.payload) || 0; };
+		cdp.on('Runtime.bindingCalled', onBinding);
+		await f.evaluate((i) => {
+			const el = document.querySelector(`[data-fc-cand="${i}"]`);
+			el.setAttribute('data-fc-scroller', '1');
+			el.scrollTop = 0;
+			const watch = { travel: 0, last: 0 };
+			watch.fn = () => { const top = el.scrollTop; watch.travel += Math.abs(top - watch.last); watch.last = top; if (window.__fcTop) window.__fcTop(String(top)); };
+			el.__fcWatch = watch;
+			el.addEventListener('scroll', watch.fn, { passive: true });
+		}, best.i);
+		await t.page.mouse.move(Math.round(best.x), Math.round(best.y));
+	}
+	const during = best ? async (until) => {
+		let dir = 1;
+		while (Date.now() < until) {
+			await t.page.mouse.wheel(0, dir * 40);
+			await new Promise((r) => setTimeout(r, 14));
+			dir = scrollStep({ top: liveTop, max: best.range, dir });
+		}
+	} : undefined;
+	const result = await trace(cdp, { ms, during, url, keep });
+	let travel = 0;
+	if (best) {
+		travel = await f.evaluate(() => {
+			const el = document.querySelector('[data-fc-scroller]');
+			const w = el && el.__fcWatch;
+			if (w) { el.removeEventListener('scroll', w.fn); delete el.__fcWatch; }
+			document.querySelectorAll('[data-fc-cand]').forEach((e) => e.removeAttribute('data-fc-cand'));
+			if (el) el.removeAttribute('data-fc-scroller');
+			return w ? w.travel : 0;
+		});
+		cdp.off('Runtime.bindingCalled', onBinding);
+		await cdp.send('Runtime.removeBinding', { name: '__fcTop' }).catch(() => {});
+		await cdp.send('Runtime.disable').catch(() => {});
+	}
+	const scrollMoved = { scroller: best ? best.name : null, range: best ? best.range : 0, travel: Math.round(travel) };
+	await t.check(`${label} scroll window: the view's main scroller moved under the wheel`, scrollMovedOk(scrollMoved), JSON.stringify(scrollMoved));
+	return { result, scrollMoved };
+}
+
 export default async function (t) {
 	const looks = String(t.args.looks || LOOKS.join(',')).split(',').filter(Boolean);
 	const views = String(t.args.views || 'home,usage,settings,orchestrator,wizard,projects').split(',').filter(Boolean);
@@ -215,55 +285,24 @@ export default async function (t) {
 		});
 		for (const w of windows) {
 			const keep = traces ? path.join(traces, `${look}-${view}-${w}.json`) : null;
-			let during;
-			if (w === 'sweep') during = async (until) => {
-				// a slow zigzag over the view: about 120 real moves a second
-				let i = 0;
-				while (Date.now() < until) {
-					const k = (i++ % 240) / 240, x = box.x + 20 + (box.w - 40) * (k < 0.5 ? k * 2 : 2 - k * 2), y = box.y + 20 + (box.h - 40) * ((i % 720) / 720);
-					await t.page.mouse.move(Math.round(x), Math.round(y));
-					await new Promise((r) => setTimeout(r, 6));
-				}
-			};
-			if (w === 'scroll') during = async (until) => {
-				// PM7-FRAMECOST-SCROLL-START + HOME-NOSCROLL: aim at the view's main scroller (55% of the page box
-				// lands on Home's i.pmw-divider-line, where nothing scrolls), start at its top (the last window left
-				// it wherever it was), and turn at its bounds (a fixed 30-tick leg pins a short board at its end).
-				const cands = await f.evaluate(() => {
-					const root = document.querySelector('#pm-o55-onboarding .o55-pane') || document.querySelector('.page.active') || document.body;
-					const out = [];
-					for (const el of [root, ...root.querySelectorAll('*')]) {
-						const cs = getComputedStyle(el);
-						if (!/(auto|scroll)/.test(cs.overflowY)) continue;
-						const range = el.scrollHeight - el.clientHeight;
-						if (range <= 0) continue;
-						const r = el.getBoundingClientRect();
-						if (r.height <= 0 || r.width <= 0) continue;
-						const i = out.length;
-						el.setAttribute('data-fc-cand', String(i));
-						out.push({ i, range, h: r.height, area: r.width * r.height, x: r.left + r.width / 2, y: r.top + r.height / 2, name: el.id || String(el.className).slice(0, 40) });
-					}
-					return out;
-				});
-				const best = pickScroller(cands);
-				let travel = 0;
-				if (best) {
-					await f.evaluate((i) => { const el = document.querySelector(`[data-fc-cand="${i}"]`); el.setAttribute('data-fc-scroller', '1'); el.scrollTop = 0; }, best.i);
-					await t.page.mouse.move(Math.round(best.x), Math.round(best.y));
-					let dir = 1, last = 0;
+			if (w === 'scroll') {
+				// R135-F7: setup before the trace, wheel-only inside, cleanup and the moved verdict after
+				const { result, scrollMoved } = await measureScroll(cdp, f, t, { ms, url, keep, label: `${look} ${view}` });
+				row.scroll = result;
+				row.scrollMoved = scrollMoved;
+			} else {
+				let during;
+				if (w === 'sweep') during = async (until) => {
+					// a slow zigzag over the view: about 120 real moves a second
+					let i = 0;
 					while (Date.now() < until) {
-						await t.page.mouse.wheel(0, dir * 40);
-						await new Promise((r) => setTimeout(r, 14));
-						const top = await f.evaluate(() => { const el = document.querySelector('[data-fc-scroller]'); return el ? el.scrollTop : 0; });
-						travel += Math.abs(top - last); last = top;
-						dir = scrollStep({ top, max: best.range, dir });
+						const k = (i++ % 240) / 240, x = box.x + 20 + (box.w - 40) * (k < 0.5 ? k * 2 : 2 - k * 2), y = box.y + 20 + (box.h - 40) * ((i % 720) / 720);
+						await t.page.mouse.move(Math.round(x), Math.round(y));
+						await new Promise((r) => setTimeout(r, 6));
 					}
-				}
-				await f.evaluate(() => { document.querySelectorAll('[data-fc-cand]').forEach((e) => e.removeAttribute('data-fc-cand')); const el = document.querySelector('[data-fc-scroller]'); if (el) el.removeAttribute('data-fc-scroller'); });
-				row.scrollMoved = { scroller: best ? best.name : null, range: best ? best.range : 0, travel: Math.round(travel) };
-				await t.check(`${look} ${view} scroll window: the view's main scroller moved under the wheel`, scrollMovedOk(row.scrollMoved), JSON.stringify(row.scrollMoved));
-			};
-			row[w] = await traceWindow(cdp, { ms, during, url, keep });
+				};
+				row[w] = await traceWindow(cdp, { ms, during, url, keep });
+			}
 			await t.page.mouse.move(W - 6, Math.round(H / 2));
 			await t.page.waitForTimeout(400);
 		}
