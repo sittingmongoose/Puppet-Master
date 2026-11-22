@@ -12,7 +12,7 @@
   },
   {
    "check": "audit-governance",
-   "count": 52,
+   "count": 53,
    "error": "audit_closure_validator_error",
    "fingerprints": [
     "012e9ecd9bd1",
@@ -39,6 +39,7 @@
     "8796f670028c",
     "8a8a97287f59",
     "8a9a8ac86f7c",
+    "8e6ae899e5d4",
     "962c8150aeb3",
     "9a9824b14d0b",
     "a24f1f96a2c3",
@@ -1021,12 +1022,12 @@
  ],
  "checks": {
   "audit-governance": {
-   "failure_total": 5862,
+   "failure_total": 5863,
    "status": "fail",
    "subchecks": {
     "audit_closure": {
-     "reported": 53,
-     "sampled": 53
+     "reported": 54,
+     "sampled": 54
     },
     "evidence": {
      "exported": 2863,
@@ -1059,11 +1060,11 @@
    }
   },
   "run-gates": {
-   "failure_total": 5862,
+   "failure_total": 5863,
    "status": "fail",
    "subchecks": {
     "validate_audit_closure": {
-     "reported": 53,
+     "reported": 54,
      "sampled": 50
     },
     "validate_evidence": {
@@ -1088,7 +1089,7 @@
    }
   }
  },
- "commit": "b3a0ccaa7440d8d1b4c6ae4bc4c11b7503ca2483",
+ "commit": "12ef4d03ac218c59edb7b8dccbf71a34659cc76e",
  "export_buckets": [
   {
    "check": "audit-governance",
@@ -2055,8 +2056,8 @@
   },
   "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
  },
- "recorded_at_utc": "2026-11-21T21:45:00Z",
- "run_dir": "Plans/.plan_migration/pds-20261121-004-current-planunit-snapshot",
+ "recorded_at_utc": "2026-11-22T01:53:24Z",
+ "run_dir": "Plans/.plan_migration/pds-20261122-001-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
  "untracked_inputs": [
   "tests/agent_packet_restrictions"
