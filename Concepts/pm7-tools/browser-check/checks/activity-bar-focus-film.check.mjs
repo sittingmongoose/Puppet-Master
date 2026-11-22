@@ -13,11 +13,17 @@
 // to Search and Enter is done twice more in each look, as the frames come at about 15 a second. In each frame each side
 // of the focused tile must hold its ring at 3:1 (see ringSides). Record with --record /abs/file.mp4 (GPU, 1920x1080);
 // `browser-check frames <film> --run <folder>` gives the frames after each mark. --set looks=glass-dark limits the looks.
+// The Shift+Tab route is judged on the app's own paint, not on screencast time (PM7PERF-SHIFTTAB-PREKEY-SCREENCAST):
+// a fixed marker flips in a capture-phase keydown listener
+// (helpers/activity-frame-marker.mjs), the frame before the flip must show Search's ring whole and no Files ring, and
+// the flip's first frame must show Files' ring whole with Search's gone. A pre-key frame captured or delivered after
+// the key is then never a late handover.
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { inflateSync } from 'node:zlib';
 import { encodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 import { nierReticleEscape } from '../helpers/nier-reticle-escape.mjs';
+import { installKeyMarker, markerState, firstMarkerFrame, handoverFault, whole, MARKER_ID, LETTERS } from '../helpers/activity-frame-marker.mjs';
 const LOOKS_FILM = ['glass-dark', 'glass-light'];
 
 // The ring on pixels, with no picture of the tile without it to compare against (the lens moves): across each side, 6 px
@@ -157,30 +163,55 @@ async function rig(t) {
     const probe = document.createElement('i'); probe.style.color = getComputedStyle(s).getPropertyValue('--accent-primary').trim(); probe.style.display = 'none';
     document.documentElement.appendChild(probe); const col = getComputedStyle(probe).color; probe.remove();
     c.fillStyle = col; c.fillRect(0, 0, 1, 1); return Array.from(c.getImageData(0, 0, 1, 1).data); }, k);
-  // every frame of a press, judged: the tile is still (a focused tile stands still), the lens's resting box is read after
   let crops = 0;   /* the first 24 failing frames of a test are cropped */
-  // from: the control the key focus left, when a press moves it (Shift+Tab): the frames before the press shows, which
-  // still hold that control's whole ring and not yet this one's, are passed over, only while they lead (a ring that goes
-  // missing later still fails)
-  const frameFaults = async (look, label, k, cap, from = null) => {
+  // Every frame of a press, judged: the tile is still (a focused tile stands still), the lens's resting box is read after.
+  // A key-driven handover (marker: { from, box, before }) is judged on the app's own paint, not on screencast time
+  // (PM7PERF-SHIFTTAB-PREKEY-SCREENCAST): the frame before the trusted key's marker flips must show the control the
+  // key focus left, ring whole, and not the new control's; the flip's first frame must show the new control's ring whole
+  // with the old one's gone. No timestamp is compared, so a pre-key frame captured or delivered after the key cannot be
+  // scored as a late handover.
+  const sideText = sd => Object.fromEntries(Object.entries(sd).map(([q, v]) => [q, `${v.share} ${v.median}`]));
+  const frameFaults = async (look, label, k, cap, marker = null) => {
     const tile = await boxOf(`#activityBar .icon[data-ab-id="${k}"] .symbol`), lens = await boxOf('#lg-lenses .lg-lens[data-lg-for="rail-icons"]'), ink = await inkOf(k);
-    const prev = from ? await boxOf(`#activityBar .icon[data-ab-id="${from}"] .symbol`) : null;
+    const prev = marker ? await boxOf(`#activityBar .icon[data-ab-id="${marker.from}"] .symbol`) : null;
     const near = lens && tile && Math.abs(lens.x + lens.width / 2 - tile.x - tile.width / 2) <= 3 && Math.abs(lens.y + lens.height / 2 - tile.y - tile.height / 2) <= 3 ? lens : null;
-    const bad = [], seen = cap.got.length, rows = Math.ceil(Math.max(tile.y + tile.height, near ? near.y + near.height : 0, prev ? prev.y + prev.height : 0)) + 32;
-    let lead = !!prev, passed = 0;
+    const bad = [], seen = cap.got.length, rows = Math.ceil(Math.max(tile.y + tile.height, near ? near.y + near.height : 0, prev ? prev.y + prev.height : 0, marker ? marker.box.y + marker.box.height : 0)) + 32;
+    const span = prev ? { x: Math.min(tile.x, prev.x), y: Math.min(tile.y, prev.y), width: Math.max(tile.x + tile.width, prev.x + prev.width) - Math.min(tile.x, prev.x), height: Math.max(tile.y + tile.height, prev.y + prev.height) - Math.min(tile.y, prev.y) } : tile;
+    const crop = (im, tag) => { if (crops++ < 24 && t.run?.dir) { const dir = join(t.run.dir, 'ring-frames'); mkdirSync(dir, { recursive: true }); cropPng(im, span, join(dir, `${look}-${label.replace(/[^a-z0-9]+/gi, '-')}-${tag}.png`)); } };
+    if (marker) {
+      if (marker.before !== 'M' && marker.before !== 'G') {
+        bad.push({ marker: -1, of: seen, leadIn: -1, why: 'the page\'s pre-key marker colour was not readable before the press' });
+        t.log(`${look} ${label}: could not judge the handover: the page's pre-key marker colour was not readable`);
+        return { seen, bad };
+      }
+      const states = cap.got.map(fr => markerState(decodeTop(Buffer.from(fr.data, 'base64'), rows), marker.box));
+      const { at, pre, why } = firstMarkerFrame(states, marker.before);
+      if (pre < 0) {
+        bad.push({ marker: at, of: states.length, leadIn: at, why });
+        t.log(`${look} ${label}: could not judge the handover: ${why}`);
+        return { seen, bad };
+      }
+      const atIm = decodeTop(Buffer.from(cap.got[at].data, 'base64'), rows), preIm = decodeTop(Buffer.from(cap.got[pre].data, 'base64'), rows);
+      const atFiles = better(ringSides(atIm, tile, ink), near && ringSides(atIm, near, ink)), preFiles = better(ringSides(preIm, tile, ink), near && ringSides(preIm, near, ink));
+      const atSearch = ringSides(atIm, prev, ink), preSearch = ringSides(preIm, prev, ink);
+      const fault = handoverFault({ preFiles, preSearch, atFiles, atSearch });
+      t.log(`${look} ${label}: ${seen} frames on pixels, marker frame ${at + 1} of ${seen} (${at} before it), ink ${ink.slice(0, 3)}, ${fault ? 'fails: ' + fault.why : 'the handover is in the marker frame'}`);
+      if (fault) {
+        bad.push({ marker: at, of: seen, leadIn: at, which: fault.which, why: fault.why, before: { files: sideText(preFiles), search: sideText(preSearch) }, at: { files: sideText(atFiles), search: sideText(atSearch) } });
+        crop(preIm, `before-${at + 1}`);
+        crop(atIm, `marker-${at + 1}`);
+      }
+      return { seen, bad };
+    }
     for (const fr of cap.got) {
       const im = decodeTop(Buffer.from(fr.data, 'base64'), rows), sd = better(ringSides(im, tile, ink), near && ringSides(im, near, ink));
-      const whole = Object.values(sd).every(v => v.share >= 0.9);
-      if (lead && !whole && Object.values(ringSides(im, prev, ink)).every(v => v.share >= 0.9)) { passed++; continue; }
-      lead = false;
-      if (whole) continue;
+      if (whole(sd)) continue;
       const ms = Math.round(fr.wall - cap.at);
-      bad.push({ ms, sides: Object.fromEntries(Object.entries(sd).map(([q, v]) => [q, `${v.share} ${v.median}`])) });
-      const span = prev ? { x: Math.min(tile.x, prev.x), y: Math.min(tile.y, prev.y), width: Math.max(tile.x + tile.width, prev.x + prev.width) - Math.min(tile.x, prev.x), height: Math.max(tile.y + tile.height, prev.y + prev.height) - Math.min(tile.y, prev.y) } : tile;
-      if (bad.length <= 4 && crops++ < 24 && t.run?.dir) { const dir = join(t.run.dir, 'ring-frames'); mkdirSync(dir, { recursive: true }); cropPng(im, span, join(dir, `${look}-${label.replace(/[^a-z0-9]+/gi, '-')}-${ms}ms.png`)); }
+      bad.push({ ms, sides: sideText(sd) });
+      if (bad.length <= 4) crop(im, `${ms}ms`);
     }
-    t.log(`${look} ${label}: ${seen} frames on pixels${passed ? ` (${passed} leading frames still before the press)` : ''}, ink ${ink.slice(0, 3)}, ${bad.length} without the ring at 3:1 on every side${bad.length ? ' ' + JSON.stringify(bad.slice(0, 6)) : ''}`);
-    return { seen: seen - passed, bad };
+    t.log(`${look} ${label}: ${seen} frames on pixels, ink ${ink.slice(0, 3)}, ${bad.length} without the ring at 3:1 on every side${bad.length ? ' ' + JSON.stringify(bad.slice(0, 6)) : ''}`);
+    return { seen, bad };
   };
   const judge = async (look, label, k, cap) => {
     if (!cap) return;
@@ -327,6 +358,12 @@ async function pointerRoutes(t) {
   const n = Math.max(1, Number(t.args.clicks || 6)), stall = Math.max(0, Number(t.args.stall ?? 600));
   const motion = await pinMotion(t, f);
   await installStall(f);
+  // PM7PERF-SHIFTTAB-PREKEY-SCREENCAST: the Shift+Tab handover is judged on the app's own paint. The marker is
+  // installed in the app frame and its page box read once; each press reads the page's pre-key colour just before it.
+  await f.evaluate(installKeyMarker);
+  const markerBox = await f.locator(`#${MARKER_ID}`).boundingBox();
+  if (!markerBox) throw new Error('the key marker is not painted in the app frame');
+  t.log(`the key marker is at ${JSON.stringify(markerBox)}`);
   const away = () => t.page.mouse.move(1880, 1040);
   const centre = async k => { const b = await f.locator(`#activityBar .icon[data-ab-id="${k}"] .symbol`).boundingBox(); return [b.x + b.width / 2, b.y + b.height / 2]; };
   const ready = async look => {   // Search open, the key focus on Files, the pointer away
@@ -349,7 +386,7 @@ async function pointerRoutes(t) {
       { name: `a quick click under a ${stall} ms stall, the pointer moved off`, reps: n, load: stall, act: async () => { await t.page.mouse.move(...(await centre('files'))); await t.page.mouse.down(); await t.page.mouse.up(); await away(); }, end: 'files' },
       { name: `a press held 900 ms under a ${stall} ms stall`, reps: Math.ceil(n / 2), load: stall, act: async () => { await t.page.mouse.move(...(await centre('files'))); await t.page.mouse.down(); await f.waitForTimeout(900); await t.page.mouse.up(); }, end: 'files' },
       { name: 'the pointer resting on the key-focused Files', reps: Math.ceil(n / 2), load: 0, act: async () => { await t.page.mouse.move(...(await centre('files'))); await f.waitForTimeout(600); }, end: 'search' },
-      { name: 'Shift+Tab back to Files after Search\'s focus tag shows', reps: n, load: 0, from: 'search', pre: async () => { await kb.press('Tab'); await f.waitForTimeout(1200); await pace(slowTag); }, act: () => kb.press('Shift+Tab'), after: () => pace(1), end: 'search' },
+      { name: 'Shift+Tab back to Files after Search\'s focus tag shows', reps: n, load: 0, from: 'search', marker: true, pre: async () => { await kb.press('Tab'); await f.waitForTimeout(1200); await pace(slowTag); }, act: () => kb.press('Shift+Tab'), after: () => pace(1), end: 'search' },
     ];
     for (const r of routes) {
       if (!stall && r.load) continue;
@@ -359,17 +396,21 @@ async function pointerRoutes(t) {
         await ready(look);
         if (r.pre) await r.pre();
         if (r.load) { await f.evaluate(ms => { window.__fo96Stall.arm = ms; }, r.load); armed++; }
-        const cap = await film(async () => { await t.mark(`${look}: ${r.name} ${i + 1}`); await r.act(); });
+        let markerBefore = null;
+        const cap = await film(async () => { await t.mark(`${look}: ${r.name} ${i + 1}`); if (r.marker) markerBefore = LETTERS[await f.evaluate(() => window.__pmAbKeyMarker.state())]; await r.act(); });
         if (r.after) await r.after();
         const s = await state('files');
         const ok = s.active === 'files' && s.keyFocus === true && (r.end === 'files' ? s.files : s.search);
         if (!ok) out.wrong.push({ i: i + 1, s });
-        if (cap) { const q = await frameFaults(look, `${r.name} ${i + 1}`, 'files', cap, r.from || null); out.frames += q.seen; if (q.bad.length) out.bad.push({ i: i + 1, frames: q.bad.slice(0, 2) }); }
+        if (cap) { const q = await frameFaults(look, `${r.name} ${i + 1}`, 'files', cap, r.marker ? { from: r.from, box: markerBox, before: markerBefore } : null); out.frames += q.seen; if (q.bad.length) out.bad.push({ i: i + 1, frames: q.bad.slice(0, 2) }); }
         await away(); await f.waitForTimeout(300);
       }
       const held = await f.evaluate(() => window.__fo96Stall.held) - held0;
-      t.log(`${look} (${motion}) ${r.name}: ${r.reps} presses, ${out.frames} frames, ${out.bad.length} with a frame below 3:1${r.load ? `; held ${held} of ${armed}` : ''}`);
-      await t.check(`${look} (${motion}): ${r.name}, ${r.reps} times: the key focus stays on Files with its ring on pixels at 3:1 on every side in every frame, and the panel is as it should be`,
+      t.log(`${look} (${motion}) ${r.name}: ${r.reps} presses, ${out.frames} frames, ${out.bad.length} failing or unjudged${r.load ? `; held ${held} of ${armed}` : ''}`);
+      const rule = r.marker
+        ? `the frame before the trusted key's marker flips shows Search's whole ring and no Files ring, and the flip's first frame shows Files' ring whole with Search's gone, and the panel is as it should be`
+        : `the key focus stays on Files with its ring on pixels at 3:1 on every side in every frame, and the panel is as it should be`;
+      await t.check(`${look} (${motion}): ${r.name}, ${r.reps} times: ${rule}`,
         out.wrong.length === 0 && out.bad.length === 0 && out.frames >= 3 * r.reps && (!r.load || held === armed), JSON.stringify({ frames: out.frames, failed: out.bad.length, first: out.bad.slice(0, 3), wrong: out.wrong.slice(0, 2), held: r.load ? `${held}/${armed}` : undefined }));
     }
     await away(); await kb.press('Control+1'); await f.waitForTimeout(1200);
