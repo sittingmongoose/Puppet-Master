@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
 // node tools/usage-hover-pause-verdict.selftest.mjs [check file]: the argument runs the same assertions against another
 // revision of the check, which is how each item's RED run shows the old verdict misjudging a constructed record.
-const { judge, outerCap, uninterruptedIntent, judgeShortHandoff } = await import(process.argv[2] ? pathToFileURL(resolve(process.argv[2])).href : '../checks/usage-hover-pause.check.mjs');
+const { judge, outerCap, uninterruptedIntent, judgeShortHandoff, r5MountQualified, r5BurstGate } = await import(process.argv[2] ? pathToFileURL(resolve(process.argv[2])).href : '../checks/usage-hover-pause.check.mjs');
 // R125 #6: the probe's deadline comes from the record's last input, as the recorder arms it (520 + 150). The old
 // fixture injected 650 and so credited 20 ms of lateness in the nominal control though the probe fired at the real
 // deadline; a control's lateness must be the queue's, not the fixture's.
@@ -320,4 +320,41 @@ test('R117 T3: a visible proxy before a late marker clear is an early return', (
  for (const f of r.frames) Object.assign(f, {op:f.t<720?'wheel':null,lit:f.t>=730?['new']:[],tools:f.t>=730?.9:0});
  r.frames.find(f => f.t === 700).proxyLit = true;
  assert.equal(j(r).r2.ok, false);
+});
+
+// PM7PERF-R5-UNQUALIFIED-RETURNS-COUNTED: TIB-FILMS' real R5 mount records (reviews/TIB-FILMS-REPORT.md, films under
+// /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-tib-20261121/films/): head retry 3 delivered 156 of 203 wheels, max
+// delivery gap 302.3 ms, early return after 169.9 ms idle; base retry 3 delivered 153 of 203, max gap 472.1 ms, a
+// return after 155.1 ms idle in a 408.1 ms gap. R5 rejects both inputs; the single-burst assertions must then read
+// one could-not-judge row, never failures on the product's legitimate idle returns (the GPU films show them).
+const r5Record = (delivered, gapMs, idleReturnMs) => {
+	const ts = []; let t = 1000;
+	for (let i = 0; i < delivered; i++) { ts.push(t); t += i === 40 ? gapMs : 30; }
+	const last = ts.at(-1);
+	return {
+		room: 'overview', liveRoom: 'overview', oldPaused: true, moves: 0, swaps: 2, targetHovered: true,
+		wheels: ts.map((t) => ({ t, trusted: true })),
+		ends: [{ t: ts[40] + idleReturnMs, live: true, room: 'overview' }, { t: last + 160, live: true, room: 'overview' }],
+		last, during: Array.from({ length: 100 }, (_, i) => ({ t: 1000 + i * 60 }))
+	};
+};
+const r5Args = (r) => ({ inputs: 203, mountNoPause: false, activated: true, burstBroke: false, during: r.during, destinationTop: 0, last: r.last });
+test('R5 films: the head retry 3 record (156/203 wheels, 302.3 ms gap) is unqualified and its burst rows could-not-judge', () => {
+	const r = r5Record(156, 302.3, 169.9);
+	assert.equal(r5MountQualified(r, r5Args(r)), false);
+	assert.equal(r5BurstGate({ qualified: false, burstBroke: false }), 'could-not-judge');
+});
+test('R5 films: the base retry 3 record (153/203 wheels, 472.1 ms gap) is unqualified and its burst rows could-not-judge', () => {
+	const r = r5Record(153, 472.1, 155.1);
+	assert.equal(r5MountQualified(r, r5Args(r)), false);
+	assert.equal(r5BurstGate({ qualified: false, burstBroke: false }), 'could-not-judge');
+});
+test('R5: an intact 203-wheel burst keeps its qualification and judges', () => {
+	const r = r5Record(203, 30, 0);
+	r.ends = [{ t: r.last + 160, live: true, room: 'overview' }];
+	assert.equal(r5MountQualified(r, r5Args(r)), true);
+	assert.equal(r5BurstGate({ qualified: true, burstBroke: false }), 'judge');
+});
+test('R5: a broke burst keeps the R5-CASCADE skip, not a second failing row', () => {
+	assert.equal(r5BurstGate({ qualified: false, burstBroke: true }), 'skip');
 });

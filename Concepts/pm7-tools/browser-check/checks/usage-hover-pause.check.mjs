@@ -343,6 +343,25 @@ async function providerRace(t, f, label, park) {
 	return rec;
 }
 
+// R5's qualification of one mount record (exported for tools/usage-hover-pause-verdict.selftest.mjs). A busy mount
+// can delay event delivery past 150 ms while the already-queued wheel task precedes the timer; Chrome may coalesce
+// queued wheel inputs while busy, so at least 80% must reach the page. The pause must actually stay alive: an end
+// before the last tick rejects this run regardless of the delivery gap, and a gap in delivered pause input over the
+// rest is also unqualified.
+export function r5MountQualified(rec, { inputs = 203, mountNoPause = false, activated, burstBroke, during, destinationTop, last }) {
+	return (mountNoPause || rec.oldPaused) && activated && rec.wheels.length >= inputs * 0.8 && rec.wheels.every((w) => w.trusted) && !burstBroke && rec.ends.every((e) => e.t > last) && !rec.moves && during.length > 10 && rec.swaps > 0 && rec.liveRoom === rec.room && rec.targetHovered && destinationTop === 0;
+}
+
+// What the single-burst assertions do with the record (PM7PERF-R5-UNQUALIFIED-RETURNS-COUNTED): once R5 rejects the
+// input, delivery gaps past the 150 ms idle timer let the product's legitimate idle returns happen (TIB-FILMS' GPU
+// films head+base show the tools return in each gap and fade on renewed scrolling), so they read one could-not-judge
+// row, never failures. A broke burst keeps its R5-CASCADE SKIP log; only a qualified intact burst is judged.
+export function r5BurstGate({ qualified, burstBroke }) {
+	if (burstBroke) return 'skip';
+	if (!qualified) return 'could-not-judge';
+	return 'judge';
+}
+
 // R5 (R99): a trusted keyboard room activation in an ongoing trusted wheel burst. Calibrate the destination's
 // row/provider at rest, switch away, then leave the pointer at that exact position while Enter/Space mounts it again.
 // Every sample resolves the LIVE board, including Reduce Motion's asynchronous spare-board adoption.
@@ -439,13 +458,17 @@ async function roomMountRace(t, f, label, park, rm) {
 		const detail = `wheels ${rec.wheels.length}, max gap ${burst.maxGap} ms (wheel delivery ${maxGap} ms, driver ${driverGap} ms), samples ${during.length}, swaps ${rec.swaps}, moves ${rec.moves}, target ${rec.targetHovered}, calibration scroll ${destinationTop}`;
 		t.log(S + detail + ' | return ' + JSON.stringify({ ends: rec.ends, op: rec.op, cardLit: rec.cardLit, tools: rec.tools, provider: rec.provider }));
 		records.push({ room, attempt: attempt + 1, at, destinationTop, maxGap, driverGap, burst, rec });
-		// A busy mount can delay event delivery past 150 ms while the already-queued wheel task precedes the timer.
-		// Chrome may coalesce queued wheel inputs while busy; at least 80% must reach the page. The pause must
-		// actually stay alive: an end before the last tick rejects this run, regardless of that delivery gap, and a
-		// gap in delivered pause input over the rest is also unqualified.
-		const qualified = (String(t.args.mountNoPause || '') === '1' || rec.oldPaused) && activated && rec.wheels.length >= INPUTS * 0.8 && rec.wheels.every((w) => w.trusted) && !burstBroke && rec.ends.every((e) => e.t > last) && !rec.moves && during.length > 10 && rec.swaps > 0 && rec.liveRoom === room && rec.targetHovered && destinationTop === 0;
+		const qualified = r5MountQualified(rec, { inputs: INPUTS, mountNoPause: String(t.args.mountNoPause || '') === '1', activated, burstBroke, during, destinationTop, last });
 		if (!qualified && attempt < 2) { t.log(S + `unjudgeable attempt ${attempt + 1}; repeat the same input route: ` + detail); continue; }
 		await t.check(S + 'could judge trusted keyboard mount within one stationary wheel burst', qualified, detail);
+		// PM7PERF-R5-UNQUALIFIED-RETURNS-COUNTED: the rejected input's idle returns are the product working; one
+		// could-not-judge row stands in for the single-burst assertions, which cannot judge this record.
+		const gate = r5BurstGate({ qualified, burstBroke });
+		if (gate === 'could-not-judge') {
+			await t.check(S + 'R5 suppression/restoration judges one stationary wheel burst', false,
+				'could not judge: R5 rejected the input as unqualified; the idle returns in the delivery gaps are the product working, not a pause failure (TIB-FILMS GPU films head+base); ' + detail);
+			break;
+		}
 		if (String(t.args.mountNoPause || '') === '1') {
 			await t.check(S + 'main control has no pause interval', !rec.oldPaused && during.every((s) => s.op !== 'wheel'));
 			t.log(S + 'SKIP R5 suppression/restoration: explicit mountNoPause control has no wheel hold');
@@ -453,7 +476,7 @@ async function roomMountRace(t, f, label, park, rm) {
 		}
 		// A broken burst lets the pause end correctly mid-burst: the could-judge row above has failed, and the rows that
 		// depend on the pause surviving the burst are skipped with the gap, not failed (PM7PERF-HOVERPAUSE-R5-CASCADE).
-		if (burstBroke) { t.log(S + 'SKIP R5 suppression/restoration: ' + burstDetail); break; }
+		if (gate === 'skip') { t.log(S + 'SKIP R5 suppression/restoration: ' + burstDetail); break; }
 		await t.check(S + 'live board keeps its wheel marker after the mount', !burstBroke && rec.oldPaused && during.length > 0 && during.every((s) => s.op === 'wheel'), burstDetail || `${during.filter((s) => s.op !== 'wheel').length}/${during.length} live samples lost marker`);
 		// Allow the first 100 ms for an already-lit reused card's outgoing fade; nothing arriving may light thereafter.
 		const settled = during.filter((s) => s.t >= during[0].t + 100);
