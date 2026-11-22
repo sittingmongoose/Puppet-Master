@@ -35,6 +35,9 @@ import re._constants as C
 import re._parser as P
 import sys
 from pathlib import Path
+from urllib.parse import urljoin
+
+from referencing import Registry
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
@@ -114,7 +117,67 @@ def pattern_examples(pattern):
 
 # ---------------------------------------------------------------- schema walk
 
-def deref(node, resolver, seen=None):
+def stable_validator(v):
+    """Check repeated resource URIs before making registry discovery deterministic."""
+    original = v._resolver._registry
+    registrations = sorted(original.items(), reverse=True)
+    resources = {}
+    duplicates = set()
+
+    def unannotated(resource):
+        def schema_objects(sub):
+            yield id(sub.contents)
+            for child in sub.subresources():
+                yield from schema_objects(child)
+
+        schema_ids = set(schema_objects(resource))
+
+        def strip(value):
+            if isinstance(value, dict):
+                return {k: strip(x) for k, x in value.items()
+                        if k != 'x-pm-oracle-id' or id(value) not in schema_ids}
+            if isinstance(value, list):
+                return [strip(x) for x in value]
+            return value
+
+        return json.dumps(strip(resource.contents), sort_keys=True)
+
+    def record(uri, resource):
+        prior = resources.setdefault(uri, resource)
+        if prior.contents is resource.contents:
+            return
+        if unannotated(prior) != unannotated(resource):
+            raise ValueError(f'conflicting schema resources registered for {uri!r}')
+        duplicates.add(uri)
+
+    def visit(uri, resource):
+        declared = resource.id()
+        if declared is not None:
+            uri = urljoin(uri, declared)
+            record(uri, resource)
+        for child in resource.subresources():
+            visit(uri, child)
+
+    for uri, resource in registrations:
+        record(uri, resource)
+        visit(uri, resource)
+    if not duplicates:
+        return v
+
+    # Crawl one document at a time. Bulk crawl uses hash order when choosing
+    # between equivalent copies, which changes their attributed clause IDs.
+    registry = Registry(retrieve=original._retrieve).combine(*(
+        Registry().with_resource(uri, resource).crawl() for uri, resource in registrations
+    ))
+    # Preserve explicit URI bindings over discovered copies.
+    registry = registry.with_resources((uri, resource) for uri, resource in registrations
+                                       if uri in duplicates and registry[uri] is not resource)
+    return v.evolve(registry=registry, _resolver=registry.resolver(v._resolver._base_uri))
+
+
+def deref(node, resolver, seen=None, *, entered=False):
+    if not entered and isinstance(node, dict) and '$id' in node:
+        resolver = resolver.in_subresource(common.DRAFT202012.create_resource(node))
     seen = seen or set()
     while isinstance(node, dict) and '$ref' in node and len(node) <= 2:  # {$ref, x-pm-oracle-id}
         if node['$ref'] in seen:
@@ -141,12 +204,19 @@ def ctx_key(entry):
 def walk(v, key_of=None):
     """Every schema node with: the instance path patterns that reach it and the conditions on the way.
     key_of replaces ctx_key only for --reach-audit, which re-walks with the c0482747da key to compare."""
-    key_of = key_of or ctx_key
+    return _walk(stable_validator(v), key_of or ctx_key)
+
+
+def _walk(v, key_of):
     nodes = {}
-    def visit(node, resolver, ipath, ctx, steps, depth, obj=None, empty=None):
+    def visit(node, resolver, ipath, ctx, steps, depth, obj=None, empty=None, *, entered=False):
         if not isinstance(node, dict) or depth > 40:
             return
-        location = node.get('x-pm-oracle-id', json.dumps(node, sort_keys=True))
+        if not entered and '$id' in node:
+            resolver = resolver.in_subresource(common.DRAFT202012.create_resource(node))
+        location = node.get('x-pm-oracle-id')
+        if location is None:
+            location = json.dumps(node, sort_keys=True)
         key = (location, ipath, tuple(key_of(c) for c in ctx))  # GC2: owner node in the key (shared with GO eb10b969cf)
         if key in seen:
             return
@@ -157,7 +227,7 @@ def walk(v, key_of=None):
             dict(ipath=ipath, ctx=ctx, steps=steps, obj=obj, empty_domain=empty))
         if '$ref' in node:
             resolved = resolver.lookup(node['$ref'])
-            visit(resolved.contents, resolved.resolver, ipath, ctx, steps, depth + 1, obj, empty)
+            visit(resolved.contents, resolved.resolver, ipath, ctx, steps, depth + 1, obj, empty, entered=True)
         for name, sub in node.get('properties', {}).items():
             visit(sub, resolver, ipath + (name,), ctx, steps + ((name, sub, resolver),), depth + 1, None, empty)
         for key2 in ('additionalProperties', 'unevaluatedProperties'):
@@ -185,7 +255,7 @@ def walk(v, key_of=None):
         if isinstance(node.get('contains'), dict):
             visit(node['contains'], resolver, ipath + ('#',), ctx + (('contains', len(ipath), 0, node, resolver, obj),), steps, depth + 1, None, empty)
     seen = set()
-    visit(v.schema, v._resolver, (), (), (), 0)
+    visit(v.schema, v._resolver, (), (), (), 0, entered=True)
     return nodes
 
 
@@ -242,16 +312,16 @@ FORMATS = {'date-time': '2026-11-05T00:00:00Z', 'uuid': '00000000-0000-4000-8000
            'uri': 'urn:gc:1', 'uri-reference': 'urn:gc:1', 'email': 'gc@example.com'}
 
 
-def gen(node, resolver, depth=0, variant=0):
-    node, resolver = deref(node, resolver)
+def gen(node, resolver, depth=0, variant=0, *, entered=False):
+    node, resolver = deref(node, resolver, entered=entered)
     if not isinstance(node, dict) or depth > 14:
         return None
     if '$ref' in node:
         resolved = resolver.lookup(node['$ref'])
-        base = gen(resolved.contents, resolved.resolver, depth + 1, variant)
+        base = gen(resolved.contents, resolved.resolver, depth + 1, variant, entered=True)
         rest = {k: v for k, v in node.items() if k != '$ref'}
         if isinstance(base, dict) and rest.get('properties'):
-            return {**base, **gen(dict(rest, type='object'), resolver, depth + 1, variant)}
+            return {**base, **gen(dict(rest, type='object'), resolver, depth + 1, variant, entered=True)}
         return base
     if 'const' in node:
         return copy.deepcopy(node['const'])
@@ -584,7 +654,7 @@ def siblings(location, ipath, by_ipath):
             continue
         for variant in (0, 1):
             try:
-                value = gen(node, resolver, 0, variant)
+                value = gen(node, resolver, 0, variant, entered=True)
             except Exception:  # noqa: BLE001
                 continue
             if value not in out:
@@ -612,8 +682,9 @@ def static_class(info, keyword):
 
 
 def close_root(root, v, seeds, budget):
+    v = stable_validator(v)
     CURRENT[0] = v
-    nodes = walk(v)
+    nodes = _walk(v, ctx_key)
     by_ipath = collections.defaultdict(list)
     for location, info in nodes.items():
         for reach in info['reach']:

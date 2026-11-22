@@ -1,5 +1,19 @@
-"""One coordination guard table."""
+"""Enforced ledger observations outside the credited ledger-input witness set."""
 import pm_guard_isolation as g
+
+LEDGER_RESOURCE_GAPS = {
+    'prepared_registry_row_ref_unresolved': (
+        'In a fixed root with resolvable pinned refs, a changed prepared source or owner ref that passes '
+        'ledger_schema changes the canonical row and trips prepared_registry_row_mismatch. With root resources in scope, '
+        'a missing referenced file, pointer or anchor can fail ref_resolves on the unchanged row.'
+    ),
+    'ledger_retention_binding': (
+        'The ledger schema pins both retention refs to RP-COORDINATION-180D version 1.0.0 and '
+        'requires run_id in required_context_fields. The committed policy satisfies the version and '
+        'hold eligibility checks. With root resources in scope, a missing policy, different policy '
+        'version or loss of hold eligibility can fail the binding on the unchanged row.'
+    ),
+}
 
 def p_0(value, context):
     return None if value['ledger_owner_join'] is True else 'ledger_owner_join'

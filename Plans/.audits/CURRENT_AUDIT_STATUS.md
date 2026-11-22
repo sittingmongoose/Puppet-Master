@@ -2,14 +2,14 @@
 
 This generated index separates immutable historical report headers from current presentation status. Old `FINAL_REPORT.md` files are not rewritten; finding-level closure authority remains `Plans/.audits/_semantic_closure_registry.jsonl`.
 
-- Generated: `2026-11-20T23:59:59Z`
+- Generated: `2026-11-21T07:37:39Z`
 - Reports indexed: 71
 - Current blockers: 94
 - Current report blockers: 0
 - Open finding blockers: 94
 - Reopened finding blockers: 94
 - Historical BLOCKED/FAIL reports indexed: 25
-- Closure registry rows: 1788
+- Closure registry rows: 1792
 
 ## Active open findings
 
@@ -146,7 +146,7 @@ Open as `scripts/pm-audit-closure.py validate` reports them: a finding stays ope
 | `audit-20260618-004-plans-to-code-currentness-compatibility-repair` | `PASS_CERTIFIED` | `reported_pass_or_pass_with_warnings` | false | 99 |
 | `audit-20260618-005-plans-to-code-final-corrective-certification` | `PASS_CERTIFIED` | `reported_pass_or_pass_with_warnings` | false | 0 |
 | `audit-20260618-006-prd-planning-wizard-semantic-fidelity` | `BLOCKED` | `historical_blocked_or_fail_report_indexed` | false | 39 |
-| `audit-20260618-007-prd-planning-wizard-post-repair-fidelity` | `BLOCKED` | `historical_blocked_or_fail_report_indexed` | false | 309 |
+| `audit-20260618-007-prd-planning-wizard-post-repair-fidelity` | `BLOCKED` | `historical_blocked_or_fail_report_indexed` | false | 313 |
 | `audit-20260618-008-prd-planning-wizard-semantic-fidelity` | `PASS_WITH_WARNINGS` | `reported_pass_or_pass_with_warnings` | false | 9 |
 | `audit-20260618-009-prd-planning-wizard-post-closure-fidelity` | `STATUS_UNSTATED` | `historical_report_status_unstated_or_nonstandard` | false | 38 |
 | `audit-20260619-001-prd-planning-wizard-final-semantic-fidelity` | `STATUS_UNSTATED` | `historical_report_status_unstated_or_nonstandard` | false | 55 |

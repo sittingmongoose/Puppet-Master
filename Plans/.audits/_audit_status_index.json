@@ -1094,7 +1094,7 @@
       "line": 1480
     }
   ],
-  "generated_at_utc": "2026-11-20T23:59:59Z",
+  "generated_at_utc": "2026-11-21T07:37:39Z",
   "reports": [
     {
       "audit_id": "audit-20260615-001-part-3-fable-cleanup",
@@ -1690,11 +1690,11 @@
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
           "not_for_plan": 42,
-          "repaired": 237,
+          "repaired": 238,
           "source_lineage_only": 6,
-          "stale_retired": 24
+          "stale_retired": 27
         },
-        "matching_rows": 309,
+        "matching_rows": 313,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -2459,7 +2459,7 @@
     "reports_glob": "Plans/.audits/audit-*/FINAL_REPORT.md"
   },
   "summary": {
-    "closure_registry_row_count": 1788,
+    "closure_registry_row_count": 1792,
     "current_blocker_count": 94,
     "current_open_finding_count": 94,
     "current_reopened_finding_count": 94,

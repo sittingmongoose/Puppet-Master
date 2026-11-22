@@ -243,7 +243,7 @@ def module_text(table):
     return '\n'.join(lines)
 
 
-def write_tables(tables, mapping, *, check):
+def write_tables(tables, mapping, *, check, sources=None):
     texts = {ROOT / 'scripts' / (adapter.PREFIX + t['name'] + '.py'): module_text(t) for t in tables}
     rows_text = json.dumps(mapping, indent=1, sort_keys=True) + '\n'
     problems = []
@@ -251,10 +251,25 @@ def write_tables(tables, mapping, *, check):
         for path, text in texts.items():
             if not path.exists() or path.read_text() != text:
                 problems.append(str(path.relative_to(ROOT)))
-        if not adapter.ROWS_PATH.exists() or adapter.ROWS_PATH.read_text() != rows_text:
+        inventory = adapter.ROWS_PATH.read_text() if adapter.ROWS_PATH.exists() else ''
+        modules = (ROOT / 'scripts').glob(adapter.PREFIX + '*.py')
+        if sources is not None and set(sources) != SOURCES.keys():
+            # The generated inventory is shared. The row-key prefix, like the
+            # module prefix, is the source being checked.
+            try:
+                live = json.loads(inventory)
+            except ValueError:
+                live = None
+            inventory_matches = isinstance(live, dict) and {
+                key: value for key, value in live.items() if key.partition(':')[0] in sources
+            } == mapping
+            prefixes = tuple(adapter.PREFIX + source + '_' for source in sources)
+            modules = (path for path in modules if path.name.startswith(prefixes))
+        else:
+            inventory_matches = inventory == rows_text
+        if not inventory_matches:
             problems.append(str(adapter.ROWS_PATH.relative_to(ROOT)))
-        stale = [p for p in (ROOT / 'scripts').glob(adapter.PREFIX + '*.py') if p not in texts]
-        problems += [str(p.relative_to(ROOT)) for p in stale]
+        problems.extend(str(path.relative_to(ROOT)) for path in sorted(modules) if path not in texts)
         return problems
     for path in (ROOT / 'scripts').glob(adapter.PREFIX + '*.py'):
         if path not in texts:
@@ -400,7 +415,7 @@ def main():
                                          tables=len(tables))
         print(f'{source}: calls={len(rec.calls)} rows={len(mapping)} tables={len(tables)} suite={summary.get("status")}', file=sys.stderr, flush=True)
     if args.check:
-        problems = write_tables(all_tables, all_mapping, check=True)
+        problems = write_tables(all_tables, all_mapping, check=True, sources=sources)
         (args.out / 'check.json').write_text(json.dumps(dict(problems=problems), indent=1) + '\n')
         print(json.dumps(dict(check_problems=len(problems))))
         return int(bool(problems))

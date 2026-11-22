@@ -467,6 +467,52 @@ class LedgerTests(unittest.TestCase):
                 mutation(ledger)
                 self.assertTrue(errors(CHECK.ledger_failures(ledger)) & {"ledger_schema", "ledger_row_order"})
 
+    def test_ledger_reference_gap_replays_against_committed_refs(self):
+        code = "prepared_registry_row_ref_unresolved"
+        ledger = copy.deepcopy(LEDGER)
+        row = ledger["rows"][0]
+        missing = "Plans/missing-coordination-source.md"
+        row["registry_row"]["source_refs"][-1] = missing
+        row["registry_row_sha256"] = CHECK.row_sha256(row["registry_row"])
+        self.assertEqual(errors(CHECK.ledger_failures(ledger)), {"prepared_registry_row_mismatch", code})
+
+        # Leave the submitted ledger and all pinned refs intact. Make just the
+        # referenced report unavailable to exercise the wider root input.
+        is_file = Path.is_file
+        unavailable = ROOT / CHECK.SEARCH_REPORT
+        self.assertTrue(is_file(unavailable))
+        with patch.object(Path, "is_file", lambda path: path != unavailable and is_file(path)):
+            failures = CHECK.ledger_failures(LEDGER)
+        self.assertEqual(failures, [
+            {"error": code, "event_type": event_type, "detail": [CHECK.SEARCH_REPORT]}
+            for event_type, _, _ in CHECK.FAMILIES
+        ])
+        self.assertEqual(CHECK.ledger_failures(LEDGER), [])
+        self.assertIn(code, CHECK.LEDGER_RESOURCE_GAPS)
+
+    def test_ledger_retention_gap_replays_against_committed_policy(self):
+        code = "ledger_retention_binding"
+        ledger = copy.deepcopy(LEDGER)
+        ledger["rows"][0]["required_context_fields"].remove("run_id")
+        self.assertEqual(errors(CHECK.ledger_failures(ledger)), {"ledger_schema"})
+
+        original_load = CHECK.load
+        svr = original_load(CHECK.SVR_PATH)
+        policy = next(p for p in svr["retention_policies"] if p["policy_id"] == CHECK.RETENTION_REF["policy_id"])
+        self.assertTrue(policy["hold_eligible"])
+        policy["hold_eligible"] = False
+
+        def load_with_ineligible_policy(path, root=ROOT):
+            return svr if path == CHECK.SVR_PATH else original_load(path, root)
+
+        with patch.object(CHECK, "load", side_effect=load_with_ineligible_policy):
+            failures = CHECK.ledger_failures(LEDGER)
+        self.assertEqual(failures, [
+            {"error": code, "event_type": event_type} for event_type, _, _ in CHECK.FAMILIES
+        ])
+        self.assertEqual(CHECK.ledger_failures(LEDGER), [])
+        self.assertIn(code, CHECK.LEDGER_RESOURCE_GAPS)
+
     def test_admitted_row_needs_authority_contract_ref(self):
         ledger = admitted(PREP_LEDGER, 0)
         self.assertEqual(CHECK.ledger_failures(ledger), [])

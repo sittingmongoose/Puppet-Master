@@ -192,7 +192,8 @@ requireThat(glyph.includes('var PX_YOU =') && glyph.includes('function pnYou(M)'
 for (const source of [read('Concepts/chat-assistant-concepts/5.6 Pro/app.js'), read('Concepts/chat-assistant-concepts/5.6 Pro/delivery-polish.js')]) {
   requireThat(!source.includes('class="menu-head-wand"'), 'wand wrapper discards glyph ink roles');
 }
-const slots = 'Concepts/liquid-glass/opus-5.5/src/slots/onboarding/opus-5.5/src/css/22-hover/';
+const glassSlots = 'Concepts/liquid-glass/opus-5.5/src/slots/';
+const slots = glassSlots + 'onboarding/opus-5.5/src/css/22-hover/';
 // FO-121 (f58faa070f) removed the pointer sheen; the box-edge hairline and inset band stay.
 const darkHover = read(slots + 'G0596.css');
 requireThat(/--pmf-rim:\s*color-mix\(in srgb, color-mix\(in srgb, rgb\(var\(--accent-primary-rgb\)\) 45%, #fff\) 85%, transparent\)/.test(darkHover) &&
@@ -200,9 +201,21 @@ requireThat(/--pmf-rim:\s*color-mix\(in srgb, color-mix\(in srgb, rgb\(var\(--ac
 const lightHover = read(slots + 'G0597.css');
 requireThat(/--pmf-rim:\s*color-mix\(in srgb, rgb\(var\(--accent-primary-rgb\)\) 85%, transparent\)/.test(lightHover) &&
   /--pmf-rim2:\s*color-mix\(in srgb, rgb\(var\(--accent-primary-rgb\)\) 28%, transparent\)/.test(lightHover), 'Glass Light box-edge glow differs');
+for (const [file, unit, pseudo] of [
+  [slots + 'G0601.css', 'G0601', '::after'],
+  [glassSlots + 'usage-redesign/src/css/20-board/G1238.css', 'G1238', '::before'],
+]) {
+  const css = read(file).replace(/\/\*[\s\S]*?\*\//g, '');
+  const painters = [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)]
+    .filter(rule => rule[1].trim().endsWith(pseudo));
+  const body = painters[0]?.[2] ?? '';
+  const backgrounds = [...body.matchAll(/(?:^|;)\s*background\s*:\s*([^;]*)/gi)];
+  requireThat(painters.length === 1 && backgrounds.length === 1 && backgrounds[0][1].trim() === 'none',
+    'Glass hover painter ' + unit + ' must declare background: none');
+}
 const glass = read('Concepts/liquid-glass/opus-5.5/src/glass.js');
 requireThat(!/function onPtr\(/.test(glass), 'independent Glass sheet pointer light remains');
-counts.source_boundary_checks = 10;
+counts.source_boundary_checks = 12;
 
 process.stdout.write(JSON.stringify({ status: failures.length ? 'fail' : 'pass',
   claim_boundary: 'isolated_source_helpers_with_fixture_DOM_storage_not_browser_or_native_proof', counts, failures }, null, 2));

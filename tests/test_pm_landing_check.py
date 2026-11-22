@@ -337,6 +337,30 @@ class RenamedShardStaleness(unittest.TestCase):
 
     # T63 (REVIEW-etools-tb3-opus findings 7 and 8): the branch left the evidence file alone, in its commits read raw
     # and in the working tree, and the file is no symbolic link
+    def test_clean_crlf_evidence_keeps_the_rename_excuse(self):
+        evidence = self.root / self.EVIDENCE
+        self._git("config", "core.autocrlf", "true")
+        evidence.unlink()
+        self._git("checkout-index", "--index", "--", self.EVIDENCE)
+        self.assertEqual(evidence.read_bytes(), b"{}\r\n")
+        self.assertEqual(self._git("status", "--porcelain", "--", self.EVIDENCE).stdout, b"")
+        self.assertTrue(self.stale(self.ref(self.OLD)), self.context.why)
+        self.assertNotIn(self.EVIDENCE, self.context.why)
+
+    def test_filtered_blob_check_rejects_content_edits_even_when_status_is_clean(self):
+        self._git("config", "core.autocrlf", "true")
+        (self.root / self.EVIDENCE).write_bytes(b'{"edited": true}\r\n')
+        real_git = self.context._git
+
+        def hide_status(*args):
+            if args[0] == "status":
+                return subprocess.CompletedProcess(args, 0, stdout=b"")
+            return real_git(*args)
+
+        with patch.object(self.context, "_git", side_effect=hide_status):
+            self.assertFalse(self.stale(self.ref(self.OLD)))
+        self.assertEqual(self.context.why[self.EVIDENCE], "evidence differs from HEAD on disk")
+
     def test_an_uncommitted_edit_of_the_evidence_keeps_its_class(self):
         (self.root / self.EVIDENCE).write_text('{"edited": true}\n')
         self.assertFalse(self.stale(self.ref(self.OLD)))
@@ -403,6 +427,7 @@ class RenamedShardStaleness(unittest.TestCase):
         context = M.RenameContext(self.root, "base", [self.NEW, self.NEW_SCHEMA])
         self.assertFalse(self.stale(self.ref(self.OLD, source=fresh), context))
         self.assertIn(fresh, context.why)
+        self.assertRegex(context.why[fresh], r"^evidence has working-tree changes: !! ")
 
     def test_an_excluded_untracked_evidence_file_keeps_its_class(self):
         (self.root / ".git/info").mkdir(parents=True, exist_ok=True)
@@ -1492,6 +1517,74 @@ class LandingRun(unittest.TestCase):
         return self.run_main("--base", self.base, "--baseline", "baseline.json", *argv)
 
 
+class ClosureRegistryGrowth(LandingRun):
+    PATH = "Plans/.audits/_semantic_closure_registry.jsonl"
+    REGISTRY = "Plans/event_family_registry.json"
+    ERROR = "audit_closure_validator_error"
+
+    def setUp(self):
+        super().setUp()
+        self.old = [self.closure_row(f"{self.PATH}:{n}: missing required closure proof") for n in range(1, 68)]
+        self.stale = self.closure_row(
+            f"{self.PATH}:1539: closure_evidence_hashes for {self.REGISTRY}#json=/families is stale "
+            f"(stored {'a' * 64}, current {'b' * 64})"
+        )
+        self.nonstale = self.closure_row(f"{self.PATH}:1540: missing required closure proof")
+        self.stub(audit={"audit_closure": self.old})
+        self.record()
+        self.touch(self.REGISTRY)
+
+    def closure_row(self, detail):
+        return {"path": self.PATH, "error": self.ERROR, "detail": detail}
+
+    def compare_closure(self, rows, expected_exit):
+        self.stub(audit={"audit_closure": rows})
+        code, out = self.compare("--json")
+        report = json.loads(out)
+        self.assertEqual(code, expected_exit, (report["grown_buckets"], report["grown_subchecks"]))
+        return report
+
+    def assert_stale_only_growth(self):
+        report = self.compare_closure(self.old + [self.stale], 1)
+        self.assertEqual(report["blocking"], 0)
+        self.assertEqual(report["grown_buckets"], [{
+            "bucket": f"audit-governance|audit_closure|{self.ERROR}|{self.PATH}",
+            "baseline_count": 67, "count": 68, "stale": True,
+        }])
+        self.assertEqual([(row["error"], row["stale"]) for row in report["new"]], [(self.ERROR, True)])
+
+    def test_complete_closure_growth_by_the_merge_3a_stale_row_exits_one(self):
+        self.assert_stale_only_growth()
+
+    def test_complete_closure_growth_by_a_nonstale_row_exits_two(self):
+        for added in (self.nonstale, self.old[0]):
+            with self.subTest(added=added):
+                report = self.compare_closure(self.old + [added], 2)
+                self.assertEqual(report["blocking"], 1)
+                self.assertFalse(report["grown_buckets"][0]["stale"])
+        self.assert_stale_only_growth()
+
+    def test_complete_mixed_closure_growth_exits_two(self):
+        # Replacing an old non-stale finding keeps their count level but adds a new fingerprint.
+        for old in (self.old, self.old[1:]):
+            with self.subTest(removed=len(self.old) - len(old)):
+                report = self.compare_closure(old + [self.stale, self.nonstale], 2)
+                self.assertEqual(report["blocking"], 1)
+                self.assertFalse(report["grown_buckets"][0]["stale"])
+        self.assert_stale_only_growth()
+
+    def test_truncated_closure_growth_keeps_the_total_only_rule(self):
+        report = self.compare_closure(self.old + [self.stale] * 34, 2)
+        self.assertEqual(report["blocking"], 1)
+        self.assertEqual(report["grown_buckets"], [])
+        self.assertEqual(report["subchecks_compared_by_total_only"], ["audit-governance/audit_closure"])
+        (growth,) = report["grown_subchecks"]
+        self.assertEqual((growth["baseline_reported"], growth["reported"], growth["sampled"]), (67, 101, 100))
+        self.assertTrue(growth["truncated"])
+        self.assertFalse(growth["stale"])
+        self.assert_stale_only_growth()
+
+
 def drift(source_path):
     """The Event Authority currentness row for one inventoried source whose stored hash no longer
     matches. It names the source only in `source_path`; its `path` is empty."""
@@ -1941,11 +2034,15 @@ class RuleThreeTimeouts(LandingRun):
     a blocker. Measured case: lint-contractrefs takes about 199 s in the shared checkout on the
     network mount and finds nothing when run alone; the old 180 s bound killed it."""
 
-    def test_the_default_bound_is_600_seconds_above_the_measured_199(self):
+    def test_the_default_bound_matches_the_successful_1800_second_baseline_retry(self):
         self.stub(gates={"verify_spec_lock": [STALE_HASH]})
         self.record()
-        self.assertEqual(self.timeouts, [600, 600, 600])
+        self.assertEqual(self.timeouts, [1800, 1800, 1800])
         self.assertLess(199, self.module.DEFAULT_SUBCHECK_TIMEOUT_SECONDS)
+        self.touch("Plans/Touched.md")
+        _, out = self.compare("--json")
+        self.assertEqual(self.timeouts[3:], [1800, 1800, 1800])
+        self.assertEqual(json.loads(out)["subcheck_timeout_seconds"], 1800)
 
     def test_lint_contractrefs_killed_at_its_bound_is_reported_on_its_own_line(self):
         self.stub(gates={"verify_spec_lock": [STALE_HASH]})
@@ -2226,14 +2323,14 @@ class TimeoutsLiftExitZero(LandingRun):
         return self.compare()
 
     def test_a_timeout_alone_exits_one_because_the_run_was_not_fully_verified(self):
-        code, out = self.run_with(("lint_path_refs", [timeout_row("lint-path-refs", 600)]))
+        code, out = self.run_with(("lint_path_refs", [timeout_row("lint-path-refs", 1800)]))
         self.assertEqual(code, 1, out)
         self.assertIn("not fully verified and exits 1, not 0", out)
         # The timeout line names the subcheck, how long it ran and the limit.
         self.assertIn("[infrastructure] run-gates/lint_path_refs  subprocess_timeout (lint-path-refs)  "
-                      "killed after 600 s, at its limit of 600 s", out)
-        self.assertIn("1 subcheck did not finish within 600 s, the limit (run-gates/lint_path_refs killed after "
-                      "600 s)", out)
+                      "killed after 1800 s, at its limit of 1800 s", out)
+        self.assertIn("1 subcheck did not finish within 1800 s, the limit (run-gates/lint_path_refs killed after "
+                      "1800 s)", out)
         self.assertIn("it cannot exit 0", out)
 
     def test_a_complete_run_with_nothing_to_report_still_exits_zero(self):
@@ -2611,7 +2708,7 @@ class ExportKeyedSubchecks(LandingRun):
         self.assertIn("[blocking    ] run-gates/validate_plan_graph  missing_ref  Plans/storage-plan.md", out)
 
     def test_an_export_that_times_out_or_cannot_be_read_falls_back_and_says_so(self):
-        for export, reason in (("timeout", "did not finish within 600 s"),
+        for export, reason in (("timeout", "did not finish within 1800 s"),
                                ("unreadable", "could not be read: its report is not JSON (stand-in)")):
             with self.subTest(export=export):
                 self.setUp()
@@ -2713,7 +2810,7 @@ class ExportKeyedSubchecks(LandingRun):
         self.exports[self.PRD] = "timeout"
         code, out = self.compare()
         self.assertEqual(code, 1, out)
-        self.assertIn("did not finish within 600 s; the truncated rule applies", out)
+        self.assertIn("did not finish within 1800 s; the truncated rule applies", out)
         self.assertIn("[pre-existing] run-gates/validate_prd_planning_runtime_contracts  unresolved_local_ref  "
                       "Plans/home_layout_event_contracts.schema.json  50 -> 50", out)
         self.assertNotIn("[improved", out)
