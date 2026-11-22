@@ -210,9 +210,10 @@ class ReadinessInputs(F.LandingRun):
 
     def test_changes_during_exports_stop_before_classifying_failures(self):
         self.record()
-        def changing(*args):
+        inner = self.module.key_from_exports
+        def changing(*args, **kwargs):
             (self.source / self.artifact).write_text("changed during export\n")
-            return {}, []
+            return inner(*args, **kwargs)
         self.module.key_from_exports = changing
         code, out = self.compare()
         self.assertEqual(code, 3, out + self.stderr)
