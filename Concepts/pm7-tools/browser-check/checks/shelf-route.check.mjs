@@ -56,14 +56,19 @@ export function pickEffectRows([p, toks, authored]) {
 export function shelfReachStatus(e) {
   const slot = document.getElementById('sidePanelSlot');
   const view = e.closest('.side-panel-view');
-  const shown = node => {
-    if (!node?.checkVisibility({ opacityProperty: true, visibilityProperty: true, contentVisibilityAuto: true })) return false;
-    // A fully transparent filter leaves the whole subtree in hit testing.
+  // R133-FOLLOWUPS 3 (T124): the filter-only ancestor walk starts at the node it judges; from the control it
+  // catches an opacity(0) wrapper BELOW the view too, which the slot/view walks (starting above it) miss.
+  const filterClear = node => {
     for (let a = node; a; a = a.parentElement) {
       const filters = getComputedStyle(a).filter.matchAll(/(?:^|\s)opacity\(([^)]+)\)/g);
       for (const [, value] of filters) if (Number.parseFloat(value) === 0) return false;
     }
     return true;
+  };
+  const shown = node => {
+    if (!node?.checkVisibility({ opacityProperty: true, visibilityProperty: true, contentVisibilityAuto: true })) return false;
+    // A fully transparent filter leaves the whole subtree in hit testing.
+    return filterClear(node);
   };
   const onScreen = node => {
     const r = node.getBoundingClientRect();
@@ -73,8 +78,9 @@ export function shelfReachStatus(e) {
   return {
     slot: shown(slot) && onScreen(slot),
     view: shown(view) && onScreen(view),
-    // A control can be outside the scroller's rendered band until reach scrolls it in.
-    shown: e.isConnected && e.checkVisibility(),
+    // A control can be outside the scroller's rendered band until reach scrolls it in. Its default layout
+    // visibility check stays; the filter walk from the control adds the transparent-wrapper case.
+    shown: e.isConnected && e.checkVisibility() && filterClear(e),
     what: (e.getAttribute('aria-label') || e.textContent || e.className || e.tagName).toString().trim().replace(/\s+/g, ' ').slice(0, 40),
   };
 }
