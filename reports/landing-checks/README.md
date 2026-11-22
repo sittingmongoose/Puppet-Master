@@ -765,8 +765,11 @@ currentness edition require the assigned reseal agent. Follow the latest
 `reports/governance-reseal-*/reseal-record.md`. Install and validate the approved currentness
 edition under the lock before recording its baseline.
 
-For an ordinary Plans landing, prepare a fresh full worktree at the newly pushed primary main.
-Nas1 is suitable. Copy the same ignored inputs listed above and save their path and SHA-256
+For an ordinary Plans landing, prepare a fresh full worktree at the newly pushed primary main
+and run the follow-up from the VM, or another host that can reach the check host: the recipe's
+`pm-land.py check` controller SSHes to the check host (default `nas1`), and Nas1 itself cannot
+resolve `nas1-agent`, so the recipe cannot run there. Copy the same ignored inputs listed above
+and save their path and SHA-256
 inventory with the generation evidence. Include the raw evidence link and manifest. Run the
 two generation commands together under `long-job` on that host. If a snapshot for this UTC day
 already exists, use the next three-digit sequence in its run ID. Set `PM_LAND_SCRIPT` to the
@@ -804,7 +807,12 @@ git add Plans/.plan_migration reports/landing-checks/baseline.json
 git commit -m "plans: refresh the plan-migration snapshot and the landing-check baseline"
 git push origin "HEAD:refs/heads/$PM_LAND_TOPIC_BRANCH"
 long-job start "pm-${PM_LAND_TOPIC_BRANCH#fix/}" -- python3 -B "$PM_LAND_SCRIPT" check "$PM_LAND_TOPIC_BRANCH"
-long-job wait "pm-${PM_LAND_TOPIC_BRANCH#fix/}" --timeout 1500
+# Re-arm on 124: a real check can outlast one 1500 s wait.
+while :; do
+    long-job wait "pm-${PM_LAND_TOPIC_BRANCH#fix/}" --timeout 1500 && break
+    wait_code=$?
+    [ "$wait_code" -eq 124 ] || exit "$wait_code"
+done
 ```
 
 Check that the generation inventory still matches after recording. Confirm the check receipt
