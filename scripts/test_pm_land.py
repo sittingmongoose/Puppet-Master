@@ -1119,102 +1119,17 @@ print(json.dumps({{"schema_id": "pm.landing_check.report.v1", "commit": {self.he
                 else:
                     note_path.write_text("base note\n", encoding="utf-8")
 
-    def test_documented_followup_creates_and_checks_the_same_local_branch(self):
+    def test_landing_rules_describe_the_remote_route_only(self):
         repo = Path(__file__).resolve().parents[1]
-        readme = (repo / "reports/landing-checks/README.md").read_text()
-        fence = chr(96) * 3
-        recipe = re.search(rf"^## Refreshing it after a Plans landing\n.*?^{fence}sh\n(.*?)^{fence}$",
-                           readme, re.MULTILINE | re.DOTALL)[1]
-        branch_commands = ("git fetch origin", "PM_LAND_TIMESTAMP=$(date -u +%Y%m%d-%H%M%S)",
-                           'PM_LAND_TOPIC_BRANCH="fix/landing-snapshot-$PM_LAND_TIMESTAMP"',
-                           'git switch -c "$PM_LAND_TOPIC_BRANCH" origin/main',
-                           'git push origin "HEAD:refs/heads/$PM_LAND_TOPIC_BRANCH"',
-                           'long-job start "pm-${PM_LAND_TOPIC_BRANCH#fix/}" -- python3 -B "$PM_LAND_SCRIPT" check "$PM_LAND_TOPIC_BRANCH"',
-                           'long-job wait "pm-${PM_LAND_TOPIC_BRANCH#fix/}" --timeout 1500')
-        for command in branch_commands:
-            self.assertIn(command, recipe)
         sections = [path.read_text().split("### How to land on main\n")[1].split("### Never\n")[0]
                     for path in (repo / "AGENTS.md", repo / ".claude/CLAUDE.md")]
         self.assertEqual(sections[0], sections[1])
-        for phrase in ("check <branch> --on <host>", "PM_LAND_SCRIPT", "verify --receipt", "--no-overwrite-ignore", "default `nas1`", "verify` exiting 0 confirms only",
+        for phrase in ("check <branch> --on <host>", "PM_LAND_SCRIPT", "verify --receipt", "--no-overwrite-ignore",
+                       "default `nas1`", "verify` exiting 0 confirms only", "every 25 minutes",
                        "commit", "tree", "base", "ignored-input inventory", "report SHA-256", "exit"):
             self.assertIn(phrase, sections[0])
-
-        self.put(self.shared, "Plans/owner.md", "test plan\n")
-        historical_runs = self.git(repo, "ls-tree", "-d", "--name-only", "a45c1a0362:Plans/.plan_migration")
-        for name in historical_runs.stdout.splitlines():
-            self.put(self.shared, f"Plans/.plan_migration/{name}/summary.json", "{}\n")
-        self.put(self.shared, "Plans/.plan_migration/current_run.json", '{"run_id":"previous"}')
-        self.put(self.shared, "scripts/pm-plan-migration.py", """import json, sys
-from pathlib import Path
-assert sys.argv[1] == "snapshot-current"
-assert sys.argv[-2:] == ["--supersedes-run-id", "previous"]
-assert "--expected-doc-count" in sys.argv
-Path("Plans/.plan_migration/current_run.json").write_text(json.dumps({"run_id": sys.argv[3]}))
-""")
-        self.put(self.shared, "scripts/pm-landing-check.py", """import json, sys
-from pathlib import Path
-assert sys.argv[1] == "--record-baseline"
-report = Path("reports/landing-checks/baseline.json")
-report.parent.mkdir(parents=True, exist_ok=True)
-report.write_text(json.dumps({"baseline": "fixture"}))
-""")
-        self.git(self.shared, "add", "--", "Plans", "scripts")
-        self.git(self.shared, "commit", "-m", "fixture at published main")
-        published = land.revision(self.shared, "HEAD")
-        self.git(self.origin, "fetch", str(self.shared), land.MAIN_REF)
-        self.git(self.origin, "update-ref", land.MAIN_REF, published, self.base)
-        self.git(self.clone, "config", "user.email", "fixture@example.invalid")
-        self.git(self.clone, "config", "user.name", "Landing fixture")
-        self.git(self.clone, "fetch", "origin")
-        scratch = self.root / "detached-followup"
-        self.git(self.clone, "worktree", "add", "--detach", str(scratch), published)
-
-        observed = self.root / "observed-check.json"
-        runner = self.put(self.root, "fixture-pm-land.py", f"""import importlib.util, json
-from pathlib import Path
-spec = importlib.util.spec_from_file_location("pm_land", {str(repo / 'scripts/pm-land.py')!r})
-land = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(land)
-
-def at_remote_boundary(branch, head):
-    Path({str(observed)!r}).write_text(json.dumps({{"branch": branch, "head": head}}))
-    raise SystemExit(0)
-
-land.new_run = at_remote_boundary
-raise SystemExit(land.main())
-""")
-        launcher = self.put(self.root, "bin/long-job", """#!/bin/sh
-set -eu
-mode=$1
-name=$2
-shift 2
-case "$mode" in
-    start) test "$1" = --; shift; printf '%s\\n' "$name" >"$TEST_JOB"; "$@" ;;
-    wait) test "$name" = "$(cat "$TEST_JOB")"; test "$*" = "--timeout 1500" ;;
-    *) exit 2 ;;
-esac
-""")
-        launcher.chmod(0o700)
-        date = self.put(self.root, "bin/date", """#!/bin/sh
-case "$*" in
-    '-u +%Y%m%d-%H%M%S') echo 20261121-224647 ;;
-    *) exit 2 ;;
-esac
-""")
-        date.chmod(0o700)
-        env = {**os.environ, "PATH": f"{launcher.parent}:{os.environ['PATH']}", "PM_LAND_SCRIPT": str(runner),
-               "TEST_JOB": str(self.root / "started-job")}
-        result = subprocess.run(["bash", "-c", recipe], cwd=scratch, env=env, capture_output=True, text=True)
-        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-        branch = self.git(scratch, "symbolic-ref", "--short", "HEAD").stdout.strip()
-        tip = land.revision(scratch, "HEAD")
-        self.assertRegex(branch, r"^fix/landing-snapshot-\d{8}-\d{6}$")
-        self.assertEqual(land.revision(scratch, "HEAD^"), published)
-        self.assertEqual(land.revision(self.origin, f"refs/heads/{branch}"), tip)
-        self.assertEqual(land.read_json(observed), {"branch": branch, "head": tip})
-        self.assertEqual(land.read_json(scratch / "Plans/.plan_migration/current_run.json")["run_id"],
-                         "pds-20261121-002-current-planunit-snapshot")
+        # The local-copy route and the scripted Plans follow-up move to the batching task (pm7-build, option B).
+        self.assertNotIn("Checks on a local copy", sections[0])
 
     def test_ignored_input_membership_and_bytes_must_match_on_either_side(self):
         path = "Plans/.audits/usage-successor/governance/auto-decision-receipt.json"

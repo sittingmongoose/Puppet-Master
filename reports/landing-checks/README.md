@@ -629,8 +629,9 @@ Apply the checks' file selection to that list. Keep the Plan text and reference 
 (`.md`, `.json`, `.jsonl`, `.yaml`, `.yml`, `.schema`, `.py`, `.txt`, `.tsv`, and files
 whose name contains `.schema.`), the readiness audit directory, and the validator tree under
 `scripts/` outside Python caches. Keep fixture text and source files under the other listed
-roots and assets read by the PM7 concept. Under `tests/`, also use the checked GUI asset policy's
-source extensions and exclusions. Include explicitly declared evidence and readiness
+roots and assets read by the PM7 concept. For GUI assets, use the checked GUI asset policy's full
+selection: every one of its `SOURCE_ROOTS` (not only `tests/`), its source extensions and its
+exclusions; `pm-land.py` reads them from the checked validator. Include explicitly declared evidence and readiness
 hash targets from the Spec Lock, evidence records, audit closure registry, legacy audit
 inventory and readiness receipt even if their extensions differ. The raw-capture manifest supplies the exact
 files to hash behind `tests/agent_packet_restrictions`.
@@ -650,9 +651,8 @@ Anyone who writes a checker input in the shared checkout, including readiness re
    read `holder.txt` and clear the directory only if its latest time is more than 90 minutes
    old, otherwise wait five minutes and retry. While you hold it, rewrite the time in
    `holder.txt` at least every 25 minutes, including before each long-job wait; the 90 minutes
-   count from the latest time written. On the local-copy and remote-host routes the checks
-   themselves run BEFORE you take the lock; take it for the re-checks under it (`verify`, or
-   the input re-hash), the fast-forward, the push, the Plans follow-up and the worktree
+   count from the latest time written. On the remote-host route the check itself runs BEFORE
+   you take the lock; take it for `verify`, the fast-forward, the push, the Plans follow-up and the worktree
    removal. This is the one lock procedure for every lander, whichever route its checks take;
    there is no other guard, flock or token. Inspect the shared HEAD, fetched primary and any
    interrupted landing before proceeding. Before each publication step, confirm `holder.txt`
@@ -757,69 +757,32 @@ has a push mirror, publish it separately after the primary has accepted the comm
 
 After a landing that changes any `Plans/` path passes its landing check and pushes `main`, the
 landing agent keeps the same landing lock and refreshes the migration snapshot and baseline as one
-separate follow-up commit. An ordinary landing with no `Plans/` paths refreshes neither artifact. Never
+separate follow-up commit. A landing with no `Plans/` paths refreshes neither artifact. Never
 refresh the baseline to make a landing pass: that excuses exactly the failure it was meant to show.
 
-Changes to `Plans/Spec_Lock.json`, `Plans/.evidence/**`, `Plans/auto_decisions.jsonl` or a
-currentness edition require the assigned reseal agent. Follow the latest
-`reports/governance-reseal-*/reseal-record.md`. Install and validate the approved currentness
-edition under the lock before recording its baseline.
+Working directory: `~/pm-worktrees/snapshot-$(date -u +%Y%m%d)`, a full worktree on the VM's local
+disk at the newly pushed `main`, never the shared checkout. The snapshot writes a new tracked run
+directory and removes snapshot runs older than the one it replaces, which is why it cannot run where
+branches land. The replaced run stays because the new run declares it and validation reads its
+summary. `git add Plans/.plan_migration` below stages both changes. Git history keeps the removed bytes.
 
-For an ordinary Plans landing, prepare a fresh full worktree at the newly pushed primary main
-and run the follow-up from the VM, or another host that can reach the check host: the recipe's
-`pm-land.py check` controller SSHes to the check host (default `nas1`), and Nas1 itself cannot
-resolve `nas1-agent`, so the recipe cannot run there. Copy the same ignored inputs listed above
-and save their path and SHA-256
-inventory with the generation evidence. Include the raw evidence link and manifest. Run the
-two generation commands together under `long-job` on that host. If a snapshot for this UTC day
-already exists, use the next three-digit sequence in its run ID. Set `PM_LAND_SCRIPT` to the
-trusted absolute path to the lander script. Run the commands from the fresh full worktree.
-The snapshot writes a new
-tracked run directory and removes older runs. The replaced run stays because the new run
-declares it and validation reads its summary. Git history keeps the removed bytes.
+    cd ~/pm-worktrees/snapshot-$(date -u +%Y%m%d)
+    git fetch origin
+    git checkout -B plans/snapshot-$(date -u +%Y%m%d) origin/main
+    git sparse-checkout disable
+    ln -sfn /mnt/Cursor/PuppetMaster-Evidence/tests/agent_packet_restrictions \
+            tests/agent_packet_restrictions
+    python3 scripts/pm-plan-migration.py snapshot-current \
+        --run-id pds-$(date -u +%Y%m%d)-001-current-planunit-snapshot \
+        --expected-doc-count "$(ls Plans/*.md | wc -l)" \
+        --supersedes-run-id "$(python3 -c "import json;print(json.load(open('Plans/.plan_migration/current_run.json'))['run_id'])")"
+    python3 scripts/pm-landing-check.py --record-baseline
+    git add Plans/.plan_migration reports/landing-checks/baseline.json
+    git commit -m "plans: refresh the plan-migration snapshot and the landing-check baseline"
+    git push -u origin HEAD
 
-```sh
-set -eu
-git fetch origin
-PM_LAND_TIMESTAMP=$(date -u +%Y%m%d-%H%M%S)
-PM_LAND_TOPIC_BRANCH="fix/landing-snapshot-$PM_LAND_TIMESTAMP"
-git switch -c "$PM_LAND_TOPIC_BRANCH" origin/main
-PM_LAND_SNAP_DATE=${PM_LAND_TIMESTAMP%%-*}
-PM_LAND_SNAP_SEQ=$(python3 - "$PM_LAND_SNAP_DATE" <<'PY'
-from pathlib import Path
-import sys
-
-date = sys.argv[1]
-runs = Path("Plans/.plan_migration").glob(f"pds-{date}-[0-9][0-9][0-9]-*")
-next_number = max((int(run.name.split("-")[2]) for run in runs if run.is_dir()), default=0) + 1
-if next_number > 999:
-    sys.exit(f"No three-digit snapshot sequence remains for {date}")
-print(f"{next_number:03d}")
-PY
-)
-python3 scripts/pm-plan-migration.py snapshot-current \
-    --run-id "pds-$PM_LAND_SNAP_DATE-$PM_LAND_SNAP_SEQ-current-planunit-snapshot" \
-    --expected-doc-count "$(ls Plans/*.md | wc -l)" \
-    --supersedes-run-id "$(python3 -c "import json;print(json.load(open('Plans/.plan_migration/current_run.json'))['run_id'])")"
-python3 scripts/pm-landing-check.py --record-baseline \
-    --readiness-audit-root "$PWD/Plans/.audits/event-authority-2026-08-13-currentness"
-git add Plans/.plan_migration reports/landing-checks/baseline.json
-git commit -m "plans: refresh the plan-migration snapshot and the landing-check baseline"
-git push origin "HEAD:refs/heads/$PM_LAND_TOPIC_BRANCH"
-long-job start "pm-${PM_LAND_TOPIC_BRANCH#fix/}" -- python3 -B "$PM_LAND_SCRIPT" check "$PM_LAND_TOPIC_BRANCH"
-# Re-arm on 124: a real check can outlast one 1500 s wait.
-while :; do
-    long-job wait "pm-${PM_LAND_TOPIC_BRANCH#fix/}" --timeout 1500 && break
-    wait_code=$?
-    [ "$wait_code" -eq 124 ] || exit "$wait_code"
-done
-```
-
-Check that the generation inventory still matches after recording. Confirm the check receipt
-has the ignored-input inventory used to record the baseline. Then judge, verify, fast-forward,
-run the shared shard check, verify again and push under the same hand procedure. If generation
-or validation fails, keep the lock while handing off or recovering the owed follow-up. Remove
-the temporary worktrees and release your holder when the follow-up is published.
+Land that separate commit through the ordinary fast-forward, shard-check, landing-check, main-push
+and worktree-removal procedure while holding the same landing lock; release it afterward.
 
 Six things that make the difference between a good baseline and a misleading one:
 
