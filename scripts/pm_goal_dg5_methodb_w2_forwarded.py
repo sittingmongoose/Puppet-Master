@@ -39,13 +39,18 @@ CURRENT_ORIGINAL = {
     f'dg5/read_current/{phase}/root/schema': f'read_current/{phase}/root'
     for phase in ('original', 'final')
 }
+INSPECTION_ORIGINAL = {
+    f'dg5/inspect_original/{phase}/root/schema': f'inspect_original/{phase}/root'
+    for phase in ('original', 'final')
+}
 CURRENT_APPEND = {row.replace('/root/', '/append/root/'): code for row, code in CURRENT_ORIGINAL.items()}
 READER_APPEND = HISTORICAL_APPEND | CURRENT_APPEND
 READER_ORIGINAL = HISTORICAL_ORIGINAL | CURRENT_ORIGINAL
 READ_APPEND = READER_APPEND | PROJECTOR_APPEND
-ORIGINAL_SCHEMAS = READER_ORIGINAL | PROJECTOR_ORIGINAL
+ORIGINAL_SCHEMAS = READER_ORIGINAL | PROJECTOR_ORIGINAL | INSPECTION_ORIGINAL
 READER_COMPARISONS = {'read_historical': (902, 'read_historical/final_fence'),
-                      'read_current': (928, 'read_current/final_original')}
+                      'read_current': (928, 'read_current/final_original'),
+                      'inspect_original': (884, 'inspect_original/final_fence')}
 DEPENDENCIES = {
     'dg5/start/commit/schema': ('start/retained_native', 'commit', 'StorageCommit', 1272, 'commit'),
     'dg5/start/origin/schema': ('start/retained_native', 'origin', 'StorageOrigin', 1272, 'origin'),

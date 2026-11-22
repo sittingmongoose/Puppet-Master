@@ -14,11 +14,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('reference', 'case', 'input', 'out'):
         parser.add_argument('--' + name, type=Path, required=True)
+    parser.add_argument('--native-bindings', type=Path)
+    parser.add_argument('--only-root', action='append', default=[])
     parser.add_argument('--omit-site', action='store_true')
     args = parser.parse_args()
     case = json.loads(args.case.read_bytes())
     name = case['row']
-    reference = worker.load_reference(args.reference, [case])
+    reference = worker.load_reference(args.reference, [case], args.native_bindings)
     mapping = reference['rows'][name]
     sites = {(site['path'], site['line']) for site in mapping['current_sites']}
     worker.require(sorted(mapping['roots']) == sorted(spec['root'] for spec in case['fixtures']) and
@@ -35,7 +37,10 @@ def main():
     collector = worker.stage.sweep.Collector()
     checked = set()
     records = []
-    for spec in case['fixtures'][1 if args.omit_site else 0:]:
+    choices = [spec for spec in case['fixtures'] if not args.only_root or spec['root'] in args.only_root]
+    worker.require({tuple(spec['validation_site']) for spec in choices} == sites,
+                   'the selected examples must include both original sites')
+    for spec in choices[1 if args.omit_site else 0:]:
         started = time.monotonic()
         root = spec['root']
         source = args.input / root.removeprefix('dg5:')

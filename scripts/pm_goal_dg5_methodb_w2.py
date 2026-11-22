@@ -62,8 +62,11 @@ class Fixture(stage.Fixture):
                 return projector.cutover, (generation,)
             return projector.replay, (generation,)
         if self.route.startswith('read_original/'):
-            _, reader, _ = stage.original.projected(self.world)
             method = self.route.split('/')[1]
+            if method == 'inspect_original':
+                reader = stage.original.R.StartedReaders(self.world.registry, world=self.world)
+            else:
+                _, reader, _ = stage.original.projected(self.world)
             return getattr(reader, method), (stage.original.sreq(self.world),)
         if self.route == 'projection/record':
             readers = stage.original.R
