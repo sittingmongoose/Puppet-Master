@@ -33,7 +33,7 @@ host, path, job, state and the command to remove it by hand once nothing uses it
 exit of 2 or 3. It prints the separate checker exit and the `record.json` receipt path on the
 evidence share. Nonzero means the tool could not run or record the check.
 
-Under the hand lander's guard, immediately before fast-forward and again before pushing, use:
+Under the hand lander's lock, immediately before fast-forward and again before pushing, use:
 
     python3 -B "$PM_LAND_SCRIPT" verify --receipt "$PM_LAND_RECEIPT" \
         --commit "$PM_LAND_COMMIT" --base "$PM_LAND_BASE"
@@ -644,31 +644,37 @@ Anyone who writes a checker input in the shared checkout, including readiness re
 
 ## Landing by hand
 
-1. Take the landing lock in `/mnt/Cursor/PuppetMaster-Evidence/scratch/landing-lock/held` before
-   the landing fetch. Use an exclusive `flock` on the sibling `pm-land-reap.guard` for
-   acquisition, takeover, holder updates, shared publication and release. Create `held` with
-   `mkdir` under the guard, and record your name, branch, UTC time and a unique token in
-   `held/holder.txt`. Put `token: <your token>` on its own line. Confirm that token under the guard
-   before renewing or releasing it, and replace the holder file atomically. Renew every 25
-   minutes, including before each long-job wait, and keep the lock through Plans follow-up and
-   cleanup. Another lander can take over after 90 minutes without renewal. Inspect the shared
-   HEAD, fetched primary and any interrupted landing before proceeding. Remove only your own
-   holder after finishing. Keep long work and waits outside the flock.
+1. Take the landing lock before the landing fetch: run
+   `mkdir /mnt/Cursor/PuppetMaster-Evidence/scratch/landing-lock/held`. Success means you hold
+   the lock; write your agent name, branch and UTC time to `held/holder.txt`. If `mkdir` fails,
+   read `holder.txt` and clear the directory only if its latest time is more than 90 minutes
+   old, otherwise wait five minutes and retry. While you hold it, rewrite the time in
+   `holder.txt` at least every 25 minutes, including before each long-job wait; the 90 minutes
+   count from the latest time written. On the local-copy and remote-host routes the checks
+   themselves run BEFORE you take the lock; take it for the re-checks under it (`verify`, or
+   the input re-hash), the fast-forward, the push, the Plans follow-up and the worktree
+   removal. This is the one lock procedure for every lander, whichever route its checks take;
+   there is no other guard, flock or token. Inspect the shared HEAD, fetched primary and any
+   interrupted landing before proceeding. Before each publication step, confirm `holder.txt`
+   still names your agent and branch; if it does not, stop and hand off to the current holder.
+   Release the lock with `rm -r` of the `held` directory only after finishing, and only your
+   own holder.
 2. In the topic worktree, fetch and rebase on `origin/main`, then push the rebased topic. For
    Plans edits, re-read cited passages against the current text. Regenerate `_shards` and
    `.plan_index` where required.
-3. Run `pm-land.py check` for that branch. Use the **recorded checker exit**. Stop on 2 or 3.
+3. Run `pm-land.py check` for that branch before taking the lock; the controller never needs
+   it. Use the **recorded checker exit**. Stop on 2 or 3.
    For exit 1, compare changed pre-existing rows with the baseline and rerun any timed-out
    subchecks on their own in a full checkout at the checked SHA with the same inputs. Resolve
    what the report names using the baseline and staleness rules above. Apply the shard-check
    rule to the remote shard result too.
 4. In the shared checkout, set `PM_LAND_RECEIPT` to the receipt and `PM_LAND_COMMIT` and
-   `PM_LAND_BASE` to its full `head` and `base` SHAs. Fetch and run `verify` under the guard.
+   `PM_LAND_BASE` to its full `head` and `base` SHAs. Fetch and run `verify` under the lock.
    The shared checkout is for landing only. Verification refuses any staged or unstaged tracked
-   change, including deletions, and any skip-worktree or assume-unchanged flag anywhere in the
-   checkout. It names the affected paths.
+   change, including deletions, any skip-worktree or assume-unchanged flag, and visible
+   untracked checker inputs anywhere in the checkout. It names the affected paths.
    If the base or the branch moved, repeat the rebase, push and check.
-5. With the same guard held, fast-forward only after `verify` passes immediately beforehand.
+5. With the lock held, fast-forward only after `verify` passes immediately beforehand.
    Run `git merge --ff-only --no-overwrite-ignore "$PM_LAND_COMMIT"`.
    Confirm that shared HEAD and its tree match the receipt. If Git refuses or the fast-forward
    is incomplete, retain the lock and inspect HEAD, index and working files before any repair.
@@ -677,19 +683,19 @@ Anyone who writes a checker input in the shared checkout, including readiness re
    shared checkout. A failure on the topic's paths stops publication. If all failures name other
    paths, confirm the shard exists in HEAD and its HEAD manifest references it. Report those
    paths to Jared.
-7. Fetch and run `verify` again under the guard. Push only after it passes immediately beforehand.
+7. Fetch and run `verify` again under the lock. Push only after it passes immediately beforehand.
 8. Push the exact checked commit to primary main with a lease on the checked base. After a
    completed fast-forward fails publication, use freshly fetched primary main. If a push
    returned an uncertain result, check primary first and reconcile against what it accepted.
-   For an unpublished candidate, run `held_git rollback_unpublished` below. Under the owned
-   guard it confirms the index still matches HEAD, refuses any tracked deletion, tracked
-   modification or hidden index flag anywhere in the shared checkout, and checks the reverse
-   transition for ignored or untracked files, including parent-file and directory collisions. Run
+   For an unpublished candidate, run `rollback_unpublished` below under the lock. It confirms
+   the index still matches HEAD, refuses any tracked deletion, tracked modification or hidden
+   index flag anywhere in the shared checkout, and checks the reverse transition for ignored
+   or untracked files, including parent-file and directory collisions. Run
    `reset --keep` only immediately after both checks pass. If either refuses, keep the lock and
    hand off the candidate,
    fetched target, HEAD, `git status --porcelain` and the refusal paths without resetting. If
-   ownership was lost, hand off to the current holder. Never use `--hard` in the shared checkout.
-9. Complete the Plans follow-up below under the same logical lock. Reseals follow the assigned
+   you no longer hold the lock, hand off to the current holder. Never use `--hard` in the shared checkout.
+9. Complete the Plans follow-up below under the same lock. Reseals follow the assigned
    reseal record.
 10. Confirm primary main contains the exact topic tip, then check the original worktree and
     branch before removal. Inspect porcelain, `git ls-files -v` and
@@ -702,24 +708,17 @@ Anyone who writes a checker input in the shared checkout, including readiness re
     branch that another worktree has checked out (such as one that attached at the same tip
     after the removal) and a tip `main` doesn't contain. If either step refuses, leave the branch
     and hand it off. Never use `git branch -D` or `git update-ref -d` here.
-    Recheck your token under the guard and release your holder.
+    Confirm `holder.txt` still names you, then release the lock with `rm -r` of the `held`
+    directory.
 
-### Guarded fast-forward, push and rollback commands
+### Locked fast-forward, push and rollback commands
 
-Set `PM_LAND_LOCK` to the absolute `held` directory, `PM_LAND_TOKEN` to its token and
-`PM_LAND_SCRIPT` to the absolute trusted script path. Run these functions from the shared
-checkout. Apply the report and shard judgments in the numbered steps.
+Set `PM_LAND_SCRIPT` to the absolute trusted script path. Hold the landing lock (step 1) and
+run these functions from the shared checkout. Renew `holder.txt` before each long wait, and
+confirm it still names you before each publication; if it does not, stop and hand off. Apply
+the report and shard judgments in the numbered steps.
 
 ```sh
-held_git() (
-    exec 9>>"$(dirname "$PM_LAND_LOCK")/pm-land-reap.guard"
-    flock -x 9 || exit 3
-    test -n "$PM_LAND_TOKEN" || exit 3
-    current_token=$(sed -n 's/^token: //p' "$PM_LAND_LOCK/holder.txt") || exit 3
-    test "$current_token" = "$PM_LAND_TOKEN" || exit 3
-    "$@"
-)
-
 verify_checked() {
     git fetch origin || return
     python3 -B "$PM_LAND_SCRIPT" verify --receipt "$PM_LAND_RECEIPT" \
@@ -749,8 +748,8 @@ rollback_unpublished() {
 }
 ```
 
-Run `held_git fast_forward_checked` after judging the remote result. After the shared shard
-check, run `held_git push_checked`. If it fails, follow step 8 immediately. If the checkout
+Run `fast_forward_checked` after judging the remote result. After the shared shard
+check, run `push_checked`. If it fails, follow step 8 immediately. If the checkout
 has a push mirror, publish it separately after the primary has accepted the commit.
 
 ## Refreshing it after a Plans landing
