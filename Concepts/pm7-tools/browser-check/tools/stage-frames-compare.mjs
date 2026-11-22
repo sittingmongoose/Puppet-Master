@@ -24,9 +24,17 @@
 // PIXELWISE (only pixelwise within the base's pictures: a weaker pass, listed one by one; --strict fails it), differ.
 // The frozen pictures are taken with animations disabled and say nothing about a running animation: the run's one
 // unfrozen capture per look (variant "unfrozen", animations running) must be in both runs and is reported, not judged.
+// Not frozen (PM7PERF-STAGEFRAMES-SAMEBUILD-UNFROZEN): two back-to-back runs of one build differed in 6 of 12 frozen
+// captures with identical DOM (TIB-P8: basic-dark Ready 7479 px, up to 114 a channel). A capture whose own two frozen
+// pictures (.png and .b.png, 20 frames apart in the same run) differ by more than the compositor's variation was not
+// frozen by the harness: something in it keeps moving. Such a capture is named (NOT FROZEN) and reported, not
+// pixel-judged, so a same-build pair passes without --also; its DOM is still judged, a stable capture that differs
+// between builds still fails, and --strict fails the not-frozen ones. The compositor's own variation is a level or a
+// few: over 8 levels in at least 16 pixels is motion, not raster noise.
 import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
+const SELF_LEVEL = 8, SELF_MIN = 16;
 
 // A screenshot's pixels (Playwright's PNGs: 8-bit RGB or RGBA, not interlaced), with nothing but zlib
 function png(buf) {
@@ -132,17 +140,25 @@ for (const e of index) {
 	}
 	const d = dom(fs.readFileSync(a + '.dom.txt', 'utf8'), fs.readFileSync(b + '.dom.txt', 'utf8'));
 	if (p.same) px++; if (d.same) dm++;
-	const cls = p.same ? 'same' : p.matched ? 'equal' : p.within ? 'pixelwise' : 'differ';
-	rows.push({ look: e.look, file: e.file, props: e.props, target: e.target, class: cls, pixels: p, dom: d });
+	let cls = p.same ? 'same' : p.matched ? 'equal' : p.within ? 'pixelwise' : 'differ';
+	let notFrozen = null;
+	if (cls === 'differ') {
+		const self = (x, y) => { const q = pixels(fs.readFileSync(x), fs.readFileSync(y)); return q.size ? null : { n: q.n, max: q.max || 0 }; };
+		const sb = self(a + '.png', a + '.b.png'), sc = self(b + '.png', b + '.b.png');
+		const moving = (s) => !!s && s.max > SELF_LEVEL && s.n >= SELF_MIN;
+		if (moving(sb) || moving(sc)) { cls = 'not-frozen'; notFrozen = { base: sb, changed: sc }; }
+	}
+	rows.push({ look: e.look, file: e.file, props: e.props, target: e.target, class: cls, pixels: p, dom: d, notFrozen });
 }
 for (const e of extra) rows.push({ ...e, class: 'extra', extra: true });
-const judged = rows.filter((r) => r.pixels), weak = judged.filter((r) => r.class === 'pixelwise');
-const bad = rows.filter((r) => r.missing || r.extra || (r.pixels && (r.class === 'differ' || !r.dom.same)) || (strict && r.class === 'pixelwise'));
+const judged = rows.filter((r) => r.pixels), weak = judged.filter((r) => r.class === 'pixelwise'), notFrozenRows = rows.filter((r) => r.class === 'not-frozen');
+const bad = rows.filter((r) => r.missing || r.extra || (r.pixels && (r.class === 'differ' || !r.dom.same)) || (strict && (r.class === 'pixelwise' || r.class === 'not-frozen')));
 console.log(matrixNote);
-console.log(`${index.length - unfrozen} frozen captures: equal to one base picture in ${px + matched} (the first pictures the same in ${px}, another picture of each build the same in ${matched}); PIXELWISE only in ${within} (weaker: every pixel equals the base's at that place in one of its pictures, but the picture equals none of them: it may be a mixture); differ in ${judged.filter((r) => r.class === 'differ').length}; DOM the same in ${dm}; missing ${missing}${extra.length ? `; not asked for ${extra.length}` : ''}`);
+console.log(`${index.length - unfrozen} frozen captures: equal to one base picture in ${px + matched} (the first pictures the same in ${px}, another picture of each build the same in ${matched}); PIXELWISE only in ${within} (weaker: every pixel equals the base's at that place in one of its pictures, but the picture equals none of them: it may be a mixture); differ in ${judged.filter((r) => r.class === 'differ').length}; not frozen in the harness ${notFrozenRows.length} (reported, not judged); DOM the same in ${dm}; missing ${missing}${extra.length ? `; not asked for ${extra.length}` : ''}`);
 if (unfrozen || !noMatrix) console.log(`unfrozen ${unfrozen} (animations running, one per look: for eyes, not judged; the frozen pictures above say nothing about a running animation)`);
 for (const r of rows.filter((x) => x.unfrozen)) console.log(`UNFROZEN ${r.look}/${r.file}: its own two pictures differ by ${r.unfrozen.base} px in the base, ${r.unfrozen.changed} px in the changed run; base and changed ${r.unfrozen.across} px (logged)`);
 for (const r of weak) console.log(`PIXELWISE ${r.look}/${r.file}: equal to none of the base's ${1 + r.pixels.refs} pictures; each of its pixels equals the base's at that place in one of them (${r.pixels.n} px differ from the first, up to ${r.pixels.max} a channel, box ${r.pixels.box.join(',')})${strict ? ': fails under --strict' : ''}`);
+for (const r of notFrozenRows) console.log(`NOT FROZEN ${r.look}/${r.file}: the harness did not freeze this capture — its own two pictures differ by ${r.notFrozen.base ? `${r.notFrozen.base.n} px (up to ${r.notFrozen.base.max} a channel)` : 'a size change'} in the base, ${r.notFrozen.changed ? `${r.notFrozen.changed.n} px (up to ${r.notFrozen.changed.max} a channel)` : 'a size change'} in the changed run; pixels reported, not judged${strict ? ': fails under --strict' : ''}; DOM ${r.dom.same ? 'the same' : 'DIFFERS'}`);
 for (const r of bad) {
 	if (r.missing) { console.log(`MISSING ${r.look}/${r.file} (${r.missing})`); continue; }
 	if (r.extra) { console.log(`EXTRA  ${r.look}/${r.file}: in the base's index but not in its capture matrix`); continue; }
@@ -151,7 +167,7 @@ for (const r of bad) {
 }
 if (jsonOut) fs.writeFileSync(jsonOut, JSON.stringify(rows, null, 1));
 const frozenN = judged.length + missing;
-if (bad.length) console.log(`VERDICT: FAIL: ${bad.length} of ${rows.length} captures (missing ${missing}, pixels differ ${judged.filter((r) => r.class === 'differ').length}, DOM differs ${judged.filter((r) => !r.dom.same).length}${extra.length ? `, not asked for ${extra.length}` : ''}${strict ? `, PIXELWISE only under --strict ${weak.length}` : ''})`);
-else if (weak.length) console.log(`VERDICT: PASS (weaker): ${weak.length} of ${frozenN} frozen captures only pixelwise within the base's pictures, equal to none of them; the other ${frozenN - weak.length} equal to one base picture; DOM the same in all`);
+if (bad.length) console.log(`VERDICT: FAIL: ${bad.length} of ${rows.length} captures (missing ${missing}, pixels differ ${judged.filter((r) => r.class === 'differ').length}, DOM differs ${judged.filter((r) => !r.dom.same).length}${extra.length ? `, not asked for ${extra.length}` : ''}${strict ? `, PIXELWISE only under --strict ${weak.length}, not frozen under --strict ${notFrozenRows.length}` : ''})`);
+else if (weak.length || notFrozenRows.length) console.log(`VERDICT: PASS (weaker): ${weak.length} of ${frozenN} frozen captures only pixelwise within the base's pictures, equal to none of them${notFrozenRows.length ? `; ${notFrozenRows.length} not frozen in the harness, reported not judged (${notFrozenRows.map((r) => `${r.look}/${r.file}`).join(', ')})` : ''}; the other ${frozenN - weak.length - notFrozenRows.length} equal to one base picture; DOM the same in all`);
 else console.log(`VERDICT: PASS: every capture equal to one base picture (${frozenN} frozen), DOM the same in all${unfrozen ? `; ${unfrozen} unfrozen not judged` : ''}`);
 process.exit(bad.length ? 1 : 0);

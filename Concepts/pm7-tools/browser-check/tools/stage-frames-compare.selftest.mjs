@@ -181,6 +181,38 @@ try {
 		ok('PIXEL-MIX: an unfrozen capture missing from the changed run fails (exit 1)', r2.code === 1 && /MISSING basic-dark\/02-ready-unfrozen \(changed/.test(r2.out), `exit ${r2.code}: ${r2.out.trim()}`);
 	}
 
+	// -- PM7PERF-STAGEFRAMES-SAMEBUILD-UNFROZEN: two back-to-back runs of ONE build differed in 6 of 12 frozen
+	// captures with identical DOM (TIB-P8: basic-dark Ready 7479 px up to 114 a channel). A capture whose own two
+	// frozen pictures differ by more than the compositor's variation was not frozen by the harness: it is named and
+	// reported, not pixel-judged, so a same-build pair passes without --also; a stable capture that differs between
+	// builds still fails, and --strict fails the not-frozen ones.
+	{
+		const one = { ...matrix, variants: ['base'], screens: ['ready'], expected: [E('basic-dark', '01-ready-base', 'ready', 'base')] };
+		const RED = [200, 30, 30], BLUE = [30, 30, 200];
+		const block = (bx, by, c) => png(8, 6, (x, y) => (x >= bx && x < bx + 5 && y >= by && y < by + 4 ? c : [40, 40, 40]));
+		// each run's own two pictures differ by 40 px (the block moves between them): not frozen
+		const base = run({ matrix: one, pics: () => ({ a: block(0, 0, RED), b: block(3, 2, RED) }) });
+		const changed = run({ matrix: one, pics: () => ({ a: block(3, 2, BLUE), b: block(0, 1, BLUE) }) });
+		const r = compare(base, changed);
+		ok('SAMEBUILD-UNFROZEN: a same-build pair whose capture is not frozen passes with the capture named (exit 0)', r.code === 0 && /^NOT FROZEN basic-dark\/01-ready-base/m.test(r.out) && /reported, not judged/.test(r.out), `exit ${r.code}: ${r.out.trim()}`);
+		ok('SAMEBUILD-UNFROZEN: the verdict names the not-frozen capture', /VERDICT: PASS \(weaker\)[^\n]*not frozen in the harness/m.test(r.out), r.out.trim());
+		const strict = compare(base, changed, '--strict');
+		ok('SAMEBUILD-UNFROZEN: --strict fails a not-frozen capture (exit 1)', strict.code === 1 && /VERDICT: FAIL/m.test(strict.out), `exit ${strict.code}: ${strict.out.trim()}`);
+		// a stable capture that differs between builds still fails: the block sits still in each run
+		const stableBase = run({ matrix: one, pics: () => ({ a: block(0, 0, RED), b: block(0, 0, RED) }) });
+		const stableChanged = run({ matrix: one, pics: () => ({ a: block(3, 2, BLUE), b: block(3, 2, BLUE) }) });
+		const s = compare(stableBase, stableChanged);
+		ok('SAMEBUILD-UNFROZEN: a stable capture that differs between builds still fails (exit 1)', s.code === 1 && /^PIXELS basic-dark\/01-ready-base/m.test(s.out) && !/^NOT FROZEN/m.test(s.out), `exit ${s.code}: ${s.out.trim()}`);
+		// a level or two of compositor variation in the own two pictures is not a moving capture
+		const levelBase = run({ matrix: one, pics: () => ({ a: block(0, 0, RED), b: png(8, 6, (x, y) => (x < 5 && y < 4 ? [202, 31, 31] : [41, 40, 40])) }) });
+		const lv = compare(levelBase, stableChanged);
+		ok('SAMEBUILD-UNFROZEN: a few levels of compositor variation are not a moving capture (still exit 1)', lv.code === 1 && !/^NOT FROZEN/m.test(lv.out), `exit ${lv.code}: ${lv.out.trim()}`);
+		// the DOM is still judged on a not-frozen capture
+		const domChanged = run({ matrix: one, pics: () => ({ a: block(3, 2, BLUE), b: block(0, 1, BLUE) }), dom: () => '<g id="id0" data-moved="1">' });
+		const d = compare(base, domChanged);
+		ok('SAMEBUILD-UNFROZEN: a DOM difference on a not-frozen capture still fails (exit 1)', d.code === 1 && /^DOM    basic-dark\/01-ready-base/m.test(d.out), `exit ${d.code}: ${d.out.trim()}`);
+	}
+
 	// -- the DOM normalisation: ids renamed in order of appearance, colours left as they are
 	{
 		// a stub of the stage's root as DOM() walks it: nodeType, tagName, attributes, firstChild / nextSibling, data
