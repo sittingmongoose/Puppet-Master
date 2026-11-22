@@ -80,6 +80,13 @@ try {
 		ok('EMPTY-INDEX: the matrix is every look x screen x variant, in the run\'s file names', !!files && files.length === 12 && files[0] === 'basic-dark/01-welcome-asleep-base' && files[3] === 'basic-dark/04-ready-quiet' && files[5] === 'basic-dark/06-welcome-awake-quiet' && files[6] === 'nier-light/01-welcome-asleep-base', JSON.stringify(files));
 	}
 
+	// -- the transition variants (TOOLS-STAGEREST-K1) flow through the matrix naming like any variant
+	{
+		const m = check.captureMatrix({ looks: ['nier-dark'], screens: ['ready'], variants: ['base', 'textsize', 'resized', 'motion'], unfrozen: true });
+		const files = m.map((e) => e.file);
+		ok('K1: the transition variants are named in the matrix, unfrozen last', files.length === 5 && files[0] === '01-ready-base' && files[1] === '02-ready-textsize' && files[2] === '03-ready-resized' && files[3] === '04-ready-motion' && files[4] === '05-ready-unfrozen' && m[4].unfrozen === true, JSON.stringify(files));
+	}
+
 	// -- an empty base index is refused
 	{
 		const base = run({ matrix: { ...matrix, expected: [] }, index: [] }), changed = run({ matrix });
