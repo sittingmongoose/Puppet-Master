@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27776,
+    "depends_on_edge_count": 27779,
     "downstream_blocked_node_count": 0,
-    "edge_count": 31001,
-    "node_count": 9618,
+    "edge_count": 31004,
+    "node_count": 9619,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-22T20:33:06Z",
+  "generated_at_utc": "2026-11-22T23:31:39Z",
   "gui_related_units": {
     "count": 3935,
     "units": [
@@ -43309,10 +43309,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 9618,
+  "plan_unit_count": 9619,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 4932,
+      "high": 4933,
       "low": 10,
       "medium": 36,
       "standard": 4640
@@ -44556,6 +44556,7 @@
       "event_authority_contract": 98,
       "event_authority_contract_drift": 68,
       "event_authority_decision_drift": 1,
+      "event_authority_documented_gap": 1,
       "event_authority_drift": 1,
       "event_authority_evidence_maintenance": 1,
       "event_authority_false_pass": 9,
@@ -47572,7 +47573,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 9338,
+      "accepted": 9339,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -47606,7 +47607,7 @@
       "contract": 203,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 909,
+      "decision": 910,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
@@ -47780,7 +47781,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "eb4a9e10a80cc73e94ade88cd2fa4494dc396127505d2ea0529a526542ed37c8",
+        "expected": "8a5bb4ee20677d71d679ed179a9b25d6729cc0199324f018886ce3eaabdb2470",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {

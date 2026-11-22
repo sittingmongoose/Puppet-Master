@@ -2152,7 +2152,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 16330,
+      "line_count": 16332,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 207,
       "plan_unit_ids": [
@@ -2468,7 +2468,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "eb4a9e10a80cc73e94ade88cd2fa4494dc396127505d2ea0529a526542ed37c8",
+      "sha256": "8a5bb4ee20677d71d679ed179a9b25d6729cc0199324f018886ce3eaabdb2470",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 205,
@@ -7039,10 +7039,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 767,
+        "False": 768,
         "True": 235
       },
-      "heading_count": 1242,
+      "heading_count": 1243,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -7177,15 +7177,17 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-validate-pm7-gui-fixtures.py",
         "scripts/pm_emit_only_event_contract.py",
+        "scripts/pm_goal_dg5_matrix_gap_v1.py",
+        "scripts/pm_goal_dg5_matrix_gap_v1_selftest.py",
         "scripts/pm_pnc019_currentness.py",
         "scripts/pm_s3bo_ext_sl_deletion.py",
         "scripts/pm_s3bo_ext_sr2_capture.py",
         "scripts/pm_wiring_inventory.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 63217,
+      "line_count": 63282,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 1002,
+      "plan_unit_count": 1003,
       "plan_unit_ids": [
         "DL-400",
         "DL-401",
@@ -8188,7 +8190,8 @@
         "DL-2596",
         "DL-2597",
         "DL-2598",
-        "DL-2599"
+        "DL-2599",
+        "DL-2600"
       ],
       "reasoning_tiers": [
         "high",
@@ -8270,6 +8273,7 @@
         "event_authority_checkpoint_approval_drift",
         "event_authority_checkpoint_drift",
         "event_authority_decision_drift",
+        "event_authority_documented_gap",
         "event_authority_evidence_maintenance",
         "event_authority_landing_granularity_drift",
         "event_authority_registration_checkpoint_drift",
@@ -8392,19 +8396,20 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "b2246da9b2f0f646bdc428693402cb157b9e91f8f667ee80bffb8fcf2bf7bcc0",
+      "sha256": "ae237bd08d807a42d7bcf94e9c1a8926b126868e179854a71918d9fde1d3b592",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 1002
+        "accepted": 1003
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "decision": 886,
+        "decision": 887,
         "decision_record": 24,
         "requirement": 91
       },
       "validation_surfaces": [
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/gap-list-v1.1-20261122/GAP-LIST-v1.1.json",
         "60 fps GPU recordings at 860/1024/1280/~1390/1920 px, all ten looks and Reduced Motion; count exposed wrong-chip frames",
         "60 fps GPU recordings of rail, faces, world lifecycle and owner-phase Creating; no fabricated native evidence",
         "Concepts/onboarding/opus-5.5-pip/tools/sound_levels.mjs",
@@ -8437,6 +8442,7 @@
         "future native Settings/owner search, Details, Reset and readiness evidence; not_run",
         "future placement gate/ranking/pin/recovery fixtures",
         "git check-ignore --no-index",
+        "python3 -B scripts/pm_goal_dg5_matrix_gap_v1_selftest.py",
         "python3 -m unittest discover -s tests -p test_pm_settings_draft_transfer.py",
         "python3 -m unittest tests.test_event_authority_holding_bucket",
         "python3 -m unittest tests.test_pm_jujutsu_closure_semantics",
@@ -8498,6 +8504,7 @@
         "python3 scripts/pm7-qa2-alignment-check.py",
         "python3 scripts/pm_coordination_events.py",
         "python3 scripts/pm_filesafe_event_contracts.py",
+        "python3 scripts/pm_goal_dg5_matrix_gap_v1.py apply --matrix <goal.cancelled matrix> --out <matrix.json>",
         "reports/event-authority-20260911/decision-responses.jsonl",
         "reports/event-authority-20260911/step-08-compaction-detail-cleanup-answer.json",
         "reports/event-authority-20260911/step-08-compaction-detail-cleanup-presentation.json",
@@ -25242,7 +25249,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-22T20:33:05Z",
+  "generated_at_utc": "2026-11-22T23:31:38Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -25250,13 +25257,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 5683,
+      "False": 5684,
       "True": 3935
     },
-    "plan_unit_count": 9618,
+    "plan_unit_count": 9619,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 9338,
+      "accepted": 9339,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -25290,7 +25297,7 @@
       "contract": 203,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 909,
+      "decision": 910,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
