@@ -5,7 +5,7 @@
 // still in; the verdict per state is that count (0 = no pixel changed where main's page holds still), with the share of
 // the frame main varies in and its boxes.
 //   node tools/usage-hover-pause-pix-judge.mjs <shots dir> [--json out.json]
-import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { readFileSync, readdirSync, writeFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
@@ -46,6 +46,16 @@ export function stillJudge(a1png, a2png, bpng, rect = null) {
 	return { changed, maxDelta, bounds, changedBoxes: merge(hit, hit), varyShare: Math.round(varyCells / (cw * ch) * 10000) / 100, varyBoxes: merge(vary) };
 }
 
+// R132-FOLLOWUPS 5: the diagnostic writes only A1 for a fresh identical state; an earlier differing triplet left
+// in the same output folder keeps its B and A2, and with all three names present the judge read the stale
+// companions against the new A1 (old A2 matches it, old B differs) and failed a current identical capture. A1 is
+// written first of a triplet: B or A2 older than A1 belongs to an earlier capture, and the identical-receipt
+// summary must be at least as new as A1 to confirm it. Exported for the selftest.
+export function captureFresh({ a1Ms, bMs = null, a2Ms = null, summaryMs = null }) {
+	const companions = bMs != null && a2Ms != null ? bMs >= a1Ms && a2Ms >= a1Ms : null;
+	return { companions, summary: summaryMs != null ? summaryMs >= a1Ms : null };
+}
+
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
 	const dir = process.argv[2], out = process.argv.indexOf('--json') > 0 ? process.argv[process.argv.indexOf('--json') + 1] : null;
 	const rows = [], states = new Map(), summaries = new Map();
@@ -72,15 +82,22 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
 			console.error(name + ': ' + row.error);
 			continue;
 		}
-		if (tags.size !== 3) {
-			const alone = tags.size === 1 && tags.has('A1');
-			const identical = alone && row?.judged === true && row.drift === 0 && row.diff === 0 && row.diff2 === 0;
+		const mtime = (f) => { try { return statSync(f).mtimeMs; } catch (e) { return null; } };
+		const a1Ms = tags.has('A1') ? mtime(p('A1')) : null;
+		const fresh = a1Ms == null ? { companions: null, summary: null } : captureFresh({
+			a1Ms, bMs: tags.has('B') ? mtime(p('B')) : null, a2Ms: tags.has('A2') ? mtime(p('A2')) : null,
+			summaryMs: row ? mtime(path.join(dir, row.surface + '-summary.json')) : null
+		});
+		const stale = tags.size === 3 && fresh.companions === false;
+		if (tags.size !== 3 || stale) {
+			const alone = tags.has('A1') && (tags.size === 1 || stale);
+			const identical = alone && row?.judged === true && row.drift === 0 && row.diff === 0 && row.diff2 === 0 && fresh.summary !== false;
 			if (identical) {
 				decodePng(readFileSync(p('A1')));
 				rows.push({ name, identical: true });
-				console.log(name + ': capture summary confirms identical A1, B and A2');
+				console.log(name + ': capture summary confirms identical A1, B and A2' + (stale ? ' (stale companions from an earlier capture left in the folder, not judged)' : ''));
 			} else {
-				const error = alone ? 'missing identical capture summary' : 'incomplete triplet (' + ([...tags].join(', ') || 'no shots') + ')';
+				const error = stale ? 'stale companions from an earlier capture (B/A2 older than A1)' : alone ? 'missing identical capture summary' : 'incomplete triplet (' + ([...tags].join(', ') || 'no shots') + ')';
 				rows.push({ name, error });
 				console.error(name + ': ' + error);
 			}
