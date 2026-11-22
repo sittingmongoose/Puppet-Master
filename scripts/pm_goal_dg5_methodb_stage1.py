@@ -129,6 +129,9 @@ class Example:
             frame = sys._getframe(1)
             site = (str(Path(frame.f_code.co_filename).relative_to(ROOT)), frame.f_lineno)
             require(site in self.sites, f'unexpected original validator call site {site}')
+            admitted_site = self.declaration.get('validation_site')
+            if admitted_site is not None and site != tuple(admitted_site):
+                return original_validate(bank, ref, value, code)
             validator = bank.original.validator(ref)
             registry = closure._registry_digest(validator)
             key = (type(validator).__module__ + '.' + type(validator).__qualname__,
