@@ -396,3 +396,25 @@ test('R132-6: a correctly armed callback whose return exceeds the total endDelay
 	r.cls = [{t:700,card:'new',on:true}];
 	assert.equal(j(r).r2.ok, false);
 });
+
+// PM7PERF-V6-P5-IDLE-COVERAGE: on headless Alexis the native short-M/R witness defers the marker (+181-228 ms) and
+// the idle release (+341-403 ms) past the original 150 ms wheel deadline (V-REPORT.md §19, triage T2.3). The input
+// setup is intact; the host cannot qualify it. That must read as a named host limit, not a silent coverage gap or a
+// setup failure.
+test('V6 P5 coverage: a deferred native marker/release past the deadline is a named host limit', () => {
+	const r = { mode: 'move', key: 'm', focused: 'health', pre: { top: 0 }, wheels: [{t: 100, trusted: true}], moves: 0,
+		scrolls: [{t: 103, top: 40, op: 'wheel'}],
+		keys: [{t: 120, key: 'm', trusted: true, focused: 'health'}, {t: 270, key: 'Escape', trusted: true}],
+		point: [50, 50],
+		markers: [{t: 300, gesture: {kb: true, type: 'move'}, op: 'move', dragHeld: true, handoff: true, hovered: true},
+			{t: 480, op: 'wheel', dragHeld: false, hovered: true, gesture: null}],
+		frames: [], ends: [{t: 500, live: true, gesture: false, op: null, point: [50, 50]}], after: {op: null, hovered: true} };
+	const v = judgeShortHandoff(r);
+	assert.equal(v.qualified, false);
+	assert.equal(v.hostLimit, true, 'the intact input with a deferred release is the host limit, not a setup failure');
+	assert.equal(v.markerAfterScrollMs, 197);
+	assert.equal(v.releaseAfterScrollMs, 377);
+	// a setup failure is not the host limit
+	r.wheels[0].trusted = false;
+	assert.equal(judgeShortHandoff(r).hostLimit, false);
+});

@@ -733,8 +733,16 @@ export function judgeShortHandoff(rec) {
 	const ok = qualified && entered.handoff && idle.op === 'wheel' && held.every((x) => x.op === 'wheel' && x.hovered) &&
 		rec.ends.length === 1 && end.live && !end.op && !end.gesture && end.t >= due - 2 && end.t <= due + 250 &&
 		JSON.stringify(end.point) === JSON.stringify(rec.point) && rec.after.hovered && !rec.after.op && !rec.after.gesture;
+	// PM7PERF-V6-P5-IDLE-COVERAGE: when the input setup is intact but the native idle release lands past the
+	// original wheel deadline (headless Alexis defers the marker +181-228 ms and the release +341-403 ms), the host
+	// cannot qualify the witness; name that limit so the coverage row reads could-not-judge, not a setup failure.
+	const setup = !!(wheel?.trusted && rec.wheels.length === 1 && last && last.top > rec.pre.top && press?.trusted && press.focused === 'health' && escape?.trusted && !rec.moves);
+	const deferredMarker = rec.markers.find((x) => x.t >= press?.t && x.gesture?.kb && x.gesture.type === rec.mode);
+	const hostLimit = !qualified && setup && !!idle && idle.t >= due;
 	return { qualified, ok, due, entered: entered?.t ?? null, idle: idle?.t ?? null,
-		escape: escape?.t ?? null, press: press?.t ?? null, held: held.length };
+		escape: escape?.t ?? null, press: press?.t ?? null, held: held.length,
+		hostLimit, markerAfterScrollMs: deferredMarker && last ? Math.round(deferredMarker.t - last.t) : null,
+		releaseAfterScrollMs: idle && last ? Math.round(idle.t - last.t) : null };
 }
 
 async function keyboardPause(t, f, label, park, short = false) {
@@ -848,6 +856,9 @@ async function keyboardPause(t, f, label, park, short = false) {
 			if (verdict.qualified) {
 				done.add(mode);
 				await t.check(S + 'wheel suppression survives idle release and ends once at the original deadline', verdict.ok, detail);
+			} else if (verdict.hostLimit) {
+				await t.check(S + 'native early-idle release coverage on this host', false,
+					`could not judge: host limit (PM7PERF-V6-P5-IDLE-COVERAGE) — the native marker arrived +${verdict.markerAfterScrollMs} ms and the idle release +${verdict.releaseAfterScrollMs} ms after the wheel scroll, past the ${REST_MS} ms deadline; coverage owed on a native-speed host; ` + detail);
 			}
 			continue;
 		}
