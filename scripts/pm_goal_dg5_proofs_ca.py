@@ -42,12 +42,6 @@ PROOFS = {
         "fields (schema_id/schema_version), so 'const' is always present when the "
         "branch is reached with a schema from that bank.",
         [(C1, 59), (C1, 47), ('scripts/pm_goal_own_c3_w12b_roots.py', 24)]),
-    'dg5/site/pm_goal_dg_ca_c1.py:322': _p(
-        "The statement is acquired only as the issuing AssociationOwner's original "
-        "(registry acquire), and AssociationOwner.inventory builds it with the "
-        "literal complete=True; no other statement shape can be issued or acquired, "
-        "so the completeness re-check cannot refuse alone.",
-        [(C1, 320), (C1, 322), (OWN, 730), (OWN, 737)]),
     'dg5/site/pm_goal_dg_ca_c1.py:323': _p(
         "statement['owner_epoch'] is copied from owner.owner_epoch inside inventory() "
         "and compared with the same attribute immediately after acquire in the same "
@@ -192,16 +186,6 @@ PROOFS = {
         "smoke). Even at a uniform 512 characters per member the canonical "
         "header measures 3107 bytes, under the 4096 cap; genuine ids measure 193.",
         [(AS, 597), (AS, 600), (ST, 426)]),
-    'dg5/site/pm_goal_dg_ca_c1.py:628': _p(
-        "In append_original the stored event is Storage's encoding of the exact "
-        "producer value passed to append (required frozen at :611), and Storage "
-        "validates the candidate's producer25 template at append; producer25 of "
-        "the read-back event therefore equals that producer. The check runs "
-        "after the append, so no preserved-effects suite negative can target "
-        "it; the same comparison is negatively witnessed on the resolve path "
-        "(:648).",
-        [(C1, 611), (C1, 616), (C1, 628)],
-        ['dg5/site/pm_goal_dg_ca_c1.py:648']),
     'dg5/site/pm_goal_dg_ca_c1.py:630': _p(
         "appender.first_receipt(handle) resolves the append-issued receipt "
         "handle through Storage.receipt_of, which returns a deepcopy of the "
@@ -228,14 +212,6 @@ PROOFS = {
         "sole refusal, and :587 is witnessed by a single-defect negative.",
         [(C1, 644), (C1, 646), (C1, 587), (ST, 1638)],
         ['dg5/site/pm_goal_dg_ca_c1.py:587']),
-    'dg5/site/pm_goal_dg_ca_owners.py:524': _p(
-        "domain_generation is set to 1 in the same install_writer_domain call "
-        "that writes the domain cell, and never reset; a second install that "
-        "somehow passed :524 would put the domain cell with expected=None "
-        "and refuse at the Storage CAS-absent check. The in-memory flag and "
-        "the stored cell are the same fact fixed by the first install.",
-        [(OWN, 524), (OWN, 540), (OWN, 546)],
-        ['dg5/site/pm_goal_test_storage.py:1654']),
     'dg5/site/pm_goal_test_storage.py:1602': _p(
         "authenticate_receipt compares the presented first-append receipt "
         "with the custody row's receipt; publish_control then recomputes the "
@@ -302,13 +278,6 @@ PROOFS = {
         "be indexed.",
         [(ST, 1057), (ST, 1463), (ST, 1466)],
         ['dg5/site/pm_goal_test_storage.py:1463']),
-    'dg5/site/pm_goal_test_storage.py:1618': _p(
-        "durable_group_value assembles the group value from the commit "
-        "record Storage itself wrote at append (commit frame fields and "
-        "member tuples from the indexed group) and checks it against the "
-        "group schema those same writers satisfy; no caller-supplied field "
-        "reaches it without append-time validation.",
-        [(ST, 254), (ST, 1618)]),
     'dg5/site/pm_goal_test_storage.py:1624': _p(
         "read_frame is reached only from read_event (which has just required "
         "the same events-dict lookup at :1633) and from scan/recovery over "
@@ -355,18 +324,6 @@ PROOFS = {
         "A stored control_epoch that could overflow the increment therefore "
         "cannot be carried to it by any coherent route state.",
         [(R3, 516), (R3, 591), (R3, 682)]),
-    'dg5/site/pm_goal_dg_ca3_route.py:1189': _p(
-        "control['pending'] at publish_control entails the same pending at "
-        "settle_owner: the only genuine writer is GoalOwner.reserve_pending, "
-        "which is fenced off while a cancellation is pending (owners :478) - "
-        "and cancellation_pending is set from latch until publish itself "
-        "clears it after this check - so no genuine operation can introduce "
-        "a body pending between settle and publish, and settle's identical "
-        "check at :866 refuses any pending introduced earlier. The same "
-        "field and predicate are witnessed at :866.",
-        [(R3, 866), (R3, 1189), (OWN, 478)],
-        ['dg5/site/pm_goal_dg_ca3_route.py:866',
-         'dg5/site/pm_goal_dg_ca_owners.py:478']),
     'dg5/site/pm_goal_dg_ca3_native.py:738': _p(
         "effects.inventory is called only from D05 aggregate/readback paths "
         "inside run_native, immediately after effects.drain has read the same "
@@ -397,12 +354,6 @@ PROOFS = {
         "so a divergent operation id cannot survive to the route join.",
         [(R3, 797), (N3, 944), (N3, 1069)],
         ['dg5/site/pm_goal_dg_ca3_native.py:1069']),
-    'dg5/site/pm_goal_dg_ca3_route.py:801': _p(
-        "owners_native compares the stored result cell with the result "
-        "record from d06.readback, which reads that same cell (w.value) "
-        "moments earlier in the same synchronous settle call; no write to "
-        "the result cell runs between the two reads.",
-        [(R3, 801), (N3, 1066)]),
     'dg5/site/pm_goal_dg_ca3_route.py:812': _p(
         "The safe-stop scope join compares the d05 readback's scopes with "
         "the route run scope; the d05 result/origin are bound together by "
@@ -412,44 +363,6 @@ PROOFS = {
         "(witnessed: tampering the result scope refuses at :874 first).",
         [(R3, 812), (N3, 874)],
         ['dg5/site/pm_goal_dg_ca3_native.py:874']),
-    'dg5/site/pm_goal_dg_ca3_native.py:803': _p(
-        "aggregate is called only from run_native, which is the only caller that "
-        "sets run['d05'] (at the end of aggregate itself); a second aggregate "
-        "through run_native is refused earlier by the scheduler-stop store CAS "
-        "on its fixed key, so 'd05' in run with aggregate re-entered cannot "
-        "arise through any route call.",
-        [(N3, 803), (N3, 805), (N3, 850)]),
-    'dg5/site/pm_goal_dg_ca3_native.py:805': _p(
-        "aggregate reads run['scheduler_stop_key'] only after scheduler.stop "
-        "in the same run_native call has set it unconditionally (:635) before "
-        "drain and aggregate run; the key and its cell therefore exist.",
-        [(N3, 635), (N3, 805)]),
-    'dg5/site/pm_goal_dg_ca3_native.py:938': _p(
-        "d06.prepare is called only from run_native, which aggregate-blocks a "
-        "second entry at :803 long before prepare could run twice; run['d06'] "
-        "is set only at the end of prepare itself, so a re-entered prepare "
-        "with 'd06' present cannot arise through any route call.",
-        [(N3, 803), (N3, 938), (N3, 983)],
-        ['dg5/site/pm_goal_dg_ca3_native.py:803']),
-    'dg5/site/pm_goal_dg_ca3_native.py:993': _p(
-        "publish is called only from run_native immediately after prepare in "
-        "the same synchronous sequence, and prepare always leaves "
-        "run['d06']['phase'] == 'prepared'; nothing runs between the two "
-        "calls that could change the phase.",
-        [(N3, 983), (N3, 993)]),
-    'dg5/site/pm_goal_dg_ca3_native.py:997': _p(
-        "publish compares the current body/control selectors with the "
-        "before-selectors captured in prepare in the same run_native "
-        "sequence; between prepare and publish only readback and reads run "
-        "(no body/control writer), so the selectors cannot diverge.",
-        [(N3, 948), (N3, 997)]),
-    'dg5/site/pm_goal_dg_ca3_native.py:1006': _p(
-        "The candidate's producer_semantic_digest is computed at prepare "
-        "from the exact event dict that publish appends unchanged (the "
-        "frozen producer path), and custody's digest is Storage's "
-        "producer_digest of that same stored event; both are "
-        "NR.producer_digest of one dict with no intervening edit path.",
-        [(N3, 935), (N3, 1006)]),
     'dg5/site/pm_goal_dg_ca3_route.py:840': _p(
         "native_selections compares the d06 origin cell with the origin "
         "record from d06.readback, which reads that same cell moments "
@@ -584,20 +497,6 @@ PROOFS = {
         "replay no-effect check restates read_result's passive guarantee.",
         [('scripts/pm_goal_dg_cb_migration.py', 759), ('scripts/pm_goal_dg_cb_migration.py', 868)],
         ['dg5/site/pm_goal_dg_cb_migration.py:868']),
-    'dg5/site/pm_goal_dg_cb_migration.py:868': _p(
-        "read_result captures the cell generation and then only reads "
-        "stored cells and schema-validates them (predicate run twice, both "
-        "read-only); no transact or append runs in between, so the "
-        "generation cannot move.",
-        [('scripts/pm_goal_dg_cb_migration.py', 826), ('scripts/pm_goal_dg_cb_migration.py', 868)]),
-    'dg5/site/pm_goal_dg_cb_migration.py:867': _p(
-        "read_result evaluates the identical pure predicate twice over the "
-        "same stored cells with no intervening write (its own passive check "
-        "at :868 covers the same span), so the two results cannot differ "
-        "through any genuine call (the helper test seam is not a family "
-        "entry argument).",
-        [('scripts/pm_goal_dg_cb_migration.py', 862), ('scripts/pm_goal_dg_cb_migration.py', 867)],
-        ['dg5/site/pm_goal_dg_cb_migration.py:868']),
     'dg5/site/pm_goal_dg_cb_migration.py:790': _p(
         "commit reads back each write from the same Storage transaction it "
         "has just applied (transact is all-or-none and w.value returns the "
@@ -614,54 +513,6 @@ PROOFS = {
         "with no last receipt cannot be produced by any owner call; direct "
         "cell tampering is refused earlier by the image origin sha binding.",
         [(BO, 798)]),
-    'dg5/site/pm_goal_dg_cb_owners.py:291': _p(
-        "MigrationStorage.transact checks are built only in Coordinator."
-        "derive from the capture images' versions, and commit re-derives "
-        "the candidate from a final capture and requires the checks to be "
-        "identical (final_candidate) before transacting; a cell whose "
-        "version moved between capture and commit is therefore refused at "
-        "final_candidate (or independent/final capture) before any stale "
-        "check can reach transact, and no write runs between the final "
-        "derive and the transaction in the same call.",
-        [(BO, 291), ('scripts/pm_goal_dg_cb_migration.py', 778)]),
-    'dg5/site/pm_goal_dg_cb_owners.py:286': _p(
-        "Every transact check in the family is constructed in derive() as "
-        "dict(table=..., key=..., expected=...) - exactly the required key "
-        "set - so the shape check cannot refuse on any family path.",
-        [(BO, 286), ('scripts/pm_goal_dg_cb_migration.py', 613)]),
-    'dg5/site/pm_goal_dg_cb_owners.py:289': _p(
-        "Derive builds checks only with expected=<captured version> (never "
-        "None), so the expected-is-None absent branch of MigrationStorage."
-        "transact is unreachable from any family caller.",
-        [(BO, 289), ('scripts/pm_goal_dg_cb_migration.py', 613)]),
-    'dg5/site/pm_goal_dg_ca3_native.py:142': _p(
-        "verify_custody checks the selector sha against the current cell "
-        "bytes immediately before the schema check; a cell whose schema_id "
-        "differed from the selector's would have different bytes and is "
-        "refused at selector_hash first, and a sha-matching cell carries "
-        "the selector's schema_id by construction of src_sel.",
-        [(N3, 140), (N3, 142)]),
-    'dg5/site/pm_goal_dg_ca3_native.py:211': _p(
-        "make() seeds are dicts the issuing owner has just built from "
-        "stored records it validated against the same root at issuance "
-        "(issue/validate paths), then re-validates with the identical "
-        "validator; a seed leaf the specimen would not preserve cannot "
-        "have passed issuance validation in the same process.",
-        [(N3, 211), (N3, 250)]),
-    'dg5/site/pm_goal_dg_ca3_native.py:250': _p(
-        "issue() keys are fresh uid/test keys or deterministic per-run "
-        "keys issued once behind the phase guards (already_prepared / "
-        "already_aggregated refuse re-entry before any second issue to "
-        "the same key), so an occupied destination cannot reach issue().",
-        [(N3, 250), (N3, 803), (N3, 938)],
-        ['dg5/site/pm_goal_dg_ca3_native.py:803',
-         'dg5/site/pm_goal_dg_ca3_native.py:938']),
-    'dg5/run/revision/number': _p(
-        "run['revision'] is an in-memory counter starting at allocation "
-        "and incremented once per genuine run transition in the same "
-        "process; no stored input carries it, so no single-defect case "
-        "can present it at the uint64 ceiling.",
-        [(N3, 518)]),
     'dg5/site/pm_goal_dg_ca3_route.py:807': _p(
         "owners_native is reached only with a d06 disposition from "
         "d06.readback, whose safe-stop seed status is the literal "
@@ -683,11 +534,6 @@ PROOFS = {
         "bound by the append custody checks at C1 :628 (proof).",
         [(R3, 822), (N3, 1095)],
         ['dg5/site/pm_goal_dg_ca_c1.py:628']),
-    'dg5/site/pm_goal_dg_ca3_route.py:824': _p(
-        "Same first-custody read twice argument as C1 :630 on the C3 "
-        "readback path: both sides are deepcopies of the one custody row "
-        "for the event, read in the same synchronous sequence.",
-        [(R3, 824), (N3, 1095)]),
     'dg5/site/pm_goal_dg_ca3_route.py:827': _p(
         "mutation_started in the frozen producer payload is computed at "
         "freeze from the same safe-stop settlements list the disposition "
@@ -703,35 +549,6 @@ PROOFS = {
         "presented to msgpack_decode through any stored cell in this "
         "storage model.",
         [(BO, 154), (BO, 169)]),
-    'dg5/site/pm_goal_dg_cb_owners.py:230': _p(
-        "The schema ids lookup values are the stored wrappers' own "
-        "schema_id fields, written by the issuing owners from the same "
-        "FAMILY_SCHEMAS table (wrap/store_form at issuance), so a stored "
-        "original's schema_id is always a table key for its family; a "
-        "tampered wrapper is refused by its issuance-origin sha binding "
-        "before any schema_ref_for call in capture authentication.",
-        [(BO, 230), (BO, 395)]),
-    'dg5/site/pm_goal_dg_cb_migration.py:782': _p(
-        "Commit writes are the derive() candidate: manifest parts are "
-        "grouped by manifest_parts under the same PART_CAP probe size, "
-        "and every other write is a schema-bounded record (binding, "
-        "result with bounded scope/member selectors from the manifest "
-        "parts), so no single write value can exceed the cap.",
-        [('scripts/pm_goal_dg_cb_migration.py', 579), ('scripts/pm_goal_dg_cb_migration.py', 782)]),
-    'dg5/site/pm_goal_dg_cb_migration.py:783': _p(
-        "operation_cap adds only the physical_key wrapper around a write "
-        "value already bounded by stored_part_cap and the manifest "
-        "grouping probe, which sizes parts with the identical "
-        "dict(physical_key, value) measure; non-part writes are "
-        "schema-bounded records far under the cap (see :782).",
-        [('scripts/pm_goal_dg_cb_migration.py', 579), ('scripts/pm_goal_dg_cb_migration.py', 783)],
-        ['dg5/site/pm_goal_dg_cb_migration.py:782']),
-    'dg5/site/pm_goal_dg_cb_migration.py:842': _p(
-        "read_result re-measures manifest parts that manifest_parts "
-        "grouped under exactly this cap measure at commit and that are "
-        "bound by the whole-manifest sha check at :844 in the same "
-        "predicate; a part over cap cannot have been committed.",
-        [('scripts/pm_goal_dg_cb_migration.py', 579), ('scripts/pm_goal_dg_cb_migration.py', 842)]),
     'dg5/site/pm_goal_dg_ca3_route.py:799': _p(
         "The route re-checks the d06 control phase/result that "
         "d06.readback has just required at native :1069 (committed phase "
@@ -739,91 +556,12 @@ PROOFS = {
         "reached owners_native already passed that exact predicate.",
         [(R3, 799), (N3, 1069)],
         ['dg5/site/pm_goal_dg_ca3_native.py:1069']),
-    'dg5/site/pm_goal_dg_cb_migration.py:424': _p(
-        "derive_joins runs only after goal enumeration and authentication "
-        "succeed, which requires the goal body and control cells to be "
-        "present and imageable; cap.images therefore contains both items "
-        "when derive_joins reads them in the same capture call.",
-        [('scripts/pm_goal_dg_cb_migration.py', 424), ('scripts/pm_goal_dg_cb_migration.py', 361)]),
-    'dg5/site/pm_goal_dg_cb_migration.py:425': _p(
-        "Same enumeration argument as :424 for the body item specifically: "
-        "the goal owner's enumeration reads the body cell through "
-        "body_cell (goal/body_unavailable) before any image is "
-        "authenticated, so a missing body refuses there first.",
-        [('scripts/pm_goal_dg_cb_migration.py', 425)],
-        ['dg5/site/pm_goal_dg_cb_owners.py:438']),
-    'dg5/site/pm_goal_dg_cb_migration.py:426': _p(
-        "Same enumeration argument as :424 for the control item: the goal "
-        "owner's control() read (goal/control_unavailable) precedes "
-        "derive_joins in the same capture call.",
-        [('scripts/pm_goal_dg_cb_migration.py', 426)],
-        ['dg5/site/pm_goal_dg_cb_owners.py:443']),
-    'dg5/site/pm_goal_dg_cb_migration.py:428': _p(
-        "Body and control scope fields are written at goal birth from the "
-        "same scope the keys are scoped by (goal keys embed project/thread/"
-        "goal ids), and both cells are bound by their issuance origins in "
-        "authenticate_mapping before derive_joins; a scope-divergent body "
-        "cannot be the cell stored under this scope's body key without "
-        "breaking that origin binding first.",
-        [('scripts/pm_goal_dg_cb_migration.py', 428)]),
-    'dg5/site/pm_goal_dg_cb_migration.py:443': _p(
-        "Each receipt image in cap.images was issued by the goal owner for "
-        "this scope at mutation time (receipt record scope/owner are the "
-        "issuing mutation's scope and owner) and is bound by its issuance "
-        "origin in authenticate_mapping before derive_joins re-checks the "
-        "same fields.",
-        [('scripts/pm_goal_dg_cb_migration.py', 443)]),
     'dg5/site/pm_goal_dg_cb_migration.py:451': _p(
         "cap.stop is the projection returned by the host owner's "
         "read_for_binding_migration in the same capture, built from the "
         "same stop cell whose image stop_item carries; both reads are of "
         "one cell in one synchronous capture with no stop write between.",
         [('scripts/pm_goal_dg_cb_migration.py', 451), (BO, 776)]),
-    'dg5/site/pm_goal_dg_cb_migration.py:462': _p(
-        "The goal_plan_binding image is enumerated by the plan owner for "
-        "this scope (gpb_key scoped by the run id under this scope) and "
-        "its record goal_id is written by bind_goal from that scope; the "
-        "storage instance is the wrapper's own instance stamped at "
-        "issuance in this Storage.",
-        [('scripts/pm_goal_dg_cb_migration.py', 462)]),
-    'dg5/site/pm_goal_dg_cb_migration.py:920': _p(
-        "withdraw reads the stored result via result_selection at entry "
-        "as 'original' and re-reads the identical cell at :920 in the same "
-        "synchronous call; the only writes in between are the read_result "
-        "audit (passive, :868) and no result write, so the two reads "
-        "cannot differ.",
-        [('scripts/pm_goal_dg_cb_migration.py', 920)],
-        ['dg5/site/pm_goal_dg_cb_migration.py:868']),
-    'dg5/site/pm_goal_dg_cb_migration.py:922': _p(
-        "The withdrawal value is the scope + three ids + the stored "
-        "original result + fenced domain selection + preserved pending "
-        "ids; the original result is itself a commit write already bounded "
-        "by stored_part_cap as a stored part, and the remaining fields are "
-        "fixed-size ids, so the operation measure cannot reach PART_CAP "
-        "for any result commit could have written.",
-        [('scripts/pm_goal_dg_cb_migration.py', 922), ('scripts/pm_goal_dg_cb_migration.py', 782)],
-        ['dg5/site/pm_goal_dg_cb_migration.py:782']),
-    'dg5/site/pm_goal_dg_cb_owners.py:228': _p(
-        "schema_ref_for is called only from image()/physical issuance "
-        "paths with the owners' fixed family names, every one a key of "
-        "FAMILY_SCHEMAS; no caller passes a caller-supplied family.",
-        [(BO, 228), (BO, 395)]),
-    'dg5/d06/revision/number': _p(
-        "after_rev is computed only in d06.prepare, whose every refusal is "
-        "caught by run_native and recorded as d06_refusal (the route entry "
-        "accepts), so the overflow can never be the refusal of a family "
-        "entry; and the body revision it increments is the run revision "
-        "counter (see run/revision), starting at 1 and advancing once per "
-        "genuine transition in the same process.",
-        [(N3, 949)],
-        ['dg5/run/revision/number']),
-    'dg5/site/pm_goal_dg_ca3_native.py:947': _p(
-        "Same prepare-only argument as d06/revision: unsupported_status is "
-        "checked only in d06.prepare, whose refusals run_native catches and "
-        "records instead of refusing the entry; the body status itself is "
-        "written only by allocate ('running') and transition() with the "
-        "statuses its callers pass from NONTERMINAL+TERMINAL.",
-        [(N3, 947), (N3, 518)]),
     'dg5/site/pm_goal_dg_ca3_route.py:78': _p(
         "Same wrapper argument as C1 :56 on the C3 route wrapper: every "
         "wrap() call site whose def requires physical_key passes a "

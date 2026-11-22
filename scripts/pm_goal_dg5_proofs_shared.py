@@ -64,31 +64,6 @@ PROOFS = {
             'refusal at :581. A non-dict payload therefore still refuses at :581 with :577 '
             'cut (the decode_payload_shape chain witnesses exactly this), so :577 selects '
             'the exact payload_shape code and never gates acceptance alone.')),
-    SITE + '553': dict(
-        kind='decode-or-refuse',
-        families=FAMILIES,
-        depends_on=[],
-        sites=[(ST, 550), (ST, 551), (ST, 553), (ST, 555)],
-        argument=(
-            'decode_frame binds header only when decode_canonical(header_raw) succeeds '
-            '(:551); on StorageRefusal the except branch refuses header_codec at :553. '
-            'With :553 cut, header is unbound and the next use at :555 raises '
-            'UnboundLocalError (the decode_header_codec CUT_EXCEPTION witnesses exactly '
-            'this), so no execution accepts a frame whose header does not decode; :553 '
-            'converts the codec refusal to the exact header_codec code.')),
-    SITE + '572': dict(
-        kind='decode-or-refuse',
-        families=FAMILIES,
-        depends_on=[],
-        sites=[(ST, 569), (ST, 570), (ST, 572), (ST, 574)],
-        argument=(
-            'decode_frame binds value only when decode_canonical(payload_raw) succeeds '
-            '(:570); on StorageRefusal the except branch refuses payload_codec at :572. '
-            'With :572 cut, value is unbound and the next use (_commit_shape at :574 or '
-            'the payload checks) raises UnboundLocalError (the decode_payload_codec '
-            'CUT_EXCEPTION witnesses exactly this), so no execution accepts a frame whose '
-            'payload does not decode; :572 converts the codec refusal to the exact '
-            'payload_codec code.')),
     OSITE + '303': dict(
         kind='reduce-or-refuse',
         families=FAMILIES,
@@ -113,34 +88,6 @@ PROOFS = {
             'exact_json_float chain witnesses exactly this). Every value :416 refuses is '
             'a float, so :416 selects the exact float code and never gates acceptance '
             'alone.')),
-    SITE + '1450': dict(
-        kind='code-selection',
-        families=FAMILIES,
-        depends_on=[SITE + '492'],
-        sites=[(ST, 1450), (ST, 1501), (ST, 492), (ST, 1534)],
-        argument=(
-            'append at :1450 requires durability_class in (ordinary, barrier) before '
-            'writing; the identical predicate on the identical commit field is re-checked '
-            'at :492 when the just-written commit frame is decoded by the readback scan '
-            '(:1531-1535) in the same call, before any index or state commit. With :1450 '
-            'cut, an unknown durability class still fails _commit_shape at :492 on '
-            'readback and the append raises unindexed (the durability_class_unknown chain '
-            'witnesses exactly this), so :1450 selects the append-boundary code and never '
-            'gates acceptance alone. It closes by this proof once :492 is closed.')),
-    SITE + '1477': dict(
-        kind='code-selection',
-        families=FAMILIES,
-        depends_on=[SITE + '1056'],
-        sites=[(ST, 1477), (ST, 1056), (ST, 1535)],
-        argument=(
-            'append at :1477 requires the fresh candidates event ids distinct within the '
-            'group; the same group is indexed frame by frame at :1056 (_index_group, '
-            'called from the readback at :1535 in the same call), where the second frame '
-            'with an already-indexed event_id refuses index/duplicate_event_id. With '
-            ':1477 cut, duplicate ids in one group still refuse there before _commit_state '
-            '(the duplicate_in_group chain witnesses exactly this), so :1477 selects the '
-            'append-boundary code and never gates acceptance alone. It closes by this '
-            'proof once :1056 is closed.')),
     SITE + '1462': dict(
         kind='code-selection',
         families=FAMILIES,
@@ -199,94 +146,4 @@ PROOFS = {
             '(the read_event_absent chain witnesses exactly this), so :1633 selects the '
             'read_event code and never gates acceptance alone. It closes by this proof '
             'once :1624 is closed.')),
-    SITE + '440': dict(
-        kind='entailed-by-event-schema',
-        families=FAMILIES,
-        depends_on=[SITE + '473'],
-        sites=[(ST, 426), (ST, 440), (ST, 1486)],
-        argument=(
-            'encode_event_frame at :440 caps the canonical header at HEADER_CAP=4096. '
-            'The header is event_header (:426): one integer plus seven EventRecord string '
-            'fields, each already bounded (maxLength 256 or a computed short string) by '
-            'the whole EventRecord validation every append runs before encoding, so the '
-            'encoded header is structurally far below the cap. It closes by this proof '
-            'once the EventRecord validation row :473 is closed.')),
-    SITE + '441': dict(
-        kind='entailed-by-stored-part-cap',
-        families=FAMILIES,
-        depends_on=[SITE + '473'],
-        sites=[(ST, 61), (ST, 441), (ST, 1486), (ST, 1487)],
-        argument=(
-            'encode_event_frame at :441 caps the canonical payload at '
-            'PAYLOAD_CAP=16777216 (ST:60). The payload bytes are canonical(event) '
-            'verbatim, and every append first requires the identical bytes to fit '
-            'STORED_PART_CAP=16384 (ST:61) at :1487, right after the whole EventRecord '
-            'validation at :1486. The tighter cap always refuses first by three orders '
-            'of magnitude, so no complete append call can make :441 refuse alone. It '
-            'closes by this proof once :473 is closed.')),
-    SITE + '187': dict(
-        kind='code-selection',
-        families=FAMILIES,
-        depends_on=[SITE + '473'],
-        sites=[(ST, 186), (ST, 187), (ST, 473)],
-        argument=(
-            'scope_partition at :187 requires an application-scoped event to carry no '
-            'project_id, during append dedupe. The whole EventRecord validation later in '
-            'the same append (:473, via validate_event_record) bounds the identical '
-            'scope_kind/project_id pair by the identical predicate (application scope '
-            'requires a null project). With :187 cut, an application candidate carrying '
-            'a project still refuses there before any frame is written (the '
-            'scope_application_project chain witnesses exactly this), so :187 selects '
-            'the precise scope code and never gates acceptance alone.')),
-    SITE + '189': dict(
-        kind='code-selection',
-        families=FAMILIES,
-        depends_on=[SITE + '473'],
-        sites=[(ST, 189), (ST, 473)],
-        argument=(
-            'scope_partition at :189 requires the candidate project_id to be a non-empty '
-            'string during append dedupe; the whole EventRecord validation later in the '
-            'same append (:473) bounds the identical project_id field by type string '
-            'plus minLength 1. With :189 cut, an empty project_id still refuses there '
-            'before any frame is written, so :189 selects the precise scope code and '
-            'never gates acceptance alone. It closes by this proof once :473 is closed.')),
-    SITE + '470': dict(
-        kind='code-selection',
-        families=FAMILIES,
-        depends_on=[SITE + '473'],
-        sites=[(ST, 470), (ST, 473)],
-        argument=(
-            'validate_event_record at :470 requires the event to be a dict before the '
-            'whole EventRecord schema at :471-473, whose root type is object: a non-dict '
-            'event fails the identical type predicate there (the event_record_type chain '
-            'witnesses exactly this). With :470 cut, no non-dict event is accepted; it '
-            'selects the precise type code and closes once :473 is closed.')),
-    SITE + '1726': dict(
-        kind='code-selection',
-        families=FAMILIES,
-        depends_on=[SITE + '1728'],
-        sites=[(ST, 1726), (ST, 1728), (ST, 1737)],
-        argument=(
-            'read_pack at :1726 requires the pack record to exist and be durable; a '
-            'withdrawn pack has durable=False and its file unlinked at withdraw (:1737), '
-            'and an absent pack has no file either, so with :1726 cut the same call '
-            'still refuses pack/present at :1728 on the next line (the pack_withdrawn '
-            'and pack_absent chains witness exactly this). :1726 selects the precise '
-            'unavailable code and never gates acceptance alone; it closes once :1728 '
-            'is closed.')),
-    SITE + '1534': dict(
-        kind='entailed-by-canonical-round-trip',
-        families=FAMILIES,
-        depends_on=[],
-        sites=[(ST, 435), (ST, 445), (ST, 512), (ST, 1531), (ST, 1534)],
-        argument=(
-            'append at :1534 requires the readback scan of the bytes just written in '
-            'the same call to end exactly at the new watermark with the identical '
-            'commit dict. The scan decodes frames produced by the canonical encoders '
-            '(:435/:445) with their exact inverses in decode_frame (:512): any byte '
-            'defect refuses at a frame or commit-shape site during the scan, and a '
-            'clean scan returns the identical commit by canonical round-trip. The only '
-            'other scan endings are the injected Crash faults (torn frames), which are '
-            'interruptions, not acceptances. No complete append call can make this row '
-            'refuse alone.')),
 }
