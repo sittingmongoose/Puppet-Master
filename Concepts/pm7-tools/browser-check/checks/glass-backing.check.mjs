@@ -33,7 +33,54 @@ function changed(a, b, mask) {
 function grow(m, w, h, k) { const o = new Uint8Array(m.length); for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { if (!m[y * w + x]) continue; for (let dy = -k; dy <= k; dy++) for (let dx = -k; dx <= k; dx++) { const yy = y + dy, xx = x + dx; if (yy >= 0 && yy < h && xx >= 0 && xx < w) o[yy * w + xx] = 1; } } return o; }
 function motionMask(a, b) { const m = new Uint8Array(a.data.length / 4); for (let i = 0, p = 0; i < a.data.length; i += 4, p++) if (Math.max(Math.abs(a.data[i] - b.data[i]), Math.abs(a.data[i + 1] - b.data[i + 1]), Math.abs(a.data[i + 2] - b.data[i + 2])) > THRESHOLD / 2) m[p] = 1; return m; }
 
-// how much of the page's content reads through the surface sel (null when it isn't on screen)
+// The read-through verdict from the plates (exported for tools/glass-backing-reflow.selftest.mjs). a1/a2: the
+// surface as painted twice (its motion and the page's motion behind it do not count); b: the outside text
+// transparent; c: the surface's text transparent too (its own glyphs re-rasterise a little whatever is behind
+// them); c0: the surface's text transparent at the BASELINE, the page behind still painted. PM7PERF-GLASS-AGENTS-
+// REFLOW: the surface's own rows can reflow between a2 and b (the docked Agents timer's plural-to-singular tick
+// moved the next row 1,111 px, counted as 0.70% read-through); c0 masks the own glyphs at their baseline position
+// too, so a moved own row is masked at both positions. The 0.20% bar and the read-through test are unchanged.
+export function backingVerdict({ a1, a2, b, c, c0, width, height }) {
+	const mask = motionMask(a1, a2);
+	if (c0) { const ownBase = grow(motionMask(a2, c0), width, height, 2); for (let i = 0; i < ownBase.length; i++) if (ownBase[i]) mask[i] = 1; }
+	const own = grow(motionMask(b, c), width, height, 2);
+	for (let i = 0; i < own.length; i++) if (own[i]) mask[i] = 1;
+	const counted = mask.reduce((s, v) => s + (v ? 0 : 1), 0);
+	const m = changed(a2, b, mask);
+	return { n: m.n, mx: m.mx, share: m.n / Math.max(1, counted), motion: 1 - counted / mask.length };
+}
+
+// R135-F5, R136-N2: the pane's own layout signature — its scroll state and the row boxes the plates depend on:
+// the boxes carrying the surface's painted non-text content (rows, icons, controls), tracked by their offset
+// top/left/height (offset positions ignore transforms, so a spinning icon is not a reflow), rounded to whole
+// pixels, only where they intersect the surface's visible clip. A timer leaf's shrink-wrapped text width is not
+// part of it: on the real Agents pane 22 live <i data-work-time> flex items change width every second without
+// moving a row, and rows scrolled outside the clip paint nothing. When a timer row WRAPS, the row boxes below
+// shift and the non-text .wk-lead/.wk-kind icons move to positions neither the baseline plate nor the own-glyph
+// mask covers, counting as read-through (the sol-max-15 witness: 0.38%-1.32%).
+function bcLayoutSig(s) {
+	const e = document.querySelector(s); if (!e) return null;
+	const b = e.getBoundingClientRect();
+	const top = Math.max(0, b.top), left = Math.max(0, b.left);
+	const bottom = Math.min(b.bottom, innerHeight), right = Math.min(b.right, innerWidth);
+	const parts = [e.scrollTop, e.scrollHeight, e.clientWidth, e.clientHeight];
+	// The row boxes: every ancestor of a non-text element up to the surface. Pure-text subtrees (timer leaves,
+	// labels) are masked by the own-glyph plates, and their width jitter moves no painted box.
+	const NON_TEXT = 'svg, img, canvas, video, iframe, input, select, textarea, button, hr';
+	const boxes = new Set();
+	for (const el of e.querySelectorAll(NON_TEXT)) for (let n = el; n && n !== e; n = n.parentElement) boxes.add(n);
+	for (const el of e.querySelectorAll('*')) {
+		if (!boxes.has(el) || el.offsetParent === null) continue;
+		const r = el.getBoundingClientRect();
+		if (r.bottom <= top || r.top >= bottom || r.right <= left || r.left >= right) continue;
+		parts.push(Math.round(el.offsetTop) + ':' + Math.round(el.offsetLeft) + ':' + Math.round(el.offsetHeight));
+	}
+	return parts.join('|');
+}
+
+// how much of the page's content reads through the surface sel (null when it isn't on screen). R135-F5: the plates
+// are acquired with the pane's layout signature; an own-pane reflow during any plate reacquires the whole sequence
+// (bounded attempts), then a named could-not-judge result — never a pass, and never the icons' false read-through.
 async function readThrough(t, f, sel, { rerenderAgents = false } = {}) {
 	const r = await f.evaluate((s) => {
 		const e = document.querySelector(s); if (!e) return null;
@@ -43,61 +90,80 @@ async function readThrough(t, f, sel, { rerenderAgents = false } = {}) {
 	}, sel);
 	if (!r) return null;
 	await f.waitForTimeout(400);
-	const a1 = await shot(t, r); await f.waitForTimeout(300); const a2 = await shot(t, r);
-	const mask = motionMask(a1, a2);
-	await f.evaluate((s) => {
-		const e = document.querySelector(s);
-		let oldStyle = e.getAttribute('style');
-		const c = getComputedStyle(e);
-		for (const property of ['color', '-webkit-text-fill-color', 'text-shadow', 'caret-color']) {
-			e.style.setProperty(property, c.getPropertyValue(property), 'important');
-		}
-		const st = document.createElement('style');
-		st.id = 'bc-through';
-		// Match the live subtree so text added between shots still belongs to the surface (T71).
-		const transparent = '{ color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; transition: none !important; caret-color: transparent !important; }';
-		st.textContent = `body *:not(:is(${s}, ${s} *)) ${transparent}`;
-		st.__bcRestore = () => {
-			if (oldStyle === undefined) return;
-			if (oldStyle === null) e.removeAttribute('style');
-			else e.setAttribute('style', oldStyle);
-			oldStyle = undefined;
-		};
-		st.__bcHideSurface = () => {
-			st.__bcRestore();
-			st.textContent += ` ${s}, ${s} * ${transparent}`;
-		};
-		document.head.appendChild(st);
-	}, sel);
-	try {
-		if (rerenderAgents) {
-			// Replace text leaves only. Rewriting the list's HTML also rebuilt its animated and painted descendants (T142).
-			const replaced = await f.evaluate(() => {
-				const labels = [...document.querySelectorAll('#panel-agents [data-work-rail] :is(.sh-hlabel, .wk-copy strong, .wk-copy .wk-sub, .wk-right b)')]
-					.filter((n) => n.childElementCount === 0 && n.textContent.trim() && n.checkVisibility({ visibilityProperty: true }));
-				for (const label of labels) label.replaceWith(label.cloneNode(true));
-				return labels.length;
+	const ACQUISITIONS = 3;
+	for (let attempt = 1; ; attempt++) {
+		// R136-N3, R137-F1: bracket EVERY plate — the signature is sampled before a1 and after each of a1, a2,
+		// c0, b and c, and the sequence judges only when every sample equals the first. Endpoints alone let the
+		// real pane's 1-second reversible wrap pulse (0s -> 1s -> 2s, A -> B -> A) through: one acquisition spans
+		// 1.5-2 s, longer than the timer period, so both ticks can land inside it and sigStart === sigEnd again
+		// while a1..c0 paint state B and b/c state A (the sol-max-15 rows' false read-through).
+		const sigStart = await f.evaluate(bcLayoutSig, sel);
+		if (sigStart === null) return null;
+		const sigs = [sigStart];
+		const sig = async () => { sigs.push(await f.evaluate(bcLayoutSig, sel)); };
+		const a1 = await shot(t, r); await sig(); await f.waitForTimeout(300); const a2 = await shot(t, r); await sig();
+		await f.evaluate((s) => {
+			const e = document.querySelector(s);
+			let oldStyle = e.getAttribute('style');
+			const c = getComputedStyle(e);
+			// R135-F3: getComputedStyle is live. Snapshot the strings BEFORE the transparent rule is appended:
+			// reading them in __bcOutsideOnly while `${s}, ${s} *` is active pinned transparent text on the
+			// surface for shot b (every surface's text matched shot c, and selftest=rerender passed vacuously).
+			const saved = ['color', '-webkit-text-fill-color', 'text-shadow', 'caret-color'].map((p) => [p, c.getPropertyValue(p)]);
+			const st = document.createElement('style');
+			st.id = 'bc-through';
+			// Match the live subtree so text added between shots still belongs to the surface (T71).
+			const transparent = '{ color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; transition: none !important; caret-color: transparent !important; }';
+			st.__bcRestore = () => {
+				if (oldStyle === undefined) return;
+				if (oldStyle === null) e.removeAttribute('style');
+				else e.setAttribute('style', oldStyle);
+				oldStyle = undefined;
+			};
+			st.__bcOutsideOnly = () => {
+				for (const [property, value] of saved) e.style.setProperty(property, value, 'important');
+				st.textContent = `body *:not(:is(${s}, ${s} *)) ${transparent}`;
+			};
+			st.__bcHideSurface = () => {
+				st.__bcRestore();
+				st.textContent += ` ${s}, ${s} * ${transparent}`;
+			};
+			// the baseline own-glyph plate first: only the surface's text transparent, the page behind still painted
+			st.textContent = `${s}, ${s} * ${transparent}`;
+			document.head.appendChild(st);
+		}, sel);
+		try {
+			await f.waitForTimeout(350);
+			const c0 = await shot(t, r); await sig();
+			await f.evaluate(() => document.getElementById('bc-through').__bcOutsideOnly());
+			if (rerenderAgents) {
+				// Replace text leaves only. Rewriting the list's HTML also rebuilt its animated and painted descendants (T142).
+				const replaced = await f.evaluate(() => {
+					const labels = [...document.querySelectorAll('#panel-agents [data-work-rail] :is(.sh-hlabel, .wk-copy strong, .wk-copy .wk-sub, .wk-right b)')]
+						.filter((n) => n.childElementCount === 0 && n.textContent.trim() && n.checkVisibility({ visibilityProperty: true }));
+					for (const label of labels) label.replaceWith(label.cloneNode(true));
+					return labels.length;
+				});
+				if (replaced === 0) throw new Error('Glass backing rerender did not find visible Agents text leaves');
+				t.log(`Glass backing rerender: replaced ${replaced} Agents text elements before shot b`);
+			}
+			await f.waitForTimeout(350);
+			const b = await shot(t, r); await sig();
+			// Exclude the surface's own glyphs, grown by 2 px to cover re-rasterisation against another backdrop.
+			await f.evaluate(() => document.getElementById('bc-through').__bcHideSurface());
+			await f.waitForTimeout(350);
+			const c = await shot(t, r); await sig();
+			if (sigs.every((s) => s !== null && s === sigStart)) return { rect: r, ...backingVerdict({ a1, a2, b, c, c0, width: r.width, height: r.height }) };
+		} finally {
+			await f.evaluate(() => {
+				const st = document.getElementById('bc-through');
+				st.remove();
+				st.__bcRestore();
 			});
-			if (replaced === 0) throw new Error('Glass backing rerender did not find visible Agents text leaves');
-			t.log(`Glass backing rerender: replaced ${replaced} Agents text elements before shot b`);
 		}
-		await f.waitForTimeout(350);
-		const b = await shot(t, r);
-		// Exclude the surface's own glyphs, grown by 2 px to cover re-rasterisation against another backdrop.
-		await f.evaluate(() => document.getElementById('bc-through').__bcHideSurface());
-		await f.waitForTimeout(350);
-		const c = await shot(t, r);
-		const own = grow(motionMask(b, c), r.width, r.height, 2);
-		for (let i = 0; i < own.length; i++) if (own[i]) mask[i] = 1;
-		const counted = mask.reduce((s, v) => s + (v ? 0 : 1), 0);
-		const m = changed(a2, b, mask);
-		return { rect: r, n: m.n, mx: m.mx, share: m.n / Math.max(1, counted), motion: 1 - counted / mask.length };
-	} finally {
-		await f.evaluate(() => {
-			const st = document.getElementById('bc-through');
-			st.remove();
-			st.__bcRestore();
-		});
+		if (attempt >= ACQUISITIONS) return { rect: r, reflowed: true, attempts: attempt };
+		t.log(`Glass backing ${sel}: own pane reflowed between the baseline and read-through plates (acquisition ${attempt}/${ACQUISITIONS}); reacquiring`);
+		await f.waitForTimeout(400);
 	}
 }
 
@@ -127,6 +193,10 @@ export default async function (t) {
 	};
 	const judge = (look, name, m) => {
 		if (!m) { bad.push(`${look} ${name}: not on screen`); rows.push(`${look} ${name}: not on screen`); return; }
+		if (m.reflowed) {
+			const why = `${look} ${name}: could not judge: the surface's own layout reflowed between the baseline and read-through plates on all ${m.attempts} acquisitions (PM7PERF-GLASS-AGENTS-REFLOW, R135-F5)`;
+			bad.push(why); rows.push(why); return;
+		}
 		const pct = (m.share * 100).toFixed(2);
 		rows.push(`${look} ${name}: ${pct}% of its pixels show the page through it (max change ${m.mx}; its own text and motion left out: ${(m.motion * 100).toFixed(1)}%) ${m.rect.width}x${m.rect.height}`);
 		if (m.share > MAX_SHARE) bad.push(`${look} ${name}: ${pct}% reads through`);

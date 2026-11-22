@@ -2,7 +2,7 @@
 // node tools/settings-chapter.selftest.mjs
 // The page probe itself is tested in a browser on a constructed page: diagnostics/settings-chapter-probe.check.mjs.
 import assert from 'node:assert/strict';
-import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press } from '../checks/perf-settings-chapter.check.mjs';
+import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press, selectAllModifier, flingScrollGate } from '../checks/perf-settings-chapter.check.mjs';
 
 /* SETCHAPTER-ROWCOUNT-FIRST-RAF: the first-screen row over the Code & Tools arrivals */
 {
@@ -71,15 +71,20 @@ import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arriv
 	console.log('PASS hover release: judged only with sampled leaving-chapter tags and a seen walk of that chapter');
 }
 
-/* R97 #4: the matrix sets up a real tag to sample, including when the chapter's idle census is late. */
+/* R97 #4 + PM7PERF-SETCHAPTER-HOVER-SAMPLE-UNQUALIFIED: the matrix qualifies the outgoing tagged-control input with
+ * a real hover of the leaving chapter's control BEFORE the bounded tag wait (the stock walk reached the AI chapter
+ * with zero bound tags; astra-max-15: an ordinary mouse hover opened a real outgoing control tip and both pages
+ * passed 17/17). The bounded wait and the explicit missing-witness result stay. */
 {
-	const run = async (waitForHoverTags, censusFinishes) => {
+	const CONTROL = '#workspace-stage .setting-row :is(button, input, select, textarea, [role="switch"], [role="slider"], [role="checkbox"])';
+	const run = async (waitForHoverTags, censusFinishes, controlExists = true) => {
 		const events = [];
 		let tagged = 0;
 		const f = {
 			locator: (selector) => ({
 				first: () => ({
-					boundingBox: async () => ({ x: 0, y: 0, width: 60, height: 20 }),
+					count: async () => { assert.equal(selector, CONTROL, 'the hover qualifies a real control of the leaving chapter'); return controlExists ? 1 : 0; },
+					boundingBox: async () => selector === CONTROL ? { x: 100, y: 200, width: 80, height: 20 } : { x: 0, y: 0, width: 60, height: 20 },
 					waitFor: async ({ state, timeout }) => {
 						assert.equal(selector, '#workspace-stage [data-pm-hover-bound="true"]');
 						assert.equal(state, 'attached');
@@ -93,18 +98,48 @@ import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arriv
 			}),
 			evaluate: async () => { events.push('sample'); return { tagged }; }
 		};
-		const mouse = { move: async () => {}, down: async () => { events.push('press'); }, up: async () => {} };
+		const mouse = { move: async (x, y) => { if (x === 140 && y === 210) events.push('hover control'); }, down: async () => { events.push('press'); }, up: async () => {} };
 		const t = { page: { mouse, waitForTimeout: async () => {} } };
 		const sample = await press(t, f, 'ai', { waitForHoverTags });
 		return { events, tagged: sample.tagged };
 	};
-	assert.deepEqual(await run(true, true), { events: ['wait for tags', 'sample', 'press'], tagged: 1 },
-		'wait for the delayed census before sampling the old chapter and pressing the next link');
-	assert.deepEqual(await run(true, false), { events: ['wait for tags', 'sample', 'press'], tagged: 0 },
-		'a timed-out census still yields an unsampled switch for the existing verdict');
+	assert.deepEqual(await run(true, true), { events: ['hover control', 'wait for tags', 'sample', 'press'], tagged: 1 },
+		'a real hover of the leaving chapter\'s control precedes the bounded tag wait, the sample and the press');
+	assert.deepEqual(await run(true, false), { events: ['hover control', 'wait for tags', 'sample', 'press'], tagged: 0 },
+		'a timed-out census still yields an unsampled switch for the existing missing-witness verdict');
+	assert.deepEqual(await run(true, false, false), { events: ['wait for tags', 'sample', 'press'], tagged: 0 },
+		'no hoverable control: the bounded wait and the missing-witness result stay');
 	assert.deepEqual(await run(false, true), { events: ['sample', 'press'], tagged: 0 },
 		'presses outside the hover matrix keep their original schedule');
-	console.log('PASS hover setup: the matrix samples after a delayed census, or reports missing tags on timeout');
+	console.log('PASS hover setup: a real control hover qualifies the outgoing tagged input before the bounded wait; a missing control or tag keeps the explicit missing-witness result');
+}
+
+/* R132-FOLLOWUPS 3: a programmatic scroll before the wheel must not be credited as the wheel's travel. The commit
+ * records R.start; a scroll listener that arms without the delivered wheel and measures moved from R.start credits
+ * any pre-wheel programmatic scroll (the page's own focus/restore scroll) as the fling. */
+{
+	assert.equal(typeof flingScrollGate, 'function', 'the fling scroll gate needs the delivered wheel; the base credited pre-wheel programmatic travel');
+	const R = { committed: true, wheel: null, wheelTop: null, start: 0, height: 800, sampled: false, armed: false };
+	// a programmatic scroll crosses the viewport before any wheel: it must not arm, and credits no travel
+	assert.equal(flingScrollGate(R, 900).arms, false, 'no delivered wheel: a programmatic scroll cannot arm the sample');
+	assert.equal(flingScrollGate(R, 900).moved, null, 'no wheel delivery position: no travel is credited');
+	// the wheel is delivered at scrollTop 900 (after the programmatic scroll); a further 50 px is the wheel's own
+	const delivered = { ...R, wheel: 1234, wheelTop: 900 };
+	const g = flingScrollGate(delivered, 950);
+	assert.equal(g.arms, true, 'a scroll after the delivered wheel arms');
+	assert.equal(g.moved, 50, 'the travel is measured from the wheel delivery position, not the commit');
+	// and the verdict fails the viewport crossing on that 50 px: the programmatic 900 px is not the wheel's
+	const rows = flingVerdict({ wheel: 1234, wheelPending: 5, wheelTargetPending: true, pending: 5, targetPending: true, sampled: true, moved: g.moved, height: 800, targetInView: true, empty: [] });
+	assert.equal(rows[1].ok, false, 'the wheel itself crossed no viewport: the row fails');
+	// a real fling from the delivery position keeps its pass
+	const real = flingScrollGate({ ...delivered, wheelTop: 0 }, 900);
+	assert.equal(real.arms, true);
+	assert.equal(real.moved, 900);
+	assert.equal(flingVerdict({ wheel: 1234, wheelPending: 5, wheelTargetPending: true, pending: 5, targetPending: true, sampled: true, moved: real.moved, height: 800, targetInView: true, empty: [] })[1].ok, true);
+	// an already-sampled or armed record does not arm again
+	assert.equal(flingScrollGate({ ...delivered, sampled: true }, 1800).arms, false);
+	assert.equal(flingScrollGate({ ...delivered, armed: true }, 1800).arms, false);
+	console.log('PASS fling travel: a pre-wheel programmatic scroll neither arms nor credits travel; the wheel travel is measured from its delivery position, and a real fling keeps its pass');
 }
 
 /* R97 #6: the wait ends on the fill's own completion, and an unfinished fill is told apart from a missing row */
@@ -149,4 +184,20 @@ import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arriv
 	assert.equal(arrivalVerdict([arr('general->code', { dupIds: 1, fill: { state: 'stalled', pending: 1, waited: 16000, lastProgress: 900, dragged: false } })])[1].ok, false, 'a doubled row id fails even on an unfinished fill');
 	assert.equal(arrivalVerdict([arr('ai->code', { missing: { ws: 'x', want: 0, gone: [] } })])[1].ok, false, 'Code with no modeled rows fails');
 	console.log('PASS fill completion: waited on the fill itself (done, stalled, deadline), and an unfinished fill is not a missing row');
+}
+
+/* PM7PERF-SETCHAPTER-SELECTALL-MAC-KEY-REMOTE: Playwright resolves ControlOrMeta on the DRIVER's platform, so a
+ * Linux driver sent Control+A to Mac Chrome and the five native selection rows failed (astra-max-15,
+ * opaque-settings-selectall-mac.json: six trusted Control+A and six Command+A seen; Command+A selected Terminal
+ * colors and the editing words in all four native editor controls on both pages). The modifier must come from the
+ * BROWSER's platform (navigator.platform), not the driver's. */
+{
+	assert.equal(typeof selectAllModifier, 'function', 'Select All needs the browser-platform modifier; the base sent ControlOrMeta (Control from a Linux driver) to Mac Chrome');
+	assert.equal(selectAllModifier('MacIntel'), 'Meta', 'Mac Chrome driven from Linux selects with Command');
+	assert.equal(selectAllModifier('iPhone'), 'Meta');
+	assert.equal(selectAllModifier('Linux x86_64'), 'Control');
+	assert.equal(selectAllModifier('Win32'), 'Control');
+	assert.equal(selectAllModifier(''), 'Control', 'an unread platform keeps the Control default');
+	assert.equal(selectAllModifier(undefined), 'Control');
+	console.log('PASS Select All modifier: Mac browser platform takes Meta even from a Linux driver, Linux/Windows take Control, an unread platform keeps Control');
 }

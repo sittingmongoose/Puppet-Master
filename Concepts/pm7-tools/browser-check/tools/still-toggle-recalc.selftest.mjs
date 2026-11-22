@@ -64,4 +64,27 @@ const zero = toggleRecalcs([mark('pm-still:on', 1000000), recalc(1008000, 0)]).a
 assert.equal(zero.first, 0);
 assert.equal(toggleCost(zero.first, 24).pass, true, 'an explicit zero is measured');
 if (process.argv[2]) console.log(`given check: missing count read as ${toggleRecalcs([mark('pm-still:on', 1000000), ev('UpdateLayoutTree', 1008000, { ph: 'X', dur: 900, args: {} })]).after('pm-still:on', 'pm-still:on').first}`);
-console.log('PASS the toggle\'s recalc is the first after its mark however late (84 ms read), the spread is the 60 ms after it; the control fails when the forced step is outside mark..recalc, missing, repeated or erroring; a recalc with no count is unmeasured, an explicit 0 measured');
+// 7. PM7PERF-PREWARM-CONTROL-ARM-RACE (TIB-P1's real late-arm replays, reviews/TIB-P1-REPORT.md: the base diagnostic
+// armed 3044.2 ms after the waking move, the head diagnostic 3055.7 ms, against the 3000 ms still deadline; the page
+// went still before the arm, the trace carried no pm-still:on mark and no forced mark, and the callback stayed
+// parked). The base row judged forcedInToggle(null, undefined, probe) = false: a FAIL, "no still mark in the trace",
+// although the product was right. The control must read could-not-judge for that replay instead.
+const { prewarmControlVerdict } = await import('../helpers/still-prewarm-control.mjs');
+const parkedProbe = { forced: [], errors: [], parked: { id: 2, stage: 3 } };
+assert.equal(forcedInToggle(null, undefined, parkedProbe), false, 'what the base row judged on the late replay');
+assert.equal(typeof prewarmControlVerdict, 'function', 'the control needs a late-arm verdict; the base fails the 3044/3056 ms arm as a missed mark');
+const lateArm = prewarmControlVerdict({ armStill: true, recalc: null, forcedMark: undefined, probe: parkedProbe });
+assert.equal(lateArm.couldNotJudge, true, 'an arm after the page went still is could-not-judge, not a missed mark');
+assert.equal(lateArm.pass, false);
+// the passing base diagnostic armed at 2692.8 ms with the page awake: the real marks keep their pass
+const onTime = prewarmControlVerdict({ armStill: false, recalc: r1, forcedMark: ['pm-still:prewarm:forced:2:3', 1005000], probe });
+assert.equal(onTime.pass, true); assert.equal(onTime.couldNotJudge, false);
+// the forced step ran but its mark never reached the trace (the trace opened after the transition): could-not-judge
+const traceMiss = prewarmControlVerdict({ armStill: false, recalc: null, forcedMark: undefined, probe });
+assert.equal(traceMiss.couldNotJudge, true); assert.equal(traceMiss.pass, false);
+// real misses keep failing: the forced step after the recalc with both marks in the trace, or no forced step at all
+const outside = prewarmControlVerdict({ armStill: false, recalc: r3, forcedMark: ['f', 1020000], probe });
+assert.equal(outside.pass, false); assert.equal(outside.couldNotJudge, false);
+const absent = prewarmControlVerdict({ armStill: false, recalc: r3, forcedMark: ['f', 1005000], probe: { forced: [], errors: [] } });
+assert.equal(absent.pass, false); assert.equal(absent.couldNotJudge, false);
+console.log('PASS the toggle\'s recalc is the first after its mark however late (84 ms read), the spread is the 60 ms after it; the control fails when the forced step is outside mark..recalc, missing, repeated or erroring; a recalc with no count is unmeasured, an explicit 0 measured; a late arm (3044/3056 ms vs the 3000 ms deadline) and a forced step outside the trace are could-not-judge, an on-time arm keeps its pass');

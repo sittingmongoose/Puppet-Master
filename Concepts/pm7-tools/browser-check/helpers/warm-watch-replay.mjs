@@ -27,9 +27,17 @@ export function replayWatch(steps, hz) {
 	// max(40, 3 x median) and the steady bar max(25, 1.5 x median) — and they are logged rounded to 0.1 ms.
 	// A row logging a bar under its floor is impossible metadata, not an exact row: it is judged by the bracket
 	// path below, as a row without the fields is, so a low logged bar cannot excuse a needless watch.
+	// PM7PERF-WARMWATCH-ABOVE-FLOOR-BARS (R74 C1): the floors alone do not certify a plausible bar. The product
+	// computes both bars from one shared median (note() in 11-motion-start.js: slow = max(40, 3m), steady =
+	// max(25, 1.5m), each logged rounded to 0.1 ms), so a pair no median can produce (slow1 50 with steady1 45:
+	// 50 implies m 16.7 and steady 25) is impossible metadata. Such a row falls to the bracket path and is judged
+	// against the row's own bar, so a fabricated low bar cannot excuse a needless watch. Below 50 ms the steady
+	// bar is at its 25 ms floor; at 50 and above it is half the slow bar. 0.2 ms covers both 0.1 ms roundings.
+	const pairedBars = (s, st) => s < 50 ? Math.abs(st - STEADY_MS) <= 0.2 : Math.abs(st - s / 2) <= 0.2;
 	const exactRow = (e) => [e.slow1, e.steady1, e.slow2, e.steady2].every((n) => Number.isFinite(n) && n > 0)
 		&& e.slow1 >= SLOW_FLOOR_MS - 0.1 && e.slow2 >= SLOW_FLOOR_MS - 0.1
 		&& e.steady1 >= STEADY_MS - 0.1 && e.steady2 >= STEADY_MS - 0.1
+		&& pairedBars(e.slow1, e.steady1) && pairedBars(e.slow2, e.steady2)
 		&& (e.resetAt === 0 || e.resetAt === 1 || e.resetAt === 2);
 	for (const e of steps) {
 		steady = Number.isFinite(e.steadyMs) && e.steadyMs > 0 ? e.steadyMs : fallbackSteady;

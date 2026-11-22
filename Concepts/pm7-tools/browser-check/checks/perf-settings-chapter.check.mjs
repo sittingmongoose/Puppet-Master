@@ -154,6 +154,19 @@ const ACTIVE = () => (document.querySelector('#pm-settings-root .domain-link.act
 
 export async function press(t, f, domain, { waitForHoverTags = false } = {}) {
 	if (waitForHoverTags) {
+		// PM7PERF-SETCHAPTER-HOVER-SAMPLE-UNQUALIFIED: tags bind on real hover intent. The stock walk never hovered
+		// the leaving chapter's controls, so the AI chapter reached the press with zero bound tags and the sample
+		// abstained (astra-max-15: an ordinary mouse hover opened a real outgoing control tip before the same chapter
+		// presses and both pages passed 17/17). Hover a real control of the current chapter first; the bounded wait
+		// and the explicit missing-witness row stay.
+		const control = f.locator('#workspace-stage .setting-row :is(button, input, select, textarea, [role="switch"], [role="slider"], [role="checkbox"])').first();
+		if (await control.count()) {
+			const cb = await control.boundingBox();
+			if (cb) {
+				await t.page.mouse.move(Math.round(cb.x + cb.width / 2), Math.round(cb.y + cb.height / 2), { steps: 4 });
+				await t.page.waitForTimeout(350);
+			}
+		}
 		// The page binds tags in idle batches. Give the chapter a chance to bind a real tag before sampling it.
 		try {
 			await f.locator('#workspace-stage [data-pm-hover-bound="true"]').first().waitFor({ state: 'attached', timeout: 10000 });
@@ -315,6 +328,14 @@ export function flingVerdict(r) {
 			detail: r.sampled ? `moved ${r.moved} px of a ${r.height} px view; Terminal look in view ${!!r.targetInView}` : `no scroll-frame sample with Terminal look in view (${r.framesBefore || 0} scroll frames past one viewport without it)` },
 		{ name: 'no visible list is empty at the scroll frame', ok: !!r.sampled && r.empty.length === 0, detail: (r.empty || []).join(',') || 'no scroll-frame sample' }
 	];
+}
+/* R132-FOLLOWUPS 3 (exported for tools/settings-chapter.selftest.mjs): the fling scroll gate. Only a scroll after the
+   delivered wheel arms the sample, and the travel credited to the wheel is measured from its delivery position
+   (wheelTop), not from the commit's start: a programmatic pre-wheel scroll is not the wheel's travel. The R93 #4
+   page recorder mirrors this gate inline (it is serialized into the page). */
+export function flingScrollGate(R, top) {
+	return { arms: !!R.committed && !!R.wheel && !R.sampled && !R.armed && Math.abs(top - R.start) >= R.height,
+		moved: R.wheelTop == null ? null : top - R.wheelTop };
 }
 /* SETCHAPTER-RESTORE-PENDING-AT-TRANSACTION (exported for tools/settings-chapter.selftest.mjs): the restore-all row
    judges a transaction across a chapter change only if, when the transaction starts, Code & Tools is the chapter, still
@@ -501,6 +522,13 @@ async function moreOptionsRow(t, f, label, expectedReduced) {
 	} finally { await f.evaluate(() => window.__pscMore.stop()); }
 }
 
+// PM7PERF-SETCHAPTER-SELECTALL-MAC-KEY-REMOTE: Playwright resolves ControlOrMeta on the DRIVER's platform, so a
+// Linux driver sent Control+A to Mac Chrome and the five native selection rows failed (astra-max-15: Command+A
+// selected Terminal colors and the editing words in all four native editor controls on both pages). Choose the
+// modifier from the BROWSER's platform (navigator.platform), not the driver's. Exported for
+// tools/settings-chapter.selftest.mjs.
+export const selectAllModifier = (platform) => /Mac|iPhone|iPad|iPod/.test(platform || '') ? 'Meta' : 'Control';
+
 export const tests = {};
 export { FILL_WAIT };
 
@@ -624,6 +652,9 @@ for (const surface of ['normal', 'sandbox']) {
 		await t.viewport(1920, 1080); await muteSound(t.page);
 		await t.emulate({ reducedMotion: t.args.motion === 'reduce' ? 'reduce' : 'no-preference' });
 		const f = await t.app.open({ sandbox: surface === 'sandbox' });
+		const platform = await f.evaluate(() => navigator.platform);
+		const selectAllKey = selectAllModifier(platform) + '+A';
+		t.log(`${surface} Select All key: ${selectAllKey} (browser platform ${platform})`);
 		await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
 		await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(700);
 		await f.evaluate(() => {
@@ -645,7 +676,7 @@ for (const surface of ['normal', 'sandbox']) {
 		try {
 			await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
 			await f.waitForFunction(() => window.__pscSelectAll.ready, null, { timeout: 5000 });
-			await t.page.keyboard.press('ControlOrMeta+A');
+			await t.page.keyboard.press(selectAllKey);
 			const r = await f.evaluate(() => { const { stop, ...r } = window.__pscSelectAll; return { ...r, selectedTerminal: getSelection().toString().includes('Terminal colors') }; });
 			t.log(`${surface} Select All: pending ${r.before} -> ${r.after}, Terminal look pending ${r.targetPending}, chapter focus ${r.chapterFocus}, selected Terminal colors ${r.selectedTerminal}`);
 			await t.check(`${surface}: Select All reached the chapter button while Terminal look was pending`, r.seen && r.chapterFocus && r.before > 0 && r.targetPending, JSON.stringify(r));
@@ -660,6 +691,9 @@ for (const surface of ['normal', 'sandbox']) {
 		await t.viewport(1920, 1080); await muteSound(t.page);
 		await t.emulate({ reducedMotion: t.args.motion === 'reduce' ? 'reduce' : 'no-preference' });
 		const f = await t.app.open({ sandbox: surface === 'sandbox' });
+		const platform = await f.evaluate(() => navigator.platform);
+		const selectAllKey = selectAllModifier(platform) + '+A';
+		t.log(`${surface} Select All key: ${selectAllKey} (browser platform ${platform})`);
 		await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
 		for (const kind of ['input', 'textarea', 'contenteditable', 'plaintext-only', 'code-editor']) {
 			await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(700);
@@ -695,7 +729,7 @@ for (const surface of ['normal', 'sandbox']) {
 			try {
 				await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
 				await f.waitForFunction(() => window.__pscEditing.ready, null, { timeout: 5000 });
-				await t.page.keyboard.press('ControlOrMeta+A');
+				await t.page.keyboard.press(selectAllKey);
 				const r = await f.evaluate(() => { const { stop, selection, ...r } = window.__pscEditing; return { ...r, selected: selection() }; });
 				t.log(`${surface} ${kind} Select All: pending ${r.before} -> ${r.after}, focused ${r.focused}, default prevented ${r.prevented}`);
 				await t.check(`${surface} ${kind}: Select All reached the editor with pending lists`, r.seen && r.focused && r.before > 0, JSON.stringify(r));
@@ -758,7 +792,8 @@ for (const surface of ['normal', 'sandbox']) {
 				});
 				const scroll=e=>{
 					const sc=e.target;
-					if(!R.committed||R.sampled||R.armed||sc.id!=='settings-document'||Math.abs(sc.scrollTop-R.start)<R.height)return;
+					/* R132-FOLLOWUPS 3: only a scroll after the delivered wheel arms (flingScrollGate mirrors this in node) */
+					if(sc.id!=='settings-document'||!R.committed||!R.wheel||R.sampled||R.armed||Math.abs(sc.scrollTop-R.start)<R.height)return;
 					R.armed=true;
 					requestAnimationFrame(()=>{
 						const v=sc.getBoundingClientRect();
@@ -767,7 +802,7 @@ for (const surface of ['normal', 'sandbox']) {
 						const tb=root.querySelector('#section-editor-terminal-look')?.getBoundingClientRect();
 						R.targetInView=!!tb&&tb.height>0&&tb.bottom>v.top&&tb.top<v.bottom;
 						if(!R.targetInView){R.armed=false;R.framesBefore=(R.framesBefore||0)+1;return;}
-						R.top=sc.scrollTop;R.moved=R.top-R.start;
+						R.top=sc.scrollTop;R.moved=R.wheelTop==null?null:R.top-R.wheelTop;
 						R.empty=[...sc.querySelectorAll('[data-o55-fill="pending"]')].filter(l=>{
 							if(l.closest('details:not([open])'))return false;
 							const b=l.closest('[data-section-id]').getBoundingClientRect();

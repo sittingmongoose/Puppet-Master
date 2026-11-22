@@ -46,17 +46,18 @@ test('T117 rejects an added row even when every live row has data-path', () => {
   assert.equal(live[0].getAttribute('data-shelf-fx-want'), 'authored.rs');
 });
 
-function reachStatus({ opacity = '1', filter = 'none', x = 0 } = {}) {
+function reachStatus({ opacity = '1', filter = 'none', wrapperFilter = 'none', x = 0 } = {}) {
   const slot = {
     parentElement: null,
     checkVisibility: options => !options?.opacityProperty || Number(opacity) > 0,
     getBoundingClientRect: () => ({ left: x, right: x + 250, top: 0, bottom: 500 }),
   };
   const view = { ...slot, parentElement: slot, checkVisibility: () => true };
-  const button = { ...view, parentElement: view, closest: () => view, isConnected: true, getAttribute: () => 'More' };
+  const wrapper = { ...view, parentElement: view };
+  const button = { ...view, parentElement: wrapper, closest: () => view, isConnected: true, getAttribute: () => 'More' };
   const read = runInNewContext('(' + shelfReachStatus.toString() + ')', {
     document: { getElementById: () => slot },
-    getComputedStyle: el => ({ filter: el === slot ? filter : 'none' }),
+    getComputedStyle: el => ({ filter: el === slot ? filter : el === wrapper ? wrapperFilter : 'none' }),
     innerWidth: 1280,
     innerHeight: 500,
   });
@@ -73,6 +74,15 @@ test('T124 rejects a transparent filter on a hit-testable ancestor', () => {
   assert.equal(reachStatus({ filter: 'blur(1px) opacity(0.5)' }).view, true);
   assert.equal(reachStatus({ filter: 'blur(1px) opacity(0)' }).slot, false);
   assert.equal(reachStatus({ filter: 'opacity(0%)' }).view, false);
+});
+
+test('T124 (R133-3): an opacity(0) filter on a wrapper below the view is caught from the control', () => {
+  const s = reachStatus({ wrapperFilter: 'blur(1px) opacity(0)' });
+  assert.equal(s.view, true, 'the view itself is shown');
+  assert.equal(s.shown, false, 'the control under a transparent wrapper below the view is not shown');
+  // the control's default layout visibility check is preserved: a non-zero filter keeps it shown
+  assert.equal(reachStatus({ wrapperFilter: 'blur(1px) opacity(0.5)' }).shown, true);
+  assert.equal(reachStatus().shown, true);
 });
 
 test('T98 later context walk includes the middle row of a known route', () => {

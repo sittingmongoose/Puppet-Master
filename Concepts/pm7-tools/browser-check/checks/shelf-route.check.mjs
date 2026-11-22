@@ -9,6 +9,7 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { press as nativePress } from '../helpers/press.mjs';
 
 const INPUTS = ['mouse', 'shift-f10', 'menu-key'];
 const KEY = { 'shift-f10': 'Shift+F10', 'menu-key': 'ContextMenu' };
@@ -55,14 +56,19 @@ export function pickEffectRows([p, toks, authored]) {
 export function shelfReachStatus(e) {
   const slot = document.getElementById('sidePanelSlot');
   const view = e.closest('.side-panel-view');
-  const shown = node => {
-    if (!node?.checkVisibility({ opacityProperty: true, visibilityProperty: true, contentVisibilityAuto: true })) return false;
-    // A fully transparent filter leaves the whole subtree in hit testing.
+  // R133-FOLLOWUPS 3 (T124): the filter-only ancestor walk starts at the node it judges; from the control it
+  // catches an opacity(0) wrapper BELOW the view too, which the slot/view walks (starting above it) miss.
+  const filterClear = node => {
     for (let a = node; a; a = a.parentElement) {
       const filters = getComputedStyle(a).filter.matchAll(/(?:^|\s)opacity\(([^)]+)\)/g);
       for (const [, value] of filters) if (Number.parseFloat(value) === 0) return false;
     }
     return true;
+  };
+  const shown = node => {
+    if (!node?.checkVisibility({ opacityProperty: true, visibilityProperty: true, contentVisibilityAuto: true })) return false;
+    // A fully transparent filter leaves the whole subtree in hit testing.
+    return filterClear(node);
   };
   const onScreen = node => {
     const r = node.getBoundingClientRect();
@@ -72,8 +78,9 @@ export function shelfReachStatus(e) {
   return {
     slot: shown(slot) && onScreen(slot),
     view: shown(view) && onScreen(view),
-    // A control can be outside the scroller's rendered band until reach scrolls it in.
-    shown: e.isConnected && e.checkVisibility(),
+    // A control can be outside the scroller's rendered band until reach scrolls it in. Its default layout
+    // visibility check stays; the filter walk from the control adds the transparent-wrapper case.
+    shown: e.isConnected && e.checkVisibility() && filterClear(e),
     what: (e.getAttribute('aria-label') || e.textContent || e.className || e.tagName).toString().trim().replace(/\s+/g, ' ').slice(0, 40),
   };
 }
@@ -1054,7 +1061,10 @@ export default async function (t) {
     for (const engine of (engines.length ? engines : [null])) {
     if (engine !== null) {
       const sw = panel.locator(`[data-pm7-scm-engine="${engine}"]`);
-      await sw.click();
+      // R133-FOLLOWUPS 1: the native press helper (fresh center hit-test, no Playwright stability wait); a
+      // rejected press reports its hit witness and sends nothing.
+      const hit = await nativePress(f, sw);
+      await t.check(`${target} engine ${engine} switch press reached its target`, hit.ok, JSON.stringify(hit), { hard: true });
       await t.check(`${target} engine ${engine} selected`, await panel.evaluate((p, en) => p.dataset.scmEngine === en, engine), '', { hard: true });
       await f.waitForTimeout(400);
     }

@@ -93,6 +93,19 @@ import { pathToFileURL } from 'url';
 import path from 'path';
 import fs from 'fs';
 
+// R133-FOLLOWUPS 5 (T92): the rolling above-target window's charge for one observer interval. A sampled state
+// covers the interval until the next frame, but a long gap must not charge the whole gap to the last above-target
+// sample: the product's compositor fade may have completed inside it. With the shy fade on, the above-target
+// interval ends when the fade reached its target (shyAt + shyFade), not at the next sample; with no fade the Pod
+// stayed opaque and the whole interval is real exposure. The page tick mirrors this inline (it is serialized into
+// the page); exported for tests/pod-window-charge.selftest.mjs, which extracts it from this file's source.
+export function podWindowCharge({ wasOpaque, dt, now, shy, shyAt, shyFade }) {
+  if (!wasOpaque || dt <= 0) return null;
+  const end = shy && shyAt !== null ? Math.min(now, shyAt + shyFade) : now;
+  const start = now - dt;
+  return end > start ? [start, end] : null;
+}
+
 /* ---------------------------------------------------------------- census scope
  * Every <svg> in the document must carry class nx or nx-brand, EXCEPT inside
  * these out-of-scope hosts (INVENTORY §1c "Other <svg> emitters", confirmed
@@ -2027,8 +2040,12 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
           // A sampled state covers the interval until the next frame. Clip the oldest
           // interval at the window boundary so a partial frame cannot inflate the sum.
           if (wasOpaque && dt > 0) {
-            samples.push([now - dt, now]);
-            sampleMs += dt;
+            // R133-FOLLOWUPS 5 (T92): a long observer gap must not charge the whole gap to the last above-target
+            // sample — the compositor may have faded the Pod inside it. With the shy fade on, the above-target
+            // interval ends when the fade reached its target (shyAt + shyFade), not at the next sample. Mirrors
+            // the exported podWindowCharge (tests/pod-window-charge.selftest.mjs).
+            const end = shy && M.shyAt !== null ? Math.min(now, M.shyAt + M.shyFade) : now;
+            if (end > now - dt) { samples.push([now - dt, end]); sampleMs += end - (now - dt); }
           }
           wasOpaque = Boolean(what && op > P.target + P.targetSlack);
           const cutoff = now - P.windowMs;

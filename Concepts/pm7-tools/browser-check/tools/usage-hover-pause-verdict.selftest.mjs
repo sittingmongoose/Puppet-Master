@@ -5,7 +5,8 @@ import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
 // node tools/usage-hover-pause-verdict.selftest.mjs [check file]: the argument runs the same assertions against another
 // revision of the check, which is how each item's RED run shows the old verdict misjudging a constructed record.
-const { judge, outerCap, uninterruptedIntent, judgeShortHandoff } = await import(process.argv[2] ? pathToFileURL(resolve(process.argv[2])).href : '../checks/usage-hover-pause.check.mjs');
+const { judge, outerCap, uninterruptedIntent, judgeShortHandoff, r5MountQualified, r5MountProduct, r5BurstGate } = await import(process.argv[2] ? pathToFileURL(resolve(process.argv[2])).href : '../checks/usage-hover-pause.check.mjs');
+import { burstState } from '../helpers/burst-rest.mjs';
 // R125 #6: the probe's deadline comes from the record's last input, as the recorder arms it (520 + 150). The old
 // fixture injected 650 and so credited 20 ms of lateness in the nominal control though the probe fired at the real
 // deadline; a control's lateness must be the queue's, not the fixture's.
@@ -244,12 +245,23 @@ test('R117 T3: the card lighting up cannot substitute for a required proxy', () 
  assert.equal(j(r).r2.ok, true);
 });
 
-test('TB7 H1: a late product timer entry cannot spend the return-work budget', () => {
+test('TB7 H1 (R132-6): a correctly armed callback keeps its prompt clear across a queue gap; a late arm cannot spend the return-work budget', () => {
  const r = make();
  r.ops = [{t:101,op:'wheel'},{t:685,op:null}];
  r.timer = { inputDue: 670, armed: 520, entered: 685 };
  for (const f of r.frames) Object.assign(f, { op: f.t < 685 ? 'wheel' : null, lit: f.t >= 690 ? ['new'] : [], tools: f.t >= 690 ? .9 : 0 });
  r.cls = [{t:690,card:'new',on:true}];
+ // R132-6: armed at the input, the 15 ms probe-to-callback gap is queue scheduling; the clear at entry is prompt
+ // (callbackWork 0) and the total endDelay 165 ms is inside rest + probe lateness + work + 2.
+ assert.equal(j(r).r2.ok, true);
+ // a late arm is the product's own delay: the same entry now fails
+ r.timer = { inputDue: 670, armed: 560, entered: 685 };
+ assert.equal(j(r).r2.ok, false);
+ // entry delay still cannot spend the return-work budget: work past RETURN_WORK_MS fails even armed right
+ r.timer = { inputDue: 670, armed: 520, entered: 685 };
+ r.ops = [{t:101,op:'wheel'},{t:702,op:null}];
+ for (const f of r.frames) Object.assign(f, { op: f.t < 702 ? 'wheel' : null, lit: f.t >= 706 ? ['new'] : [], tools: f.t >= 706 ? .9 : 0 });
+ r.cls = [{t:706,card:'new',on:true}];
  assert.equal(j(r).r2.ok, false);
 });
 test('TB7 H2: a task mutation between samples cannot claim the previous frame', () => {
@@ -320,4 +332,160 @@ test('R117 T3: a visible proxy before a late marker clear is an early return', (
  for (const f of r.frames) Object.assign(f, {op:f.t<720?'wheel':null,lit:f.t>=730?['new']:[],tools:f.t>=730?.9:0});
  r.frames.find(f => f.t === 700).proxyLit = true;
  assert.equal(j(r).r2.ok, false);
+});
+
+// PM7PERF-R5-UNQUALIFIED-RETURNS-COUNTED + R135-F2: TIB-FILMS' real R5 mount records (reviews/TIB-FILMS-REPORT.md,
+// films under /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-tib-20261121/films/): ALL 12 p6 mount attempts delivered
+// with scrolls 0 and max wheel gaps 302.3-778.1 ms, so roomMountRace's burstState(holdInputs(...)) computes
+// burstBroke true on every one (head retry 3: 156/203 wheels, 302.3 ms; base retry 3: 153/203, 472.1 ms). A broke
+// burst keeps the R5-CASCADE SKIP, never could-not-judge; the fixtures derive burstBroke from the record's own
+// timestamps as the check does, not a hardcoded false the code cannot produce. Could-not-judge needs an INTACT
+// burst with failed input delivery (Chrome coalescing wheels below 80% on a busy host). A product fault on a
+// qualified intact burst must FAIL the product row, never hide as could-not-judge.
+const r5Record = (delivered, gapMs, idleReturnMs) => {
+	const ts = []; let t = 1000;
+	for (let i = 0; i < delivered; i++) { ts.push(t); t += i === 40 ? gapMs : 30; }
+	const last = ts.at(-1);
+	return {
+		room: 'overview', liveRoom: 'overview', oldPaused: true, moves: 0, swaps: 2, targetHovered: true, pointerOnBoard: true,
+		wheels: ts.map((t) => ({ t, trusted: true })),
+		ends: [{ t: ts[40] + idleReturnMs, live: true, room: 'overview' }, { t: last + 160, live: true, room: 'overview' }],
+		last, during: Array.from({ length: 100 }, (_, i) => ({ t: 1000 + i * 60 }))
+	};
+};
+const r5Args = (r) => ({ inputs: 203, activated: true, burstBroke: burstState(r.wheels).broke, during: r.during, destinationTop: 0 });
+test('R5 films: the head retry 3 record (156/203 wheels, 302.3 ms gap) broke its burst and keeps the CASCADE skip', () => {
+	const r = r5Record(156, 302.3, 169.9);
+	assert.equal(burstState(r.wheels).broke, true, 'the archived record\'s own gaps break the burst');
+	assert.equal(r5MountQualified(r, r5Args(r)), false);
+	assert.equal(r5BurstGate({ qualified: false, burstBroke: burstState(r.wheels).broke }), 'skip');
+});
+test('R5 films: the base retry 3 record (153/203 wheels, 472.1 ms gap) broke its burst and keeps the CASCADE skip', () => {
+	const r = r5Record(153, 472.1, 155.1);
+	assert.equal(burstState(r.wheels).broke, true);
+	assert.equal(r5MountQualified(r, r5Args(r)), false);
+	assert.equal(r5BurstGate({ qualified: false, burstBroke: burstState(r.wheels).broke }), 'skip');
+});
+test('R5: an intact but coalesced delivery (150/203 wheels, 30 ms cadence) is could-not-judge', () => {
+	const r = r5Record(150, 30, 0);
+	r.ends = [{ t: r.last + 160, live: true, room: 'overview' }];
+	assert.equal(burstState(r.wheels).broke, false);
+	assert.equal(r5MountQualified(r, r5Args(r)), false);
+	assert.equal(r5BurstGate({ qualified: false, burstBroke: burstState(r.wheels).broke }), 'could-not-judge');
+});
+test('R5: an intact 203-wheel burst keeps its qualification and judges', () => {
+	const r = r5Record(203, 30, 0);
+	r.ends = [{ t: r.last + 160, live: true, room: 'overview' }];
+	assert.equal(r5MountQualified(r, r5Args(r)), true);
+	assert.equal(r5BurstGate({ qualified: true, burstBroke: burstState(r.wheels).broke }), 'judge');
+	assert.equal(r5MountProduct(r, { last: r.last, during: r.during }), true);
+});
+test('R5: a broke burst keeps the R5-CASCADE skip, not a second failing row', () => {
+	assert.equal(r5BurstGate({ qualified: false, burstBroke: true }), 'skip');
+});
+// R135-F2 RED: on a quiet host an intact 203-wheel burst qualifies; a product fault must then FAIL, not read
+// could-not-judge. The base mixed these assertions into r5MountQualified, so each of these records was rejected
+// as unqualified input and suppressed behind the could-not-judge row. R136-N1: the mount-fault fixtures model
+// the real page (62-boards-data.js: overview has no provider widget, accounts no skyline; samples push only
+// while the live board IS the destination room and targetHovered matches a room-exclusive selector), so a
+// failed or wrong mount leaves during [] and targetHovered false — qualification must still pass on the
+// intact input, and the product row must FAIL.
+test('R135-F2: a qualified burst whose old board never enters the wheel pause fails the product row', () => {
+	const r = r5Record(203, 30, 0);
+	r.ends = [{ t: r.last + 160, live: true, room: 'overview' }];
+	r.oldPaused = false;
+	assert.equal(r5MountQualified(r, r5Args(r)), true, 'input delivery is intact; the fault is the product\'s');
+	assert.equal(r5BurstGate({ qualified: true, burstBroke: burstState(r.wheels).broke }), 'judge');
+	assert.equal(r5MountProduct(r, { last: r.last, during: r.during }), false);
+});
+test('R135-F2: a qualified burst whose pause ends before the last wheel fails the product row', () => {
+	const r = r5Record(203, 30, 0);
+	r.ends = [{ t: r.last - 40, live: true, room: 'overview' }];
+	assert.equal(r5MountQualified(r, r5Args(r)), true);
+	assert.equal(r5MountProduct(r, { last: r.last, during: r.during }), false);
+});
+test('R135-F2/R136-N1: a qualified burst that never swaps the board fails the product row', () => {
+	const r = r5Record(203, 30, 0);
+	r.ends = [{ t: r.last + 160, live: true, room: 'overview' }];
+	r.swaps = 0; r.liveRoom = 'accounts'; r.during = []; r.targetHovered = false;
+	assert.equal(r5MountQualified(r, r5Args(r)), true, 'the input was delivered intact; the mount failure is the product\'s');
+	assert.equal(r5BurstGate({ qualified: true, burstBroke: burstState(r.wheels).broke }), 'judge');
+	assert.equal(r5MountProduct(r, { last: r.last, during: r.during }), false);
+});
+test('R135-F2/R136-N1: a qualified burst whose live board is another room fails the product row', () => {
+	const r = r5Record(203, 30, 0);
+	r.ends = [{ t: r.last + 160, live: true, room: 'overview' }];
+	r.liveRoom = 'accounts'; r.during = []; r.targetHovered = false;
+	assert.equal(r5MountQualified(r, r5Args(r)), true);
+	assert.equal(r5MountProduct(r, { last: r.last, during: r.during }), false);
+});
+test('R136-N1: the pointer off the board before the burst is unqualified input, not a product fault', () => {
+	const r = r5Record(203, 30, 0);
+	r.ends = [{ t: r.last + 160, live: true, room: 'overview' }];
+	r.pointerOnBoard = false;
+	assert.equal(r5MountQualified(r, r5Args(r)), false);
+	assert.equal(r5BurstGate({ qualified: false, burstBroke: burstState(r.wheels).broke }), 'could-not-judge');
+});
+test('R136-N1: a mounted room the pointer is not over fails the product row', () => {
+	const r = r5Record(203, 30, 0);
+	r.ends = [{ t: r.last + 160, live: true, room: 'overview' }];
+	r.targetHovered = false;
+	assert.equal(r5MountQualified(r, r5Args(r)), true);
+	assert.equal(r5MountProduct(r, { last: r.last, during: r.during }), false);
+});
+test('R136-N1: a mounted room with too few burst samples fails the product row', () => {
+	const r = r5Record(203, 30, 0);
+	r.ends = [{ t: r.last + 160, live: true, room: 'overview' }];
+	r.during = r.during.slice(0, 5);
+	assert.equal(r5MountQualified(r, r5Args(r)), true);
+	assert.equal(r5MountProduct(r, { last: r.last, during: r.during }), false);
+});
+
+// R132-FOLLOWUPS 6 (R132-REPORT.md): a 4 ms unrelated task between the probe callback and the product's correctly
+// armed wheelEnd callback failed a prompt marker clear at :235. The gap between separate timer callbacks is queue
+// scheduling when timer.armed shows the product requested its 150 ms timeout at the input.
+test('R132-6: a 4 ms queue gap between the probe and a correctly armed product callback passes', () => {
+	const r = make();
+	r.ops = [{t:101,op:'wheel'},{t:676,op:null}];
+	r.timer = { inputDue: 670, armed: 520, entered: 674 };
+	for (const f of r.frames) Object.assign(f, { op: f.t < 676 ? 'wheel' : null });
+	assert.equal(j(r).r2.entryGap, 4);
+	assert.equal(j(r).r2.ok, true);
+});
+test('R132-6: a late arm with the same entry still fails', () => {
+	const r = make();
+	r.ops = [{t:101,op:'wheel'},{t:676,op:null}];
+	r.timer = { inputDue: 670, armed: 560, entered: 674 };
+	for (const f of r.frames) Object.assign(f, { op: f.t < 676 ? 'wheel' : null });
+	assert.equal(j(r).r2.ok, false);
+});
+test('R132-6: a correctly armed callback whose return exceeds the total endDelay bound still fails', () => {
+	const r = make();
+	r.ops = [{t:101,op:'wheel'},{t:700,op:null}];
+	r.timer = { inputDue: 670, armed: 520, entered: 698 };
+	for (const f of r.frames) Object.assign(f, { op: f.t < 700 ? 'wheel' : null, lit: f.t >= 700 ? ['new'] : [], tools: f.t >= 700 ? .9 : 0 });
+	r.cls = [{t:700,card:'new',on:true}];
+	assert.equal(j(r).r2.ok, false);
+});
+
+// PM7PERF-V6-P5-IDLE-COVERAGE: on headless Alexis the native short-M/R witness defers the marker (+181-228 ms) and
+// the idle release (+341-403 ms) past the original 150 ms wheel deadline (V-REPORT.md §19, triage T2.3). The input
+// setup is intact; the host cannot qualify it. That must read as a named host limit, not a silent coverage gap or a
+// setup failure.
+test('V6 P5 coverage: a deferred native marker/release past the deadline is a named host limit', () => {
+	const r = { mode: 'move', key: 'm', focused: 'health', pre: { top: 0 }, wheels: [{t: 100, trusted: true}], moves: 0,
+		scrolls: [{t: 103, top: 40, op: 'wheel'}],
+		keys: [{t: 120, key: 'm', trusted: true, focused: 'health'}, {t: 270, key: 'Escape', trusted: true}],
+		point: [50, 50],
+		markers: [{t: 300, gesture: {kb: true, type: 'move'}, op: 'move', dragHeld: true, handoff: true, hovered: true},
+			{t: 480, op: 'wheel', dragHeld: false, hovered: true, gesture: null}],
+		frames: [], ends: [{t: 500, live: true, gesture: false, op: null, point: [50, 50]}], after: {op: null, hovered: true} };
+	const v = judgeShortHandoff(r);
+	assert.equal(v.qualified, false);
+	assert.equal(v.hostLimit, true, 'the intact input with a deferred release is the host limit, not a setup failure');
+	assert.equal(v.markerAfterScrollMs, 197);
+	assert.equal(v.releaseAfterScrollMs, 377);
+	// a setup failure is not the host limit
+	r.wheels[0].trusted = false;
+	assert.equal(judgeShortHandoff(r).hostLimit, false);
 });

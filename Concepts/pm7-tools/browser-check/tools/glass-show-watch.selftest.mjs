@@ -171,6 +171,27 @@ assert.equal(normal.pending, 1);
 assert.equal(normal.cleared, 1);
 assert.equal(restChurn(normal), '', 'a genuine queued check can replace even a timer armed before the window');
 
+// R132-FOLLOWUPS 4 (SHOWWATCH-REQUEST-CHURN): the same redundant clear/rearm chain at the APPROVED queueShown
+// site balances (1 + 9 - 5 = 4 + 1), keeps one pending and stays under the caps, so the base accepted it. Five
+// unnecessary allowed-site clear/rearms for four fires is churn: at most one rearm per completed interval.
+const approvedChurn = fixture({ ...churnRange, ...showWatchSites(legitimateSource, churnRange) }, legitimateSource);
+approvedChurn.run('awaitShow(2000); __swt.arm(); setTimeout(queueShown, 100); setTimeout(queueShown, 300); setTimeout(queueShown, 500); setTimeout(queueShown, 700); setTimeout(queueShown, 900);');
+await approvedChurn.advance(10000);
+const ac = approvedChurn.run('__swt.read()');
+assert.equal(ac.asked, 9);
+assert.equal(ac.cleared, 5);
+assert.equal(ac.fired, 4);
+assert.equal(ac.pendingAtStart, 1);
+assert.equal(ac.pending, 1);
+assert.equal(ac.peakPending, 1);
+assert.deepEqual(Array.from(ac.badAsks), []);
+assert.deepEqual(Array.from(ac.badClears), []);
+assert.equal(ac.rearms, 5, 'each approved clear followed by a re-arm is one rearm cycle');
+assert.match(restChurn(ac), /redundant clear\/rearm/, 'balanced churn at approved sites must fail row 13');
+// the legitimate single queued-check clear keeps its pass (one rearm, five fires)
+assert.equal(normal.rearms, 1);
+assert.equal(restChurn(normal), '', 'a genuine queued check can replace even a timer armed before the window');
+
 const overlap = fixture({ ...range, ...chainSites }, chain);
 overlap.run('__swt.arm(); awaitShow(2000); checkShownNow();');
 assert.match(restChurn(overlap.run('__swt.read()')), /2 timers were pending at once/);

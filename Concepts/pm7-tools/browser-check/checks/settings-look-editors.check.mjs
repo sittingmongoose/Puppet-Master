@@ -23,6 +23,22 @@
 // Each test runs on the surfaces asked for (normal and T3's sandbox unless --set sandbox= picks one).
 import { decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 
+// PM7-B12-PIP-CHIRP-ALEXIS + R135-F4: B-12 failed 1 of 144 Alexis runs with engine log [] on main and the branch
+// pages alike (a host sound matter). Only a cause that actually stops speak() logging names the host: speak()
+// (15-sound.js:2529-2539) logs played:true even on a SUSPENDED context (ensureContext returns it; resume() is
+// async), so a context that could not be created or was closed ('none'/'closed') or 'no-audio' drops (voice(),
+// 15-sound.js:1750) are the host causes. Other drop reasons (rate, merged, rest, ...) are ordinary engine traffic.
+// Such a host read is a named could-not-judge, never a page failure; a silent or short engine otherwise still fails.
+// Exported for tools/settings-chirp-verdict.selftest.mjs.
+export function chirpVerdict({ got, want, host }) {
+	if (got.length >= want) return { pass: true, couldNotJudge: false, note: JSON.stringify(got) };
+	const noAudio = host ? host.dropped.filter((d) => d.endsWith(':no-audio')) : [];
+	if (host && (host.ctx === 'none' || host.ctx === 'closed' || noAudio.length > 0)) {
+		return { pass: false, couldNotJudge: true, note: `could not judge: host audio (PM7-B12-PIP-CHIRP-ALEXIS) — the sound context is ${host.ctx} after the trusted press${noAudio.length ? `, the engine dropped ${noAudio.join(', ')}` : ''}; check the host's audio device/autoplay policy for the kit; ${JSON.stringify(got)}` };
+	}
+	return { pass: false, couldNotJudge: false, note: JSON.stringify(got) };
+}
+
 const BEHAVIOUR = ['code.terminal.shell', 'code.terminal.cwd', 'code.terminal.startup-command', 'code.terminal.layout-restore', 'code.terminal.kill-confirm'];
 const LOOK = ['theme', 'scheme-pair', 'min-contrast', 'import-scheme', 'font-family', 'font-size', 'font-weight', 'line-height', 'letter-spacing', 'ligatures', 'bold-bright', 'rendering-mode',
 	'cursor-shape', 'cursor-blink', 'cursor-trail', 'background', 'background-color', 'background-gradient', 'background-image', 'background-image-file', 'background-fit', 'background-desaturate',
@@ -284,6 +300,13 @@ for (const surface of ['normal', 'sandbox']) {
 		if (!(await t.check('the Project\'s sound is on', ready === 'on', ready))) return;
 		const chirps = (from) => f.evaluate((n) => O55.sound.log.slice(n).filter((e) => /^pip:(cheer|alert|think|wake|happy|wink)/.test(e.event) && e.played).map((e) => e.event), from);
 		const mark = () => f.evaluate(() => O55.sound.log.length);
+		// settle the engine log before reading it: the minimum dwell, then a bounded poll for the played chirps
+		const settleChirps = async (from, want, minMs) => {
+			await t.page.waitForTimeout(minMs);
+			await f.waitForFunction(([n, w]) => O55.sound.log.slice(n).filter((e) => /^pip:(cheer|alert|think|wake|happy|wink)/.test(e.event) && e.played).length >= w, [from, want], { timeout: 6000, polling: 250 }).catch(() => {});
+			return chirps(from);
+		};
+		const hostAudio = (from) => f.evaluate((n) => ({ ctx: O55.sound.ctx ? O55.sound.ctx.state : 'none', muted: O55.sound.muted, dropped: O55.sound.log.slice(n).filter((e) => e.dropped === 'no-audio').map((e) => `${e.event}:${e.dropped}`), entries: O55.sound.log.slice(n).length }), from);
 		const part = (on) => f.evaluate(async (want) => { const R = PM_PIP_PARTS; if (!!R.get('app-voice') !== want) { const c = document.querySelector('.pipe-chip[data-pipe-part="app-voice"]'); if (c) c.click(); } await new Promise((r) => setTimeout(r, 300)); return !!R.get('app-voice'); }, on);
 		// the sample, with "Pip chirps in the app" off
 		await part(false);
@@ -292,9 +315,9 @@ for (const surface of ['normal', 'sandbox']) {
 			await hear.scrollIntoViewIfNeeded();
 			const m0 = await mark();
 			await hear.click();
-			await t.page.waitForTimeout(600);
-			const got = await chirps(m0);
-			await t.check('Hear Pip’s chirp sounds a chirp (engine log), with the part off', got.length >= 1, JSON.stringify(got));
+			const got = await settleChirps(m0, 1, 600);
+			const v = chirpVerdict({ got, want: 1, host: await hostAudio(m0) });
+			await t.check('Hear Pip’s chirp sounds a chirp (engine log), with the part off', v.pass, v.note);
 		}
 		// Play with the part off: silent, and says so
 		const playLine = await f.evaluate(() => (document.querySelector('.pipe-play-sound') || {}).textContent || '');
@@ -306,8 +329,8 @@ for (const surface of ['normal', 'sandbox']) {
 		await play.scrollIntoViewIfNeeded();
 		const m1 = await mark();
 		await play.click();
-		await t.page.waitForTimeout(5600);
-		const got = await chirps(m1);
-		await t.check('Play chirps as the team works (engine log)', got.length >= 3, JSON.stringify(got));
+		const got = await settleChirps(m1, 3, 5600);
+		const v = chirpVerdict({ got, want: 3, host: await hostAudio(m1) });
+		await t.check('Play chirps as the team works (engine log)', v.pass, v.note);
 	};
 }

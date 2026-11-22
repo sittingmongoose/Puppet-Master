@@ -20,18 +20,19 @@ const SIZES = [[1920, 1080], [1390, 900], [1024, 900], [860, 900], [740, 768], [
 const ITEM = ':is(.o55-lookopt, .o55-lookmodes button)';
 const list = (v, all) => (v ? String(v).split(',').map((s) => s.trim()).filter(Boolean) : all);
 
-export async function clickLookButton(f, slots = localBrowserSlots) {
+export async function clickLookButton(f, slots = localBrowserSlots, hostInfo = {}) {
 	try {
 		await f.locator('#pm-o55-onboarding .o55-head .o55-lookbtn').click();
 	} catch (error) {
 		if (error.name !== 'TimeoutError') throw error;
-		throw new Error(`${error.message.split('\n')[0]}. ${await slots()}`, { cause: error });
+		throw new Error(`${error.message.split('\n')[0]}. ${await slots(hostInfo)}`, { cause: error });
 	}
 }
 
 async function cell(t, surface, w, h) {
 	if (!t.app.surfaces().includes(surface)) { t.log(`skipped: the sandbox switch leaves out the ${surface} surface`); return; }
 	await t.viewport(w, h);
+	const slotsInfo = { host: t.run.host || null, attached: t.run.session?.kind === 'cdp' };
 	const f = await t.app.open({ onboarding: true, query: 'o55=fresh', sandbox: surface === 'sandbox' });
 	await f.waitForFunction(() => window.O55?.S?.open && !!document.querySelector('#pm-o55-onboarding .o55-lookbtn'), null, { timeout: 30000 });
 	const size = await f.evaluate(() => ({ w: innerWidth, h: innerHeight, layout: O55.S.root.getAttribute('data-o55-layout') || 'wide' }));
@@ -55,7 +56,7 @@ async function cell(t, surface, w, h) {
 			await f.evaluate(() => O55.ui.go('look', { noHistory: true }));
 			await f.waitForTimeout(400);
 			try {
-				await clickLookButton(f);
+				await clickLookButton(f, localBrowserSlots, slotsInfo);
 				await f.waitForFunction(() => O55.S.lookOpen && !!document.querySelector('#pm-o55-onboarding .o55-lookmenu'), null, { timeout: 5000 });
 				await f.waitForTimeout(250);
 				const pad0 = await f.evaluate(() => { const r = document.querySelector('#pm-o55-onboarding .o55-lookmenu').getBoundingClientRect(); return { x: r.left + 4, y: r.top + r.height / 2 }; });
@@ -75,9 +76,9 @@ async function cell(t, surface, w, h) {
 			await f.evaluate(async () => { const p = document.querySelector('#pm-o55-onboarding .o55-nierpanel'); await Promise.all(p.getAnimations({ subtree: true }).filter((a) => Number.isFinite(a.effect.getComputedTiming().endTime)).map((a) => a.finished.catch(() => {}))); });
 			await f.waitForTimeout(300);
 			/* the header's Look button, by a real click, as a person opens it */
-			await clickLookButton(f);
+			await clickLookButton(f, localBrowserSlots, slotsInfo);
 			const menuOpen = await f.waitForFunction(() => O55.S.lookOpen && !!document.querySelector('#pm-o55-onboarding .o55-lookslot .o55-lookmenu'), null, { timeout: 5000 }).then(() => true, () => false);
-			await t.check(`FO-81 header Look menu opens over the editor ${tag}`, menuOpen, menuOpen ? undefined : await localBrowserSlots(), { hard: true });
+			await t.check(`FO-81 header Look menu opens over the editor ${tag}`, menuOpen, menuOpen ? undefined : await localBrowserSlots(slotsInfo), { hard: true });
 			await f.evaluate(async () => { const m = document.querySelector('#pm-o55-onboarding .o55-lookmenu'); await Promise.all(m.getAnimations({ subtree: true }).filter((a) => Number.isFinite(a.effect.getComputedTiming().endTime)).map((a) => a.finished.catch(() => {}))); });
 			const scan = await f.evaluate((ITEM) => {
 				const menu = document.querySelector('#pm-o55-onboarding .o55-lookslot .o55-lookmenu');
@@ -178,14 +179,14 @@ async function cell(t, surface, w, h) {
 					const s1 = await st();
 					await t.check(`FO-81 a press in the editor closes the menu and keeps the editor ${tag}`, !s1.menu && s1.panel && s1.win, JSON.stringify({ at, ...s1 }));
 				}
-				if (!(await st()).menu) { await clickLookButton(f); await f.waitForTimeout(250); }
+				if (!(await st()).menu) { await clickLookButton(f, localBrowserSlots, slotsInfo); await f.waitForTimeout(250); }
 				if (fam === 'nier') {
 					await click(await centre('#pm-o55-onboarding .o55-lookmenu .o55-looknier-adjust'));
 					const s2 = await st();
 					await t.check(`FO-81 Adjust NieR in the menu gives way to the open editor ${tag}`, !s2.menu && s2.panel && s2.focus === 'heading', JSON.stringify(s2));
-				if (!(await st()).menu) { await clickLookButton(f); await f.waitForTimeout(250); }
+				if (!(await st()).menu) { await clickLookButton(f, localBrowserSlots, slotsInfo); await f.waitForTimeout(250); }
 				}
-				const reopen = async () => { if (!(await st()).menu) { await clickLookButton(f); await f.waitForTimeout(250); } };
+				const reopen = async () => { if (!(await st()).menu) { await clickLookButton(f, localBrowserSlots, slotsInfo); await f.waitForTimeout(250); } };
 				/* a ? in the menu over the editor: its note shows, wherever it opens (the menu; Pip's stage lies under the
 				   editor): the top box at its centre and four inset points is the note, it is painted, and its words are
 				   written out in full (FO-81 recheck: at the wide sizes the note went to the covered stage) */

@@ -47,6 +47,8 @@
 //
 // --set looks=<a,b>  default basic-dark,nier-dark (the writers do not depend on the look); looks=all for all ten
 // --set settle=<ms>  wait after load (default 40000)
+// --set predecessor=0  measure only the standalone state; the default also runs the perf-rest predecessor's route
+//                      and measures the same windows again (PM7-PERF-QUIET-PREDECESSOR), with the same bounds.
 // Both surfaces. A place that is missing from the page fails as "could not judge", it does not pass.
 import { muteSound, parkPointer } from '../helpers/quiet-page.mjs';
 import { DOM_LISTEN, DOM_READ } from '../helpers/dom-writes.mjs';
@@ -67,6 +69,16 @@ const STATE = () => {
 	return { art: drawn('artLiveElapsed'), tst: drawn('tstLiveElapsed'), orchestrator: !!orch, orchestratorShown: !!(orch && orch.classList.contains('active')) };
 };
 
+// PM7-PERF-QUIET-PREDECESSOR: five fresh standalone Basic Dark runs passed 7 same-value writes each while the same
+// head after the original unchanged perf-rest predecessor failed 44/40 (sol-witness-{1..5}-fix vs sol-prefix-1-fix).
+// The default run therefore measures the standalone windows, then runs perf-rest's own default route (its four
+// looks and the two views it visits) and measures the same windows again with the same bounds, so one isolated run
+// covers the reachable failing state. Exported for tools/quiet-writes-predecessor.selftest.mjs.
+export const PREDECESSOR_ROUTE = { looks: ['basic-dark', 'glass-dark', 'retro-dark', 'nier-dark'], lookSettle: 5000, views: ['settings', 'dashboard'], viewSettle: 2000 };
+export function quietPhases(predecessorArg) {
+	return String(predecessorArg ?? '1') === '0' ? ['standalone'] : ['standalone', 'after-predecessor'];
+}
+
 export default async function (t) {
 	const want = String(t.args.looks || 'basic-dark,nier-dark');
 	const looks = want === 'all' ? ALL : want.split(',').filter(Boolean);
@@ -78,41 +90,55 @@ export default async function (t) {
 	await f.evaluate(() => document.fonts.ready.then(() => true));
 	await t.page.waitForTimeout(Number(t.args.settle ?? 40000));
 
-	for (const look of looks) {
-		await t.app.look(look);
-		await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 }).catch(() => {});
-		// the look change's own aftermath: the parked Customize screens redraw themselves, unseen, 3 to 10 s after it (their
-		// settle, then an idle moment or their 10 s backstop); that redraw must write only what differs. Listened to from
-		// the cover's end for --set lookListen ms.
-		{
-			await f.evaluate(DOM_LISTEN);
-			await t.page.waitForTimeout(Number(t.args.lookListen ?? 14000));
-			const r = await f.evaluate(DOM_READ, PLACES);
-			t.log(`${look} after the look change: ${r.records} DOM records in ${r.secs.toFixed(1)} s, ${r.same} same-value, elsewhere ${r.otherSame} (per second ${r.otherPerSecond.join(' ')})`);
-			for (const [k, n] of r.others) t.log(`  NOTE same-value write after the look change x${n}: ${k}`);
-			await t.check(`${look}: after the look change, at most ${burstMax} same-value writes outside the places above (the parked Customize screens' redraw)`, r.otherSame <= burstMax, `${r.otherSame} in ${r.secs.toFixed(1)} s; ${r.others.slice(0, 3).map(([k, n]) => k + ' x' + n).join('; ')}`);
+	for (const phase of quietPhases(t.args.predecessor)) {
+		const suffix = phase === 'standalone' ? '' : ' (after the perf-rest predecessor)';
+		if (phase === 'after-predecessor') {
+			// the predecessor's state-changing route: perf-rest's default look cycle and view visits on this same page
+			for (const look of PREDECESSOR_ROUTE.looks) {
+				await t.app.look(look);
+				await t.page.waitForTimeout(PREDECESSOR_ROUTE.lookSettle);
+				for (const pageId of PREDECESSOR_ROUTE.views) {
+					await f.evaluate((id) => PM_PAGES.go(id), pageId);
+					await t.page.waitForTimeout(PREDECESSOR_ROUTE.viewSettle);
+				}
+			}
 		}
-		for (const [view, pageId] of [['settings', 'settings'], ['home', 'dashboard']]) {
-			await f.evaluate((id) => PM_PAGES.go(id), pageId);
-			await parkPointer(t.page, W, H);
-			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 5000));
-			const st = await f.evaluate(STATE);
-			await f.evaluate(DOM_LISTEN);
-			await t.page.waitForTimeout(view === 'home' ? homeMs : ms);
-			const r = await f.evaluate(DOM_READ, PLACES);
-			const at = `${look} ${view}`, per = (n) => (n / r.secs).toFixed(1) + '/s', P = r.places;
-			t.log(`${at}: ${r.records} DOM records in ${r.secs.toFixed(1)} s (${per(r.records)}), ${r.same} same-value: status bar ${P.status.same}, notice age ${P.notice.same}, Orchestrator page ${P.orchestrator.same}, elsewhere ${r.otherSame} (per second ${r.otherPerSecond.join(' ')})`);
-			for (const [k, n] of r.others) t.log(`  NOTE same-value write elsewhere x${n}: ${k}`);
-			await t.check(`${at}: nothing in the status bar is rewritten with the value it holds`, P.status.found > 0 && P.status.same === 0, P.status.found ? `${P.status.same} same-value writes (${per(P.status.same)}) ${P.status.eg.join('; ')}` : 'no #pm7GlobalStatusBar with a .pm7-work-item: could not judge');
-			await t.check(`${at}: the front notice's age is not rewritten with the text it holds`, P.notice.found > 0 && P.notice.same === 0, P.notice.found ? `${P.notice.same} same-value writes (${per(P.notice.same)}) ${P.notice.eg.join('; ')}` : 'no .pmn-front-when: could not judge');
-			await t.check(`${at}: the Orchestrator page, not shown, is not rewritten with the values it holds`, st.orchestrator && !st.orchestratorShown && P.orchestrator.same === 0, !st.orchestrator ? 'no #panel-orchestrator: could not judge' : st.orchestratorShown ? 'the Orchestrator page is shown here: could not judge' : `${P.orchestrator.same} same-value writes (${per(P.orchestrator.same)}) ${P.orchestrator.eg.join('; ')}`);
-			await t.check(`${at}: in a typical second at most ${othersMax} same-value writes land anywhere else`, r.otherMedian <= othersMax, `median ${r.otherMedian} a second; per second ${r.otherPerSecond.join(' ')}; ${r.otherSame} in all`);
-			await t.check(`${at}: in the whole window at most ${totalMax} same-value writes land anywhere else (no redraw rewrites what it holds)`, r.otherSame <= totalMax, `${r.otherSame} in ${r.secs.toFixed(1)} s; ${r.others.slice(0, 3).map(([k, n]) => k + ' x' + n).join('; ')}`);
-			for (const [key, id] of [['art', 'artLiveElapsed'], ['tst', 'tstLiveElapsed']]) {
-				const s = st[key];
-				if (!s.found) { await t.check(`${at}: the shelf counter #${id} could be judged`, false, 'not in the page'); continue; }
-				if (s.drawn) { t.log(`${at}: NOTE #${id}'s row is drawn here (${P[key].records} writes, text ${s.text}): the hidden-row rule is not judged in this view`); continue; }
-				await t.check(`${at}: the shelf counter #${id} is not written while its row is not drawn`, P[key].records === 0, `${P[key].records} writes in ${r.secs.toFixed(1)} s, text ${s.text}`);
+		for (const look of looks) {
+			await t.app.look(look);
+			await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 }).catch(() => {});
+			// the look change's own aftermath: the parked Customize screens redraw themselves, unseen, 3 to 10 s after it (their
+			// settle, then an idle moment or their 10 s backstop); that redraw must write only what differs. Listened to from
+			// the cover's end for --set lookListen ms.
+			{
+				await f.evaluate(DOM_LISTEN);
+				await t.page.waitForTimeout(Number(t.args.lookListen ?? 14000));
+				const r = await f.evaluate(DOM_READ, PLACES);
+				t.log(`${look}${suffix} after the look change: ${r.records} DOM records in ${r.secs.toFixed(1)} s, ${r.same} same-value, elsewhere ${r.otherSame} (per second ${r.otherPerSecond.join(' ')})`);
+				for (const [k, n] of r.others) t.log(`  NOTE same-value write after the look change x${n}: ${k}`);
+				await t.check(`${look}${suffix}: after the look change, at most ${burstMax} same-value writes outside the places above (the parked Customize screens' redraw)`, r.otherSame <= burstMax, `${r.otherSame} in ${r.secs.toFixed(1)} s; ${r.others.slice(0, 3).map(([k, n]) => k + ' x' + n).join('; ')}`);
+			}
+			for (const [view, pageId] of [['settings', 'settings'], ['home', 'dashboard']]) {
+				await f.evaluate((id) => PM_PAGES.go(id), pageId);
+				await parkPointer(t.page, W, H);
+				await t.page.waitForTimeout(Number(t.args.viewSettle ?? 5000));
+				const st = await f.evaluate(STATE);
+				await f.evaluate(DOM_LISTEN);
+				await t.page.waitForTimeout(view === 'home' ? homeMs : ms);
+				const r = await f.evaluate(DOM_READ, PLACES);
+				const at = `${look} ${view}${suffix}`, per = (n) => (n / r.secs).toFixed(1) + '/s', P = r.places;
+				t.log(`${at}: ${r.records} DOM records in ${r.secs.toFixed(1)} s (${per(r.records)}), ${r.same} same-value: status bar ${P.status.same}, notice age ${P.notice.same}, Orchestrator page ${P.orchestrator.same}, elsewhere ${r.otherSame} (per second ${r.otherPerSecond.join(' ')})`);
+				for (const [k, n] of r.others) t.log(`  NOTE same-value write elsewhere x${n}: ${k}`);
+				await t.check(`${at}: nothing in the status bar is rewritten with the value it holds`, P.status.found > 0 && P.status.same === 0, P.status.found ? `${P.status.same} same-value writes (${per(P.status.same)}) ${P.status.eg.join('; ')}` : 'no #pm7GlobalStatusBar with a .pm7-work-item: could not judge');
+				await t.check(`${at}: the front notice's age is not rewritten with the text it holds`, P.notice.found > 0 && P.notice.same === 0, P.notice.found ? `${P.notice.same} same-value writes (${per(P.notice.same)}) ${P.notice.eg.join('; ')}` : 'no .pmn-front-when: could not judge');
+				await t.check(`${at}: the Orchestrator page, not shown, is not rewritten with the values it holds`, st.orchestrator && !st.orchestratorShown && P.orchestrator.same === 0, !st.orchestrator ? 'no #panel-orchestrator: could not judge' : st.orchestratorShown ? 'the Orchestrator page is shown here: could not judge' : `${P.orchestrator.same} same-value writes (${per(P.orchestrator.same)}) ${P.orchestrator.eg.join('; ')}`);
+				await t.check(`${at}: in a typical second at most ${othersMax} same-value writes land anywhere else`, r.otherMedian <= othersMax, `median ${r.otherMedian} a second; per second ${r.otherPerSecond.join(' ')}; ${r.otherSame} in all`);
+				await t.check(`${at}: in the whole window at most ${totalMax} same-value writes land anywhere else (no redraw rewrites what it holds)`, r.otherSame <= totalMax, `${r.otherSame} in ${r.secs.toFixed(1)} s; ${r.others.slice(0, 3).map(([k, n]) => k + ' x' + n).join('; ')}`);
+				for (const [key, id] of [['art', 'artLiveElapsed'], ['tst', 'tstLiveElapsed']]) {
+					const s = st[key];
+					if (!s.found) { await t.check(`${at}: the shelf counter #${id} could be judged`, false, 'not in the page'); continue; }
+					if (s.drawn) { t.log(`${at}: NOTE #${id}'s row is drawn here (${P[key].records} writes, text ${s.text}): the hidden-row rule is not judged in this view`); continue; }
+					await t.check(`${at}: the shelf counter #${id} is not written while its row is not drawn`, P[key].records === 0, `${P[key].records} writes in ${r.secs.toFixed(1)} s, text ${s.text}`);
+				}
 			}
 		}
 	}

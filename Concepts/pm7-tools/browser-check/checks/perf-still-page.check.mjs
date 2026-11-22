@@ -95,7 +95,7 @@ export const CENSUS = () => {
 			const markedPart = !!(el && el.getAttribute && (el.getAttribute('data-pm-held') || '').split(' ').includes(a.effect.pseudoElement ? a.effect.pseudoElement.replace(/^::?/, '') : 'self'));
 			// each running loop's start (document timeline time, performance.now()'s clock), its mark and whether a finite
 			// animation runs on the same element (the page waits for that to end before it holds the loop)
-			if (a.playState === 'running') { if (caret) out.exempt.push(what); else { out.run.push(what); keep.push(a); out.runAt.push({ what, start: a.startTime, held: (el && el.getAttribute && el.getAttribute('data-pm-held')) || '', finite: !!(el && el.getAnimations && el.getAnimations().some((x) => { try { return x !== a && x.effect && x.effect.target === el && x.playState === 'running' && x.effect.getTiming().iterations !== Infinity; } catch (e) { return false; } })) }); } }
+			if (a.playState === 'running') { if (caret) out.exempt.push(what); else { out.run.push(what); keep.push(a); out.runAt.push({ what, start: a.startTime, state: a.playState, pending: !!a.pending, currentTime: a.currentTime ?? null, held: (el && el.getAttribute && el.getAttribute('data-pm-held')) || '', finite: !!(el && el.getAnimations && el.getAnimations().some((x) => { try { return x !== a && x.effect && x.effect.target === el && x.playState === 'running' && x.effect.getTiming().iterations !== Infinity; } catch (e) { return false; } })) }); } }
 			else if (a.playState === 'paused' && markedPart) { out.held++; keep.push(a); }
 		} else if (a.playState === 'paused') out.finPaused.push(what);
 		else if (a.playState === 'running') { out.finRun++; if (out.finList.length < 6) { let d = 0; try { d = Math.round(a.effect.getComputedTiming().activeDuration); } catch (e) { /* none */ } out.finList.push(`${what} (${d} ms)`); } }
@@ -144,6 +144,18 @@ export function stillJudged(view, { drawn = 15, main = 10, starts = 60, hz = nul
 	if (view === 'usage') return { rows: [], meets: (q) => d(q) <= drawn && m(q) <= main, score: (q) => [d(q) + m(q), s(q)], startCap, hz };
 	if (view === 'dashboard') return { rows: ['drawn'], meets: (q) => d(q) <= drawn, score: (q) => [d(q), m(q), s(q)], startCap, hz };
 	return { rows: ['drawn', 'rendered', 'starts'], meets: (q) => d(q) <= drawn && m(q) <= main && startsOk(q), score: (q) => [d(q) + m(q), s(q)], startCap, hz };
+}
+
+// The 23 s Home census split (PM7PERF-STILL-PENDING-AGE): a queued animation (Chrome's pending flag, null start,
+// current time 0 — sol-max-15's instrumented runtime saw five at 22780.6 ms after the last move) is logged, not
+// judged; an older loop (started before the still mark, or more than lookAgain before the census, or an unclassified
+// null start) is due; one that began after the still mark and less than lookAgain before the census is young, logged.
+// Exported for tools/still-home-census.selftest.mjs.
+export function stillHomeDue(runAt, { stillAt, now, lookAgain = 5000 }) {
+	const queued = runAt.filter((r) => r.pending && r.start == null && (r.currentTime == null || r.currentTime === 0));
+	const due = runAt.filter((r) => !queued.includes(r) && (stillAt == null || r.start == null || r.start < stillAt || now - r.start > lookAgain));
+	const young = runAt.filter((r) => !due.includes(r) && !queued.includes(r));
+	return { due, young, queued };
 }
 
 // The still state's marks in a trace's events and, per mark, the style recalcs of the page's main thread after it
@@ -332,15 +344,16 @@ export default async function (t) {
 		const at23 = await f0.evaluate(CENSUS);
 		// judged: a loop running at 23 s that began before the still mark (held at the toggle) or more than LOOK_AGAIN
 		// (4 s) + 1 s before the census (its next look would have held it); logged: one that began since, with its age
-		const lookAgain = 5000;
-		const age = (r) => r.start == null ? null : Math.round(at23.now - r.start);
-		const due = at23.runAt.filter((r) => at23.stillAt == null || r.start == null || r.start < at23.stillAt || at23.now - r.start > lookAgain);
-		const young = at23.runAt.filter((r) => !due.includes(r));
-		const fmt = (rs) => rs.slice(0, 4).map((r) => `${r.what} (started ${age(r) == null ? '?' : age(r) + ' ms'} before the census${r.held ? ', marked ' + r.held : ''}${r.finite ? ', a finite animation on it' : ''})`).join('; ');
-		const stillFor = at23.stillAt == null ? null : Math.round(at23.now - at23.stillAt);
-		if (young.length) t.log(`basic-dark Home, no hook: NOTE ${young.length} loops began after the page went still and less than ${lookAgain} ms before the 23 s census, logged, not judged: ${fmt(young)}`);
-		await t.check('basic-dark Home, no hook: not still 18 s after the last input', !at18.still && at18.run.length > 0, `still ${at18.still}, ${at18.run.length} endless running`);
-		await t.check('basic-dark Home, no hook: still 23 s after the last input, nothing endless running', at23.still && due.length === 0, `still ${at23.still}${at23.hasScript ? '' : ' (no still-page script in this page)'}${stillFor == null ? '' : ` (for ${stillFor} ms)`}, ${due.length} endless running that the page should hold by now${due.length ? ': ' + fmt(due) : ''}${young.length ? `; ${young.length} younger logged` : ''}`);
+	const lookAgain = 5000;
+	const age = (r) => r.start == null ? null : Math.round(at23.now - r.start);
+	const { due, young, queued } = stillHomeDue(at23.runAt, { stillAt: at23.stillAt, now: at23.now, lookAgain });
+	const fmt = (rs) => rs.slice(0, 4).map((r) => `${r.what} (started ${age(r) == null ? '?' : age(r) + ' ms'} before the census${r.held ? ', marked ' + r.held : ''}${r.finite ? ', a finite animation on it' : ''})`).join('; ');
+	const fmtQueued = (rs) => rs.slice(0, 5).map((r) => `${r.what} (pending, current time ${r.currentTime ?? '?'}, no start)`).join('; ');
+	const stillFor = at23.stillAt == null ? null : Math.round(at23.now - at23.stillAt);
+	if (queued.length) t.log(`basic-dark Home, no hook: NOTE ${queued.length} endless animations queued at the 23 s census (pending, null start, current time 0), logged, not judged: ${fmtQueued(queued)}`);
+	if (young.length) t.log(`basic-dark Home, no hook: NOTE ${young.length} loops began after the page went still and less than ${lookAgain} ms before the 23 s census, logged, not judged: ${fmt(young)}`);
+	await t.check('basic-dark Home, no hook: not still 18 s after the last input', !at18.still && at18.run.length > 0, `still ${at18.still}, ${at18.run.length} endless running`);
+	await t.check('basic-dark Home, no hook: still 23 s after the last input, nothing endless running', at23.still && due.length === 0, `still ${at23.still}${at23.hasScript ? '' : ' (no still-page script in this page)'}${stillFor == null ? '' : ` (for ${stillFor} ms)`}, ${due.length} endless running that the page should hold by now${due.length ? ': ' + fmt(due) : ''}${queued.length ? `; ${queued.length} queued logged` : ''}${young.length ? `; ${young.length} younger logged` : ''}`);
 	}
 
 	const f = await t.app.open({ query: `pm-warm=0&pm-still=${after}` });

@@ -129,6 +129,155 @@ const VIEWS = {
 	settings: (f) => f.evaluate(() => PM_PAGES.go('settings'))
 };
 
+// PM7-FRAMECOST-SCROLL-START / PM7-FRAMECOST-HOME-NOSCROLL (exported for tools/frame-cost-scroll.selftest.mjs):
+// the scroll window's plan. The view's main scroller is its largest scrollable range (ties by area); the walk
+// starts at its top and turns at its bounds, so a short board (Usage's 695 px) is not pinned for most ticks, and
+// the wheel aims at the scroller itself, not at a fixed share of the page box (Home's divider line scrolls nothing).
+export function pickScroller(candidates) {
+	let best = null;
+	for (const c of candidates) {
+		if (!(c.range > 0) || !(c.h > 0)) continue;
+		if (!best || c.range > best.range || (c.range === best.range && c.area > best.area)) best = c;
+	}
+	return best;
+}
+export function scrollStep({ top, max, dir }) {
+	if (top >= max - 1) return -1;
+	if (top <= 0) return 1;
+	return dir;
+}
+
+// PM7-FRAMECOST-HOME-NOSCROLL: the window's moved verdict — a wheel that moved nothing (Home's wheel over
+// i.pmw-divider-line scrolled no scroller) or a view with no scrollable range is a failed window, not a scroll
+// number. Exported for tools/frame-cost-scroll.selftest.mjs.
+export function scrollMovedOk({ scroller, range, travel }) {
+	return !!scroller && range > 0 && travel > 0;
+}
+
+// R135-F7: the scroll window with nothing but the wheel inside the trace (frame-trace.mjs measures "with nothing
+// added to the page"). Discovery, marking, the instant reset to the top and the pointer aim run BEFORE traceWindow;
+// a passive scroll listener installed before it accumulates the travel and pushes the live top through a CDP
+// binding, so the wheel loop turns at the bounds (scrollStep) without one f.evaluate per tick; cleanup and the
+// moved verdict run AFTER the trace. R136-N4: Settings' scroller is scroll-behavior:smooth — a bare scrollTop = 0
+// animates back to the top INSIDE the trace and credits the reset to travel, so the reset jumps instantly (inline
+// scroll-behavior:auto, restored after) and must read 0 stable for two frames before the watch starts counting.
+// PM7-FRAMECOST-SCROLL-START / HOME-NOSCROLL: the walk still starts at the scroller's top, aims at the scroller
+// itself (Home's divider line scrolls nothing) and fails when nothing moved. Exported for
+// tools/frame-cost-scroll.selftest.mjs, which drives it with a fake trace, CDP session and page. R137-F3: the
+// wheel loop's clock is injectable (now/wait, defaulting to Date.now and a setTimeout promise, so the check
+// behaves exactly as before); the selftest passes a virtual clock whose wait(ms) advances time without
+// sleeping, so every case is deterministic on a loaded host instead of racing a ~42 ms real-time margin.
+export async function measureScroll(cdp, f, t, { ms, url, keep, label, trace = traceWindow, now = Date.now, wait = (ms) => new Promise((r) => setTimeout(r, ms)) }) {
+	const cands = await f.evaluate(() => {
+		const root = document.querySelector('#pm-o55-onboarding .o55-pane') || document.querySelector('.page.active') || document.body;
+		const out = [];
+		for (const el of [root, ...root.querySelectorAll('*')]) {
+			const cs = getComputedStyle(el);
+			if (!/(auto|scroll)/.test(cs.overflowY)) continue;
+			const range = el.scrollHeight - el.clientHeight;
+			if (range <= 0) continue;
+			const r = el.getBoundingClientRect();
+			if (r.height <= 0 || r.width <= 0) continue;
+			const i = out.length;
+			el.setAttribute('data-fc-cand', String(i));
+			out.push({ i, range, h: r.height, area: r.width * r.height, x: r.left + r.width / 2, y: r.top + r.height / 2, name: el.id || String(el.className).slice(0, 40) });
+		}
+		return out;
+	});
+	const best = pickScroller(cands);
+	let liveTop = 0, onBinding = null, settled = true;
+	let frameCdp = cdp, frameSessionFailed = false;
+	if (best) {
+		// R136-N5: under --set sandbox=1 the app is an opaque-origin OOPIF; Runtime.addBinding on the page's
+		// session never injects __fcTop into the frame, liveTop stayed 0 and the wheel pinned at the bottom
+		// bound while travel still passed. The binding lives on the frame's own CDP session (kit convention);
+		// Tracing stays on cdp. Without a frame session the window says could-not-judge, never a silent pass.
+		// R137-F2: an in-process child frame (--record's framed viewport, any shared-target sandbox) has no
+		// session of its own — Playwright throws "part of the parent frame" — but it IS part of cdp's target,
+		// so the binding rides cdp there (sound-prime/cold-bell/activity-bar-focus-film convention); the
+		// frameCdp !== cdp guard below keeps cdp from being detached. Any other error stays could-not-judge.
+		if (f !== t.page.mainFrame()) frameCdp = await t.page.context().newCDPSession(f).catch((e) => (String(e?.message || '').includes('part of the parent frame') ? cdp : null));
+		if (!frameCdp) frameSessionFailed = true;
+		else {
+			await frameCdp.send('Runtime.enable');
+			await frameCdp.send('Runtime.addBinding', { name: '__fcTop' });
+			onBinding = (e) => { if (e.name === '__fcTop') liveTop = Number(e.payload) || 0; };
+			frameCdp.on('Runtime.bindingCalled', onBinding);
+			await f.evaluate((i) => {
+				const el = document.querySelector(`[data-fc-cand="${i}"]`);
+				el.setAttribute('data-fc-scroller', '1');
+				el.__fcBehavior = el.style.getPropertyValue('scroll-behavior');
+				el.style.setProperty('scroll-behavior', 'auto');
+				el.scrollTop = 0;
+			}, best.i);
+			settled = await f.evaluate(() => new Promise((resolve) => {
+				const el = document.querySelector('[data-fc-scroller]');
+				const deadline = performance.now() + 2000;
+				let stable = 0;
+				const check = () => {
+					if (el.scrollTop === 0) { if (++stable >= 2) return resolve(true); }
+					else stable = 0;
+					if (performance.now() >= deadline) return resolve(false);
+					requestAnimationFrame(check);
+				};
+				requestAnimationFrame(check);
+			}));
+			await f.evaluate(() => {
+				const el = document.querySelector('[data-fc-scroller]');
+				const watch = { travel: 0, last: el.scrollTop };
+				watch.fn = () => { const top = el.scrollTop; watch.travel += Math.abs(top - watch.last); watch.last = top; if (window.__fcTop) window.__fcTop(String(top)); };
+				el.__fcWatch = watch;
+				el.addEventListener('scroll', watch.fn, { passive: true });
+			});
+			await t.page.mouse.move(Math.round(best.x), Math.round(best.y));
+		}
+	}
+	const during = best && !frameSessionFailed ? async (until) => {
+		let dir = 1;
+		while (now() < until) {
+			await t.page.mouse.wheel(0, dir * 40);
+			await wait(14);
+			dir = scrollStep({ top: liveTop, max: best.range, dir });
+		}
+	} : undefined;
+	let result, travel = 0;
+	try {
+		result = await trace(cdp, { ms, during, url, keep });
+	} finally {
+		// R136-C1: teardown runs even when the trace throws — no leaked listener, marks or binding into the next look.
+		if (best) {
+			travel = await f.evaluate(() => {
+				const el = document.querySelector('[data-fc-scroller]');
+				const w = el && el.__fcWatch;
+				if (w) { el.removeEventListener('scroll', w.fn); delete el.__fcWatch; }
+				document.querySelectorAll('[data-fc-cand]').forEach((e) => e.removeAttribute('data-fc-cand'));
+				if (el) {
+					if (el.__fcBehavior !== undefined) {
+						if (el.__fcBehavior) el.style.setProperty('scroll-behavior', el.__fcBehavior);
+						else el.style.removeProperty('scroll-behavior');
+						delete el.__fcBehavior;
+					}
+					el.removeAttribute('data-fc-scroller');
+				}
+				return w ? w.travel : 0;
+			});
+			if (onBinding) {
+				frameCdp.off('Runtime.bindingCalled', onBinding);
+				await frameCdp.send('Runtime.removeBinding', { name: '__fcTop' }).catch(() => {});
+				await frameCdp.send('Runtime.disable').catch(() => {});
+			}
+			if (frameCdp && frameCdp !== cdp) await frameCdp.detach().catch(() => {});
+		}
+	}
+	const scrollMoved = { scroller: best ? best.name : null, range: best ? best.range : 0, travel: Math.round(travel) };
+	const movedOk = !frameSessionFailed && settled && scrollMovedOk(scrollMoved);
+	const detail = frameSessionFailed
+		? 'could not judge: the sandbox frame\'s CDP session is unavailable, so the wheel cannot turn at the scroller\'s bounds (R136-N5); ' + JSON.stringify(scrollMoved)
+		: JSON.stringify({ ...scrollMoved, settled });
+	await t.check(`${label} scroll window: the view's main scroller moved under the wheel`, movedOk, detail);
+	return { result, scrollMoved };
+}
+
 export default async function (t) {
 	const looks = String(t.args.looks || LOOKS.join(',')).split(',').filter(Boolean);
 	const views = String(t.args.views || 'home,usage,settings,orchestrator,wizard,projects').split(',').filter(Boolean);
@@ -190,22 +339,24 @@ export default async function (t) {
 		});
 		for (const w of windows) {
 			const keep = traces ? path.join(traces, `${look}-${view}-${w}.json`) : null;
-			let during;
-			if (w === 'sweep') during = async (until) => {
-				// a slow zigzag over the view: about 120 real moves a second
-				let i = 0;
-				while (Date.now() < until) {
-					const k = (i++ % 240) / 240, x = box.x + 20 + (box.w - 40) * (k < 0.5 ? k * 2 : 2 - k * 2), y = box.y + 20 + (box.h - 40) * ((i % 720) / 720);
-					await t.page.mouse.move(Math.round(x), Math.round(y));
-					await new Promise((r) => setTimeout(r, 6));
-				}
-			};
-			if (w === 'scroll') during = async (until) => {
-				await t.page.mouse.move(Math.round(box.x + box.w * 0.5), Math.round(box.y + box.h * 0.55));
-				let i = 0;
-				while (Date.now() < until) { await t.page.mouse.wheel(0, (Math.floor(i++ / 30) % 2 ? -1 : 1) * 40); await new Promise((r) => setTimeout(r, 14)); }
-			};
-			row[w] = await traceWindow(cdp, { ms, during, url, keep });
+			if (w === 'scroll') {
+				// R135-F7: setup before the trace, wheel-only inside, cleanup and the moved verdict after
+				const { result, scrollMoved } = await measureScroll(cdp, f, t, { ms, url, keep, label: `${look} ${view}` });
+				row.scroll = result;
+				row.scrollMoved = scrollMoved;
+			} else {
+				let during;
+				if (w === 'sweep') during = async (until) => {
+					// a slow zigzag over the view: about 120 real moves a second
+					let i = 0;
+					while (Date.now() < until) {
+						const k = (i++ % 240) / 240, x = box.x + 20 + (box.w - 40) * (k < 0.5 ? k * 2 : 2 - k * 2), y = box.y + 20 + (box.h - 40) * ((i % 720) / 720);
+						await t.page.mouse.move(Math.round(x), Math.round(y));
+						await new Promise((r) => setTimeout(r, 6));
+					}
+				};
+				row[w] = await traceWindow(cdp, { ms, during, url, keep });
+			}
 			await t.page.mouse.move(W - 6, Math.round(H / 2));
 			await t.page.waitForTimeout(400);
 		}
