@@ -1149,7 +1149,7 @@ CHECKER_FUNCTIONS = frozenset(('validate', '_checked', 'errors', 'check')) | GUA
 # is a new pin (dg5_gate_e2/README.md).
 GATE_E2 = ROOT / 'scripts' / 'dg5_gate_e2'
 GATE_E2_PIN = {
-    'code_sites.py': '4ffb2b834c95e5e229e66fc0012b8195238a9db4f57bfefee4d1c45f2a37ca2b',
+    'code_sites.py': '917c77b7e884d0e33f6d12f9d37385880f3e7ebb8be6ad36e6a59286225cc609',
     'proof_sources.py': '335bbb989dafa21df7510bda9182693a9231cf559d39b646a7752c7b40fd837e',
 }
 _GATE_SITES = []
@@ -1207,9 +1207,14 @@ def static_single_raise_site(code):
         return dict(ok=False, reason='gate-e2 module is not the pinned file (sha256 %s, pinned %s)' % (actual, GATE_E2_PIN))
     try:
         if not _GATE_SITES or _GATE_SITES[0][1] != actual['code_sites.py']:
-            spec = importlib.util.spec_from_file_location('dg5_gate_e2_code_sites', module_path)
-            gate = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(gate)
+            # T323 N1 residual (Qwen lane B): compile the pin-checked bytes themselves; a SourceFileLoader could
+            # execute a matching .pyc (same mtime/size) instead of the pinned .py on a manual run without a fresh
+            # PYTHONPYCACHEPREFIX (JUDGE-FIX-R2 probe_c). The sha check above already bound these exact bytes.
+            import types
+            data = module_path.read_bytes()
+            gate = types.ModuleType('dg5_gate_e2_code_sites')
+            gate.__file__ = str(module_path)
+            exec(compile(data, str(module_path), 'exec'), gate.__dict__)
             files = {str(p.relative_to(ROOT)): p.read_text() for p in sorted((ROOT / 'scripts').glob('*.py'))
                      if p.name.startswith(SITE_MODULE_PREFIXES)}
             _GATE_SITES[:] = [(gate.OwnerSites(files), actual['code_sites.py'])]
