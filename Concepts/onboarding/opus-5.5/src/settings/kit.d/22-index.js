@@ -27,13 +27,19 @@ const pm51TabLabel = (ws, t) => (((PLACEMENT && PLACEMENT.managers[ws]) || {}).t
    far below the list's top, and "For the whole project" stayed lit while the list filled the screen (Jared,
    2026-11-21: "the highlight on the submenu doesnt work properly ... still not fixed"). The copy a tab switch is
    morphing out (.o55-leaving) is not the page: an anchor left on it no longer counts, and none is adopted into it, or
-   the arriving copy got no anchors and the open tab listed no groups once the leaving copy was gone. */
+   the arriving copy got no anchors and the open tab listed no groups once the leaving copy was gone.
+   Only the open tab's groups are adopted, as pm51PlaceInline places only its groups and the index lists only its
+   entries: a row of another tab's group can be drawn on this one (Image Generation's Defaults card shows "Saves to",
+   media.io.artifacts-location, of Pictures & files' "Where results go"), and adopting it there lit "Where results go"
+   over the last third of the abilities list and listed it under Abilities, where a click set the tab without redrawing
+   the page (neon-max-16, 2026-11-22; Services listed Limits & switching's "Moving between accounts" the same way). */
 const pm51Live = (scope, sel) => [...scope.querySelectorAll(sel)].find(el => !el.closest('.o55-leaving'));
 function pm51AdoptAnchors(ws, body) {
   const w = getDomain().workspaces.find(x => x.id === ws);
   if (!w || !body || !Array.isArray(w.sections)) return;
+  const cur = pm51HasTabs(w) ? pm51IndexCurTab(ws) : null;
   for (const s of w.sections) {
-    if (!s.inline || s.advanced || pm51Live(body, `[data-section-id="${cssEscape(s.id)}"]`)) continue;
+    if (!s.inline || s.advanced || (cur && s.tab && s.tab !== cur) || pm51Live(body, `[data-section-id="${cssEscape(s.id)}"]`)) continue;
     const owner = [...body.querySelectorAll('[data-pm51-owns]')].find(p => (p.dataset.pm51Owns || '').split(' ').includes(s.id));
     const split = owner && pm51Live(owner, '.pm51-split:not([data-section-id])');
     const row = split ? null : (s.settings || []).map(st => pm51Live(body, `#setting-${cssEscape(st.id)}, [data-setting-id="${cssEscape(st.id)}"]`)).find(Boolean);

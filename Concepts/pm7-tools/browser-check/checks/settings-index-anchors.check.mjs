@@ -7,6 +7,14 @@
 //   itself: PM51.page owns) on the card of its first drawn row, the Defaults card inside the shown ability's details,
 //   ~750-900 px below the top of the abilities list, so "For the whole project" stayed lit while the list filled the
 //   screen. settings-index-spy passed: it reads "the section in view" from the same adopted anchors.
+// - Round 2 (Neon's batch 16 deep review, neon-max-16, on 1367b816c4): with Media abilities moved onto the list/detail
+//   block, the Defaults card it freed was adopted by "Where results go" (media-files, a group of the Pictures & files
+//   tab) because its "Saves to" row is drawn there; pm51AdoptAnchors walked every group of the page, not the open tab's,
+//   so "Where results go" lit for the last ~335 px of the list and was listed under Abilities. Clicking it there set the
+//   tab to Pictures & files without redrawing the page (the adopted anchor counted as "drawn"), so the page stayed on
+//   Abilities while the index opened Pictures & files; Providers & Accounts › Services listed "Moving between accounts"
+//   (Limits & switching) the same way. The walk now wants Media abilities lit for the whole list, and a click on any entry
+//   under an open tab must leave the page and the index on that tab.
 // - Reached by the top tabs (Media & Output, then its Abilities tab), Abilities listed no entries at all: the tab redraw
 //   morphs the page body, the leaving copy still held the adopted anchors, so the arriving copy got none.
 // - pm4-settings-css.css gave .page-index a 1 px right border: drawn in Basic, Friendly, Retro and NieR, both modes.
@@ -35,7 +43,7 @@ const READ = () => {
 	const rs = sw && sw.getBoundingClientRect(), rp = sp && sp.getBoundingClientRect();
 	let reading = null;
 	if (rs && rs.top <= line - 40 && rs.bottom >= line + 40) reading = 'switches';
-	else if (rp && rp.top <= line - 40 && rp.bottom >= line + 40) reading = line - rp.top <= 400 ? 'list-top' : 'list';
+	else if (rp && rp.top <= line - 40 && rp.bottom >= line + 40) reading = 'list';
 	const lit = [...document.querySelectorAll('#pm-settings-root .page-index-card .index-link.is-active')].map((l) => l.textContent.trim());
 	const max = sc.scrollHeight - sc.clientHeight;
 	return { top: Math.round(sc.scrollTop), atEnd: sc.scrollTop >= max - 2, reading, lit, past: !!rp && rp.bottom < line, mid: { x: b.left + b.width / 2, y: b.top + b.height * 0.6 } };
@@ -78,6 +86,27 @@ async function openAbilities(t, route) {
 	return f;
 }
 
+/* A click on an entry under an open tab: where the page and the index are afterwards. */
+const AFTER = (ws) => {
+	const card = document.querySelector('#pm-settings-root .page-index-card');
+	const open = card && card.querySelector(`.pm51-index-tab.is-open[data-workspace="${ws}"]`);
+	const body = document.querySelector(`[data-continuous-workspace-body="${ws}"]`);
+	const pageTab = body && [...body.querySelectorAll('.pm51-mgr > .pm51-tabs .manager-tab.active')].find((b) => !b.closest('.o55-leaving'));
+	return { indexTab: open ? open.dataset.tab : null, pageTab: pageTab ? pageTab.dataset.tab : null, lit: card ? [...card.querySelectorAll('.index-link.is-active')].map((l) => l.textContent.trim()) : [] };
+};
+const SUB = ([ws, tab]) => {
+	const el = document.querySelector(`#pm-settings-root .page-index-card .pm51-index-tab.is-open[data-workspace="${ws}"][data-tab="${tab}"]`);
+	const sub = el && el.nextElementSibling && el.nextElementSibling.classList.contains('pm51-index-sub') ? el.nextElementSibling : null;
+	return sub ? [...sub.querySelectorAll('.index-link')].map((l) => l.textContent.trim()) : [];
+};
+async function openTab(t, f, ws, tab) {
+	await f.locator(`#pm-settings-root .page-index-card .pm51-index-tab[data-workspace="${ws}"][data-tab="${tab}"]:visible`).first().click();
+	await t.settle();
+	await t.page.waitForTimeout(500);
+	await still(t, f);
+}
+const TABBED = { media: ['abilities', 'files'], providers: ['services', 'models', 'limits', 'usage'] };
+
 const ROUTES = ['top tabs', 'side index'];
 export const tests = Object.fromEntries(ROUTES.flatMap((route) => [
 	[`Jared 2026-11-21 Media › Abilities lists its groups, reached by the ${route}`, async (t) => {
@@ -93,8 +122,8 @@ export const tests = Object.fromEntries(ROUTES.flatMap((route) => [
 		await t.check('the Settings page is drawn', !!v0, 'no #settings-document');
 		if (!v0) return;
 		await wheelPoint(t, f, v0.mid);
-		const want = { switches: ['For the whole project'], 'list-top': ['Media abilities'], list: ['Media abilities', 'Where results go'] };
-		const judged = { switches: 0, 'list-top': 0, list: 0 }, wrong = [];
+		const want = { switches: ['For the whole project'], list: ['Media abilities'] };
+		const judged = { switches: 0, list: 0 }, wrong = [];
 		let last = -1, n = 0;
 		for (n = 0; n < 60; n++) {
 			await t.page.mouse.wheel(0, step);
@@ -108,10 +137,39 @@ export const tests = Object.fromEntries(ROUTES.flatMap((route) => [
 			last = v.top;
 		}
 		t.log(`walk (${route}): ${n + 1} steps of ${step} px; judged ${JSON.stringify(judged)}`);
-		await t.check(`the walk read the For the whole project card and the top of the list (${route})`, judged.switches >= 1 && judged['list-top'] >= 2, JSON.stringify(judged));
-		await t.check(`every judged step lights the card being read (${route}): For the whole project on its card, Media abilities on the list`, wrong.length === 0, wrong.slice(0, 6).join(' | ') + (wrong.length > 6 ? ` and ${wrong.length - 6} more` : ''));
+		await t.check(`the walk read the For the whole project card and the list (${route})`, judged.switches >= 1 && judged.list >= 2, JSON.stringify(judged));
+		await t.check(`every judged step lights the card being read (${route}): For the whole project on its card, Media abilities on the whole list`, wrong.length === 0, wrong.slice(0, 6).join(' | ') + (wrong.length > 6 ? ` and ${wrong.length - 6} more` : ''));
 	}]
-]).concat([
+]).concat(Object.entries(TABBED).map(([ws, tabs]) => [`Neon 2026-11-22 a click on an entry under an open tab of ${ws} keeps the page and the index on that tab`, async (t) => {
+	const [w, h] = String(t.args.size || '1440x900').split('x').map(Number);
+	const f = await t.app.open();
+	await t.emulate({ reducedMotion: 'no-preference' });
+	await t.viewport(w, h);
+	await f.locator('#tab-settings').click();
+	await t.settle();
+	await f.locator('#pm-settings-root [data-action="navigate-domain"][data-domain="ai"]:visible').first().click();
+	await t.settle();
+	const bad = [], seen = [];
+	for (const tab of tabs) {
+		await openTab(t, f, ws, tab);
+		const list = await f.evaluate(SUB, [ws, tab]);
+		seen.push(`${tab}: ${list.join(', ') || 'none'}`);
+		if (!list.length) bad.push(`${tab}: lists no entries`);
+		for (const label of list) {
+			await openTab(t, f, ws, tab);
+			const link = f.locator(`#pm-settings-root .page-index-card .pm51-index-tab.is-open[data-workspace="${ws}"][data-tab="${tab}"] + .pm51-index-sub .index-link`, { hasText: label }).first();
+			if (!(await link.count())) { bad.push(`${tab}: "${label}" gone before its click`); continue; }
+			await link.click();
+			await t.page.waitForTimeout(900);
+			await still(t, f);
+			const a = await f.evaluate(AFTER, ws);
+			if (a.pageTab !== tab || a.indexTab !== tab) bad.push(`${tab} > "${label}": page on ${a.pageTab}, index open on ${a.indexTab}`);
+			else if (!a.lit.includes(label)) bad.push(`${tab} > "${label}": lit ${a.lit.join(',') || 'none'}`);
+		}
+	}
+	t.log(`${ws} entries: ${seen.join(' | ')}`);
+	await t.check(`every entry under an open tab of ${ws} lands on that tab, on the page and in the index, and lights itself`, bad.length === 0, bad.slice(0, 8).join(' | ') + (bad.length > 8 ? ` and ${bad.length - 8} more` : ''));
+}])).concat([
 	['Jared 2026-11-21 the lit entry under Abilities reads at 4.5:1 or more, in every look', async (t) => {
 		const f = await openAbilities(t, 'side index');
 		await f.locator('#pm-settings-root .page-index-card .pm51-index-sub .index-link[data-section="media-abilities"]:visible').first().click();
