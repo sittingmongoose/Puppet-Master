@@ -33,6 +33,12 @@ must be non-empty and carry at least one non-'/' character; Neon's E1/E2 inputs 
 equal after-states) stay CANNOT_DECIDE — on the unfixed head they turn into COVERED_LATER:
   e1_empty_suffix_own       'peq/original/root/' vs 'peq/final/root/', origins at the route site
   e2_empty_suffix_not_own   the same codes, origins at another guard line (:256)
+N5 raise-line equality (review N5-BATCH-20261121 E2): the stock judge compares the raise line
+(the innermost frame outside the bridge/guard helpers, e.g. s_world.py:110), not only the guard
+line; differing raise lines under one guard line stay a different code (Neon's E3/E3B inputs):
+  e3_diff_raise_line        ra-17 codes, guard :94 on both, raise :110 vs :111: stays KILLED_CODE
+  e3b_diff_raise_line_not_own  the same raise-line difference from the non-route guard :256:
+                            stays CANNOT_DECIDE
 Through the re-run (`prove()`'s path: `rerun=lambda: self.owner_states(...)`, with `fork_trial` stubbed to
 return each repeated trial's result and after-state; review R2):
   rerun_equal               same code; the three repeats return the judged results and equal states: COVERED_LATER,
@@ -78,8 +84,13 @@ ROOT_ELSEWHERE = dict(site=['scripts/pm_goal_dg_s_readers.py', 256],
                               ['scripts/pm_goal_dg_s_world.py', 110, 'validate', True]])
 ROOT_EMPTY_INTACT = 'peq/original/root/'
 ROOT_EMPTY_CUT = 'peq/final/root/'
+ROOT_AT_111 = dict(site=ROOT_SITE, frames=[ROOT_SITE + ['retained_native', False],
+                                           ['scripts/pm_goal_dg_s_world.py', 111, 'validate', True]])
+ROOT_ELSEWHERE_111 = dict(site=['scripts/pm_goal_dg_s_readers.py', 256],
+                          frames=[['scripts/pm_goal_dg_s_readers.py', 256, 'original_started', False],
+                                  ['scripts/pm_goal_dg_s_world.py', 111, 'validate', True]])
 ROOT_CASES = {'prefixeq_cover', 'prefixeq_write', 'prefixeq_other_site', 'prefixeq_other_suffix'}
-N5_CASES = {'e1_empty_suffix_own', 'e2_empty_suffix_not_own'}
+N5_CASES = {'e1_empty_suffix_own', 'e2_empty_suffix_not_own', 'e3_diff_raise_line', 'e3b_diff_raise_line_not_own'}
 
 
 def state(store='s0', owner='o0', reason=None):
@@ -116,6 +127,8 @@ CASES = {
                             (state(),) * 3, 'CANNOT_DECIDE'),
     'e2_empty_suffix_not_own': (ROOT_EMPTY_INTACT, ROOT_EMPTY_CUT, ROOT_EMPTY_INTACT, ROOT_EMPTY_INTACT,
                                 (state(),) * 3, 'CANNOT_DECIDE'),
+    'e3_diff_raise_line': (ROOT_INTACT, ROOT_CUT, ROOT_INTACT, ROOT_INTACT, (state(),) * 3, 'KILLED_CODE'),
+    'e3b_diff_raise_line_not_own': (ROOT_INTACT, ROOT_CUT, ROOT_INTACT, ROOT_INTACT, (state(),) * 3, 'CANNOT_DECIDE'),
 }
 ORIGINS = {'rebuilt_elsewhere': [ELSEWHERE, None, ELSEWHERE], 'no_origin': [None, None, None],
            'prefixeq_cover': [ROOT_AT_SITE, ROOT_AT_SITE, ROOT_AT_SITE],
@@ -123,7 +136,9 @@ ORIGINS = {'rebuilt_elsewhere': [ELSEWHERE, None, ELSEWHERE], 'no_origin': [None
            'prefixeq_other_site': [ROOT_AT_SITE, ROOT_ELSEWHERE, ROOT_AT_SITE],
            'prefixeq_other_suffix': [ROOT_AT_SITE, ROOT_AT_SITE, ROOT_AT_SITE],
            'e1_empty_suffix_own': [ROOT_AT_SITE, ROOT_AT_SITE, ROOT_AT_SITE],
-           'e2_empty_suffix_not_own': [ROOT_ELSEWHERE, ROOT_ELSEWHERE, ROOT_ELSEWHERE]}
+           'e2_empty_suffix_not_own': [ROOT_ELSEWHERE, ROOT_ELSEWHERE, ROOT_ELSEWHERE],
+           'e3_diff_raise_line': [ROOT_AT_SITE, ROOT_AT_111, ROOT_AT_SITE],
+           'e3b_diff_raise_line_not_own': [ROOT_ELSEWHERE, ROOT_ELSEWHERE_111, ROOT_ELSEWHERE]}
 
 
 def run():
