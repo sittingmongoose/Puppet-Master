@@ -197,12 +197,15 @@
       this.bubbleMO.observe(this.bubble, { childList: true, characterData: true, subtree: true, attributes: true, attributeFilter: ['class'] });
       /* NieR's kept box is measured again only when its key changes (map, classes, words, fonts; pm7-perf lane W). A
          Text size or Line spacing change restyles the box with none of those changing, so the band kept clear stayed the
-         old size under the new words (P1, TOOLS-STAGEREST-K4). A resize of the box itself drops the key: no layout is
+         old size under the new words (P1, TOOLS-STAGEREST-K4). A resize of the box or its tab drops the key: no layout is
          read here, so the at-rest saving stays, and the next frame measures the box anew. */
       if (this.bubbleRO) this.bubbleRO.disconnect();
       if (window.ResizeObserver) {
         this.bubbleRO = new ResizeObserver(() => { if (this.dead) return; this.nierKey = null; this.dirty = true; if (this.kick) this.kick(); });
         this.bubbleRO.observe(this.bubble, { box: 'border-box' });
+        /* (and NieR's PIP tab, which boxInScene adds to the box and which stands outside the box's own rectangle: Text
+           size rescales the tab's own font-size too) */
+        const tab = this.bubble.querySelector(':scope > .pst-bn'); if (tab) this.bubbleRO.observe(tab, { box: 'border-box' });
       }
       if (this.tube === 'phosphor') div('pst-crt', this.screen, '<i class="pst-roll"></i><i class="pst-scan"></i><i class="pst-mask"></i><i class="pst-noise"></i><i class="pst-vig"></i><i class="pst-glare"></i>');
       if (this.tube === 'teletype') { div('pst-grain', this.screen); this.head = div('pst-printer', this.screen, '<i class="pst-bail"></i><i class="pst-platen"></i><i class="pst-head"><b></b></i>').querySelector('.pst-head'); }
