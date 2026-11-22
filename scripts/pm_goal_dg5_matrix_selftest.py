@@ -32,24 +32,35 @@ def _sha(path):
     return hashlib.sha256((ROOT / path).read_bytes()).hexdigest()
 
 
-def _rec(i, label, outcome, target=None, kill=None, sig=0):
+def _rec(i, label, outcome, target=None, kill=None, sig=0, cut_errors=None, codes=None):
     errors = [target] if target and outcome == 'exact_expected' else []
-    return dict(id=i, family=FAM, label=label, sig=sig, outcome=outcome, target=target, valid=None,
-                kill=kill, errors=errors, input_sha256='f' * 64, restoration_errors=list(errors),
-                cut_errors=[], site_cuts=None, cut_exception_site=None)
+    record = dict(id=i, family=FAM, label=label, sig=sig, outcome=outcome, target=target, valid=None,
+                  kill=kill, errors=errors, input_sha256='f' * 64, restoration_errors=list(errors),
+                  cut_errors=[] if cut_errors is None else cut_errors, site_cuts=None,
+                  cut_exception_site=None)
+    if codes is not None:
+        record['refusal_code'] = codes['intact']
+        record['killed_code_check'] = dict(
+            verdict='KILLED_CODE', intact_code=codes['intact'], cut_code=codes['cut'],
+            restoration_code=codes['intact'], different_code=True,
+            own_guard=dict(own=True, code_matches=True, why=None))
+    return record
 
 
-def _proof(base, rows, ledger, specs, tables):
+def _proof(base, rows, ledger, specs, tables, failures=None, bindings=None):
     (base / 'tables').mkdir(parents=True, exist_ok=True)
     with gzip.open(base / 'ledger.json.gz', 'wt') as h:
         json.dump(ledger, h)
     with gzip.open(base / 'signatures.json.gz', 'wt') as h:
         json.dump([[]], h)   # no accepted call evaluates any candidate row (controls 0)
     (base / 'family-rows.json').write_text(json.dumps({FAM: sorted(rows)}))
-    (base / 'collection.json').write_text(json.dumps(dict(rows=rows, calls=len(ledger), failures=[])))
+    (base / 'collection.json').write_text(json.dumps(
+        dict(rows=rows, calls=len(ledger), failures=[] if failures is None else failures)))
     (base / 'tables/rows.json').write_text(json.dumps(specs))
     (base / 'tables/summary.json').write_text(json.dumps(tables))
-    (base / 'source-bindings.json').write_text(json.dumps(dict(files={OA: _sha(OA), ST: _sha(ST)})))
+    files = {OA: _sha(OA), ST: _sha(ST)}
+    files.update(bindings or {})
+    (base / 'source-bindings.json').write_text(json.dumps(dict(files=files)))
     return base
 
 
@@ -201,10 +212,110 @@ def check_matrix():
     assert m[normal]['status'] == 'CLOSED', m[normal]                         # normal rule first (ruling 6)
 
 
+def check_amendment1():
+    """Amendment 1's condition 2 (KILLED_CODE with Addendum J2) and condition 4 (one exact
+    declared known failure): the positive, then every refusal the brief names."""
+    line = _refuse_line()
+    declared = [['source', 'unsupported_same_run_halts', 'reducer/unregistered_record']]
+    other = ['source', 'another_case', 'reducer/unregistered_record']
+    codes = dict(intact='Corrupt:magic', cut='Corrupt:prefix_crc')
+
+    def failure(entries):
+        return dict(kind='source_failed', source='pm_goal_dg5_adapter', exit=1,
+                    details=json.dumps(dict(status='fail', failures=entries)))
+
+    def trial(td, tag, name, ledger, failures, declaration):
+        table = 't-' + tag
+        rows = {name: dict(sites=[[OA, line]])}
+        specs = [dict(guard=name, table=table, status='UNPROVED')]
+        tables = [dict(table=table, status='NOT_RUN', rows=[name], reason='no control vector')]
+        proof = _proof(Path(td) / tag, rows, ledger, specs, tables, failures=failures)
+        out = Path(td) / (tag + '.json')
+        cmd = [sys.executable, '-B', 'scripts/pm_goal_dg5_matrix.py', str(proof),
+               '--family', FAM, '--out', str(out)]
+        if declaration is not None:
+            path = Path(td) / (tag + '.known.json')
+            path.write_text(json.dumps(declaration))
+            cmd += ['--known-failure', str(path)]
+        r = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
+        assert r.returncode == 0, (tag, r.stderr[-2000:])
+        fam = json.loads(out.read_text())['families'][FAM]
+        return fam, {x['row']: x for x in fam['matrix']}[name]
+
+    with tempfile.TemporaryDirectory(prefix='dg5-matrix-amend1-') as td:
+        # (a) KILLED_CODE meeting J2 + one declared known failure not touching the row.
+        name = 'dg5/test/not_run_killed_code'
+        fam, row = trial(td, 'amend1-ok', name,
+                         [_rec(0, 'case/control', 'control'),
+                          _rec(1, 'case/code', 'exact_expected', name, 'KILLED_CODE',
+                               cut_errors=['dg5/site/pm_goal_test_storage.py:525'], codes=codes)],
+                         [failure([declared[0]])], declared)
+        assert row['status'] == 'CLOSED_BY_PROOF' and row['reason'] == 'witness_bound_not_run', row
+        just = row['justification']
+        assert just['kind'] == 'witness_bound_not_run', just
+        assert just['witness']['kill'] == 'KILLED_CODE', just['witness']
+        assert just['witness']['codes'] == dict(intact_code='Corrupt:magic',
+                                                cut_code='Corrupt:prefix_crc',
+                                                restoration_code='Corrupt:magic'), just['witness']
+        assert just['known_failures'] == [declared[0]], just['known_failures']
+        assert just['replay'][0]['known_failure']['entry'] == declared[0], just['replay'][0]
+        assert just['replay'][0]['controls_exact'] is True, just['replay'][0]
+        assert fam['witness_bound_not_run'] == 1, fam['status']
+
+        # (b) a KILLED_CODE label without J2's conditions refuses.
+        name = 'dg5/test/not_run_killed_code_without_j2'
+        _, row = trial(td, 'amend1-no-j2', name,
+                       [_rec(0, 'case/control', 'control'),
+                        _rec(1, 'case/code', 'exact_expected', name, 'KILLED_CODE',
+                             cut_errors=['dg5/site/pm_goal_test_storage.py:525'])],
+                       [], declared)
+        assert row['status'] == 'OPEN', row
+
+        # (c) a second failure in the replay refuses.
+        name = 'dg5/test/not_run_second_failure'
+        _, row = trial(td, 'amend1-second', name,
+                       [_rec(0, 'case/control', 'control'),
+                        _rec(1, 'case/code', 'exact_expected', name, 'KILLED_CODE',
+                             cut_errors=['dg5/site/pm_goal_test_storage.py:525'], codes=codes)],
+                       [failure([declared[0]]), failure([other])], declared)
+        assert row['status'] == 'OPEN', row
+
+        # (d) an undeclared failure refuses.
+        name = 'dg5/test/not_run_undeclared_failure'
+        _, row = trial(td, 'amend1-undeclared', name,
+                       [_rec(0, 'case/control', 'control'),
+                        _rec(1, 'case/code', 'exact_expected', name, 'KILLED_CODE',
+                             cut_errors=['dg5/site/pm_goal_test_storage.py:525'], codes=codes)],
+                       [failure([other])], declared)
+        assert row['status'] == 'OPEN', row
+
+        # (e) a declared failure whose case is the row's own case refuses.
+        name = 'dg5/test/not_run_touching_failure'
+        touching = ['source', 'case/touching', 'reducer/unregistered_record']
+        _, row = trial(td, 'amend1-touching', name,
+                       [_rec(0, 'case/control', 'control'),
+                        _rec(1, 'case/touching', 'exact_expected', name, 'KILLED_CODE',
+                             cut_errors=['dg5/site/pm_goal_test_storage.py:525'], codes=codes)],
+                       [failure([touching])], [touching])
+        assert row['status'] == 'OPEN', row
+
+        # (f) a control other than the known case that is not exact refuses.
+        name = 'dg5/test/not_run_inexact_control'
+        bad = _rec(2, 'case/other_control', 'control')
+        bad['errors'] = ['dg5/test/elsewhere']
+        _, row = trial(td, 'amend1-inexact', name,
+                       [_rec(0, 'case/control', 'control'), bad,
+                        _rec(1, 'case/code', 'exact_expected', name, 'KILLED_CODE',
+                             cut_errors=['dg5/site/pm_goal_test_storage.py:525'], codes=codes)],
+                       [failure([declared[0]])], declared)
+        assert row['status'] == 'OPEN', row
+
+
 def main():
     check_classifier()
     check_closure_reports()
     check_matrix()
+    check_amendment1()
     print('pm_goal_dg5_matrix_selftest: PASS')
     return 0
 
