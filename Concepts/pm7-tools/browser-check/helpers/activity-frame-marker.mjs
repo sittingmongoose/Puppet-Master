@@ -29,8 +29,10 @@
 
 export const MARKER_ID = 'pm-abkey-marker';
 // Page CSS px in the app frame: over the header, clear of the Activity bar's tiles (x 13..45, y 113..189 at 1920).
-// 8 counter bands of 12 px plus the 12 px key band. The counter wraps at 256 painted frames, longer than a press's
-// 1.2 s capture (about 72 frames at 60 Hz).
+// 8 counter bands of 12 px plus the 12 px key band. The counter wraps at 256 painted frames: about 72 frames in a
+// press's 1.2 s capture at 60 Hz, and a wrap inside one capture only above 256 / 1.2 ≈ 213 Hz. keyFrames reads the
+// wrap as the adjacency it is (255 -> 0), but above that ceiling a dropped frame could alias to the same counter a
+// wrap later; no display the kit runs on is near it (PM7PERF-SHIFTTAB-MARKER-R2-NOTES 2).
 export const MARKER_BOX = { x: 250, y: 6, width: 108, height: 14 };
 export const COUNTER_BITS = 8;
 

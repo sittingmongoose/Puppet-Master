@@ -367,7 +367,9 @@ async function pointerRoutes(t) {
   const { f, kb, looks, state, reach, film, frameFaults } = await rig(t);
   // The Shift+Tab route is not slowed: its marker must see an idle encoder at the key, and the ring lies above Search's
   // focus tag (z-index 2147483100 over the tag's 2147483000), so the tag's 240 ms fade -- finished by the 1200 ms wait
-  // after the Tab -- cannot wash the ring the route judges.
+  // after the Tab -- cannot wash the ring the route judges. --set slowTag= is no longer honoured on this route, or
+  // anywhere in this check: TB9 round 2 removed it, because slowing the fade kept the screencast's encoder busy and
+  // coalesced the key frame -- the very frame the marker exists to capture (PM7PERF-SHIFTTAB-MARKER-R2-NOTES 2).
   const n = Math.max(1, Number(t.args.clicks || 6)), stall = Math.max(0, Number(t.args.stall ?? 600));
   const motion = await pinMotion(t, f);
   await installStall(f);
