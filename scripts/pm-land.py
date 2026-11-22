@@ -462,9 +462,21 @@ def affects_shared_check(name):
             or name in {".gitignore", ".gitattributes", "AGENTS.md"})
 
 
+def hidden_index_paths(root):
+    return {entry[2:] for entry in git(root, "ls-files", "-v", "-z").stdout.split("\0")
+            if entry and (entry[0] == "S" or entry[0].islower())}
+
+
+def require_clean_shared_tracked(root):
+    hidden = hidden_index_paths(root)
+    tracked, _ = status_paths(root)
+    dirty = sorted(tracked | hidden)
+    if dirty:
+        raise Refusal("shared checkout has uncommitted changes or hidden index flags: " + ", ".join(dirty))
+
+
 def require_clean_shared_checkout(root, touched):
-    hidden = {entry[2:] for entry in git(root, "ls-files", "-v", "-z").stdout.split("\0")
-              if entry and (entry[0] == "S" or entry[0].islower())}
+    hidden = hidden_index_paths(root)
     tracked, untracked = status_paths(root)
     untracked_inputs = {name for name in untracked if affects_shared_check(name)}
     dirty = sorted(tracked | hidden | untracked_inputs | set(overlaps(untracked, touched)))
@@ -478,7 +490,10 @@ def require_clean_shared_index(root):
                  "--ignore-submodules=none", "--ita-visible-in-index", "-z", "HEAD", "--").stdout
     staged = sorted(set(output.split("\0")) - {""})
     if staged:
-        raise Refusal("shared checkout has staged changes: " + ", ".join(staged))
+        tracked, _ = status_paths(root)
+        extras = sorted((tracked | hidden_index_paths(root)) - set(staged))
+        detail = f"; uncommitted changes or hidden index flags: {', '.join(extras)}" if extras else ""
+        raise Refusal("shared checkout has staged changes: " + ", ".join(staged) + detail)
 
 
 def added_paths(root, before, after):
@@ -511,6 +526,7 @@ def publication_preflight(root, base, candidate, expected_inputs):
                 raise Refusal("candidate would overwrite ignored files: " + ", ".join(sorted(filter(None, collisions))))
     require_same_inputs(expected_inputs, guarded_input_manifest(root, candidate), "shared publication")
     require_clean_shared_index(root)
+    require_clean_shared_checkout(root, touched)
 
 
 def verify_rollback(candidate, target):
@@ -528,6 +544,7 @@ def verify_rollback(candidate, target):
         raise Refusal(f"candidate {candidate} is already in fetched origin/main")
 
     require_clean_shared_index(root)
+    require_clean_shared_tracked(root)
     tracked = tracklist(root, candidate)
     collisions = set()
     for name in added_paths(root, candidate, target):
@@ -544,6 +561,7 @@ def verify_rollback(candidate, target):
     if collisions:
         raise Refusal("rollback would overwrite local paths: " + ", ".join(sorted(collisions)))
     require_clean_shared_index(root)
+    require_clean_shared_tracked(root)
     say(f"Verified rollback paths from {candidate} to {target}.")
     return 0
 

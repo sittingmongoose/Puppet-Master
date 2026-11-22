@@ -680,9 +680,11 @@ Anyone who writes a checker input in the shared checkout, including readiness re
    completed fast-forward fails publication, use freshly fetched primary main. If a push
    returned an uncertain result, check primary first and reconcile against what it accepted.
    For an unpublished candidate, run `held_git rollback_unpublished` below. Under the owned
-   guard it confirms the index still matches HEAD and checks the reverse transition for ignored
-   or untracked files, including parent-file and directory collisions. Run `reset --keep` only
-   immediately after both checks pass. If either refuses, keep the lock and hand off the candidate,
+   guard it confirms the index still matches HEAD, refuses any tracked deletion, tracked
+   modification or hidden index flag anywhere in the shared checkout, and checks the reverse
+   transition for ignored or untracked files, including parent-file and directory collisions. Run
+   `reset --keep` only immediately after both checks pass. If either refuses, keep the lock and
+   hand off the candidate,
    fetched target, HEAD, `git status --porcelain` and the refusal paths without resetting. If
    ownership was lost, hand off to the current holder. Never use `--hard` in the shared checkout.
 9. Complete the Plans follow-up below under the same logical lock. Reseals follow the assigned

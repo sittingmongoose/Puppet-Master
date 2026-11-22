@@ -577,6 +577,129 @@ class LandingFixture(unittest.TestCase):
         self.assertIn("shared checkout has staged changes: tracked.txt", errors)
         self.assertEqual(self.git(self.shared, "show", ":tracked.txt").stdout, "staged before rollback\n")
 
+    def test_rollback_refuses_unstaged_tracked_deletion_modification_and_hidden_flags(self):
+        repo = Path(__file__).resolve().parents[1]
+        name = ".github/workflows/assistant-v3-matrix-publication.yml"
+        target_blob = self.git(repo, "show", f"8e27ca6832:{name}").stdout
+        candidate_blob = self.git(repo, "show", f"8eacd40516:{name}").stdout
+        self.assertNotEqual(target_blob, candidate_blob)
+
+        self.put(self.shared, name, target_blob)
+        self.git(self.shared, "add", "--", name)
+        self.git(self.shared, "commit", "-m", "historical workflow target")
+        target = land.revision(self.shared, "HEAD")
+        self.put(self.shared, name, candidate_blob)
+        self.git(self.shared, "commit", "-am", "historical workflow candidate")
+        candidate = land.revision(self.shared, "HEAD")
+        self.git(self.shared, "update-ref", land.ORIGIN_MAIN, target)
+        self.assertEqual(self.rollback_check(candidate, target), (0, ""))
+
+        workflow = self.shared / name
+        saved = workflow.rename(self.root / "saved-workflow.yml")
+        index = self.shared / ".git/index"
+        before = (index.read_bytes(), index.stat().st_mtime_ns)
+        self.assertEqual(self.git(self.shared, "status", "--porcelain").stdout, f" D {name}\n")
+        result, errors = self.rollback_check(candidate, target)
+        self.assertEqual(result, 3, errors)
+        self.assertIn(name, errors)
+        self.assertFalse(workflow.exists())
+        self.assertEqual((index.read_bytes(), index.stat().st_mtime_ns), before)
+        self.assertEqual(land.revision(self.shared, "HEAD"), candidate)
+
+        saved.rename(workflow)
+        workflow.write_text(candidate_blob + "\n# local edit\n", encoding="utf-8")
+        self.assertEqual(self.git(self.shared, "status", "--porcelain").stdout, f" M {name}\n")
+        result, errors = self.rollback_check(candidate, target)
+        self.assertEqual(result, 3, errors)
+        self.assertIn(name, errors)
+        self.assertTrue(workflow.read_text(encoding="utf-8").endswith("# local edit\n"))
+        self.assertEqual(land.revision(self.shared, "HEAD"), candidate)
+
+        workflow.write_text(candidate_blob, encoding="utf-8")
+        for flag in ("assume-unchanged", "skip-worktree"):
+            with self.subTest(flag=flag):
+                self.git(self.shared, "update-index", "--" + flag, "--", name)
+                result, errors = self.rollback_check(candidate, target)
+                self.assertEqual(result, 3, errors)
+                self.assertIn(name, errors)
+                self.git(self.shared, "update-index", "--no-" + flag, "--", name)
+        self.assertEqual(self.rollback_check(candidate, target), (0, ""))
+
+    def test_verify_refuses_dirty_shared_checkout_modified_deleted_staged_and_mid_scan(self):
+        note = "notes.txt"
+        self.put(self.shared, note, "base note\n")
+        self.git(self.shared, "add", "--", note)
+        self.git(self.shared, "commit", "-m", "add unrelated tracked file")
+        previous_base, previous_tip = self.base, self.head
+        self.base = land.revision(self.shared, "HEAD")
+        self.put(self.shared, "tracked.txt", "topic edit\n")
+        self.git(self.shared, "commit", "-am", "topic changes only tracked.txt")
+        self.head = land.revision(self.shared, "HEAD")
+        self.tree = land.revision(self.shared, "HEAD^{tree}")
+        self.git(self.origin, "fetch", str(self.shared), land.MAIN_REF)
+        self.git(self.origin, "update-ref", land.MAIN_REF, self.base, previous_base)
+        self.git(self.origin, "update-ref", self.ref, self.head, previous_tip)
+        self.git(self.shared, "fetch", "origin")
+        self.git(self.shared, "reset", "--keep", self.base)
+        self.cleanup()
+        self.remote, self.manifest = land.prepare_remote(self.folder, self.ref, self.head, self.tree, self.base)
+        self.make_record(0)
+
+        def run_verify():
+            errors = io.StringIO()
+            with patch.object(land, "ssh", side_effect=self.local_verify), redirect_stderr(errors):
+                return land.main(["verify", "--receipt", str(self.path)]), errors.getvalue()
+
+        note_path = self.shared / note
+        note_path.write_text("modified note\n", encoding="utf-8")
+        code, errors = run_verify()
+        self.assertEqual(code, 3, errors)
+        self.assertIn(note, errors)
+        self.assertEqual(note_path.read_text(encoding="utf-8"), "modified note\n")
+
+        saved_note = note_path.rename(self.root / "saved-note.txt")
+        code, errors = run_verify()
+        self.assertEqual(code, 3, errors)
+        self.assertIn(note, errors)
+        self.assertFalse(note_path.exists())
+        saved_note.rename(note_path)
+
+        # Simultaneous staged addition, unstaged modification, and unstaged deletion: all paths named.
+        self.put(self.shared, "staged-extra.txt", "staged\n")
+        self.git(self.shared, "add", "--", "staged-extra.txt")
+        note_path.write_text("modified while staged\n", encoding="utf-8")
+        saved_tracked = (self.shared / "tracked.txt").rename(self.root / "saved-tracked.txt")
+        code, errors = run_verify()
+        self.assertEqual(code, 3, errors)
+        for path in ("staged-extra.txt", note, "tracked.txt"):
+            self.assertIn(path, errors)
+        saved_tracked.rename(self.shared / "tracked.txt")
+        self.git(self.shared, "rm", "-f", "--", "staged-extra.txt")
+        note_path.write_text("base note\n", encoding="utf-8")
+        self.assertEqual(run_verify(), (0, ""))
+
+        # Mid-scan tracked modification and deletion during guarded_input_manifest.
+        real_guarded = land.guarded_input_manifest
+        for mode in ("modify", "delete"):
+            with self.subTest(mid_scan=mode):
+                def mutate_mid_scan(root, candidate, _mode=mode):
+                    manifest = real_guarded(root, candidate)
+                    if root == self.shared:
+                        if _mode == "modify":
+                            note_path.write_text("edited mid-scan\n", encoding="utf-8")
+                        else:
+                            note_path.rename(self.root / "mid-scan-deleted-note.txt")
+                    return manifest
+
+                with patch.object(land, "guarded_input_manifest", side_effect=mutate_mid_scan):
+                    code, errors = run_verify()
+                self.assertEqual(code, 3, errors)
+                self.assertIn(note, errors)
+                if mode == "delete":
+                    (self.root / "mid-scan-deleted-note.txt").rename(note_path)
+                else:
+                    note_path.write_text("base note\n", encoding="utf-8")
+
     def test_documented_followup_creates_and_checks_the_same_local_branch(self):
         repo = Path(__file__).resolve().parents[1]
         readme = (repo / "reports/landing-checks/README.md").read_text()
