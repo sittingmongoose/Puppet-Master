@@ -60,6 +60,16 @@ Prefix-equivalence unit checks, no complete call:
                             byte-equal codes; a crash), and killed_code_check treating an applicable pair as
                             the same code for J2
 
+N5 suffix boundary (review N5-BATCH-20261121 D1, lead 1122004535-9d63): the suffix after 'root/'
+must be non-empty and carry at least one non-'/' character; '<area>/<kind>/root/' and 'root//'
+name no violation and stay a different code:
+  n5_parts_*                root_row_code_parts refuses empty and slash-only suffixes (a suffix
+                            with a non-'/' character still parses)
+  n5_eq_*                   root_row_prefix_equivalent refuses such pairs
+  n5_D1/D2/D3               Neon's D1-D3 inputs through Collector._judge (synthetic complete call,
+                            equal after-states): CANNOT_DECIDE, never COVERED_LATER — on the unfixed
+                            head the empty suffix turns them into COVERED_LATER (red first)
+
 Template unit checks (addendum 5), no complete call:
   real_424_row              the real row cb_migration.py:424: its intact code M/capture/goal_unavailable with the
                             origin frame at :424, the cut refusing at :425 (M/capture/goal_body_unavailable):
@@ -342,6 +352,7 @@ def run(work):
     rows.extend(gate_pin_cases(Path(work)))
     rows.extend(template_unit_cases())
     rows.extend(prefixeq_unit_cases())
+    rows.extend(n5_suffix_cases())
     return dict(status='pass' if all(r['passed'] for r in rows) and not collector.failures else 'fail',
                 judge=dict(guard_sweep=sweep.__file__, boundaries=bridge.__file__),
                 collector_failures=collector.failures, cases=rows)
@@ -411,6 +422,74 @@ def prefixeq_unit_cases():
     for row in rows:
         row.setdefault('expected_kill', row['expected'])
         row.setdefault('actual_kill', row['result'].get('verdict') if isinstance(row['result'], dict) else None)
+        row.setdefault('covered_later_check', None)
+    return rows
+
+
+def n5_suffix_cases():
+    """N5 D1 (review N5-BATCH-20261121, lead 1122004535-9d63): the violation suffix after 'root/'
+    must be non-empty and carry at least one non-'/' character. Neon's D1-D3 inputs drive the full
+    judge path (Collector._judge) with a synthetic complete call whose after-states are equal:
+    the codes map to another row, so the verdict is CANNOT_DECIDE (different code, not own). On
+    the unfixed head the empty/slash-only suffix is prefix-equivalent and credits COVERED_LATER."""
+    rows = []
+
+    def trial(name, expected, fn):
+        try:
+            result = fn()
+        except (AttributeError, TypeError) as error:
+            result = dict(missing='%s: %s' % (type(error).__name__, error))
+            ok = False
+        else:
+            ok = result == expected
+        rows.append(dict(case=name, expected=expected, result=result, passed=bool(ok)))
+
+    # Neon's origin shape: recorded site = the bank's raise line s_world.py:110; the owner guard
+    # line is the innermost non-checker frame; the bridge validate frame is checker/bridge.
+    at = lambda guard_line: dict(site=['scripts/pm_goal_dg_s_world.py', 110],
+                                 frames=[['scripts/pm_goal_dg_s_readers.py', guard_line, 'retained_native', False, False],
+                                         ['scripts/pm_goal_dg5_boundaries.py', 734, 'validate', True, True],
+                                         ['scripts/pm_goal_dg_s_world.py', 110, 'validate', False, True]])
+    trial('n5_parts_empty_suffix', None, lambda: sweep.root_row_code_parts('peq/original/root/'))
+    trial('n5_parts_slash_suffix', None, lambda: sweep.root_row_code_parts('peq/original/root//'))
+    trial('n5_parts_slash3_suffix', None, lambda: sweep.root_row_code_parts('peq/original/root///'))
+    trial('n5_parts_non_slash_suffix', ('peq', 'original', '/x'),
+          lambda: sweep.root_row_code_parts('peq/original/root//x'))
+    trial('n5_eq_empty_suffix', False,
+          lambda: sweep.root_row_prefix_equivalent('peq/original/root/', 'peq/final/root/', at(94), at(94))['applicable'])
+    trial('n5_eq_slash_suffix', False,
+          lambda: sweep.root_row_prefix_equivalent('peq/original/root//', 'peq/final/root//', at(94), at(94))['applicable'])
+
+    def judge_case(name, intact_code, cut_code, guard_line):
+        intact_origin, cut_origin = at(guard_line), at(guard_line)
+
+        def evaluate(value):
+            cut = bool(tables.CUT)
+            row = 'dg5/peq/%s/root/schema' % ('final' if cut else 'original')
+            return dict(errors=[row], refusal_code=cut_code if cut else intact_code,
+                        refusal_origin=cut_origin if cut else intact_origin,
+                        store_after_sha256='s0', owner_state_sha256='o0',
+                        owner_state=dict(hook=FAMILY, reason=None))
+
+        collector = sweep.Collector(judge=True)
+        record = dict(target='dg5/peq/original/root/schema', valid=False, family=FAMILY,
+                      errors=['dg5/peq/original/root/schema'], refusal_code=intact_code,
+                      refusal_origin=intact_origin, refusing_sites=[])
+        collector._judge(record, evaluate, {})
+        code = record.get('killed_code_check') or {}
+        result = dict(kill=record.get('kill'), prefix_equivalence=bool(code.get('prefix_equivalence')),
+                      different_code=code.get('different_code'), reason=record.get('cannot_decide_reason'))
+        expected = dict(kill='CANNOT_DECIDE', prefix_equivalence=False, different_code=True,
+                        reason='different-code later refusal: declared target is not the row guard with its own code: '
+                               'refusal code maps to another row')
+        rows.append(dict(case=name, expected=expected, result=result, passed=result == expected))
+
+    judge_case('n5_D1_empty_suffix_not_own', 'peq/original/root/', 'peq/final/root/', 256)
+    judge_case('n5_D2_empty_suffix_own', 'peq/original/root/', 'peq/final/root/', 94)
+    judge_case('n5_D3_slash_suffix_not_own', 'peq/original/root//', 'peq/final/root//', 256)
+    for row in rows:
+        row.setdefault('expected_kill', row['expected'].get('kill') if isinstance(row['expected'], dict) else row['expected'])
+        row.setdefault('actual_kill', row['result'].get('kill') if isinstance(row['result'], dict) else None)
         row.setdefault('covered_later_check', None)
     return rows
 

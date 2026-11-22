@@ -216,15 +216,21 @@ def root_row_code_parts(code):
     (`bank.validate(..., where + '/root')` with where = <area>/<kind>); the bank
     appends '/schema/<path>:<validator>'. The root-row segment is unambiguous
     only when 'root' is exactly one segment, at index 2, with a non-empty area,
-    kind and suffix. Returns (area, kind, suffix), or None when the code is not
-    an unambiguous root-row code (the prefix rule then refuses to apply).
+    kind and suffix, and the suffix carries at least one non-'/' character:
+    '<area>/<kind>/root/' and '<area>/<kind>/root//' name no violation and are
+    not prefix-equivalent (N5 D1/E1, lead 1122004535-9d63). Returns
+    (area, kind, suffix), or None when the code is not an unambiguous root-row
+    code (the prefix rule then refuses to apply).
     """
     if not isinstance(code, str) or not code or code.startswith('crash:'):
         return None
     parts = code.split('/')
     if len(parts) < 4 or parts[2] != 'root' or parts.count('root') != 1 or not all(parts[:2]):
         return None
-    return parts[0], parts[1], '/'.join(parts[3:])
+    suffix = '/'.join(parts[3:])
+    if not suffix or not suffix.strip('/'):
+        return None
+    return parts[0], parts[1], suffix
 
 
 def root_row_prefix_equivalent(intact_code, cut_code, intact_origin=None, cut_origin=None):
