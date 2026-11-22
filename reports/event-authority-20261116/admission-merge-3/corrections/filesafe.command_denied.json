@@ -1,0 +1,270 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "filesafe.command_denied",
+ "findings": [
+  4
+ ],
+ "source_commit": "5a782e5b683b3319d7e02bdb91c5c5d1b1fd8f3d",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2301",
+ "decision_ref": "Plans/Decision_Log.md#DL-2516",
+ "registry_before": {
+  "revision": "2026-11-19.65",
+  "sha256": "2fde9c4414db1a9477d60ebb4e1e7d8fa7412f435392d2d8404aacb3dba1a251",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.66",
+  "sha256": "2ad85df397b4d7342e6e7c02b9f2a263e3c3a352665a32c164586abd2fd7c1e8",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-filesafe-command-denied",
+  "family_revision": "2.0.0",
+  "event_type": "filesafe.command_denied",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/Contracts_V0.md#CV-550",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-550",
+  "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_command_denied/2.0.0",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/filesafe_command_denied_v2.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_command_denied/2.0.0"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [],
+    "run_id": [
+     "/payload/run_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Contracts_V0.md#CV-550",
+   "Plans/event_payloads/filesafe_command_denied_v2.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-OPERATIONAL-2555D",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_command_denied/2.0.0",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/filesafe_command_denied_v2.schema.json",
+     "json_pointer": "#",
+     "schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_command_denied/2.0.0"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Contracts_V0.md#CV-550",
+    "read_owner_ref": "Plans/Contracts_V0.md#CV-550",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-FILESAFE-BLOCKED-COMMAND-APPLICATION-2555D",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_command_denied/2.0.0",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/filesafe_command_denied_v2.schema.json",
+     "json_pointer": "#",
+     "schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_command_denied/2.0.0"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Contracts_V0.md#CV-550",
+    "read_owner_ref": "Plans/Contracts_V0.md#CV-550",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-OPERATIONAL-2555D",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "registry_row": {
+  "family_id": "event-family-filesafe-command-denied",
+  "family_revision": "2.0.0",
+  "event_type": "filesafe.command_denied",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/Contracts_V0.md#CV-550",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-550",
+  "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_command_denied/2.0.0",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/filesafe_command_denied_v2.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_command_denied/2.0.0"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [],
+    "run_id": [
+     "/payload/run_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Contracts_V0.md#CV-550",
+   "Plans/event_payloads/filesafe_command_denied_v2.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-OPERATIONAL-2555D",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_command_denied/2.0.0",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/filesafe_command_denied_v2.schema.json",
+     "json_pointer": "#",
+     "schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_command_denied/2.0.0"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Contracts_V0.md#CV-550",
+    "read_owner_ref": "Plans/Contracts_V0.md#CV-550",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-FILESAFE-BLOCKED-COMMAND-APPLICATION-2555D",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_command_denied/2.0.0",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/filesafe_command_denied_v2.schema.json",
+     "json_pointer": "#",
+     "schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_command_denied/2.0.0"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Contracts_V0.md#CV-550",
+    "read_owner_ref": "Plans/Contracts_V0.md#CV-550",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-OPERATIONAL-2555D",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "predecessor_record_sha256": "e100092dc52845d34a8df615e6982f08465afb00ac67091b4c8bf42bd163e9c2",
+ "predecessor_assessment_sha256": "2be85d86e131ad6e2ee4fc55b854188da5d53bec37e86db200e454cf79913ec2",
+ "applied_record_sha256": "60a05e1a4f89f9f9f3408d230248e591eaf2ac3c1eb6495e80d5e7e92ee5c302",
+ "applied_assessment_sha256": "0b40a679ceb9cf5d8b9bc3c7a0fa900b615e0a60840202aafeb78984633be95a",
+ "citation_changes": [
+  {
+   "ordinal": 0,
+   "old": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-550",
+    "line_start": 55495,
+    "line_end": 55495,
+    "quote": "Current selected assignment (2026-11-19): filesafe.command_denied@2.0.0 is registered for application_or_project",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-550, Plans/storage-plan.md:55452-55563",
+    "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+    "source_citation": {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-550",
+     "line_start": 55282,
+     "line_end": 55282,
+     "quote": "**Retention — Card 2 item 2.a, DL-422 (review round 7).** Project-scoped `filesafe.command_denied` is seven-year troubleshooting history: `retention_policy_ref = RP-OPERATIONAL-2555D`, reusing the exact existing Storage registry object (fixed_ttl, terminal_transition, 220752000 seconds = 2,555 days, 2,000,000 records per Project, fail_closed overflow, hold_eligible, compact expiry). For this binding the terminal-transition anchor is the saved original refusal or startup-failure result at its first successful durable save, never a retry, reprocessing, recovery, later append or observation time. Expiry is inclusive at that anchor plus 2,555 days. Remove only expired entries that no investigation, active reference, recovery or backup protects; existing legal holds, preserved/recent-run, rollback and maintenance references still override eligibility. If full and no entry may expire, refuse new entries rather than evict an unexpired or protected row. The extra troubleshooting entry may disappear only after expiry and protection checks; its original approval or action result keeps its own lifetime. Supporting approvals, source snapshots and recovery logs retain their own policies. Jared answered \"i approve all of it\"; the presented deck maps approve all to option A. The accepted answer is landed in `Plans/Decision_Log.md#DL-422` (batch 1); this unit applies its exact option A and shared conditions. This applies exactly item 2.a and Card 2's shared conditions. It adds no counting or deletion rule for future entries outside Projects. **Application scope remains PENDING_RETENTION_DECISION and may not record this event until exact approved rules exist.** Exact remaining question: What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.command_denied` history? A Project policy must not be inferred for it. No original body, snapshot, transaction, generic index or checkpoint lifetime is reopened.",
+     "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-550",
+    "line_start": 55497,
+    "line_end": 55505,
+    "quote": "  Current selected assignment (2026-11-19): filesafe.command_denied@2.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2301. Its event history selects Application\n  = RP-FILESAFE-BLOCKED-COMMAND-APPLICATION-2555D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project\n  = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); Plans/storage-plan.md#SP-550\n  owns the event policy''s existing anchors, counts, holds and deletion rules. Original sources and coherent backups\n  retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication\n  still requires the exact selected schema/scope, original custody, current permission, receipt and required producer\n  adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN.\n  No native adoption, new retention choice or governance seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-550, Plans/storage-plan.md:55454-55565"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  },
+  {
+   "ordinal": 1,
+   "old": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-550",
+    "line_start": 55495,
+    "line_end": 55495,
+    "quote": "Current selected assignment (2026-11-19): filesafe.command_denied@2.0.0 is registered for application_or_project",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-550, Plans/storage-plan.md:55452-55563",
+    "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+    "source_citation": {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-550",
+     "line_start": 55229,
+     "line_end": 55229,
+     "quote": "\\ selects `RP-FILESAFE-BLOCKED-COMMAND-APPLICATION-2555D@1.0.0`; Project records select the Project\\",
+     "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-550",
+    "line_start": 55497,
+    "line_end": 55505,
+    "quote": "  Current selected assignment (2026-11-19): filesafe.command_denied@2.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2301. Its event history selects Application\n  = RP-FILESAFE-BLOCKED-COMMAND-APPLICATION-2555D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project\n  = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); Plans/storage-plan.md#SP-550\n  owns the event policy''s existing anchors, counts, holds and deletion rules. Original sources and coherent backups\n  retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication\n  still requires the exact selected schema/scope, original custody, current permission, receipt and required producer\n  adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN.\n  No native adoption, new retention choice or governance seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-550, Plans/storage-plan.md:55454-55565"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

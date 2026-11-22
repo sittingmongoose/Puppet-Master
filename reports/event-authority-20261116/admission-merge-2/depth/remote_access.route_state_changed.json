@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/449"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/449 (canonical row SHA-256 a3956980736e792a174e69494d59199dfbf636dd398a43bd6bbd82dda804284c). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/449, canonical row SHA-256 4dd89770514ea6f36efba2c0861f1d7584e41425a7bf3a785075bfd8be6bc495. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/449",
-       "line_start": 29049,
-       "line_end": 29090,
+       "line_start": 29156,
+       "line_end": 29198,
        "quote": "\"event_type\": \"remote_access.route_state_changed\"",
-       "quote_line": 29052,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 29159,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/449",
-       "quote_scope": "unit #/families/449, Plans/event_family_registry.json:29049-29090"
+       "quote_scope": "unit #/families/449, Plans/event_family_registry.json:29156-29198"
       }
      ]
     },
@@ -266,34 +266,56 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1408",
-       "line_start": 50933,
-       "line_end": 50933,
-       "quote": "Current selected assignment (2026-11-19): remote_access.route_state_changed@1.0.0 is registered for application_only",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "line_start": 50936,
+       "line_end": 50942,
+       "quote": "  Current selected assignment (2026-11-19): remote_access.route_state_changed@1.0.0 is registered for application_only\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2367. Its event history selects RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0;\n  Plans/storage-plan.md#SP-1408 owns the event policy''s existing anchors, counts, holds and deletion rules. Original\n  sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to\n  them. Current append/publication still requires the exact selected schema/scope, original custody, current permission,\n  receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native\n  execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1408, Plans/Contracts_V0.md:50900-50981",
+       "quote_scope": "unit CV-1408, Plans/Contracts_V0.md:50903-50984",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1408",
-        "line_start": 48789,
-        "line_end": 48789,
-        "quote": "retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only ex",
-        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+        "line_start": 50933,
+        "line_end": 50933,
+        "quote": "Current selected assignment (2026-11-19): remote_access.route_state_changed@1.0.0 is registered for application_only",
+        "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+        "quote_check": "exact",
+        "quote_scope": "unit CV-1408, Plans/Contracts_V0.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:50900-50981",
+        "source_citation": {
+         "path": "Plans/Contracts_V0.md",
+         "unit": "CV-1408",
+         "line_start": 48789,
+         "line_end": 48789,
+         "quote": "retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only ex",
+         "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+        "line": 50933
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "7269f08349180c8211b640ad3e53f7ec5eb82162",
+        "old_quote": "Current selected assignment (2026-11-19): remote_access.route_state_changed@1.0.0 is registered for application_only",
+        "old_path": "Plans/Contracts_V0.md",
+        "old_unit": "CV-1408",
+        "old_line_start": 50933,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1408",
-       "line_start": 71306,
-       "line_end": 71306,
+       "line_start": 71316,
+       "line_end": 71316,
        "quote": "Current selected assignment (2026-11-19): remote_access.route_state_changed@1.0.0 is registered for application_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2367. Its event history selects RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1408, Plans/storage-plan.md:71207-71306",
+       "quote_scope": "unit SP-1408, Plans/storage-plan.md:71217-71316",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1408",
@@ -403,12 +425,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1408",
-       "line_start": 71239,
-       "line_end": 71239,
+       "line_start": 71249,
+       "line_end": 71249,
        "quote": "The exact checkpoint in derived redb checkpoints is w3e_remote_access_route_state_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1408, Plans/storage-plan.md:71207-71306",
+       "quote_scope": "unit SP-1408, Plans/storage-plan.md:71217-71316",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1408",
@@ -465,12 +487,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1408",
-       "line_start": 50923,
-       "line_end": 50927,
+       "line_start": 50926,
+       "line_end": 50930,
        "quote": "Phase 2 (2026-11-13) runs the executable synthetic\n  oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of\n  a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py\n  through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a\n  written pr",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
-       "quote_check": "whitespace_normalized",
-       "quote_scope": "unit CV-1408, Plans/Contracts_V0.md:50900-50981",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1408, Plans/Contracts_V0.md:50903-50984",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1408",
@@ -611,10 +633,10 @@
   "row_pointer": "#/families/449"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "5c154712bddcd2265e43024ac78ab73c8f993c730597e255a2836e0e46fbc471",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "8676d49ce7e8f87d426ea22a5a8d809226e38653bf07c875a50c1f01de407dbc",
+  "verdicts_changed": false,
+  "native_execution": "NOT_RUN"
  }
 }

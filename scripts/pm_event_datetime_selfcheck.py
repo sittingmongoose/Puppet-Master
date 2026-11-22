@@ -5305,3 +5305,47 @@ def _nested_root_mutation(context):
     """
     with _nested_fixture(context):
         return _real_in_place(context)
+
+
+# ---------------------------------------------------------------------------
+# Q. The migration-snapshot rule (stream E, 2026-11-20): fresh and history copies.
+#    Each standing case of pm_event_datetime_snapshot_rule_selftest is one check,
+#    the witness the committed mutation set names for the rule's mutation points.
+# ---------------------------------------------------------------------------
+
+SNAPSHOT_RULE_CASES = (
+    "accept_span_over_excluded_owner_fence", "accept_span_over_classified_owner_fence",
+    "refuse_uncovered_owner_span", "refuse_unmapped_snapshot_line", "refuse_changed_owner_text",
+    "refuse_missing_owner_file", "refuse_owner_range_past_eof", "refuse_ephemeral_exclusion_citation",
+    "refuse_span_row_outside_span_map", "refuse_noncanonical_owner_path",
+    "refuse_unreadable_uncovered_owner_container", "refuse_exclusion_on_snapshot_path",
+    "accept_history_stale_current_run", "accept_history_retained_predecessor", "refuse_unlisted_run",
+    "refuse_history_text_changed", "refuse_history_span_map_edited", "refuse_history_no_git_repository",
+    "refuse_history_uncommitted_run", "refuse_history_owner_blob_missing",
+    "refuse_fresh_uncovered_with_history_available", "declaring_snapshot_line_is_unclassified_node",
+    "accept_span_at_byte_zero", "refuse_empty_span", "refuse_span_ending_on_uncovered_fence_line",
+    "refuse_span_starting_on_uncovered_fence_close", "refuse_ephemeral_citation_of_migration_directory",
+    "accept_history_under_git_hook_environment",
+)
+
+
+def _snapshot_rule_check(name):
+    def run(context):
+        _, inv, _, _ = _mods()
+        import pm_event_datetime_snapshot_rule_selftest as snapshot
+        # The case module binds the inventory at its own import; the module installed now is the code under test.
+        snapshot.inv = inv
+        return snapshot.run_case(name)["ok"] is True
+    run.__name__ = "_snapshot_" + name
+    return run
+
+
+for _snapshot_case in SNAPSHOT_RULE_CASES:
+    check("datetime_unit_snapshot_" + _snapshot_case)(_snapshot_rule_check(_snapshot_case))
+
+
+@check("datetime_unit_snapshot_cases_registered")
+def _snapshot_cases_registered(context):
+    """Every standing snapshot-rule case is registered here, in its own order, and nothing else."""
+    import pm_event_datetime_snapshot_rule_selftest as snapshot
+    return tuple(snapshot.CASES) == SNAPSHOT_RULE_CASES

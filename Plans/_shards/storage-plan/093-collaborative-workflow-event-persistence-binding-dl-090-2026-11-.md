@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L37701-L47187
+Source lines: L37707-L47193
 
-Source SHA256: `8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537`
+Source SHA256: `0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888`
 
 ---
 
@@ -2284,7 +2284,7 @@ canonical_text: 'Newly authored owner contract under DL-045 for run.background_e
   rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or
   history rewrite. retention_policy_ref = RP-RUNTIME-365D. Case L-3 directly names Runtime/run/node/attempt: 365
   days after actual run completion, 1,000,000/run and 5,000,000/project, successor compaction. Holds, original anchors
-  and dependency checks are unchanged; retries never reset the retention anchor. Checks and positive/negative fixtures:
+  and dependency checks are unchanged; retries never reset the retention anchor. The Application EventRecord count follows the Case L-3 assignment recorded in DL-2597. Checks and positive/negative fixtures:
   python3 scripts/pm-dt-event-contracts.py; ATS-294. Native execution remains NOT_RUN. No registry append, admission,
   owner decision or seal follows.
 
@@ -2530,7 +2530,7 @@ canonical_text: 'Newly authored owner contract under DL-045 for tool.execution_c
   rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or
   history rewrite. retention_policy_ref = RP-RUNTIME-365D. Case L-3 directly names Runtime/run/node/attempt: 365
   days after actual run completion, 1,000,000/run and 5,000,000/project, successor compaction. Holds, original anchors
-  and dependency checks are unchanged; retries never reset the retention anchor. Checks and positive/negative fixtures:
+  and dependency checks are unchanged; retries never reset the retention anchor. The Application EventRecord count follows the Case L-3 assignment recorded in DL-2597. Checks and positive/negative fixtures:
   python3 scripts/pm-dt-event-contracts.py; ATS-295. Native execution remains NOT_RUN. No registry append, admission,
   owner decision or seal follows.
 
@@ -2734,7 +2734,7 @@ canonical_text: 'Newly authored owner contract under DL-045 for tool.execution_s
   rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or
   history rewrite. retention_policy_ref = RP-RUNTIME-365D. Case L-3 directly names Runtime/run/node/attempt: 365
   days after actual run completion, 1,000,000/run and 5,000,000/project, successor compaction. Holds, original anchors
-  and dependency checks are unchanged; retries never reset the retention anchor. Checks and positive/negative fixtures:
+  and dependency checks are unchanged; retries never reset the retention anchor. The Application EventRecord count follows the Case L-3 assignment recorded in DL-2597. Checks and positive/negative fixtures:
   python3 scripts/pm-dt-event-contracts.py; ATS-296. Native execution remains NOT_RUN. No registry append, admission,
   owner decision or seal follows.
 

@@ -1,0 +1,153 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "remote_access.route_migration_state_changed",
+ "findings": [
+  1,
+  4
+ ],
+ "source_commit": "4afe0c732bec58344096b3cbd10aeedb328e2024",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2365",
+ "decision_ref": "Plans/Decision_Log.md#DL-2553",
+ "registry_before": {
+  "revision": "2026-11-19.102",
+  "sha256": "3b572b8ca597fff898ff6069803bca5c49a2af77bcc4ca2fb137e273b3df64ad",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.103",
+  "sha256": "78ea2e0cdf33fbcc3d88ebde9afce75f5cc96dc670348abd51768c4202fc5685",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-remote-access-route-migration-state-changed",
+  "family_revision": "1.0.0",
+  "event_type": "remote_access.route_migration_state_changed",
+  "scope_policy": "application_only",
+  "semantic_owner_doc": "Plans/Remote_Access_System.md#RAS-1406",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-1406",
+  "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/remote_access_route_migration_state_changed/1.0.0/schema.json",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/w3e/remote_access_route_migration_state_changed.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/remote_access_route_migration_state_changed/1.0.0/schema.json"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Remote_Access_System.md#RAS-1406",
+   "Plans/Contracts_V0.md#CV-1406",
+   "Plans/storage-plan.md#SP-1406",
+   "Plans/event_payloads/w3e/remote_access_route_migration_state_changed.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
+   "policy_version": "1.0.0"
+  }
+ },
+ "registry_row": {
+  "family_id": "event-family-remote-access-route-migration-state-changed",
+  "family_revision": "1.0.0",
+  "event_type": "remote_access.route_migration_state_changed",
+  "scope_policy": "application_only",
+  "semantic_owner_doc": "Plans/Remote_Access_System.md#RAS-1406",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-1406",
+  "payload_schema_id": "pm.event_payload.remote_access.route_migration_state_changed.v1",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/w3e/remote_access_route_migration_state_changed.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/remote_access_route_migration_state_changed/1.0.0/schema.json"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Remote_Access_System.md#RAS-1406",
+   "Plans/Contracts_V0.md#CV-1406",
+   "Plans/storage-plan.md#SP-1406",
+   "Plans/event_payloads/w3e/remote_access_route_migration_state_changed.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+   "Plans/event_payloads/w3e/remote_access_route_migration_state_changed.schema.json#/properties/schema_id/const"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
+   "policy_version": "1.0.0"
+  }
+ },
+ "predecessor_record_sha256": "783b0339ca94185c848a1c2c37e2494bd8cd1960e2cb3034ce83232d1f4af3aa",
+ "predecessor_assessment_sha256": "fe05b1502ffbf3b25747853a208023bf629bf2e31d3c63c4f8555cde4292672d",
+ "applied_record_sha256": "d24809161229de9b763bd0794f365d20a4050e63dfb55636e3645336e5949342",
+ "applied_assessment_sha256": "048ba62998ad6440a7114a351757ecb14602aaa6aadeabfddd90e77cbcaba1c2",
+ "citation_changes": [
+  {
+   "ordinal": 1,
+   "old": {
+    "path": "Plans/Contracts_V0.md",
+    "unit": "CV-1406",
+    "line_start": 50770,
+    "line_end": 50770,
+    "quote": "Current selected assignment (2026-11-19): remote_access.route_migration_state_changed@1.0.0 is registered for",
+    "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+    "quote_check": "exact",
+    "quote_scope": "unit CV-1406, Plans/Contracts_V0.md:50737-50819",
+    "source_citation": {
+     "path": "Plans/Contracts_V0.md",
+     "unit": "CV-1406",
+     "line_start": 48667,
+     "line_end": 48667,
+     "quote": "retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotec",
+     "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/Contracts_V0.md",
+    "unit": "CV-1406",
+    "line_start": 50773,
+    "line_end": 50780,
+    "quote": "  Current selected assignment (2026-11-19): remote_access.route_migration_state_changed@1.0.0 is registered for\n  application_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2365. Its event\n  history selects RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0; Plans/storage-plan.md#SP-1406 owns the event\n  policy''s existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their\n  independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires\n  the exact selected schema/scope, original custody, current permission, receipt and required producer adoption.\n  Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native\n  adoption, new retention choice or governance seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit CV-1406, Plans/Contracts_V0.md:50740-50822"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

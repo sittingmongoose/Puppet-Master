@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27322,
+    "depends_on_edge_count": 27775,
     "downstream_blocked_node_count": 0,
-    "edge_count": 30547,
-    "node_count": 9468,
+    "edge_count": 31000,
+    "node_count": 9617,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-21T05:32:19Z",
+  "generated_at_utc": "2026-11-21T12:47:49Z",
   "gui_related_units": {
     "count": 3935,
     "units": [
@@ -8690,8 +8690,8 @@
         "source_location": {
           "heading": "CV-1461 - session_prompt.admitted Resolved Payload And Owner Contract",
           "heading_level": 3,
-          "heading_line": 52779,
-          "line": 52781,
+          "heading_line": 52782,
+          "line": 52784,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8701,8 +8701,8 @@
         "source_location": {
           "heading": "CV-1462 - session_prompt.cancelled Resolved Payload And Owner Contract",
           "heading_level": 3,
-          "heading_line": 52867,
-          "line": 52869,
+          "heading_line": 52870,
+          "line": 52872,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8712,8 +8712,8 @@
         "source_location": {
           "heading": "CV-1463 - session_prompt.expired Resolved Payload And Owner Contract",
           "heading_level": 3,
-          "heading_line": 52955,
-          "line": 52957,
+          "heading_line": 52958,
+          "line": 52960,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8723,8 +8723,8 @@
         "source_location": {
           "heading": "CV-1464 - session_prompt.rejected Resolved Payload And Owner Contract",
           "heading_level": 3,
-          "heading_line": 53043,
-          "line": 53045,
+          "heading_line": 53046,
+          "line": 53048,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -9119,8 +9119,8 @@
         "source_location": {
           "heading": "CV-3200 — config.validation.passed: saved tier-start setup-check history (E8-6 B)",
           "heading_level": 3,
-          "heading_line": 57525,
-          "line": 57547,
+          "heading_line": 57528,
+          "line": 57550,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -9130,8 +9130,8 @@
         "source_location": {
           "heading": "CV-3201 — config.validation.warning: saved tier-start setup-check history (E8-6 B)",
           "heading_level": 3,
-          "heading_line": 57588,
-          "line": 57610,
+          "heading_line": 57591,
+          "line": 57613,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -36377,8 +36377,8 @@
         "source_location": {
           "heading": "SP-235 - Case L Migration Backup And Canonical Redb Recovery",
           "heading_level": 3,
-          "heading_line": 18537,
-          "line": 18539,
+          "heading_line": 18541,
+          "line": 18543,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36388,8 +36388,8 @@
         "source_location": {
           "heading": "SP-236 - Case L SeglogFrameV2 Durability And Recovery",
           "heading_level": 3,
-          "heading_line": 18578,
-          "line": 18580,
+          "heading_line": 18582,
+          "line": 18584,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36399,8 +36399,8 @@
         "source_location": {
           "heading": "SP-237 - Case L Retention Compaction Deletion And Quarantine",
           "heading_level": 3,
-          "heading_line": 18682,
-          "line": 18684,
+          "heading_line": 18686,
+          "line": 18688,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36410,8 +36410,8 @@
         "source_location": {
           "heading": "SP-238 - Case L Storage IO Admission And Recovery",
           "heading_level": 3,
-          "heading_line": 18730,
-          "line": 18732,
+          "heading_line": 18734,
+          "line": 18736,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36421,8 +36421,8 @@
         "source_location": {
           "heading": "SP-239 - Case L Aggregate Lock And Viewer Envelope",
           "heading_level": 3,
-          "heading_line": 18766,
-          "line": 18768,
+          "heading_line": 18770,
+          "line": 18772,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36432,8 +36432,8 @@
         "source_location": {
           "heading": "SP-240 - Case L Root Continuity Relocation And Fallback Branch",
           "heading_level": 3,
-          "heading_line": 18802,
-          "line": 18804,
+          "heading_line": 18806,
+          "line": 18808,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36443,8 +36443,8 @@
         "source_location": {
           "heading": "SP-242 - Case L Safe Point Restore Transaction And Restore Point Storage",
           "heading_level": 3,
-          "heading_line": 18881,
-          "line": 18883,
+          "heading_line": 18885,
+          "line": 18887,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36454,8 +36454,8 @@
         "source_location": {
           "heading": "SP-244 - Debug Workspace Persistence Keys",
           "heading_level": 3,
-          "heading_line": 19141,
-          "line": 19143,
+          "heading_line": 19145,
+          "line": 19147,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36465,8 +36465,8 @@
         "source_location": {
           "heading": "SP-245 - Home Workspace Layout Transaction And Recovery",
           "heading_level": 3,
-          "heading_line": 19091,
-          "line": 19093,
+          "heading_line": 19095,
+          "line": 19097,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36476,8 +36476,8 @@
         "source_location": {
           "heading": "SP-248 - Usage View-State Persistence Surface",
           "heading_level": 3,
-          "heading_line": 19375,
-          "line": 19377,
+          "heading_line": 19379,
+          "line": 19381,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36487,8 +36487,8 @@
         "source_location": {
           "heading": "SP-249 - Settled Widget Layout Versioning Migration And Write Boundary",
           "heading_level": 3,
-          "heading_line": 19474,
-          "line": 19476,
+          "heading_line": 19478,
+          "line": 19480,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36498,8 +36498,8 @@
         "source_location": {
           "heading": "SP-250 - Home Workspace Cross-Axis And Semantic Preset Persistence",
           "heading_level": 3,
-          "heading_line": 19567,
-          "line": 19569,
+          "heading_line": 19571,
+          "line": 19573,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36509,8 +36509,8 @@
         "source_location": {
           "heading": "SP-252 - Product Onboarding Draft-First Storage Migration",
           "heading_level": 3,
-          "heading_line": 19717,
-          "line": 19719,
+          "heading_line": 19721,
+          "line": 19723,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36520,8 +36520,8 @@
         "source_location": {
           "heading": "Slot migration-generation custody and activation",
           "heading_level": 3,
-          "heading_line": 26680,
-          "line": 26704,
+          "heading_line": 26684,
+          "line": 26708,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36531,8 +36531,8 @@
         "source_location": {
           "heading": "SP-279 — Storage integrity finding custody and checkpoint-free read",
           "heading_level": 3,
-          "heading_line": 28515,
-          "line": 28517,
+          "heading_line": 28519,
+          "line": 28521,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36542,8 +36542,8 @@
         "source_location": {
           "heading": "SP-330 - The v2 Home Layout Record, Its Transaction And The Migration From v1",
           "heading_level": 3,
-          "heading_line": 33809,
-          "line": 33811,
+          "heading_line": 33815,
+          "line": 33817,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36553,8 +36553,8 @@
         "source_location": {
           "heading": "SP-331 - Terminal Appearance Storage",
           "heading_level": 3,
-          "heading_line": 33974,
-          "line": 33976,
+          "heading_line": 33980,
+          "line": 33982,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36564,8 +36564,8 @@
         "source_location": {
           "heading": "SP-332 - Terminal Records Re-Scoped To One Session Per Tab, And Saved Scrollback",
           "heading_level": 3,
-          "heading_line": 34096,
-          "line": 34098,
+          "heading_line": 34102,
+          "line": 34104,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36575,8 +36575,8 @@
         "source_location": {
           "heading": "SP-333 - Editor Appearance And Wallpaper Settings Levels",
           "heading_level": 3,
-          "heading_line": 34195,
-          "line": 34197,
+          "heading_line": 34201,
+          "line": 34203,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36586,8 +36586,8 @@
         "source_location": {
           "heading": "SP-338 - Render-Ready Chat Pages And The Open-Path Gate",
           "heading_level": 3,
-          "heading_line": 34568,
-          "line": 34570,
+          "heading_line": 34574,
+          "line": 34576,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36597,8 +36597,8 @@
         "source_location": {
           "heading": "SP-339 - No Always-On JSON Copies; Dump, Inspect, Tail And Export",
           "heading_level": 3,
-          "heading_line": 34634,
-          "line": 34636,
+          "heading_line": 34640,
+          "line": 34642,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36608,8 +36608,8 @@
         "source_location": {
           "heading": "SP-340 - redb Value Limits, Two Files, Quick Repair And Scheduled Compaction",
           "heading_level": 3,
-          "heading_line": 34708,
-          "line": 34710,
+          "heading_line": 34714,
+          "line": 34716,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36619,8 +36619,8 @@
         "source_location": {
           "heading": "SP-341 - Parquet Archive, DuckDB On Demand And Kept Usage History",
           "heading_level": 3,
-          "heading_line": 34761,
-          "line": 34763,
+          "heading_line": 34767,
+          "line": 34769,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36630,8 +36630,8 @@
         "source_location": {
           "heading": "SP-656 — Preview subject UI and runtime identity mapping",
           "heading_level": 3,
-          "heading_line": 50529,
-          "line": 50531,
+          "heading_line": 50535,
+          "line": 50537,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -43309,10 +43309,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 9468,
+  "plan_unit_count": 9617,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 4782,
+      "high": 4931,
       "low": 10,
       "medium": 36,
       "standard": 4640
@@ -44544,7 +44544,7 @@
       "evalsession_owner_boundary_drift": 1,
       "event_alias_precedence_drift": 1,
       "event_authority": 120,
-      "event_authority_admission": 472,
+      "event_authority_admission": 619,
       "event_authority_admission_decision_entry_drift": 1,
       "event_authority_admission_decision_entry_scope_drift": 1,
       "event_authority_and_false_completion": 1,
@@ -44566,6 +44566,7 @@
       "event_authority_original_custody_and_scope": 33,
       "event_authority_payload_depth_drift": 1,
       "event_authority_registration_checkpoint_drift": 1,
+      "event_authority_retention": 2,
       "event_authority_revision": 8,
       "event_authority_seal_check_drift": 1,
       "event_catalog_payload_owner_drift": 1,
@@ -47570,7 +47571,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 9188,
+      "accepted": 9337,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -47604,7 +47605,7 @@
       "contract": 203,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 759,
+      "decision": 908,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
@@ -47718,7 +47719,7 @@
       {
         "actual": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
         "error": "pnc019_source_hash_stale",
-        "expected": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+        "expected": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
         "source_path": "Plans/event_family_registry.json"
       },
       {
@@ -47778,7 +47779,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
+        "expected": "eb4a9e10a80cc73e94ade88cd2fa4494dc396127505d2ea0529a526542ed37c8",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -47814,7 +47815,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "993845de7022ceaa9a1d9acf00da905bd177a6289ce94081654042de16d065ba",
+        "expected": "7d8cbcb7a2299c109742f5a65c9318a728a301ea12436d7a3bbd8389a63de876",
         "source_path": "scripts/pm_pnc019_currentness.py"
       },
       {

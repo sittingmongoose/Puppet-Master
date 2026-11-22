@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/238"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/238 (canonical row SHA-256 620d220923c921849b3e600c1daf579a65af643d8e929600b99cbad35f1b9820). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/238, canonical row SHA-256 620d220923c921849b3e600c1daf579a65af643d8e929600b99cbad35f1b9820. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/238",
-       "line_start": 16588,
-       "line_end": 16671,
+       "line_start": 16590,
+       "line_end": 16673,
        "quote": "\"event_type\": \"browser.context_share_revoked\"",
-       "quote_line": 16591,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 16593,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/238",
-       "quote_scope": "unit #/families/238, Plans/event_family_registry.json:16588-16671"
+       "quote_scope": "unit #/families/238, Plans/event_family_registry.json:16590-16673"
       }
      ]
     },
@@ -230,22 +230,44 @@
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-321",
        "line_start": 18295,
-       "line_end": 18295,
-       "quote": "Current selected assignment (2026-11-19): browser.context_share_revoked@1.0.0 is registered for application_or_project",
+       "line_end": 18305,
+       "quote": "  Current selected assignment (2026-11-19): browser.context_share_revoked@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2156. Its event history selects Application\n  = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0\n  (anchor_kind=explicit_delete, cardinality_scope=thread); Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321\n  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:\n  projector.checkpoint.ds15.browser_context_share_revoked:{scope_key} uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-459;\n  this assigns that stored value, not event history. Original sources and coherent backups retain their independent\n  owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact\n  selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing\n  registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new\n  retention choice or governance seal follows.'",
        "quote_check": "exact",
        "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:18131-18339",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-321",
-        "line_start": 16874,
-        "line_end": 16874,
-        "quote": "\\ (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-401,\\",
-        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+        "line_start": 18295,
+        "line_end": 18295,
+        "quote": "Current selected assignment (2026-11-19): browser.context_share_revoked@1.0.0 is registered for application_or_project",
+        "quote_check": "exact",
+        "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:18131-18339",
+        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+        "source_citation": {
+         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+         "unit": "SMPFS-321",
+         "line_start": 16874,
+         "line_end": 16874,
+         "quote": "\\ (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-401,\\",
+         "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+        "line": 18295
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "4ebb138daffd1e4fe389eb42d35bb4303c1e33d1",
+        "old_quote": "Current selected assignment (2026-11-19): browser.context_share_revoked@1.0.0 is registered for application_or_project",
+        "old_path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "old_unit": "SMPFS-321",
+        "old_line_start": 18295,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       }
      ],
@@ -594,10 +616,10 @@
   "row_pointer": "#/families/238"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "0a1ea8d58439b265b6b879832c9fbdcc46ea63db5c62d09447bb650039ca4ccb",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
+  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
+  "source_assessment_sha256": "c15249c17132b889cade71cace46e4a93351a9f2b600391ea5e34065340361b9",
+  "verdicts_changed": false,
+  "native_execution": "NOT_RUN"
  }
 }

@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/362"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/362 (canonical row SHA-256 88d2fd472b0c5745d663f975d2959775febfe44c6b7805021725f30f2ac93b94). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/362, canonical row SHA-256 26eedb55fe5ece4133cd876a569a451c58d7fc04ff63895bbf4fd167717fb020. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/362",
-       "line_start": 24329,
-       "line_end": 24417,
+       "line_start": 24336,
+       "line_end": 24426,
        "quote": "\"event_type\": \"crew.board_message_posted\"",
-       "quote_line": 24332,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 24339,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/362",
-       "quote_scope": "unit #/families/362, Plans/event_family_registry.json:24329-24417"
+       "quote_scope": "unit #/families/362, Plans/event_family_registry.json:24336-24426"
       }
      ]
     },
@@ -61,7 +61,7 @@
        "quote": "**OSI-681: `crew.board_message_posted@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current a",
        "quote_check": "exact",
        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md:32532-32644",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-681",
@@ -92,7 +92,7 @@
        "quote": "**Producer and ordering.** `AgentCoordinator / post board message` owns the occurrence. Predicate: message absent -> posted; from_agent_id is an admitted member of this crew; expli",
        "quote_check": "exact",
        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md:32532-32644",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-681",
@@ -110,7 +110,7 @@
        "quote": "**Governed application successor (DO-A04).** Newly authored technical owner contract CV-740/SP-723 selects `AgentMessageApplicationV2@2.0.0`, `OriginalCoordinationAppendSourceV2` a",
        "quote_check": "exact",
        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md:32532-32644",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-681",
@@ -139,7 +139,7 @@
        "line_start": 32536,
        "line_end": 32536,
        "quote": "`Plans/orchestrator_event_payloads.schema.json#/$defs/crew_board_message_posted` (`pm.event_payload.crew_board_message_posted.v1@1.0.0`) is the closed payload. It carries schema_version and no stored schema_id: under SP-320 the EventRecord's payload_schema_id names it.",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "quote_check": "exact",
        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md:32532-32644",
        "source_citation": {
@@ -154,12 +154,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-720",
-       "line_start": 35855,
-       "line_end": 35855,
+       "line_start": 35861,
+       "line_end": 35861,
        "quote": "Its closed member `crew_board_message_posted` is copied from Plans/coordination_event_payloads.schema.json#/$defs/crew_board_message_posted, the file the row's value_schema_ref names, including schema_version and scope union;",
        "quote_check": "exact",
-       "quote_scope": "unit SP-720, Plans/storage-plan.md:35851-35895",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-720, Plans/storage-plan.md:35857-35901",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-720",
@@ -175,7 +175,7 @@
        "line_start": 32536,
        "line_end": 32536,
        "quote": "`Plans/orchestrator_event_payloads.schema.json#/$defs/crew_board_message_posted` (`pm.event_payload.crew_board_message_posted.v1@1.0.0`) is the closed payload. It carries schema_version and no stored schema_id: under SP-320 the EventRecord's payload_schema_id names it.",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "quote_check": "exact",
        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md:32532-32644",
        "source_citation": {
@@ -208,7 +208,7 @@
        "quote": "**Identity and replay.** scope_partition is `app` or the exact EventRecord project~ encoding. Project identity preimage remains `JCS([\"ea-do-v1\",scope_partition,server_id,thread_id",
        "quote_check": "exact",
        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md:32532-32644",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-681",
@@ -226,7 +226,7 @@
        "quote": "The current writing recipe is `ea-do-rfc8785-v2`; only new writes use it.",
        "quote_check": "exact",
        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md:32532-32644",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-681",
@@ -257,7 +257,7 @@
        "quote": "**Identity and replay.** scope_partition is `app` or the exact EventRecord project~ encoding. Project identity preimage remains `JCS([\"ea-do-v1\",scope_partition,server_id,thread_id",
        "quote_check": "exact",
        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md:32532-32644",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-681",
@@ -275,7 +275,7 @@
        "quote": "Recovery verifies the original and returns its exact complete receipt before any retry;",
        "quote_check": "exact",
        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md:32532-32644",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-681",
@@ -303,21 +303,43 @@
        "unit": "OSI-681",
        "line_start": 32640,
        "line_end": 32640,
-       "quote": "Current selected assignment (2026-11-19): crew.board_message_posted@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2280. Its event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
+       "quote": "Current selected assignment (2026-11-19): crew.board_message_posted@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2280. Its event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the SP-351 Server counterpart bucket), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the Project partition); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
        "quote_check": "exact",
        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md:32532-32644",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-681",
-        "line_start": 32603,
-        "line_end": 32603,
-        "quote": "Event history `retention_policy_ref = RP-COORDINATION-180D@1.0.0`, under DL-085.",
-        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+        "line_start": 32640,
+        "line_end": 32640,
+        "quote": "Current selected assignment (2026-11-19): crew.board_message_posted@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2280. Its event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
+        "quote_check": "exact",
+        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:32532-32644",
+        "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+        "source_citation": {
+         "path": "Plans/orchestrator-subagent-integration.md",
+         "unit": "OSI-681",
+         "line_start": 32603,
+         "line_end": 32603,
+         "quote": "Event history `retention_policy_ref = RP-COORDINATION-180D@1.0.0`, under DL-085.",
+         "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+        "line": 32640
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "1e2b0cc2a33d9850f6de51da0b03fed231a62dde",
+        "old_quote": "Current selected assignment (2026-11-19): crew.board_message_posted@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2280. Its event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
+        "old_path": "Plans/orchestrator-subagent-integration.md",
+        "old_unit": "OSI-681",
+        "old_line_start": 32640,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       }
      ],
@@ -341,7 +363,7 @@
        "quote": "**Retention and custody.** `retention_policy_ref = RP-COORDINATION-180D@1.0.0` under DL-085, as materialized in the landed `Plans/storage_value_registry.json` (Storage retention landing `4d52bd2758526cd0e8a56358baaa73049c1d4bdd`), report `reports/event-",
        "quote_check": "exact",
        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md:32532-32644",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-681",
@@ -372,7 +394,7 @@
        "quote": "**Producer and ordering.** `AgentCoordinator / post board message` owns the occurrence. Predicate: message absent -> posted; from_agent_id is an admitted member of this crew; expli",
        "quote_check": "exact",
        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md:32532-32644",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-681",
@@ -403,7 +425,7 @@
        "quote": "**Operating consumer and checkpoint.** `reader.orchestrator.crew_board_message_posted.history.v1@1.0.0` serves the existing crew-board history inspector for this exact family. It e",
        "quote_check": "exact",
        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md:32532-32644",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-681",
@@ -434,7 +456,7 @@
        "quote": "**Compatibility and withdrawal.** Accept only this exact schema/version; old sketches or aliases do not self-upgrade or become lawful history. A historical read requires proof of i",
        "quote_check": "exact",
        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md:32532-32644",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-681",
@@ -452,7 +474,7 @@
        "quote": "**Historical-read admission oracle — crew.board_message_posted.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with ",
        "quote_check": "exact",
        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md:32532-32644",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-681",
@@ -470,7 +492,7 @@
        "quote": "A custody refusal, or missing, unverified, contradictory, unsupported or foreign recipe evidence, refuses.",
        "quote_check": "exact",
        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md:32532-32644",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-681",
@@ -496,8 +518,8 @@
       {
        "path": "Plans/orchestrator-subagent-integration.md",
        "line": 32532,
-       "sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "unit": "OSI-681",
        "line_start": 32532,
        "line_end": 32532,
@@ -522,12 +544,12 @@
        "path": "Plans/orchestrator-subagent-integration.md",
        "line": 32556,
        "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `crew.board_message_posted` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
-       "sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "line_start": 32556,
        "line_end": 32556,
        "quote_check": "exact",
        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md:32532-32644",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "unit": "OSI-681",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
@@ -571,10 +593,10 @@
   "row_pointer": "#/families/362"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "bf984224e2d6542a8928228e84e963cc992389e41c851cf1cb31ca8235a6a10e",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "786934b4c8db4a51bf4102b2335e2ce082215b2cb8c6f0cec31baaa3b7f74e82",
+  "verdicts_changed": false,
+  "native_execution": "NOT_RUN"
  }
 }

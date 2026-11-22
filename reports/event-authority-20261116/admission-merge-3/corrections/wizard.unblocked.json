@@ -1,0 +1,116 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "wizard.unblocked",
+ "findings": [
+  1
+ ],
+ "source_commit": "59a57f6d5bdfa5a0a86b4252553b4e4b659251f4",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2432",
+ "decision_ref": "Plans/Decision_Log.md#DL-2595",
+ "registry_before": {
+  "revision": "2026-11-19.144",
+  "sha256": "8e56bd6e131652580604cc6d7f734c6b994c1601433f5d79f2c99f2a98ee7d92",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-wizard-unblocked",
+  "family_revision": "1.0.0",
+  "event_type": "wizard.unblocked",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/Contracts_V0.md#CV-597",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-597",
+  "payload_schema_id": "https://puppetmaster.local/schemas/dcw/wizard_unblocked.schema.json",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/dcw/wizard_unblocked.schema.json"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Contracts_V0.md#CV-597",
+   "Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  }
+ },
+ "registry_row": {
+  "family_id": "event-family-wizard-unblocked",
+  "family_revision": "1.0.0",
+  "event_type": "wizard.unblocked",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/Contracts_V0.md#CV-597",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-597",
+  "payload_schema_id": "pm.event_payload.wizard.unblocked.v1",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/dcw/wizard_unblocked.schema.json"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Contracts_V0.md#CV-597",
+   "Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+   "Plans/dcw_blockage_event_fixtures.json#/families/1/positive/event/payload_schema_id"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  }
+ },
+ "predecessor_record_sha256": "8864d1abc4206513c3294f24230ded465eb8055d34ce5892a871dece0d8863ad",
+ "predecessor_assessment_sha256": "ef4681e76093e7ac53872b087b43ce83acb1dca71481d9d7bb83856c81f8d43b",
+ "applied_record_sha256": "2007c011b4debed037690c463133aa642873dd19304df47c7cea12ab419f4128",
+ "applied_assessment_sha256": "916a7b2642b0cf8324967f340b95b66adf18725a4ad8755ec7d782bcba9ac5f8",
+ "citation_changes": [],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

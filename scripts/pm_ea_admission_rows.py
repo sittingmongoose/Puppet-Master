@@ -491,12 +491,15 @@ def derive_row(family: dict, grade: dict, contract: dict, readiness) -> tuple[di
     # Payload editions resolve exactly as readiness resolves them, each for its own scope edition
     # (a closed payload listing one id per edition resolves that edition's id).
     def resolve(scope: str, ref: str) -> dict:
+        from pm_ea_payload_selectors import selector_id, selector_source
         path, pointer = split_ref(ref)
         probe = {"payload_schema_ref": {"path": path, "json_pointer": pointer, "schema_id": "?"}}
         schema, schema_id = readiness.event_family_payload_schema(probe, scope)
         if schema is None or not isinstance(schema_id, str) or not schema_id:
             raise Gap(f"{scope} payload {ref} has no single resolvable schema id (readiness resolver)")
-        return {"path": path, "json_pointer": pointer, "schema_id": schema_id, "schema": schema}
+        return {"path": path, "json_pointer": pointer, "schema_id": schema_id, "schema": schema,
+                "selector_id": selector_id(event_type, scope, schema, schema_id, root=REPO),
+                "selector_source": selector_source(event_type, scope, schema, schema_id, path, pointer, root=REPO)}
 
     editions = {scope: resolve(scope, ref) for scope, ref in sorted(contract["editions"].items())}
     if not editions:
@@ -519,6 +522,13 @@ def derive_row(family: dict, grade: dict, contract: dict, readiness) -> tuple[di
     else:
         scope_policy = schema_scope
         provenance["scope_policy"] = "payload schema scope_kind"
+    if event_type in ("panel.redocked", "panel.undocked") and scope_policy == "application_or_project" and graded_scope == "project_only":
+        # MERGE3 finding 3: named Application specimens + per-family Storage
+        # contract supersede the incomplete preparation scope; keep grade history.
+        if "named panel payload positives" not in contract.get("scope_source", ""):
+            raise Gap("panel correction lacks reviewed owner-positive scope proof")
+        provenance["superseded_preparation_scope"] = graded_scope
+        graded_scope = None
     for other in (graded_scope, schema_scope):
         if other is not None and other != scope_policy:
             raise Gap(f"scope policy sources disagree: {scope_policy} vs {other}")
@@ -536,8 +546,8 @@ def derive_row(family: dict, grade: dict, contract: dict, readiness) -> tuple[di
     if set(editions) != needed:
         raise Gap(f"payload editions {sorted(editions)} do not match scope policy {scope_policy}")
     for scope, stated in sorted(contract["edition_ids"].items()):
-        if scope in editions and editions[scope]["schema_id"] != stated:
-            raise Gap(f"{scope} edition resolves {editions[scope]['schema_id']}, the lane contract states {stated}")
+        if scope in editions and editions[scope]["selector_id"] != stated:
+            raise Gap(f"{scope} envelope selects {editions[scope]['selector_id']}, the lane contract states {stated}")
 
     # Owners: the graded owner and payload units, cross-checked with the lane's own refs.
     owners = dict(contract["owners"])
@@ -630,13 +640,20 @@ def derive_row(family: dict, grade: dict, contract: dict, readiness) -> tuple[di
     for ref in (owners["semantic"], owners["payload"], owners.get("storage"), *contract.get("extra_source_refs", [])):
         if ref and ref not in source_refs:
             source_refs.append(ref)
+    selector_refs = []
     for scope in sorted(editions):
         ref = editions[scope]["path"] + editions[scope]["json_pointer"]
         if ref not in source_refs:
             source_refs.append(ref)
+        if editions[scope]["selector_id"] != editions[scope]["schema_id"]:
+            selector_ref = editions[scope]["selector_source"]
+            if selector_ref not in source_refs and selector_ref not in selector_refs:
+                selector_refs.append(selector_ref)
+    provenance['payload_schema_id'] = {scope: edition['selector_source'] for scope, edition in editions.items()}
     if contract["contract_ref"].startswith("Plans/") and contract["contract_ref"] not in source_refs:
         source_refs.append(contract["contract_ref"])
     source_refs.append(SELF_GRADES[family["lane"]])
+    source_refs.extend(selector_refs)
 
     row: dict[str, Any] = {
         "family_id": family_id,
@@ -645,7 +662,7 @@ def derive_row(family: dict, grade: dict, contract: dict, readiness) -> tuple[di
         "scope_policy": scope_policy,
         "semantic_owner_doc": owners["semantic"],
         "payload_owner_doc": owners["payload"],
-        "payload_schema_id": top["schema_id"],
+        "payload_schema_id": top["selector_id"],
         "payload_schema_ref": {"path": top["path"], "json_pointer": top["json_pointer"], "schema_id": top["schema_id"]},
         "legacy": {
             "aliases": [],
@@ -664,7 +681,7 @@ def derive_row(family: dict, grade: dict, contract: dict, readiness) -> tuple[di
         row["payload_versions"] = [
             {
                 "scope_kind": scope,
-                "payload_schema_id": editions[scope]["schema_id"],
+                "payload_schema_id": editions[scope]["selector_id"],
                 "payload_schema_ref": {"path": editions[scope]["path"], "json_pointer": editions[scope]["json_pointer"],
                                        "schema_id": editions[scope]["schema_id"]},
                 "source_graph_ref": "Plans/Contracts_V0.md#CV-366",

@@ -7,7 +7,7 @@
   ],
   "july_classification": "confirmed_persisted_unregistered",
   "disposition": "KEEP_REGISTERED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to chat.response_stop_requested. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.104 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2240); DL-077 admission record reports/event-authority-20260911/admission-records/chat.response_stop_requested.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/chat.response_stop_requested.json (sha256 7e9cfb50cccae19dda1b8fb461d99e686bf990dce3721f474b5145d0a7baafc8); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to chat.response_stop_requested. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.104 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2240); DL-077 admission record reports/event-authority-20260911/admission-records/chat.response_stop_requested.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/chat.response_stop_requested.json (sha256 2ebd04e8d18860c4cb608b9ab10733987fc8b5c5b013927d8510b7f861f72aa0); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
@@ -21,8 +21,8 @@
     },
     "membership_version": {
       "status": "PASS",
-      "citation": "Plans/event_family_registry.json:21240-21325",
-      "note": "Currently registered at 2026-11-18.2 as #/families/322 (canonical row SHA-256 c6f7ddf0dcde3bfdacd596a38bdb7f7383bb0f6b91d323ac4160e0a402047304). Original one-family admission checkpoints remain in the family record and immutable Git source."
+      "citation": "Plans/event_family_registry.json:21246-21331",
+      "note": "Currently registered at 2026-11-19.145 as #/families/322, canonical row SHA-256 c6f7ddf0dcde3bfdacd596a38bdb7f7383bb0f6b91d323ac4160e0a402047304. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain."
     },
     "closed_payload_schema": {
       "status": "PASS",
@@ -31,7 +31,7 @@
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/assistant-chat-design.md:33053; Plans/storage-plan.md:46927",
+      "citation": "Plans/assistant-chat-design.md:33053; Plans/storage-plan.md:46933",
       "note": "Actual original Storage/Server/Computer/thread/assistant-turn/work joins, reversible Project partitions, original operation identity and exact CV-366 application key are explicit."
     },
     "replay_idempotency": {
@@ -41,12 +41,12 @@
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:47061",
+      "citation": "Plans/storage-plan.md:47067-47077",
       "note": "Signed E8-2 option A assigns the saved `dch_stop_outcome` (the existing canonical `assistant_turn_stop_outcome` family specified in SP-627) exactly the Stop request history's `RP-CHAT-THREAD-LIFETIME@1.0.0` policy under DL-401 G15. The governing chat is the one in the original authenticated Stop request, joined through `stop_request_event_id`, actual Storage instance, scope and thread; it cannot be replaced by the current caller's chat. Keep and delete the result with that same chat in Project and application scope. Apply the same shared 250,000-entry thread count and linked-successor rule without early eviction, the immediate deletion-hide rule, unheld active-copy purge within 24 hours and backup-byte purge within 30 days. Holds delay physical purge without restoring visibility. Independent first receipts, work records and referenced bodies keep their own policies. This resolves the saved outcome's pending retention question and adds no second history event, new record family, count allowance, hold exception or writer admission. Exact-key custody, full storage materialization and original request/result barriers remain required before actual writes."
     },
     "redaction_custody": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:39491; Plans/storage-plan.md:46925",
+      "citation": "Plans/Contracts_V0.md:39491; Plans/storage-plan.md:46931",
       "note": "No-secret refs, exact canonical source/request/result/receipt/pack custody, coherent restore and current authorization/deletion/hold checks are family-specific. A missing result cannot be reconstructed from display or delivery."
     },
     "transitions": {
@@ -56,17 +56,17 @@
     },
     "consumers_checkpoints": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:46929",
+      "citation": "Plans/storage-plan.md:46935",
       "note": "The exact passive Stop reader explicitly adopts the generic SP-278 projector, checkpoint and nine-field durable token, atomic advance, current frontier/coverage validation and side-effect-free rebuild. It creates no domain cursor and never rebuilds canonical outcomes."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:39495; Plans/storage-plan.md:47122; Plans/Contracts_V0.md:39493",
+      "citation": "Plans/Contracts_V0.md:39495; Plans/storage-plan.md:47128; Plans/Contracts_V0.md:39493",
       "note": "Written editions and original provenance remain authoritative with current custody; writer/read publication fences and separately versioned rebuild are defined. Three conditional retirement applications preserve old bytes and do not claim native cutover."
     },
     "positive_negative_oracles": {
       "status": "PASS",
-      "citation": "Plans/assistant-chat-design.md:33049; Plans/assistant-chat-design.md:33139; Plans/Contracts_V0.md:39493; Plans/storage-plan.md:46925; scripts/pm_dch_stop.py:364; scripts/pm_dch_stop.py:422; scripts/pm_dch_stop.py:391; scripts/pm_dch_schema_coverage.py:356",
+      "citation": "Plans/assistant-chat-design.md:33049; Plans/assistant-chat-design.md:33139; Plans/Contracts_V0.md:39493; Plans/storage-plan.md:46931; scripts/pm_dch_stop.py:364; scripts/pm_dch_stop.py:422; scripts/pm_dch_stop.py:391; scripts/pm_dch_schema_coverage.py:356",
       "note": "Exact-family C12 PASS from reports/event-authority-20261114/c12-ch2/C12-GRADES.json"
     }
   },

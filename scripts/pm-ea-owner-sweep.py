@@ -70,6 +70,46 @@ def section(ref):
     return start, end, "\n".join(body.splitlines()[start - 1:end])
 
 
+def decision_binding_text(ref):
+    """Read the decision's own scalar before matching its edition bindings.
+
+    YAML wrapping can split a quoted schema ID or the following parenthesis.
+    Decode only the uniquely declared unit; never join unrelated paragraphs
+    or substitute another decision's policy.
+    """
+    _, _, body = section(ref)
+    unit = ref.split('#', 1)[1]
+    selected = []
+    for block in re.finditer(r'(?ms)^```ya?ml\s*\n(.*?)^```', body):
+        data = yaml.safe_load(block[1])
+        if isinstance(data, dict) and data.get('plan_unit_id') == unit:
+            value = data.get('canonical_text')
+            if not isinstance(value, str):
+                raise ValueError('decision has no canonical scalar: '+ref)
+            selected.append(value)
+    if len(selected) == 1:
+        return selected[0]
+    if selected or re.search(r'(?m)^plan_unit_id:', body):
+        raise ValueError('decision canonical scalar is missing or ambiguous: '+ref)
+    return body
+
+
+def decision_binding_matches(body, scope, policy):
+    binding = re.search(r'\b'+re.escape(scope)+r' `[^`]+` \((.*?)(?:, producer )', body, re.S)
+    return bool(binding and policy_name(policy) in binding[1])
+
+
+def assignment_decision_problem(subject, scope, decision, admission):
+    """A current scope must be stated by the decision actually cited for it."""
+    allowed={admission['decision_ref'],admission.get('original_admission_decision_ref',admission['decision_ref'])}
+    body=decision_binding_text(decision)
+    declared=set(re.findall(r'\b(?:scope policy|Its scope is)\s+`?(application_or_project|project_only|application_only)\b',body,re.I))
+    if decision not in allowed or subject not in body or declared != {scope}:
+        return dict(decision=decision,stated_scope=scope,decision_scopes=sorted(declared),
+                    allowed_decisions=sorted(allowed))
+    return None
+
+
 @lru_cache(maxsize=2048)
 def clauses(ref):
     """Decode YAML wrapping, while retaining physical line bounds and exact bytes."""
@@ -183,6 +223,11 @@ def policy_name(policy):
             else policy.get("setting_key", "ai.usage.usage-retention"))
 
 
+CREW = {"crew.board_message_posted", "crew.board_message_read", "crew.board_messages_archived"}
+GITHUB = {"auth.github.device_code.issued", "auth.github.token.polling", "auth.github.authenticated", "auth.github.failed", "auth.github.disconnected"}
+GITHUB_COUNT = "Plans/storage-plan.md#Application-wide count buckets under the operational policy"
+
+
 def scope_assignment(row, policies):
     parts = []
     for scope, selection in sorted(scope_policies(row).items()):
@@ -190,6 +235,13 @@ def scope_assignment(row, policies):
         policy = policies.get(selection.get("policy_id"), {})
         details = ("anchor_kind=" + str(policy.get("anchor_kind")) + ", cardinality_scope=" + (str(policy["cardinality_scope"]) if policy.get("cardinality_scope") is not None else "null")
                    if policy else "anchor=" + str(selection.get("anchor")))
+        if row.get("event_type") in CREW:
+            # SP-351 overrides the base policy count partition for Application.
+            details = "anchor_kind=run_completion, count in the " + ("SP-351 Server counterpart bucket" if scope == "application" else "Project partition")
+        if row.get("event_type") == "filesafe.policy_degraded":
+            details = "anchor_kind=terminal_transition, " + (
+                "count in app:filesafe_policy_degraded, one dedicated bucket per Puppet Master Server under DL-2450"
+                if scope == "application" else "cardinality_scope=project, count in the Project partition")
         parts.append(scope.capitalize() + " = " + name + " (" + details + ")")
     return ", ".join(parts)
 
@@ -209,6 +261,12 @@ def scope_clause_problem(value, row):
         return False
     if len(names) == 1 and re.search(r"both (?:application and project|scopes)|application and project|project and application", value, re.I):
         return False
+    if len(names) == 1 and all(re.search(r"\b"+scope+r"\b", value, re.I) for scope in selections):
+        # One explicit event-history object can govern both scopes across
+        # sentences; a separate effective count is not another policy object.
+        named = set(re.findall(r"RP-[A-Z0-9-]+@[1-9][0-9]*\.[0-9]+\.[0-9]+", value))
+        if named == names:
+            return False
     scope_names = "|".join(re.escape(scope) for scope in selections)
     labels = list(re.finditer(r"\b(" + scope_names + r")(?=\s*(?:=|editions?\b|scopes?\b|versions?\b|event history\b|history\b|retention\b))", value, re.I))
     found = {}
@@ -306,10 +364,104 @@ def decision_scope(decision):
                 objects=objects, title=body.splitlines()[0])
 
 
+def postfix_owner_findings(registry, policies, ready, bodies=None):
+    """Inspect every Crew binding copy and the shared GitHub count heading."""
+    bodies = bodies or {}
+    findings, checked = [], []
+    for event in sorted(CREW):
+        row = registry[event]
+        refs = {registry[name]['payload_owner_doc'] for name in CREW}
+        expected = scope_assignment(row, policies)
+        count = 0
+        for ref in sorted(refs):
+            for clause in clauses(ref):
+                value = bodies.get((ref, clause['line_start']), clause['text'])
+                mentioned = {name for name in CREW if name in value}
+                if clause['field'].endswith('preserved_exact_tokens') or (mentioned and event not in mentioned) or (not mentioned and ref != row['payload_owner_doc']):
+                    continue
+                active = active_text(value)
+                if not re.search(r'event history selects', active, re.I):
+                    continue
+                count += 1
+                if expected not in active:
+                    findings.append(dict(event_type=event, lane='DO', ref=ref,
+                        line_start=clause['line_start'], kind='crew_effective_count_partition', expected=expected))
+        checked.append(dict(event_type=event, binding_copies=count))
+        if count < 3:
+            findings.append(dict(event_type=event, lane='DO', kind='crew_binding_coverage_missing', found=count))
+    policy = policies['RP-COORDINATION-180D']
+    expected_policy = dict(anchor_kind='run_completion', ttl_seconds=15552000,
+        max_cardinality=1000000, cardinality_scope='project', overflow_action='evict_oldest_eligible')
+    if any(policy.get(k) != v for k, v in expected_policy.items()):
+        findings.append(dict(event_type='crew.board_message_posted', lane='DO', kind='crew_base_policy_changed'))
+    _, _, body = section(GITHUB_COUNT)
+    body = bodies.get(GITHUB_COUNT, body)
+    current = body.split('**Boundary.**')[-1]
+    required = ['SP-670', 'RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0',
+        'app:github_sign_in', 'DL-2145 through DL-2149', 'Application scope',
+        'Native counting, refusal, expiry and cleanup remain NOT_RUN']
+    defects = [x for x in required if x not in body]
+    if any(name not in body for name in GITHUB):
+        defects.append('five exact sign-in families')
+    if re.search(r'they are not registered|families are not registered|once admitted every record|future admission', body, re.I):
+        defects.append('present-tense unregistered sign-in claim')
+    if 'registered all five GitHub sign-in families' not in current:
+        defects.append('current registration boundary')
+    for event in sorted(GITHUB):
+        checked.append(dict(event_type=event, ref=GITHUB_COUNT, required=required))
+        if defects:
+            findings.append(dict(event_type=event, lane=ready[event]['lane'], ref=GITHUB_COUNT,
+                kind='github_cross_family_registration_boundary', missing=defects))
+    return findings, checked
+
+
+def postfix_owner_mutations(registry, policies, ready):
+    mutations = []
+    for event in sorted(CREW):
+        ref = registry[event]['payload_owner_doc']
+        for clause in clauses(ref):
+            if event in clause['text'] and 'Current selected assignment' in clause['text']:
+                old = clause['text'].replace('count in the SP-351 Server counterpart bucket', 'cardinality_scope=project')
+                findings, _ = postfix_owner_findings(registry, policies, ready, {(ref, clause['line_start']):old})
+                mutations.append(dict(event_type=event, mutation='Application Project count restored',
+                    killed=any(x['event_type']==event and x['kind']=='crew_effective_count_partition' for x in findings)))
+                break
+    _, _, body = section(GITHUB_COUNT)
+    old_lines = [
+        'The app:github_sign_in bucket is that decision’s retention assignment for the five families’ future admission; they are not registered and it admits nothing.',
+        '**Boundary.** The five sign-in families are not registered, so no sign-in record is counted today. Native counting, refusal, expiry and cleanup remain NOT_RUN.'
+    ]
+    for old in old_lines:
+        mutated = body + '\n' + old if not old.startswith('**Boundary') else body.split('**Boundary.**')[0] + old
+        findings, _ = postfix_owner_findings(registry, policies, ready, {GITHUB_COUNT:mutated})
+        mutations.append(dict(mutation=old, killed=all(any(x['event_type']==event and x['lane']==ready[event]['lane'] and x['kind']=='github_cross_family_registration_boundary' for x in findings) for event in GITHUB)))
+    panels=load('Plans/panel_event_contracts/manifest.json')['families']
+    for event in ('panel.redocked','panel.undocked'):
+        row=registry[event]
+        panel=next(x for x in panels if x['event_type']==event)
+        admission=load('reports/event-authority-20260911/admission-records/'+event+'.json')
+        original=admission['original_admission_decision_ref']
+        refs={row['semantic_owner_doc'],row['payload_owner_doc'],'Plans/storage-plan.md#'+panel['sp'],
+              'Plans/Automated_Testing_System.md#'+panel['ats']}
+        for ref in sorted(refs):
+            selected=[x for x in clauses(ref) if 'Current selected assignment' in x['text'] and event+'@' in x['text']]
+            for clause in selected:
+                match=re.search(r'as recorded by (Plans/Decision_Log\.md#DL-\d+)',clause['text'])
+                positive=bool(match) and assignment_decision_problem(event,row['scope_policy'],match[1],admission) is None
+                killed=assignment_decision_problem(event,row['scope_policy'],original,admission) is not None
+                mutations.append(dict(event_type=event,ref=ref,line_start=clause['line_start'],
+                    mutation='restore original Project-only decision as current two-scope authority',
+                    positive=positive,killed=positive and killed))
+            if len(selected)!=1:
+                mutations.append(dict(event_type=event,ref=ref,mutation='current scope-summary coverage',killed=False))
+    return mutations
+
+
 def main():
     global REVISION
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--output", type=Path)
+    p.add_argument("--self-test", action="store_true")
     p.add_argument("--explore", action="store_true", help="include every signal for evidence review")
     p.add_argument("--revision", help="read every input at this Git edition, e.g. the received FIX3 head")
     args = p.parse_args()
@@ -329,12 +481,11 @@ def main():
             raise ValueError('multi-scope family lacks an exact edition selection: ' + event)
         if len(selections) > 1:
             record = load('reports/event-authority-20260911/admission-records/' + event + '.json')
-            _, _, decision_body = section(record['decision_ref'])
+            decision_body = decision_binding_text(record['decision_ref'])
             checked = []
             for scope, policy in selections.items():
                 token = policy_name(policy)
-                binding = re.search(r'\b' + re.escape(scope) + r' `[^`]+` \((.*?)(?:, producer )', decision_body, re.S)
-                valid = bool(binding and token in binding[1])
+                valid = decision_binding_matches(decision_body, scope, policy)
                 if policy.get('policy_id'):
                     valid = valid and policies[policy['policy_id']]['policy_version'] == policy['policy_version']
                 checked.append(dict(scope=scope, policy=policy, decision_binding_matches=valid))
@@ -344,6 +495,8 @@ def main():
             scope_checks.append(dict(event_type=event,decision=record['decision_ref'],editions=checked))
         delta = preparation.get("retention_delta", {})
         refs = {row["semantic_owner_doc"], row["payload_owner_doc"]}
+        if event in GITHUB:
+            refs.add(GITHUB_COUNT)
         refs.update(graded_owner_refs(preparation, event))
         refs.update(ref for ref in row["source_refs"] if ref.startswith("Plans/storage-plan.md#"))
         if delta.get("owner"):
@@ -394,11 +547,10 @@ def main():
                         findings.append(dict(base, kind="dual_scope_retention_assignment", sentence=value,
                                              expected=expected))
                     record = load("reports/event-authority-20260911/admission-records/" + event + ".json")
-                    _, _, decision_text = section(record["decision_ref"])
+                    decision_text = decision_binding_text(record["decision_ref"])
                     for scope, selection in selections.items():
                         token = policy_name(selection)
-                        selected_scope = re.search(r"\b" + re.escape(scope) + r" `[^`]+` \((.*?)(?:, producer )", decision_text, re.S)
-                        if not selected_scope or token not in selected_scope[1]:
+                        if not decision_binding_matches(decision_text, scope, selection):
                             findings.append(dict(base, kind="scope_policy_not_in_governing_decision", sentence=value,
                                                  scope=scope, expected=token, decision=record["decision_ref"]))
                 if SIGNAL.search(value):
@@ -407,7 +559,7 @@ def main():
                     signals.append(record)
                     for kind, sentence in stale_sentences(value, row["scope_policy"]):
                         findings.append(dict(base, kind=kind, sentence=sentence))
-                selected = re.search(r"Current selected assignment \(2026-11-19\): ([a-z0-9_.]+)@([^ ]+) is registered for ([a-z_]+).*?as recorded by (Plans/Decision_Log.md#DL-\d+)\. Its event history selects ([^;]+);", value)
+                selected = re.search(r"Current selected assignment \(2026-11-19\): ([a-z0-9_.]+)@([^ ]+) is registered for ([a-z_]+).*?as recorded by (Plans/Decision_Log.md#DL-\d+)\. Its event history selects ([^;]+?)(?:;|\. The Application bucket)", value)
                 if selected:
                     subject, version, family_scope, decision, policy = selected.groups()
                     selected_row = registry.get(subject, {})
@@ -416,8 +568,11 @@ def main():
                     admission = load("reports/event-authority-20260911/admission-records/" + subject + ".json")
                     _, _, decision_body = section(decision)
                     if (version != selected_row.get("family_revision") or family_scope != selected_row.get("scope_policy")
-                            or policy != expected or decision != admission["decision_ref"] or subject not in decision_body):
+                            or policy != expected or subject not in decision_body):
                         findings.append(dict(base, kind="current_assignment_differs_from_admitted_row", sentence=value))
+                    problem=assignment_decision_problem(subject,family_scope,decision,admission)
+                    if problem:
+                        findings.append(dict(base,kind='current_scope_decision_mismatch',sentence=value,**problem))
                 if (event == "usage.event" and ref == "Plans/Contracts_V0.md#CV-614"
                         and "Application source retention and coherent backup use this event's same explicit policy" in value):
                     findings.append(dict(base, kind="usage_source_borrows_event_policy", sentence=value))
@@ -470,10 +625,14 @@ def main():
                               decision=doc["decision_ref"], errors=errors))
         findings.extend(dict(event_type=event, lane="S5b", ref=ref, **error) for error in errors)
     assert len(revisions) == 8
+    extra, postfix_checks = postfix_owner_findings(registry, policies, ready)
+    findings.extend(extra)
+    mutations = postfix_owner_mutations(registry, policies, ready) if args.self_test else []
+    findings.extend(dict(event_type="shared", lane="shared", kind="postfix_mutation_survived", mutation=x) for x in mutations if not x["killed"])
     result = dict(schema_id="pm.ea.owner_sweep.v1", admitted_families=len(ready),
                   input_revision=REVISION or "working_tree", script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                   selected_sections=len(owners), owners=owners, signals=signals, claim_audit=claim_audit,
-                  multi_scope_checks=scope_checks,
+                  multi_scope_checks=scope_checks, postfix_checks=postfix_checks, mutations=mutations,
                   retention_citations=decisions, decision_scopes=scope_cache, revisions=revisions, findings=findings,
                   by_lane={lane:dict(families=len({x['event_type'] for x in findings if x['lane']==lane}),
                                      findings=sum(x['lane']==lane for x in findings))

@@ -12,6 +12,7 @@ import copy
 import hashlib
 import json
 import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -566,6 +567,44 @@ LANE_DEFECTS = [
 ]
 
 
+def attach_correction_history(root, repo, family):
+    """A corrected admission requires this fixture's own Git context.
+
+    Ordinary M1 and S5b fixtures keep their deliberately Gitless rebuild proof.
+    The isolated repo borrows immutable objects; no source checkout is edited.
+    """
+    record = _read(repo, RECORDS+'/'+family+'.json')
+    if not record.get('postfix_correction'):
+        return False
+    subprocess.run(['git','init','--quiet',str(root)],check=True)
+    common = Path(subprocess.check_output(['git','-C',str(repo),'rev-parse','--path-format=absolute','--git-common-dir'],text=True).strip())
+    (root/'.git/objects/info/alternates').write_text(str(common/'objects')+'\n')
+    head = subprocess.check_output(['git','-C',str(repo),'rev-parse','HEAD'],text=True).strip()
+    subprocess.run(['git','-C',str(root),'update-ref','HEAD',head],check=True)
+    return True
+
+
+class CorrectionHistoryContext(unittest.TestCase):
+    def test_corrected_control_requires_its_own_git_history(self):
+        candidates = sorted((REPO / 'reports/event-authority-20261116/admission-merge-3/corrections').glob('*.json'))
+        if not candidates:
+            self.skipTest('No post-landing corrections in this edition')
+        family = json.loads(candidates[0].read_text())['event_type']
+        with tempfile.TemporaryDirectory(prefix='pm-ea-correction-context-') as scratch:
+            root = Path(scratch) / 'case'
+            for rel in admission_mode.inputs([family], REPO):
+                (root / rel).parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(REPO / rel, root / rel)
+            admission_mode.reset_caches()
+            without_history = admission_mode.verdict(family, root=root)
+            self.assertEqual('refused', without_history['mode'])
+            self.assertEqual('registry_after_mismatch', without_history['code'])
+            self.assertTrue(attach_correction_history(root, REPO, family))
+            admission_mode.reset_caches()
+            with_history = admission_mode.verdict(family, root=root)
+            self.assertEqual('admitted', with_history['mode'], with_history)
+
+
 def run_lane_scenarios(module, repo: Path = REPO, lanes=None) -> list[dict]:
     """Each lane case under each defect: accepted or refused through the lane's own function and `module`."""
     results = []
@@ -583,6 +622,7 @@ def run_lane_scenarios(module, repo: Path = REPO, lanes=None) -> list[dict]:
                 for defect_name, defect, accepted in LANE_DEFECTS:
                     root = Path(scratch) / (lane + "-" + defect_name)
                     shutil.copytree(base, root)
+                    attach_correction_history(root,repo,family)
                     if defect is not None:
                         defect(family)(root)
                     module.reset_caches()
@@ -760,6 +800,83 @@ class Merge2Fix1EvidenceTests(unittest.TestCase):
         spec = importlib.util.spec_from_file_location("fix1_writer", REPO / "scripts/pm-ea-admission-writer.py")
         cls.writer = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(cls.writer)
+
+    def test_real_filesafe_historical_retention_member_is_bounded(self):
+        w = self.writer
+        commit = '10ba97e699d51287673d6f1db4d994f54c59b4ed'
+        path = 'reports/event-authority-20261116/admission-merge-2/depth/filesafe.policy_degraded.json'
+        assessment = json.loads(subprocess.check_output(['git', '-C', str(REPO), 'show', commit+':'+path]))
+        received = assessment['rows'][0]['cells']['retention']['evidence'][1]
+        source = copy.deepcopy(received)
+        source.update(commit=commit,received_unit=source['unit'],unit='#/retention_policy_ref',
+                      json_pointer='#/retention_policy_ref',subject_event_type='filesafe.policy_degraded')
+        fixed = w.rederive_source_citation(source)
+        self.assertEqual((fixed['line_start'],fixed['line_end']),(134,134))
+        self.assertEqual(fixed['received_unit'],'CV-556')
+        self.assertEqual(w.source_citation_problems(fixed),[])
+        for defect in (
+            dict(unit='#/producer',json_pointer='#/producer'),
+            dict(subject_event_type='filesafe.path_denied'),
+            dict(unit='CV-556'),
+            dict(unit='#',json_pointer='#'),
+            dict(file_sha256='0'*64),
+        ):
+            with self.subTest(defect):
+                with self.assertRaises((w.Gap,ValueError)):
+                    w.rederive_source_citation(dict(source,**defect))
+
+    def test_real_correction_decision_editions_survive_yaml_wrapping(self):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('owner_sweep_decision_test',REPO/'scripts/pm-ea-owner-sweep.py')
+        sweep = importlib.util.module_from_spec(spec);spec.loader.exec_module(sweep)
+        checked = 0
+        for row in _read(REPO,REGISTRY)['families']:
+            path = REPO/RECORDS/(row['event_type']+'.json')
+            if not path.exists():continue
+            record = json.loads(path.read_text())
+            if not record.get('postfix_correction') or len(sweep.scope_policies(row))<2:continue
+            text = sweep.decision_binding_text(record['decision_ref'])
+            for scope,policy in sweep.scope_policies(row).items():
+                with self.subTest(row['event_type'],scope=scope):
+                    self.assertTrue(sweep.decision_binding_matches(text,scope,policy))
+                    self.assertFalse(sweep.decision_binding_matches(text,'wrong_'+scope,policy))
+                    wrong = (dict(policy,policy_version='999.0.0') if policy.get('policy_id') else
+                             dict(policy,setting_key=policy['setting_key']+'.wrong'))
+                    self.assertFalse(sweep.decision_binding_matches(text,scope,wrong))
+                checked += 1
+        self.assertGreater(checked,0)
+
+    def test_real_panel_owner_generation_covers_testing_and_storage(self):
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('panel_summary_driver',REPO/'scripts/pm-ea-postfix-correct.py')
+        driver=importlib.util.module_from_spec(spec);spec.loader.exec_module(driver)
+        spec=importlib.util.spec_from_file_location('panel_summary_sweep',REPO/'scripts/pm-ea-owner-sweep.py')
+        sweep=importlib.util.module_from_spec(spec);spec.loader.exec_module(sweep)
+        commit='10ba97e699d51287673d6f1db4d994f54c59b4ed'
+        policies={p['policy_id']:p for p in _read(REPO,'Plans/storage_value_registry.json')['retention_policies']}
+        for family in _read(REPO,'Plans/panel_event_contracts/manifest.json')['families']:
+            event=family['event_type'];row=_row(REPO,event);assignment=sweep.scope_assignment(row,policies)
+            refs=[row['semantic_owner_doc'],row['payload_owner_doc'],'Plans/storage-plan.md#'+family['sp'],
+                  'Plans/Automated_Testing_System.md#'+family['ats']]
+            for ref in refs:
+                with self.subTest(event,ref=ref):
+                    path,unit=ref.split('#',1)
+                    text=subprocess.check_output(['git','-C',str(REPO),'show',commit+':'+path]).decode()
+                    first,last=self.writer.unit_span(text,unit);body='\n'.join(text.splitlines()[first-1:last])
+                    policy='RP-AUTHORITY-INDEFINITE@1.0.0' if unit==family['sp'] else None
+                    fixed=driver.owner_summary(body,event,assignment,[1,3],policy)
+                    self.assertNotEqual(fixed,body)
+                    self.assertIn(event+'@2.0.0 is registered for application_or_project',fixed)
+                    self.assertIn(assignment,fixed)
+                    admission=_read(REPO,RECORDS+'/'+event+'.json')
+                    self.assertIn('as recorded by '+admission['decision_ref']+'.',fixed)
+                    self.assertIn('Historical original admission: '+admission['original_admission_decision_ref']+' (project_only);',fixed)
+                    self.assertEqual(driver.owner_summary(fixed,event,assignment,[1,3],policy),fixed)
+                    if policy:
+                        self.assertIn('Application = `'+policy+'`, Project = `'+policy+'`',fixed)
+                    if unit==family['ats']:
+                        sibling='panel.undocked' if event=='panel.redocked' else 'panel.redocked'
+                        self.assertIn(sibling+'@2.0.0 is registered for project_only',fixed)
 
     def test_real_collaboration_span_digest_and_historical_location(self):
         w = self.writer

@@ -82,7 +82,7 @@
     $('#rmSongs').innerHTML = list.map((s) => { const e = PS.SONGS[P.kit].find((x) => x.id === s.id); return `<button type="button" class="rm-song" role="radio" aria-checked="${s.chosen}" data-song="${s.id}"><b>${esc(s.title)}${s.isDefault ? '<i class="rm-dot" title="The song this look starts with"></i>' : ''}</b><span>${s.id === 'original' ? 'The tune of today' : esc(s.family)} · ${bpmOf(e.song)} BPM</span></button>`; }).join('');
   }
   function steps() {
-    const e = PS.SONGS[P.kit].find((x) => x.id === P.song().id) || PS.SONGS[P.kit][0]; let before = [];
+    const e = P.song(); let before = [];
     $('#rmSteps').innerHTML = STEPS.map(([n, st], i) => { const now = partsAt(e, st), added = now.filter((x) => before.indexOf(x) < 0), gone = before.filter((x) => now.indexOf(x) < 0); before = now; const note = i === 0 ? now.join(', ') + ' alone' : (added.length ? '+ ' + added.join(', ') : gone.length ? 'fewer parts' : 'the same parts'); return `<button type="button" class="rm-step" role="radio" aria-checked="${i === S.step}" data-step="${i}"><b>${n}</b><span>${esc(note)}</span></button>`; }).join('');
   }
   function voices() {
@@ -93,13 +93,15 @@
   function sync() {
     const e = P.song(), kit = P.kit, song = e.song;
     $('#rmHint').hidden = P.unlocked;
-    $('#rmTitle').textContent = P.muted ? 'Sound is off' : !S.playing ? 'Nothing playing' : `${NAME[kit]} · ${e.id === 'original' ? 'the original tune' : '“' + e.title + '”'}`;
+    $('#rmTitle').textContent = P.muted ? 'Sound is off' : !S.playing ? 'Nothing playing' : `${NAME[e.kit]} · ${e.id === 'original' ? 'the original tune' : '“' + e.title + '”'}`;
     $('#rmMeta').textContent = P.muted ? 'Switch it on in the sound menu.' : !S.playing ? 'Pick a song and press Play.' : `${bpmOf(song)} BPM in ${meterOf(song)}${P.jukebox ? ' · jukebox' : ''}`;
     const seen = {}, rows = !S.playing ? [] : P.parts().filter((q) => q.role && PART[q.role]).filter((q) => { if (seen[q.role]) { seen[q.role].on = seen[q.role].on || q.on; return false; } seen[q.role] = q; return true; });
     $('#rmParts').innerHTML = rows.map((q) => `<i class="${q.on ? 'on' : ''}">${PART[q.role]}</i>`).join('');
     document.querySelectorAll('#rmSteps .rm-step').forEach((b, i) => b.setAttribute('aria-checked', String(i === S.step)));
-    document.querySelectorAll('#rmSongs .rm-song').forEach((b) => { b.setAttribute('aria-checked', String(b.dataset.song === e.id)); b.toggleAttribute('data-playing', S.playing && !P.muted && b.dataset.song === e.id); });
-    document.querySelectorAll('.rm-cell').forEach((b) => b.setAttribute('aria-pressed', String(S.playing && !P.muted && b.dataset.k === kit && b.dataset.song === e.id)));
+    // (under the jukebox the song that is on may be another look's: then none of this look's four is the one playing)
+    const own = e.kit === kit, mine = own ? e.id : (P.songs().find((s) => s.chosen) || {}).id;
+    document.querySelectorAll('#rmSongs .rm-song').forEach((b) => { b.setAttribute('aria-checked', String(b.dataset.song === mine)); b.toggleAttribute('data-playing', S.playing && !P.muted && own && b.dataset.song === e.id); });
+    document.querySelectorAll('.rm-cell').forEach((b) => b.setAttribute('aria-pressed', String(S.playing && !P.muted && b.dataset.k === e.kit && b.dataset.song === e.id)));
     $('#rmJuke').setAttribute('aria-pressed', String(P.jukebox));
     $('#rmOpen').href = 'onboarding.html?theme=' + encodeURIComponent(S.theme);
   }

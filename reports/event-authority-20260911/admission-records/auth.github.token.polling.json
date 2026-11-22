@@ -3,8 +3,8 @@
  "event_type": "auth.github.token.polling",
  "family_id": "event-family-auth-github-token-polling",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
- "decision_ref": "Plans/Decision_Log.md#DL-2149",
- "decision_section_sha256": "c0e634f5f1646e0e2a7b094fef564842ecec6b3d4091fb8c3884cee70f7a028c",
+ "decision_ref": "Plans/Decision_Log.md#DL-2455",
+ "decision_section_sha256": "93780fca8a469979b0ddb5ac4299f95e983b6c1d256144b89790e51cd5024c98",
  "registry_before": {
   "revision": "2026-11-16.12",
   "sha256": "00c9224678e694491c50085d4d6b55ced0b6e7e11b95bb205748cf3b31252e1a",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "1393c12ad4ff4ce7374c2eb807b13ef66ad4bbea322f720ea88e4275b000f0e4",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/auth.github.token.polling.json",
-  "sha256": "7ab782d6976cfbf21a42c5306b00da2dd90c9d456aaa6193db9cc34cf918e849"
+  "sha256": "88ec63bd11a061590c7d87f4dd8374ad5e897e6725277587d3214e1d0edbe5c4"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,13 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_record_sha256": "6fa3377b0b7f6c689ff399eb88314413385b417142ede80716f21a2d99534782",
-  "source_assessment_sha256": "d8553f15c13356eb122870b3252e6e2cf4fb4dd31225884230ae0cd561829e52",
-  "source_decision_section_sha256": "f24b9b0576b986c48a381c9b45ad4b3514c4b2deae0d880b27bfceb3f661d378",
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_record_sha256": "7f86dd3ff2ce9a8cab8a549c401892b1f85c6c961140a43527523ed152a9d79d",
+  "source_assessment_sha256": "3a4ca58982f1765bc715a070773539cf376c282f5768c408a9ff255dbae09b3a",
+  "source_decision_section_sha256": "77c03414aed42d2d9df532a28314b43bf1e1320a2e72e6428d9b02e53debba80",
   "original_registry_checkpoints_preserved": true
- }
+ },
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2149",
+ "postfix_correction": "reports/event-authority-20261116/admission-merge-3/corrections/auth.github.token.polling.json"
 }

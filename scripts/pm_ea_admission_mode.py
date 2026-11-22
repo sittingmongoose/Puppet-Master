@@ -192,7 +192,15 @@ def registry_history_problem(record: dict, registry: dict, index: int, root: Pat
     """
     before, after = record["registry_before"], record["registry_after"]
     historical_row_sha = record.get("registry_row_sha256")
-    correction = record.get("registry_row_correction")
+    history_record = record
+    if record.get("postfix_correction"):
+        from pm_ea_postfix_corrections import witness
+        try:
+            _, history_record = witness(record, root)
+        except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as exc:
+            return "registry_after_mismatch", {"route":"postfix_correction", "reason":str(exc)}
+        historical_row_sha = history_record["registry_row_sha256"]
+    correction = history_record.get("registry_row_correction")
     if correction is not None:
         # FIX1/T259 repairs four wrongly dispatched owner roles after admission.
         # Original append checkpoints remain historical; only these exact
@@ -203,7 +211,7 @@ def registry_history_problem(record: dict, registry: dict, index: int, root: Pat
             valid = (isinstance(correction, dict)
                      and correction.get("authority") == "MERGE2-FIX1 finding 5 / T259"
                      and correction.get("predecessor_row_sha256") == pin["predecessor_sha256"]
-                     and record.get("registry_row_sha256") == pin["successor_sha256"]
+                     and history_record.get("registry_row_sha256") == pin["successor_sha256"]
                      and correction.get("contract_ref") == pin["contract_ref"])
         except (OSError, ValueError, KeyError, TypeError):
             valid = False
@@ -314,6 +322,11 @@ def verdict(event_type: str, *, root: Path = ROOT, registry: dict | None = None,
     if prepared_row is not None and canonical_sha256(prepared_row) != row_sha:
         return _refused(event_type, "registry_row_differs_from_prepared_row",
                         {"prepared": canonical_sha256(prepared_row), "pinned": row_sha})
+    if record.get("postfix_correction"):
+        from pm_ea_postfix_corrections import problem as correction_problem
+        correction_failure = correction_problem(record, root)
+        if correction_failure:
+            return _refused(event_type, *correction_failure)
     # 6. Complete under the frozen seal check's own record predicate.
     frozen = frozen_module(root)
     try:
@@ -393,8 +406,31 @@ def inputs(event_types, root: Path = ROOT) -> list[str]:
     """Repository-relative paths a disposable copy of the tree needs for these verdicts."""
     root = Path(root)
     paths = {REGISTRY, DECISION_LOG, FROZEN, POST_AUGUST_RECEIPT, "scripts/pm_ea_admission_mode.py",
-             "scripts/pm_ea_reviewed_owner_corrections.json"}
+             "scripts/pm_ea_reviewed_owner_corrections.json", "scripts/pm_ea_postfix_corrections.py",
+             "scripts/pm_ea_payload_selectors.py"}
     paths.update(str(p.relative_to(root)) for p in sorted((root / RECORD_DIR).glob("*.json")))
+    # The correction proof is portable only with its immutable witness and
+    # exact selector/resource inputs. Git history remains required for admission.
+    correction_dir = root / "reports/event-authority-20261116/admission-merge-3/corrections"
+    for path in sorted(correction_dir.glob("*.json")):
+        paths.add(str(path.relative_to(root)))
+        rec = json.loads(path.read_text())
+        for row in (rec.get("before_row",{}),rec.get("registry_row",{})):
+            refs = [row.get("payload_schema_ref",{})]+[v.get("payload_schema_ref",{}) for v in row.get("payload_versions",[])]
+            paths.update(ref["path"] for ref in refs if ref.get("path"))
+    selector_inputs = ["Plans/event_authority_w3e_oracle_plan.json", "Plans/dcw_event_contract_fixtures.json",
+        "Plans/dcw_blockage_event_fixtures.json", "Plans/orchestrator_event_contract_fixtures.json",
+        "Plans/panel_event_contracts/manifest.json"]
+    paths.update(selector_inputs)
+    plan_path = root / selector_inputs[0]
+    if plan_path.is_file():
+        plan = json.loads(plan_path.read_text())
+        paths.update(f["payload_schema"] for f in plan["families"])
+    panel_path = root / selector_inputs[-1]
+    if panel_path.is_file():
+        panels = json.loads(panel_path.read_text())["families"]
+        paths.update("Plans/panel_event_contracts/"+p["slug"]+".fixtures.json" for p in panels)
+        paths.update(p["payload_schema"] for p in panels)
     # Revision records rebuild the registry states before later in-place row revisions (revision_states).
     revisions = [p for d in sorted(root.glob(REVISION_DIR_GLOB)) for p in sorted(d.glob("*.json"))]
     paths.update(str(p.relative_to(root)) for p in revisions)
@@ -543,7 +579,9 @@ def revision_states(doc: dict, root: Path = ROOT) -> list[dict]:
                             and isinstance(rec[s].get("revision"), str) and isinstance(rec[s].get("sha256"), str)
                             for s in ("registry_before", "registry_after"))):
                 pending.append(rec)
-    states, current = [], doc
+    from pm_ea_postfix_corrections import prior_states
+    states = prior_states(doc, root)
+    current = states[-1] if states else doc
     # The four FIX1 owner-role corrections follow S5b. Reconstruct that exact
     # prior registry first so earlier append proofs still work without Git.
     # Both complete registry hashes and every corrected row pair are pinned;
@@ -551,9 +589,9 @@ def revision_states(doc: dict, root: Path = ROOT) -> list[dict]:
     try:
         corrections = json.loads((root / "scripts/pm_ea_reviewed_owner_corrections.json").read_text())
         after, before = corrections["registry_after"], corrections["registry_before"]
-        if (len(doc["families"]) >= after["family_count"]
-                and hashlib.sha256(_prefix(doc, after["revision"], after["family_count"])).hexdigest() == after["sha256"]):
-            earlier = copy.deepcopy(dict(doc, families=doc["families"][:after["family_count"]]))
+        if (len(current["families"]) >= after["family_count"]
+                and hashlib.sha256(_prefix(current, after["revision"], after["family_count"])).hexdigest() == after["sha256"]):
+            earlier = copy.deepcopy(dict(current, families=current["families"][:after["family_count"]]))
             for event, pin in corrections["families"].items():
                 at = [i for i, row in enumerate(earlier["families"]) if row.get("event_type") == event]
                 if len(at) != 1 or canonical_sha256(earlier["families"][at[0]]) != pin["successor_sha256"]:

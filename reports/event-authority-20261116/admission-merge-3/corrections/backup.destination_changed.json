@@ -1,0 +1,153 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "backup.destination_changed",
+ "findings": [
+  1,
+  4
+ ],
+ "source_commit": "6e18af95fdfcdfa3174029f374a73645df5d1f90",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2150",
+ "decision_ref": "Plans/Decision_Log.md#DL-2456",
+ "registry_before": {
+  "revision": "2026-11-19.5",
+  "sha256": "0b57727b4318858f6bf0b623596b668155b2994660ed6690ffbe5ba24414df1b",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.6",
+  "sha256": "b5dcfc00f5ffba7ba1b245387e011d969278744d2d19ab7fec9b8e6585acfb36",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-backup-destination-changed",
+  "family_revision": "1.0.0",
+  "event_type": "backup.destination_changed",
+  "scope_policy": "application_only",
+  "semantic_owner_doc": "Plans/Backup_Restore_System.md#BRS-1400",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-1400",
+  "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/backup_destination_changed/1.0.0/schema.json",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/w3e/backup_destination_changed.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/backup_destination_changed/1.0.0/schema.json"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Backup_Restore_System.md#BRS-1400",
+   "Plans/Contracts_V0.md#CV-1400",
+   "Plans/storage-plan.md#SP-1400",
+   "Plans/event_payloads/w3e/backup_destination_changed.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  }
+ },
+ "registry_row": {
+  "family_id": "event-family-backup-destination-changed",
+  "family_revision": "1.0.0",
+  "event_type": "backup.destination_changed",
+  "scope_policy": "application_only",
+  "semantic_owner_doc": "Plans/Backup_Restore_System.md#BRS-1400",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-1400",
+  "payload_schema_id": "pm.event_payload.backup.destination_changed.v1",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/w3e/backup_destination_changed.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/backup_destination_changed/1.0.0/schema.json"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Backup_Restore_System.md#BRS-1400",
+   "Plans/Contracts_V0.md#CV-1400",
+   "Plans/storage-plan.md#SP-1400",
+   "Plans/event_payloads/w3e/backup_destination_changed.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+   "Plans/event_payloads/w3e/backup_destination_changed.schema.json#/properties/schema_id/const"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  }
+ },
+ "predecessor_record_sha256": "73a1f5e44cf89906218589a2e279f8cfc225c6224461933cb6f6cb5fc54d0bbf",
+ "predecessor_assessment_sha256": "9d5750176876be2a511fa4dd63cf7807c080bd8143923e9310505a742be61194",
+ "applied_record_sha256": "3b19a4e035f87822c139cc250e54d9fabe94b4aea2e084000d8b65e731b44e64",
+ "applied_assessment_sha256": "8dbbe3929d045abdb81df391fc0eb6bc921969353a7acb87242af16bbfa308b2",
+ "citation_changes": [
+  {
+   "ordinal": 1,
+   "old": {
+    "path": "Plans/Contracts_V0.md",
+    "unit": "CV-1400",
+    "line_start": 50273,
+    "line_end": 50273,
+    "quote": "Current selected assignment (2026-11-19): backup.destination_changed@1.0.0 is registered for application_only",
+    "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+    "quote_check": "exact",
+    "quote_scope": "unit CV-1400, Plans/Contracts_V0.md:50235-50321",
+    "source_citation": {
+     "path": "Plans/Contracts_V0.md",
+     "unit": "CV-1400",
+     "line_start": 48289,
+     "line_end": 48289,
+     "quote": "retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the delet",
+     "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/Contracts_V0.md",
+    "unit": "CV-1400",
+    "line_start": 50273,
+    "line_end": 50279,
+    "quote": "  Current selected assignment (2026-11-19): backup.destination_changed@1.0.0 is registered for application_only\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2150. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0;\n  Plans/storage-plan.md#SP-1400 owns the event policy''s existing anchors, counts, holds and deletion rules. Original\n  sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to\n  them. Current append/publication still requires the exact selected schema/scope, original custody, current permission,\n  receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native\n  execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit CV-1400, Plans/Contracts_V0.md:50235-50321"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

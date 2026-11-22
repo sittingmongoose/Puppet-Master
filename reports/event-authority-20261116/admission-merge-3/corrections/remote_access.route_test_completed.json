@@ -1,0 +1,153 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "remote_access.route_test_completed",
+ "findings": [
+  1,
+  4
+ ],
+ "source_commit": "bc4c93d6e56efe438765b691a6658323d7fae875",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2368",
+ "decision_ref": "Plans/Decision_Log.md#DL-2556",
+ "registry_before": {
+  "revision": "2026-11-19.105",
+  "sha256": "e8b1edcd8c6c052a1ef0341b6aff9b9cbf3338adabe70d441822602f718c7548",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.106",
+  "sha256": "5b33f1924c0d8875409f5ac6c69de346bcf4c55d4e291a26ade5935d7fdaa3f0",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-remote-access-route-test-completed",
+  "family_revision": "1.0.0",
+  "event_type": "remote_access.route_test_completed",
+  "scope_policy": "application_only",
+  "semantic_owner_doc": "Plans/Remote_Access_System.md#RAS-1409",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-1409",
+  "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/remote_access_route_test_completed/1.0.0/schema.json",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/w3e/remote_access_route_test_completed.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/remote_access_route_test_completed/1.0.0/schema.json"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Remote_Access_System.md#RAS-1409",
+   "Plans/Contracts_V0.md#CV-1409",
+   "Plans/storage-plan.md#SP-1409",
+   "Plans/event_payloads/w3e/remote_access_route_test_completed.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
+   "policy_version": "1.0.0"
+  }
+ },
+ "registry_row": {
+  "family_id": "event-family-remote-access-route-test-completed",
+  "family_revision": "1.0.0",
+  "event_type": "remote_access.route_test_completed",
+  "scope_policy": "application_only",
+  "semantic_owner_doc": "Plans/Remote_Access_System.md#RAS-1409",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-1409",
+  "payload_schema_id": "pm.event_payload.remote_access.route_test_completed.v1",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/w3e/remote_access_route_test_completed.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/remote_access_route_test_completed/1.0.0/schema.json"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Remote_Access_System.md#RAS-1409",
+   "Plans/Contracts_V0.md#CV-1409",
+   "Plans/storage-plan.md#SP-1409",
+   "Plans/event_payloads/w3e/remote_access_route_test_completed.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+   "Plans/event_payloads/w3e/remote_access_route_test_completed.schema.json#/properties/schema_id/const"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
+   "policy_version": "1.0.0"
+  }
+ },
+ "predecessor_record_sha256": "3e153a45d7bc301ee103fecc850a9f3f2299e50b02e273bf14b5b602986a897a",
+ "predecessor_assessment_sha256": "32f4a8223cc88ae85508fb51dd5e1d2488344b7ca0ea5dd1469a3b876d277047",
+ "applied_record_sha256": "33f1c452be12fb511e191e790505794e9331602ec862eadbe11e1325c3fa486a",
+ "applied_assessment_sha256": "5422f48ae444167e26a9f5889a8a7000448e10034eded7b50c7ce6b03a2a93ea",
+ "citation_changes": [
+  {
+   "ordinal": 1,
+   "old": {
+    "path": "Plans/Contracts_V0.md",
+    "unit": "CV-1409",
+    "line_start": 51015,
+    "line_end": 51015,
+    "quote": "Current selected assignment (2026-11-19): remote_access.route_test_completed@1.0.0 is registered for application_only",
+    "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+    "quote_check": "exact",
+    "quote_scope": "unit CV-1409, Plans/Contracts_V0.md:50982-51063",
+    "source_citation": {
+     "path": "Plans/Contracts_V0.md",
+     "unit": "CV-1409",
+     "line_start": 48850,
+     "line_end": 48850,
+     "quote": "retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotec",
+     "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/Contracts_V0.md",
+    "unit": "CV-1409",
+    "line_start": 51018,
+    "line_end": 51024,
+    "quote": "  Current selected assignment (2026-11-19): remote_access.route_test_completed@1.0.0 is registered for application_only\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2368. Its event history selects RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0;\n  Plans/storage-plan.md#SP-1409 owns the event policy''s existing anchors, counts, holds and deletion rules. Original\n  sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to\n  them. Current append/publication still requires the exact selected schema/scope, original custody, current permission,\n  receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native\n  execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit CV-1409, Plans/Contracts_V0.md:50985-51066"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

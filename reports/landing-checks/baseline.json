@@ -12,22 +12,18 @@
   },
   {
    "check": "audit-governance",
-   "count": 63,
+   "count": 53,
    "error": "audit_closure_validator_error",
    "fingerprints": [
     "012e9ecd9bd1",
     "049ea2d895f1",
     "09b580e0b418",
-    "0a1df5b92689",
     "1a87da077213",
-    "219cdc339fb7",
     "247c5f7c2e20",
     "2531b2cc5551",
     "2c5f33669aee",
     "2e533fa483ef",
-    "2fe042e90fcd",
     "30c340e1cdc2",
-    "405a0ee03622",
     "45b066cf1641",
     "48c386eb6806",
     "4cfff707f0a0",
@@ -35,9 +31,7 @@
     "628de07d08e1",
     "63d4614e04cb",
     "683308639b4a",
-    "6b78c748b62b",
     "743032d61af8",
-    "7645687fad20",
     "79c68e726644",
     "7fa1ca4c40fb",
     "81383beccb6e",
@@ -45,12 +39,10 @@
     "8796f670028c",
     "8a8a97287f59",
     "8a9a8ac86f7c",
+    "8e6ae899e5d4",
     "962c8150aeb3",
-    "9a1d448f67e4",
     "9a9824b14d0b",
-    "a057b97d1709",
     "a24f1f96a2c3",
-    "a4cf626dc1e0",
     "a50defdf4fd2",
     "a522d78532e9",
     "aac113588a00",
@@ -65,10 +57,8 @@
     "cadec0b0b291",
     "cd40f6a20e94",
     "cd9d5ba74892",
-    "cdc940b1654b",
     "d035c44e6079",
     "d154ae019da5",
-    "d5691588f3d3",
     "d70733c932f9",
     "db2764899eb9",
     "de84fc67d0e6",
@@ -81,26 +71,6 @@
    ],
    "path": "Plans/.audits/_semantic_closure_registry.jsonl",
    "subcheck": "audit_closure"
-  },
-  {
-   "check": "audit-governance",
-   "count": 1,
-   "error": "stale_audit_status_index",
-   "fingerprints": [
-    "-"
-   ],
-   "path": "Plans/.audits/_audit_status_index.json",
-   "subcheck": "audit_status_index"
-  },
-  {
-   "check": "audit-governance",
-   "count": 1,
-   "error": "stale_current_audit_status_markdown",
-   "fingerprints": [
-    "-"
-   ],
-   "path": "Plans/.audits/CURRENT_AUDIT_STATUS.md",
-   "subcheck": "audit_status_index"
   },
   {
    "check": "audit-governance",
@@ -636,67 +606,36 @@
    "subcheck": "spec_lock"
   },
   {
-   "check": "audit-governance",
-   "count": 1,
-   "error": "missing_ref",
-   "fingerprints": [
-    "976753f2c3a3"
-   ],
-   "path": "Plans/00-plans-index.md",
-   "subcheck": "support_refs"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "raw_capture_link_missing",
-   "fingerprints": [
-    "5d316cecf2a9"
-   ],
-   "path": "tests/fixtures/governance/raw_evidence_capture_modes.json",
-   "subcheck": "json_syntax"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "missing_ref",
-   "fingerprints": [
-    "976753f2c3a3"
-   ],
-   "path": "Plans/00-plans-index.md",
-   "subcheck": "lint_contractrefs"
-  },
-  {
    "check": "run-gates",
    "count": 50,
    "error": "audit_closure_validator_error",
    "fingerprints": [
+    "012e9ecd9bd1",
+    "049ea2d895f1",
     "09b580e0b418",
-    "0a1df5b92689",
     "1a87da077213",
-    "219cdc339fb7",
     "247c5f7c2e20",
     "2531b2cc5551",
     "2c5f33669aee",
     "2e533fa483ef",
-    "2fe042e90fcd",
     "30c340e1cdc2",
-    "405a0ee03622",
     "45b066cf1641",
     "48c386eb6806",
     "4cfff707f0a0",
     "5c137ac47696",
+    "628de07d08e1",
     "63d4614e04cb",
-    "6b78c748b62b",
+    "683308639b4a",
     "743032d61af8",
-    "7645687fad20",
     "79c68e726644",
+    "7fa1ca4c40fb",
     "84d7b59b8a63",
+    "8796f670028c",
+    "8a8a97287f59",
+    "8a9a8ac86f7c",
     "962c8150aeb3",
-    "9a1d448f67e4",
     "9a9824b14d0b",
-    "a057b97d1709",
     "a24f1f96a2c3",
-    "a4cf626dc1e0",
     "a50defdf4fd2",
     "a522d78532e9",
     "aac113588a00",
@@ -707,42 +646,23 @@
     "c0d488bd89eb",
     "c2d352388369",
     "c3aa89b7219d",
+    "c83d475e4fa0",
     "cadec0b0b291",
     "cd40f6a20e94",
     "cd9d5ba74892",
-    "cdc940b1654b",
     "d035c44e6079",
     "d154ae019da5",
-    "d5691588f3d3",
     "d70733c932f9",
+    "db2764899eb9",
     "de84fc67d0e6",
     "e1824239ee90",
     "e220de5c10c5",
     "ee381f491c7c",
+    "eec4834e08f2",
     "f81b99ccc0c0"
    ],
    "path": "Plans/.audits/_semantic_closure_registry.jsonl",
    "subcheck": "validate_audit_closure"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "stale_audit_status_index",
-   "fingerprints": [
-    "-"
-   ],
-   "path": "Plans/.audits/_audit_status_index.json",
-   "subcheck": "validate_audit_status_index"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "stale_current_audit_status_markdown",
-   "fingerprints": [
-    "-"
-   ],
-   "path": "Plans/.audits/CURRENT_AUDIT_STATUS.md",
-   "subcheck": "validate_audit_status_index"
   },
   {
    "check": "run-gates",
@@ -1102,16 +1022,12 @@
  ],
  "checks": {
   "audit-governance": {
-   "failure_total": 5876,
+   "failure_total": 5863,
    "status": "fail",
    "subchecks": {
     "audit_closure": {
-     "reported": 64,
-     "sampled": 64
-    },
-    "audit_status_index": {
-     "reported": 2,
-     "sampled": 2
+     "reported": 54,
+     "sampled": 54
     },
     "evidence": {
      "exported": 2863,
@@ -1130,10 +1046,6 @@
     "spec_lock": {
      "reported": 16,
      "sampled": 16
-    },
-    "support_refs": {
-     "reported": 1,
-     "sampled": 1
     }
    }
   },
@@ -1148,24 +1060,12 @@
    }
   },
   "run-gates": {
-   "failure_total": 5877,
+   "failure_total": 5863,
    "status": "fail",
    "subchecks": {
-    "json_syntax": {
-     "reported": 1,
-     "sampled": 1
-    },
-    "lint_contractrefs": {
-     "reported": 1,
-     "sampled": 1
-    },
     "validate_audit_closure": {
-     "reported": 64,
+     "reported": 54,
      "sampled": 50
-    },
-    "validate_audit_status_index": {
-     "reported": 2,
-     "sampled": 2
     },
     "validate_evidence": {
      "exported": 2863,
@@ -1189,7 +1089,7 @@
    }
   }
  },
- "commit": "b19f171724f8746322da9fbc2780b78924d13159",
+ "commit": "12ef4d03ac218c59edb7b8dccbf71a34659cc76e",
  "export_buckets": [
   {
    "check": "audit-governance",
@@ -2156,8 +2056,10 @@
   },
   "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
  },
- "recorded_at_utc": "2026-11-21T16:08:30Z",
- "run_dir": "Plans/.plan_migration/pds-20261121-003-current-planunit-snapshot",
+ "recorded_at_utc": "2026-11-22T01:53:24Z",
+ "run_dir": "Plans/.plan_migration/pds-20261122-001-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
- "untracked_inputs": []
+ "untracked_inputs": [
+  "tests/agent_packet_restrictions"
+ ]
 }

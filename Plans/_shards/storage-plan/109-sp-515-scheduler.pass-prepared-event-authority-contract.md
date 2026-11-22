@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L48090-L53884
+Source lines: L48096-L53890
 
-Source SHA256: `8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537`
+Source SHA256: `0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888`
 
 ---
 
@@ -3541,7 +3541,7 @@ canonical_text: |-
 
   PNC-019 s4r retention binding for `panel.redocked` (2026-11-14).
 
-  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.
+  Event history: Application = `RP-AUTHORITY-INDEFINITE@1.0.0`, Project = `RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.
 
   Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action": "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
 
@@ -3554,7 +3554,7 @@ canonical_text: |-
   This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 
-  Current selected assignment (2026-11-19): panel.redocked@2.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2338. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-664 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: panel_redocked_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns that stored value, not event history. Separate stored-value assignment: panel_redocked_operation uses RP-OPERATIONAL-2555D@1.0.0 under Plans/Decision_Log.md#DL-501; this assigns that stored value, not event history. Separate checkpoint assignment: panel_redocked_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-664 contract; checkpoint retention grants no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
+  Current selected assignment (2026-11-19): panel.redocked@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2528. Its event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null); Historical original admission: Plans/Decision_Log.md#DL-2338 (project_only); Plans/storage-plan.md#SP-664 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: panel_redocked_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns that stored value, not event history. Separate stored-value assignment: panel_redocked_operation uses RP-OPERATIONAL-2555D@1.0.0 under Plans/Decision_Log.md#DL-501; this assigns that stored value, not event history. Separate checkpoint assignment: panel_redocked_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-664 contract; checkpoint retention grants no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
 gui_related: false
 gui_classification_reason: Event custody and validation, no new UI.
 split_recommended: false
@@ -3623,7 +3623,7 @@ canonical_text: |-
 
   PNC-019 s4r retention binding for `panel.undocked` (2026-11-14).
 
-  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.
+  Event history: Application = `RP-AUTHORITY-INDEFINITE@1.0.0`, Project = `RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.
 
   Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action": "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
 
@@ -3636,7 +3636,7 @@ canonical_text: |-
   This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 
-  Current selected assignment (2026-11-19): panel.undocked@2.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2339. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-665 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: panel_undocked_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns that stored value, not event history. Separate stored-value assignment: panel_undocked_operation uses RP-OPERATIONAL-2555D@1.0.0 under Plans/Decision_Log.md#DL-501; this assigns that stored value, not event history. Separate checkpoint assignment: panel_undocked_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-665 contract; checkpoint retention grants no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
+  Current selected assignment (2026-11-19): panel.undocked@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2529. Its event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null); Historical original admission: Plans/Decision_Log.md#DL-2339 (project_only); Plans/storage-plan.md#SP-665 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: panel_undocked_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns that stored value, not event history. Separate stored-value assignment: panel_undocked_operation uses RP-OPERATIONAL-2555D@1.0.0 under Plans/Decision_Log.md#DL-501; this assigns that stored value, not event history. Separate checkpoint assignment: panel_undocked_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-665 contract; checkpoint retention grants no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
 gui_related: false
 gui_classification_reason: Event custody and validation, no new UI.
 split_recommended: false

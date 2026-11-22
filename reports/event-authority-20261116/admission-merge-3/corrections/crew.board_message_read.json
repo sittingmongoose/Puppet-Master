@@ -1,0 +1,249 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "crew.board_message_read",
+ "findings": [
+  2,
+  4,
+  5
+ ],
+ "source_commit": "bc1fde434d053265146bd1ab86c9eb1901e27a09",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2281",
+ "decision_ref": "Plans/Decision_Log.md#DL-2502",
+ "registry_before": {
+  "revision": "2026-11-19.51",
+  "sha256": "c1346ec8a6ac13fc997579befba115fa615c55451d54f946d86e68ecbaf6e1da",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.52",
+  "sha256": "f4093ddb90b5cea532c76f5fc993cdbcd9e211c85f2268114e33a200b6a6dd2d",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-crew-board-message-read",
+  "family_revision": "1.0.0",
+  "event_type": "crew.board_message_read",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-682",
+  "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-682",
+  "payload_schema_id": "pm.event_payload.crew_board_message_read.v1",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/admission_merge2/crew_board_message_read.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.event_payload.crew_board_message_read.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ],
+    "run_id": [
+     "/payload/run_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/orchestrator-subagent-integration.md#OSI-682",
+   "Plans/orchestrator_event_payloads.schema.json#/$defs/crew_board_message_read",
+   "reports/event-authority-20261116/admission-merge-2/payload-identity-copies.json",
+   "Plans/event_payloads/admission_merge2/crew_board_message_read.schema.json#",
+   "Plans/orchestrator_event_contract_fixtures.json#/contracts/2",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-COORDINATION-180D",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "pm.event_payload.crew_board_message_read.v1",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/admission_merge2/crew_board_message_read.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.event_payload.crew_board_message_read.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-682",
+    "read_owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-682",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-COORDINATION-180D",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "pm.event_payload.crew_board_message_read.v1",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/admission_merge2/crew_board_message_read.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.event_payload.crew_board_message_read.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-682",
+    "read_owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-682",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-COORDINATION-180D",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "registry_row": {
+  "family_id": "event-family-crew-board-message-read",
+  "family_revision": "1.0.0",
+  "event_type": "crew.board_message_read",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-682",
+  "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-682",
+  "payload_schema_id": "pm.event_payload.crew_board_message_read.v1@1.0.0",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/admission_merge2/crew_board_message_read.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.event_payload.crew_board_message_read.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ],
+    "run_id": [
+     "/payload/run_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/orchestrator-subagent-integration.md#OSI-682",
+   "Plans/orchestrator_event_payloads.schema.json#/$defs/crew_board_message_read",
+   "reports/event-authority-20261116/admission-merge-2/payload-identity-copies.json",
+   "Plans/event_payloads/admission_merge2/crew_board_message_read.schema.json#",
+   "Plans/orchestrator_event_contract_fixtures.json#/contracts/2",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+   "Plans/orchestrator_event_contract_fixtures.json#/event_cases/3/event/payload_schema_id",
+   "Plans/orchestrator_event_contract_fixtures.json#/event_cases/4/event/payload_schema_id"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-COORDINATION-180D",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "pm.event_payload.crew_board_message_read.v1@1.0.0",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/admission_merge2/crew_board_message_read.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.event_payload.crew_board_message_read.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-682",
+    "read_owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-682",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-COORDINATION-180D",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "pm.event_payload.crew_board_message_read.v1@1.0.0",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/admission_merge2/crew_board_message_read.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.event_payload.crew_board_message_read.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-682",
+    "read_owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-682",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-COORDINATION-180D",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "predecessor_record_sha256": "3184d8040bc261aa011272fff8820ea20851b049fefdbbbc6ba1d3b9feda626b",
+ "predecessor_assessment_sha256": "47fd65eb5bde67faa74ccb2a584cd44f47bc5fb3309b14cbcc786cd382d17323",
+ "applied_record_sha256": "c29b5434d0323a70b0ec97d39fbb25951d6b2000d5b7d0c2e3640a7db167f86e",
+ "applied_assessment_sha256": "865ffe4902ee6fdd1ef7728748457b15f91d92eac9a842f981388a07b5bf116d",
+ "citation_changes": [
+  {
+   "ordinal": 0,
+   "old": {
+    "path": "Plans/orchestrator-subagent-integration.md",
+    "unit": "OSI-682",
+    "line_start": 32751,
+    "line_end": 32751,
+    "quote": "Current selected assignment (2026-11-19): crew.board_message_read@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2281. Its event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
+    "quote_check": "exact",
+    "quote_scope": "unit OSI-682, Plans/orchestrator-subagent-integration.md:32645-32751",
+    "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+    "source_citation": {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "unit": "OSI-682",
+     "line_start": 32680,
+     "line_end": 32680,
+     "quote": "Event history `retention_policy_ref = RP-COORDINATION-180D@1.0.0`, under DL-085.",
+     "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/orchestrator-subagent-integration.md",
+    "unit": "OSI-682",
+    "line_start": 32751,
+    "line_end": 32751,
+    "quote": "Current selected assignment (2026-11-19): crew.board_message_read@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2281. Its event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the SP-351 Server counterpart bucket), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the Project partition); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
+    "quote_check": "exact",
+    "quote_scope": "unit OSI-682, Plans/orchestrator-subagent-integration.md:32645-32751"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

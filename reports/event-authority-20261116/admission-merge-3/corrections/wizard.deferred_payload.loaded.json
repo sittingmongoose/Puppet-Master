@@ -1,0 +1,118 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "wizard.deferred_payload.loaded",
+ "findings": [
+  1
+ ],
+ "source_commit": "f918c67f8e4ffa8efc9bcb695ba164bcd9ea0040",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2430",
+ "decision_ref": "Plans/Decision_Log.md#DL-2593",
+ "registry_before": {
+  "revision": "2026-11-19.142",
+  "sha256": "bd5a646ab633821d93836179591335ed28f4f370ae03dc52d9c1db93d006818a",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.143",
+  "sha256": "9a3f2820e9a160936630c1245a0f479d0ce0d1a0e20871d2521cea30771d7b28",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-wizard-deferred-payload-loaded",
+  "family_revision": "1.0.0",
+  "event_type": "wizard.deferred_payload.loaded",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/Planning_Wizard.md#PWIZ-098",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-595",
+  "payload_schema_id": "https://puppetmaster.local/schemas/dcw/wizard_deferred_payload_loaded.schema.json",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/dcw/wizard_deferred_payload_loaded.schema.json"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Planning_Wizard.md#PWIZ-098",
+   "Plans/Contracts_V0.md#CV-595",
+   "Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  }
+ },
+ "registry_row": {
+  "family_id": "event-family-wizard-deferred-payload-loaded",
+  "family_revision": "1.0.0",
+  "event_type": "wizard.deferred_payload.loaded",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/Planning_Wizard.md#PWIZ-098",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-595",
+  "payload_schema_id": "pm.event_payload.wizard.deferred_payload.loaded.v1",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/dcw/wizard_deferred_payload_loaded.schema.json"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Planning_Wizard.md#PWIZ-098",
+   "Plans/Contracts_V0.md#CV-595",
+   "Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+   "Plans/dcw_event_contract_fixtures.json#/families/5/positive/event/payload_schema_id"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  }
+ },
+ "predecessor_record_sha256": "5ee188e1f20d1eda66ed46b5d9619abaf415e859a36a57cb0524fb66a2695787",
+ "predecessor_assessment_sha256": "470e9f576a5b1c01efe574422676d88bcaff4dd80e58049140bb232cc7335b7d",
+ "applied_record_sha256": "d823df3caa2eb0ecb3a5ee67983ca03610380451fed92742b3ccc1c355f13f6c",
+ "applied_assessment_sha256": "0f1178db6bc365a23c30dc802be79ee4fff0d454d0ee8e3a4d18faa3b5ffba91",
+ "citation_changes": [],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

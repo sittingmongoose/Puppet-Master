@@ -1,0 +1,147 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "bundle.annotation_state_changed",
+ "findings": [
+  4
+ ],
+ "source_commit": "7037005e38f770303c40c8a13f891b8a35a5a26f",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2224",
+ "decision_ref": "Plans/Decision_Log.md#DL-2461",
+ "registry_before": {
+  "revision": "2026-11-19.10",
+  "sha256": "b3290c582f0fad7a5f843dd942fa6d3bffb16ed636614dfebd4aad3727aeb066",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.11",
+  "sha256": "b17f7d44ac08cba4e312a62b384dfd6346208fe2403020b5d687538b31bdf9d7",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-bundle-annotation-state-changed",
+  "family_revision": "1.0.0",
+  "event_type": "bundle.annotation_state_changed",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/FinalGUISpec.md#F3-708",
+  "payload_owner_doc": "Plans/FinalGUISpec.md#F3-708",
+  "payload_schema_id": "pm.card5.bundle_annotation_state_changed.payload.v1",
+  "payload_schema_ref": {
+   "path": "Plans/card5_event_contracts/bundle_annotation_state_changed.payload.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.card5.bundle_annotation_state_changed.payload.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/FinalGUISpec.md#F3-708",
+   "Plans/card5_event_contracts/bundle_annotation_state_changed.payload.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  }
+ },
+ "registry_row": {
+  "family_id": "event-family-bundle-annotation-state-changed",
+  "family_revision": "1.0.0",
+  "event_type": "bundle.annotation_state_changed",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/FinalGUISpec.md#F3-708",
+  "payload_owner_doc": "Plans/FinalGUISpec.md#F3-708",
+  "payload_schema_id": "pm.card5.bundle_annotation_state_changed.payload.v1",
+  "payload_schema_ref": {
+   "path": "Plans/card5_event_contracts/bundle_annotation_state_changed.payload.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.card5.bundle_annotation_state_changed.payload.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/FinalGUISpec.md#F3-708",
+   "Plans/card5_event_contracts/bundle_annotation_state_changed.payload.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  }
+ },
+ "predecessor_record_sha256": "a1472a1dbfd4a8d8824a6d4ed681126d6f6ca574379c4918545ad78ebb154eae",
+ "predecessor_assessment_sha256": "eb776334bfca00640a1a269b6323d298d4da73dd0ee5e710ca09e278e872dbec",
+ "applied_record_sha256": "e4ff038e64308ef0b2479dab66138db0ab78ef95b6d43b6c4235b2ef8df5f3c7",
+ "applied_assessment_sha256": "856ad8fdce51d770958fbc03ddec5902e0345fa086379d9b1172963841d2f5a8",
+ "citation_changes": [
+  {
+   "ordinal": 0,
+   "old": {
+    "path": "Plans/FinalGUISpec.md",
+    "unit": "F3-708",
+    "line_start": 53152,
+    "line_end": 53152,
+    "quote": "Current selected assignment (2026-11-19): bundle.annotation_state_changed@1.0.0 is registered for project_only",
+    "quote_check": "exact",
+    "quote_scope": "unit F3-708, Plans/FinalGUISpec.md:52948-53199",
+    "file_sha256": "73d2fdbe5d89e1c00d558530c568133646e6c4496956e28ca59efbe50391faa3",
+    "source_citation": {
+     "path": "Plans/FinalGUISpec.md",
+     "unit": "F3-708",
+     "line_start": 52990,
+     "line_end": 52990,
+     "quote": "\\ `bundle.annotation_state_changed` compatibility mapping custody the same `RP-AUTHORITY-INDEFINITE@1.0.0`\\",
+     "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/FinalGUISpec.md",
+    "unit": "F3-708",
+    "line_start": 53152,
+    "line_end": 53164,
+    "quote": "  Current selected assignment (2026-11-19): bundle.annotation_state_changed@1.0.0 is registered for project_only\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2224. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0;\n  Plans/FinalGUISpec.md#F3-708 owns the event policy''s existing anchors, counts, holds and deletion rules. Separate\n  stored-value assignment: bundle_annotation_state_changed_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500;\n  this assigns that stored value, not event history. Separate stored-value assignment: existing annotation compatibility\n  mapping uses RP-AUTHORITY-INDEFINITE@1.0.0 under signed E8-3 (send f66b1af9-f851-493f-a2ee-6b666b477920); this\n  assigns that stored value, not event history. Separate checkpoint assignment: bundle_annotation_state_changed_checkpoint\n  uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/FinalGUISpec.md#F3-708 contract; checkpoint retention grants\n  no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event\n  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,\n  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved\n  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance\n  seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit F3-708, Plans/FinalGUISpec.md:52948-53199"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

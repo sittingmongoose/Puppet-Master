@@ -1,6 +1,6 @@
 /* Pip's sound, round two (Fable 5.2). api.js: window.PipSound, the one door the stage and the window knock on.
    It keeps the calls the Pip concept already makes (play, say, hush, loop, setTheme, toggle, kitOf) and adds what the
-   sound menu needs: four songs for each look and which one is chosen, a jukebox that goes round them, a three-way
+   sound menu needs: four songs for each look and which one is chosen, a jukebox that plays any song of any look, a three-way
    mixer that is remembered, where the person is in the flow (progress), and things the stage can watch: beats and
    notes as they are heard, how open Pip's mouth is, the analyser.
    A Session is one look playing on one engine; the page has a live one, and the tools make offline ones to render
@@ -46,14 +46,19 @@
       this.chapter = o.chapter || 0; this.index = o.index || 0; this.asleep = !!o.asleep; this.reduced = !!o.reduced;
       this.flags = { work: false, power: false }; this.player = null; this.line = null; this.last = {}; this.at = {}; this.vr = PS.rng(o.seed == null ? 99 : o.seed);
       this.sfxLevel = o.sfxLevel == null ? 1 : o.sfxLevel; this.recent = []; this.lastUi = null; this.voiceUntil = -1; this.vocalUntil = -1;
-      this.cacheL = {};
+      this.cacheL = {}; this.guest = o.guest || null;
       E.setRoom(PS.LOOKS[this.kit].room);
     }
-    /* the song of a look: the one chosen for it, or the look's own default */
-    entry(kit) { kit = kit || this.kit; const list = PS.SONGS[kit], id = this.pick[kit] || PS.DEFAULT_SONG[kit]; return list.find((e) => e.id === id) || list[0]; }
+    /* the song of a look: the one chosen for it, or the look's own default. The look on show may have a guest instead:
+       a song written for another look, which the jukebox has put on ({ kit, id }); it stays on when the look changes. */
+    entry(kit) {
+      kit = kit || this.kit;
+      if (this.guest && kit === this.kit) { const g = PS.songOf(this.guest.kit, this.guest.id); if (g) return g; }
+      const list = PS.SONGS[kit], id = this.pick[kit] || PS.DEFAULT_SONG[kit]; return list.find((e) => e.id === id) || list[0];
+    }
     /* what a gesture needs to know about a look: its materials, and the key and register of the song it plays in */
     look(kit) {
-      kit = kit || this.kit; const en = this.entry(kit), key = kit + ':' + en.id;
+      kit = kit || this.kit; const en = this.entry(kit), key = kit + ':' + en.kit + ':' + en.id;
       return this.cacheL[key] || (this.cacheL[key] = Object.assign({}, PS.LOOKS[kit], { song: en.song, reg: en.reg, motif: en.motif }));
     }
     intensity() { return this.entry().level({ chapter: this.chapter, index: this.index, asleep: this.asleep }); }
@@ -195,7 +200,7 @@
   }
 
   /* ------------------------------------------------------------------ the live page */
-  const S = { theme: 'friendly-dark', kit: 'friendly', muted: false, unlocked: false, reduced: false, sigOnLook: true, jukebox: false, vol: { music: 0.85, voice: 1, sfx: 1 }, song: {}, juke: {}, voice: {}, want: { bed: 0, work: 0, power: 0, snore: 0, swing: 0 }, chapter: 0, index: 0, asleep: true };
+  const S = { theme: 'friendly-dark', kit: 'friendly', muted: false, unlocked: false, reduced: false, sigOnLook: true, jukebox: false, vol: Object.assign({}, PS.MIX), song: {}, juke: null, bag: [], voice: {}, want: { bed: 0, work: 0, power: 0, snore: 0, swing: 0 }, chapter: 0, index: 0, asleep: true };
   let E = null, sess = null, clock = 0, snoreT = 0, swingN = null, making = null, lookT = 0;
   const pending = [], subs = {};
   const fire = (type, data) => (subs[type] || []).forEach((f) => { try { f(data); } catch (e) { PS.errors.push(String((e && e.stack) || e)); } });
@@ -215,7 +220,11 @@
   function save() { if (!remember()) return; try { G.localStorage.setItem(STORE, JSON.stringify({ vol: S.vol, muted: S.muted, jukebox: S.jukebox, song: S.song })); } catch (e) { /* as above */ } }
   if (G.PIP_SOUND_DEFAULTS) Object.assign(S.vol, G.PIP_SOUND_DEFAULTS.vol || {});
   load();
-  const songOf = (kit) => (S.jukebox && S.juke[kit]) || S.song[kit] || PS.DEFAULT_SONG[kit];
+  const songOf = (kit) => S.song[kit] || PS.DEFAULT_SONG[kit];
+  // what the jukebox has on, if it is on and has chosen: a song of any look, { kit, id }
+  const guest = () => (S.jukebox && S.juke) || null;
+  // the song that is on, or would be: the jukebox's, or the one chosen for the look on show
+  const current = () => (sess ? sess.entry() : (guest() && PS.songOf(guest().kit, guest().id)) || PS.songOf(S.kit, songOf(S.kit)) || PS.SONGS[S.kit][0]);
   const audible = () => !S.muted && S.unlocked;
   function ensure() {
     if (E) { if (E.ctx.state !== 'running' && E.ctx.state !== 'closed') { try { const p = E.ctx.resume(); if (p && p.catch) p.catch(() => {}); } catch (e) { /* closed */ } } return E; }
@@ -224,7 +233,7 @@
     Object.keys(S.vol).forEach((n) => E.setVolume(n, S.vol[n]));
     pending.forEach(([t, f]) => E.on(t, f));
     const songs = {}; KITS.forEach((k) => { songs[k] = songOf(k); });
-    sess = new Session(E, { kit: S.kit, songs, voices: S.voice, chapter: S.chapter, index: S.index, asleep: S.asleep, reduced: S.reduced });
+    sess = new Session(E, { kit: S.kit, songs, guest: guest(), voices: S.voice, chapter: S.chapter, index: S.index, asleep: S.asleep, reduced: S.reduced });
     sess.flags.work = S.want.work > 0; sess.flags.power = S.want.power > 0;
     return E;
   }
@@ -280,20 +289,31 @@
     PS.inst.prewarm(E, now.length ? now : later, () => {
       if (making !== p) return; making = null;
       if (!audible() || !(S.want.bed > 0.001)) return;
+      // (the jukebox's song stays on through a change of look from its first song on, not only from its first draw)
+      if (S.jukebox && !S.juke) sess.guest = S.juke = { kit: en.kit, id: en.id };
       p.onRound = (tEnd) => { if (!S.jukebox || sess.player !== p) return false; jukeNext(tEnd); return true; };
       sess.swap(p, Math.max(E.now() + 0.08, after || 0)); tick();
-      fire('music', { on: true, song: en.song.id }); fire('song', { kit: S.kit, id: en.id });
+      fire('music', { on: true, song: en.song.id }); fire('song', { kit: en.kit, id: en.id });
       PS.inst.prewarm(E, later);
     });
     if (!clock) clock = setInterval(tick, 40);
   }
   function stopMusic() { making = null; if (sess) sess.music(false); fire('music', { on: false }); }
-  /* the jukebox: when a song has been once round, another of the look's four comes on, never the same one twice */
-  function jukeNext(tEnd) {
-    const list = PS.SONGS[S.kit], cur = sess.entry().id, others = list.filter((e) => e.id !== cur), pick = others[Math.floor(Math.random() * others.length)] || list[0];
-    S.juke[S.kit] = pick.id; sess.setSong(pick.id, S.kit);
-    startMusic(tEnd + 0.5);
+  /* The jukebox: when a song has been once round, another comes on, drawn from every song of every look (twenty-four),
+     whatever look is on show. Each is heard once before any comes round again, and the original tune, which every
+     look has in its own instruments, is never drawn twice running. */
+  function jukePick() {
+    const cur = current(), same = (e) => e.kit === cur.kit && e.id === cur.id;
+    if (!S.bag.some((e) => !same(e))) { S.bag = []; KITS.forEach((k) => PS.SONGS[k].forEach((e) => S.bag.push(e))); }
+    let pool = S.bag.filter((e) => !same(e));
+    if (cur.id === 'original') { pool = pool.filter((e) => e.id !== 'original'); if (!pool.length) KITS.forEach((k) => PS.SONGS[k].forEach((e) => { if (e.id !== 'original') pool.push(e); })); }
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    S.bag = S.bag.filter((e) => e !== pick && !same(e));
+    S.juke = { kit: pick.kit, id: pick.id }; if (sess) sess.guest = S.juke;
+    fire('jukebox', { on: true, kit: pick.kit, id: pick.id });
+    return pick;
   }
+  function jukeNext(tEnd) { jukePick(); startMusic(tEnd + 0.5); }
   function snoreLoop() {
     clearTimeout(snoreT); snoreT = 0;
     if (!(S.want.snore > 0.001)) return;
@@ -313,7 +333,7 @@
     // sound switched on or off, a new look or a new song: bring everything that should be sounding into line
     if (!audible()) { stopMusic(); if (sess) sess.hush(); swingLoop(0); return; }
     if (!ensure()) return;
-    sess.setKit(S.kit); sess.reduced = S.reduced; KITS.forEach((k) => sess.setSong(songOf(k), k));
+    sess.setKit(S.kit); sess.reduced = S.reduced; sess.guest = guest(); KITS.forEach((k) => sess.setSong(songOf(k), k));
     sess.progress({ chapter: S.chapter, index: S.index, asleep: S.asleep });
     sess.flag('work', S.want.work > 0); sess.flag('power', S.want.power > 0);
     if (S.want.bed > 0.001) startMusic(); else stopMusic();
@@ -338,13 +358,20 @@
     volume(name, v) { if (v == null) return S.vol[name]; if (!(name in S.vol)) return 0; S.vol[name] = clamp(+v, 0, 1.5); if (E) E.setVolume(name, S.vol[name]); save(); fire('volume', { name, value: S.vol[name] }); return S.vol[name]; },
     unlock() { if (S.unlocked) return; S.unlocked = true; refresh(); fire('unlock', {}); },
     /* the four songs of a look (this look's if none is named): [{ id, title, family, isDefault, chosen, playing }] */
-    songs(kit) { kit = kit ? kitOf(kit) : S.kit; const chosen = S.song[kit] || PS.DEFAULT_SONG[kit], now = sess && sess.player && sess.player.playing && kit === S.kit ? sess.entry().id : null; return PS.SONGS[kit].map((e) => ({ id: e.id, title: e.id === 'original' ? 'Original' : e.title, family: e.family, bpm: e.song.bpm, isDefault: e.id === PS.DEFAULT_SONG[kit], chosen: e.id === chosen, playing: e.id === now })); },
+    songs(kit) { kit = kit ? kitOf(kit) : S.kit; const chosen = S.song[kit] || PS.DEFAULT_SONG[kit], now = sess && sess.player && sess.player.playing ? sess.entry() : null; return PS.SONGS[kit].map((e) => ({ id: e.id, kit, title: e.id === 'original' ? 'Original' : e.title, family: e.family, bpm: e.song.bpm, isDefault: e.id === PS.DEFAULT_SONG[kit], chosen: e.id === chosen, playing: e === now })); },
     /* choose a look's song: it comes on at once if that look is showing (and the jukebox, if it is on, carries on from it) */
-    setSong(id, kit) { kit = kit ? kitOf(kit) : S.kit; if (!PS.SONGS[kit].some((e) => e.id === id)) return false; S.song[kit] = id; delete S.juke[kit]; save(); if (sess) sess.setSong(id, kit); if (kit === S.kit) refresh(); fire('song', { kit, id }); return true; },
+    setSong(id, kit) { kit = kit ? kitOf(kit) : S.kit; if (!PS.songOf(kit, id)) return false; S.song[kit] = id; if (kit === S.kit) S.juke = S.jukebox ? { kit, id } : null; save(); if (sess) sess.setSong(id, kit); if (kit === S.kit) refresh(); fire('song', { kit, id }); return true; },
     get jukebox() { return S.jukebox; },
-    setJukebox(on) { S.jukebox = !!on; if (!S.jukebox) { S.juke = {}; } save(); if (!S.jukebox) refresh(); fire('jukebox', { on: S.jukebox }); return S.jukebox; },
-    /* the jukebox's next song now, without waiting for the end of the round */
-    skip() { if (!sess || !audible()) return; const list = PS.SONGS[S.kit], cur = sess.entry().id, i = list.findIndex((e) => e.id === cur), pick = list[(i + 1) % list.length]; if (S.jukebox) S.juke[S.kit] = pick.id; else { S.song[S.kit] = pick.id; save(); } sess.setSong(pick.id, S.kit); refresh(); },
+    /* On: the song that is playing is the jukebox's first, and from here the look on show no longer decides the song (a
+       change of look leaves the jukebox's song on). Off: the look's own chosen song comes back. */
+    setJukebox(on) { const cur = current(); S.jukebox = !!on; S.juke = S.jukebox ? { kit: cur.kit, id: cur.id } : null; S.bag = []; save(); refresh(); fire('jukebox', { on: S.jukebox }); return S.jukebox; },
+    /* the next song now, without waiting for the end of the round: the jukebox's next draw, or (jukebox off) the next of the look's four */
+    skip() {
+      if (!sess || !audible()) return;
+      if (S.jukebox) jukePick();
+      else { const list = PS.SONGS[S.kit], i = list.findIndex((e) => e.id === songOf(S.kit)), pick = list[(i + 1) % list.length]; S.song[S.kit] = pick.id; save(); sess.setSong(pick.id, S.kit); }
+      refresh();
+    },
     /* Pip's voice for a look, for comparing: null is the voice the look has, or the name of another take (PS.voice.ALT) */
     voices(kit) { kit = kit ? kitOf(kit) : S.kit; return [{ id: null, name: PS.voice.VOX[kit].name || 'This look’s voice' }].concat(Object.keys(PS.voice.ALT[kit] || {}).map((id) => ({ id, name: PS.voice.ALT[kit][id].name || id }))).map((v) => Object.assign(v, { chosen: (S.voice[kit] || null) === v.id })); },
     setVoice(id, kit) { kit = kit ? kitOf(kit) : S.kit; if (id) S.voice[kit] = id; else delete S.voice[kit]; if (sess) { if (id) sess.voices[kit] = id; else delete sess.voices[kit]; } fire('voice', { kit, id: id || null }); },
@@ -378,10 +405,10 @@
     },
     /* where the person is: { index (screen in the flow), chapter 0..4, asleep } */
     progress(s) { ['index', 'chapter', 'asleep'].forEach((k) => { if (s[k] != null) S[k] = k === 'asleep' ? !!s[k] : s[k] | 0; }); if (sess) sess.progress(S); if (API.trace && E) API.trace.push({ t: +E.now().toFixed(3), kind: 'progress', index: S.index, chapter: S.chapter, asleep: S.asleep }); fire('progress', Object.assign({}, S)); },
-    intensity() { const e = PS.SONGS[S.kit].find((x) => x.id === songOf(S.kit)) || PS.SONGS[S.kit][0]; return e.level(S); },
+    intensity() { return current().level(S); },
     /* what is playing: the parts of the song and whether each is in */
     parts() {
-      const e = PS.SONGS[S.kit].find((x) => x.id === (sess ? sess.entry().id : songOf(S.kit))) || PS.SONGS[S.kit][0], song = e.song, I = e.level(S);
+      const e = current(), song = e.song, I = e.level(S);
       if (!song.tracks) return [{ name: 'tune', role: 'lead', inst: 'original', on: true }, { name: 'bass', role: 'bass', inst: 'original', on: true }];
       return Object.keys(song.tracks).map((n) => { const T = song.tracks[n]; return { name: n, role: T.role || null, inst: T.inst || 'drums', on: T.when ? S.want[T.when] > 0.001 : T.at ? T.at.indexOf(I) >= 0 : I >= (T.from || 0) && I <= (T.to == null ? 99 : T.to) }; });
     },
@@ -392,7 +419,8 @@
     mouth() { return E ? PS.voice.mouthAt(E.now()) : { open: 0, round: 0 }; },
     transport() { const p = sess && sess.player; if (!p || !p.playing) return { playing: false }; const a = p.at(E.now()), pulse = p.pulse || 1; return { playing: true, bpm: p.bpm, meter: p.beats, pulse, bar: a.bar, beat: a.beat, phase: (a.beat / pulse) % 1, song: p.song.id, level: p.intensity, barT: a.barT, beatDur: p.beat }; },
     analyser() { return E && E.analyser; },
-    song() { const e = PS.SONGS[S.kit].find((x) => x.id === (sess ? sess.entry().id : songOf(S.kit))) || PS.SONGS[S.kit][0]; return { id: e.id, title: e.id === 'original' ? 'Original' : e.title, family: e.family, song: e.song }; },
+    /* the song that is on (or would be). kit: the look it was written for, which under the jukebox need not be the look on show */
+    song() { const e = current(); return { id: e.id, kit: e.kit, title: e.id === 'original' ? 'Original' : e.title, family: e.family, song: e.song, level: e.level }; },
     /* set to [] to keep a record of what the page asks for (the checks replay it offline): { t, kind: 'play' | 'say' | 'progress', ... } */
     trace: null,
     Session, LEVEL, RATE, PRI
@@ -404,7 +432,7 @@
      flag: [name, on], song }] } -> Promise<AudioBuffer> */
   API.render = function (spec) {
     const sr = spec.sr || 48000, ctx = new OfflineAudioContext(2, Math.ceil(sr * spec.seconds), sr), kit = kitOf(spec.kit);
-    const e = new PS.Engine(ctx, { offline: true, seed: 7, limit: spec.limit }); Object.keys(S.vol).forEach((n) => { e.bus[n].gain.value = spec.vol && spec.vol[n] != null ? spec.vol[n] : { music: 0.85, voice: 1, sfx: 1 }[n]; });
+    const e = new PS.Engine(ctx, { offline: true, seed: 7, limit: spec.limit }); Object.keys(S.vol).forEach((n) => e.setVolume(n, spec.vol && spec.vol[n] != null ? spec.vol[n] : PS.MIX[n], true));
     const s = new Session(e, { kit, song: spec.song || PS.DEFAULT_SONG[kit], voices: spec.voice ? { [kit]: spec.voice } : {}, chapter: spec.chapter || 0, index: spec.index || 0, asleep: !!spec.asleep, seed: 5 });
     const script = (spec.script || []).slice().sort((a, b) => a.at - b.at);
     let p = null;

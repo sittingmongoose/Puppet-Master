@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L17563-L18959
+Source lines: L17563-L18963
 
-Source SHA256: `8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537`
+Source SHA256: `0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888`
 
 ---
 
@@ -783,6 +783,10 @@ negative_constraints:
 - Do not change the existing lifecycle graph, add a retention clock or erase required audit authority.
 - Do not infer a new disclosure permission, event admission or native execution result.
 ```
+
+#### Application counts for queued runs and tool execution (DL-2597)
+
+Application EventRecords of `run.background_enqueued`, `tool.execution_started` and `tool.execution_completed` retain `RP-RUNTIME-365D@1.0.0`. Each family counts its Application records in its own SP-349 Server-wide counterpart bucket, with a cap of 5,000,000 per Puppet Master Server and Storage instance, in addition to the policy’s 1,000,000 per actual Run. A record from one family consumes only its family’s Server allowance. Project records keep the policy’s per-Run and per-Project limits. All records retain the 365-day expiry from actual Run completion, successor compaction and existing holds.
 
 ### Case L-4. Storage I/O, aggregate lock/viewer, root continuity, and fallback
 

@@ -1878,6 +1878,48 @@
    },
    "data:value_arithmetic:datetime_inventory:nested_resource_pointer:plus_one nested_resource_pointer: 5 in :5#1": {
     "witness": "check:datetime_nested_resource_pointer_boundaries"
+   },
+   "site:datetime_inventory:scan:ValueError:exclusion_purpose_citation_ephemeral#1": {
+    "witness": "check:datetime_unit_snapshot_refuse_ephemeral_exclusion_citation"
+   },
+   "predicate:site:datetime_inventory:scan:ValueError:exclusion_purpose_citation_ephemeral#1:false citation == 'Plans/.plan_migration'#1": {
+    "witness": "check:datetime_unit_snapshot_refuse_ephemeral_citation_of_migration_directory"
+   },
+   "predicate:site:datetime_inventory:scan:ValueError:exclusion_purpose_citation_ephemeral#1:false citation.startswith('Plans/.plan_migration/')#1": {
+    "witness": "check:datetime_unit_snapshot_refuse_ephemeral_exclusion_citation"
+   },
+   "site:datetime_inventory:scan:ValueError:exclusion_path_ephemeral#1": {
+    "witness": "check:datetime_unit_snapshot_refuse_exclusion_on_snapshot_path"
+   },
+   "site:datetime_inventory:scan:dynamic#1": {
+    "witness": "check:datetime_unit_snapshot_refuse_unlisted_run"
+   },
+   "boundary:datetime_inventory:snapshot_run:len(parts) >= 4:0#1": {
+    "witness": "check:datetime_unit_snapshot_accept_span_over_excluded_owner_fence"
+   },
+   "boundary:datetime_inventory:adjudicate_snapshot_line:0 <= value['byte_start'] < value['byte_end']:0#1": {
+    "witness": "check:datetime_unit_snapshot_accept_span_at_byte_zero"
+   },
+   "boundary:datetime_inventory:adjudicate_snapshot_line:0 <= value['byte_start'] < value['byte_end']:1#1": {
+    "witness": "check:datetime_unit_snapshot_refuse_empty_span"
+   },
+   "boundary:datetime_inventory:adjudicate_snapshot_line:end > len(data):0#1": {
+    "witness": "check:datetime_unit_snapshot_accept_span_over_excluded_owner_fence"
+   },
+   "boundary:datetime_inventory:adjudicate_snapshot_line:lo <= last:0#1": {
+    "witness": "check:datetime_unit_snapshot_refuse_span_ending_on_uncovered_fence_line"
+   },
+   "boundary:datetime_inventory:adjudicate_snapshot_line:hi >= first:0#1": {
+    "witness": "check:datetime_unit_snapshot_refuse_span_starting_on_uncovered_fence_close"
+   },
+   "boundary:datetime_inventory:SnapshotHistory.verify:end > len(owner):0#1": {
+    "witness": "check:datetime_unit_snapshot_accept_history_stale_current_run"
+   },
+   "boundary:datetime_inventory:scan.container:len(rows) > before:0#1": {
+    "witness": "check:datetime_unit_snapshot_refuse_uncovered_owner_span"
+   },
+   "data:walk_domain:datetime_inventory:scan:walk_first snapshot_lines#1": {
+    "witness": "check:datetime_unit_snapshot_refuse_unmapped_snapshot_line"
    }
   }
  },

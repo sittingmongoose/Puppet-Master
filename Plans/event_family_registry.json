@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-11-18.2",
+  "registry_revision": "2026-11-19.145",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -16078,7 +16078,7 @@
       "scope_policy": "application_only",
       "semantic_owner_doc": "Plans/Backup_Restore_System.md#BRS-1400",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-1400",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/backup_destination_changed/1.0.0/schema.json",
+      "payload_schema_id": "pm.event_payload.backup.destination_changed.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/w3e/backup_destination_changed.schema.json",
         "json_pointer": "#",
@@ -16105,7 +16105,8 @@
         "Plans/Contracts_V0.md#CV-1400",
         "Plans/storage-plan.md#SP-1400",
         "Plans/event_payloads/w3e/backup_destination_changed.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/event_payloads/w3e/backup_destination_changed.schema.json#/properties/schema_id/const"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -16120,7 +16121,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/Backup_Restore_System.md#BRS-1401",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-1401",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/backup_state_changed/1.0.0/schema.json",
+      "payload_schema_id": "pm.event_payload.backup.state_changed.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/w3e/backup_state_changed.schema.json",
         "json_pointer": "#",
@@ -16147,7 +16148,8 @@
         "Plans/Contracts_V0.md#CV-1401",
         "Plans/storage-plan.md#SP-1401",
         "Plans/event_payloads/w3e/backup_state_changed.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/event_payloads/w3e/backup_state_changed.schema.json#/properties/schema_id/const"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -16157,7 +16159,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/backup_state_changed/1.0.0/schema.json",
+          "payload_schema_id": "pm.event_payload.backup.state_changed.v1",
           "payload_schema_ref": {
             "path": "Plans/event_payloads/w3e/backup_state_changed.schema.json",
             "json_pointer": "#",
@@ -16176,7 +16178,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/backup_state_changed/1.0.0/schema.json",
+          "payload_schema_id": "pm.event_payload.backup.state_changed.v1",
           "payload_schema_ref": {
             "path": "Plans/event_payloads/w3e/backup_state_changed.schema.json",
             "json_pointer": "#",
@@ -20315,7 +20317,7 @@
       "scope_policy": "project_only",
       "semantic_owner_doc": "Plans/assistant-chat-design.md#ACD-573",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-592",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/bundle_revision/revision_completed.schema.json",
+      "payload_schema_id": "pm.event_payload.bundle.revision_completed.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/bundle_revision/revision_completed.schema.json",
         "json_pointer": "#",
@@ -20343,7 +20345,8 @@
         "Plans/assistant-chat-design.md#ACD-573",
         "Plans/Contracts_V0.md#CV-592",
         "Plans/event_payloads/bundle_revision/revision_completed.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/dcw_event_contract_fixtures.json#/families/2/positive/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -20358,7 +20361,7 @@
       "scope_policy": "project_only",
       "semantic_owner_doc": "Plans/assistant-chat-design.md#ACD-574",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-593",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/bundle_revision/revision_interrupted.schema.json",
+      "payload_schema_id": "pm.event_payload.bundle.revision_interrupted.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/bundle_revision/revision_interrupted.schema.json",
         "json_pointer": "#",
@@ -20386,7 +20389,8 @@
         "Plans/assistant-chat-design.md#ACD-574",
         "Plans/Contracts_V0.md#CV-593",
         "Plans/event_payloads/bundle_revision/revision_interrupted.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/dcw_event_contract_fixtures.json#/families/3/positive/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -20401,7 +20405,7 @@
       "scope_policy": "project_only",
       "semantic_owner_doc": "Plans/assistant-chat-design.md#ACD-571",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-590",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/bundle_revision/revision_requested.schema.json",
+      "payload_schema_id": "pm.event_payload.bundle.revision_requested.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/bundle_revision/revision_requested.schema.json",
         "json_pointer": "#",
@@ -20429,7 +20433,8 @@
         "Plans/assistant-chat-design.md#ACD-571",
         "Plans/Contracts_V0.md#CV-590",
         "Plans/event_payloads/bundle_revision/revision_requested.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/dcw_event_contract_fixtures.json#/families/0/positive/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -20444,7 +20449,7 @@
       "scope_policy": "project_only",
       "semantic_owner_doc": "Plans/assistant-chat-design.md#ACD-572",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-591",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/bundle_revision/revision_started.schema.json",
+      "payload_schema_id": "pm.event_payload.bundle.revision_started.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/bundle_revision/revision_started.schema.json",
         "json_pointer": "#",
@@ -20472,7 +20477,8 @@
         "Plans/assistant-chat-design.md#ACD-572",
         "Plans/Contracts_V0.md#CV-591",
         "Plans/event_payloads/bundle_revision/revision_started.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/dcw_event_contract_fixtures.json#/families/1/positive/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -24123,7 +24129,7 @@
       "scope_policy": "project_only",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-680",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-680",
-      "payload_schema_id": "pm.event_payload.config_validation_failed.v1",
+      "payload_schema_id": "pm.event_payload.config_validation_failed.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/config_validation_failed",
@@ -24154,7 +24160,8 @@
         "Plans/orchestrator-subagent-integration.md#OSI-680",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/config_validation_failed",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/0",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/0/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -24333,7 +24340,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-681",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-681",
-      "payload_schema_id": "pm.event_payload.crew_board_message_posted.v1",
+      "payload_schema_id": "pm.event_payload.crew_board_message_posted.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/admission_merge2/crew_board_message_posted.schema.json",
         "json_pointer": "#",
@@ -24366,7 +24373,9 @@
         "reports/event-authority-20261116/admission-merge-2/payload-identity-copies.json",
         "Plans/event_payloads/admission_merge2/crew_board_message_posted.schema.json#",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/1",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/1/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/2/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -24376,7 +24385,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.crew_board_message_posted.v1",
+          "payload_schema_id": "pm.event_payload.crew_board_message_posted.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/event_payloads/admission_merge2/crew_board_message_posted.schema.json",
             "json_pointer": "#",
@@ -24395,7 +24404,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.crew_board_message_posted.v1",
+          "payload_schema_id": "pm.event_payload.crew_board_message_posted.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/event_payloads/admission_merge2/crew_board_message_posted.schema.json",
             "json_pointer": "#",
@@ -24422,7 +24431,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-682",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-682",
-      "payload_schema_id": "pm.event_payload.crew_board_message_read.v1",
+      "payload_schema_id": "pm.event_payload.crew_board_message_read.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/admission_merge2/crew_board_message_read.schema.json",
         "json_pointer": "#",
@@ -24455,7 +24464,9 @@
         "reports/event-authority-20261116/admission-merge-2/payload-identity-copies.json",
         "Plans/event_payloads/admission_merge2/crew_board_message_read.schema.json#",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/2",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/3/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/4/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -24465,7 +24476,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.crew_board_message_read.v1",
+          "payload_schema_id": "pm.event_payload.crew_board_message_read.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/event_payloads/admission_merge2/crew_board_message_read.schema.json",
             "json_pointer": "#",
@@ -24484,7 +24495,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.crew_board_message_read.v1",
+          "payload_schema_id": "pm.event_payload.crew_board_message_read.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/event_payloads/admission_merge2/crew_board_message_read.schema.json",
             "json_pointer": "#",
@@ -24511,7 +24522,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-683",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-683",
-      "payload_schema_id": "pm.event_payload.crew_board_messages_archived.v1",
+      "payload_schema_id": "pm.event_payload.crew_board_messages_archived.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/admission_merge2/crew_board_messages_archived.schema.json",
         "json_pointer": "#",
@@ -24544,7 +24555,9 @@
         "reports/event-authority-20261116/admission-merge-2/payload-identity-copies.json",
         "Plans/event_payloads/admission_merge2/crew_board_messages_archived.schema.json#",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/3",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/5/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/6/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -24554,7 +24567,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.crew_board_messages_archived.v1",
+          "payload_schema_id": "pm.event_payload.crew_board_messages_archived.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/event_payloads/admission_merge2/crew_board_messages_archived.schema.json",
             "json_pointer": "#",
@@ -24573,7 +24586,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.crew_board_messages_archived.v1",
+          "payload_schema_id": "pm.event_payload.crew_board_messages_archived.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/event_payloads/admission_merge2/crew_board_messages_archived.schema.json",
             "json_pointer": "#",
@@ -27279,10 +27292,10 @@
       "family_id": "event-family-panel-redocked",
       "family_revision": "2.0.0",
       "event_type": "panel.redocked",
-      "scope_policy": "project_only",
+      "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/FinalGUISpec.md#F3-704",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-684",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/panel_redocked/2.0.0",
+      "payload_schema_id": "pm.event.panel_redocked.v2",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/panel_redocked_v2.schema.json",
         "json_pointer": "#",
@@ -27308,22 +27321,65 @@
         "Plans/FinalGUISpec.md#F3-704",
         "Plans/Contracts_V0.md#CV-684",
         "Plans/event_payloads/panel_redocked_v2.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/panel_event_contracts/panel_redocked.fixtures.json#/payload_cases/9/value/schema_id",
+        "Plans/panel_event_contracts/panel_redocked.fixtures.json#/payload_cases/0/value/schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
-      }
+      },
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback",
+      "payload_versions": [
+        {
+          "scope_kind": "application",
+          "payload_schema_id": "pm.event.panel_redocked.v2",
+          "payload_schema_ref": {
+            "path": "Plans/event_payloads/panel_redocked_v2.schema.json",
+            "json_pointer": "#",
+            "schema_id": "https://puppetmaster.local/schemas/event_payloads/panel_redocked/2.0.0"
+          },
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/FinalGUISpec.md#F3-704",
+          "read_owner_ref": "Plans/FinalGUISpec.md#F3-704",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033"
+        },
+        {
+          "scope_kind": "project",
+          "payload_schema_id": "pm.event.panel_redocked.v2",
+          "payload_schema_ref": {
+            "path": "Plans/event_payloads/panel_redocked_v2.schema.json",
+            "json_pointer": "#",
+            "schema_id": "https://puppetmaster.local/schemas/event_payloads/panel_redocked/2.0.0"
+          },
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/FinalGUISpec.md#F3-704",
+          "read_owner_ref": "Plans/FinalGUISpec.md#F3-704",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033"
+        }
+      ]
     },
     {
       "family_id": "event-family-panel-undocked",
       "family_revision": "2.0.0",
       "event_type": "panel.undocked",
-      "scope_policy": "project_only",
+      "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/FinalGUISpec.md#F3-705",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-685",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/panel_undocked/2.0.0",
+      "payload_schema_id": "pm.event.panel_undocked.v2",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/panel_undocked_v2.schema.json",
         "json_pointer": "#",
@@ -27349,13 +27405,56 @@
         "Plans/FinalGUISpec.md#F3-705",
         "Plans/Contracts_V0.md#CV-685",
         "Plans/event_payloads/panel_undocked_v2.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/panel_event_contracts/panel_undocked.fixtures.json#/payload_cases/9/value/schema_id",
+        "Plans/panel_event_contracts/panel_undocked.fixtures.json#/payload_cases/0/value/schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
-      }
+      },
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback",
+      "payload_versions": [
+        {
+          "scope_kind": "application",
+          "payload_schema_id": "pm.event.panel_undocked.v2",
+          "payload_schema_ref": {
+            "path": "Plans/event_payloads/panel_undocked_v2.schema.json",
+            "json_pointer": "#",
+            "schema_id": "https://puppetmaster.local/schemas/event_payloads/panel_undocked/2.0.0"
+          },
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/FinalGUISpec.md#F3-705",
+          "read_owner_ref": "Plans/FinalGUISpec.md#F3-705",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033"
+        },
+        {
+          "scope_kind": "project",
+          "payload_schema_id": "pm.event.panel_undocked.v2",
+          "payload_schema_ref": {
+            "path": "Plans/event_payloads/panel_undocked_v2.schema.json",
+            "json_pointer": "#",
+            "schema_id": "https://puppetmaster.local/schemas/event_payloads/panel_undocked/2.0.0"
+          },
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/FinalGUISpec.md#F3-705",
+          "read_owner_ref": "Plans/FinalGUISpec.md#F3-705",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033"
+        }
+      ]
     },
     {
       "family_id": "event-family-parser-error",
@@ -27364,7 +27463,7 @@
       "scope_policy": "project_only",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-684",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-684",
-      "payload_schema_id": "pm.event_payload.parser_error.v1",
+      "payload_schema_id": "pm.event_payload.parser_error.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/parser_error",
@@ -27395,7 +27494,8 @@
         "Plans/orchestrator-subagent-integration.md#OSI-684",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/parser_error",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/4",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/7/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -27902,7 +28002,7 @@
       "scope_policy": "project_only",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-685",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-685",
-      "payload_schema_id": "pm.event_payload.phase_force_completed.v1",
+      "payload_schema_id": "pm.event_payload.phase_force_completed.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/phase_force_completed",
@@ -27933,7 +28033,8 @@
         "Plans/orchestrator-subagent-integration.md#OSI-685",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/phase_force_completed",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/5",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/8/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -28801,7 +28902,7 @@
       "scope_policy": "application_only",
       "semantic_owner_doc": "Plans/Remote_Access_System.md#RAS-1402",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-1402",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/remote_access_private_endpoint_state_changed/1.0.0/schema.json",
+      "payload_schema_id": "pm.event_payload.remote_access.private_endpoint_state_changed.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/w3e/remote_access_private_endpoint_state_changed.schema.json",
         "json_pointer": "#",
@@ -28828,7 +28929,8 @@
         "Plans/Contracts_V0.md#CV-1402",
         "Plans/storage-plan.md#SP-1402",
         "Plans/event_payloads/w3e/remote_access_private_endpoint_state_changed.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/event_payloads/w3e/remote_access_private_endpoint_state_changed.schema.json#/properties/schema_id/const"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -28843,7 +28945,7 @@
       "scope_policy": "application_only",
       "semantic_owner_doc": "Plans/Remote_Access_System.md#RAS-1403",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-1403",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/remote_access_proxy_state_changed/1.0.0/schema.json",
+      "payload_schema_id": "pm.event_payload.remote_access.proxy_state_changed.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/w3e/remote_access_proxy_state_changed.schema.json",
         "json_pointer": "#",
@@ -28870,7 +28972,8 @@
         "Plans/Contracts_V0.md#CV-1403",
         "Plans/storage-plan.md#SP-1403",
         "Plans/event_payloads/w3e/remote_access_proxy_state_changed.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/event_payloads/w3e/remote_access_proxy_state_changed.schema.json#/properties/schema_id/const"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -28885,7 +28988,7 @@
       "scope_policy": "application_only",
       "semantic_owner_doc": "Plans/Remote_Access_System.md#RAS-1404",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-1404",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/remote_access_public_security_violation_detected/1.0.0/schema.json",
+      "payload_schema_id": "pm.event_payload.remote_access.public_security_violation_detected.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/w3e/remote_access_public_security_violation_detected.schema.json",
         "json_pointer": "#",
@@ -28912,7 +29015,8 @@
         "Plans/Contracts_V0.md#CV-1404",
         "Plans/storage-plan.md#SP-1404",
         "Plans/event_payloads/w3e/remote_access_public_security_violation_detected.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/event_payloads/w3e/remote_access_public_security_violation_detected.schema.json#/properties/schema_id/const"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -28927,7 +29031,7 @@
       "scope_policy": "application_only",
       "semantic_owner_doc": "Plans/Remote_Access_System.md#RAS-1405",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-1405",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/remote_access_remote_link_state_changed/1.0.0/schema.json",
+      "payload_schema_id": "pm.event_payload.remote_access.remote_link_state_changed.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/w3e/remote_access_remote_link_state_changed.schema.json",
         "json_pointer": "#",
@@ -28954,7 +29058,8 @@
         "Plans/Contracts_V0.md#CV-1405",
         "Plans/storage-plan.md#SP-1405",
         "Plans/event_payloads/w3e/remote_access_remote_link_state_changed.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/event_payloads/w3e/remote_access_remote_link_state_changed.schema.json#/properties/schema_id/const"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -28969,7 +29074,7 @@
       "scope_policy": "application_only",
       "semantic_owner_doc": "Plans/Remote_Access_System.md#RAS-1406",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-1406",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/remote_access_route_migration_state_changed/1.0.0/schema.json",
+      "payload_schema_id": "pm.event_payload.remote_access.route_migration_state_changed.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/w3e/remote_access_route_migration_state_changed.schema.json",
         "json_pointer": "#",
@@ -28996,7 +29101,8 @@
         "Plans/Contracts_V0.md#CV-1406",
         "Plans/storage-plan.md#SP-1406",
         "Plans/event_payloads/w3e/remote_access_route_migration_state_changed.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/event_payloads/w3e/remote_access_route_migration_state_changed.schema.json#/properties/schema_id/const"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -29011,7 +29117,7 @@
       "scope_policy": "application_only",
       "semantic_owner_doc": "Plans/Remote_Access_System.md#RAS-1407",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-1407",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/remote_access_route_preference_changed/1.0.0/schema.json",
+      "payload_schema_id": "pm.event_payload.remote_access.route_preference_changed.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/w3e/remote_access_route_preference_changed.schema.json",
         "json_pointer": "#",
@@ -29038,7 +29144,8 @@
         "Plans/Contracts_V0.md#CV-1407",
         "Plans/storage-plan.md#SP-1407",
         "Plans/event_payloads/w3e/remote_access_route_preference_changed.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/event_payloads/w3e/remote_access_route_preference_changed.schema.json#/properties/schema_id/const"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -29053,7 +29160,7 @@
       "scope_policy": "application_only",
       "semantic_owner_doc": "Plans/Remote_Access_System.md#RAS-1408",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-1408",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/remote_access_route_state_changed/1.0.0/schema.json",
+      "payload_schema_id": "pm.event_payload.remote_access.route_state_changed.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/w3e/remote_access_route_state_changed.schema.json",
         "json_pointer": "#",
@@ -29080,7 +29187,8 @@
         "Plans/Contracts_V0.md#CV-1408",
         "Plans/storage-plan.md#SP-1408",
         "Plans/event_payloads/w3e/remote_access_route_state_changed.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/event_payloads/w3e/remote_access_route_state_changed.schema.json#/properties/schema_id/const"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -29095,7 +29203,7 @@
       "scope_policy": "application_only",
       "semantic_owner_doc": "Plans/Remote_Access_System.md#RAS-1409",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-1409",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/remote_access_route_test_completed/1.0.0/schema.json",
+      "payload_schema_id": "pm.event_payload.remote_access.route_test_completed.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/w3e/remote_access_route_test_completed.schema.json",
         "json_pointer": "#",
@@ -29122,7 +29230,8 @@
         "Plans/Contracts_V0.md#CV-1409",
         "Plans/storage-plan.md#SP-1409",
         "Plans/event_payloads/w3e/remote_access_route_test_completed.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/event_payloads/w3e/remote_access_route_test_completed.schema.json#/properties/schema_id/const"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -29179,7 +29288,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/Backup_Restore_System.md#BRS-1410",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-1410",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/restore_state_changed/1.0.0/schema.json",
+      "payload_schema_id": "pm.event_payload.restore.state_changed.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/w3e/restore_state_changed.schema.json",
         "json_pointer": "#",
@@ -29206,7 +29315,8 @@
         "Plans/Contracts_V0.md#CV-1410",
         "Plans/storage-plan.md#SP-1410",
         "Plans/event_payloads/w3e/restore_state_changed.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/event_payloads/w3e/restore_state_changed.schema.json#/properties/schema_id/const"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -29216,7 +29326,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/restore_state_changed/1.0.0/schema.json",
+          "payload_schema_id": "pm.event_payload.restore.state_changed.v1",
           "payload_schema_ref": {
             "path": "Plans/event_payloads/w3e/restore_state_changed.schema.json",
             "json_pointer": "#",
@@ -29235,7 +29345,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/restore_state_changed/1.0.0/schema.json",
+          "payload_schema_id": "pm.event_payload.restore.state_changed.v1",
           "payload_schema_ref": {
             "path": "Plans/event_payloads/w3e/restore_state_changed.schema.json",
             "json_pointer": "#",
@@ -30853,7 +30963,7 @@
       "scope_policy": "application_only",
       "semantic_owner_doc": "Plans/Server_System.md#SRV-1411",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-1411",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/server_catalog_changed/1.0.0/schema.json",
+      "payload_schema_id": "pm.event_payload.server.catalog_changed.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/w3e/server_catalog_changed.schema.json",
         "json_pointer": "#",
@@ -30880,7 +30990,8 @@
         "Plans/Contracts_V0.md#CV-1411",
         "Plans/storage-plan.md#SP-1411",
         "Plans/event_payloads/w3e/server_catalog_changed.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/event_payloads/w3e/server_catalog_changed.schema.json#/properties/schema_id/const"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -30895,7 +31006,7 @@
       "scope_policy": "application_only",
       "semantic_owner_doc": "Plans/Server_System.md#SRV-1412",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-1412",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/server_client_pairing_state_changed/1.0.0/schema.json",
+      "payload_schema_id": "pm.event_payload.server.client_pairing_state_changed.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/w3e/server_client_pairing_state_changed.schema.json",
         "json_pointer": "#",
@@ -30922,7 +31033,8 @@
         "Plans/Contracts_V0.md#CV-1412",
         "Plans/storage-plan.md#SP-1412",
         "Plans/event_payloads/w3e/server_client_pairing_state_changed.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/event_payloads/w3e/server_client_pairing_state_changed.schema.json#/properties/schema_id/const"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -30937,7 +31049,7 @@
       "scope_policy": "application_only",
       "semantic_owner_doc": "Plans/Server_System.md#SRV-1413",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-1413",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/server_client_revoked/1.0.0/schema.json",
+      "payload_schema_id": "pm.event_payload.server.client_revoked.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/w3e/server_client_revoked.schema.json",
         "json_pointer": "#",
@@ -30964,7 +31076,8 @@
         "Plans/Contracts_V0.md#CV-1413",
         "Plans/storage-plan.md#SP-1413",
         "Plans/event_payloads/w3e/server_client_revoked.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/event_payloads/w3e/server_client_revoked.schema.json#/properties/schema_id/const"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -30979,7 +31092,7 @@
       "scope_policy": "application_only",
       "semantic_owner_doc": "Plans/Server_System.md#SRV-1414",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-1414",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/server_client_trust_changed/1.0.0/schema.json",
+      "payload_schema_id": "pm.event_payload.server.client_trust_changed.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/w3e/server_client_trust_changed.schema.json",
         "json_pointer": "#",
@@ -31006,7 +31119,8 @@
         "Plans/Contracts_V0.md#CV-1414",
         "Plans/storage-plan.md#SP-1414",
         "Plans/event_payloads/w3e/server_client_trust_changed.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/event_payloads/w3e/server_client_trust_changed.schema.json#/properties/schema_id/const"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -31021,7 +31135,7 @@
       "scope_policy": "application_only",
       "semantic_owner_doc": "Plans/Server_System.md#SRV-1415",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-1415",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/server_connection_state_changed/1.0.0/schema.json",
+      "payload_schema_id": "pm.event_payload.server.connection_state_changed.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/w3e/server_connection_state_changed.schema.json",
         "json_pointer": "#",
@@ -31048,7 +31162,8 @@
         "Plans/Contracts_V0.md#CV-1415",
         "Plans/storage-plan.md#SP-1415",
         "Plans/event_payloads/w3e/server_connection_state_changed.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/event_payloads/w3e/server_connection_state_changed.schema.json#/properties/schema_id/const"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -31063,7 +31178,7 @@
       "scope_policy": "application_only",
       "semantic_owner_doc": "Plans/Server_System.md#SRV-1416",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-1416",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/server_discovery_expired/1.0.0/schema.json",
+      "payload_schema_id": "pm.event_payload.server.discovery_expired.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/w3e/server_discovery_expired.schema.json",
         "json_pointer": "#",
@@ -31090,7 +31205,8 @@
         "Plans/Contracts_V0.md#CV-1416",
         "Plans/storage-plan.md#SP-1416",
         "Plans/event_payloads/w3e/server_discovery_expired.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/event_payloads/w3e/server_discovery_expired.schema.json#/properties/schema_id/const"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -31105,7 +31221,7 @@
       "scope_policy": "application_only",
       "semantic_owner_doc": "Plans/Server_System.md#SRV-1417",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-1417",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/server_discovery_observed/1.0.0/schema.json",
+      "payload_schema_id": "pm.event_payload.server.discovery_observed.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/w3e/server_discovery_observed.schema.json",
         "json_pointer": "#",
@@ -31132,7 +31248,8 @@
         "Plans/Contracts_V0.md#CV-1417",
         "Plans/storage-plan.md#SP-1417",
         "Plans/event_payloads/w3e/server_discovery_observed.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/event_payloads/w3e/server_discovery_observed.schema.json#/properties/schema_id/const"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -31147,7 +31264,7 @@
       "scope_policy": "application_only",
       "semantic_owner_doc": "Plans/Server_System.md#SRV-1418",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-1418",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/server_endpoint_changed/1.0.0/schema.json",
+      "payload_schema_id": "pm.event_payload.server.endpoint_changed.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/w3e/server_endpoint_changed.schema.json",
         "json_pointer": "#",
@@ -31174,7 +31291,8 @@
         "Plans/Contracts_V0.md#CV-1418",
         "Plans/storage-plan.md#SP-1418",
         "Plans/event_payloads/w3e/server_endpoint_changed.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/event_payloads/w3e/server_endpoint_changed.schema.json#/properties/schema_id/const"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -31189,7 +31307,7 @@
       "scope_policy": "application_only",
       "semantic_owner_doc": "Plans/Server_System.md#SRV-1419",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-1419",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/server_identity_mismatch_detected/1.0.0/schema.json",
+      "payload_schema_id": "pm.event_payload.server.identity_mismatch_detected.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/w3e/server_identity_mismatch_detected.schema.json",
         "json_pointer": "#",
@@ -31216,7 +31334,8 @@
         "Plans/Contracts_V0.md#CV-1419",
         "Plans/storage-plan.md#SP-1419",
         "Plans/event_payloads/w3e/server_identity_mismatch_detected.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/event_payloads/w3e/server_identity_mismatch_detected.schema.json#/properties/schema_id/const"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -31231,7 +31350,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-686",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-686",
-      "payload_schema_id": "pm.event_payload.subagent_budget_warning.v1",
+      "payload_schema_id": "pm.event_payload.subagent_budget_warning.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/subagent_budget_warning",
@@ -31262,7 +31381,9 @@
         "Plans/orchestrator-subagent-integration.md#OSI-686",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_budget_warning",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/6",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/9/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/10/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -31272,7 +31393,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.subagent_budget_warning.v1",
+          "payload_schema_id": "pm.event_payload.subagent_budget_warning.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_budget_warning",
@@ -31291,7 +31412,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.subagent_budget_warning.v1",
+          "payload_schema_id": "pm.event_payload.subagent_budget_warning.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_budget_warning",
@@ -31318,7 +31439,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-687",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-687",
-      "payload_schema_id": "pm.event_payload.subagent_cancelled.v1",
+      "payload_schema_id": "pm.event_payload.subagent_cancelled.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/subagent_cancelled",
@@ -31349,7 +31470,9 @@
         "Plans/orchestrator-subagent-integration.md#OSI-687",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_cancelled",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/7",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/11/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/12/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -31359,7 +31482,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.subagent_cancelled.v1",
+          "payload_schema_id": "pm.event_payload.subagent_cancelled.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_cancelled",
@@ -31378,7 +31501,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.subagent_cancelled.v1",
+          "payload_schema_id": "pm.event_payload.subagent_cancelled.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_cancelled",
@@ -31405,7 +31528,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-688",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-688",
-      "payload_schema_id": "pm.event_payload.subagent_completed.v1",
+      "payload_schema_id": "pm.event_payload.subagent_completed.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/subagent_completed",
@@ -31436,7 +31559,9 @@
         "Plans/orchestrator-subagent-integration.md#OSI-688",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_completed",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/8",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/13/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/14/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -31446,7 +31571,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.subagent_completed.v1",
+          "payload_schema_id": "pm.event_payload.subagent_completed.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_completed",
@@ -31465,7 +31590,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.subagent_completed.v1",
+          "payload_schema_id": "pm.event_payload.subagent_completed.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_completed",
@@ -31492,7 +31617,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-689",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-689",
-      "payload_schema_id": "pm.event_payload.subagent_context_warning.v1",
+      "payload_schema_id": "pm.event_payload.subagent_context_warning.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/subagent_context_warning",
@@ -31523,7 +31648,9 @@
         "Plans/orchestrator-subagent-integration.md#OSI-689",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_context_warning",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/9",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/15/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/16/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -31533,7 +31660,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.subagent_context_warning.v1",
+          "payload_schema_id": "pm.event_payload.subagent_context_warning.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_context_warning",
@@ -31552,7 +31679,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.subagent_context_warning.v1",
+          "payload_schema_id": "pm.event_payload.subagent_context_warning.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_context_warning",
@@ -31579,7 +31706,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-690",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-690",
-      "payload_schema_id": "pm.event_payload.subagent_escalated.v1",
+      "payload_schema_id": "pm.event_payload.subagent_escalated.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/subagent_escalated",
@@ -31610,7 +31737,9 @@
         "Plans/orchestrator-subagent-integration.md#OSI-690",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_escalated",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/10",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/17/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/18/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -31620,7 +31749,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.subagent_escalated.v1",
+          "payload_schema_id": "pm.event_payload.subagent_escalated.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_escalated",
@@ -31639,7 +31768,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.subagent_escalated.v1",
+          "payload_schema_id": "pm.event_payload.subagent_escalated.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_escalated",
@@ -31666,7 +31795,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-691",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-691",
-      "payload_schema_id": "pm.event_payload.subagent_failed.v1",
+      "payload_schema_id": "pm.event_payload.subagent_failed.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/subagent_failed",
@@ -31697,7 +31826,9 @@
         "Plans/orchestrator-subagent-integration.md#OSI-691",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_failed",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/11",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/19/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/20/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -31707,7 +31838,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.subagent_failed.v1",
+          "payload_schema_id": "pm.event_payload.subagent_failed.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_failed",
@@ -31726,7 +31857,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.subagent_failed.v1",
+          "payload_schema_id": "pm.event_payload.subagent_failed.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_failed",
@@ -31753,7 +31884,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-692",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-692",
-      "payload_schema_id": "pm.event_payload.subagent_message_received.v1",
+      "payload_schema_id": "pm.event_payload.subagent_message_received.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/subagent_message_received",
@@ -31784,7 +31915,9 @@
         "Plans/orchestrator-subagent-integration.md#OSI-692",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_message_received",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/12",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/21/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/22/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -31794,7 +31927,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.subagent_message_received.v1",
+          "payload_schema_id": "pm.event_payload.subagent_message_received.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_message_received",
@@ -31813,7 +31946,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.subagent_message_received.v1",
+          "payload_schema_id": "pm.event_payload.subagent_message_received.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_message_received",
@@ -31840,7 +31973,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-693",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-693",
-      "payload_schema_id": "pm.event_payload.subagent_message_sent.v1",
+      "payload_schema_id": "pm.event_payload.subagent_message_sent.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/subagent_message_sent",
@@ -31871,7 +32004,9 @@
         "Plans/orchestrator-subagent-integration.md#OSI-693",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_message_sent",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/13",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/23/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/24/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -31881,7 +32016,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.subagent_message_sent.v1",
+          "payload_schema_id": "pm.event_payload.subagent_message_sent.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_message_sent",
@@ -31900,7 +32035,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.subagent_message_sent.v1",
+          "payload_schema_id": "pm.event_payload.subagent_message_sent.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_message_sent",
@@ -31927,7 +32062,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-694",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-694",
-      "payload_schema_id": "pm.event_payload.subagent_model_switched.v1",
+      "payload_schema_id": "pm.event_payload.subagent_model_switched.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/subagent_model_switched",
@@ -31958,7 +32093,9 @@
         "Plans/orchestrator-subagent-integration.md#OSI-694",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_model_switched",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/14",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/25/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/26/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -31968,7 +32105,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.subagent_model_switched.v1",
+          "payload_schema_id": "pm.event_payload.subagent_model_switched.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_model_switched",
@@ -31987,7 +32124,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.subagent_model_switched.v1",
+          "payload_schema_id": "pm.event_payload.subagent_model_switched.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_model_switched",
@@ -32014,7 +32151,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-695",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-695",
-      "payload_schema_id": "pm.event_payload.subagent_output_truncated.v1",
+      "payload_schema_id": "pm.event_payload.subagent_output_truncated.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/subagent_output_truncated",
@@ -32045,7 +32182,9 @@
         "Plans/orchestrator-subagent-integration.md#OSI-695",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_output_truncated",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/15",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/27/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/28/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -32055,7 +32194,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.subagent_output_truncated.v1",
+          "payload_schema_id": "pm.event_payload.subagent_output_truncated.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_output_truncated",
@@ -32074,7 +32213,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.subagent_output_truncated.v1",
+          "payload_schema_id": "pm.event_payload.subagent_output_truncated.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_output_truncated",
@@ -32101,7 +32240,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-696",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-696",
-      "payload_schema_id": "pm.event_payload.subagent_paused.v1",
+      "payload_schema_id": "pm.event_payload.subagent_paused.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/subagent_paused",
@@ -32132,7 +32271,9 @@
         "Plans/orchestrator-subagent-integration.md#OSI-696",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_paused",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/16",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/29/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/30/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -32142,7 +32283,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.subagent_paused.v1",
+          "payload_schema_id": "pm.event_payload.subagent_paused.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_paused",
@@ -32161,7 +32302,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.subagent_paused.v1",
+          "payload_schema_id": "pm.event_payload.subagent_paused.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_paused",
@@ -32188,7 +32329,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-697",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-697",
-      "payload_schema_id": "pm.event_payload.subagent_progress.v1",
+      "payload_schema_id": "pm.event_payload.subagent_progress.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/subagent_progress",
@@ -32219,7 +32360,9 @@
         "Plans/orchestrator-subagent-integration.md#OSI-697",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_progress",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/17",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/31/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/32/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -32229,7 +32372,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.subagent_progress.v1",
+          "payload_schema_id": "pm.event_payload.subagent_progress.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_progress",
@@ -32248,7 +32391,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.subagent_progress.v1",
+          "payload_schema_id": "pm.event_payload.subagent_progress.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_progress",
@@ -32275,7 +32418,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-698",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-698",
-      "payload_schema_id": "pm.event_payload.subagent_resumed.v1",
+      "payload_schema_id": "pm.event_payload.subagent_resumed.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/subagent_resumed",
@@ -32306,7 +32449,9 @@
         "Plans/orchestrator-subagent-integration.md#OSI-698",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_resumed",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/18",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/33/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/34/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -32316,7 +32461,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.subagent_resumed.v1",
+          "payload_schema_id": "pm.event_payload.subagent_resumed.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_resumed",
@@ -32335,7 +32480,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.subagent_resumed.v1",
+          "payload_schema_id": "pm.event_payload.subagent_resumed.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_resumed",
@@ -32362,7 +32507,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-699",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-699",
-      "payload_schema_id": "pm.event_payload.subagent_retried.v1",
+      "payload_schema_id": "pm.event_payload.subagent_retried.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/subagent_retried",
@@ -32393,7 +32538,9 @@
         "Plans/orchestrator-subagent-integration.md#OSI-699",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_retried",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/19",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/35/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/36/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -32403,7 +32550,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.subagent_retried.v1",
+          "payload_schema_id": "pm.event_payload.subagent_retried.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_retried",
@@ -32422,7 +32569,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.subagent_retried.v1",
+          "payload_schema_id": "pm.event_payload.subagent_retried.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_retried",
@@ -32449,7 +32596,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-700",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-700",
-      "payload_schema_id": "pm.event_payload.subagent_spawned.v1",
+      "payload_schema_id": "pm.event_payload.subagent_spawned.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/subagent_spawned",
@@ -32480,7 +32627,9 @@
         "Plans/orchestrator-subagent-integration.md#OSI-700",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_spawned",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/20",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/37/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/38/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -32490,7 +32639,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.subagent_spawned.v1",
+          "payload_schema_id": "pm.event_payload.subagent_spawned.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_spawned",
@@ -32509,7 +32658,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.subagent_spawned.v1",
+          "payload_schema_id": "pm.event_payload.subagent_spawned.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_spawned",
@@ -32536,7 +32685,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-701",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-701",
-      "payload_schema_id": "pm.event_payload.subagent_started.v1",
+      "payload_schema_id": "pm.event_payload.subagent_started.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/subagent_started",
@@ -32567,7 +32716,9 @@
         "Plans/orchestrator-subagent-integration.md#OSI-701",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_started",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/21",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/39/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/40/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -32577,7 +32728,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.subagent_started.v1",
+          "payload_schema_id": "pm.event_payload.subagent_started.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_started",
@@ -32596,7 +32747,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.subagent_started.v1",
+          "payload_schema_id": "pm.event_payload.subagent_started.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_started",
@@ -32623,7 +32774,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-702",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-702",
-      "payload_schema_id": "pm.event_payload.subagent_timeout.v1",
+      "payload_schema_id": "pm.event_payload.subagent_timeout.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/subagent_timeout",
@@ -32654,7 +32805,9 @@
         "Plans/orchestrator-subagent-integration.md#OSI-702",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_timeout",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/22",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/41/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/42/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -32664,7 +32817,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.subagent_timeout.v1",
+          "payload_schema_id": "pm.event_payload.subagent_timeout.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_timeout",
@@ -32683,7 +32836,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.subagent_timeout.v1",
+          "payload_schema_id": "pm.event_payload.subagent_timeout.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_timeout",
@@ -32710,7 +32863,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-703",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-703",
-      "payload_schema_id": "pm.event_payload.subagent_tool_called.v1",
+      "payload_schema_id": "pm.event_payload.subagent_tool_called.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/subagent_tool_called",
@@ -32741,7 +32894,9 @@
         "Plans/orchestrator-subagent-integration.md#OSI-703",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_tool_called",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/23",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/43/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/44/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -32751,7 +32906,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.subagent_tool_called.v1",
+          "payload_schema_id": "pm.event_payload.subagent_tool_called.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_tool_called",
@@ -32770,7 +32925,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.subagent_tool_called.v1",
+          "payload_schema_id": "pm.event_payload.subagent_tool_called.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_tool_called",
@@ -32797,7 +32952,7 @@
       "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-704",
       "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-704",
-      "payload_schema_id": "pm.event_payload.subagent_tool_completed.v1",
+      "payload_schema_id": "pm.event_payload.subagent_tool_completed.v1@1.0.0",
       "payload_schema_ref": {
         "path": "Plans/orchestrator_event_payloads.schema.json",
         "json_pointer": "#/$defs/subagent_tool_completed",
@@ -32828,7 +32983,9 @@
         "Plans/orchestrator-subagent-integration.md#OSI-704",
         "Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_tool_completed",
         "Plans/orchestrator_event_contract_fixtures.json#/contracts/24",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/45/event/payload_schema_id",
+        "Plans/orchestrator_event_contract_fixtures.json#/event_cases/46/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -32838,7 +32995,7 @@
       "payload_versions": [
         {
           "scope_kind": "application",
-          "payload_schema_id": "pm.event_payload.subagent_tool_completed.v1",
+          "payload_schema_id": "pm.event_payload.subagent_tool_completed.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_tool_completed",
@@ -32857,7 +33014,7 @@
         },
         {
           "scope_kind": "project",
-          "payload_schema_id": "pm.event_payload.subagent_tool_completed.v1",
+          "payload_schema_id": "pm.event_payload.subagent_tool_completed.v1@1.0.0",
           "payload_schema_ref": {
             "path": "Plans/orchestrator_event_payloads.schema.json",
             "json_pointer": "#/$defs/subagent_tool_completed",
@@ -33287,7 +33444,7 @@
       "scope_policy": "project_only",
       "semantic_owner_doc": "Plans/Contracts_V0.md#CV-596",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-596",
-      "payload_schema_id": "https://puppetmaster.local/schemas/dcw/wizard_blocked.schema.json",
+      "payload_schema_id": "pm.event_payload.wizard.blocked.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/planning_wizard/wizard_blocked.schema.json",
         "json_pointer": "#",
@@ -33314,7 +33471,8 @@
       "source_refs": [
         "Plans/Contracts_V0.md#CV-596",
         "Plans/event_payloads/planning_wizard/wizard_blocked.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/dcw_blockage_event_fixtures.json#/families/0/positive/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -33329,7 +33487,7 @@
       "scope_policy": "project_only",
       "semantic_owner_doc": "Plans/Planning_Wizard.md#PWIZ-098",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-595",
-      "payload_schema_id": "https://puppetmaster.local/schemas/dcw/wizard_deferred_payload_loaded.schema.json",
+      "payload_schema_id": "pm.event_payload.wizard.deferred_payload.loaded.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json",
         "json_pointer": "#",
@@ -33357,7 +33515,8 @@
         "Plans/Planning_Wizard.md#PWIZ-098",
         "Plans/Contracts_V0.md#CV-595",
         "Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/dcw_event_contract_fixtures.json#/families/5/positive/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -33372,7 +33531,7 @@
       "scope_policy": "project_only",
       "semantic_owner_doc": "Plans/Planning_Wizard.md#PWIZ-097",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-594",
-      "payload_schema_id": "https://puppetmaster.local/schemas/dcw/wizard_opened.schema.json",
+      "payload_schema_id": "pm.event_payload.wizard.opened.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/planning_wizard/wizard_opened.schema.json",
         "json_pointer": "#",
@@ -33400,7 +33559,8 @@
         "Plans/Planning_Wizard.md#PWIZ-097",
         "Plans/Contracts_V0.md#CV-594",
         "Plans/event_payloads/planning_wizard/wizard_opened.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/dcw_event_contract_fixtures.json#/families/4/positive/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
@@ -33415,7 +33575,7 @@
       "scope_policy": "project_only",
       "semantic_owner_doc": "Plans/Contracts_V0.md#CV-597",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-597",
-      "payload_schema_id": "https://puppetmaster.local/schemas/dcw/wizard_unblocked.schema.json",
+      "payload_schema_id": "pm.event_payload.wizard.unblocked.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json",
         "json_pointer": "#",
@@ -33442,7 +33602,8 @@
       "source_refs": [
         "Plans/Contracts_V0.md#CV-597",
         "Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/dcw_blockage_event_fixtures.json#/families/1/positive/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",

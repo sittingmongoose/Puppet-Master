@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/403"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/403 (canonical row SHA-256 b8c57c9840bcee9ea7b4d9075e76ed6a106d8afb865cdc9eb578eec77af58fc5). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/403, canonical row SHA-256 b8c57c9840bcee9ea7b4d9075e76ed6a106d8afb865cdc9eb578eec77af58fc5. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/403",
-       "line_start": 26507,
-       "line_end": 26552,
+       "line_start": 26520,
+       "line_end": 26565,
        "quote": "\"event_type\": \"live.session.degraded\"",
-       "quote_line": 26510,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 26523,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/403",
-       "quote_scope": "unit #/families/403, Plans/event_family_registry.json:26507-26552"
+       "quote_scope": "unit #/families/403, Plans/event_family_registry.json:26520-26565"
       }
      ]
     },
@@ -90,7 +90,7 @@
        "line_start": 10109,
        "line_end": 10110,
        "quote": "Producer: Unified live-visualization orchestrator preflight/fallback hook. Record an actual capability loss for\n  this live visualization occurrence, including prelaunch fallback. au",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-223, Plans/newtools.md:10094-10285",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -108,7 +108,7 @@
        "line_start": 10203,
        "line_end": 10204,
        "quote": "Round 7 authenticated history for live.session.degraded: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as dedupe",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-223, Plans/newtools.md:10094-10285",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -188,7 +188,7 @@
        "line_start": 10116,
        "line_end": 10118,
        "quote": "Idempotency key is sha256(canonical MessagePack\n  array [\"live.session.degraded\", \"1.0.0\", actual project_id, live_session_id,degradation_revision]); the ordered\n  tuple is unambiguous",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-223, Plans/newtools.md:10094-10285",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -219,7 +219,7 @@
        "line_start": 10135,
        "line_end": 10136,
        "quote": "Replay: event delivery and passive reads execute no external action; exact duplicates leave the index state unchanged.\n  Actual original run/Doctor source custody plus canonical even",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-223, Plans/newtools.md:10094-10285",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -237,7 +237,7 @@
        "line_start": 10203,
        "line_end": 10204,
        "quote": "Round 7 authenticated history for live.session.degraded: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as dedupe",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-223, Plans/newtools.md:10094-10285",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -265,36 +265,58 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-646",
-       "line_start": 49631,
-       "line_end": 49631,
-       "quote": "Current selected assignment (2026-11-19): live.session.degraded@1.0.0 is registered for project_only in Plans/event_family_registry.json,",
+       "line_start": 49637,
+       "line_end": 49647,
+       "quote": "  Current selected assignment (2026-11-19): live.session.degraded@1.0.0 is registered for project_only in Plans/event_family_registry.json,\n  as recorded by Plans/Decision_Log.md#DL-2321. Its event history selects RP-RUNTIME-365D@1.0.0; Plans/storage-plan.md#SP-646\n  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:\n  ds15_live_session_degraded_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns\n  that stored value, not event history. Separate checkpoint assignment: ds15_live_session_degraded_checkpoint uses\n  RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-646 contract; checkpoint retention grants\n  no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event\n  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,\n  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved\n  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance\n  seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit SP-646, Plans/storage-plan.md:49565-49671",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-646, Plans/storage-plan.md:49571-49677",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-646",
-        "line_start": 49160,
-        "line_end": 49160,
-        "quote": "\\ = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing policy object unchanged: {\\\"anchor_kind\\\"\\",
-        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        "line_start": 49631,
+        "line_end": 49631,
+        "quote": "Current selected assignment (2026-11-19): live.session.degraded@1.0.0 is registered for project_only in Plans/event_family_registry.json,",
+        "quote_check": "exact",
+        "quote_scope": "unit SP-646, Plans/storage-plan.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:49565-49671",
+        "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "source_citation": {
+         "path": "Plans/storage-plan.md",
+         "unit": "SP-646",
+         "line_start": 49160,
+         "line_end": 49160,
+         "quote": "\\ = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing policy object unchanged: {\\\"anchor_kind\\\"\\",
+         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        },
+        "reanchor": {
+         "method": "exact_normalized",
+         "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+         "unit": "SP-646",
+         "old_quote": "\\ = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing policy object unchanged: {\\\"anchor_kind\\\"\\",
+         "new_quote": "= RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\n\n  Use the existing policy object unchanged: {\"anchor_kind\"",
+         "normalizations": [
+          "whitespace/line wrapping",
+          "YAML quoting/escaping",
+          "Markdown escaping"
+         ],
+         "owner_change_commit": "ea68abacca470d9dd49885294f5bd5c4d0771024"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "line": 49631
        },
-       "reanchor": {
-        "method": "exact_normalized",
-        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
-        "unit": "SP-646",
-        "old_quote": "\\ = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing policy object unchanged: {\\\"anchor_kind\\\"\\",
-        "new_quote": "= RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\n\n  Use the existing policy object unchanged: {\"anchor_kind\"",
-        "normalizations": [
-         "whitespace/line wrapping",
-         "YAML quoting/escaping",
-         "Markdown escaping"
-        ],
-        "owner_change_commit": "ea68abacca470d9dd49885294f5bd5c4d0771024"
-       },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "ef9e57293255b31fbaec73feb179d0ef65837fbf",
+        "old_quote": "Current selected assignment (2026-11-19): live.session.degraded@1.0.0 is registered for project_only in Plans/event_family_registry.json,",
+        "old_path": "Plans/storage-plan.md",
+        "old_unit": "SP-646",
+        "old_line_start": 49631,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       }
      ],
@@ -316,7 +338,7 @@
        "line_start": 10153,
        "line_end": 10155,
        "quote": "backup/restore covers original\n  log, receipts and the source closure; mandatory original custody missing or unverifiable fences retry and disclosure.\n  The derived checkpoint is rebui",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-223, Plans/newtools.md:10094-10285",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -334,7 +356,7 @@
        "line_start": 10203,
        "line_end": 10204,
        "quote": "Round 7 authenticated history for live.session.degraded: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as dedupe",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-223, Plans/newtools.md:10094-10285",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -365,7 +387,7 @@
        "line_start": 10109,
        "line_end": 10110,
        "quote": "Producer: Unified live-visualization orchestrator preflight/fallback hook. Record an actual capability loss for\n  this live visualization occurrence, including prelaunch fallback. au",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-223, Plans/newtools.md:10094-10285",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -396,7 +418,7 @@
        "line_start": 10139,
        "line_end": 10140,
        "quote": "reader.ds15.live_session_degraded.v1@1.0.0, operating as Chat live_run_card capability reader, reads\n  only this exact admitted event type at 1.0.0. It adopts SP-278 by name and DL-0",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-223, Plans/newtools.md:10094-10285",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -414,7 +436,7 @@
        "line_start": 10203,
        "line_end": 10204,
        "quote": "Round 7 authenticated history for live.session.degraded: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as dedupe",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-223, Plans/newtools.md:10094-10285",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -476,7 +498,7 @@
        "line_start": 10203,
        "line_end": 10204,
        "quote": "Round 7 authenticated history for live.session.degraded: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as dedupe",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-223, Plans/newtools.md:10094-10285",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -507,7 +529,7 @@
        "line_start": 10175,
        "line_end": 10176,
        "quote": "Oracles: ATS-326 and scripts/pm-ds15-event-contracts.py exercise this exact closed payload and checkpoint identity.\n  Native obligations: original-outcome/append crash boundaries, re",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-223, Plans/newtools.md:10094-10285",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -525,7 +547,7 @@
        "line_start": 10203,
        "line_end": 10204,
        "quote": "Round 7 authenticated history for live.session.degraded: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as dedupe",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-223, Plans/newtools.md:10094-10285",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -556,10 +578,10 @@
   "row_pointer": "#/families/403"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "0799ba26c3302913403b536fa2ef590a829cdbf24d2a59427ce98a6a5fe20e97",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "afeed7f3754660838396f54f7b91697528f42989abf052a807d661ae130f21b1",
+  "verdicts_changed": false,
+  "native_execution": "NOT_RUN"
  }
 }

@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/413"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/413 (canonical row SHA-256 422d094acb4fc05c8a6935c31c8a89ba5a3b8765f1176da76772a1cd28401cac). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/413, canonical row SHA-256 422d094acb4fc05c8a6935c31c8a89ba5a3b8765f1176da76772a1cd28401cac. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/413",
-       "line_start": 26939,
-       "line_end": 26981,
+       "line_start": 26952,
+       "line_end": 26994,
        "quote": "\"event_type\": \"memory.monthly_summary.completed\"",
-       "quote_line": 26942,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 26955,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/413",
-       "quote_scope": "unit #/families/413, Plans/event_family_registry.json:26939-26981"
+       "quote_scope": "unit #/families/413, Plans/event_family_registry.json:26952-26994"
       }
      ]
     },
@@ -56,12 +56,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-638",
-       "line_start": 48832,
-       "line_end": 48832,
+       "line_start": 48838,
+       "line_end": 48838,
        "quote": "Semantic owner is Plans/assistant-memory-subsystem.md section 7.2, as amended by DL-402, DL-403 and DL-446. This",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-638, Plans/storage-plan.md:48824-48904",
+       "quote_scope": "unit SP-638, Plans/storage-plan.md:48830-48910",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-638",
@@ -87,12 +87,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-638",
-       "line_start": 48842,
-       "line_end": 48842,
+       "line_start": 48848,
+       "line_end": 48848,
        "quote": "DL-446 answers DL-403 for this exact job",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-638, Plans/storage-plan.md:48824-48904",
+       "quote_scope": "unit SP-638, Plans/storage-plan.md:48830-48910",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-638",
@@ -131,12 +131,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-638",
-       "line_start": 48832,
-       "line_end": 48832,
+       "line_start": 48838,
+       "line_end": 48838,
        "quote": "unit owns this family's payload and storage contract. Its producer is MemoryMaintenance.monthly_summary.completed.v1@1.0.0",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-638, Plans/storage-plan.md:48824-48904",
+       "quote_scope": "unit SP-638, Plans/storage-plan.md:48830-48910",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-638",
@@ -149,12 +149,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-638",
-       "line_start": 48850,
-       "line_end": 48850,
+       "line_start": 48856,
+       "line_end": 48856,
        "quote": "A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment",
        "quote_check": "exact",
-       "quote_scope": "unit SP-638, Plans/storage-plan.md:48824-48904",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-638, Plans/storage-plan.md:48830-48910",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-638",
@@ -180,12 +180,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-638",
-       "line_start": 48836,
-       "line_end": 48836,
+       "line_start": 48842,
+       "line_end": 48842,
        "quote": "all declared fields required, additionalProperties=false, version=1.0.0, payload_ref=null. Completed status/result",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-638, Plans/storage-plan.md:48824-48904",
+       "quote_scope": "unit SP-638, Plans/storage-plan.md:48830-48910",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-638",
@@ -224,12 +224,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-638",
-       "line_start": 48838,
-       "line_end": 48838,
+       "line_start": 48844,
+       "line_end": 48844,
        "quote": "idempotency_key=\"memory-maintenance:\"+the same lower-hex digest. The caller-supplied semantic EventRecord fields",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-638, Plans/storage-plan.md:48824-48904",
+       "quote_scope": "unit SP-638, Plans/storage-plan.md:48830-48910",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-638",
@@ -268,12 +268,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-638",
-       "line_start": 48838,
-       "line_end": 48838,
+       "line_start": 48844,
+       "line_end": 48844,
        "quote": "Current append and retry refuse projector_replay_only as replay_only_not_appendable, before any original return",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-638, Plans/storage-plan.md:48824-48904",
+       "quote_scope": "unit SP-638, Plans/storage-plan.md:48830-48910",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-638",
@@ -312,12 +312,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-638",
-       "line_start": 48869,
-       "line_end": 48869,
-       "quote": "Current selected assignment (2026-11-19): memory.monthly_summary.completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2331. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-638 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_monthly_summary_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Separate stored-value assignment: memory_verification_sweep_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+       "line_start": 48875,
+       "line_end": 48875,
+       "quote": "  Current selected assignment (2026-11-19): memory.monthly_summary.completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2331. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-638 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_monthly_summary_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Separate stored-value assignment: memory_verification_sweep_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-638, Plans/storage-plan.md:48824-48904",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-638, Plans/storage-plan.md:48830-48910",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-638",
@@ -329,17 +329,25 @@
        "locator_maintenance": {
         "authority": "MERGE2-FIX3",
         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       },
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX finding 4",
+        "old_quote": "Current selected assignment (2026-11-19): memory.monthly_summary.completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2331. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-638 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_monthly_summary_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Separate stored-value assignment: memory_verification_sweep_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+        "old_line_start": 48869,
+        "new_line_start": 48871,
+        "new_line_end": 48871,
+        "reason": "Expand the exact current assignment through its policy, scope, anchor and effective count in its own cited unit."
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-638",
-       "line_start": 48869,
-       "line_end": 48869,
-       "quote": "Current selected assignment (2026-11-19): memory.monthly_summary.completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2331. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-638 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_monthly_summary_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Separate stored-value assignment: memory_verification_sweep_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+       "line_start": 48875,
+       "line_end": 48875,
+       "quote": "  Current selected assignment (2026-11-19): memory.monthly_summary.completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2331. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-638 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_monthly_summary_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Separate stored-value assignment: memory_verification_sweep_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-638, Plans/storage-plan.md:48824-48904",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-638, Plans/storage-plan.md:48830-48910",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-638",
@@ -351,6 +359,14 @@
        "locator_maintenance": {
         "authority": "MERGE2-FIX3",
         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       },
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX finding 4",
+        "old_quote": "Current selected assignment (2026-11-19): memory.monthly_summary.completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2331. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-638 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_monthly_summary_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Separate stored-value assignment: memory_verification_sweep_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+        "old_line_start": 48869,
+        "new_line_start": 48871,
+        "new_line_end": 48871,
+        "reason": "Expand the exact current assignment through its policy, scope, anchor and effective count in its own cited unit."
        }
       }
      ],
@@ -369,12 +385,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-638",
-       "line_start": 48845,
-       "line_end": 48845,
+       "line_start": 48851,
+       "line_end": 48851,
        "quote": "and root; mismatches fail. Preserve BRS-031 coherent canonical memory/operation/receipt/EventRecord boundaries;",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-638, Plans/storage-plan.md:48824-48904",
+       "quote_scope": "unit SP-638, Plans/storage-plan.md:48830-48910",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-638",
@@ -413,12 +429,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-638",
-       "line_start": 48836,
-       "line_end": 48836,
+       "line_start": 48842,
+       "line_end": 48842,
        "quote": "transaction accepted -> started -> effect_committed -> completed. The payload is its own closed definition Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-638, Plans/storage-plan.md:48824-48904",
+       "quote_scope": "unit SP-638, Plans/storage-plan.md:48830-48910",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-638",
@@ -444,12 +460,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-638",
-       "line_start": 48842,
-       "line_end": 48842,
+       "line_start": 48848,
+       "line_end": 48848,
        "quote": "DL-446 answers DL-403 for this exact job",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-638, Plans/storage-plan.md:48824-48904",
+       "quote_scope": "unit SP-638, Plans/storage-plan.md:48830-48910",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-638",
@@ -488,12 +504,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-638",
-       "line_start": 48845,
-       "line_end": 48845,
+       "line_start": 48851,
+       "line_end": 48851,
        "quote": "reader.storage.event_record_index@1.0.0, projector.storage.event_record_index@1.0.0, checkpoints/event_record_index_checkpoint.v1:{storage_instance_id},",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-638, Plans/storage-plan.md:48824-48904",
+       "quote_scope": "unit SP-638, Plans/storage-plan.md:48830-48910",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-638",
@@ -532,12 +548,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-638",
-       "line_start": 48849,
-       "line_end": 48849,
+       "line_start": 48855,
+       "line_end": 48855,
        "quote": "authorized historical reads. Withdrawal first fences this family's command/writer, retains unresolved original",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-638, Plans/storage-plan.md:48824-48904",
+       "quote_scope": "unit SP-638, Plans/storage-plan.md:48830-48910",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-638",
@@ -563,12 +579,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-638",
-       "line_start": 48850,
-       "line_end": 48850,
+       "line_start": 48856,
+       "line_end": 48856,
        "quote": "Reader dispatch follows SP-1101: each retained canonical original",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-638, Plans/storage-plan.md:48824-48904",
+       "quote_scope": "unit SP-638, Plans/storage-plan.md:48830-48910",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-638",
@@ -607,12 +623,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-638",
-       "line_start": 48831,
-       "line_end": 48832,
+       "line_start": 48837,
+       "line_end": 48838,
        "quote": "canonical_text: |-\n  Newly authored owner contract under DL-045 for exactly memory.monthly_summary.completed@1.0.0,",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-638, Plans/storage-plan.md:48824-48904",
+       "quote_scope": "unit SP-638, Plans/storage-plan.md:48830-48910",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-638",
@@ -634,12 +650,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-638",
-       "line_start": 48831,
-       "line_end": 48832,
+       "line_start": 48837,
+       "line_end": 48838,
        "quote": "canonical_text: |-\n  Newly authored owner contract under DL-045 for exactly memory.monthly_summary.completed@1.0.0,",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-638, Plans/storage-plan.md:48824-48904",
+       "quote_scope": "unit SP-638, Plans/storage-plan.md:48830-48910",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-638",
@@ -791,10 +807,10 @@
   "row_pointer": "#/families/413"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "2c08355bbfe08ec3c507478e1fb268310e24634b84301ab3ea5bf6818fc95cc5",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "d0a6dd34b7acf2550cfe96dc0fc1554d62d465c71bd14dc505c530fdc14176cc",
+  "verdicts_changed": false,
+  "native_execution": "NOT_RUN"
  }
 }

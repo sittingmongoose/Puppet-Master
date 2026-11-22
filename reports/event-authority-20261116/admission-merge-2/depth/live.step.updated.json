@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/405"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/405 (canonical row SHA-256 c9f9e5af2ac4d798d48132b5d3b0237b938c215d5229582b0b08abac8110f142). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/405, canonical row SHA-256 c9f9e5af2ac4d798d48132b5d3b0237b938c215d5229582b0b08abac8110f142. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/405",
-       "line_start": 26599,
-       "line_end": 26644,
+       "line_start": 26612,
+       "line_end": 26657,
        "quote": "\"event_type\": \"live.step.updated\"",
-       "quote_line": 26602,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 26615,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/405",
-       "quote_scope": "unit #/families/405, Plans/event_family_registry.json:26599-26644"
+       "quote_scope": "unit #/families/405, Plans/event_family_registry.json:26612-26657"
       }
      ]
     },
@@ -90,7 +90,7 @@
        "line_start": 9548,
        "line_end": 9549,
        "quote": "Producer: Unified live-visualization orchestrator scenario progress hook. An existing launched session emits one\n  immutable update per actual step observation. step_revision strictl",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-220, Plans/newtools.md:9533-9718",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -108,7 +108,7 @@
        "line_start": 9637,
        "line_end": 9638,
        "quote": "Round 7 authenticated history for live.step.updated: retained read, checkpoint and rebuild accept supported 1.0.0\n  originals written with projector_replay_only as well as dedupe_by_",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-220, Plans/newtools.md:9533-9718",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -188,7 +188,7 @@
        "line_start": 9555,
        "line_end": 9557,
        "quote": "Idempotency key is sha256(canonical MessagePack\n  array [\"live.step.updated\", \"1.0.0\", actual project_id, live_session_id,step_id,step_revision]); the ordered tuple\n  is unambiguous, n",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-220, Plans/newtools.md:9533-9718",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -219,7 +219,7 @@
        "line_start": 9574,
        "line_end": 9575,
        "quote": "Replay: event delivery and passive reads execute no external action; exact duplicates leave the index state unchanged.\n  Actual original run/Doctor source custody plus canonical even",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-220, Plans/newtools.md:9533-9718",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -237,7 +237,7 @@
        "line_start": 9637,
        "line_end": 9638,
        "quote": "Round 7 authenticated history for live.step.updated: retained read, checkpoint and rebuild accept supported 1.0.0\n  originals written with projector_replay_only as well as dedupe_by_",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-220, Plans/newtools.md:9533-9718",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -265,36 +265,58 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-643",
-       "line_start": 49311,
-       "line_end": 49311,
-       "quote": "Current selected assignment (2026-11-19): live.step.updated@1.0.0 is registered for project_only in Plans/event_family_registry.json,",
+       "line_start": 49317,
+       "line_end": 49326,
+       "quote": "  Current selected assignment (2026-11-19): live.step.updated@1.0.0 is registered for project_only in Plans/event_family_registry.json,\n  as recorded by Plans/Decision_Log.md#DL-2323. Its event history selects RP-RUNTIME-365D@1.0.0; Plans/storage-plan.md#SP-643\n  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:\n  ds15_live_step_updated_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns\n  that stored value, not event history. Separate checkpoint assignment: ds15_live_step_updated_checkpoint uses RP-PROJECTION-3GEN@1.0.0\n  under its existing Plans/storage-plan.md#SP-643 contract; checkpoint retention grants no event/source deletion.\n  Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred\n  to them. Current append/publication still requires the exact selected schema/scope, original custody, current\n  permission, receipt and required producer adoption. Actual missing registration or unresolved required custody\n  refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit SP-643, Plans/storage-plan.md:49246-49350",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-643, Plans/storage-plan.md:49252-49356",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-643",
-        "line_start": 48974,
-        "line_end": 48974,
-        "quote": "\\ history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing\\",
-        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        "line_start": 49311,
+        "line_end": 49311,
+        "quote": "Current selected assignment (2026-11-19): live.step.updated@1.0.0 is registered for project_only in Plans/event_family_registry.json,",
+        "quote_check": "exact",
+        "quote_scope": "unit SP-643, Plans/storage-plan.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:49246-49350",
+        "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "source_citation": {
+         "path": "Plans/storage-plan.md",
+         "unit": "SP-643",
+         "line_start": 48974,
+         "line_end": 48974,
+         "quote": "\\ history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing\\",
+         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        },
+        "reanchor": {
+         "method": "exact_normalized",
+         "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+         "unit": "SP-643",
+         "old_quote": "\\ history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing\\",
+         "new_quote": "history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\n\n  Use the existing",
+         "normalizations": [
+          "whitespace/line wrapping",
+          "YAML quoting/escaping",
+          "Markdown escaping"
+         ],
+         "owner_change_commit": "ea68abacca470d9dd49885294f5bd5c4d0771024"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "line": 49311
        },
-       "reanchor": {
-        "method": "exact_normalized",
-        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
-        "unit": "SP-643",
-        "old_quote": "\\ history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing\\",
-        "new_quote": "history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\n\n  Use the existing",
-        "normalizations": [
-         "whitespace/line wrapping",
-         "YAML quoting/escaping",
-         "Markdown escaping"
-        ],
-        "owner_change_commit": "ea68abacca470d9dd49885294f5bd5c4d0771024"
-       },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "82fcd08be4eff14dded876c2aa982cb389dfdf22",
+        "old_quote": "Current selected assignment (2026-11-19): live.step.updated@1.0.0 is registered for project_only in Plans/event_family_registry.json,",
+        "old_path": "Plans/storage-plan.md",
+        "old_unit": "SP-643",
+        "old_line_start": 49311,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       }
      ],
@@ -316,7 +338,7 @@
        "line_start": 9592,
        "line_end": 9594,
        "quote": "backup/restore covers original\n  log, receipts and the source closure; mandatory original custody missing or unverifiable fences retry and disclosure.\n  The derived checkpoint is rebui",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-220, Plans/newtools.md:9533-9718",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -334,7 +356,7 @@
        "line_start": 9637,
        "line_end": 9638,
        "quote": "Round 7 authenticated history for live.step.updated: retained read, checkpoint and rebuild accept supported 1.0.0\n  originals written with projector_replay_only as well as dedupe_by_",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-220, Plans/newtools.md:9533-9718",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -365,7 +387,7 @@
        "line_start": 9548,
        "line_end": 9549,
        "quote": "Producer: Unified live-visualization orchestrator scenario progress hook. An existing launched session emits one\n  immutable update per actual step observation. step_revision strictl",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-220, Plans/newtools.md:9533-9718",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -427,7 +449,7 @@
        "line_start": 9637,
        "line_end": 9638,
        "quote": "Round 7 authenticated history for live.step.updated: retained read, checkpoint and rebuild accept supported 1.0.0\n  originals written with projector_replay_only as well as dedupe_by_",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-220, Plans/newtools.md:9533-9718",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -489,7 +511,7 @@
        "line_start": 9637,
        "line_end": 9638,
        "quote": "Round 7 authenticated history for live.step.updated: retained read, checkpoint and rebuild accept supported 1.0.0\n  originals written with projector_replay_only as well as dedupe_by_",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-220, Plans/newtools.md:9533-9718",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -520,7 +542,7 @@
        "line_start": 9614,
        "line_end": 9615,
        "quote": "Oracles: ATS-323 and scripts/pm-ds15-event-contracts.py exercise this exact closed payload and checkpoint identity.\n  Native obligations: original-outcome/append crash boundaries, re",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-220, Plans/newtools.md:9533-9718",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -538,7 +560,7 @@
        "line_start": 9637,
        "line_end": 9638,
        "quote": "Round 7 authenticated history for live.step.updated: retained read, checkpoint and rebuild accept supported 1.0.0\n  originals written with projector_replay_only as well as dedupe_by_",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit N2-220, Plans/newtools.md:9533-9718",
        "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
        "source_citation": {
@@ -569,10 +591,10 @@
   "row_pointer": "#/families/405"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "6b9e93ab5d3261a9b64a790dd02042d53387b46465253aec361dfd31e1c213c8",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "fe240a96f14bff80442dec3d851dd55a04686bdf5e164678840544c10d83a8d3",
+  "verdicts_changed": false,
+  "native_execution": "NOT_RUN"
  }
 }

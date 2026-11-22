@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/398"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/398 (canonical row SHA-256 3102ebc183e82833dd9355c70163aad7ea8ed59a443c3372591af10ee2297d15). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/398, canonical row SHA-256 3102ebc183e82833dd9355c70163aad7ea8ed59a443c3372591af10ee2297d15. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/398",
-       "line_start": 26275,
-       "line_end": 26323,
+       "line_start": 26288,
+       "line_end": 26336,
        "quote": "\"event_type\": \"gate.failed\"",
-       "quote_line": 26278,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 26291,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/398",
-       "quote_scope": "unit #/families/398, Plans/event_family_registry.json:26275-26323"
+       "quote_scope": "unit #/families/398, Plans/event_family_registry.json:26288-26336"
       }
      ]
     },
@@ -61,7 +61,7 @@
        "quote": "Newly authored owner contract under DL-045 for gate.failed@1.0.0 only",
        "quote_check": "exact",
        "quote_scope": "unit CV-606, Plans/Contracts_V0.md:35480-35518",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-606",
@@ -87,12 +87,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-586",
-       "line_start": 39800,
-       "line_end": 39800,
+       "line_start": 39806,
+       "line_end": 39806,
        "quote": "For gate.failed alone, the newly authored original-source custody",
        "quote_check": "exact",
-       "quote_scope": "unit SP-586, Plans/storage-plan.md:39791-39833",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-586, Plans/storage-plan.md:39797-39839",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-586",
@@ -142,7 +142,7 @@
        "quote": "Exposing either scalar requires both dispatch fields and the matching node_id.",
        "quote_check": "exact",
        "quote_scope": "unit CV-606, Plans/Contracts_V0.md:35480-35518",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-606",
@@ -196,7 +196,7 @@
        "quote": "For gate.failed alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
        "quote_scope": "unit CV-606, Plans/Contracts_V0.md:35480-35518",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-606",
@@ -222,12 +222,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-586",
-       "line_start": 39802,
-       "line_end": 39802,
+       "line_start": 39808,
+       "line_end": 39808,
        "quote": "For gate.failed alone, source codec",
        "quote_check": "exact",
-       "quote_scope": "unit SP-586, Plans/storage-plan.md:39791-39833",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-586, Plans/storage-plan.md:39797-39839",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-586",
@@ -258,7 +258,7 @@
        "quote": "For gate.failed alone, current writer and retry paths refuse",
        "quote_check": "exact",
        "quote_scope": "unit CV-606, Plans/Contracts_V0.md:35480-35518",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-606",
@@ -312,7 +312,7 @@
        "quote": "For gate.failed alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
        "quote_scope": "unit CV-606, Plans/Contracts_V0.md:35480-35518",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-606",
@@ -338,12 +338,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-586",
-       "line_start": 39809,
-       "line_end": 39809,
-       "quote": "Current selected assignment (2026-11-19): gate.failed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2316. Its event history selects RP-RUNTIME-365D@1.0.0; Plans/storage-plan.md#SP-586 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+       "line_start": 39815,
+       "line_end": 39815,
+       "quote": "  Current selected assignment (2026-11-19): gate.failed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2316. Its event history selects RP-RUNTIME-365D@1.0.0; Plans/storage-plan.md#SP-586 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-586, Plans/storage-plan.md:39791-39833",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-586, Plans/storage-plan.md:39797-39839",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-586",
@@ -355,6 +355,14 @@
        "locator_maintenance": {
         "authority": "MERGE2-FIX3",
         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       },
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX finding 4",
+        "old_quote": "Current selected assignment (2026-11-19): gate.failed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2316. Its event history selects RP-RUNTIME-365D@1.0.0; Plans/storage-plan.md#SP-586 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+        "old_line_start": 39809,
+        "new_line_start": 39811,
+        "new_line_end": 39811,
+        "reason": "Expand the exact current assignment through its policy, scope, anchor and effective count in its own cited unit."
        }
       },
       {
@@ -391,12 +399,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-586",
-       "line_start": 39800,
-       "line_end": 39800,
+       "line_start": 39806,
+       "line_end": 39806,
        "quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-586, Plans/storage-plan.md:39791-39833",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-586, Plans/storage-plan.md:39797-39839",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-586",
@@ -427,7 +435,7 @@
        "quote": "For gate.failed alone, the explicit lifecycle transition is",
        "quote_check": "exact",
        "quote_scope": "unit CV-606, Plans/Contracts_V0.md:35480-35518",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-606",
@@ -453,12 +461,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-586",
-       "line_start": 39801,
-       "line_end": 39801,
+       "line_start": 39807,
+       "line_end": 39807,
        "quote": "For gate.failed alone, its SP-278/DL-076 checkpoint",
        "quote_check": "exact",
-       "quote_scope": "unit SP-586, Plans/storage-plan.md:39791-39833",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-586, Plans/storage-plan.md:39797-39839",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-586",
@@ -502,12 +510,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-586",
-       "line_start": 39799,
-       "line_end": 39799,
+       "line_start": 39805,
+       "line_end": 39805,
        "quote": "Withdrawal first cuts off this family's append admission",
        "quote_check": "exact",
-       "quote_scope": "unit SP-586, Plans/storage-plan.md:39791-39833",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-586, Plans/storage-plan.md:39797-39839",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-586",
@@ -543,7 +551,7 @@
        "quote": "For gate.failed alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
        "quote_scope": "unit CV-606, Plans/Contracts_V0.md:35480-35518",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-606",
@@ -574,7 +582,7 @@
        "unit": "ATS-293",
        "quote_check": "exact",
        "quote_scope": "unit ATS-293, Plans/Automated_Testing_System.md:9155-9193",
-       "file_sha256": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
+       "file_sha256": "eb4a9e10a80cc73e94ade88cd2fa4494dc396127505d2ea0529a526542ed37c8",
        "source_citation": {
         "line_end": 9157,
         "line_start": 9157,
@@ -604,14 +612,14 @@
        "json_pointer": "#/families/6"
       },
       {
-       "line_end": 39803,
-       "line_start": 39803,
+       "line_end": 39809,
+       "line_start": 39809,
        "path": "Plans/storage-plan.md",
        "quote": "For gate.failed, boolean authority/context flags are exact booleans",
        "unit": "SP-586",
        "quote_check": "exact",
-       "quote_scope": "unit SP-586, Plans/storage-plan.md:39791-39833",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-586, Plans/storage-plan.md:39797-39839",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "line_end": 38681,
         "line_start": 38681,
@@ -748,10 +756,10 @@
   "row_pointer": "#/families/398"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "8bccd5bd351d7f760a5f37563c85bba8937b009cfea7ead1e13178aff899b6fe",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "82e91295af668ed9e61aad5e712df4b446aa14c3c67a4969319091089d476c2f",
+  "verdicts_changed": false,
+  "native_execution": "NOT_RUN"
  }
 }

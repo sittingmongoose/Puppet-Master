@@ -1,0 +1,124 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "parser.error",
+ "findings": [
+  2
+ ],
+ "source_commit": "7f95995f5c9e7c1a5be8448c74fc69e38bedf00b",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2340",
+ "decision_ref": "Plans/Decision_Log.md#DL-2530",
+ "registry_before": {
+  "revision": "2026-11-19.79",
+  "sha256": "8dda8f1082e22ba7fe0b018b2b4f237b2fea818f65614f4b8e370f9c41df8801",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.80",
+  "sha256": "85691e3b0dc7c029ee9224cc4a953833a582f931a0ff7eea09dc6640f8763c60",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-parser-error",
+  "family_revision": "1.0.0",
+  "event_type": "parser.error",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-684",
+  "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-684",
+  "payload_schema_id": "pm.event_payload.parser_error.v1",
+  "payload_schema_ref": {
+   "path": "Plans/orchestrator_event_payloads.schema.json",
+   "json_pointer": "#/$defs/parser_error",
+   "schema_id": "pm.event_payload.parser_error.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ],
+    "run_id": [
+     "/payload/run_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/orchestrator-subagent-integration.md#OSI-684",
+   "Plans/orchestrator_event_payloads.schema.json#/$defs/parser_error",
+   "Plans/orchestrator_event_contract_fixtures.json#/contracts/4",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-RUNTIME-365D",
+   "policy_version": "1.0.0"
+  }
+ },
+ "registry_row": {
+  "family_id": "event-family-parser-error",
+  "family_revision": "1.0.0",
+  "event_type": "parser.error",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-684",
+  "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-684",
+  "payload_schema_id": "pm.event_payload.parser_error.v1@1.0.0",
+  "payload_schema_ref": {
+   "path": "Plans/orchestrator_event_payloads.schema.json",
+   "json_pointer": "#/$defs/parser_error",
+   "schema_id": "pm.event_payload.parser_error.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ],
+    "run_id": [
+     "/payload/run_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/orchestrator-subagent-integration.md#OSI-684",
+   "Plans/orchestrator_event_payloads.schema.json#/$defs/parser_error",
+   "Plans/orchestrator_event_contract_fixtures.json#/contracts/4",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+   "Plans/orchestrator_event_contract_fixtures.json#/event_cases/7/event/payload_schema_id"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-RUNTIME-365D",
+   "policy_version": "1.0.0"
+  }
+ },
+ "predecessor_record_sha256": "6ec99b6168c61a3097ec8b42ee3c96394dc1203d215b8a4342b49d11e6dff01f",
+ "predecessor_assessment_sha256": "6734493cb24f02a25dec2be4447beea2a38b1531257b18f1ef54104c78ce0b93",
+ "applied_record_sha256": "6841e1a6403388544baa5eec49913baa7ef10b24a1b4dba304d61d70ac2a682c",
+ "applied_assessment_sha256": "3c3c6f3ad8b18b19ee5b0ac816ec16966f6b8186f4912dbe53984bbe587f59b9",
+ "citation_changes": [],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

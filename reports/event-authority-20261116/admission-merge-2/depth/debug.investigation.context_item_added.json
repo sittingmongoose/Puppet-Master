@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/365"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/365 (canonical row SHA-256 3e0ea2c28125bac7e42e8643fe98e12cd7c3e89b19d2e73408772b1b1cabbe38). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/365, canonical row SHA-256 3e0ea2c28125bac7e42e8643fe98e12cd7c3e89b19d2e73408772b1b1cabbe38. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/365",
-       "line_start": 24596,
-       "line_end": 24633,
+       "line_start": 24609,
+       "line_end": 24646,
        "quote": "\"event_type\": \"debug.investigation.context_item_added\"",
-       "quote_line": 24599,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 24612,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/365",
-       "quote_scope": "unit #/families/365, Plans/event_family_registry.json:24596-24633"
+       "quote_scope": "unit #/families/365, Plans/event_family_registry.json:24609-24646"
       }
      ]
     },
@@ -61,7 +61,7 @@
        "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.context_item_added@1.0.0,",
        "quote_check": "exact",
        "quote_scope": "unit CV-570, Plans/Contracts_V0.md:5182-5334",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-570",
@@ -101,7 +101,7 @@
        "quote": "Producer binding: owner.debug.investigation.context_item_added@1.0.0 is the exact emitting handler above.",
        "quote_check": "exact",
        "quote_scope": "unit CV-570, Plans/Contracts_V0.md:5182-5334",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-570",
@@ -130,9 +130,9 @@
        "line_start": 5191,
        "line_end": 5192,
        "quote": "Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/context_item_added;\n  operation_id",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit CV-570, Plans/Contracts_V0.md:5182-5334",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-570",
@@ -182,7 +182,7 @@
        "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.context_item_added\",",
        "quote_check": "exact",
        "quote_scope": "unit CV-570, Plans/Contracts_V0.md:5182-5334",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-570",
@@ -211,9 +211,9 @@
        "line_start": 5225,
        "line_end": 5226,
        "quote": "immutable semantic\n  envelope and payload under Case L-5. Same identity and digest returns the original",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit CV-570, Plans/Contracts_V0.md:5182-5334",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-570",
@@ -240,44 +240,88 @@
        "path": "Plans/storage-plan.md",
        "unit": "SP-570",
        "line_start": 1368,
-       "line_end": 1368,
-       "quote": "Current selected assignment (2026-11-19): debug.investigation.context_item_added@1.0.0 is registered for project_only",
+       "line_end": 1377,
+       "quote": "  Current selected assignment (2026-11-19): debug.investigation.context_item_added@1.0.0 is registered for project_only\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2283. Its event history selects RP-OPERATIONAL-2555D@1.0.0;\n  Plans/storage-plan.md#SP-570 owns the event policy''s existing anchors, counts, holds and deletion rules. Separate\n  stored-value assignment: dev_session_record uses RP-DEBUG-30D@1.0.0 under Plans/Decision_Log.md#DL-506; this assigns\n  that stored value, not event history. Separate stored-value assignment: revision_run uses RP-CHAT-THREAD-LIFETIME@1.0.0\n  under Plans/Decision_Log.md#DL-508; this assigns that stored value, not event history. Original sources and coherent\n  backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication\n  still requires the exact selected schema/scope, original custody, current permission, receipt and required producer\n  adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN.\n  No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
        "quote_scope": "unit SP-570, Plans/storage-plan.md:1057-1842",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-570",
-        "line_start": 1192,
-        "line_end": 1192,
-        "quote": "\\ (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under DL-401,\\",
-        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        "line_start": 1368,
+        "line_end": 1368,
+        "quote": "Current selected assignment (2026-11-19): debug.investigation.context_item_added@1.0.0 is registered for project_only",
+        "quote_check": "exact",
+        "quote_scope": "unit SP-570, Plans/storage-plan.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:1057-1842",
+        "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "source_citation": {
+         "path": "Plans/storage-plan.md",
+         "unit": "SP-570",
+         "line_start": 1192,
+         "line_end": 1192,
+         "quote": "\\ (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under DL-401,\\",
+         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "line": 1368
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "17a023b0e6d8c2a0653f75d1ea44bded83b91051",
+        "old_quote": "Current selected assignment (2026-11-19): debug.investigation.context_item_added@1.0.0 is registered for project_only",
+        "old_path": "Plans/storage-plan.md",
+        "old_unit": "SP-570",
+        "old_line_start": 1368,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-570",
        "line_start": 1368,
-       "line_end": 1368,
-       "quote": "Current selected assignment (2026-11-19): debug.investigation.context_item_added@1.0.0 is registered for project_only",
+       "line_end": 1377,
+       "quote": "  Current selected assignment (2026-11-19): debug.investigation.context_item_added@1.0.0 is registered for project_only\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2283. Its event history selects RP-OPERATIONAL-2555D@1.0.0;\n  Plans/storage-plan.md#SP-570 owns the event policy''s existing anchors, counts, holds and deletion rules. Separate\n  stored-value assignment: dev_session_record uses RP-DEBUG-30D@1.0.0 under Plans/Decision_Log.md#DL-506; this assigns\n  that stored value, not event history. Separate stored-value assignment: revision_run uses RP-CHAT-THREAD-LIFETIME@1.0.0\n  under Plans/Decision_Log.md#DL-508; this assigns that stored value, not event history. Original sources and coherent\n  backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication\n  still requires the exact selected schema/scope, original custody, current permission, receipt and required producer\n  adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN.\n  No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
        "quote_scope": "unit SP-570, Plans/storage-plan.md:1057-1842",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-570",
-        "line_start": 1196,
-        "line_end": 1196,
-        "quote": "\\ selects `RP-DEBUG-APPLICATION-2555D@1.0.0`; Project records select the Project policy and never count\\",
-        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        "line_start": 1368,
+        "line_end": 1368,
+        "quote": "Current selected assignment (2026-11-19): debug.investigation.context_item_added@1.0.0 is registered for project_only",
+        "quote_check": "exact",
+        "quote_scope": "unit SP-570, Plans/storage-plan.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:1057-1842",
+        "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "source_citation": {
+         "path": "Plans/storage-plan.md",
+         "unit": "SP-570",
+         "line_start": 1196,
+         "line_end": 1196,
+         "quote": "\\ selects `RP-DEBUG-APPLICATION-2555D@1.0.0`; Project records select the Project policy and never count\\",
+         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "line": 1368
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "17a023b0e6d8c2a0653f75d1ea44bded83b91051",
+        "old_quote": "Current selected assignment (2026-11-19): debug.investigation.context_item_added@1.0.0 is registered for project_only",
+        "old_path": "Plans/storage-plan.md",
+        "old_unit": "SP-570",
+        "old_line_start": 1368,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       }
      ],
@@ -301,7 +345,7 @@
        "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt",
        "quote_check": "exact",
        "quote_scope": "unit CV-570, Plans/Contracts_V0.md:5182-5334",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-570",
@@ -332,7 +376,7 @@
        "quote": "Producer binding: owner.debug.investigation.context_item_added@1.0.0 is the exact emitting handler above.",
        "quote_check": "exact",
        "quote_scope": "unit CV-570, Plans/Contracts_V0.md:5182-5334",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-570",
@@ -363,7 +407,7 @@
        "quote": "Consumer binding: reader.debug.investigation.context_item_added@1.0.0 is the direct transient history",
        "quote_check": "exact",
        "quote_scope": "unit CV-570, Plans/Contracts_V0.md:5182-5334",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-570",
@@ -394,7 +438,7 @@
        "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions",
        "quote_check": "exact",
        "quote_scope": "unit CV-570, Plans/Contracts_V0.md:5182-5334",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-570",
@@ -423,9 +467,9 @@
        "line_start": 5272,
        "line_end": 5273,
        "quote": "history or sibling records. Positive/negative oracles\n  are the context_item_added cases in Plans/debug_investigation_event_fixtures.json",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit CV-570, Plans/Contracts_V0.md:5182-5334",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-570",
@@ -508,10 +552,10 @@
   "row_pointer": "#/families/365"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "ef32ab2bf49792fafc582f32411b54d773bab18493db1b66d70274d8dba83cfa",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "70f05f38ca1364b2b0129c3f99f726395d13718ef2da4b9323336fea2437abff",
+  "verdicts_changed": false,
+  "native_execution": "NOT_RUN"
  }
 }
