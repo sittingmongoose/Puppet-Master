@@ -33,6 +33,23 @@ function changed(a, b, mask) {
 function grow(m, w, h, k) { const o = new Uint8Array(m.length); for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { if (!m[y * w + x]) continue; for (let dy = -k; dy <= k; dy++) for (let dx = -k; dx <= k; dx++) { const yy = y + dy, xx = x + dx; if (yy >= 0 && yy < h && xx >= 0 && xx < w) o[yy * w + xx] = 1; } } return o; }
 function motionMask(a, b) { const m = new Uint8Array(a.data.length / 4); for (let i = 0, p = 0; i < a.data.length; i += 4, p++) if (Math.max(Math.abs(a.data[i] - b.data[i]), Math.abs(a.data[i + 1] - b.data[i + 1]), Math.abs(a.data[i + 2] - b.data[i + 2])) > THRESHOLD / 2) m[p] = 1; return m; }
 
+// The read-through verdict from the plates (exported for tools/glass-backing-reflow.selftest.mjs). a1/a2: the
+// surface as painted twice (its motion and the page's motion behind it do not count); b: the outside text
+// transparent; c: the surface's text transparent too (its own glyphs re-rasterise a little whatever is behind
+// them); c0: the surface's text transparent at the BASELINE, the page behind still painted. PM7PERF-GLASS-AGENTS-
+// REFLOW: the surface's own rows can reflow between a2 and b (the docked Agents timer's plural-to-singular tick
+// moved the next row 1,111 px, counted as 0.70% read-through); c0 masks the own glyphs at their baseline position
+// too, so a moved own row is masked at both positions. The 0.20% bar and the read-through test are unchanged.
+export function backingVerdict({ a1, a2, b, c, c0, width, height }) {
+	const mask = motionMask(a1, a2);
+	if (c0) { const ownBase = grow(motionMask(a2, c0), width, height, 2); for (let i = 0; i < ownBase.length; i++) if (ownBase[i]) mask[i] = 1; }
+	const own = grow(motionMask(b, c), width, height, 2);
+	for (let i = 0; i < own.length; i++) if (own[i]) mask[i] = 1;
+	const counted = mask.reduce((s, v) => s + (v ? 0 : 1), 0);
+	const m = changed(a2, b, mask);
+	return { n: m.n, mx: m.mx, share: m.n / Math.max(1, counted), motion: 1 - counted / mask.length };
+}
+
 // how much of the page's content reads through the surface sel (null when it isn't on screen)
 async function readThrough(t, f, sel, { rerenderAgents = false } = {}) {
 	const r = await f.evaluate((s) => {
@@ -49,27 +66,34 @@ async function readThrough(t, f, sel, { rerenderAgents = false } = {}) {
 		const e = document.querySelector(s);
 		let oldStyle = e.getAttribute('style');
 		const c = getComputedStyle(e);
-		for (const property of ['color', '-webkit-text-fill-color', 'text-shadow', 'caret-color']) {
-			e.style.setProperty(property, c.getPropertyValue(property), 'important');
-		}
 		const st = document.createElement('style');
 		st.id = 'bc-through';
 		// Match the live subtree so text added between shots still belongs to the surface (T71).
 		const transparent = '{ color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; transition: none !important; caret-color: transparent !important; }';
-		st.textContent = `body *:not(:is(${s}, ${s} *)) ${transparent}`;
 		st.__bcRestore = () => {
 			if (oldStyle === undefined) return;
 			if (oldStyle === null) e.removeAttribute('style');
 			else e.setAttribute('style', oldStyle);
 			oldStyle = undefined;
 		};
+		st.__bcOutsideOnly = () => {
+			for (const property of ['color', '-webkit-text-fill-color', 'text-shadow', 'caret-color']) {
+				e.style.setProperty(property, c.getPropertyValue(property), 'important');
+			}
+			st.textContent = `body *:not(:is(${s}, ${s} *)) ${transparent}`;
+		};
 		st.__bcHideSurface = () => {
 			st.__bcRestore();
 			st.textContent += ` ${s}, ${s} * ${transparent}`;
 		};
+		// the baseline own-glyph plate first: only the surface's text transparent, the page behind still painted
+		st.textContent = `${s}, ${s} * ${transparent}`;
 		document.head.appendChild(st);
 	}, sel);
 	try {
+		await f.waitForTimeout(350);
+		const c0 = await shot(t, r);
+		await f.evaluate(() => document.getElementById('bc-through').__bcOutsideOnly());
 		if (rerenderAgents) {
 			// Replace text leaves only. Rewriting the list's HTML also rebuilt its animated and painted descendants (T142).
 			const replaced = await f.evaluate(() => {
@@ -87,11 +111,7 @@ async function readThrough(t, f, sel, { rerenderAgents = false } = {}) {
 		await f.evaluate(() => document.getElementById('bc-through').__bcHideSurface());
 		await f.waitForTimeout(350);
 		const c = await shot(t, r);
-		const own = grow(motionMask(b, c), r.width, r.height, 2);
-		for (let i = 0; i < own.length; i++) if (own[i]) mask[i] = 1;
-		const counted = mask.reduce((s, v) => s + (v ? 0 : 1), 0);
-		const m = changed(a2, b, mask);
-		return { rect: r, n: m.n, mx: m.mx, share: m.n / Math.max(1, counted), motion: 1 - counted / mask.length };
+		return { rect: r, ...backingVerdict({ a1, a2, b, c, c0, width: r.width, height: r.height }) };
 	} finally {
 		await f.evaluate(() => {
 			const st = document.getElementById('bc-through');
