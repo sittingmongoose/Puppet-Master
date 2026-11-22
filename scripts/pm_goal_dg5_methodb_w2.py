@@ -44,6 +44,14 @@ REQUIRED_CHILDREN = ('source', 'record', 'required_children')
 
 class Fixture(stage.Fixture):
     def prepare(self):
+        if self.route == 'owner/current_goal':
+            self.bank = self.goal_bank
+            return self.world.owners['goal'].current_argument, ()
+        if self.route.startswith(('current_goal/', 'current_start/')):
+            _, reader, _ = stage.original.projected(self.world)
+            if self.route.startswith('current_goal/'):
+                self.bank = self.goal_bank
+            return reader.read_current, (stage.original.sreq(self.world),)
         if self.route.startswith(('project_original/', 'read_append/project/', 'read_append/cutover/')):
             where, _ = self.route.split('/', 1)[1].rsplit('/', 1)
             projector = stage.original.R.StartedProjector(self.world.registry, world=self.world)
@@ -226,6 +234,19 @@ class Fixture(stage.Fixture):
             return self.action(*self.args)
 
     def call(self, edit):
+        if self.route in ('owner/current_goal', 'd01/current_source') and edit:
+            _, path, change = edit
+            goal = self.route == 'owner/current_goal'
+            return self.call_output('current_argument' if goal else 'current_source',
+                                    345 if goal else 404, 'value', path, change,
+                                    source=stage.original.ST.__file__)
+        if self.route.startswith(('current_goal/', 'current_start/')) and edit:
+            kind, phase = self.route.split('/')
+            _, path, change = edit
+            goal = kind == 'current_goal'
+            where = 'read_current' if phase == 'original' else 'read_current/final'
+            return self.call_output('h_' + kind, 855 if goal else 848, 'goal' if goal else 'current',
+                                    path, change, where)
         if self.route.startswith(('read_original/', 'project_original/')) and edit:
             where, definition = self.route.split('/', 1)[1].rsplit('/', 1)
             _, path, change = edit
@@ -282,13 +303,14 @@ class Fixture(stage.Fixture):
             value = rules.apply(value, path, tuple(change) if isinstance(change, list) else change)
         return self.action(root, value, kind=self.issue_kind)
 
-    def call_output(self, function, line, local_name, path, change, where=None):
+    def call_output(self, function, line, local_name, path, change, where=None, *, source=None):
         """Edit an assembled reader document immediately before validation."""
-        reader_source = stage.original.R.__file__
+        reader_source = source or stage.original.R.__file__
         seen = []
 
         def at_result(frame, event, _):
-            if event == 'line' and frame.f_lineno == line and (where is None or frame.f_locals['where'] == where):
+            if (event == 'line' and frame.f_lineno == line and not seen and
+                    (where is None or frame.f_locals['where'] == where)):
                 value = frame.f_locals[local_name]
                 changed = rules.apply(value, path, tuple(change))
                 value.clear()
@@ -307,7 +329,7 @@ class Fixture(stage.Fixture):
             return self.action(*self.args)
         finally:
             sys.settrace(previous)
-            require(seen == [line], 'expected one edit of the final reader document')
+            require(seen == [line], f'expected one edit of the selected document at line {line}, observed {seen}')
 
     def call_reader(self, edit):
         if not edit:
