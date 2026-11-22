@@ -24,7 +24,6 @@ SHARED = Path("/mnt/Cursor/PuppetMaster")
 EVIDENCE = SHARED.with_name("PuppetMaster-Evidence")
 RUNS = EVIDENCE / "scratch/landing-remote"
 CLONE = Path.home() / "src/PuppetMaster"
-PROC = Path("/proc")
 HOSTS = {"1070ti": "1070ti", "nas1": "nas1-agent"}
 MACHINES = {"1070ti": "1070ti", "nas1": "ubuntu-agent-nas1"}
 DEFAULT_HOST = "nas1"
@@ -588,6 +587,10 @@ def receipt_witness(folder):
     return revision_metadata(CLONE, "--git-common-dir") / "pm-land-check-receipts" / f"{folder.name}.sha256"
 
 
+def cleanup_receipt(folder):
+    return folder / "cleanup-receipt.json"
+
+
 def prepare_remote(folder, ref, head, tree, base):
     branch = ref.removeprefix("refs/heads/")
     if check_ref(branch) != ref:
@@ -639,6 +642,7 @@ def remote_check(folder, host, ref, head, tree, base):
                       "full": True, "clean": True, "job": job_name(folder), "argv": args,
                       "exit_code": code, "report": str(report), "report_sha256": report_digest,
                       "started_utc": started, "ended_utc": ended, "check_seconds": seconds,
+                      "cleanup_receipt": str(cleanup_receipt(folder)),
                       "shard_exit_code": shard, "shard_seconds": shard_seconds, "ignored_inputs": inputs})
     witness = receipt_witness(folder)
     witness.parent.mkdir(mode=0o700, exist_ok=True)
@@ -692,56 +696,51 @@ def remote_verify(folder, digest):
         require_clean_full(root, record["head"], record["tree"])
 
 
-def require_no_worktree_users(root, job):
-    real_root = root.resolve(strict=True)
+def preserve_remote_copy(folder, host, state):
+    root = worktree_path(folder)
+    name = job_name(folder)
+    notice = f"preserved remote copy: {host}:{root} (job {name}, state {state})"
+    remote_command = shlex.join(["git", "-C", str(CLONE), "worktree", "remove", "--force", str(root)])
+    removal = shlex.join(["ssh", HOSTS[host], remote_command])
+    path = cleanup_receipt(folder)
+    say(notice)
+    say(f"Remove by hand once nothing uses it: {removal}")
     try:
-        for process in PROC.iterdir():
-            if not process.name.isdecimal():
-                continue
-            try:
-                links = [process / "cwd", *(process / "fd").iterdir()]
-            except FileNotFoundError:
-                # The process may have exited. Still inspect cwd if it exists.
-                links = [process / "cwd"]
-            for link in links:
-                try:
-                    target = Path(os.readlink(link).removesuffix(" (deleted)"))
-                except FileNotFoundError:
-                    continue  # The process exited or closed this descriptor.
-                if target.is_absolute() and target.is_relative_to(real_root):
-                    location = "cwd" if link.name == "cwd" else f"fd/{link.name}"
-                    raise Refusal(f"preserving {root}: job {job} ended but PID {process.name} still uses "
-                                  f"{location} in the worktree: {target}")
+        # A job can fail before producing a checker receipt. Keep this separate from its witnessed bytes.
+        write_json(path, {"host": host, "worktree": str(root), "job": name, "state": state,
+                          "preserved_remote_copy": notice, "remove_by_hand": removal})
     except OSError as exc:
-        raise Refusal(f"preserving {root}: cannot prove job {job} left no worktree users: {exc}") from exc
+        say(f"Could not write cleanup receipt {path}: {exc}")
+    else:
+        say(f"Cleanup receipt: {path}")
 
 
-def remote_cleanup(folder):
+def remote_job_status(name):
+    result = command(["long-job", "status", name, "--json"], check=False)
+    if result.returncode:
+        return {}
+    try:
+        info = json.loads(result.stdout)
+    except ValueError:
+        return {}
+    if (not isinstance(info, list) or len(info) != 1 or not isinstance(info[0], dict)
+            or info[0].get("name") != name):
+        return {}
+    return info[0]
+
+
+def remote_cleanup(folder, host):
     root = worktree_path(folder)
     if not os.path.lexists(root):
         return
-    name = job_name(folder)
-    state = command(["long-job", "status", name, "--json"], check=False)
-    if state.returncode:
-        raise Refusal(f"preserving {root}: cannot establish terminal state for {name}: {state.stderr.strip()}")
-    try:
-        info = json.loads(state.stdout)
-    except ValueError as exc:
-        raise Refusal(f"preserving {root}: unreadable status for job {name}") from exc
-    if (not isinstance(info, list) or len(info) != 1 or not isinstance(info[0], dict)
-            or info[0].get("name") != name):
-        raise Refusal(f"preserving {root}: job {name} has no proven terminal state")
-    job = info[0]
-    code, signal = job.get("code"), job.get("signal")
-    done = (job.get("state") == "done" and type(code) is int and code == 0 and not signal)
-    failed = (job.get("state") == "failed" and (signal or (type(code) is int and code != 0)))
-    if not job.get("ended") or not (done or failed):
-        raise Refusal(f"preserving {root}: job {name} ({job.get('state')}) has no proven terminal exit")
+    job = remote_job_status(job_name(folder))
+    state, code = job.get("state"), job.get("code")
+    if state != "done" or type(code) is not int or code != 0 or not job.get("ended") or job.get("signal"):
+        preserve_remote_copy(folder, host, state if isinstance(state, str) and state else "unknown")
+        return
     require_owned_worktree(root, folder)
     if git(root, "symbolic-ref", "--quiet", "HEAD", check=False).returncode != 1:
         raise Refusal(f"preserving {root}: could not establish that the temporary worktree is detached")
-    if failed:
-        require_no_worktree_users(root, name)
     git(CLONE, "worktree", "remove", "--force", str(root))
     say(f"Removed temporary remote worktree {root}")
 
@@ -757,9 +756,10 @@ def helper(folder, host, mode, *args):
 
 def transport_failure(folder, host):
     fallback = next(other for other in HOSTS if other != host)
+    preserve_remote_copy(folder, host, "unknown")
     write_json(folder / "transport-failure.json",
                {"host": host, "job": job_name(folder), "failed_utc": now(), "fallback_host": fallback})
-    return TransportFailure(f"Lost SSH to {host}. Preserving any worktree for {job_name(folder)}. "
+    return TransportFailure(f"Lost SSH to {host}. "
                             f"Evidence: {folder}. Check the job on reconnect or retry with --on {fallback}.")
 
 
@@ -796,7 +796,8 @@ def cleanup_after_check(folder, host):
         if result.returncode:
             raise Refusal(result.stderr.strip() or f"cleanup exited {result.returncode}")
     except (Refusal, OSError) as exc:
-        say(f"Preserving any remote worktree for {job_name(folder)} on {host}. Evidence: {folder}. {exc}")
+        say(f"Could not confirm remote cleanup: {exc}")
+        preserve_remote_copy(folder, host, "unknown")
     else:
         if result.stdout:
             say(result.stdout.strip())
@@ -919,7 +920,7 @@ def worker_main(argv):
     if args.mode == "check":
         remote_check(folder, args.host, args.ref, args.head, args.tree, args.base)
     else:
-        remote_cleanup(folder)
+        remote_cleanup(folder, args.host)
     return 0
 
 

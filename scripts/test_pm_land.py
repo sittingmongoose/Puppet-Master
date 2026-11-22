@@ -9,7 +9,6 @@ from pathlib import Path
 import re
 import socket
 import subprocess
-import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -133,7 +132,7 @@ class LandingFixture(unittest.TestCase):
             return real_command(args, **kwargs)
 
         with patch.object(land, "command", side_effect=local_status):
-            land.remote_cleanup(self.folder)
+            land.remote_cleanup(self.folder, "nas1")
 
     def test_public_cli_only_accepts_check_and_verify(self):
         script = Path(__file__).with_name("pm-land.py")
@@ -212,10 +211,12 @@ class LandingFixture(unittest.TestCase):
         record = land.read_json(path)
         self.assertEqual((record["exit_code"], record["head"], record["tree"]), (2, self.head, self.tree))
         self.assertEqual(record["ignored_inputs"], self.manifest)
+        self.assertEqual(record["cleanup_receipt"], str(fresh_run / "cleanup-receipt.json"))
         self.assertEqual(land.receipt_witness(fresh_run).read_text().strip(), land.file_hash(path))
 
     def test_transport_failure_preserves_evidence_and_avoids_cleanup(self):
-        with (patch.object(land, "new_run", return_value=self.folder),
+        output = io.StringIO()
+        with (redirect_stdout(output),patch.object(land, "new_run", return_value=self.folder),
               patch.object(land, "ssh", side_effect=[subprocess.CompletedProcess([], 255)] * 3) as ssh,
               patch.object(land.time, "sleep"), patch.object(land, "cleanup_after_check") as cleanup,
               self.assertRaisesRegex(land.TransportFailure, "--on 1070ti")):
@@ -223,6 +224,7 @@ class LandingFixture(unittest.TestCase):
         self.assertEqual(ssh.call_count, 3)
         cleanup.assert_not_called()
         self.assertEqual(land.read_json(self.folder / "transport-failure.json")["job"], land.job_name(self.folder))
+        self.expect_preservation(output.getvalue(), "unknown")
 
     def test_wait_retry_resets_consecutive_transport_failures(self):
         statuses = (0, 255, 255, 124, 255, 255, 0)
@@ -238,83 +240,61 @@ class LandingFixture(unittest.TestCase):
         with (patch.object(land, "new_run", return_value=self.folder), patch.object(land, "start_remote_job"),
               patch.object(land, "ssh", return_value=result), redirect_stdout(output)):
             self.assertEqual(land.check_topic(self.shared, self.branch, "nas1"), 0)
-        self.assertIn(str(self.remote), output.getvalue())
+        self.expect_preservation(output.getvalue(), "unknown")
         self.assertIn(str(self.path), output.getvalue())
 
-    def test_cleanup_preserves_active_lost_stopped_and_unknown_worktrees(self):
-        for state, code in (("starting", 0), ("running", 0), ("partial", 0), ("lost", 0), ("stopped", 0), ("", 2)):
-            with self.subTest(state=state), self.assertRaisesRegex(land.Refusal, "preserving"):
-                self.cleanup(state, code)
-            self.assertTrue(self.remote.is_dir())
+    def expect_preservation(self, output, state):
+        receipt_path = self.folder / "cleanup-receipt.json"
+        notice = (f"preserved remote copy: nas1:{self.remote} "
+                  f"(job {land.job_name(self.folder)}, state {state})")
+        removal = f"ssh nas1-agent 'git -C {self.clone} worktree remove --force {self.remote}'"
+        self.assertIn(notice, output)
+        self.assertIn(removal, output)
+        self.assertIn(str(receipt_path), output)
+        receipt = land.read_json(receipt_path)
+        self.assertEqual(receipt["preserved_remote_copy"], notice)
+        self.assertEqual(receipt["remove_by_hand"], removal)
+        self.assertTrue(self.remote.is_dir())
+
+    def test_cleanup_preserves_failed_signalled_lost_and_unknown_jobs(self):
+        original_receipt = self.path.read_bytes()
+        cases = (("failed", 0, {"code": 3}, "failed"),
+                 ("failed", 0, {"code": None, "signal": 15}, "failed"),
+                 ("starting", 0, {}, "starting"),
+                 ("running", 0, {}, "running"),
+                 ("partial", 0, {}, "partial"),
+                 ("lost", 0, {}, "lost"),
+                 ("stopped", 0, {}, "stopped"),
+                 ("done", 0, {"ended": None}, "done"),
+                 ("", 2, {}, "unknown"))
+        for state, status_exit, fields, expected in cases:
+            with self.subTest(state=state, fields=fields):
+                with redirect_stdout(io.StringIO()) as output:
+                    self.cleanup(state, status_exit, **fields)
+                self.expect_preservation(output.getvalue(), expected)
+                self.assertEqual(self.path.read_bytes(), original_receipt)
+        self.assertEqual(self.verify(), 0)
+
+    def test_cleanup_records_failed_job_without_a_checker_receipt(self):
+        self.path.rename(self.root / "saved-record.json")
+        with redirect_stdout(io.StringIO()) as output:
+            self.cleanup("failed", code=3)
+        self.expect_preservation(output.getvalue(), "failed")
+        self.assertFalse(self.path.exists())
+
+    def test_cleanup_removes_only_a_confirmed_successful_owned_worktree(self):
+        with redirect_stdout(io.StringIO()) as output:
+            self.cleanup()
+        self.assertIn(f"Removed temporary remote worktree {self.remote}", output.getvalue())
+        self.assertFalse(self.remote.exists())
+        self.assertFalse((self.folder / "cleanup-receipt.json").exists())
+        self.assertTrue(self.clone.is_dir())
 
     def test_cleanup_does_not_remove_a_tree_without_the_run_owner(self):
         land.owner_file(self.remote).write_text("another-run\n")
         with self.assertRaisesRegex(land.Refusal, "ownership"):
             self.cleanup()
         self.assertTrue(self.remote.is_dir())
-
-    def test_cleanup_preserves_signaled_or_unconfirmed_failure(self):
-        for extra in ({"code": None, "signal": None}, {"ended": None}):
-            with self.subTest(extra=extra), self.assertRaisesRegex(land.Refusal, "no proven terminal exit"):
-                self.cleanup("failed", **extra)
-            self.assertTrue(self.remote.is_dir())
-        proc = self.root / "proc"
-        with patch.object(land, "PROC", proc):
-            with self.assertRaisesRegex(land.Refusal, r"preserving .*no worktree users"):
-                self.cleanup("failed", code=None, signal=15)
-            self.assertTrue(self.remote.is_dir())
-            proc.mkdir()
-            self.cleanup("failed", code=3)
-        self.assertFalse(self.remote.exists())
-
-    def test_cleanup_preserves_nested_validator_after_checker_signal(self):
-        validator = "import os, sys; print(os.getpid(), flush=True); sys.stdin.readline(); print('released', flush=True)"
-        checker = ("import os, signal, subprocess, sys; "
-                   "subprocess.Popen([sys.executable, '-c', sys.argv[1]]); "
-                   "os.kill(os.getpid(), signal.SIGKILL)")
-        wrapper = ("import subprocess, sys; "
-                   "result = subprocess.run([sys.executable, '-c', *sys.argv[1:]]); "
-                   "sys.exit(3 if result.returncode == -9 else 4)")
-        with subprocess.Popen([sys.executable, "-c", wrapper, checker, validator], cwd=self.remote,
-                              stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True) as worker:
-            try:
-                pid = int(worker.stdout.readline())
-                self.assertEqual(worker.wait(timeout=5), 3)
-                proc = self.root / "proc"
-                proc.mkdir()
-                (proc / str(pid)).symlink_to(Path("/proc") / str(pid))
-                with patch.object(land, "PROC", proc, create=True):
-                    with self.assertRaisesRegex(land.Refusal, rf"preserving .*{land.job_name(self.folder)}.*PID {pid}.*cwd"):
-                        self.cleanup("failed", code=3)
-                self.assertTrue(self.remote.is_dir())
-                self.assertEqual((Path("/proc") / str(pid) / "cwd").resolve(), self.remote)
-            finally:
-                worker.stdin.write("release\n")
-                worker.stdin.flush()
-                self.assertEqual(worker.stdout.readline().strip(), "released")
-
-    def test_cleanup_preserves_live_process_with_open_worktree_file(self):
-        reader = ("import os, sys; handle = open(sys.argv[1]); "
-                  "print(os.getpid(), flush=True); sys.stdin.readline(); handle.close()")
-        path = self.remote / "tracked.txt"
-        with subprocess.Popen([sys.executable, "-c", reader, str(path)], cwd=self.root,
-                              stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True) as process:
-            try:
-                pid = int(process.stdout.readline())
-                proc = self.root / "proc"
-                proc.mkdir()
-                (proc / str(pid)).symlink_to(Path("/proc") / str(pid))
-                with patch.object(land, "PROC", proc, create=True):
-                    for code, signal in ((3, None), (None, 15)):
-                        with self.subTest(code=code, signal=signal), self.assertRaisesRegex(
-                            land.Refusal, rf"preserving .*{land.job_name(self.folder)}.*PID {pid}.*fd"
-                        ):
-                            self.cleanup("failed", code=code, signal=signal)
-                self.assertTrue(path.is_file())
-            finally:
-                process.stdin.write("release\n")
-                process.stdin.flush()
-                self.assertEqual(process.wait(timeout=5), 0)
 
     def test_job_name_is_valid_with_long_mixed_case_branch(self):
         folder = land.new_run("fix/" + "Case" * 50, self.head)
