@@ -1214,6 +1214,56 @@ esac
         self.assertEqual(land.input_manifest(self.shared, self.shared, land.tracklist(self.shared, candidate),
                                             candidate), manifest)
 
+    def test_gui_sources_outside_tests_are_bound_when_ignored_and_refused_when_visible(self):
+        repo = Path(__file__).resolve().parents[1]
+        name = "src/gui/public/favicon.svg"
+        historical = self.git(repo, "show", f"75362beb00:{name}", check=False)
+        svg = historical.stdout if not historical.returncode else '<svg xmlns="http://www.w3.org/2000/svg"></svg>\n'
+        self.put(self.shared, land.GUI_POLICY, (repo / land.GUI_POLICY).read_text())
+        self.git(self.shared, "add", "--", land.GUI_POLICY)
+        self.git(self.shared, "commit", "-m", "track the GUI validator")
+        candidate = land.revision(self.shared, "HEAD")
+        tree = land.revision(self.shared, "HEAD^{tree}")
+        self.git(self.origin, "fetch", str(self.shared), land.MAIN_REF)
+        self.git(self.origin, "update-ref", land.MAIN_REF, candidate, self.base)
+        self.git(self.origin, "update-ref", self.ref, candidate, self.head)
+        self.git(self.shared, "fetch", "origin")
+        self.git(self.shared, "reset", "--keep", candidate)
+        self.cleanup()
+        self.base, self.head, self.tree = candidate, candidate, tree
+        self.remote, self.manifest = land.prepare_remote(self.folder, self.ref, candidate, tree, candidate)
+        self.make_record(0)
+
+        # Visible untracked GUI source outside tests/: verify must refuse it by path.
+        self.put(self.shared, name, svg)
+        with self.assertRaisesRegex(land.Refusal, r"uncommitted changes or hidden index flags:.*favicon\.svg"):
+            self.verify()
+        (self.shared / name).unlink()
+
+        # Ignored through .git/info/exclude on both clones: the inventory must carry it, and a
+        # receipt whose inventory predates it must be refused.
+        rules = f"/{name}\n/src/node_modules/\n/src/gui/public/photo.png\n"
+        for clone in (self.shared, self.clone):
+            exclude = clone / ".git/info/exclude"
+            exclude.write_text(exclude.read_text() + rules)
+        self.put(self.shared, name, svg)
+        self.put(self.shared, "src/node_modules/generated.js", "excluded source")
+        self.put(self.shared, "src/gui/public/photo.png", "not a source extension")
+        with self.assertRaisesRegex(land.Refusal, r"ignored input mismatch:.*favicon\.svg"):
+            self.verify()
+        self.manifest = land.guarded_input_manifest(self.shared, candidate)
+        self.assertIn(name, self.manifest)
+        self.assertNotIn("src/node_modules/generated.js", self.manifest)
+        self.assertNotIn("src/gui/public/photo.png", self.manifest)
+        self.cleanup()
+        self.remote, self.manifest = land.prepare_remote(self.folder, self.ref, candidate, tree, candidate)
+        self.make_record(0)
+        self.assertEqual((self.remote / name).read_text(), svg)
+        self.assertIn(name, self.manifest)
+        self.assertNotIn("src/node_modules/generated.js", self.manifest)
+        self.assertNotIn("src/gui/public/photo.png", self.manifest)
+        self.assertEqual(self.verify(), 0)
+
     def test_inventory_includes_exact_artifacts_declared_by_validators(self):
         custody = "Plans/.audits/older/frozen.bin"
         lock_input = "Plans/.audits/lock-files/generated.bin"

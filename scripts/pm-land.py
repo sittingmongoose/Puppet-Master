@@ -237,29 +237,39 @@ def ignored_reference_paths(root, refs):
     return set(os.fsdecode(result.stdout).split("\0")) - {""}
 
 
-def gui_test_inputs(ignored, worktree, tracked, commit):
+def gui_policy_rules(worktree, tracked, commit):
+    """The checked GUI validator's literal path rules, read without executing that tree."""
     source = tracked_text(worktree, GUI_POLICY, tracked, commit)
     if not source:
-        return set()
-    # Read the validator's literal path rules from the checked tree without executing that tree.
+        return None
     names = {"SOURCE_ROOTS", "SOURCE_EXTENSIONS", "EXCLUDED_DIRS"}
-    rules = {target.id: ast.literal_eval(row.value) for row in ast.parse(source).body
-             if isinstance(row, ast.Assign) for target in row.targets
-             if isinstance(target, ast.Name) and target.id in names}
-    if "tests" not in rules["SOURCE_ROOTS"]:
-        return set()
-    return {name for name in ignored if name.startswith("tests/") and
-            PurePosixPath(name).suffix.lower() in rules["SOURCE_EXTENSIONS"] and
-            not rules["EXCLUDED_DIRS"].intersection(PurePosixPath(name).parts[1:])}
+    return {target.id: ast.literal_eval(row.value) for row in ast.parse(source).body
+            if isinstance(row, ast.Assign) for target in row.targets
+            if isinstance(target, ast.Name) and target.id in names}
+
+
+def gui_selected(name, rules):
+    path = PurePosixPath(name)
+    if path.suffix.lower() not in rules["SOURCE_EXTENSIONS"]:
+        return False
+    for root in rules["SOURCE_ROOTS"]:
+        prefix = PurePosixPath(root).parts
+        if path.parts[:len(prefix)] == prefix and not rules["EXCLUDED_DIRS"].intersection(path.parts[len(prefix):]):
+            return True
+    return False
 
 
 def copies(root, worktree, tracked, commit):
+    gui_rules = gui_policy_rules(worktree, tracked, commit)
+    roots = [*IGNORED_INPUT_ROOTS, *(gui_rules["SOURCE_ROOTS"] if gui_rules else [])]
     found = git(root, "ls-files", "--others", "--ignored", "--exclude-standard",
-                "-z", "--", *IGNORED_INPUT_ROOTS).stdout
+                "-z", "--", *roots).stdout
     ignored = set(found.split("\0")) - {""} - tracked
     selected = {name for name in ignored if
-                (not within(name, "tests") or within(name, "tests/fixtures")) and selected_ignored_input(name)}
-    selected.update(gui_test_inputs(ignored, worktree, tracked, commit))
+                any(within(name, input_root) for input_root in IGNORED_INPUT_ROOTS)
+                and (not within(name, "tests") or within(name, "tests/fixtures")) and selected_ignored_input(name)}
+    if gui_rules:
+        selected.update(name for name in ignored if gui_selected(name, gui_rules))
     references = declared_input_paths(root, worktree, ignored, tracked, commit)
     selected.update(ignored_reference_paths(root, references))
     return selected
@@ -461,11 +471,13 @@ def overlaps(changed, touched):
         str(parent) in touched for parent in PurePosixPath(name).parents))
 
 
-def affects_shared_check(name):
-    # The aggregates also parse tracked and visible JSON/JSONL outside these roots.
+def affects_shared_check(name, gui_rules=None):
+    # The aggregates also parse tracked and visible JSON/JSONL outside these roots, and the
+    # GUI validator scans its own source roots, including visible untracked files there.
     return (any(within(name, root) for root in IGNORED_INPUT_ROOTS)
             or PurePosixPath(name).suffix.lower() in {".json", ".jsonl"}
-            or name in {".gitignore", ".gitattributes", "AGENTS.md"})
+            or name in {".gitignore", ".gitattributes", "AGENTS.md"}
+            or (gui_rules is not None and gui_selected(name, gui_rules)))
 
 
 def hidden_index_paths(root):
@@ -481,10 +493,10 @@ def require_clean_shared_tracked(root):
         raise Refusal("shared checkout has uncommitted changes or hidden index flags: " + ", ".join(dirty))
 
 
-def require_clean_shared_checkout(root, touched):
+def require_clean_shared_checkout(root, touched, gui_rules=None):
     hidden = hidden_index_paths(root)
     tracked, untracked = status_paths(root)
-    untracked_inputs = {name for name in untracked if affects_shared_check(name)}
+    untracked_inputs = {name for name in untracked if affects_shared_check(name, gui_rules)}
     dirty = sorted(tracked | hidden | untracked_inputs | set(overlaps(untracked, touched)))
     if dirty:
         raise Refusal("shared checkout has uncommitted changes or hidden index flags: " + ", ".join(dirty))
@@ -516,7 +528,8 @@ def publication_preflight(root, base, candidate, expected_inputs):
     if head not in (base, candidate):
         # A shared checkout behind the checked base also fast-forwards through these paths.
         touched |= changed_paths(root, head, base)
-    require_clean_shared_checkout(root, touched)
+    gui_rules = gui_policy_rules(root, tracklist(root, candidate), candidate)
+    require_clean_shared_checkout(root, touched, gui_rules)
     if head != candidate:
         present = set()
         for name in added_paths(root, head, candidate):
@@ -532,7 +545,7 @@ def publication_preflight(root, base, candidate, expected_inputs):
                 raise Refusal("candidate would overwrite ignored files: " + ", ".join(sorted(filter(None, collisions))))
     require_same_inputs(expected_inputs, guarded_input_manifest(root, candidate), "shared publication")
     require_clean_shared_index(root)
-    require_clean_shared_checkout(root, touched)
+    require_clean_shared_checkout(root, touched, gui_rules)
 
 
 def verify_rollback(candidate, target):
@@ -1421,7 +1434,7 @@ def main(argv=None):
         check = commands.add_parser("check", help="run remote landing checks on a pushed branch")
         check.add_argument("branch")
         check.add_argument("--on", choices=HOSTS, default=DEFAULT_HOST)
-        verify = commands.add_parser("verify", help="read-only verification under the hand lander's guard")
+        verify = commands.add_parser("verify", help="read-only verification under the hand lander's lock")
         mode = verify.add_mutually_exclusive_group(required=True)
         mode.add_argument("--receipt", type=Path)
         mode.add_argument("--rollback-check", action="store_true", help="check paths before a hand rollback")
