@@ -46,7 +46,7 @@ class Fixture(stage.Fixture):
         if self.route == 'projection/record':
             readers = stage.original.R
             return readers.projection_record, (self.world, readers.original_started(self.world))
-        if self.route == 'representation/row':
+        if self.route in ('representation/row', 'representation/record'):
             projector, _, _ = stage.original.projected(self.world)
             _, _, _, row = projector.current_row()
             return projector.rep.decode, (row['value'], stage.original.R.original_started(self.world))
@@ -215,7 +215,11 @@ class Fixture(stage.Fixture):
         if self.route in ('read_historical/root', 'read_current/root') and edit:
             line = {'read_historical/root': 906, 'read_current/root': 937}[self.route]
             _, path, change = edit
-            return self.call_reader_result(line, path, change)
+            return self.call_output('body', line, 'value', path, change)
+
+        if self.route == 'representation/record' and edit:
+            _, path, change = edit
+            return self.call_output('decode', 484, 'record', path, change)
 
         if self.route.startswith(('read_append/', 'read_native/')):
             return self.call_reader(edit)
@@ -231,14 +235,14 @@ class Fixture(stage.Fixture):
             value = rules.apply(value, path, tuple(change) if isinstance(change, list) else change)
         return self.action(root, value, kind=self.issue_kind)
 
-    def call_reader_result(self, line, path, change):
-        """Edit the assembled reader result just before its original validation."""
+    def call_output(self, function, line, local_name, path, change):
+        """Edit an assembled reader document immediately before validation."""
         reader_source = stage.original.R.__file__
         seen = []
 
         def at_result(frame, event, _):
             if event == 'line' and frame.f_lineno == line:
-                value = frame.f_locals['value']
+                value = frame.f_locals[local_name]
                 changed = rules.apply(value, path, tuple(change))
                 value.clear()
                 value.update(changed)
@@ -246,7 +250,7 @@ class Fixture(stage.Fixture):
             return at_result
 
         def choose_frame(frame, event, _):
-            if event == 'call' and frame.f_code.co_name == 'body' and frame.f_code.co_filename == reader_source:
+            if event == 'call' and frame.f_code.co_name == function and frame.f_code.co_filename == reader_source:
                 return at_result
             return None
 
