@@ -1016,11 +1016,14 @@ print(json.dumps({{"schema_id": "pm.landing_check.report.v1", "commit": {self.he
                            'git push origin "HEAD:refs/heads/$PM_LAND_TOPIC_BRANCH"',
                            'long-job start "pm-${PM_LAND_TOPIC_BRANCH#fix/}" -- python3 -B "$PM_LAND_SCRIPT" check "$PM_LAND_TOPIC_BRANCH"',
                            'long-job wait "pm-${PM_LAND_TOPIC_BRANCH#fix/}" --timeout 1500')
-        for path in (repo / "AGENTS.md", repo / ".claude/CLAUDE.md"):
-            section = path.read_text().split("### How to land on main\n")[1].split("### Never\n")[0]
-            for command in branch_commands:
-                self.assertIn(command, recipe)
-                self.assertIn(command, section)
+        for command in branch_commands:
+            self.assertIn(command, recipe)
+        sections = [path.read_text().split("### How to land on main\n")[1].split("### Never\n")[0]
+                    for path in (repo / "AGENTS.md", repo / ".claude/CLAUDE.md")]
+        self.assertEqual(sections[0], sections[1])
+        for phrase in ("pm-land.py check <branch> --on <host>", "pm-land.py verify", "<default host>",
+                       "commit", "tree", "base", "ignored-input inventory", "report SHA-256", "exit"):
+            self.assertIn(phrase, sections[0])
 
         self.put(self.shared, "Plans/owner.md", "test plan\n")
         historical_runs = self.git(repo, "ls-tree", "-d", "--name-only", "a45c1a0362:Plans/.plan_migration")
