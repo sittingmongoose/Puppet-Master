@@ -32,6 +32,19 @@ const PHASES = ['welcome', 'tiles', 'begin', 'smb'];
 const STAGE = '#pm-o55-onboarding .o55-stage';
 class RouteDone extends Error {}
 
+// PM7PERF-PIP-DEVICE-OFFSCREEN: the device option's full-rectangle centre can sit below the scroll pane's edge,
+// under the fixed footer (Retro Dark: centre y840.08 vs the pane bottom 826; the stock press hit FOOTER.o55-foot
+// and Continue stayed disabled). Wheel the card into view and hit-test the press point before pressing; a target
+// still covered after six wheels, or with no scroll pane, is a setup result, not a press. Pure, exported for
+// tools/pip-device-press.selftest.mjs; the 96 px step is the real repair's trusted wheel (device-route.json).
+export function devicePressStep({ center, pane, optionHit, wheels }) {
+	if (optionHit) return { action: 'press' };
+	if (!pane) return { action: 'setup', why: 'the press point is covered and the target has no scroll pane' };
+	if (wheels >= 6) return { action: 'setup', why: `the press point stays covered after ${wheels} wheels` };
+	const dy = center.y > pane.bottom ? 96 : center.y < pane.top ? -96 : 96;
+	return { action: 'wheel', dy, at: { x: pane.x + pane.w / 2, y: pane.y + pane.h / 2 } };
+}
+
 async function surface(t, sandbox) {
 	const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
 	const phases = t.args.phases ? String(t.args.phases).split(',') : PHASES;
@@ -55,6 +68,33 @@ async function surface(t, sandbox) {
 	const press = async (sel, name) => { const b = await box(sel); if (!b) throw new Error('no ' + name); await page.mouse.move(b.x, b.y, { steps: 5 }); await sleep(220); t.mark('press ' + name); await page.mouse.down(); await sleep(60); await page.mouse.up(); };
 	const primary = async (name) => { await settle(); await f.waitForFunction((s) => { const b = document.querySelector(s); return b && !b.disabled && b.getAttribute('aria-disabled') !== 'true'; }, `${LAYER} .o55-primary`, { timeout: 15000 }); await press(`${LAYER} .o55-primary`, name); await settle(); };
 	const act = async (a, arg) => { await settle(); await press(`${LAYER} [data-o55-do="${a}"]` + (arg != null ? `[data-arg="${arg}"]` : ''), a + ' ' + (arg || '')); await settle(); };
+	/* the device option's press: scroll it into view and hit-test first (PM7PERF-PIP-DEVICE-OFFSCREEN) */
+	const pressInView = async (sel, name) => {
+		let wheels = 0;
+		for (;;) {
+			const geo = await f.evaluate((s) => {
+				const e = [...document.querySelectorAll(s)].find((x) => x.getClientRects().length && !x.closest('[inert]'));
+				if (!e) return null;
+				let pane = e.parentElement;
+				while (pane && pane !== document.documentElement) { const cs = getComputedStyle(pane); if (/(auto|scroll)/.test(cs.overflowY) && pane.scrollHeight > pane.clientHeight) break; pane = pane.parentElement; }
+				const r = e.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+				const hit = document.elementFromPoint(cx, cy);
+				const p = pane && pane !== document.documentElement ? pane.getBoundingClientRect() : null;
+				return { center: { x: cx, y: cy }, pane: p && { x: p.left, y: p.top, w: p.width, h: p.height, top: p.top, bottom: p.bottom }, optionHit: !!hit && (hit === e || e.contains(hit)) };
+			}, sel);
+			if (!geo) throw new Error('no ' + name);
+			const step = devicePressStep({ ...geo, wheels });
+			if (step.action === 'press') { await press(sel, name); return; }
+			if (step.action === 'setup') {
+				await t.check(`begin: ${name} reachable for a trusted press`, false, `could not judge: setup — ${step.why}; no press sent`);
+				throw new RouteDone();
+			}
+			await page.mouse.move(step.at.x + off.x, step.at.y + off.y, { steps: 3 });
+			await page.mouse.wheel(0, step.dy);
+			await sleep(300);
+			wheels++;
+		}
+	};
 	const type = async (bind, text) => {
 		await settle(); const sel = `${LAYER} [data-o55-bind="${bind}"]`;
 		for (let k = 0; k < 3; k++) {
@@ -218,7 +258,7 @@ async function surface(t, sandbox) {
 		/* smb: each look on the share screen, then its presses and hovers */
 		if (!later('begin')) throw new RouteDone();
 		if (phases.includes('smb')) {
-			if ((await screen()) === 'begin') { await act('pick', 'existing'); await act('sub', 'device'); await primary('begin'); }
+			if ((await screen()) === 'begin') { await act('pick', 'existing'); await settle(); await pressInView(`${LAYER} [data-o55-do="sub"][data-arg="device"]`, 'sub device'); await settle(); await primary('begin'); }
 			await t.check('on nas-find', (await screen()) === 'nas-find', await screen());
 			await act('method', 'smb'); await act('share', 'smb-home'); await primary('find continue');
 			await t.check('on nas-smb', (await screen()) === 'nas-smb', await screen());
