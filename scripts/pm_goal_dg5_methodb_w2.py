@@ -29,6 +29,7 @@ closure, rules, world = stage.closure, stage.clauses, stage.world
 ROOT, FAMILY, require, sha, write = stage.ROOT, stage.FAMILY, stage.require, stage.sha, stage.write
 REFERENCE_SHA = 'cb562fa287b7987eabe3b49fc9d3c5119948a69df444ce0a3a0b2d76bdbd4cf2'
 FULL_REFERENCE_SHA = 'ca913e1b9353ead76cdfae84fa7eda30606c38042c6ac45f7e86bed1cc0b3e42'
+NATIVE_BINDINGS_SHA = '5ee9e10bb85b577f0b11f330bd51ffe502260279535e75acaccbf8f7511f7b74'
 FULL_REFERENCE_OVERLAY = 'd95dfc693296a7bab5fe4e1af044ab14a4ec083c'
 TABLE_PREFIX = 'pm_goal_dg5_methodb_w2_phase_'
 PREFLIGHT_CUSTODY = 'https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0#/$defs/'
@@ -203,6 +204,22 @@ class Fixture(stage.Fixture):
                                      original_writer_method=methods.get(name, transition_record['original_writer_method']))
             record['cause'] = rule['then']['properties']['cause']['const']
             yield variant
+
+    def call_publication(self, edit):
+        if self.route != 'publish_update' or not edit:
+            return super().call_publication(edit)
+        _, path, change = edit
+        skeleton = world.skeleton
+        retained = self.world.edition.consumer + '#/$defs/RetainedNativeStart'
+
+        def edit_update(bank, reference):
+            value = skeleton(bank, reference)
+            if reference == retained:
+                value['original_d01_update'] = rules.apply(value['original_d01_update'], path, tuple(change))
+            return value
+
+        with patch.object(world, 'skeleton', edit_update):
+            return self.action(*self.args)
 
     def call(self, edit):
         if self.route.startswith(('read_original/', 'project_original/')) and edit:
@@ -1060,7 +1077,7 @@ def run_case(case, reference, prior_row, output, disable, selected=None):
     return report
 
 
-def load_reference(path, cases):
+def load_reference(path, cases, native_bindings=None):
     digest = sha(path)
     require(digest in (REFERENCE_SHA, FULL_REFERENCE_SHA), 'fresh reference bundle changed')
     with gzip.open(path, 'rt') as stream:
@@ -1072,11 +1089,20 @@ def load_reference(path, cases):
     # The whole-family capture can list more than one exact variant under a
     # historical root ID. Keep this runner limited to complete, unambiguous
     # rows and carry every literal rule from the selected published variant.
+    recovered = {}
+    if native_bindings is not None:
+        require(sha(native_bindings) == NATIVE_BINDINGS_SHA, 'the earlier native reference changed')
+        with gzip.open(native_bindings, 'rt') as stream:
+            recovery = json.load(stream)
+        require(recovery['reference_sha256'] == digest and recovery['main'] == reference['source']['main'],
+                'the earlier native reference has different source pins')
+        recovered = recovery['roots']
     rows, roots = {}, {}
     for case in cases:
         name = case['row']
         row = reference['rows'][name]
-        require(not row['historical_roots_without_current_row_binding'],
+        missing = row['historical_roots_without_current_row_binding']
+        require(all(ident in recovered and name in recovered[ident]['historical_rows'] for ident in missing),
                 f'{name}: earlier root bindings are still unresolved')
         identifiers = []
         for item in row['current_roots']:
@@ -1086,6 +1112,11 @@ def load_reference(path, cases):
                     f'{name}: multiple exact variants share {ident}')
             identifiers.append(ident)
             roots[ident] = variant
+        for ident in missing:
+            require(ident not in identifiers and (ident not in roots or roots[ident] == recovered[ident]),
+                    f'{name}: multiple earlier variants share {ident}')
+            identifiers.append(ident)
+            roots[ident] = recovered[ident]
         sites = []
         for file, line in row['sites']:
             source = subprocess.check_output(['git', 'show', f'{FULL_REFERENCE_OVERLAY}:{file}'], cwd=ROOT)
@@ -1098,6 +1129,7 @@ def load_reference(path, cases):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--matrix', type=Path, required=True)
+    parser.add_argument('--native-bindings', type=Path)
     parser.add_argument('--reference', type=Path, required=True)
     parser.add_argument('--case', type=Path, action='append', required=True)
     parser.add_argument('--out', type=Path, required=True)
@@ -1105,7 +1137,7 @@ def main():
     parser.add_argument('--root', help='replay one exact declared root and publish its proof fragment')
     args = parser.parse_args()
     cases = [json.loads(path.read_bytes()) for path in args.case]
-    reference = load_reference(args.reference, cases)
+    reference = load_reference(args.reference, cases, args.native_bindings)
     _, rows, _ = stage.matrix_inputs(args.matrix)
     world.v3_edition()
     world.v7_edition()
