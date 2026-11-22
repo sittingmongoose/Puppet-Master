@@ -154,6 +154,19 @@ const ACTIVE = () => (document.querySelector('#pm-settings-root .domain-link.act
 
 export async function press(t, f, domain, { waitForHoverTags = false } = {}) {
 	if (waitForHoverTags) {
+		// PM7PERF-SETCHAPTER-HOVER-SAMPLE-UNQUALIFIED: tags bind on real hover intent. The stock walk never hovered
+		// the leaving chapter's controls, so the AI chapter reached the press with zero bound tags and the sample
+		// abstained (astra-max-15: an ordinary mouse hover opened a real outgoing control tip before the same chapter
+		// presses and both pages passed 17/17). Hover a real control of the current chapter first; the bounded wait
+		// and the explicit missing-witness row stay.
+		const control = f.locator('#workspace-stage .setting-row :is(button, input, select, textarea, [role="switch"], [role="slider"], [role="checkbox"])').first();
+		if (await control.count()) {
+			const cb = await control.boundingBox();
+			if (cb) {
+				await t.page.mouse.move(Math.round(cb.x + cb.width / 2), Math.round(cb.y + cb.height / 2), { steps: 4 });
+				await t.page.waitForTimeout(350);
+			}
+		}
 		// The page binds tags in idle batches. Give the chapter a chance to bind a real tag before sampling it.
 		try {
 			await f.locator('#workspace-stage [data-pm-hover-bound="true"]').first().waitFor({ state: 'attached', timeout: 10000 });

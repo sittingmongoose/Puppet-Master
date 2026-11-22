@@ -71,15 +71,20 @@ import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arriv
 	console.log('PASS hover release: judged only with sampled leaving-chapter tags and a seen walk of that chapter');
 }
 
-/* R97 #4: the matrix sets up a real tag to sample, including when the chapter's idle census is late. */
+/* R97 #4 + PM7PERF-SETCHAPTER-HOVER-SAMPLE-UNQUALIFIED: the matrix qualifies the outgoing tagged-control input with
+ * a real hover of the leaving chapter's control BEFORE the bounded tag wait (the stock walk reached the AI chapter
+ * with zero bound tags; astra-max-15: an ordinary mouse hover opened a real outgoing control tip and both pages
+ * passed 17/17). The bounded wait and the explicit missing-witness result stay. */
 {
-	const run = async (waitForHoverTags, censusFinishes) => {
+	const CONTROL = '#workspace-stage .setting-row :is(button, input, select, textarea, [role="switch"], [role="slider"], [role="checkbox"])';
+	const run = async (waitForHoverTags, censusFinishes, controlExists = true) => {
 		const events = [];
 		let tagged = 0;
 		const f = {
 			locator: (selector) => ({
 				first: () => ({
-					boundingBox: async () => ({ x: 0, y: 0, width: 60, height: 20 }),
+					count: async () => { assert.equal(selector, CONTROL, 'the hover qualifies a real control of the leaving chapter'); return controlExists ? 1 : 0; },
+					boundingBox: async () => selector === CONTROL ? { x: 100, y: 200, width: 80, height: 20 } : { x: 0, y: 0, width: 60, height: 20 },
 					waitFor: async ({ state, timeout }) => {
 						assert.equal(selector, '#workspace-stage [data-pm-hover-bound="true"]');
 						assert.equal(state, 'attached');
@@ -93,18 +98,20 @@ import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arriv
 			}),
 			evaluate: async () => { events.push('sample'); return { tagged }; }
 		};
-		const mouse = { move: async () => {}, down: async () => { events.push('press'); }, up: async () => {} };
+		const mouse = { move: async (x, y) => { if (x === 140 && y === 210) events.push('hover control'); }, down: async () => { events.push('press'); }, up: async () => {} };
 		const t = { page: { mouse, waitForTimeout: async () => {} } };
 		const sample = await press(t, f, 'ai', { waitForHoverTags });
 		return { events, tagged: sample.tagged };
 	};
-	assert.deepEqual(await run(true, true), { events: ['wait for tags', 'sample', 'press'], tagged: 1 },
-		'wait for the delayed census before sampling the old chapter and pressing the next link');
-	assert.deepEqual(await run(true, false), { events: ['wait for tags', 'sample', 'press'], tagged: 0 },
-		'a timed-out census still yields an unsampled switch for the existing verdict');
+	assert.deepEqual(await run(true, true), { events: ['hover control', 'wait for tags', 'sample', 'press'], tagged: 1 },
+		'a real hover of the leaving chapter\'s control precedes the bounded tag wait, the sample and the press');
+	assert.deepEqual(await run(true, false), { events: ['hover control', 'wait for tags', 'sample', 'press'], tagged: 0 },
+		'a timed-out census still yields an unsampled switch for the existing missing-witness verdict');
+	assert.deepEqual(await run(true, false, false), { events: ['wait for tags', 'sample', 'press'], tagged: 0 },
+		'no hoverable control: the bounded wait and the missing-witness result stay');
 	assert.deepEqual(await run(false, true), { events: ['sample', 'press'], tagged: 0 },
 		'presses outside the hover matrix keep their original schedule');
-	console.log('PASS hover setup: the matrix samples after a delayed census, or reports missing tags on timeout');
+	console.log('PASS hover setup: a real control hover qualifies the outgoing tagged input before the bounded wait; a missing control or tag keeps the explicit missing-witness result');
 }
 
 /* R97 #6: the wait ends on the fill's own completion, and an unfinished fill is told apart from a missing row */
