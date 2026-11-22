@@ -779,11 +779,13 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
             self.assertTrue(any(f":5: {group} for {self.anchor} is stale" in e for e in report["errors"]), report)
             self.assertTrue(any(f":4: owner_evidence_hashes for {self.anchor} is stale"
                                 in e for e in report["errors"]), report)
-        # Without one member, the other no longer matches the batch rebuilt from its committed
-        # records file. It supersedes nothing, so the old pin on line 3 is live again, and stale.
+        # Without one member, the survivor no longer sits at the line its append wrote it on, and no
+        # longer matches the batch rebuilt from its committed records file. It supersedes nothing, so
+        # the old pin on line 3 is live again, and stale.
         write_jsonl(self.registry, appended[:3] + appended[4:])
         report = m.validate_registry(self.registry)
-        self.assertTrue(any(e.startswith(f"{self.registry_ref}:4: registry_batch_anchor differs") for e in report["errors"]), report)
+        self.assertTrue(any(e.startswith(f"{self.registry_ref}:4: registry_batch_anchor cannot be rebuilt")
+                            and "does not sit at" in e for e in report["errors"]), report)
         self.assertTrue(any(f":3: owner_evidence_hashes for {self.anchor} is stale" in e for e in report["errors"]), report)
         write_jsonl(self.registry, appended + [later])
         snapshot = self.commit("later registry member")
@@ -918,9 +920,10 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
         write_jsonl(self.registry, [*rows, rows[3]])
         report = m.validate_registry(self.registry)
         self.assertTrue(any("duplicate closure_id" in e for e in report["errors"]), report)
-        for line in (4, 5, 6):
-            self.assertTrue(any(e.startswith(f"{self.registry_ref}:{line}: registry_batch_anchor cannot be rebuilt")
-                                for e in report["errors"]), report)
+        # The duplicate is a copy of line 4 on another line, so it sits nowhere its append wrote it
+        # (T335); the members it shadows still leave their pins stale.
+        self.assertTrue(any(e.startswith(f"{self.registry_ref}:6: registry_batch_anchor cannot be rebuilt")
+                            and "does not sit at" in e for e in report["errors"]), report)
         for line in (4, 5):
             self.assertTrue(any(f":{line}: owner_evidence_hashes for {self.anchor} is stale" in e
                                 for e in report["errors"]), report)
@@ -1296,6 +1299,133 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
         ):
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, text)
+
+    def test_registry_pin_batch_requires_its_records_committed_before_its_rows(self) -> None:
+        """T334 (Astra medium 3): a committed batch cannot validate when its records file was first
+        committed after the append that added its rows: the append could not have read it."""
+        m = pm_audit_closure
+        self.prepare_same_file_records()
+        code, report = self.append()
+        self.assertEqual((code, report["appended"], report["errors"]), (0, 3, []), report)
+        ordered = self.commit("one append of all three")
+        records_commit = self.git("rev-parse", f"{ordered}^")
+        # Rebuild the history with the registry append before the records commit, author dates kept.
+        self.git("checkout", "-q", "-b", "records-later", f"{records_commit}^")
+        self.git("cherry-pick", ordered)
+        self.git("cherry-pick", records_commit)
+        validation = m.validate_registry(self.registry)
+        for line in (4, 5, 6):
+            self.assertTrue(any(e.startswith(f"{self.registry_ref}:{line}: registry_batch_anchor cannot be rebuilt")
+                                and "was first committed at" in e for e in validation["errors"]), validation)
+
+    def test_registry_pin_batch_rows_cannot_swap_their_lines(self) -> None:
+        """T335 (Astra low 2): two committed batch rows exchanging physical registry lines is
+        reported. A committed row sits at the line its append wrote it on, so the order of a batch
+        is bound to its adding commit, not just its member set."""
+        m = pm_audit_closure
+        self.prepare_same_file_records()
+        code, report = self.append()
+        self.assertEqual((code, report["appended"], report["errors"]), (0, 3, []), report)
+        self.commit("one append of all three")
+        rows = [json.loads(line) for line in self.registry.read_bytes().splitlines()]
+        rows[3], rows[4] = rows[4], rows[3]
+        write_jsonl(self.registry, rows)
+        self.commit("swap the two batch rows")
+        validation = m.validate_registry(self.registry)
+        for line in (4, 5):
+            self.assertTrue(any(e.startswith(f"{self.registry_ref}:{line}: registry_batch_anchor cannot be rebuilt")
+                                and "does not sit at" in e for e in validation["errors"]), validation)
+        self.assertEqual(validation["superseded_lines"], [], validation)
+
+    def test_registry_batch_pins_are_the_same_tree_with_or_without_the_link(self) -> None:
+        """T332 (Astra medium 1): an alias of the registry that git holds as a regular file is never
+        an alias of it, however the working copy links the two paths. Replacing a hard link with a
+        byte-identical copy leaves the same tree, so it must leave the same validation."""
+        m = pm_audit_closure
+        original = self.target
+        second = m._self_test_registry_row(**{**original, "closure_id": "closure-second", "detail_keys": ["second"]})
+        write_jsonl(self.registry, [original, second])
+        self.target = second
+        self.prepare_record(line=2)
+        code, seeded = self.append()
+        self.assertEqual((code, seeded["appended"], seeded["errors"]), (0, 1, []), seeded)
+        prior_pin = json.loads(self.registry.read_bytes().splitlines()[2])
+        alias = self.registry.with_name("published-rows.jsonl")
+        os.link(self.registry, alias)
+        self.anchor = m.rel(alias) + "#jsonlset=audit_ids=audit-fixture"
+        self.prepare_pin_batch_records([(1, original), (3, prior_pin)], split_lines=(1, 3))
+        code, report = self.append()
+        self.assertEqual((code, report["appended"], report["errors"]), (0, 2, []), report)
+        self.commit("append the alias-pinned batch")  # git holds the alias as a regular blob
+        linked = m.validate_registry(self.registry)
+        alias.unlink()
+        alias.write_bytes(self.registry.read_bytes())
+        self.assertEqual(self.git("status", "--porcelain", "--", m.rel(alias)), "")  # the same tree
+        self.assertEqual(m.validate_registry(self.registry), linked)
+
+    def test_registry_pin_batch_rejected_marker_cannot_hide_a_stale_split_ref(self) -> None:
+        """T333 (Astra medium 2): a split-only holder whose batch marker is rejected keeps its pins
+        over the whole set, the row included, so a registry set that drifted from its receipt stays
+        in the historical stale inventory."""
+        m = pm_audit_closure
+        original = self.target
+        second = m._self_test_registry_row(**{**original, "closure_id": "closure-second", "detail_keys": ["second"]})
+        write_jsonl(self.registry, [original, second])
+        self.target = second
+        self.prepare_record(line=2)
+        code, seeded = self.append()
+        self.assertEqual((code, seeded["appended"], seeded["errors"]), (0, 1, []), seeded)
+        prior_pin = json.loads(self.registry.read_bytes().splitlines()[2])
+        self.prepare_pin_batch_records([(1, original), (3, prior_pin)], split_lines=(3,))
+        rows = self.append_pin_batch()
+        moved = copy.deepcopy(rows)
+        moved[3]["audit_ids"] = ["audit-moved"]  # the plain member leaves the audit set
+        moved[3]["closed_by_audit_id"] = "audit-moved"
+        write_jsonl(self.registry, moved)
+        self.commit("move the plain member out of the audit set")
+        with_marker = m._target_stale_refs(moved[4], m.CommitResolver(self.root, self.git("rev-parse", "HEAD")))
+        self.assertIn(self.anchor, {ref for _, ref, _ in with_marker}, with_marker)
+        tampered = copy.deepcopy(moved)
+        tampered[4]["hashes"].pop(m.REGISTRY_BATCH_ANCHOR)
+        write_jsonl(self.registry, tampered)
+        snapshot = self.commit("remove the holder's batch marker")
+        without_marker = m._target_stale_refs(tampered[4], m.CommitResolver(self.root, snapshot))
+        self.assertIn(self.anchor, {ref for _, ref, _ in without_marker}, without_marker)
+
+    def test_registry_pin_batch_cannot_rebind_to_a_copy_of_its_records_file(self) -> None:
+        """T331 (Astra high 2): committed batch rows cannot be re-pointed at a byte-identical copy of
+        their records file so that they absorb a later append as one batch. The append that first
+        added the rows decides their batch, never the records path they carry now."""
+        m = pm_audit_closure
+        key = m.REGISTRY_BATCH_ANCHOR
+        records = self.prepare_same_file_records()
+        a, b, c = (record["closure_id"] for record in records)
+        records_copy = self.audit_dir / "all-copy.jsonl"
+        records_copy.write_bytes(self.records.read_bytes())
+        with patch.dict(os.environ, {"GIT_AUTHOR_DATE": self.STAMP_DATE}):
+            self.commit("a byte-identical copy of the records file")
+        before = self.registry.read_bytes()
+        original_records = self.records
+        self.records = records_copy
+        code, report = self.append()
+        self.assertEqual((code, report["appended"], report["errors"]), (0, 3, []), report)
+        attack = [json.loads(line) for line in self.registry.read_bytes().splitlines()]
+        marker = copy.deepcopy(attack[3]["hashes"][key])
+        self.assertEqual(marker["members"], sorted(row["closure_id"] for row in attack[3:]))
+        self.registry.write_bytes(before)
+        self.records = original_records
+        code, report = self.append(only=f"{a},{b}")
+        self.assertEqual((code, report["appended"], report["errors"]), (0, 2, []), report)
+        self.commit("append a and b from the first copy")
+        for row in attack[3:]:
+            row["hashes"][key] = copy.deepcopy(marker)
+        write_jsonl(self.registry, attack)
+        self.commit("repoint the committed rows at the copy")
+        validation = m.validate_registry(self.registry)
+        for line in (4, 5, 6):
+            self.assertIn(f"{self.registry_ref}:{line}: registry_batch_anchor differs from the batch rebuilt "
+                          "from the append that committed the row", validation["errors"])
+        self.assertEqual(validation["superseded_lines"], [], validation)
 
     def test_split_only_anchor_is_current_after_append(self) -> None:
         self.prepare_currentness_split()

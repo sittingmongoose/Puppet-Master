@@ -1,0 +1,19 @@
+{
+ "worker": {
+  "file": "worker/records.jsonl",
+  "model": "gpt-6.2-sol (c-sd2)"
+ },
+ "recheck_commit": "99c9ce8d8e773003b0d7fd6fa79c3eb345441f59",
+ "sol": [
+  {
+   "file": "review-sol-max-rsd2b02.jsonl",
+   "model": "gpt-6.2-sol (max)"
+  }
+ ],
+ "astra": [
+  {
+   "file": "review-astra-max-rsd2b02.jsonl",
+   "model": "gpt-6.2-astra (max)"
+  }
+ ]
+}
