@@ -73,19 +73,6 @@ PROOFS.update({
             "committed_start=None (pm_goal_dg_s_start.py:185), and :847's base nulls only "
             "pending_candidate, so a non-None committed_start refuses at :847 before :849 is evaluated. "
             "With :847 passing, committed_start is None and :849 cannot refuse through commit_start.")),
-    'dg5/native/body_revision/number': dict(
-        kind='entailment', families=['goal_run.started'],
-        depends_on=['dg5/producer/goal_run_revision/number'],
-        sites=[(START, 240), (START, 931), (START, 977), (START, 1000), (START, 826)],
-        argument=(
-            "Every complete call that reaches NativeOwner.after_images does so inside commit_start: "
-            "producer_submission (called at :977) first computes goal_run_revision as NR.uint64 of the "
-            "same native before revision + 1 at :931, and only then candidate() (:1000) calls "
-            "after_images, whose :240 computes NR.uint64 of that identical value. The prepared-submission "
-            "path skips producer_submission only for an operation whose earlier commit_start already ran "
-            "it at the same before revision, which :826 re-binds to the birth body on the retry. So "
-            "whenever :240 runs, before + 1 is already known uint64-representable and :240 cannot be the "
-            "first refusal.")),
     'dg5/projector/now/date-time': dict(
         kind='construction', families=['goal_run.started'],
         depends_on=[],
@@ -127,19 +114,6 @@ PROOFS.update({
             "which relations (:258) binds, the retained map is keyed by that event id, and the reducer "
             "sets state['started'] for exactly that row (readers:321). A complete projection therefore "
             "always has a started state, and :655 cannot be the first refusal in replay.")),
-    'dg5/site/pm_goal_dg_s_readers.py:792': dict(
-        kind='construction', families=['goal_run.started'],
-        depends_on=[],
-        sites=[(READERS, 792), (READERS, 783), (READERS, 763)],
-        argument=(
-            "In every reader body, Storage generations move only inside the named synchronous hooks: "
-            "the helpers acquire, read, decode and issue in-memory originals, and perform no Storage "
-            "transaction. StartedReaders._hook brackets each hook call with the exact commit-generation "
-            "and cell-generation deltas and adds them to self._delta (readers:763-769), and _passive "
-            "snapshots both generations before the body runs (readers:783-784). The finally comparison "
-            "at :792 is therefore an identity over the modeled hook transitions of this family: the "
-            "measured generation movement is exactly the sum the hooks were charged, so it cannot "
-            "refuse in a complete reader call.")),
 })
 
 PROOFS.update({
@@ -170,29 +144,6 @@ PROOFS.update({
             "validations at :980-983, so every field is a plain JSON value preserved byte-for-byte by "
             "the canonical frame encoding. producer25(stored) is therefore the submission by "
             "construction, and :1025 cannot refuse in a complete commit_start call.")),
-    'dg5/site/pm_goal_dg_s_start.py:1326': dict(
-        kind='construction', families=['goal_run.started'],
-        depends_on=[],
-        sites=[(START, 1326), (START, 959), (START, 1020)],
-        argument=(
-            "dedupe() is entered only from commit_start's head, which has just read the same "
-            "reservation and required its state to be 'published' (:959-961); the only intervening "
-            "step is request-schema validation, which writes nothing. The reservation for a start "
-            "operation is created by the single-candidate append at :1020 ([submission]), so a "
-            "published start reservation holds exactly one event id. The re-read at :1326 therefore "
-            "always finds the published reservation with one event, and the check cannot refuse.")),
-    'dg5/site/pm_goal_dg_s_start.py:1406': dict(
-        kind='entailment', families=['goal_run.started'],
-        depends_on=['dg5/site/pm_goal_dg_s_start.py:1022'],
-        sites=[(START, 1406), (START, 1020), (START, 1022), (STORAGE, 1571), (STORAGE, 1579)],
-        argument=(
-            "commit_original is reached only after :1022 has required the append outcome 'appended' "
-            "for this operation. AppendOwner.append_original then issues first custody for the "
-            "appended reservation, and Storage.issue_first_receipt moves an appended reservation to "
-            "'receipted' before returning (pm_goal_test_storage.py:1571-1581); the first-receipt and "
-            "original_append steps in between perform no reservation transition. The reservation "
-            "commit_original re-reads is therefore still 'receipted', so :1406 cannot be the first "
-            "refusal in a complete commit_start call.")),
 })
 
 PROOFS.update({
@@ -245,21 +196,6 @@ PROOFS.update({
             "the following line subscripts the None selector. The ef0 discovery chain for "
             "S4/retained_before_any_start stops exactly there (exception after widening to :458), so "
             ":77 cannot be the sole refusal of a complete retained acquisition.")),
-    'dg5/site/pm_goal_dg_s_readers.py:917': dict(
-        kind='entailment', families=['goal_run.started'],
-        depends_on=['dg5/site/pm_goal_dg_s_readers.py:812', 'dg5/site/pm_goal_dg_s_readers.py:920'],
-        sites=[(READERS, 917), (READERS, 812), (READERS, 920), (SOURCE, 283), (SOURCE, 293)],
-        argument=(
-            "An incomplete generic snapshot in read_current carries a defect recorded by acquire: a "
-            "custody defect on a row returns the snapshot before that row is appended "
-            "(pm_goal_test_source.py:283-286) and a scan tail returns it at the defective segment "
-            "(:293-297). If the defect is at or before the start row, the start row is absent and "
-            ":812 refuses inside h_generic before :917 is reached. If the defect is after the start "
-            "row, the snapshot rows and coverage stop short of the projected generation's processed "
-            "prefix or its token has since moved, so the stale-generic-token comparison at :920 "
-            "refuses later in the same call. The segment-tail shape of this argument is exactly why "
-            "the garbage-tail supplement case was withdrawn: bytes past the segment watermark are "
-            "not part of the snapshot at all. Hence :917 has no single-defect witness.")),
 })
 
 PROOFS.update({

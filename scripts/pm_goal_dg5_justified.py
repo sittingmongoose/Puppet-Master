@@ -77,6 +77,33 @@ def _frames(detail):
 PROOF_MODULES = ('u', 's', 'ca', 'r', 'cf', 'shared')   # pm_goal_dg5_proofs_<x>.py or pm_goal_dg5_justified_<x>.py (SPLIT.md)
 
 
+WITHDRAWN_FILE = ROOT / 'scripts/pm_goal_dg5_withdrawn_proofs.json'
+
+
+def withdrawn_proofs():
+    """Proof keys a ruling withdrew or ruled UNSOUND, read from the data file.
+
+    One entry per key: the row, the module the ruling names, the ruling source and its
+    reason. AMEND1-MATRIX review F7; FINAL-LIST-113.r6 and later rulings."""
+    try:
+        data = json.loads(WITHDRAWN_FILE.read_text())
+    except (OSError, ValueError) as error:
+        raise SystemExit(f'{WITHDRAWN_FILE.name}: {error}')
+    return {entry['row']: entry for entry in data.get('keys', [])}
+
+
+def _refuse_withdrawn(label, row, withdrawn):
+    """Fail closed: a withdrawn/UNSOUND key never loads, even if a definition returns."""
+    entry = withdrawn.get(row)
+    if entry is None:
+        return
+    reason = entry.get('why') or entry.get('route') or ''
+    raise SystemExit(f'{label}: written-proof key {row} is withdrawn/UNSOUND by {entry["ruling"]}'
+                     + (f' ({reason})' if reason else '')
+                     + '; remove the definition (scripts/pm_goal_dg5_withdrawn_proofs.json)')
+
+
+
 class ProofDuplicateError(ValueError):
     """A written-proof key is defined more than once (TOOL-ISSUES T316): fail closed, nothing judged."""
 
@@ -192,7 +219,7 @@ def written_proofs():
     silently drop) or across modules — raises ProofDuplicateError before anything is returned
     (TOOL-ISSUES T316, lead ruling 1121224233-9f91 (2); fail closed, nothing judged)."""
     import importlib
-    out, seen = {}, {}
+    out, seen, withdrawn = {}, {}, withdrawn_proofs()
     for name in PROOF_MODULES:
         for stem in ('pm_goal_dg5_proofs_', 'pm_goal_dg5_justified_'):  # either per-family file name
             try:
@@ -203,6 +230,7 @@ def written_proofs():
                 continue
             label = 'scripts/%s%s.py' % (stem, name)
             for key, line in _proof_key_occurrences(module, label):
+                _refuse_withdrawn(label, key, withdrawn)
                 if key in seen:
                     first_label, first_line = seen[key]
                     where = 'within' if first_label == label else 'across'
