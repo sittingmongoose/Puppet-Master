@@ -12,14 +12,56 @@ file any landing branch touched: stale governance hashes, and a plan-migration s
 
 ## Commands
 
-    python3 scripts/pm-landing-check.py --base origin/main   # at landing, in the shared checkout
-    python3 scripts/pm-landing-check.py --record-baseline    # refresh, in a full checkout at main
+From a clone with the rebased, pushed topic, run the check under `long-job`:
 
-Both hand the aggregate checks `--subcheck-timeout-seconds`, 1800 by default; see "Subchecks that
-time out" below.
+    long-job start pm-check-my-topic -- python3 -B scripts/pm-land.py check fix/my-topic --on nas1
+    long-job wait pm-check-my-topic --timeout 1500
 
-At landing, also pass `--keep-check-reports <dir>`, a directory under
-`/mnt/Cursor/PuppetMaster-Evidence/`. It keeps each check's full report, every row it printed, as
+Wait again on exit 124. Nas1 is the default. Use `--on 1070ti` for the slower fallback. The
+controller never takes the landing lock and can run while a hand lander holds it. It reads
+shared inputs and writes its evidence and its own remote checkout. It checks the
+named topic at its exact published tip and uses a full, freshly fetched `origin/main` SHA as the
+base. On repeated SSH failures it prints the remote job and evidence directory. Reconnect to
+that job or retry on the other host.
+The checker removes its temporary remote worktree only after a completed check run (`exit_code`
+0, 1 or 2) whose job and process tree (the systemd unit cgroup, or every descendant proven ended
+under `setsid`) have exited. Failed runs (including checker exit 3) and runs with live or
+unverified processes preserve the remote copy and print and save to `cleanup-receipt.json` its
+host, path, job, state and the command to remove it by hand once nothing uses it.
+
+`check` returns 0 when the checker ran and the result was recorded, including a recorded checker
+exit of 2 or 3. It prints the separate checker exit and the `record.json` receipt path on the
+evidence share. Nonzero means the tool could not run or record the check.
+
+Under the hand lander's lock, immediately before fast-forward and again before pushing, use:
+
+    python3 -B "$PM_LAND_SCRIPT" verify --receipt "$PM_LAND_RECEIPT" \
+        --commit "$PM_LAND_COMMIT" --base "$PM_LAND_BASE"
+
+`PM_LAND_SCRIPT` is the absolute path to a trusted copy of the current script. The optional
+commit and base default to the receipt's full SHAs. Fetch `origin/main` in the shared checkout
+first. `verify` reads the receipt, report, shared checkout and current origin refs. It checks the
+check host's independent receipt witness, which attests to a clean full remote checkout and
+survives its removal. If the checkout was preserved, verification inspects it again. The shared
+checkout is for landing only. Verification names and refuses any tracked change or hidden index
+flag anywhere in the checkout. It also checks the full ignored inventory by path and SHA-256 and
+ignored collisions at newly tracked paths. File metadata changes during the
+inventory trigger one re-scan. Verification exits 0 when the receipt matches and reports the
+original checker exit. A mismatch is named and returns nonzero. The checker exit still governs
+the landing judgment.
+
+The November 21, 2026 trials checked the unchanged commits listed below.
+
+| Host | Checked commit | Landing check | Shard check |
+| --- | --- | --- | --- |
+| Nas1 | `2b83b7143f` | 3,053 s (51 min), exit 0 | 39 s |
+| 1070ti | `b19f171724` | 8,240 s (2 h 17 min), exit 1 | 96 s |
+
+The remote check passes `--subcheck-timeout-seconds 1800` to the aggregates. See "Subchecks
+that time out" below.
+
+The remote runner passes `--keep-check-reports <dir>` to `pm-landing-check.py` with a directory
+under `/mnt/Cursor/PuppetMaster-Evidence/`. It keeps each check's full report, every row it printed, as
 `<dir>/<check>.json` beside the `--json` output, so the landing can later be replayed exactly. The
 `--json` report keeps only the rows it reports, and a replay from it alone cannot see the rest of a
 sampled subcheck's printed rows, which is what the readiness growth counter reads. It also keeps each
@@ -45,9 +87,8 @@ from its export is not truncated; one whose export falls back is, and the summar
 repository, so every file outside a sparse cone reads as missing: a dry run at `ecb77f4e6c` on a
 worktree without `Concepts` and `tests` produced three blocking items and 76 new failures that were
 all the absent cone, in two truncated subchecks, and none of them about the branch. The tool was
-right to stop, but a lander would have read those as theirs. Run it in the shared checkout at
-landing or after `git sparse-checkout disable`; `--allow-sparse` overrides it for a deliberate
-partial run.
+right to stop, but a lander would have read those as theirs. Run it in a full checkout on the idle
+machine. `--allow-sparse` is for a deliberate partial run outside the landing flow.
 
 The recorded `commit` is the commit the baseline was taken at, and it has to be a commit of `main`:
 rule 2 applies only while that commit is an ancestor of the landing's base (see "Only against a
@@ -99,7 +140,7 @@ There is no staleness exception or pre-existing classification for an input mism
 recorded input edition; never re-record a baseline to make a pending landing pass.
 
 Older baselines without this field cannot establish input equivalence and the new checker refuses
-them. Adopt the recorder during a scheduled refresh between landings, using the full local worktree
+them. Adopt the recorder during a scheduled refresh between landings, using a full worktree on the idle machine
 at the pushed `main`; the old checker accepts the additive field. The adoption order is documented
 in [the readiness drift notes](readiness-drift-20261011/NOTES.md). This fix does not refresh the
 repository baseline or authorize a governance reseal.
@@ -574,26 +615,143 @@ someone names it. The seventh, the
 tree that records a baseline; the runbook below does that. The baseline records what it was taken
 with, in `untracked_inputs`.
 
-The `Plans/.audits` inputs need copying too, and the recipe above does not cover them. Most of that
-directory is tracked; these inputs are gitignored and exist only in the shared checkout. A fresh
-worktree without them records four phantom rows the shared checkout never has: `stale_audit_status_index`
-in each aggregate, because the tracked `_audit_status_index.json` names `FINAL_REPORT.md` files the tree
-does not have, and `missing_ref` on `Plans/00-plans-index.md` line 135 in each aggregate, because that
-line names the widget-followup `audit_report.json`. A phantom row in a baseline excuses a later real
-failure of the same key as pre-existing. Copy from the shared checkout:
+Both aggregate checks walk files on disk. The contract-reference linter reads every eligible
+Markdown and JSON file under `Plans/`, including ignored files in `Plans/.audits/`. The usage,
+web and migration checks also select JSONL, YAML and schema inputs. Discover these inputs in
+both checkouts with the same Git inventory:
 
-    Plans/.audits/audit-20260827-001-pmconcept7-usage-recovery/FINAL_REPORT.md
-    Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/FINAL_REPORT.md
-    Plans/.audits/audit-20260828-002-settings-tome-tabs-preport/        (whole dir)
-    Plans/.audits/audit-20260828-003-chat-56-fast-lane/                 (whole dir)
-    Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/FINAL_REPORT.md
-    Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json
-    Plans/.audits/audit-20260830-001-pmconcept7-live-resize-preview/    (whole dir)
-    Plans/.audits/event-authority-2026-08-12/NEXT_STEPS_20260910.md
-    Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_SHEET_ANSWERS_20260910.json
-    Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_SHEET_PLAIN_20260909.md
+```sh
+git ls-files --others --ignored --exclude-standard -z -- \
+    Plans reports scripts Concepts tests .puppet-master/project
+```
 
-Copy only these, not the whole .audits folder (about 30 GB).
+Apply the checks' file selection to that list. Keep the Plan text and reference types
+(`.md`, `.json`, `.jsonl`, `.yaml`, `.yml`, `.schema`, `.py`, `.txt`, `.tsv`, and files
+whose name contains `.schema.`), the readiness audit directory, and the validator tree under
+`scripts/` outside Python caches. Keep fixture text and source files under the other listed
+roots and assets read by the PM7 concept. For GUI assets, use the checked GUI asset policy's full
+selection: every one of its `SOURCE_ROOTS` (not only `tests/`), its source extensions and its
+exclusions; `pm-land.py` reads them from the checked validator. Include explicitly declared evidence and readiness
+hash targets from the Spec Lock, evidence records, audit closure registry, legacy audit
+inventory and readiness receipt even if their extensions differ. The raw-capture manifest supplies the exact
+files to hash behind `tests/agent_packet_restrictions`.
+
+Copy the selected files from the shared checkout and preserve their relative paths. Compare
+the set of paths and each SHA-256 before checking. Repeat both comparisons before fast-forward
+and before push. A file visible on only one side invalidates the receipt. A full audit-folder
+copy can include tens of gigabytes of unrelated capture data.
+
+Anyone who writes a checker input in the shared checkout, including readiness receipts, currentness editions and other ignored inputs the check reads, must hold the landing lock.
+
+## Landing by hand
+
+1. Take the landing lock before the landing fetch: run
+   `mkdir /mnt/Cursor/PuppetMaster-Evidence/scratch/landing-lock/held`. Success means you hold
+   the lock; write your agent name, branch and UTC time to `held/holder.txt`. If `mkdir` fails,
+   read `holder.txt` and clear the directory only if its latest time is more than 90 minutes
+   old, otherwise wait five minutes and retry. While you hold it, rewrite the time in
+   `holder.txt` at least every 25 minutes, including before each long-job wait; the 90 minutes
+   count from the latest time written. On the remote-host route the check itself runs BEFORE
+   you take the lock; take it for `verify`, the fast-forward, the push, the Plans follow-up and the worktree
+   removal. This is the one lock procedure for every lander, whichever route its checks take;
+   there is no other guard, flock or token. Inspect the shared HEAD, fetched primary and any
+   interrupted landing before proceeding. Before each publication step, confirm `holder.txt`
+   still names your agent and branch; if it does not, stop and hand off to the current holder.
+   Release the lock with `rm -r` of the `held` directory only after finishing, and only your
+   own holder.
+2. In the topic worktree, fetch and rebase on `origin/main`, then push the rebased topic. For
+   Plans edits, re-read cited passages against the current text. Regenerate `_shards` and
+   `.plan_index` where required.
+3. Run `pm-land.py check` for that branch before taking the lock; the controller never needs
+   it. Use the **recorded checker exit**. Stop on 2 or 3.
+   For exit 1, compare changed pre-existing rows with the baseline and rerun any timed-out
+   subchecks on their own in a full checkout at the checked SHA with the same inputs. Resolve
+   what the report names using the baseline and staleness rules above. Apply the shard-check
+   rule to the remote shard result too.
+4. In the shared checkout, set `PM_LAND_RECEIPT` to the receipt and `PM_LAND_COMMIT` and
+   `PM_LAND_BASE` to its full `head` and `base` SHAs. Fetch and run `verify` under the lock.
+   The shared checkout is for landing only. Verification refuses any staged or unstaged tracked
+   change, including deletions, any skip-worktree or assume-unchanged flag, and visible
+   untracked checker inputs anywhere in the checkout. It names the affected paths.
+   If the base or the branch moved, repeat the rebase, push and check.
+5. With the lock held, fast-forward only after `verify` passes immediately beforehand.
+   Run `git merge --ff-only --no-overwrite-ignore "$PM_LAND_COMMIT"`.
+   Confirm that shared HEAD and its tree match the receipt. If Git refuses because an ignored
+   file is in the way, stop and hand the branch over with that path; never delete or move the
+   file to make room. If the fast-forward is incomplete, retain the lock and inspect HEAD,
+   index and working files before any repair. Preserve any other writer's changes.
+6. Run `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` in the
+   shared checkout. A failure on the topic's paths stops publication. If all failures name other
+   paths, confirm the shard exists in HEAD and its HEAD manifest references it. Report those
+   paths to Jared.
+7. Fetch and run `verify` again under the lock. Push only after it passes immediately beforehand.
+8. Push the exact checked commit to primary main with a lease on the checked base. After a
+   completed fast-forward fails publication, use freshly fetched primary main. If a push
+   returned an uncertain result, check primary first and reconcile against what it accepted.
+   For an unpublished candidate, run `rollback_unpublished` below under the lock. It confirms
+   the index still matches HEAD, refuses any tracked deletion, tracked modification or hidden
+   index flag anywhere in the shared checkout, and checks the reverse transition for ignored
+   or untracked files, including parent-file and directory collisions. Run
+   `reset --keep` only immediately after both checks pass. If either refuses, keep the lock and
+   hand off the candidate,
+   fetched target, HEAD, `git status --porcelain` and the refusal paths without resetting. If
+   you no longer hold the lock, hand off to the current holder. Never use `--hard` in the shared checkout.
+9. Complete the Plans follow-up below under the same lock. Reseals follow the assigned
+   reseal record.
+10. Confirm primary main contains the exact topic tip, then check the original worktree and
+    branch before removal. Inspect porcelain, `git ls-files -v` and
+    `git ls-files --others --ignored --exclude-standard`. Hand off a switched, changed or
+    uncertain worktree, including hidden tracked edits or authored ignored files. Remove the
+    clean worktree from its original clone with `git worktree remove "$PM_LAND_TOPIC_WORKTREE"`.
+    Then confirm the branch still names the verified tip,
+    `test "$(git rev-parse --verify "refs/heads/$PM_LAND_TOPIC_BRANCH")" = "$PM_LAND_COMMIT"`,
+    and delete it with `git branch -d "$PM_LAND_TOPIC_BRANCH"`. `git branch -d` also refuses a
+    branch that another worktree has checked out (such as one that attached at the same tip
+    after the removal) and a tip `main` doesn't contain. If either step refuses, leave the branch
+    and hand it off. Never use `git branch -D` or `git update-ref -d` here.
+    Confirm `holder.txt` still names you, then release the lock with `rm -r` of the `held`
+    directory.
+
+### Locked fast-forward, push and rollback commands
+
+Set `PM_LAND_SCRIPT` to the absolute trusted script path. Hold the landing lock (step 1) and
+run these functions from the shared checkout. Renew `holder.txt` before each long wait, and
+confirm it still names you before each publication; if it does not, stop and hand off. Apply
+the report and shard judgments in the numbered steps.
+
+```sh
+verify_checked() {
+    git fetch origin || return
+    python3 -B "$PM_LAND_SCRIPT" verify --receipt "$PM_LAND_RECEIPT" \
+        --commit "$PM_LAND_COMMIT" --base "$PM_LAND_BASE"
+}
+
+fast_forward_checked() {
+    verify_checked || return
+    git merge --ff-only --no-overwrite-ignore "$PM_LAND_COMMIT"
+}
+
+push_checked() {
+    primary=$(git remote get-url --push origin) || return
+    test "$(git rev-parse HEAD)" = "$PM_LAND_COMMIT" || return
+    verify_checked || return
+    git push --force-with-lease="refs/heads/main:$PM_LAND_BASE" \
+        "$primary" "$PM_LAND_COMMIT:refs/heads/main"
+}
+
+rollback_unpublished() {
+    git fetch origin || return
+    PM_LAND_ROLLBACK_BASE=$(git rev-parse --verify 'origin/main^{commit}') || return
+    git diff --cached --quiet --no-ext-diff --ignore-submodules=none --ita-visible-in-index HEAD -- || return
+    python3 -B "$PM_LAND_SCRIPT" verify --rollback-check \
+        --from "$PM_LAND_COMMIT" --to "$PM_LAND_ROLLBACK_BASE" || return
+    git reset --keep "$PM_LAND_ROLLBACK_BASE"
+}
+```
+
+Run `fast_forward_checked` after judging the remote result. After the shared shard
+check, run `push_checked`. If it fails, follow step 8 immediately. If the checkout
+has a push mirror, publish it separately after the primary has accepted the commit.
 
 ## Refreshing it after a Plans landing
 
