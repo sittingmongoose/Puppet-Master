@@ -403,7 +403,11 @@ function midFitAll(root) {
     changed = true;
   });
   fixedColumns.forEach(({ el, best }) => { el.textContent = best; });
-  fixedColumns.forEach(({ el, full, bestN }) => { confirmMidFit(el, full, bestN); });
+  let pending = fixedColumns.map(({ el, full, bestN }) => ({ el, full, n: Math.max(4, bestN) + 1 }));
+  while (pending.length) {
+    pending = pending.filter(item => item.n > 4 && overflows(item.el));
+    pending.forEach(item => { item.n -= 1; item.el.textContent = midText(item.full, item.n); });
+  }
   if (changed) midDistinct(els);
 }
 /* two different names in one list never read the same ("crates/puppet-….rs" twice): such a pair takes the plain cut */

@@ -1850,6 +1850,7 @@
     e.remove();
   }
   function disposeLens(L, keepMark) {
+    unwatchFilesIntent(L);
     if (L.carryPreviews) { L.carryPreviews.forEach(removeCarryPreview); L.carryPreviews.clear(); }
     var carried = false;
     L.held = null;
@@ -1888,6 +1889,8 @@
   var parkedLenses = { over: new Map(), under: new Map() };
   function parkLens(L) {
     /* a parked lens abandons its hold (R43 F2): a release while it is parked never reaches it, and it would come back bent */
+    unwatchFilesIntent(L);
+    if (L.carryPreviews) { L.carryPreviews.forEach(removeCarryPreview); L.carryPreviews.clear(); }
     L.held = null;
     if (L.pending) pressMark(L.pending, false);
     L.pending = null;
@@ -2267,6 +2270,13 @@
     hiddenLenses.delete(L); showUnwatch(L);
     if (!L.carryFrame && switchMotion === 'hop' && cfg.sel === '.pmw-strip' &&
         target.getAttribute('data-tab-id') === 'dashboard:home') sampleCarryFrame(L);
+    if (filesSwitcher(strip)) {
+      if (switchMotion === 'hop' && (!L.filesCarrySeen || L.filesCarrySeen.size < 2)) watchFilesIntent(L);
+      else {
+        unwatchFilesIntent(L);
+        if (L.carryPreviews && L.carryPreviews.size) { L.carryPreviews.forEach(removeCarryPreview); L.carryPreviews.clear(); }
+      }
+    }
     if (L.scroller && L.scroller.isConnected) {
       var out;
       if (pre && pre.scroller === L.scroller && pre.out !== undefined) out = pre.out;
@@ -2429,7 +2439,10 @@
     var cfg = L.cfg; if (!T.matches(cfg.active || '.active')) return;
     if (filesSwitcher(L.strip)) {
       var chosen = T.getAttribute('data-tab');
-      if (chosen === 'open' || chosen === 'changed') (L.filesCarrySeen || (L.filesCarrySeen = new Set())).add(chosen);
+      if (chosen === 'open' || chosen === 'changed') {
+        (L.filesCarrySeen || (L.filesCarrySeen = new Set())).add(chosen);
+        if (L.filesCarrySeen.size >= 2) unwatchFilesIntent(L);
+      }
     }
     /* (a carried block lands by its own clock, which a long task right after the press may have held back) */
     var K = L.carry, wait = K ? K.dur - carryAge(K) : L.hopEnd - performance.now();
@@ -2840,7 +2853,7 @@
     /* Keep the original chip drawn until the carry's first advancing pose. */
     function edgeVisibility(el, before, after) {
       var anim = el.animate([ { opacity: before, offset: 0, easing: 'steps(1, end)' },
-        { opacity: after, offset: Math.min(0.5, 8 / T.span) }, { opacity: after, offset: 1 }],
+        { opacity: after, offset: Math.min(0.5, 0.5 / T.span) }, { opacity: after, offset: 1 }],
         { duration: T.span, fill: 'both' });
       anim.pause(); anim.currentTime = 0;
       anims.push(anim);
@@ -3010,13 +3023,12 @@
     return null;
   }
   function filesCarryIntent(e) {
-    if (!switchOn() || !e.target.closest?.('#panel-files > .pm-segtab')) return;
+    if (!switchOn()) return;
     var hit = stripAt(e.target), L = hit && lenses.get(hit.strip);
     if (!L || !choosable(hit.item, hit.cfg) || hit.item.contains(e.relatedTarget)) return;
     prepareFilesCarry(L, hit.cfg, hit.strip, hit.item);
   }
   function endFilesCarryIntent(e) {
-    if (!e.target.closest?.('#panel-files > .pm-segtab')) return;
     var hit = stripAt(e.target), L = hit && lenses.get(hit.strip);
     var preview = L && L.carryPreviews?.get(hit.item);
     if (!preview || hit.item.contains(e.relatedTarget) ||
@@ -3024,10 +3036,22 @@
     L.carryPreviews.delete(hit.item);
     removeCarryPreview(preview);
   }
-  document.addEventListener('pointerover', filesCarryIntent, true);
-  document.addEventListener('focusin', filesCarryIntent, true);
-  document.addEventListener('pointerout', endFilesCarryIntent, true);
-  document.addEventListener('focusout', endFilesCarryIntent, true);
+  function watchFilesIntent(L) {
+    if (!L || L.filesIntentOn || !L.strip) return;
+    L.filesIntentOn = true;
+    L.strip.addEventListener('pointerover', filesCarryIntent, true);
+    L.strip.addEventListener('focusin', filesCarryIntent, true);
+    L.strip.addEventListener('pointerout', endFilesCarryIntent, true);
+    L.strip.addEventListener('focusout', endFilesCarryIntent, true);
+  }
+  function unwatchFilesIntent(L) {
+    if (!L || !L.filesIntentOn || !L.strip) return;
+    L.filesIntentOn = false;
+    L.strip.removeEventListener('pointerover', filesCarryIntent, true);
+    L.strip.removeEventListener('focusin', filesCarryIntent, true);
+    L.strip.removeEventListener('pointerout', endFilesCarryIntent, true);
+    L.strip.removeEventListener('focusout', endFilesCarryIntent, true);
+  }
   document.addEventListener('pointerdown', function (e) {
     if (!switchOn() || e.button !== 0 || reduced()) return;
     var hit = stripAt(e.target); if (!hit) return;
