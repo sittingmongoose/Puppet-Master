@@ -153,30 +153,6 @@ PROOFS = {
             '(the read_event_absent chain witnesses exactly this), so :1633 selects the '
             'read_event code and never gates acceptance alone. It closes by this proof '
             'once :1624 is closed.')),
-    SITE + '441': dict(
-        kind='entailed-by-stored-part-cap',
-        families=FAMILIES,
-        depends_on=[SITE + '473'],
-        sites=[(ST, 61), (ST, 441), (ST, 1486), (ST, 1487)],
-        argument=(
-            'encode_event_frame at :441 caps the canonical payload at '
-            'PAYLOAD_CAP=16777216 (ST:60). The payload bytes are canonical(event) '
-            'verbatim, and every append first requires the identical bytes to fit '
-            'STORED_PART_CAP=16384 (ST:61) at :1487, right after the whole EventRecord '
-            'validation at :1486. The tighter cap always refuses first by three orders '
-            'of magnitude, so no complete append call can make :441 refuse alone. It '
-            'closes by this proof once :473 is closed.')),
-    SITE + '470': dict(
-        kind='code-selection',
-        families=FAMILIES,
-        depends_on=[SITE + '473'],
-        sites=[(ST, 470), (ST, 473)],
-        argument=(
-            'validate_event_record at :470 requires the event to be a dict before the '
-            'whole EventRecord schema at :471-473, whose root type is object: a non-dict '
-            'event fails the identical type predicate there (the event_record_type chain '
-            'witnesses exactly this). With :470 cut, no non-dict event is accepted; it '
-            'selects the precise type code and closes once :473 is closed.')),
 }
 
 

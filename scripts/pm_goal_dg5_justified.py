@@ -77,11 +77,37 @@ def _frames(detail):
 PROOF_MODULES = ('u', 's', 'ca', 'r', 'cf', 'shared')   # pm_goal_dg5_proofs_<x>.py or pm_goal_dg5_justified_<x>.py (SPLIT.md)
 
 
+WITHDRAWN_FILE = ROOT / 'scripts/pm_goal_dg5_withdrawn_proofs.json'
+
+
+def withdrawn_proofs():
+    """Proof keys a ruling withdrew or ruled UNSOUND, read from the data file.
+
+    One entry per key: the row, the module the ruling names, the ruling source and its
+    reason. AMEND1-MATRIX review F7; FINAL-LIST-113.r6 and later rulings."""
+    try:
+        data = json.loads(WITHDRAWN_FILE.read_text())
+    except (OSError, ValueError) as error:
+        raise SystemExit(f'{WITHDRAWN_FILE.name}: {error}')
+    return {entry['row']: entry for entry in data.get('keys', [])}
+
+
+def _refuse_withdrawn(label, row, withdrawn):
+    """Fail closed: a withdrawn/UNSOUND key never loads, even if a definition returns."""
+    entry = withdrawn.get(row)
+    if entry is None:
+        return
+    reason = entry.get('why') or entry.get('route') or ''
+    raise SystemExit(f'{label}: written-proof key {row} is withdrawn/UNSOUND by {entry["ruling"]}'
+                     + (f' ({reason})' if reason else '')
+                     + '; remove the definition (scripts/pm_goal_dg5_withdrawn_proofs.json)')
+
+
 def written_proofs():
     """Per-family written proofs: PROOFS = {row: dict(kind, argument, depends_on, sites=[(path, line)])}.
     Each proof is re-bound here to the exact source bytes of its cited sites."""
     import importlib
-    out = {}
+    out, withdrawn = {}, withdrawn_proofs()
     for name in PROOF_MODULES:
         for stem in ('pm_goal_dg5_proofs_', 'pm_goal_dg5_justified_'):  # either per-family file name
             try:
@@ -90,8 +116,10 @@ def written_proofs():
                 if error.name != stem + name:
                     raise
                 continue
+            label = 'scripts/%s%s.py' % (stem, name)
             for row, proof in getattr(module, 'PROOFS', {}).items():
-                out[row] = dict(proof, module='scripts/%s%s.py' % (stem, name),
+                _refuse_withdrawn(label, row, withdrawn)
+                out[row] = dict(proof, module=label,
                                 bound_sites=[_bind(p, l) for p, l in proof.get('sites', [])],
                                 depends_on=list(proof.get('depends_on', [])))
     return out
