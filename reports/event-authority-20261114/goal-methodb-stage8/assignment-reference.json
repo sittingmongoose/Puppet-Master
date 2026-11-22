@@ -1,0 +1,834 @@
+[
+  {
+    "accepted_branches": {
+      "0": {
+        "physical_key": "goal_cancel_assignment_audit_reference.v1:32326136326134612d356633642d343632642d383335612d306565386235356537613963:544f2d70726f6a2d3861373565643866376163623434323461326238:544f2d7468722d3564323366646530343237343431336238373538:544f2d676f616c2d3662643639363030343234373461623162636166:544f2d6f702d3434326664336532313761623466323962396461:attempt:0",
+        "record": {
+          "assignment_attempt": 0,
+          "audit_payload": {
+            "blake3": "0ae01d66509009f9225339065d1837bd5268aecf9ac65b286ed025b12ce38122",
+            "byte_size": 24651,
+            "media_type": "application/vnd.pm.goal-cancel-assignment-audit+msgpack"
+          },
+          "audit_schema_ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageAssignmentAudit",
+          "audit_value_codec": "pm.storage.canonical_msgpack.v1",
+          "audit_value_sha256": "c5cf6f4a0ea57ee2dfc1f964a993e88a6503802098fbc6dd6cb1185da6e0fb86",
+          "complete_original_input_commitment": "7a15e697af041d1d1880313aac90ea3c9acdedb75d1a121714b77ffe04dbed6d",
+          "operation_id": "TO-op-442fd3e217ab4f29b9da",
+          "original_issuer_transaction_id": "TEST_ONLY:assignment-audit-tx:5480dd4a-6590-4f0e-94ae-c0ea9ce1138f",
+          "scope": {
+            "goal_id": "TO-goal-6bd6960042474ab1bcaf",
+            "project_id": "TO-proj-8a75ed8f7acb4424a2b8",
+            "storage_instance_id": "22a62a4a-5f3d-462d-835a-0ee8b55e7a9c",
+            "thread_id": "TO-thr-5d23fde04274413b8758"
+          }
+        },
+        "schema_id": "pm.storage_value.goal_cancel_assignment_audit_reference.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "22a62a4a-5f3d-462d-835a-0ee8b55e7a9c"
+      }
+    },
+    "examples": {
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/closed_members": {
+        "control_name": "0",
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/assignment_attempt/minimum": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "assignment_attempt"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/assignment_attempt/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "assignment_attempt"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/audit_schema_ref/const": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_schema_ref"
+        ],
+        "value": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageAssignmentAuditx"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/audit_value_codec/const": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_value_codec"
+        ],
+        "value": "pm.storage.canonical_msgpack.v1x"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/audit_value_sha256/pattern": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_value_sha256"
+        ],
+        "value": "c5cf6f4a0ea57ee2dfc1f964a993e88a6503802098fbc6dd6cb1185da6e0fb86\n"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/audit_value_sha256/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_value_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/complete_original_input_commitment/pattern": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "complete_original_input_commitment"
+        ],
+        "value": "7a15e697af041d1d1880313aac90ea3c9acdedb75d1a121714b77ffe04dbed6d\n"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/complete_original_input_commitment/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "complete_original_input_commitment"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/operation_id/minLength": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/operation_id/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/original_issuer_transaction_id/minLength": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "original_issuer_transaction_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/original_issuer_transaction_id/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "original_issuer_transaction_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/required": {
+        "control_name": "0",
+        "member": [
+          "remove",
+          "scope"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/type": {
+        "control_name": "0",
+        "path": [
+          "record"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/PackReference/closed_members": {
+        "control_name": "0",
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "audit_payload"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/PackReference/properties/blake3/pattern": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_payload",
+          "blake3"
+        ],
+        "value": "0ae01d66509009f9225339065d1837bd5268aecf9ac65b286ed025b12ce38122\n"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/PackReference/properties/blake3/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_payload",
+          "blake3"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/PackReference/properties/byte_size/maximum": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_payload",
+          "byte_size"
+        ],
+        "value": 16777217
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/PackReference/properties/byte_size/minimum": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_payload",
+          "byte_size"
+        ],
+        "value": 0
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/PackReference/properties/byte_size/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_payload",
+          "byte_size"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/PackReference/properties/media_type/const": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_payload",
+          "media_type"
+        ],
+        "value": "application/vnd.pm.goal-cancel-assignment-audit+msgpackx"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/PackReference/required": {
+        "control_name": "0",
+        "member": [
+          "remove",
+          "blake3"
+        ],
+        "path": [
+          "record",
+          "audit_payload"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/PackReference/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_payload"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/closed_members": {
+        "control_name": "0",
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/properties/goal_id/minLength": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/properties/goal_id/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/properties/project_id/minLength": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/properties/project_id/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/properties/storage_instance_id/minLength": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/properties/storage_instance_id/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/properties/thread_id/minLength": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "scope",
+          "thread_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/properties/thread_id/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "scope",
+          "thread_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/required": {
+        "control_name": "0",
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "scope"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/StorageAssignmentAuditReference/closed_members": {
+        "control_name": "0",
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/StorageAssignmentAuditReference/properties/physical_key/minLength": {
+        "control_name": "0",
+        "path": [
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/StorageAssignmentAuditReference/properties/physical_key/type": {
+        "control_name": "0",
+        "path": [
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/StorageAssignmentAuditReference/properties/schema_id/const": {
+        "control_name": "0",
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.storage_value.goal_cancel_assignment_audit_reference.v1x"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/StorageAssignmentAuditReference/properties/schema_version/const": {
+        "control_name": "0",
+        "path": [
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/StorageAssignmentAuditReference/properties/storage_instance_id/minLength": {
+        "control_name": "0",
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/StorageAssignmentAuditReference/properties/storage_instance_id/type": {
+        "control_name": "0",
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/StorageAssignmentAuditReference/required": {
+        "control_name": "0",
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/StorageAssignmentAuditReference/type": {
+        "control_name": "0",
+        "path": [],
+        "value": null
+      }
+    },
+    "family": "goal.cancelled",
+    "reference": "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/StorageAssignmentAuditReference",
+    "root": "dg5:30be96928cb627f9",
+    "route": "assignment/reference",
+    "row": "dg5/assignment/reference/schema",
+    "site": [
+      "scripts/pm_goal_dg_ca_assignment.py",
+      424
+    ],
+    "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+    "transaction": true,
+    "variant": "publish"
+  },
+  {
+    "accepted_branches": {
+      "0": {
+        "physical_key": "goal_cancel_assignment_audit_reference.v1:32326136326134612d356633642d343632642d383335612d306565386235356537613963:544f2d70726f6a2d3861373565643866376163623434323461326238:544f2d7468722d3564323366646530343237343431336238373538:544f2d676f616c2d3662643639363030343234373461623162636166:544f2d6f702d3434326664336532313761623466323962396461:attempt:0",
+        "record": {
+          "assignment_attempt": 0,
+          "audit_payload": {
+            "blake3": "0ae01d66509009f9225339065d1837bd5268aecf9ac65b286ed025b12ce38122",
+            "byte_size": 24651,
+            "media_type": "application/vnd.pm.goal-cancel-assignment-audit+msgpack"
+          },
+          "audit_schema_ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageAssignmentAudit",
+          "audit_value_codec": "pm.storage.canonical_msgpack.v1",
+          "audit_value_sha256": "c5cf6f4a0ea57ee2dfc1f964a993e88a6503802098fbc6dd6cb1185da6e0fb86",
+          "complete_original_input_commitment": "7a15e697af041d1d1880313aac90ea3c9acdedb75d1a121714b77ffe04dbed6d",
+          "operation_id": "TO-op-442fd3e217ab4f29b9da",
+          "original_issuer_transaction_id": "TEST_ONLY:assignment-audit-tx:5480dd4a-6590-4f0e-94ae-c0ea9ce1138f",
+          "scope": {
+            "goal_id": "TO-goal-6bd6960042474ab1bcaf",
+            "project_id": "TO-proj-8a75ed8f7acb4424a2b8",
+            "storage_instance_id": "22a62a4a-5f3d-462d-835a-0ee8b55e7a9c",
+            "thread_id": "TO-thr-5d23fde04274413b8758"
+          }
+        },
+        "schema_id": "pm.storage_value.goal_cancel_assignment_audit_reference.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "22a62a4a-5f3d-462d-835a-0ee8b55e7a9c"
+      }
+    },
+    "examples": {
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/closed_members": {
+        "control_name": "0",
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/assignment_attempt/minimum": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "assignment_attempt"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/assignment_attempt/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "assignment_attempt"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/audit_schema_ref/const": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_schema_ref"
+        ],
+        "value": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageAssignmentAuditx"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/audit_value_codec/const": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_value_codec"
+        ],
+        "value": "pm.storage.canonical_msgpack.v1x"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/audit_value_sha256/pattern": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_value_sha256"
+        ],
+        "value": "c5cf6f4a0ea57ee2dfc1f964a993e88a6503802098fbc6dd6cb1185da6e0fb86\n"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/audit_value_sha256/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_value_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/complete_original_input_commitment/pattern": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "complete_original_input_commitment"
+        ],
+        "value": "7a15e697af041d1d1880313aac90ea3c9acdedb75d1a121714b77ffe04dbed6d\n"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/complete_original_input_commitment/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "complete_original_input_commitment"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/operation_id/minLength": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/operation_id/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/original_issuer_transaction_id/minLength": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "original_issuer_transaction_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/properties/original_issuer_transaction_id/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "original_issuer_transaction_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/required": {
+        "control_name": "0",
+        "member": [
+          "remove",
+          "scope"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/AssignmentAuditReference/type": {
+        "control_name": "0",
+        "path": [
+          "record"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/PackReference/closed_members": {
+        "control_name": "0",
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "audit_payload"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/PackReference/properties/blake3/pattern": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_payload",
+          "blake3"
+        ],
+        "value": "0ae01d66509009f9225339065d1837bd5268aecf9ac65b286ed025b12ce38122\n"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/PackReference/properties/blake3/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_payload",
+          "blake3"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/PackReference/properties/byte_size/maximum": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_payload",
+          "byte_size"
+        ],
+        "value": 16777217
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/PackReference/properties/byte_size/minimum": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_payload",
+          "byte_size"
+        ],
+        "value": 0
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/PackReference/properties/byte_size/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_payload",
+          "byte_size"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/PackReference/properties/media_type/const": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_payload",
+          "media_type"
+        ],
+        "value": "application/vnd.pm.goal-cancel-assignment-audit+msgpackx"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/PackReference/required": {
+        "control_name": "0",
+        "member": [
+          "remove",
+          "blake3"
+        ],
+        "path": [
+          "record",
+          "audit_payload"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/PackReference/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "audit_payload"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/closed_members": {
+        "control_name": "0",
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/properties/goal_id/minLength": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/properties/goal_id/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/properties/project_id/minLength": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/properties/project_id/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/properties/storage_instance_id/minLength": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/properties/storage_instance_id/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/properties/thread_id/minLength": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "scope",
+          "thread_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/properties/thread_id/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "scope",
+          "thread_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/required": {
+        "control_name": "0",
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/Scope/type": {
+        "control_name": "0",
+        "path": [
+          "record",
+          "scope"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/StorageAssignmentAuditReference/closed_members": {
+        "control_name": "0",
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/StorageAssignmentAuditReference/properties/physical_key/minLength": {
+        "control_name": "0",
+        "path": [
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/StorageAssignmentAuditReference/properties/physical_key/type": {
+        "control_name": "0",
+        "path": [
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/StorageAssignmentAuditReference/properties/schema_id/const": {
+        "control_name": "0",
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.storage_value.goal_cancel_assignment_audit_reference.v1x"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/StorageAssignmentAuditReference/properties/schema_version/const": {
+        "control_name": "0",
+        "path": [
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/StorageAssignmentAuditReference/properties/storage_instance_id/minLength": {
+        "control_name": "0",
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/StorageAssignmentAuditReference/properties/storage_instance_id/type": {
+        "control_name": "0",
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/StorageAssignmentAuditReference/required": {
+        "control_name": "0",
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/StorageAssignmentAuditReference/type": {
+        "control_name": "0",
+        "path": [],
+        "value": null
+      }
+    },
+    "family": "goal.cancelled",
+    "reference": "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/StorageAssignmentAuditReference",
+    "root": "dg5:30be96928cb627f9",
+    "route": "assignment/reference",
+    "row": "dg5/assignment/reference/schema",
+    "site": [
+      "scripts/pm_goal_dg_ca_assignment.py",
+      434
+    ],
+    "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+    "transaction": true,
+    "variant": "read"
+  }
+]

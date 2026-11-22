@@ -6,6 +6,8 @@ import gzip
 from itertools import count
 import json
 from pathlib import Path
+import multiprocessing
+import shutil
 import subprocess
 import sys
 import time
@@ -21,13 +23,20 @@ from pm_goal_dg5_methodb_stage3 import (
 HERE = Path(__file__).resolve().parent
 
 
-def assignment_fixture(route, path):
+def assignment_fixture(route, path, variant):
     from pm_goal_dg_ca_assignment import AssignedCancel, assigned_world
     from pm_goal_dg_ca_c4_cases import STEPS
 
     world = assigned_world(path)
     cancellation = AssignedCancel(world)
     cancellation.dispatch(cancellation.user_request())
+    if route == 'assignment/reference':
+        for step in ('capture_source', 'reserve_append_assignment'):
+            getattr(cancellation, step)()
+        if variant == 'publish':
+            return world, cancellation.issue_assignment_audit
+        cancellation.issue_assignment_audit()
+        return world, lambda: world.assigner.resolve_audit(cancellation.audit_key)
     method = route.split('/')[1]
     action = 'append_original' if method == 'append_reserved' else method
     for step in STEPS:
@@ -117,8 +126,8 @@ def cancel_fixture(route, path, *, enrolled=False, variant=None):
     import pm_goal_dg_cb_migration as migration
     import pm_goal_dg_cb_owners as owners
 
-    if route.startswith('C4A/'):
-        world, action = assignment_fixture(route, path)
+    if route.startswith(('C4A/', 'assignment/')):
+        world, action = assignment_fixture(route, path, variant)
     elif route == 'maintenance/source':
         if variant == 'update':
             world = migration.migration_world(path)
@@ -130,7 +139,10 @@ def cancel_fixture(route, path, *, enrolled=False, variant=None):
     else:
         world = migration.migration_world(path)
         if route == 'registration/state':
-            action = world.registration.register_all
+            if variant == 'implementation':
+                action = lambda: world.registration.add_implementation('plan_goal_birth_or_attach', 'old_adapter')
+            else:
+                action = world.registration.register_all
         else:
             scope = owners.legacy_goal(world, revisions=2)
             if route.startswith('issue/'):
@@ -180,6 +192,8 @@ class CancelCheck(OwnerCheck):
             frame = sys._getframe(1)
             site = [str(Path(frame.f_code.co_filename).relative_to(self.source)), frame.f_lineno]
             require(site == self.site, f'original cancellation caller changed: {site}')
+            if prefix_store is not None:
+                record['at_validator'] = bridge.manifest(bridge.file_state(prefix_store))
             if edit and (not edited or repeated):
                 member = edit['member'][1]
                 if member in value:
@@ -236,6 +250,46 @@ class CancelCheck(OwnerCheck):
             require(record.get('refusal') == (expected if edit else None),
                     f"original refusal differs: expected {expected if edit else None!r}, got {record.get('refusal')!r}")
         return record
+
+
+    def call_on_copy(self, world, action, edit, require_exact):
+        if self.declare.get('variant') != 'publish':
+            return super().call_on_copy(world, action, edit, require_exact)
+        import pm_goal_dg5_boundaries as bridge
+
+        copied = self.scratch.parent / ('transaction-' + str(len(self.runs)))
+        shutil.copytree(self.scratch, copied)
+        original = bridge.manifest(bridge.file_state(copied))
+        relative = world.storage.root.relative_to(self.scratch)
+        recv, send = multiprocessing.get_context('fork').Pipe(duplex=False)
+
+        def replay():
+            try:
+                with patch.object(world.storage, 'root', copied / relative):
+                    trial = self.call(action, edit, require_exact=require_exact, prefix_store=copied)
+                    trial['after_call'] = bridge.manifest(bridge.file_state(copied))
+                require(trial['at_validator'] != original, 'the original audit pack write did not precede validation')
+                if trial['errors']:
+                    require(trial['at_validator'] == trial['after_call'], 'the refusal wrote after the original pack write')
+                send.send(trial)
+            except Exception as error:
+                send.send({'exception': str(error)})
+            finally:
+                send.close()
+
+        process = multiprocessing.get_context('fork').Process(target=replay)
+        process.start()
+        send.close()
+        try:
+            trial = recv.recv()
+        finally:
+            recv.close()
+            process.join()
+        require(process.exitcode == 0 and 'exception' not in trial, trial)
+        self.runs.append(trial)
+        for observed in trial['observations']:
+            self.collector.observe(self.row, not observed['errors'], tuple(self.site))
+        return trial
 
 
 def length_checks(plain, bank, root, examples, rules, gaps):
