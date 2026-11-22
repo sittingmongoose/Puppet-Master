@@ -391,6 +391,19 @@ async function noInputCase(t, f, where) {
   await t.check(`${tag}: the next handover changes the subject`, n.uid !== s.uid && !n.pinned, `${s.uid} -> ${n.uid}`);
 }
 
+// PM7-ORBIT-SECOND-PANEL-PRESS-QUALIFICATION: an unreachable press target is its own setup result (the Mac wide run
+// read x12 y0 ok:false and no press was sent, yet the pin row failed as a product verdict), and the 700 ms mark
+// window runs from the DELIVERED wheel (117.0/118.7 ms observed), not from before dispatch (764 ms). Exported for
+// tools/orbit-second-panel.selftest.mjs.
+export function secondPanelSetup({ press, b, wheelAt }) {
+  if (press && !b?.ok) return { ok: false, why: `the live panel's words are unreachable for the press: ${JSON.stringify(b)}` };
+  if (wheelAt == null) return { ok: false, why: 'no trusted wheel was delivered to the reopened panel' };
+  return { ok: true, why: null };
+}
+export function secondPanelPinOk({ press, r }) {
+  return r.connected && r.scroll?.ms != null && r.scroll.ms < 700 && r.before.over >= 16 && r.before.top === 0 && !r.before.pin && r.scroll.top > 0 && r.pin === (press ? null : 'node:' + r.uid);
+}
+
 async function secondPanelCase(t, f, where) {
   const tag = `${where} second Orbit panel`;
   await f.evaluate(() => window.PM56_DEMO.selectThread('orbit-run'));
@@ -414,32 +427,40 @@ async function secondPanelCase(t, f, where) {
     const a = await words(first);
     await t.check(`${label}: the reopened panel's words can be reached`, a.ok, JSON.stringify(a), { hard: true });
     await t.page.mouse.move(OFF.x + a.x, OFF.y + a.y);
-    const at = await f.evaluate(() => performance.now());
+    // time the mark window from the delivered wheel (PM7-ORBIT-SECOND-PANEL-PRESS-QUALIFICATION)
+    await first.evaluate(panel => {
+      window.__fo104WheelAt = null;
+      panel.addEventListener('wheel', (e) => { if (e.isTrusted && window.__fo104WheelAt == null) window.__fo104WheelAt = performance.now(); }, { once: true, capture: true, passive: true });
+    });
     await t.page.mouse.wheel(0, -48);
     let b = null;
     if (press) {
       b = await words(second);
-      if (b.ok) await t.page.mouse.click(OFF.x + b.x, OFF.y + b.y);
+      const setup = secondPanelSetup({ press, b, wheelAt: 0 });
+      if (!setup.ok) await t.check(`${label}: the live panel's words can be reached for the press`, false, 'could not judge: setup — ' + setup.why, { hard: true });
+      await t.page.mouse.click(OFF.x + b.x, OFF.y + b.y);
     }
-    const r = await first.evaluate(async (panel, at) => {
+    const r = await first.evaluate(async (panel) => {
+      const at = window.__fo104WheelAt;
       const stage = panel.closest('.orbit-stage');
       const pin = () => stage.querySelector('.orbit-node[aria-pressed="true"]')?.getAttribute('data-k') ?? null;
       const before = { top: panel.scrollTop, pin: pin(), over: panel.scrollHeight - panel.clientHeight };
       const nextFrame = () => new Promise(resolve => requestAnimationFrame(resolve));
       let scroll = null;
-      const onScroll = () => { scroll = { top: panel.scrollTop, ms: Math.round(performance.now() - at) }; };
+      const onScroll = () => { scroll = { top: panel.scrollTop, ms: at == null ? null : Math.round(performance.now() - at) }; };
       panel.addEventListener('scroll', onScroll, { once: true });
       panel.scrollTop = 14;
       await nextFrame(); await nextFrame(); await nextFrame();
       panel.removeEventListener('scroll', onScroll);
       // The pin can re-render the completed card and clamp the test's scroll. Read the scroll event and the pin separately.
-      const result = { before, scroll, pin: pin(), connected: panel.isConnected, uid: stage.getAttribute('data-orbit-focus') };
+      const result = { before, scroll, pin: pin(), connected: panel.isConnected, uid: stage.getAttribute('data-orbit-focus'), wheelAt: at };
       panel.scrollTop = 0;
       return result;
-    }, at);
+    });
+    const setup = secondPanelSetup({ press, b, wheelAt: r.wheelAt });
+    if (!setup.ok) await t.check(`${label}: could judge the second-panel mark window`, false, 'could not judge: setup — ' + setup.why + '; ' + JSON.stringify({ ...r, pressTarget: b }), { hard: true });
     await t.check(`${label}: a scroll with no input inside 700 ms ${press ? 'does not pin' : 'pins'} the reopened panel`,
-      (!press || b?.ok) && r.connected && r.scroll?.ms < 700 && r.before.over >= 16 && r.before.top === 0 && !r.before.pin && r.scroll.top > 0 &&
-      r.pin === (press ? null : 'node:' + r.uid), JSON.stringify({ ...r, pressTarget: b }));
+      secondPanelPinOk({ press, r }), JSON.stringify({ ...r, pressTarget: b }));
     if (press) await f.waitForTimeout(700); // Expire the previous trial's mark before the control.
   }
 }
