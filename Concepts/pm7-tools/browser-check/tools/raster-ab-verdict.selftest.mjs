@@ -163,20 +163,24 @@ test('reverse gate: more than one eighth of the resolved pairs below -60 withhol
 	const oneOfSix = verdictOf([-69.5, 0.2, 18.6, 67.8, 85.9, 135.3]);
 	assert.equal(oneOfSix.couldNotJudge, true);
 	assert.match(oneOfSix.rule, /1 of 6 resolved pairs below -60/);
-	// 1 of 8: run-greenC-r1-2 opaque at +50 (median 43.7, min -150.1) is judged, not withheld
-	const oneOfEight = verdictOf([-150.1, 1.9, 26.4, 36.9, 41.7, 61.9, 75.1, 95.1]);
+	// 1 of 8: run-greenC-r1-2 opaque firstNewMs (TIMING_RECORDS below) shifted +50 ms, in run order
+	// (median 43.7, IQR 97.0, min -150.1), is judged, not withheld
+	const oneOfEight = verdictOf([185, -27.5, 35.9, -16.1, -150.1, 75.1, 51.5, 86.9]);
 	assert.equal(oneOfEight.couldNotJudge, false);
 	assert.equal(oneOfEight.ok, false);
 	// 1 of 12 is 8.3%, 2 of 12 is 16.7%
-	const twelve = two => [-70, ...(two ? [-70] : []), 41, 41, 41, 41, 41, 41, 41, 41, 41, 41];
+	const twelve = two => [-70, ...(two ? [-70] : [41]), 41, 41, 41, 41, 41, 41, 41, 41, 41, 41];
+	assert.equal(twelve(false).length, 12);
+	assert.equal(twelve(true).length, 12);
 	assert.equal(reverseVerdictOf(twelve(false)).couldNotJudge, false, 'one reverse pair in 12 is judged');
 	assert.equal(reverseVerdictOf(twelve(true)).couldNotJudge, true, 'two reverse pairs in 12 refuse');
 });
 
 // RN-REPS12, 2026-11-22, Alexis PC (RTX 3080), local headless Chrome, file://, 2 concurrent, --set reps=12.
 // Resolved paired differences (head - control) in run order. Folders C:\Users\lexxm\pm7-reps12\run-green-q1-1/-2.
-// Every row passed at 30 ms unshifted. A +50 ms shift of q1-2 normal firstNewMs leaves one reverse pair in 12
-// (-210.5 ms), which the minimum gate withheld (one row of 8); the fraction gate judges it and the row fails.
+// Every row passed at 30 ms unshifted. Shifted +50 ms, b6026c4b94's minimum gate withheld 2 of the 8 timing rows:
+// q1-2 normal firstNewMs (one reverse pair in 12, -210.5 ms) and q1-2 normal settledMs (one in 16, -66.8 ms).
+// The fraction gate judges both and both rows fail.
 const REPS12_GREEN = {
 	'q1-1 normal firstNewMs': [-7.7, -21.7, -0.1, 13.6, 21.7, 157.4, -5, 0.5, -3.1, -3.8, -0.2, 25.1],
 	'q1-1 normal settledMs': [11.2, -13.4, 15, 12.9, 8, -7.6, -103.3, 27.5, -22.1, 6.8, -23, -22.1, -57.6, -3.2, 27.4],
