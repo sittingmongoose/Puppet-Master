@@ -8,7 +8,7 @@
 import assert from 'node:assert/strict';
 import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
-const { pickScroller, scrollStep } = await import(process.argv[2] ? pathToFileURL(resolve(process.argv[2])).href : '../diagnostics/frame-cost.check.mjs');
+const { pickScroller, scrollStep, scrollMovedOk } = await import(process.argv[2] ? pathToFileURL(resolve(process.argv[2])).href : '../diagnostics/frame-cost.check.mjs');
 assert.equal(typeof pickScroller, 'function', 'the scroll window needs the view main scroller pick; the base wheeled over the divider line');
 assert.equal(typeof scrollStep, 'function', 'the scroll window needs bound-aware turning; the base turned every 30 ticks wherever it was');
 // the main scroller is the largest scrollable range (Usage's board, 695 px), ties by area
@@ -36,3 +36,11 @@ for (let tick = 0; tick < 120; tick++) {
 assert.ok(pinned <= 4, `the bound-aware walk is pinned ${pinned} ticks of 120, not most of them`);
 assert.ok(legs >= 3, 'the walk turns at both bounds several times over 120 ticks');
 console.log('PASS frame-cost scroll: the main scroller is the largest scrollable range, the walk starts at its top and turns at its bounds (pinned at most the tick that reaches the end), and a view with no scroller is named');
+
+// PM7-FRAMECOST-HOME-NOSCROLL: the window fails when nothing moved — Home's wheel over i.pmw-divider-line scrolled
+// no scroller at all ("moved: nothing scrolled"), and a view with no scrollable range cannot move either.
+assert.equal(typeof scrollMovedOk, 'function', 'the scroll window needs a moved verdict; the base logged a wheel over a still page as a scroll number');
+assert.equal(scrollMovedOk({ scroller: 'home-page', range: 400, travel: 0 }), false, 'a wheel that moved nothing fails the window');
+assert.equal(scrollMovedOk({ scroller: null, range: 0, travel: 0 }), false, 'no main scroller in the view fails the window');
+assert.equal(scrollMovedOk({ scroller: 'pmuScroll', range: 695, travel: 2780 }), true, 'a walk that travelled passes');
+console.log('PASS frame-cost moved verdict: a wheel that moved nothing (Home over the divider line) or a view with no scroller fails the window; a travelled walk passes');

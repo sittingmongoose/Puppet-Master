@@ -147,6 +147,13 @@ export function scrollStep({ top, max, dir }) {
 	return dir;
 }
 
+// PM7-FRAMECOST-HOME-NOSCROLL: the window's moved verdict — a wheel that moved nothing (Home's wheel over
+// i.pmw-divider-line scrolled no scroller) or a view with no scrollable range is a failed window, not a scroll
+// number. Exported for tools/frame-cost-scroll.selftest.mjs.
+export function scrollMovedOk({ scroller, range, travel }) {
+	return !!scroller && range > 0 && travel > 0;
+}
+
 export default async function (t) {
 	const looks = String(t.args.looks || LOOKS.join(',')).split(',').filter(Boolean);
 	const views = String(t.args.views || 'home,usage,settings,orchestrator,wizard,projects').split(',').filter(Boolean);
@@ -254,6 +261,7 @@ export default async function (t) {
 				}
 				await f.evaluate(() => { document.querySelectorAll('[data-fc-cand]').forEach((e) => e.removeAttribute('data-fc-cand')); const el = document.querySelector('[data-fc-scroller]'); if (el) el.removeAttribute('data-fc-scroller'); });
 				row.scrollMoved = { scroller: best ? best.name : null, range: best ? best.range : 0, travel: Math.round(travel) };
+				await t.check(`${look} ${view} scroll window: the view's main scroller moved under the wheel`, scrollMovedOk(row.scrollMoved), JSON.stringify(row.scrollMoved));
 			};
 			row[w] = await traceWindow(cdp, { ms, during, url, keep });
 			await t.page.mouse.move(W - 6, Math.round(H / 2));
