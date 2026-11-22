@@ -95,17 +95,6 @@
     },
     {
       "audit_ids": [
-        "audit-20260617-007-semantic-closure-registry-post-repair-fidelity",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-audit-20260617-007-semantic-closure-registry-post-repair-fidelity-001",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Lead reconcile (pm-closure-lead, pm7-build decision 1112002103-d9d5): supported, as both blind max reviews judged this row at R 77bae0c636. Sol 6.1 max: The original defect was accepting previously closed findings without current owner and closure evidence checks, and both groups are still checked. PLS-025 now renews changed evidence through bound append-only re-audits; the old refresh/correction wording does not license restamping. Astra max: The finding was that stale current evidence could still pass validation and be reused as previously_closed. Current hash validation detects mismatches, and PLS-025 permits suppressing a stale predecessor only through a validated re-audit successor; this claim does not depend on the withdrawn refresh-hashes writer. The worker's and the cheap recheck's not_supported reading (renewal by restamping is withdrawn by DL-039 and PLS-025) is not adopted: both checks the original defect lacked are still enforced, and renewal now runs through PLS-025 re-audit rows, which this closure does not contradict. The not_supported fix is dropped. Evidence: the max reviewers' quotes first, then the worker's quotes, all verbatim at R; dependencies and stale-ref dispositions are the worker's, which cover exactly the stale set at R. | Lead: adopted the verdict both fresh max reviews (FU-01 rfu) agree on, per pm7-build 1112013508-4999.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-22c5cd3ccf834ffd403199c8",
-      "line": 1202
-    },
-    {
-      "audit_ids": [
         "fable-20260706",
         "closure-reaudit-20261104"
       ],
@@ -227,11 +216,11 @@
         "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
         "closure-reaudit-20261104"
       ],
-      "closure_id": "closure-reaudit-20261104--closure-reaudit-20261104--closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-011",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: the Doctor/onboarding audit-20260701-003 repair-011 closure credits refresh-hashes rewriting/restamping registry evidence hashes. At R cmd_refresh_hashes docstring states \"It never writes: restamping closure-registry hashes without a re-audit is forbidden (DL-039)\" and the non-dry-run path fails with \"refresh-hashes no longer writes the registry\"; PLS-025 still forbids writing a refreshed evidence hash without the re-audit that justifies it and forbids rewriting/restamping/deleting any row. Per the worker brief this is not_supported with an in_stream fix, not stale_retired: only the mechanism was retired, not the obligation that registry hashes be current. The stage-1 validate at R still reports unsuperseded stale hashes, so the in_stream condition is unmet. Any matrix/coverage half of the closure still holds but does not back the restamping claim.",
+      "closure_id": "closure-reaudit-20261104--closure-reaudit-20261104--closure-reaudit-20261104--closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-011",
+      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Short delta at 99c9ce8d8e: row 1256 is the reopened successor of 1103 and 351 for Doctor/onboarding audit-20260701-003 repair-011. The per-audit coverage half still holds (direct read-only validate_audit_dir with require_matrix=True at R2b reports 12/12 repaired rows, 0 errors, 0 warnings, matching the 12 registry entries), and the sole stale anchor, validate_registry, moved only for split-only anchor currentness and batch-resolver checks (T275/T282-T285/T308) while continuing to detect and fail on unsuperseded stale hashes. However, the original closure also credits refreshing closure registry hashes; at R2b cmd_refresh_hashes still refuses non-dry-run writes (direct run exited 2 under DL-039), PLS-025 still forbids restamping and requires bound append-only re-audit successors, and the registry still fails validation at R2b with unsuperseded stale hashes across 15 rows (53 stale hashes verified directly at R2b) and open rows. Per WORKER-BRIEF.md, this remains not_supported with fix.kind in_stream because the registry-currentness obligation is still live and unmet at R2b.",
       "closure_status": "reopened",
       "finding_key": "sfk-4295336d87f4f0b9df21a400",
-      "line": 1256
+      "line": 1800
     },
     {
       "audit_ids": [
@@ -738,11 +727,11 @@
         "audit-20260701-001-containerized-hosts-closed-world-semantic-fidelity",
         "closure-reaudit-20261104"
       ],
-      "closure_id": "closure-reaudit-20261104--closure-reaudit-20261104--closure-audit-20260701-001-containerized-hosts-closed-world-semantic-fidelity-repair-001",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: the Containerized Hosts audit-20260701-001 repair-001 closure credits refresh-hashes rewriting/restamping registry evidence hashes. At R cmd_refresh_hashes docstring states \"It never writes: restamping closure-registry hashes without a re-audit is forbidden (DL-039)\" and the non-dry-run path fails with \"refresh-hashes no longer writes the registry\"; PLS-025 still forbids writing a refreshed evidence hash without the re-audit that justifies it and forbids rewriting/restamping/deleting any row. Per the worker brief this is not_supported with an in_stream fix, not stale_retired: only the mechanism was retired, not the obligation that registry hashes be current. The stage-1 validate at R still reports unsuperseded stale hashes, so the in_stream condition is unmet. Any matrix/coverage half of the closure still holds but does not back the restamping claim.",
+      "closure_id": "closure-reaudit-20261104--closure-reaudit-20261104--closure-reaudit-20261104--closure-audit-20260701-001-containerized-hosts-closed-world-semantic-fidelity-repair-001",
+      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Short delta at 99c9ce8d8e: row 1255 is the reopened successor of 1096 and 338 for Containerized Hosts audit-20260701-001 repair-001, whose original closure credited refreshing stale registry hashes with scripts/pm-audit-closure.py refresh-hashes. The sole stale anchor, validate_registry, moved only for split-only anchor currentness and batch-resolver checks (T275/T282-T285/T308) and still calls validate_hashes and reports unsuperseded stale hashes as errors; validate_current_hashes still detects stale whole-file hashes and the Containerized Hosts matrix retains its 3 rows. However, at R2b cmd_refresh_hashes still refuses non-dry-run writes (direct run exited 2 under DL-039), PLS-025 still forbids restamping and requires bound append-only re-audit successors, and the registry still fails validation at R2b with unsuperseded stale hashes across 15 rows (53 stale hashes verified directly at R2b) and open rows. Per WORKER-BRIEF.md, this remains not_supported with fix.kind in_stream because the currentness obligation is still live and unmet at R2b.",
       "closure_status": "reopened",
       "finding_key": "sfk-bd12e603e3d781b949823e2e",
-      "line": 1255
+      "line": 1799
     },
     {
       "audit_ids": [
@@ -945,11 +934,11 @@
         "audit-20260623-001-fff-ledger-to-plans-semantic-fidelity",
         "closure-reaudit-20261104"
       ],
-      "closure_id": "closure-reaudit-20261104--closure-reaudit-20261104--closure-audit-20260623-001-fff-ledger-to-plans-semantic-fidelity-repair-003",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: the row credits refresh-hashes restamping historical registry hashes. At R cmd_refresh_hashes docstring states \"It never writes: restamping closure-registry hashes without a re-audit is forbidden (DL-039)\" and the non-dry-run path fails with \"refresh-hashes no longer writes the registry\"; PLS-025 still forbids writing a refreshed evidence hash without the re-audit that justifies it. Per the worker brief this is not_supported with an in_stream fix, not stale_retired: only the mechanism was retired, not the obligation that registry hashes be current. The registry jsonlset still shows the repair-003 re-audit row as reopened and the four FFF closure rows present, so the coverage half holds, but the restamping claim is unbacked. The stage-1 validate at R still reports unsuperseded stale hashes (registry does not validate), so the in_stream condition is not yet met.",
+      "closure_id": "closure-reaudit-20261104--closure-reaudit-20261104--closure-reaudit-20261104--closure-audit-20260623-001-fff-ledger-to-plans-semantic-fidelity-repair-003",
+      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Short delta at b68bf79f93: Line 1249 is the reopened successor of 1087 and 314 on FFF audit-001 repair-003. While the four-row FFF repair_closure_matrix.jsonl and its registry entries remain present (the coverage half still holds), the original repair credits refreshing historical registry owner and closure evidence hashes with scripts/pm-audit-closure.py refresh-hashes. At R, cmd_refresh_hashes still refuses to write (exit 2 with 'refresh-hashes no longer writes the registry' and docstring citing DL-039 and PLS-025), main registers refresh-hashes as '--dry-run only; writing is disabled by DL-039', and PLS-025 still forbids writing refreshed hashes without an append-only re-audit successor. Per WORKER-BRIEF.md, this remains not_supported with fix.kind in_stream (not stale_retired, because the registry-currentness obligation remains active). At R, pm-audit-closure.py validate still fails with 53 unsuperseded stale hashes in 15 rows and 93 unsuperseded open rows, so the in_stream closing condition is not yet met.",
       "closure_status": "reopened",
       "finding_key": "sfk-e1fcd45c960c7c2508038375",
-      "line": 1249
+      "line": 1797
     },
     {
       "audit_ids": [
@@ -1063,11 +1052,11 @@
         "audit-20260629-001-free-models-closed-world-semantic-fidelity",
         "closure-reaudit-20261104"
       ],
-      "closure_id": "closure-reaudit-20261104--closure-reaudit-20261104--closure-audit-20260629-001-free-models-closed-world-semantic-fidelity-repair-001",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: the Free Models audit-20260629-001 repair-001 closure credits refresh-hashes rewriting/restamping registry evidence hashes. At R cmd_refresh_hashes docstring states \"It never writes: restamping closure-registry hashes without a re-audit is forbidden (DL-039)\" and the non-dry-run path fails with \"refresh-hashes no longer writes the registry\"; PLS-025 still forbids writing a refreshed evidence hash without the re-audit that justifies it and forbids rewriting/restamping/deleting any row. Per the worker brief this is not_supported with an in_stream fix, not stale_retired: only the mechanism was retired, not the obligation that registry hashes be current. The stage-1 validate at R still reports unsuperseded stale hashes, so the in_stream condition is unmet. Any matrix/coverage half of the closure still holds but does not back the restamping claim.",
+      "closure_id": "closure-reaudit-20261104--closure-reaudit-20261104--closure-reaudit-20261104--closure-audit-20260629-001-free-models-closed-world-semantic-fidelity-repair-001",
+      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Short delta at 99c9ce8d8e: row 1254 is the reopened successor of 1095 and 335 for Free Models audit-20260629-001 repair-001, whose original closure credited refreshing owner/closure evidence hashes with pm-audit-closure and then validating the registry and repair matrix. The sole stale anchor, validate_registry, moved only for split-only anchor currentness and batch-resolver checks (T275/T282-T285/T308) and still calls validate_hashes and fails on unsuperseded stale hashes; validate_current_hashes still detects stale whole-file hashes and the Free Models matrix retains its 3 rows. However, at R2b cmd_refresh_hashes still refuses non-dry-run writes (direct run exited 2 under DL-039), PLS-025 still forbids writing refreshed hashes without a re-audit, and the registry still fails validation at R2b with unsuperseded stale hashes across 15 rows (53 stale hashes verified directly at R2b) and open rows. Per WORKER-BRIEF.md, this remains not_supported with fix.kind in_stream because only the restamping writer was withdrawn, not the registry-currentness obligation, and that obligation is still unmet at R2b.",
       "closure_status": "reopened",
       "finding_key": "sfk-f6f7b1a8d1ba5658b04fb84f",
-      "line": 1254
+      "line": 1798
     },
     {
       "audit_ids": [
@@ -1094,7 +1083,7 @@
       "line": 1480
     }
   ],
-  "generated_at_utc": "2026-11-21T07:37:39Z",
+  "generated_at_utc": "2026-11-22T17:16:32Z",
   "reports": [
     {
       "audit_id": "audit-20260615-001-part-3-fable-cleanup",
@@ -1397,10 +1386,10 @@
         "closure_status_counts": {
           "explicitly_deferred": 2,
           "not_for_plan": 6,
-          "repaired": 44,
+          "repaired": 46,
           "source_lineage_only": 28
         },
-        "matching_rows": 80,
+        "matching_rows": 82,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -1420,10 +1409,10 @@
           "explicitly_deferred": 2,
           "not_for_plan": 10,
           "reopened": 1,
-          "repaired": 49,
+          "repaired": 52,
           "source_lineage_only": 30
         },
-        "matching_rows": 92,
+        "matching_rows": 95,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -1516,10 +1505,10 @@
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
           "reopened": 6,
-          "repaired": 114,
+          "repaired": 115,
           "stale_retired": 1
         },
-        "matching_rows": 121,
+        "matching_rows": 122,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -1609,11 +1598,11 @@
           "explicitly_deferred": 4,
           "not_for_plan": 6,
           "reopened": 4,
-          "repaired": 99,
+          "repaired": 100,
           "source_lineage_only": 24,
           "stale_retired": 1
         },
-        "matching_rows": 138,
+        "matching_rows": 139,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -1631,10 +1620,10 @@
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
           "reopened": 3,
-          "repaired": 60,
+          "repaired": 61,
           "source_lineage_only": 36
         },
-        "matching_rows": 99,
+        "matching_rows": 100,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -1947,10 +1936,10 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "reopened": 2,
-          "repaired": 11
+          "reopened": 3,
+          "repaired": 12
         },
-        "matching_rows": 13,
+        "matching_rows": 15,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -2133,10 +2122,10 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "reopened": 2,
+          "reopened": 3,
           "repaired": 8
         },
-        "matching_rows": 10,
+        "matching_rows": 11,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -2170,10 +2159,10 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "reopened": 2,
+          "reopened": 3,
           "repaired": 8
         },
-        "matching_rows": 10,
+        "matching_rows": 11,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -2207,11 +2196,11 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "reopened": 2,
-          "repaired": 35,
+          "reopened": 3,
+          "repaired": 36,
           "stale_retired": 1
         },
-        "matching_rows": 38,
+        "matching_rows": 40,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -2459,10 +2448,10 @@
     "reports_glob": "Plans/.audits/audit-*/FINAL_REPORT.md"
   },
   "summary": {
-    "closure_registry_row_count": 1792,
-    "current_blocker_count": 94,
-    "current_open_finding_count": 94,
-    "current_reopened_finding_count": 94,
+    "closure_registry_row_count": 1803,
+    "current_blocker_count": 93,
+    "current_open_finding_count": 93,
+    "current_reopened_finding_count": 93,
     "current_report_blocker_count": 0,
     "historical_blocked_or_fail_report_count": 25,
     "report_count": 71,

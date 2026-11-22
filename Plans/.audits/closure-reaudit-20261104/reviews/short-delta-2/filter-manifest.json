@@ -1,0 +1,63 @@
+{
+ "Plans/.audits/closure-reaudit-20261104/reviews/short-delta-2/B01/review-astra-max-sd2b01.jsonl": {
+  "alias": "Plans/.audits/closure-reaudit-20261104/reviews/short-delta-2/B01/review-astra-max-rsd2b01.jsonl",
+  "lines": [
+   1539,
+   1249,
+   1245
+  ],
+  "source": "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/shortdelta/SD2/B01/review-astra-max-sd2b01.jsonl",
+  "source_sha256": "e0170f0374dbdd4ee8a1a6b8857f38b699288adee5711df76aba39ada87f87d2",
+  "staged_sha256": "e0170f0374dbdd4ee8a1a6b8857f38b699288adee5711df76aba39ada87f87d2"
+ },
+ "Plans/.audits/closure-reaudit-20261104/reviews/short-delta-2/B01/review-sol-max-sd2b01.jsonl": {
+  "alias": "Plans/.audits/closure-reaudit-20261104/reviews/short-delta-2/B01/review-sol-max-rsd2b01.jsonl",
+  "lines": [
+   1539,
+   1249,
+   1245
+  ],
+  "source": "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/shortdelta/SD2/B01/review-sol-max-sd2b01.jsonl",
+  "source_sha256": "fded062749790c370b1f3143863f1e2572b6a34565452e4d7be6169091803c78",
+  "staged_sha256": "fded062749790c370b1f3143863f1e2572b6a34565452e4d7be6169091803c78"
+ },
+ "Plans/.audits/closure-reaudit-20261104/reviews/short-delta-2/B02/review-astra-max-sd2b02.jsonl": {
+  "alias": "Plans/.audits/closure-reaudit-20261104/reviews/short-delta-2/B02/review-astra-max-rsd2b02.jsonl",
+  "lines": [
+   1240,
+   1241,
+   1251,
+   1254,
+   1255,
+   1256,
+   1257,
+   1270
+  ],
+  "source": "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/shortdelta/SD2/B02/review-astra-max-sd2b02.jsonl",
+  "source_sha256": "bbe8525846576bca8ed6d023e38b0b659572c66bd84545b586fe77d62f107caa",
+  "staged_sha256": "bbe8525846576bca8ed6d023e38b0b659572c66bd84545b586fe77d62f107caa"
+ },
+ "Plans/.audits/closure-reaudit-20261104/reviews/short-delta-2/B02/review-sol-max-sd2b02.jsonl": {
+  "alias": "Plans/.audits/closure-reaudit-20261104/reviews/short-delta-2/B02/review-sol-max-rsd2b02.jsonl",
+  "lines": [
+   1240,
+   1241,
+   1251,
+   1254,
+   1255,
+   1256,
+   1257,
+   1270
+  ],
+  "source": "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/shortdelta/SD2/B02/review-sol-max-sd2b02.jsonl",
+  "source_sha256": "a7c6a64461fba8b1b2450a11c6ef2b28e52f3b6264fd755418bc1670cf758ba6",
+  "staged_sha256": "a7c6a64461fba8b1b2450a11c6ef2b28e52f3b6264fd755418bc1670cf758ba6"
+ },
+ "_held": {
+  "1251": {
+   "closure_id": "closure-reaudit-20261104--closure-reaudit-20261104--closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-006",
+   "line": 1251,
+   "reason": "Held out of this batch: its successor adds a member to the audit-20260626-001-provider-updates audit_ids row set, which stales the live owner pin on row 1694 (repair-007). Row 1694 is not in this batch, so reaudit-append refuses the whole transaction; 1251 is paired with 1694 in a later round."
+  }
+ }
+}
