@@ -1,0 +1,391 @@
+{
+ "ruling": "FINAL-LIST-113.r6.json (newest edition; no r7) + METHOD-RULING.md addenda 1-21 + ERRATUM-20261121",
+ "source": "dg5-withdrawn-audit PROOFS.json 2026-11-22T03:39:58Z (AMEND1-MATRIX review F7)",
+ "keys": [
+  {
+   "row": "dg5/site/pm_goal_dg_cf1_world.py:1372",
+   "module": "scripts/pm_goal_dg5_fanout_cf_check_002.proof.json",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: a negative expecting the guard's own code (rule C)"
+  },
+  {
+   "row": "dg5/d06/revision/number",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "see the reviews: kill if a negative exists, else OPEN"
+  },
+  {
+   "row": "dg5/run/revision/number",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": "ADJ3: break stands at level 2 (run.restart at level 1)",
+   "route": "kill: a negative expecting the guard's own code (rule C)"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_ca3_native.py:1006",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: the mutant becomes a single-defect negative"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_ca3_native.py:142",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": "SOUND stands (M-A-2)",
+   "route": "kill: the mutant becomes a single-defect negative (S2-SURV, level 3 via c3/d06_d05_join field)"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_ca3_native.py:211",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: a negative expecting the guard's own code (rule C)"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_ca3_native.py:250",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": "census-questions follow-up-1 (addendum 12 point 1, per method by the family corpus)",
+   "route": "kill: rule C (cut gives tx/cas_absent); the corpus calls stop/drain/aggregate/prepare directly (ca3_cases.py:386-389)"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_ca3_native.py:803",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "see the reviews: kill if a negative exists, else OPEN"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_ca3_native.py:805",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: a negative expecting the guard's own code (rule C)"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_ca3_native.py:938",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": "census-questions follow-up-1 (addendum 12 point 1, per method by the family corpus)",
+   "route": "kill: rule C (cut gives native/issue_absent); the corpus calls D06Owner.prepare directly (ca3_cases.py:389/399/412)"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_ca3_native.py:947",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: the mutant becomes a single-defect negative"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_ca3_native.py:993",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: the mutant becomes a single-defect negative"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_ca3_native.py:997",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: a negative expecting the guard's own code (rule C)"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_ca3_route.py:1189",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: a negative expecting the guard's own code (rule C)"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_ca3_route.py:801",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": "DG5 probe (edits follow-up 184530f7f1): intact refuses at :801, cut accepts, reproduced; the corrected claim is false",
+   "route": "kill candidate: DG5 probe input (an older committed result copy saved at a new key, control and origin pointing at it); counts only if its addendum-4 coherence argument passes the blind coherence review; otherwise the row stays OPEN"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_ca3_route.py:824",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: the mutant becomes a single-defect negative"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_ca_c1.py:322",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": "both round-2b reviewers UNSOUND",
+   "route": "kill: the mutant becomes a single-defect negative"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_ca_c1.py:628",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: the mutant becomes a single-defect negative"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_ca_owners.py:524",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "see the reviews: kill if a negative exists, else OPEN"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_cb_migration.py:424",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: a negative expecting the guard's own code (rule C)"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_cb_migration.py:425",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: a negative expecting the guard's own code (rule C)"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_cb_migration.py:426",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: a negative expecting the guard's own code (rule C)"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_cb_migration.py:428",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: a negative expecting the guard's own code (rule C)"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_cb_migration.py:443",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: the mutant becomes a single-defect negative"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_cb_migration.py:462",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: the mutant becomes a single-defect negative"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_cb_migration.py:782",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: a negative expecting the guard's own code (rule C)"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_cb_migration.py:783",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: the mutant becomes a single-defect negative"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_cb_migration.py:842",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: the mutant becomes a single-defect negative"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_cb_migration.py:867",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: a negative expecting the guard's own code (rule C)"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_cb_migration.py:868",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: the mutant becomes a single-defect negative"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_cb_migration.py:920",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: the mutant becomes a single-defect negative"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_cb_migration.py:922",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "see the reviews: kill if a negative exists, else OPEN"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_cb_owners.py:228",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": "census-questions follow-up-1 (addendum 12 point 1, per method by the family corpus): image() is called directly by DG5 negatives (supplement_ca.py:2017/2023)",
+   "route": "kill: rule C / CUT_EXCEPTION via the DG5 cb/image_* negatives (they need their addendum-11 coherence argument)"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_cb_owners.py:230",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "see the reviews: kill if a negative exists, else OPEN"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_cb_owners.py:286",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "see the reviews: kill if a negative exists, else OPEN"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_cb_owners.py:289",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: the mutant becomes a single-defect negative"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_cb_owners.py:291",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: the mutant becomes a single-defect negative"
+  },
+  {
+   "row": "dg5/site/pm_goal_test_storage.py:1618",
+   "module": "scripts/pm_goal_dg5_proofs_ca.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": "addendum 3: same field, any value its type admits",
+   "route": "kill: a negative expecting the guard's own code (rule C)"
+  },
+  {
+   "row": "dg5/native/body_revision/number",
+   "module": "scripts/pm_goal_dg5_proofs_s.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: a negative expecting the guard's own code (rule C)"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_s_readers.py:792",
+   "module": "scripts/pm_goal_dg5_proofs_s.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: the mutant becomes a single-defect negative"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_s_readers.py:917",
+   "module": "scripts/pm_goal_dg5_proofs_s.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: a negative expecting the guard's own code (rule C)"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_s_start.py:1326",
+   "module": "scripts/pm_goal_dg5_proofs_s.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "OPEN (rule 3): re-close only on a KILLED later check"
+  },
+  {
+   "row": "dg5/site/pm_goal_dg_s_start.py:1406",
+   "module": "scripts/pm_goal_dg5_proofs_s.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "see the reviews: kill if a negative exists, else OPEN"
+  },
+  {
+   "row": "dg5/start/original_append/schema",
+   "module": "scripts/pm_goal_dg5_proofs_s.py",
+   "ruling": "METHOD-RULING addendum 14 R3: the proof stays withdrawn (premise false on reading the code); row CANNOT_DECIDE held. Key not present in any audited module.",
+   "why": null,
+   "route": null
+  },
+  {
+   "row": "dg5/site/pm_goal_test_storage.py:1450",
+   "module": "scripts/pm_goal_dg5_proofs_shared.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: the mutant becomes a single-defect negative"
+  },
+  {
+   "row": "dg5/site/pm_goal_test_storage.py:1477",
+   "module": "scripts/pm_goal_dg5_proofs_shared.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: the mutant becomes a single-defect negative"
+  },
+  {
+   "row": "dg5/site/pm_goal_test_storage.py:1534",
+   "module": "scripts/pm_goal_dg5_proofs_shared.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "see the reviews: kill if a negative exists, else OPEN"
+  },
+  {
+   "row": "dg5/site/pm_goal_test_storage.py:1726",
+   "module": "scripts/pm_goal_dg5_proofs_shared.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: the mutant becomes a single-defect negative"
+  },
+  {
+   "row": "dg5/site/pm_goal_test_storage.py:187",
+   "module": "scripts/pm_goal_dg5_proofs_shared.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": "addendum 7: break is a note; SOUND survives a dispute",
+   "route": "kill: KILLED_CODE (addendum 10); cut refuses at :1464 with another code"
+  },
+  {
+   "row": "dg5/site/pm_goal_test_storage.py:189",
+   "module": "scripts/pm_goal_dg5_proofs_shared.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": "addendum 7: break is a note; SOUND survives a dispute",
+   "route": "kill: KILLED_CODE (addendum 10); cut refuses at :163 / :1463 with other codes"
+  },
+  {
+   "row": "dg5/site/pm_goal_test_storage.py:440",
+   "module": "scripts/pm_goal_dg5_proofs_shared.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: a negative expecting the guard's own code (rule C)"
+  },
+  {
+   "row": "dg5/site/pm_goal_test_storage.py:441",
+   "module": "scripts/pm_goal_dg5_proofs_shared.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": "census-questions follow-up-1 (addendum 12 point 1, per method by the family corpus): the shared corpus calls encode_event_frame directly with the break's exact shape",
+   "route": "kill: the shared corpus negative frame_payload_over_16mib (selftest_b2.py:688), once the collector observes direct calls (addendum 12 point 3)"
+  },
+  {
+   "row": "dg5/site/pm_goal_test_storage.py:470",
+   "module": "scripts/pm_goal_dg5_proofs_shared.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": "census-questions follow-up-1 (addendum 12 point 1, per method by the family corpus): in shared, validate_event_record is a census pure entry, so the dict-subclass break is level 1; in Started it stays CANNOT_DECIDE",
+   "route": "kill: a level-1 negative through the shared census pure entry validate_event_record (pm_goal_dg5_adapter.py:616-627)"
+  },
+  {
+   "row": "dg5/site/pm_goal_test_storage.py:553",
+   "module": "scripts/pm_goal_dg5_proofs_shared.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: a negative expecting the guard's own code (rule C)"
+  },
+  {
+   "row": "dg5/site/pm_goal_test_storage.py:572",
+   "module": "scripts/pm_goal_dg5_proofs_shared.py",
+   "ruling": "FINAL-LIST-113.r6.json cat withdraw",
+   "why": null,
+   "route": "kill: a negative expecting the guard's own code (rule C)"
+  }
+ ]
+}
