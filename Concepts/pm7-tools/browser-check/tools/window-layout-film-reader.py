@@ -22,6 +22,12 @@ FILM_ROW = "WLR-FILM "
 def collect_cases(summary, log_lines):
     if summary.get("stopped") or summary.get("killed"):
         raise ValueError("the recording stopped before the check finished")
+    # R133-FOLLOWUPS 4 (T75): a normally finalized summary with one complete passing pair and a check failure
+    # before the next case's row or mark satisfies the pairing equality below on a strict subset of the requested
+    # route. Acceptance is tied to the run's own census — the run finished and every requested check passed —
+    # independent of the pair-consistency check.
+    if summary.get("ok") is not True or summary.get("failed"):
+        raise ValueError("the run's own checks did not all pass: the film covers a subset of the requested route, not the whole census")
     marks = {}
     for mark in summary.get("marks", []):
         label = mark["label"]
@@ -185,13 +191,28 @@ def selftest():
         cell = f"{mode} basic-light rep 1"
         marks.extend([{"label": cell + " 740", "at": at}, {"label": cell + " 1920", "at": at + 1}])
         rows.append(FILM_ROW + json.dumps({"label": cell + " 740", "x": 0, "y": 0}))
-    assert [case["shrink"] for case in collect_cases({"marks": marks}, rows)] == [1, 3]
+    assert [case["shrink"] for case in collect_cases({"marks": marks, "ok": True, "failed": 0}, rows)] == [1, 3]
     try:
-        collect_cases({"marks": marks + [marks[0]]}, rows)
+        collect_cases({"marks": marks + [marks[0]], "ok": True, "failed": 0}, rows)
     except ValueError as error:
         assert str(error) == "duplicate film mark: normal basic-light rep 1 740"
     else:
         raise AssertionError("duplicate film marks accepted")
+
+    # R133-FOLLOWUPS 4 (T75): a normally finalized summary with one complete passing pair and a check failure
+    # before the next case's row or mark satisfies the pairing equality on a strict subset of the requested route.
+    # Acceptance must be tied to the run's own census, independent of the pair consistency.
+    for bad in (
+        {"marks": marks[:2], "ok": False, "failed": 1, "checks": 3},
+        {"marks": marks[:2], "ok": True, "failed": 1, "checks": 3},
+        {"marks": marks, "ok": None, "failed": 0, "checks": 0},
+    ):
+        try:
+            collect_cases(bad, rows[:1] if bad["marks"] == marks[:2] else rows)
+        except ValueError as error:
+            assert "subset of the requested route" in str(error), str(error)
+        else:
+            raise AssertionError("a finalized summary whose census did not complete accepted as the whole route")
 
     wide = (b"\x55" * 3, b"\x00" * 9)
     retained = (b"\x11" * 3, wide[1])
