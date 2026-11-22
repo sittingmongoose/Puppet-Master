@@ -24,13 +24,14 @@
 // PIXELWISE (only pixelwise within the base's pictures: a weaker pass, listed one by one; --strict fails it), differ.
 // The frozen pictures are taken with animations disabled and say nothing about a running animation: the run's one
 // unfrozen capture per look (variant "unfrozen", animations running) must be in both runs and is reported, not judged.
-// Not frozen (PM7PERF-STAGEFRAMES-SAMEBUILD-UNFROZEN): two back-to-back runs of one build differed in 6 of 12 frozen
-// captures with identical DOM (TIB-P8: basic-dark Ready 7479 px, up to 114 a channel). A capture whose own two frozen
-// pictures (.png and .b.png, 20 frames apart in the same run) differ by more than the compositor's variation was not
-// frozen by the harness: something in it keeps moving. Such a capture is named (NOT FROZEN) and reported, not
-// pixel-judged, so a same-build pair passes without --also; its DOM is still judged, a stable capture that differs
-// between builds still fails, and --strict fails the not-frozen ones. The compositor's own variation is a level or a
-// few: over 8 levels in at least 16 pixels is motion, not raster noise.
+// Not frozen (PM7PERF-STAGEFRAMES-SAMEBUILD-UNFROZEN, R135-F1): a capture whose own two frozen pictures (.png and
+// .b.png, 20 frames apart in the same run) differ by more than the compositor's variation was not frozen: something in
+// it keeps moving. Only when the BASE itself moves is the capture named (NOT FROZEN) and reported, not pixel-judged,
+// so a same-build pair passes without --also — the harness cannot pixel-judge a capture it did not freeze. A
+// difference on a capture the BASE froze FAILS whatever the head does: a head that breaks freezing on a frozen base,
+// or a paint regression on a frozen base, is a real difference (the old moving(base) || moving(changed) downgraded
+// both to a not-frozen pass). The DOM is judged either way; --strict fails the not-frozen ones. The compositor's own
+// variation is a level or a few: over 8 levels in at least 16 pixels is motion, not raster noise.
 import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
@@ -146,7 +147,7 @@ for (const e of index) {
 		const self = (x, y) => { const q = pixels(fs.readFileSync(x), fs.readFileSync(y)); return q.size ? null : { n: q.n, max: q.max || 0 }; };
 		const sb = self(a + '.png', a + '.b.png'), sc = self(b + '.png', b + '.b.png');
 		const moving = (s) => !!s && s.max > SELF_LEVEL && s.n >= SELF_MIN;
-		if (moving(sb) || moving(sc)) { cls = 'not-frozen'; notFrozen = { base: sb, changed: sc }; }
+		if (moving(sb)) { cls = 'not-frozen'; notFrozen = { base: sb, changed: sc }; }
 	}
 	rows.push({ look: e.look, file: e.file, props: e.props, target: e.target, class: cls, pixels: p, dom: d, notFrozen });
 }
