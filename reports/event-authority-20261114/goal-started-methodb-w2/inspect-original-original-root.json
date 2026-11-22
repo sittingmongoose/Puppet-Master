@@ -1,0 +1,137 @@
+{
+  "row": "dg5/inspect_original/original/root/schema",
+  "fixtures": [
+    {
+      "route": "read_original/inspect_original/original/enclosing",
+      "edition": "v3",
+      "root": "dg5:525e53cd7926ee62",
+      "hash_seed": 6,
+      "validation_site": [
+        "scripts/pm_goal_dg_s_readers.py",
+        256
+      ],
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    },
+    {
+      "route": "read_original/inspect_original/original/enclosing",
+      "edition": "v7",
+      "root": "dg5:6c637862cfc208c8",
+      "hash_seed": 0,
+      "validation_site": [
+        "scripts/pm_goal_dg_s_readers.py",
+        256
+      ],
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    },
+    {
+      "route": "read_original/inspect_original/original/retained",
+      "edition": "v3",
+      "root": "dg5:80c244d6a4b70586",
+      "hash_seed": 6,
+      "validation_site": [
+        "scripts/pm_goal_dg_s_readers.py",
+        94
+      ],
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    },
+    {
+      "route": "read_original/inspect_original/original/retained",
+      "edition": "v7",
+      "root": "dg5:d3020b7172a4ee5f",
+      "hash_seed": 0,
+      "validation_site": [
+        "scripts/pm_goal_dg_s_readers.py",
+        94
+      ],
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    },
+    {
+      "route": "read_original/inspect_original/original/retained",
+      "edition": "v7",
+      "root": "dg5:4d594a7115abd16e",
+      "hash_seed": 9,
+      "validation_site": [
+        "scripts/pm_goal_dg_s_readers.py",
+        94
+      ],
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    },
+    {
+      "route": "read_original/inspect_original/original/enclosing",
+      "edition": "v7",
+      "root": "dg5:cdc43088b78d9d9d",
+      "hash_seed": 9,
+      "validation_site": [
+        "scripts/pm_goal_dg_s_readers.py",
+        256
+      ],
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    }
+  ]
+}
