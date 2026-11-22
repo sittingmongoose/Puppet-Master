@@ -348,13 +348,19 @@ async function providerRace(t, f, label, park) {
 	return rec;
 }
 
-// R5's qualification of one mount record (exported for tools/usage-hover-pause-verdict.selftest.mjs). A busy mount
-// can delay event delivery past 150 ms while the already-queued wheel task precedes the timer; Chrome may coalesce
-// queued wheel inputs while busy, so at least 80% must reach the page. The pause must actually stay alive: an end
-// before the last tick rejects this run regardless of the delivery gap, and a gap in delivered pause input over the
-// rest is also unqualified.
-export function r5MountQualified(rec, { inputs = 203, mountNoPause = false, activated, burstBroke, during, destinationTop, last }) {
-	return (mountNoPause || rec.oldPaused) && activated && rec.wheels.length >= inputs * 0.8 && rec.wheels.every((w) => w.trusted) && !burstBroke && rec.ends.every((e) => e.t > last) && !rec.moves && during.length > 10 && rec.swaps > 0 && rec.liveRoom === rec.room && rec.targetHovered && destinationTop === 0;
+// R5's INPUT-DELIVERY qualification of one mount record (exported for tools/usage-hover-pause-verdict.selftest.mjs).
+// A busy mount can delay event delivery past 150 ms while the already-queued wheel task precedes the timer; Chrome
+// may coalesce queued wheel inputs while busy, so at least 80% must reach the page. R135-F2: product behaviour is
+// NOT qualification — a quiet host's intact burst that the product mishandles must fail r5MountProduct below,
+// never hide behind the could-not-judge row.
+export function r5MountQualified(rec, { inputs = 203, activated, burstBroke, during, destinationTop }) {
+	return activated && rec.wheels.length >= inputs * 0.8 && rec.wheels.every((w) => w.trusted) && !burstBroke && !rec.moves && during.length > 10 && destinationTop === 0 && rec.targetHovered;
+}
+
+// R5's product assertions on qualified input (R135-F2): the old board enters the wheel hold, the pause ends only
+// after the last wheel, and the board swaps to the live room. A fault here FAILS the run.
+export function r5MountProduct(rec, { last }) {
+	return rec.oldPaused && rec.ends.every((e) => e.t > last) && rec.swaps > 0 && rec.liveRoom === rec.room;
 }
 
 // What the single-burst assertions do with the record (PM7PERF-R5-UNQUALIFIED-RETURNS-COUNTED): once R5 rejects the
@@ -463,7 +469,7 @@ async function roomMountRace(t, f, label, park, rm) {
 		const detail = `wheels ${rec.wheels.length}, max gap ${burst.maxGap} ms (wheel delivery ${maxGap} ms, driver ${driverGap} ms), samples ${during.length}, swaps ${rec.swaps}, moves ${rec.moves}, target ${rec.targetHovered}, calibration scroll ${destinationTop}`;
 		t.log(S + detail + ' | return ' + JSON.stringify({ ends: rec.ends, op: rec.op, cardLit: rec.cardLit, tools: rec.tools, provider: rec.provider }));
 		records.push({ room, attempt: attempt + 1, at, destinationTop, maxGap, driverGap, burst, rec });
-		const qualified = r5MountQualified(rec, { inputs: INPUTS, mountNoPause: String(t.args.mountNoPause || '') === '1', activated, burstBroke, during, destinationTop, last });
+		const qualified = r5MountQualified(rec, { inputs: INPUTS, activated, burstBroke, during, destinationTop });
 		if (!qualified && attempt < 2) { t.log(S + `unjudgeable attempt ${attempt + 1}; repeat the same input route: ` + detail); continue; }
 		await t.check(S + 'could judge trusted keyboard mount within one stationary wheel burst', qualified, detail);
 		// PM7PERF-R5-UNQUALIFIED-RETURNS-COUNTED: the rejected input's idle returns are the product working; one
@@ -482,6 +488,8 @@ async function roomMountRace(t, f, label, park, rm) {
 		// A broken burst lets the pause end correctly mid-burst: the could-judge row above has failed, and the rows that
 		// depend on the pause surviving the burst are skipped with the gap, not failed (PM7PERF-HOVERPAUSE-R5-CASCADE).
 		if (gate === 'skip') { t.log(S + 'SKIP R5 suppression/restoration: ' + burstDetail); break; }
+		// R135-F2: the product assertions judge on qualified input; a fault fails, never could-not-judge.
+		await t.check(S + 'R5 mount keeps the wheel hold, swaps to the live room and ends after the last wheel', r5MountProduct(rec, { last }), JSON.stringify({ oldPaused: rec.oldPaused, swaps: rec.swaps, liveRoom: rec.liveRoom, room: rec.room, ends: rec.ends, last }));
 		await t.check(S + 'live board keeps its wheel marker after the mount', !burstBroke && rec.oldPaused && during.length > 0 && during.every((s) => s.op === 'wheel'), burstDetail || `${during.filter((s) => s.op !== 'wheel').length}/${during.length} live samples lost marker`);
 		// Allow the first 100 ms for an already-lit reused card's outgoing fade; nothing arriving may light thereafter.
 		const settled = during.filter((s) => s.t >= during[0].t + 100);
