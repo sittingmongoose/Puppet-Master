@@ -161,6 +161,73 @@ def boundary_of(family, label):
     return 'retained_history'
 
 
+# --- root-row prefix-equivalence (lead ruling 1121224233-9f91 (1)) ---
+# Byte-identical to the stock judge's functions (fix/covered-later-prefixeq-20261121); the forked
+# Method B judge's later_refusal applies them through pm_goal_dg5_methodb_judge._stock_origin.
+def root_row_code_parts(code):
+    """The root-row code grammar: <area>/<kind>/root/<violation suffix>.
+
+    The s_readers root rows validate each root copy at one runtime check
+    (`bank.validate(..., where + '/root')` with where = <area>/<kind>); the bank
+    appends '/schema/<path>:<validator>'. The root-row segment is unambiguous
+    only when 'root' is exactly one segment, at index 2, with a non-empty area,
+    kind and suffix. Returns (area, kind, suffix), or None when the code is not
+    an unambiguous root-row code (the prefix rule then refuses to apply).
+    """
+    if not isinstance(code, str) or not code or code.startswith('crash:'):
+        return None
+    parts = code.split('/')
+    if len(parts) < 4 or parts[2] != 'root' or parts.count('root') != 1 or not all(parts[:2]):
+        return None
+    return parts[0], parts[1], '/'.join(parts[3:])
+
+
+def root_row_prefix_equivalent(intact_code, cut_code, intact_origin=None, cut_origin=None):
+    """Lead ruling 1121224233-9f91 (1): two refusal codes are the same code for J2 when
+    (a) the refusal origins are the same source site (file:line): both the recorded origin
+    site and the innermost non-checker origin frame (the owner guard line, e.g.
+    s_readers.py:94; the recorded site alone can be the bank's shared raise line),
+    (b) the violation suffix after the root-row segment is byte-equal, and (c) the codes
+    are byte-equal after removing the root-row prefix segment (<area>/<kind>/root/ ->
+    <area>/root/). Anything that fails any of (a)-(c) stays a different code.
+    Returns dict(applicable, ...)."""
+    out = dict(applicable=False, intact_code=intact_code, cut_code=cut_code)
+    intact_parts, cut_parts = root_row_code_parts(intact_code), root_row_code_parts(cut_code)
+    if intact_parts is None or cut_parts is None:
+        return dict(out, why='a code is not an unambiguous root-row code')
+    if intact_code == cut_code:
+        return dict(out, why='codes already byte-equal (the same-code rule applies directly)')
+
+    def origin_site(origin):
+        site = origin.get('site') if isinstance(origin, dict) else None
+        return tuple(site) if isinstance(site, (list, tuple)) and len(site) == 2 else None
+
+    def guard_site(origin):
+        # The innermost origin frame outside the checker: the owner guard line that
+        # raised the refusal (frames are [where, line, name, bridge_or_guard, checker]).
+        for frame in reversed((origin.get('frames') or []) if isinstance(origin, dict) else []):
+            if isinstance(frame, (list, tuple)) and len(frame) >= 5 and not frame[4]:
+                return (frame[0], frame[1])
+        return None
+    intact_site, cut_site = origin_site(intact_origin), origin_site(cut_origin)
+    intact_guard, cut_guard = guard_site(intact_origin), guard_site(cut_origin)
+    if intact_site is None or cut_site is None:
+        return dict(out, why='a refusal origin site is not recorded')
+    if intact_site != cut_site:
+        return dict(out, why='refusal origins at different sites: %s vs %s' % (list(intact_site), list(cut_site)))
+    if intact_guard is None or cut_guard is None:
+        return dict(out, why='an origin has no owner guard frame (only checker frames)')
+    if intact_guard != cut_guard:
+        return dict(out, why='refusal origins at different guard sites: %s vs %s' % (list(intact_guard), list(cut_guard)))
+    if intact_parts[0] != cut_parts[0]:
+        return dict(out, why='different area')
+    if intact_parts[2] != cut_parts[2]:
+        return dict(out, why='different violation suffix')
+    return dict(out, applicable=True, site=list(intact_site), guard_site=list(intact_guard), area=intact_parts[0],
+                kinds=[intact_parts[1], cut_parts[1]], suffix=intact_parts[2],
+                normalized_code=intact_parts[0] + '/root/' + intact_parts[2])
+
+
 class Collector:
     def __init__(self, *, judge=True):
         self.checkpoint_path = OUTPUT

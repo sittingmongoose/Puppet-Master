@@ -153,6 +153,21 @@ def origin_at(origin, site):
     return False
 
 
+def _stock_origin(origin):
+    """Adapt the forked harness's refusal origin to the frame shape the shared prefix-equivalence
+    rule reads. The harness records [where, line, name, helper]; the stock bridge records
+    [where, line, name, bridge_or_guard, checker]. For root-row schema refusals the helper flag
+    marks exactly the frames the stock checker flag marks (this judge, the harness, the bridge,
+    a bank's validate path), so it maps to both; the rule functions themselves are byte-identical
+    to the stock judge's. A malformed frame list yields no guard frame: the rule fails closed."""
+    if not isinstance(origin, dict):
+        return origin
+    frames = origin.get('frames') or []
+    if not all(isinstance(f, (list, tuple)) and len(f) == 4 for f in frames):
+        return dict(origin, frames=[])
+    return dict(origin, frames=[[f[0], f[1], f[2], f[3], f[3]] for f in frames])
+
+
 class IdentityMismatch(ValueError):
     """Rule 2 refused a joint cut: the members do not check one node on one value."""
 
@@ -914,16 +929,28 @@ class ForkedExample(w3.OwnerExample):
         return states if same else None
 
     def later_refusal(self, record, before, disabled, restored, rerun=None):
-        """KILLED_CODE first, then the after-state rule (rulings 1121112536-0b66 (3), 1121115610-7650, addendum 1)."""
+        """KILLED_CODE first, then the after-state rule (rulings 1121112536-0b66 (3), 1121115610-7650,
+        addendum 1). Root-row prefix-equivalence (lead ruling 1121224233-9f91 (1), Job E): a refusal at
+        the sibling root row of the same site with the same violation, codes differing only in the
+        root-row prefix, is the same code for J2 and goes through the unchanged after-state rule."""
         import pm_goal_dg5_boundaries as bridge
+        import pm_goal_guard_sweep as sweep
 
         intact_code, cut_code = before.get('refusal'), disabled.get('refusal')
         origin = self.origins[-3] if len(self.origins) >= 3 else None
+        cut_origin = self.origins[-2] if len(self.origins) >= 2 else None
         code_matches = (isinstance(intact_code, str) and intact_code == self.route['refusal']
                         and bridge.row(intact_code) == self.row)
         origin_at_site = origin_at(origin, self.route['site'])
         own = code_matches and origin_at_site
         different = isinstance(cut_code, str) and bool(cut_code) and cut_code != intact_code
+        prefix_equivalence = None
+        if different:
+            prefix = sweep.root_row_prefix_equivalent(intact_code, cut_code,
+                                                      _stock_origin(origin), _stock_origin(cut_origin))
+            if prefix['applicable']:
+                prefix_equivalence = prefix
+                different = False
         repeats = restored == before
         code = dict(intact_code=intact_code, cut_code=cut_code, restoration_code=restored.get('refusal'),
                     different_code=different,
@@ -931,6 +958,8 @@ class ForkedExample(w3.OwnerExample):
                                    route_site=list(self.route['site']), origin=origin,
                                    verified_by='origin frame at the route site' if own else None),
                     restoration_repeats=repeats, exact=record['outcome'] == 'exact_expected')
+        if prefix_equivalence:
+            code['prefix_equivalence'] = prefix_equivalence
         entry = dict(route=self.label, ledger_id=record['id'], killed_code_check=code)
         if different:
             if own and repeats and code['exact']:
@@ -943,13 +972,14 @@ class ForkedExample(w3.OwnerExample):
                 code.update(verdict=None, reason=why)
                 verdict = 'CANNOT_DECIDE'
                 record['cannot_decide_reason'] = 'different-code later refusal: ' + why
-        elif not (isinstance(intact_code, str) and intact_code and intact_code == cut_code):
+        elif not (isinstance(intact_code, str) and intact_code and intact_code == cut_code) and not prefix_equivalence:
             # Only a same-code later refusal can be cover (review (b)): both codes must exist and be equal.
             code.update(verdict=None, reason='not a same-code later refusal')
             verdict = 'CANNOT_DECIDE'
             record['cannot_decide_reason'] = 'not a same-code later refusal: intact %r, cut %r' % (intact_code, cut_code)
         else:
-            code.update(verdict=None, reason='same code')
+            code.update(verdict=None, reason='prefix-equivalent root-row codes: same code for J2'
+                        if prefix_equivalence else 'same code')
             states = rerun() if rerun is not None else self.after_states[-3:]
             if states is None:
                 check = dict(intact=None, restoration=None, cut=None, verdict='CANNOT_DECIDE',
