@@ -24,7 +24,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import { pathToFileURL } from 'url';
+import { pathToFileURL, fileURLToPath } from 'url';
 
 /* Selectors that are allowed to match nothing, each with the reason.
    An entry here is a promise that someone owns it -- not a mute button.
@@ -318,7 +318,10 @@ export async function runOrphanGate(browser, { src, html }) {
 }
 
 /* ---- standalone ---- */
-if (import.meta.url === pathToFileURL(process.argv[1] || '').href) {
+/* run as a command: compare real paths, since node runs the entry module from its real path and a symlinked
+   invocation otherwise does nothing (the kit's helpers/is-main.mjs, astra-max-17) */
+const isMain = (() => { if (!process.argv[1]) return false; const real = (p) => { try { return fs.realpathSync(p); } catch { return path.resolve(p); } }; return real(path.resolve(process.argv[1])) === real(fileURLToPath(import.meta.url)); })();
+if (isMain) {
   const arg = k => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : null; };
   // decodeURIComponent: the concept dir is literally named "5.6 Pro", and a
   // URL pathname carries that space as %20.

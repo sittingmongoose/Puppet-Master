@@ -9,6 +9,7 @@ import { readFileSync, readdirSync, writeFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
+import { isMainModule } from '../helpers/is-main.mjs';
 
 const G = 16;
 export function stillJudge(a1png, a2png, bpng, rect = null) {
@@ -56,7 +57,7 @@ export function captureFresh({ a1Ms, bMs = null, a2Ms = null, summaryMs = null }
 	return { companions, summary: summaryMs != null ? summaryMs >= a1Ms : null };
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (isMainModule(import.meta.url)) {
 	const dir = process.argv[2], out = process.argv.indexOf('--json') > 0 ? process.argv[process.argv.indexOf('--json') + 1] : null;
 	const rows = [], states = new Map(), summaries = new Map();
 	for (const file of readdirSync(dir).sort()) {
