@@ -129,6 +129,24 @@ const VIEWS = {
 	settings: (f) => f.evaluate(() => PM_PAGES.go('settings'))
 };
 
+// PM7-FRAMECOST-SCROLL-START / PM7-FRAMECOST-HOME-NOSCROLL (exported for tools/frame-cost-scroll.selftest.mjs):
+// the scroll window's plan. The view's main scroller is its largest scrollable range (ties by area); the walk
+// starts at its top and turns at its bounds, so a short board (Usage's 695 px) is not pinned for most ticks, and
+// the wheel aims at the scroller itself, not at a fixed share of the page box (Home's divider line scrolls nothing).
+export function pickScroller(candidates) {
+	let best = null;
+	for (const c of candidates) {
+		if (!(c.range > 0) || !(c.h > 0)) continue;
+		if (!best || c.range > best.range || (c.range === best.range && c.area > best.area)) best = c;
+	}
+	return best;
+}
+export function scrollStep({ top, max, dir }) {
+	if (top >= max - 1) return -1;
+	if (top <= 0) return 1;
+	return dir;
+}
+
 export default async function (t) {
 	const looks = String(t.args.looks || LOOKS.join(',')).split(',').filter(Boolean);
 	const views = String(t.args.views || 'home,usage,settings,orchestrator,wizard,projects').split(',').filter(Boolean);
@@ -201,9 +219,41 @@ export default async function (t) {
 				}
 			};
 			if (w === 'scroll') during = async (until) => {
-				await t.page.mouse.move(Math.round(box.x + box.w * 0.5), Math.round(box.y + box.h * 0.55));
-				let i = 0;
-				while (Date.now() < until) { await t.page.mouse.wheel(0, (Math.floor(i++ / 30) % 2 ? -1 : 1) * 40); await new Promise((r) => setTimeout(r, 14)); }
+				// PM7-FRAMECOST-SCROLL-START + HOME-NOSCROLL: aim at the view's main scroller (55% of the page box
+				// lands on Home's i.pmw-divider-line, where nothing scrolls), start at its top (the last window left
+				// it wherever it was), and turn at its bounds (a fixed 30-tick leg pins a short board at its end).
+				const cands = await f.evaluate(() => {
+					const root = document.querySelector('#pm-o55-onboarding .o55-pane') || document.querySelector('.page.active') || document.body;
+					const out = [];
+					for (const el of [root, ...root.querySelectorAll('*')]) {
+						const cs = getComputedStyle(el);
+						if (!/(auto|scroll)/.test(cs.overflowY)) continue;
+						const range = el.scrollHeight - el.clientHeight;
+						if (range <= 0) continue;
+						const r = el.getBoundingClientRect();
+						if (r.height <= 0 || r.width <= 0) continue;
+						const i = out.length;
+						el.setAttribute('data-fc-cand', String(i));
+						out.push({ i, range, h: r.height, area: r.width * r.height, x: r.left + r.width / 2, y: r.top + r.height / 2, name: el.id || String(el.className).slice(0, 40) });
+					}
+					return out;
+				});
+				const best = pickScroller(cands);
+				let travel = 0;
+				if (best) {
+					await f.evaluate((i) => { const el = document.querySelector(`[data-fc-cand="${i}"]`); el.setAttribute('data-fc-scroller', '1'); el.scrollTop = 0; }, best.i);
+					await t.page.mouse.move(Math.round(best.x), Math.round(best.y));
+					let dir = 1, last = 0;
+					while (Date.now() < until) {
+						await t.page.mouse.wheel(0, dir * 40);
+						await new Promise((r) => setTimeout(r, 14));
+						const top = await f.evaluate(() => { const el = document.querySelector('[data-fc-scroller]'); return el ? el.scrollTop : 0; });
+						travel += Math.abs(top - last); last = top;
+						dir = scrollStep({ top, max: best.range, dir });
+					}
+				}
+				await f.evaluate(() => { document.querySelectorAll('[data-fc-cand]').forEach((e) => e.removeAttribute('data-fc-cand')); const el = document.querySelector('[data-fc-scroller]'); if (el) el.removeAttribute('data-fc-scroller'); });
+				row.scrollMoved = { scroller: best ? best.name : null, range: best ? best.range : 0, travel: Math.round(travel) };
 			};
 			row[w] = await traceWindow(cdp, { ms, during, url, keep });
 			await t.page.mouse.move(W - 6, Math.round(H / 2));
