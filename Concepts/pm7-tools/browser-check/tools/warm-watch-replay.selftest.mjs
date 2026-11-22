@@ -234,6 +234,7 @@ function watchDipRows() {
 // hand-written rows that carry the per-interval fields (120 Hz, median 8: slow bar 40, steady bar 25)
 const X = { steadyMs: 25, slowMs: 40, slow1: 40, steady1: 25, slow2: 40, steady2: 25, resetAt: 0 };
 const exact = (k) => watched(k).map((r) => ({ ...r, ...X }));
+const Y = { steadyMs: 45, slowMs: 90, slow1: 90, steady1: 45, slow2: 90, steady2: 45, resetAt: 0 };
 
 const CASES = [
  ['R18-4 from the product: a d1 over the 40 ms bar resets the count inside the step that then logs a 90 ms bar', () => {
@@ -346,7 +347,20 @@ const CASES = [
 	// the steady floor holds the same way: the steady bar is max(25, 1.5 x median), so steady1 1 is
 	// impossible and the row is not exact. Bracketed, its 40 ms d1 clears the count: no needless watch.
 	['R59 C1: a row logging an impossible steady bar (steady1 1, under the 25 ms floor) is not exact either',
-		() => log(exact(16), step([40, 8, 8], { ...X, steady1: 1 })), { needless: 0, early: 0 }]
+		() => log(exact(16), step([40, 8, 8], { ...X, steady1: 1 })), { needless: 0, early: 0 }],
+	// R74 C1 (PM7PERF-WARMWATCH-ABOVE-FLOOR-BARS): 50 is above the 40 ms floor, so the floor rule trusts the
+	// claimed slow1 50 / resetAt 1 and excuses the 17th watch. But the product computes both bars from one shared
+	// median (note(): slow = max(40, 3m), steady = max(25, 1.5m)): slow1 50 implies m 16.7 and steady1 25, not 45.
+	// The pair no median can produce is impossible metadata; the row must fall to the bracket path against its own
+	// 90 ms bar, where the 60 ms d1 resets nothing and the 17th watch is needless.
+	['R74 C1: an above-floor but impossible bar pair (slow1 50 with steady1 45) cannot excuse a needless watch',
+		() => log(Array.from({ length: 16 }, () => step([30, 30, 30], { ...Y })), step([60, 30, 30], { ...Y, slow1: 50, resetAt: 1 })), { needless: 1, early: 0 }],
+	// R74's own control: the same final row restored to slow1 90 / resetAt 0 is one needless watch
+	['R74 C1 control: the same row with slow1 90 and resetAt 0 is a needless watch',
+		() => log(Array.from({ length: 16 }, () => step([30, 30, 30], { ...Y })), step([60, 30, 30], { ...Y })), { needless: 1, early: 0 }],
+	// a valid non-floor pair keeps its exact reset: slow1 50 with steady1 25 is m 16.7, and the 60 ms d1 is over 50
+	['R74 C1 control: a valid above-floor pair (slow1 50, steady1 25) keeps its real reset',
+		() => log(Array.from({ length: 16 }, () => step([30, 30, 30], { ...Y })), step([60, 30, 30], { ...Y, slow1: 50, steady1: 25, resetAt: 1 })), { needless: 0, early: 0 }]
 ];
 
 let failed = 0;
