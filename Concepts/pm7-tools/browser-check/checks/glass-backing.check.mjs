@@ -61,11 +61,14 @@ async function readThrough(t, f, sel, { rerenderAgents = false } = {}) {
 	if (!r) return null;
 	await f.waitForTimeout(400);
 	const a1 = await shot(t, r); await f.waitForTimeout(300); const a2 = await shot(t, r);
-	const mask = motionMask(a1, a2);
 	await f.evaluate((s) => {
 		const e = document.querySelector(s);
 		let oldStyle = e.getAttribute('style');
 		const c = getComputedStyle(e);
+		// R135-F3: getComputedStyle is live. Snapshot the strings BEFORE the transparent rule is appended:
+		// reading them in __bcOutsideOnly while `${s}, ${s} *` is active pinned transparent text on the
+		// surface for shot b (every surface's text matched shot c, and selftest=rerender passed vacuously).
+		const saved = ['color', '-webkit-text-fill-color', 'text-shadow', 'caret-color'].map((p) => [p, c.getPropertyValue(p)]);
 		const st = document.createElement('style');
 		st.id = 'bc-through';
 		// Match the live subtree so text added between shots still belongs to the surface (T71).
@@ -77,9 +80,7 @@ async function readThrough(t, f, sel, { rerenderAgents = false } = {}) {
 			oldStyle = undefined;
 		};
 		st.__bcOutsideOnly = () => {
-			for (const property of ['color', '-webkit-text-fill-color', 'text-shadow', 'caret-color']) {
-				e.style.setProperty(property, c.getPropertyValue(property), 'important');
-			}
+			for (const [property, value] of saved) e.style.setProperty(property, value, 'important');
 			st.textContent = `body *:not(:is(${s}, ${s} *)) ${transparent}`;
 		};
 		st.__bcHideSurface = () => {
