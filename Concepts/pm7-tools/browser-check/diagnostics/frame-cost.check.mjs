@@ -189,7 +189,11 @@ export async function measureScroll(cdp, f, t, { ms, url, keep, label, trace = t
 		// session never injects __fcTop into the frame, liveTop stayed 0 and the wheel pinned at the bottom
 		// bound while travel still passed. The binding lives on the frame's own CDP session (kit convention);
 		// Tracing stays on cdp. Without a frame session the window says could-not-judge, never a silent pass.
-		if (f !== t.page.mainFrame()) frameCdp = await t.page.context().newCDPSession(f).catch(() => null);
+		// R137-F2: an in-process child frame (--record's framed viewport, any shared-target sandbox) has no
+		// session of its own — Playwright throws "part of the parent frame" — but it IS part of cdp's target,
+		// so the binding rides cdp there (sound-prime/cold-bell/activity-bar-focus-film convention); the
+		// frameCdp !== cdp guard below keeps cdp from being detached. Any other error stays could-not-judge.
+		if (f !== t.page.mainFrame()) frameCdp = await t.page.context().newCDPSession(f).catch((e) => (String(e?.message || '').includes('part of the parent frame') ? cdp : null));
 		if (!frameCdp) frameSessionFailed = true;
 		else {
 			await frameCdp.send('Runtime.enable');

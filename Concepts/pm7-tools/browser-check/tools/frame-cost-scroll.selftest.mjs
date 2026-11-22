@@ -245,7 +245,7 @@ assert.equal(typeof measureScroll, 'function', 'the scroll window needs a trace-
 // never injects __fcTop into the frame: liveTop stayed 0, the wheel pinned at the bottom bound for most of the
 // trace, and travel still passed. The binding must live on the frame's own CDP session (Tracing stays on the
 // page session); if that session cannot be opened, the window must say could-not-judge, never pass.
-function sandboxWorld({ sessionFails = false } = {}) {
+function sandboxWorld({ sessionFails = false, sharedTarget = false } = {}) {
 	const RANGE = 695;
 	const events = [];
 	const state = { phase: 'setup' };
@@ -273,7 +273,7 @@ function sandboxWorld({ sessionFails = false } = {}) {
 		querySelectorAll: (s) => (s === '[data-fc-cand]' && scroller.attrs.has('data-fc-cand') ? [scroller] : []),
 	};
 	const frameHandlers = [];
-	const win = {}; // the OOPIF's window: __fcTop exists only if the binding was added on the FRAME session
+	const win = {}; // the frame's window: __fcTop exists only if the binding was added on the session owning the frame's target (frame session for an OOPIF, page session for a shared-target frame)
 	const frameCdp = {
 		send: async (method) => {
 			events.push([state.phase, 'frameCdp', method]);
@@ -285,7 +285,18 @@ function sandboxWorld({ sessionFails = false } = {}) {
 		off: (name, fn) => { const i = frameHandlers.indexOf(fn); if (i >= 0) frameHandlers.splice(i, 1); },
 		detach: async () => { events.push([state.phase, 'frameCdp', 'detach']); },
 	};
-	const cdp = { send: async (method) => { events.push([state.phase, 'cdp', method]); return {}; }, on: () => {}, off: () => {} };
+	const pageHandlers = [];
+	const cdp = {
+		send: async (method) => {
+			events.push([state.phase, 'cdp', method]);
+			// R137-F2: a shared-target frame is part of the page's CDP target, so the page session's binding reaches it
+			if (sharedTarget && method === 'Runtime.addBinding') win.__fcTop = (payload) => { for (const h of pageHandlers) h({ name: '__fcTop', payload }); };
+			if (sharedTarget && method === 'Runtime.removeBinding') delete win.__fcTop;
+			return {};
+		},
+		on: (name, fn) => { if (name === 'Runtime.bindingCalled') pageHandlers.push(fn); },
+		off: (name, fn) => { const i = pageHandlers.indexOf(fn); if (i >= 0) pageHandlers.splice(i, 1); },
+	};
 	const mainF = {};
 	const f = {
 		evaluate: async (fn, arg) => {
@@ -302,6 +313,7 @@ function sandboxWorld({ sessionFails = false } = {}) {
 			context: () => ({ newCDPSession: async (target) => {
 				events.push([state.phase, 'session', target === f ? 'frame' : 'page']);
 				if (target === f && sessionFails) throw new Error('no frame session');
+				if (target === f && sharedTarget) throw new Error("This frame does not have a separate CDP session, it is a part of the parent frame's session");
 				return target === f ? frameCdp : cdp;
 			} }),
 			mouse: {
@@ -317,7 +329,7 @@ function sandboxWorld({ sessionFails = false } = {}) {
 		},
 		check: async (name, ok, detail) => { checks.push({ name, ok, detail }); },
 	};
-	return { RANGE, events, state, styleMap, scroller, win, frameCdp, cdp, f, t, wheels, checks, frameHandlers };
+	return { RANGE, events, state, styleMap, scroller, win, frameCdp, cdp, f, t, wheels, checks, frameHandlers, pageHandlers };
 }
 // R136-N5 RED: the sandbox walk turns at its bounds from the frame-pushed top; the binding lives on the frame
 // session, Tracing on the page session, and the frame session is detached after.
@@ -357,6 +369,33 @@ function sandboxWorld({ sessionFails = false } = {}) {
 	assert.equal(scrollMoved.travel, 0);
 	assert.ok(!w.events.some((e) => e[2] === 'Runtime.addBinding'), 'no binding without a frame session');
 }
+// R137-F2 RED: an in-process child iframe (--record's framed viewport __bc_viewport, or any shared-target
+// sandbox) has no session of its own: Playwright's newCDPSession(f) throws "This frame does not have a
+// separate CDP session, it is a part of the parent frame's session". The frame IS part of the page's CDP
+// target, so the binding rides the page session cdp (the kit convention: sound-prime, cold-bell,
+// activity-bar-focus-film); the window measures, never could-not-judge, and cdp is never detached.
+{
+	const w = sandboxWorld({ sharedTarget: true });
+	const trace = async (cdp2, { during }) => {
+		assert.equal(cdp2, w.cdp, 'Tracing stays on the page session');
+		w.state.phase = 'inside';
+		if (during) await during(Date.now() + 300);
+		w.state.phase = 'after';
+		return { main: { cost: 1 } };
+	};
+	const { scrollMoved } = await measureScroll(w.cdp, w.f, w.t, { ms: 300, url: 'file://page', keep: null, label: 'basic-dark usage framed', trace });
+	assert.ok(w.wheels.includes(40) && w.wheels.includes(-40), 'the shared-target walk turns at the bounds from the pushed top');
+	assert.ok(w.events.some((e) => e[1] === 'cdp' && e[2] === 'Runtime.addBinding'), 'the binding rides the page session the frame shares');
+	assert.ok(!w.events.some((e) => e[1] === 'frameCdp'), 'no separate frame session is opened or detached');
+	assert.equal(w.checks.length, 1);
+	assert.equal(w.checks[0].ok, true, 'a shared-target frame measures its window, not could-not-judge');
+	assert.ok(!/could not judge/.test(w.checks[0].detail));
+	assert.ok(scrollMoved.travel > 0);
+	assert.equal(w.pageHandlers.length, 0, 'the binding handler is detached from the page session');
+	assert.equal(w.scroller.listeners.length, 0);
+	assert.equal(w.scroller.attrs.size, 0);
+	assert.ok(!w.styleMap.has('scroll-behavior'), 'the inline scroll-behavior is restored');
+}
 // R136-C1 RED: a throwing trace still tears down the listener, marks and binding (no leak into the next look).
 {
 	const w = sandboxWorld();
@@ -368,4 +407,4 @@ function sandboxWorld({ sessionFails = false } = {}) {
 	assert.ok(!w.styleMap.has('scroll-behavior'), 'the inline scroll-behavior is restored even when the trace throws');
 	assert.ok(w.events.some((e) => e[1] === 'frameCdp' && e[2] === 'detach'), 'the frame session is detached even when the trace throws');
 }
-console.log('PASS frame-cost trace hygiene: discovery, marking, scrollTop=0 and the pointer aim run before the trace, only the wheel runs inside (turning from the passive listener\'s pushed top), and cleanup plus the moved verdict run after; a view with no scroller fails its window; a smooth-behavior scroller resets instantly and settles before the watch starts; the sandbox binding lives on the frame session (or the window says could-not-judge), and a throwing trace still tears everything down');
+console.log('PASS frame-cost trace hygiene: discovery, marking, scrollTop=0 and the pointer aim run before the trace, only the wheel runs inside (turning from the passive listener\'s pushed top), and cleanup plus the moved verdict run after; a view with no scroller fails its window; a smooth-behavior scroller resets instantly and settles before the watch starts; the sandbox binding lives on the frame session (or the window says could-not-judge), a shared-target in-process frame measures on the page session it is part of (never could-not-judge, never detached), and a throwing trace still tears everything down');
