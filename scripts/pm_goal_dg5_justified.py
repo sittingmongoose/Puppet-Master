@@ -240,6 +240,8 @@ def written_proofs():
                         f'fail closed, nothing judged')
                 seen[key] = (label, line)
             for row, proof in getattr(module, 'PROOFS', {}).items():
+                # The runtime table too: an imported, alias- or helper-mutated PROOFS can
+                # carry a withdrawn key the source parse never sees (TOOLBATCH F6).
                 _refuse_withdrawn(label, row, withdrawn)
                 out[row] = dict(proof, module=label,
                                 bound_sites=[_bind(p, l) for p, l in proof.get('sites', [])],
