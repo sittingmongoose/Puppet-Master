@@ -227,6 +227,9 @@ PM51.swapDetail = function (wsId, sel) {
   if (oldMore && nextMore) oldMore.replaceWith(nextMore);
   else if (oldMore) oldMore.remove();
   else if (nextMore && moreBody) moreBody.insertBefore(nextMore, moreBody.firstChild);
+  /* the detail's cards carry the index's adopted anchors: the leaving copy takes its anchors with it, so the
+     arriving detail's groups are re-adopted and relisted, and the highlight put back, as after a tab morph */
+  if (PM51.syncIndex) PM51.syncIndex(wsId);
   try { syncDetailButtonStates(); } catch (e) { /* cosmetic */ }
   saveState();
 };

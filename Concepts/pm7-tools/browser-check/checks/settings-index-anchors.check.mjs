@@ -20,6 +20,12 @@
 //   the search tests compare the new tab's entries with those it lists when opened from the index.
 // - Reached by the top tabs (Media & Output, then its Abilities tab), Abilities listed no entries at all: the tab redraw
 //   morphs the page body, the leaving copy still held the adopted anchors, so the arriving copy got none.
+// - FO-S1 (batch 18, two reviewers on main 804031ee16): selecting another item in Personas, Goals > Templates,
+//   History > Sessions or Servers swaps the detail (kit.d/20-motion.js PM51.swapDetail) without telling the index:
+//   the leaving copy took the detail groups' adopted anchors with it, the highlight stalled on "Your personas" or
+//   the tab caption instead of the group being read, and Sessions kept listing "Session details" while the new
+//   detail's More options was closed. The FO-S1 rows at the end fail on that base and pass once the swap resyncs
+//   the index through the same adoption path (pm51AdoptAnchors / PM51.syncIndex).
 // - pm4-settings-css.css gave .page-index a 1 px right border: drawn in Basic, Friendly, Retro and NieR, both modes.
 // - liquid-glass glass.css coloured the lit entry under an open tab with --pm-switch-ink-on, the ink for words on the
 //   switcher's chip, while drawing no chip there: 1.0-1.3:1 in Basic, Friendly Dark, Retro and NieR (a bare dot).
@@ -140,6 +146,161 @@ async function searchJump(t, f, query) {
 	await t.page.waitForTimeout(900);
 	await still(t, f);
 }
+
+/* FO-S1: the index after a detail swap. Judged from the manager's own cards and rows (the group card being read,
+   the template's kind row) and from which index entry is lit under the open tab, never from adopted anchors. */
+const SWAP_VIEW = (ws) => {
+	const sc = document.querySelector('#settings-document');
+	if (!sc) return null;
+	const b = sc.getBoundingClientRect();
+	let readTop = b.top;
+	for (const s of document.querySelectorAll('#settings-document .pm51-mgr.has-manager-tabs > .pm51-tabs')) {
+		if (!s.checkVisibility()) continue;
+		const r = s.getBoundingClientRect();
+		if (r.top <= b.top + 2 && r.bottom > b.top) readTop = Math.max(readTop, r.bottom);
+	}
+	const line = readTop + 30;
+	const body = document.querySelector(`[data-continuous-workspace-body="${ws}"]`);
+	const live = (el) => el && !el.closest('.o55-leaving');
+	const detail = body && [...body.querySelectorAll('.resource-detail')].find((el) => live(el) && el.getClientRects().length);
+	const dr = detail && detail.getBoundingClientRect();
+	const shown = (el) => el.getClientRects().length > 0 && !el.closest('details:not([open]), [hidden], [inert]');
+	const cards = detail ? [...detail.querySelectorAll('.pm51-section')].filter((c) => live(c) && shown(c)).map((c) => {
+		const head = c.querySelector(':scope > .pm51-section-head .pm51-section-title, :scope h3');
+		const r = c.getBoundingClientRect();
+		return { title: head ? head.textContent.trim() : '?', top: r.top, bottom: r.bottom };
+	}) : [];
+	const kindRow = detail && detail.querySelector('[data-setting-id="planning.verification.goal-template"]');
+	const kr = kindRow && kindRow.getBoundingClientRect();
+	const adv = detail && detail.querySelector('details.pm51-advanced');
+	const tab = document.querySelector(`#pm-settings-root .page-index-card .pm51-index-tab.is-open[data-workspace="${ws}"]`);
+	const sub = tab && tab.nextElementSibling && tab.nextElementSibling.classList.contains('pm51-index-sub') ? tab.nextElementSibling : null;
+	const entries = sub ? [...sub.querySelectorAll('.index-link')].map((l) => l.textContent.trim()) : [];
+	const litSub = sub ? [...sub.querySelectorAll('.index-link.is-active')].map((l) => l.textContent.trim()) : [];
+	const litTab = !!(tab && tab.classList.contains('is-active'));
+	const lit = [...document.querySelectorAll('#pm-settings-root .page-index-card .index-link.is-active')].map((l) => `${l.dataset.workspace}:${l.textContent.trim()}`);
+	const activeRow = body && [...body.querySelectorAll('.resource-roster .resource-row')].find((r) => live(r) && r.classList.contains('active'));
+	const max = sc.scrollHeight - sc.clientHeight;
+	return {
+		top: Math.round(sc.scrollTop), atEnd: sc.scrollTop >= max - 2, line,
+		detail: dr ? { top: dr.top, bottom: dr.bottom } : null,
+		detailTitle: detail ? (detail.querySelector('.pm51-detail-title') || {}).textContent : null,
+		activeRow: activeRow ? (activeRow.querySelector('.resource-row-name') || {}).textContent : null,
+		cards, kindTop: kr ? kr.top : null, advOpen: adv ? adv.open : null,
+		entries, litSub, litTab, lit,
+		mid: { x: b.left + b.width / 2, y: b.top + b.height * 0.6 }
+	};
+};
+const SWAP_MGRS = [
+	{
+		ws: 'personas', domain: 'memory', tab: null, minJudged: 4,
+		groups: ['Your personas', 'About this persona', 'How it answers', 'Model and cost', 'Tools and instructions'],
+		want: (v) => {
+			const map = { 'About': 'About this persona', 'How it answers': 'How it answers', 'Model and cost': 'Model and cost', 'Tools and instructions': 'Tools and instructions' };
+			const card = v.cards.filter((c) => map[c.title]).find((c) => c.top + 40 <= v.line && v.line <= c.bottom - 40);
+			return card ? map[card.title] : null;
+		}
+	},
+	{
+		ws: 'goals', domain: 'memory', tab: 'templates', minJudged: 2,
+		groups: ['Kind of job'],
+		want: (v) => (v.kindTop !== null && v.detail && v.kindTop + 40 <= v.line && v.line <= v.detail.bottom ? 'Kind of job' : null)
+	},
+	{
+		ws: 'project-history', domain: 'projects', tab: 'sessions', advanced: true, minJudged: 1,
+		groups: ['Session details'],
+		want: (v) => {
+			const card = v.cards.find((c) => c.title === 'Technical details');
+			return card && card.top + 40 <= v.line && v.line <= card.bottom - 40 ? 'Session details' : null;
+		}
+	},
+	{
+		ws: 'servers', domain: 'system', tab: 'servers', minJudged: 2,
+		groups: ['Servers', 'SSH computers', 'SSH keys', 'Setting up tools on servers'],
+		want: (v) => {
+			const card = v.cards.find((c) => c.title === 'Details');
+			return card && v.detail && card.top + 40 <= v.line && v.line <= Math.min(card.bottom - 40, v.detail.bottom) ? 'Servers' : null;
+		}
+	}
+];
+const FO_S1_ROWS = SWAP_MGRS.map((m) => [`FO-S1 ${m.ws}${m.tab ? ' > ' + m.tab : ''} keeps the index on the new detail's groups after a swap`, async (t) => {
+	const [w, h] = String(t.args.size || '1440x900').split('x').map(Number);
+	const step = Number(t.args.step || 90);
+	const f = await t.app.open();
+	await t.emulate({ reducedMotion: 'no-preference' });
+	await t.viewport(w, h);
+	await f.locator('#tab-settings').click();
+	await t.settle();
+	await f.locator(`#pm-settings-root [data-action="navigate-domain"][data-domain="${m.domain}"]:visible`).first().click();
+	await t.settle();
+	await f.locator(`#pm-settings-root .workspace-tabs [data-workspace="${m.ws}"]:visible`).first().click();
+	await t.settle();
+	if (m.tab) {
+		await f.locator(`#pm-settings-root [data-workspace-block="${m.ws}"] .pm51-tabs [data-tab="${m.tab}"]:visible`).first().click();
+		await t.settle();
+		await t.page.waitForTimeout(700);
+		await still(t, f);
+	}
+	const detailSel = `#pm-settings-root [data-workspace-block="${m.ws}"] .resource-detail:not(.o55-leaving)`;
+	if (m.advanced) {
+		await f.locator(`${detailSel} details.pm51-advanced > summary`).first().click();
+		await t.page.waitForTimeout(700);
+		await still(t, f);
+	}
+	const v0 = await f.evaluate(SWAP_VIEW, m.ws);
+	await t.check('the manager draws its list and detail, and the index lists the detail\'s groups', !!v0 && !!v0.detail && v0.entries.length > 0, JSON.stringify(v0 && { entries: v0.entries, detail: v0.detailTitle }));
+	if (!v0 || !v0.detail) return;
+	/* wheel into the detail, so the swap happens mid-read, as a reader does */
+	await f.evaluate((ws) => {
+		const sc = document.querySelector('#settings-document');
+		const body = document.querySelector(`[data-continuous-workspace-body="${ws}"]`);
+		const detail = body && [...body.querySelectorAll('.resource-detail')].find((el) => !el.closest('.o55-leaving'));
+		if (sc && detail) sc.scrollTo({ top: sc.scrollTop + detail.getBoundingClientRect().top - sc.getBoundingClientRect().top - 60, behavior: 'instant' });
+	}, m.ws);
+	await t.page.waitForTimeout(600);
+	await still(t, f);
+	const vIn = await f.evaluate(SWAP_VIEW, m.ws);
+	await wheelPoint(t, f, vIn.mid);
+	for (let i = 0; i < 2; i++) { await t.page.mouse.wheel(0, step); await still(t, f); }
+	/* select the second item with a real click */
+	await f.locator(`#pm-settings-root [data-workspace-block="${m.ws}"] .resource-roster .resource-row:not(.o55-leaving)`).nth(1).click();
+	await t.page.waitForTimeout(800);
+	await still(t, f);
+	const v1 = await f.evaluate(SWAP_VIEW, m.ws);
+	t.log(`swap: ${v0.detailTitle} -> ${v1.detailTitle}; entries ${JSON.stringify(v1.entries)}; lit ${JSON.stringify(v1.lit)}; More options open: ${v1.advOpen}`);
+	await t.check('the second item is selected and its detail is drawn', !!v1.detail && v1.detailTitle !== v0.detailTitle && v1.activeRow !== null, JSON.stringify({ title: v1.detailTitle, row: v1.activeRow }));
+	if (m.advanced) {
+		await t.check('after the swap the index does not list the group hidden in the new detail\'s closed More options', v1.advOpen === false && !v1.entries.includes('Session details'), `More options open: ${v1.advOpen}, entries ${JSON.stringify(v1.entries)}`);
+		await f.locator(`${detailSel} details.pm51-advanced > summary`).first().click();
+		await t.page.waitForTimeout(700);
+		await still(t, f);
+	}
+	/* walk from the chapter top down through the new detail */
+	await f.evaluate(() => { const sc = document.querySelector('#settings-document'); if (sc) sc.scrollTo({ top: 0, behavior: 'instant' }); });
+	await t.page.waitForTimeout(800);
+	await still(t, f);
+	const vTop = await f.evaluate(SWAP_VIEW, m.ws);
+	await wheelPoint(t, f, vTop.mid);
+	let judged = 0; const wrong = []; let last = -1, n = 0;
+	for (n = 0; n < 200; n++) {
+		await t.page.mouse.wheel(0, step);
+		await still(t, f);
+		const v = await f.evaluate(SWAP_VIEW, m.ws);
+		const want = v.detail ? m.want(v) : null;
+		if (want) {
+			judged++;
+			if (!v.litSub.includes(want)) wrong.push(`${v.top}px: lit ${v.lit.join(',') || 'none'}${v.litTab ? ' (tab caption)' : ''}, reading ${want}`);
+		}
+		if (v.atEnd || v.top === last || (v.detail && v.detail.bottom < v.line - 300)) break;
+		last = v.top;
+	}
+	const vEnd = await f.evaluate(SWAP_VIEW, m.ws);
+	t.log(`walk: ${n + 1} steps of ${step}px, ${judged} judged; end entries ${JSON.stringify(vEnd.entries)}`);
+	await t.check(`the walk read the new detail's groups (${judged} judged steps)`, judged >= m.minJudged, `${judged} judged`);
+	await t.check('every judged step lights the group entry being read, under the open tab', wrong.length === 0, wrong.slice(0, 6).join(' | ') + (wrong.length > 6 ? ` and ${wrong.length - 6} more` : ''));
+	const missing = m.groups.filter((g) => !vEnd.entries.includes(g));
+	await t.check(`the index lists the new detail's groups (${m.groups.join(', ')})`, missing.length === 0, `missing ${JSON.stringify(missing)}; listed ${JSON.stringify(vEnd.entries)}`);
+}]);
 
 const ROUTES = ['top tabs', 'side index'];
 export const tests = Object.fromEntries(ROUTES.flatMap((route) => [
@@ -315,4 +476,4 @@ export const tests = Object.fromEntries(ROUTES.flatMap((route) => [
 		await t.check('each look was painted before it was measured (at least 4 theme families seen)', painted >= 4, seen.join(' '));
 		await t.check('no look draws a line between the side index and the page', lines.length === 0, lines.join(' | '));
 	}]
-]));
+]).concat(FO_S1_ROWS));
