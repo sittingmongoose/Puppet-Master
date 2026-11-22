@@ -163,8 +163,11 @@ export function scrollMovedOk({ scroller, range, travel }) {
 // scroll-behavior:auto, restored after) and must read 0 stable for two frames before the watch starts counting.
 // PM7-FRAMECOST-SCROLL-START / HOME-NOSCROLL: the walk still starts at the scroller's top, aims at the scroller
 // itself (Home's divider line scrolls nothing) and fails when nothing moved. Exported for
-// tools/frame-cost-scroll.selftest.mjs, which drives it with a fake trace, CDP session and page.
-export async function measureScroll(cdp, f, t, { ms, url, keep, label, trace = traceWindow }) {
+// tools/frame-cost-scroll.selftest.mjs, which drives it with a fake trace, CDP session and page. R137-F3: the
+// wheel loop's clock is injectable (now/wait, defaulting to Date.now and a setTimeout promise, so the check
+// behaves exactly as before); the selftest passes a virtual clock whose wait(ms) advances time without
+// sleeping, so every case is deterministic on a loaded host instead of racing a ~42 ms real-time margin.
+export async function measureScroll(cdp, f, t, { ms, url, keep, label, trace = traceWindow, now = Date.now, wait = (ms) => new Promise((r) => setTimeout(r, ms)) }) {
 	const cands = await f.evaluate(() => {
 		const root = document.querySelector('#pm-o55-onboarding .o55-pane') || document.querySelector('.page.active') || document.body;
 		const out = [];
@@ -231,9 +234,9 @@ export async function measureScroll(cdp, f, t, { ms, url, keep, label, trace = t
 	}
 	const during = best && !frameSessionFailed ? async (until) => {
 		let dir = 1;
-		while (Date.now() < until) {
+		while (now() < until) {
 			await t.page.mouse.wheel(0, dir * 40);
-			await new Promise((r) => setTimeout(r, 14));
+			await wait(14);
 			dir = scrollStep({ top: liveTop, max: best.range, dir });
 		}
 	} : undefined;

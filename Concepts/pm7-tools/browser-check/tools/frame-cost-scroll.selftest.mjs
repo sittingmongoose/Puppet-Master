@@ -51,7 +51,17 @@ console.log('PASS frame-cost moved verdict: a wheel that moved nothing (Home ove
 // before, cleanup and the moved verdict after. This drives the check's own measureScroll with a fake trace, CDP
 // session and page, and reads the order of every call.
 assert.equal(typeof measureScroll, 'function', 'the scroll window needs a trace-free plan: setup before, wheel-only inside, verdict after');
+// R137-F3: the wheel loop's clock, injected into measureScroll. wait(ms) advances virtual time without
+// sleeping, so every case runs the same ticks on a quiet or a loaded host (the real-time Date.now() + 300
+// deadline left only ~3 ticks of margin for the first -40 and flaked under VM load). The epoch-scale start
+// keeps red-on-base honest: a base revision that ignores the hooks runs its real Date.now/setTimeout loop
+// against the same deadline instead of reading 0 ticks and falsely passing the N4 case.
+function virtualClock() {
+	let now = Date.now();
+	return { now: () => now, wait: async (ms) => { now += ms; } };
+}
 {
+	const clock = virtualClock();
 	const RANGE = 695;
 	const events = [];
 	let phase = 'setup';
@@ -88,8 +98,9 @@ assert.equal(typeof measureScroll, 'function', 'the scroll window needs a trace-
 		evaluate: async (fn, arg) => {
 			events.push([phase, 'evaluate']);
 			const saved = { document: globalThis.document, window: globalThis.window, getComputedStyle: globalThis.getComputedStyle };
-			// rAF stays installed like a real page global: the settle promise's later frames call it after evaluate returns
-			Object.assign(globalThis, { document: doc, window: win, getComputedStyle: (x) => ({ overflowY: x === scroller ? 'auto' : 'visible' }), requestAnimationFrame: (cb) => setTimeout(cb, 0) });
+			// rAF stays installed like a real page global: the settle promise's later frames call it after evaluate
+			// returns; microtask-scheduled so the settle is deterministic, never a wall-clock race (R137-F3)
+			Object.assign(globalThis, { document: doc, window: win, getComputedStyle: (x) => ({ overflowY: x === scroller ? 'auto' : 'visible' }), requestAnimationFrame: (cb) => queueMicrotask(cb) });
 			try { return fn(arg); } finally { Object.assign(globalThis, saved); }
 		},
 	};
@@ -112,12 +123,12 @@ assert.equal(typeof measureScroll, 'function', 'the scroll window needs a trace-
 		events.push([phase, 'trace:start']);
 		assert.equal(scroller.scrollTop, 0, 'the scroller starts at its top before the trace opens');
 		phase = 'inside';
-		if (during) await during(Date.now() + 300);
+		if (during) await during(clock.now() + 300);
 		phase = 'after';
 		events.push([phase, 'trace:end']);
 		return { main: { cost: 1 } };
 	};
-	const { result, scrollMoved } = await measureScroll(cdp, f, t, { ms: 300, url: 'file://page', keep: null, label: 'basic-dark usage', trace });
+	const { result, scrollMoved } = await measureScroll(cdp, f, t, { ms: 300, url: 'file://page', keep: null, label: 'basic-dark usage', trace, now: clock.now, wait: clock.wait });
 	assert.deepEqual(result, { main: { cost: 1 } }, 'the trace result is kept');
 	const before = events.slice(0, events.findIndex((e) => e[1] === 'trace:start'));
 	const inside = events.filter((e) => e[0] === 'inside');
@@ -161,6 +172,7 @@ assert.equal(typeof measureScroll, 'function', 'the scroll window needs a trace-
 // that moved nothing must fail. The fake scroller animates any smooth scrollTop write 300 px per wheel tick;
 // the wheel itself moves nothing (mis-aimed pointer / blocked container).
 {
+	const clock = virtualClock();
 	const events = [];
 	let phase = 'setup';
 	const styleMap = new Map();
@@ -203,7 +215,7 @@ assert.equal(typeof measureScroll, 'function', 'the scroll window needs a trace-
 		evaluate: async (fn, arg) => {
 			events.push([phase, 'evaluate']);
 			const saved = { document: globalThis.document, window: globalThis.window, getComputedStyle: globalThis.getComputedStyle };
-			Object.assign(globalThis, { document: doc, window: win, getComputedStyle: (x) => ({ overflowY: x === scroller ? 'auto' : 'visible' }), requestAnimationFrame: (cb) => setTimeout(cb, 0) });
+			Object.assign(globalThis, { document: doc, window: win, getComputedStyle: (x) => ({ overflowY: x === scroller ? 'auto' : 'visible' }), requestAnimationFrame: (cb) => queueMicrotask(cb) });
 			try { return fn(arg); } finally { Object.assign(globalThis, saved); }
 		},
 	};
@@ -228,8 +240,8 @@ assert.equal(typeof measureScroll, 'function', 'the scroll window needs a trace-
 		},
 		check: async (name, ok, detail) => { checks.push({ name, ok, detail }); },
 	};
-	const trace = async (cdp2, { during }) => { phase = 'inside'; if (during) await during(Date.now() + 300); phase = 'after'; return {}; };
-	const { scrollMoved } = await measureScroll(cdp, f, t, { ms: 300, url: 'file://page', keep: null, label: 'basic-dark settings', trace });
+	const trace = async (cdp2, { during }) => { phase = 'inside'; if (during) await during(clock.now() + 300); phase = 'after'; return {}; };
+	const { scrollMoved } = await measureScroll(cdp, f, t, { ms: 300, url: 'file://page', keep: null, label: 'basic-dark settings', trace, now: clock.now, wait: clock.wait });
 	assert.equal(checks.length, 1);
 	assert.equal(checks[0].ok, false, 'a wheel that moved nothing fails the window even when a smooth reset animates inside the trace');
 	assert.equal(scrollMoved.travel, 0, 'the reset animation is not travel');
@@ -247,6 +259,7 @@ assert.equal(typeof measureScroll, 'function', 'the scroll window needs a trace-
 // page session); if that session cannot be opened, the window must say could-not-judge, never pass.
 function sandboxWorld({ sessionFails = false, sharedTarget = false } = {}) {
 	const RANGE = 695;
+	const clock = virtualClock();
 	const events = [];
 	const state = { phase: 'setup' };
 	const styleMap = new Map();
@@ -302,7 +315,7 @@ function sandboxWorld({ sessionFails = false, sharedTarget = false } = {}) {
 		evaluate: async (fn, arg) => {
 			events.push([state.phase, 'evaluate']);
 			const saved = { document: globalThis.document, window: globalThis.window, getComputedStyle: globalThis.getComputedStyle };
-			Object.assign(globalThis, { document: doc, window: win, getComputedStyle: (x) => ({ overflowY: x === scroller ? 'auto' : 'visible' }), requestAnimationFrame: (cb) => setTimeout(cb, 0) });
+			Object.assign(globalThis, { document: doc, window: win, getComputedStyle: (x) => ({ overflowY: x === scroller ? 'auto' : 'visible' }), requestAnimationFrame: (cb) => queueMicrotask(cb) });
 			try { return fn(arg); } finally { Object.assign(globalThis, saved); }
 		},
 	};
@@ -329,7 +342,7 @@ function sandboxWorld({ sessionFails = false, sharedTarget = false } = {}) {
 		},
 		check: async (name, ok, detail) => { checks.push({ name, ok, detail }); },
 	};
-	return { RANGE, events, state, styleMap, scroller, win, frameCdp, cdp, f, t, wheels, checks, frameHandlers, pageHandlers };
+	return { RANGE, events, state, styleMap, scroller, win, frameCdp, cdp, f, t, wheels, checks, frameHandlers, pageHandlers, clock };
 }
 // R136-N5 RED: the sandbox walk turns at its bounds from the frame-pushed top; the binding lives on the frame
 // session, Tracing on the page session, and the frame session is detached after.
@@ -340,12 +353,12 @@ function sandboxWorld({ sessionFails = false, sharedTarget = false } = {}) {
 		w.events.push([w.state.phase, 'trace:start']);
 		assert.equal(w.scroller.scrollTop, 0, 'the scroller starts at its top');
 		w.state.phase = 'inside';
-		if (during) await during(Date.now() + 300);
+		if (during) await during(w.clock.now() + 300);
 		w.state.phase = 'after';
 		w.events.push([w.state.phase, 'trace:end']);
 		return { main: { cost: 1 } };
 	};
-	const { scrollMoved } = await measureScroll(w.cdp, w.f, w.t, { ms: 300, url: 'file://page', keep: null, label: 'basic-dark usage sandbox', trace });
+	const { scrollMoved } = await measureScroll(w.cdp, w.f, w.t, { ms: 300, url: 'file://page', keep: null, label: 'basic-dark usage sandbox', trace, now: w.clock.now, wait: w.clock.wait });
 	assert.ok(w.wheels.includes(40) && w.wheels.includes(-40), 'the sandbox walk turns at the bounds from the frame-pushed top');
 	assert.ok(w.events.some((e) => e[1] === 'frameCdp' && e[2] === 'Runtime.addBinding'), 'the binding is installed on the frame session');
 	assert.ok(!w.events.some((e) => e[1] === 'cdp' && e[2] === 'Runtime.addBinding'), 'never on the page session');
@@ -379,11 +392,11 @@ function sandboxWorld({ sessionFails = false, sharedTarget = false } = {}) {
 	const trace = async (cdp2, { during }) => {
 		assert.equal(cdp2, w.cdp, 'Tracing stays on the page session');
 		w.state.phase = 'inside';
-		if (during) await during(Date.now() + 300);
+		if (during) await during(w.clock.now() + 300);
 		w.state.phase = 'after';
 		return { main: { cost: 1 } };
 	};
-	const { scrollMoved } = await measureScroll(w.cdp, w.f, w.t, { ms: 300, url: 'file://page', keep: null, label: 'basic-dark usage framed', trace });
+	const { scrollMoved } = await measureScroll(w.cdp, w.f, w.t, { ms: 300, url: 'file://page', keep: null, label: 'basic-dark usage framed', trace, now: w.clock.now, wait: w.clock.wait });
 	assert.ok(w.wheels.includes(40) && w.wheels.includes(-40), 'the shared-target walk turns at the bounds from the pushed top');
 	assert.ok(w.events.some((e) => e[1] === 'cdp' && e[2] === 'Runtime.addBinding'), 'the binding rides the page session the frame shares');
 	assert.ok(!w.events.some((e) => e[1] === 'frameCdp'), 'no separate frame session is opened or detached');
@@ -407,4 +420,4 @@ function sandboxWorld({ sessionFails = false, sharedTarget = false } = {}) {
 	assert.ok(!w.styleMap.has('scroll-behavior'), 'the inline scroll-behavior is restored even when the trace throws');
 	assert.ok(w.events.some((e) => e[1] === 'frameCdp' && e[2] === 'detach'), 'the frame session is detached even when the trace throws');
 }
-console.log('PASS frame-cost trace hygiene: discovery, marking, scrollTop=0 and the pointer aim run before the trace, only the wheel runs inside (turning from the passive listener\'s pushed top), and cleanup plus the moved verdict run after; a view with no scroller fails its window; a smooth-behavior scroller resets instantly and settles before the watch starts; the sandbox binding lives on the frame session (or the window says could-not-judge), a shared-target in-process frame measures on the page session it is part of (never could-not-judge, never detached), and a throwing trace still tears everything down');
+console.log('PASS frame-cost trace hygiene (deterministic virtual clock, R137-F3): discovery, marking, scrollTop=0 and the pointer aim run before the trace, only the wheel runs inside (turning from the passive listener\'s pushed top), and cleanup plus the moved verdict run after; a view with no scroller fails its window; a smooth-behavior scroller resets instantly and settles before the watch starts; the sandbox binding lives on the frame session (or the window says could-not-judge), a shared-target in-process frame measures on the page session it is part of (never could-not-judge, never detached), and a throwing trace still tears everything down');
