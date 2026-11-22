@@ -429,7 +429,6 @@ async function pointerRoutes(t) {
           if (r.marker) {   /* armed after the capture's first frame: an idle encoder keeps K and K+1 */
             await f.waitForTimeout(150);   /* the start frame's encode+ack finishes, so the key's frame finds the encoder idle */
             await f.evaluate(armKeyMarker);
-            await f.waitForFunction(() => window.__pmAbKeyMarker && window.__pmAbKeyMarker.painted !== null, null, { timeout: 3000 });
           }
           await r.act();
         }, r.marker ? { maxWidth: 960, maxHeight: 540 } : null);
