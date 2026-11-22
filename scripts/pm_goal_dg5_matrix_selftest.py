@@ -47,12 +47,12 @@ def _rec(i, label, outcome, target=None, kill=None, sig=0, cut_errors=None, code
     return record
 
 
-def _proof(base, rows, ledger, specs, tables, failures=None, bindings=None):
+def _proof(base, rows, ledger, specs, tables, failures=None, bindings=None, signatures=None):
     (base / 'tables').mkdir(parents=True, exist_ok=True)
     with gzip.open(base / 'ledger.json.gz', 'wt') as h:
         json.dump(ledger, h)
     with gzip.open(base / 'signatures.json.gz', 'wt') as h:
-        json.dump([[]], h)   # no accepted call evaluates any candidate row (controls 0)
+        json.dump([[]] if signatures is None else signatures, h)
     (base / 'family-rows.json').write_text(json.dumps({FAM: sorted(rows)}))
     (base / 'collection.json').write_text(json.dumps(
         dict(rows=rows, calls=len(ledger), failures=[] if failures is None else failures)))
@@ -214,22 +214,31 @@ def check_matrix():
 
 def check_amendment1():
     """Amendment 1's condition 2 (KILLED_CODE with Addendum J2) and condition 4 (one exact
-    declared known failure): the positive, then every refusal the brief names."""
+    declared known failure): the positive, the brief's refusals, and the AMEND1-MATRIX
+    review's F1-F5/F8 trials (01l, 01m, 05b, 05c, 05e, 06b, 06c, 06d, 07a)."""
     line = _refuse_line()
     declared = [['source', 'unsupported_same_run_halts', 'reducer/unregistered_record']]
     other = ['source', 'another_case', 'reducer/unregistered_record']
     codes = dict(intact='Corrupt:magic', cut='Corrupt:prefix_crc')
+    witness_label = 'adapter/dg5-shared/frame_fixture_decode:magic/decode_frame'
 
     def failure(entries):
         return dict(kind='source_failed', source='pm_goal_dg5_adapter', exit=1,
                     details=json.dumps(dict(status='fail', failures=entries)))
 
-    def trial(td, tag, name, ledger, failures, declaration):
+    def witness(name, i=1, label=witness_label, sig=0, killed=codes):
+        return _rec(i, label, 'exact_expected', name, 'KILLED_CODE', sig=sig,
+                    cut_errors=['dg5/site/pm_goal_test_storage.py:525'], codes=killed)
+
+    def trial(td, tag, name, ledger, failures, declaration, reason='no control vector',
+              signatures=None, sites=None):
         table = 't-' + tag
-        rows = {name: dict(sites=[[OA, line]])}
+        site = (sites or [[OA, line]])[0]
+        rows = {name: dict(sites=[site])}
         specs = [dict(guard=name, table=table, status='UNPROVED')]
-        tables = [dict(table=table, status='NOT_RUN', rows=[name], reason='no control vector')]
-        proof = _proof(Path(td) / tag, rows, ledger, specs, tables, failures=failures)
+        tables = [dict(table=table, status='NOT_RUN', rows=[name], reason=reason)]
+        proof = _proof(Path(td) / tag, rows, ledger, specs, tables, failures=failures,
+                       signatures=signatures)
         out = Path(td) / (tag + '.json')
         cmd = [sys.executable, '-B', 'scripts/pm_goal_dg5_matrix.py', str(proof),
                '--family', FAM, '--out', str(out)]
@@ -246,9 +255,7 @@ def check_amendment1():
         # (a) KILLED_CODE meeting J2 + one declared known failure not touching the row.
         name = 'dg5/test/not_run_killed_code'
         fam, row = trial(td, 'amend1-ok', name,
-                         [_rec(0, 'case/control', 'control'),
-                          _rec(1, 'case/code', 'exact_expected', name, 'KILLED_CODE',
-                               cut_errors=['dg5/site/pm_goal_test_storage.py:525'], codes=codes)],
+                         [_rec(0, 'case/control', 'control'), witness(name)],
                          [failure([declared[0]])], declared)
         assert row['status'] == 'CLOSED_BY_PROOF' and row['reason'] == 'witness_bound_not_run', row
         just = row['justification']
@@ -274,18 +281,14 @@ def check_amendment1():
         # (c) a second failure in the replay refuses.
         name = 'dg5/test/not_run_second_failure'
         _, row = trial(td, 'amend1-second', name,
-                       [_rec(0, 'case/control', 'control'),
-                        _rec(1, 'case/code', 'exact_expected', name, 'KILLED_CODE',
-                             cut_errors=['dg5/site/pm_goal_test_storage.py:525'], codes=codes)],
+                       [_rec(0, 'case/control', 'control'), witness(name)],
                        [failure([declared[0]]), failure([other])], declared)
         assert row['status'] == 'OPEN', row
 
         # (d) an undeclared failure refuses.
         name = 'dg5/test/not_run_undeclared_failure'
         _, row = trial(td, 'amend1-undeclared', name,
-                       [_rec(0, 'case/control', 'control'),
-                        _rec(1, 'case/code', 'exact_expected', name, 'KILLED_CODE',
-                             cut_errors=['dg5/site/pm_goal_test_storage.py:525'], codes=codes)],
+                       [_rec(0, 'case/control', 'control'), witness(name)],
                        [failure([other])], declared)
         assert row['status'] == 'OPEN', row
 
@@ -304,10 +307,94 @@ def check_amendment1():
         bad = _rec(2, 'case/other_control', 'control')
         bad['errors'] = ['dg5/test/elsewhere']
         _, row = trial(td, 'amend1-inexact', name,
-                       [_rec(0, 'case/control', 'control'), bad,
-                        _rec(1, 'case/code', 'exact_expected', name, 'KILLED_CODE',
-                             cut_errors=['dg5/site/pm_goal_test_storage.py:525'], codes=codes)],
+                       [_rec(0, 'case/control', 'control'), bad, witness(name)],
                        [failure([declared[0]])], declared)
+        assert row['status'] == 'OPEN', row
+
+        # --- AMEND1-MATRIX review trials (each wrongly closed on 2d3c998212) ---
+
+        # (g) 01l: J2 own_guard names a different row and code.
+        name = 'dg5/test/review_01l_own_guard_wrong_row'
+        bad = witness(name)
+        bad['killed_code_check']['own_guard'].update(
+            row='dg5/site/pm_goal_test_storage.py:999', code='Corrupt:other')
+        _, row = trial(td, 'amend1-01l', name,
+                       [_rec(0, 'case/control', 'control'), bad],
+                       [failure([declared[0]])], declared)
+        assert row['status'] == 'OPEN', row
+
+        # (h) 01m: J2 cut_errors is the judge's exception string, with a cut exception site.
+        name = 'dg5/test/review_01m_cut_errors_exception'
+        bad = witness(name)
+        bad['cut_errors'] = 'exception:RuntimeError'
+        bad['cut_exception_site'] = dict(exception='RuntimeError', detail='TypeError: boom')
+        _, row = trial(td, 'amend1-01m', name,
+                       [_rec(0, 'case/control', 'control'), bad],
+                       [failure([declared[0]])], declared)
+        assert row['status'] == 'OPEN', row
+
+        # (i) 05b: the declared case id is the witness's own case, bare in real format.
+        name = 'dg5/test/review_05b_real_case_id'
+        touches = ['dg5-shared', 'frame_fixture_decode:magic', 'Corrupt:unexpected']
+        _, row = trial(td, 'amend1-05b', name,
+                       [_rec(0, 'case/control', 'control'), witness(name)],
+                       [failure([touches])], [touches])
+        assert row['status'] == 'OPEN', row
+
+        # (j) 05c: the declared case refused at the row in the ledger (component 'storage').
+        name = 'dg5/test/review_05c_ledger_hits_row'
+        probe = _rec(7, 'adapter/storage/custom_magic_probe/TestOwnerStorage.read_event',
+                     'other_refusal', sig=1)
+        probe['errors'] = [name]
+        touches = ['storage', 'custom_magic_probe', 'Corrupt:unexpected']
+        _, row = trial(td, 'amend1-05c', name,
+                       [_rec(0, 'case/control', 'control'), probe, witness(name, sig=0)],
+                       [failure([touches])], [touches],
+                       signatures=[[], [name]], sites=[[ST, 197]])
+        assert row['status'] == 'OPEN', row
+
+        # (k) 05e: the declared code is the witness's cut code.
+        name = 'dg5/test/review_05e_cut_code'
+        touches = ['source', 'unrelated_case', 'Corrupt:prefix_crc']
+        _, row = trial(td, 'amend1-05e', name,
+                       [_rec(0, 'case/control', 'control'), witness(name)],
+                       [failure([touches])], [touches])
+        assert row['status'] == 'OPEN', row
+
+        # (l) 06b: a real refused control (outcome 'control_refused') is still a control.
+        name = 'dg5/test/review_06b_control_refused'
+        bad = _rec(2, 'adapter/storage/other_control/TestOwnerStorage.append', 'control_refused')
+        bad['errors'] = ['dg5/site/pm_goal_test_storage.py:1450']
+        _, row = trial(td, 'amend1-06b', name,
+                       [_rec(0, 'case/control', 'control'), bad, witness(name)],
+                       [failure([declared[0]])], declared)
+        assert row['status'] == 'OPEN', row
+
+        # (m) 06c: a control whose label only contains the case as a substring is not exempt.
+        name = 'dg5/test/review_06c_substring_collision'
+        bad = _rec(2, 'adapter/source/unsupported_same_run_halts_other/GenericSource.acquire',
+                   'control_refused')
+        bad['errors'] = ['dg5/site/pm_goal_test_storage.py:1450']
+        _, row = trial(td, 'amend1-06c', name,
+                       [_rec(0, 'case/control', 'control'), bad, witness(name)],
+                       [failure([declared[0]])], declared)
+        assert row['status'] == 'OPEN', row
+
+        # (n) 06d: the known case's own control refuses at this row.
+        name = 'dg5/test/review_06d_exempt_case_hits_row'
+        bad = _rec(2, 'adapter/source/unsupported_same_run_halts/GenericSource.project',
+                   'control_refused')
+        bad['errors'] = [name]
+        _, row = trial(td, 'amend1-06d', name,
+                       [_rec(0, 'case/control', 'control'), bad, witness(name)],
+                       [failure([declared[0]])], declared)
+        assert row['status'] == 'OPEN', row
+
+        # (o) 07a: Amendment 1 does not apply to a 'no single-row vector' table.
+        name = 'dg5/test/review_07a_no_single_row_vector'
+        _, row = trial(td, 'amend1-07a', name,
+                       [_rec(0, 'case/control', 'control'), witness(name)],
+                       [failure([declared[0]])], declared, reason='no single-row vector')
         assert row['status'] == 'OPEN', row
 
 
