@@ -329,6 +329,14 @@ export function flingVerdict(r) {
 		{ name: 'no visible list is empty at the scroll frame', ok: !!r.sampled && r.empty.length === 0, detail: (r.empty || []).join(',') || 'no scroll-frame sample' }
 	];
 }
+/* R132-FOLLOWUPS 3 (exported for tools/settings-chapter.selftest.mjs): the fling scroll gate. Only a scroll after the
+   delivered wheel arms the sample, and the travel credited to the wheel is measured from its delivery position
+   (wheelTop), not from the commit's start: a programmatic pre-wheel scroll is not the wheel's travel. The R93 #4
+   page recorder mirrors this gate inline (it is serialized into the page). */
+export function flingScrollGate(R, top) {
+	return { arms: !!R.committed && !!R.wheel && !R.sampled && !R.armed && Math.abs(top - R.start) >= R.height,
+		moved: R.wheelTop == null ? null : top - R.wheelTop };
+}
 /* SETCHAPTER-RESTORE-PENDING-AT-TRANSACTION (exported for tools/settings-chapter.selftest.mjs): the restore-all row
    judges a transaction across a chapter change only if, when the transaction starts, Code & Tools is the chapter, still
    has pending row lists (its switch is in flight) and has its place saved. A transaction that runs after the fill has
@@ -784,7 +792,8 @@ for (const surface of ['normal', 'sandbox']) {
 				});
 				const scroll=e=>{
 					const sc=e.target;
-					if(!R.committed||R.sampled||R.armed||sc.id!=='settings-document'||Math.abs(sc.scrollTop-R.start)<R.height)return;
+					/* R132-FOLLOWUPS 3: only a scroll after the delivered wheel arms (flingScrollGate mirrors this in node) */
+					if(sc.id!=='settings-document'||!R.committed||!R.wheel||R.sampled||R.armed||Math.abs(sc.scrollTop-R.start)<R.height)return;
 					R.armed=true;
 					requestAnimationFrame(()=>{
 						const v=sc.getBoundingClientRect();
@@ -793,7 +802,7 @@ for (const surface of ['normal', 'sandbox']) {
 						const tb=root.querySelector('#section-editor-terminal-look')?.getBoundingClientRect();
 						R.targetInView=!!tb&&tb.height>0&&tb.bottom>v.top&&tb.top<v.bottom;
 						if(!R.targetInView){R.armed=false;R.framesBefore=(R.framesBefore||0)+1;return;}
-						R.top=sc.scrollTop;R.moved=R.top-R.start;
+						R.top=sc.scrollTop;R.moved=R.wheelTop==null?null:R.top-R.wheelTop;
 						R.empty=[...sc.querySelectorAll('[data-o55-fill="pending"]')].filter(l=>{
 							if(l.closest('details:not([open])'))return false;
 							const b=l.closest('[data-section-id]').getBoundingClientRect();

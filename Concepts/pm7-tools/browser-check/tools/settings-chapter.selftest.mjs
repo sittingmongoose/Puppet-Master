@@ -2,7 +2,7 @@
 // node tools/settings-chapter.selftest.mjs
 // The page probe itself is tested in a browser on a constructed page: diagnostics/settings-chapter-probe.check.mjs.
 import assert from 'node:assert/strict';
-import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press, selectAllModifier } from '../checks/perf-settings-chapter.check.mjs';
+import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press, selectAllModifier, flingScrollGate } from '../checks/perf-settings-chapter.check.mjs';
 
 /* SETCHAPTER-ROWCOUNT-FIRST-RAF: the first-screen row over the Code & Tools arrivals */
 {
@@ -112,6 +112,34 @@ import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arriv
 	assert.deepEqual(await run(false, true), { events: ['sample', 'press'], tagged: 0 },
 		'presses outside the hover matrix keep their original schedule');
 	console.log('PASS hover setup: a real control hover qualifies the outgoing tagged input before the bounded wait; a missing control or tag keeps the explicit missing-witness result');
+}
+
+/* R132-FOLLOWUPS 3: a programmatic scroll before the wheel must not be credited as the wheel's travel. The commit
+ * records R.start; a scroll listener that arms without the delivered wheel and measures moved from R.start credits
+ * any pre-wheel programmatic scroll (the page's own focus/restore scroll) as the fling. */
+{
+	assert.equal(typeof flingScrollGate, 'function', 'the fling scroll gate needs the delivered wheel; the base credited pre-wheel programmatic travel');
+	const R = { committed: true, wheel: null, wheelTop: null, start: 0, height: 800, sampled: false, armed: false };
+	// a programmatic scroll crosses the viewport before any wheel: it must not arm, and credits no travel
+	assert.equal(flingScrollGate(R, 900).arms, false, 'no delivered wheel: a programmatic scroll cannot arm the sample');
+	assert.equal(flingScrollGate(R, 900).moved, null, 'no wheel delivery position: no travel is credited');
+	// the wheel is delivered at scrollTop 900 (after the programmatic scroll); a further 50 px is the wheel's own
+	const delivered = { ...R, wheel: 1234, wheelTop: 900 };
+	const g = flingScrollGate(delivered, 950);
+	assert.equal(g.arms, true, 'a scroll after the delivered wheel arms');
+	assert.equal(g.moved, 50, 'the travel is measured from the wheel delivery position, not the commit');
+	// and the verdict fails the viewport crossing on that 50 px: the programmatic 900 px is not the wheel's
+	const rows = flingVerdict({ wheel: 1234, wheelPending: 5, wheelTargetPending: true, pending: 5, targetPending: true, sampled: true, moved: g.moved, height: 800, targetInView: true, empty: [] });
+	assert.equal(rows[1].ok, false, 'the wheel itself crossed no viewport: the row fails');
+	// a real fling from the delivery position keeps its pass
+	const real = flingScrollGate({ ...delivered, wheelTop: 0 }, 900);
+	assert.equal(real.arms, true);
+	assert.equal(real.moved, 900);
+	assert.equal(flingVerdict({ wheel: 1234, wheelPending: 5, wheelTargetPending: true, pending: 5, targetPending: true, sampled: true, moved: real.moved, height: 800, targetInView: true, empty: [] })[1].ok, true);
+	// an already-sampled or armed record does not arm again
+	assert.equal(flingScrollGate({ ...delivered, sampled: true }, 1800).arms, false);
+	assert.equal(flingScrollGate({ ...delivered, armed: true }, 1800).arms, false);
+	console.log('PASS fling travel: a pre-wheel programmatic scroll neither arms nor credits travel; the wheel travel is measured from its delivery position, and a real fling keeps its pass');
 }
 
 /* R97 #6: the wait ends on the fill's own completion, and an unfinished fill is told apart from a missing row */
