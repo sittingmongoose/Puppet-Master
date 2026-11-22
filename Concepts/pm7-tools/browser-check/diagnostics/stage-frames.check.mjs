@@ -225,7 +225,7 @@ export default async function (t) {
 		if (!ok) { await t.check(`${look}: the look is applied`, false, 'not applied'); continue; }
 		await t.page.waitForTimeout(Number(t.args.lookSettle ?? 5000));
 		fs.mkdirSync(path.join(out, look), { recursive: true });
-		let n = 0, lastOpen = false;
+		let n = 0, lastOpen = false, lastLine = '';
 		for (const [si, screen] of screens.entries()) {
 			const name = names[si], awake = name === 'welcome-awake';
 			const at = await f.evaluate((id) => { try { window.O55.ui.go(id, { noHistory: true }); } catch (e) { return String(e); } return window.O55.S.sess.screen; }, screen);
@@ -241,6 +241,8 @@ export default async function (t) {
 			}
 			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 6000));
 			await f.waitForFunction(SETTLED, null, { timeout: 10000, polling: 250 }).catch(() => t.log(`${look} ${screen}: NOTE not settled after 16 s; captured as it was`));
+			// the screen's line as said, kept for the unfrozen capture: the quiet variant below puts it away (R135-F8)
+			lastLine = await f.evaluate(() => { const st = document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage; return st ? (st.saying || '') : ''; });
 			for (const [vi, v] of variants.entries()) {
 				if (v === 'quiet') await f.evaluate(() => { const host = document.querySelector('#pm-o55-onboarding .o55-stage'); host.__pipStage.say('', null, true); });
 				if (v === 'tip') await f.evaluate(() => { const host = document.querySelector('#pm-o55-onboarding .o55-stage'); host.__pipStage.tip({ id: 'stage-frames-tip', title: 'A note on this', text: 'What this choice means, written out in a few words.' }, true); });
@@ -289,6 +291,9 @@ export default async function (t) {
 		/* one unfrozen capture of the last screen: the clock running and the animations allowed, as a person sees it */
 		const last = plan.find((e) => e.look === look && e.unfrozen);
 		if (last && lastOpen) {
+			// R135-F8: restore the line the quiet variant put away, whole and at once (sayKept is the product's own
+			// keep-the-line across a change), so the unfrozen capture shows the live speech bubble, not a muted stage
+			if (lastLine) await f.evaluate((line) => { const st = document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage; if (st) { st.saying = line; if (typeof st.sayKept === 'function') st.sayKept(line); else st.say(line, null, true); } }, lastLine);
 			await t.page.waitForTimeout(1500);
 			const info = await f.evaluate(INFO), dom = await f.evaluate(DOM), b = info.box;
 			const clip = { x: Math.max(0, Math.floor(b.x)), y: Math.max(0, Math.floor(b.y)), width: Math.ceil(b.w), height: Math.ceil(b.h) };
