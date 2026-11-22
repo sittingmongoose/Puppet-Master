@@ -676,9 +676,10 @@ Anyone who writes a checker input in the shared checkout, including readiness re
    If the base or the branch moved, repeat the rebase, push and check.
 5. With the lock held, fast-forward only after `verify` passes immediately beforehand.
    Run `git merge --ff-only --no-overwrite-ignore "$PM_LAND_COMMIT"`.
-   Confirm that shared HEAD and its tree match the receipt. If Git refuses or the fast-forward
-   is incomplete, retain the lock and inspect HEAD, index and working files before any repair.
-   Preserve any other writer's changes.
+   Confirm that shared HEAD and its tree match the receipt. If Git refuses because an ignored
+   file is in the way, stop and hand the branch over with that path; never delete or move the
+   file to make room. If the fast-forward is incomplete, retain the lock and inspect HEAD,
+   index and working files before any repair. Preserve any other writer's changes.
 6. Run `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` in the
    shared checkout. A failure on the topic's paths stops publication. If all failures name other
    paths, confirm the shard exists in HEAD and its HEAD manifest references it. Report those
