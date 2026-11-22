@@ -1337,6 +1337,32 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
                                 and "does not sit at" in e for e in validation["errors"]), validation)
         self.assertEqual(validation["superseded_lines"], [], validation)
 
+    def test_registry_batch_pins_are_the_same_tree_with_or_without_the_link(self) -> None:
+        """T332 (Astra medium 1): an alias of the registry that git holds as a regular file is never
+        an alias of it, however the working copy links the two paths. Replacing a hard link with a
+        byte-identical copy leaves the same tree, so it must leave the same validation."""
+        m = pm_audit_closure
+        original = self.target
+        second = m._self_test_registry_row(**{**original, "closure_id": "closure-second", "detail_keys": ["second"]})
+        write_jsonl(self.registry, [original, second])
+        self.target = second
+        self.prepare_record(line=2)
+        code, seeded = self.append()
+        self.assertEqual((code, seeded["appended"], seeded["errors"]), (0, 1, []), seeded)
+        prior_pin = json.loads(self.registry.read_bytes().splitlines()[2])
+        alias = self.registry.with_name("published-rows.jsonl")
+        os.link(self.registry, alias)
+        self.anchor = m.rel(alias) + "#jsonlset=audit_ids=audit-fixture"
+        self.prepare_pin_batch_records([(1, original), (3, prior_pin)], split_lines=(1, 3))
+        code, report = self.append()
+        self.assertEqual((code, report["appended"], report["errors"]), (0, 2, []), report)
+        self.commit("append the alias-pinned batch")  # git holds the alias as a regular blob
+        linked = m.validate_registry(self.registry)
+        alias.unlink()
+        alias.write_bytes(self.registry.read_bytes())
+        self.assertEqual(self.git("status", "--porcelain", "--", m.rel(alias)), "")  # the same tree
+        self.assertEqual(m.validate_registry(self.registry), linked)
+
     def test_registry_pin_batch_cannot_rebind_to_a_copy_of_its_records_file(self) -> None:
         """T331 (Astra high 2): committed batch rows cannot be re-pointed at a byte-identical copy of
         their records file so that they absorb a later append as one batch. The append that first

@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any
 import functools
 import os
+import posixpath
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -2463,11 +2464,44 @@ def reaudit_split_anchor_hashes(
     return extra
 
 
+def _committed_entry(path: str) -> tuple[str, str] | None:
+    """The (git mode, object) HEAD holds for one path, or None when git holds nothing there: no
+    history yet, or the path is only in the working copy."""
+    entry = _git_bytes(ROOT, "ls-tree", "HEAD", "--", path)
+    if entry is None or not entry.strip():
+        return None
+    mode, _, sha = entry.split(b"\t", 1)[0].split(b" ")
+    return mode.decode(), sha.decode()
+
+
+def _committed_symlink_points_at(path: str, other: str) -> bool:
+    """Whether a committed symbolic link at `path` resolves to `other` (a repo-relative path)."""
+    entry = _committed_entry(path)
+    if entry is None or entry[0] != "120000":
+        return False
+    target = _git_bytes(ROOT, "cat-file", "blob", entry[1])
+    if target is None:
+        return False
+    resolved = posixpath.normpath(posixpath.join(
+        posixpath.dirname(path), target.decode("utf-8", "replace")))
+    return resolved == other
+
+
 def _is_registry_file(dependency_path: str, registry_ref: str) -> bool:
-    """Whether a dependency path names the registry file itself: the same path, or another name
-    (a hard link or symbolic link) of the same file, judged by file identity, not spelling (T236)."""
+    """Whether a dependency path names the registry file itself: the same path, or another name a
+    fresh checkout reproduces - a symbolic link committed at HEAD between the two paths - or, while
+    either path is not committed, another name of the same working-copy file (T236). Two paths git
+    holds as regular files are two registries however the working copy links them: whether a hard
+    link survives is a property of one checkout, not of the commit, and a registry pin bound to it
+    would not rebuild identically everywhere (T332)."""
     if dependency_path == registry_ref:
         return True
+    if _committed_symlink_points_at(dependency_path, registry_ref) \
+            or _committed_symlink_points_at(registry_ref, dependency_path):
+        return True
+    if _committed_entry(dependency_path) is not None and _committed_entry(registry_ref) is not None:
+        return False
+    # At least one path exists only in this working copy, so only it can answer (T236).
     try:
         return os.path.samefile(repo_path(dependency_path), repo_path(registry_ref))
     except (OSError, ValueError):
