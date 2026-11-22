@@ -131,6 +131,13 @@ export function restChurn(c) {
 	if (c.peakPending > 1) problems.push(`${c.peakPending} timers were pending at once`);
 	if (c.badAsks.length) problems.push(`unexpected request sites ${c.badAsks.join(', ')}`);
 	if (c.badClears.length) problems.push(`unexpected cancellation sites ${c.badClears.join(', ')}`);
+	// R132-FOLLOWUPS 4: balanced clear/rearm churn at approved sites stays under the caps and the lifecycle
+	// balance (five redundant queueShown clear/rearms, four fires, nine asks, one pending at both edges). Each
+	// clear followed by a re-arm without an intervening fire is one rearm cycle; a healthy window rearms at most
+	// once per completed interval (the wake/queued-check drops the header counts), so more rearms than fires is
+	// redundant churn, not the ambient syncs' own drops.
+	const rearms = c.rearms || 0;
+	if (rearms > c.fired) problems.push(`${rearms} redundant clear/rearm cycles for ${c.fired} fires (at most one per interval)`);
 	return problems.join('; ');
 }
 
@@ -175,7 +182,7 @@ export const TIMER_PROBE = (range) => {
 		let id = 0;
 		const wrapped = function (...a) {
 			const at = performance.now();
-			if (counting(at)) { P.fired++; P.pending--; P.delays.add(d); }
+			if (counting(at)) { P.fired++; P.pending--; P.delays.add(d); P.afterClear = false; }
 			P.byId.delete(id);
 			const s = snap();
 			push({ k: 'fire', n: meta.n, d: meta.d, at: Math.round(at), asked: meta.asked, g: meta.g, vis: s.vis, op: s.op, hidden: document.hidden });
@@ -194,6 +201,9 @@ export const TIMER_PROBE = (range) => {
 			if (!askOwners.has(site)) P.badAsks.add(`${site}@${l}`);
 			P.delays.add(d);
 			if (P.sites.length < 14) P.sites.push(d + 'ms@' + l);
+			// R132-FOLLOWUPS 4: a clear followed by a re-arm without an intervening fire is one rearm cycle
+			if (P.afterClear) P.rearms++;
+			P.afterClear = false;
 		}
 		return id;
 	};
@@ -207,6 +217,7 @@ export const TIMER_PROBE = (range) => {
 				P.cleared++;
 				P.pending--;
 				if (!clearOwners.has(site)) P.badClears.add(`${site || 'unknown'}@${l}`);
+				P.afterClear = true;
 			}
 			const s = snap();
 			push({ k: 'clear', n: meta.n, d: meta.d, at: Math.round(now), asked: meta.asked, g: meta.g, vis: s.vis, op: s.op });
@@ -215,7 +226,7 @@ export const TIMER_PROBE = (range) => {
 		return realClear.call(window, id);
 	};
 	P.arm = (ms = 10000) => {
-		P.asked = 0; P.fired = 0; P.cleared = 0; P.unattributed = 0;
+		P.asked = 0; P.fired = 0; P.cleared = 0; P.unattributed = 0; P.rearms = 0; P.afterClear = false;
 		P.pendingAtStart = P.pending = P.peakPending = P.byId.size;
 		P.delays = new Set(); P.badAsks = new Set(); P.badClears = new Set(); P.sites = [];
 		P.until = performance.now() + ms;
@@ -224,7 +235,7 @@ export const TIMER_PROBE = (range) => {
 		const complete = performance.now() >= P.until;
 		P.until = 0;
 		return {
-			complete, asked: P.asked, fired: P.fired, cleared: P.cleared, unattributed: P.unattributed,
+			complete, asked: P.asked, fired: P.fired, cleared: P.cleared, unattributed: P.unattributed, rearms: P.rearms,
 			pendingAtStart: P.pendingAtStart, pending: P.pending, peakPending: P.peakPending,
 			badAsks: [...P.badAsks], badClears: [...P.badClears], delays: [...P.delays], sites: P.sites.slice(),
 		};
