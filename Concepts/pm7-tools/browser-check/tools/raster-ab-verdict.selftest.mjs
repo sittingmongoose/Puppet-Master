@@ -155,6 +155,88 @@ test('bite: the bite-threshold shift fails on top of the real resolved green noi
 	}
 });
 
+const reverseVerdictOf = diffs => rasterAbVerdict({firstNewMs: diffs.map(diff => ({diff, resolved: true}))}).firstNewMs;
+
+test('reverse gate: more than one eighth of the resolved pairs below -60 withholds, one in a large sample does not', () => {
+	const verdictOf = reverseVerdictOf;
+	// 1 of 6: the loaded run-green3-r2-2 opaque row (median 43.2) stays refused
+	const oneOfSix = verdictOf([-69.5, 0.2, 18.6, 67.8, 85.9, 135.3]);
+	assert.equal(oneOfSix.couldNotJudge, true);
+	assert.match(oneOfSix.rule, /1 of 6 resolved pairs below -60/);
+	// 1 of 8: run-greenC-r1-2 opaque firstNewMs (TIMING_RECORDS below) shifted +50 ms, in run order
+	// (median 43.7, IQR 97.0, min -150.1), is judged, not withheld
+	const oneOfEight = verdictOf([185, -27.5, 35.9, -16.1, -150.1, 75.1, 51.5, 86.9]);
+	assert.equal(oneOfEight.couldNotJudge, false);
+	assert.equal(oneOfEight.ok, false);
+	// 1 of 12 is 8.3%, 2 of 12 is 16.7%
+	const twelve = two => [-70, ...(two ? [-70] : [41]), 41, 41, 41, 41, 41, 41, 41, 41, 41, 41];
+	assert.equal(twelve(false).length, 12);
+	assert.equal(twelve(true).length, 12);
+	assert.equal(reverseVerdictOf(twelve(false)).couldNotJudge, false, 'one reverse pair in 12 is judged');
+	assert.equal(reverseVerdictOf(twelve(true)).couldNotJudge, true, 'two reverse pairs in 12 refuse');
+});
+
+// RN-REPS12, 2026-11-22, Alexis PC (RTX 3080), local headless Chrome, file://, 2 concurrent, --set reps=12.
+// Resolved paired differences (head - control) in run order. Folders C:\Users\lexxm\pm7-reps12\run-green-q1-1/-2.
+// Every row passed at 30 ms unshifted. Shifted +50 ms, b6026c4b94's minimum gate withheld 2 of the 8 timing rows:
+// q1-2 normal firstNewMs (one reverse pair in 12, -210.5 ms) and q1-2 normal settledMs (one in 16, -66.8 ms).
+// The fraction gate judges both and both rows fail.
+const REPS12_GREEN = {
+	'q1-1 normal firstNewMs': [-7.7, -21.7, -0.1, 13.6, 21.7, 157.4, -5, 0.5, -3.1, -3.8, -0.2, 25.1],
+	'q1-1 normal settledMs': [11.2, -13.4, 15, 12.9, 8, -7.6, -103.3, 27.5, -22.1, 6.8, -23, -22.1, -57.6, -3.2, 27.4],
+	'q1-1 opaque firstNewMs': [0, -27.9, 52.8, -93.9, -64.9, -31.7, 18, -2.7, 55.7, -13.3, -14.5, 4.5, 2.3, -5.9, 11.9, 37, 36.8],
+	'q1-2 normal firstNewMs': [-260.5, -20.6, 14.6, -25.6, 27.6, -1, -28.9, -24.9, -0.3, 3.9, -13.2, -14.1],
+	'q1-2 normal settledMs': [-44.3, -31.5, -4, 1.8, -16.5, 31.9, -12.5, -116.8, -76.9, -4.2, 27.1, 13.9, -15.3, -36.7, -20.8, -5],
+	'q1-2 opaque firstNewMs': [33.2, -31.6, 13.3, -1.4, 35.7, 9.7, -18.3, -18.9, -4.2, 15.8, 30.6, -16.4, -14.1, -4.5]
+};
+const reps12Pairs = diffs => ({firstNewMs: diffs.map(diff => ({diff, resolved: true}))});
+
+test('reps12: real green timing rows pass and one reverse pair in 12 does not withhold a +50 fault', () => {
+	for (const [label, diffs] of Object.entries(REPS12_GREEN)) {
+		const green = rasterAbVerdict(reps12Pairs(diffs), {minResolved: 12}).firstNewMs;
+		assert.equal(green.ok, true, label + ': green must pass');
+		const shifted = rasterAbVerdict(reps12Pairs(diffs.map(diff => r1(diff + RASTER_AB_BITE_MS.firstNewMs))), {minResolved: 12}).firstNewMs;
+		assert.equal(shifted.ok, false, label + ': a +50 ms fault must fail');
+		assert.equal(shifted.couldNotJudge, false, label + ': one reverse pair in 12 must not withhold the fault');
+	}
+});
+
+// RN-REPS12 bite round 1, delay50 vs main, same conditions. normal firstNew is not moved by the 50 ms resize
+// busy-wait and passes; normal settled and opaque firstNew/settled are moved. q1-1 normal settled is the row the
+// one-outlier minimum withheld as "reverse pair -65.7 ms below -60" (1 of 16); the fraction gate judges it and it
+// fails on the median, so a real fault is not hidden. Folders C:\Users\lexxm\pm7-reps12\run-bite-q1-1/-2.
+const REPS12_BITE = {
+	'q1-1 normal settledMs': [-65.7, 82.5, 43.5, 42.1, 38.8, 57.9, 68.5, 10.7, 48.4, 24.6, 64, 29.7, 43.5, -13.6, 39.1, 69.6],
+	'q1-1 opaque firstNewMs': [70.2, 84.3, 67.5, 87.2, 101.2, 139.1, 32.7, 105.7, 80.5, 44.9, 50, 115.6, -0.8],
+	'q1-2 normal settledMs': [-1.8, 58.7, 42.1, 41.6, 72.2, 76, 27.7, 3, 27.3, 47.4, 11.2, 30.6],
+	'q1-2 opaque firstNewMs': [48.8, 51.6, -57.3, -55.7, 6.7, 73.9, 96.7, 72.2, 113.6, 95.7, 2.5, 69.5, 47.2, 14.4, 157]
+};
+const REPS12_BITE_UNMOVED = {
+	'q1-1 normal firstNewMs': [-24.6, 0, -8.7, -2.2, -3.9, -3.8, 4.8, 10, 23.2, -7.6, 8.2, -14.3],
+	'q1-2 normal firstNewMs': [23.6, -3.3, 4.2, 23.9, -10.4, 13, 6.1, 15.9, 8.5, 3.1, -24.6, -3.1]
+};
+const REPS12_BITE_RETAINED = {
+	'q1-1 opaque retainedMs': [88.9, 76.6, 67.7, 93.3, 144.6, 33.9, 105.8, 85.4, 40.9, 28.3, 84.7, 2.5],
+	'q1-2 opaque retainedMs': [64.1, 56.5, -60.3, -24.6, 7.3, 71.6, 97.8, 83.4, 92, 68.5, 48.5, 178.1]
+};
+
+test('reps12: real delay50 rows fail their moved measures numerically, and normal firstNew still passes', () => {
+	for (const [label, diffs] of Object.entries(REPS12_BITE)) {
+		const v = rasterAbVerdict(reps12Pairs(diffs), {minResolved: 12}).firstNewMs;
+		assert.equal(v.ok, false, label + ': moved measure must fail');
+		assert.equal(v.couldNotJudge, false, label + ': the real fault must not be withheld');
+	}
+	for (const [label, diffs] of Object.entries(REPS12_BITE_UNMOVED)) {
+		const v = rasterAbVerdict(reps12Pairs(diffs), {minResolved: 12}).firstNewMs;
+		assert.equal(v.ok, true, label + ': delay50 did not move this measure');
+	}
+	for (const [label, diffs] of Object.entries(REPS12_BITE_RETAINED)) {
+		const v = rasterAbVerdict({retainedMs: diffs.map(diff => ({diff, resolved: true}))}, {minResolved: 12}).retainedMs;
+		assert.equal(v.ok, false, label + ': moved retained must fail');
+		assert.match(v.rule, /clip-race noise/, label + ': retained fails through the clip-race gate');
+	}
+});
+
 // retainedMs IQR gate (lead 1120233156-26c3): judged only when the clip race is quiet. Real records:
 // quiet = run-baseline-mac alone (IQR 12.5 <= 25, median -16.7 -> PASS); noisy = run-green3-r1-1 opaque under 3-way
 // load (IQR 45.8 > 25 -> could-not-judge clip-race noise, never a numeric false fail even though median 33.4 > 25).
@@ -286,7 +368,7 @@ test('timing gate: preserve archived green and bite verdicts and withhold noisy 
 		fail: /^paired median/,
 		gaps: /^could not judge: capture gaps/,
 		iqr: /^could not judge: timing noise, IQR/,
-		reverse: /^could not judge: timing noise, reverse pair/
+		reverse: /^could not judge: timing noise, \d+ of \d+ resolved pairs below -60/
 	};
 	for (const [run, surface, firstNew, settled = firstNew] of TIMING_RECORDS) {
 		for (const [key, [expected, diffs, total]] of Object.entries({firstNewMs: firstNew, settledMs: settled})) {
@@ -304,7 +386,7 @@ test('timing gate: numeric bounds are inclusive, and refusals identify the gate 
 	const reverseRecord = TIMING_RECORDS.find(([run, surface]) => run === 'run-green3-r2-2' && surface === 'opaque');
 	const verdictOf = (diffs, total) => rasterAbVerdict({firstNewMs: resolvedPairs(diffs, total)}).firstNewMs;
 	assert.equal(verdictOf(iqrRecord[2][1]).rule, 'could not judge: timing noise, IQR 131.8 ms over 125 (6 of 6 resolved)');
-	assert.equal(verdictOf(reverseRecord[2][1]).rule, 'could not judge: timing noise, reverse pair -69.5 ms below -60 (6 of 6 resolved)');
+	assert.equal(verdictOf(reverseRecord[2][1]).rule, 'could not judge: timing noise, 1 of 6 resolved pairs below -60 ms (more than 1/8)');
 	const boundary = verdictOf([-60, -60, 31, 31, 65, 65]);
 	assert.equal(boundary.iqrMs, 93.8);
 	assert.equal(boundary.couldNotJudge, false, '-60 ms is allowed');
@@ -354,6 +436,9 @@ test('timing gate only withholds old verdicts on real records and 4096 seeded ra
 	assertMonotonic(retPairs(BITE50C_1_RETAINED), 'bite50C-1 retained');
 	for (const [index, diffs] of [BITE50C_1_FIRSTNEW, BITE50C_2_FIRSTNEW, BITE50C_3_FIRSTNEW].entries()) {
 		assertMonotonic({firstNewMs: resolvedPairs(diffs)}, 'bite50C-' + (index + 1));
+	}
+	for (const [label, diffs] of Object.entries({...REPS12_GREEN, ...REPS12_BITE})) {
+		assertMonotonic({firstNewMs: resolvedPairs(diffs)}, 'reps12 ' + label, {minResolved: 12});
 	}
 
 	let seed = 0xd85be76d;

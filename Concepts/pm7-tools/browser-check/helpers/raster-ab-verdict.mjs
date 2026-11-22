@@ -42,6 +42,12 @@ export const RASTER_AB_RETAINED_IQR_MAX_MS = 25;
 // the most negative resolved pair was -48.4 ms in a real bite and -69.5 ms or lower in the remaining false fails.
 const RASTER_AB_TIMING_IQR_MAX_MS = 125;
 const RASTER_AB_TIMING_REVERSE_MIN_MS = -60;
+// RN-REPS12: one reverse pair decided a 6-pair verdict at the minimum's 0% breakdown point. Refuse a numeric timing
+// failure only when MORE than this fraction of the resolved differences are below the reverse floor. One reverse pair
+// in 6 or 7 (1/6, 1/7 > 1/8) still refuses the loaded false failures; one in 8 (12.5%, not > 1/8) is judged, as is one
+// in the 12 pairs reps=12 resolves (8.3%). Two in 12 (16.7%) refuse. Fitted on the archived rows and the 2026-11-22
+// Alexis reps=12 rows; PM7PERF-RASTER-REVERSE-PAIR-BREAKDOWN, R126, RN-REVPAIR, RN-REPS12.
+const RASTER_AB_TIMING_REVERSE_FRACTION = 1 / 8;
 
 export const median = a => { const s = [...a].sort((x, y) => x - y); return s.length ? (s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2) : null; };
 export const r1 = v => v == null ? null : Math.round(v * 10) / 10;
@@ -95,7 +101,8 @@ export function shrinkResolution(r, measures) {
 // for one balanced-order pair (null when either side was not measured); resolved says both sides' edges were resolved.
 // Returns one verdict per measure: {ok, rule, tolMs, medianDiffMs, iqrMs, diffs, nResolved, nTotal, couldNotJudge}.
 // The median is judged only with enough resolved pairs and a bounded IQR. A numeric failure of firstNewMs or
-// settledMs also requires no resolved difference below the reverse bound. Refusals are failing infrastructure rows.
+// settledMs also requires reverse pairs below the bound to stay at or under an eighth of the resolved pairs; one
+// outlier in a large enough sample does not withhold the verdict. Refusals are failing infrastructure rows.
 export function rasterAbVerdict(pairsByMeasure, {tolMs = RASTER_AB_TOL_MS, minResolved = 6, retainedIqrMaxMs = RASTER_AB_RETAINED_IQR_MAX_MS} = {}) {
 	const out = {};
 	for (const [key, raw] of Object.entries(pairsByMeasure)) {
@@ -113,9 +120,9 @@ export function rasterAbVerdict(pairsByMeasure, {tolMs = RASTER_AB_TOL_MS, minRe
 		else if (key === 'retainedMs' && spread != null && spread > retainedIqrMaxMs) refusal = `clip-race noise, IQR ${spread} ms over ${retainedIqrMaxMs} (${resolvedCount})`;
 		else if (timing && spread > RASTER_AB_TIMING_IQR_MAX_MS) refusal = `timing noise, IQR ${spread} ms over ${RASTER_AB_TIMING_IQR_MAX_MS} (${resolvedCount})`;
 		else if (timing && !withinTolerance) {
-			const reverse = diffs.reduce((lowest, diff) => Math.min(lowest, diff), Infinity);
-			if (reverse < RASTER_AB_TIMING_REVERSE_MIN_MS) {
-				refusal = `timing noise, reverse pair ${reverse} ms below ${RASTER_AB_TIMING_REVERSE_MIN_MS} (${resolvedCount})`;
+			const reverse = diffs.filter(diff => diff < RASTER_AB_TIMING_REVERSE_MIN_MS).length;
+			if (reverse > nResolved * RASTER_AB_TIMING_REVERSE_FRACTION) {
+				refusal = `timing noise, ${reverse} of ${nResolved} resolved pairs below ${RASTER_AB_TIMING_REVERSE_MIN_MS} ms (more than 1/8)`;
 			}
 		}
 		const couldNotJudge = refusal != null;
