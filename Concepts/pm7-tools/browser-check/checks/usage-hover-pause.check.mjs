@@ -350,17 +350,21 @@ async function providerRace(t, f, label, park) {
 
 // R5's INPUT-DELIVERY qualification of one mount record (exported for tools/usage-hover-pause-verdict.selftest.mjs).
 // A busy mount can delay event delivery past 150 ms while the already-queued wheel task precedes the timer; Chrome
-// may coalesce queued wheel inputs while busy, so at least 80% must reach the page. R135-F2: product behaviour is
-// NOT qualification — a quiet host's intact burst that the product mishandles must fail r5MountProduct below,
-// never hide behind the could-not-judge row.
-export function r5MountQualified(rec, { inputs = 203, activated, burstBroke, during, destinationTop }) {
-	return activated && rec.wheels.length >= inputs * 0.8 && rec.wheels.every((w) => w.trusted) && !burstBroke && !rec.moves && during.length > 10 && destinationTop === 0 && rec.targetHovered;
+// may coalesce queued wheel inputs while busy, so at least 80% must reach the page. R135-F2/R136-N1: product
+// behaviour is NOT qualification — samples only push while the live board IS the destination room and targetHovered
+// matches a room-exclusive selector (62-boards-data.js: overview has no provider widget, accounts no skyline), so a
+// failed or wrong mount forces during [] and targetHovered false. Qualification reads only what the INPUT did:
+// activation delivered, wheels delivered and trusted, burst intact, no pointer move, calibration at the top, and
+// the pointer witnessed over the board's hover area BEFORE the burst. The mount outcome is judged by r5MountProduct.
+export function r5MountQualified(rec, { inputs = 203, activated, burstBroke, destinationTop }) {
+	return activated && rec.wheels.length >= inputs * 0.8 && rec.wheels.every((w) => w.trusted) && !burstBroke && !rec.moves && destinationTop === 0 && rec.pointerOnBoard;
 }
 
-// R5's product assertions on qualified input (R135-F2): the old board enters the wheel hold, the pause ends only
-// after the last wheel, and the board swaps to the live room. A fault here FAILS the run.
-export function r5MountProduct(rec, { last }) {
-	return rec.oldPaused && rec.ends.every((e) => e.t > last) && rec.swaps > 0 && rec.liveRoom === rec.room;
+// R5's product assertions on qualified input (R135-F2, R136-N1): the old board enters the wheel hold, the pause
+// ends only after the last wheel, and the board swaps to the live room — a mounted room the pointer is over,
+// sampled during the burst. A fault here FAILS the run, never could-not-judge.
+export function r5MountProduct(rec, { last, during }) {
+	return rec.oldPaused && rec.ends.every((e) => e.t > last) && rec.swaps > 0 && rec.liveRoom === rec.room && during.length > 10 && rec.targetHovered;
 }
 
 // What the single-burst assertions do with the record (PM7PERF-R5-UNQUALIFIED-RETURNS-COUNTED): once R5 rejects the
@@ -397,11 +401,23 @@ async function roomMountRace(t, f, label, park, rm) {
 		await choose(source);
 		await nav(room).focus();
 		await f.evaluate(()=>{window.__uhpMountNeutralRows=new WeakMap();document.querySelectorAll('#pmuScroll .pmu-board .pmu-row,#pmuScroll .pmu-board .pmu-irow,#pmuScroll .pmu-board .pmu-accrow').forEach(row=>window.__uhpMountNeutralRows.set(row,getComputedStyle(row).backgroundColor));});
+		// R136-N1: witness the pointer's pre-burst position from the real move events (frame coordinates), so
+		// qualification can require the pointer over the board's hover area without asking the product's outcome.
+		await f.evaluate(() => {
+			window.__uhpPrePointer = null;
+			const track = (e) => { window.__uhpPrePointer = [e.clientX, e.clientY]; };
+			document.addEventListener('pointermove', track, true);
+			window.__uhpPrePointerStop = () => document.removeEventListener('pointermove', track, true);
+		});
 		await t.page.mouse.move(at.x, at.y, { steps: 4 });
 		await t.page.waitForTimeout(500);
 		await f.evaluate(({ room, baseline, selector }) => {
 			const sc = document.getElementById('pmuScroll'), old = document.getElementById('pmuBoard');
-			const r = window.__uhpMount = { room, wheels: [], scrolls: [], keys: [], samples: [], ends: [], moves: 0, oldPaused: false, swaps: 0 };
+			const pre = window.__uhpPrePointer;
+			if (window.__uhpPrePointerStop) { window.__uhpPrePointerStop(); delete window.__uhpPrePointerStop; }
+			const preHit = pre && document.elementFromPoint(pre[0], pre[1]);
+			const r = window.__uhpMount = { room, wheels: [], scrolls: [], keys: [], samples: [], ends: [], moves: 0, oldPaused: false, swaps: 0,
+				pointerOnBoard: !!(preHit && sc.contains(preHit) && preHit.closest('.pmu-board')) };
 			let running = true, last = old, position = null;
 			const live = () => document.getElementById('pmuBoard');
 			const wheel = (e) => { r.wheels.push({ t: performance.now(), trusted: e.isTrusted }); position = [e.clientX, e.clientY]; };
@@ -489,10 +505,10 @@ async function roomMountRace(t, f, label, park, rm) {
 		// depend on the pause surviving the burst are skipped with the gap, not failed (PM7PERF-HOVERPAUSE-R5-CASCADE).
 		if (gate === 'skip') { t.log(S + 'SKIP R5 suppression/restoration: ' + burstDetail); break; }
 		// R135-F2: the product assertions judge on qualified input; a fault fails, never could-not-judge.
-		await t.check(S + 'R5 mount keeps the wheel hold, swaps to the live room and ends after the last wheel', r5MountProduct(rec, { last }), JSON.stringify({ oldPaused: rec.oldPaused, swaps: rec.swaps, liveRoom: rec.liveRoom, room: rec.room, ends: rec.ends, last }));
+		await t.check(S + 'R5 mount keeps the wheel hold, swaps to the live room and ends after the last wheel', r5MountProduct(rec, { last, during }), JSON.stringify({ oldPaused: rec.oldPaused, swaps: rec.swaps, liveRoom: rec.liveRoom, room: rec.room, ends: rec.ends, last, during: during.length, targetHovered: rec.targetHovered }));
 		await t.check(S + 'live board keeps its wheel marker after the mount', !burstBroke && rec.oldPaused && during.length > 0 && during.every((s) => s.op === 'wheel'), burstDetail || `${during.filter((s) => s.op !== 'wheel').length}/${during.length} live samples lost marker`);
 		// Allow the first 100 ms for an already-lit reused card's outgoing fade; nothing arriving may light thereafter.
-		const settled = during.filter((s) => s.t >= during[0].t + 100);
+		const settled = during.length ? during.filter((s) => s.t >= during[0].t + 100) : [];
 		await t.check(S + 'live card tools, CSS row backgrounds and engine lights stay paused', !burstBroke && settled.length > 10 && settled.every((s) => !s.lit && (s.tools == null || s.tools <= 0.05) && !s.rows), burstDetail || `${settled.filter((s) => s.lit || s.tools > 0.05 || s.rows).length}/${settled.length} lit samples`);
 		const hitSamples=settled.filter(s=>s.hit&&s.hit.alpha>.02),ghostSamples=hitSamples.filter(s=>s.hit.ghost&&!s.hit.live);
 		t.log(S+'R116 T1 hit-tested surfaces: '+JSON.stringify({samples:hitSamples.length,ghost:ghostSamples.length,bad:hitSamples.filter(s=>s.hit.tools>.05||s.hit.lit||s.hit.rows)}));

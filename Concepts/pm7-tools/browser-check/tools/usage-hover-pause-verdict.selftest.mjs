@@ -347,7 +347,7 @@ const r5Record = (delivered, gapMs, idleReturnMs) => {
 	for (let i = 0; i < delivered; i++) { ts.push(t); t += i === 40 ? gapMs : 30; }
 	const last = ts.at(-1);
 	return {
-		room: 'overview', liveRoom: 'overview', oldPaused: true, moves: 0, swaps: 2, targetHovered: true,
+		room: 'overview', liveRoom: 'overview', oldPaused: true, moves: 0, swaps: 2, targetHovered: true, pointerOnBoard: true,
 		wheels: ts.map((t) => ({ t, trusted: true })),
 		ends: [{ t: ts[40] + idleReturnMs, live: true, room: 'overview' }, { t: last + 160, live: true, room: 'overview' }],
 		last, during: Array.from({ length: 100 }, (_, i) => ({ t: 1000 + i * 60 }))
@@ -378,41 +378,67 @@ test('R5: an intact 203-wheel burst keeps its qualification and judges', () => {
 	r.ends = [{ t: r.last + 160, live: true, room: 'overview' }];
 	assert.equal(r5MountQualified(r, r5Args(r)), true);
 	assert.equal(r5BurstGate({ qualified: true, burstBroke: burstState(r.wheels).broke }), 'judge');
-	assert.equal(r5MountProduct(r, { last: r.last }), true);
+	assert.equal(r5MountProduct(r, { last: r.last, during: r.during }), true);
 });
 test('R5: a broke burst keeps the R5-CASCADE skip, not a second failing row', () => {
 	assert.equal(r5BurstGate({ qualified: false, burstBroke: true }), 'skip');
 });
 // R135-F2 RED: on a quiet host an intact 203-wheel burst qualifies; a product fault must then FAIL, not read
 // could-not-judge. The base mixed these assertions into r5MountQualified, so each of these records was rejected
-// as unqualified input and suppressed behind the could-not-judge row.
+// as unqualified input and suppressed behind the could-not-judge row. R136-N1: the mount-fault fixtures model
+// the real page (62-boards-data.js: overview has no provider widget, accounts no skyline; samples push only
+// while the live board IS the destination room and targetHovered matches a room-exclusive selector), so a
+// failed or wrong mount leaves during [] and targetHovered false — qualification must still pass on the
+// intact input, and the product row must FAIL.
 test('R135-F2: a qualified burst whose old board never enters the wheel pause fails the product row', () => {
 	const r = r5Record(203, 30, 0);
 	r.ends = [{ t: r.last + 160, live: true, room: 'overview' }];
 	r.oldPaused = false;
 	assert.equal(r5MountQualified(r, r5Args(r)), true, 'input delivery is intact; the fault is the product\'s');
 	assert.equal(r5BurstGate({ qualified: true, burstBroke: burstState(r.wheels).broke }), 'judge');
-	assert.equal(r5MountProduct(r, { last: r.last }), false);
+	assert.equal(r5MountProduct(r, { last: r.last, during: r.during }), false);
 });
 test('R135-F2: a qualified burst whose pause ends before the last wheel fails the product row', () => {
 	const r = r5Record(203, 30, 0);
 	r.ends = [{ t: r.last - 40, live: true, room: 'overview' }];
 	assert.equal(r5MountQualified(r, r5Args(r)), true);
-	assert.equal(r5MountProduct(r, { last: r.last }), false);
+	assert.equal(r5MountProduct(r, { last: r.last, during: r.during }), false);
 });
-test('R135-F2: a qualified burst that never swaps the board fails the product row', () => {
+test('R135-F2/R136-N1: a qualified burst that never swaps the board fails the product row', () => {
 	const r = r5Record(203, 30, 0);
 	r.ends = [{ t: r.last + 160, live: true, room: 'overview' }];
-	r.swaps = 0;
-	assert.equal(r5MountQualified(r, r5Args(r)), true);
-	assert.equal(r5MountProduct(r, { last: r.last }), false);
+	r.swaps = 0; r.liveRoom = 'accounts'; r.during = []; r.targetHovered = false;
+	assert.equal(r5MountQualified(r, r5Args(r)), true, 'the input was delivered intact; the mount failure is the product\'s');
+	assert.equal(r5BurstGate({ qualified: true, burstBroke: burstState(r.wheels).broke }), 'judge');
+	assert.equal(r5MountProduct(r, { last: r.last, during: r.during }), false);
 });
-test('R135-F2: a qualified burst whose live board is another room fails the product row', () => {
+test('R135-F2/R136-N1: a qualified burst whose live board is another room fails the product row', () => {
 	const r = r5Record(203, 30, 0);
 	r.ends = [{ t: r.last + 160, live: true, room: 'overview' }];
-	r.liveRoom = 'accounts';
+	r.liveRoom = 'accounts'; r.during = []; r.targetHovered = false;
 	assert.equal(r5MountQualified(r, r5Args(r)), true);
-	assert.equal(r5MountProduct(r, { last: r.last }), false);
+	assert.equal(r5MountProduct(r, { last: r.last, during: r.during }), false);
+});
+test('R136-N1: the pointer off the board before the burst is unqualified input, not a product fault', () => {
+	const r = r5Record(203, 30, 0);
+	r.ends = [{ t: r.last + 160, live: true, room: 'overview' }];
+	r.pointerOnBoard = false;
+	assert.equal(r5MountQualified(r, r5Args(r)), false);
+	assert.equal(r5BurstGate({ qualified: false, burstBroke: burstState(r.wheels).broke }), 'could-not-judge');
+});
+test('R136-N1: a mounted room the pointer is not over fails the product row', () => {
+	const r = r5Record(203, 30, 0);
+	r.ends = [{ t: r.last + 160, live: true, room: 'overview' }];
+	r.targetHovered = false;
+	assert.equal(r5MountQualified(r, r5Args(r)), true);
+	assert.equal(r5MountProduct(r, { last: r.last, during: r.during }), false);
+});
+test('R136-N1: a mounted room with too few burst samples fails the product row', () => {
+	const r = r5Record(203, 30, 0);
+	r.ends = [{ t: r.last + 160, live: true, room: 'overview' }];
+	r.during = r.during.slice(0, 5);
+	assert.equal(r5MountQualified(r, r5Args(r)), true);
+	assert.equal(r5MountProduct(r, { last: r.last, during: r.during }), false);
 });
 
 // R132-FOLLOWUPS 6 (R132-REPORT.md): a 4 ms unrelated task between the probe callback and the product's correctly
