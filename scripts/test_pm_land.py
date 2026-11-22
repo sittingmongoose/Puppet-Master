@@ -1021,7 +1021,7 @@ print(json.dumps({{"schema_id": "pm.landing_check.report.v1", "commit": {self.he
         sections = [path.read_text().split("### How to land on main\n")[1].split("### Never\n")[0]
                     for path in (repo / "AGENTS.md", repo / ".claude/CLAUDE.md")]
         self.assertEqual(sections[0], sections[1])
-        for phrase in ("pm-land.py check <branch> --on <host>", "pm-land.py verify", "default `nas1`", "verify` exiting 0 confirms only",
+        for phrase in ("check <branch> --on <host>", "PM_LAND_SCRIPT", "verify --receipt", "--no-overwrite-ignore", "default `nas1`", "verify` exiting 0 confirms only",
                        "commit", "tree", "base", "ignored-input inventory", "report SHA-256", "exit"):
             self.assertIn(phrase, sections[0])
 
