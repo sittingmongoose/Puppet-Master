@@ -23,9 +23,11 @@ shared inputs and writes its evidence and its own remote checkout. It checks the
 named topic at its exact published tip and uses a full, freshly fetched `origin/main` SHA as the
 base. On repeated SSH failures it prints the remote job and evidence directory. Reconnect to
 that job or retry on the other host.
-The checker removes its temporary remote worktree only after the worker is done with recorded exit 0,
-and otherwise preserves the tree and prints and saves to `cleanup-receipt.json` its host, path, job,
-state and the command to remove it by hand once nothing uses it.
+The checker removes its temporary remote worktree only after a completed check run (`exit_code`
+0, 1 or 2) whose job and process tree (the systemd unit cgroup, or every descendant proven ended
+under `setsid`) have exited. Failed runs (including checker exit 3) and runs with live or
+unverified processes preserve the remote copy and print and save to `cleanup-receipt.json` its
+host, path, job, state and the command to remove it by hand once nothing uses it.
 
 `check` returns 0 when the checker ran and the result was recorded, including a recorded checker
 exit of 2 or 3. It prints the separate checker exit and the `record.json` receipt path on the

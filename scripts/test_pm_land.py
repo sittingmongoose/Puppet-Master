@@ -7,9 +7,13 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
+import signal
 import socket
 import subprocess
+import sys
 import tempfile
+import time
 import unittest
 from unittest.mock import patch
 
@@ -119,16 +123,21 @@ class LandingFixture(unittest.TestCase):
 
     def cleanup(self, state="done", status_exit=0, **status):
         name = land.job_name(self.folder)
+        unit = f"long-job-{name}-000000"
         real_command = land.command
 
         def local_status(args, **kwargs):
             if args[0] == "long-job":
                 self.assertEqual(args, ["long-job", "status", name, "--json"])
                 return subprocess.CompletedProcess(
-                    args, status_exit, json.dumps([{"name": name, "state": state, "code": 0,
+                    args, status_exit, json.dumps([{"name": name, "attempt": 1, "via": "systemd",
+                                                   "unit": unit, "state": state, "code": 0,
                                                    "ended": "2026-11-21T15:20:00+00:00", **status}]),
                     "no job named " + name
                     if status_exit else "")
+            if args[0] == "systemctl":
+                return subprocess.CompletedProcess(
+                    args, 0, "LoadState=not-found\nActiveState=inactive\nSubState=dead\nControlGroup=\n", "")
             return real_command(args, **kwargs)
 
         with patch.object(land, "command", side_effect=local_status):
@@ -295,6 +304,301 @@ class LandingFixture(unittest.TestCase):
         with self.assertRaisesRegex(land.Refusal, "ownership"):
             self.cleanup()
         self.assertTrue(self.remote.is_dir())
+
+    def test_cleanup_preserves_remote_copy_on_checker_exit_three_even_when_job_is_done(self):
+        self.make_record(3)
+        original_receipt = self.path.read_bytes()
+        with redirect_stdout(io.StringIO()) as output:
+            self.cleanup()
+        self.expect_preservation(output.getvalue(), "checker-exit-3")
+        self.assertEqual(self.path.read_bytes(), original_receipt)
+
+        # Missing receipt even with long-job state=done must also preserve the copy.
+        self.path.rename(self.root / "removed-record.json")
+        (self.folder / "cleanup-receipt.json").unlink()
+        with redirect_stdout(io.StringIO()) as output:
+            self.cleanup()
+        self.expect_preservation(output.getvalue(), "missing-receipt")
+
+    def test_cleanup_checks_systemd_unit_and_cgroup_before_removal(self):
+        name = land.job_name(self.folder)
+        unit = f"long-job-{name}-abc123"
+        fake_cgroup_root = self.root / "cgroup"
+        unit_cg = f"/user.slice/user-1000.slice/{unit}.service"
+        (fake_cgroup_root / unit_cg.lstrip("/")).mkdir(parents=True)
+        real_command = land.command
+
+        def run_with(status_payload, show_stdout="", show_exit=0):
+            def fake_command(args, **kwargs):
+                if args[0] == "long-job":
+                    return subprocess.CompletedProcess(args, 0, json.dumps([status_payload]), "")
+                if args[0] == "systemctl":
+                    return subprocess.CompletedProcess(args, show_exit, show_stdout, "systemctl error" if show_exit else "")
+                return real_command(args, **kwargs)
+
+            output = io.StringIO()
+            with (patch.object(land, "command", side_effect=fake_command),
+                  patch.object(land, "CGROUP_FS_ROOT", fake_cgroup_root, create=True),
+                  patch.object(land, "CLEANUP_DRAIN_SECONDS", 0.0, create=True),
+                  redirect_stdout(output)):
+                land.remote_cleanup(self.folder, "nas1")
+            return output.getvalue()
+
+        base_status = {"name": name, "attempt": 1, "state": "done", "code": 0,
+                       "ended": "2026-11-21T15:20:00+00:00", "signal": None}
+        # Missing or unknown via must preserve.
+        for bad_via in ({}, {"via": "other"}, {"via": "systemd", "unit": ""}):
+            with self.subTest(bad_via=bad_via):
+                out = run_with({**base_status, **bad_via})
+                self.expect_preservation(out, "unverified-processes")
+
+        # systemctl failure, active/deactivating/failed states, and non-empty cgroup.procs must preserve.
+        systemd_status = {**base_status, "via": "systemd", "unit": unit}
+        out = run_with(systemd_status, show_stdout="", show_exit=1)
+        self.expect_preservation(out, "unverified-processes")
+
+        for active, sub, expected_state in (
+            ("active", "running", "active-processes"),
+            ("deactivating", "stop-sigterm", "active-processes"),
+            ("failed", "failed", "unverified-processes"),
+        ):
+            with self.subTest(active=active, sub=sub):
+                show = f"LoadState=loaded\nActiveState={active}\nSubState={sub}\nControlGroup={unit_cg}\n"
+                out = run_with(systemd_status, show_stdout=show)
+                self.expect_preservation(out, expected_state)
+
+        procs_file = fake_cgroup_root / unit_cg.lstrip("/") / "cgroup.procs"
+        procs_file.write_text("424242\n", encoding="ascii")
+        show_inactive = f"LoadState=loaded\nActiveState=inactive\nSubState=dead\nControlGroup={unit_cg}\n"
+        out = run_with(systemd_status, show_stdout=show_inactive)
+        self.expect_preservation(out, "active-processes")
+
+        # Once cgroup.procs is empty and unit is inactive/dead, cleanup removes the worktree.
+        procs_file.write_text("", encoding="ascii")
+        (self.folder / "cleanup-receipt.json").unlink()
+        out = run_with(systemd_status, show_stdout=show_inactive)
+        self.assertIn(f"Removed temporary remote worktree {self.remote}", out)
+        self.assertFalse(self.remote.exists())
+        self.assertFalse((self.folder / "cleanup-receipt.json").exists())
+
+    def prepare_setsid_worker(self, folder, worktree, check_script):
+        shard_script = self.put(self.root, f"fake-shard-{folder.name}.py", "print('{}')\n")
+        source = Path(__file__).with_name("pm-land.py").read_text(encoding="utf-8")
+        marker = 'if __name__ == "__main__":'
+        overrides = (
+            f"EVIDENCE = Path({str(self.evidence)!r})\n"
+            f"RUNS = Path({str(self.runs)!r})\n"
+            f"SHARED = Path({str(self.shared)!r})\n"
+            f"CLONE = Path({str(self.clone)!r})\n"
+            f"MACHINES['nas1'] = {socket.gethostname()!r}\n"
+            f"SHARD = ({sys.executable!r}, '-B', {str(shard_script)!r})\n"
+            f"CHECK = ({sys.executable!r}, '-B', {str(check_script)!r})\n"
+            f"CLEANUP_DRAIN_SECONDS = 2.0\n"
+            f"def worktree_path(_folder):\n    return Path({str(worktree)!r})\n"
+        )
+        worker = folder / "worker.py"
+        worker.write_text(source.replace(marker, overrides + marker), encoding="utf-8")
+        return worker
+
+    def kill_pid_if_matches(self, pid, start):
+        try:
+            stat_text = Path(f"/proc/{pid}/stat").read_text(encoding="utf-8")
+            cur_start = stat_text.rsplit(")", 1)[1].split()[19]
+        except (OSError, IndexError):
+            return
+        if cur_start == start:
+            try:
+                os.kill(pid, signal.SIGKILL)
+            except OSError:
+                pass
+
+    def test_cleanup_preserves_setsid_job_while_detached_validator_descendant_is_alive(self):
+        long_job = shutil.which("long-job")
+        if not long_job or sys.platform != "linux":
+            self.skipTest("installed long-job on Linux is required")
+        lj_home = self.root / "long-job-home"
+        lj_home.mkdir()
+        env = {**os.environ, "LONG_JOB_HOME": str(lj_home)}
+
+        # Case 1 (Astra finding 2): aggregate killed by SIGKILL while detached validator survives;
+        # checker exits 3, worker records exit 3 and exits 0, long-job reports state=done code=0.
+        folder1 = self.runs / "setsid-astra-f2"
+        folder1.mkdir(parents=True)
+        worktree1 = self.root / "setsid-tree-1"
+        pidfile1 = self.root / "validator1.json"
+        validator1 = self.put(self.root, "validator1.py", f"""import json, os, sys, time
+from pathlib import Path
+fh = open("tracked.txt", "rb")
+start = Path(f"/proc/{{os.getpid()}}/stat").read_text().rsplit(")", 1)[1].split()[19]
+Path({str(pidfile1)!r}).write_text(json.dumps({{"pid": os.getpid(), "start": start}}))
+time.sleep(30)
+fh.close()
+""")
+        aggregate1 = self.put(self.root, "aggregate1.py", f"""import subprocess, sys, time
+subprocess.Popen([sys.executable, "-B", {str(validator1)!r}], start_new_session=True,
+                 stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+time.sleep(30)
+""")
+        check1 = self.put(self.root, "check1.py", f"""import os, signal, subprocess, sys, time
+from pathlib import Path
+agg = subprocess.Popen([sys.executable, "-B", {str(aggregate1)!r}],
+                       stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+deadline = time.monotonic() + 10
+while not Path({str(pidfile1)!r}).is_file() and time.monotonic() < deadline:
+    time.sleep(0.05)
+os.kill(agg.pid, signal.SIGKILL)
+agg.wait()
+sys.exit(3)
+""")
+        worker1 = self.prepare_setsid_worker(folder1, worktree1, check1)
+        job1 = land.job_name(folder1)
+        try:
+            start_res = subprocess.run(
+                [long_job, "start", job1, "--via", "setsid", "--log", str(folder1 / "check.log"), "--",
+                 sys.executable, "-B", str(worker1), "check", "nas1", self.ref, self.head, self.tree, self.base],
+                env=env, capture_output=True, text=True, check=False,
+            )
+            self.assertEqual(start_res.returncode, 0, start_res.stdout + start_res.stderr)
+            wait_res = subprocess.run([long_job, "wait", job1, "--timeout", "60"], env=env,
+                                      capture_output=True, text=True, check=False)
+            self.assertEqual(wait_res.returncode, 0, wait_res.stdout + wait_res.stderr)
+            info1 = json.loads(subprocess.run([long_job, "status", job1, "--json"], env=env,
+                                              capture_output=True, text=True, check=True).stdout)[0]
+            self.assertEqual((info1["via"], info1["state"], info1["code"], info1["signal"]), ("setsid", "done", 0, None))
+            self.assertEqual(land.read_json(folder1 / "record.json")["exit_code"], 3)
+
+            v1 = land.read_json(pidfile1)
+            self.addCleanup(self.kill_pid_if_matches, v1["pid"], v1["start"])
+            clean1 = subprocess.run([sys.executable, "-B", str(worker1), "cleanup", "nas1"],
+                                    env=env, capture_output=True, text=True, check=False)
+            self.assertEqual(clean1.returncode, 0, clean1.stdout + clean1.stderr)
+            self.assertTrue(worktree1.is_dir(), "worktree was removed while validator was alive")
+            self.assertEqual(os.readlink(f"/proc/{v1['pid']}/cwd"), os.path.realpath(worktree1))
+            self.assertIn(f"preserved remote copy: nas1:{worktree1}", clean1.stdout)
+            self.assertTrue((folder1 / "cleanup-receipt.json").is_file())
+        finally:
+            if pidfile1.is_file():
+                v1 = land.read_json(pidfile1)
+                self.kill_pid_if_matches(v1["pid"], v1["start"])
+
+        # Case 2: checker exits 0 with valid report, yet a detached descendant that cleared env and chdir("/") survives.
+        folder2 = self.runs / "setsid-stealth-exit0"
+        folder2.mkdir(parents=True)
+        worktree2 = self.root / "setsid-tree-2"
+        pidfile2 = self.root / "validator2.json"
+        validator2 = self.put(self.root, "validator2.py", f"""import json, os, time
+from pathlib import Path
+os.chdir("/")
+start = Path(f"/proc/{{os.getpid()}}/stat").read_text().rsplit(")", 1)[1].split()[19]
+Path({str(pidfile2)!r}).write_text(json.dumps({{"pid": os.getpid(), "start": start}}))
+time.sleep(30)
+""")
+        check2 = self.put(self.root, "check2.py", f"""import json, subprocess, sys, time
+from pathlib import Path
+subprocess.Popen([sys.executable, "-B", {str(validator2)!r}], cwd="/", env={{}}, start_new_session=True,
+                 stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, close_fds=True)
+deadline = time.monotonic() + 10
+while not Path({str(pidfile2)!r}).is_file() and time.monotonic() < deadline:
+    time.sleep(0.05)
+print(json.dumps({{"schema_id": "pm.landing_check.report.v1", "commit": {self.head!r},
+                   "base": {self.base!r}, "blocking": 0, "subcheck_timeout_seconds": {land.TIMEOUT}}}))
+""")
+        worker2 = self.prepare_setsid_worker(folder2, worktree2, check2)
+        job2 = land.job_name(folder2)
+        try:
+            start_res = subprocess.run(
+                [long_job, "start", job2, "--via", "setsid", "--log", str(folder2 / "check.log"), "--",
+                 sys.executable, "-B", str(worker2), "check", "nas1", self.ref, self.head, self.tree, self.base],
+                env=env, capture_output=True, text=True, check=False,
+            )
+            self.assertEqual(start_res.returncode, 0, start_res.stdout + start_res.stderr)
+            wait_res = subprocess.run([long_job, "wait", job2, "--timeout", "60"], env=env,
+                                      capture_output=True, text=True, check=False)
+            self.assertEqual(wait_res.returncode, 0, wait_res.stdout + wait_res.stderr)
+            self.assertEqual(land.read_json(folder2 / "record.json")["exit_code"], 0)
+            v2 = land.read_json(pidfile2)
+            self.addCleanup(self.kill_pid_if_matches, v2["pid"], v2["start"])
+            clean2 = subprocess.run([sys.executable, "-B", str(worker2), "cleanup", "nas1"],
+                                    env=env, capture_output=True, text=True, check=False)
+            self.assertEqual(clean2.returncode, 0, clean2.stdout + clean2.stderr)
+            self.assertTrue(worktree2.is_dir(), "worktree was removed while stealth descendant was alive")
+            self.assertIn(f"preserved remote copy: nas1:{worktree2}", clean2.stdout)
+            self.assertTrue((folder2 / "cleanup-receipt.json").is_file())
+        finally:
+            if pidfile2.is_file():
+                v2 = land.read_json(pidfile2)
+                self.kill_pid_if_matches(v2["pid"], v2["start"])
+
+    def test_cleanup_removes_setsid_job_once_all_descendants_proven_ended(self):
+        long_job = shutil.which("long-job")
+        if not long_job or sys.platform != "linux":
+            self.skipTest("installed long-job on Linux is required")
+        lj_home = self.root / "long-job-home-clean"
+        lj_home.mkdir()
+        env = {**os.environ, "LONG_JOB_HOME": str(lj_home)}
+        folder = self.runs / "setsid-clean-exit0"
+        folder.mkdir(parents=True)
+        worktree = self.root / "setsid-tree-clean"
+        check_ok = self.put(self.root, "check_ok.py", f"""import json, subprocess, sys
+child = subprocess.Popen([sys.executable, "-c", "pass"], start_new_session=True)
+child.wait()
+print(json.dumps({{"schema_id": "pm.landing_check.report.v1", "commit": {self.head!r},
+                   "base": {self.base!r}, "blocking": 0, "subcheck_timeout_seconds": {land.TIMEOUT}}}))
+""")
+        worker = self.prepare_setsid_worker(folder, worktree, check_ok)
+        job = land.job_name(folder)
+        start_res = subprocess.run(
+            [long_job, "start", job, "--via", "setsid", "--log", str(folder / "check.log"), "--",
+             sys.executable, "-B", str(worker), "check", "nas1", self.ref, self.head, self.tree, self.base],
+            env=env, capture_output=True, text=True, check=False,
+        )
+        self.assertEqual(start_res.returncode, 0, start_res.stdout + start_res.stderr)
+        wait_res = subprocess.run([long_job, "wait", job, "--timeout", "60"], env=env,
+                                  capture_output=True, text=True, check=False)
+        self.assertEqual(wait_res.returncode, 0, wait_res.stdout + wait_res.stderr)
+        self.assertTrue(worktree.is_dir())
+        # First confirm that missing worker process metadata on a setsid job preserves the copy.
+        meta_path = land.proc_file(worktree)
+        saved_meta = meta_path.read_bytes()
+        meta_path.unlink()
+        clean_missing = subprocess.run([sys.executable, "-B", str(worker), "cleanup", "nas1"],
+                                       env=env, capture_output=True, text=True, check=False)
+        self.assertEqual(clean_missing.returncode, 0, clean_missing.stdout + clean_missing.stderr)
+        self.assertTrue(worktree.is_dir())
+        self.assertIn("state unverified-processes", clean_missing.stdout)
+        meta_path.write_bytes(saved_meta)
+        (folder / "cleanup-receipt.json").unlink()
+
+        # Confirm that a live post-start process holding an open fd in the worktree also preserves the copy.
+        holder = subprocess.Popen(
+            [sys.executable, "-c", f"import time; fh = open({str(worktree / 'tracked.txt')!r}, 'rb'); time.sleep(30)"],
+            stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        )
+        self.addCleanup(lambda: (holder.kill(), holder.wait()) if holder.poll() is None else None)
+        deadline = time.monotonic() + 5
+        while time.monotonic() < deadline:
+            try:
+                if any(os.readlink(f"/proc/{holder.pid}/fd/{fd}") == os.path.realpath(worktree / "tracked.txt")
+                       for fd in os.listdir(f"/proc/{holder.pid}/fd")):
+                    break
+            except OSError:
+                pass
+            time.sleep(0.05)
+        clean_fd = subprocess.run([sys.executable, "-B", str(worker), "cleanup", "nas1"],
+                                  env=env, capture_output=True, text=True, check=False)
+        self.assertEqual(clean_fd.returncode, 0, clean_fd.stdout + clean_fd.stderr)
+        self.assertTrue(worktree.is_dir())
+        self.assertIn("state active-processes", clean_fd.stdout)
+        holder.kill()
+        holder.wait()
+        (folder / "cleanup-receipt.json").unlink()
+
+        clean = subprocess.run([sys.executable, "-B", str(worker), "cleanup", "nas1"],
+                               env=env, capture_output=True, text=True, check=False)
+        self.assertEqual(clean.returncode, 0, clean.stdout + clean.stderr)
+        self.assertIn(f"Removed temporary remote worktree {worktree}", clean.stdout)
+        self.assertFalse(worktree.exists())
+        self.assertFalse((folder / "cleanup-receipt.json").exists())
 
     def test_job_name_is_valid_with_long_mixed_case_branch(self):
         folder = land.new_run("fix/" + "Case" * 50, self.head)

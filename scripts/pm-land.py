@@ -46,6 +46,12 @@ PLAN_INPUT_EXTENSIONS = {".md", ".json", ".jsonl", ".yaml", ".yml", ".schema", "
 FIXTURE_INPUT_EXTENSIONS = PLAN_INPUT_EXTENSIONS | {".txt", ".csv", ".tsv", ".html", ".css", ".js", ".svg"}
 CONCEPT_ASSET_EXTENSIONS = {".gif", ".jpeg", ".jpg", ".otf", ".png", ".ttf", ".webp", ".woff", ".woff2"}
 PM7_SOURCE = "Concepts/onboarding/opus-5.5/src"
+CGROUP_FS_ROOT = Path("/sys/fs/cgroup")
+CLEANUP_DRAIN_SECONDS = 2.0
+CLEANUP_DRAIN_POLL = 0.1
+PR_SET_CHILD_SUBREAPER = 36
+PR_GET_CHILD_SUBREAPER = 37
+ALIVE_SYSTEMD_STATES = frozenset({"active", "activating", "deactivating", "reloading", "refreshing"})
 
 
 class Refusal(RuntimeError):
@@ -596,6 +602,132 @@ def owner_file(worktree):
     return git_dir / "pm-land-check-owner"
 
 
+def proc_file(worktree):
+    return revision_metadata(worktree, "--git-dir") / "pm-land-check-proc.json"
+
+
+def long_job_state_root():
+    if os.environ.get("LONG_JOB_HOME"):
+        return Path(os.environ["LONG_JOB_HOME"]).expanduser()
+    if os.environ.get("XDG_STATE_HOME"):
+        return Path(os.environ["XDG_STATE_HOME"]) / "long-job"
+    return Path.home() / ".local" / "state" / "long-job"
+
+
+def read_proc_stat(pid):
+    try:
+        text = Path(f"/proc/{pid}/stat").read_text(encoding="utf-8", errors="replace")
+        fields = text.rsplit(")", 1)[1].split()
+        return {"state": fields[0], "ppid": int(fields[1]), "pgid": int(fields[2]),
+                "sid": int(fields[3]), "start": fields[19]}
+    except (OSError, IndexError, ValueError):
+        return None
+
+
+def proc_alive_as(pid, start):
+    if type(pid) is not int or pid <= 0 or not isinstance(start, str) or not start.isdigit():
+        return False
+    info = read_proc_stat(pid)
+    return info is not None and info["start"] == start and info["state"] not in ("Z", "X")
+
+
+def current_cgroup():
+    try:
+        lines = Path("/proc/self/cgroup").read_text(encoding="utf-8", errors="replace").splitlines()
+    except OSError:
+        return ""
+    fallback = ""
+    for line in lines:
+        parts = line.split(":", 2)
+        if len(parts) != 3:
+            continue
+        if parts[0] == "0" and parts[1] == "":
+            return parts[2]
+        if parts[1] == "name=systemd" and not fallback:
+            fallback = parts[2]
+    return fallback
+
+
+def enable_child_subreaper():
+    if sys.platform != "linux":
+        return False
+    try:
+        import ctypes
+        libc = ctypes.CDLL("libc.so.6", use_errno=True)
+        if libc.prctl(PR_SET_CHILD_SUBREAPER, 1, 0, 0, 0) != 0:
+            return False
+        value = ctypes.c_int(0)
+        if libc.prctl(PR_GET_CHILD_SUBREAPER, ctypes.byref(value), 0, 0, 0) != 0:
+            return False
+        return value.value == 1
+    except (OSError, AttributeError):
+        return False
+
+
+def reap_children():
+    reaped = 0
+    while True:
+        try:
+            pid, _ = os.waitpid(-1, os.WNOHANG)
+        except ChildProcessError:
+            break
+        if pid <= 0:
+            break
+        reaped += 1
+    return reaped
+
+
+def worker_live_children():
+    task_dir = Path("/proc/self/task")
+    if not task_dir.is_dir():
+        return None, "cannot read /proc/self/task"
+    my_pid = os.getpid()
+    alive = []
+    for _ in range(10):
+        reaped = reap_children()
+        child_pids = set()
+        read_any = False
+        try:
+            task_entries = list(task_dir.iterdir())
+        except OSError as exc:
+            return None, f"cannot list /proc/self/task: {exc}"
+        for entry in task_entries:
+            children_path = entry / "children"
+            try:
+                text = children_path.read_text(encoding="utf-8")
+            except FileNotFoundError:
+                continue
+            except OSError as exc:
+                return None, f"cannot read {children_path}: {exc}"
+            read_any = True
+            for token in text.split():
+                if token.isdigit():
+                    child_pids.add(int(token))
+        if not read_any:
+            return None, "no readable /proc/self/task/*/children files"
+        try:
+            proc_entries = os.listdir("/proc")
+        except OSError as exc:
+            return None, f"cannot list /proc: {exc}"
+        for name in proc_entries:
+            if name.isdigit():
+                info = read_proc_stat(int(name))
+                if info is not None and info["ppid"] == my_pid and info["state"] not in ("Z", "X"):
+                    child_pids.add(int(name))
+        alive = []
+        for pid in sorted(child_pids):
+            info = read_proc_stat(pid)
+            if info is None:
+                continue
+            if info["state"] in ("Z", "X"):
+                reaped += reap_children()
+                continue
+            alive.append({"pid": pid, "start": info["start"]})
+        if alive or reaped == 0:
+            return alive, None
+    return alive, None
+
+
 def revision_metadata(root, option):
     return Path(git(root, "rev-parse", "--path-format=absolute", option).stdout.strip())
 
@@ -637,15 +769,41 @@ def prepare_remote(folder, ref, head, tree, base):
 
 
 def remote_check(folder, host, ref, head, tree, base):
+    subreaper = enable_child_subreaper()
     root, inputs = prepare_remote(folder, ref, head, tree, base)
-    shard, shard_seconds = capture(SHARD, root, folder / "shards.json", folder / "shards.stderr")
-    started = now()
-    report = folder / "landing-check.json"
-    args = [*CHECK, "--base", base, "--subcheck-timeout-seconds", str(TIMEOUT), "--json",
-            "--readiness-audit-root", str(root / READINESS),
-            "--keep-check-reports", str(folder / "subchecks")]
-    code, seconds = capture(args, root, report, folder / "landing-check.stderr")
-    ended = now()
+    my_stat = read_proc_stat(os.getpid())
+    proc_meta = {
+        "folder": folder.name,
+        "worktree": os.path.realpath(root),
+        "worker_pid": os.getpid(),
+        "worker_start": my_stat["start"] if my_stat else None,
+        "pgid": os.getpgid(0),
+        "sid": os.getsid(0),
+        "uid": os.getuid(),
+        "cgroup": current_cgroup(),
+        "long_job_dir": os.environ.get("LONG_JOB_DIR"),
+        "long_job_attempt": os.environ.get("LONG_JOB_ATTEMPT"),
+        "subreaper": subreaper,
+        "descendants_proven_ended": False,
+        "surviving_descendants": [],
+    }
+    write_json(proc_file(root), proc_meta)
+    previous_run_id = os.environ.get("PM_LAND_RUN_ID")
+    os.environ["PM_LAND_RUN_ID"] = folder.name
+    try:
+        shard, shard_seconds = capture(SHARD, root, folder / "shards.json", folder / "shards.stderr")
+        started = now()
+        report = folder / "landing-check.json"
+        args = [*CHECK, "--base", base, "--subcheck-timeout-seconds", str(TIMEOUT), "--json",
+                "--readiness-audit-root", str(root / READINESS),
+                "--keep-check-reports", str(folder / "subchecks")]
+        code, seconds = capture(args, root, report, folder / "landing-check.stderr")
+        ended = now()
+    finally:
+        if previous_run_id is None:
+            os.environ.pop("PM_LAND_RUN_ID", None)
+        else:
+            os.environ["PM_LAND_RUN_ID"] = previous_run_id
     report_digest = file_hash(report)
     validate_check_report(report, head, base, code)
     require_clean_full(root, head, tree)
@@ -666,6 +824,13 @@ def remote_check(folder, host, ref, head, tree, base):
     witness.parent.mkdir(mode=0o700, exist_ok=True)
     with witness.open("x", encoding="ascii") as stream:
         stream.write(file_hash(path) + "\n")
+
+    alive, check_err = worker_live_children()
+    proc_meta["surviving_descendants"] = alive or []
+    if check_err:
+        proc_meta["descendant_check_error"] = check_err
+    proc_meta["descendants_proven_ended"] = bool(subreaper and check_err is None and alive == [])
+    write_json(proc_file(root), proc_meta)
 
 
 def verify_record(folder, record, host, ref, head, tree, base):
@@ -714,7 +879,7 @@ def remote_verify(folder, digest):
         require_clean_full(root, record["head"], record["tree"])
 
 
-def preserve_remote_copy(folder, host, state):
+def preserve_remote_copy(folder, host, state, reason=None):
     root = worktree_path(folder)
     name = job_name(folder)
     notice = f"preserved remote copy: {host}:{root} (job {name}, state {state})"
@@ -722,11 +887,16 @@ def preserve_remote_copy(folder, host, state):
     removal = shlex.join(["ssh", HOSTS[host], remote_command])
     path = cleanup_receipt(folder)
     say(notice)
+    if reason:
+        say(f"Reason: {reason}")
     say(f"Remove by hand once nothing uses it: {removal}")
+    payload = {"host": host, "worktree": str(root), "job": name, "state": state,
+               "preserved_remote_copy": notice, "remove_by_hand": removal}
+    if reason:
+        payload["reason"] = reason
     try:
         # A job can fail before producing a checker receipt. Keep this separate from its witnessed bytes.
-        write_json(path, {"host": host, "worktree": str(root), "job": name, "state": state,
-                          "preserved_remote_copy": notice, "remove_by_hand": removal})
+        write_json(path, payload)
     except OSError as exc:
         say(f"Could not write cleanup receipt {path}: {exc}")
     else:
@@ -747,6 +917,296 @@ def remote_job_status(name):
     return info[0]
 
 
+def cgroup_procs_in(cgroup_path):
+    if not isinstance(cgroup_path, str) or not cgroup_path.startswith("/"):
+        return None, f"invalid cgroup path: {cgroup_path!r}"
+    posix = PurePosixPath(cgroup_path)
+    if ".." in posix.parts or cgroup_path == "/":
+        return None, f"unsafe cgroup path: {cgroup_path!r}"
+    base = CGROUP_FS_ROOT / cgroup_path.lstrip("/")
+    if not base.exists() and not (CGROUP_FS_ROOT / "cgroup.controllers").exists():
+        legacy = CGROUP_FS_ROOT / "systemd" / cgroup_path.lstrip("/")
+        if legacy.exists():
+            base = legacy
+    if not base.exists():
+        return [], None
+    pids = set()
+    try:
+        for dirpath, _, filenames in os.walk(base):
+            if "cgroup.procs" not in filenames:
+                continue
+            procs_path = Path(dirpath) / "cgroup.procs"
+            try:
+                content = procs_path.read_text(encoding="utf-8")
+            except FileNotFoundError:
+                continue
+            except OSError as exc:
+                return None, f"cannot read {procs_path}: {exc}"
+            for line in content.splitlines():
+                token = line.strip()
+                if token.isdigit():
+                    pids.add(int(token))
+    except FileNotFoundError:
+        return [], None
+    except OSError as exc:
+        return None, f"cannot walk cgroup {base}: {exc}"
+    return sorted(pids), None
+
+
+def systemd_unit_ended(unit, recorded_cgroup=""):
+    if not isinstance(unit, str) or not unit or unit.startswith("-"):
+        return False, False, "unverified-processes", "missing systemd unit name"
+    result = command(["systemctl", "--user", "show", unit,
+                      "-p", "LoadState", "-p", "ActiveState", "-p", "SubState", "-p", "ControlGroup"],
+                     check=False)
+    if result.returncode != 0:
+        return False, False, "unverified-processes", f"systemctl show {unit} exited {result.returncode}"
+    props = {}
+    for line in result.stdout.splitlines():
+        key, sep, value = line.partition("=")
+        if sep:
+            props[key.strip()] = value.strip()
+    load = props.get("LoadState")
+    active = props.get("ActiveState")
+    sub = props.get("SubState")
+    cg = props.get("ControlGroup", "")
+    if not load or not active or not sub:
+        return False, False, "unverified-processes", f"incomplete systemctl output for {unit}"
+    if active in ALIVE_SYSTEMD_STATES:
+        return False, True, "active-processes", f"systemd unit {unit} is {active}/{sub}"
+    if active != "inactive" or sub != "dead":
+        return False, False, "unverified-processes", f"systemd unit {unit} ended in {active}/{sub}"
+    cgroups_to_check = []
+    if cg:
+        cgroups_to_check.append(cg)
+    if (recorded_cgroup and recorded_cgroup not in cgroups_to_check
+            and (recorded_cgroup.endswith(f"/{unit}.service") or recorded_cgroup.endswith(f"/{unit}"))):
+        cgroups_to_check.append(recorded_cgroup)
+    for cg_path in cgroups_to_check:
+        pids, err = cgroup_procs_in(cg_path)
+        if err:
+            return False, False, "unverified-processes", err
+        if pids:
+            return False, True, "active-processes", f"systemd cgroup {cg_path} still has live pids: {pids}"
+    if load in ("not-found", "loaded"):
+        return True, False, None, None
+    return False, False, "unverified-processes", f"unexpected systemd LoadState={load} for {unit}"
+
+
+def self_ancestor_pids():
+    ancestors = {os.getpid()}
+    pid = os.getpid()
+    for _ in range(64):
+        info = read_proc_stat(pid)
+        if info is None or info["ppid"] <= 1 or info["ppid"] in ancestors:
+            break
+        pid = info["ppid"]
+        ancestors.add(pid)
+    return ancestors
+
+
+def path_within_worktree(target, real_root):
+    cleaned = target[:-10] if target.endswith(" (deleted)") else target
+    return cleaned == real_root or cleaned.startswith(real_root + "/")
+
+
+def spawned_by_root_daemon(ppid):
+    if ppid <= 1:
+        return False
+    try:
+        return os.stat(f"/proc/{ppid}").st_uid == 0
+    except OSError:
+        return False
+
+
+def setsid_job_ended(folder, root, job):
+    if not os.path.isdir("/proc/self"):
+        return False, False, "unverified-processes", "cannot inspect /proc on this host"
+    meta_path = proc_file(root)
+    try:
+        meta = read_json(meta_path)
+    except (OSError, ValueError):
+        return False, False, "unverified-processes", f"missing or unreadable worker process metadata: {meta_path}"
+    real_root = os.path.realpath(root)
+    if (not isinstance(meta, dict) or meta.get("folder") != folder.name
+            or meta.get("worktree") != real_root):
+        return False, False, "unverified-processes", "worker process metadata does not match this run"
+    if meta.get("subreaper") is not True or meta.get("descendants_proven_ended") is not True:
+        surviving = meta.get("surviving_descendants") or []
+        state = "active-processes" if surviving else "unverified-processes"
+        return False, False, state, (f"setsid worker did not prove all descendants ended "
+                                     f"(subreaper={meta.get('subreaper')}, surviving={surviving})")
+    if meta.get("surviving_descendants"):
+        return False, False, "active-processes", f"descendants survived worker exit: {meta['surviving_descendants']}"
+
+    name = job_name(folder)
+    lj_dir_raw = meta.get("long_job_dir")
+    job_dir_path = Path(lj_dir_raw) if isinstance(lj_dir_raw, str) and lj_dir_raw else long_job_state_root() / "jobs" / name
+    if job_dir_path.name != name:
+        return False, False, "unverified-processes", f"unexpected long-job directory: {job_dir_path}"
+    try:
+        job_json = read_json(job_dir_path / "job.json")
+        run_json = read_json(job_dir_path / "run.json")
+    except (OSError, ValueError) as exc:
+        return False, False, "unverified-processes", f"cannot read long-job metadata in {job_dir_path}: {exc}"
+    attempt = job.get("attempt")
+    if (not isinstance(job_json, dict) or not isinstance(run_json, dict)
+            or job_json.get("via") != "setsid"
+            or job_json.get("attempt") != attempt or run_json.get("attempt") != attempt):
+        return False, False, "unverified-processes", "long-job setsid metadata does not match the finished attempt"
+
+    runner_pid = run_json.get("runner_pid") or job_json.get("runner_pid")
+    runner_start = run_json.get("runner_start") or job_json.get("runner_start")
+    pgid = run_json.get("pgid") or runner_pid
+    worker_pid = meta.get("worker_pid")
+    worker_start = meta.get("worker_start")
+    worker_pgid = meta.get("pgid")
+    worker_sid = meta.get("sid")
+    if (type(runner_pid) is not int or runner_pid <= 0
+            or not isinstance(runner_start, str) or not runner_start.isdigit()
+            or type(pgid) is not int or pgid <= 0
+            or type(worker_pid) is not int or worker_pid <= 0
+            or not isinstance(worker_start, str) or not worker_start.isdigit()):
+        return False, False, "unverified-processes", "incomplete setsid runner or worker identity"
+
+    if proc_alive_as(worker_pid, worker_start):
+        return False, True, "active-processes", f"worker pid {worker_pid} is still alive"
+    if proc_alive_as(runner_pid, runner_start):
+        return False, True, "active-processes", f"long-job runner pid {runner_pid} is still alive"
+
+    min_start = min(int(runner_start), int(worker_start))
+    my_uid = os.getuid()
+    ancestors = self_ancestor_pids()
+    target_pgids = {p for p in (pgid, worker_pgid) if type(p) is int and p > 0}
+    target_sids = {s for s in (runner_pid, worker_sid) if type(s) is int and s > 0}
+    job_dir_token = f"LONG_JOB_DIR={job_dir_path}".encode()
+    attempt_token = f"LONG_JOB_ATTEMPT={attempt}".encode()
+    run_id_token = f"PM_LAND_RUN_ID={folder.name}".encode()
+
+    try:
+        proc_entries = os.listdir("/proc")
+    except OSError as exc:
+        return False, False, "unverified-processes", f"cannot list /proc: {exc}"
+    for entry in proc_entries:
+        if not entry.isdigit():
+            continue
+        pid = int(entry)
+        if pid in ancestors:
+            continue
+        info = read_proc_stat(pid)
+        if info is None or info["state"] in ("Z", "X"):
+            continue
+        if not info["start"].isdigit():
+            continue
+        start_val = int(info["start"])
+        if info["pgid"] in target_pgids or info["sid"] in target_sids:
+            if start_val >= min_start and pid not in target_pgids and pid not in target_sids:
+                return False, True, "active-processes", f"pid {pid} is still in job process group/session"
+        try:
+            pstat = os.stat(f"/proc/{pid}")
+        except FileNotFoundError:
+            continue
+        except OSError as exc:
+            return False, False, "unverified-processes", f"cannot stat /proc/{pid}: {exc}"
+        if pstat.st_uid != my_uid or start_val < min_start:
+            continue
+        try:
+            env_vars = Path(f"/proc/{pid}/environ").read_bytes().split(b"\0")
+        except (FileNotFoundError, ProcessLookupError):
+            continue
+        except PermissionError as exc:
+            if spawned_by_root_daemon(info["ppid"]):
+                continue
+            return False, False, "unverified-processes", f"cannot inspect /proc/{pid}/environ: {exc}"
+        except OSError as exc:
+            return False, False, "unverified-processes", f"cannot inspect /proc/{pid}/environ: {exc}"
+        if (job_dir_token in env_vars and attempt_token in env_vars) or run_id_token in env_vars:
+            return False, False, "active-processes", f"pid {pid} still carries job environment"
+        try:
+            cwd_target = os.readlink(f"/proc/{pid}/cwd")
+        except (FileNotFoundError, ProcessLookupError):
+            continue
+        except PermissionError as exc:
+            if spawned_by_root_daemon(info["ppid"]):
+                continue
+            return False, False, "unverified-processes", f"cannot inspect /proc/{pid}/cwd: {exc}"
+        except OSError as exc:
+            return False, False, "unverified-processes", f"cannot inspect /proc/{pid}/cwd: {exc}"
+        if path_within_worktree(cwd_target, real_root):
+            return False, False, "active-processes", f"pid {pid} still has cwd inside worktree: {cwd_target}"
+        try:
+            fds = os.listdir(f"/proc/{pid}/fd")
+        except (FileNotFoundError, ProcessLookupError):
+            continue
+        except PermissionError as exc:
+            if spawned_by_root_daemon(info["ppid"]):
+                continue
+            return False, False, "unverified-processes", f"cannot inspect /proc/{pid}/fd: {exc}"
+        except OSError as exc:
+            return False, False, "unverified-processes", f"cannot inspect /proc/{pid}/fd: {exc}"
+        for fd in fds:
+            try:
+                fd_target = os.readlink(f"/proc/{pid}/fd/{fd}")
+            except (FileNotFoundError, ProcessLookupError):
+                continue
+            except PermissionError as exc:
+                if spawned_by_root_daemon(info["ppid"]):
+                    continue
+                return False, False, "unverified-processes", f"cannot inspect /proc/{pid}/fd/{fd}: {exc}"
+            except OSError as exc:
+                return False, False, "unverified-processes", f"cannot inspect /proc/{pid}/fd/{fd}: {exc}"
+            if path_within_worktree(fd_target, real_root):
+                return False, False, "active-processes", f"pid {pid} still holds open fd in worktree: {fd_target}"
+    return True, False, None, None
+
+
+def remote_job_processes_ended(folder, root, job):
+    via = job.get("via")
+    if via not in ("systemd", "setsid"):
+        return False, "unverified-processes", f"unknown long-job isolation mode: {via!r}"
+    recorded_cgroup = ""
+    if via == "systemd":
+        try:
+            meta = read_json(proc_file(root))
+            if isinstance(meta, dict) and isinstance(meta.get("cgroup"), str):
+                recorded_cgroup = meta["cgroup"]
+        except (OSError, ValueError):
+            recorded_cgroup = ""
+    deadline = time.monotonic() + max(0.0, CLEANUP_DRAIN_SECONDS)
+    while True:
+        if via == "systemd":
+            ended, retryable, state, reason = systemd_unit_ended(job.get("unit"), recorded_cgroup)
+        else:
+            ended, retryable, state, reason = setsid_job_ended(folder, root, job)
+        if ended:
+            return True, None, None
+        if not retryable or time.monotonic() >= deadline:
+            return False, state or "unverified-processes", reason
+        time.sleep(CLEANUP_DRAIN_POLL)
+
+
+def check_receipt_allows_cleanup(folder, root):
+    record_path = folder / "record.json"
+    if record_path.is_symlink() or not record_path.is_file():
+        return False, "missing-receipt", f"checker receipt is missing: {record_path}"
+    try:
+        record = read_json(record_path)
+    except (OSError, ValueError) as exc:
+        return False, "missing-receipt", f"cannot read checker receipt {record_path}: {exc}"
+    if not isinstance(record, dict):
+        return False, "missing-receipt", f"checker receipt is not a JSON object: {record_path}"
+    if record.get("job") != job_name(folder) or record.get("worktree") != str(root):
+        return False, "failed", "checker receipt does not match this job or worktree"
+    exit_code = record.get("exit_code")
+    if type(exit_code) is not int or exit_code not in (0, 1, 2):
+        state = f"checker-exit-{exit_code}" if type(exit_code) is int else "failed"
+        return False, state, f"landing check did not complete normally (exit_code={exit_code!r})"
+    shard_exit = record.get("shard_exit_code")
+    if type(shard_exit) is not int or shard_exit < 0:
+        return False, "failed", f"shard check did not complete normally (shard_exit_code={shard_exit!r})"
+    return True, None, None
+
+
 def remote_cleanup(folder, host):
     root = worktree_path(folder)
     if not os.path.lexists(root):
@@ -756,7 +1216,15 @@ def remote_cleanup(folder, host):
     if state != "done" or type(code) is not int or code != 0 or not job.get("ended") or job.get("signal"):
         preserve_remote_copy(folder, host, state if isinstance(state, str) and state else "unknown")
         return
+    ok, fail_state, fail_reason = check_receipt_allows_cleanup(folder, root)
+    if not ok:
+        preserve_remote_copy(folder, host, fail_state, fail_reason)
+        return
     require_owned_worktree(root, folder)
+    ended, proc_state, proc_reason = remote_job_processes_ended(folder, root, job)
+    if not ended:
+        preserve_remote_copy(folder, host, proc_state, proc_reason)
+        return
     if git(root, "symbolic-ref", "--quiet", "HEAD", check=False).returncode != 1:
         raise Refusal(f"preserving {root}: could not establish that the temporary worktree is detached")
     git(CLONE, "worktree", "remove", "--force", str(root))
