@@ -540,7 +540,7 @@ export const tests = {
 			for (const j of usage.queued.filter((q) => q.owner === EXTRA.key)) {
 				const resumed = after(j), entered = work(j);
 				const detail = j.editorBuild && (!resumed || !entered)
-					? `${top(j.stack)}. Editor callback still missing after up to ${EDITOR_BUILD_WAIT_MS / 1000} s. ${editorLoad ??= await localBrowserSlots()}`
+					? `${top(j.stack)}. Editor callback still missing after up to ${EDITOR_BUILD_WAIT_MS / 1000} s. ${editorLoad ??= await localBrowserSlots({ host: t.run.host || null, attached: t.run.session?.kind === 'cdp' })}`
 					: top(j.stack);
 				await t.check(`${look}: job ${j.id} (${EXTRA.name}): same queued job resumes after release`, resumed, detail);
 				await t.check(`${look}: job ${j.id} (${EXTRA.name}): its own callback runs after release`, entered, detail);
