@@ -6,6 +6,8 @@
 // words and adding the new text node in the same record; the re-acquire re-inserts the nine kept bracket parts
 // (seen: they were attached when the window began). The old rule counted every unseen added node: one target
 // change read "2 nodes created" and failed the row on a correct page.
+// R124 F4-1: the excuse compares the removed and added words, so a page that re-creates the same label text every
+// frame is not a target change and its text counts (the base helper excused any removal under the label).
 import assert from 'node:assert/strict';
 import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
@@ -13,27 +15,28 @@ const m = await import(process.argv[2] ? pathToFileURL(resolve(process.argv[2]))
 
 const text = (desc) => ({ text: true, seen: false, desc });
 const part = (desc) => ({ text: false, seen: true, desc });
+const reset = (from, to) => ({ removedText: from, addedText: to });
 // one target change, as recorded: the HUD target word and the bracket label each re-set their words
 const oneChange = [
-	{ g: 'hudhtml', wordReset: true, added: [text('b.pst-target #text')] },
-	{ g: 'hud', wordReset: true, added: [text('text #text')] }
+	{ g: 'hudhtml', reset: reset('STANDBY', 'WHERE'), added: [text('b.pst-target #text')] },
+	{ g: 'hud', reset: reset('STANDBY', 'WHERE'), added: [text('text #text')] }
 ];
 // the whole recorded window: two word changes, the lose (STANDBY word), the nine kept parts back, the words again
 const recorded = [
 	...oneChange,
-	{ g: 'hudhtml', wordReset: true, added: [text('b.pst-target #text')] },
-	{ g: 'hud', wordReset: true, added: [text('text #text')] },
-	{ g: 'hudhtml', wordReset: true, added: [text('b.pst-target #text')] },
-	{ g: 'hud', wordReset: false, added: [part('path')] },
-	{ g: 'hud', wordReset: false, added: [part('path')] },
-	{ g: 'hud', wordReset: false, added: [part('path')] },
-	{ g: 'hud', wordReset: false, added: [part('path')] },
-	{ g: 'hud', wordReset: false, added: [part('path')] },
-	{ g: 'hud', wordReset: false, added: [part('rect')] },
-	{ g: 'hud', wordReset: false, added: [part('path')] },
-	{ g: 'hud', wordReset: false, added: [part('rect')] },
-	{ g: 'hud', wordReset: false, added: [part('text')] },
-	{ g: 'hud', wordReset: true, added: [text('text #text')] }
+	{ g: 'hudhtml', reset: reset('WHERE', 'AND'), added: [text('b.pst-target #text')] },
+	{ g: 'hud', reset: reset('WHERE', 'AND'), added: [text('text #text')] },
+	{ g: 'hudhtml', reset: reset('AND', 'STANDBY'), added: [text('b.pst-target #text')] },
+	{ g: 'hud', reset: null, added: [part('path')] },
+	{ g: 'hud', reset: null, added: [part('path')] },
+	{ g: 'hud', reset: null, added: [part('path')] },
+	{ g: 'hud', reset: null, added: [part('path')] },
+	{ g: 'hud', reset: null, added: [part('path')] },
+	{ g: 'hud', reset: null, added: [part('rect')] },
+	{ g: 'hud', reset: null, added: [part('path')] },
+	{ g: 'hud', reset: null, added: [part('rect')] },
+	{ g: 'hud', reset: null, added: [part('text')] },
+	{ g: 'hud', reset: reset('AND', 'STANDBY'), added: [text('text #text')] }
 ];
 const count = (records) => records.reduce((a, r) => a + m.createdAdded(r).length, 0);
 
@@ -43,14 +46,21 @@ assert.equal(count(recorded), 0, 'the whole recorded window (two word changes, a
 
 // a genuine rebuild still counts: new elements anywhere, and text added without the words changing in the record
 const rebuild = [
-	{ g: 'props', wordReset: false, added: [{ text: false, seen: false, desc: 'div.pst-prop' }, { text: true, seen: false, desc: 'div.pst-prop #text' }] },
-	{ g: 'hud', wordReset: false, added: [text('text #text')] }
+	{ g: 'props', reset: null, added: [{ text: false, seen: false, desc: 'div.pst-prop' }, { text: true, seen: false, desc: 'div.pst-prop #text' }] },
+	{ g: 'hud', reset: null, added: [text('text #text')] }
 ];
 assert.equal(count(rebuild), 3, 'new elements and their text, and label text added without a word change in the same record, still count');
 // a word-reset record that also adds an element: the element counts, the re-set words do not
-const mixed = [{ g: 'hud', wordReset: true, added: [text('text #text'), { text: false, seen: false, desc: 'path' }] }];
+const mixed = [{ g: 'hud', reset: reset('STANDBY', 'WHERE'), added: [text('text #text'), { text: false, seen: false, desc: 'path' }] }];
 assert.equal(count(mixed), 1, 'a word reset excuses only the text nodes of its own record, never an added element');
 // nodes already in the stage when the window began never count, word reset or not
-assert.equal(count([{ g: 'hud', wordReset: false, added: [part('path'), { text: true, seen: true, desc: 'text #text' }] }]), 0);
+assert.equal(count([{ g: 'hud', reset: null, added: [part('path'), { text: true, seen: true, desc: 'text #text' }] }]), 0);
 
-console.log('PASS a target change\'s word-reset text nodes (b.pst-target and the bracket label) do not count as created; genuine new nodes still do (the old rule failed the row on the recorded window)');
+// R124 F4-1: the same words re-created is not a target change; the page that rewrites the label's text every frame
+// (the per-frame innerHTML fault 54-art-nier.js guards against) counts its text node
+const repeated = [{ g: 'hud', reset: reset('WHERE', 'WHERE'), added: [text('text #text')] }];
+assert.equal(count(repeated), 1, 'text re-created with the same words counts as created (the base rule excused it)');
+const repeatedHud = [{ g: 'hudhtml', reset: reset('STANDBY', 'STANDBY'), added: [text('b.pst-target #text')] }];
+assert.equal(count(repeatedHud), 1, 'the same for the HUD target word');
+
+console.log('PASS a target change\'s word-reset text nodes (b.pst-target and the bracket label) do not count as created; the same words re-created do count, and genuine new nodes still do (the old rule excused them and failed the recorded window)');

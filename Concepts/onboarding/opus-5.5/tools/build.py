@@ -440,7 +440,7 @@ CSS_COMMENT_OR_STRING = re.compile(r'/\*.*?\*/|"(?:[^"\\\n]|\\.)*"|\'(?:[^\'\\\n
 
 def outside_forced_colors(text: str) -> str:
     """The CSS text with the inside of every `@media (forced-colors: active) { ... }` block blanked, newlines kept.
-    Blocks are found and their braces counted with comments and strings masked, so a brace inside either is not one."""
+    Comments and strings are masked for brace counting. An unclosed block raises ValueError."""
     masked = CSS_COMMENT_OR_STRING.sub(lambda m: re.sub(r'[^\n]', ' ', m.group(0)), text)
     out, i = [], 0
     for m in FORCED_COLORS_BLOCK.finditer(masked):
@@ -450,6 +450,9 @@ def outside_forced_colors(text: str) -> str:
         while j < len(masked) and depth:
             depth += {'{': 1, '}': -1}.get(masked[j], 0)
             j += 1
+        if depth:
+            line = text.count('\n', 0, m.start()) + 1
+            raise ValueError(f'unclosed forced-colors block at line {line}')
         out += [text[i:m.start()], re.sub(r'[^\n]', ' ', text[m.start():j])]
         i = j
     return ''.join(out) + text[i:]
@@ -472,10 +475,15 @@ def lint_sources() -> list[str]:
                 if 'settings' in p.relative_to(SRC).parts and ':has(' in text:
                     problems.append(f':has() in Settings styles {rel}')
                 # forced colors paint borders in system colours and draw no accent stripe, so that one media block is exempt
-                for m in re.finditer(r'border-(?:left|inline-start)\s*:\s*([^;]+);', outside_forced_colors(text)):
-                    width = re.search(r'(\d+(?:\.\d+)?)px', m.group(1))
-                    if width and float(width.group(1)) >= 2:
-                        problems.append(f'left accent border in {rel}: {m.group(0)}')
+                try:
+                    outside = outside_forced_colors(text)
+                except ValueError as exc:
+                    problems.append(f'{rel}: {exc}')
+                else:
+                    for m in re.finditer(r'border-(?:left|inline-start)\s*:\s*([^;]+);', outside):
+                        width = re.search(r'(\d+(?:\.\d+)?)px', m.group(1))
+                        if width and float(width.group(1)) >= 2:
+                            problems.append(f'left accent border in {rel}: {m.group(0)}')
                 notes: list[str] = []
                 problems.extend(lint_page_wide_universal(rel.as_posix(), text, notes))
                 for n in notes:

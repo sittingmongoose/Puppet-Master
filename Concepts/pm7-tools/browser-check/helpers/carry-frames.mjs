@@ -63,7 +63,7 @@ export const RECORD = withPaintedChip((stripSel) => {
 					Object.defineProperty(a, 'currentTime', {
 						configurable: true, get() { return ctDesc.get.call(a); },
 						set(v) {
-							if (a.__pmFramePaced) { rec.framePaced = true; rec.firstCt ??= v; }
+							if (a.__pmFramePaced) { rec.framePaced = true; rec.firstCt ??= v; rec.appliedTl = document.timeline.currentTime; }
 							else if (a.startTime == null) { rec.hold = v; rec.held = performance.now(); }
 							ctDesc.set.call(a, v);
 						}
@@ -94,8 +94,10 @@ export const RECORD = withPaintedChip((stripSel) => {
 				const lens = el.querySelector(':scope > lg-under > .lg-lens');
 				const on = el.querySelector(s.active);
 				const ba = block ? block.getAnimations().find((a) => a.effect && a.effect.getTiming().duration > 0 && a.playState !== 'idle') : null;
+				const rec = ba?.__pmFramePaced ? W.anims[block.__carryRec] : null;
 				row.s[s.sel] = {
 					block: block ? (paintedChip(block)?.box || rr(block)) : null, st: ba ? ba.startTime : null, ct: ba ? ba.currentTime : null,
+					rec: rec?.id, appliedTl: rec?.appliedTl,
 					lens: lens ? rr(lens) : null, lensOp: lens ? +getComputedStyle(lens).opacity : 0,
 					on: on ? (on.getAttribute('data-tab') || on.textContent.trim().slice(0, 24)) : null, onBox: on ? rr(on) : null
 				};
@@ -221,18 +223,18 @@ export function modelError(fr) {
 // tol: 3 px. A block that takes over from another starts on the compositor's clock, which runs a millisecond or a few
 // off the page's under a recording's load: head's worst swap moved 1.4-1.75 px past its motion (Alexis, both surfaces);
 // main's jumps are 8-28 px past it.
-export function steps(fr, { tol = STEP_TOL, from = -Infinity, to = Infinity, presentationGaps = false } = {}) {
+export function steps(fr, { tol = STEP_TOL, from = -Infinity, to = Infinity, presentationGaps = false, oneFrame = false } = {}) {
 	const bad = [], gaps = []; let worst = { excess: 0 };
 	for (let i = 1; i < fr.length; i++) {
 		const a = fr[i - 1], b = fr[i]; if (b.t < from || a.t > to) continue;
-		const dt = b.t - a.t; if (dt <= 0 || (dt > 80) !== presentationGaps) continue;
+		const dt = b.t - a.t; if (dt <= 0 || (!oneFrame && (dt > 80) !== presentationGaps)) continue;
 		const ea = edges(a.box), eb = edges(b.box);
 		const ta = a.poseTime ?? a.t, tb = b.poseTime ?? b.t;
 		const speed = (f, t, other) => f.rec ? Math.max(speedAt(f.rec, t),
 			other.rec?.framePaced === f.rec.framePaced ? speedAt(f.rec, other.poseTime ?? other.t) : 0) : 0;
 		const v = Math.max(speed(a, ta, b), speed(b, tb, a));
 		// A sampled presentation gap gets one frame of travel, even if it spans many refresh intervals.
-		const allow = v * (presentationGaps ? FRAME : dt) * STEP_MARGIN + tol;
+		const allow = v * (presentationGaps || oneFrame ? FRAME : dt) * STEP_MARGIN + tol;
 		const moved = Math.max(...ea.map((x, k) => Math.abs(eb[k] - x)));
 		const step = { t: +b.t.toFixed(1), dt: +dt.toFixed(1), moved: +moved.toFixed(2), allow: +allow.toFixed(2), excess: +(moved - allow).toFixed(2), from: a.src, to: b.src, a: ea.map((x) => +x.toFixed(1)), b: eb.map((x) => +x.toFixed(1)) };
 		if (presentationGaps) gaps.push(step);

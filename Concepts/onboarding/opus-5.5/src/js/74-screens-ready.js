@@ -31,15 +31,26 @@
      Studio's resets); a new run of setup keeps them. A record from before it (the Projects only in the onboarding
      record's finished / commit) is still read below. */
   const MADE = 'pm7:shell:setup-projects:v1';
-  const madeGet = () => { try { const v = JSON.parse(window.localStorage.getItem(MADE) || '[]'); return Array.isArray(v) ? v.filter((p) => p && typeof p.id === 'string' && p.id) : []; } catch (_) { return []; } };
-  const madeSet = (list) => { try { if (list.length) window.localStorage.setItem(MADE, JSON.stringify(list)); else window.localStorage.removeItem(MADE); } catch (_) { /* no storage */ } };
+  /* FO-230: O55.store uses shared storage when available and keeps the record in visit memory on opaque previews. */
+  const madeGet = () => {
+    const list = O55.store.get(MADE, []);
+    return Array.isArray(list) ? list.filter((p) => p && typeof p.id === 'string' && p.id) : [];
+  };
+  const madeSet = (list) => {
+    if (list.length) O55.store.set(MADE, list);
+    else O55.store.clear(MADE);
+  };
   function madeKeep(id, name, info) {
     const list = madeGet(), was = list.find((p) => p.id === id);
     const next = { id, name: name || (was && was.name) || id, info: (info && (info.path || info.branch)) ? info : ((was && was.info) || info || null) };
     madeSet(list.filter((p) => p.id !== id).concat(next));
   }
+  /* (FO-230: the fresh-load exclusion is the initial boot's only: restoreEarly and restoreProject run before 95-boot.js
+     clears the old record, and must not list its Projects; once boot's forgetSetup has run, the Projects made during
+     the visit are setup's own and setupProjects lists them again) */
+  let freshBoot = freshInstall;
   function setupProjects() {
-    if (freshInstall) return [];
+    if (freshBoot) return [];
     const rec = O55.store.get('onboarding', null), out = madeGet().map((p) => ({ id: p.id, name: p.name || p.id, info: p.info || null }));
     if (!rec) return out;
     const d = rec.drafts && rec.drafts.main, cm = rec.commit, fin = rec.finished;
@@ -92,6 +103,12 @@
     if (own && !own.classList.contains('is-selected')) own.classList.add('is-selected');
   })();
 
+  function addSetupRow(box, project) {
+    if (rowOfFixtureAtLoad.has(project.id)) return;
+    const row = box.add(project.id, Object.assign({}, project.info || {}, { name: project.name || project.id }));
+    if (row && !row.hasAttribute('data-o55-added')) row.setAttribute('data-o55-added', '');
+  }
+
   /* Shell helpers: select a Project in the title-bar menu (adding it when the app doesn't list it yet). The project box
      owns the menu's rows (PM_PROJECT_BOX, pm6-js-panels.js: one row renderer, the label stays the bare name). The Settings
      owner watches the menu and reloads that Project's settings. */
@@ -114,7 +131,7 @@
     restoreProject() {
       /* (every Project setup made or opened is listed again while its record lasts, the active one or not) */
       const box = window.PM_PROJECT_BOX;
-      if (box) setupProjects().forEach((p) => { if (!rowOf(p.id)) { const row = box.add(p.id, Object.assign({}, p.info || {}, { name: p.name || p.id })); if (row) row.setAttribute('data-o55-added', ''); } });
+      if (box) setupProjects().forEach((p) => { if (!rowOf(p.id)) addSetupRow(box, p); });
       if (restoring && box) { const r = restoring; restoring = null; O55.shell.selectProject(r.id, r.name || r.id, r.info || undefined); }
       /* (a setup row restoreEarly put in the page before the load's labelling pass (wireTitles: every menu row present
          then gets its text as a title, which the hover tag reads first) is the row the box adds, which has none) */
@@ -123,8 +140,44 @@
       const menu = document.getElementById('projectMenu');
       if (!menu || menu.__pmActive) return;
       menu.__pmActive = true;
-      const note = () => { const sel = menu.querySelector('.pm6-tb-menu-item.is-selected[data-project]'), id = sel ? sel.getAttribute('data-project') : ''; if (id && id !== lsGet()) lsSet(id); };
+      const selectedId = () => menu.querySelector('.pm6-tb-menu-item.is-selected[data-project]')?.getAttribute('data-project') || '';
+      let lastSelected = selectedId();
+      const note = () => {
+        const id = selectedId();
+        if (id === lastSelected) return;
+        lastSelected = id;
+        if (id && id !== lsGet()) lsSet(id);
+      };
       new MutationObserver(note).observe(menu, { attributes: true, subtree: true, attributeFilter: ['class'] });
+
+      if (!box || !O55.store.persistent) return;
+      window.addEventListener('storage', (event) => {
+        if (event.storageArea !== window.localStorage) return;
+        /* Old setup records can still list a Project. Reset clears onboarding separately from the roster. */
+        const clearedSetup = event.key === O55.store.KEYS.onboarding && event.newValue === null;
+        if (event.key !== MADE && event.key !== ACTIVE && event.key !== null && !clearedSetup) return;
+
+        const projects = setupProjects();
+        const ids = new Set(projects.map((p) => p.id));
+        projects.forEach((p) => { if (event.key === MADE || !rowOf(p.id)) addSetupRow(box, p); });
+
+        const sharedId = lsGet();
+        const id = sharedId && (ids.has(sharedId) || rowOfFixtureAtLoad.has(sharedId)) ? sharedId : defaultProject;
+        const focused = document.activeElement;
+        if (id && (selectedId() !== id || window.PM_ACTIVE_PROJECT_ID !== id)) {
+          window.PM_ACTIVE_PROJECT_ID = id;
+          box.select(id);
+        }
+        /* Applying a peer's selection (including the fallback for a cleared key) never writes it back. */
+        lastSelected = selectedId();
+        menu.querySelectorAll('[data-o55-added][data-project]').forEach((row) => {
+          if (!ids.has(row.getAttribute('data-project'))) {
+            const restoreFocus = row === focused;
+            row.remove();
+            if (restoreFocus) rowOf(id)?.focus({ preventScroll: true });
+          }
+        });
+      });
     },
     /* a new install or a reset of setup's progress (FO-222 round 2, F3, F4): the Projects setup made go, and an active id
        naming one of them; with all, any active id (a new install opens in the page's own Project). Called before every
@@ -143,6 +196,9 @@
       const sel = document.querySelector('#projectMenu .pm6-tb-menu-item.is-selected[data-project]'), box = window.PM_PROJECT_BOX;
       const moved = !!(sel && gone(sel.getAttribute('data-project')) && box && defaultProject && box.select(defaultProject));
       document.querySelectorAll('#projectMenu [data-o55-added][data-project]').forEach((r) => { if (gone(r.getAttribute('data-project'))) r.remove(); });
+      /* (FO-230: the boot's exclusion ends here — the first forgetSetup of a fresh load is 95-boot.js's own; from now
+         on setupProjects lists what the visit makes) */
+      freshBoot = false;
       return moved;
     },
     /* before a new run of setup replaces the onboarding record (R87-P2: Run Onboarding Again, Start over, a finished run

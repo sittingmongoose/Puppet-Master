@@ -95,13 +95,12 @@ PM51.modelResolve = (id, v) => o55ModelResolve(id, v === undefined ? PM51.value(
 const O55_MEDIA_KIND = { image: 'image-generation', video: 'video-generation', tts: 'text-to-speech', music: 'audio-generation', vision: 'image-understanding' };
 function o55ModelCatalog(id, ctx) {
   const c = O55_MODEL_CANON[id] || {};
+  if (c.catalog === 'account' && ctx && ctx.account) return PM51.accountModels(ctx.provider, ctx.account);
   const f = findSettingGlobal(id);
   const examples = (f && Array.isArray(f.setting.options) ? f.setting.options : []).filter(o => typeof o === 'string' && o.includes('/')).map(v => ({ value: v, label: PM51.valueLabel(id, v) }));
   let more = [];
   if (O55_MEDIA_KIND[c.catalog]) more = PM51.mediaModels ? PM51.mediaModels(O55_MEDIA_KIND[c.catalog]) : [];
   else { try { more = o55More[id] ? o55More[id]() || [] : o55Ready(); } catch (e) { more = []; } }
-  /* an account's own default offers that account's service's models */
-  if (c.catalog === 'account' && ctx && ctx.provider) more = o55Ready().filter(m => m.pid === ctx.provider);
   return examples.concat(more);
 }
 function o55ModelMarks(id, raw) {
@@ -152,7 +151,7 @@ const o55MselName = (label, it) => `${label}: ${it ? it.name : 'Not set'}${it &&
 function o55MselOptions(items) {
   return items.map(it => `<option value="${a(it.raw)}"${it.on ? ' selected' : ''} data-name="${a(it.name)}"${it.sub ? ` data-sub="${a(it.sub)}"` : ''}${it.brand ? ` data-brand="${a(it.brand)}"` : ''}${it.mark ? ` data-mark="${a(it.mark)}"` : ''}${it.pre ? ' data-pre="1"' : ''}${it.none ? ' data-none="1"' : ''}${it.levels && it.levels.length ? ` data-levels="${a(it.levels.join('|'))}"` : ''}${it.effort ? ` data-effort="${a(it.effort)}"` : ''}${it.marks && it.marks.length ? ` data-marks="${a(it.marks.join('|'))}"` : ''}${it.why ? ` data-disabled="1" data-reason="${a(it.why)}"` : ''}>${h(it.name)}</option>`).join('');
 }
-/* PM51.modelSelect(id, value, { action, data, label, cls, depthKey, provider, choices })
+/* PM51.modelSelect(id, value, { action, data, label, cls, depthKey, choices })
      id        the inventory row it sets (its choices, its inherit words, its depth key)
      action    the hidden select's data-action: 'change-setting' for a row, 'pm51-scoped-select' for a thing's row, a
                manager's own; `data` its data attributes (a scoped row's scope and owner)
@@ -161,11 +160,11 @@ function o55MselOptions(items) {
 PM51.modelSelect = (id, value, opts = {}) => {
   const f = findSettingGlobal(id);
   const label = opts.label || (f ? PM51.rowLabel(f.setting) : (O55_MODEL_CANON[id] || {}).label || id);
-  const ctx = { depthKey: opts.depthKey || '', provider: opts.provider || '' };
+  const ctx = { depthKey: opts.depthKey || '', provider: opts.data?.provider, account: opts.data?.account };
   const items = opts.choices ? o55OwnItems(id, value, opts.choices) : o55ModelItems(id, value, ctx);
   const cur = items.find(x => x.on) || null;
   const data = Object.assign({}, opts.data || {}); delete data.setting;
-  return `<span class="pm51-dd o55-msel${opts.choices ? ' is-own' : ''}" data-o55-msel="${a(id)}"${ctx.depthKey ? ` data-o55-depth-key="${a(ctx.depthKey)}"` : ''}${ctx.provider ? ` data-o55-provider="${a(ctx.provider)}"` : ''}><select class="select-control pm51-select pm51-dd-native${opts.cls ? ' ' + opts.cls : ''}" data-action="${a(opts.action || 'pm51-noop')}" data-setting="${a(id)}" ${dataAttrs(data)} aria-label="${a(label)}" aria-hidden="true" tabindex="-1">${o55MselOptions(items)}</select><button type="button" class="o55-pick-trigger is-model o55-msel-trigger" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-label="${a(o55MselName(label, cur))}" data-action="pm51-model-pick" data-setting="${a(id)}" data-o55-label="${a(label)}" data-pm-hover-exempt="dropdown">${o55MselFace(cur)}</button></span>`;
+  return `<span class="pm51-dd o55-msel${opts.choices ? ' is-own' : ''}" data-o55-msel="${a(id)}"${ctx.depthKey ? ` data-o55-depth-key="${a(ctx.depthKey)}"` : ''}><select class="select-control pm51-select pm51-dd-native${opts.cls ? ' ' + opts.cls : ''}" data-action="${a(opts.action || 'pm51-noop')}" data-setting="${a(id)}" ${dataAttrs(data)} aria-label="${a(label)}" aria-hidden="true" tabindex="-1">${o55MselOptions(items)}</select><button type="button" class="o55-pick-trigger is-model o55-msel-trigger" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-label="${a(o55MselName(label, cur))}" data-action="pm51-model-pick" data-setting="${a(id)}" data-o55-label="${a(label)}" data-pm-hover-exempt="dropdown">${o55MselFace(cur)}</button></span>`;
 };
 /* the items a drawn control holds, read back from its hidden select (so the popup lists exactly what the row offers) */
 function o55MselItems(sel) {
@@ -177,7 +176,7 @@ function o55MselRefresh(wrap) {
   const sel = wrap.querySelector('select'), btn = wrap.querySelector('.o55-msel-trigger'); if (!sel || !btn) return;
   const id = wrap.dataset.o55Msel;
   if (!wrap.classList.contains('is-own')) {
-    const ctx = { depthKey: wrap.dataset.o55DepthKey || '', provider: wrap.dataset.o55Provider || '' };
+    const ctx = { depthKey: wrap.dataset.o55DepthKey || '', provider: sel.dataset.provider, account: sel.dataset.account };
     /* a row of the setting itself shows what is stored (the Details panel may have saved it); a thing's own row (an
        account's) keeps its own value */
     const v = !ctx.depthKey && sel.dataset.action === 'change-setting' && findSettingGlobal(id) ? PM51.value(id) : sel.value;

@@ -64,8 +64,11 @@
 
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { EDITOR_BUILD_WAIT_MS } from './editor-build-completion.check.mjs';
+import { localBrowserSlots } from '../helpers/browser-slots.mjs';
 
 const HOLD_MS = 3000;
+const RESUME_MS = 6000;
 
 const OWNERS = [
 	{ key: 'usage', name: 'Usage board (40-board.js)', start: '/* ---- js/40-board.js ---- */' },
@@ -74,6 +77,7 @@ const OWNERS = [
 	{ key: 'glass', name: 'Glass prewarm (glass.js prewarmSoon)', start: '<script id="lg-js">', fn: '(?:^|\\.)prewarmSoon$', glassOnly: true }
 ];
 const ADMISSION = '/* ---- js/11-motion-start.js ---- */';
+const EDITOR = '/* ---- panels/kinds/11-editor-customize.js ---- */';
 const EXTRA = { key: 'busy', name: 'other PM_BUSY.idle jobs' };
 const nameOf = (key) => (OWNERS.find((o) => o.key === key) || (key === EXTRA.key ? EXTRA : null))?.name || key;
 const needed = (look) => OWNERS.filter((o) => !o.glassOnly || /^glass-/.test(look));
@@ -91,11 +95,11 @@ async function regionsOf(t) {
 		return [lineAt(i), lineAt(Math.min(...ends))];
 	};
 	const owners = OWNERS.map((o) => ({ key: o.key, fn: o.fn || null, r: region(o.start) }));
-	return { owners, admission: region(ADMISSION) };
+	return { owners, admission: region(ADMISSION), editor: region(EDITOR) };
 }
 
 // installed before the page's own scripts, in every frame (the sandbox's too)
-const RECORDER = (cfg) => {
+export const RECORDER = (cfg) => {
 	if (window.__pmIdleRec) return;
 	try { localStorage.clear(); } catch (_) { /* opaque surface */ }
 	const R = window.__pmIdleRec = { fired: [], jobs: [], bodies: [], gated: true, hooked: false, armedAt: null, dragOnAt: null, offs: [], ons: [], upAt: null, upDrag: null };
@@ -199,10 +203,12 @@ const RECORDER = (cfg) => {
 				// via: asked by the shared admission, so the native callback is its wrapper and the owner's entry is witnessed
 				// inside it; token: the PM_BUSY.idle request it was first asked under (0 for a re-admission of a job parked
 				// before it ever reached requestIdleCallback)
-				identity = { id: ++seq, stack, owner, via: !!R.admitting || frames(stack).some(admitting), token: R.admitting || 0 };
+				const callFrames = frames(stack);
+				const editorBuild = callFrames.some((f) => inR(cfg.editor, f.line) && /(?:^|\.)admit$/.test(f.fn));
+				identity = { id: ++seq, stack, owner, editorBuild, via: !!R.admitting || callFrames.some(admitting), token: R.admitting || 0 };
 				identities.set(fn, identity);
 			}
-			const j = { id: identity.id, owner: identity.owner, via: identity.via, token: identity.token, handle: ++handle, fn, options, stack: identity.stack, pending: true, native: 0 };
+			const j = { ...identity, handle: ++handle, fn, options, pending: true, native: 0 };
 			R.jobs.push(j); pending.set(j.handle, j);
 			if (!R.gated) ask(j);
 			return j.handle;
@@ -283,7 +289,7 @@ const RECORDER = (cfg) => {
 		// Independent native deadline proves this hold actually offered idle delivery.
 		ric.call(window, () => { R.opportunity = { at: performance.now(), drag: inDrag() }; }, { timeout: 500 });
 	};
-	R.pending = () => R.jobs.filter(j => j.pending).map(({ id, handle, owner, stack, via, token }) => ({ id, handle, owner, stack, via, token }));
+	R.pending = () => R.jobs.filter(j => j.pending).map(({ id, handle, owner, stack, via, token, editorBuild }) => ({ id, handle, owner, stack, via, token, editorBuild }));
 	// jobs an owner withdrew itself, outside any drag (a census torn down, a scan superseded): not the drag's doing
 	R.withdrawn = (handles) => R.jobs.filter((j) => handles.includes(j.handle) && j.cancelled && !j.cancelDrag).map((j) => j.handle);
 	// a timer set by an owner's idle callback carries that idle work on: it belongs to the owner (the drag's own
@@ -426,6 +432,22 @@ async function judge(t, f, label, win, owners) {
 	await t.check(`${label}: no timer of those owners does work inside the drag`, timers.length === 0, timers.map((c) => `${nameOf(c.owner)} ${c.ms.toFixed(1)} ms at ${top(c.stack)}`).join('; ') || '0');
 }
 
+export async function waitForResume(t, f, usage, look) {
+	await t.page.waitForTimeout(RESUME_MS);
+	const editorJobs = usage.queued.filter((j) => j.editorBuild).map(({ id, token }) => ({ id, token }));
+	if (editorJobs.length) {
+		t.log(`${look}: extending the resume wait for queued editor build job IDs ${editorJobs.map((j) => j.id).join(', ')} (up to ${EDITOR_BUILD_WAIT_MS / 1000} s total)`);
+		await f.waitForFunction(({ jobs, closed }) => {
+			const rec = window.__pmIdleRec;
+			return jobs.every(({ id, token }) =>
+				rec.fired.some((c) => c.id === id && !c.drag && c.at > closed) &&
+				rec.bodies.some((b) => b.job === id && !b.drag && b.at > closed && (!token || b.token === token)));
+		}, { jobs: editorJobs, closed: usage.closed }, { timeout: EDITOR_BUILD_WAIT_MS - RESUME_MS }).catch((error) => {
+			if (error.name !== 'TimeoutError') throw error;
+		});
+	}
+}
+
 export const tests = {
 	async 'idle work waits out a held drag (SW-17)'(t) {
 		const looks = String(t.args.looks || 'glass-dark,basic-dark').split(',');
@@ -495,7 +517,7 @@ export const tests = {
 				const mine = usage.queued.filter((j) => j.owner === o.key);
 				await t.check(`${look}: ${o.name} has a real idle job pending at the press`, mine.length > 0, mine.length ? brief(mine) : `none; pending ${brief(usage.queued)}`);
 			}
-			await t.page.waitForTimeout(6000);
+			await waitForResume(t, f, usage, look);
 			// T56: the window's end is the final class-off after the release, read after the resume wait
 			usage.end = await windowEnd(t, f, `${look} Usage`, usage, readd && keys.includes(readd.key) ? readd : null);
 			await judge(t, f, `${look} Usage`, usage, owners);
@@ -514,9 +536,14 @@ export const tests = {
 				const idle = mine.filter((j) => !work(j));
 				await t.check(`${look}: ${o.name}'s own callback runs for each resumed job`, mine.length > 0 && idle.length === 0, mine.length ? (idle.length ? `resumed without the owner's callback: ${brief(idle)}` : `${mine.length} ran: ids ${mine.map((j) => j.id).join(', ')}`) : 'no pending job to run');
 			}
+			let editorLoad;
 			for (const j of usage.queued.filter((q) => q.owner === EXTRA.key)) {
-				await t.check(`${look}: job ${j.id} (${EXTRA.name}): same queued job resumes after release`, after(j), top(j.stack));
-				await t.check(`${look}: job ${j.id} (${EXTRA.name}): its own callback runs after release`, work(j), top(j.stack));
+				const resumed = after(j), entered = work(j);
+				const detail = j.editorBuild && (!resumed || !entered)
+					? `${top(j.stack)}. Editor callback still missing after up to ${EDITOR_BUILD_WAIT_MS / 1000} s. ${editorLoad ??= await localBrowserSlots()}`
+					: top(j.stack);
+				await t.check(`${look}: job ${j.id} (${EXTRA.name}): same queued job resumes after release`, resumed, detail);
+				await t.check(`${look}: job ${j.id} (${EXTRA.name}): its own callback runs after release`, entered, detail);
 			}
 		}
 		}

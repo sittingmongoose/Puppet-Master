@@ -221,43 +221,13 @@ export function installWitness(cfg) {
 			const svgRoot = n.namespaceURI === 'http://www.w3.org/2000/svg' && n.tagName.toLowerCase() === 'svg' && !n.ownerSVGElement;
 			if ((n instanceof HTMLElement || svgRoot) && (cs.overflowX !== 'visible' || cs.overflowY !== 'visible')) clip = inter(clip, rect(n));
 		}
-		/* T52 (TOOLBATCH2 pre-check finding 7): a back-face flip. rotateY(180deg) with backface-visibility: hidden on the
-		   stage host for one frame paints nothing, and neither the classifier nor the paint chain read it.
-		   T67 (TOOLBATCH4, REVIEW-kit-tb3-opus finding 8): only what hides paint joins the signature: an element whose
-		   backface-visibility is hidden while its back face is turned to the viewer (m33 negative), read both in its own
-		   3D rendering context (its own transform, composed through preserve-3d parents) and composed from the root
-		   down, so either way a renderer reads it, it is flagged. A hidden back face facing the viewer (scale(-1, 1), a 2D
-		   mirror) and a turned element whose back face shows (a grandparent turned with nothing hidden) leave Pip
-		   painted, and are no longer flagged (8a: both were false stops). The transform read is the element's whole
-		   one: the individual translate, rotate and scale properties, then transform (8c: a flip by rotate: y 180deg was
-		   seen only through its backface string). */
-		const deg = (a) => { const v = parseFloat(a); return /rad$/.test(a) && !/grad$/.test(a) ? v * 180 / Math.PI : /grad$/.test(a) ? v * .9 : /turn$/.test(a) ? v * 360 : v; };
-		const ownMatrix = (cs) => {
-			let m = new DOMMatrix();
-			const ro = cs.rotate;
-			if (ro && ro !== 'none') { const q = ro.trim().split(/\s+/); let x = 0, y = 0, z = 1, a = q[q.length - 1];
-				if (q.length === 2) { x = q[0] === 'x' ? 1 : 0; y = q[0] === 'y' ? 1 : 0; z = q[0] === 'z' ? 1 : 0; }
-				else if (q.length === 4) [x, y, z] = q.slice(0, 3).map(Number);
-				m = m.rotateAxisAngle(x, y, z, deg(a)); }
-			const sc = cs.scale;
-			if (sc && sc !== 'none') { const v = sc.trim().split(/\s+/).map((x) => (x.endsWith('%') ? parseFloat(x) / 100 : parseFloat(x))); m = m.scale(v[0], v.length > 1 ? v[1] : v[0], v.length > 2 ? v[2] : 1); }
-			const tf = cs.transform;
-			if (tf && tf !== 'none') m = m.multiply(new DOMMatrix(tf));
-			return m;
-		};
-		let composed = new DOMMatrix(), ctx = new DOMMatrix(), keep3d = false;
-		const facing = (n, cs, role, at, inCtx, parent3d) => {
-			let own = new DOMMatrix();
-			try { own = ownMatrix(cs); } catch (_) { sig.push(`${role}:transform=unreadable`); }
-			const m = at.multiply(own), c = parent3d ? inCtx.multiply(own) : own;
-			if (cs.backfaceVisibility === 'hidden' && (c.m33 < 0 || m.m33 < 0)) sig.push(`${role}:back face hidden and turned away`);
-			return { m, c, keep3d: cs.transformStyle === 'preserve-3d' };
-		};
-		for (let i = chainNodes.length - 1; i >= 0; i--) { const [n, cs] = chainNodes[i]; const r = facing(n, cs, `${n.tagName}.${(n.getAttribute('class') || '').split(' ')[0]}`, composed, ctx, keep3d); composed = r.m; ctx = r.c; keep3d = r.keep3d; }
 		const part = (e) => { const cs = getComputedStyle(e), fl = filterOf(cs); return { op: chainOp * (+cs.opacity) * fl.op, shown: chainShown && cs.display !== 'none' && cs.visibility === 'visible', blur: chainBlur + fl.blur, dim: chainDim * fl.dim, cs }; };
 		const ph = part(S.gHead), pc = part(S.gCtl), ps = S.pstrs.map(part);
 		effects(S.gHead, ph.cs, 'head'); effects(S.gCtl, pc.cs, 'controller'); S.pstrs.forEach((p, i) => effects(p, ps[i].cs, 'string'));
-		facing(S.gHead, ph.cs, 'head', composed, ctx, keep3d); facing(S.gCtl, pc.cs, 'controller', composed, ctx, keep3d); S.pstrs.forEach((p, i) => facing(p, ps[i].cs, 'string', composed, ctx, keep3d));
+		const parts = [[S.gHead, ph.cs, 'head'], [S.gCtl, pc.cs, 'controller'], ...S.pstrs.map((p, i) => [p, ps[i].cs, 'string'])];
+		if ([...chainNodes, ...parts].some(([, cs]) => cs.backfaceVisibility === 'hidden')) {
+			backFaces(chainNodes, parts, sig);
+		}
 		rec[F.headVis] = ph.shown ? 1 : 0; rec[F.ctlVis] = pc.shown ? 1 : 0; rec[F.strVis] = ps.every((p) => p.shown) ? 1 : 0;
 		rec[F.opHead] = Math.round(ph.op * 1000); rec[F.opCtl] = Math.round(pc.op * 1000); rec[F.opStr] = Math.round(Math.min(...ps.map((p) => p.op)) * 1000);
 		rec[F.blur] = Math.round(ph.blur * 10); rec[F.dim] = Math.round(ph.dim * 1000);
@@ -294,6 +264,87 @@ export function installWitness(cfg) {
 		if (hb[2] >= 4 && hb[3] >= 4) W.last = Object.fromEntries(['look', 'pipTheme', 'screen', 'hx', 'hy', 'hw', 'hh', 'cx', 'cy', 'cw', 'ch'].map((k) => [k, rec[F[k]]]));
 		return rec;
 	};
+	/* T52/T67, T97/T125: a hidden back face is determined by the transformed normal (inverse m33).
+	   Compose in the element's 3D context and from the root. A 2D mirror leaves the normal facing forward. */
+	function backFaces(chain, parts, sig) {
+		const identity = new DOMMatrix();
+		const px = (s) => s.split(/\s+/).map(parseFloat);
+		const about = (m, [x, y, z = 0]) => identity.translate(x, y, z).multiply(m).translate(-x, -y, -z);
+		const angle = (s) => {
+			const v = parseFloat(s);
+			if (s.endsWith('grad')) return v * 0.9;
+			if (s.endsWith('rad')) return v * 180 / Math.PI;
+			return s.endsWith('turn') ? v * 360 : v;
+		};
+		const translated = (v, size) => {
+			if (!v) return 0;
+			if (v.endsWith('%')) return parseFloat(v) * size / 100;
+			return v.endsWith('px') || v === '0' ? parseFloat(v) : NaN;
+		};
+		const localMatrix = (n, cs) => {
+			let m = identity;
+			if (cs.translate !== 'none') {
+				const [x, y, z] = cs.translate.split(/\s+/);
+				m = m.translate(translated(x, n.offsetWidth), translated(y, n.offsetHeight), translated(z, 0));
+			}
+			if (cs.rotate !== 'none') {
+				const tokens = cs.rotate.split(/\s+/), a = angle(tokens.pop());
+				const [x, y, z] = tokens.length === 3 ? tokens.map(Number) : [
+					+(tokens[0] === 'x'), +(tokens[0] === 'y'), +(tokens[0] === 'z' || !tokens.length)
+				];
+				m = m.rotateAxisAngle(x, y, z, a);
+			}
+			if (cs.scale !== 'none') {
+				const [x, y = x, z = 1] = cs.scale.split(/\s+/).map((v) => parseFloat(v) / (v.endsWith('%') ? 100 : 1));
+				m = m.scale(x, y, z);
+			}
+			if (cs.transform !== 'none') m = m.multiply(new DOMMatrix(cs.transform));
+			return m.isIdentity ? m : about(m, px(cs.transformOrigin));
+		};
+		const projectionOf = (cs) => {
+			if (cs.perspective === 'none') return identity;
+			const m = new DOMMatrix();
+			m.m34 = -1 / Math.max(1, parseFloat(cs.perspective));
+			return about(m, px(cs.perspectiveOrigin));
+		};
+		/* Layout offsets, unlike the projected client rectangles, are in each HTML transform's input space. */
+		const offset = (n) => {
+			let x = 0, y = 0;
+			for (; n instanceof HTMLElement; n = n.offsetParent) {
+				x += n.offsetLeft + (n.offsetParent?.clientLeft || 0);
+				y += n.offsetTop + (n.offsetParent?.clientTop || 0);
+			}
+			return [x, y];
+		};
+		const projected = (m) => m.m14 !== 0 || m.m24 !== 0 || m.m34 !== 0 || m.m44 !== 1;
+		const normalZ = (m) => m.is2D ? 1 : m.inverse().m33;
+		const visit = (n, cs, role, parent) => {
+			const inherited = parent.world.multiply(parent.projection);
+			const localContext = (parent.keep3d ? parent.context : identity).multiply(parent.projection);
+			let own = localMatrix(n, cs);
+			if (parent.node instanceof HTMLElement && n instanceof HTMLElement && (projected(inherited) || projected(localContext))) {
+				const [nx, ny] = offset(n), [px, py] = offset(parent.node);
+				own = identity.translate(nx - px - parent.node.scrollLeft, ny - py - parent.node.scrollTop).multiply(own);
+			}
+			const world = inherited.multiply(own), context = localContext.multiply(own);
+			if (cs.backfaceVisibility === 'hidden') {
+				const a = normalZ(context), b = normalZ(world);
+				if (a < -1e-7 || b < -1e-7) sig.push(`${role}:back face hidden and turned away`);
+				else if (!Number.isFinite(a) || !Number.isFinite(b)) sig.push(`${role}:back face hidden with indeterminate facing`);
+			}
+			return { world, context, projection: projectionOf(cs), keep3d: cs.transformStyle === 'preserve-3d', node: n };
+		};
+		let parent = { world: identity, context: identity, projection: identity, keep3d: false, node: null };
+		try {
+			for (let i = chain.length - 1; i >= 0; i--) {
+				const [n, cs] = chain[i];
+				parent = visit(n, cs, `${n.tagName}.${(n.getAttribute('class') || '').split(' ')[0]}`, parent);
+			}
+			for (const [n, cs, role] of parts) visit(n, cs, role, parent);
+		} catch (_) {
+			sig.push('Pip:back face hidden with unreadable transform');
+		}
+	}
 	const sample = () => {
 		const t0 = performance.now(), seq = ++W.seq;
 		let rec;

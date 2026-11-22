@@ -6,7 +6,7 @@
   "off": "Off",
   "on": "On",
   "none": "None",
-  "inherit": "Same as the project",
+  "inherit": "Inherited",
   "default": "Default",
   "custom": "Custom",
   "manual": "Manual",
@@ -743,7 +743,7 @@
    "verbose": "Long, with full explanations"
   },
   "personas.tuning.default-mode": {
-   "inherit": "Same as the project",
+   "inherit": "Same as new agent runs",
    "ask": "Ask before acting",
    "plan": "Plan first",
    "regular": "Work normally",
@@ -771,7 +771,7 @@
    "override": "Let the newer one take over"
   },
   "extensions.commands.command-mode": {
-   "inherit": "Same as the project",
+   "inherit": "Same as the chat",
    "ask": "Ask before acting",
    "plan": "Plan only",
    "regular": "Work normally",

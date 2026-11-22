@@ -14,6 +14,12 @@ const W = '.o55g-win .o55g-layer:not(.o55g-out)';
 const pause = f => f.waitForTimeout(450);
 async function settings(t) { await t.viewport(1440,900); const f=await t.app.open({settleMs:1500}); await f.locator('#tab-settings').click(); await f.waitForTimeout(1500); return f; }
 async function next(f) { await f.locator(`.o55g-win .o55g-primary`).click(); await pause(f); }
+async function paintedLook(t, f, look) {
+ await t.app.look(look);
+ // The look can be applied while the cover is still lifting. Give the exposed line a frame before reading its ink.
+ await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 });
+ await f.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
+}
 export const tests = {
  async 'FO-169 services no-match and clear'(t) {
   const f=await settings(t); await f.evaluate(()=>PM51.go('ai','providers')); await pause(f);
@@ -23,10 +29,10 @@ export const tests = {
   await t.equal('all service rows hidden',await roster.locator('.resource-row:visible').count(),0);
   await t.equal('exactly one visible empty line',await roster.getByText('No services match. Clear the filter to see everything.',{exact:true}).locator('visible=true').count(),1);
   await t.equal('no heading claims hidden rows',await roster.locator('.roster-title:visible,.o55-roster-group:visible').count(),0);
-  for (const look of ['basic-dark','glass-light','nier-dark']) { await t.app.look(look); await t.shot(`fo169-${look}`,'Filter no-match line: spacing, contrast and placement under filter'); }
+  for (const look of ['basic-dark','glass-light','nier-dark']) { await paintedLook(t, f, look); await t.shot(`fo169-${look}`,'Filter no-match line: spacing, contrast and placement under filter'); }
   const line=roster.locator('.pm51-filter-empty:visible');
   for (const look of list(t.args.look,LOOKS)) {
-   await t.app.look(look);
+   await paintedLook(t, f, look);
    const k=await ink(line.first()), p=await paintedText(line.first());
    t.log('FO169-INK '+JSON.stringify({look,ink:k,stems:p.count,stemMin:p.count?p.minimum:null,lowest:p.lowest[0]||null}));
    if (['basic-dark','basic-light','glass-dark','nier-dark'].includes(look)) await t.crop(`fo169-line-${look}`,line.first(),`No-match line ink in ${look}: peak ${k.peak.contrast}:1 measured`);

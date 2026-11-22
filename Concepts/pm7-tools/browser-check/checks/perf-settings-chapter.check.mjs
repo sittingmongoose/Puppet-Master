@@ -8,7 +8,8 @@
 //            no section of an arrival turns relevant and is skipped again within a second ("one-frame unlocks").
 //   release  the hover tags of the removed chapter (about 2,000 nodes) were walked in the build task's microtasks.
 //            Judged: the controller's cleanupRemoved does not run before that frame, and the old chapter's tagged nodes
-//            have let go of their tags by that collection (after the initial 2.5 s settle and capped completion wait).
+//            have let go of their tags by that collection (after the initial 2.5 s settle and the wait for the fill's own
+//            completion, R97 #6).
 // "First painted frame": a message posted from the first animation frame that has the new chapter arrives once that
 // frame's style, layout, paint and commit are over on the main thread. Each switch is a real held press on the chapter
 // list (down, 90 ms, up); Settings acts on the click. Logged per switch, not judged: release -> painted, the build task
@@ -33,11 +34,32 @@ const PROBE = () => {
 	if (window.__psc) return true;
 	const root = document.getElementById('pm-settings-root');
 	const sig = () => { const b = root.querySelector('#workspace-stage [data-workspace-block]'); return b ? b.getAttribute('data-workspace-block') : ''; };
-	const P = window.__psc = { on: false, sig, cv: [], saves: [], cleanups: [], loaf: [] };
+	const rows = () => root.querySelectorAll('#workspace-stage .setting-row').length;
+	const P = window.__psc = { on: false, sig, cv: [], saves: [], cleanups: [], loaf: [], frame: 0 };
+	/* SETCHAPTER-ROWCOUNT-FIRST-RAF: the first frame's row count is read after every callback that can still change that
+	   frame, not in this probe's own animation-frame callback, where a page callback queued after it in the same frame
+	   (the chapter is committed in the click task, so anything it asks a frame for runs after this tick) would add rows
+	   that are painted but not counted. A ResizeObserver callback runs after every animation-frame callback of the frame
+	   and after its layout, just before paint, and observers report in the order they were made: so the probe makes a
+	   fresh observer in the first frame's tick (later than any the page made in the commit) on a 1 px mark of its own,
+	   whose first observation reports in that same frame, reads the count there and again in a microtask after it. The
+	   tick's own read is logged only; a frame whose end read is missing is not judged as a first screen. */
+	const mark = document.createElement('div');
+	mark.setAttribute('aria-hidden', 'true');
+	mark.style.cssText = 'position:fixed;left:-4px;top:0;width:1px;height:1px;visibility:hidden;pointer-events:none;contain:strict';
+	document.documentElement.appendChild(mark);
 	const tick = () => {
+		P.frame++;
 		if (P.on && !P.first && sig() !== P.old) {
 			P.first = performance.now();
-			P.rows1 = root.querySelectorAll('#workspace-stage .setting-row').length;
+			P.rowsRaf = rows();
+			const frame = P.frame, ro = new ResizeObserver(() => {
+				ro.disconnect();
+				if (!P.on || P.frame !== frame) return;
+				P.rows1 = rows(); P.rows1At = 'frame end';
+				queueMicrotask(() => { if (P.frame === frame) P.rows1 = rows(); });
+			});
+			ro.observe(mark);
 			const mc = new MessageChannel(); mc.port1.onmessage = () => { P.painted = performance.now(); }; mc.port2.postMessage(0);
 		}
 		requestAnimationFrame(tick);
@@ -58,8 +80,14 @@ const PROBE = () => {
 	if (hover && typeof hover.cleanupRemoved === 'function') {
 		const cleanup = hover.cleanupRemoved;
 		/* only a walk of the leaving chapter counts (a part removed at the press, a popout or a tag of the pressed link, may
-		   be walked in idle time during the hold) */
-		hover.cleanupRemoved = function (r) { if (P.on && r && (P.tagged || []).some((n) => n === r || (r.contains && r.contains(n)))) P.cleanups.push(performance.now()); return cleanup.apply(this, arguments); };
+		   be walked in idle time during the hold). R97 #4: a walk is the leaving chapter's when the chapter has changed and
+		   its root was a node of the old stage (ARM keeps them all) or holds the old block, not only when it holds one of
+		   the six sampled tagged nodes: a walk of another part of the old chapter counts too. */
+		hover.cleanupRemoved = function (r) {
+			if (P.on && r && r.nodeType === 1 && P.leaving && sig() !== P.old
+				&& (P.leaving.has(r) || (P.oldBlock && r.contains(P.oldBlock)) || (P.tagged || []).some((n) => r.contains(n)))) P.cleanups.push(performance.now());
+			return cleanup.apply(this, arguments);
+		};
 	}
 	try { new PerformanceObserver((l) => { if (P.on) for (const e of l.getEntries()) for (const s of e.scripts || []) if (s.sourceFunctionName === 'finish') P.loaf.push(s.duration); }).observe({ type: 'long-animation-frame' }); } catch (e) { /* none */ }
 	return true;
@@ -67,8 +95,12 @@ const PROBE = () => {
 /* before a press: forget the last switch, remember a few tagged nodes of the chapter that is about to leave */
 const ARM = () => {
 	const P = window.__psc;
-	Object.assign(P, { on: true, cv: [], saves: [], cleanups: [], loaf: [], click: 0, commit: 0, first: 0, painted: 0, old: P.sig() });
-	P.tagged = [...document.querySelectorAll('#workspace-stage [data-pm-hover-bound="true"]')].slice(0, 6);
+	Object.assign(P, { on: true, cv: [], saves: [], cleanups: [], loaf: [], click: 0, commit: 0, first: 0, painted: 0, rows1: 0, rowsRaf: 0, rows1At: '', old: P.sig() });
+	const stage = document.querySelector('#workspace-stage');
+	P.leaving = new WeakSet(stage ? [...stage.querySelectorAll('*')] : []);
+	P.oldBlock = stage ? stage.querySelector('[data-workspace-block]') : null;
+	const bound = stage ? [...stage.querySelectorAll('[data-pm-hover-bound="true"]')] : [];
+	P.tagged = bound.slice(0, 6); P.taggedAll = bound.length;
 	return { old: P.old, tagged: P.tagged.length };
 };
 const COLLECT = () => {
@@ -88,8 +120,9 @@ const COLLECT = () => {
 		elements: stage ? stage.getElementsByTagName('*').length : 0, unlocks,
 		savesBeforePaint: P.saves.filter((s) => P.painted && s.t < P.painted).length,
 		savedPlace: P.saves.filter((s) => s.domain === domain).length,
-		cleanupsBeforePaint: P.cleanups.filter((c) => P.painted && c < P.painted).length,
-		rowsFirst: P.rows1 || 0, rowsEnd: stage ? stage.querySelectorAll('.setting-row').length : 0,
+		cleanupsBeforePaint: P.cleanups.filter((c) => P.painted && c < P.painted).length, walks: P.cleanups.length,
+		/* null when the first frame's end read did not happen (SETCHAPTER-ROWCOUNT-FIRST-RAF): not judged as a first screen */
+		rowsFirst: P.rows1At === 'frame end' ? P.rows1 : null, rowsRaf: P.rowsRaf || 0, rowsEnd: stage ? stage.querySelectorAll('.setting-row').length : 0,
 		pendingLeft: document.querySelectorAll('#workspace-stage [data-o55-fill="pending"]').length,
 		/* The rendered workspace model includes both placement and hand-authored rows (R97 check 2). */
 		missing: (() => {
@@ -103,12 +136,32 @@ const COLLECT = () => {
 		})(),
 		dupIds: (() => { const ids = [...document.querySelectorAll('#workspace-stage [id^="setting-"]')].map((n) => n.id); return ids.length - new Set(ids).size; })(),
 		taggedStill: (P.tagged || []).filter((n) => !n.isConnected && n.getAttribute('data-pm-hover-bound') === 'true').length,
-		tagged: (P.tagged || []).length
+		tagged: (P.tagged || []).length, taggedAll: P.taggedAll || 0
 	};
 };
+/* C1's first-screen row over the Code & Tools arrivals (exported for tools/settings-chapter.selftest.mjs). A row whose
+   first-frame count was not read at that frame's end cannot show a first screen (SETCHAPTER-ROWCOUNT-FIRST-RAF). */
+export function firstScreenVerdict(code) {
+	const unread = code.filter((r) => typeof r.rowsFirst !== 'number');
+	const whole = code.filter((r) => typeof r.rowsFirst === 'number' && r.rowsEnd > 0 && r.rowsFirst >= r.rowsEnd);
+	const detail = [
+		...unread.map((r) => `${r.pair}: the first frame's row count was not read at that frame's end (${r.rowsRaf ?? '?'} at its first animation-frame callback)`),
+		...whole.map((r) => `${r.pair}: all ${r.rowsEnd} rows were built for the first frame`)
+	].join('; ');
+	return { ok: code.length > 0 && !unread.length && !whole.length, detail: detail || (code.length ? '' : 'no arrival at Code & Tools'), unread: unread.length, whole: whole.length };
+}
 const ACTIVE = () => (document.querySelector('#pm-settings-root .domain-link.active') || {}).dataset?.domain || '';
 
-async function press(t, f, domain) {
+export async function press(t, f, domain, { waitForHoverTags = false } = {}) {
+	if (waitForHoverTags) {
+		// The page binds tags in idle batches. Give the chapter a chance to bind a real tag before sampling it.
+		try {
+			await f.locator('#workspace-stage [data-pm-hover-bound="true"]').first().waitFor({ state: 'attached', timeout: 10000 });
+		} catch (error) {
+			if (error.name !== 'TimeoutError') throw error;
+			// Capture the switch anyway so the could-judge row reports the missing tags.
+		}
+	}
 	const box = await f.locator(`#pm-settings-root .domain-link[data-domain="${domain}"]`).first().boundingBox();
 	if (!box) throw new Error(`no chapter link for ${domain}`);
 	await t.page.mouse.move(Math.round(box.x + Math.min(box.width / 2, 60)), Math.round(box.y + box.height / 2));
@@ -166,6 +219,14 @@ const ARM_RESTORE = (id) => {
 	const save = tome.save, restore = tome.restoreProjectDefaults;
 	tome.save = function (snap) { R.saves.push(snap && snap.domain); return save.apply(this, arguments); };
 	tome.restoreProjectDefaults = function () {
+		/* SETCHAPTER-RESTORE-PENDING-AT-TRANSACTION: acceptance reaches the transaction through o55AfterPaint (a frame,
+		   then a timer), so what the row needs is judged here, at the transaction's start, not only at acceptance: Code
+		   is still the chapter, its rows are still pending (the switch has not finished), and its place is saved. */
+		R.atTransaction = {
+			domain: root.querySelector('.domain-link.active')?.dataset.domain || '',
+			pending: root.querySelectorAll('#workspace-stage [data-o55-fill="pending"]').length,
+			saved: R.saves.includes('code')
+		};
 		R.before = tome.projectSnapshot(tome.project().id);
 		R.result = restore.apply(this, arguments);
 		R.restored = tome.projectSnapshot(tome.project().id);
@@ -185,6 +246,87 @@ const ARM_RESTORE = (id) => {
 	mo.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
 	R.stop = () => { mo.disconnect(); tome.save = save; tome.restoreProjectDefaults = restore; };
 };
+/* R97 #6: after the switch's settle, wait for the fill's own completion, not a fixed cap on the whole sequence. The
+   product starts its idle fill 450 ms after the commit, gives each section its own 1 s timeout and parks the job while a
+   drag is held, so a correct fill on a busy host or behind a long stall can still be pending at any fixed deadline. The
+   wait ends when no row list is pending ('done'); when the pending count has not fallen for `quiet` ms ('stalled': the fill
+   stopped, with `dragged` when a drag class was on the body at any step); or at `cap` ms while still falling ('deadline':
+   the host was too slow to finish, which says nothing about a missing row). Polled on a 100 ms timer, not every frame. */
+const FILL_LIMITS = { quiet: 15000, cap: 90000 };
+const FILL_WAIT = ({ quiet, cap }) => new Promise((done) => {
+	const pending = () => document.querySelectorAll('#workspace-stage [data-o55-fill="pending"]').length;
+	const drag = () => ['pm-resizing', 'pm-ab-dragging', 'pmw-dragging', 'pmu-pointer-op', 'pm7u-pointer-op'].some((c) => document.body && document.body.classList.contains(c));
+	const t0 = performance.now();
+	let n = pending(), last = t0, dragged = drag();
+	const end = (state, now, m) => done({ state, pending: m, waited: Math.round(now - t0), lastProgress: Math.round(last - t0), dragged });
+	const step = () => {
+		const now = performance.now(), m = pending();
+		if (drag()) dragged = true;
+		if (m !== n) { n = m; last = now; }
+		if (m === 0) return end('done', now, m);
+		if (now - last >= quiet) return end('stalled', now, m);
+		if (now - t0 >= cap) return end('deadline', now, m);
+		setTimeout(step, 100);
+	};
+	step();
+});
+/* The completeness rows (exported for tools/settings-chapter.selftest.mjs). R97 #6: an arrival whose fill did not finish
+   is reported as such (stopped, or still filling at the cap), apart from the rows a finished fill left out; row ids drawn
+   twice are wrong either way. */
+export function arrivalVerdict(rows) {
+	const unfinished = rows.filter((r) => r.fill && r.fill.state !== 'done');
+	const finished = rows.filter((r) => !r.fill || r.fill.state === 'done');
+	const left = finished.filter((r) => r.pendingLeft > 0 || (r.missing && r.missing.gone.length) || (r.to === 'code' && !(r.missing && r.missing.want)));
+	const doubled = rows.filter((r) => r.dupIds > 0);
+	const why = (f) => f.state === 'stalled'
+		? `the fill stopped: no list filled for ${Math.round((f.waited - f.lastProgress) / 1000)} s with ${f.pending} still pending${f.dragged ? ' (a drag was held)' : ''}`
+		: `still filling at the ${Math.round(f.waited / 1000)} s cap with ${f.pending} lists pending (a deadline, not a missing row)`;
+	return [
+		{ name: 'each arrival\'s fill finished (no row list left pending)', ok: !unfinished.length, detail: unfinished.map((r) => `${r.pair}: ${why(r.fill)}`).join('; ') },
+		{ name: 'after each arrival every row in the rendered workspace model is drawn, once', ok: !left.length && !doubled.length,
+			detail: [...left.map((r) => `${r.pair}: ${r.pendingLeft} row lists still pending, missing ${r.missing ? r.missing.gone.join(', ') || 'none' : '?'} of ${r.missing ? r.missing.want : '?'} modeled on ${r.missing ? r.missing.ws : '?'}`),
+				...doubled.map((r) => `${r.pair}: ${r.dupIds} duplicate row ids`)].join('; ') + (unfinished.length ? ` (not judged for missing rows: ${unfinished.map((r) => r.pair).join(', ')}, whose fill did not finish)` : '') }
+	];
+}
+/* The release rows (exported for tools/settings-chapter.selftest.mjs). R97 #4: both rows pass vacuously when nothing of
+   the leaving chapter was sampled or no walk of it was seen, so each switch must have sampled tagged nodes of the leaving
+   chapter and seen at least one walk of that chapter by collection; then no such walk may come before the new chapter's
+   first frame, and the sampled nodes must have let go of their tags. */
+export function hoverVerdict(rows) {
+	const unsampled = rows.filter((r) => !(r.tagged > 0));
+	const unwalked = rows.filter((r) => r.tagged > 0 && !(r.walks > 0));
+	const walked = rows.filter((r) => r.cleanupsBeforePaint > 0);
+	const kept = rows.filter((r) => r.taggedStill > 0);
+	return [
+		{ name: 'could judge the old chapter\'s hover tags: every switch sampled tagged nodes of the leaving chapter and saw a walk of it by collection', ok: rows.length > 0 && !unsampled.length && !unwalked.length,
+			detail: [...unsampled.map((r) => `${r.pair}: no tagged node of the leaving chapter was sampled`), ...unwalked.map((r) => `${r.pair}: no walk of the leaving chapter was seen`)].join('; ') || (rows.length ? '' : 'no switch') },
+		{ name: 'the old chapter\'s hover tags are not walked before the new chapter\'s first frame', ok: !walked.length, detail: walked.map((r) => `${r.pair}: ${r.cleanupsBeforePaint} walk(s)`).join('; ') },
+		{ name: 'the old chapter\'s tagged nodes let go of their tags by collection after the fill\'s completion wait', ok: !kept.length, detail: kept.map((r) => `${r.pair}: ${r.taggedStill} of ${r.tagged}`).join('; ') }
+	];
+}
+/* R93 #4's fling rows (exported for tools/settings-chapter.selftest.mjs). R97 #3: Terminal look must still be pending
+   when the wheel is delivered (the commit's sample is logged only), and the scroll frame's sample must have Terminal look
+   in view, so the empty-list row has the pending target in front of it. */
+export function flingVerdict(r) {
+	return [
+		{ name: 'the wheel was delivered with Terminal look pending', ok: !!r.wheel && r.wheelPending > 0 && r.wheelTargetPending === true,
+			detail: r.wheel ? `at wheel delivery ${r.wheelPending} lists pending, Terminal look pending ${r.wheelTargetPending} (at commit ${r.pending}, ${r.targetPending})` : 'no wheel event was seen after the commit' },
+		{ name: 'a real wheel crossed at least one viewport and brought Terminal look into view', ok: !!r.sampled && r.moved >= r.height && r.targetInView === true,
+			detail: r.sampled ? `moved ${r.moved} px of a ${r.height} px view; Terminal look in view ${!!r.targetInView}` : `no scroll-frame sample with Terminal look in view (${r.framesBefore || 0} scroll frames past one viewport without it)` },
+		{ name: 'no visible list is empty at the scroll frame', ok: !!r.sampled && r.empty.length === 0, detail: (r.empty || []).join(',') || 'no scroll-frame sample' }
+	];
+}
+/* SETCHAPTER-RESTORE-PENDING-AT-TRANSACTION (exported for tools/settings-chapter.selftest.mjs): the restore-all row
+   judges a transaction across a chapter change only if, when the transaction starts, Code & Tools is the chapter, still
+   has pending row lists (its switch is in flight) and has its place saved. A transaction that runs after the fill has
+   finished would pass the row without crossing the change. */
+export function restoreJudgeable(r) {
+	const a = r && r.atTransaction;
+	if (!a) return { ok: false, detail: 'the restore transaction never started', log: 'no transaction' };
+	const ok = a.domain === 'code' && a.pending > 0 && a.saved === true;
+	const log = `chapter ${a.domain || 'none'}, ${a.pending} row lists pending, Code saved ${a.saved}`;
+	return { ok, log, detail: ok ? log : [a.domain !== 'code' && `the chapter was ${a.domain || 'none'}, not Code & Tools`, !(a.pending > 0) && 'no row list was pending: the switch had finished before the transaction', a.saved !== true && 'Code was not saved yet'].filter(Boolean).join('; ') };
+}
 const RESTORE_RECORD = () => {
 	const tome = window.PM7_SETTINGS_TOME;
 	try { return { source: 'stored', record: JSON.parse(localStorage.getItem('pm7:settings:tome-tabs:v1:' + encodeURIComponent(tome.project().id)) || 'null') }; }
@@ -204,6 +346,9 @@ async function restoreAllRow(t, f, surface) {
 		t.log(`${surface} R90 P1: Code already saved eagerly at acceptance ${!!r.eagerAtAccept}; place ${JSON.stringify(r.place)}`);
 		await t.check(`${surface}: could judge restore-all: changed Text Size and accepted the existing confirmation`, r.accepted && r.changedAtAccept, JSON.stringify(r));
 		await t.check(`${surface}: could judge restore-all: Code was already saved eagerly at acceptance, as on main`, r.eagerAtAccept === true, JSON.stringify(r));
+		const judge = restoreJudgeable(r);
+		t.log(`${surface} R90 P1 at the transaction's start: ${judge.log}`);
+		await t.check(`${surface}: could judge restore-all: the transaction started while Code & Tools was still arriving (row lists pending) and saved`, judge.ok, judge.detail);
 		await t.check(`${surface}: restore-all returned an accepted rollback receipt`, r.result?.ok === true && !!r.result.rollback_ref, JSON.stringify(r.result));
 		await t.page.waitForTimeout(2500);
 		const { source, record: s } = await f.evaluate(RESTORE_RECORD);
@@ -357,6 +502,7 @@ async function moreOptionsRow(t, f, label, expectedReduced) {
 }
 
 export const tests = {};
+export { FILL_WAIT };
 
 /* R97 check 2: the collector must notice a missing hand-authored Spelling row on the real rendered model. */
 for (const surface of ['normal', 'sandbox']) {
@@ -615,7 +761,13 @@ for (const surface of ['normal', 'sandbox']) {
 					if(!R.committed||R.sampled||R.armed||sc.id!=='settings-document'||Math.abs(sc.scrollTop-R.start)<R.height)return;
 					R.armed=true;
 					requestAnimationFrame(()=>{
-						const v=sc.getBoundingClientRect();R.top=sc.scrollTop;R.moved=R.top-R.start;
+						const v=sc.getBoundingClientRect();
+						/* R97 #3: the sample is the first scroll frame, past one viewport, with Terminal look in view (an
+						   animated wheel scroll may cross the first viewport before it gets there) */
+						const tb=root.querySelector('#section-editor-terminal-look')?.getBoundingClientRect();
+						R.targetInView=!!tb&&tb.height>0&&tb.bottom>v.top&&tb.top<v.bottom;
+						if(!R.targetInView){R.armed=false;R.framesBefore=(R.framesBefore||0)+1;return;}
+						R.top=sc.scrollTop;R.moved=R.top-R.start;
 						R.empty=[...sc.querySelectorAll('[data-o55-fill="pending"]')].filter(l=>{
 							if(l.closest('details:not([open])'))return false;
 							const b=l.closest('[data-section-id]').getBoundingClientRect();
@@ -625,9 +777,20 @@ for (const surface of ['normal', 'sandbox']) {
 						R.sampled=true;
 					});
 				};
+				/* R97 #3: the precondition is judged when the wheel is delivered, not at the commit: three driver steps lie
+				   between them, and an idle fill that finishes in that gap leaves nothing for the wheel to test. Passive, so
+				   the scroll keeps its own path. */
+				const wheel=()=>{
+					if(!R.committed||R.wheel)return;
+					const sec=root.querySelector('#section-editor-terminal-look');
+					R.wheel=performance.now();R.wheelPending=root.querySelectorAll('[data-o55-fill="pending"]').length;
+					R.wheelTargetPending=!!sec?.querySelector('[data-o55-fill="pending"]');
+					R.wheelTop=root.querySelector('#settings-document')?.scrollTop??null;
+				};
 				mo.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
 				window.addEventListener('scroll',scroll,true);
-				R.stop=()=>{mo.disconnect();window.removeEventListener('scroll',scroll,true);};
+				window.addEventListener('wheel',wheel,{capture:true,passive:true});
+				R.stop=()=>{mo.disconnect();window.removeEventListener('scroll',scroll,true);window.removeEventListener('wheel',wheel,{capture:true,passive:true});};
 			});
 			try {
 				await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
@@ -637,10 +800,8 @@ for (const surface of ['normal', 'sandbox']) {
 				await t.page.mouse.wheel(0,Math.ceil(delta));
 				await f.waitForFunction(()=>window.__pscFling.sampled,null,{timeout:5000}).catch(()=>{});
 				const r=await f.evaluate(()=>{const {stop,...r}=window.__pscFling;return r;});
-				t.log(`${look} ${surface} fling: ${r.pending} lists pending at commit, target pending ${r.targetPending}; moved ${r.moved} px (${r.height} px view); empty visible lists at scroll-frame rAF: ${r.empty.join(',')||'none'}`);
-				await t.check(`${look} ${surface}: fling began with Terminal look pending`,r.pending>0&&r.targetPending,JSON.stringify(r));
-				await t.check(`${look} ${surface}: a real wheel crossed at least one viewport`,r.sampled&&r.moved>=r.height,JSON.stringify(r));
-				await t.check(`${look} ${surface}: no visible list is empty at the scroll frame`,r.sampled&&r.empty.length===0,r.empty.join(',')||'no scroll-frame sample');
+				t.log(`${look} ${surface} fling: ${r.pending} lists pending at commit, target pending ${r.targetPending}; at wheel delivery ${r.wheel?`${r.wheelPending} pending, target pending ${r.wheelTargetPending}`:'no wheel seen'}; moved ${r.moved} px (${r.height} px view), Terminal look in view ${!!r.targetInView}; empty visible lists at scroll-frame rAF: ${r.empty.join(',')||'none'}`);
+				for (const row of flingVerdict(r)) await t.check(`${look} ${surface}: ${row.name}`,row.ok,row.detail);
 			} finally {await f.evaluate(()=>window.__pscFling.stop());}
 		}
 	};
@@ -821,14 +982,15 @@ for (const surface of ['normal', 'sandbox']) {
 				const rows = [];
 				for (const [a, b] of seq) {
 					if ((await f.evaluate(ACTIVE)) !== a) { await f.locator(`#pm-settings-root .domain-link[data-domain="${a}"]`).first().click(); await t.page.waitForTimeout(2000); }
-					await press(t, f, b);
+					await press(t, f, b, { waitForHoverTags: true });
 					await t.page.waitForTimeout(2500);
-					/* the rest of the page is filled in idle slices: wait for that, with a generous cap */
-					await f.waitForFunction(() => !document.querySelector('#workspace-stage [data-o55-fill="pending"]'), null, { timeout: 10000 }).catch(() => {});
+					/* the rest of the page is filled in idle slices: wait for the fill's own completion (R97 #6) */
+					const fill = await f.evaluate(FILL_WAIT, FILL_LIMITS);
 					const r = await f.evaluate(COLLECT);
+					r.fill = fill;
 					r.pair = `${a}->${b}`;
 					rows.push(r);
-					t.log(`${look} ${surface} ${r.pair}: release -> painted ${r.clickToPainted} ms (commit ${r.commit}, build task ${r.build ?? '-'} ms, ${r.elements} elements; rows ${r.rowsFirst} in the first frame of ${r.rowsEnd}); one-frame unlocks ${r.unlocks.length ? r.unlocks.join(',') : 'none'}; saves before paint ${r.savesBeforePaint}, place saved ${r.savedPlace}; tag walks before paint ${r.cleanupsBeforePaint}, old tagged nodes still tagged ${r.taggedStill}/${r.tagged}`);
+					t.log(`${look} ${surface} ${r.pair}: fill ${r.fill.state} ${r.fill.waited} ms after the settle (last progress at ${r.fill.lastProgress} ms, ${r.fill.pending} lists pending${r.fill.dragged ? ', a drag was held' : ''}); release -> painted ${r.clickToPainted} ms (commit ${r.commit}, build task ${r.build ?? '-'} ms, ${r.elements} elements; rows ${r.rowsFirst ?? '-'} in the first frame (${r.rowsRaf} at its first animation-frame callback) of ${r.rowsEnd}); one-frame unlocks ${r.unlocks.length ? r.unlocks.join(',') : 'none'}; saves before paint ${r.savesBeforePaint}, place saved ${r.savedPlace}; tag walks of the old chapter ${r.walks} (before paint ${r.cleanupsBeforePaint}), old tagged nodes ${r.taggedAll} (sampled ${r.tagged}, still tagged ${r.taggedStill})`);
 					await t.page.waitForTimeout(500);
 				}
 				const shown = rows.filter((r) => r.clickToPainted !== null && r.to === r.pair.split('->')[1]);
@@ -836,19 +998,12 @@ for (const surface of ['normal', 'sandbox']) {
 				const unlocked = rows.filter((r) => r.unlocks.length);
 				await t.check(`${look} ${surface}: no section of an arrival is laid out for one frame and skipped again`, !unlocked.length,
 					unlocked.map((r) => `${r.pair}: ${r.unlocks.join(', ')}`).join('; '));
-				const code = rows.filter((r) => r.to === 'code');
-				const whole = code.filter((r) => r.rowsEnd > 0 && r.rowsFirst >= r.rowsEnd);
-				if (seq.some(([, to]) => to === 'code')) await t.check(`${look} ${surface}: an arrival at Code & Tools shows its first screen before the rest of its rows`, code.length > 0 && !whole.length,
-					whole.map((r) => `${r.pair}: all ${r.rowsEnd} rows were built for the first frame`).join('; ') || 'no arrival at Code & Tools');
-				const left = rows.filter((r) => r.pendingLeft > 0 || r.dupIds > 0 || (r.missing && r.missing.gone.length) || (r.to === 'code' && !(r.missing && r.missing.want)));
-				await t.check(`${look} ${surface}: after each arrival every row in the rendered workspace model is drawn, once`, !left.length,
-					left.map((r) => `${r.pair}: ${r.pendingLeft} row lists still pending, ${r.dupIds} duplicate row ids, missing ${r.missing ? r.missing.gone.join(', ') || 'none' : '?'} of ${r.missing ? r.missing.want : '?'} modeled on ${r.missing ? r.missing.ws : '?'}`).join('; '));
+				const first = firstScreenVerdict(rows.filter((r) => r.to === 'code'));
+				if (seq.some(([, to]) => to === 'code')) await t.check(`${look} ${surface}: an arrival at Code & Tools shows its first screen before the rest of its rows`, first.ok, first.detail);
+				for (const row of arrivalVerdict(rows)) await t.check(`${look} ${surface}: ${row.name}`, row.ok, row.detail);
 				const unsaved = rows.filter((r) => r.savedPlace < 1);
-				await t.check(`${look} ${surface}: the new place is saved by collection after the capped row-completion wait`, !unsaved.length, unsaved.map((r) => r.pair).join(', '));
-				const walked = rows.filter((r) => r.cleanupsBeforePaint > 0);
-				await t.check(`${look} ${surface}: the old chapter's hover tags are not walked before the new chapter's first frame`, !walked.length, walked.map((r) => `${r.pair}: ${r.cleanupsBeforePaint} walk(s)`).join('; '));
-				const kept = rows.filter((r) => r.taggedStill > 0);
-				await t.check(`${look} ${surface}: the old chapter's tagged nodes let go of their tags by collection after the capped row-completion wait`, !kept.length, kept.map((r) => `${r.pair}: ${r.taggedStill} of ${r.tagged}`).join('; '));
+				await t.check(`${look} ${surface}: the new place is saved by collection after the fill's completion wait`, !unsaved.length, unsaved.map((r) => r.pair).join(', '));
+				for (const row of hoverVerdict(rows)) await t.check(`${look} ${surface}: ${row.name}`, row.ok, row.detail);
 			});
 		}
 	};

@@ -131,8 +131,23 @@ function pm51RevealIndex() {
   });
 }
 function pm51RevealIndexNow() {
-  const box = root.querySelector('.page-index'); if (!box || box.scrollHeight <= box.clientHeight + 1) return;
+  const box = root.querySelector('.page-index'); if (!box) return;
+  const card = box.querySelector('.page-index-card');
+  const horizontal = card && card.scrollWidth > card.clientWidth + 1 && getComputedStyle(card).flexDirection === 'row';
+  if (!horizontal && box.scrollHeight <= box.clientHeight + 1) return;
   const hit = box.querySelector('.index-link.is-active') || box.querySelector('.page-index-title.is-current'); if (!hit) return;
+  if (horizontal) {
+    const width = card.clientWidth;
+    const left = card.getBoundingClientRect().left + card.clientLeft;
+    const r = hit.getBoundingClientRect();
+    const room = Math.max(0, width - r.width);
+    const pad = Math.min(72, width * .2, room / 2);
+    if (r.left >= left + pad && r.right <= left + width - pad) return;
+    const inset = Math.min(width * .35, room - pad);
+    const want = card.scrollLeft + r.left - left - inset;
+    card.scrollTo({ left: Math.max(0, Math.min(card.scrollWidth - width, want)), behavior: pm51IndexStill() ? 'instant' : 'smooth' });
+    return;
+  }
   const key = (hit.dataset.workspace || '') + '|' + (hit.dataset.section || hit.dataset.tab || '');
   const b = box.getBoundingClientRect(), r = hit.getBoundingClientRect(), pad = Math.min(72, box.clientHeight * .2);
   if (r.top >= b.top + pad && r.bottom <= b.bottom - pad && key === pm51IndexShown) return;

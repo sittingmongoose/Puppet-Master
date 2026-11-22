@@ -14,6 +14,8 @@
 //   so and dims the list.
 // - The chat's Memory button (chat header) and the wand's Memory row open the same page as a sheet over the chat (mock
 //   10); its filter and Add work inside it; Escape closes it.
+// - Basic Dark keeps the approved settled geometry: the desktop page's list and Add dialog, and the chat sheet's
+//   card and list at desktop and phone widths (FO167R3-L4).
 // - Replies: Demo Studio's Memory examples (memory-saved, memory-remember) show "Saved to memory · View" at the end of
 //   a reply that saved a note (mock 08) and "Got it. Saved to memory for every project. View" (mock 09); View opens
 //   the sheet with that note lit; typing "Remember that I always use pnpm" saves a note and answers the same way; a
@@ -252,6 +254,21 @@ const SHEET = () => {
 	const at = document.elementFromPoint(r.left + r.width / 2, r.top + 30);
 	return { open: true, title: (s.querySelector('.pm7-mem-title') || {}).textContent || '', settings: ((s.querySelector('.pm7-mem-open') || {}).textContent || '').trim(), inChat: r.left >= cr.left - 1 && r.right <= cr.right + 1 && r.bottom <= cr.bottom + 1 && r.top >= cr.top - 1, underHeader: !hr || r.top >= hr.bottom - 2, w: Math.round(r.width), onTop: !!(at && at.closest && at.closest('.pm7-mem-sheet')) };
 };
+
+// Mock 10 at the live chat frame widths (FO-167 round 3 geometry.json). Subtract the chat frame's origin so
+// the phone's rail and the chat panel's position do not shift the expected card and list insets.
+const SHEET_GEOMETRY = () => {
+	const frame = document.querySelector('.pm7-mem-layer.is-open:not([hidden])');
+	const card = frame?.querySelector('.pm7-mem-sheet .mm-intro');
+	const list = frame?.querySelector('.pm7-mem-sheet .mm-list');
+	if (!card?.getClientRects().length || !list?.getClientRects().length) return null;
+	const f = frame.getBoundingClientRect(), c = card.getBoundingClientRect(), l = list.getBoundingClientRect();
+	return {
+		card: [c.left - f.left, c.top - f.top, f.right - c.right, c.height],
+		listTop: l.top - f.top
+	};
+};
+const withinMock = (actual, expected) => Math.abs(actual - expected) <= 2;
 // a reply's words, without the save line, and what memory UI the transcript draws
 const TRANSCRIPT = () => {
 	const root = document.querySelector('#pmRoot');
@@ -429,6 +446,39 @@ for (const surface of ['normal', 'sandbox']) {
 		}
 		const s = await g.evaluate(SHEET);
 		await t.check('390x844: the chat’s Memory button opens the sheet, inside the chat', s.open && s.inChat && s.onTop, JSON.stringify(s));
+	});
+
+	T('FO-167 settled Memory geometry', async (t) => {
+		const f = await settings(t, surface);
+		const list = await f.locator(`${BODY} .mm-list`).evaluate(async (e) => {
+			await document.fonts.ready;
+			const { top, bottom } = e.getBoundingClientRect();
+			return [top, bottom];
+		});
+		await t.check('1390x900: the Settings list runs from 468 to 860 px', withinMock(list[0], 468) && withinMock(list[1], 860), JSON.stringify(list));
+		await f.locator(`${BODY} .mm-add`).first().click();
+		await f.waitForSelector(dialog('page'), { state: 'visible', timeout: 8000 });
+		await t.page.waitForTimeout(400);
+		const add = await f.evaluate(DIALOG, dialog('page'));
+		await t.check('1390x900: the settled Add memory dialog is 620 px wide', add?.title === 'Add memory' && withinMock(add.rect.w, 620), JSON.stringify(add?.rect));
+		await t.page.keyboard.press('Escape');
+
+		const sheetSizes = [
+			{ size: [1390, 900], card: [27, 130, 36, 220.83], listTop: 475.83 },
+			{ size: [390, 844], card: [27, 112, 36, 255.61], listTop: 492.61 },
+		];
+		for (const { size, card, listTop } of sheetSizes) {
+			const g = await home(t, surface, size);
+			await g.locator('#pmRoot .chat-header .pm7-mem-btn').first().click();
+			await g.waitForSelector('.pm7-mem-layer.is-open:not([hidden]) .pm7-mem-sheet .mm-list', { state: 'visible', timeout: 8000 });
+			await g.evaluate(async () => { await document.fonts.ready; });
+			await t.page.waitForTimeout(400);
+			const actual = await g.evaluate(SHEET_GEOMETRY);
+			const tag = size.join('x');
+			await t.check(`${tag}: the settled sheet card matches mock 10 within the chat frame`, !!actual && actual.card.every((v, i) => withinMock(v, card[i])), JSON.stringify({ actual: actual?.card, expected: card }));
+			await t.check(`${tag}: the settled sheet list starts at mock 10’s inset`, !!actual && withinMock(actual.listTop, listTop), JSON.stringify({ actual: actual?.listTop, expected: listTop }));
+			await t.page.keyboard.press('Escape');
+		}
 	});
 
 	T('FO-199 the sheet follows a held chat resize, no spill at any frame', async (t) => {

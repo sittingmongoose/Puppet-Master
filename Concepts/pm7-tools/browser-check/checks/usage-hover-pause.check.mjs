@@ -10,7 +10,8 @@
 // R107 retains pointer-departure checks; R112 retains long keyboard M/R ownership and unchanged main provider state.
 // R113 rows cover main's plot-at-limit/readout and pointer-tooltip behavior, ordinary compact donut entry, neutral
 // digit-strip rolls (NieR skip is explicit), released-gesture handoff and natural Live beats after real scroll cleanup.
-// R116 P5's short idle order is covered by tools/usage-hover-pause-handoff.selftest.mjs, which executes authored source.
+// R116 P5: --set shortOnly=1 witnesses trusted M/R and Escape before the original rest expires. The handoff self-test
+// exercises the controlled order in the authored source.
 // --set looks=basic-dark,glass-light --set rm=1 --set chartOnly=1 --set r113Only=1 --set dump=<file.json>
 // Fixed stopping bar: only a real check falsely passing on real input or a demonstrated product bug stops the lane;
 // other tool findings go on TOOL-ISSUES.md. Native input prerequisites and reduced-motion semantics remain explicit.
@@ -19,21 +20,42 @@ import { muteSound } from '../helpers/quiet-page.mjs';
 import { r113Cases } from '../helpers/usage-hover-pause-r113.mjs';
 import { burstState, burstWhy, REST_MS } from '../helpers/burst-rest.mjs';
 
+// Fixed budget for the measured interval from wheelEnd entry to the marker-clear observation.
+export const RETURN_WORK_MS = 16;
+
 // the recorder, installed once in the app's frame; __uhp.start() clears it and starts a window, __uhp.stop() ends it
-const INSTALL = () => {
+// (exported for tools/usage-hover-pause-probe.selftest.mjs, which runs it against a stub page and a timer queue)
+export const INSTALL = () => {
 	if (window.__uhp) return true;
 	const sc = document.getElementById('pmuScroll');
 	let board = document.getElementById('pmuBoard');
 	if (!board) return false;
 	const R = window.__uhp = { on: false };
+	const nativeTimeout = globalThis.setTimeout;
+	const timed = function (fn, delay, ...args) {
+		// 42-cards.js arms this named callback for the 150 ms wheel rest.
+		if (typeof fn !== 'function' || fn.name !== 'wheelEnd' || delay !== 150 || !R.probe)
+			return nativeTimeout(fn, delay, ...args);
+		const timer = R.timer = { inputDue: R.probe.due, armed: performance.now(), entered: null };
+		return nativeTimeout(function (...values) {
+			if (R.on && R.timer === timer) timer.entered = performance.now();
+			return Reflect.apply(fn, this, values);
+		}, delay, ...args);
+	};
 	const cardId = (c) => (c ? c.getAttribute('data-id') || c.getAttribute('data-card') || c.id || String([...board.children].indexOf(c)) : null);
 	const cls = (el) => String(el.className && el.className.baseVal !== undefined ? el.className.baseVal : el.className || el.tagName).slice(0, 48);
-	// The last input arms a 150 ms probe of the host's own timer lateness. The page's pause ends at that same rest, so a
-	// loaded host's late timer is measured here instead of assumed (TB6 item 2: the old wall-clock 200 ms bound read
-	// 197-257 ms on a correct page). 150 is literal: INSTALL is serialised into the page and cannot close over REST_MS.
-	const armProbe = (t) => { R.probe = { due: t + 150, fired: null }; clearTimeout(R.probeTimer); R.probeTimer = setTimeout(() => { R.probe.fired = performance.now(); }, 150); };
-	sc.addEventListener('wheel', () => { if (R.on) { const t = performance.now(); R.wheels.push(t); armProbe(t); } }, { passive: true, capture: true });
-	sc.addEventListener('scroll', () => { if (R.on) { const t = performance.now(); R.scrolls.push(t); armProbe(t); } }, { passive: true });
+	// Measure from this window capture callback to the probe callback. Earlier window listeners can have run
+	// already, and both timers share the renderer queue. This capture still precedes the scroller's wheelEnd arm.
+	// 150 is literal because INSTALL is serialized into the page.
+	const armProbe = (t) => { R.probe = { due: t + 150, fired: null }; clearTimeout(R.probeTimer); R.probeTimer = nativeTimeout(() => { R.probe.fired = performance.now(); }, 150); };
+	const onInput = (list) => (e) => {
+		if (!R.on) return;
+		if (list === 'scrolls' ? e.target !== sc : !e.composedPath().includes(sc)) return;
+		const t = performance.now();
+		R[list].push(t); armProbe(t);
+	};
+	window.addEventListener('wheel', onInput('wheels'), { passive: true, capture: true });
+	window.addEventListener('scroll', onInput('scrolls'), { passive: true, capture: true });
 	sc.addEventListener('transitionrun', (e) => {
 		if (!R.on) return;
 		const t = e.target, card = t.closest && t.closest('.pmu-card');
@@ -54,6 +76,27 @@ const INSTALL = () => {
 		const chartControlled=(e.propertyName==='opacity'&&t.matches?.('.pmu-mark[data-prov],path[data-mark="arc"],.pmu-colstack'))||(e.propertyName==='transform'&&t.matches?.('.pmu-col'))||(['background-color','background'].includes(e.propertyName)&&R.chartRows?.has(t));
 		R.trans.push({ chartControlled, t: performance.now(), prop: e.propertyName, pseudo: e.pseudoElement, cls: cls(t), card: cardId(card), under: !!under, approved: !!approved, exiting, from, to, self: !!(t.matches && t.matches(':hover')) });
 	}, true);
+	// These fixed layers can remain visible after a card's engine classes have changed.
+	const proxies = (card) => {
+		const required = card && getComputedStyle(card);
+		const needsGlow = required && +required.getPropertyValue('--pmh-glow') > 0;
+		const needsFrame = required && +required.getPropertyValue('--pmh-frame') > 0;
+		const target = card?.getBoundingClientRect();
+		const layers = [...document.querySelectorAll('#pmh-glow > i,#pmh-frame')].flatMap((el) => {
+			const style = getComputedStyle(el);
+			if (style.visibility !== 'visible' || style.display === 'none') return [];
+			const visible = +style.opacity > 0.01, armed = el.matches('.pmh-glow-on,.pmh-frame-on');
+			if (!visible && !armed) return [];
+			const box = el.getBoundingClientRect();
+			if (box.width <= 0 || box.height <= 0) return [];
+			const matchesTarget = target && Math.abs(box.left - target.left) <= 8 && Math.abs(box.top - target.top) <= 8;
+			return [{ frame: el.id === 'pmh-frame', matchesTarget, visible, armed }];
+		});
+		const hasProxies = (state) => (!needsGlow || layers.some((x) => !x.frame && x.matchesTarget && x[state])) &&
+			(!needsFrame || layers.some((x) => x.frame && x.matchesTarget && x[state]));
+		return { proxyLit: layers.some((x) => x.visible), proxyRequired: !!(needsGlow || needsFrame),
+			proxyArmed: hasProxies('armed'), proxyBack: hasProxies('visible') };
+	};
 	const frame = () => {
 		if (!R.on) return;
 		board = document.getElementById('pmuBoard');
@@ -61,39 +104,80 @@ const INSTALL = () => {
 		const tools = hc && hc.querySelector('.pmu-cardtools');
 		R.frames.push({ t: performance.now(), top: Math.round(sc.scrollTop), card: cardId(hc), tools: tools ? Math.round(parseFloat(getComputedStyle(tools).opacity) * 100) / 100 : null,
 			lit: [...board.querySelectorAll(':scope > .pmu-card.pmh-on')].map(cardId), near: [...board.querySelectorAll(':scope > .pmu-card.pmh-near')].map(cardId),
-			op: board.getAttribute('data-op'), highlights: board.querySelectorAll('.is-hl-on,.is-hl-dim,path[data-mark="arc"].is-dim,.pmu-dl-row.is-hot,.pmu-col.is-hot-col').length });
-		requestAnimationFrame(frame);
+			op: board.getAttribute('data-op'), ...proxies(hc), highlights: board.querySelectorAll('.is-hl-on,.is-hl-dim,path[data-mark="arc"].is-dim,.pmu-dl-row.is-hot,.pmu-col.is-hot-col').length });
+	};
+	// A tiny isolated size change gives one sample during each frame's layout, after all rAF callbacks.
+	const sampleBox = document.createElement('div');
+	sampleBox.style.cssText = 'position:fixed;left:0;top:0;width:1px;height:1px;pointer-events:none;opacity:0;contain:strict';
+	document.body.appendChild(sampleBox);
+	const sampler = new ResizeObserver(frame);
+	let raf, width = 1;
+	const tick = () => {
+		if (!R.on) return;
+		width = width === 1 ? 2 : 1;
+		sampleBox.style.width = width + 'px';
+		raf = requestAnimationFrame(tick);
 	};
 	// frames of 50 ms or more (Chrome's long-animation-frame entries), with their style and layout and their longest
 	// scripts, logged around the pause's end
 	try {
 		new PerformanceObserver((l) => { if (R.on) for (const e of l.getEntries()) R.loaf.push({ t: e.startTime, d: Math.round(e.duration), sl: Math.round(e.styleAndLayoutDuration || 0), scripts: [...(e.scripts || [])].sort((a, b) => b.duration - a.duration).slice(0, 3).map((s) => `${s.invoker || s.invokerType} ${Math.round(s.duration)} ms (forced style/layout ${Math.round(s.forcedStyleAndLayoutDuration || 0)})`) }); }).observe({ type: 'long-animation-frame' });
 	} catch (e) { /* no entries in this browser */ }
-	// when a card takes or drops the engine's light, timed as the class is written (the frame callbacks above run before
-	// the engine's in a frame, so a frame sample sees a light one frame after the frame that drew it)
+	// Reconstruct each write in a mutation batch, including a class-on before a same-task marker release.
+	const hasLight = (value) => (value || '').split(/\s+/).includes('pmh-on');
 	new MutationObserver((ms) => {
-		if (!R.on) return; const now = performance.now(), live = document.getElementById('pmuBoard');
-		for (const m of ms) {
-			if (m.target === live && m.attributeName === 'data-op') R.ops.push({t:now,op:live.getAttribute('data-op')});
-			if(m.attributeName==='class'&&m.target.matches?.('.pmu-irow.is-hl-on,.pmu-dl-row.is-hot'))R.chartRows.add(m.target);
-			if (m.attributeName === 'class' && m.target.parentNode === live && m.target.classList.contains('pmu-card')) R.cls.push({ t: now, card: cardId(m.target), on: m.target.classList.contains('pmh-on') });
+		if (!R.on) return;
+		const now = performance.now(), live = document.getElementById('pmuBoard');
+		const nextValues = new Map(), changes = [];
+		for (let i = ms.length - 1; i >= 0; i--) {
+			const { target, attributeName, oldValue } = ms[i];
+			if (attributeName === 'class' && target.matches?.('.pmu-irow.is-hl-on,.pmu-dl-row.is-hot')) R.chartRows.add(target);
+			const isOp = target === live && attributeName === 'data-op';
+			const isCard = attributeName === 'class' && target.parentNode === live && target.classList.contains('pmu-card');
+			if (!isOp && !isCard) continue;
+			const value = nextValues.has(target) ? nextValues.get(target) : target.getAttribute(attributeName);
+			nextValues.set(target, oldValue);
+			if (isOp && value !== oldValue) changes.push({ op: value });
+			if (isCard && hasLight(value) !== hasLight(oldValue)) changes.push({ card: cardId(target), on: hasLight(value) });
 		}
-	}).observe(sc, { attributes: true, attributeFilter: ['class','data-op'], subtree: true });
+		for (const change of changes.reverse()) {
+			const record = { t: now, order: R.order++, ...change };
+			('op' in change ? R.ops : R.cls).push(record);
+		}
+	}).observe(sc, { attributes: true, attributeFilter: ['class','data-op'], attributeOldValue: true, subtree: true });
 	R.start = () => {
 		const tools = document.querySelector('#pmuBoard .pmu-card:hover .pmu-cardtools');
 		const fadeMs = tools ? Math.max(...getComputedStyle(tools).transitionDuration.split(',').map((v) => parseFloat(v) * (v.trim().endsWith('ms') ? 1 : 1000))) : 140;
-		Object.assign(R, { on: true, chartRows:new WeakSet(board.querySelectorAll('.pmu-irow.is-hl-on,.pmu-dl-row.is-hot')), frames: [], wheels: [], scrolls: [], trans: [], loaf: [], cls: [], ops: [], fadeMs, rest: cardId(document.querySelector('#pmuBoard .pmu-card:hover')), t0: performance.now(), probe: null }); requestAnimationFrame(frame);
+		Object.assign(R, { on: true, chartRows:new WeakSet(board.querySelectorAll('.pmu-irow.is-hl-on,.pmu-dl-row.is-hot')), frames: [], wheels: [], scrolls: [], trans: [], loaf: [], cls: [], ops: [], order: 0, fadeMs, rest: cardId(document.querySelector('#pmuBoard .pmu-card:hover')), t0: performance.now(), probe: null, timer: null });
+		globalThis.setTimeout = timed;
+		sampler.observe(sampleBox);
+		raf = requestAnimationFrame(tick);
 	};
-	R.stop = () => { R.on = false; return { t0: R.t0, frames: R.frames, wheels: R.wheels, scrolls: R.scrolls, trans: R.trans, loaf: R.loaf, cls: R.cls, ops: R.ops, fadeMs: R.fadeMs, probe: R.probe }; };
+	R.stop = () => {
+		R.on = false;
+		clearTimeout(R.probeTimer);
+		if (globalThis.setTimeout === timed) globalThis.setTimeout = nativeTimeout;
+		cancelAnimationFrame(raf);
+		sampler.disconnect();
+		return { t0: R.t0, frames: R.frames, wheels: R.wheels, scrolls: R.scrolls, trans: R.trans, loaf: R.loaf,
+			cls: R.cls, ops: R.ops, fadeMs: R.fadeMs, probe: R.probe, timer: R.timer };
+	};
 	R.state = () => { board = document.getElementById('pmuBoard'); const hc = board.querySelector(':scope > .pmu-card:hover'), tools = hc && hc.querySelector('.pmu-cardtools'); return { card: cardId(hc), lit: !!(hc && hc.classList.contains('pmh-on')), tools: tools ? parseFloat(getComputedStyle(tools).opacity) : null }; };
 	return true;
 };
+
+// Both trusted wheel delivery and movement of the Usage scroll pane can re-arm the same hold.
+function holdInputs(wheels, scrolls) {
+	const time = (input) => typeof input === 'number' ? input : input.t;
+	const first = wheels.length ? time(wheels[0]) : Infinity;
+	return wheels.concat(scrolls).map(time).filter((t) => Number.isFinite(t) && t >= first).sort((a, b) => a - b);
+}
 
 // R1 and R2 from one window's record (pure, so the verdict can be read back from a dump)
 export function judge(rec, { rest, back }) {
 	const first = rec.wheels[0], lastWheel = rec.wheels.at(-1), firstScroll = rec.scrolls.find((t) => t >= first);
 	const lastScroll = rec.scrolls.at(-1) ?? lastWheel, end = Math.max(lastWheel, lastScroll);
-	// The event recorder follows the app's listener in the same task. Allow 2 ms at expiry for the two clocks in that task.
+	// Allow 2 ms between the window-capture timestamp and the scroller's re-arm in the same task.
 	const due = end + REST_MS, ops = (rec.ops || []).filter((x) => x.t >= first);
 	const startIndex = ops.findIndex((x) => x.op === 'wheel'), started = ops[startIndex];
 	const release = startIndex < 0 ? null : ops.slice(startIndex + 1).find((x) => x.op !== 'wheel');
@@ -110,42 +194,72 @@ export function judge(rec, { rest, back }) {
 		return false;
 	};
 	const ins = rec.trans.filter((x) => during(x) && x.under && !x.approved && !x.chartControlled && !x.exiting && !neutralExit(x));
-	const litFrames = active.filter((x) => x.lit.concat(x.near || []).length > 0);
+	const litFrames = active.filter((x) => x.lit.length || x.near?.length || x.proxyLit);
 	const toolFrames = active.filter((x) => x.t >= firstScroll + (rec.fadeMs ?? 140) + 50 && x.tools > 0.05);
-	// R2 times the first actual return after the independent rest deadline. An already-lit target is an early return.
+	// R2 times the first actual return after the pause's real end. An already-lit target is an early return.
 	const after = rec.frames.filter((x) => x.t >= due - 2);
 	const settled = after.at(-1), target = settled?.card;
-	const lightT = settled?.lit.includes(target) && settled.tools > 0.5 ?
-		(rec.cls || []).find((x) => x.t >= due - 2 && x.card === target && x.on)?.t ??
-		after.find((x) => x.card === target && x.lit.includes(target))?.t : null;
-	const toolsTr = rec.trans.find((x) => x.t >= due - 2 && x.card === target && x.prop === 'opacity' && /pmu-cardtools/.test(x.cls));
-	const toolsFr = after.find((x) => x.card === target && x.tools > 0.5);
-	const toolsT = toolsFr ? toolsFr.t : Infinity;
-	const backT = coverage && !litFrames.length && !toolFrames.length && lightT != null && toolsT !== Infinity ? Math.max(lightT, toolsT) : null;
-	// TB6 item 2: (a) the pause ends at the rest, no later than the host's own measured timer lateness (the probe armed
-	// with the last input); (b) the light and tools are back within two drawn frames of that end (the check's own rAF
-	// samples count frames, so a long frame between the end and the return costs one frame, not its milliseconds);
-	// (c) a hard outer cap still fails a page that returns very late.
 	const endT = release?.t ?? null;
+	// R125 #3: the return is judged only after the marker's actual removal. The old search started at the nominal
+	// deadline, so when the marker outlived it a light and tools already back in the gap counted (a negative back
+	// delay), and the row passed a page that never stayed suppressed to its end. Signals before the actual end are
+	// now an early return; the return itself must be seen at or after it.
+	const sinceEnd = (x) => endT != null && x.t >= endT;
+	const early = endT == null ? [] : after.filter((x) => x.t < endT && (x.proxyLit || (x.card === target && (x.lit.includes(target) || x.tools > 0.5))));
+	const earlyClass = release && (rec.cls || []).some((x) => {
+		const beforeRelease = x.t < endT || (x.t === endT && x.order < release.order);
+		const afterStart = x.t > started.t || (x.t === started.t && x.order > started.order);
+		return x.card === target && x.on && beforeRelease && afterStart;
+	});
+	const lightT = settled?.lit.includes(target) && settled.tools > 0.5 ?
+		after.find((x) => sinceEnd(x) && x.card === target && x.lit.includes(target))?.t ?? null : null;
+	const toolsTr = rec.trans.find((x) => sinceEnd(x) && x.card === target && x.prop === 'opacity' && /pmu-cardtools/.test(x.cls));
+	const toolsFr = after.find((x) => sinceEnd(x) && x.card === target && x.tools > 0.5);
+	const toolsT = toolsFr ? toolsFr.t : Infinity;
+	const targetSamples = after.filter((x) => sinceEnd(x) && x.card === target);
+	const proxyT = settled?.proxyRequired ? (settled.proxyBack ?
+		targetSamples.find((x) => x.proxyBack)?.t ?? Infinity : Infinity) : endT;
+	// A glow starts at zero opacity. Require it armed with the light and tools, plus a separate visible sample by the cap.
+	const proxyStart = settled?.proxyRequired ? targetSamples.find((x) => x.proxyArmed || x.proxyBack)?.t ?? Infinity : endT;
+	const backT = coverage && !litFrames.length && !toolFrames.length && !early.length && !earlyClass && lightT != null && toolsT !== Infinity && proxyStart !== Infinity ? Math.max(lightT, toolsT, proxyStart) : null;
+	// A probe on the last input estimates lateness, the product callback has a bounded return interval, and the
+	// first two sampled frames after marker clear must show the light and tools back. The outer cap covers the whole return.
 	const probe = rec.probe && Number.isFinite(rec.probe.due) && Number.isFinite(rec.probe.fired) ? rec.probe : null;
 	const late = probe ? Math.max(0, probe.fired - probe.due) : null;
 	const endDelay = endT != null ? endT - end : null;
-	const endOk = endDelay != null && late != null && endDelay >= REST_MS - 2 && endDelay <= REST_MS + late + 2;
+	// A shared queue can delay both callbacks. Entry delay beyond the probe is separate from the time in wheelEnd.
+	// Report the residual after subtracting the 150 ms rest and observed probe lateness.
+	const work = endDelay != null && late != null ? endDelay - REST_MS - late : null;
+	const timer = rec.timer;
+	const entry = probe && timer?.inputDue === probe.due && Number.isFinite(timer?.entered) ? timer.entered : null;
+	const entryGap = entry != null ? entry - Math.max(due, probe.fired) : null;
+	const callbackWork = entry != null && endT != null ? endT - entry : null;
+	const endOk = entryGap != null && entryGap <= 2 && entry >= due - 2 &&
+		callbackWork != null && callbackWork >= 0 && callbackWork <= RETURN_WORK_MS &&
+		endDelay >= REST_MS - 2 && endDelay <= REST_MS + late + RETURN_WORK_MS + 2;
 	const backDelay = backT != null && endT != null ? backT - endT : null;
-	const backFrames = backT != null && endT != null ? rec.frames.filter((x) => x.t > endT && x.t < backT).length : null;
+	// R125 #2: the sample that first shows the return is counted, so a light first seen on the third sample after the
+	// end reads 3 frames and fails; two frames means the return is on the first or the second drawn sample.
+	const backFrames = backT != null && endT != null ? rec.frames.filter((x) => x.t > endT && x.t <= backT).length : null;
 	const backOk = backFrames != null && backFrames <= 2;
-	const capOk = backT != null && backT - end <= back;
+	const capOk = backT != null && Math.max(backT, proxyT) - end <= back;
 	return {
 		r1: { ok: coverage && active.length >= 5 && ins.length === 0 && litFrames.length === 0 && toolFrames.length === 0, toolFrames: toolFrames.length, coverage, pauseEnd: release?.t, ins: ins.length, insCards: [...new Set(ins.map((x) => x.card))], insProps: [...new Set(ins.map((x) => x.prop + ' ' + x.cls.split(' ')[0]))].slice(0, 8), litFrames: litFrames.length, frames: rec.frames.filter(during).length, cardsPassed: [...new Set(rec.frames.filter(during).map((x) => x.card).filter(Boolean))].length },
 		r2: { ok: coverage && !litFrames.length && !toolFrames.length && backT != null && endOk && backOk && capOk,
 			ms: backT != null ? Math.round(backT - end) : null, card: target,
 			light: lightT != null ? Math.round(lightT - end) : null, tools: toolsT !== Infinity ? Math.round(toolsT - end) : null, toolsTransition: toolsTr ? Math.round(toolsTr.t - end) : null,
-			end: endDelay != null ? Math.round(endDelay) : null, late: late != null ? Math.round(late) : null,
-			back: backDelay != null ? Math.round(backDelay) : null, backFrames,
+			proxy: settled?.proxyRequired && Number.isFinite(proxyT) ? Math.round(proxyT - end) : null, proxyRequired: !!settled?.proxyRequired,
+			end: endDelay != null ? Math.round(endDelay) : null, late: late != null ? Math.round(late) : null, work: work != null ? Math.round(work) : null,
+			entryGap: entryGap != null ? Math.round(entryGap) : null, callbackWork: callbackWork != null ? Math.round(callbackWork) : null,
+			back: backDelay != null ? Math.round(backDelay) : null, backFrames, early: early.length, earlyClass: !!earlyClass,
 			long: (rec.loaf || []).filter((x) => x.t + x.d > end && x.t < end + 400).map((x) => `+${Math.round(x.t - end)} ms ${x.d} ms (style/layout ${x.sl}: ${x.scripts.join('; ') || 'no script'})`) },
 		span: { wheel: Math.round(lastWheel - first), tail: Math.round(lastScroll - lastWheel), wheels: rec.wheels.length, scrolls: rec.scrolls.length },
-		burst: burstState(rec.wheels)
+		burst: burstState(holdInputs(rec.wheels, rec.scrolls)), wheelGap: burstState(rec.wheels).maxGap
 	};
+}
+
+export function uninterruptedIntent({ enterIndex, overs, applied }) {
+	return enterIndex != null && overs.slice(enterIndex + 1).every((t) => t > (applied ?? Infinity));
 }
 
 async function providerRace(t, f, label, park) {
@@ -160,18 +274,27 @@ async function providerRace(t, f, label, park) {
 	const y = (top + bottom) / 2;
 	await f.evaluate(() => {
 		// R99's room routes can leave the spare first in DOM order; R4 samples the live board too.
-		const sc = document.getElementById('pmuScroll'), board = document.getElementById('pmuBoard');
-		const r = window.__uhpRace = { enter: null, wheel: null, end: null, pauses: [], during: [], frames: 0, moves: 0, outs: 0, startTop: sc.scrollTop,
+		const sc = document.getElementById('pmuScroll'), board = document.getElementById('pmuBoard'), root = document.getElementById('pmuApp');
+		const r = window.__uhpRace = { enter: null, enterIndex: null, overs: [], applied: null, wheel: null, end: null, pauses: [], during: [], frames: 0, moves: 0, outs: 0, startTop: sc.scrollTop,
 			clean: !board.querySelector('.is-hl-dim, .is-hl-on'), marks: board.querySelectorAll('.pmu-mark[data-prov]').length };
 		let target = null, running = true;
-		const over = (e) => { const el = e.target.closest?.('.pmu-skycol[data-prov]'); if (!target && el && board.contains(el)) { target = el; r.enter = performance.now(); r.id = el.dataset.prov; } };
+		const over = (e) => {
+			const provider = e.target.closest?.('[data-prov]');
+			if (!provider || !root.contains(provider) || provider.closest('.pmu-gallery')) return;
+			const now = performance.now(), column = provider.closest('.pmu-skycol[data-prov]');
+			if (!target && column && board.contains(column)) {
+				target = column; r.enter = now; r.enterIndex = r.overs.length; r.id = provider.dataset.prov;
+			}
+			r.overs.push(now);
+		};
 		const out = (e) => { if (target && target.contains(e.target) && !target.contains(e.relatedTarget)) r.outs++; };
 		const wheel = (e) => { r.wheel = performance.now(); r.wx = e.clientX; r.wy = e.clientY; };
 		const move = (e) => { if (r.wheel != null && (e.clientX !== r.wx || e.clientY !== r.wy)) r.moves++; };
 		const sample = (why) => {
+			const lit = board.querySelectorAll('.is-hl-dim, .is-hl-on');
+			if (lit.length && r.applied == null) r.applied = performance.now();
 			if (board.getAttribute('data-op') !== 'wheel') return;
 			r.frames++;
-			const lit = board.querySelectorAll('.is-hl-dim, .is-hl-on');
 			if (lit.length) r.during.push({ t: performance.now(), why, dim: board.querySelectorAll('.is-hl-dim').length, on: board.querySelectorAll('.is-hl-on').length });
 		};
 		const mo = new MutationObserver((ms) => {
@@ -183,11 +306,11 @@ async function providerRace(t, f, label, park) {
 		});
 		mo.observe(board, { attributes: true, attributeFilter: ['class', 'data-op'], subtree: true });
 		const frame = () => { if (!running) return; sample('frame'); requestAnimationFrame(frame); };
-		board.addEventListener('pointerover', over, true); board.addEventListener('pointerout', out, true);
+		root.addEventListener('pointerover', over, true); board.addEventListener('pointerout', out, true);
 		sc.addEventListener('wheel', wheel, { capture: true, passive: true }); sc.addEventListener('pointermove', move, true);
 		requestAnimationFrame(frame);
 		r.stop = () => {
-			running = false; mo.disconnect(); board.removeEventListener('pointerover', over, true); board.removeEventListener('pointerout', out, true);
+			running = false; mo.disconnect(); root.removeEventListener('pointerover', over, true); board.removeEventListener('pointerout', out, true);
 			sc.removeEventListener('wheel', wheel, true); sc.removeEventListener('pointermove', move, true);
 			const dim = [...board.querySelectorAll('.is-hl-dim')], on = [...board.querySelectorAll('.is-hl-on')];
 			return { ...r, stop: undefined, top: sc.scrollTop, paused: board.getAttribute('data-op') === 'wheel', targetHovered: !!target?.matches(':hover'),
@@ -203,15 +326,17 @@ async function providerRace(t, f, label, park) {
 	const rec = await f.evaluate(() => window.__uhpRace.stop());
 	t.log(label + 'R4 provider race: ' + JSON.stringify(rec));
 	const gap = rec.enter != null && rec.wheel != null ? rec.wheel - rec.enter : null;
-	await t.check(label + 'R4 could judge: enter then wheel within 110 ms, the board scrolls, pointer stays on the same provider',
-		rec.clean && rec.eligibleDim + rec.eligibleOn > 0 && gap != null && gap >= 0 && gap < 110 && rec.top > rec.startTop && rec.targetHovered && !rec.moves && !rec.outs,
-		`enter-to-wheel ${gap} ms, scroll ${rec.top - rec.startTop} px, hovered ${rec.targetHovered}, moves ${rec.moves}, leaves ${rec.outs}, clean ${rec.clean}, eligible dim/on ${rec.eligibleDim}/${rec.eligibleOn}`);
+	const qualified = rec.clean && rec.eligibleDim + rec.eligibleOn > 0 && gap != null && gap >= 0 && gap < 110 &&
+		rec.top > rec.startTop && rec.targetHovered && !rec.moves && !rec.outs && uninterruptedIntent(rec);
+	await t.check(label + 'R4 could judge: enter then wheel within 110 ms, with the same provider intent pending',
+		qualified, `enter-to-wheel ${gap} ms, scroll ${rec.top - rec.startTop} px, hovered ${rec.targetHovered}, moves ${rec.moves}, leaves ${rec.outs}, over ${JSON.stringify(rec.overs)}, applied ${rec.applied}, clean ${rec.clean}, eligible dim/on ${rec.eligibleDim}/${rec.eligibleOn}`);
+	if (!qualified) return rec;
 	if (String(t.args.raceNoPause || '') === '1') {
 		await t.check(label + 'R4 main control has no wheel marker and its ordinary provider intent completes', rec.pauses.length === 0 && rec.correct && rec.dim===rec.eligibleDim && rec.on===rec.eligibleOn && rec.dim+rec.on>0);
 		t.log(label + 'R4 main control: ordinary chart behavior is judged above; marker-only checks are inapplicable');
 		return rec;
 	}
-	await t.check(label + 'R4 main provider intent completes during the wheel hold without being cancelled or rearmed', rec.pauses.length > 0 && rec.frames > 0 && rec.during.some(x=>x.t>=rec.enter+100),
+	await t.check(label + 'R4 main provider intent completes during the wheel hold without being cancelled or rearmed', rec.pauses.length > 0 && rec.frames > 0 && rec.during.some(x=>x.t>=rec.enter+110),
 		`${rec.pauses.length} pauses, ${rec.frames} paused samples, ${rec.during.length} lit samples: ${JSON.stringify(rec.during.slice(0, 3))}`);
 	await t.check(label + 'R4 main provider highlight remains after the hold without a synthetic return', rec.end != null && !rec.paused && rec.targetHovered && rec.eligibleDim + rec.eligibleOn > 0 && rec.dim === rec.eligibleDim && rec.on === rec.eligibleOn && rec.correct,
 		`pause end ${rec.end}, paused ${rec.paused}, hovered ${rec.targetHovered}, dim ${rec.dim}, on ${rec.on}, correct provider ${rec.correct}`);
@@ -246,11 +371,12 @@ async function roomMountRace(t, f, label, park, rm) {
 		await t.page.waitForTimeout(500);
 		await f.evaluate(({ room, baseline, selector }) => {
 			const sc = document.getElementById('pmuScroll'), old = document.getElementById('pmuBoard');
-			const r = window.__uhpMount = { room, wheels: [], keys: [], samples: [], ends: [], moves: 0, oldPaused: false, swaps: 0 };
+			const r = window.__uhpMount = { room, wheels: [], scrolls: [], keys: [], samples: [], ends: [], moves: 0, oldPaused: false, swaps: 0 };
 			let running = true, last = old, position = null;
 			const live = () => document.getElementById('pmuBoard');
 			const wheel = (e) => { r.wheels.push({ t: performance.now(), trusted: e.isTrusted }); position = [e.clientX, e.clientY]; };
 			// Native input can mount the room before the next paint; witness the initial hold after its wheel handler.
+			const scroll = () => r.scrolls.push(performance.now());
 			const held = () => { if (old.getAttribute('data-op') === 'wheel') r.oldPaused = true; };
 			const keydown = (e) => { if (e.key === 'Enter' || e.key === ' ') r.keys.push({ t: performance.now(), key: e.key, trusted: e.isTrusted, room: e.target.dataset.room }); };
 			const move = (e) => { if (position && (e.clientX !== position[0] || e.clientY !== position[1])) r.moves++; };
@@ -276,11 +402,11 @@ async function roomMountRace(t, f, label, park, rm) {
 				}
 				requestAnimationFrame(sample);
 			};
-			sc.addEventListener('wheel', wheel, { capture: true, passive: true }); sc.addEventListener('wheel', held, { passive: true });
+			sc.addEventListener('wheel', wheel, { capture: true, passive: true }); sc.addEventListener('wheel', held, { passive: true }); sc.addEventListener('scroll', scroll, { passive: true });
 			document.addEventListener('keydown', keydown, true); sc.addEventListener('pointermove', move, true);
 			document.addEventListener('pmu-op-end', end); requestAnimationFrame(sample);
 			r.stop = () => {
-				running = false; sc.removeEventListener('wheel', wheel, true); sc.removeEventListener('wheel', held); document.removeEventListener('keydown', keydown, true);
+				running = false; sc.removeEventListener('wheel', wheel, true); sc.removeEventListener('wheel', held); sc.removeEventListener('scroll', scroll); document.removeEventListener('keydown', keydown, true);
 				sc.removeEventListener('pointermove', move, true); document.removeEventListener('pmu-op-end', end);
 				const b = live(), card = b?.querySelector(':scope > .pmu-card:hover'), tools = card?.querySelector('.pmu-cardtools');
 				const hot = b?.querySelector(selector + ':hover'), id = hot?.dataset.prov;
@@ -294,9 +420,10 @@ async function roomMountRace(t, f, label, park, rm) {
 		}, { room, baseline, selector });
 		// Real inputs at a wall-clock cadence, independent of renderer acknowledgements: serial awaiting lets the
 		// mount stall the test driver and can accidentally create two bursts. Mouse coordinates never change.
-		const INPUTS = 203, inputs = [];
+		const INPUTS = 203, inputs = [], sent = [];
 		for (let i = 0; i < INPUTS; i++) {
 			if (i === 3) inputs.push(t.page.keyboard.press(key));
+			sent.push(performance.now());
 			inputs.push(t.page.mouse.wheel(0, i < 3 || i % 2 ? 1 : -1));
 			await new Promise((resolve) => setTimeout(resolve, 30));
 		}
@@ -305,17 +432,17 @@ async function roomMountRace(t, f, label, park, rm) {
 		const rec = await f.evaluate(() => window.__uhpMount.stop());
 		const first = rec.wheels[0]?.t, last = rec.wheels.at(-1)?.t;
 		const during = rec.samples.filter((s) => s.t >= first && s.t <= last);
-		const gaps = rec.wheels.slice(1).map((w, i) => w.t - rec.wheels[i].t), maxGap = Math.max(...gaps);
-		const burst = burstState(rec.wheels), burstBroke = burst.broke, burstDetail = burstBroke ? burstWhy(burst) : null;
+		const maxGap = burstState(rec.wheels).maxGap, driverGap = burstState(sent).maxGap;
+		const burst = burstState(holdInputs(rec.wheels, rec.scrolls)), burstBroke = burst.broke, burstDetail = burstBroke ? burstWhy(burst) : null;
 		const activated = rec.keys.some((k) => k.trusted && k.room === room && k.t > first && k.t < last);
 		const S = label + `R5 ${room} (${rm ? 'Reduced Motion spare' : 'motion on'}, ${key}): `;
-		const detail = `wheels ${rec.wheels.length}, max gap ${Math.round(maxGap)} ms, samples ${during.length}, swaps ${rec.swaps}, moves ${rec.moves}, target ${rec.targetHovered}, calibration scroll ${destinationTop}`;
+		const detail = `wheels ${rec.wheels.length}, max gap ${burst.maxGap} ms (wheel delivery ${maxGap} ms, driver ${driverGap} ms), samples ${during.length}, swaps ${rec.swaps}, moves ${rec.moves}, target ${rec.targetHovered}, calibration scroll ${destinationTop}`;
 		t.log(S + detail + ' | return ' + JSON.stringify({ ends: rec.ends, op: rec.op, cardLit: rec.cardLit, tools: rec.tools, provider: rec.provider }));
-		records.push({ room, attempt: attempt + 1, at, destinationTop, maxGap, rec });
+		records.push({ room, attempt: attempt + 1, at, destinationTop, maxGap, driverGap, burst, rec });
 		// A busy mount can delay event delivery past 150 ms while the already-queued wheel task precedes the timer.
 		// Chrome may coalesce queued wheel inputs while busy; at least 80% must reach the page. The pause must
 		// actually stay alive: an end before the last tick rejects this run, regardless of that delivery gap, and a
-		// driver gap over the rest (TB6 item 1) is not a stationary burst even when its timer was late.
+		// gap in delivered pause input over the rest is also unqualified.
 		const qualified = (String(t.args.mountNoPause || '') === '1' || rec.oldPaused) && activated && rec.wheels.length >= INPUTS * 0.8 && rec.wheels.every((w) => w.trusted) && !burstBroke && rec.ends.every((e) => e.t > last) && !rec.moves && during.length > 10 && rec.swaps > 0 && rec.liveRoom === room && rec.targetHovered && destinationTop === 0;
 		if (!qualified && attempt < 2) { t.log(S + `unjudgeable attempt ${attempt + 1}; repeat the same input route: ` + detail); continue; }
 		await t.check(S + 'could judge trusted keyboard mount within one stationary wheel burst', qualified, detail);
@@ -397,38 +524,51 @@ async function appliedHighlights(t, f, label, park) {
 			const wheel = (e) => { r.wheels.push({ t: performance.now(), trusted: e.isTrusted }); pos = [e.clientX,e.clientY]; point = pos; };
 			const scroll = () => r.scrolls.push({ t: performance.now(), top: sc.scrollTop });
 			const move = (e) => { point = [e.clientX,e.clientY]; if (pos && (e.clientX !== pos[0] || e.clientY !== pos[1])) r.moves++; };
+			const start = (e) => { if (e.detail?.board === b && b.getAttribute('data-op') === 'wheel') r.marked = true; };
 			const end = (e) => { if (e.detail?.board === b) r.ends.push(performance.now()); };
 			const sample = () => { if (!running) return; if (kind === 'engine' || b.getAttribute('data-op') === 'wheel') r.frames.push(read()); requestAnimationFrame(sample); };
 			sc.addEventListener('wheel', wheel, { capture:true, passive:true }); sc.addEventListener('scroll',immediate,{passive:true}); sc.addEventListener('scroll', scroll, { passive:true }); sc.addEventListener('pointermove', move, true);
-			document.addEventListener('pmu-op-end', end); requestAnimationFrame(sample);
+			document.addEventListener('pmu-op-start', start); document.addEventListener('pmu-op-end', end); requestAnimationFrame(sample);
 			r.read = read;
-			r.stop = () => { running=false; sc.removeEventListener('wheel',wheel,true); sc.removeEventListener('scroll',immediate); sc.removeEventListener('scroll',scroll); sc.removeEventListener('pointermove',move,true); document.removeEventListener('pmu-op-end',end); return { ...r, read:undefined, stop:undefined, after:read() }; };
+			r.stop = () => { running=false; sc.removeEventListener('wheel',wheel,true); sc.removeEventListener('scroll',immediate); sc.removeEventListener('scroll',scroll); sc.removeEventListener('pointermove',move,true); document.removeEventListener('pmu-op-start',start); document.removeEventListener('pmu-op-end',end); if (r.pressListener) document.removeEventListener('pointerdown',r.pressListener,true); delete r.pressListener; return { ...r, read:undefined, stop:undefined, after:read() }; };
 		}, { kind, selector, reducedTool });
 		await t.page.mouse.move(at.x, at.y, { steps: 4 });
 		await t.page.waitForTimeout(kind === 'engine' ? 4000 : 900);
 		if (kind === 'tool') {
 			const menu = target.locator('.pmu-cardmenu').first(), mb = await menu.boundingBox();
-			if (!mb) { await t.check(label + 'R100 tool: menu button exists', false); continue; }
+			if (!mb) { await f.evaluate(() => window.__uhpApplied.stop()); await t.check(label + 'R100 tool: menu button exists', false); continue; }
 			at = { x: mb.x + mb.width / 2, y: mb.y + mb.height / 2 };
 			await t.page.mouse.move(at.x, at.y); await t.page.waitForTimeout(600);
 			if(!reducedTool) await f.evaluate(() => {
 				const r = window.__uhpApplied;
 				const down = (e) => { document.removeEventListener('pointerdown',down,true); const c = e.target.closest('.pmu-card'); const tools = c?.querySelector('.pmu-cardtools'); r.press={ trusted:e.isTrusted, tool:e.target.closest('[data-tool]')?.dataset.tool, opacity:tools ? parseFloat(getComputedStyle(tools).opacity) : null, paused:document.getElementById('pmuBoard').getAttribute('data-op') === 'wheel' }; };
+				r.pressListener = down;
 				document.addEventListener('pointerdown',down,true);
 			});
 		}
+		const S = label + 'R100 ' + kind + (rm && kind === 'tool' ? (reducedTool ? ' (Reduced Motion)' : ' (motion enabled)') : '') + ': ';
 		const pre = await f.evaluate(() => window.__uhpApplied.read());
 		if (kind === 'tool') {
 			await t.page.mouse.wheel(0, 1);
 			if (!reducedTool) {
-				await f.waitForFunction(() => document.getElementById('pmuBoard').getAttribute('data-op') === 'wheel');
+				try {
+					await f.waitForFunction(() => window.__uhpApplied.marked, null, { timeout: 10000 });
+				} catch (error) {
+					if (error.name !== 'TimeoutError') throw error;
+					const rec = await f.evaluate(() => window.__uhpApplied.stop());
+					records.push({ kind, attempt, pre, rec });
+					await t.check(S + 'could judge the fading-tool press: no pause marker within 10 s', false,
+						JSON.stringify({ wheels: rec.wheels, scrolls: rec.scrolls }));
+					await park();
+					continue;
+				}
 				await t.page.mouse.down(); await t.page.mouse.up();
 			}
 		}
 		else for(let i=0;i<18;i++){await t.page.mouse.wheel(0,kind==='engine'?-1:i%2?-1:1);await t.page.waitForTimeout(30);}
 		await t.page.waitForTimeout(900);
 		const rec = await f.evaluate(() => { const r=window.__uhpApplied.stop(); r.menuOpen=!!PMU.menu.current(); return r; });
-		const S=label+`R100 ${kind}${rm&&kind==='tool'?(reducedTool?' (Reduced Motion)':' (motion enabled)'):''}: `, last=rec.wheels.at(-1)?.t, marked=rec.frames.filter((x) => x.t >= rec.wheels[0]?.t+50);
+		const last=rec.wheels.at(-1)?.t, marked=rec.frames.filter((x) => x.t >= rec.wheels[0]?.t+50);
 		records.push({kind,attempt,pre,rec});
 		t.log(S+JSON.stringify({pre, neutral:rec.neutral, frames:marked.length, ends:rec.ends, press:rec.press, after:rec.after}));
 		if (kind === 'tool' && reducedTool) {
@@ -549,20 +689,40 @@ async function pointerDeparture(t, f, label, park) {
 }
 
 // R112: keyboard gestures need no pointer press/move, so they can take over an outstanding wheel return.
-async function keyboardPause(t, f, label, park) {
+export function judgeShortHandoff(rec) {
+	const wheel = rec.wheels[0], press = rec.keys.find((k) => k.key === rec.key), escape = rec.keys.find((k) => k.key === 'Escape');
+	const last = rec.scrolls.filter((s) => s.t < press?.t && s.op === 'wheel').at(-1);
+	const due = last ? last.t + REST_MS : null;
+	const entered = rec.markers.find((x) => x.t >= press?.t && x.t < escape?.t &&
+		x.gesture?.kb && x.gesture.type === rec.mode && x.dragHeld && x.op === rec.mode);
+	// The body releases the drag flag at idle sync, independently of what the board writes for data-op.
+	const idle = rec.markers.find((x) => x.t >= escape?.t && !x.gesture && !x.dragHeld);
+	const qualified = !!(wheel?.trusted && rec.wheels.length === 1 && last && last.top > rec.pre.top &&
+		press?.trusted && press.focused === 'health' && escape?.trusted && entered?.hovered &&
+		idle && idle.t < due && !rec.moves);
+	const held = [...rec.markers, ...rec.frames].filter((x) => x.t >= idle?.t && x.t < due - 2);
+	const [end] = rec.ends;
+	const ok = qualified && entered.handoff && idle.op === 'wheel' && held.every((x) => x.op === 'wheel' && x.hovered) &&
+		rec.ends.length === 1 && end.live && !end.op && !end.gesture && end.t >= due - 2 && end.t <= due + 250 &&
+		JSON.stringify(end.point) === JSON.stringify(rec.point) && rec.after.hovered && !rec.after.op && !rec.after.gesture;
+	return { qualified, ok, due, entered: entered?.t ?? null, idle: idle?.t ?? null,
+		escape: escape?.t ?? null, press: press?.t ?? null, held: held.length };
+}
+
+async function keyboardPause(t, f, label, park, short = false) {
 	await park();
 	const liveWasOn = await f.evaluate(() => { const on = PMU.live.on(); PMU.live.pause(); PM7_USAGE.setRoomDetail('overview', 'glance'); return on; });
 	await t.page.waitForTimeout(4500);
 	// Keep the gesture's cards and a real provider mark. Laying out unrelated widgets can delay Chrome's second tick.
-	await f.evaluate(() => {
+	await f.evaluate((short) => {
 		const b = PMU.board, board = document.getElementById('pmuBoard');
 		const provider = board.querySelector('.pmu-skycol[data-prov]')?.dataset.prov;
 		const row = [...board.querySelectorAll('.pmu-irow[data-prov]')].find((el) => el.dataset.prov === provider);
 		const mark = [...board.querySelectorAll('.pmu-mark[data-prov]')].find((el) => el.dataset.prov !== provider);
-		const witness = (row || mark)?.closest('.pmu-card')?.dataset.widget;
+		const witness = !short && (row || mark)?.closest('.pmu-card')?.dataset.widget;
 		const keep = new Set(['health', 'ov-skyline', witness]);
 		b.visible().filter((id) => !keep.has(id)).forEach((id) => b.setVisible(id, false));
-	});
+	}, short);
 	await t.page.waitForTimeout(1800);
 	const minHeight = await f.evaluate(() => {
 		const board = document.getElementById('pmuBoard'), pane = document.getElementById('pmuScroll');
@@ -571,8 +731,13 @@ async function keyboardPause(t, f, label, park) {
 		return prior;
 	});
 	const records = [];
-	for (const [key, mode] of [['m', 'move'], ['r', 'resize']]) {
-		const S = label + `R112 ${mode}: `;
+	const tries = short ? 3 : 1;
+	const done = new Set();
+	const cases = [['m', 'move'], ['r', 'resize']].flatMap(([key, mode]) =>
+		Array.from({ length: tries }, (_, attempt) => ({ key, mode, attempt: attempt + 1 })));
+	for (const { key, mode, attempt } of cases) {
+		if (done.has(mode)) continue;
+		const S = label + (short ? 'R116 P5 short ' : 'R112 ') + mode + ': ';
 		await park();
 		await f.evaluate(() => { document.getElementById('pmuScroll').scrollTop = 0; });
 		await f.locator('#pmuBoard > .pmu-card[data-widget="health"]').focus();
@@ -581,35 +746,83 @@ async function keyboardPause(t, f, label, park) {
 		if (!box || !pane) { await t.check(S + 'could judge: Skyline provider and focused card exist', false); continue; }
 		await t.page.mouse.move(box.x + box.width / 2, (Math.max(box.y, pane.y) + Math.min(box.y + box.height, pane.y + pane.height)) / 2);
 		await t.page.waitForTimeout(900);
-		await f.evaluate(({key, mode}) => {
+		await f.evaluate(({ key, mode, short }) => {
 			const sc = document.getElementById('pmuScroll'), board = () => document.getElementById('pmuBoard');
 			const target = board().querySelector('.pmu-card[data-widget="ov-skyline"] .pmu-skycol[data-prov]:hover');
 			const track = target?.querySelector('.pmu-skytrack');
 			const read = () => {
-				const b = board(), dim = [...b.querySelectorAll('.is-hl-dim')], on = [...b.querySelectorAll('.is-hl-on')];
-				return { t: performance.now(), op: b.getAttribute('data-op'), gesture: PMU.board.gesture(), top: sc.scrollTop, shadow: track && getComputedStyle(track).boxShadow,
-					hovered: !!target?.isConnected && target.closest('.pmu-board') === b && target.matches(':hover'),
+				const b = board();
+				const sample = { t: performance.now(), op: b.getAttribute('data-op'), gesture: PMU.board.gesture(),
+					handoff: b.hasAttribute('data-wheel-handoff'), dragHeld: document.body.classList.contains('pm-resizing'), top: sc.scrollTop,
+					hovered: !!target?.isConnected && target.closest('.pmu-board') === b && target.matches(':hover') };
+				// The short native route needs the idle mutation. Continuous style reads consume its idle time.
+				if (short) return sample;
+				const dim = [...b.querySelectorAll('.is-hl-dim')], on = [...b.querySelectorAll('.is-hl-on')];
+				return { ...sample, shadow: track && getComputedStyle(track).boxShadow,
 					dim: dim.length, on: on.length, correct: !!target && dim.every((el) => el.dataset.prov !== target.dataset.prov) && on.every((el) => el.dataset.prov === target.dataset.prov),
 					eligibleDim: [...b.querySelectorAll('.pmu-mark[data-prov]')].filter((el) => el.dataset.prov !== target?.dataset.prov).length,
 					eligibleOn: [...b.querySelectorAll('.pmu-irow[data-prov]')].filter((el) => el.dataset.prov === target?.dataset.prov).length };
 			};
 			const r = window.__uhpKeyboard = { key, mode, pre: read(), focused: document.activeElement?.dataset.widget, wheels: [], scrolls: [], keys: [], ends: [], moves: 0, frames: [], markers: [] };
-			let running = true, point = null;
+			let running = true, point = null, notifyScroll, notifyMarker;
+			const shortScroll = short && new Promise((resolve) => { notifyScroll = resolve; });
+			const shortMarker = short && new Promise((resolve) => { notifyMarker = resolve; });
+			if (short) r.wait = (kind) => new Promise((resolve) => {
+				const timeout = setTimeout(() => resolve(false), 150);
+				(kind === 'scroll' ? shortScroll : shortMarker).then(() => { clearTimeout(timeout); resolve(true); });
+			});
 			const wheel = (e) => {
 				point = [e.clientX, e.clientY];
 				r.wheels.push({t: performance.now(), trusted: e.isTrusted, ...read()});
 			};
-			const scroll = () => r.scrolls.push({ t: performance.now(), top: sc.scrollTop, op: board().getAttribute('data-op') });
+			const scroll = () => {
+				const sample = { t: performance.now(), top: sc.scrollTop, op: board().getAttribute('data-op') };
+				r.scrolls.push(sample);
+				if (sample.op === 'wheel' && sample.top > r.pre.top) notifyScroll?.();
+			};
 			const keydown = (e) => { if (e.key === key || e.key === 'Escape') r.keys.push({t: performance.now(), key: e.key, trusted: e.isTrusted, focused: e.target.dataset.widget}); };
 			const move = (e) => { if (point && (e.clientX !== point[0] || e.clientY !== point[1])) r.moves++; };
 			const end = (e) => r.ends.push({t: performance.now(), live: e.detail?.board === board(), gesture: !!PMU.board.gesture(), op: board().getAttribute('data-op'), point: e.detail?.point});
 			const frame = () => { if (!running) return; r.frames.push(read()); requestAnimationFrame(frame); };
 			sc.addEventListener('wheel', wheel, {passive: true}); sc.addEventListener('scroll', scroll, {passive: true}); document.addEventListener('keydown', keydown, true); document.addEventListener('pointermove', move, true); document.addEventListener('pmu-op-end', end);
-			const markers = new MutationObserver(() => r.markers.push(read()));
-			markers.observe(board(), { attributes: true, attributeFilter: ['data-op'] });
-			requestAnimationFrame(frame);
-			r.stop = () => { running = false; markers.disconnect(); sc.removeEventListener('wheel', wheel); sc.removeEventListener('scroll', scroll); document.removeEventListener('keydown', keydown, true); document.removeEventListener('pointermove', move, true); document.removeEventListener('pmu-op-end', end); return {...r, stop: undefined, point, after: read()}; };
-		}, {key, mode});
+			let dragHeld = r.pre.dragHeld;
+			const markers = new MutationObserver((changes) => {
+				const sample = read();
+				if (changes.every((change) => change.target === document.body) && sample.dragHeld === dragHeld) return;
+				dragHeld = sample.dragHeld;
+				r.markers.push(sample);
+				if (sample.op === mode && sample.gesture?.kb) notifyMarker?.();
+			});
+			markers.observe(board(), { attributes: true, attributeFilter: short ? ['data-op', 'data-wheel-handoff'] : ['data-op'] });
+			if (short) markers.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+			else requestAnimationFrame(frame);
+			r.stop = () => { running = false; markers.disconnect(); sc.removeEventListener('wheel', wheel); sc.removeEventListener('scroll', scroll); document.removeEventListener('keydown', keydown, true); document.removeEventListener('pointermove', move, true); document.removeEventListener('pmu-op-end', end); return {...r, stop: undefined, wait: undefined, point, after: read()}; };
+		}, { key, mode, short });
+		if (short) {
+			const [rolled] = await Promise.all([
+				f.evaluate(() => window.__uhpKeyboard.wait('scroll')),
+				t.page.mouse.wheel(0, 1)
+			]);
+			if (rolled) {
+				const marker = f.evaluate(() => window.__uhpKeyboard.wait('marker'));
+				await t.page.keyboard.press(key);
+				await marker;
+				await t.page.keyboard.press('Escape');
+			}
+			await t.page.waitForTimeout(500);
+			const rec = await f.evaluate(() => window.__uhpKeyboard.stop());
+			const verdict = judgeShortHandoff(rec);
+			records.push({ attempt, rec, verdict });
+			const detail = JSON.stringify({ attempt, wheels: rec.wheels.map((x) => x.t), scrolls: rec.scrolls, ...verdict });
+			t.log(S + detail);
+			if (!verdict.qualified && attempt < tries) continue;
+			await t.check(S + 'could judge trusted M/R and idle release before the original wheel deadline', verdict.qualified, detail);
+			if (verdict.qualified) {
+				done.add(mode);
+				await t.check(S + 'wheel suppression survives idle release and ends once at the original deadline', verdict.ok, detail);
+			}
+			continue;
+		}
 		await t.page.mouse.wheel(0, 1);
 		// TB6 item 3: the real VM abort in stream F's batch 13 was this wait (usage-hover-pause.check.mjs:570 then), not
 		// only pointerDeparture's. Catch it, mark the group could not judge, and let the rest of the check run.
@@ -747,7 +960,7 @@ async function wheelProxies(t, f, label, park) {
 		const r = await f.evaluate(() => window.__usageProxies.stop());
 		const first = r.wheels[0], moved = r.scrolls.find((s) => s.top > first?.top);
 		const last = Math.max(r.wheels.at(-1)?.t, r.scrolls.at(-1)?.t);
-		const burst = burstState(r.wheels), burstDetail = burst.broke ? burstWhy(burst) : null;
+		const burst = burstState(holdInputs(r.wheels, r.scrolls)), burstDetail = burst.broke ? burstWhy(burst) : null;
 		const held = r.frames.filter((s) => s.top > first?.top && s.t >= moved?.t && s.t < last + 130);
 		const before = first?.layers.filter((l) => l.opacity > 0.05 && l.on === (kind === 'settled glow')) || [];
 		const bright = held.flatMap((s) => s.layers.filter((l) => l.opacity > 0.01).map((l) => ({ ...l, t: s.t, top: s.top })));
@@ -770,11 +983,19 @@ async function wheelProxies(t, f, label, park) {
 	return records;
 }
 
+// R125 #4: 400 ms is the hard ceiling on the return from the last input; --set back= may only lower it, so a runner
+// cannot widen the rule it is running. (Non-numbers and non-positive values fall back to the ceiling.)
+export const RETURN_CAP_MS = 400;
+export const outerCap = (back) => {
+	const n = Number(back);
+	return Number.isFinite(n) && n > 0 ? Math.min(RETURN_CAP_MS, n) : RETURN_CAP_MS;
+};
+
 export default async function (t) {
 	const looks = String(t.args.looks || 'basic-dark').split(',').filter(Boolean);
-	// BACK: the hard outer cap on the return from the last input (TB6 item 2: 400 ms); the judged return is the pause's
-	// own end (150 ms rest plus the host's measured timer lateness) and two frames after it.
-	const TRIES = Number(t.args.tries || 3), TICKS = Number(t.args.ticks || 12), GAP = Number(t.args.gap || 30), BACK = Number(t.args.back || 400);
+	// BACK: the hard outer cap on the return from the last input (TB6 item 2: 400 ms, R125 #4: clamped, never raised);
+	// the judged return is the pause's own end (150 ms rest plus the host's measured timer lateness) and two frames after.
+	const TRIES = Number(t.args.tries || 3), TICKS = Number(t.args.ticks || 12), GAP = Number(t.args.gap || 30), BACK = outerCap(t.args.back ?? 400);
 	const W = 1920, H = 1080;
 	await t.viewport(W, H);
 	await muteSound(t.page);
@@ -792,6 +1013,12 @@ export default async function (t) {
 			await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 }).catch(() => {});
 			await f.evaluate(() => PM_PAGES.go('usage'));
 			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 8000));
+			if (String(t.args.shortOnly || '') === '1') {
+				const short = await keyboardPause(t, f, S, park, true);
+				dump.push({ surface, look, short });
+				if (t.args.dump) writeFileSync(String(t.args.dump), JSON.stringify(dump));
+				continue;
+			}
 			const proxyOnly = String(t.args.proxyOnly || '') === '1';
 			if (!holdOnly && !rm && /^(basic|friendly|glass)-/.test(look) && (proxyOnly ||
 				!['narrowOnly', 'chartOnly', 'raceOnly', 'mountOnly', 'departureOnly', 'keyboardOnly', 'r113Only'].some((key) => String(t.args[key] || '') === '1'))) {
@@ -844,7 +1071,7 @@ export default async function (t) {
 			const res = { r0: [], r1: [], r2: [], burst: [] };
 			const at0 = await f.evaluate(() => { const p = document.querySelector('.page.active') || document.body, r = p.getBoundingClientRect(); return { x: Math.round(r.left + r.width / 2), y: Math.round(r.top + r.height * 0.55) }; });
 			for (let w = 0; w < TRIES; w++) {
-				let rec, rest, at, j, short = [];
+				let rec, rest, at, j, driverGap, short = [];
 				for (let attempt = 0; attempt < 3; attempt++) {
 					await park();
 					await t.page.waitForTimeout(500);
@@ -854,7 +1081,13 @@ export default async function (t) {
 					await t.page.waitForTimeout(1200);
 					rest = await f.evaluate(() => window.__uhp.state());
 					await f.evaluate(() => window.__uhp.start());
-					for (let i = 0; i < TICKS; i++) { await t.page.mouse.wheel(0, 40); await t.page.waitForTimeout(GAP); }
+					const sent = [];
+					for (let i = 0; i < TICKS; i++) {
+						sent.push(performance.now());
+						await t.page.mouse.wheel(0, 40);
+						await t.page.waitForTimeout(GAP);
+					}
+					driverGap = burstState(sent).maxGap;
 					await t.page.waitForTimeout(800);
 					rec = await f.evaluate(() => window.__uhp.stop());
 					const moved = rec.frames.length ? rec.frames[rec.frames.length - 1].top - rec.frames[0].top : 0;
@@ -864,16 +1097,16 @@ export default async function (t) {
 				const moved = rec.frames.length ? rec.frames[rec.frames.length - 1].top - rec.frames[0].top : 0;
 				if (!rec.wheels.length || moved < TICKS * 40 * 0.6) { await t.check(`${S}window ${w + 1}: could judge: the wheel scrolled the board`, false, short.join('; ')); continue; }
 				j = judge(rec, { rest: rest.card, back: BACK });
-				dump.push({ surface, look, window: w + 1, rest, at, judged: j, rec });
+				dump.push({ surface, look, window: w + 1, rest, at, judged: j, driverGap, rec });
 				res.r0.push(!!(rest.card && rest.lit && rest.tools > 0.5));
 				res.r1.push(j.r1); res.r2.push(j.r2); res.burst.push(j.burst);
-				t.log(`${S}window ${w + 1}: at rest card ${rest.card} lit ${rest.lit} tools ${rest.tools} | wheel ${j.span.wheels} events over ${j.span.wheel} ms, scroll ${j.span.scrolls} events ending ${j.span.tail} ms after the last wheel, ${moved} px | during: ${j.r1.cardsPassed} cards under the pointer, ${j.r1.ins} hover-in transitions (${j.r1.insProps.join(', ') || 'none'}) on ${j.r1.insCards.join(',') || 'no card'}, ${j.r1.litFrames} of ${j.r1.frames} frames retain a card engine light, ${j.r1.toolFrames} retain shown tools | after: back in ${j.r2.ms === null ? 'never (800 ms)' : j.r2.ms + ' ms'} on ${j.r2.card} (light ${j.r2.light ?? 'never'}, tools ${j.r2.tools ?? 'never'}; pause end ${j.r2.end ?? 'never'} ms after the rest, host timer late ${j.r2.late ?? '?'} ms, back ${j.r2.back ?? 'never'} ms = ${j.r2.backFrames ?? '?'} drawn frames)${j.r2.long.length ? ' | long frames after: ' + j.r2.long.join(' / ') : ''}${short.length ? ' | taken again: ' + short.join('; ') : ''}`);
+				t.log(`${S}window ${w + 1}: at rest card ${rest.card} lit ${rest.lit} tools ${rest.tools} | wheel ${j.span.wheels} events over ${j.span.wheel} ms, max gap ${j.burst.maxGap} ms (wheel delivery ${j.wheelGap} ms, driver ${driverGap} ms), scroll ${j.span.scrolls} events ending ${j.span.tail} ms after the last wheel, ${moved} px | during: ${j.r1.cardsPassed} cards under the pointer, ${j.r1.ins} hover-in transitions (${j.r1.insProps.join(', ') || 'none'}) on ${j.r1.insCards.join(',') || 'no card'}, ${j.r1.litFrames} of ${j.r1.frames} frames retain a card engine light or visible proxy, ${j.r1.toolFrames} retain shown tools | after: back in ${j.r2.ms === null ? 'never (800 ms)' : j.r2.ms + ' ms'} on ${j.r2.card} (light ${j.r2.light ?? 'never'}, tools ${j.r2.tools ?? 'never'}, proxy ${j.r2.proxyRequired ? j.r2.proxy ?? 'never' : 'n/a'}; pause end ${j.r2.end ?? 'never'} ms after the rest, host timer late ${j.r2.late ?? '?'} ms, excess ${j.r2.work ?? '?'} ms, timer entry gap ${j.r2.entryGap ?? '?'} ms, callback to marker clear ${j.r2.callbackWork ?? '?'} ms, back ${j.r2.back ?? 'never'} ms = ${j.r2.backFrames ?? '?'} drawn frames)${j.r2.long.length ? ' | long frames after: ' + j.r2.long.join(' / ') : ''}${short.length ? ' | taken again: ' + short.join('; ') : ''}`);
 				if (t.args.dump) writeFileSync(String(t.args.dump), JSON.stringify(dump));
 			}
 			await park();
 			const n = res.r1.length;
 			await t.check(S + `could judge: at rest the card under the pointer is lit and shows its tools (${res.r0.filter(Boolean).length} of ${res.r0.length} windows)`, n === TRIES && res.r0.every(Boolean), `windows judged ${n} of ${TRIES}`);
-			// TB6 item 1: a driver gap longer than the rest lets the pause end correctly mid-burst. The burst row FAILS
+			// A gap in delivered pause inputs longer than the rest lets the pause end correctly mid-burst. The burst row FAILS
 			// (could not judge), and the rows that depend on the pause surviving the whole burst are skipped with the gap
 			// in a SKIP log line, so one host-timing miss reads as one failure, not five.
 			await t.check(S + `could judge: each wheel burst kept the pause alive (no gap over the ${REST_MS} ms rest)`, n === TRIES && res.burst.length === TRIES && res.burst.every((b) => !b.broke),
@@ -887,7 +1120,7 @@ export default async function (t) {
 					res.r1.map((r, i) => `w${i + 1}: ${r.ins} hover-in transitions, ${r.litFrames} lit frames, ${r.toolFrames} shown-tool frames, marker coverage ${r.coverage}, ${r.frames} sampled frames, ${r.cardsPassed} cards passed`).join('; '));
 				await t.check(S + `after the wheel, the pause ends at its ${REST_MS} ms rest and the highlight is back within two frames without a move (outer cap ${BACK} ms)`, !burstBroke && n > 0 && res.r2.every((r) => r.ok),
 					burstBroke ? burstDetail :
-					res.r2.map((r, i) => `w${i + 1}: ${r.ms === null ? 'never' : r.ms + ' ms'} (${r.card}: light ${r.light ?? 'never'}, tools ${r.tools ?? 'never'}; pause end ${r.end ?? 'never'} ms, host timer late ${r.late ?? '?'} ms, back ${r.back ?? 'never'} ms = ${r.backFrames ?? '?'} drawn frames)`).join('; '));
+					res.r2.map((r, i) => `w${i + 1}: ${r.ms === null ? 'never' : r.ms + ' ms'} (${r.card}: light ${r.light ?? 'never'}, tools ${r.tools ?? 'never'}, proxy ${r.proxyRequired ? r.proxy ?? 'never' : 'n/a'}; pause end ${r.end ?? 'never'} ms, host timer late ${r.late ?? '?'} ms, excess ${r.work ?? '?'} ms, entry gap ${r.entryGap ?? '?'} ms, callback work ${r.callbackWork ?? '?'} ms, back ${r.back ?? 'never'} ms = ${r.backFrames ?? '?'} drawn frames${r.early ? `, and ${r.early} samples showed the return before the end` : ''})`).join('; '));
 			}
 
 			// R3: keyboard focus is not paused. The board's first card takes keyboard focus (a key pressed first, so the
