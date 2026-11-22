@@ -103,6 +103,7 @@ def _refuse_withdrawn(label, row, withdrawn):
                      + '; remove the definition (scripts/pm_goal_dg5_withdrawn_proofs.json)')
 
 
+
 class ProofDuplicateError(ValueError):
     """A written-proof key is defined more than once (TOOL-ISSUES T316): fail closed, nothing judged."""
 
@@ -229,6 +230,7 @@ def written_proofs():
                 continue
             label = 'scripts/%s%s.py' % (stem, name)
             for key, line in _proof_key_occurrences(module, label):
+                _refuse_withdrawn(label, key, withdrawn)
                 if key in seen:
                     first_label, first_line = seen[key]
                     where = 'within' if first_label == label else 'across'
