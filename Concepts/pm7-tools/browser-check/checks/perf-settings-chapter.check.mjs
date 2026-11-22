@@ -501,6 +501,13 @@ async function moreOptionsRow(t, f, label, expectedReduced) {
 	} finally { await f.evaluate(() => window.__pscMore.stop()); }
 }
 
+// PM7PERF-SETCHAPTER-SELECTALL-MAC-KEY-REMOTE: Playwright resolves ControlOrMeta on the DRIVER's platform, so a
+// Linux driver sent Control+A to Mac Chrome and the five native selection rows failed (astra-max-15: Command+A
+// selected Terminal colors and the editing words in all four native editor controls on both pages). Choose the
+// modifier from the BROWSER's platform (navigator.platform), not the driver's. Exported for
+// tools/settings-chapter.selftest.mjs.
+export const selectAllModifier = (platform) => /Mac|iPhone|iPad|iPod/.test(platform || '') ? 'Meta' : 'Control';
+
 export const tests = {};
 export { FILL_WAIT };
 
@@ -624,6 +631,9 @@ for (const surface of ['normal', 'sandbox']) {
 		await t.viewport(1920, 1080); await muteSound(t.page);
 		await t.emulate({ reducedMotion: t.args.motion === 'reduce' ? 'reduce' : 'no-preference' });
 		const f = await t.app.open({ sandbox: surface === 'sandbox' });
+		const platform = await f.evaluate(() => navigator.platform);
+		const selectAllKey = selectAllModifier(platform) + '+A';
+		t.log(`${surface} Select All key: ${selectAllKey} (browser platform ${platform})`);
 		await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
 		await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(700);
 		await f.evaluate(() => {
@@ -645,7 +655,7 @@ for (const surface of ['normal', 'sandbox']) {
 		try {
 			await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
 			await f.waitForFunction(() => window.__pscSelectAll.ready, null, { timeout: 5000 });
-			await t.page.keyboard.press('ControlOrMeta+A');
+			await t.page.keyboard.press(selectAllKey);
 			const r = await f.evaluate(() => { const { stop, ...r } = window.__pscSelectAll; return { ...r, selectedTerminal: getSelection().toString().includes('Terminal colors') }; });
 			t.log(`${surface} Select All: pending ${r.before} -> ${r.after}, Terminal look pending ${r.targetPending}, chapter focus ${r.chapterFocus}, selected Terminal colors ${r.selectedTerminal}`);
 			await t.check(`${surface}: Select All reached the chapter button while Terminal look was pending`, r.seen && r.chapterFocus && r.before > 0 && r.targetPending, JSON.stringify(r));
@@ -660,6 +670,9 @@ for (const surface of ['normal', 'sandbox']) {
 		await t.viewport(1920, 1080); await muteSound(t.page);
 		await t.emulate({ reducedMotion: t.args.motion === 'reduce' ? 'reduce' : 'no-preference' });
 		const f = await t.app.open({ sandbox: surface === 'sandbox' });
+		const platform = await f.evaluate(() => navigator.platform);
+		const selectAllKey = selectAllModifier(platform) + '+A';
+		t.log(`${surface} Select All key: ${selectAllKey} (browser platform ${platform})`);
 		await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
 		for (const kind of ['input', 'textarea', 'contenteditable', 'plaintext-only', 'code-editor']) {
 			await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(700);
@@ -695,7 +708,7 @@ for (const surface of ['normal', 'sandbox']) {
 			try {
 				await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
 				await f.waitForFunction(() => window.__pscEditing.ready, null, { timeout: 5000 });
-				await t.page.keyboard.press('ControlOrMeta+A');
+				await t.page.keyboard.press(selectAllKey);
 				const r = await f.evaluate(() => { const { stop, selection, ...r } = window.__pscEditing; return { ...r, selected: selection() }; });
 				t.log(`${surface} ${kind} Select All: pending ${r.before} -> ${r.after}, focused ${r.focused}, default prevented ${r.prevented}`);
 				await t.check(`${surface} ${kind}: Select All reached the editor with pending lists`, r.seen && r.focused && r.before > 0, JSON.stringify(r));
