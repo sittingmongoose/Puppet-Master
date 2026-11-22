@@ -1363,6 +1363,35 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
         self.assertEqual(self.git("status", "--porcelain", "--", m.rel(alias)), "")  # the same tree
         self.assertEqual(m.validate_registry(self.registry), linked)
 
+    def test_registry_pin_batch_rejected_marker_cannot_hide_a_stale_split_ref(self) -> None:
+        """T333 (Astra medium 2): a split-only holder whose batch marker is rejected keeps its pins
+        over the whole set, the row included, so a registry set that drifted from its receipt stays
+        in the historical stale inventory."""
+        m = pm_audit_closure
+        original = self.target
+        second = m._self_test_registry_row(**{**original, "closure_id": "closure-second", "detail_keys": ["second"]})
+        write_jsonl(self.registry, [original, second])
+        self.target = second
+        self.prepare_record(line=2)
+        code, seeded = self.append()
+        self.assertEqual((code, seeded["appended"], seeded["errors"]), (0, 1, []), seeded)
+        prior_pin = json.loads(self.registry.read_bytes().splitlines()[2])
+        self.prepare_pin_batch_records([(1, original), (3, prior_pin)], split_lines=(3,))
+        rows = self.append_pin_batch()
+        moved = copy.deepcopy(rows)
+        moved[3]["audit_ids"] = ["audit-moved"]  # the plain member leaves the audit set
+        moved[3]["closed_by_audit_id"] = "audit-moved"
+        write_jsonl(self.registry, moved)
+        self.commit("move the plain member out of the audit set")
+        with_marker = m._target_stale_refs(moved[4], m.CommitResolver(self.root, self.git("rev-parse", "HEAD")))
+        self.assertIn(self.anchor, {ref for _, ref, _ in with_marker}, with_marker)
+        tampered = copy.deepcopy(moved)
+        tampered[4]["hashes"].pop(m.REGISTRY_BATCH_ANCHOR)
+        write_jsonl(self.registry, tampered)
+        snapshot = self.commit("remove the holder's batch marker")
+        without_marker = m._target_stale_refs(tampered[4], m.CommitResolver(self.root, snapshot))
+        self.assertIn(self.anchor, {ref for _, ref, _ in without_marker}, without_marker)
+
     def test_registry_pin_batch_cannot_rebind_to_a_copy_of_its_records_file(self) -> None:
         """T331 (Astra high 2): committed batch rows cannot be re-pointed at a byte-identical copy of
         their records file so that they absorb a later append as one batch. The append that first

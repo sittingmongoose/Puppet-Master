@@ -1577,11 +1577,15 @@ def _target_stale_refs(
     out, as the target's live split check does (T284)."""
     hashes = target.get("hashes") if isinstance(target.get("hashes"), dict) else {}
     anchored = hashes.get("hash_scope") == ANCHOR_SCOPE
+    pins = True
     try:
         resolver = registry_row_resolver(target, resolver, registry_ref)
     except AnchorError:
-        pass  # The registry validator reports malformed metadata as a structural error.
-    own_row_sets = _registry_split_resolver(target, resolver, registry_ref)
+        # The registry validator reports malformed metadata as a structural error. The row's pins
+        # then cover the whole set, the row included, so its split-only sets must be compared
+        # against the full set too: a rejected marker cannot hide a drifted one (T333).
+        pins = False
+    own_row_sets = _registry_split_resolver(target, resolver, registry_ref) if pins else resolver
     out: set[tuple[str, str, str]] = set()
     groups = {
         "owner_evidence_hashes": hashes.get("owner_evidence_hashes"),
