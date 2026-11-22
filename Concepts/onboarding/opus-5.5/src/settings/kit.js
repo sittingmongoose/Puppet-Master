@@ -1227,8 +1227,11 @@ scrollToSection = function (sectionId, smooth = true) {
   const meta = pm51SectionMeta[sectionId];
   if (meta && !meta.page) {
     const body = mountContinuousWorkspace(meta.workspace);
+    /* "not rendered" is the drawn page's tab, not only a missing anchor: an anchor of this group on another tab's page
+       (a row of it drawn there) left the page on that tab while the index opened this one (neon-max-16) */
+    const drawn = body && [...body.querySelectorAll('.pm51-mgr > .pm51-tabs .manager-tab.active')].find(b => !b.closest('.o55-leaving'));
     if (meta.tab && PM51.tab(meta.workspace, pm51DefaultTabs[meta.workspace] || null) !== meta.tab) PM51.setTab(meta.workspace, meta.tab);
-    if (body && !body.querySelector(`#section-${cssEscape(sectionId)}`)) PM51.refresh(meta.workspace, { swap: false });
+    if (body && ((meta.tab && drawn && drawn.dataset.tab !== meta.tab) || !body.querySelector(`#section-${cssEscape(sectionId)}`))) PM51.refresh(meta.workspace, { swap: false });
     pm51OpenAdvancedFor(root.querySelector(`#section-${cssEscape(sectionId)}`));
   }
   return pm51OriginalScrollToSection(sectionId, smooth);
