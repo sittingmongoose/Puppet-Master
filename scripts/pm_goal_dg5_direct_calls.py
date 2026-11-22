@@ -14,8 +14,8 @@ METHODS_SHA256. For a family that is listed and not PENDING, each method under `
 those; every method under ``excluded_construction`` (constructors, factories, fixture classes) is left alone. A listed
 name the written construction rules C1-C3 exclude (construction-and-owner-methods.md) is not wrapped either: it is
 reported under ``construction_by_rule``, a guard kept after the census fix (final/methods.json listed three
-S1CancelWorld methods because its FIXTURE_CLASS regex missed a digit; final-a16b drops them, so the guard skips
-nothing on the pinned list). A name in both lists is refused at install.
+S1CancelWorld methods because its FIXTURE_CLASS regex missed a digit; final-a16b drops them and final-a19 keeps them
+out, so the guard skips nothing on the pinned list). A name in both lists is refused at install.
 
 A call through the wrapper is recorded (run as a DG5 complete call through bridge.entry_call, exactly as a census
 entry is) only when it is a direct call in the census probe's sense (outside-probe-v5.py):
@@ -61,9 +61,11 @@ import pm_goal_dg5_boundaries as bridge
 
 HERE = Path(__file__).resolve().parent
 METHODS = HERE / 'dg5_direct_calls' / 'methods.json'
-# census-questions/followup-1/final-a16b/methods.json: the census edition with FIXTURE_CLASS fixed (lead's choice after
-# the S1CancelWorld finding; supersedes final/methods.json 54d88a4a, which listed three S1CancelWorld methods).
-METHODS_SHA256 = '4603e2c80a54cf357bc1c361585a8364d1a324d4bbf6fe83e7a1e004f45e663a'
+# census-questions/followup-1/final-a19/methods.json: supersedes final-a16b 4603e2c8 (a18 rebuilt the classification on
+# the a18 census edition and a19 fixes the probe's stale-case attribution, which packet 3 caught: CF1's demo wrapper
+# clears CASE[0] under a functools.wraps hook, so test_demo_cf01:run was credited to CF1/altered_retry). The recheck
+# CENSUS-PACKET-4-neon passes A and C with 0 REAL findings.
+METHODS_SHA256 = 'd4e521aeae0cbcd592bee83e6acd35133a1ff367d66af0cc5f34b23f98df69c6'
 PENDING = frozenset()
 EXCLUDE_SUFFIX = ('_oracles', '_cases', '_selftest', '_selftest_b2', '_crash', '_inspection_cases')
 EXCLUDE_MODULES = ('pm_goal_test_numrule', 'pm_goal_test_adapters_selftest', 'pm_goal_test_selftest_b2')
