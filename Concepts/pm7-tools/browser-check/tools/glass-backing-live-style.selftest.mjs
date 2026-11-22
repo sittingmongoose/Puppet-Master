@@ -18,9 +18,9 @@ assert.ok(marker >= 0, 'the bc-through style installer is missing from the check
 const call = src.lastIndexOf('f.evaluate((s) => {', marker);
 assert.ok(call >= 0, 'the installer evaluate call is missing');
 const open = src.indexOf('{', call + 'f.evaluate('.length);
-const close = src.indexOf('\n\t}, sel);', marker);
+const close = src.indexOf('}, sel);', marker);
 assert.ok(close > open, 'the installer evaluate terminator is missing');
-const body = src.slice(open + 1, close + 2);
+const body = src.slice(open + 1, close);
 const install = new Function('s', 'document', 'getComputedStyle', body);
 
 const SEL = '#sidePanelSlot';
