@@ -11,6 +11,7 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
+import { isMainModule } from '../helpers/is-main.mjs';
 
 export const MUTATIONS = {
 	'basic-light': ['opacity', 'head opacity 0'],
@@ -125,7 +126,7 @@ export function mutate(html, spec) {
 	return { out, kind };
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (isMainModule(import.meta.url)) {
 	const a = process.argv.slice(2), opt = (k) => { const i = a.indexOf('--' + k); return i < 0 ? undefined : a[i + 1]; };
 	const page = opt('page'), out = opt('out');
 	if (!page || !out) { console.error('usage: pip-steady-mutants.mjs --page <build.html> --out <dir> [--looks a,b]'); process.exit(2); }
