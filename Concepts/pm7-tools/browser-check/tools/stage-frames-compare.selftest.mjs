@@ -213,6 +213,29 @@ try {
 		ok('SAMEBUILD-UNFROZEN: a DOM difference on a not-frozen capture still fails (exit 1)', d.code === 1 && /^DOM    basic-dark\/01-ready-base/m.test(d.out), `exit ${d.code}: ${d.out.trim()}`);
 	}
 
+	// -- R132-FOLLOWUPS 2: the freeze parks nextBlink/idleNext at 1e9 and THAW never restored them, so the
+	// "unfrozen" capture after the walk showed a stage that never blinks and has no idle life, not the stage as a
+	// person sees it. THAW must reschedule both as the product itself does (58-rig.js:1249 and :1106).
+	{
+		const src = fs.readFileSync(CHECK, 'utf8');
+		const s = src.indexOf('const THAW ='), e = src.indexOf('// The stage\'s DOM', s);
+		ok('R132-2: THAW found in the diagnostic', s >= 0 && e > s, 'no THAW');
+		const vm = await import('node:vm');
+		const played = [], scales = [], tips = [];
+		const st = { t: 40, ps: { nextBlink: 1e9 }, idleNext: 1e9, idleUntil: 5, idleLook: 'up', tip: (x) => tips.push(x) };
+		const ctx = vm.createContext({
+			window: { __frzA: [{ play: () => played.push(1) }] },
+			document: { querySelector: () => ({ __pipStage: st }) },
+			O55: { motion: { setTimeScale: (x) => scales.push(x) } }
+		});
+		vm.runInContext(src.slice(s, e) + '\nTHAW(true);', ctx);
+		ok('R132-2: THAW restores the clock and plays the parked animations', scales.includes(1) && played.length === 1, JSON.stringify({ scales, played }));
+		ok('R132-2: THAW closes the tip when asked', tips.length === 1 && tips[0] === null, JSON.stringify(tips));
+		ok('R132-2: THAW reschedules the blink as the product does (t + 2.2..5.6), not 1e9', st.ps.nextBlink >= 42.2 && st.ps.nextBlink <= 45.6, String(st.ps.nextBlink));
+		ok('R132-2: THAW reschedules idle life as the product does (t + 7..13), not 1e9', st.idleNext >= 47 && st.idleNext <= 53, String(st.idleNext));
+		ok('R132-2: THAW clears the idle pose', st.idleUntil === 0 && st.idleLook === null, JSON.stringify({ idleUntil: st.idleUntil, idleLook: st.idleLook }));
+	}
+
 	// -- the DOM normalisation: ids renamed in order of appearance, colours left as they are
 	{
 		// a stub of the stage's root as DOM() walks it: nodeType, tagName, attributes, firstChild / nextSibling, data

@@ -148,6 +148,15 @@ const THAW = (closeTip) => {
 	O55.motion.setTimeScale(1);
 	for (const a of window.__frzA || []) { try { a.play(); } catch (e) { /* gone */ } }
 	window.__frzA = [];
+	/* R132-FOLLOWUPS 2: the freeze parked the blink and idle-life scheduling at 1e9; left there, the "unfrozen"
+	   capture after the walk showed a stage that never blinks and has no idle life, not the stage as a person sees
+	   it. Reschedule both as the product itself does (58-rig.js:1249's blink and :1106's idle life). */
+	const host = document.querySelector('#pm-o55-onboarding .o55-stage'), st = host && host.__pipStage;
+	if (st && st.ps) {
+		st.ps.nextBlink = st.t + 2.2 + Math.random() * 3.4;
+		st.idleNext = st.t + 7 + Math.random() * 6;
+		st.idleUntil = 0; st.idleLook = null;
+	}
 };
 
 // The stage's DOM: elements with sorted attributes, text, ids renamed in order of first appearance
