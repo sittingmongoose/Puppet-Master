@@ -779,11 +779,13 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
             self.assertTrue(any(f":5: {group} for {self.anchor} is stale" in e for e in report["errors"]), report)
             self.assertTrue(any(f":4: owner_evidence_hashes for {self.anchor} is stale"
                                 in e for e in report["errors"]), report)
-        # Without one member, the other no longer matches the batch rebuilt from its committed
-        # records file. It supersedes nothing, so the old pin on line 3 is live again, and stale.
+        # Without one member, the survivor no longer sits at the line its append wrote it on, and no
+        # longer matches the batch rebuilt from its committed records file. It supersedes nothing, so
+        # the old pin on line 3 is live again, and stale.
         write_jsonl(self.registry, appended[:3] + appended[4:])
         report = m.validate_registry(self.registry)
-        self.assertTrue(any(e.startswith(f"{self.registry_ref}:4: registry_batch_anchor differs") for e in report["errors"]), report)
+        self.assertTrue(any(e.startswith(f"{self.registry_ref}:4: registry_batch_anchor cannot be rebuilt")
+                            and "does not sit at" in e for e in report["errors"]), report)
         self.assertTrue(any(f":3: owner_evidence_hashes for {self.anchor} is stale" in e for e in report["errors"]), report)
         write_jsonl(self.registry, appended + [later])
         snapshot = self.commit("later registry member")
@@ -918,9 +920,10 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
         write_jsonl(self.registry, [*rows, rows[3]])
         report = m.validate_registry(self.registry)
         self.assertTrue(any("duplicate closure_id" in e for e in report["errors"]), report)
-        for line in (4, 5, 6):
-            self.assertTrue(any(e.startswith(f"{self.registry_ref}:{line}: registry_batch_anchor cannot be rebuilt")
-                                for e in report["errors"]), report)
+        # The duplicate is a copy of line 4 on another line, so it sits nowhere its append wrote it
+        # (T335); the members it shadows still leave their pins stale.
+        self.assertTrue(any(e.startswith(f"{self.registry_ref}:6: registry_batch_anchor cannot be rebuilt")
+                            and "does not sit at" in e for e in report["errors"]), report)
         for line in (4, 5):
             self.assertTrue(any(f":{line}: owner_evidence_hashes for {self.anchor} is stale" in e
                                 for e in report["errors"]), report)
@@ -1314,6 +1317,25 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
         for line in (4, 5, 6):
             self.assertTrue(any(e.startswith(f"{self.registry_ref}:{line}: registry_batch_anchor cannot be rebuilt")
                                 and "was first committed at" in e for e in validation["errors"]), validation)
+
+    def test_registry_pin_batch_rows_cannot_swap_their_lines(self) -> None:
+        """T335 (Astra low 2): two committed batch rows exchanging physical registry lines is
+        reported. A committed row sits at the line its append wrote it on, so the order of a batch
+        is bound to its adding commit, not just its member set."""
+        m = pm_audit_closure
+        self.prepare_same_file_records()
+        code, report = self.append()
+        self.assertEqual((code, report["appended"], report["errors"]), (0, 3, []), report)
+        self.commit("one append of all three")
+        rows = [json.loads(line) for line in self.registry.read_bytes().splitlines()]
+        rows[3], rows[4] = rows[4], rows[3]
+        write_jsonl(self.registry, rows)
+        self.commit("swap the two batch rows")
+        validation = m.validate_registry(self.registry)
+        for line in (4, 5):
+            self.assertTrue(any(e.startswith(f"{self.registry_ref}:{line}: registry_batch_anchor cannot be rebuilt")
+                                and "does not sit at" in e for e in validation["errors"]), validation)
+        self.assertEqual(validation["superseded_lines"], [], validation)
 
     def test_registry_pin_batch_cannot_rebind_to_a_copy_of_its_records_file(self) -> None:
         """T331 (Astra high 2): committed batch rows cannot be re-pointed at a byte-identical copy of

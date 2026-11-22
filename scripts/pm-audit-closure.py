@@ -5269,7 +5269,7 @@ def _registry_batch_markers(
 
 # Caches of the registry batch derivation (T308). Each key names everything its value was derived
 # from, so a resolver made per row (refresh-hashes) reuses them, and a changed file or commit misses.
-_REGISTRY_INTRODUCTIONS: dict[tuple[str, str, str], dict[tuple[str, str, str], list[str]]] = {}
+_REGISTRY_INTRODUCTIONS: dict[tuple[str, str, str], dict[tuple[str, str], list[tuple[str, int]]]] = {}
 _GIT_ANCESTRY: dict[tuple[str, str, str], bool] = {}
 _COMMITTED_RECORDS: dict[tuple[str, str, str], dict[str, Any] | str] = {}
 _RECORD_SPLIT_REFS: dict[tuple[str, str, str, str], frozenset[str] | str] = {}
@@ -5295,10 +5295,11 @@ def _reaudit_row_identity(row: Any) -> tuple[str, str] | None:
     return identity if all(isinstance(part, str) for part in identity) else None  # type: ignore[return-value]
 
 
-def _registry_introductions(root: Path, registry_ref: str, base: str) -> dict[tuple[str, str], list[str]]:
-    """Re-audit row identity -> the ordinary commits in the history of `base`, oldest first, whose change
-    to the registry adds a row with that identity (T308). Rows are never edited and history is never
-    rewritten, so the first of them is a permanent record of the append that wrote the row."""
+def _registry_introductions(root: Path, registry_ref: str, base: str) -> dict[tuple[str, str], list[tuple[str, int]]]:
+    """Re-audit row identity -> (commit, registry line), oldest first, for the ordinary commits in the
+    history of `base` whose change to the registry adds a row with that identity, at the line the
+    commit wrote it on (T308, T335). Rows are never edited and history is never rewritten, so the
+    first of them is a permanent record of the append that wrote the row and where it sat."""
     key = (str(root), registry_ref, base)
     if key not in _REGISTRY_INTRODUCTIONS:
         out = _git_bytes(root, "log", base, "--full-history", "--no-merges", "--no-renames", "--topo-order", "--reverse",
@@ -5306,11 +5307,25 @@ def _registry_introductions(root: Path, registry_ref: str, base: str) -> dict[tu
                          "--", registry_ref)
         if out is None:
             raise AnchorError(f"cannot read the git history of {registry_ref} at {base[:12]}")
-        found: dict[tuple[str, str, str], list[str]] = {}
+        found: dict[tuple[str, str], list[tuple[str, int]]] = {}
         for part in out.split(b"\x01")[1:]:
             head, _, diff = part.partition(b"\n")
             commit = head.decode().strip()
+            position = 0  # 0 until the first hunk; an added row before one cannot occur
             for line in diff.split(b"\n"):
+                if line.startswith(b"@@"):
+                    # With -U0 every added line of this hunk starts at the header's new-file line
+                    # (a count of 1 is omitted, so parse the header, not split it).
+                    hunk = re.match(rb"^@@ -[0-9]+(?:,[0-9]+)? \+([0-9]+)(?:,[0-9]+)? @@", line)
+                    if hunk is not None:
+                        position = int(hunk.group(1)) - 1
+                    continue
+                if line.startswith(b"+"):
+                    position += 1
+                elif line.startswith(b"-"):
+                    continue
+                else:
+                    continue
                 # The key "reaudit" is spelled out or escaped; any other added line is not a re-audit row.
                 if not line.startswith(b"+{") or (b'"reaudit"' not in line and b"\\u" not in line):
                     continue
@@ -5320,9 +5335,9 @@ def _registry_introductions(root: Path, registry_ref: str, base: str) -> dict[tu
                     continue
                 identity = _reaudit_row_identity(row)
                 if identity is not None:
-                    commits = found.setdefault(identity, [])
-                    if commit not in commits:
-                        commits.append(commit)
+                    entries = found.setdefault(identity, [])
+                    if (commit, position) not in entries:
+                        entries.append((commit, position))
         _REGISTRY_INTRODUCTIONS[key] = found
     return _REGISTRY_INTRODUCTIONS[key]
 
@@ -5334,17 +5349,19 @@ def _is_git_ancestor(root: Path, older: str, newer: str) -> bool:
     return _GIT_ANCESTRY[key]
 
 
-def _row_append_commit(root: Path, introductions: dict[tuple[str, str, str], list[str]], row: dict[str, Any]) -> str | None:
-    """The commit that first added this row to the registry, or None while the row is not committed."""
+def _row_append_commit(root: Path, introductions: dict[tuple[str, str], list[tuple[str, int]]],
+                       row: dict[str, Any]) -> tuple[str, int] | None:
+    """The (commit, registry line) of the append that first added this row, or None while it is not
+    committed. The line is the one the commit wrote the row on (T335)."""
     identity = _reaudit_row_identity(row)
-    commits = introductions.get(identity) if identity is not None else None
-    if not commits:
+    entries = introductions.get(identity) if identity is not None else None
+    if not entries:
         return None
-    first = commits[0]
-    if any(not _is_git_ancestor(root, first, other) for other in commits[1:]):
+    first, position = entries[0]
+    if any(not _is_git_ancestor(root, first, other) for other, _ in entries[1:]):
         raise AnchorError(f"commits that do not descend from one another each add {row.get('closure_id')} to the "
                           "registry, so the append that wrote it cannot be decided")
-    return first
+    return first, position
 
 
 def _committed_records(root: Path, record_ref: str, adding: str) -> dict[str, Any] | str:
@@ -5489,11 +5506,18 @@ def _derive_registry_batches(
         try:
             if failure:
                 raise AnchorError(failure)
-            commit = _row_append_commit(root, introductions, row)
+            origin = _row_append_commit(root, introductions, row)
         except AnchorError as exc:
             out[line_no] = f"registry_batch_anchor cannot be rebuilt: {exc}"
             continue
+        commit, position = origin if origin is not None else (None, line_no)
         appends[line_no] = commit
+        if origin is not None and position != line_no:
+            # A committed row sits at the line its append wrote it on; a registry is append-only,
+            # so a batch member that moved was reordered by hand (T335).
+            out[line_no] = (f"registry_batch_anchor cannot be rebuilt: line {line_no} does not sit at the line "
+                            f"{position} where commit {commit[:12]} first added this row")
+            continue
         if commit is not None and commit != adding and not _is_git_ancestor(root, adding, commit):
             # The append that wrote the row could not have read a records file first committed
             # after it (T334); a pending append keeps the dry-run path, its records are at HEAD.
