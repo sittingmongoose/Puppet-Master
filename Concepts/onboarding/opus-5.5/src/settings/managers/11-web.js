@@ -244,6 +244,9 @@
     return {
       title: r.name, pill: PM51.pill(plain(r)), subtitle: SHORT[r.id] || r.description,
       primary: off ? { label: 'Turn on', icon: 'play', action: 'pm51-web-turn-on', data } : null,
+      /* while the ability is on, its head keeps Turn on's room (kit.js pm51-detail-space), so turning it off or on never
+         re-wraps the head (FO-130 at 860x900: the buttons dropped to a second line and the head grew 44 px) */
+      primarySpace: { label: 'Turn on', icon: 'play' },
       menu: anchor => PM51.menu(anchor, [
         { label: off ? 'Turn on' : 'Turn off', icon: off ? 'play' : 'pause', onClick: () => off ? turnOn(r) : turnOff(r) },
         { label: 'Reset to the example', icon: 'restore', onClick: () => PM51.confirm(`Reset ${r.name}?`, 'The AI model, backups and choices go back to the example defaults. Web services and limits are kept.', 'Reset', () => { resetRoute(r); PM51.toast(`${r.name} reset`, 'Defaults are back.'); }) }
