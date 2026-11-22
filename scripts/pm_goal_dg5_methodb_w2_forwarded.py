@@ -22,6 +22,7 @@ ISSUER_FORWARDING = {
     'dg5/d01/current_source/schema': 'issue/current_source',
 }
 CURRENT_GOAL_CHECKS = {'dg5/read_current/current_goal/schema', 'dg5/read_current/final/current_goal/schema'}
+CURRENT_START_CHECKS = {'dg5/read_current/current_start/schema', 'dg5/read_current/final/current_start/schema'}
 HISTORICAL_APPEND = {
     f'dg5/read_historical/{phase}/append/root/schema': f'read_historical/{phase}/root'
     for phase in ('original', 'final')
@@ -77,16 +78,18 @@ class ForwardedCall(worker.CompleteCall):
     def in_child(self, sender, edit, cut, replay):
         issuer = self.row in ISSUER_FORWARDING
         goal_comparison = self.row in CURRENT_GOAL_CHECKS
-        if issuer or goal_comparison:
+        start_comparison = self.row in CURRENT_START_CHECKS
+        if issuer or goal_comparison or start_comparison:
             code, member, definition, line = (ISSUER_FORWARDING[self.row], None, None, 462) if issuer else (
-                'read_current/final_current_goal', None, 'CurrentGoalArgument', 934)
+                ('read_current/final_current_goal', None, 'CurrentGoalArgument', 934) if goal_comparison else
+                ('read_current/final_current_start', None, 'CurrentStartSource', 933))
         else:
             code, member, definition, line, _ = DEPENDENCIES[self.row]
         forwarded = []
         original_validate = worker.world.Bank.validate
         reader = worker.stage.original.R
         original_same = reader.same
-        historical = []
+        historical, workflow_members = [], []
 
         def observe(bank, reference, value, prefix='root'):
             if issuer and prefix == code:
@@ -97,6 +100,24 @@ class ForwardedCall(worker.CompleteCall):
                 forwarded.append(dict(site=site, reference=reference, value=copy.deepcopy(value),
                                       errors=worker.error_records(bank.errors(reference, value))))
                 return original_validate(bank, reference, value, prefix)
+            if start_comparison and prefix == 'd01/current_source':
+                frame = sys._getframe(2)
+                site = (str(Path(frame.f_code.co_filename).relative_to(worker.ROOT)), frame.f_lineno)
+                worker.require(site == (START, 404) and
+                               reference == self.fixture.world.edition.d01 + '#/$defs/CurrentSource',
+                               'the workflow used a different original D01 schema check')
+                workflow_members.append(copy.deepcopy(value))
+            if start_comparison and prefix == 'read_current/root':
+                target = bank.lookup(reference)
+                member_ref = target.contents['properties']['current_native']['$ref']
+                source = self.declaration['schema_reference']
+                selected = target.resolver.lookup(member_ref)
+                if set(selected.contents) == {'$ref'}:
+                    selected = selected.resolver.lookup(selected.contents['$ref'])
+                worker.require('current_native' in target.contents['required'] and
+                               selected.contents is bank.lookup(source).contents,
+                               'the reader result must require the original current workflow definition')
+                historical.append(copy.deepcopy(value['current_native']))
             reader_append = self.row in READ_APPEND
             if self.row in READER_APPEND and prefix == self.code.split('/')[0] + '/root':
                 target = bank.lookup(reference)
@@ -133,7 +154,7 @@ class ForwardedCall(worker.CompleteCall):
                 bank = self.fixture.bank
                 reference = self.declaration.get('schema_reference',
                     self.fixture.world.edition.consumer + '#/$defs/' + definition)
-                if goal_comparison and '/final/' not in self.row:
+                if (goal_comparison or start_comparison) and '/final/' not in self.row:
                     value, expected = expected, value
                 worker.require(not bank.errors(reference, expected), 'the reconstructed comparison document failed validation')
                 forwarded.append(dict(site=(READERS, line), schema_reference=reference,
@@ -143,15 +164,16 @@ class ForwardedCall(worker.CompleteCall):
 
         class Receipt:
             def send(self, result):
-                sender.send(dict(result, forwarded=forwarded, historical=historical))
+                sender.send(dict(result, forwarded=forwarded, historical=historical,
+                                 workflow_members=workflow_members))
 
             def close(self):
                 sender.close()
 
         with ExitStack() as changes:
-            if self.row == REPRESENTATION or goal_comparison:
+            if self.row == REPRESENTATION or goal_comparison or start_comparison:
                 changes.enter_context(patch.object(reader, 'same', observe_equality))
-            else:
+            if (self.row != REPRESENTATION and not goal_comparison) or start_comparison:
                 changes.enter_context(patch.object(worker.world.Bank, 'validate', observe))
             super().in_child(Receipt(), edit, cut, replay)
 
@@ -250,9 +272,14 @@ def check_calls(example, collector, ident, later_code, *, alter_copy=False):
         worker.require(positive_forward['same'] and not forward['same'] and
                        positive_forward['expected'] == forward['expected'] == control['input'],
                        'the comparison did not use the same schema-valid document')
-    if example.row in READER_APPEND or example.row in READER_ORIGINAL:
+    if example.row in READER_APPEND or example.row in READER_ORIGINAL or example.row in CURRENT_START_CHECKS:
         worker.require(accepted['historical'] == [control['input']] and not disabled['historical'],
-                       'the final historical document did not use the same validated append value')
+                       'the result did not use the same validated document')
+    if example.row in CURRENT_START_CHECKS:
+        member = control['input']['d01_current']
+        seen = accepted['workflow_members']
+        worker.require(len(seen) == 2 and all(worker.stage.original.R.same(value, member) for value in seen),
+                       'the reader did not use both documents checked by the real D01 source')
     return control
 
 
@@ -262,8 +289,34 @@ def original_later_code(name, specification):
     return None if name in PROJECTOR_ORIGINAL else READER_COMPARISONS[ORIGINAL_SCHEMAS[name].split('/')[0]][1]
 
 
+def checked_current_workflow_rules(fixture, captured, reference, source_path, reference_digest):
+    record = json.loads(source_path.read_bytes())
+    worker.require(record['row'] == 'dg5/issue/current_source/schema' and record['status'] == 'READY_FOR_MATRIX' and
+                   record['reference_sha256'] == reference_digest, 'the current source rule tests are incomplete')
+    child_root, = record['roots']
+    child = record['roots'][child_root]
+    bank = fixture.bank
+    wrapper = bank.lookup(captured['schema']['$ref'])
+    field = wrapper.contents['properties']['d01_current']
+    worker.require(set(wrapper.contents) <= {'type', 'properties', 'required', 'additionalProperties'} and
+                   'd01_current' in wrapper.contents['required'] and set(field) == {'$ref'} and
+                   field['$ref'] == child['schema']['$ref'] and
+                   wrapper.resolver.lookup(field['$ref']).contents is bank.lookup(field['$ref']).contents,
+                   'the original wrapper must require the same complete current source definition')
+    validator = bank.original.validator(field['$ref'])
+    worker.require(worker.closure._registry_digest(validator) == child['registry_sha256'] and
+                   type(validator).__module__ + '.' + type(validator).__qualname__ == child['validator_class'] and
+                   child['schema'] == validator.schema and not child['gaps'] and
+                   set(child['clauses']) == set(child['clause_ids']) <= set(reference['clause_ids']),
+                   'the current source validator or exact nested rules differ')
+    pin = worker.sha(source_path)
+    return {rule: dict(check, nested_schema_test=dict(row=record['row'], root=child_root, transcript_sha256=pin,
+                                                     instance_member='d01_current'))
+            for rule, check in child['clauses'].items()}
+
+
 def check_root(out, name, specification, sites, reference, previous, alter_copy, reference_digest,
-               shared_rule_tests=None):
+               shared_rule_tests=None, accepted_controls=None, current_source_tests=None):
     started = time.monotonic()
     ident = specification['root']
     worker.pilot.PREFIX = worker.TABLE_PREFIX
@@ -273,6 +326,9 @@ def check_root(out, name, specification, sites, reference, previous, alter_copy,
     out.mkdir(parents=True)
     suite = worker.stage.original.Suite(out / 'stores')
     fixture = worker.Fixture(suite, specification['route'], specification['edition'])
+    if accepted_controls is not None:
+        worker.require(name in CURRENT_START_CHECKS, 'the additional examples apply to the current workflow only')
+        fixture.additional_controls = json.loads(accepted_controls.read_bytes())['documents']
     original = name in ORIGINAL_SCHEMAS
     experiment_type = HistoricalOriginalCall if original else ForwardedCall
     experiment = experiment_type(fixture, name, sites, specification)
@@ -284,6 +340,8 @@ def check_root(out, name, specification, sites, reference, previous, alter_copy,
         later_code = ISSUER_FORWARDING[name] + '/schema/:additionalProperties'
     elif name in CURRENT_GOAL_CHECKS:
         later_code = 'read_current/final_current_goal'
+    elif name in CURRENT_START_CHECKS:
+        later_code = 'read_current/final_current_start'
     else:
         late, _, _, _, defect = DEPENDENCIES[name]
         later_code = f'{late}/schema/{defect}:additionalProperties' if defect else late
@@ -293,6 +351,11 @@ def check_root(out, name, specification, sites, reference, previous, alter_copy,
     else:
         captured = check_calls(experiment, collector, ident, later_code, alter_copy=alter_copy)
     examples = worker.PreviousExamples()
+    checked_rules = None
+    if current_source_tests:
+        worker.require(name in CURRENT_START_CHECKS, 'current source tests apply only to the workflow wrapper')
+        checked_rules = checked_current_workflow_rules(
+            fixture, captured, reference, current_source_tests, reference_digest)
     if shared_rule_tests:
         record = json.loads(shared_rule_tests.read_bytes())
         worker.require(record['status'] == 'READY_FOR_MATRIX' and record['reference_sha256'] == reference_digest and
@@ -304,13 +367,16 @@ def check_root(out, name, specification, sites, reference, previous, alter_copy,
                        set(replayed['clauses']) == set(reference['clause_ids']),
                        'the two calls do not reach the same fully tested installed validator')
     else:
-        replayed = worker.replay_root(fixture, captured, reference, examples.entries(previous), None)
+        replayed = worker.replay_root(fixture, captured, reference, examples.entries(previous), None,
+                                      checked_rules=checked_rules)
     proof = worker.pilot.run_gates(collector, out, [name])
     binding = proof / 'source-bindings.json'
     source_bindings = json.loads(binding.read_bytes())
-    checker = READERS if name == REPRESENTATION or name in READ_APPEND or original or name in CURRENT_GOAL_CHECKS else START
+    checker = READERS if name == REPRESENTATION or name in READ_APPEND or original or name in CURRENT_GOAL_CHECKS | CURRENT_START_CHECKS else START
     if name in ISSUER_FORWARDING:
         source_bindings['files'][ADAPTERS] = worker.sha(worker.ROOT / ADAPTERS)
+    if name in CURRENT_START_CHECKS:
+        source_bindings['files'][START] = worker.sha(worker.ROOT / START)
     for source in (Path(worker.__file__), Path(worker.stage.__file__), Path(__file__), worker.ROOT / checker):
         source_bindings['files'][str(source.relative_to(worker.ROOT))] = worker.sha(source)
     worker.write(binding, source_bindings)
@@ -331,7 +397,9 @@ def check_root(out, name, specification, sites, reference, previous, alter_copy,
                  controls=replayed['controls'], gaps=replayed['gaps'], counts=dict(counts),
                  historical_example_inputs=examples.pins,
                  schema_reference=specification.get('schema_reference'),
-                 shared_rule_tests_sha256=worker.sha(shared_rule_tests) if shared_rule_tests else None))
+                 shared_rule_tests_sha256=worker.sha(shared_rule_tests) if shared_rule_tests else None,
+                 additional_controls_sha256=worker.sha(accepted_controls) if accepted_controls else None,
+                 current_source_tests_sha256=worker.sha(current_source_tests) if current_source_tests else None))
     print(name, ident, len(replayed['clauses']), len(remaining), later_code, flush=True)
 
 
@@ -344,6 +412,8 @@ def main():
     parser.add_argument('--root')
     parser.add_argument('--show-differences', action='store_true')
     parser.add_argument('--shared-rule-tests', type=Path)
+    parser.add_argument('--accepted-controls', type=Path)
+    parser.add_argument('--current-source-tests', type=Path)
     parser.add_argument('--alter-forwarded-copy', action='store_true')
     args = parser.parse_args()
     cases = [(path, json.loads(path.read_bytes())) for path in args.case]
@@ -356,7 +426,7 @@ def main():
         banks['v7'] = worker.world.v7_edition().bank.original
     for path, case in cases:
         row = case['row']
-        worker.require(row in DEPENDENCIES or row in ORIGINAL_SCHEMAS or row in ISSUER_FORWARDING or row in CURRENT_GOAL_CHECKS,
+        worker.require(row in DEPENDENCIES or row in ORIGINAL_SCHEMAS or row in ISSUER_FORWARDING or row in CURRENT_GOAL_CHECKS | CURRENT_START_CHECKS,
                        f'no checked forwarding premise for {row}')
         worker.require(not args.shared_rule_tests or row in ISSUER_FORWARDING or row in CURRENT_GOAL_CHECKS,
                        'reused rules require the same captured validator and a declared dependency')
@@ -388,7 +458,7 @@ def main():
                           len(set(walk.get('clause_ids', ())) - set(exact['clause_ids'])), flush=True)
                 continue
             check_root(output, row, spec, sites, exact, previous[ident], args.alter_forwarded_copy, reference_digest,
-                       args.shared_rule_tests)
+                       args.shared_rule_tests, args.accepted_controls, args.current_source_tests)
 
 
 if __name__ == '__main__':
