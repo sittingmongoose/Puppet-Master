@@ -1,0 +1,24 @@
+{
+  "row": "dg5/read_current/final/current_start/schema",
+  "fixtures": [
+    {
+      "route": "current_start/final",
+      "root": "dg5:8120092adb33dfdb",
+      "edition": "v3",
+      "schema_reference": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentStartSource",
+      "hash_seed": 117,
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    }
+  ]
+}
