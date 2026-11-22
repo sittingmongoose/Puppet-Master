@@ -7484,7 +7484,9 @@ body.pm-resizing #projectMenuBtn .pm6-tb-project-badge .nx-st::before { animatio
 }
 
 #panel-settings .page-index {
-  padding: 10px 8px 12px; border-right: 1px solid var(--k3-line);
+  /* no right border: its card has its own edge, and the column's line drew a second one 6 px beside it in Basic,
+     Friendly, Retro and NieR (Jared, 2026-11-21: "This line needs to be removed. on the themes where it is there") */
+  padding: 10px 8px 12px;
   background: var(--k3-bg-2); overflow: auto;
 }
 #panel-settings .page-index-card {
@@ -26136,6 +26138,15 @@ html[data-motion="reduced"] #panel-settings .pm51-mgr > .pm51-tabs .tab-ink { tr
 #panel-settings .pm51-mgr .pm51-roster .resource-avatar { width: 32px; height: 32px; border-radius: 9px; font-size: 11px; }
 #panel-settings .pm51-mgr .pm51-detail-head { padding: 16px 20px 12px; border-bottom: 1px solid var(--k3-line); background: none; }
 #panel-settings .pm51-mgr .pm51-detail-title { font-size: 17px; }
+/* A list/detail head whose item shows a primary button only in some states keeps that button's room while it is
+   hidden (the manager passes primarySpace; kit.js draws it inert and aria-hidden). Its head then wraps the same way in
+   both states. Web & Research shows Turn on only while an ability is off: at 860x900 the 337 px detail fit the title
+   beside the More button, Turn on (90 px) dropped the buttons to a second line and the head grew 44 px, moving
+   everything above the switch just pressed (FO-130 settings-save-still; on main too, measured below the head there). */
+#panel-settings .pm51-mgr .pm51-detail-space { display: inline-flex; visibility: hidden; }
+/* when such a head's buttons wrap to their own line they sit at its end in both states, so More stays put and the
+   room kept for Turn on reads as space, not as a gap before More */
+#panel-settings .pm51-mgr .pm51-detail-actions.has-space { margin-left: auto; }
 #panel-settings .workspace-block .pm51-mgr .pm51-detail-content { padding: 4px 20px 18px; }
 
 /* ---- More options -------------------------------------------------------------------------------------------- */
@@ -74237,8 +74248,11 @@ html[data-lg="on"][data-theme="glass-light"][data-lg-tier="cpu"]:not(#lgz) #pane
 /* field placeholders read as words (review r3: "Filter services" at 2.2-3.0:1) */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root :is(input)::placeholder,
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root :is(textarea)::placeholder { color: var(--text-muted) !important; opacity: 1 !important; }
-/* the page index's open sections: the current one reads by its words and a small blue mark, never a second fill */
-:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .pm51-index-sub > .index-link.is-active { background: transparent !important; color: var(--pm-switch-ink-on, var(--text-primary)) !important; font-weight: 600; }
+/* the page index's open sections: the current one reads by its words and a small blue mark, never a second fill. Its
+   words are the page's own strongest ink, not the chip's (--pm-switch-ink-on is the ink for words ON the chip, and no chip
+   is drawn here: in Basic, Friendly Dark, Retro and NieR the lit entry fell to 1.0-1.3:1 and read as a bare dot,
+   Jared 2026-11-21 "the highlight on the submenu doesnt work properly") */
+:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .pm51-index-sub > .index-link.is-active { background: transparent !important; color: var(--k3-text-1, var(--text-primary)) !important; font-weight: 600; }
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root :is(.pm51-index-sub, .pm51-index-group) > .index-link.is-active::before { background: var(--pm-switch-mark, var(--accent-blue)) !important; box-shadow: none !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root :where(.domain-link):not(.t7.t7:not(*)):not(.active):not(.is-active):not([aria-current="true"]):hover,
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root :is(.rail-scroll > .side-link):not(.active):not(.is-active):not([aria-current="true"]):hover,
@@ -121461,7 +121475,7 @@ PM51.listDetail = ({ id, rosterId, rosterTitle, count, add, filter, items, detai
     <div class="roster-list">${items.map(it => `<button type="button" class="resource-row${it.selected ? ' active' : ''}" data-action="${a(it.action || selectAction || 'pm51-select')}" data-manager="${a(id)}" data-id="${a(it.id)}" ${dataAttrs(it.data)} aria-current="${it.selected ? 'true' : 'false'}"><span class="resource-avatar">${it.avatar || h(PM51.initials(it.title))}</span><span class="resource-row-copy"><span class="resource-row-name">${h(it.title)}</span><span class="resource-row-meta">${h(it.meta || '')}${it.pill ? ' ' + it.pill : ''}</span></span>${it.tone ? PM51.dot(it.tone) : ''}</button>`).join('')}</div>
   </aside>
   <section class="resource-detail pm51-detail">
-    <div class="resource-head pm51-detail-head"><button type="button" class="icon-btn pm51-roster-toggle" data-action="pm51-toggle-roster" aria-label="Show list">${icon('menu')}</button><div class="resource-head-main"><div class="pm51-detail-title">${h(detail.title)}${detail.pill ? ' ' + detail.pill : ''}</div>${detail.subtitle ? `<div class="pm51-detail-sub">${h(detail.subtitle)}</div>` : ''}</div><div class="pm51-detail-actions">${detail.primary ? PM51.btn(Object.assign({ primary: true }, detail.primary)) : ''}${detail.menu ? PM51.iconBtn({ icon: 'more', label: 'More actions', callback: detail.menu, menu: true }) : ''}</div></div>
+    <div class="resource-head pm51-detail-head"><button type="button" class="icon-btn pm51-roster-toggle" data-action="pm51-toggle-roster" aria-label="Show list">${icon('menu')}</button><div class="resource-head-main"><div class="pm51-detail-title">${h(detail.title)}${detail.pill ? ' ' + detail.pill : ''}</div>${detail.subtitle ? `<div class="pm51-detail-sub">${h(detail.subtitle)}</div>` : ''}</div><div class="pm51-detail-actions${detail.primarySpace ? ' has-space' : ''}">${detail.primary ? PM51.btn(Object.assign({ primary: true }, detail.primary)) : detail.primarySpace ? `<span class="pm51-detail-space" aria-hidden="true" inert>${PM51.btn(Object.assign({ primary: true }, detail.primarySpace))}</span>` : ''}${detail.menu ? PM51.iconBtn({ icon: 'more', label: 'More actions', callback: detail.menu, menu: true }) : ''}</div></div>
     <div class="resource-content pm51-detail-content">${detail.body}</div>
   </section>
 </div>`;
@@ -122462,8 +122476,11 @@ scrollToSection = function (sectionId, smooth = true) {
   const meta = pm51SectionMeta[sectionId];
   if (meta && !meta.page) {
     const body = mountContinuousWorkspace(meta.workspace);
+    /* "not rendered" is the drawn page's tab, not only a missing anchor: an anchor of this group on another tab's page
+       (a row of it drawn there) left the page on that tab while the index opened this one (neon-max-16) */
+    const drawn = body && [...body.querySelectorAll('.pm51-mgr > .pm51-tabs .manager-tab.active')].find(b => !b.closest('.o55-leaving'));
     if (meta.tab && PM51.tab(meta.workspace, pm51DefaultTabs[meta.workspace] || null) !== meta.tab) PM51.setTab(meta.workspace, meta.tab);
-    if (body && !body.querySelector(`#section-${cssEscape(sectionId)}`)) PM51.refresh(meta.workspace, { swap: false });
+    if (body && ((meta.tab && drawn && drawn.dataset.tab !== meta.tab) || !body.querySelector(`#section-${cssEscape(sectionId)}`))) PM51.refresh(meta.workspace, { swap: false });
     pm51OpenAdvancedFor(root.querySelector(`#section-${cssEscape(sectionId)}`));
   }
   return pm51OriginalScrollToSection(sectionId, smooth);
@@ -127052,15 +127069,57 @@ const pm51HasTabs = w => w && w.type !== 'settings' && (pm51TabOrder[w.id] || []
 const pm51TabLabel = (ws, t) => (((PLACEMENT && PLACEMENT.managers[ws]) || {}).tabs || {})[t] || humanize(t);
 
 /* A group the manager draws itself (a composed placement section) has no anchor of its own. Its first drawn row
-   names the card it sits in; that card becomes the group's anchor, so the index, a jump and the scroll spy all see it. */
+   names the card it sits in; that card becomes the group's anchor, so the index, a jump and the scroll spy all see it.
+   A group the manager draws one item at a time (PM51.page's `owns`: Media abilities, Web abilities) is its list and
+   the shown item's details, so its anchor is that list/detail block: its first row sits in the details' Defaults card,
+   far below the list's top, and "For the whole project" stayed lit while the list filled the screen (Jared,
+   2026-11-21: "the highlight on the submenu doesnt work properly ... still not fixed"). The copy a tab switch is
+   morphing out (.o55-leaving) is not the page: an anchor left on it no longer counts, and none is adopted into it, or
+   the arriving copy got no anchors and the open tab listed no groups once the leaving copy was gone.
+   Only the open tab's groups are adopted, as pm51PlaceInline places only its groups and the index lists only its
+   entries: a row of another tab's group can be drawn on this one (Image Generation's Defaults card shows "Saves to",
+   media.io.artifacts-location, of Pictures & files' "Where results go"), and adopting it there lit "Where results go"
+   over the last third of the abilities list and listed it under Abilities, where a click set the tab without redrawing
+   the page (neon-max-16, 2026-11-22; Services listed Limits & switching's "Moving between accounts" the same way).
+   An adopted anchor counts only while it still holds its group. A redraw in place (28-in-place.js, which keeps
+   data-o55-adopted on the nodes it reuses) after Settings Search or Delivery history changed the tab left the old tab's
+   anchors on the new tab's cards: Commands listed Shortcuts' "Keyboard shortcuts" and "Hints and clashes", Events
+   listed Destinations' "Notifications", and a click on one sent the page back (neon-p-recheck-r2 F1). So an anchor of
+   another tab, or one whose card no longer holds a row of its group (nor is its owner's list/detail block), is
+   dropped before the open tab's groups are adopted. */
+const pm51Live = (scope, sel) => [...scope.querySelectorAll(sel)].find(el => !el.closest('.o55-leaving'));
+const pm51RowSel = s => (s.settings || []).map(st => `#setting-${cssEscape(st.id)}, [data-setting-id="${cssEscape(st.id)}"]`).join(', ');
+const pm51OwnerOf = (scope, id) => [...scope.querySelectorAll('[data-pm51-owns]')].find(p => (p.dataset.pm51Owns || '').split(' ').includes(id));
+function pm51DropStaleAnchors(w, body, cur) {
+  const byId = new Map(w.sections.map(s => [s.id, s]));
+  body.querySelectorAll('[data-o55-adopted]').forEach(el => {
+    if (el.closest('.o55-leaving')) return;
+    const id = el.dataset.sectionId, s = byId.get(id);
+    if (s && !(cur && s.tab && s.tab !== cur)) {
+      const owner = el.matches('.pm51-split') && pm51OwnerOf(body, id);
+      const sel = pm51RowSel(s);
+      if ((owner && owner.contains(el)) || (sel && (el.matches(sel) || el.querySelector(sel)))) return;
+    }
+    if (el.id === `section-${id}`) el.removeAttribute('id');
+    el.removeAttribute('data-section-id'); el.removeAttribute('data-o55-adopted');
+  });
+}
 function pm51AdoptAnchors(ws, body) {
   const w = getDomain().workspaces.find(x => x.id === ws);
   if (!w || !body || !Array.isArray(w.sections)) return;
+  const cur = pm51HasTabs(w) ? pm51IndexCurTab(ws) : null;
+  pm51DropStaleAnchors(w, body, cur);
   for (const s of w.sections) {
-    if (!s.inline || s.advanced || body.querySelector(`[data-section-id="${cssEscape(s.id)}"]`)) continue;
-    const row = (s.settings || []).map(st => body.querySelector(`#setting-${cssEscape(st.id)}, [data-setting-id="${cssEscape(st.id)}"]`)).find(Boolean);
-    if (!row) continue;
-    const card = row.closest('.pm51-section, .settings-section');
+    if (!s.inline || s.advanced || (cur && s.tab && s.tab !== cur) || pm51Live(body, `[data-section-id="${cssEscape(s.id)}"]`)) continue;
+    const owner = pm51OwnerOf(body, s.id);
+    const split = owner && pm51Live(owner, '.pm51-split:not([data-section-id])');
+    /* the group's first row as drawn, not as listed: Search services lists web.providers.provider-order first, drawn in
+       its second card ("When an ability has no order of its own", ~580 px down), while provider-status heads the
+       services accordion it is named after (neon-max-16, low) */
+    const row = split ? null : (s.settings || []).map(st => pm51Live(body, `#setting-${cssEscape(st.id)}, [data-setting-id="${cssEscape(st.id)}"]`))
+      .reduce((a, b) => (b && (!a || (b.compareDocumentPosition(a) & Node.DOCUMENT_POSITION_FOLLOWING)) ? b : a), null);
+    if (!split && !row) continue;
+    const card = split || row.closest('.pm51-section, .settings-section');
     const host = card && !card.hasAttribute('data-section-id') ? card : (row.hasAttribute('data-section-id') ? null : row);
     if (!host) continue;
     host.setAttribute('data-section-id', s.id); host.setAttribute('data-o55-adopted', '');
@@ -134910,6 +134969,9 @@ ensurePm51State = function () { o55EnsurePm51State(); try { o55PersonaCanon(); }
     return {
       title: r.name, pill: PM51.pill(plain(r)), subtitle: SHORT[r.id] || r.description,
       primary: off ? { label: 'Turn on', icon: 'play', action: 'pm51-web-turn-on', data } : null,
+      /* while the ability is on, its head keeps Turn on's room (kit.js pm51-detail-space), so turning it off or on never
+         re-wraps the head (FO-130 at 860x900: the buttons dropped to a second line and the head grew 44 px) */
+      primarySpace: { label: 'Turn on', icon: 'play' },
       menu: anchor => PM51.menu(anchor, [
         { label: off ? 'Turn on' : 'Turn off', icon: off ? 'play' : 'pause', onClick: () => off ? turnOn(r) : turnOff(r) },
         { label: 'Reset to the example', icon: 'restore', onClick: () => PM51.confirm(`Reset ${r.name}?`, 'The AI model, backups and choices go back to the example defaults. Web services and limits are kept.', 'Reset', () => { resetRoute(r); PM51.toast(`${r.name} reset`, 'Defaults are back.'); }) }
