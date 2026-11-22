@@ -16,11 +16,16 @@
 //  - Basic Light at 1920x1080 and 1390x900: Basic's check badge or the ring spreading from it past the stage's visible
 //    box (the pane, cut by its clipping parents) when a choice on Away from home is made (the globe hangs at the pane's
 //    right edge; AST4's key ring was cut there).
+//  - NieR Light and Dark at 740x768 and 1920x1080, Text size: a font-size and line-height stylesheet restating the box's
+//    (as the Text size and Line spacing settings' o55PaintScales does) changes the box's size with its words, class, map
+//    and fonts unchanged. Creating's settled blocks must stay clear of the resized box and its PIP tab, and the stage's
+//    kept box must be re-measured against a fresh boxInScene (TOOLS-STAGEREST-K4: the nierKey gap, opus-review-stagerest
+//    P1, passes the other groups).
 // Geometry from the page, not pixels: films cover the motion claims (lane report). Every case also fails if it sampled
 // no frames, or never saw what it is about (a leaving prop, a block, a ring); a case whose sampler saw no leaving prop
 // reruns its whole sequence up to twice more before failing as 'could not judge' (a slow GPU can drop every leaving
 // frame; TOOL-ISSUES F13-NAS1-KEEPOFF-SAMPLES), and an overlap fails at once. Both surfaces unless --set sandbox picks one.
-// --set only=nier|leave|begin|ring runs one group. About 6 minutes per surface.
+// --set only=nier|leave|begin|ring|textsize runs one group. About 8 minutes per surface.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/stage-keepoff.check.mjs --set page=<build>
 
 const LAYER = '#pm-o55-onboarding .o55-layer:not(.o55-out)';
@@ -206,11 +211,39 @@ async function ring(t, mode) {
 	}
 }
 
+
+// the stage's kept NieR box against a fresh measurement, in scene units (the draw oracle's rounding)
+const BOXREAD = () => {
+	const st = document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage;
+	const r4 = (b) => (b ? b.map((v) => Math.round(v * 4) / 4).join(',') : 'null');
+	return { kept: r4(st.nierBox), fresh: r4(st.boxInScene(st.bubble, 6)) };
+};
+
+// Text size: the box changes size with its words, class, map and fonts unchanged (TOOLS-STAGEREST-K4). Creating's
+// blocks are settled clear of the box as it was; a font-size and line-height stylesheet (as the settings' o55PaintScales
+// restates .pst-bubble) grows the box, and the kept box must be re-measured and the blocks stay clear of the live one.
+async function textsize(t, mode) {
+	for (const look of ['nier-light', 'nier-dark']) for (const size of [[740, 768], [1920, 1080]]) {
+		const tag = `${look} ${size.join('x')} ${mode} Text size`;
+		const f = await openAt(t, mode, look, size, 'name');
+		await nameIt(t, f);
+		const reached = (await next(t, f, 'review')) && (await next(t, f, 'creating'));
+		await f.waitForTimeout(8000);
+		const before = await f.evaluate(BOXREAD);
+		await f.evaluate(() => { const s = document.createElement('style'); s.id = 'sk-textsize'; s.textContent = '#pm-o55-onboarding .pst-bubble{font-size:17px !important;line-height:1.7 !important}'; document.head.appendChild(s); });
+		await f.waitForTimeout(2500);
+		const after = await f.evaluate(BOXREAD);
+		const S = await result(t, f);
+		await t.check(`${tag}: the kept box is re-measured after a font-size stylesheet (words, class, map and fonts unchanged)`, reached && after.kept === after.fresh, `kept ${after.kept} vs fresh ${after.fresh}; before the stylesheet: kept ${before.kept} vs fresh ${before.fresh}`);
+		await t.check(`${tag}: Creating's blocks stay clear of the resized box and the PIP tab`, reached && S.blocks > 0 && S.hits.length === 0, `${reached ? 'creating' : 'did not reach Creating'}, ${S.frames} frames, ${S.blocks} block samples, ${S.hits.length} overlaps: ${S.hits.slice(0, 3).join(' ; ')}`);
+	}
+}
 const all = (mode) => async (t) => {
 	if (want(t, 'nier')) await nier(t, mode);
 	if (want(t, 'leave')) await leave(t, mode);
 	if (want(t, 'begin')) await begin(t, mode);
 	if (want(t, 'ring')) await ring(t, mode);
+	if (want(t, 'textsize')) await textsize(t, mode);
 };
 export const tests = {
 	'stage keep-off, normal page': on('normal', all('normal')),
