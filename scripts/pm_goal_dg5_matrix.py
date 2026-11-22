@@ -45,13 +45,21 @@ failure), reads conditions 2 and 4 as follows, and nothing wider:
     when that failure's case touches none of the row's own site and bytes. Any
     other failure, a second failure, or an undeclared one still fails the
     condition, and every control other than that case's own case must be exact.
-    A control is any family record the judge marked a control, exact or refused
-    (pm_goal_guard_sweep writes `control` and `control_refused`); the case id is
-    matched as a whole label segment, never a substring; and "touches" includes
-    any ledger record of that case that evaluated or refused at this row, the
-    witness's intact, cut and restoration codes, and a suite component or module
-    that maps to a row site file.
-  * Both readings apply only when every table of the row is NOT_RUN with reason
+    A control is every family record the judge marked valid=True; it is exact
+    only when its outcome is `control` with no errors (an exception or any other
+    outcome spelling, and a refused control with empty errors, are not exact).
+    The one exempt control is the known failure's own case, matched by
+    [component, case id] together against the label's
+    `adapter/<component>/<case>/<entry>` parts; a case id is matched as a whole
+    label sub-path (one or more consecutive whole segments, so a real id
+    containing '/' matches), never a substring. "Touches" includes any ledger
+    record of that case that evaluated or refused at this row (errors, failing,
+    refusing sites, restoration_errors, cut_errors, signatures), any code the
+    row's tries or witness recorded (refusal codes and every killed_code_check
+    intact, cut and restoration code), a code that case's own ledger records
+    emitted, and a suite component or module that maps to a row site file.
+  * Both readings apply only when every table of the row -- the family tables
+    and every cited shared proof's table included -- is NOT_RUN with reason
     `no control vector`. A `no single-row vector` table keeps the unamended
     condition 2 (an exact KILLED witness) and condition 4 (failures 0).
 
@@ -244,7 +252,6 @@ def _restoration(record):
 
 
 NOT_RUN_REASONS = ('no control vector', 'no single-row vector')
-CONTROL_OUTCOMES = ('control', 'control_refused')   # pm_goal_guard_sweep._judge writes both
 _GUARDED_CALLS = ('shared_refuse', 'refuse', 'shared_require', 'require')
 _TREE_CACHE = {}
 
@@ -378,8 +385,29 @@ def _label_parts(label):
 
 
 def _label_carries(label, case):
-    """True when `case` is the whole label or one whole segment of it (never a substring)."""
-    return bool(case) and (str(label) == case or case in _label_parts(label))
+    """True when `case` is the whole label or a whole sub-path of it: one or more
+    consecutive whole '/'-separated segments, never a substring. A real case id may
+    itself contain '/' (`frame_fixture/magic`), and then matches only as that sub-path."""
+    if not case:
+        return False
+    if str(label) == case:
+        return True
+    parts = _label_parts(label)
+    case_parts = [part for part in case.split('/') if part]
+    if not case_parts:
+        return False
+    n = len(case_parts)
+    return any(parts[i:i + n] == case_parts for i in range(len(parts) - n + 1))
+
+
+def _label_case(label):
+    """The (component, case id) an `adapter/<component>/<case>/<entry>` label carries,
+    or None for any other shape. The case id is every segment between the component
+    and the final entry segment, so a multi-segment case id stays one id."""
+    parts = _label_parts(label)
+    if len(parts) < 4 or parts[0] != 'adapter':
+        return None
+    return parts[1], '/'.join(parts[2:-1])
 
 
 def _known_failure_entry(value):
@@ -422,11 +450,13 @@ def _replay_entry(proof, family, declared=()):
 
     The replay must have every control exact and either no failure or exactly one
     `source_failed` whose details hold exactly one declared triple (Amendment 1).
-    A control whose own label carries that case id as a whole segment is the known
-    failure's case and is the only control exempt from the exactness test.
+    A control is every family record the judge marked valid=True; it is exact only
+    when its outcome is 'control' with no errors. The one exempt control is the known
+    failure's own case: its label must carry the declared [component, case id]
+    together in the `adapter/<component>/<case>/<entry>` parts.
     """
     controls = [r for r in proof['ledger']
-                if r.get('family') == family and r.get('outcome') in CONTROL_OUTCOMES]
+                if r.get('family') == family and r.get('valid') is True]
     failures = proof['collection'].get('failures')
     known = None
     if isinstance(failures, list) and len(failures) == 1:
@@ -435,8 +465,9 @@ def _replay_entry(proof, family, declared=()):
         if (failure.get('kind') == 'source_failed' and entries is not None and len(entries) == 1
                 and _known_failure_entry(entries[0]) and tuple(entries[0]) in set(map(tuple, declared))):
             known = dict(entry=list(entries[0]), kind=failure.get('kind'), source=failure.get('source'))
-    case = known['entry'][1] if known else None
-    exact = all(not r.get('errors') or (case is not None and _label_carries(r.get('label'), case))
+    known_case = (known['entry'][0], known['entry'][1]) if known else None
+    exact = all((r.get('outcome') == 'control' and not r.get('errors'))
+                or (known_case is not None and _label_case(r.get('label')) == known_case)
                 for r in controls)
     ok = (failures == [] or known is not None) and exact
     return ok, dict(proof_dir=proof['path'], calls=proof['collection'].get('calls'),
@@ -449,10 +480,13 @@ def _known_failure_touches(entry, name, sites, tries, witness, module=None, proo
 
     One data entry has only the source component, case id and refusal code, so "touches"
     is read from everything the row itself records: the case must not be one of its
-    attempts, its witness, or any ledger record that evaluated or refused at this row; its
-    code must not be a code the row refused with (intact, cut or restoration); and neither
-    the case nor the code may occur in the bytes of a row site file. A suite component or
-    failing module that maps to a row site file also touches it.
+    attempts, its witness, or any ledger record that evaluated or refused at this row
+    (errors, failing, refusing sites, restoration_errors, cut_errors, signatures); its
+    code must not be a code the row refused with (any try's or the witness's refusal
+    code or killed_code_check intact, cut or restoration code); the case's own ledger
+    records must not emit a code recorded at this row; and neither the case nor the
+    code may occur in the bytes of a row site file. A suite component or failing module
+    that maps to a row site file also touches it.
     """
     source, case, code = entry
     labels = [r.get('label') for r in tries if r.get('label')]
@@ -463,10 +497,10 @@ def _known_failure_touches(entry, name, sites, tries, witness, module=None, proo
     if code == name:
         return 'its refusal code names this row'
     codes = {r.get('refusal_code') for r in tries if r.get('refusal_code')}
-    if witness is not None:
-        if witness.get('refusal_code'):
-            codes.add(witness['refusal_code'])
-        check = witness.get('killed_code_check')
+    if witness is not None and witness.get('refusal_code'):
+        codes.add(witness['refusal_code'])
+    for record in list(tries) + ([witness] if witness is not None else []):
+        check = record.get('killed_code_check')
         if isinstance(check, dict):
             codes.update(code for code in (check.get('intact_code'), check.get('cut_code'),
                                            check.get('restoration_code')) if code)
@@ -491,13 +525,24 @@ def _known_failure_touches(entry, name, sites, tries, witness, module=None, proo
                 continue
             refusing = [item[0] if isinstance(item, (list, tuple)) and item else item
                         for item in (record.get('refusing_sites') or [])]
+            restoration_errors = record.get('restoration_errors')
+            cut_errors = record.get('cut_errors')
             if name in (record.get('errors') or []) or name in (record.get('failing') or []) \
-                    or name in refusing:
+                    or name in refusing \
+                    or (isinstance(restoration_errors, list) and name in restoration_errors) \
+                    or (isinstance(cut_errors, list) and name in cut_errors):
                 return 'its case refused at this row in the recorded ledger'
             sig = record.get('sig')
             if isinstance(sig, int) and 0 <= sig < len(proof['signatures']) \
                     and name in proof['signatures'][sig]:
                 return 'its case was evaluated at this row in the recorded ledger'
+            record_codes = {record.get('refusal_code')} if record.get('refusal_code') else set()
+            check = record.get('killed_code_check')
+            if isinstance(check, dict):
+                record_codes.update(code for code in (check.get('intact_code'), check.get('cut_code'),
+                                                      check.get('restoration_code')) if code)
+            if record_codes & codes:
+                return 'its case emitted a code recorded at this row'
     return None
 
 
@@ -515,7 +560,8 @@ def _witness_bound_not_run(name, sites, specs, shared, tries, shared_tries, acce
     if any(spec.get('status') == 'FAIL' or spec.get('table_status') == 'FAIL' for spec in shared['specs']):
         return None
     # Amendment 1 is limited to the shape it names: a NOT_RUN table with no control vector.
-    amended = all(spec.get('table_reason') == 'no control vector' for spec in specs)
+    # Every table the row uses counts, the cited shared proofs' tables included (F5).
+    amended = all(spec.get('table_reason') == 'no control vector' for spec in specs + shared['specs'])
     witness_pair = _exact_witness(tries, name, allow_killed_code=amended)
     shared_cite = False
     if witness_pair is None and shared['valid']:
@@ -559,7 +605,7 @@ def _witness_bound_not_run(name, sites, specs, shared, tries, shared_tries, acce
         triple = tuple(known['entry'])
         if triple not in known_used:
             known_used.append(triple)
-        touches = _known_failure_touches(triple, name, sites, tries, witness,
+        touches = _known_failure_touches(triple, name, sites, tries + shared_tries, witness,
                                          known.get('source'), proofs + shared_proofs)
         if touches is not None:
             return None

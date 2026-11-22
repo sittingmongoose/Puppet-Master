@@ -34,7 +34,10 @@ def _sha(path):
 
 def _rec(i, label, outcome, target=None, kill=None, sig=0, cut_errors=None, codes=None):
     errors = [target] if target and outcome == 'exact_expected' else []
-    record = dict(id=i, family=FAM, label=label, sig=sig, outcome=outcome, target=target, valid=None,
+    # The judge marks every control valid=True (pm_goal_guard_sweep._judge); Amendment 1
+    # condition 4 as fixed by TOOLBATCH F1 selects controls by that mark, not by outcome.
+    record = dict(id=i, family=FAM, label=label, sig=sig, outcome=outcome, target=target,
+                  valid=True if outcome in ('control', 'control_refused') else None,
                   kill=kill, errors=errors, input_sha256='f' * 64, restoration_errors=list(errors),
                   cut_errors=[] if cut_errors is None else cut_errors, site_cuts=None,
                   cut_exception_site=None)
@@ -214,8 +217,9 @@ def check_matrix():
 
 def check_amendment1():
     """Amendment 1's condition 2 (KILLED_CODE with Addendum J2) and condition 4 (one exact
-    declared known failure): the positive, the brief's refusals, and the AMEND1-MATRIX
-    review's F1-F5/F8 trials (01l, 01m, 05b, 05c, 05e, 06b, 06c, 06d, 07a)."""
+    declared known failure): the positive, the brief's refusals, the AMEND1-MATRIX
+    review's F1-F5/F8 trials (01l, 01m, 05b, 05c, 05e, 06b, 06c, 06d, 07a), and the
+    TOOLBATCH-AMEND1-FIX review's F1-F5 trials (M1a-c, M2a-c, M3a-e, M4b)."""
     line = _refuse_line()
     declared = [['source', 'unsupported_same_run_halts', 'reducer/unregistered_record']]
     other = ['source', 'another_case', 'reducer/unregistered_record']
@@ -395,6 +399,149 @@ def check_amendment1():
         _, row = trial(td, 'amend1-07a', name,
                        [_rec(0, 'case/control', 'control'), witness(name)],
                        [failure([declared[0]])], declared, reason='no single-row vector')
+        assert row['status'] == 'OPEN', row
+
+        # --- TOOLBATCH-AMEND1-FIX review trials (each wrongly closed on 31794f52eb) ---
+
+        # (p) M1a: a real-judge exception control (valid=True, generated=True, errors=None,
+        # the shape pm_goal_guard_sweep.py:415-419 writes without appending a failure).
+        name = 'dg5/test/review_M1a_control_exception_real_judge'
+        exc = _rec(2, 'adapter/storage/exception_case/TestOwnerStorage.append', 'exception')
+        exc.update(valid=True, generated=True, errors=None)
+        _, row = trial(td, 'amend1-M1a', name,
+                       [_rec(0, 'case/control', 'control'), exc, witness(name)],
+                       [failure([declared[0]])], declared)
+        assert row['status'] == 'OPEN', row
+
+        # (q) M1b: a control with another outcome spelling ('control_failed') and errors.
+        name = 'dg5/test/review_M1b_control_alt_outcome_spelling'
+        bad = _rec(2, 'adapter/storage/alt_outcome_case/TestOwnerStorage.append', 'control_failed')
+        bad.update(valid=True, errors=['dg5/site/pm_goal_test_storage.py:1450'])
+        _, row = trial(td, 'amend1-M1b', name,
+                       [_rec(0, 'case/control', 'control'), bad, witness(name)],
+                       [failure([declared[0]])], declared)
+        assert row['status'] == 'OPEN', row
+
+        # (r) M1c: a refused control with empty errors is not exact.
+        name = 'dg5/test/review_M1c_control_refused_empty_errors'
+        bad = _rec(2, 'adapter/storage/empty_errors_case/TestOwnerStorage.append', 'control_refused')
+        bad['errors'] = []
+        _, row = trial(td, 'amend1-M1c', name,
+                       [_rec(0, 'case/control', 'control'), bad, witness(name)],
+                       [failure([declared[0]])], declared)
+        assert row['status'] == 'OPEN', row
+
+        # (s) M2a: the real declared case, but the refused control is in another component.
+        name = 'dg5/test/review_M2a_case_id_other_component'
+        bad = _rec(2, 'adapter/storage/unsupported_same_run_halts/TestOwnerStorage.append',
+                   'control_refused')
+        bad['errors'] = ['dg5/site/pm_goal_test_storage.py:1450']
+        _, row = trial(td, 'amend1-M2a', name,
+                       [_rec(0, 'case/control', 'control'), bad, witness(name)],
+                       [failure([declared[0]])], declared)
+        assert row['status'] == 'OPEN', row
+
+        # (t) M2b: the declared case id matches only the control's entry segment.
+        name = 'dg5/test/review_M2b_case_id_matches_entry_segment'
+        touches = ['source', 'TestOwnerStorage.append', 'reducer/unregistered_record']
+        bad = _rec(2, 'adapter/storage/unrelated_control/TestOwnerStorage.append', 'control_refused')
+        bad['errors'] = ['dg5/site/pm_goal_test_storage.py:1450']
+        _, row = trial(td, 'amend1-M2b', name,
+                       [_rec(0, 'case/control', 'control'), bad, witness(name)],
+                       [failure([touches])], [touches])
+        assert row['status'] == 'OPEN', row
+
+        # (u) M2c: the declared case id matches only the control's component segment.
+        # The row site is storage:197: 'registration' occurs in the owner-adapters bytes.
+        name = 'dg5/test/review_M2c_case_id_matches_comp_segment'
+        touches = ['source', 'registration', 'reducer/unregistered_record']
+        bad = _rec(2, 'adapter/registration/unrelated_control/Registry.register', 'control_refused')
+        bad['errors'] = ['dg5/site/pm_goal_test_storage.py:1450']
+        _, row = trial(td, 'amend1-M2c', name,
+                       [_rec(0, 'case/control', 'control'), bad, witness(name)],
+                       [failure([touches])], [touches], sites=[[ST, 197]])
+        assert row['status'] == 'OPEN', row
+
+        # (v) M3a: a second attempt's killed_code_check.restoration_code is the declared code.
+        name = 'dg5/test/review_M3a_restoration_code_other_attempt'
+        touches = ['source', 'unrelated_case', 'Corrupt:rest_only_drift']
+        second = _rec(2, 'case/second_attempt', 'exact_expected', name, 'RESTORATION_FAILED')
+        second['restoration_errors'] = []
+        second['killed_code_check'] = dict(verdict='RESTORATION_FAILED',
+                                           restoration_code='Corrupt:rest_only_drift')
+        _, row = trial(td, 'amend1-M3a', name,
+                       [_rec(0, 'case/control', 'control'), second, witness(name)],
+                       [failure([touches])], [touches])
+        assert row['status'] == 'OPEN', row
+
+        # (w) M3b: the declared case's ledger record hits the row only in restoration_errors.
+        name = 'dg5/test/review_M3b_case_ledger_restoration_errors'
+        hit = _rec(2, 'adapter/source/unsupported_same_run_halts/GenericSource.acquire',
+                   'control_refused')
+        hit['errors'] = ['dg5/site/pm_goal_test_storage.py:1450']
+        hit['restoration_errors'] = [name]
+        _, row = trial(td, 'amend1-M3b', name,
+                       [_rec(0, 'case/control', 'control'), hit, witness(name)],
+                       [failure([declared[0]])], declared)
+        assert row['status'] == 'OPEN', row
+
+        # (x) M3c: the declared case's ledger record hits the row only in cut_errors.
+        name = 'dg5/test/review_M3c_case_ledger_cut_errors'
+        hit = _rec(2, 'adapter/source/unsupported_same_run_halts/GenericSource.acquire',
+                   'control_refused')
+        hit['errors'] = ['dg5/site/pm_goal_test_storage.py:1450']
+        hit['restoration_errors'] = ['dg5/site/pm_goal_test_storage.py:1450']
+        hit['cut_errors'] = [name]
+        _, row = trial(td, 'amend1-M3c', name,
+                       [_rec(0, 'case/control', 'control'), hit, witness(name)],
+                       [failure([declared[0]])], declared)
+        assert row['status'] == 'OPEN', row
+
+        # (y) M3d: the declared case's ledger record emits the row's own code.
+        name = 'dg5/test/review_M3d_case_ledger_emits_row_code'
+        hit = _rec(2, 'adapter/source/unsupported_same_run_halts/GenericSource.acquire',
+                   'control_refused')
+        hit['errors'] = ['dg5/site/pm_goal_test_storage.py:1450']
+        hit['restoration_errors'] = ['dg5/site/pm_goal_test_storage.py:1450']
+        hit['refusal_code'] = 'Corrupt:magic'
+        hit['killed_code_check'] = dict(verdict='KILLED_CODE', restoration_code='Corrupt:magic')
+        _, row = trial(td, 'amend1-M3d', name,
+                       [_rec(0, 'case/control', 'control'), hit, witness(name)],
+                       [failure([declared[0]])], declared)
+        assert row['status'] == 'OPEN', row
+
+        # (z) M3e: a declared case id containing '/' is the witness's own multi-segment case.
+        name = 'dg5/test/review_M3e_slash_case_id_witness'
+        touches = ['dg5-shared', 'frame_fixture/magic', 'Corrupt:unexpected']
+        _, row = trial(td, 'amend1-M3e', name,
+                       [_rec(0, 'case/control', 'control'),
+                        witness(name, label='adapter/dg5-shared/frame_fixture/magic/decode_frame')],
+                       [failure([touches])], [touches])
+        assert row['status'] == 'OPEN', row
+
+        # (aa) M4b: a cited shared proof whose own table is 'no single-row vector' keeps the
+        # unamended conditions even when every family table is 'no control vector'.
+        name = 'dg5/test/review_M4b_shared_single_row_with_fam_no_control'
+        fam_proof = _proof(Path(td) / 'amend1-M4b-fam', {name: dict(sites=[[OA, line]])},
+                           [_rec(0, 'case/control', 'control')],
+                           [dict(guard=name, table='t-M4b-fam', status='UNPROVED')],
+                           [dict(table='t-M4b-fam', status='NOT_RUN', rows=[name],
+                                 reason='no control vector')])
+        shr_proof = _proof(Path(td) / 'amend1-M4b-shr', {name: dict(sites=[[OA, line]])},
+                           [_rec(0, 'case/control', 'control'), witness(name)],
+                           [dict(guard=name, table='t-M4b-shr', status='UNPROVED')],
+                           [dict(table='t-M4b-shr', status='NOT_RUN', rows=[name],
+                                 reason='no single-row vector')],
+                           failures=[failure([declared[0]])])
+        out = Path(td) / 'amend1-M4b.json'
+        decl_path = Path(td) / 'amend1-M4b.known.json'
+        decl_path.write_text(json.dumps(declared))
+        r = subprocess.run([sys.executable, '-B', 'scripts/pm_goal_dg5_matrix.py',
+                            str(fam_proof), '--family', FAM, '--shared-proof', str(shr_proof),
+                            '--known-failure', str(decl_path), '--out', str(out)],
+                           cwd=ROOT, capture_output=True, text=True)
+        assert r.returncode == 0, r.stderr[-2000:]
+        row = {x['row']: x for x in json.loads(out.read_text())['families'][FAM]['matrix']}[name]
         assert row['status'] == 'OPEN', row
 
 
