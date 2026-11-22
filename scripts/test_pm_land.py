@@ -21,6 +21,64 @@ SPEC = importlib.util.spec_from_file_location("pm_land", Path(__file__).with_nam
 land = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(land)
 
+# The setsid cleanup tests scan the real /proc. Scope the test worker's process inventory
+# to the fixture: descendants of the test process or the long-job runner, plus members of
+# the job's process group/session. Unrelated host processes (an unreadable
+# /proc/<pid>/environ among them) must not decide the fixture's cleanup. Production keeps
+# the full scan and its conservative unreadable-means-unverified behaviour.
+_FIXTURE_PROC_SCOPE = '''
+_fixture_real_listdir = os.listdir
+def _fixture_proc_pids(entries):
+    stats = {}
+    for entry in entries:
+        if entry.isdigit():
+            try:
+                fields = Path(f"/proc/{entry}/stat").read_text(encoding="utf-8", errors="replace").rsplit(")", 1)[1].split()
+                stats[int(entry)] = (int(fields[1]), int(fields[2]), int(fields[3]))
+            except (OSError, IndexError, ValueError):
+                continue
+    roots = {FIXTURE_TEST_PID}
+    groups, sessions = set(), set()
+    try:
+        meta = read_json(proc_file(worktree_path(None)))
+        job_dir = Path(meta["long_job_dir"])
+        run = read_json(job_dir / "run.json")
+        job = read_json(job_dir / "job.json")
+        runner = run.get("runner_pid") or job.get("runner_pid")
+        if type(runner) is int and runner > 0:
+            roots.add(runner)
+        for value in (run.get("pgid") or runner, meta.get("pgid")):
+            if type(value) is int and value > 0:
+                groups.add(value)
+        for value in (runner, meta.get("sid")):
+            if type(value) is int and value > 0:
+                sessions.add(value)
+    except (OSError, ValueError, KeyError, TypeError):
+        pass
+    keep = set()
+    for pid, (ppid, pgid, sid) in stats.items():
+        if pgid in groups or sid in sessions:
+            keep.add(pid)
+            continue
+        ancestor = pid
+        for _ in range(64):
+            if ancestor in roots:
+                keep.add(pid)
+                break
+            parent = stats.get(ancestor)
+            if parent is None or parent[0] <= 1 or parent[0] == ancestor:
+                break
+            ancestor = parent[0]
+    return keep
+def _fixture_listdir(path):
+    entries = _fixture_real_listdir(path)
+    if path == "/proc":
+        keep = _fixture_proc_pids(entries)
+        return [entry for entry in entries if not entry.isdigit() or int(entry) in keep]
+    return entries
+os.listdir = _fixture_listdir
+'''
+
 
 class LandingFixture(unittest.TestCase):
     def setUp(self):
@@ -395,7 +453,8 @@ class LandingFixture(unittest.TestCase):
             f"CHECK = ({sys.executable!r}, '-B', {str(check_script)!r})\n"
             f"CLEANUP_DRAIN_SECONDS = 2.0\n"
             f"def worktree_path(_folder):\n    return Path({str(worktree)!r})\n"
-        )
+            f"FIXTURE_TEST_PID = {os.getpid()}\n"
+        ) + _FIXTURE_PROC_SCOPE
         worker = folder / "worker.py"
         worker.write_text(source.replace(marker, overrides + marker), encoding="utf-8")
         return worker
@@ -592,6 +651,62 @@ print(json.dumps({{"schema_id": "pm.landing_check.report.v1", "commit": {self.he
         holder.kill()
         holder.wait()
         (folder / "cleanup-receipt.json").unlink()
+
+        # A fixture descendant whose environ is unreadable must still preserve the copy:
+        # production treats unreadable as unverified, whatever the process inventory.
+        unreadable_pidfile = self.root / "unreadable-child.json"
+        unreadable = subprocess.Popen(
+            [sys.executable, "-c",
+             "import ctypes, json, os, time\n"
+             "from pathlib import Path\n"
+             "ctypes.CDLL('libc.so.6', use_errno=True).prctl(4, 0, 0, 0, 0)\n"
+             f"Path({str(unreadable_pidfile)!r}).write_text(json.dumps({{'pid': os.getpid()}}))\n"
+             "time.sleep(30)\n"],
+            stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        )
+        self.addCleanup(lambda: (unreadable.kill(), unreadable.wait()) if unreadable.poll() is None else None)
+        deadline = time.monotonic() + 5
+        while not unreadable_pidfile.is_file() and time.monotonic() < deadline:
+            time.sleep(0.05)
+        self.assertTrue(unreadable_pidfile.is_file())
+        clean_unreadable = subprocess.run([sys.executable, "-B", str(worker), "cleanup", "nas1"],
+                                          env=env, capture_output=True, text=True, check=False)
+        self.assertEqual(clean_unreadable.returncode, 0, clean_unreadable.stdout + clean_unreadable.stderr)
+        self.assertTrue(worktree.is_dir())
+        self.assertIn("state unverified-processes", clean_unreadable.stdout)
+        unreadable.kill()
+        unreadable.wait()
+        (folder / "cleanup-receipt.json").unlink()
+
+        # An unrelated host process — orphaned to init, own session, unreadable environ —
+        # must not decide this fixture's cleanup. This is the observed flake: the expected
+        # process inventory ignores processes outside the fixture.
+        orphan_pidfile = self.root / "orphan.json"
+        orphan_launcher = subprocess.Popen(
+            [sys.executable, "-c",
+             "import ctypes, json, os, time\n"
+             "from pathlib import Path\n"
+             "if os.fork() != 0:\n"
+             "    os._exit(0)\n"
+             "os.setsid()\n"
+             "os.chdir('/')\n"
+             "ctypes.CDLL('libc.so.6', use_errno=True).prctl(4, 0, 0, 0, 0)\n"
+             "start = Path(f'/proc/{os.getpid()}/stat').read_text().rsplit(')', 1)[1].split()[19]\n"
+             f"Path({str(orphan_pidfile)!r}).write_text(json.dumps({{'pid': os.getpid(), 'start': start}}))\n"
+             "time.sleep(30)\n"],
+            stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        )
+        orphan_launcher.wait()
+        deadline = time.monotonic() + 5
+        while not orphan_pidfile.is_file() and time.monotonic() < deadline:
+            time.sleep(0.05)
+        self.assertTrue(orphan_pidfile.is_file())
+        orphan = land.read_json(orphan_pidfile)
+        self.addCleanup(self.kill_pid_if_matches, orphan["pid"], orphan["start"])
+        orphan_ppid = int(Path(f"/proc/{orphan['pid']}/stat").read_text().rsplit(")", 1)[1].split()[1])
+        self.assertNotEqual(orphan_ppid, os.getpid())
+        with self.assertRaises(PermissionError):
+            Path(f"/proc/{orphan['pid']}/environ").read_bytes()
 
         clean = subprocess.run([sys.executable, "-B", str(worker), "cleanup", "nas1"],
                                env=env, capture_output=True, text=True, check=False)
