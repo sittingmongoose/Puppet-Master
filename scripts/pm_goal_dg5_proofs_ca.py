@@ -332,13 +332,6 @@ PROOFS = {
         "(witnessed: tampering the result scope refuses at :874 first).",
         [(R3, 812), (N3, 874)],
         ['dg5/site/pm_goal_dg_ca3_native.py:874']),
-    'dg5/site/pm_goal_dg_ca3_native.py:938': _p(
-        "d06.prepare is called only from run_native, which aggregate-blocks a "
-        "second entry at :803 long before prepare could run twice; run['d06'] "
-        "is set only at the end of prepare itself, so a re-entered prepare "
-        "with 'd06' present cannot arise through any route call.",
-        [(N3, 803), (N3, 938), (N3, 983)],
-        ['dg5/site/pm_goal_dg_ca3_native.py:803']),
     'dg5/site/pm_goal_dg_ca3_route.py:840': _p(
         "native_selections compares the d06 origin cell with the origin "
         "record from d06.readback, which reads that same cell moments "
@@ -489,14 +482,6 @@ PROOFS = {
         "with no last receipt cannot be produced by any owner call; direct "
         "cell tampering is refused earlier by the image origin sha binding.",
         [(BO, 798)]),
-    'dg5/site/pm_goal_dg_ca3_native.py:250': _p(
-        "issue() keys are fresh uid/test keys or deterministic per-run "
-        "keys issued once behind the phase guards (already_prepared / "
-        "already_aggregated refuse re-entry before any second issue to "
-        "the same key), so an occupied destination cannot reach issue().",
-        [(N3, 250), (N3, 803), (N3, 938)],
-        ['dg5/site/pm_goal_dg_ca3_native.py:803',
-         'dg5/site/pm_goal_dg_ca3_native.py:938']),
     'dg5/site/pm_goal_dg_ca3_route.py:807': _p(
         "owners_native is reached only with a d06 disposition from "
         "d06.readback, whose safe-stop seed status is the literal "
@@ -562,11 +547,6 @@ PROOFS = {
         "same stop cell whose image stop_item carries; both reads are of "
         "one cell in one synchronous capture with no stop write between.",
         [('scripts/pm_goal_dg_cb_migration.py', 451), (BO, 776)]),
-    'dg5/site/pm_goal_dg_cb_owners.py:228': _p(
-        "schema_ref_for is called only from image()/physical issuance "
-        "paths with the owners' fixed family names, every one a key of "
-        "FAMILY_SCHEMAS; no caller passes a caller-supplied family.",
-        [(BO, 228), (BO, 395)]),
     'dg5/site/pm_goal_dg_ca3_route.py:78': _p(
         "Same wrapper argument as C1 :56 on the C3 route wrapper: every "
         "wrap() call site whose def requires physical_key passes a "
