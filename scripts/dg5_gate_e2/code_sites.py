@@ -38,10 +38,16 @@ READ_ONLY_ATTRS = ('code', 'reason')
 
 
 def _load_sources_module():
-    import importlib.util
-    spec = importlib.util.spec_from_file_location('dg5_proof_sources_cs', Path(__file__).resolve().parent / 'proof_sources.py')
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    # T323 N1 residual (Qwen lane B): compile the exact source bytes; a SourceFileLoader would execute a matching
+    # .pyc (same mtime/size) from PYTHONPYCACHEPREFIX even though the .py matches its pin (JUDGE-FIX-R2 probe_c).
+    import hashlib
+    import types
+    path = Path(__file__).resolve().parent / 'proof_sources.py'
+    data = path.read_bytes()
+    module = types.ModuleType('dg5_proof_sources_cs')
+    module.__file__ = str(path)
+    module.__dg5_source_sha256__ = hashlib.sha256(data).hexdigest()
+    exec(compile(data, str(path), 'exec'), module.__dict__)
     return module
 
 
