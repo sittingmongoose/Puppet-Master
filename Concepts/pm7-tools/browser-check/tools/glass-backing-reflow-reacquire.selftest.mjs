@@ -196,4 +196,18 @@ function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = fa
 	assert.ok(m && !m.reflowed && m.share <= 0.002);
 	assert.equal(w.shots(), 10, 'the tick during c is caught and the sequence reacquired');
 }
-console.log('PASS own-pane reflow is detected from the layout signatures bracketing every plate: a single tick is reacquired into a clean verdict, persistent reflow ends in a bounded named could-not-judge (never a pass), a quiet pane keeps its first-acquisition pass, width-only timer ticks (visible or off-screen) are not reflow, and ticks during a2 or c are caught');
+// R137-F1 RED: the real pane's 1-second reversible wrap pulse ("MM minutes 0 seconds" [2 lines, state A] ->
+// "1 second" [1 line, state B, -15 px] -> "2 seconds" [2 lines, state A again], the sol-max-15 rows). One
+// acquisition spans 1.5-2 s > the 1 s timer period, so Tick 1 (A->B) can land between sigStart and shot(a1)
+// and Tick 2 (B->A) 1000 ms later between c0 and b: the six samples read A, B, B, B, A, A. The endpoint-only
+// guard sigStart === sigEnd judges the mixed sequence and falsely fails on the shifted icons (the direct
+// repro read 5.813% with zero reacquisitions). Every plate must be bracketed: judge only when EVERY sample
+// equals the first, else reacquire into the quiet second acquisition.
+{
+	const w = world([1, 4]); // Tick 1 before a1, Tick 2 before b: samples A, B, B, B, A, A
+	const m = await readThrough(w.t, w.f, SEL);
+	assert.ok(m && !m.reflowed && m.share <= 0.002, `the A->B->A pulse must reacquire, not judge (base share ${m && (m.share * 100).toFixed(3)}%)`);
+	assert.equal(w.shots(), 10, 'the mid-sequence pulse is caught and the quiet reacquisition judges');
+	assert.ok(w.logs.some((l) => /reflowed/.test(l) && /reacquir/.test(l)), 'the reacquisition is logged');
+}
+console.log('PASS own-pane reflow is detected from the layout signatures bracketing every plate: a single tick is reacquired into a clean verdict, persistent reflow ends in a bounded named could-not-judge (never a pass), a quiet pane keeps its first-acquisition pass, width-only timer ticks (visible or off-screen) are not reflow, ticks during a2 or c are caught, and a 1-second A->B->A wrap pulse inside one acquisition is caught mid-sequence, not judged on its equal endpoints');

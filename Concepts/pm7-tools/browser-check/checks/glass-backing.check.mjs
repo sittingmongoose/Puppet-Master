@@ -92,11 +92,16 @@ async function readThrough(t, f, sel, { rerenderAgents = false } = {}) {
 	await f.waitForTimeout(400);
 	const ACQUISITIONS = 3;
 	for (let attempt = 1; ; attempt++) {
-		// R136-N3: bracket EVERY plate — the signature is sampled before a1 and after c, so a wrap tick landing
-		// during any shot (or its IPC window) is seen; the base read sigA after a2 and sigB before c.
+		// R136-N3, R137-F1: bracket EVERY plate — the signature is sampled before a1 and after each of a1, a2,
+		// c0, b and c, and the sequence judges only when every sample equals the first. Endpoints alone let the
+		// real pane's 1-second reversible wrap pulse (0s -> 1s -> 2s, A -> B -> A) through: one acquisition spans
+		// 1.5-2 s, longer than the timer period, so both ticks can land inside it and sigStart === sigEnd again
+		// while a1..c0 paint state B and b/c state A (the sol-max-15 rows' false read-through).
 		const sigStart = await f.evaluate(bcLayoutSig, sel);
 		if (sigStart === null) return null;
-		const a1 = await shot(t, r); await f.waitForTimeout(300); const a2 = await shot(t, r);
+		const sigs = [sigStart];
+		const sig = async () => { sigs.push(await f.evaluate(bcLayoutSig, sel)); };
+		const a1 = await shot(t, r); await sig(); await f.waitForTimeout(300); const a2 = await shot(t, r); await sig();
 		await f.evaluate((s) => {
 			const e = document.querySelector(s);
 			let oldStyle = e.getAttribute('style');
@@ -129,7 +134,7 @@ async function readThrough(t, f, sel, { rerenderAgents = false } = {}) {
 		}, sel);
 		try {
 			await f.waitForTimeout(350);
-			const c0 = await shot(t, r);
+			const c0 = await shot(t, r); await sig();
 			await f.evaluate(() => document.getElementById('bc-through').__bcOutsideOnly());
 			if (rerenderAgents) {
 				// Replace text leaves only. Rewriting the list's HTML also rebuilt its animated and painted descendants (T142).
@@ -143,13 +148,12 @@ async function readThrough(t, f, sel, { rerenderAgents = false } = {}) {
 				t.log(`Glass backing rerender: replaced ${replaced} Agents text elements before shot b`);
 			}
 			await f.waitForTimeout(350);
-			const b = await shot(t, r);
+			const b = await shot(t, r); await sig();
 			// Exclude the surface's own glyphs, grown by 2 px to cover re-rasterisation against another backdrop.
 			await f.evaluate(() => document.getElementById('bc-through').__bcHideSurface());
 			await f.waitForTimeout(350);
-			const c = await shot(t, r);
-			const sigEnd = await f.evaluate(bcLayoutSig, sel);
-			if (sigEnd !== null && sigStart === sigEnd) return { rect: r, ...backingVerdict({ a1, a2, b, c, c0, width: r.width, height: r.height }) };
+			const c = await shot(t, r); await sig();
+			if (sigs.every((s) => s !== null && s === sigStart)) return { rect: r, ...backingVerdict({ a1, a2, b, c, c0, width: r.width, height: r.height }) };
 		} finally {
 			await f.evaluate(() => {
 				const st = document.getElementById('bc-through');
