@@ -42,15 +42,35 @@ const W = 236, H = 200, SEL = '#sidePanelSlot';
 const BG = [20, 20, 24], TEXT = [230, 230, 230], ICON1 = [100, 217, 255], ICON2 = [234, 236, 240];
 const REAL = { 'color': 'rgb(230, 230, 230)', '-webkit-text-fill-color': 'rgb(230, 230, 230)', 'text-shadow': 'none', 'caret-color': 'rgb(230, 230, 230)' };
 const TRANSPARENT = 'rgba(0, 0, 0, 0)';
-// the pane: five rows; a tick wraps the second row's timer and shifts rows 2-4 up 15 px (the witness's dy)
-function world(tickShots) {
-	let shifted = false, shots = 0, appended = null;
+// the pane: five visible rows plus three scrolled below the clip; every row carries a non-text icon and a
+// shrink-wrapped <i data-work-time> timer leaf whose width ticks without moving the row (the real pane's 22
+// live timers, R136-N2). A wrap tick shifts rows 2-4 up 15 px (the witness's dy).
+function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = false } = {}) {
+	let shifted = false, wide = false, shots = 0, appended = null;
 	const inline = new Map();
 	const rowY = (i) => 20 + i * 34 + (shifted && i >= 2 ? -15 : 0);
-	const children = Array.from({ length: 5 }, (_, i) => ({
-		offsetParent: null, // set below; a getter keeps the signature live
-		get offsetTop() { return rowY(i); }, offsetLeft: 0, offsetHeight: 30, offsetWidth: W,
-	}));
+	const timerW = (i) => (wide && (!offscreenOnly || i >= 5) ? 47 : 40);
+	const rows = [], icons = [], timers = [];
+	for (let i = 0; i < 8; i++) {
+		const row = {
+			offsetParent: null, parentElement: null, children: [], // set below; getters keep the signature live
+			get offsetTop() { return rowY(i); }, offsetLeft: 0, offsetHeight: 30, offsetWidth: W,
+			getBoundingClientRect: () => ({ top: 57 + rowY(i), left: 61, bottom: 57 + rowY(i) + 30, right: 61 + W, width: W, height: 30 }),
+		};
+		const icon = { // the .wk-lead svg: non-text, survives color:transparent
+			offsetParent: row, parentElement: row, children: [],
+			offsetTop: 2, offsetLeft: 8, offsetHeight: 12, offsetWidth: 12,
+			getBoundingClientRect: () => ({ top: 57 + rowY(i) + 2, left: 69, bottom: 57 + rowY(i) + 14, right: 81, width: 12, height: 12 }),
+		};
+		const timer = { // the <i data-work-time> text leaf: width ticks, the row does not move
+			offsetParent: row, parentElement: row, children: [],
+			offsetTop: 6, offsetLeft: 200, offsetHeight: 10,
+			get offsetWidth() { return timerW(i); },
+			getBoundingClientRect: () => ({ top: 57 + rowY(i) + 6, left: 261, bottom: 57 + rowY(i) + 16, right: 261 + timerW(i), width: timerW(i), height: 10 }),
+		};
+		row.children = [icon, timer];
+		rows.push(row); icons.push(icon); timers.push(timer);
+	}
 	const e = {
 		attrs: new Map(),
 		getAttribute(n) { return this.attrs.has(n) ? this.attrs.get(n) : null; },
@@ -59,9 +79,9 @@ function world(tickShots) {
 		style: { setProperty(p, v) { inline.set(p, v); } },
 		getBoundingClientRect: () => ({ left: 61, top: 57, right: 61 + W, bottom: 57 + H, width: W, height: H }),
 		scrollTop: 0, scrollHeight: 1200, clientWidth: W, clientHeight: H,
-		querySelectorAll: () => children,
+		querySelectorAll: (sel) => (sel === '*' ? rows.flatMap((r, i) => [r, icons[i], timers[i]]) : sel.includes('svg') ? icons : []),
 	};
-	children.forEach((c) => { c.offsetParent = e; });
+	rows.forEach((r) => { r.offsetParent = e; r.parentElement = e; });
 	const st = { id: '', textContent: '', remove() { appended = null; } };
 	const doc = {
 		querySelector: (s) => (s === SEL ? e : null),
@@ -91,14 +111,17 @@ function world(tickShots) {
 		log: (m) => logs.push(m),
 		page: { screenshot: async ({ clip }) => {
 			shots++;
-			if (tickShots.includes(shots)) shifted = !shifted; // the timer tick lands before this shot
+			if (tickShots.includes(shots)) shifted = !shifted; // the wrap tick lands before this shot
+			if (widthShots.includes(shots)) wide = !wide; // a width-only timer tick lands before this shot
 			const full = render();
 			const lx = clip.x - 61, ly = clip.y - 57, out = new Uint8Array(clip.width * clip.height * 4);
 			for (let y = 0; y < clip.height; y++) for (let x = 0; x < clip.width; x++) {
 				const s = ((y + ly) * W + (x + lx)) * 4, d = (y * clip.width + x) * 4;
 				out[d] = full[s]; out[d + 1] = full[s + 1]; out[d + 2] = full[s + 2]; out[d + 3] = full[s + 3];
 			}
-			return encodePng({ width: clip.width, height: clip.height, data: out });
+			const png = encodePng({ width: clip.width, height: clip.height, data: out });
+			if (afterShots.includes(shots)) shifted = !shifted; // the tick lands DURING this shot: framebuffer pre-wrap, signature post-wrap
+			return png;
 		} },
 	};
 	const f = {
@@ -138,4 +161,39 @@ function world(tickShots) {
 	assert.ok(m && !m.reflowed && m.share === 0, 'a quiet pane judges clean on the first acquisition');
 	assert.equal(w.shots(), 5);
 }
-console.log('PASS own-pane reflow between c0 and b is detected from the layout signatures: a single tick is reacquired into a clean verdict, persistent reflow ends in a bounded named could-not-judge (never a pass), and a quiet pane keeps its first-acquisition pass');
+// R136-N2 RED: a timer-label width change that moves no visible row is not reflow. The base signature hashed
+// every descendant's offsetWidth (the real pane's 22 live <i data-work-time> flex items), so a width-only tick
+// flipped sigA !== sigB on every acquisition and exhausted all 3 into could-not-judge on a quiet host.
+{
+	const w = world([], { widthShots: [4, 9, 14] });
+	const m = await readThrough(w.t, w.f, SEL);
+	assert.ok(m && !m.reflowed, `a width-only timer tick must not reacquire (base reflowed: ${m && m.reflowed})`);
+	assert.equal(m.share, 0);
+	assert.equal(w.shots(), 5, 'one quiet acquisition');
+}
+// R136-N2 RED: rows scrolled outside the visible clip paint nothing; even their width ticks must not count.
+{
+	const w = world([], { widthShots: [4, 9, 14], offscreenOnly: true });
+	const m = await readThrough(w.t, w.f, SEL);
+	assert.ok(m && !m.reflowed, 'off-screen rows are outside the signature');
+	assert.equal(m.share, 0);
+	assert.equal(w.shots(), 5);
+}
+// R136-N3 RED: a wrap tick landing DURING shot(a2) (framebuffer pre-wrap, signature post-wrap) must be caught:
+// the signature brackets every plate, before a1 and after c. The base read sigA after a2 and sigB before c,
+// so sigA === sigB passed the mixed sequence through un-reacquired.
+{
+	const w = world([], { afterShots: [2] });
+	const m = await readThrough(w.t, w.f, SEL);
+	assert.ok(m && !m.reflowed && m.share <= 0.002, 'the reacquired quiet sequence judges clean');
+	assert.equal(w.shots(), 10, 'the tick during a2 is caught and the sequence reacquired');
+	assert.ok(w.logs.some((l) => /reflowed/.test(l) && /reacquir/.test(l)), 'the reacquisition is logged');
+}
+// R136-N3 RED: a tick during shot(c) is caught too (the base left c unguarded).
+{
+	const w = world([], { afterShots: [5] });
+	const m = await readThrough(w.t, w.f, SEL);
+	assert.ok(m && !m.reflowed && m.share <= 0.002);
+	assert.equal(w.shots(), 10, 'the tick during c is caught and the sequence reacquired');
+}
+console.log('PASS own-pane reflow is detected from the layout signatures bracketing every plate: a single tick is reacquired into a clean verdict, persistent reflow ends in a bounded named could-not-judge (never a pass), a quiet pane keeps its first-acquisition pass, width-only timer ticks (visible or off-screen) are not reflow, and ticks during a2 or c are caught');
