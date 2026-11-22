@@ -1,0 +1,235 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "browser.context_share_revoked",
+ "findings": [
+  4
+ ],
+ "source_commit": "4ebb138daffd1e4fe389eb42d35bb4303c1e33d1",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2156",
+ "decision_ref": "Plans/Decision_Log.md#DL-2459",
+ "registry_before": {
+  "revision": "2026-11-19.8",
+  "sha256": "1a13be381c92ff687e3f3cc49eed53aa80689e4e36332ab40636685c9b162ccc",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.9",
+  "sha256": "21275b6079787147cf8907652912b4983113c77884a85f44142bdb65919507e7",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-browser-context-share-revoked",
+  "family_revision": "1.0.0",
+  "event_type": "browser.context_share_revoked",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321",
+  "payload_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321",
+  "payload_schema_id": "pm.ds15.browser_context_share_revoked.payload.v1",
+  "payload_schema_ref": {
+   "path": "Plans/ds15_browser_context_share_revoked.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.ds15.browser_context_share_revoked.payload.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/scope/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321",
+   "Plans/ds15_browser_context_share_revoked.schema.json#",
+   "Plans/ds15_deck2_contracts.json#/1",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-CHAT-THREAD-LIFETIME",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "pm.ds15.browser_context_share_revoked.payload.v1",
+    "payload_schema_ref": {
+     "path": "Plans/ds15_browser_context_share_revoked.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.ds15.browser_context_share_revoked.payload.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321",
+    "read_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-CHAT-THREAD-LIFETIME",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "pm.ds15.browser_context_share_revoked.payload.v1",
+    "payload_schema_ref": {
+     "path": "Plans/ds15_browser_context_share_revoked.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.ds15.browser_context_share_revoked.payload.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321",
+    "read_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-CHAT-THREAD-LIFETIME",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "registry_row": {
+  "family_id": "event-family-browser-context-share-revoked",
+  "family_revision": "1.0.0",
+  "event_type": "browser.context_share_revoked",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321",
+  "payload_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321",
+  "payload_schema_id": "pm.ds15.browser_context_share_revoked.payload.v1",
+  "payload_schema_ref": {
+   "path": "Plans/ds15_browser_context_share_revoked.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.ds15.browser_context_share_revoked.payload.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/scope/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321",
+   "Plans/ds15_browser_context_share_revoked.schema.json#",
+   "Plans/ds15_deck2_contracts.json#/1",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-CHAT-THREAD-LIFETIME",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "pm.ds15.browser_context_share_revoked.payload.v1",
+    "payload_schema_ref": {
+     "path": "Plans/ds15_browser_context_share_revoked.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.ds15.browser_context_share_revoked.payload.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321",
+    "read_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-CHAT-THREAD-LIFETIME",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "pm.ds15.browser_context_share_revoked.payload.v1",
+    "payload_schema_ref": {
+     "path": "Plans/ds15_browser_context_share_revoked.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.ds15.browser_context_share_revoked.payload.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321",
+    "read_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-CHAT-THREAD-LIFETIME",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "predecessor_record_sha256": "b88d9f91a66f3a59bb5ae69be0b9fa0f9f27ceb69b96ad4362c2819de49de4fa",
+ "predecessor_assessment_sha256": "7493f75c8ba9ed33617b94932d06e545a12984c0b96fa67fca38a6368527a874",
+ "applied_record_sha256": "1a1344e15b4802b770248e4faefe52808489e7633885e1e784499eb22ba2a152",
+ "applied_assessment_sha256": "30015562f0884006c46d5f58a083a991829d943427f1478668e865113b712df7",
+ "citation_changes": [
+  {
+   "ordinal": 0,
+   "old": {
+    "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "unit": "SMPFS-321",
+    "line_start": 18295,
+    "line_end": 18295,
+    "quote": "Current selected assignment (2026-11-19): browser.context_share_revoked@1.0.0 is registered for application_or_project",
+    "quote_check": "exact",
+    "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:18131-18339",
+    "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+    "source_citation": {
+     "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+     "unit": "SMPFS-321",
+     "line_start": 16874,
+     "line_end": 16874,
+     "quote": "\\ (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-401,\\",
+     "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "unit": "SMPFS-321",
+    "line_start": 18295,
+    "line_end": 18305,
+    "quote": "  Current selected assignment (2026-11-19): browser.context_share_revoked@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2156. Its event history selects Application\n  = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0\n  (anchor_kind=explicit_delete, cardinality_scope=thread); Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321\n  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:\n  projector.checkpoint.ds15.browser_context_share_revoked:{scope_key} uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-459;\n  this assigns that stored value, not event history. Original sources and coherent backups retain their independent\n  owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact\n  selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing\n  registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new\n  retention choice or governance seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:18131-18339"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

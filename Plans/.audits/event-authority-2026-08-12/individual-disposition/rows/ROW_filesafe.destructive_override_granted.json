@@ -3,12 +3,12 @@
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
   "disposition": "KEEP_REGISTERED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to filesafe.destructive_override_granted. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.167 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2303); DL-077 admission record reports/event-authority-20260911/admission-records/filesafe.destructive_override_granted.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/filesafe.destructive_override_granted.json (sha256 17f662b664040a564aa27120404ea0eb4cdf3d75eb414e12587d813e3517f4d3); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to filesafe.destructive_override_granted. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.167 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2303); DL-077 admission record reports/event-authority-20260911/admission-records/filesafe.destructive_override_granted.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/filesafe.destructive_override_granted.json (sha256 127a38f27fdb03b5ebe46f4bb980b07581c5995f14a5afcecac3b8ddb0af0216); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "evidence": {
     "membership_version": {
       "status": "PASS",
-      "citation": "Plans/event_family_registry.json:25518-25601",
-      "note": "Currently registered at 2026-11-18.2 as #/families/385 (canonical row SHA-256 39cdfcc6ffba98aa4fc2288563d760db81497c9bac060d2203f4c654cce7c30a). Original one-family admission checkpoints remain in the family record and immutable Git source."
+      "citation": "Plans/event_family_registry.json:25531-25614",
+      "note": "Currently registered at 2026-11-19.145 as #/families/385, canonical row SHA-256 39cdfcc6ffba98aa4fc2288563d760db81497c9bac060d2203f4c654cce7c30a. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain."
     },
     "owner_doc": {
       "status": "PASS",
@@ -17,7 +17,7 @@
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:45474; Plans/Contracts_V0.md:45482; Plans/storage-plan.md:55719",
+      "citation": "Plans/Contracts_V0.md:45474; Plans/Contracts_V0.md:45482; Plans/storage-plan.md:55725",
       "note": "CV-552 selects its exact producer, separate Project/application original-source roots and ordered lifecycle; SP-552 explicitly adopts SP-286/CV-339 full-value v2 before terminal publication. Native methods remain specified_unimplemented."
     },
     "closed_payload_schema": {
@@ -27,22 +27,22 @@
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:45464; Plans/storage-plan.md:55721; Plans/Contracts_V0.md:45494",
+      "citation": "Plans/Contracts_V0.md:45464; Plans/storage-plan.md:55727; Plans/Contracts_V0.md:45494",
       "note": "CV-552/SP-552 bind exact event-id/key recipes and full envelope/source/subject/Server/Host/root joins. The closed EventRecord uses scope_kind/project_id; application never borrows a Project or node/attempt. Own full original-source join positives/negatives pass."
     },
     "replay_idempotency": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:55721; Plans/storage-plan.md:55735; Plans/storage-plan.md:55731; Plans/Contracts_V0.md:45468",
+      "citation": "Plans/storage-plan.md:55727; Plans/storage-plan.md:55741; Plans/storage-plan.md:55737; Plans/Contracts_V0.md:45468",
       "note": "SP-552 resolves the lifetime tuple and semantic digest to the unchanged original complete event and first receipt. Changed digest conflicts; missing authoritative dedupe/source fences with zero new effect. Own protocol cases pass."
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:55746; Plans/filesafe_event_sources/filesafe_destructive_override_granted.contract.json:137",
+      "citation": "Plans/storage-plan.md:55752; Plans/filesafe_event_sources/filesafe_destructive_override_granted.contract.json:137",
       "note": "SP-552 and its graph assign RP-AUTHORITY-INDEFINITE from current Case L-3 approval/receipt/audit-authority defaults. CV-552/F2-052/F2-213 retain authenticated operator authorization and original grant receipt semantics. Source bodies, holds, generic index and checkpoint policies retain independent owners. No retention choice or registry admission is made."
     },
     "redaction_custody": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:55725; Plans/Contracts_V0.md:45478; Plans/Contracts_V0.md:45503",
+      "citation": "Plans/storage-plan.md:55731; Plans/Contracts_V0.md:45478; Plans/Contracts_V0.md:45503",
       "note": "CV-552 now validates the selected original itself and its own commitment before a recursive exact-type complete join, on current acceptance and body reads. Own both-scope wrong selected-bank types refuse. Issued-only history and original typed commitments are preserved; native custody/permissions/backup remain NOT_RUN."
     },
     "transitions": {
@@ -52,17 +52,17 @@
     },
     "consumers_checkpoints": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:55723",
+      "citation": "Plans/storage-plan.md:55729",
       "note": "SP-552 explicitly adopts SP-278 for its exact versioned ephemeral history reader, with none_required family checkpoint, generic durable nine-field token, live snapshot, atomic projection/frontier CAS and source-generation rebuild fences."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:45472; Plans/storage-plan.md:55729; Plans/storage-plan.md:55731",
+      "citation": "Plans/Contracts_V0.md:45472; Plans/storage-plan.md:55735; Plans/storage-plan.md:55737",
       "note": "SP-552/CV-552 preserve old dispatch/original Project resources, cut off writer admission, reconcile original pending operations, fence own reader/index generations and require verified retained-survivor rebuild before publication. Unknown versions/sources remain unavailable."
     },
     "positive_negative_oracles": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:45462; Plans/storage-plan.md:55735; Plans/Automated_Testing_System.md:12253",
+      "citation": "Plans/Contracts_V0.md:45462; Plans/storage-plan.md:55741; Plans/Automated_Testing_System.md:12253",
       "note": "Complete original DF suite, whole-definition Method B schema/branch coverage with exact refusal, clause cut/restoration and no unresolved clauses; source/tool/case-bound 355-row proof plus 48 checked singleton entailments. Independently sealed retained original/store and copy-join evidence. Shared number corpus and all DF date-time boundaries replayed. Global inventory infrastructure remains separately blocked; native NOT_RUN."
     }
   },

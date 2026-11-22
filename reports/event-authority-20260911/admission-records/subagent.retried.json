@@ -3,8 +3,8 @@
  "event_type": "subagent.retried",
  "family_id": "event-family-subagent-retried",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
- "decision_ref": "Plans/Decision_Log.md#DL-2418",
- "decision_section_sha256": "b0b2c99eb5e4ad7e17c3a0cf941a669fc3831cb0391202b4335cb807cbaa64da",
+ "decision_ref": "Plans/Decision_Log.md#DL-2581",
+ "decision_section_sha256": "e89c4c18d700537d482b59b1d1287d890f629fd658ddcd0c466237c6f3d08e73",
  "registry_before": {
   "revision": "2026-11-16.281",
   "sha256": "54c51e5022030c6e90d7ca512098fe9da85c54f7fd4250a13ebaad23d266187a",
@@ -15,10 +15,10 @@
   "sha256": "faecfba1542fb4218c633a3f22423f3f29217493fdffe7c16cc69295ec41bf96",
   "family_count": 501
  },
- "registry_row_sha256": "31f0012f07287535d8f618fe869c3547f67d3702b9e0e1032bdf71fa70a55b1d",
+ "registry_row_sha256": "977a29c384b88e4cd6f39727dbc78d64ddabd6f14a53b847eb4c1d3576d92858",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/subagent.retried.json",
-  "sha256": "2aa7401746c3e47f363803e9fb04b46ede0253f93cf28c2962fbb3eadf21d8ad"
+  "sha256": "6e7b9bb73ba191776f1478230e435adb7442c8b25c6a98c1b44dfa6efa7ffb69"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,13 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_record_sha256": "a6d8330dacb3b6abff60a181a750a23449f5c79980061832728552699e7b1599",
-  "source_assessment_sha256": "3ae6c628ce4f09c889b55d0affcdfd1cda84c43da9820cdc6bbc8eb301d6e6df",
-  "source_decision_section_sha256": "9b8eb76f23d3d796edeb54cbf7dc50b38331955ed9ec0e0dbc016da7a8a58644",
+  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
+  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
+  "source_record_sha256": "043bbd7a780212163282eb6444a1ef6f6798ded57113e9d4ecfabf75c73ac76e",
+  "source_assessment_sha256": "f7bc3db02ee02fc3166c6cb2b32e1ffc14a1d7a554e72c8071f178113dbed80d",
+  "source_decision_section_sha256": "2a84775e212fac5366804347418f4258ceba7e3bac356c122cc99b201347fddc",
   "original_registry_checkpoints_preserved": true
- }
+ },
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2418",
+ "postfix_correction": "reports/event-authority-20261116/admission-merge-3/corrections/subagent.retried.json"
 }

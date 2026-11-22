@@ -4,7 +4,7 @@
  "family_id": "event-family-bsd-policy-changed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2219",
- "decision_section_sha256": "8a1299d6faa56ce1314d9759b0275a42cf732b01808eb153f671847563f9c3ba",
+ "decision_section_sha256": "c7f570bbdbd435bdadc52d0168ca9b9ca15a5df877ab6b403196cf95b4425be2",
  "registry_before": {
   "revision": "2026-11-16.82",
   "sha256": "347ac0f782ad96436a10f5d79531d1dfb3711eca743217f71b878340f0667e8d",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "ce84e66496191e903c97ba3c64fc081f0ade7db6ac36ee042b0de0c05eb7d50f",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/bsd.policy_changed.json",
-  "sha256": "c5fca5a78cbf221ce0099359dc51501cdd041059f33ae5e47d1cbcaea7328986"
+  "sha256": "23c729ff1470139a523c4a20066cb6cee17404f65b100a990507f079fd5ab4e2"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_record_sha256": "51d12744af7cac732913f2401d5437f3da8f0803cd82fc13e8843a777e373d7f",
-  "source_assessment_sha256": "3ff7a171ddae56b9683b17d4fb5b5726fd9670778e93ea4f4c4f6af8f8e4d8e2",
-  "source_decision_section_sha256": "884f31f6d62edee7432eef9039295a8a2854b002573571356e5483f75283a3cb",
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_record_sha256": "8b503498e3a63206f1d0caa9efdfc5594b66b90073df1e8dac3ed4b07f184a40",
+  "source_assessment_sha256": "7fc3e06de159a4e65f8f23e3b231fa01bdbdb6e476f7e90266af53218429795b",
+  "source_decision_section_sha256": "90292b9420256e354731e6d24992366e51a9eb5a8b37596f16b66c6cd8950ec7",
   "original_registry_checkpoints_preserved": true
  }
 }

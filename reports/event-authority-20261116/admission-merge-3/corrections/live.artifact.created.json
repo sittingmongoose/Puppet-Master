@@ -1,0 +1,172 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "live.artifact.created",
+ "findings": [
+  4
+ ],
+ "source_commit": "7e5a7ae01e45205ccca5cb1b61682886c0ceb3af",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2319",
+ "decision_ref": "Plans/Decision_Log.md#DL-2522",
+ "registry_before": {
+  "revision": "2026-11-19.71",
+  "sha256": "902f66e79010389666598e4b6a3a7732ffc2c4a89f271fe9d04e94393c47c608",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.72",
+  "sha256": "8cb45cc30d5226590367ad8cbd62f83bb62d2b0038cf252514d2bfd257c0dae4",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-live-artifact-created",
+  "family_revision": "1.0.0",
+  "event_type": "live.artifact.created",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/newtools.md#N2-221",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-664",
+  "payload_schema_id": "pm.ds15.live_artifact_created.payload.v1",
+  "payload_schema_ref": {
+   "path": "Plans/ds15_live_artifact_created.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.ds15.live_artifact_created.payload.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [],
+    "run_id": [
+     "/payload/run_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/newtools.md#N2-221",
+   "Plans/Contracts_V0.md#CV-664",
+   "Plans/storage-plan.md#SP-644",
+   "Plans/ds15_live_artifact_created.schema.json#",
+   "Plans/ds15_event_contracts.json#/3",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-RUNTIME-365D",
+   "policy_version": "1.0.0"
+  }
+ },
+ "registry_row": {
+  "family_id": "event-family-live-artifact-created",
+  "family_revision": "1.0.0",
+  "event_type": "live.artifact.created",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/newtools.md#N2-221",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-664",
+  "payload_schema_id": "pm.ds15.live_artifact_created.payload.v1",
+  "payload_schema_ref": {
+   "path": "Plans/ds15_live_artifact_created.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.ds15.live_artifact_created.payload.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [],
+    "run_id": [
+     "/payload/run_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/newtools.md#N2-221",
+   "Plans/Contracts_V0.md#CV-664",
+   "Plans/storage-plan.md#SP-644",
+   "Plans/ds15_live_artifact_created.schema.json#",
+   "Plans/ds15_event_contracts.json#/3",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-RUNTIME-365D",
+   "policy_version": "1.0.0"
+  }
+ },
+ "predecessor_record_sha256": "988893cde319b5e96d83c8d7dd6ef3700ce7fcad6709a0a1495a1fc8bf658a6d",
+ "predecessor_assessment_sha256": "008196215723458a784ff0e5c46111a71db622aaf10fa8b1e331c4052dfd1199",
+ "applied_record_sha256": "e663de9b6cca67228ba3b45a84d213ab2a9f4359525795c048b0509e4e4ca352",
+ "applied_assessment_sha256": "8b43d2f6762986a033590e4f86ff04100602fcc0772ea2fe1b5e90b40b7eabca",
+ "citation_changes": [
+  {
+   "ordinal": 0,
+   "old": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-644",
+    "line_start": 49417,
+    "line_end": 49417,
+    "quote": "Current selected assignment (2026-11-19): live.artifact.created@1.0.0 is registered for project_only in Plans/event_family_registry.json,",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-644, Plans/storage-plan.md:49351-49457",
+    "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+    "source_citation": {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-644",
+     "line_start": 49036,
+     "line_end": 49036,
+     "quote": "\\ = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing policy object unchanged: {\\\"anchor_kind\\\"\\",
+     "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+    },
+    "reanchor": {
+     "method": "exact_normalized",
+     "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+     "unit": "SP-644",
+     "old_quote": "\\ = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing policy object unchanged: {\\\"anchor_kind\\\"\\",
+     "new_quote": "= RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\n\n  Use the existing policy object unchanged: {\"anchor_kind\"",
+     "normalizations": [
+      "whitespace/line wrapping",
+      "YAML quoting/escaping",
+      "Markdown escaping"
+     ],
+     "owner_change_commit": "ea68abacca470d9dd49885294f5bd5c4d0771024"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-644",
+    "line_start": 49419,
+    "line_end": 49429,
+    "quote": "  Current selected assignment (2026-11-19): live.artifact.created@1.0.0 is registered for project_only in Plans/event_family_registry.json,\n  as recorded by Plans/Decision_Log.md#DL-2319. Its event history selects RP-RUNTIME-365D@1.0.0; Plans/storage-plan.md#SP-644\n  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:\n  ds15_live_artifact_created_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns\n  that stored value, not event history. Separate checkpoint assignment: ds15_live_artifact_created_checkpoint uses\n  RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-644 contract; checkpoint retention grants\n  no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event\n  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,\n  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved\n  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance\n  seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-644, Plans/storage-plan.md:49353-49459"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

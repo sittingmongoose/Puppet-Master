@@ -1,0 +1,153 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "preview.session.started",
+ "findings": [
+  4
+ ],
+ "source_commit": "3c950316f13460d96b01a34579f7c4f9841a678a",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2357",
+ "decision_ref": "Plans/Decision_Log.md#DL-2547",
+ "registry_before": {
+  "revision": "2026-11-19.96",
+  "sha256": "2eaf15ecf3aea6947fc759f074c1f9e908ccfb00e8976556b572449bcf76b8c7",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.97",
+  "sha256": "cbb86242eaf7121a4f65a7a69532543138280f0755b1022d084a8d75aa85a7ce",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-preview-session-started",
+  "family_revision": "1.0.0",
+  "event_type": "preview.session.started",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-315",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-672",
+  "payload_schema_id": "pm.ds15.preview_session_started.payload.v1",
+  "payload_schema_ref": {
+   "path": "Plans/ds15_preview_session_started.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.ds15.preview_session_started.payload.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-315",
+   "Plans/Contracts_V0.md#CV-672",
+   "Plans/storage-plan.md#SP-652",
+   "Plans/ds15_preview_session_started.schema.json#",
+   "Plans/ds15_event_contracts.json#/11",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-TELEMETRY-90D",
+   "policy_version": "1.0.0"
+  }
+ },
+ "registry_row": {
+  "family_id": "event-family-preview-session-started",
+  "family_revision": "1.0.0",
+  "event_type": "preview.session.started",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-315",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-672",
+  "payload_schema_id": "pm.ds15.preview_session_started.payload.v1",
+  "payload_schema_ref": {
+   "path": "Plans/ds15_preview_session_started.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.ds15.preview_session_started.payload.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-315",
+   "Plans/Contracts_V0.md#CV-672",
+   "Plans/storage-plan.md#SP-652",
+   "Plans/ds15_preview_session_started.schema.json#",
+   "Plans/ds15_event_contracts.json#/11",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-TELEMETRY-90D",
+   "policy_version": "1.0.0"
+  }
+ },
+ "predecessor_record_sha256": "d0f976933b09230047029d81f09c0e0654995a936dc31369107b7c9426df545c",
+ "predecessor_assessment_sha256": "cd3768ba15906d3e1a139eac8b736d9126e28cdf32cdb4d34b6d6b32abae6045",
+ "applied_record_sha256": "aa07e4e6b55e777f4bec38b760708d0e52576bd13d319870ea167de24ee2252a",
+ "applied_assessment_sha256": "db87ea76bc1b458ab2795a898291c8d554c5be65cf57aa6bd66648ecb853ae48",
+ "citation_changes": [
+  {
+   "ordinal": 0,
+   "old": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-652",
+    "line_start": 50246,
+    "line_end": 50246,
+    "quote": "Current selected assignment (2026-11-19): preview.session.started@1.0.0 is registered for project_only in Plans/event_family_registry.json,",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-652, Plans/storage-plan.md:50186-50286",
+    "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+    "source_citation": {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-652",
+     "line_start": 49558,
+     "line_end": 49558,
+     "quote": "\\ = RP-TELEMETRY-90D@1.0.0`, under DL-401, DL-415, DL-421, DL-500.\\n\\nUse the existing policy object\\",
+     "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-652",
+    "line_start": 50248,
+    "line_end": 50258,
+    "quote": "  Current selected assignment (2026-11-19): preview.session.started@1.0.0 is registered for project_only in Plans/event_family_registry.json,\n  as recorded by Plans/Decision_Log.md#DL-2357. Its event history selects RP-TELEMETRY-90D@1.0.0; Plans/storage-plan.md#SP-652\n  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:\n  ds15_preview_session_started_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this\n  assigns that stored value, not event history. Separate checkpoint assignment: ds15_preview_session_started_checkpoint\n  uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-652 contract; checkpoint retention grants\n  no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event\n  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,\n  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved\n  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance\n  seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-652, Plans/storage-plan.md:50188-50288"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

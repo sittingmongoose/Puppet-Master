@@ -1,0 +1,241 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "chat.thread_worktree_merge_failed",
+ "findings": [
+  4
+ ],
+ "source_commit": "df8b0af48e1f2e9b07a53162dd09fe249477040b",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2246",
+ "decision_ref": "Plans/Decision_Log.md#DL-2483",
+ "registry_before": {
+  "revision": "2026-11-19.32",
+  "sha256": "933fee106c1f2e8ec6fa92edacefa0e79e3d8009af012211bbb6da9629274dbf",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.33",
+  "sha256": "7cc50d05d0bc2be46b342a12cd9edc62d6f65b1c65753aa137777666fad86790",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-chat-thread-worktree-merge-failed",
+  "family_revision": "1.0.0",
+  "event_type": "chat.thread_worktree_merge_failed",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/assistant-chat-design.md#ACD-618",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-638",
+  "payload_schema_id": "pm.dch_event.chat_thread_worktree_merge_failed.project.v1",
+  "payload_schema_ref": {
+   "path": "Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json",
+   "json_pointer": "#/$defs/project",
+   "schema_id": "pm.dch_event.chat_thread_worktree_merge_failed.project.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/scope/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/assistant-chat-design.md#ACD-618",
+   "Plans/Contracts_V0.md#CV-638",
+   "Plans/storage-plan.md#SP-618",
+   "Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json#/$defs/application",
+   "Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json#/$defs/project",
+   "Plans/dch_event_contracts.json#/rows/8",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-CHAT-THREAD-LIFETIME",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "pm.dch_event.chat_thread_worktree_merge_failed.application.v1",
+    "payload_schema_ref": {
+     "path": "Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json",
+     "json_pointer": "#/$defs/application",
+     "schema_id": "pm.dch_event.chat_thread_worktree_merge_failed.application.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/assistant-chat-design.md#ACD-618",
+    "read_owner_ref": "Plans/assistant-chat-design.md#ACD-618",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-CHAT-THREAD-LIFETIME",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "pm.dch_event.chat_thread_worktree_merge_failed.project.v1",
+    "payload_schema_ref": {
+     "path": "Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json",
+     "json_pointer": "#/$defs/project",
+     "schema_id": "pm.dch_event.chat_thread_worktree_merge_failed.project.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/assistant-chat-design.md#ACD-618",
+    "read_owner_ref": "Plans/assistant-chat-design.md#ACD-618",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-CHAT-THREAD-LIFETIME",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "registry_row": {
+  "family_id": "event-family-chat-thread-worktree-merge-failed",
+  "family_revision": "1.0.0",
+  "event_type": "chat.thread_worktree_merge_failed",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/assistant-chat-design.md#ACD-618",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-638",
+  "payload_schema_id": "pm.dch_event.chat_thread_worktree_merge_failed.project.v1",
+  "payload_schema_ref": {
+   "path": "Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json",
+   "json_pointer": "#/$defs/project",
+   "schema_id": "pm.dch_event.chat_thread_worktree_merge_failed.project.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/scope/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/assistant-chat-design.md#ACD-618",
+   "Plans/Contracts_V0.md#CV-638",
+   "Plans/storage-plan.md#SP-618",
+   "Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json#/$defs/application",
+   "Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json#/$defs/project",
+   "Plans/dch_event_contracts.json#/rows/8",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-CHAT-THREAD-LIFETIME",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "pm.dch_event.chat_thread_worktree_merge_failed.application.v1",
+    "payload_schema_ref": {
+     "path": "Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json",
+     "json_pointer": "#/$defs/application",
+     "schema_id": "pm.dch_event.chat_thread_worktree_merge_failed.application.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/assistant-chat-design.md#ACD-618",
+    "read_owner_ref": "Plans/assistant-chat-design.md#ACD-618",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-CHAT-THREAD-LIFETIME",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "pm.dch_event.chat_thread_worktree_merge_failed.project.v1",
+    "payload_schema_ref": {
+     "path": "Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json",
+     "json_pointer": "#/$defs/project",
+     "schema_id": "pm.dch_event.chat_thread_worktree_merge_failed.project.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/assistant-chat-design.md#ACD-618",
+    "read_owner_ref": "Plans/assistant-chat-design.md#ACD-618",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-CHAT-THREAD-LIFETIME",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "predecessor_record_sha256": "04e717cdf2adb5a56bf83f0ee7b5a67f82f1ff01200ade7c78f8b32c5a4a2a60",
+ "predecessor_assessment_sha256": "f2a1c50fc7bcfc7a2eca83dea3e6b788c4dbe8c6b601164a5f6829aab42c6609",
+ "applied_record_sha256": "113612d3cc5e40b99b628929153bf1bb67899c26cb90018dc0ef1b89098ce3aa",
+ "applied_assessment_sha256": "f6c6c2acec549822c9e9a81f02a3dc9469c905a0eea3d03416c2d817be1e962c",
+ "citation_changes": [
+  {
+   "ordinal": 0,
+   "old": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-618",
+    "line_start": 43716,
+    "line_end": 43716,
+    "quote": "Current selected assignment (2026-11-19): chat.thread_worktree_merge_failed@1.0.0 is registered for application_or_project",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-618, Plans/storage-plan.md:43436-43782",
+    "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+    "source_citation": {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-618",
+     "line_start": 42205,
+     "line_end": 42205,
+     "quote": "Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-401.",
+     "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-618",
+    "line_start": 43718,
+    "line_end": 43728,
+    "quote": "  Current selected assignment (2026-11-19): chat.thread_worktree_merge_failed@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2246. Its event history selects Application\n  = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0\n  (anchor_kind=explicit_delete, cardinality_scope=thread); Plans/storage-plan.md#SP-618 owns the event policy''s\n  existing anchors, counts, holds and deletion rules. Separate checkpoint assignment: dch_chat_thread_worktree_merge_failed_checkpoint\n  uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-618 contract; checkpoint retention grants\n  no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event\n  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,\n  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved\n  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance\n  seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-618, Plans/storage-plan.md:43438-43784"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

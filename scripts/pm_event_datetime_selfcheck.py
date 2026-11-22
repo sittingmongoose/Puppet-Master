@@ -694,6 +694,26 @@ def _real_envelope(context):
             validator.is_valid({"event": dict(event, occurred_at_utc="2026-01-01t00:00:00+05:30")}))
 
 
+
+@check("datetime_eventrecord_comma_fraction_refused")
+def _eventrecord_comma_fraction(context):
+    """Only the decimal point separates fractional seconds, including in a full EventRecord."""
+    dt, _, _, m = _mods()
+    path = "Plans/event_record.schema.json"
+    schema = json.loads((context.root / path).read_text())
+    event = json.loads((context.root / "Plans/seglog_frame_v2_wire_fixtures.json").read_text())["base_event"]
+    validator = _bound(schema, selection=_selection([(schema, {"": context.row(path, "")})]))
+    field = "occurred_at_utc"
+    good = "2024-04-30T12:00:00.5Z"
+    bad = "2024-04-30T12:00:00,5Z"
+    errors = _refused_at(validator, dict(event, **{field: bad}), field)
+    return (validator.is_valid(dict(event, **{field: good})) and
+            outcome(dt.date_time, good) == ("accept", good) and
+            outcome(dt.date_time, bad) == ("refuse", "date_time_syntax") and
+            errors is not None and any(e.validator == "format" and isinstance(e.cause, m.Refusal)
+                                       and e.cause.reason == "date_time_syntax" for e in errors))
+
+
 def _eventrecord_host_string(field, kind):
     """Sol max gate finding 1 (REAL): datetime_validator over the complete committed EventRecord schema refuses a host
     string-like value (HOST_STRINGS[kind]) at field, the malformed text and base_event's own valid text alike: every
@@ -3241,7 +3261,7 @@ def _detect_listed_survivor(context):
     """Fix round 17: a hand-written declared survivor (V04) names its rule and is listed by none; listing it, or a
     generated declared survivor, is a problem, and so is a witnessed hand-written mutation its rule omits."""
     spec = _gate_bar().load_spec(context.root)
-    survivor = next(m for m in spec["mutations"] if m.get("survives"))
+    survivor = next(m for m in spec["mutations"] if m["id"] == "hw-fix17-V04-automatic-empty-context-only")
     generated = next(k for k, e in spec["generated"]["points"].items() if e.get("survives"))
 
     def list_hand(spec):
@@ -3255,7 +3275,7 @@ def _detect_listed_survivor(context):
         rule["mutations"].remove("hw-fix17-B05-legacy-six-digit-fraction")
 
     quiet = not [p for p in _fresh_problems(context, lambda spec: None) if "survivor" in p]
-    return (quiet and survivor["id"] == "hw-fix17-V04-automatic-empty-context-only" and
+    return (quiet and survivor.get("survives") and
             any(p.endswith("lists the declared survivor %s; declared survivors are never listed" % survivor["id"])
                 for p in _fresh_problems(context, list_hand)) and
             any(("lists the declared survivor %s;" % generated) in p for p in _fresh_problems(context, list_generated)) and
@@ -3639,6 +3659,17 @@ def _composed_alone_check(keyword, hook):
                     return False
         return True
     return run
+
+
+@check("datetime_unit_composition_terminal_z_diagnostics")
+def _composed_terminal_z(context):
+    """The composed pattern and format both diagnose a suffix after Z."""
+    _, validator, _ = _untyped_validators()
+    bad = dict(COMPOSED_GOOD, observed_at_utc="Zbogus")
+    errors = {(e.validator, tuple(e.absolute_path)) for e in validator.iter_errors(bad)}
+    return validator.is_valid(COMPOSED_GOOD) and errors == {
+        ("format", ("observed_at_utc",)), ("pattern", ("observed_at_utc",)),
+    }
 
 
 for _keyword in COMPOSED_ALONE:
@@ -5136,6 +5167,27 @@ def _selected_dch_recipes(context):
                 observed["raw-v1"] != observed["strict-v3"])
 
 
+@check("datetime_nested_preloaded_terminal_z_diagnostics")
+def _nested_terminal_z(context):
+    """Require the terminal-Z diagnostic on preloaded current and retained EventRecords."""
+    with _nested_fixture(context) as (local, rows, _, _):
+        _, current, current_event = _committed_eventrecord(context)
+        _, inv, _, _ = _mods()
+        pointer = "/recipes/strict-v3" + NESTED_SUFFIX
+        row = next(r for r in rows if r["pointer"] == pointer)
+        objects, controls, _ = _node_controls(local)
+        retained = _node_validator(local, row)
+        retained_event = objects[controls[inv.node_key(row)]]["value"]
+        for validator, event in ((current, current_event), (retained, retained_event)):
+            if not validator.is_valid(event):
+                return False
+            bad = dict(event, observed_at_utc="2026-01-01T00:00:00Zx")
+            errors = _refused_at(validator, bad, "observed_at_utc")
+            if errors is None or {e.validator for e in errors} != {"format", "pattern"}:
+                return False
+    return True
+
+
 @check("datetime_nested_scanner_selection_binding_agree")
 def _nested_agree(context):
     _, inv, _, _ = _mods()
@@ -5253,3 +5305,47 @@ def _nested_root_mutation(context):
     """
     with _nested_fixture(context):
         return _real_in_place(context)
+
+
+# ---------------------------------------------------------------------------
+# Q. The migration-snapshot rule (stream E, 2026-11-20): fresh and history copies.
+#    Each standing case of pm_event_datetime_snapshot_rule_selftest is one check,
+#    the witness the committed mutation set names for the rule's mutation points.
+# ---------------------------------------------------------------------------
+
+SNAPSHOT_RULE_CASES = (
+    "accept_span_over_excluded_owner_fence", "accept_span_over_classified_owner_fence",
+    "refuse_uncovered_owner_span", "refuse_unmapped_snapshot_line", "refuse_changed_owner_text",
+    "refuse_missing_owner_file", "refuse_owner_range_past_eof", "refuse_ephemeral_exclusion_citation",
+    "refuse_span_row_outside_span_map", "refuse_noncanonical_owner_path",
+    "refuse_unreadable_uncovered_owner_container", "refuse_exclusion_on_snapshot_path",
+    "accept_history_stale_current_run", "accept_history_retained_predecessor", "refuse_unlisted_run",
+    "refuse_history_text_changed", "refuse_history_span_map_edited", "refuse_history_no_git_repository",
+    "refuse_history_uncommitted_run", "refuse_history_owner_blob_missing",
+    "refuse_fresh_uncovered_with_history_available", "declaring_snapshot_line_is_unclassified_node",
+    "accept_span_at_byte_zero", "refuse_empty_span", "refuse_span_ending_on_uncovered_fence_line",
+    "refuse_span_starting_on_uncovered_fence_close", "refuse_ephemeral_citation_of_migration_directory",
+    "accept_history_under_git_hook_environment",
+)
+
+
+def _snapshot_rule_check(name):
+    def run(context):
+        _, inv, _, _ = _mods()
+        import pm_event_datetime_snapshot_rule_selftest as snapshot
+        # The case module binds the inventory at its own import; the module installed now is the code under test.
+        snapshot.inv = inv
+        return snapshot.run_case(name)["ok"] is True
+    run.__name__ = "_snapshot_" + name
+    return run
+
+
+for _snapshot_case in SNAPSHOT_RULE_CASES:
+    check("datetime_unit_snapshot_" + _snapshot_case)(_snapshot_rule_check(_snapshot_case))
+
+
+@check("datetime_unit_snapshot_cases_registered")
+def _snapshot_cases_registered(context):
+    """Every standing snapshot-rule case is registered here, in its own order, and nothing else."""
+    import pm_event_datetime_snapshot_rule_selftest as snapshot
+    return tuple(snapshot.CASES) == SNAPSHOT_RULE_CASES

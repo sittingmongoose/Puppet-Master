@@ -1,10 +1,12 @@
 """Real DO boundary regressions for the C12 closure, not native authority."""
 import copy
+import io
 import importlib.util
 import json
 import sys
 import tempfile
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
 from unittest.mock import patch
 
@@ -92,6 +94,30 @@ class OrchestratorC12(unittest.TestCase):
             result = json.loads((Path(tmp) / 'copy-tree.json').read_text())
         self.assertEqual(result['equality_partitions'], 877)
         self.assertEqual(len(result['independent_witnesses']), 6)
+
+    def test_matrix_diagnostic_and_strict_exits(self):
+        spec = importlib.util.spec_from_file_location('c12_exit_test', ROOT / 'scripts/pm-orchestrator-guard-proof.py')
+        proof = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(proof)
+        clean = {'rows': ['row'], 'controls': [], 'negatives': [], 'errors': [], 'unwitnessed_rows': ['row']}
+        defect = {'id': 'negative', 'defect': 'refused_by_no_row', 'refused_by': [], 'expected_codes': ['row']}
+        cases = [
+            (clean, 0),
+            (dict(clean, negatives=[defect]), 1),
+            (dict(clean, errors=[('control_refused', 'control', ['row'])]), 1),
+        ]
+        for matrix, expected_strict in cases:
+            with self.subTest(matrix=matrix), patch.object(proof, 'fixtures_now', return_value={}):
+                matrices = {'board': matrix, 'checkpoint': clean}
+                with patch.object(proof, 'boundary_matrix', side_effect=lambda name, _: matrices[name]):
+                    for flags, expected in (([], 0), (['--strict'], expected_strict)):
+                        with self.subTest(flags=flags), redirect_stdout(io.StringIO()) as out:
+                            code = proof.main(['matrix', '--boundary', 'board', '--boundary', 'checkpoint', *flags])
+                            self.assertEqual(code or 0, expected)
+                            summary = json.loads(out.getvalue().splitlines()[0])
+                            self.assertEqual(summary['negative_defects'], len(matrix['negatives']))
+                            self.assertEqual(summary['control_errors'], len(matrix['errors']))
+                            self.assertIn('"boundary": "checkpoint"', out.getvalue())
 
     def test_matrix_cache_binds_same_object_content_and_number_type(self):
         spec = importlib.util.spec_from_file_location('c12_cache_test', ROOT / 'scripts/pm-orchestrator-guard-proof.py')

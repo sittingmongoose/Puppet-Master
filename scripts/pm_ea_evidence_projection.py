@@ -1,9 +1,11 @@
-"""Physical JSON locations for exact family evidence, without sibling-row fallback."""
+"""Physical JSON and Markdown bounds for exact family evidence."""
 
 from __future__ import annotations
 
 import json
 import re
+from collections.abc import Set
+from functools import lru_cache
 
 _CACHE: dict[int, tuple[str, dict, dict[str, tuple[int, int]]]] = {}
 
@@ -147,3 +149,104 @@ def family_span(text: str, event_type: str, pointer: str | None = None,
         selected += "/cells/" + criterion
     first, last = positions[selected]
     return selected, (text.count("\n", 0, first) + 1, text.count("\n", 0, last - 1) + 1)
+
+
+_EVENT_NAME = r"[a-z][a-z0-9_]*(?:\.[a-z][a-z0-9_]*)+"
+_EVENT_TOKEN = re.compile(r"(?<![\w.])" + _EVENT_NAME + r"(?!\w|\.\w)")
+_MARKDOWN_HEADING = re.compile(r"^#{1,6}\s+(.+)")
+_EXCLUSIVE_OWNER = re.compile(
+    r"(?:source and event custody contract for|exact-family physical source contract for|an exact read-only historical)"
+    r"\s+`?(" + _EVENT_NAME + r")(?!\w|\.\w)"
+)
+_EVENT_TABLE_ROW = re.compile(r"^\s*\|\s*`(" + _EVENT_NAME + r")`\s*\|")
+
+_GOAL_OWNER_ROUTING = re.compile(
+    r"Routing note, \d{4}-\d{2}-\d{2}: the `(" + _EVENT_NAME + r")` row of "
+    r"`Plans/event_family_registry\.json` keeps this section as its `semantic_owner_doc`"
+)
+
+_RETENTION_ASSIGNMENT_START = "Current selected assignment ("
+_RETENTION_ASSIGNMENT = re.compile(
+    r"Current selected assignment \(\d{4}-\d{2}-\d{2}\): (" + _EVENT_NAME + r")@\d+\.\d+\.\d+"
+    r" is registered for \w+ in Plans/event_family_registry\.json, as recorded by "
+    r"Plans/Decision_Log\.md#DL-\d+\. Its event history selects RP-[A-Z0-9-]+@\d+\.\d+\.\d+\b"
+)
+_PARAGRAPH_BREAK = re.compile(r"^\s*(?:$|```|#{1,6}\s|[a-z][\w-]*:\s|Current selected assignment \()")
+
+
+@lru_cache(maxsize=1)
+def registered_semantic_owners(registry_text: str) -> dict[str, str | None]:
+    return {row["event_type"]: row.get("semantic_owner_doc") for row in json.loads(registry_text)["families"]}
+
+
+def _retention_assignment_at(lines: list[str], first_line: int, quote_lines: tuple[int, int],
+                             event_type: str) -> tuple[int, int] | None:
+    """Verify the assignment paragraph containing the located retention quotation."""
+    quote_start, quote_end = quote_lines
+    for start, line in enumerate(lines, first_line):
+        if start > quote_end:
+            break
+        if not line.lstrip().startswith(_RETENTION_ASSIGNMENT_START):
+            continue
+        stop = start - first_line + 1
+        while stop < len(lines) and not _PARAGRAPH_BREAK.match(lines[stop]):
+            stop += 1
+        end = first_line + stop - 1
+        if end < quote_start:
+            continue
+        paragraph = " ".join(" ".join(lines[start - first_line:stop]).split())
+        match = _RETENTION_ASSIGNMENT.match(paragraph)
+        if match is None:
+            continue
+        if not start <= quote_start <= quote_end <= end:
+            raise ValueError(f"Markdown evidence crosses a retention assignment subject boundary for {event_type}")
+        if match[1] != event_type:
+            raise ValueError(f"Markdown evidence subject is {match[1]}, expected {event_type}")
+        return start, end
+    return None
+
+
+def markdown_family_span(text: str, span: tuple[int, int], event_type: str, known_events: Set[str],
+                         criterion: str | None, quote: str | None, *,
+                         quote_lines: tuple[int, int] | None = None,
+                         selected_semantic_owner: bool = False) -> tuple[int, int]:
+    """Bind proof to a family-specific paragraph, owner heading, or oracle row."""
+    lines = text.splitlines()[span[0] - 1:span[1]]
+    if criterion == "retention" and quote_lines is not None:
+        assignment = _retention_assignment_at(lines, span[0], quote_lines, event_type)
+        if assignment is not None:
+            return assignment
+    heading_number, heading = next(
+        ((number, match[1]) for number, line in enumerate(lines, span[0]) if (match := _MARKDOWN_HEADING.match(line))),
+        (span[0], ""),
+    )
+    subjects = set(_EVENT_TOKEN.findall(heading)) & (known_events | {event_type})
+    if not subjects:
+        # Custody headings can use a display name. Their owner declaration
+        # names the exact event before later cross-references to peer families.
+        subjects = set(_EXCLUSIVE_OWNER.findall("\n".join(lines))) & (known_events | {event_type})
+    if subjects and event_type not in subjects:
+        raise ValueError(f"Markdown evidence subject is {', '.join(sorted(subjects))}, expected {event_type}")
+
+    if heading == "Goal and GoalRun payload minima" and criterion in ("owner_doc", "positive_negative_oracles"):
+        if selected_semantic_owner and criterion == "owner_doc" and quote_lines is not None:
+            first, last = quote_lines
+            match = _GOAL_OWNER_ROUTING.match(lines[first - span[0]].lstrip())
+            if (first == last and match and match[1] == event_type
+                    and match[0] in " ".join((quote or "").split())):
+                return first, last
+        matches = [number for number, line in enumerate(lines, span[0])
+                   if (match := _EVENT_TABLE_ROW.match(line)) and match[1] == event_type]
+        if (criterion == "owner_doc" and len(matches) == 1
+                and (quote or "").strip() == lines[heading_number - span[0]].strip()):
+            # The heading is the cited anchor when its table explicitly names
+            # this family, including a historical selector superseded in the registry.
+            return heading_number, heading_number
+    elif heading.endswith("deck-2 owner contract") and criterion == "positive_negative_oracles" and (quote or "").strip() == "Oracles:":
+        matches = [number for number, line in enumerate(lines, span[0])
+                   if line.lstrip().startswith("Oracles:") and event_type in _EVENT_TOKEN.findall(line)]
+    else:
+        return span
+    if len(matches) != 1:
+        raise ValueError(f"Markdown evidence has no unique family-specific subject row for {event_type}")
+    return matches[0], matches[0]

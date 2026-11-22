@@ -3,8 +3,8 @@
  "event_type": "live.artifact.created",
  "family_id": "event-family-live-artifact-created",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
- "decision_ref": "Plans/Decision_Log.md#DL-2319",
- "decision_section_sha256": "303ed1f95a921f0585baee6407fe9f71314111e723f68bd210bd397bbbcc073f",
+ "decision_ref": "Plans/Decision_Log.md#DL-2522",
+ "decision_section_sha256": "c4825809bab543f993540ce300afa233f1f4939d3ecbb3f75f375e47ad146324",
  "registry_before": {
   "revision": "2026-11-16.182",
   "sha256": "42b629830598d98e34a6bf96e95b33bea4cbc9b78a361ea4a515f49d8e511285",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "a923ee9ea95bcd7a766c4d670429990f87ab830f47f131071b1c102860c5cee0",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/live.artifact.created.json",
-  "sha256": "008196215723458a784ff0e5c46111a71db622aaf10fa8b1e331c4052dfd1199"
+  "sha256": "3f751292586096f79317b8efa22f5136815767f933b4bd4022eaef16548ed53d"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,13 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_record_sha256": "9b7617468de1ed06a3aabc5c84204179cbd4f9beb76811480741ac8c23560885",
-  "source_assessment_sha256": "53c6c3f03185da832a67bb2ca6d69b0bc83fdcb6a94783855e1ddc61d125936d",
-  "source_decision_section_sha256": "2f47085ac81722ad80ff5538c4b8be9c8e49844610d0a7f6e783d8c931065fe2",
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_record_sha256": "98b2aff868d7ee5ac014144a34f11f14f95df208f73e88a160b99ae536dc7370",
+  "source_assessment_sha256": "8b6327477c56f0e4ac116e01b5cb0f0af58284e42b691d514417fbe88218af99",
+  "source_decision_section_sha256": "d1e4eeb0a1d1c5282d96fc2a1f9cc966e1402d97ba396e3e5a8cb07e053e00e8",
   "original_registry_checkpoints_preserved": true
- }
+ },
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2319",
+ "postfix_correction": "reports/event-authority-20261116/admission-merge-3/corrections/live.artifact.created.json"
 }

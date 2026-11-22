@@ -3,8 +3,8 @@
  "event_type": "remote_access.private_endpoint_state_changed",
  "family_id": "event-family-remote-access-private-endpoint-state-changed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
- "decision_ref": "Plans/Decision_Log.md#DL-2361",
- "decision_section_sha256": "327f2fa946fca9f0985ba7245991e0eb335d8df1aad0b24184d60afea7d988f5",
+ "decision_ref": "Plans/Decision_Log.md#DL-2549",
+ "decision_section_sha256": "407c2fe7a231ae59e4c611617df6fd040979f3976aced0242f41a51df9986dbb",
  "registry_before": {
   "revision": "2026-11-16.224",
   "sha256": "29dfd5a15d548fe0299279d538fda18c1cf1c0958430c9a926a76ea7ee948254",
@@ -15,10 +15,10 @@
   "sha256": "e81e51faff696241375addd431e83ee553a17bd779fe8d1dfab7414da95bceef",
   "family_count": 444
  },
- "registry_row_sha256": "edc1ce8c3f9bfba8923f0d91c74c1d0ba91339719567bc972ab2c73c423bf929",
+ "registry_row_sha256": "47577b7861db4c3b6a00280a478abd6f2b1866063d876873aef611e498dc743e",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/remote_access.private_endpoint_state_changed.json",
-  "sha256": "695ecc50ccbb9dc2b26c01c37af86a991519dc78a659b0d5f70646a213069060"
+  "sha256": "8d4d81a042a970f5555a9aa1f41560c54647b30c291c0ef1d32c9e3d1fb513d1"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,13 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_record_sha256": "527e36c015517d071146b4e2466573be3920f45e673c474b0dc7747492302b85",
-  "source_assessment_sha256": "d38b3af416ec77a97a5b89536c770ed7fbe90746573cace4c4ba6acdcea4f686",
-  "source_decision_section_sha256": "2689b5813fff7daf19e96ebf031d062ac20278a358f9f1c482069bcdea42391c",
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_record_sha256": "37aeba14fd342fc32a909b04715b683d354679924faea486bd69c0439409f4e6",
+  "source_assessment_sha256": "dde6d607e1b3cd85db95ae2de77e23d7ae5e519a95d4d23ed060a366d9375ded",
+  "source_decision_section_sha256": "263d3280496d720d65abcd4c9ff2a19840a3f0778f30757bbdfcc7f3a2fec3d5",
   "original_registry_checkpoints_preserved": true
- }
+ },
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2361",
+ "postfix_correction": "reports/event-authority-20261116/admission-merge-3/corrections/remote_access.private_endpoint_state_changed.json"
 }

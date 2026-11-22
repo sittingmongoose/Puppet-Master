@@ -3,8 +3,8 @@
  "event_type": "filesafe.command_denied",
  "family_id": "event-family-filesafe-command-denied",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
- "decision_ref": "Plans/Decision_Log.md#DL-2301",
- "decision_section_sha256": "f2c952d8c5077a1969dec726ee0d92b6e86280950d2871b107d324ff9133e602",
+ "decision_ref": "Plans/Decision_Log.md#DL-2516",
+ "decision_section_sha256": "5aa6bd178cd60100db771ed46806e2c3d6cb9ed095718532f70a1d4782b0e19d",
  "registry_before": {
   "revision": "2026-11-16.164",
   "sha256": "530b40eb371b22585ece0efef4d31cbf961f746919cb9ebebee274a457de9b03",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "dc5d2e57eac4127858f6f27149100664db008d7c2e0d74a286dcbb2f538e4d41",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/filesafe.command_denied.json",
-  "sha256": "2be85d86e131ad6e2ee4fc55b854188da5d53bec37e86db200e454cf79913ec2"
+  "sha256": "7422c7202bee314dd058199b7ad3698a3722639d1fd707748b4bf87533ad279b"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,13 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_record_sha256": "1770746d0c76ea3ff1d9eaa2d4b6b6626efcbc2bd3ca95c33087b00989ac4a06",
-  "source_assessment_sha256": "9c493c2a1dae6d91671c56703f032cd9827b5d1b57f0be46b7c643a60de51e52",
-  "source_decision_section_sha256": "bf8bed4e2c22b1160e87a824150d8ed5cb4854872322e2ebdcf0417fe741efbb",
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_record_sha256": "f40c2a3cc054da749f9afafbe37ee2f1665f33bc0608078ba1b6968c6b0f053c",
+  "source_assessment_sha256": "d42c73429254d9b4198022ae66b8aa4781f5163d46570de80b3d97998e2d1a52",
+  "source_decision_section_sha256": "623d5839c8c86ea70e0a1339b542a80e6563a0c68171d1a855eb800d42ac5c50",
   "original_registry_checkpoints_preserved": true
- }
+ },
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2301",
+ "postfix_correction": "reports/event-authority-20261116/admission-merge-3/corrections/filesafe.command_denied.json"
 }

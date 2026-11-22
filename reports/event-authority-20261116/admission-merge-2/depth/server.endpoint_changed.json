@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/485"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/485 (canonical row SHA-256 8e028050d1f994e5c29b30a67b7c2de44160175596cc4f93610528fd927b8fb8). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/485, canonical row SHA-256 7477c0a92f951480a9efde2a66365d82036b5cfa15eea658f9c30a75f1b71208. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/485",
-       "line_start": 31143,
-       "line_end": 31184,
+       "line_start": 31260,
+       "line_end": 31302,
        "quote": "\"event_type\": \"server.endpoint_changed\"",
-       "quote_line": 31146,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 31263,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/485",
-       "quote_scope": "unit #/families/485, Plans/event_family_registry.json:31143-31184"
+       "quote_scope": "unit #/families/485, Plans/event_family_registry.json:31260-31302"
       }
      ]
     },
@@ -266,34 +266,56 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1418",
-       "line_start": 51753,
-       "line_end": 51753,
-       "quote": "Current selected assignment (2026-11-19): server.endpoint_changed@1.0.0 is registered for application_only in",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "line_start": 51756,
+       "line_end": 51762,
+       "quote": "  Current selected assignment (2026-11-19): server.endpoint_changed@1.0.0 is registered for application_only in\n  Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2403. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0;\n  Plans/storage-plan.md#SP-1418 owns the event policy''s existing anchors, counts, holds and deletion rules. Original\n  sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to\n  them. Current append/publication still requires the exact selected schema/scope, original custody, current permission,\n  receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native\n  execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1418, Plans/Contracts_V0.md:51714-51801",
+       "quote_scope": "unit CV-1418, Plans/Contracts_V0.md:51717-51804",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1418",
-        "line_start": 49396,
-        "line_end": 49396,
-        "quote": "retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the delet",
-        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+        "line_start": 51753,
+        "line_end": 51753,
+        "quote": "Current selected assignment (2026-11-19): server.endpoint_changed@1.0.0 is registered for application_only in",
+        "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+        "quote_check": "exact",
+        "quote_scope": "unit CV-1418, Plans/Contracts_V0.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:51714-51801",
+        "source_citation": {
+         "path": "Plans/Contracts_V0.md",
+         "unit": "CV-1418",
+         "line_start": 49396,
+         "line_end": 49396,
+         "quote": "retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the delet",
+         "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+        "line": 51753
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "ecf787789ba4c4c8eaa3fdaa48d2cfbe3abe2b10",
+        "old_quote": "Current selected assignment (2026-11-19): server.endpoint_changed@1.0.0 is registered for application_only in",
+        "old_path": "Plans/Contracts_V0.md",
+        "old_unit": "CV-1418",
+        "old_line_start": 51753,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1418",
-       "line_start": 72295,
-       "line_end": 72295,
+       "line_start": 72305,
+       "line_end": 72305,
        "quote": "Current selected assignment (2026-11-19): server.endpoint_changed@1.0.0 is registered for application_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2403. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1418, Plans/storage-plan.md:72199-72295",
+       "quote_scope": "unit SP-1418, Plans/storage-plan.md:72209-72305",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1418",
@@ -403,12 +425,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1418",
-       "line_start": 72228,
-       "line_end": 72228,
+       "line_start": 72238,
+       "line_end": 72238,
        "quote": "The exact checkpoint in derived redb checkpoints is w3e_server_endpoint_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1418, Plans/storage-plan.md:72199-72295",
+       "quote_scope": "unit SP-1418, Plans/storage-plan.md:72209-72305",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1418",
@@ -465,12 +487,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1418",
-       "line_start": 51735,
-       "line_end": 51739,
+       "line_start": 51738,
+       "line_end": 51742,
        "quote": "Phase 2 (2026-11-13) runs\n  the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named\n  single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared\n  scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone\n  in their own table with a written pr",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
-       "quote_check": "whitespace_normalized",
-       "quote_scope": "unit CV-1418, Plans/Contracts_V0.md:51714-51801",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1418, Plans/Contracts_V0.md:51717-51804",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1418",
@@ -611,10 +633,10 @@
   "row_pointer": "#/families/485"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "e33d14089e5ac8b9f14f256a8450a4442a1b0864583d937ac0aa70cac5a36a82",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "aa097d9cacaf84531b8aa5f7fc3513173a8f30e9b925da33b5831257208b6694",
+  "verdicts_changed": false,
+  "native_execution": "NOT_RUN"
  }
 }

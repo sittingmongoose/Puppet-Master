@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/511"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/511 (canonical row SHA-256 18060fa2cdaf043c295673847413073a5843eba70cab782900ba9c22816223aa). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/511, canonical row SHA-256 87ea65cf586a8d28d853a0e61200dcd5bbc37acdbbbe636ef24441f93c407bf1. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/511",
-       "line_start": 33283,
-       "line_end": 33324,
+       "line_start": 33440,
+       "line_end": 33482,
        "quote": "\"event_type\": \"wizard.blocked\"",
-       "quote_line": 33286,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 33443,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/511",
-       "quote_scope": "unit #/families/511, Plans/event_family_registry.json:33283-33324"
+       "quote_scope": "unit #/families/511, Plans/event_family_registry.json:33440-33482"
       }
      ]
     },
@@ -59,7 +59,7 @@
        "line_start": 45088,
        "line_end": 45088,
        "quote": "Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002,",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "quote_check": "exact",
        "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
        "source_citation": {
@@ -103,7 +103,7 @@
        "line_start": 45094,
        "line_end": 45094,
        "quote": "Producer emitter.wizard_blocked@1.0.0 is the responsible Planning Wizard component's observer of its original",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "quote_check": "exact",
        "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
        "source_citation": {
@@ -147,7 +147,7 @@
        "line_start": 45092,
        "line_end": 45092,
        "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json are required-present, root additionalProperties=false,",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "quote_check": "exact",
        "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
        "source_citation": {
@@ -211,7 +211,7 @@
        "quote": "NEW identity recipe",
        "quote_check": "exact",
        "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-596",
@@ -240,7 +240,7 @@
        "line_start": 45098,
        "line_end": 45098,
        "quote": "Retry compares exactly the producer-owned semantic fields enumerated by CV-339: event_type, scope_kind, project_id,",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "quote_check": "exact",
        "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
        "source_citation": {
@@ -283,10 +283,10 @@
        "unit": "CV-596",
        "line_start": 45124,
        "line_end": 45124,
-       "quote": "Current selected assignment (2026-11-19): wizard.blocked@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2429. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/Contracts_V0.md#CV-596 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+       "quote": "  Current selected assignment (2026-11-19): wizard.blocked@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2429. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/Contracts_V0.md#CV-596 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
        "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-596",
@@ -298,6 +298,14 @@
        "locator_maintenance": {
         "authority": "MERGE2-FIX3",
         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       },
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX finding 4",
+        "old_quote": "Current selected assignment (2026-11-19): wizard.blocked@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2429. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/Contracts_V0.md#CV-596 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+        "old_line_start": 45124,
+        "new_line_start": 45124,
+        "new_line_end": 45124,
+        "reason": "Expand the exact current assignment through its policy, scope, anchor and effective count in its own cited unit."
        }
       }
      ],
@@ -319,7 +327,7 @@
        "line_start": 45102,
        "line_end": 45102,
        "quote": "NEW original custody source wizard_blocked_evidence is materialized in Plans/storage_value_registry.json under",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "quote_check": "exact",
        "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
        "source_citation": {
@@ -363,7 +371,7 @@
        "line_start": 45100,
        "line_end": 45100,
        "quote": "The planning component's immutable observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run.",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "quote_check": "exact",
        "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
        "source_citation": {
@@ -407,7 +415,7 @@
        "line_start": 45106,
        "line_end": 45106,
        "quote": "NEW passive operating consumer reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "quote_check": "exact",
        "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
        "source_citation": {
@@ -453,7 +461,7 @@
        "quote": "Compatibility/withdrawal for wizard.blocked alone: dispatch only explicitly supported exact family/schema/version;",
        "quote_check": "exact",
        "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-596",
@@ -469,7 +477,7 @@
        "line_start": 45104,
        "line_end": 45104,
        "quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord profile; under CV-253,",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "quote_check": "exact",
        "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
        "source_citation": {
@@ -549,7 +557,7 @@
        "line_start": 45092,
        "line_end": 45092,
        "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json are required-present, root additionalProperties=false,",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "quote_check": "exact",
        "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts.",
        "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
@@ -793,10 +801,10 @@
   "row_pointer": "#/families/511"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "538484f77bca24a1f5afb198479ccca4ed9b544280cebbd20dec55340c7319e9",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
+  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
+  "source_assessment_sha256": "4cc5e45c6326629747a594367a4827b20ba9b325a4e09aa3c18d77f0bcfe6592",
+  "verdicts_changed": false,
+  "native_execution": "NOT_RUN"
  }
 }

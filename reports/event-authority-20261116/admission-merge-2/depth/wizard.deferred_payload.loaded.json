@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/512"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/512 (canonical row SHA-256 ba4ac5c9ddacee0d8ec0709b67fc2fc62356d22851b82f13439ea8d93dd6106c). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/512, canonical row SHA-256 fcd292bf19a0f13b37d8f1497da0e73d8854860a98faeaded8c9821af674e1d7. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/512",
-       "line_start": 33325,
-       "line_end": 33367,
+       "line_start": 33483,
+       "line_end": 33526,
        "quote": "\"event_type\": \"wizard.deferred_payload.loaded\"",
-       "quote_line": 33328,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 33486,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/512",
-       "quote_scope": "unit #/families/512, Plans/event_family_registry.json:33325-33367"
+       "quote_scope": "unit #/families/512, Plans/event_family_registry.json:33483-33526"
       }
      ]
     },
@@ -88,7 +88,7 @@
        "quote": "wizard.deferred_payload.loaded Payload And Identity\n\n```yaml\nplan_unit_id: CV-595\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Contracts_V0.md\ncanonical_text: |-\n  wizard.deferred_payload.loaded",
        "quote_check": "exact",
        "quote_scope": "unit CV-595, Plans/Contracts_V0.md:45032-45079",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-595",
@@ -128,7 +128,7 @@
        "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character",
        "quote_check": "exact",
        "quote_scope": "unit CV-595, Plans/Contracts_V0.md:45032-45079",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-595",
@@ -141,12 +141,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "Wizard Deferred Payload Loaded Original Custody",
-       "line_start": 55439,
-       "line_end": 55439,
+       "line_start": 55445,
+       "line_end": 55445,
        "quote": "Observe the existing successful acceptance/loading result of one PWIZ-001 canonical seed into the actual current PlanningRun intake child. The original successful open event and its exact first receip",
        "quote_check": "exact",
-       "quote_scope": "unit Wizard Deferred Payload Loaded Original Custody, Plans/storage-plan.md:55433-55451",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit Wizard Deferred Payload Loaded Original Custody, Plans/storage-plan.md:55439-55457",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "Wizard Deferred Payload Loaded Original Custody",
@@ -159,12 +159,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "heading:Wizard Opened Original Custody",
-       "line_start": 55414,
-       "line_end": 55414,
+       "line_start": 55420,
+       "line_end": 55420,
        "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384. The closed source schema ",
        "quote_check": "exact",
-       "quote_scope": "unit heading:Wizard Opened Original Custody, Plans/storage-plan.md:55412-55432",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit heading:Wizard Opened Original Custody, Plans/storage-plan.md:55418-55438",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "Wizard Deferred Payload Loaded Original Custody",
@@ -186,7 +186,7 @@
        "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character",
        "quote_check": "exact",
        "quote_scope": "unit CV-595, Plans/Contracts_V0.md:45032-45079",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-595",
@@ -204,7 +204,7 @@
        "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, ",
        "quote_check": "exact",
        "quote_scope": "unit CV-595, Plans/Contracts_V0.md:45032-45079",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-595",
@@ -356,7 +356,7 @@
        "quote": "NEW identity recipe for this exact family: digest is lowercase SHA-256 of UTF-8 compact JSON [\"wizard.deferred_payload.loaded\",project_id,planning_run_id,thread_id,request_id] with en",
        "quote_check": "exact",
        "quote_scope": "unit CV-595, Plans/Contracts_V0.md:45032-45079",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-595",
@@ -374,7 +374,7 @@
        "quote": "scope_kind=project; envelope project_id/thread_id equal the actual source child and payload; run_id/node_id/attempt_id and requested/effective account refs are null because this obser",
        "quote_check": "exact",
        "quote_scope": "unit CV-595, Plans/Contracts_V0.md:45032-45079",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-595",
@@ -405,7 +405,7 @@
        "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character",
        "quote_check": "exact",
        "quote_scope": "unit CV-595, Plans/Contracts_V0.md:45032-45079",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-595",
@@ -423,7 +423,7 @@
        "quote": "replay_only_not_appendable. Passive readers cannot emit. Observe the existing successful acceptance/loading result of one PWIZ-001 canonical seed into the actual current PlanningRun",
        "quote_check": "exact",
        "quote_scope": "unit CV-595, Plans/Contracts_V0.md:45032-45079",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-595",
@@ -451,7 +451,7 @@
        "unit": "PWIZ-098",
        "line_start": 4927,
        "line_end": 4927,
-       "quote": "Current selected assignment (2026-11-19): wizard.deferred_payload.loaded@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2430. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/Planning_Wizard.md#PWIZ-098 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: wizard_seed_load_evidence uses RP-CHAT-THREAD-LIFETIME@1.0.0 under Plans/Decision_Log.md#DL-508; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+       "quote": "  Current selected assignment (2026-11-19): wizard.deferred_payload.loaded@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2430. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/Planning_Wizard.md#PWIZ-098 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: wizard_seed_load_evidence uses RP-CHAT-THREAD-LIFETIME@1.0.0 under Plans/Decision_Log.md#DL-508; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
        "quote_scope": "unit PWIZ-098, Plans/Planning_Wizard.md:4906-4958",
        "file_sha256": "0d705e75a031704f2a13f3f467fc31ca949c02fb1e800b626fed3c137f7d7d36",
@@ -466,6 +466,14 @@
        "locator_maintenance": {
         "authority": "MERGE2-FIX3",
         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       },
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX finding 4",
+        "old_quote": "Current selected assignment (2026-11-19): wizard.deferred_payload.loaded@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2430. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/Planning_Wizard.md#PWIZ-098 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: wizard_seed_load_evidence uses RP-CHAT-THREAD-LIFETIME@1.0.0 under Plans/Decision_Log.md#DL-508; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+        "old_line_start": 4927,
+        "new_line_start": 4927,
+        "new_line_end": 4927,
+        "reason": "Expand the exact current assignment through its policy, scope, anchor and effective count in its own cited unit."
        }
       }
      ],
@@ -484,12 +492,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "heading:Wizard Opened Original Custody",
-       "line_start": 55420,
-       "line_end": 55420,
+       "line_start": 55426,
+       "line_end": 55426,
        "quote": "Mandatory coherent backup includes this non-rebuildable source, original command/child/seed/context evidence, seglog permanent identities and SP-286 original full-value receipt custody at one verified",
        "quote_check": "exact",
-       "quote_scope": "unit heading:Wizard Opened Original Custody, Plans/storage-plan.md:55412-55432",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit heading:Wizard Opened Original Custody, Plans/storage-plan.md:55418-55438",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "Wizard Deferred Payload Loaded Original Custody",
@@ -524,12 +532,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "heading:Wizard Opened Original Custody",
-       "line_start": 55414,
-       "line_end": 55414,
+       "line_start": 55420,
+       "line_end": 55420,
        "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384. The closed source schema ",
        "quote_check": "exact",
-       "quote_scope": "unit heading:Wizard Opened Original Custody, Plans/storage-plan.md:55412-55432",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit heading:Wizard Opened Original Custody, Plans/storage-plan.md:55418-55438",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "Wizard Deferred Payload Loaded Original Custody",
@@ -639,12 +647,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "Wizard Deferred Payload Loaded Original Custody",
-       "line_start": 55443,
-       "line_end": 55443,
+       "line_start": 55449,
+       "line_end": 55449,
        "quote": "The independent passive consumer is `reader.wizard_deferred_payload_loaded_history@1.0.0`, selecting only this exact event/schema/version and authorized actual Project/PlanningRun/child/request. It ex",
        "quote_check": "exact",
-       "quote_scope": "unit Wizard Deferred Payload Loaded Original Custody, Plans/storage-plan.md:55433-55451",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit Wizard Deferred Payload Loaded Original Custody, Plans/storage-plan.md:55439-55457",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "Wizard Deferred Payload Loaded Original Custody",
@@ -657,12 +665,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "Wizard Deferred Payload Loaded Original Custody",
-       "line_start": 55443,
-       "line_end": 55443,
+       "line_start": 55449,
+       "line_end": 55449,
        "quote": "The independent passive consumer is `reader.wizard_deferred_payload_loaded_history@1.0.0`, selecting only this exact event/schema/version and authorized actual Project/PlanningRun/child/request. It ex",
        "quote_check": "exact",
-       "quote_scope": "unit Wizard Deferred Payload Loaded Original Custody, Plans/storage-plan.md:55433-55451",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit Wizard Deferred Payload Loaded Original Custody, Plans/storage-plan.md:55439-55457",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "Wizard Deferred Payload Loaded Original Custody",
@@ -706,12 +714,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "Wizard Deferred Payload Loaded Original Custody",
-       "line_start": 55445,
-       "line_end": 55445,
+       "line_start": 55451,
+       "line_end": 55451,
        "quote": "Withdrawal cuts off this exact writer admission first, drains or fences pending original slots under their original receipt gates, then withdraws `reader.wizard_deferred_payload_loaded_",
        "quote_check": "exact",
-       "quote_scope": "unit Wizard Deferred Payload Loaded Original Custody, Plans/storage-plan.md:55433-55451",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit Wizard Deferred Payload Loaded Original Custody, Plans/storage-plan.md:55439-55457",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "Wizard Deferred Payload Loaded Original Custody",
@@ -724,12 +732,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "Wizard Deferred Payload Loaded Original Custody",
-       "line_start": 55445,
-       "line_end": 55445,
+       "line_start": 55451,
+       "line_end": 55451,
        "quote": "Withdrawal cuts off this exact writer admission first, drains or fences pending original slots under their original receipt gates, then withdraws `reader.wizard_deferred_payload_loaded_history@1.0.0` ",
        "quote_check": "exact",
-       "quote_scope": "unit Wizard Deferred Payload Loaded Original Custody, Plans/storage-plan.md:55433-55451",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit Wizard Deferred Payload Loaded Original Custody, Plans/storage-plan.md:55439-55457",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "Wizard Deferred Payload Loaded Original Custody",
@@ -765,7 +773,7 @@
        "quote": "persisted timestamps are UTC ISO-8601 values with Z",
        "quote_check": "exact",
        "quote_scope": "unit CV-253, Plans/Contracts_V0.md:20956-21005",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-253",
@@ -1061,10 +1069,10 @@
   "row_pointer": "#/families/512"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "0747155e19a0331b8f20161adc8a7008d619ec80c5909ff0b5aefcbedd5531c5",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "6ca573b5f388a528a98012c4fe66f62a733d22a32af50aa04a0abad8ef30f899",
+  "verdicts_changed": false,
+  "native_execution": "NOT_RUN"
  }
 }

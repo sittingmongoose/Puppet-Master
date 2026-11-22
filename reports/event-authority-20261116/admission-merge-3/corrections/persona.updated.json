@@ -1,0 +1,231 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "persona.updated",
+ "findings": [
+  4
+ ],
+ "source_commit": "9a2b99b2a9055ce8af5fd68e79ad3549df399b43",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2346",
+ "decision_ref": "Plans/Decision_Log.md#DL-2536",
+ "registry_before": {
+  "revision": "2026-11-19.85",
+  "sha256": "eb53ed285604b976eece78d091b81e913e7e97df368b7c1424bf721c14e4513d",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.86",
+  "sha256": "edf0286ff269e6d77ed27239850a84f26d6c90292c508043c7232a2ab17d2551",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-persona-updated",
+  "family_revision": "1.0.0",
+  "event_type": "persona.updated",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/Personas.md#P-125",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-691",
+  "payload_schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_updated",
+  "payload_schema_ref": {
+   "path": "Plans/dg6b_event_contracts.schema.json",
+   "json_pointer": "#/$defs/persona_updated",
+   "schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_updated"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/scope/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Personas.md#P-125",
+   "Plans/Contracts_V0.md#CV-691",
+   "Plans/dg6b_event_contracts.schema.json#/$defs/persona_updated",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_updated",
+    "payload_schema_ref": {
+     "path": "Plans/dg6b_event_contracts.schema.json",
+     "json_pointer": "#/$defs/persona_updated",
+     "schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_updated"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Personas.md#P-125",
+    "read_owner_ref": "Plans/Personas.md#P-125",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_updated",
+    "payload_schema_ref": {
+     "path": "Plans/dg6b_event_contracts.schema.json",
+     "json_pointer": "#/$defs/persona_updated",
+     "schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_updated"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Personas.md#P-125",
+    "read_owner_ref": "Plans/Personas.md#P-125",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "registry_row": {
+  "family_id": "event-family-persona-updated",
+  "family_revision": "1.0.0",
+  "event_type": "persona.updated",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/Personas.md#P-125",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-691",
+  "payload_schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_updated",
+  "payload_schema_ref": {
+   "path": "Plans/dg6b_event_contracts.schema.json",
+   "json_pointer": "#/$defs/persona_updated",
+   "schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_updated"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/scope/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Personas.md#P-125",
+   "Plans/Contracts_V0.md#CV-691",
+   "Plans/dg6b_event_contracts.schema.json#/$defs/persona_updated",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_updated",
+    "payload_schema_ref": {
+     "path": "Plans/dg6b_event_contracts.schema.json",
+     "json_pointer": "#/$defs/persona_updated",
+     "schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_updated"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Personas.md#P-125",
+    "read_owner_ref": "Plans/Personas.md#P-125",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_updated",
+    "payload_schema_ref": {
+     "path": "Plans/dg6b_event_contracts.schema.json",
+     "json_pointer": "#/$defs/persona_updated",
+     "schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_updated"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Personas.md#P-125",
+    "read_owner_ref": "Plans/Personas.md#P-125",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "predecessor_record_sha256": "b0d8e19a78b70a2c5d5c30a3e2cb969e8e006cb4e9d60bd6049c17d403d98130",
+ "predecessor_assessment_sha256": "da6ce39c8395dbd5a29906f45faf8c82f5e1cb33aaf234333535e0d19435b951",
+ "applied_record_sha256": "23ec95dfad6e46dac9345a00731423c7d63fd44f1f07b40010270ad9e771fa8b",
+ "applied_assessment_sha256": "2973ad05cde7a5937580373f9e34a58409f40cec656c1bc7d384d2925d2e0f7a",
+ "citation_changes": [
+  {
+   "ordinal": 0,
+   "old": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-672",
+    "line_start": 37512,
+    "line_end": 37512,
+    "quote": "Current selected assignment (2026-11-19): persona.updated@1.0.0 is registered for application_or_project in Plans/event_family_registry.json,",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-672, Plans/storage-plan.md:37146-37700",
+    "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+    "source_citation": {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-672",
+     "line_start": 36415,
+     "line_end": 36415,
+     "quote": "\\ history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-504.\\n\\nUse the existing\\",
+     "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-672",
+    "line_start": 37514,
+    "line_end": 37531,
+    "quote": "  Current selected assignment (2026-11-19): persona.updated@1.0.0 is registered for application_or_project in Plans/event_family_registry.json,\n  as recorded by Plans/Decision_Log.md#DL-2346. Its event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0\n  (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation,\n  cardinality_scope=null); Plans/storage-plan.md#SP-672 owns the event policy''s existing anchors, counts, holds\n  and deletion rules. Separate stored-value assignment: persona_created_operation uses RP-CONFIG-CURRENT@1.0.0 under\n  Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:\n  persona_deleted_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored\n  value, not event history. Separate stored-value assignment: persona_exported_operation uses RP-CONFIG-CURRENT@1.0.0\n  under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:\n  persona_imported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that\n  stored value, not event history. Separate stored-value assignment: persona_selected_operation uses RP-CONFIG-CURRENT@1.0.0\n  under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:\n  persona_updated_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored\n  value, not event history. Original sources and coherent backups retain their independent owner policies; the event\n  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,\n  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved\n  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance\n  seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-672, Plans/storage-plan.md:37148-37702"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

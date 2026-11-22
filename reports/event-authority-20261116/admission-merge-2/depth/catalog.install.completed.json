@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/315"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/315 (canonical row SHA-256 bbe37e678a4269b6a01666de7103842a7bd4955c9c0b87fc7447c9badb8856e8). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/315, canonical row SHA-256 bbe37e678a4269b6a01666de7103842a7bd4955c9c0b87fc7447c9badb8856e8. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/315",
-       "line_start": 20657,
-       "line_end": 20740,
+       "line_start": 20663,
+       "line_end": 20746,
        "quote": "\"event_type\": \"catalog.install.completed\"",
-       "quote_line": 20660,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 20666,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/315",
-       "quote_scope": "unit #/families/315, Plans/event_family_registry.json:20657-20740"
+       "quote_scope": "unit #/families/315, Plans/event_family_registry.json:20663-20746"
       }
      ]
     },
@@ -90,7 +90,7 @@
        "line_start": 17802,
        "line_end": 17803,
        "quote": "Producer: catalog lifecycle controller records the existing subsystem owner effective installation commit. For\n  an executable installation this is verified activation/ready under Sh",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-319, Plans/Section15_MVP_Promoted_Features_Spec.md:17788-17926",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -108,7 +108,7 @@
        "line_start": 17860,
        "line_end": 17861,
        "quote": "Round 7 type/source refinement: original_context retains the complete writer transition schema; retained read/checkpoint/rebuild\n  require only current scope and exact-boolean owner",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-319, Plans/Section15_MVP_Promoted_Features_Spec.md:17788-17926",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -188,7 +188,7 @@
        "line_start": 17813,
        "line_end": 17814,
        "quote": "Idempotency key is application scope: application@1:{hex(server_id)}:{hex(owner_operation_id)};\n  Project scope: sha256(canonical MessagePack array [\"catalog.install.completed\", \"1.0",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-319, Plans/Section15_MVP_Promoted_Features_Spec.md:17788-17926",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -219,7 +219,7 @@
        "line_start": 17827,
        "line_end": 17829,
        "quote": "no repeat install on retry or replay. Current writes/retries\n  use dedupe_by_idempotency_key and refuse projector_replay_only as replay_only_not_appendable. Retained supported\n  replay",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-319, Plans/Section15_MVP_Promoted_Features_Spec.md:17788-17926",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -237,7 +237,7 @@
        "line_start": 17860,
        "line_end": 17861,
        "quote": "Round 7 type/source refinement: original_context retains the complete writer transition schema; retained read/checkpoint/rebuild\n  require only current scope and exact-boolean owner",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-319, Plans/Section15_MVP_Promoted_Features_Spec.md:17788-17926",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -265,23 +265,45 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-658",
-       "line_start": 50710,
-       "line_end": 50710,
-       "quote": "Current selected assignment (2026-11-19): catalog.install.completed@1.0.0 is registered for application_or_project",
+       "line_start": 50716,
+       "line_end": 50727,
+       "quote": "  Current selected assignment (2026-11-19): catalog.install.completed@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2233. Its event history selects Application\n  = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0\n  (anchor_kind=creation, cardinality_scope=null); Plans/storage-plan.md#SP-658 owns the event policy''s existing\n  anchors, counts, holds and deletion rules. Separate stored-value assignment: ds15_catalog_install_completed_checkpoint\n  uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns that stored value, not event history.\n  Separate checkpoint assignment: ds15_catalog_install_completed_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under\n  its existing Plans/storage-plan.md#SP-658 contract; checkpoint retention grants no event/source deletion. Original\n  sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to\n  them. Current append/publication still requires the exact selected schema/scope, original custody, current permission,\n  receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native\n  execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit SP-658, Plans/storage-plan.md:50661-50751",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-658, Plans/storage-plan.md:50667-50757",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-658",
-        "line_start": 49895,
-        "line_end": 49895,
-        "quote": "\\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-500.\\n\\nUse\\",
-        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        "line_start": 50710,
+        "line_end": 50710,
+        "quote": "Current selected assignment (2026-11-19): catalog.install.completed@1.0.0 is registered for application_or_project",
+        "quote_check": "exact",
+        "quote_scope": "unit SP-658, Plans/storage-plan.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:50661-50751",
+        "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "source_citation": {
+         "path": "Plans/storage-plan.md",
+         "unit": "SP-658",
+         "line_start": 49895,
+         "line_end": 49895,
+         "quote": "\\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-500.\\n\\nUse\\",
+         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "line": 50710
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "c4f5271453b2388dc8768c5d47856475ac6a5332",
+        "old_quote": "Current selected assignment (2026-11-19): catalog.install.completed@1.0.0 is registered for application_or_project",
+        "old_path": "Plans/storage-plan.md",
+        "old_unit": "SP-658",
+        "old_line_start": 50710,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       }
      ],
@@ -303,7 +325,7 @@
        "line_start": 17827,
        "line_end": 17828,
        "quote": "backup closure is unavailable; no repeat install on retry or replay. Current writes/retries\n  use dedupe_by_idempotency_key and refuse projector_replay_only as replay_only_not_append",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-319, Plans/Section15_MVP_Promoted_Features_Spec.md:17788-17926",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -321,7 +343,7 @@
        "line_start": 17860,
        "line_end": 17861,
        "quote": "Round 7 type/source refinement: original_context retains the complete writer transition schema; retained read/checkpoint/rebuild\n  require only current scope and exact-boolean owner",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-319, Plans/Section15_MVP_Promoted_Features_Spec.md:17788-17926",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -352,7 +374,7 @@
        "line_start": 17802,
        "line_end": 17803,
        "quote": "Producer: catalog lifecycle controller records the existing subsystem owner effective installation commit. For\n  an executable installation this is verified activation/ready under Sh",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-319, Plans/Section15_MVP_Promoted_Features_Spec.md:17788-17926",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -383,7 +405,7 @@
        "line_start": 17833,
        "line_end": 17834,
        "quote": "reader.ds15.catalog_install_completed.v1@1.0.0, Catalog installation history reader for only catalog.install.completed@1.0.0,\n  adopts SP-278 by name and DL-076 nine-field token. Che",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-319, Plans/Section15_MVP_Promoted_Features_Spec.md:17788-17926",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -401,7 +423,7 @@
        "line_start": 17860,
        "line_end": 17861,
        "quote": "Round 7 type/source refinement: original_context retains the complete writer transition schema; retained read/checkpoint/rebuild\n  require only current scope and exact-boolean owner",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-319, Plans/Section15_MVP_Promoted_Features_Spec.md:17788-17926",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -432,7 +454,7 @@
        "line_start": 17798,
        "line_end": 17799,
        "quote": "withdrawal binding; full per-family negative evidence: /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/catalog_install_completed-search.json.\n  Reuse Sect",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-319, Plans/Section15_MVP_Promoted_Features_Spec.md:17788-17926",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -450,7 +472,7 @@
        "line_start": 17860,
        "line_end": 17861,
        "quote": "Round 7 type/source refinement: original_context retains the complete writer transition schema; retained read/checkpoint/rebuild\n  require only current scope and exact-boolean owner",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-319, Plans/Section15_MVP_Promoted_Features_Spec.md:17788-17926",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -481,7 +503,7 @@
        "line_start": 17855,
        "line_end": 17856,
        "quote": "Oracles: ATS-329 and own family fixtures in Plans/ds15_event_contract_fixtures.json, numeric fixtures and scripts/pm-ds15-event-contracts.py\n  cover start/terminal source, false-succ",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-319, Plans/Section15_MVP_Promoted_Features_Spec.md:17788-17926",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -499,7 +521,7 @@
        "line_start": 17860,
        "line_end": 17861,
        "quote": "Round 7 type/source refinement: original_context retains the complete writer transition schema; retained read/checkpoint/rebuild\n  require only current scope and exact-boolean owner",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-319, Plans/Section15_MVP_Promoted_Features_Spec.md:17788-17926",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -584,10 +606,10 @@
   "row_pointer": "#/families/315"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "7f660cdf5dd6e51c05f5a59f0ade6a76e598a7c2d3db661365bf4d532b014dfb",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "3c7d9d49ed391fd8206518881dbfc51ae96dc41e94914209e32d04f8421754ea",
+  "verdicts_changed": false,
+  "native_execution": "NOT_RUN"
  }
 }

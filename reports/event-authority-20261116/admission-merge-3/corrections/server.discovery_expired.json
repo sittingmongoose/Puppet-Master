@@ -1,0 +1,153 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "server.discovery_expired",
+ "findings": [
+  1,
+  4
+ ],
+ "source_commit": "a2836bb9cbe40ed7dd9c6523a228744ba4aaadfa",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2401",
+ "decision_ref": "Plans/Decision_Log.md#DL-2564",
+ "registry_before": {
+  "revision": "2026-11-19.113",
+  "sha256": "42b286d9b8dc6201f9167f59a074c7c200c9b8edb683e0543c9aedb937449436",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.114",
+  "sha256": "ecf895ca73272015369da480ea240f6312eef1fff6ae6f04d079915c968fbe90",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-server-discovery-expired",
+  "family_revision": "1.0.0",
+  "event_type": "server.discovery_expired",
+  "scope_policy": "application_only",
+  "semantic_owner_doc": "Plans/Server_System.md#SRV-1416",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-1416",
+  "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/server_discovery_expired/1.0.0/schema.json",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/w3e/server_discovery_expired.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/server_discovery_expired/1.0.0/schema.json"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Server_System.md#SRV-1416",
+   "Plans/Contracts_V0.md#CV-1416",
+   "Plans/storage-plan.md#SP-1416",
+   "Plans/event_payloads/w3e/server_discovery_expired.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
+   "policy_version": "1.0.0"
+  }
+ },
+ "registry_row": {
+  "family_id": "event-family-server-discovery-expired",
+  "family_revision": "1.0.0",
+  "event_type": "server.discovery_expired",
+  "scope_policy": "application_only",
+  "semantic_owner_doc": "Plans/Server_System.md#SRV-1416",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-1416",
+  "payload_schema_id": "pm.event_payload.server.discovery_expired.v1",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/w3e/server_discovery_expired.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/server_discovery_expired/1.0.0/schema.json"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Server_System.md#SRV-1416",
+   "Plans/Contracts_V0.md#CV-1416",
+   "Plans/storage-plan.md#SP-1416",
+   "Plans/event_payloads/w3e/server_discovery_expired.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+   "Plans/event_payloads/w3e/server_discovery_expired.schema.json#/properties/schema_id/const"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
+   "policy_version": "1.0.0"
+  }
+ },
+ "predecessor_record_sha256": "86766cdd45ca18c50b65ca70ce1154deb531f8cf82023bfe6dad486075131f24",
+ "predecessor_assessment_sha256": "0e2cb4656fc03f46e254aceded2ab97d2a50fe914402b33ccced98562a958593",
+ "applied_record_sha256": "3d5dbfe9a338e7bb69954a145a944cbf8d928f341ac35064b0a90874f5b8dafc",
+ "applied_assessment_sha256": "a07051e546ffa67a7179360a51963cfeacf7c3980864e17294b39e1e35792c38",
+ "citation_changes": [
+  {
+   "ordinal": 1,
+   "old": {
+    "path": "Plans/Contracts_V0.md",
+    "unit": "CV-1416",
+    "line_start": 51584,
+    "line_end": 51584,
+    "quote": "Current selected assignment (2026-11-19): server.discovery_expired@1.0.0 is registered for application_only in",
+    "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+    "quote_check": "exact",
+    "quote_scope": "unit CV-1416, Plans/Contracts_V0.md:51552-51632",
+    "source_citation": {
+     "path": "Plans/Contracts_V0.md",
+     "unit": "CV-1416",
+     "line_start": 49275,
+     "line_end": 49275,
+     "quote": "retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only ex",
+     "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/Contracts_V0.md",
+    "unit": "CV-1416",
+    "line_start": 51587,
+    "line_end": 51593,
+    "quote": "  Current selected assignment (2026-11-19): server.discovery_expired@1.0.0 is registered for application_only in\n  Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2401. Its event history selects RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0;\n  Plans/storage-plan.md#SP-1416 owns the event policy''s existing anchors, counts, holds and deletion rules. Original\n  sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to\n  them. Current append/publication still requires the exact selected schema/scope, original custody, current permission,\n  receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native\n  execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit CV-1416, Plans/Contracts_V0.md:51555-51635"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

@@ -3,8 +3,8 @@
  "event_type": "server.identity_mismatch_detected",
  "family_id": "event-family-server-identity-mismatch-detected",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
- "decision_ref": "Plans/Decision_Log.md#DL-2404",
- "decision_section_sha256": "61e046615df6b6f379a6411c5da8d0e77061840e2a82d6f19f01c96c068e53d0",
+ "decision_ref": "Plans/Decision_Log.md#DL-2567",
+ "decision_section_sha256": "e0735d133c997a509247c5f09c79aa1bcf23d3a23545270fb5d89b8f5af4e360",
  "registry_before": {
   "revision": "2026-11-16.267",
   "sha256": "41b80fd36833500c144fb26d49aaddfe481525444fe19777b359f11775e9b407",
@@ -15,10 +15,10 @@
   "sha256": "fffbf1dd7bba37cbb0f8fc999df49998433583278fc7668cff1bf8b07a07fb07",
   "family_count": 487
  },
- "registry_row_sha256": "69cf01ad7ddbf15412cea3e7a18573de11775d5a7d6196afefdede068b8ca83c",
+ "registry_row_sha256": "838289ef271e23993015438faab2fd9827e1bf3bee3dd26e46997c6a7da5f0a7",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/server.identity_mismatch_detected.json",
-  "sha256": "654ebe20a4039b8ca467b0f14b3bdcaaebe079681d72a5debeee7d7463a6127d"
+  "sha256": "356e8647fe1279adc2a26b8116ef89231d527611cd87accc0f80093a1d6bb67c"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,13 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_record_sha256": "aeae6b7b5511b40e3a94f65035ef9cdbe6e2821c7c88200cf57ff28da0ebb4d1",
-  "source_assessment_sha256": "d312690286057adb602a086194fe8fe0fbe65776bc1cabc4edc391d601c6b584",
-  "source_decision_section_sha256": "11bf045dddde9705716b1ed851ea6c394d4b0076249e53239b2eeab4c84ac4ab",
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_record_sha256": "6035bc1828a2c1220ba9cc66148e76bbefb8727ee331a04b072123c5ef5be120",
+  "source_assessment_sha256": "34809616214cae4fd0433928f7c06054bbc22ea44af34dcb2bdff27b0a64e43c",
+  "source_decision_section_sha256": "6b25b50c1ba5567e18b938f70898c7838f26e57037243b2b7143449289259564",
   "original_registry_checkpoints_preserved": true
- }
+ },
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2404",
+ "postfix_correction": "reports/event-authority-20261116/admission-merge-3/corrections/server.identity_mismatch_detected.json"
 }

@@ -3,8 +3,8 @@
  "event_type": "remote_access.remote_link_state_changed",
  "family_id": "event-family-remote-access-remote-link-state-changed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
- "decision_ref": "Plans/Decision_Log.md#DL-2364",
- "decision_section_sha256": "df9a3cbd3d87cc8ddbcd3b3682c65dc0138246c5da97fdcbc9915010e43c229b",
+ "decision_ref": "Plans/Decision_Log.md#DL-2552",
+ "decision_section_sha256": "4631dac29e95400250e1fb81f8924c269ea8b28d047c25c07dc7945ee58ff398",
  "registry_before": {
   "revision": "2026-11-16.227",
   "sha256": "50c7b8546d5423ca1b79b38593834980678c4392e70f45a2ac02581cb1fb42ca",
@@ -15,10 +15,10 @@
   "sha256": "dd249beb82582c580dddf7ca1fd7b179d82bb6926b727ae9ff74ef78415386be",
   "family_count": 447
  },
- "registry_row_sha256": "5e8cea5e84db98b5f8a24abf7079e70a4f174a4157d4000e100c0c29a7584684",
+ "registry_row_sha256": "d7362fd743be8a58da560a25bc76fd884e40ae3966277497138dc537a14e1543",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/remote_access.remote_link_state_changed.json",
-  "sha256": "ecb77247b486b6c84899f53653449f1aa5f952d9d9e0fbcd5cfafb396a530283"
+  "sha256": "15bf0e8f0e16874600ca48e41153795bbf36f9a91839744970875f62a4abedbf"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,13 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_record_sha256": "c093ad62e6ca2139d3e697e84f39cf92c36e350aa928367a34cd72ef67e0d6a4",
-  "source_assessment_sha256": "7189374c3d38145844a0e1461100126d9d1ca5d57f6643ef38e5e1e7b4c42b5d",
-  "source_decision_section_sha256": "95fb755586a219e655fbd82795911adc46689b8914694e124383479ec905caae",
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_record_sha256": "a3ce302b46b0776b7a5ecc67ba1208d80b2d19807eec6ba1685ad4a48f31a154",
+  "source_assessment_sha256": "16b4d3ab0573b7fd0f10ba34ef1fcc7b696b0d179efe25b9ee1ea4f55fd434b1",
+  "source_decision_section_sha256": "f87d0db28b3622750865c793402c54ce68c034cde7c7759ba4e7b31a8d69989e",
   "original_registry_checkpoints_preserved": true
- }
+ },
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2364",
+ "postfix_correction": "reports/event-authority-20261116/admission-merge-3/corrections/remote_access.remote_link_state_changed.json"
 }

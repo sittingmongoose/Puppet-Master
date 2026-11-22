@@ -267,6 +267,17 @@ def _anchor_section(doc, anchor):
     return doc[start:] if end < 0 else doc[start:end]
 
 
+def program_owner_admission_is_current(section, spec):
+    """The selected family owner must qualify the preparation refusal by live registration."""
+    prose = " ".join(section.split())
+    family = f"{spec['event_type']}@{spec['family_revision']}"
+    return (
+        f"{family} is individually registered in Plans/event_family_registry.json." in prose
+        and "Missing-registration refusal applies only if the exact current family/version/scope registration is absent;" in prose
+        and "`prepared_not_admitted`, the family is absent from" not in prose
+    )
+
+
 @_ds_entry
 def browser_program_binding_failures(row, *, root=ROOT):
     """Refusals of one Browser Program family's admission row against its prepared contract and owner canon."""
@@ -327,7 +338,8 @@ def browser_program_binding_failures(row, *, root=ROOT):
     f["GP11_authority_contract"] = row.get("authority_contract_ref") == "Plans/storage-plan.md#" + str(spec.get("sp_unit"))
     f["GP12_section15_text"] = section is not None and all(
         str(token) in section for token in (spec.get("producer_component"), spec.get("publication_operation"), spec.get("consumer_id"),
-                                            spec.get("checkpoint_family_id"), spec.get("cv_unit"), spec.get("sp_unit"), spec.get("retention_policy")))
+                                            spec.get("checkpoint_family_id"), spec.get("cv_unit"), spec.get("sp_unit"), spec.get("retention_policy"))) and (
+        row.get("admission_status") != "admitted_static_contract" or program_owner_admission_is_current(section, spec))
     f["GP13_contract_unit_text"] = cv_text is not None and all(
         str(token) in cv_text for token in (row["event_type"], spec.get("payload_schema_id"), "evt_browser_", "browser@1:",
                                             "dedupe_by_idempotency_key", "projector_replay_only", "payload_inline_limit"))

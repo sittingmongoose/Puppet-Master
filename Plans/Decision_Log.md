@@ -40390,7 +40390,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-15.173 (219 families, SHA-256 e1bcd4b70ee6cf0bc698a748cfee94d5f4035d70e73c2fbaec806bddc7422c0c) to 2026-11-16.1 (220 families, SHA-256 65bcf396439692a0a880b5550ca07725a2603ed43b32bab9657b9c3cc60f65d7). The appended row, canonical SHA-256 74132ab0dc5b7d03eb099989109c8060ba33bf082fc9107ad3a5f1c544e6e1ba, has scope policy project_only, payload `pm.attention_event.alert_acknowledged.schema.v1` at Plans/event_payloads/attention/alert_acknowledged.schema.json#, semantic owner Plans/FinalGUISpec.md#F3-700, payload owner Plans/Contracts_V0.md#CV-680 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.1 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 220 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/alert.acknowledged.json (SHA-256 8c91ac628b9b82d9c2d36126fe8c65f0f3a9044644da40899566c1c5a9daa093) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/alert.acknowledged.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/alert.acknowledged.json (SHA-256 26fe9d6fd6acb939be1afcfb5fc39a0a0e51b6b1922b26f0499452bd8dec3fbd) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/alert.acknowledged.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `alert.acknowledged`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -40434,7 +40434,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.1 (220 families, SHA-256 65bcf396439692a0a880b5550ca07725a2603ed43b32bab9657b9c3cc60f65d7) to 2026-11-16.2 (221 families, SHA-256 fb517e8051f1b8cfb1682488bed3b22d463bdfcf47d3c90960b74cec98a4a635). The appended row, canonical SHA-256 17fcf11b5e2f264edeb43ff5c4f901965c6c1d037829fe006a8026db1f98323b, has scope policy project_only, payload `pm.attention_event.alert_dismissed.schema.v1` at Plans/event_payloads/attention/alert_dismissed.schema.json#, semantic owner Plans/FinalGUISpec.md#F3-701, payload owner Plans/Contracts_V0.md#CV-681 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.2 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 221 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/alert.dismissed.json (SHA-256 da324ba6951b0486bdd1418a001ee4e54b8e5d4a5effd61aad7501691555ecec) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/alert.dismissed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/alert.dismissed.json (SHA-256 56186f06fb5847d8152b3b6f3066b50bec215fde026a5a56de6f22aa9f322ee7) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/alert.dismissed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `alert.dismissed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -40478,7 +40478,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.2 (221 families, SHA-256 fb517e8051f1b8cfb1682488bed3b22d463bdfcf47d3c90960b74cec98a4a635) to 2026-11-16.3 (222 families, SHA-256 5725ededda26037f56470673024f82a08f0fcec3517bc3f3025e2d088392fc6a). The appended row, canonical SHA-256 62106cffcafc018ce4e7efb15438e35bb66d0a4825e488eea59149913df42b8a, has scope policy project_only, payload `pm.attention_event.alert_rule_muted.schema.v1` at Plans/event_payloads/attention/alert_rule_muted.schema.json#, semantic owner Plans/FinalGUISpec.md#F3-702, payload owner Plans/Contracts_V0.md#CV-682 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.3 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 222 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/alert.rule_muted.json (SHA-256 681a203f3b2f90ade1ed5f8e0d255906cfd67722819a40fb3973394be591a223) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/alert.rule_muted.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/alert.rule_muted.json (SHA-256 9b64aa150cf3b5df6e1cef00dcf90cd32bef0e1e528b6aca09b1525542b03c21) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/alert.rule_muted.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `alert.rule_muted`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -40522,7 +40522,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.3 (222 families, SHA-256 5725ededda26037f56470673024f82a08f0fcec3517bc3f3025e2d088392fc6a) to 2026-11-16.4 (223 families, SHA-256 22ad70bc92a7f3e3f182910477eef56c918874f94eef031e3713cedcbd655c39). The appended row, canonical SHA-256 94a87a700ce0daad575221e59cfea1a7e16a205db9c01469760f227b311bfe2c, has scope policy project_only, payload `pm.attention_event.alert_snoozed.schema.v1` at Plans/event_payloads/attention/alert_snoozed.schema.json#, semantic owner Plans/FinalGUISpec.md#F3-703, payload owner Plans/Contracts_V0.md#CV-683 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.4 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 223 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/alert.snoozed.json (SHA-256 4955d81bc2fc0622f8a8b787c230db6df001e7bedef00367e3cb214ec3d71dce) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/alert.snoozed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/alert.snoozed.json (SHA-256 7a5bbb1cefc1e60e508610f5c10ed595c55ac7cd8600c0fe8e61b4f2ab995114) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/alert.snoozed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `alert.snoozed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -40566,7 +40566,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.4 (223 families, SHA-256 22ad70bc92a7f3e3f182910477eef56c918874f94eef031e3713cedcbd655c39) to 2026-11-16.5 (224 families, SHA-256 b355419159015fa6499e545ae460870b4be6a39d2bc044b8d7cf14341e4b773c). The appended row, canonical SHA-256 35a2da011f49c011efa5fdcbf90a42623d2092c7c35b816ec6e4a7e61dd6e23d, has scope policy project_only, payload `pm.event_payload.approval_denied.v1` at Plans/dt_event_contracts.schema.json#/$defs/approval_denied, semantic owner Plans/Contracts_V0.md#CV-602, payload owner Plans/Contracts_V0.md#CV-602 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.5 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 224 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/approval.denied.json (SHA-256 e1807b4c4398c3e284a1283638f7ed945b60c7d6fb709f93aae0ae7a53df084d) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/approval.denied.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/approval.denied.json (SHA-256 708667638619d6624153239f7ccf934addbea75216bc5c871f43780dc9ed4df1) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/approval.denied.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `approval.denied`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -40610,7 +40610,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.5 (224 families, SHA-256 b355419159015fa6499e545ae460870b4be6a39d2bc044b8d7cf14341e4b773c) to 2026-11-16.6 (225 families, SHA-256 a079144181bcfafa6c45738cc135e641957e63119c8b1d66c88f805e2fb026f3). The appended row, canonical SHA-256 dc1b28e29a2e74a6ee2cdd929795f083f73b66d4b757876450a2e9182c80f1c3, has scope policy project_only, payload `pm.event_payload.approval_granted.v1` at Plans/dt_event_contracts.schema.json#/$defs/approval_granted, semantic owner Plans/Contracts_V0.md#CV-601, payload owner Plans/Contracts_V0.md#CV-601 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.6 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 225 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/approval.granted.json (SHA-256 7c397b52953c87e248307eef76dafe85dd9606a9474a300211c92868f13f7ddc) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/approval.granted.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/approval.granted.json (SHA-256 fe2dccefc3ece73b3d63cf45119d1c3294db77c27c8782fcb69cc44dc2af4743) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/approval.granted.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `approval.granted`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -40654,7 +40654,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.6 (225 families, SHA-256 a079144181bcfafa6c45738cc135e641957e63119c8b1d66c88f805e2fb026f3) to 2026-11-16.7 (226 families, SHA-256 6be7c6179462e600ef0e49744f61a2bbe3de7ec6b1772bbf5ca1c0c0a8a91384). The appended row, canonical SHA-256 8bb7728dfcb8172f2ff162a77a219e2429d47b0beea57e5e9a01511651c2fb45, has scope policy project_only, payload `pm.event_payload.approval_requested.v1` at Plans/dt_event_contracts.schema.json#/$defs/approval_requested, semantic owner Plans/Contracts_V0.md#CV-600, payload owner Plans/Contracts_V0.md#CV-600 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.7 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 226 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/approval.requested.json (SHA-256 317cd85e64e7cd7d664ee2f37e492cc2766f64dca9bce7c2cf75bfc5ee5076ea) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/approval.requested.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/approval.requested.json (SHA-256 f4ac008d1173c5b22ccc3ecdd8bc22fa590179630615c9752daa89a90b1caa4d) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/approval.requested.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `approval.requested`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -40698,7 +40698,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.7 (226 families, SHA-256 6be7c6179462e600ef0e49744f61a2bbe3de7ec6b1772bbf5ca1c0c0a8a91384) to 2026-11-16.8 (227 families, SHA-256 f4db9a7626b94ac38d17b1fc3c9634a401fc84220e0edba2b2cef57de270c27e). The appended row, canonical SHA-256 6e7b755ec48cc3f1d60205760ee252e575be3efa4ce7af065835335b207337ab, has scope policy project_only, payload `pm.event_payload.approval_timeout.v1` at Plans/dt_event_contracts.schema.json#/$defs/approval_timeout, semantic owner Plans/Contracts_V0.md#CV-603, payload owner Plans/Contracts_V0.md#CV-603 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.8 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 227 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/approval.timeout.json (SHA-256 be8c7fb03f119dcb805158cbc7377220a63439ee03c23c5f5f92bd0a2a94383f) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/approval.timeout.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/approval.timeout.json (SHA-256 2ad332118ff2c620f364d97abcac9b0e736f9a3b85f74955701f241a97356fc9) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/approval.timeout.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `approval.timeout`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -41050,7 +41050,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.15 (234 families, SHA-256 649a883bd178a82914e9a81dcf4fabad50674ea048652f8d9c0ec1a0209d6a60) to 2026-11-16.16 (235 families, SHA-256 1f5db77785207534a6ac3c7521780ad4160df170e3ffddc515616d263c7e9fc2). The appended row, canonical SHA-256 bc45dbc74a2dfd4a104829c608eb9136b4da167dfc9ef37811b8c4d5d571e0c9, has scope policy application_or_project, payload `pm.collaboration_event.brainstorm_plan_synthesized.v1` at Plans/collaboration_event_payloads.schema.json#/$defs/brainstorm_plan_synthesized, semantic owner Plans/Collaborative_Workflows.md#CWR-120, payload owner Plans/Contracts_V0.md#CV-475 and retention RP-CHAT-THREAD-LIFETIME@1.0.0. Its payload versions are project `pm.collaboration_event.brainstorm_plan_synthesized.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer existing_project_policy); application `pm.collaboration_event.brainstorm_plan_synthesized.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.16 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 235 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/brainstorm.plan_synthesized.json (SHA-256 02357c2537aa5d24862ba82e966cf1262a89fad4c621ef5bb9216ef83650a2fa) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/brainstorm.plan_synthesized.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/brainstorm.plan_synthesized.json (SHA-256 9df0f4ac6d75a1809ca4c268c4504498626cbe7f65e412b84e8a9e370bb3fb37) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/brainstorm.plan_synthesized.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `brainstorm.plan_synthesized`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -41094,7 +41094,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.16 (235 families, SHA-256 1f5db77785207534a6ac3c7521780ad4160df170e3ffddc515616d263c7e9fc2) to 2026-11-16.17 (236 families, SHA-256 df31767052907a71d4f906fcc3eeffbb7866e8b26965f6b0aeace40489415a15). The appended row, canonical SHA-256 563c4ee6c10133e7e6d7e7801d8744e4495fec8b53525463e6a9a45f78b26ae4, has scope policy application_or_project, payload `pm.collaboration_event.brainstorm_proposal_added.v1` at Plans/collaboration_event_payloads.schema.json#/$defs/brainstorm_proposal_added, semantic owner Plans/Collaborative_Workflows.md#CWR-118, payload owner Plans/Contracts_V0.md#CV-473 and retention RP-CHAT-THREAD-LIFETIME@1.0.0. Its payload versions are project `pm.collaboration_event.brainstorm_proposal_added.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer existing_project_policy); application `pm.collaboration_event.brainstorm_proposal_added.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.17 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 236 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/brainstorm.proposal_added.json (SHA-256 b7f8769d49bc419e50ee24ffba0193cf9fdff91cbd3fcce49e609920c8f9d210) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/brainstorm.proposal_added.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/brainstorm.proposal_added.json (SHA-256 b67489c9d6080f9df706812b31a16374fa934550691e2f3b6b5b3f4ee02129ef) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/brainstorm.proposal_added.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `brainstorm.proposal_added`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -41138,7 +41138,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.17 (236 families, SHA-256 df31767052907a71d4f906fcc3eeffbb7866e8b26965f6b0aeace40489415a15) to 2026-11-16.18 (237 families, SHA-256 8364cf34146e219784212f89e2b176b26b3bdcb708fe5bba1976bdfac05328e0). The appended row, canonical SHA-256 6319e92c8ecb7754eaef52b9b2c938f6b6de99cbee4676dc6ffddc27b408cee3, has scope policy application_or_project, payload `pm.collaboration_event.brainstorm_vote_added.v1` at Plans/collaboration_event_payloads.schema.json#/$defs/brainstorm_vote_added, semantic owner Plans/Collaborative_Workflows.md#CWR-119, payload owner Plans/Contracts_V0.md#CV-474 and retention RP-CHAT-THREAD-LIFETIME@1.0.0. Its payload versions are project `pm.collaboration_event.brainstorm_vote_added.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer existing_project_policy); application `pm.collaboration_event.brainstorm_vote_added.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.18 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 237 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/brainstorm.vote_added.json (SHA-256 cfa16b8b989d8a79ccf1550aaa841582f40c1514b980b617f56f2e05a8148ba0) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/brainstorm.vote_added.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/brainstorm.vote_added.json (SHA-256 dabd82d2fc59fb889e2cc0741bc10b75cfabfa14a67aada46515634da5d97804) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/brainstorm.vote_added.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `brainstorm.vote_added`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -41314,7 +41314,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.21 (240 families, SHA-256 189b384040c1a6a085fde81c2ce6ec6560e285180cd09315b1fecf8b7d4b464b) to 2026-11-16.22 (241 families, SHA-256 5a9cc886f64f194326560a642cbe24fa6f43df5f7ea06c92a93e4c2a3a1f9645). The appended row, canonical SHA-256 97630be8142209371b8f0164484787a71fa0a2ad7d71f337d882fa7c3d286ac6, has scope policy project_only, payload `pm.browser_event.controller_lease_granted.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/controller_lease_granted, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-controller-lease-granted, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.22 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 241 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.controller_lease.granted.json (SHA-256 8f6a2f722290329fb03b5e6563db0ce29f5ace2a73b3c9f14e9019595bc840d8) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.controller_lease.granted.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.controller_lease.granted.json (SHA-256 6e05de45047c233622e10c83150b523d9b7fc04e01ac42b9c0ec751a6b1ea32b) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.controller_lease.granted.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.controller_lease.granted`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -41358,7 +41358,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.22 (241 families, SHA-256 5a9cc886f64f194326560a642cbe24fa6f43df5f7ea06c92a93e4c2a3a1f9645) to 2026-11-16.23 (242 families, SHA-256 cc1569dd99876bd7b0d170d1328efdbe2aee955393aa0cb2626193427f0564c7). The appended row, canonical SHA-256 bb94655c9e8d3469dbec78e92d02a9ab6ea2891c7432fab3bc15f15a207eda3c, has scope policy project_only, payload `pm.browser_event.controller_lease_lost.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/controller_lease_lost, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-controller-lease-lost, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.23 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 242 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.controller_lease.lost.json (SHA-256 0a2d4e1dafe76ae966daa65259be56c62d304268b225f98ba303134d2824ffa6) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.controller_lease.lost.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.controller_lease.lost.json (SHA-256 300c4f9e5fb6f37690525632709665bd4465183637cd89e223295dc9abf5e0c5) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.controller_lease.lost.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.controller_lease.lost`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -41402,7 +41402,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.23 (242 families, SHA-256 cc1569dd99876bd7b0d170d1328efdbe2aee955393aa0cb2626193427f0564c7) to 2026-11-16.24 (243 families, SHA-256 45483947e0eacd3f0827b613ac157510587989d87dcf1643e58c261d3ea94317). The appended row, canonical SHA-256 f1c90d0d4aaf16a6804fa3b39e8c1f677c02fedaba40269b040611e30b92c0f0, has scope policy project_only, payload `pm.browser_event.controller_lease_renewed.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/controller_lease_renewed, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-controller-lease-renewed, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.24 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 243 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.controller_lease.renewed.json (SHA-256 a78f3b4c8ff569ec5f5ff7e689b65ff7c0dd454a2e47f404a0ab2a2edb295b13) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.controller_lease.renewed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.controller_lease.renewed.json (SHA-256 3469920c763ca0975063976677319e6a0be742ae3b3ab6ba62fc2c021097d414) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.controller_lease.renewed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.controller_lease.renewed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -41446,7 +41446,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.24 (243 families, SHA-256 45483947e0eacd3f0827b613ac157510587989d87dcf1643e58c261d3ea94317) to 2026-11-16.25 (244 families, SHA-256 987edec1d0b64ce7b1934001bfa6d963c89d68bce1f217ae259ed753bcfc56e4). The appended row, canonical SHA-256 fe900bad594083c512b60a8771aec9cea5da094e314639495d5c9fbcb056ef2a, has scope policy project_only, payload `pm.browser_event.controller_lease_takeover_completed.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/controller_lease_takeover_completed, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-controller-lease-takeover-completed, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.25 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 244 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.controller_lease.takeover_completed.json (SHA-256 8ae5421a9656ffb2a96496420b1133a47bc3b9ada5f025f66a9f1a44c53787be) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.controller_lease.takeover_completed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.controller_lease.takeover_completed.json (SHA-256 80a3b4cdac9d65dfc6585a0b6400f2a80a73ebd082b90605d5941ecad04f2845) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.controller_lease.takeover_completed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.controller_lease.takeover_completed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -41490,7 +41490,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.25 (244 families, SHA-256 987edec1d0b64ce7b1934001bfa6d963c89d68bce1f217ae259ed753bcfc56e4) to 2026-11-16.26 (245 families, SHA-256 f9fd6c2752c599782b38a648c71c1c9dca25c942de444b8ac1c5a375c8782d6c). The appended row, canonical SHA-256 2de7907f6686966438318de2e2de59a42897d15e1f5e6bbc7b11367f0d6da2f6, has scope policy project_only, payload `pm.browser_event.controller_lease_takeover_requested.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/controller_lease_takeover_requested, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-controller-lease-takeover-requested, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.26 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 245 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.controller_lease.takeover_requested.json (SHA-256 91c2e27d74bbf0c80fc7a18986d007121a7a7969ccbdda13a9ce0d8e1d338bf2) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.controller_lease.takeover_requested.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.controller_lease.takeover_requested.json (SHA-256 07ec0647b750054985d71e3470f17b23e169d9c404817f19441a5bd546546cb0) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.controller_lease.takeover_requested.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.controller_lease.takeover_requested`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -41534,7 +41534,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.26 (245 families, SHA-256 f9fd6c2752c599782b38a648c71c1c9dca25c942de444b8ac1c5a375c8782d6c) to 2026-11-16.27 (246 families, SHA-256 df7383504f2c99d25049e512e9e3855532fed64aa382743655593c89084f5ec8). The appended row, canonical SHA-256 deb9ed506bdb8f632967c13d67dca65c67f8a77ddc48269ecab4572d7ee61417, has scope policy project_only, payload `pm.browser_event.document_generation_changed.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/document_generation_changed, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-document-generation-changed, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.27 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 246 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.document.generation_changed.json (SHA-256 2fa033c6801a9e8f230a2311e571024f05e906543dfefb4b4e1d55eb0f513d9d) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.document.generation_changed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.document.generation_changed.json (SHA-256 d7323dac33df4e7df5148c717a7499df5ddac6009fe5d9964a7ff5ad73d5d36c) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.document.generation_changed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.document.generation_changed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -41578,7 +41578,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.27 (246 families, SHA-256 df7383504f2c99d25049e512e9e3855532fed64aa382743655593c89084f5ec8) to 2026-11-16.28 (247 families, SHA-256 11d6ba540bda46df0ff0d46d266cd5d9d546572eab5c3e995ba8e0889333f886). The appended row, canonical SHA-256 fc88462a3c92f529b1157b00f0bc82585a0ba1d3beaeb9354699dc5c4d2311e6, has scope policy project_only, payload `pm.browser_event.execution_strategy_fallback_selected.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/execution_strategy_fallback_selected, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-execution-strategy-fallback-selected, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.28 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 247 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.execution_strategy.fallback_selected.json (SHA-256 670882212692eb29c9d75d728b08d4c8b283d1a48d95c7699a143ac26497043d) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.execution_strategy.fallback_selected.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.execution_strategy.fallback_selected.json (SHA-256 93f929911e114ee78090547b91c1c3b9889c61f83b4c83a4ea53b2fb07e25e70) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.execution_strategy.fallback_selected.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.execution_strategy.fallback_selected`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -41622,7 +41622,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.28 (247 families, SHA-256 11d6ba540bda46df0ff0d46d266cd5d9d546572eab5c3e995ba8e0889333f886) to 2026-11-16.29 (248 families, SHA-256 57278bff6de2460780cfbcef6ee454e51a955fd44120f1349033fa53926dfc32). The appended row, canonical SHA-256 a30ce93313734c2dab1255b012f24df179bbd87cef194ad6e16cd161dc148f0b, has scope policy project_only, payload `pm.browser_event.execution_strategy_selected.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/execution_strategy_selected, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-execution-strategy-selected, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.29 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 248 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.execution_strategy.selected.json (SHA-256 d7a1a6c917a5a29f7f6510f0e74f808fd48110310993c5bda90d92c757c13807) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.execution_strategy.selected.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.execution_strategy.selected.json (SHA-256 4f6120fc56b900ce96572c33f4d6860f235bbe25c2365758a4e65a5e64b330f6) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.execution_strategy.selected.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.execution_strategy.selected`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -41666,7 +41666,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.29 (248 families, SHA-256 57278bff6de2460780cfbcef6ee454e51a955fd44120f1349033fa53926dfc32) to 2026-11-16.30 (249 families, SHA-256 c3fe8dafc26c5c1a1d62f4f52516038269d6db677001862b37127909afdc15c2). The appended row, canonical SHA-256 d83b5131176aeb354d07cd04487ef3e5ff42c8b7426d7e6d020bcb90fd3e89db, has scope policy project_only, payload `pm.browser_event.navigation_generation_changed.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/navigation_generation_changed, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-navigation-generation-changed, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.30 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 249 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.navigation.generation_changed.json (SHA-256 e12c9e93fa40d82b85c69b2b125bfb9e2790ebdb2e85d69bb0653fb3bc8ecce0) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.navigation.generation_changed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.navigation.generation_changed.json (SHA-256 67a651b62fa629e7497671937906e87af661fdd17e4a40856366e852b85805bd) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.navigation.generation_changed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.navigation.generation_changed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -41710,7 +41710,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.30 (249 families, SHA-256 c3fe8dafc26c5c1a1d62f4f52516038269d6db677001862b37127909afdc15c2) to 2026-11-16.31 (250 families, SHA-256 66fd253aef61690b55ad7ea3149dff23b61b3f89ae098b3a067b0a472baa3400). The appended row, canonical SHA-256 623992b5e74006fd1c6e4fbcd8fa1927824c382dbc955731a0e02cf69fb548d6, has scope policy project_only, payload `pm.browser_event.page_activated.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/page_activated, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-page-activated, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.31 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 250 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.page.activated.json (SHA-256 53381bf2d88363934e0219054ce619312367f03932f2567b997e899c24329f1d) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.page.activated.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.page.activated.json (SHA-256 839f9b7e07170ba3fd33a048785bb5a59e5731d0d230dc42c69b16074d54bba9) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.page.activated.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.page.activated`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -41754,7 +41754,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.31 (250 families, SHA-256 66fd253aef61690b55ad7ea3149dff23b61b3f89ae098b3a067b0a472baa3400) to 2026-11-16.32 (251 families, SHA-256 bf421fb608587cbfa440cac04fdf20980fe5d3de43bb74eaad70578c0dbf66c7). The appended row, canonical SHA-256 a67ee9f9f860cd299f2b6a00a794cf721e8fc728b74d1cb734579aa5c0300f02, has scope policy project_only, payload `pm.browser_event.page_closed.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/page_closed, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-page-closed, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.32 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 251 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.page.closed.json (SHA-256 a8b12c02f648253b509670e1eba947d113675e26abebefd56fc290bf81012997) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.page.closed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.page.closed.json (SHA-256 da1de7b3c9566a36ba9c3b32c373d561747a72023000525d01968d3f96b6fe2c) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.page.closed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.page.closed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -41798,7 +41798,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.32 (251 families, SHA-256 bf421fb608587cbfa440cac04fdf20980fe5d3de43bb74eaad70578c0dbf66c7) to 2026-11-16.33 (252 families, SHA-256 b239bc5a3650dcc13ba55770b15c7a9a20d7e1838fabf13faec8738839b132f5). The appended row, canonical SHA-256 da27d5e2f3227be41076b1515edfb4b41afd99c562d4ca96e56345193b68b5d8, has scope policy project_only, payload `pm.browser_event.page_created.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/page_created, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-page-created, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.33 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 252 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.page.created.json (SHA-256 1b480c1818f9964890cde832d0956684171bae80268d4075ba010cc3c056798f) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.page.created.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.page.created.json (SHA-256 c7ed6e14f3f130f2e6f7ee5f0a285d37c5bda059437ad4201f1471c90955f9da) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.page.created.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.page.created`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -41842,7 +41842,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.33 (252 families, SHA-256 b239bc5a3650dcc13ba55770b15c7a9a20d7e1838fabf13faec8738839b132f5) to 2026-11-16.34 (253 families, SHA-256 3a99ac262c1a1ed65f857026a79469cea8ddb37032efba0f2b47ec3cf0c96a5f). The appended row, canonical SHA-256 7f4c6f5204e21f394da1064a55b4d101efcdd2803520fbea559763a7b5be090a, has scope policy project_only, payload `pm.browser_event.program_cancelled.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/program_cancelled, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-cancelled, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.34 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 253 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.cancelled.json (SHA-256 06b4f63604757bf4065c21b9c2982d90ac7d52a599939e528ccd09c038a872ea) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.cancelled.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.cancelled.json (SHA-256 12ac22519d2c5e21e1194f7299829e4c5b24c4a7e697958fbe32f06ca913a81e) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.cancelled.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.program.cancelled`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -41886,7 +41886,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.34 (253 families, SHA-256 3a99ac262c1a1ed65f857026a79469cea8ddb37032efba0f2b47ec3cf0c96a5f) to 2026-11-16.35 (254 families, SHA-256 0109252b78b27f47e7756f12f3fe6664552431ea5e4f73b7d080dcd6feb8f175). The appended row, canonical SHA-256 77b661c54774e42cb7b492fcffd7afcbf764b5983b286325eb0b213025dfc0a3, has scope policy project_only, payload `pm.browser_event.program_checkpointed.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/program_checkpointed, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-checkpointed, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.35 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 254 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.checkpointed.json (SHA-256 6729d9a9a4c1b6595326bd02dd5fe61a63067b6329500b73969dde825906179f) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.checkpointed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.checkpointed.json (SHA-256 f4b4c5556394f718f8d20db8687f73a9f525792d687457f060d65bc1d7d27feb) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.checkpointed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.program.checkpointed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -41930,7 +41930,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.35 (254 families, SHA-256 0109252b78b27f47e7756f12f3fe6664552431ea5e4f73b7d080dcd6feb8f175) to 2026-11-16.36 (255 families, SHA-256 ca7a63745962348a2355bbca5facfb0968ff2a239edad5cf509b25612e4a1baa). The appended row, canonical SHA-256 9ec7bd74d280d047d28507603689d6cab7b1717b35468f86faf61be87e8fc7d0, has scope policy project_only, payload `pm.browser_event.program_completed.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/program_completed, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-completed, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.36 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 255 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.completed.json (SHA-256 17106d9b177e91bd28f0725a8511c8fcc48006a3e4b0de2b9feb3d03099cb689) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.completed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.completed.json (SHA-256 40ef09e273e4a9a4420925b781278725f31e5391d04a6bd2b409cfe8e06cedbd) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.completed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.program.completed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -41974,7 +41974,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.36 (255 families, SHA-256 ca7a63745962348a2355bbca5facfb0968ff2a239edad5cf509b25612e4a1baa) to 2026-11-16.37 (256 families, SHA-256 5d39f867fdd62a3aa60d8bed24acb7b98e253c7e0c1601e09a8f40a98ea2a664). The appended row, canonical SHA-256 f01ce38569c8733d543a6f987f0ecfc69a5c1fa3c65e284e3238d22a3cc4b374, has scope policy project_only, payload `pm.browser_event.program_failed.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/program_failed, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-failed, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.37 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 256 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.failed.json (SHA-256 4a4e0969b8b7f0294965a965266c24d3201979184f9ec986917b803e0ea4c88c) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.failed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.failed.json (SHA-256 71d83f34606fac0592b2e66be3c5f88702d602c611109d8d8a2d69c859e79aea) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.failed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.program.failed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42018,7 +42018,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.37 (256 families, SHA-256 5d39f867fdd62a3aa60d8bed24acb7b98e253c7e0c1601e09a8f40a98ea2a664) to 2026-11-16.38 (257 families, SHA-256 b0b735999a40cefebd171212ede6a8fbd699dd62175677fb406016913e01c287). The appended row, canonical SHA-256 bc72fb75fb312211c7d152875709a2d181ecb0882c5d5f98e78bcfbefcb4b671, has scope policy project_only, payload `pm.browser_event.program_paused.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/program_paused, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-paused, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.38 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 257 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.paused.json (SHA-256 91137b0170f02d6f14be80f74cc0a2144becf8b3df2d5880e01f784b5e77c059) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.paused.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.paused.json (SHA-256 40589e28764a20eccdc28eb59b37e676d7e477f81a5033e102590ec502a3d918) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.paused.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.program.paused`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42062,7 +42062,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.38 (257 families, SHA-256 b0b735999a40cefebd171212ede6a8fbd699dd62175677fb406016913e01c287) to 2026-11-16.39 (258 families, SHA-256 6bdaf686def0affb04d51e05e0079b3aeb062c19394010129270026a855ce56a). The appended row, canonical SHA-256 048c642d510cd1650703edd4871f345f9d5d4907c9edf94fa4d1a1506503ff2a, has scope policy project_only, payload `pm.browser_event.program_resumed.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/program_resumed, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-resumed, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.39 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 258 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.resumed.json (SHA-256 55d685a4ace43911e9048eb658c240399738c428b870270993bdfb502d4d5445) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.resumed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.resumed.json (SHA-256 cb350389032b77be6abe6c0fe4de5dc379b34f6d858c3926082178d2829a2802) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.resumed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.program.resumed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42106,7 +42106,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.39 (258 families, SHA-256 6bdaf686def0affb04d51e05e0079b3aeb062c19394010129270026a855ce56a) to 2026-11-16.40 (259 families, SHA-256 4b3562ce9443c7c667bd6662475e320c7ce4b37c4f2fb90e1f640838ae37db15). The appended row, canonical SHA-256 e1527f3fce8eb5216581ea4bb61eb39f1ee07a4f1a94130e9d88c17e558b56d3, has scope policy project_only, payload `pm.browser_event.program_segment_checkpointed.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/program_segment_checkpointed, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-segment-checkpointed, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.40 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 259 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.segment.checkpointed.json (SHA-256 1bc5dacb59b8fad81c16aed71059ab76c02dcb9a8d735d19498bde94348e3acb) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.segment.checkpointed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.segment.checkpointed.json (SHA-256 8b396f8167d643f29271ea5b410b40a52709f39abb54b1d47a1208921983e149) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.segment.checkpointed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.program.segment.checkpointed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42150,7 +42150,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.40 (259 families, SHA-256 4b3562ce9443c7c667bd6662475e320c7ce4b37c4f2fb90e1f640838ae37db15) to 2026-11-16.41 (260 families, SHA-256 4e0c7ae99a2f53012e3fdfbafa168ad0fe6195d48076cc454c20d42a641676be). The appended row, canonical SHA-256 8501d2e0c82e9052f6d56e212aa679e20fa7bcd77812fe580dce07507a291880, has scope policy project_only, payload `pm.browser_event.program_segment_completed.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/program_segment_completed, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-segment-completed, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.41 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 260 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.segment.completed.json (SHA-256 e4dde7b5f97fe395ecbfe6d3c7afe85fef5109a0bb89bf47aa5efd32f6866e2c) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.segment.completed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.segment.completed.json (SHA-256 4603b20caac7e13e23e15c0d90de6f7d9ae9e3026810acd8216324f8faf5f04e) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.segment.completed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.program.segment.completed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42194,7 +42194,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.41 (260 families, SHA-256 4e0c7ae99a2f53012e3fdfbafa168ad0fe6195d48076cc454c20d42a641676be) to 2026-11-16.42 (261 families, SHA-256 0ad49f1ca44dd9edfe190842f4b9a95fc8355d230b4c75a9886a13dc9ed57851). The appended row, canonical SHA-256 17ae0ce6449c063794ea6d37dd516f0d991ed2b99254871505f757fb72014ec2, has scope policy project_only, payload `pm.browser_event.program_segment_failed.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/program_segment_failed, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-segment-failed, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.42 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 261 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.segment.failed.json (SHA-256 6d53242aac26d660304c32673e8b041ab9f84bb2a1d1fdd683a240ae832361fd) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.segment.failed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.segment.failed.json (SHA-256 e820b7003cd73e2a464a8940e5f1cc7e7f860e9b460ba7a4a2b5bdacdaab4b85) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.segment.failed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.program.segment.failed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42238,7 +42238,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.42 (261 families, SHA-256 0ad49f1ca44dd9edfe190842f4b9a95fc8355d230b4c75a9886a13dc9ed57851) to 2026-11-16.43 (262 families, SHA-256 5c4b4411b243a8fe36e6dc6573020b85acef1b7d4c7c4a14c9b190b46d942b70). The appended row, canonical SHA-256 03c7bfe5e97e22a2de62ab3f40541b6ea9b5076c40637405cebceeb6847d095e, has scope policy project_only, payload `pm.browser_event.program_segment_started.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/program_segment_started, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-segment-started, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.43 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 262 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.segment.started.json (SHA-256 6a07eae58e095a8d0d1ac439b38107117e764f4c3216b399c8e602d55db50cdf) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.segment.started.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.segment.started.json (SHA-256 5ad99b9673cc09043f9f939587ee0a458292227d634ff7c08a2a451afe434485) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.segment.started.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.program.segment.started`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42282,7 +42282,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.43 (262 families, SHA-256 5c4b4411b243a8fe36e6dc6573020b85acef1b7d4c7c4a14c9b190b46d942b70) to 2026-11-16.44 (263 families, SHA-256 0ee0f20720295e5f6928d6f4298d91a4b542d5a7e8cb804c8d39e47c0af8cfcf). The appended row, canonical SHA-256 1554b0f6df6d0cd0f2eea4f840e48613936380934d4398c698ff9bad78a27b9e, has scope policy project_only, payload `pm.browser_event.program_segment_timed_out.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/program_segment_timed_out, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-segment-timed-out, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.44 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 263 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.segment.timed_out.json (SHA-256 736aec531fb6c8c5ab2c710abcb4797e88d7b5faa14e120053bed9ae53c11fd4) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.segment.timed_out.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.segment.timed_out.json (SHA-256 aa3c7756c579e1b378cda98af8291d2027b1a34f47f5152719e937c507735f60) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.segment.timed_out.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.program.segment.timed_out`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42326,7 +42326,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.44 (263 families, SHA-256 0ee0f20720295e5f6928d6f4298d91a4b542d5a7e8cb804c8d39e47c0af8cfcf) to 2026-11-16.45 (264 families, SHA-256 3130ee05b86462fff9eb12d8216befb6ef21366f18e91c6785f46d22c64a6c9a). The appended row, canonical SHA-256 159798489a225717c0628fcb39fca466ab94b71b8a46c02916adafaee59f42ce, has scope policy project_only, payload `pm.browser_event.program_started.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/program_started, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-started, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.45 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 264 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.started.json (SHA-256 a9c5e30dbb0491faeb6993f08c8f51803f5f7f6ee4109182ee6f35fdfe711971) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.started.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.started.json (SHA-256 a879c6750bf2713550c3e9040f4b5cd5cfdb79a359c3732b910cd3cfc3a359bc) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.started.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.program.started`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42370,7 +42370,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.45 (264 families, SHA-256 3130ee05b86462fff9eb12d8216befb6ef21366f18e91c6785f46d22c64a6c9a) to 2026-11-16.46 (265 families, SHA-256 807bb372a74d9a3ba0042597382efc975e189d6c81d84314d1b8358cdb56447f). The appended row, canonical SHA-256 454e7594f7411ee6f7e8911558afb629a166554b630057629162d3bbb38410f7, has scope policy project_only, payload `pm.browser_event.program_timeout_effect_state_unknown.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/program_timeout_effect_state_unknown, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-timeout-effect-state-unknown, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.46 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 265 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.timeout.effect_state_unknown.json (SHA-256 cdaab27b49ad94874ebd5266f4ed7e2d47d20aba268c7aba344570353ba1254c) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.timeout.effect_state_unknown.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.timeout.effect_state_unknown.json (SHA-256 6365ff2faa1cc760deab39c066b6046b6eb78f273faf62e79a54fc3fa280d682) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.timeout.effect_state_unknown.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.program.timeout.effect_state_unknown`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42414,7 +42414,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.46 (265 families, SHA-256 807bb372a74d9a3ba0042597382efc975e189d6c81d84314d1b8358cdb56447f) to 2026-11-16.47 (266 families, SHA-256 57e7ad0485d3a89f5a499239944576d8c0b13423fe173864a758ac7b33261324). The appended row, canonical SHA-256 7cd162982ec4b7172d9c19a3870adf1b85b4aacc993b123ad21a7e06f344b029, has scope policy project_only, payload `pm.browser_event.program_timeout_effects_reconciled.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/program_timeout_effects_reconciled, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-timeout-effects-reconciled, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.47 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 266 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.timeout.effects_reconciled.json (SHA-256 accfc424ae125e23f0a021234f28d55ebaaf18baabfd14da8f0da49883148f22) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.timeout.effects_reconciled.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.timeout.effects_reconciled.json (SHA-256 bc4f91e94b160854ef4625a453eccb1e738a3718409bd120ec840e3ff677e7d0) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.timeout.effects_reconciled.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.program.timeout.effects_reconciled`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42458,7 +42458,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.47 (266 families, SHA-256 57e7ad0485d3a89f5a499239944576d8c0b13423fe173864a758ac7b33261324) to 2026-11-16.48 (267 families, SHA-256 dd2bd6dc79f3074997fcd78f6db2469ec627e45419368ff43dac8be85c17c33c). The appended row, canonical SHA-256 48a67d05e2994db1737cef40e243ad304d37100d7adfe0052d76cd7526881ced, has scope policy project_only, payload `pm.browser_event.program_timeout_stopped.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/program_timeout_stopped, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-timeout-stopped, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.48 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 267 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.timeout.stopped.json (SHA-256 935d9e0086366abb2558108221d18c9d829f3242df382af94411ae6ec9366237) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.timeout.stopped.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program.timeout.stopped.json (SHA-256 b693cd01380b197f82d544bd9bc6d12985f2017dd6c3694c98a050c5fcb479c9) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program.timeout.stopped.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.program.timeout.stopped`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42502,7 +42502,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.48 (267 families, SHA-256 dd2bd6dc79f3074997fcd78f6db2469ec627e45419368ff43dac8be85c17c33c) to 2026-11-16.49 (268 families, SHA-256 d4277ee3a8728b247abe2fc4a29ad77db61be4c7b1faefe898671690592fff26). The appended row, canonical SHA-256 5b8e448115a3332600ec4cad1bfae9c41a4f0ad963d918f1e4d2dca88f77df19, has scope policy project_only, payload `pm.browser_event.program_workspace_checkpointed.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/program_workspace_checkpointed, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-workspace-checkpointed, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.49 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 268 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program_workspace.checkpointed.json (SHA-256 e2d3949794a7e01b91ee03e7398ee7aa30e56724747043488cc9162002c020c1) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program_workspace.checkpointed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program_workspace.checkpointed.json (SHA-256 d989497fbfc9f63769a55d47eca3be44c23bc872c1c60543ba51139ccd9a917a) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program_workspace.checkpointed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.program_workspace.checkpointed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42546,7 +42546,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.49 (268 families, SHA-256 d4277ee3a8728b247abe2fc4a29ad77db61be4c7b1faefe898671690592fff26) to 2026-11-16.50 (269 families, SHA-256 1e0eb5c02abfb557fcb8006c9b7d56a15acdfd9c992931b34784cc007e22d1c1). The appended row, canonical SHA-256 33faeb1cd48dc45c9e316a70981bd6b39ea8688054e0fc6502d3f2226a4cc147, has scope policy project_only, payload `pm.browser_event.program_workspace_closed.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/program_workspace_closed, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-workspace-closed, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.50 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 269 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program_workspace.closed.json (SHA-256 07f53d91b5ad83e4ede8e6bce85ea506ca13054b582f102946018dbea3d6bcb4) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program_workspace.closed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program_workspace.closed.json (SHA-256 a285e8c95b2b9a85f93e276e59d26c5223e4712aab24106f7390ce72fbbc3988) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program_workspace.closed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.program_workspace.closed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42590,7 +42590,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.50 (269 families, SHA-256 1e0eb5c02abfb557fcb8006c9b7d56a15acdfd9c992931b34784cc007e22d1c1) to 2026-11-16.51 (270 families, SHA-256 bc2c9d666f97876247cb6ebcbbcabb72c40c207610bbf726b3cff47f6a49b068). The appended row, canonical SHA-256 b9a1187824e5b20e49a296978a969d292a4663e9d56be9afdccc6cf21f65f53f, has scope policy project_only, payload `pm.browser_event.program_workspace_created.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/program_workspace_created, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-workspace-created, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.51 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 270 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program_workspace.created.json (SHA-256 853a552c7728345ac7e5fe740b7130a38f987e356167a72441d33a96b6eb4a18) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program_workspace.created.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program_workspace.created.json (SHA-256 d4b97b891ea460c520da6d4d88e70818df7444cf936d6ba34b8f7b480202d6fb) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program_workspace.created.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.program_workspace.created`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42634,7 +42634,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.51 (270 families, SHA-256 bc2c9d666f97876247cb6ebcbbcabb72c40c207610bbf726b3cff47f6a49b068) to 2026-11-16.52 (271 families, SHA-256 4b991c46b86b111603ee27961a6ae46e0fd7dd66ab2ce3686b4dc1cf0c9d088c). The appended row, canonical SHA-256 ad7fd9a0dbda37b17f23ca89f8e17db39170b06c269abae6a0a7846f9e58c155, has scope policy project_only, payload `pm.browser_event.program_workspace_spilled.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/program_workspace_spilled, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-workspace-spilled, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.52 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 271 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program_workspace.spilled.json (SHA-256 117474c44ae3b351ca78746dd9a8530d6a0da0cf53519a567cdcbd731bed39ab) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program_workspace.spilled.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program_workspace.spilled.json (SHA-256 1fa141bbde548b22e8dd1e8cb13f01fa5f1d034a9ee8b2c822ea8a5e1c25aa47) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program_workspace.spilled.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.program_workspace.spilled`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42678,7 +42678,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.52 (271 families, SHA-256 4b991c46b86b111603ee27961a6ae46e0fd7dd66ab2ce3686b4dc1cf0c9d088c) to 2026-11-16.53 (272 families, SHA-256 bb9052db342a7bf105ca638d54875406ab2dcd0a80d40dbc1b72b9b21a7b4385). The appended row, canonical SHA-256 6ab4e96e7dde50bd23bd8d7afb24f61fe074c4c8d6a17b066eb4028405cc84a6, has scope policy project_only, payload `pm.browser_event.program_workspace_updated.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/program_workspace_updated, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-workspace-updated, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.53 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 272 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program_workspace.updated.json (SHA-256 84898388d80e87e06bf1dbbee992d166b8afe454e563235c4d2f13ca26811142) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program_workspace.updated.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.program_workspace.updated.json (SHA-256 4e29f247df9aed45d01b3548c46e2eac506ae09a4e77d182cb52b34aa74efa2e) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.program_workspace.updated.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.program_workspace.updated`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42722,7 +42722,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.53 (272 families, SHA-256 bb9052db342a7bf105ca638d54875406ab2dcd0a80d40dbc1b72b9b21a7b4385) to 2026-11-16.54 (273 families, SHA-256 4d6b70ef01294e8b891a73e4606a0e30e1d525c04302cc9b96482c7c6cfad0b9). The appended row, canonical SHA-256 18cc870acf20d9ecb22de068142cb4e5afcbd8475239e9d470779b9582c3d03f, has scope policy project_only, payload `pm.browser_event.representation_captured.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/representation_captured, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-representation-captured, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.54 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 273 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.representation.captured.json (SHA-256 6bf2e7dc4ea2bfb35b09fd45e56d387a180e68bc48db2d945762b5401b72ef6c) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.representation.captured.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.representation.captured.json (SHA-256 7bc055816c21701db9d243e609f5cf67365418788fe968881fd953d0fe5c5566) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.representation.captured.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.representation.captured`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42766,7 +42766,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.54 (273 families, SHA-256 4d6b70ef01294e8b891a73e4606a0e30e1d525c04302cc9b96482c7c6cfad0b9) to 2026-11-16.55 (274 families, SHA-256 661ad9bf5ca6f92e3601f9c0da1e72beb463689c44e20d034d250d3e32ea6984). The appended row, canonical SHA-256 f5d50eb46c628941e72e5a3012b115a126a339bf2728b840fb6a4c44f75de5a6, has scope policy project_only, payload `pm.browser_event.representation_delta_created.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/representation_delta_created, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-representation-delta-created, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.55 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 274 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.representation.delta_created.json (SHA-256 ba0a3e5079331e6bebead6dc897a6ca55e85160f7ea35ac92b54e7b59bb4df8c) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.representation.delta_created.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.representation.delta_created.json (SHA-256 dc5639d88a42f10d0c98ffb752f76a95dd80d9362501da8393306d3a8e0a67ee) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.representation.delta_created.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.representation.delta_created`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42810,7 +42810,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.55 (274 families, SHA-256 661ad9bf5ca6f92e3601f9c0da1e72beb463689c44e20d034d250d3e32ea6984) to 2026-11-16.56 (275 families, SHA-256 aafcefe9364acb1377384364123274288c63a88e6383575786890efa56d9a3d0). The appended row, canonical SHA-256 5edac3d28ddb33bd9c93ff7712e739215718de196b407949c098abe2d1ffa626, has scope policy project_only, payload `pm.browser_event.representation_invalidated.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/representation_invalidated, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-representation-invalidated, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.56 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 275 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.representation.invalidated.json (SHA-256 ce9b7a547f04fa0414af0709d60712795745bc97aee73ecf1eae5f074e2303ef) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.representation.invalidated.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.representation.invalidated.json (SHA-256 8c3dd30d5883d4c13da33d85c7f515d822a3870532f093d4ddb8df390771f58d) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.representation.invalidated.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.representation.invalidated`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42854,7 +42854,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.56 (275 families, SHA-256 aafcefe9364acb1377384364123274288c63a88e6383575786890efa56d9a3d0) to 2026-11-16.57 (276 families, SHA-256 52e2b2710c205c6413556fe8c702d0f6aa184cddcd02e6290d8e205935da9812). The appended row, canonical SHA-256 7cd838e41e0c50d243035477c28d6a349c950ff1d01fb6981295fc0d5ad3cf3f, has scope policy project_only, payload `pm.browser_event.representation_queried.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/representation_queried, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-representation-queried, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.57 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 276 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.representation.queried.json (SHA-256 25732f23bd40f30e6bfb2dbfebe6e343eba27afd9aee702057d5f5fd25fcfd63) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.representation.queried.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.representation.queried.json (SHA-256 944decc7a4bf1ca6b1056186265fdf4f514354cbe84ac6e9703d680c0127794a) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.representation.queried.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.representation.queried`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42898,7 +42898,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.57 (276 families, SHA-256 52e2b2710c205c6413556fe8c702d0f6aa184cddcd02e6290d8e205935da9812) to 2026-11-16.58 (277 families, SHA-256 207d04fd934de2d51b209e9c3d653233c7a9deaaa4b1f1d204bd482907dd2652). The appended row, canonical SHA-256 4157eff1bcd2d9752d563e62ece89c3dec5b8d1d3ae4dc1e4edfb34c948cd400, has scope policy project_only, payload `pm.browser_event.route_browser_escalated.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/route_browser_escalated, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-route-browser-escalated, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.58 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 277 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.route.browser_escalated.json (SHA-256 0674206ef681974957faea593870caf86fd2027add0dd675d5b48ccbfb48b041) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.route.browser_escalated.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.route.browser_escalated.json (SHA-256 823b222503bf26b1c7638bef63d7afba839ffc7e2507c00e42ba3b5aa3ba2af3) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.route.browser_escalated.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.route.browser_escalated`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42942,7 +42942,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.58 (277 families, SHA-256 207d04fd934de2d51b209e9c3d653233c7a9deaaa4b1f1d204bd482907dd2652) to 2026-11-16.59 (278 families, SHA-256 080c86d00fed8c7ec23791099916821679cc83e2152090ebd084e2cb1b642622). The appended row, canonical SHA-256 e2b7d5c7b19150939cfdf511ec3f4e1975173b6ca658f95d06e79f8fb6aae06a, has scope policy project_only, payload `pm.browser_event.route_fetch_selected.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/route_fetch_selected, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-route-fetch-selected, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.59 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 278 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.route.fetch_selected.json (SHA-256 cb5c80b6ec78395d0ac03d2b2d32869caa2bd9e50ad38bca44c82c8a0d318ed5) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.route.fetch_selected.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.route.fetch_selected.json (SHA-256 543709bae51c96afefb55f966e3ad8450d0dd6fffe90fabbcb503256a7642e22) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.route.fetch_selected.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.route.fetch_selected`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -42986,7 +42986,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.59 (278 families, SHA-256 080c86d00fed8c7ec23791099916821679cc83e2152090ebd084e2cb1b642622) to 2026-11-16.60 (279 families, SHA-256 53c0995289c81254e2200a2e4c194bfdad54e459cff2c2f27cc9539140a22af3). The appended row, canonical SHA-256 29d97b2d0cdc3108e502ff9b094c20fee7af9263a2780393d57c7dc40d96d8d8, has scope policy project_only, payload `pm.browser_event.routine_disabled.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/routine_disabled, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-routine-disabled, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.60 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 279 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.routine.disabled.json (SHA-256 51d3190a99c93e2288d5f46275913f17717d76c273adfc003e68a234eca195a7) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.routine.disabled.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.routine.disabled.json (SHA-256 e5375eb405e70085b83a957b89c24267db80e335f51ae1db416aa80b9e72fcfc) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.routine.disabled.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.routine.disabled`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43030,7 +43030,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.60 (279 families, SHA-256 53c0995289c81254e2200a2e4c194bfdad54e459cff2c2f27cc9539140a22af3) to 2026-11-16.61 (280 families, SHA-256 0fb2243b55af33fee60b7a4598aa1d4705b49dbc2a8b9b35a9339147adfedd46). The appended row, canonical SHA-256 124b882f7da097c053552e8e5695c6ddee42de9f32d3a6548d9cfb4d98ed1ad6, has scope policy project_only, payload `pm.browser_event.routine_generated.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/routine_generated, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-routine-generated, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.61 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 280 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.routine.generated.json (SHA-256 c1298714def6076560473111ea309213adaa22681c9b159d21847c99ce2447b1) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.routine.generated.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.routine.generated.json (SHA-256 7af6fd2a3e7aa6b5e492a22f188d509cc96eb7f7ee65e04de20afaf05fe37a71) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.routine.generated.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.routine.generated`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43074,7 +43074,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.61 (280 families, SHA-256 0fb2243b55af33fee60b7a4598aa1d4705b49dbc2a8b9b35a9339147adfedd46) to 2026-11-16.62 (281 families, SHA-256 8a596f2c1f322d29b0ab3dc27b1c0bfd60023c7d394055822c27b400d3c81971). The appended row, canonical SHA-256 859a5db2a625d28f40e9c322c8a1f91f7d9b9d9387642bbeb6227e653201f530, has scope policy project_only, payload `pm.browser_event.routine_invalidated.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/routine_invalidated, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-routine-invalidated, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.62 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 281 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.routine.invalidated.json (SHA-256 8153d879ce983cf6e56c013061d2901a25f35d78a4688010bf66d3b9e9423dcf) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.routine.invalidated.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.routine.invalidated.json (SHA-256 a1ced4dd74fbc5e4ac506745bbd105a3e5bde36a11c91bab73d3b1fa1f56533e) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.routine.invalidated.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.routine.invalidated`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43118,7 +43118,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.62 (281 families, SHA-256 8a596f2c1f322d29b0ab3dc27b1c0bfd60023c7d394055822c27b400d3c81971) to 2026-11-16.63 (282 families, SHA-256 ef64c2deccd4b897fa2ea021bb7b2cf6f03a7203f587c3f6f41b5a6b7168667d). The appended row, canonical SHA-256 dd0f61b3026d5e919db0169c9288a0692a40a57ca6339e97d4dbf80b4fa49114, has scope policy project_only, payload `pm.browser_event.routine_promoted.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/routine_promoted, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-routine-promoted, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.63 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 282 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.routine.promoted.json (SHA-256 7e213282fed475d7d3d907ffb2215055b6deb117b277595ee0bd4b445f214a01) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.routine.promoted.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.routine.promoted.json (SHA-256 ef56d5abbe7057d1681f618ffe6fb7496d2de58de8df0bcf0fcdd4fffe3a88ac) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.routine.promoted.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.routine.promoted`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43162,7 +43162,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.63 (282 families, SHA-256 ef64c2deccd4b897fa2ea021bb7b2cf6f03a7203f587c3f6f41b5a6b7168667d) to 2026-11-16.64 (283 families, SHA-256 8c2e96452cce44befe76370b9153638c2352423069fdeb9eaf361c1eed16937b). The appended row, canonical SHA-256 af545f617a8e30be0100bbc43276fedebe506234fb6c25755b1d75938b6c2f94, has scope policy project_only, payload `pm.browser_event.routine_validated.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/routine_validated, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-routine-validated, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.64 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 283 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.routine.validated.json (SHA-256 ba8a42a2837f99ddbcadb515b84c13d88f123b72dfad2b69e761a825619a1e5b) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.routine.validated.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.routine.validated.json (SHA-256 cefb80d9c4a94988b864fbdb4fbe0799de80695a585661d100fd8d069cb095ac) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.routine.validated.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.routine.validated`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43206,7 +43206,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.64 (283 families, SHA-256 8c2e96452cce44befe76370b9153638c2352423069fdeb9eaf361c1eed16937b) to 2026-11-16.65 (284 families, SHA-256 8c89b99f3ddf6aee37a0c0097fc430f31943bd0bc69b5a10f2f216ba91e15419). The appended row, canonical SHA-256 37d0fe6a0de382038d874e0cde4554a5660f6698a4b7e4ef960842be6ce5e833, has scope policy project_only, payload `pm.browser_event.screenshot_model_attachment_selected.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/screenshot_model_attachment_selected, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-screenshot-model-attachment-selected, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.65 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 284 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.screenshot.model_attachment_selected.json (SHA-256 caac475ef6d233d6e004b61bef8889f8b8678d50a1559c7a2bbe0d6c174163b4) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.screenshot.model_attachment_selected.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.screenshot.model_attachment_selected.json (SHA-256 fe175f79dfb7cb6babcd8a64e4aeb5674da1ac489ac07da790917a9ac6e6f6a0) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.screenshot.model_attachment_selected.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.screenshot.model_attachment_selected`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43250,7 +43250,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.65 (284 families, SHA-256 8c89b99f3ddf6aee37a0c0097fc430f31943bd0bc69b5a10f2f216ba91e15419) to 2026-11-16.66 (285 families, SHA-256 42fe0bb86a1818ec4a259fcdbbaae8f6956aa63ea0381689eabc51a2d88e3c59). The appended row, canonical SHA-256 ee6bfd7da23d71eb80d5916b70860b7735da23df3ec3a2bee4bc65c84d2806f8, has scope policy project_only, payload `pm.browser_event.screenshot_skipped.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/screenshot_skipped, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-screenshot-skipped, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.66 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 285 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.screenshot.skipped.json (SHA-256 10a0090b250bc3325144e2e1c2511355fd0073f2df6ad2813719c9df5e7aff9a) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.screenshot.skipped.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.screenshot.skipped.json (SHA-256 68efdf679851e72a9543b98538eee1c7768cb908c0dff8058d7bff43ea5db01d) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.screenshot.skipped.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.screenshot.skipped`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43294,7 +43294,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.66 (285 families, SHA-256 42fe0bb86a1818ec4a259fcdbbaae8f6956aa63ea0381689eabc51a2d88e3c59) to 2026-11-16.67 (286 families, SHA-256 935b940455b72c37eb06f05860eb54093735e4a37a4fdb0c36e0cc454cf34184). The appended row, canonical SHA-256 3a0d8419897a6a01bd61eb4c697a6b40509da79da5882c420b5c53da40e0c702, has scope policy project_only, payload `pm.browser_event.script_compile_failed.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/script_compile_failed, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-script-compile-failed, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.67 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 286 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.script.compile_failed.json (SHA-256 03f2ce120fa710ea6b441415c116db473767dd9958fa94e9a3d1f764f6f0bab4) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.script.compile_failed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.script.compile_failed.json (SHA-256 ef09e9a8a70e06348b58cc14b3a75999acc5288d888c0430649b60ce4521c39c) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.script.compile_failed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.script.compile_failed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43338,7 +43338,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.67 (286 families, SHA-256 935b940455b72c37eb06f05860eb54093735e4a37a4fdb0c36e0cc454cf34184) to 2026-11-16.68 (287 families, SHA-256 4d53bdcf146a838a5c11faad872bc866e39f71deee2f696769f3073f64ab9296). The appended row, canonical SHA-256 4f19aaba3394c5670e7db14542f70df4b0f2ed1ed62e85ecb56f510f31d8dc30, has scope policy project_only, payload `pm.browser_event.script_compile_started.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/script_compile_started, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-script-compile-started, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.68 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 287 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.script.compile_started.json (SHA-256 e414e588b37719e37acecde243465f1a2b3c364f4b61d8a2d4dda1657cabd048) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.script.compile_started.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.script.compile_started.json (SHA-256 0120e85884a1cfd4300bc7b3c498ea4e5194f6c9e456a417265cb3f4afedcac8) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.script.compile_started.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.script.compile_started`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43382,7 +43382,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.68 (287 families, SHA-256 4d53bdcf146a838a5c11faad872bc866e39f71deee2f696769f3073f64ab9296) to 2026-11-16.69 (288 families, SHA-256 a3560e92c3ee7a6b0192e2a5b044401beec923f6a5551fa3666cb022d620c996). The appended row, canonical SHA-256 e627575bd8eb9d37dac63d142bdfd2e1b94b1dea6765ecbd912978ba3be39adf, has scope policy project_only, payload `pm.browser_event.script_compiled.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/script_compiled, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-script-compiled, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.69 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 288 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.script.compiled.json (SHA-256 8961eba0150dc3dd7ab7ce2aaa8261c135b730112b76f757ad0e96526de89ba7) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.script.compiled.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.script.compiled.json (SHA-256 38912f7633c12cfbfcfb489b8470e364dec449471e32a2cf21a3141aeb48a092) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.script.compiled.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.script.compiled`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43426,7 +43426,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.69 (288 families, SHA-256 a3560e92c3ee7a6b0192e2a5b044401beec923f6a5551fa3666cb022d620c996) to 2026-11-16.70 (289 families, SHA-256 d4e645ec261b09d8867f7de23bb18d692481bbd7f158c37466552933f51c925a). The appended row, canonical SHA-256 00c5efca3b0d436ac483196225d530b1090a9ae03413f2de4a83a5219fa6f405, has scope policy project_only, payload `pm.browser_event.session_interrupted.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/session_interrupted, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-session-interrupted, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.70 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 289 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.session.interrupted.json (SHA-256 e7d8f8916b62f7879fdddcfea6e1eb54beb55f553c34116c4b3f1554c258e75b) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.session.interrupted.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.session.interrupted.json (SHA-256 288c28112a3a120115c51ce917a922801b9179b450cffc7bb8b7dd8c5c65000b) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.session.interrupted.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.session.interrupted`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43470,7 +43470,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.70 (289 families, SHA-256 d4e645ec261b09d8867f7de23bb18d692481bbd7f158c37466552933f51c925a) to 2026-11-16.71 (290 families, SHA-256 cccbf9ab70645ceb4f278e2fe4f5b157eac9c9d8ced1d092a34383a2e4f4b3c8). The appended row, canonical SHA-256 15034bb7a33fa6df8a56d8dded9044295c39c38c248a7dd5eb75ae59d9b5f64f, has scope policy project_only, payload `pm.browser_event.session_reconstructed_on_host.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/session_reconstructed_on_host, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-session-reconstructed-on-host, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.71 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 290 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.session.reconstructed_on_host.json (SHA-256 ec72b8b4d7bf54e628e4cee840d5173b84dcec26bdbb1e4346decce8d5725226) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.session.reconstructed_on_host.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.session.reconstructed_on_host.json (SHA-256 c28c1cf93e8c5aa3cf6548bf37a2dae71dab6f3942a0f963c47e0943de14f20a) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.session.reconstructed_on_host.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.session.reconstructed_on_host`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43514,7 +43514,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.71 (290 families, SHA-256 cccbf9ab70645ceb4f278e2fe4f5b157eac9c9d8ced1d092a34383a2e4f4b3c8) to 2026-11-16.72 (291 families, SHA-256 295087acdd31891d5e2db8129994305368a359ecb535c7f2d72b2f5bcefa2384). The appended row, canonical SHA-256 b49e8e4c21f33385830e6a0d3bacc572cc934b9c403f3147064a9f397329e8b5, has scope policy project_only, payload `pm.browser_event.workspace_closed.schema.v1` at Plans/browser_event_payloads.schema.json#/$defs/workspace_closed, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-workspace-closed, payload owner Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.72 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 291 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.workspace.closed.json (SHA-256 6aa7d7fc3cd38ca914b3dfe0de46f4dd1e26322baae4fb4d0f1958a2c0b8156e) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.workspace.closed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/browser.workspace.closed.json (SHA-256 a8532047c0ae4c79a273ccf885522433faa004621c997a43d55094040a5a868c) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/browser.workspace.closed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `browser.workspace.closed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43558,7 +43558,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.72 (291 families, SHA-256 295087acdd31891d5e2db8129994305368a359ecb535c7f2d72b2f5bcefa2384) to 2026-11-16.73 (292 families, SHA-256 e2ee0201d30caca3d6a70103a152c791ccbaefec6638cc2b6f72ce987bb97dc4). The appended row, canonical SHA-256 f2a59cf822ea1694d352c5954029df04543c31bfc987d8301e85257a0d470165, has scope policy project_only, payload `pm.event_payload.bsd.advice_emitted.v1` at Plans/bsd_event_payloads.schema.json#/$defs/advice_emitted, semantic owner Plans/Back_Seat_Driver.md#BSD-1350, payload owner Plans/Contracts_V0.md#CV-1350 and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.73 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 292 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.advice_emitted.json (SHA-256 401b729507f907b471dc402ce63706c5341e4b24542dd6c10dcbd76f36d3bd3d) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.advice_emitted.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.advice_emitted.json (SHA-256 67450909d27ceda85f085e3d05bc7b546e34032b2d92de6afa0d65418d4a883f) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.advice_emitted.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `bsd.advice_emitted`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43602,7 +43602,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.73 (292 families, SHA-256 e2ee0201d30caca3d6a70103a152c791ccbaefec6638cc2b6f72ce987bb97dc4) to 2026-11-16.74 (293 families, SHA-256 66b75dd127a520189f5b3de2b8b33b6babb314273da416dbe3ed89c4a27f5bf2). The appended row, canonical SHA-256 f85dc3293e33b09188f5a1e17f6a8d59134f7c049683ad90be220213ff26436e, has scope policy project_only, payload `pm.event_payload.bsd.assignment_paused.v1` at Plans/bsd_event_payloads.schema.json#/$defs/assignment_paused, semantic owner Plans/Back_Seat_Driver.md#BSD-1351, payload owner Plans/Contracts_V0.md#CV-1351 and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.74 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 293 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.assignment_paused.json (SHA-256 19d94275e080a0439dbaa9cc72321aa4d7e3e0aeba685148530bdecf06b122a5) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.assignment_paused.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.assignment_paused.json (SHA-256 7ff6aa450389f44c3c2c3d1a2f78c078af48c5ae30461a78c2f42c08977bf3d6) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.assignment_paused.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `bsd.assignment_paused`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43646,7 +43646,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.74 (293 families, SHA-256 66b75dd127a520189f5b3de2b8b33b6babb314273da416dbe3ed89c4a27f5bf2) to 2026-11-16.75 (294 families, SHA-256 d7f0a607c38ab90ef5e67fd3b5ba745f2c944b975fef6b1591884a0426130aef). The appended row, canonical SHA-256 1d2ac89fcf0b232b42cddc06556065e20fe0e3d07d535d59f2e1e6fda2655dfe, has scope policy project_only, payload `pm.event_payload.bsd.assignment_resumed.v1` at Plans/bsd_event_payloads.schema.json#/$defs/assignment_resumed, semantic owner Plans/Back_Seat_Driver.md#BSD-1352, payload owner Plans/Contracts_V0.md#CV-1352 and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.75 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 294 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.assignment_resumed.json (SHA-256 ded88330bd9e5d6e15306489a9df8e0a3af995e6aef51898f407a05b14426409) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.assignment_resumed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.assignment_resumed.json (SHA-256 f9dcf53a4333662af4906a4c681148e6ce82384a3edb99162f423b6661866127) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.assignment_resumed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `bsd.assignment_resumed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43690,7 +43690,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.75 (294 families, SHA-256 d7f0a607c38ab90ef5e67fd3b5ba745f2c944b975fef6b1591884a0426130aef) to 2026-11-16.76 (295 families, SHA-256 6c5971e471cc8128345474143ccd447ce7fcd143f7928265d8d196985c8945c7). The appended row, canonical SHA-256 cd39c708ca68e62ec664c5d37777007868f4a3d9350a8da79896543f56179e2b, has scope policy project_only, payload `pm.event_payload.bsd.assignment_started.v1` at Plans/bsd_event_payloads.schema.json#/$defs/assignment_started, semantic owner Plans/Back_Seat_Driver.md#BSD-1353, payload owner Plans/Contracts_V0.md#CV-1353 and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.76 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 295 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.assignment_started.json (SHA-256 91c0a70f125b1a75d2fbd5d0da49f8d29388a773f1281c9ae1ce83027dc78972) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.assignment_started.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.assignment_started.json (SHA-256 6494eceaf606cb41f028617f563433defcc5a4dc9c5d6f1ecb63db934f2d0064) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.assignment_started.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `bsd.assignment_started`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43734,7 +43734,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.76 (295 families, SHA-256 6c5971e471cc8128345474143ccd447ce7fcd143f7928265d8d196985c8945c7) to 2026-11-16.77 (296 families, SHA-256 4e30d492c892a42f9c6758a53d6a0e985d0a0e5a3c7eb78fe22eebff8036f554). The appended row, canonical SHA-256 2134e368b15ab4622f40af47f15e606853687adfdde52c203223c89b6dfafd9e, has scope policy project_only, payload `pm.event_payload.bsd.assignment_stopped.v1` at Plans/bsd_event_payloads.schema.json#/$defs/assignment_stopped, semantic owner Plans/Back_Seat_Driver.md#BSD-1354, payload owner Plans/Contracts_V0.md#CV-1354 and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.77 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 296 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.assignment_stopped.json (SHA-256 5699126d93250d0559990de0df9984cdd87ae2bb320182adebef2c21ae94cbb8) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.assignment_stopped.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.assignment_stopped.json (SHA-256 73d388d1206c6bae0cf5b096d4ff36efde8036c6e622382653516c1ec155ecb2) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.assignment_stopped.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `bsd.assignment_stopped`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43778,7 +43778,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.77 (296 families, SHA-256 4e30d492c892a42f9c6758a53d6a0e985d0a0e5a3c7eb78fe22eebff8036f554) to 2026-11-16.78 (297 families, SHA-256 5def944c08b66d339adea7c97b503067cab7418e51652b8a6f6d7666914ae377). The appended row, canonical SHA-256 8ad29c36092a867797047af97af988c5f26e3df6e8fdc0662db3918a26a4e242, has scope policy project_only, payload `pm.event_payload.bsd.finding_cleared.v1` at Plans/bsd_event_payloads.schema.json#/$defs/finding_cleared, semantic owner Plans/Back_Seat_Driver.md#BSD-1355, payload owner Plans/Contracts_V0.md#CV-1355 and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.78 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 297 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.finding_cleared.json (SHA-256 286f0c07413452ee933c5c2b1f26075e1dd67828de691e5cf89556376783ccea) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.finding_cleared.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.finding_cleared.json (SHA-256 983a4188df416b318a6bfee234c3cebbe6f7a6b866616f1e685ae7f462c10201) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.finding_cleared.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `bsd.finding_cleared`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43822,7 +43822,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.78 (297 families, SHA-256 5def944c08b66d339adea7c97b503067cab7418e51652b8a6f6d7666914ae377) to 2026-11-16.79 (298 families, SHA-256 37f567a3f54cddfa731d56913e2194a81517d97e15fa7670ed49e3c02a984d6b). The appended row, canonical SHA-256 5aba06220dab7fcc70081fb36ca4319fee570b69dd59489b94228ae82fa6f6b7, has scope policy project_only, payload `pm.event_payload.bsd.finding_held.v1` at Plans/bsd_event_payloads.schema.json#/$defs/finding_held, semantic owner Plans/Back_Seat_Driver.md#BSD-1356, payload owner Plans/Contracts_V0.md#CV-1356 and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.79 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 298 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.finding_held.json (SHA-256 c0c562d991603f8d53a6b53515f70062ecabd52e52859432530fa6d1a3366f59) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.finding_held.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.finding_held.json (SHA-256 cf13b019fb96b85125ebd97e0766bfbcae9d82bb3d30c434b206929740fdb1c5) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.finding_held.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `bsd.finding_held`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43866,7 +43866,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.79 (298 families, SHA-256 37f567a3f54cddfa731d56913e2194a81517d97e15fa7670ed49e3c02a984d6b) to 2026-11-16.80 (299 families, SHA-256 2c7bd0700b31ece09b670f1fc2c1406dc31e208c0dd01ed90dab0a28f826ff2e). The appended row, canonical SHA-256 c05e5588973307f08fb27f5614ca29233dc49feaaac87347cca5dab7577d9856, has scope policy project_only, payload `pm.event_payload.bsd.finding_reconfirmed.v1` at Plans/bsd_event_payloads.schema.json#/$defs/finding_reconfirmed, semantic owner Plans/Back_Seat_Driver.md#BSD-1357, payload owner Plans/Contracts_V0.md#CV-1357 and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.80 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 299 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.finding_reconfirmed.json (SHA-256 2d94cbe67c6039966364340cab65fc92ba52ebbbe86677497b0693c944df3979) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.finding_reconfirmed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.finding_reconfirmed.json (SHA-256 005c387a383487374aaddffed90809dc0f63a50053cf80b6eb4687ef5bceeec6) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.finding_reconfirmed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `bsd.finding_reconfirmed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43910,7 +43910,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.80 (299 families, SHA-256 2c7bd0700b31ece09b670f1fc2c1406dc31e208c0dd01ed90dab0a28f826ff2e) to 2026-11-16.81 (300 families, SHA-256 62e684ac6cdad2b4b498431542cf068e6e7120d08cca74b470028abc1d1b05ee). The appended row, canonical SHA-256 e6b19ff3d70daf0d0088450be614775ac9ec38126bf7206b04e62d6260c4d082, has scope policy project_only, payload `pm.event_payload.bsd.finding_suppressed.v1` at Plans/bsd_event_payloads.schema.json#/$defs/finding_suppressed, semantic owner Plans/Back_Seat_Driver.md#BSD-1358, payload owner Plans/Contracts_V0.md#CV-1358 and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.81 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 300 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.finding_suppressed.json (SHA-256 910ed5f4d5352c2857706592d2953eee6253992395941044952f47c1c1a84570) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.finding_suppressed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.finding_suppressed.json (SHA-256 63f631df95308ad8ccef32648089a2bf6177f073acb98d366f43979ab573f5ac) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.finding_suppressed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `bsd.finding_suppressed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43954,7 +43954,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.81 (300 families, SHA-256 62e684ac6cdad2b4b498431542cf068e6e7120d08cca74b470028abc1d1b05ee) to 2026-11-16.82 (301 families, SHA-256 347ac0f782ad96436a10f5d79531d1dfb3711eca743217f71b878340f0667e8d). The appended row, canonical SHA-256 e42ebf0861a8369a0746b9dba2b44c3955e3bfbd0bd8138749546702843511ff, has scope policy project_only, payload `pm.event_payload.bsd.output_quarantined.v1` at Plans/bsd_event_payloads.schema.json#/$defs/output_quarantined, semantic owner Plans/Back_Seat_Driver.md#BSD-1359, payload owner Plans/Contracts_V0.md#CV-1359 and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.82 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 301 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.output_quarantined.json (SHA-256 d7c5d362c2c3dd4dda93b9744cfd0be25d593d34e5183e2f1adc35e97c605bd1) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.output_quarantined.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.output_quarantined.json (SHA-256 5d6800fe64d28c872613faf25750f61ebb573bf496b29b130ea5c8b53f4d1b88) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.output_quarantined.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `bsd.output_quarantined`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -43998,7 +43998,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.82 (301 families, SHA-256 347ac0f782ad96436a10f5d79531d1dfb3711eca743217f71b878340f0667e8d) to 2026-11-16.83 (302 families, SHA-256 26040c231c9ae5d581a6b4e3cdc38d6c09a1254f7f34c248a35920e7dab68d1b). The appended row, canonical SHA-256 ce84e66496191e903c97ba3c64fc081f0ade7db6ac36ee042b0de0c05eb7d50f, has scope policy project_only, payload `pm.event_payload.bsd.policy_changed.v1` at Plans/bsd_event_payloads.schema.json#/$defs/policy_changed, semantic owner Plans/Back_Seat_Driver.md#BSD-1360, payload owner Plans/Contracts_V0.md#CV-1360 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.83 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 302 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.policy_changed.json (SHA-256 c5fca5a78cbf221ce0099359dc51501cdd041059f33ae5e47d1cbcaea7328986) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.policy_changed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.policy_changed.json (SHA-256 23c729ff1470139a523c4a20066cb6cee17404f65b100a990507f079fd5ab4e2) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.policy_changed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `bsd.policy_changed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -44042,7 +44042,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.83 (302 families, SHA-256 26040c231c9ae5d581a6b4e3cdc38d6c09a1254f7f34c248a35920e7dab68d1b) to 2026-11-16.84 (303 families, SHA-256 eaab116f1c604fc156b18a887c94471d87dad6c6b93ce81a6359da4ce1f72ff3). The appended row, canonical SHA-256 c0618eb010d0930ce6f1dab9dd6c9189b54e168bd31e9d3365c53f74f5fc1fea, has scope policy project_only, payload `pm.event_payload.bsd.review_failed.v1` at Plans/bsd_event_payloads.schema.json#/$defs/review_failed, semantic owner Plans/Back_Seat_Driver.md#BSD-1361, payload owner Plans/Contracts_V0.md#CV-1361 and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.84 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 303 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.review_failed.json (SHA-256 663ed743c79e25e2c7c90d4312e1255c93824649eacc05076f1091ab7f9659b1) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.review_failed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.review_failed.json (SHA-256 bd90419f2c9a0d9922535a1813fbe834e495c547899b0d7dbb48eacc60b6ed9d) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.review_failed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `bsd.review_failed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -44086,7 +44086,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.84 (303 families, SHA-256 eaab116f1c604fc156b18a887c94471d87dad6c6b93ce81a6359da4ce1f72ff3) to 2026-11-16.85 (304 families, SHA-256 eebbd92413317c010d320c1f94180958a3c9a5a5546074892e19adfb2e6ae9ad). The appended row, canonical SHA-256 aca7822847735dad0136b2cafe325f9b7bee63eae2672bd0a9af2524c4788ceb, has scope policy project_only, payload `pm.event_payload.bsd.review_started.v1` at Plans/bsd_event_payloads.schema.json#/$defs/review_started, semantic owner Plans/Back_Seat_Driver.md#BSD-1362, payload owner Plans/Contracts_V0.md#CV-1362 and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.85 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 304 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.review_started.json (SHA-256 baecb15473c5139005526dd8c9c967446b06ec27f75f63b802fcfd1fd78a90d4) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.review_started.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.review_started.json (SHA-256 b4384869833e600d6183a624fdd5b1056e8dfb498de6848a7a9fd695929e418f) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.review_started.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `bsd.review_started`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -44130,7 +44130,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.85 (304 families, SHA-256 eebbd92413317c010d320c1f94180958a3c9a5a5546074892e19adfb2e6ae9ad) to 2026-11-16.86 (305 families, SHA-256 5fe045726eba8865d9d4c847c091fe9cccf1211c6244f72fc71b431fecda8c56). The appended row, canonical SHA-256 faa5fdd6ee52430fa96f01477da29c9ac8c5646572896538333b7203316e1f59, has scope policy project_only, payload `pm.event_payload.bsd.review_timed_out.v1` at Plans/bsd_event_payloads.schema.json#/$defs/review_timed_out, semantic owner Plans/Back_Seat_Driver.md#BSD-1363, payload owner Plans/Contracts_V0.md#CV-1363 and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.86 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 305 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.review_timed_out.json (SHA-256 fe982927d7a86da60105c41a45b2141958da9cb6cc6e635894b93d64a3146dbe) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.review_timed_out.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.review_timed_out.json (SHA-256 998379b837318636f38d627a02d77c9ef3bffed47d1507f52db72ecadc5c362f) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.review_timed_out.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `bsd.review_timed_out`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -44174,7 +44174,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.86 (305 families, SHA-256 5fe045726eba8865d9d4c847c091fe9cccf1211c6244f72fc71b431fecda8c56) to 2026-11-16.87 (306 families, SHA-256 b890558c9fdcee820301a72364020f8a59bf3fbdfa794635e1ffa08b251cd511). The appended row, canonical SHA-256 176bfe3cd85b483a8fff5c428656bf0dcfb2677f77844c2c232cc0483a6e91ba, has scope policy project_only, payload `pm.event_payload.bsd.workflow_binding_created.v1` at Plans/bsd_event_payloads.schema.json#/$defs/workflow_binding_created, semantic owner Plans/Back_Seat_Driver.md#BSD-1364, payload owner Plans/Contracts_V0.md#CV-1364 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.87 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 306 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.workflow_binding_created.json (SHA-256 3a9f5643b618ab8e5b424dfa102b093e9fefdd03146ff46fd01288cbb4c5bad0) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.workflow_binding_created.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.workflow_binding_created.json (SHA-256 4820ed35c2664960b47131e590910bf5f297d69564e6c4d040b0ee733a0ccd59) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.workflow_binding_created.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `bsd.workflow_binding_created`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -45582,7 +45582,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.118 (337 families, SHA-256 7fabbcdb79da535eff7c88ba3cae7378a123d2f3beae3dc10263c21b64ccad7e) to 2026-11-16.119 (338 families, SHA-256 a6931daaaca95b83732f746883014ee4f307e81000a1ed9f02f059ef7458e0f9). The appended row, canonical SHA-256 83ff7042108bee2be1a4f85377d1c9162e1938e4fd7e8c2bee2e2a2c291d3b33, has scope policy application_or_project, payload `pm.collaboration_event.collaboration_artifact_added.v1` at Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_artifact_added, semantic owner Plans/Collaborative_Workflows.md#CWR-116, payload owner Plans/Contracts_V0.md#CV-471 and retention RP-CHAT-THREAD-LIFETIME@1.0.0. Its payload versions are project `pm.collaboration_event.collaboration_artifact_added.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer existing_project_policy); application `pm.collaboration_event.collaboration_artifact_added.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.119 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 338 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.artifact_added.json (SHA-256 ef32164dc826881c7ae7bd921f0bd6c0eabde495cde1902801b39dc63f01923b) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.artifact_added.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.artifact_added.json (SHA-256 285d3727c0af4eb1348efca019e5d1ec7759fbc428b1e8f29a005783f5d5d1b6) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.artifact_added.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `collaboration.artifact_added`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -45626,7 +45626,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.119 (338 families, SHA-256 a6931daaaca95b83732f746883014ee4f307e81000a1ed9f02f059ef7458e0f9) to 2026-11-16.120 (339 families, SHA-256 f487e962e758503317ca4830f4017f831f1e4f8388496d72c44a0a5118171a09). The appended row, canonical SHA-256 a20f2f01589c1e51eeceda7866ab32b211748236e1f5f209600e2bc9199ff152, has scope policy application_or_project, payload `pm.collaboration_event.collaboration_cancelled.v1` at Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_cancelled, semantic owner Plans/Collaborative_Workflows.md#CWR-110, payload owner Plans/Contracts_V0.md#CV-465 and retention RP-CHAT-THREAD-LIFETIME@1.0.0. Its payload versions are project `pm.collaboration_event.collaboration_cancelled.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer existing_project_policy); application `pm.collaboration_event.collaboration_cancelled.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.120 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 339 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.cancelled.json (SHA-256 f8169b7f05c80de99c65e1d78b89893d3630b292e1d30f594c191fee00835919) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.cancelled.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.cancelled.json (SHA-256 04c469b0087a33509207810b6c010fb1524d1d632b594308f776a38e05cd0a8f) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.cancelled.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `collaboration.cancelled`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -45670,7 +45670,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.120 (339 families, SHA-256 f487e962e758503317ca4830f4017f831f1e4f8388496d72c44a0a5118171a09) to 2026-11-16.121 (340 families, SHA-256 42ef9c71470e601ac27eeb069acde08d81afaaf04ea5e4e4075961cdfd72d3d4). The appended row, canonical SHA-256 2cb13a7c5669dfce273179868ba30dc5ed1adf7fad0e392e9007027ecb1247fd, has scope policy application_or_project, payload `pm.collaboration_event.collaboration_completed.v1` at Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_completed, semantic owner Plans/Collaborative_Workflows.md#CWR-111, payload owner Plans/Contracts_V0.md#CV-466 and retention RP-CHAT-THREAD-LIFETIME@1.0.0. Its payload versions are project `pm.collaboration_event.collaboration_completed.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer existing_project_policy); application `pm.collaboration_event.collaboration_completed.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.121 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 340 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.completed.json (SHA-256 303f42d1855adb488405c53f80a9667ae276f4c24fbb60bc89a03cf2f6e0e118) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.completed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.completed.json (SHA-256 f721ed8123c2f931129c93516d3c8e919effdbd22009965529f92f00b270384e) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.completed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `collaboration.completed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -45714,7 +45714,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.121 (340 families, SHA-256 42ef9c71470e601ac27eeb069acde08d81afaaf04ea5e4e4075961cdfd72d3d4) to 2026-11-16.122 (341 families, SHA-256 25f3e29ba0328cf849a42aaf8ab0b8dcacf08bc487736313043c69592835ae56). The appended row, canonical SHA-256 13681a3632c7e15f69b4fe7e97c0b8a1649e75703ec44c61d1815957a06a8e96, has scope policy application_or_project, payload `pm.collaboration_event.collaboration_configuration_changed.v1` at Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_configuration_changed, semantic owner Plans/Collaborative_Workflows.md#CWR-117, payload owner Plans/Contracts_V0.md#CV-472 and retention RP-CHAT-THREAD-LIFETIME@1.0.0. Its payload versions are project `pm.collaboration_event.collaboration_configuration_changed.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer existing_project_policy); application `pm.collaboration_event.collaboration_configuration_changed.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.122 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 341 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.configuration_changed.json (SHA-256 a8d938ab9020dae3d0b2c5354a6dabdf057fa8f8d5ba684db49be54405308cb9) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.configuration_changed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.configuration_changed.json (SHA-256 8c54405d205113ef5e86f56d691654f0aa30a1d776de99902f0808d27890c683) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.configuration_changed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `collaboration.configuration_changed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -45758,7 +45758,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.122 (341 families, SHA-256 25f3e29ba0328cf849a42aaf8ab0b8dcacf08bc487736313043c69592835ae56) to 2026-11-16.123 (342 families, SHA-256 07584144343be9e9e9e99c728cdcf21d1248fac82076f17e4b80e0b9da3742af). The appended row, canonical SHA-256 d9d72c06bbfddd1c42626d7fc3d6bcf79a1a43862249cf55e1b8c6fef1872682, has scope policy application_or_project, payload `pm.collaboration_event.collaboration_created.v1` at Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_created, semantic owner Plans/Collaborative_Workflows.md#CWR-106, payload owner Plans/Contracts_V0.md#CV-461 and retention RP-CHAT-THREAD-LIFETIME@1.0.0. Its payload versions are project `pm.collaboration_event.collaboration_created.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer existing_project_policy); application `pm.collaboration_event.collaboration_created.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.123 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 342 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.created.json (SHA-256 72db9e3f52e003e3d26fc1d17613fec69791462f006fe2493292350ca304a804) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.created.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.created.json (SHA-256 4476d3b99f8e7b4bf20f91f8922f794f7645ed895eb6ac508523b34406a77184) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.created.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `collaboration.created`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -45802,7 +45802,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.123 (342 families, SHA-256 07584144343be9e9e9e99c728cdcf21d1248fac82076f17e4b80e0b9da3742af) to 2026-11-16.124 (343 families, SHA-256 edfaeac93323042761f3f9b9ab90c83adabf8f5145dcf78f793c0e778517f9e9). The appended row, canonical SHA-256 f1189e6e489a564913e4a4bc316149f8fe0605a2a06dbb99a6d6bb4068722d35, has scope policy application_or_project, payload `pm.collaboration_event.collaboration_failed.v1` at Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_failed, semantic owner Plans/Collaborative_Workflows.md#CWR-112, payload owner Plans/Contracts_V0.md#CV-467 and retention RP-CHAT-THREAD-LIFETIME@1.0.0. Its payload versions are project `pm.collaboration_event.collaboration_failed.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer existing_project_policy); application `pm.collaboration_event.collaboration_failed.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.124 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 343 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.failed.json (SHA-256 80b1bcdd5d975bc25032e727c43c3ad587d9eb7a05ff8179253cbe5759ea65ee) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.failed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.failed.json (SHA-256 2fbfca0b5ea3a11ad36dbc28067f2a0564bc540305059f1abe10569cada0ef76) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.failed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `collaboration.failed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -45846,7 +45846,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.124 (343 families, SHA-256 edfaeac93323042761f3f9b9ab90c83adabf8f5145dcf78f793c0e778517f9e9) to 2026-11-16.125 (344 families, SHA-256 29927807b73a2f9ba6e8eaadbce3882839d214312a76496bcffaf615bf0fbf57). The appended row, canonical SHA-256 d8986b00c4a377f02663de17a7f8bc073a0cf3918e63eaa8bdd5e22e1dfe79c5, has scope policy application_or_project, payload `pm.collaboration_event.collaboration_message_added.v1` at Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_message_added, semantic owner Plans/Collaborative_Workflows.md#CWR-115, payload owner Plans/Contracts_V0.md#CV-470 and retention RP-CHAT-THREAD-LIFETIME@1.0.0. Its payload versions are project `pm.collaboration_event.collaboration_message_added.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer existing_project_policy); application `pm.collaboration_event.collaboration_message_added.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.125 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 344 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.message_added.json (SHA-256 f29056a780b1c15bb75dc13deea9d2d5e4744ecd81032da449e54427f2bf107a) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.message_added.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.message_added.json (SHA-256 8b95f2bfb37b4382567504387132cb4975e22bc8629802b27cc76e7864f12368) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.message_added.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `collaboration.message_added`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -45890,7 +45890,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.125 (344 families, SHA-256 29927807b73a2f9ba6e8eaadbce3882839d214312a76496bcffaf615bf0fbf57) to 2026-11-16.126 (345 families, SHA-256 218e1b2bde2b943690749f775b7a22345c4851e201b17c29f95702bb80e69eea). The appended row, canonical SHA-256 029c65f7c3dc6b0c5434afde727bead04a5de07009b4b20602f85ff2ed9180e0, has scope policy application_or_project, payload `pm.collaboration_event.collaboration_participant_completed.v1` at Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_participant_completed, semantic owner Plans/Collaborative_Workflows.md#CWR-114, payload owner Plans/Contracts_V0.md#CV-469 and retention RP-CHAT-THREAD-LIFETIME@1.0.0. Its payload versions are project `pm.collaboration_event.collaboration_participant_completed.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer existing_project_policy); application `pm.collaboration_event.collaboration_participant_completed.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.126 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 345 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.participant_completed.json (SHA-256 99537ac55f948a477ea8906e99d41b76ac0935315a232bdd65997cba4fd60c9e) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.participant_completed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.participant_completed.json (SHA-256 a224e7184af03fa23a4ccafb9dcc2a9be64077fc48716854160aab3d917d4b33) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.participant_completed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `collaboration.participant_completed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -45934,7 +45934,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.126 (345 families, SHA-256 218e1b2bde2b943690749f775b7a22345c4851e201b17c29f95702bb80e69eea) to 2026-11-16.127 (346 families, SHA-256 73c6650cfdb2802f52900a9378c7af86f843ad3ccdd31f7fb485ec4c4a234fb2). The appended row, canonical SHA-256 73775ca36919e4309e924e9e8b3f9103f462e1e2ecc4708be449ad617902c520, has scope policy application_or_project, payload `pm.collaboration_event.collaboration_participant_started.v1` at Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_participant_started, semantic owner Plans/Collaborative_Workflows.md#CWR-113, payload owner Plans/Contracts_V0.md#CV-468 and retention RP-CHAT-THREAD-LIFETIME@1.0.0. Its payload versions are project `pm.collaboration_event.collaboration_participant_started.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer existing_project_policy); application `pm.collaboration_event.collaboration_participant_started.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.127 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 346 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.participant_started.json (SHA-256 a2f3b7e60e5c7e6d75823df407f726dedd6d6fed04b7cf03aa296de2e960daf7) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.participant_started.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.participant_started.json (SHA-256 93fbd72bd1b1db16768e3977018ad80a5d98ccd29ee052e039043792e5e48372) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.participant_started.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `collaboration.participant_started`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -45978,7 +45978,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.127 (346 families, SHA-256 73c6650cfdb2802f52900a9378c7af86f843ad3ccdd31f7fb485ec4c4a234fb2) to 2026-11-16.128 (347 families, SHA-256 48006ef52899db0653183b27802f668f3e3eadb40be082caff21ff32b1896460). The appended row, canonical SHA-256 3f467c0b2a315808e0efca741c92662fcc7f5c4ac4b432a7b698ed95414fffb6, has scope policy application_or_project, payload `pm.collaboration_event.collaboration_paused.v1` at Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_paused, semantic owner Plans/Collaborative_Workflows.md#CWR-108, payload owner Plans/Contracts_V0.md#CV-463 and retention RP-CHAT-THREAD-LIFETIME@1.0.0. Its payload versions are project `pm.collaboration_event.collaboration_paused.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer existing_project_policy); application `pm.collaboration_event.collaboration_paused.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.128 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 347 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.paused.json (SHA-256 5ebb438e6d7cd19c20cefcb4a17a8a3d3938886a63353f14c9da70504878b40c) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.paused.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.paused.json (SHA-256 a10aed10c79c61dfd0b3ba8e053da9c34a076d206587b251351a96d5047ef5b6) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.paused.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `collaboration.paused`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -46022,7 +46022,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.128 (347 families, SHA-256 48006ef52899db0653183b27802f668f3e3eadb40be082caff21ff32b1896460) to 2026-11-16.129 (348 families, SHA-256 487dd2dd7fb7dd48bb373a2d5a0770b1549b5d0b08314d13ab022be0aa5312e8). The appended row, canonical SHA-256 2b99e2a35729f736fece5e532bb246b5927f163e9e9f798b2e942fc8181a7244, has scope policy application_or_project, payload `pm.collaboration_event.collaboration_resumed.v1` at Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_resumed, semantic owner Plans/Collaborative_Workflows.md#CWR-109, payload owner Plans/Contracts_V0.md#CV-464 and retention RP-CHAT-THREAD-LIFETIME@1.0.0. Its payload versions are project `pm.collaboration_event.collaboration_resumed.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer existing_project_policy); application `pm.collaboration_event.collaboration_resumed.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.129 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 348 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.resumed.json (SHA-256 20defae7e03a640da0cc5f519051b802ee5103c183c9939ab66edc450b158fd4) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.resumed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.resumed.json (SHA-256 f9335f3d29a89168f1840154aef390db57b4d724e0a2834aa4271471bd7a7daf) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.resumed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `collaboration.resumed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -46066,7 +46066,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.129 (348 families, SHA-256 487dd2dd7fb7dd48bb373a2d5a0770b1549b5d0b08314d13ab022be0aa5312e8) to 2026-11-16.130 (349 families, SHA-256 2930bd6f79b84f75051b13767fa84aab3ca0da8d55f231d44f5e5a30caaf17ef). The appended row, canonical SHA-256 4ad22f2974f6ef35969d07512af53d3280cce86e8649ddee55f1a5e5a071cb2c, has scope policy application_or_project, payload `pm.collaboration_event.collaboration_started.v1` at Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_started, semantic owner Plans/Collaborative_Workflows.md#CWR-107, payload owner Plans/Contracts_V0.md#CV-462 and retention RP-CHAT-THREAD-LIFETIME@1.0.0. Its payload versions are project `pm.collaboration_event.collaboration_started.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer existing_project_policy); application `pm.collaboration_event.collaboration_started.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.130 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 349 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.started.json (SHA-256 dc8bbc2b619a5b97c5f3653b3830a9f11a90ab67bace71e6b880e5dcba02a929) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.started.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.started.json (SHA-256 8c9d2c753ac803cd79db357a54cbc3a10faba9a5d6bf0a91bcdc77fd41db82e0) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.started.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `collaboration.started`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -46506,7 +46506,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.139 (358 families, SHA-256 f7a95b2a5f161ea9f48a310dcbc891c7ef5e860567727e2cc277f88d8f067a8a) to 2026-11-16.140 (359 families, SHA-256 6233109a1eee5ea9f432e3f0fac4709c95644c8b7ed303b6586ea2a921d37867). The appended row, canonical SHA-256 3ff33c973472a628ad95fc42d08aeacea1d057d52c7ec5974bbb92de9464d23b, has scope policy project_only, payload `pm.continuity.actor_identified.payload.v1` at Plans/continuity_event_contracts.schema.json#/$defs/actor_identified, semantic owner Plans/orchestrator-subagent-integration.md#OSI-1600, payload owner Plans/Contracts_V0.md#CV-1600 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.140 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 359 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/continuity.actor_identified.json (SHA-256 3d35b5bf9e6a66c23506bdd7d3f0b0b97e2ad934a163cd2daf87d18c0d1115fa) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/continuity.actor_identified.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/continuity.actor_identified.json (SHA-256 3e6bbacaa8810389527a95ae236b787f3f0b9ee03687c427a843cf02bd1e1f2e) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/continuity.actor_identified.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `continuity.actor_identified`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -46550,7 +46550,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.140 (359 families, SHA-256 6233109a1eee5ea9f432e3f0fac4709c95644c8b7ed303b6586ea2a921d37867) to 2026-11-16.141 (360 families, SHA-256 49cd8ae9e14b523fb1b6226cad13c103e374fd2094b985559810611c0edd6c0f). The appended row, canonical SHA-256 418b701748d8cfb3e619e10c75613f81bec3d83b5e16dd037298e910978c9416, has scope policy project_only, payload `pm.continuity.provenance_recorded.payload.v1` at Plans/continuity_event_contracts.schema.json#/$defs/provenance_recorded, semantic owner Plans/orchestrator-subagent-integration.md#OSI-1601, payload owner Plans/Contracts_V0.md#CV-1601 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.141 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 360 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/continuity.provenance_recorded.json (SHA-256 b5eb3331d9fc6702e1ae3f8ea44bd5b6e8cc518c4c08f9e91c1f24c70433e294) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/continuity.provenance_recorded.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/continuity.provenance_recorded.json (SHA-256 a7e36b20633ed05f6733415cb38f9a1c3ac489f45eec18dc841859ca100629be) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/continuity.provenance_recorded.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `continuity.provenance_recorded`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -46594,7 +46594,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.141 (360 families, SHA-256 49cd8ae9e14b523fb1b6226cad13c103e374fd2094b985559810611c0edd6c0f) to 2026-11-16.142 (361 families, SHA-256 fe3eecc18bd8a5e6efa8d5a9cb43dcd5fb782f0c300cd4ab9c63c2f85fc8a09c). The appended row, canonical SHA-256 6f50a6f81aec5d7f3469bd8369f629719c1dbcabceb8dbf14178d8a8b40490dd, has scope policy project_only, payload `pm.continuity.redaction_applied.payload.v1` at Plans/continuity_event_contracts.schema.json#/$defs/redaction_applied, semantic owner Plans/orchestrator-subagent-integration.md#OSI-1602, payload owner Plans/Contracts_V0.md#CV-1602 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.142 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 361 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/continuity.redaction_applied.json (SHA-256 e35736e45e45fed1c5d66c4785aadd69fa7bb4aca10a74b8872be4386cee6571) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/continuity.redaction_applied.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/continuity.redaction_applied.json (SHA-256 82943bafac2b0153463c697f6245ce02c543f136426f13dbd2b051bf89dbf098) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/continuity.redaction_applied.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `continuity.redaction_applied`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -46638,7 +46638,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.142 (361 families, SHA-256 fe3eecc18bd8a5e6efa8d5a9cb43dcd5fb782f0c300cd4ab9c63c2f85fc8a09c) to 2026-11-16.143 (362 families, SHA-256 966928cf1eb74cfa35c8d0d880689188232e2b197242c262f2dcf578573639f9). The appended row, canonical SHA-256 6cd4922957d5c284ca6eda418ae891f39dcdc9d8b971f2ea7cdaaa590762b19f, has scope policy project_only, payload `pm.continuity.replay_checkpointed.payload.v1` at Plans/continuity_event_contracts.schema.json#/$defs/replay_checkpointed, semantic owner Plans/orchestrator-subagent-integration.md#OSI-1603, payload owner Plans/Contracts_V0.md#CV-1603 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.143 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 362 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/continuity.replay_checkpointed.json (SHA-256 fd473ef0c02872d064a07244491a30dfed7aa7feac36b383c62dd2e07f00c59d) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/continuity.replay_checkpointed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/continuity.replay_checkpointed.json (SHA-256 2019318c638d94bd90d1337a28e35a5c38131ffa9a30b84824942d9903580910) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/continuity.replay_checkpointed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `continuity.replay_checkpointed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -47342,7 +47342,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.158 (377 families, SHA-256 339e1107b6de8e3ceb3604049b3f9d66ee9b08c3fbea9d616af025398454e6cd) to 2026-11-16.159 (378 families, SHA-256 13281f19c3e656fe4a7f61b32b7bf6982c4f6f9adfd2022902b0a39d7bf6404b). The appended row, canonical SHA-256 6c4c2f216b5fcd9c5e85efb62c92d2be6fb2867c9d8e8434971da4a2582569a0, has scope policy project_only, payload `pm.file_manager_event.file_copied.schema.v1` at Plans/event_payloads/file_manager/file_copied.schema.json#, semantic owner Plans/FileManager.md#F-150, payload owner Plans/Contracts_V0.md#CV-560 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.159 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 378 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/file.copied.json (SHA-256 5d941f15681874ade779311b1e04425d8b26d6520adeeffb106d11cda5747eba) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/file.copied.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/file.copied.json (SHA-256 78d43fdc9aff18a75b1d6f4468dcfb51442c721aa346543ae0fa6eaba2d775f1) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/file.copied.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `file.copied`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -47386,7 +47386,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.159 (378 families, SHA-256 13281f19c3e656fe4a7f61b32b7bf6982c4f6f9adfd2022902b0a39d7bf6404b) to 2026-11-16.160 (379 families, SHA-256 541145873d475b7ded5ed6b80fd8b7329d729d5d83e4cf30c5a8e353d923e37d). The appended row, canonical SHA-256 2249c80942f20705dfe144209220b364c5b28e9d5ea494613df4377276cb89b0, has scope policy project_only, payload `pm.file_manager_event.file_created.schema.v1` at Plans/event_payloads/file_manager/file_created.schema.json#, semantic owner Plans/FileManager.md#F-151, payload owner Plans/Contracts_V0.md#CV-560 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.160 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 379 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/file.created.json (SHA-256 3a707effdaf31476a04e6a0ed6af607f0c13559bf49165d396f453387c8ce4d5) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/file.created.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/file.created.json (SHA-256 59acef2bb335e5081d50c9105ee777b71d4321dbe7b426fb959233e96f508384) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/file.created.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `file.created`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -47430,7 +47430,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.160 (379 families, SHA-256 541145873d475b7ded5ed6b80fd8b7329d729d5d83e4cf30c5a8e353d923e37d) to 2026-11-16.161 (380 families, SHA-256 ae78779888f96e02f407fc78474b4d564041ef2a456f4df1d878c1f95d84f71e). The appended row, canonical SHA-256 d032bb0874823935478616e1ce6e3eeaf1b11ea593d05b94fa9bde3ea730acf0, has scope policy project_only, payload `pm.file_manager_event.file_deleted.schema.v1` at Plans/event_payloads/file_manager/file_deleted.schema.json#, semantic owner Plans/FileManager.md#F-152, payload owner Plans/Contracts_V0.md#CV-560 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.161 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 380 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/file.deleted.json (SHA-256 ab57e4627c1c1c46beedfc3a0fbe67475c8a0eaeb93590d249165ca9d3da20ac) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/file.deleted.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/file.deleted.json (SHA-256 06ed68502f83000093634e186b59915d6f391058d0a162ccb4d882819f3a3ed1) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/file.deleted.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `file.deleted`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -47474,7 +47474,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.161 (380 families, SHA-256 ae78779888f96e02f407fc78474b4d564041ef2a456f4df1d878c1f95d84f71e) to 2026-11-16.162 (381 families, SHA-256 0afa2f588e80d72c6e0dad405be9d497fa3e0503544ab6acba366e778de56975). The appended row, canonical SHA-256 42e2464a7eee9ca6df922471207d0e5bc1b01b697012d10c9aae3f9299e3b92b, has scope policy project_only, payload `pm.file_manager_event.file_exported.schema.v1` at Plans/event_payloads/file_manager/file_exported.schema.json#, semantic owner Plans/FileManager.md#F-153, payload owner Plans/Contracts_V0.md#CV-560 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.162 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 381 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/file.exported.json (SHA-256 6a2064719aac7c8cfac42e4b6a9678aa544b90fdff93d2a0c2bdeacaa1915468) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/file.exported.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/file.exported.json (SHA-256 aee2e032a6c63420673908b465ef702706f0745e5db9f9440565513b76d49c63) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/file.exported.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `file.exported`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -47518,7 +47518,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.162 (381 families, SHA-256 0afa2f588e80d72c6e0dad405be9d497fa3e0503544ab6acba366e778de56975) to 2026-11-16.163 (382 families, SHA-256 2d5ff7136153c57c4ca537b85db9f22d4598df6525983de07d6a83ff43dc6a17). The appended row, canonical SHA-256 9e834e640374ccdc4fa974304b6859661447f4485d46f1ff45f75b056720c082, has scope policy project_only, payload `pm.file_manager_event.file_moved.schema.v1` at Plans/event_payloads/file_manager/file_moved.schema.json#, semantic owner Plans/FileManager.md#F-154, payload owner Plans/Contracts_V0.md#CV-560 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.163 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 382 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/file.moved.json (SHA-256 b2957f94ad22814762bd305f6f441a469156047f83f7fb1cd5eaa26104def307) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/file.moved.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/file.moved.json (SHA-256 e433064b7fb07e0155ffe4d56d8f522e6a500248a0119bef72cf141c429bc2aa) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/file.moved.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `file.moved`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -47562,7 +47562,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.163 (382 families, SHA-256 2d5ff7136153c57c4ca537b85db9f22d4598df6525983de07d6a83ff43dc6a17) to 2026-11-16.164 (383 families, SHA-256 530b40eb371b22585ece0efef4d31cbf961f746919cb9ebebee274a457de9b03). The appended row, canonical SHA-256 809d18d7c909575f0a10b547bf765c6f07145c3f7301698d47fcd266755b78f7, has scope policy project_only, payload `pm.file_manager_event.file_renamed.schema.v1` at Plans/event_payloads/file_manager/file_renamed.schema.json#, semantic owner Plans/FileManager.md#F-155, payload owner Plans/Contracts_V0.md#CV-560 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.164 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 383 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/file.renamed.json (SHA-256 d04b71cc70ed1c90865cad34eb7fb7597d0f5c8432a1bc81bd48fbf7adbcd6fd) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/file.renamed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/file.renamed.json (SHA-256 063af94192c91c7cad8896650dd6dc28600987f015ed5177f7cc1efd76111a64) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/file.renamed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `file.renamed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -47694,7 +47694,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.166 (385 families, SHA-256 653af5374b38f72c9925b303e8f57c4a74dbb455408b06972c17e00c8fb705be) to 2026-11-16.167 (386 families, SHA-256 104efa77e535c3461d0aa021ef205e0c83ce8ea253d02db74bb4cd260779eb83). The appended row, canonical SHA-256 39cdfcc6ffba98aa4fc2288563d760db81497c9bac060d2203f4c654cce7c30a, has scope policy application_or_project, payload `https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_granted/2.0.0` at Plans/event_payloads/filesafe_destructive_override_granted_v2.schema.json#, semantic owner Plans/Contracts_V0.md#CV-552, payload owner Plans/Contracts_V0.md#CV-552 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Its payload versions are application `https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_granted/2.0.0` (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_granted/2.0.0` (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.167 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 386 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/filesafe.destructive_override_granted.json (SHA-256 17f662b664040a564aa27120404ea0eb4cdf3d75eb414e12587d813e3517f4d3) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/filesafe.destructive_override_granted.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/filesafe.destructive_override_granted.json (SHA-256 127a38f27fdb03b5ebe46f4bb980b07581c5995f14a5afcecac3b8ddb0af0216) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/filesafe.destructive_override_granted.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `filesafe.destructive_override_granted`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -47914,7 +47914,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.171 (390 families, SHA-256 3cd5d9943a97d76ab421adfbe5906c4d765e6821ab2b39ced85faf966a235039) to 2026-11-16.172 (391 families, SHA-256 6fb0766bc7ef5cd80ea6e0fd518ca059076ecb910c18caf49d35f26326f6ed9a). The appended row, canonical SHA-256 4ac2909070b1909d73fb6cb3dd27e3a1a52a4dcbfdc3a4bc80eee5de23dc9fde, has scope policy project_only, payload `pm.file_manager_event.folder_copied.schema.v1` at Plans/event_payloads/file_manager/folder_copied.schema.json#, semantic owner Plans/FileManager.md#F-156, payload owner Plans/Contracts_V0.md#CV-560 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.172 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 391 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/folder.copied.json (SHA-256 f5cd25145d1f6b8379ac130c406f846bda7fbc4a9dec7fae88de45386ba19512) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/folder.copied.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/folder.copied.json (SHA-256 12156a04fd3afc573c87b38ddaf1406cbba42e38953041802ce1c991273311e1) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/folder.copied.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `folder.copied`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -47958,7 +47958,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.172 (391 families, SHA-256 6fb0766bc7ef5cd80ea6e0fd518ca059076ecb910c18caf49d35f26326f6ed9a) to 2026-11-16.173 (392 families, SHA-256 cbe5d5900c2a6180b1a5001a6ad8d713e7dd98638db81bb05ff8d3e0316796d4). The appended row, canonical SHA-256 855a6291c98603cde01ff0bf5b04f3c087a512f77ad21fcd014ae9bafca6761e, has scope policy project_only, payload `pm.file_manager_event.folder_created.schema.v1` at Plans/event_payloads/file_manager/folder_created.schema.json#, semantic owner Plans/FileManager.md#F-157, payload owner Plans/Contracts_V0.md#CV-560 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.173 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 392 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/folder.created.json (SHA-256 8690c480a2b14d05e57c8af528150ae6f9e271a9caee5ef0364373950102c00c) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/folder.created.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/folder.created.json (SHA-256 a9f11cf10e9ed8b7f529a836f7805219a74b6e3b348c26926abddaf788614aa2) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/folder.created.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `folder.created`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -48002,7 +48002,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.173 (392 families, SHA-256 cbe5d5900c2a6180b1a5001a6ad8d713e7dd98638db81bb05ff8d3e0316796d4) to 2026-11-16.174 (393 families, SHA-256 0d848baa14cbb77ed392ffdcefcc182a50c487a28b0f74e9fa2839c318d86037). The appended row, canonical SHA-256 f074ba2b5624c2fe734d714881d7547948396dc621511941068d3320da723543, has scope policy project_only, payload `pm.file_manager_event.folder_deleted.schema.v1` at Plans/event_payloads/file_manager/folder_deleted.schema.json#, semantic owner Plans/FileManager.md#F-158, payload owner Plans/Contracts_V0.md#CV-560 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.174 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 393 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/folder.deleted.json (SHA-256 e541b38e7cc5b044fd5d0df00487d13e644cd86359c27314bc4849ed26c4667c) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/folder.deleted.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/folder.deleted.json (SHA-256 8dde8cbbc6e85a22111840344d4cadc7507b224a989f84cabc8ea787ffd11dc7) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/folder.deleted.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `folder.deleted`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -48046,7 +48046,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.174 (393 families, SHA-256 0d848baa14cbb77ed392ffdcefcc182a50c487a28b0f74e9fa2839c318d86037) to 2026-11-16.175 (394 families, SHA-256 b504e7ab23121122f905e15ed026d6d287aca02b6069c673f49487dc4a2608a0). The appended row, canonical SHA-256 f8fa2a27bca06c3bbd040af086d2148f78e85567400b3e4f43b698e30d12e319, has scope policy project_only, payload `pm.file_manager_event.folder_exported.schema.v1` at Plans/event_payloads/file_manager/folder_exported.schema.json#, semantic owner Plans/FileManager.md#F-159, payload owner Plans/Contracts_V0.md#CV-560 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.175 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 394 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/folder.exported.json (SHA-256 967b53059e1406c7aa6b1887f05888eddb6c3ebada0284a5b3d86aaf822d3977) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/folder.exported.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/folder.exported.json (SHA-256 91076d8e9c9e2d8a73af51719b90036cac3e58d4f53d01335af168f1ed20d2a9) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/folder.exported.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `folder.exported`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -48090,7 +48090,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.175 (394 families, SHA-256 b504e7ab23121122f905e15ed026d6d287aca02b6069c673f49487dc4a2608a0) to 2026-11-16.176 (395 families, SHA-256 ff76d1df19552c2c8ed5116764763a210f8f6033bdb52bc6ef42bc799df4c384). The appended row, canonical SHA-256 5628f95593a65880063fa6f60d2b58178a875f30fde03a06ce71a4baea62fb6d, has scope policy project_only, payload `pm.file_manager_event.folder_moved.schema.v1` at Plans/event_payloads/file_manager/folder_moved.schema.json#, semantic owner Plans/FileManager.md#F-160, payload owner Plans/Contracts_V0.md#CV-560 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.176 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 395 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/folder.moved.json (SHA-256 c979aeddfb07647cbe3bb9d07848e9d00ccb181e5d3af2227b609f6c95d88cea) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/folder.moved.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/folder.moved.json (SHA-256 eb9a286bd55a749d1030ae42f56ca852ca03aaa0e48d68e174a52a9131272190) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/folder.moved.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `folder.moved`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -48134,7 +48134,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.176 (395 families, SHA-256 ff76d1df19552c2c8ed5116764763a210f8f6033bdb52bc6ef42bc799df4c384) to 2026-11-16.177 (396 families, SHA-256 e9e2f9349ebfe21f4571d9393d2a26aa1928c17971d20b08cc1632a7e62c24f0). The appended row, canonical SHA-256 d5f96b9a8b41b4be376bf8dcc8be81bba4c89eba0d992ceb2216f27c59356c74, has scope policy project_only, payload `pm.file_manager_event.folder_renamed.schema.v1` at Plans/event_payloads/file_manager/folder_renamed.schema.json#, semantic owner Plans/FileManager.md#F-161, payload owner Plans/Contracts_V0.md#CV-560 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.177 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 396 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/folder.renamed.json (SHA-256 846de4bb0be5820407096c64fa87701787bd0b1c53326ec25541423e51ad7742) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/folder.renamed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/folder.renamed.json (SHA-256 92daef4098984bab339357ed8bc1442934d18b7ab5de6facfb2d73ff616dc229) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/folder.renamed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `folder.renamed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -48178,7 +48178,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.177 (396 families, SHA-256 e9e2f9349ebfe21f4571d9393d2a26aa1928c17971d20b08cc1632a7e62c24f0) to 2026-11-16.178 (397 families, SHA-256 ad603332f77c5ad55421fd61b92f5764de80dff75f31f06c20fc90bf0ebe4a6b). The appended row, canonical SHA-256 487efc2cdb59eff1837040937bb6008dea36754688fbda85bcd829936659a79f, has scope policy project_only, payload `pm.event_payload.format_applied.v1` at Plans/event_payloads/format_applied.schema.json#, semantic owner Plans/Formatters_System.md#FS-075, payload owner Plans/Contracts_V0.md#CV-620 and retention RP-TELEMETRY-90D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.178 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 397 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/format.applied.json (SHA-256 422d2f078fd497f0faea7c8cd0c6e6941aa512045439540e97adbabd38d24d2e) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/format.applied.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/format.applied.json (SHA-256 00cd6075806c6f4ab19b9fd8f919620c70b980e9fa20d7185a1a2f83c1d6e27f) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/format.applied.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `format.applied`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -48222,7 +48222,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.178 (397 families, SHA-256 ad603332f77c5ad55421fd61b92f5764de80dff75f31f06c20fc90bf0ebe4a6b) to 2026-11-16.179 (398 families, SHA-256 a1f57f3b16ce4d17a13aa461aca5446bbedcd61d6f17975128c1fd6fc4374b27). The appended row, canonical SHA-256 32b65e61e6e92bdacdabc3e331ee19bf0f89889c9ac73d18941224f2b5bd2c02, has scope policy project_only, payload `pm.event_payload.gate_evaluation_started.v1` at Plans/dt_event_contracts.schema.json#/$defs/gate_evaluation_started, semantic owner Plans/Contracts_V0.md#CV-605, payload owner Plans/Contracts_V0.md#CV-605 and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.179 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 398 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/gate.evaluation_started.json (SHA-256 225cb3f3ec613d976dd209a6202bd59248fabb04cad84d9852c63093a63bf6a8) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/gate.evaluation_started.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/gate.evaluation_started.json (SHA-256 b66a8055630286734faca81d3bcc48b43a6ca4d73bf7db7e8c2d793d2d902ccc) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/gate.evaluation_started.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `gate.evaluation_started`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -48266,7 +48266,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.179 (398 families, SHA-256 a1f57f3b16ce4d17a13aa461aca5446bbedcd61d6f17975128c1fd6fc4374b27) to 2026-11-16.180 (399 families, SHA-256 33b9b7879026ac0d730f2d731d984c773531b86bca1b3b5b79035451226153c7). The appended row, canonical SHA-256 3102ebc183e82833dd9355c70163aad7ea8ed59a443c3372591af10ee2297d15, has scope policy project_only, payload `pm.event_payload.gate_failed.v1` at Plans/dt_event_contracts.schema.json#/$defs/gate_failed, semantic owner Plans/Contracts_V0.md#CV-606, payload owner Plans/Contracts_V0.md#CV-606 and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.180 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 399 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/gate.failed.json (SHA-256 20cb4ddf48cc1038a21bc53fb73e9aaeea40a1ee3293a297008748639a62c919) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/gate.failed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/gate.failed.json (SHA-256 ddc67de19fbd294ca55abf6982e5a71677c11a488e34b0348d2f2c93209462a3) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/gate.failed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `gate.failed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -48310,7 +48310,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.180 (399 families, SHA-256 33b9b7879026ac0d730f2d731d984c773531b86bca1b3b5b79035451226153c7) to 2026-11-16.181 (400 families, SHA-256 db01286b019b0cccadc9d311767367b225cffc01dfd2df02700ca2dbc09b90a6). The appended row, canonical SHA-256 dc47a039ce3d79448a72cf0b3476115391176f5d6ffe001e3ed58d1dca831632, has scope policy project_only, payload `pm.event_payload.gate_passed.v1` at Plans/dt_event_contracts.schema.json#/$defs/gate_passed, semantic owner Plans/Contracts_V0.md#CV-607, payload owner Plans/Contracts_V0.md#CV-607 and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.181 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 400 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/gate.passed.json (SHA-256 e44817cbfe30f651f99ae2d1c7e048ea249259b165bc9cc66b164b82806640e6) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/gate.passed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/gate.passed.json (SHA-256 138f2619e4739658ff4ad8f4f36098e828f942554ebc450299d04ce0e622b138) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/gate.passed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `gate.passed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -48354,7 +48354,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.181 (400 families, SHA-256 db01286b019b0cccadc9d311767367b225cffc01dfd2df02700ca2dbc09b90a6) to 2026-11-16.182 (401 families, SHA-256 42b629830598d98e34a6bf96e95b33bea4cbc9b78a361ea4a515f49d8e511285). The appended row, canonical SHA-256 62ba255c4e78e3142ef2c78662ca09bbd38eaf8dcb4be5729172f16c10829d0f, has scope policy project_only, payload `pm.event_payload.git_clone_completed.v1` at Plans/event_payloads/git_clone_completed.schema.json#, semantic owner Plans/Source_Control_System.md#SCS-085, payload owner Plans/Contracts_V0.md#CV-627 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.182 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 401 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/git.clone.completed.json (SHA-256 8c1141159cf93ad16e08cdb7b9c644b0a9c9940c034c31a4103a93f522ee32d7) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/git.clone.completed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/git.clone.completed.json (SHA-256 3ec82ae6eeb4a77cd4ed269ec01baad174c3ef6fbd20099e42e64ef5ac26df1c) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/git.clone.completed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `git.clone.completed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -48618,7 +48618,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.187 (406 families, SHA-256 bdc47259bc566aae55e34b5960a078efe3342791379d567f55c952a2411501e1) to 2026-11-16.188 (407 families, SHA-256 25832fba956cded523c755637507a71f107ddfa11bc3202b8a9b6a4bdf942f02). The appended row, canonical SHA-256 e04114cc46980eb61993066e21f11f0ffd6bbb5d805b47278c06bde836eb5910, has scope policy project_only, payload `pm.event_payload.lsp_server_lifecycle_changed.v1` at Plans/event_payloads/lsp_server_lifecycle_changed.schema.json#, semantic owner Plans/LSPSupport.md#LSPS-173, payload owner Plans/Contracts_V0.md#CV-621 and retention RP-TELEMETRY-90D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.188 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 407 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/lsp.server.lifecycle_changed.json (SHA-256 7196bd149112831aea24485df2d9f3cd57b38d83b9d941a4da7ab3969f913c20) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/lsp.server.lifecycle_changed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/lsp.server.lifecycle_changed.json (SHA-256 ad49c626914d2c873e9903f5752d32ab8ef769d25372f14cf22d12fbdd897481) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/lsp.server.lifecycle_changed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `lsp.server.lifecycle_changed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -48662,7 +48662,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.188 (407 families, SHA-256 25832fba956cded523c755637507a71f107ddfa11bc3202b8a9b6a4bdf942f02) to 2026-11-16.189 (408 families, SHA-256 f1f527cf39717c537e8f1f45a4bac5dee838036a58f32935e175873fc7f3c027). The appended row, canonical SHA-256 3b3afaf81b4814e2a1c310988f66342541daf09901a1fc4e5b5d876d1415b15e, has scope policy project_only, payload `https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_dedup_sweep_completed` at Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_dedup_sweep_completed, semantic owner Plans/assistant-memory-subsystem.md#AMS-100, payload owner Plans/Contracts_V0.md#CV-650 and retention RP-OPERATIONAL-2555D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.189 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 408 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.dedup_sweep.completed.json (SHA-256 de15cd0c3b1b7307347290064777282f67c0df00cf03bc17b2eaf83bf750cbd6) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.dedup_sweep.completed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.dedup_sweep.completed.json (SHA-256 25282f39918fc8979b7c24f89a47695b651f92fb88ea1c27dbbf6eefd7f9af20) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.dedup_sweep.completed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `memory.dedup_sweep.completed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -48706,7 +48706,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.189 (408 families, SHA-256 f1f527cf39717c537e8f1f45a4bac5dee838036a58f32935e175873fc7f3c027) to 2026-11-16.190 (409 families, SHA-256 8b1770552002c757b3e590ff4f70c185be6e182e826235d8f4dac080a51940f2). The appended row, canonical SHA-256 19398fa67dd8d872007cd3fe80e2cb4deb739c9afb7e0e3058ffc5b4c0db415f, has scope policy project_only, payload `https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_dedup_sweep_started` at Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_dedup_sweep_started, semantic owner Plans/assistant-memory-subsystem.md#AMS-101, payload owner Plans/Contracts_V0.md#CV-651 and retention RP-OPERATIONAL-2555D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.190 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 409 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.dedup_sweep.started.json (SHA-256 dbac183e9c82680db2cc57943ba5e77ecf7d69480776afd64b3549e836d9c3ee) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.dedup_sweep.started.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.dedup_sweep.started.json (SHA-256 14d673c89520ffc2aef3e29b759bc8bed11d12d32679c2e8895bf591c8b81b9f) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.dedup_sweep.started.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `memory.dedup_sweep.started`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -48750,7 +48750,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.190 (409 families, SHA-256 8b1770552002c757b3e590ff4f70c185be6e182e826235d8f4dac080a51940f2) to 2026-11-16.191 (410 families, SHA-256 7d6785ebee1aacdda4f78be9199ef28e88d73f92be64b00b60d1e0ab0f49b732). The appended row, canonical SHA-256 19dae3fd37958bdbb7c39ec876582c74fb0966ea3333e4e89827455a121cc9f6, has scope policy project_only, payload `https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_lexical_rebuild_completed` at Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_lexical_rebuild_completed, semantic owner Plans/assistant-memory-subsystem.md#AMS-102, payload owner Plans/Contracts_V0.md#CV-652 and retention RP-OPERATIONAL-2555D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.191 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 410 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.index.lexical.rebuild.completed.json (SHA-256 21aceb8499ef79af0e5f01ec66725b66647f17f052d995f85ef65efe3ab31835) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.index.lexical.rebuild.completed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.index.lexical.rebuild.completed.json (SHA-256 88168d35b9a7b9024194dc34018f7ba71f976f00f59ddd2c4802eb80ec0acab4) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.index.lexical.rebuild.completed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `memory.index.lexical.rebuild.completed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -48794,7 +48794,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.191 (410 families, SHA-256 7d6785ebee1aacdda4f78be9199ef28e88d73f92be64b00b60d1e0ab0f49b732) to 2026-11-16.192 (411 families, SHA-256 53bceffb268717392c0fc6970e4664ec77be589f272ca170707941ee04403ad0). The appended row, canonical SHA-256 d266a0650df5dbdef2c93671bf116415e66f3ec2f2bfd8ad5c4e026f1d14e65d, has scope policy project_only, payload `https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_lexical_rebuild_started` at Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_lexical_rebuild_started, semantic owner Plans/assistant-memory-subsystem.md#AMS-103, payload owner Plans/Contracts_V0.md#CV-653 and retention RP-OPERATIONAL-2555D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.192 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 411 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.index.lexical.rebuild.started.json (SHA-256 94c5ee9ce16b468a130c7435127c24094f1552ac250c993c8d3718b1b3c20f4d) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.index.lexical.rebuild.started.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.index.lexical.rebuild.started.json (SHA-256 46ae348108ef3bfa3ae3fc923452987e470dfb99bfbe4b4bc43b243b2384e6ce) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.index.lexical.rebuild.started.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `memory.index.lexical.rebuild.started`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -48838,7 +48838,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.192 (411 families, SHA-256 53bceffb268717392c0fc6970e4664ec77be589f272ca170707941ee04403ad0) to 2026-11-16.193 (412 families, SHA-256 810ed8ea5d99a1d08ca3164e4484a9e86989e54330bab2dcb7a563572a950580). The appended row, canonical SHA-256 b4399cbef5f8fd14f6d83960003f0d6b37239f747839970d243d5cd785a95592, has scope policy project_only, payload `https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_semantic_rebuild_completed` at Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_semantic_rebuild_completed, semantic owner Plans/assistant-memory-subsystem.md#AMS-104, payload owner Plans/Contracts_V0.md#CV-654 and retention RP-OPERATIONAL-2555D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.193 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 412 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.index.semantic.rebuild.completed.json (SHA-256 c1fdf2ecb620649260c507e42943d6b738146ce0e4c61a48826fa0a37a59032d) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.index.semantic.rebuild.completed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.index.semantic.rebuild.completed.json (SHA-256 b5afe52f2c2611fb239f6b13982aa9a1c6c998891926133209bd07b0c97f33f4) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.index.semantic.rebuild.completed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `memory.index.semantic.rebuild.completed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -48882,7 +48882,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.193 (412 families, SHA-256 810ed8ea5d99a1d08ca3164e4484a9e86989e54330bab2dcb7a563572a950580) to 2026-11-16.194 (413 families, SHA-256 9c55f96e71a31c8ed2227dc52d60bf5db0beff83764d3950e9c76970e9ec0938). The appended row, canonical SHA-256 fe0b8875f1718a2dbe0a6112de118122832fae2c83a33b606d4484eeaa656c27, has scope policy project_only, payload `https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_semantic_rebuild_started` at Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_semantic_rebuild_started, semantic owner Plans/assistant-memory-subsystem.md#AMS-105, payload owner Plans/Contracts_V0.md#CV-655 and retention RP-OPERATIONAL-2555D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.194 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 413 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.index.semantic.rebuild.started.json (SHA-256 9313454e0c73c5901de556cda83c2461cefac78d58ab9e51e024de02f9c7fb89) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.index.semantic.rebuild.started.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.index.semantic.rebuild.started.json (SHA-256 7e7a6bed9a37a0fcfc2b55e785ab5967f7a771f071667840ad3bc3c87dc673d1) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.index.semantic.rebuild.started.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `memory.index.semantic.rebuild.started`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -48926,7 +48926,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.194 (413 families, SHA-256 9c55f96e71a31c8ed2227dc52d60bf5db0beff83764d3950e9c76970e9ec0938) to 2026-11-16.195 (414 families, SHA-256 6c73c3ea5491d9f4f73c0a6d7bc663f886d325d0e8f52fcf2a040370a8e4d6a5). The appended row, canonical SHA-256 2020a398c603184689e62a0fac3404a350fa07505ad4bb5928e50218fe1f1f6d, has scope policy project_only, payload `https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_completed` at Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_completed, semantic owner Plans/storage-plan.md#SP-638, payload owner Plans/Contracts_V0.md#CV-656 and retention RP-OPERATIONAL-2555D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.195 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 414 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.monthly_summary.completed.json (SHA-256 be58d776f184e356584d839606346644dc506574be4cdb10b4747449fe3d47b5) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.monthly_summary.completed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.monthly_summary.completed.json (SHA-256 d50c408b0538d1cb39f8805c9252ca64e4e56544202b69ecffb83bbe8fd34f61) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.monthly_summary.completed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `memory.monthly_summary.completed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
   FIX1 finding 5 / T259 corrects only this already registered family's semantic/payload/Storage owner roles through Plans/memory_archive_contracts.json#/families/0. Current corrected row SHA-256 422d094acb4fc05c8a6935c31c8a89ba5a3b8765f1176da76772a1cd28401cac. The original append checkpoints above and the previous row remain historical Git evidence; this is no new admission or behavior.
@@ -48971,7 +48971,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.195 (414 families, SHA-256 6c73c3ea5491d9f4f73c0a6d7bc663f886d325d0e8f52fcf2a040370a8e4d6a5) to 2026-11-16.196 (415 families, SHA-256 1cd7260484925a02560fbd624a84b3504e8913323a68bb9f5c8a0e80552d3353). The appended row, canonical SHA-256 8dae2d66d4bd401c3a2ef31ada9a35d5996159c14ba7bbbcb8edff045a456540, has scope policy project_only, payload `https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_started` at Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_started, semantic owner Plans/storage-plan.md#SP-639, payload owner Plans/Contracts_V0.md#CV-657 and retention RP-OPERATIONAL-2555D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.196 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 415 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.monthly_summary.started.json (SHA-256 e40a410ccdfdd42be273b813ff5353dfa10b213977efc66582019b9cd6a3886c) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.monthly_summary.started.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.monthly_summary.started.json (SHA-256 9d8e1d06c0ed519a25dcb04a0a4fdaca85acf3d5a3ce239f204fc49da58f840e) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.monthly_summary.started.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `memory.monthly_summary.started`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
   FIX1 finding 5 / T259 corrects only this already registered family's semantic/payload/Storage owner roles through Plans/memory_archive_contracts.json#/families/1. Current corrected row SHA-256 daca640613eebaa304c55bb8e037a2da8da1b4bdaf3d85c0bf33542db229f54f. The original append checkpoints above and the previous row remain historical Git evidence; this is no new admission or behavior.
@@ -49016,7 +49016,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.196 (415 families, SHA-256 1cd7260484925a02560fbd624a84b3504e8913323a68bb9f5c8a0e80552d3353) to 2026-11-16.197 (416 families, SHA-256 a518084eb4de997795b8a1df403d9f86cd6d422e2d7c377f2367fa81181ca84d). The appended row, canonical SHA-256 cacc8471e40339fbab4d67dc63c784a2be01511de66110ebbf91858ea96318ed, has scope policy project_only, payload `https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_completed` at Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_completed, semantic owner Plans/Contracts_V0.md#CV-658, payload owner Plans/Contracts_V0.md#CV-658 and retention RP-OPERATIONAL-2555D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.197 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 416 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.prune_archive.completed.json (SHA-256 a423fc67c5852d06141dd548a0b611755d226a522b76295ccab33c114a3983ab) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.prune_archive.completed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.prune_archive.completed.json (SHA-256 a0ce1c63d15bcca62ca91244fa2ea92c628d5034a0b60c3879919a73343e0805) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.prune_archive.completed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `memory.prune_archive.completed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
   FIX1 finding 5 / T259 corrects only this already registered family's semantic/payload/Storage owner roles through Plans/memory_archive_contracts.json#/families/2. Current corrected row SHA-256 b802b23ae9970fa44e87c5c473b62bf0f6cd5cb181ef3b6831dbf01607f44716. The original append checkpoints above and the previous row remain historical Git evidence; this is no new admission or behavior.
@@ -49061,7 +49061,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.197 (416 families, SHA-256 a518084eb4de997795b8a1df403d9f86cd6d422e2d7c377f2367fa81181ca84d) to 2026-11-16.198 (417 families, SHA-256 4c762d619453c30535dceb398c3357686cc19a543238377ad916b7a582eac9dd). The appended row, canonical SHA-256 09c6499f2e9ac4b21ec9fa5c5cbede71e0e64550bbaba414d52e2c9645f450ed, has scope policy project_only, payload `https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_started` at Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_started, semantic owner Plans/Contracts_V0.md#CV-659, payload owner Plans/Contracts_V0.md#CV-659 and retention RP-OPERATIONAL-2555D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.198 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 417 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.prune_archive.started.json (SHA-256 ceb4e512d631393b774a6237b3d646d3243db743fd2732140d79897997a00338) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.prune_archive.started.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.prune_archive.started.json (SHA-256 b32b0b5e4b93094d685d130b26b673f4d78cbdf3989152b67e63c5ae2752a3cc) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.prune_archive.started.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `memory.prune_archive.started`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
   FIX1 finding 5 / T259 corrects only this already registered family's semantic/payload/Storage owner roles through Plans/memory_archive_contracts.json#/families/3. Current corrected row SHA-256 e1b25ca591dd023f034863caa2a8ce121f77238757c6cb17c8afac9a7be09479. The original append checkpoints above and the previous row remain historical Git evidence; this is no new admission or behavior.
@@ -49106,7 +49106,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.198 (417 families, SHA-256 4c762d619453c30535dceb398c3357686cc19a543238377ad916b7a582eac9dd) to 2026-11-16.199 (418 families, SHA-256 292d039447a53f141ebc1d120dad4f6c064e34ac582351a49121e0293653439e). The appended row, canonical SHA-256 080831e7154e4f9b5d033778ae35706083794eec68220b538e38c4acb18917e6, has scope policy project_only, payload `https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_verification_sweep_completed` at Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_verification_sweep_completed, semantic owner Plans/assistant-memory-subsystem.md#AMS-106, payload owner Plans/Contracts_V0.md#CV-656 and retention RP-OPERATIONAL-2555D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.199 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 418 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.verification_sweep.completed.json (SHA-256 5dee88db7ce51b98bb6959e41b920b8bc6d5eabe8cc048bff1fc7ec57de0d4b9) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.verification_sweep.completed.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.verification_sweep.completed.json (SHA-256 f8b4dbcaabc754c8ddbe63f5118b94083b93daefb67978b25b66c8ea78d97388) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.verification_sweep.completed.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `memory.verification_sweep.completed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -49150,7 +49150,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.199 (418 families, SHA-256 292d039447a53f141ebc1d120dad4f6c064e34ac582351a49121e0293653439e) to 2026-11-16.200 (419 families, SHA-256 3c6e0b724fa9841333695eac3d6732932239937028bcf6537b8d45c67349d79d). The appended row, canonical SHA-256 212658ba2b21f48f5d2a7185bec52f54822707a25e2b75d88d7f646e3d4c0d8b, has scope policy project_only, payload `https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_verification_sweep_started` at Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_verification_sweep_started, semantic owner Plans/assistant-memory-subsystem.md#AMS-107, payload owner Plans/Contracts_V0.md#CV-657 and retention RP-OPERATIONAL-2555D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.200 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 419 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.verification_sweep.started.json (SHA-256 b6d6d196026e96e6956b333c6b13004126a22c129c9ede96938099a7b30f45a3) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.verification_sweep.started.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/memory.verification_sweep.started.json (SHA-256 9b5cf36f45eb061f93bd6ace8d3121b97eeae41df2ddd48eafc1888957d786c7) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/memory.verification_sweep.started.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `memory.verification_sweep.started`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -50162,7 +50162,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.222 (441 families, SHA-256 55ce648c196bd112443beba7591c9d35ffd7fbbf33483e819d0de706d54ef073) to 2026-11-16.223 (442 families, SHA-256 0019fe44ad6d0dc1531552ee64bcbe76da4014f6700fc27424be2e8ebbe400e2). The appended row, canonical SHA-256 3ecba89e708cb4be6778516c481026d98bb9bf7a2895442abd8e4e44e8477dac, has scope policy project_only, payload `pm.event_payload.project_added.v1` at Plans/event_payloads/project_added.schema.json#, semantic owner Plans/Project_System.md#PJCT-072, payload owner Plans/Contracts_V0.md#CV-625 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.223 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 442 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/project.added.json (SHA-256 5e90004e6649d12974536df52bb2c6d8c7e7648452c9a5b7b35bd994b11a0dc1) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/project.added.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/project.added.json (SHA-256 f048956712886bdd1edbb130328dfcb325dff67d595afeda960ac632fb4646fe) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/project.added.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `project.added`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -50206,7 +50206,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.223 (442 families, SHA-256 0019fe44ad6d0dc1531552ee64bcbe76da4014f6700fc27424be2e8ebbe400e2) to 2026-11-16.224 (443 families, SHA-256 29dfd5a15d548fe0299279d538fda18c1cf1c0958430c9a926a76ea7ee948254). The appended row, canonical SHA-256 e2aca8f32cf140ad445f74c8a23eaee3aaf3015338e094e81484362966396993, has scope policy project_only, payload `pm.event_payload.project_created.v1` at Plans/event_payloads/project_created.schema.json#, semantic owner Plans/Project_System.md#PJCT-073, payload owner Plans/Contracts_V0.md#CV-626 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.224 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 443 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/project.created.json (SHA-256 f3f3c02ce6004b49e940aff6ca6399e86368588ac47f8ad7712507272ddbd7bf) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/project.created.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/project.created.json (SHA-256 72fcdf31fb048d78b2ff219494529fa4c8cc780bb1c0f0b54d5a28aa109970e3) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/project.created.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `project.created`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -50602,7 +50602,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.232 (451 families, SHA-256 9b3ddee04154b9ccba18d28a812def09d37a90cc396fe765fe7bad86a011d77e) to 2026-11-16.233 (452 families, SHA-256 9c712be717d4c5d02dc6bbd1206e5ac6f2ddcaef9ac1b4197314cc3f8f0bf5c7). The appended row, canonical SHA-256 311b7c719b8a2d2bb85a45bbdacdfd7fd7f5d36a28282630e4ddc0bd38d65293, has scope policy project_only, payload `pm.event_payload.requirements_clarification_requested.v1` at Plans/dt_event_contracts.schema.json#/$defs/requirements_clarification_requested, semantic owner Plans/Contracts_V0.md#CV-608, payload owner Plans/Contracts_V0.md#CV-608 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.233 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 452 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/requirements.clarification_requested.json (SHA-256 24b7636df76deff94b57fbcf0e52bebd8436c2095e8aeddd25801c8bdac2f6ea) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/requirements.clarification_requested.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/requirements.clarification_requested.json (SHA-256 2a5389bec1aaede51b5984cd5bed8b29b68d4867aecce60221d787699c315528) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/requirements.clarification_requested.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `requirements.clarification_requested`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -50690,7 +50690,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.234 (453 families, SHA-256 83ee98616bc80d5cf211e7ec7e6b71e27c18a0a62645eec00bd8c98d0bd422b4) to 2026-11-16.235 (454 families, SHA-256 dc05bfed82d39969f9f8a46cce90479e0322ab3d010c06ae9831753adb1edec6). The appended row, canonical SHA-256 87952be49876fdb54bd56d9d43d48253c05d2a1139e1404bd766d552daa24cc7, has scope policy application_or_project, payload `pm.collaboration_event.review_artifact_finalized.v1` at Plans/collaboration_event_payloads.schema.json#/$defs/review_artifact_finalized, semantic owner Plans/Collaborative_Workflows.md#CWR-123, payload owner Plans/Contracts_V0.md#CV-478 and retention RP-CHAT-THREAD-LIFETIME@1.0.0. Its payload versions are project `pm.collaboration_event.review_artifact_finalized.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer existing_project_policy); application `pm.collaboration_event.review_artifact_finalized.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.235 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 454 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/review.artifact_finalized.json (SHA-256 cf2caacace654842262e2d22d3b1f08325e3a9a909b9e5ec6b967d9409337f37) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/review.artifact_finalized.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/review.artifact_finalized.json (SHA-256 2f89023319831f19a2aba189ec1528d150cac6dbc0345be5e20e6c2f45fe91a1) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/review.artifact_finalized.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `review.artifact_finalized`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -50734,7 +50734,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.235 (454 families, SHA-256 dc05bfed82d39969f9f8a46cce90479e0322ab3d010c06ae9831753adb1edec6) to 2026-11-16.236 (455 families, SHA-256 8caa77849778bef5649b20de052938c9da0169c6d7b8c02c9ff2adfc23cfd3f8). The appended row, canonical SHA-256 46c92aa969999810d903d4f66ebf33e8d4278cfee500ff4eee9b84e3cb62e278, has scope policy application_or_project, payload `pm.collaboration_event.review_finding_added.v1` at Plans/collaboration_event_payloads.schema.json#/$defs/review_finding_added, semantic owner Plans/Collaborative_Workflows.md#CWR-121, payload owner Plans/Contracts_V0.md#CV-476 and retention RP-CHAT-THREAD-LIFETIME@1.0.0. Its payload versions are project `pm.collaboration_event.review_finding_added.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer existing_project_policy); application `pm.collaboration_event.review_finding_added.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.236 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 455 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/review.finding_added.json (SHA-256 3bd85e96d64d90bddef3760b7c16cdc393326f6f46545c3af016b700ed1287b7) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/review.finding_added.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/review.finding_added.json (SHA-256 1d311ec309927306512d223de80bbbb8f878d38a67c2abb2b376aba186b16905) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/review.finding_added.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `review.finding_added`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -50778,7 +50778,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.236 (455 families, SHA-256 8caa77849778bef5649b20de052938c9da0169c6d7b8c02c9ff2adfc23cfd3f8) to 2026-11-16.237 (456 families, SHA-256 17bafc740144ba7b28698704240d9f279477696107e03991f8e3de99e971663f). The appended row, canonical SHA-256 36d7d261229988f8b096e61e79b23871781197da47d8638e4b3448bbcff5a00e, has scope policy application_or_project, payload `pm.collaboration_event.review_finding_dispositioned.v1` at Plans/collaboration_event_payloads.schema.json#/$defs/review_finding_dispositioned, semantic owner Plans/Collaborative_Workflows.md#CWR-122, payload owner Plans/Contracts_V0.md#CV-477 and retention RP-CHAT-THREAD-LIFETIME@1.0.0. Its payload versions are project `pm.collaboration_event.review_finding_dispositioned.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer existing_project_policy); application `pm.collaboration_event.review_finding_dispositioned.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.237 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 456 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/review.finding_dispositioned.json (SHA-256 003a3b9406f95faa7afbfe7612b48b8c69a8dc92fe9173921f2e59d13b4f11b3) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/review.finding_dispositioned.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/review.finding_dispositioned.json (SHA-256 64d1c54d404251ce4417abf3770e27f99522367cf299e5edf946bb18eddd1db2) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/review.finding_dispositioned.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `review.finding_dispositioned`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -50866,7 +50866,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.238 (457 families, SHA-256 00ee0f0b2999b95c5cf144b1ba9b70fdda03a9e0e14f0d1a2e6e5a6554c0ada2) to 2026-11-16.239 (458 families, SHA-256 f635d37c90046e44ee74245b20678d91dbdb93b6627691114289f480749516e7). The appended row, canonical SHA-256 8546c08071cc1f13b0944ec521bf2a01782032ba70d203c0c033c992d779d6a5, has scope policy project_only, payload `pm.runtime_artifact.api_web_call.schema.v1` at Plans/runtime_artifact_api_web_call.schema.json#, semantic owner Plans/Runtime_Artifacts_Panel.md#RAP-100, payload owner Plans/Contracts_V0.md#CV-520 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.239 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 458 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.api_web_call.json (SHA-256 143af8e6a36e5f77575e7ca65710e76860e1afa5f4bf9181485f60ddc4bd053a) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.api_web_call.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.api_web_call.json (SHA-256 bcfe995139ce75b4d154fcde0104d10d49449224144420c5bb43d39e637466c6) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.api_web_call.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `runtime_artifact.api_web_call`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -50910,7 +50910,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.239 (458 families, SHA-256 f635d37c90046e44ee74245b20678d91dbdb93b6627691114289f480749516e7) to 2026-11-16.240 (459 families, SHA-256 fbbe5ecf8554c6613811477f3cada5c60bccf6ff093f23dff2a3bfb829cab558). The appended row, canonical SHA-256 7710d20ae8c591e9bed569982e1025240cdd3e8fb4f865880a8308a6efbe17e9, has scope policy project_only, payload `pm.runtime_artifact.artifact_version.schema.v1` at Plans/runtime_artifact_artifact_version.schema.json#, semantic owner Plans/Runtime_Artifacts_Panel.md#RAP-101, payload owner Plans/Contracts_V0.md#CV-521 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.240 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 459 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.artifact_version.json (SHA-256 57e36b822cfc6c975fa9da8e8a9aae5d0467a8a2beaf4cec654f4604a85d1f62) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.artifact_version.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.artifact_version.json (SHA-256 08b5c1e3a26a8d699f5480f2c72766d6eeaa59f2eb4014b6ed5df30226a6f32d) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.artifact_version.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `runtime_artifact.artifact_version`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -50954,7 +50954,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.240 (459 families, SHA-256 fbbe5ecf8554c6613811477f3cada5c60bccf6ff093f23dff2a3bfb829cab558) to 2026-11-16.241 (460 families, SHA-256 fcc1dbdb85ef3192706fbfcd4545dd3902a66b966f2b5e2d5c95e0e948d3bf38). The appended row, canonical SHA-256 d567980459942cbb08434d16d123a5069cc7ca4913fe854eb95bb3bf5a33511d, has scope policy project_only, payload `pm.runtime_artifact.before_after_snapshot.schema.v1` at Plans/runtime_artifact_before_after_snapshot.schema.json#, semantic owner Plans/Runtime_Artifacts_Panel.md#RAP-102, payload owner Plans/Contracts_V0.md#CV-522 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.241 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 460 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.before_after_snapshot.json (SHA-256 71efd0e2d337c254de997ebbc3690abbb665d1ebac50f31ca12013332ceb7af1) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.before_after_snapshot.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.before_after_snapshot.json (SHA-256 a77fce72ad4923d6277305ecdcabc46140b37107759e78e9f138675e62216d80) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.before_after_snapshot.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `runtime_artifact.before_after_snapshot`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -50998,7 +50998,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.241 (460 families, SHA-256 fcc1dbdb85ef3192706fbfcd4545dd3902a66b966f2b5e2d5c95e0e948d3bf38) to 2026-11-16.242 (461 families, SHA-256 87ebd2ea7fa02b24b997d91be78890377d5632a306ee4229d1f89adc7bee956c). The appended row, canonical SHA-256 5db1625ff05fad91e4444aeeb89cac44cb23a388fb10ab35336709509b410d22, has scope policy project_only, payload `pm.runtime_artifact.browser_recording.schema.v1` at Plans/runtime_artifact_browser_recording.schema.json#, semantic owner Plans/Runtime_Artifacts_Panel.md#RAP-103, payload owner Plans/Contracts_V0.md#CV-523 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.242 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 461 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.browser_recording.json (SHA-256 3b4f5e112a2609b1f191f8f4822bb7bdea7046d351a88616aa46545490be1736) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.browser_recording.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.browser_recording.json (SHA-256 70a2243e678006f5b23ed3c21cf8cbc36ffb4e7b9ac56e3c25998a32dd3f18bb) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.browser_recording.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `runtime_artifact.browser_recording`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -51042,7 +51042,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.242 (461 families, SHA-256 87ebd2ea7fa02b24b997d91be78890377d5632a306ee4229d1f89adc7bee956c) to 2026-11-16.243 (462 families, SHA-256 b00f39c00c4cb326b38a71e817cb99443dca84b142b0122f7f255e57822bf35b). The appended row, canonical SHA-256 b5bd0918017efdc1f38fcf625641724a58791344571da26b2b0a9aa926a61cf6, has scope policy project_only, payload `pm.runtime_artifact.code_diff.schema.v1` at Plans/runtime_artifact_code_diff.schema.json#, semantic owner Plans/Runtime_Artifacts_Panel.md#RAP-104, payload owner Plans/Contracts_V0.md#CV-524 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.243 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 462 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.code_diff.json (SHA-256 263f8f41571f0a365540ed3484455475c37f843b55f12471ba2c4e22c54d8971) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.code_diff.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.code_diff.json (SHA-256 6120f748e74638dc7acb4b30ed3dff2225754689c0f14a0ecee0cc3b7d0f92e8) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.code_diff.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `runtime_artifact.code_diff`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -51086,7 +51086,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.243 (462 families, SHA-256 b00f39c00c4cb326b38a71e817cb99443dca84b142b0122f7f255e57822bf35b) to 2026-11-16.244 (463 families, SHA-256 68af4e5213dfa3eafaea46a96d50cff7a501afc395adba247c916b7593c89840). The appended row, canonical SHA-256 da3258a4f9f4a88589530f3e363e6cf4fa0fe3fb3b757a8a78da8c8e36b404b5, has scope policy project_only, payload `pm.runtime_artifact.context_snapshot.schema.v1` at Plans/runtime_artifact_context_snapshot.schema.json#, semantic owner Plans/Runtime_Artifacts_Panel.md#RAP-105, payload owner Plans/Contracts_V0.md#CV-525 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.244 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 463 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.context_snapshot.json (SHA-256 362e79a5c244a6fe6ae33eeb9920c092b0dbdadfa916f259d565b59177e26c76) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.context_snapshot.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.context_snapshot.json (SHA-256 7ab3fbb50d226717ca2c0791403099fd7f137bad14f3aa3ecb8897ac36eeadb9) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.context_snapshot.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `runtime_artifact.context_snapshot`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -51130,7 +51130,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.244 (463 families, SHA-256 68af4e5213dfa3eafaea46a96d50cff7a501afc395adba247c916b7593c89840) to 2026-11-16.245 (464 families, SHA-256 587f84a24b5cfe6c064301aeb1cad127f409a9be2972369e6773212e7e1dbd5d). The appended row, canonical SHA-256 22ad6be8ef9bfa3a5c5ebc57cf8639ff52a6c3483f9dd320f9fbaf90dba4d915, has scope policy project_only, payload `pm.runtime_artifact.cost_usage.schema.v1` at Plans/runtime_artifact_cost_usage.schema.json#, semantic owner Plans/Runtime_Artifacts_Panel.md#RAP-106, payload owner Plans/Contracts_V0.md#CV-526 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.245 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 464 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.cost_usage.json (SHA-256 fe3572dbc29e08ecf69257b16fcbd04a6458caf24f1102a6d498196b2c86a2e4) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.cost_usage.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.cost_usage.json (SHA-256 a2358c2f2b4f47f0eae4dadf3e3225d7de632eb8242446552a5a6dd17997c157) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.cost_usage.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `runtime_artifact.cost_usage`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -51174,7 +51174,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.245 (464 families, SHA-256 587f84a24b5cfe6c064301aeb1cad127f409a9be2972369e6773212e7e1dbd5d) to 2026-11-16.246 (465 families, SHA-256 240231fbc76b609d6a42780d13854d50fd88c2c8d3b319fe06b048f200c34a5f). The appended row, canonical SHA-256 4bb783b17eb74c44d483858f6827b8bed3c9cba4f3675401462d9fe78318b60d, has scope policy project_only, payload `pm.runtime_artifact.document.schema.v1` at Plans/runtime_artifact_document.schema.json#, semantic owner Plans/Runtime_Artifacts_Panel.md#RAP-107, payload owner Plans/Contracts_V0.md#CV-527 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.246 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 465 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.document.json (SHA-256 c33ddaf48298b7299efd594c13ea9c11f820146af7d9f8fd7eb9709aa35d07c1) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.document.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.document.json (SHA-256 5d869da97d093c4877fd069028988a3544084582422abeffb199639ab5bd04fe) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.document.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `runtime_artifact.document`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -51218,7 +51218,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.246 (465 families, SHA-256 240231fbc76b609d6a42780d13854d50fd88c2c8d3b319fe06b048f200c34a5f) to 2026-11-16.247 (466 families, SHA-256 79989aedb9fcafed4006626e7588ff4ab52a426b55a8e567389750ccd07622f9). The appended row, canonical SHA-256 a55fa8da4b4d4b47592fa89a5e99713bba8e0190f64a826255ebd350826e329c, has scope policy project_only, payload `pm.runtime_artifact.evidence.schema.v1` at Plans/runtime_artifact_evidence.schema.json#, semantic owner Plans/Runtime_Artifacts_Panel.md#RAP-108, payload owner Plans/Contracts_V0.md#CV-528 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.247 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 466 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.evidence.json (SHA-256 81ebe3396e980fbdda718ed83c3ef86724784fba248cd532dc0fee031ddaad0f) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.evidence.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.evidence.json (SHA-256 c597a9cd7aeeca91048405d537336443809312f473878b32ae55973a360d6680) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.evidence.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `runtime_artifact.evidence`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -51262,7 +51262,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.247 (466 families, SHA-256 79989aedb9fcafed4006626e7588ff4ab52a426b55a8e567389750ccd07622f9) to 2026-11-16.248 (467 families, SHA-256 d08456ffb4f1e593b683b38374cb7ae0b1981c6b21f2c4414efcd8d33f9d8237). The appended row, canonical SHA-256 84d1affbf71df7b4270c5e82e66b785e9050efdafb4ac31e685e01c203b386f4, has scope policy project_only, payload `pm.runtime_artifact.failed_attempts.schema.v1` at Plans/runtime_artifact_failed_attempts.schema.json#, semantic owner Plans/Runtime_Artifacts_Panel.md#RAP-109, payload owner Plans/Contracts_V0.md#CV-529 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.248 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 467 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.failed_attempts.json (SHA-256 3c8550932feffbc5d88984ee4ec4ed65c44b2af3d55e0b575d1f2b5a1b10e755) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.failed_attempts.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.failed_attempts.json (SHA-256 f423ae54bab1b2d97ced43f9ea0ba0eb0794d99bd73fe305de3cba8b509de4e1) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.failed_attempts.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `runtime_artifact.failed_attempts`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -51306,7 +51306,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.248 (467 families, SHA-256 d08456ffb4f1e593b683b38374cb7ae0b1981c6b21f2c4414efcd8d33f9d8237) to 2026-11-16.249 (468 families, SHA-256 597525c3b7647f69a062f7cb1147649b6012fa205dcb5bbe12fb91002b0af491). The appended row, canonical SHA-256 9981e31c7258b317aab2dc566062536947a6f90ce95369bf4ae0094322d693f4, has scope policy project_only, payload `pm.runtime_artifact.hitl_approval.schema.v1` at Plans/runtime_artifact_hitl_approval.schema.json#, semantic owner Plans/Runtime_Artifacts_Panel.md#RAP-110, payload owner Plans/Contracts_V0.md#CV-530 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.249 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 468 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.hitl_approval.json (SHA-256 4df4013292ff2c5fbdd2cd472dce1f7c7df25fa7764cfaf51bdc22cb81dd7acd) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.hitl_approval.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.hitl_approval.json (SHA-256 ea85578c6645fd4db37ea521949e25902d205b0808716d3bcc3752e104468cbf) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.hitl_approval.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `runtime_artifact.hitl_approval`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -51350,7 +51350,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.249 (468 families, SHA-256 597525c3b7647f69a062f7cb1147649b6012fa205dcb5bbe12fb91002b0af491) to 2026-11-16.250 (469 families, SHA-256 ddb0aabf6cac1f5964ef77c9658e899620fa6c4e0375bada3cc9521bda91c47a). The appended row, canonical SHA-256 060e21d6a2b91f9d0bf17995c6e85c79d65555afc244846b19729e642994d101, has scope policy project_only, payload `pm.runtime_artifact.implementation_plan.schema.v1` at Plans/runtime_artifact_implementation_plan.schema.json#, semantic owner Plans/Runtime_Artifacts_Panel.md#RAP-111, payload owner Plans/Contracts_V0.md#CV-531 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.250 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 469 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.implementation_plan.json (SHA-256 4731275cca0f29e83eeca125b9324622fc255895a0500700020274ffcf2b6044) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.implementation_plan.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.implementation_plan.json (SHA-256 3ffb7b9278f52f18fb8e46647547c252b74a0490cdd9e4f816c1a77fcef4f3a0) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.implementation_plan.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `runtime_artifact.implementation_plan`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -51394,7 +51394,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.250 (469 families, SHA-256 ddb0aabf6cac1f5964ef77c9658e899620fa6c4e0375bada3cc9521bda91c47a) to 2026-11-16.251 (470 families, SHA-256 9c89cb3c9d4df7d6437a038d0a89857907e96b9a77c51fce8764ccd239136e16). The appended row, canonical SHA-256 7cdd422e8d6a872345a78e7bef233776c2d48a0b44c2fbbecddb554fbed50529, has scope policy project_only, payload `pm.runtime_artifact.reasoning_summary.schema.v1` at Plans/runtime_artifact_reasoning_summary.schema.json#, semantic owner Plans/Runtime_Artifacts_Panel.md#RAP-112, payload owner Plans/Contracts_V0.md#CV-532 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.251 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 470 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.reasoning_summary.json (SHA-256 a88fda141b41ed9240a44eb5dd09fe8e52522ed6ccf3c6aa9452238c60b6bff7) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.reasoning_summary.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.reasoning_summary.json (SHA-256 cf4588c9695b736a22a9686ac72b0892357e149f78e1585f45573502fb98509b) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.reasoning_summary.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `runtime_artifact.reasoning_summary`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -51438,7 +51438,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.251 (470 families, SHA-256 9c89cb3c9d4df7d6437a038d0a89857907e96b9a77c51fce8764ccd239136e16) to 2026-11-16.252 (471 families, SHA-256 554c24077f03b324d7266db8ace54c8eb53d5cdbcf29f0625fa5e54e9efdc992). The appended row, canonical SHA-256 cd7d46e7b8684d6d27e6d37c5a46809cb10a8125d23830d1266611789654d907, has scope policy project_only, payload `pm.runtime_artifact.restore_point.schema.v1` at Plans/runtime_artifact_restore_point.schema.json#, semantic owner Plans/Runtime_Artifacts_Panel.md#RAP-113, payload owner Plans/Contracts_V0.md#CV-533 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.252 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 471 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.restore_point.json (SHA-256 9b944d96b368a91a6e5ca68c897b019a53687d6f974c341ddb3f5f303a719817) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.restore_point.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.restore_point.json (SHA-256 dade4adbddd3bc25e2e1f4f3dba017a22c3ac45edca99adc80ebd80b5f4cf7a9) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.restore_point.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `runtime_artifact.restore_point`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -51482,7 +51482,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.252 (471 families, SHA-256 554c24077f03b324d7266db8ace54c8eb53d5cdbcf29f0625fa5e54e9efdc992) to 2026-11-16.253 (472 families, SHA-256 455cbf6c5aaf8bdeeca00ffa3163a8e0c72f26224f51ed7e4787047ced223e4f). The appended row, canonical SHA-256 3ff7306c11807c3505fcdab5e7e455a730a754eecbffefb4db748b3aaff7a4ec, has scope policy project_only, payload `pm.runtime_artifact.screenshot.schema.v1` at Plans/runtime_artifact_screenshot.schema.json#, semantic owner Plans/Runtime_Artifacts_Panel.md#RAP-114, payload owner Plans/Contracts_V0.md#CV-534 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.253 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 472 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.screenshot.json (SHA-256 564c6964dae1ac7c459fbeb254c531cc87b749a6bfe94767e84f270c28a98011) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.screenshot.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.screenshot.json (SHA-256 2839def38497dd1f710e1432ae4961940a1fc87a848ad9f323d78ee2b8e9ddf2) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.screenshot.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `runtime_artifact.screenshot`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -51526,7 +51526,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.253 (472 families, SHA-256 455cbf6c5aaf8bdeeca00ffa3163a8e0c72f26224f51ed7e4787047ced223e4f) to 2026-11-16.254 (473 families, SHA-256 29388cb7157b13080e919a3f17460b58c1214c5cad98f65fba0fb244a5003cd5). The appended row, canonical SHA-256 e76be754eea8f77a3aff4220b09baeedb95730876b9e0905bbbd54d6eff3b253, has scope policy project_only, payload `pm.runtime_artifact.subagent_lineage.schema.v1` at Plans/runtime_artifact_subagent_lineage.schema.json#, semantic owner Plans/Runtime_Artifacts_Panel.md#RAP-115, payload owner Plans/Contracts_V0.md#CV-535 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.254 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 473 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.subagent_lineage.json (SHA-256 a9811d4ce192af6c5dd494cf01d7304fdb06b787ec86645b584b59b688f9c302) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.subagent_lineage.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.subagent_lineage.json (SHA-256 8663c85d948df2e0aa861938dab3ee9099b1f8117e2d86cf6fce891f0b13da58) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.subagent_lineage.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `runtime_artifact.subagent_lineage`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -51570,7 +51570,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.254 (473 families, SHA-256 29388cb7157b13080e919a3f17460b58c1214c5cad98f65fba0fb244a5003cd5) to 2026-11-16.255 (474 families, SHA-256 3cd2c093b15a00c9607ad3a67cbdcea419d10402ec3eee5648e33c27e28ba9a7). The appended row, canonical SHA-256 7993f5c0cc2e293683e7acb4acca5c39a99c87e4856c2b47fea3b8a715cf85e5, has scope policy project_only, payload `pm.runtime_artifact.suggested_next_steps.schema.v1` at Plans/runtime_artifact_suggested_next_steps.schema.json#, semantic owner Plans/Runtime_Artifacts_Panel.md#RAP-116, payload owner Plans/Contracts_V0.md#CV-536 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.255 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 474 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.suggested_next_steps.json (SHA-256 ea385a873b7da7376f93828f65e14130f4885646a541be8febe00c822c8c671c) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.suggested_next_steps.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.suggested_next_steps.json (SHA-256 78d835563aa3e4009f2cee7552c4019432b88dede4b86574c41e7de0c273abe2) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.suggested_next_steps.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `runtime_artifact.suggested_next_steps`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -51614,7 +51614,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.255 (474 families, SHA-256 3cd2c093b15a00c9607ad3a67cbdcea419d10402ec3eee5648e33c27e28ba9a7) to 2026-11-16.256 (475 families, SHA-256 0114804b1711bcf312518d98580cf322b94975a8a05558e5df70e21ae5700ef2). The appended row, canonical SHA-256 b1449a814b50da2bee1679b178784ecbdb06469fbd3b24ccc0aab2b2a38dc449, has scope policy project_only, payload `pm.runtime_artifact.tool_llm_trace.schema.v1` at Plans/runtime_artifact_tool_llm_trace.schema.json#, semantic owner Plans/Runtime_Artifacts_Panel.md#RAP-117, payload owner Plans/Contracts_V0.md#CV-537 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.256 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 475 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.tool_llm_trace.json (SHA-256 8e7710bab74a9b51d29118bdc2d52afbc18e160285557457f17c5af902e37b56) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.tool_llm_trace.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.tool_llm_trace.json (SHA-256 eed63bf64ea02f7197e7e6609ea7bf61f7147adafc34aa080d7b6f2d11d6031e) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.tool_llm_trace.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `runtime_artifact.tool_llm_trace`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -51658,7 +51658,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.256 (475 families, SHA-256 0114804b1711bcf312518d98580cf322b94975a8a05558e5df70e21ae5700ef2) to 2026-11-16.257 (476 families, SHA-256 1db657d7032049048594bd059b23bc7eafc261aa91e8845236171282a4e5993a). The appended row, canonical SHA-256 f7d09843aaad3e272bb67c80648d884b2ae3e248373e783db6be02cd7f032083, has scope policy project_only, payload `pm.runtime_artifact.validation_test.schema.v1` at Plans/runtime_artifact_validation_test.schema.json#, semantic owner Plans/Runtime_Artifacts_Panel.md#RAP-118, payload owner Plans/Contracts_V0.md#CV-538 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.257 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 476 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.validation_test.json (SHA-256 b6689d1a0512c332352ac70f912dd855b047aff909db36f0b544bfa99b5ad789) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.validation_test.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.validation_test.json (SHA-256 98796c16d0aa952ff3486b8c5ba3c0867727910e9e141c6cd2d515e4360b0c01) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/runtime_artifact.validation_test.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `runtime_artifact.validation_test`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -51702,7 +51702,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.257 (476 families, SHA-256 1db657d7032049048594bd059b23bc7eafc261aa91e8845236171282a4e5993a) to 2026-11-16.258 (477 families, SHA-256 50bf2a46c07bcb8dfc3684ae05ef84c085cb784c87eeab47016927f593e9a8ed). The appended row, canonical SHA-256 6f93e46a3b0e227ff39ac4327352fb364bac964c6cc9770fdd0bb7a57a86d532, has scope policy application_or_project, payload `https://puppetmaster.local/schemas/event_payloads/safe_point_created/2.0.0` at Plans/event_payloads/safe_point_created_v2.schema.json#, semantic owner Plans/Contracts_V0.md#CV-557, payload owner Plans/Contracts_V0.md#CV-557 and retention RP-RUNTIME-365D@1.0.0. Its payload versions are application `https://puppetmaster.local/schemas/event_payloads/safe_point_created/2.0.0` (RP-RUNTIME-365D@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/event_payloads/safe_point_created/2.0.0` (RP-RUNTIME-365D@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.258 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 477 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/safe_point.created.json (SHA-256 c3b52090e864d4e9e181f520a8db270ffbfa96e3392ebc942b6b5547c67add97) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/safe_point.created.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/safe_point.created.json (SHA-256 912124ac777c39e91e1c0b961f85ebcc8b0793b269cd320807263209f869a103) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/safe_point.created.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `safe_point.created`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -51746,7 +51746,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.258 (477 families, SHA-256 50bf2a46c07bcb8dfc3684ae05ef84c085cb784c87eeab47016927f593e9a8ed) to 2026-11-16.259 (478 families, SHA-256 18551aa60f68e4e073049ef74ceb5c5e0dd4dc7edf6a6f38c198a3e057d96c9d). The appended row, canonical SHA-256 e25baaef13bce352937a53e2b62beddf8b19e9244bbc3b51367a1a58f31169a7, has scope policy application_or_project, payload `https://puppetmaster.local/schemas/event_payloads/safe_point_restored/2.0.0` at Plans/event_payloads/safe_point_restored_v2.schema.json#, semantic owner Plans/Contracts_V0.md#CV-558, payload owner Plans/Contracts_V0.md#CV-558 and retention RP-RUNTIME-365D@1.0.0. Its payload versions are application `https://puppetmaster.local/schemas/event_payloads/safe_point_restored/2.0.0` (RP-RUNTIME-365D@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/event_payloads/safe_point_restored/2.0.0` (RP-RUNTIME-365D@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.259 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 478 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/safe_point.restored.json (SHA-256 4b5fd1c11898e4d3a8ef71d08a18feb7a13464e450ef2c8f32a233d67e767751) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/safe_point.restored.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/safe_point.restored.json (SHA-256 ba257ceeee52fb8dbced674ba9eee3f51128eed920117b3f7510a017e71d1ec5) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/safe_point.restored.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `safe_point.restored`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -53022,7 +53022,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.287 (506 families, SHA-256 11cbbbb869333ca166f000b3d86fbb1b4d3b1915ba8d08f45003c075dd9e001e) to 2026-11-16.288 (507 families, SHA-256 2af0157daa2c66604012c1bc01dc4f9ce7402d6d731f17c7aaaaab7859577835). The appended row, canonical SHA-256 7e9409c3d30ec2dace5028ca9e79b060d5eec521d5a73cdf482ab30d956fe1f1, has scope policy project_only, payload `pm.ds15.tool_custom_headless_skipped.payload.v1` at Plans/ds15_tool_custom_headless_skipped.schema.json#, semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-326, payload owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-326 and retention RP-OPERATIONAL-2555D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.288 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 507 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/tool.custom_headless.skipped.json (SHA-256 4b8e3058bc0667a6dbaf34fe259d32dabf4e988f062d21349107d3dcc38fab88) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/tool.custom_headless.skipped.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/tool.custom_headless.skipped.json (SHA-256 cc03c9500045af4cd91534e45a35d90e623f2bd966db28a3392ccccf47d87c61) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/tool.custom_headless.skipped.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `tool.custom_headless.skipped`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -53418,7 +53418,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.296 (515 families, SHA-256 cfa10c4f1f5f5d303e9d209aae38b1628a8a5c9943f1ba952526e373f3efa02b) to 2026-11-16.297 (516 families, SHA-256 7cccc15d8fa34b2f64a567f9289c476024b2642b9420e4f5ef2335659ac8e6fa). The appended row, canonical SHA-256 0ace2a481d833affade0a0a505be70731de643f9061083e5fbfea0bfb35a7df6, has scope policy project_only, payload `pm.event_payload.worktree_created.v1` at Plans/dt_event_contracts.schema.json#/$defs/worktree_created, semantic owner Plans/Contracts_V0.md#CV-615, payload owner Plans/Contracts_V0.md#CV-615 and retention RP-WORKTREE-TOMBSTONE-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.297 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 516 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/worktree.created.json (SHA-256 97749ffd1e1478f10199c52d588bf85111632f68ee3a35062c1774ebb64447be) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/worktree.created.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/worktree.created.json (SHA-256 a2bca2496baf382ea68042da9d8bdbf275897343f49e3663eb3c692d7fc3ca82) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/worktree.created.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `worktree.created`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -53462,7 +53462,7 @@ canonical_text: |-
 
   The registry moves from revision 2026-11-16.297 (516 families, SHA-256 7cccc15d8fa34b2f64a567f9289c476024b2642b9420e4f5ef2335659ac8e6fa) to 2026-11-16.298 (517 families, SHA-256 8524876584b91628472eed1358ced3bb00a76ebc750bf67b69543cec5004d79f). The appended row, canonical SHA-256 f983a55a20bd53f586d38569837ce2394edf2b949d1b5afd6186e4a65297099f, has scope policy project_only, payload `pm.event_payload.worktree_deleted.v1` at Plans/dt_event_contracts.schema.json#/$defs/worktree_deleted, semantic owner Plans/Contracts_V0.md#CV-616, payload owner Plans/Contracts_V0.md#CV-616 and retention RP-WORKTREE-TOMBSTONE-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.298 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 517 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
 
-  Depth: reports/event-authority-20261116/admission-merge-2/depth/worktree.deleted.json (SHA-256 ffc0d6675371fced56d856eb9a37ca2008d7ce3c1b4c1213035e47471abb2fc9) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/worktree.deleted.json.
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/worktree.deleted.json (SHA-256 391dc24f89f9e39c930896b5cee0c722dce315c92b0d54345bc1c936e7a0d779) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/worktree.deleted.json.
 
   Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `worktree.deleted`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
 gui_related: false
@@ -53506,7 +53506,7 @@ canonical_text: 'Under Jared''s EA-P3 A standing rule and DL-045 and GRS-203, Ev
   application edition exactly. Registry revision 2026-11-16.298 (SHA-256 8524876584b91628472eed1358ced3bb00a76ebc750bf67b69543cec5004d79f)
   becomes 2026-11-16.299 (SHA-256 7aa480fcc27a5c71df8ff247b32336791ce23a6c3df7146811066c3ce0cbca9d); the count remains
   517. The successor row''s canonical SHA-256 is bb8a35168b77493dfd5b4324fa092fefdd34c61698ae1f33947fff846d7e5316.
-  The 12/12 assessment reports/event-authority-20261116/admission-merge-2/revisions/goal.blocked.json (SHA-256 116b65f9b2261a4854165aaf960d13533e202b25da3bf5de83ef289b9066ca13)
+  The 12/12 assessment reports/event-authority-20261116/admission-merge-2/revisions/goal.blocked.json (SHA-256 5a14dfd495fd00508d683ffae246a29c2b0bae3e0b7604df6d60aa581d5c6b8c)
   carries the reviewed PASS cells and records the exact selector predicates completing pending schema/scope cells.
   Source grade verdicts are unchanged. DL-078 checkpoint pins and the legacy golden revision move in this commit.
   Historical resource bytes and dormant application editions remain as specified by the pinned row. Native execution
@@ -53557,7 +53557,7 @@ canonical_text: 'Under Jared''s EA-P3 A standing rule and DL-045 and GRS-204, Ev
   becomes 2026-11-16.300 (SHA-256 a634791fb3f7ebaaa86f5b9c37971ac150ab7454f32c92043ab9de1e308be10b); the count remains
   517. The successor row''s canonical SHA-256 is 7061d1c3ec0ab906601288adeb4f926cdc75e0761e25258019cc3a3626f759cb.
   The 12/12 assessment reports/event-authority-20261116/admission-merge-2/revisions/goal.completed.json (SHA-256
-  5379996b2da322ed99eb21e38745d2cd9a6b527b7d063d8a1ede385e6cac9d96) carries the reviewed PASS cells and records
+  ac9d7f237742edac178d4fe665725c75251ee9835b17259e8e5643321dfea1e1) carries the reviewed PASS cells and records
   the exact selector predicates completing pending schema/scope cells. Source grade verdicts are unchanged. DL-078
   checkpoint pins and the legacy golden revision move in this commit. Historical resource bytes and dormant application
   editions remain as specified by the pinned row. Native execution stays NOT_RUN; no source installation, producer
@@ -53608,7 +53608,7 @@ canonical_text: 'Under Jared''s EA-P3 A standing rule and DL-080 and the exact p
   2026-11-16.300 (SHA-256 a634791fb3f7ebaaa86f5b9c37971ac150ab7454f32c92043ab9de1e308be10b) becomes 2026-11-16.301
   (SHA-256 be075e429cc8fb5c47b8c06bee6153bee597ce7320f14292e001d0e16a5008ed); the count remains 517. The successor
   row''s canonical SHA-256 is ae9962c6468e18147c0f3202187c045322f601961e308163c422b859be1c670c. The 12/12 assessment
-  reports/event-authority-20261116/admission-merge-2/revisions/goal_run.stopped.json (SHA-256 18267166906f32a038c8c10866d2e04d018e41749daef97f8d16ee00e3c7c81c)
+  reports/event-authority-20261116/admission-merge-2/revisions/goal_run.stopped.json (SHA-256 b038f18a2a2bc47adc0d646c1a25decda58af4b9f48d31cb5cc8a1d9d7d9ee9e)
   carries the reviewed PASS cells and records the exact selector predicates completing pending schema/scope cells.
   Source grade verdicts are unchanged. DL-078 checkpoint pins and the legacy golden revision move in this commit.
   Historical resource bytes and dormant application editions remain as specified by the pinned row. Native execution
@@ -53659,7 +53659,7 @@ canonical_text: 'Under Jared''s EA-P3 A standing rule and DL-080 and the exact p
   2026-11-16.301 (SHA-256 be075e429cc8fb5c47b8c06bee6153bee597ce7320f14292e001d0e16a5008ed) becomes 2026-11-16.302
   (SHA-256 48ad8de5c1639db6c254db2352dc5d70acc4d70ccfdab4cdf2c169477f8ff534); the count remains 517. The successor
   row''s canonical SHA-256 is c4dfb79556f354978a690dcfd0ca96282d1ecd0ba95f1be33c4140070b6bbeb7. The 12/12 assessment
-  reports/event-authority-20261116/admission-merge-2/revisions/goal_run.blocked.json (SHA-256 5b09f78c7bba26a6a7c143fc5917b3163deb291cd6778acbc54a6a196c961a02)
+  reports/event-authority-20261116/admission-merge-2/revisions/goal_run.blocked.json (SHA-256 b072a51f00069990bfabbc7c577c740139d58d76224b0a9673149e39694bee40)
   carries the reviewed PASS cells and records the exact selector predicates completing pending schema/scope cells.
   Source grade verdicts are unchanged. DL-078 checkpoint pins and the legacy golden revision move in this commit.
   Historical resource bytes and dormant application editions remain as specified by the pinned row. Native execution
@@ -53710,7 +53710,7 @@ canonical_text: 'Under Jared''s EA-P3 A standing rule and DL-080 and the exact R
   (SHA-256 48ad8de5c1639db6c254db2352dc5d70acc4d70ccfdab4cdf2c169477f8ff534) becomes 2026-11-16.303 (SHA-256 26c1a6bd69b0cbdddbccc86b253ac5b91f4111db60a8ad24684d7c6aa33e5ad2);
   the count remains 517. The successor row''s canonical SHA-256 is e97d04b86e8f35883e36a5aa03fba3d61398ca9caf0397842e079ad492191d53.
   The 12/12 assessment reports/event-authority-20261116/admission-merge-2/revisions/goal_run.replanned.json (SHA-256
-  497c3903fc0e1c52b353f3877788a53518cf6b2f80eefb14cabbe010e12e47f2) carries the reviewed PASS cells and records
+  aa6912e7cf7fba14495fdb87bff7a423260133044e1671d2e4ac419f1259a9a6) carries the reviewed PASS cells and records
   the exact selector predicates completing pending schema/scope cells. Source grade verdicts are unchanged. DL-078
   checkpoint pins and the legacy golden revision move in this commit. Historical resource bytes and dormant application
   editions remain as specified by the pinned row. Native execution stays NOT_RUN; no source installation, producer
@@ -53761,7 +53761,7 @@ canonical_text: 'Under Jared''s EA-P3 A standing rule and DL-409 (Jared''s Card 
   revision 2026-11-16.303 (SHA-256 26c1a6bd69b0cbdddbccc86b253ac5b91f4111db60a8ad24684d7c6aa33e5ad2) becomes 2026-11-16.304
   (SHA-256 e789db00a1b974c329b420e51ade0ae3a225403988c352d60eb1971085aba1ec); the count remains 517. The successor
   row''s canonical SHA-256 is b327b7ccdc3f7392bb125da3d3636ab361215ae8a24bc814c867caaf0d8d33f3. The 12/12 assessment
-  reports/event-authority-20261116/admission-merge-2/revisions/goal.evidence_captured.json (SHA-256 45c3b5cbf63792e2b4a58db9e5d0ea2dc8db8ec0619c9e6b2318805a34032e47)
+  reports/event-authority-20261116/admission-merge-2/revisions/goal.evidence_captured.json (SHA-256 38b03acc2706d7b457cf449989d275a89b700ab9c31b3f2f20538fcb20807dcc)
   carries the reviewed PASS cells and records the exact selector predicates completing pending schema/scope cells.
   Source grade verdicts are unchanged. DL-078 checkpoint pins and the legacy golden revision move in this commit.
   Historical resource bytes and dormant application editions remain as specified by the pinned row. Native execution
@@ -53812,7 +53812,7 @@ canonical_text: 'Under Jared''s EA-P3 A standing rule and DL-409 (Jared''s Card 
   revision 2026-11-16.304 (SHA-256 e789db00a1b974c329b420e51ade0ae3a225403988c352d60eb1971085aba1ec) becomes 2026-11-16.305
   (SHA-256 222914703a8985ef96769e5a7d8f6558bfa09110707d424dbfabae4facc3ef40); the count remains 517. The successor
   row''s canonical SHA-256 is c254d9f1d691c7f0c74230f1273ecfe80cd5ed661ba06d571e2c5f070b764024. The 12/12 assessment
-  reports/event-authority-20261116/admission-merge-2/revisions/goal.receipt_recorded.json (SHA-256 9b118d0ed32d77886c494399e7bc42ab22844dcb4921f321e176c50dd958eede)
+  reports/event-authority-20261116/admission-merge-2/revisions/goal.receipt_recorded.json (SHA-256 91df7db65efe8e49a054e50e7f9236bafa7941d9642988eac60f4112c662222f)
   carries the reviewed PASS cells and records the exact selector predicates completing pending schema/scope cells.
   Source grade verdicts are unchanged. DL-078 checkpoint pins and the legacy golden revision move in this commit.
   Historical resource bytes and dormant application editions remain as specified by the pinned row. Native execution
@@ -53863,7 +53863,7 @@ canonical_text: 'Under Jared''s EA-P3 A standing rule and DL-409 (Jared''s Card 
   revision 2026-11-16.305 (SHA-256 222914703a8985ef96769e5a7d8f6558bfa09110707d424dbfabae4facc3ef40) becomes 2026-11-16.306
   (SHA-256 774f6d49c5662d6115e42b880c855b5d415fd3eb234627e7405a3f493bd83204); the count remains 517. The successor
   row''s canonical SHA-256 is 69a491e540c14b25f82cf6f4969b840c84b26718d84d42a2f5c0f46ca347b45a. The 12/12 assessment
-  reports/event-authority-20261116/admission-merge-2/revisions/goal.tool_check_recorded.json (SHA-256 47bf26cc87adfb1ffdf9b72deaaf3cd670ed0a0b49aae47a3b27b0b09a447f09)
+  reports/event-authority-20261116/admission-merge-2/revisions/goal.tool_check_recorded.json (SHA-256 53d3c66f4da5741261cc4a1a7ec58ef10d8547ec68d009aaa7fdfbdd77360525)
   carries the reviewed PASS cells and records the exact selector predicates completing pending schema/scope cells.
   Source grade verdicts are unchanged. DL-078 checkpoint pins and the legacy golden revision move in this commit.
   Historical resource bytes and dormant application editions remain as specified by the pinned row. Native execution
@@ -54006,3 +54006,9167 @@ negative_constraints:
 - No producer adoption, native execution claim, readiness clearance or governance seal is granted.
 ```
 
+### DL-2450: FileSafe policy degradation has its own Application count bucket
+
+```yaml
+plan_unit_id: DL-2450
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  On 2026-11-19 at about 4:40 PM EST, Jared quoted FileSafe card E15-1 option A ("their own whole-app allowance: 7 years, 2,000,000 records, with new ones refused when it's full") and answered verbatim: "this". pm7-build relayed the answer in pm-mail 1119213858-1090 at 2026-11-19T21:38:58Z. The card is vm.pm-ea-lead--E15-1 in E-CARDS-15.md. The answer is recorded in ANSWERS_E-CARDS-15_20261119.md.
+
+  E15-1 A gives Application records of filesafe.policy_degraded one dedicated application-wide count bucket per Puppet Master Server, app:filesafe_policy_degraded. SP-556 applies the existing RP-OPERATIONAL-2555D@1.0.0 policy for 2,555 days (220,752,000 seconds) from the original terminal-transition anchor, with at most 2,000,000 retained records. If the next record would exceed capacity and no expired unheld member is eligible for compaction, refuse the append. Overflow never evicts an unexpired or held member, borrows room from another bucket or refuses an append in another bucket. Project records keep their own Project partition under the same policy.
+
+  This decision supplies only the Application count for filesafe.policy_degraded, already registered under DL-2307. It changes no other family, policy value or bucket. Native counting, refusal, expiry and cleanup remain NOT_RUN.
+gui_related: false
+gui_classification_reason: Applies only to an internal event history count.
+depends_on: [DL-2307]
+unblocks: []
+acceptance_criteria:
+- "Only an Application filesafe.policy_degraded record counts in app:filesafe_policy_degraded, once per Puppet Master Server."
+- "Project records keep their Project partition. The existing terminal-transition anchor, hold protections, 2,555-day period and 2,000,000 cap apply."
+- "At capacity without an expired unheld member eligible for compaction, refuse the incoming append with neither eviction of a protected or unexpired record nor effects on another bucket."
+validation_surfaces:
+- Plans/filesafe_event_contract_fixtures.json
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority_retention
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_filesafe_application_count
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-15_20261119.md (SHA-256 9c8e2bcbdc952a74f3ed9828d6d07004934f3da4f1fe3f836b2c4a6b6f2f2404)"
+- "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/E-CARDS-15.md (SHA-256 4f3178dae796ee56c232a8a3f180c947edaae00c71fd30f44ff1fc65dbfe760b)"
+preserved_exact_tokens:
+- E15-1
+- this
+- 1119213858-1090
+- filesafe.policy_degraded
+- app:filesafe_policy_degraded
+- RP-OPERATIONAL-2555D@1.0.0
+negative_constraints:
+- No retention policy object or policy value changes, unrelated bucket or family change, or producer adoption or native proof follows.
+```
+### DL-2451: Event Authority corrects auth.github.authenticated (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2451
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for auth.github.authenticated only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [7]. The original admission authority remains Plans/Decision_Log.md#DL-2145; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 45d76ab72af9bb40d91d94aba64dbb156f89b975d4cf2c52ce9620575cd8ea2f.
+  Its scope is application_only. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/auth_github_authenticated`
+  (RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, producer requires_owner_adoption).
+  The current retention evidence also cites the existing DL-401 shared Application count assignment for all five GitHub sign-in histories in Plans/storage-plan.md:29100-29105 (app:github_sign_in, 2,000,000 records in total).
+
+  The correction moves the full registry from 2026-11-18.2, 518 families, SHA-256 ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602,
+  to 2026-11-19.1, 518 families, SHA-256 92892e3361a16a91b319533f1d2b5679920496e7e4732294e8fd332762946df3, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/auth.github.authenticated.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/auth.github.authenticated.json, SHA-256 87c44ad5d96a1270824bbd234472a76b06e7a88b3ae264d724acbfb58dc196e0.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.8 SHA-256 f4db9a7626b94ac38d17b1fc3c9634a401fc84220e0edba2b2cef57de270c27e;
+  after 2026-11-16.9 SHA-256 da4339724d14b5d8b227933467f415a5d7ed6f848adada14a971a18f76b876f5. Existing semantic owner Plans/GitHub_API_Auth_and_Flows.md#GAAAF-077,
+  payload owner Plans/Contracts_V0.md#CV-690, resource Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_authenticated
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2145
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2145
+preserved_exact_tokens:
+- auth.github.authenticated
+- 45d76ab72af9bb40d91d94aba64dbb156f89b975d4cf2c52ce9620575cd8ea2f
+- 2026-11-18.2
+- 2026-11-19.1
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2452: Event Authority corrects auth.github.device_code.issued (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2452
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for auth.github.device_code.issued only, under DL-077 and DL-400, resolving post-landing Astra
+  finding(s) [7]. The original admission authority remains Plans/Decision_Log.md#DL-2146; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 eef79a3bf7a03fc95cc5441135b8476eecde4b3edac6110a773b1263fab66ff7.
+  Its scope is application_only. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/auth_github_device_code_issued`
+  (RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, producer requires_owner_adoption).
+  The current retention evidence also cites the existing DL-401 shared Application count assignment for all five GitHub sign-in histories in Plans/storage-plan.md:29100-29105 (app:github_sign_in, 2,000,000 records in total).
+
+  The correction moves the full registry from 2026-11-19.1, 518 families, SHA-256 92892e3361a16a91b319533f1d2b5679920496e7e4732294e8fd332762946df3,
+  to 2026-11-19.2, 518 families, SHA-256 244b18ca98faba7e4e6470cced27b0436888bb452f08ccbc7863e04cabc8b9cc, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/auth.github.device_code.issued.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/auth.github.device_code.issued.json, SHA-256
+  d282212ea6e9ef0b4747a365aefd2486bf9893b856aedd1444015f040ad2b1b3.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.9 SHA-256 da4339724d14b5d8b227933467f415a5d7ed6f848adada14a971a18f76b876f5;
+  after 2026-11-16.10 SHA-256 0c5977669441a847f20cac46f5ebb7266d07addc249c9de969061d41f84e0bd0. Existing semantic owner Plans/GitHub_API_Auth_and_Flows.md#GAAAF-078,
+  payload owner Plans/Contracts_V0.md#CV-690, resource Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_device_code_issued
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2146
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2146
+preserved_exact_tokens:
+- auth.github.device_code.issued
+- eef79a3bf7a03fc95cc5441135b8476eecde4b3edac6110a773b1263fab66ff7
+- 2026-11-19.1
+- 2026-11-19.2
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2453: Event Authority corrects auth.github.disconnected (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2453
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for auth.github.disconnected only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [7]. The original admission authority remains Plans/Decision_Log.md#DL-2147; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 053efdcca8aa9d86143238bee746aae575fcdc66865ad21469291b17a66f922d.
+  Its scope is application_only. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/auth_github_disconnected`
+  (RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, producer requires_owner_adoption).
+  The current retention evidence also cites the existing DL-401 shared Application count assignment for all five GitHub sign-in histories in Plans/storage-plan.md:29100-29105 (app:github_sign_in, 2,000,000 records in total).
+
+  The correction moves the full registry from 2026-11-19.2, 518 families, SHA-256 244b18ca98faba7e4e6470cced27b0436888bb452f08ccbc7863e04cabc8b9cc,
+  to 2026-11-19.3, 518 families, SHA-256 58bcbc79d11729d29c5a93b96eb10d8d58c36d65335ad28f0856276b8e69c6ea, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/auth.github.disconnected.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/auth.github.disconnected.json, SHA-256 538c740c6d1c488820f0c8c23b35602652788da103e1b266d0886f544efd2b1c.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.10 SHA-256 0c5977669441a847f20cac46f5ebb7266d07addc249c9de969061d41f84e0bd0;
+  after 2026-11-16.11 SHA-256 8e33379963ef36eab321738cc63d1b8da69882db8ab203c8060fee085a455389. Existing semantic owner Plans/GitHub_API_Auth_and_Flows.md#GAAAF-079,
+  payload owner Plans/Contracts_V0.md#CV-690, resource Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_disconnected
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2147
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2147
+preserved_exact_tokens:
+- auth.github.disconnected
+- 053efdcca8aa9d86143238bee746aae575fcdc66865ad21469291b17a66f922d
+- 2026-11-19.2
+- 2026-11-19.3
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2454: Event Authority corrects auth.github.failed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2454
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for auth.github.failed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [7]. The original admission authority remains Plans/Decision_Log.md#DL-2148; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 d6ea21fb565a0dd737fef672e1bba9449619490511f69536962d292865adda58.
+  Its scope is application_only. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/auth_github_failed`
+  (RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, producer requires_owner_adoption).
+  The current retention evidence also cites the existing DL-401 shared Application count assignment for all five GitHub sign-in histories in Plans/storage-plan.md:29100-29105 (app:github_sign_in, 2,000,000 records in total).
+
+  The correction moves the full registry from 2026-11-19.3, 518 families, SHA-256 58bcbc79d11729d29c5a93b96eb10d8d58c36d65335ad28f0856276b8e69c6ea,
+  to 2026-11-19.4, 518 families, SHA-256 5fdf0b711ca8b97a26bfbee654197ba9add00622d1eae0ee21321cf9924480c7, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/auth.github.failed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/auth.github.failed.json, SHA-256 55efbf01e4cc0a84175400911ffb680f3ed16f5af1773979dd1ae32890af6ebf.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.11 SHA-256 8e33379963ef36eab321738cc63d1b8da69882db8ab203c8060fee085a455389;
+  after 2026-11-16.12 SHA-256 00c9224678e694491c50085d4d6b55ced0b6e7e11b95bb205748cf3b31252e1a. Existing semantic owner Plans/GitHub_API_Auth_and_Flows.md#GAAAF-080,
+  payload owner Plans/Contracts_V0.md#CV-690, resource Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_failed retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2148
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2148
+preserved_exact_tokens:
+- auth.github.failed
+- d6ea21fb565a0dd737fef672e1bba9449619490511f69536962d292865adda58
+- 2026-11-19.3
+- 2026-11-19.4
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2455: Event Authority corrects auth.github.token.polling (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2455
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for auth.github.token.polling only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [7]. The original admission authority remains Plans/Decision_Log.md#DL-2149; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 1393c12ad4ff4ce7374c2eb807b13ef66ad4bbea322f720ea88e4275b000f0e4.
+  Its scope is application_only. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/auth_github_token_polling`
+  (RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, producer requires_owner_adoption).
+  The current retention evidence also cites the existing DL-401 shared Application count assignment for all five GitHub sign-in histories in Plans/storage-plan.md:29100-29105 (app:github_sign_in, 2,000,000 records in total).
+
+  The correction moves the full registry from 2026-11-19.4, 518 families, SHA-256 5fdf0b711ca8b97a26bfbee654197ba9add00622d1eae0ee21321cf9924480c7,
+  to 2026-11-19.5, 518 families, SHA-256 0b57727b4318858f6bf0b623596b668155b2994660ed6690ffbe5ba24414df1b, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/auth.github.token.polling.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/auth.github.token.polling.json, SHA-256 88ec63bd11a061590c7d87f4dd8374ad5e897e6725277587d3214e1d0edbe5c4.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.12 SHA-256 00c9224678e694491c50085d4d6b55ced0b6e7e11b95bb205748cf3b31252e1a;
+  after 2026-11-16.13 SHA-256 e427220da5356ca78cbf6e2c36126be4824956f64c37df5c344494856750ea04. Existing semantic owner Plans/GitHub_API_Auth_and_Flows.md#GAAAF-081,
+  payload owner Plans/Contracts_V0.md#CV-690, resource Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_token_polling
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2149
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2149
+preserved_exact_tokens:
+- auth.github.token.polling
+- 1393c12ad4ff4ce7374c2eb807b13ef66ad4bbea322f720ea88e4275b000f0e4
+- 2026-11-19.4
+- 2026-11-19.5
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2456: Event Authority corrects backup.destination_changed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2456
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for backup.destination_changed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2150; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 c88b18c17892e3a43817343b6e4a46efd3d6763c5bdc092a23743e64bcd993ad.
+  Its scope is application_only. Payload editions: application `pm.event_payload.backup.destination_changed.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.5, 518 families, SHA-256 0b57727b4318858f6bf0b623596b668155b2994660ed6690ffbe5ba24414df1b,
+  to 2026-11-19.6, 518 families, SHA-256 b5dcfc00f5ffba7ba1b245387e011d969278744d2d19ab7fec9b8e6585acfb36, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/backup.destination_changed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/backup.destination_changed.json, SHA-256 e146ff37ff6653e3a8013705cdea4adce2385ac5acc989befb31582f707147d0.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.13 SHA-256 e427220da5356ca78cbf6e2c36126be4824956f64c37df5c344494856750ea04;
+  after 2026-11-16.14 SHA-256 6e5f154581e14fb10b2af7e417767bc979df542c80f799ef30b2f2df04b4c7ef. Existing semantic owner Plans/Backup_Restore_System.md#BRS-1400,
+  payload owner Plans/Contracts_V0.md#CV-1400, resource Plans/event_payloads/w3e/backup_destination_changed.schema.json# retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2150
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2150
+preserved_exact_tokens:
+- backup.destination_changed
+- c88b18c17892e3a43817343b6e4a46efd3d6763c5bdc092a23743e64bcd993ad
+- 2026-11-19.5
+- 2026-11-19.6
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2457: Event Authority corrects backup.state_changed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2457
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for backup.state_changed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2151; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 d18d8c971ae7cd231642e027b4b1b73e34033a15be71cf50b408a6a400ab83e5.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.backup.state_changed.v1` (RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.backup.state_changed.v1` (RP-OPERATIONAL-2555D@1.0.0, producer
+  requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.6, 518 families, SHA-256 b5dcfc00f5ffba7ba1b245387e011d969278744d2d19ab7fec9b8e6585acfb36,
+  to 2026-11-19.7, 518 families, SHA-256 ea713346ab7623ec2eeb20cb9c668e55e824a54342c58e6945a951e347115cac, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/backup.state_changed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/backup.state_changed.json, SHA-256 bde05c6ef62825cef8366d43812a350e1d9a200c97436a875a2dcb7f13e17d81.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.14 SHA-256 6e5f154581e14fb10b2af7e417767bc979df542c80f799ef30b2f2df04b4c7ef;
+  after 2026-11-16.15 SHA-256 649a883bd178a82914e9a81dcf4fabad50674ea048652f8d9c0ec1a0209d6a60. Existing semantic owner Plans/Backup_Restore_System.md#BRS-1401,
+  payload owner Plans/Contracts_V0.md#CV-1401, resource Plans/event_payloads/w3e/backup_state_changed.schema.json# retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2151
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2151
+preserved_exact_tokens:
+- backup.state_changed
+- d18d8c971ae7cd231642e027b4b1b73e34033a15be71cf50b408a6a400ab83e5
+- 2026-11-19.6
+- 2026-11-19.7
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2458: Event Authority corrects browser.context_captured (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2458
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for browser.context_captured only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2155; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 1877201127ce7bd56e678636df559d819347611ad0b761fc4bb4d24a9db73dd9.
+  Its scope is application_or_project. Payload editions: application `pm.ds15.browser_context_captured.payload.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.ds15.browser_context_captured.payload.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.7, 518 families, SHA-256 ea713346ab7623ec2eeb20cb9c668e55e824a54342c58e6945a951e347115cac,
+  to 2026-11-19.8, 518 families, SHA-256 1a13be381c92ff687e3f3cc49eed53aa80689e4e36332ab40636685c9b162ccc, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/browser.context_captured.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/browser.context_captured.json, SHA-256 e8761bfe9c9d399175a2a8142773143bec216b000ab4ebff8e6d3ada7575708f.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.18 SHA-256 8364cf34146e219784212f89e2b176b26b3bdcb708fe5bba1976bdfac05328e0;
+  after 2026-11-16.19 SHA-256 6f4d7cc2f5e98f707685227c0f42a4d52cb6aa5f4aa90b53934b1846bec4f2af. Existing semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-310,
+  payload owner Plans/Contracts_V0.md#CV-667, resource Plans/ds15_browser_context_captured.schema.json# retain their contracts.
+  Current citations were re-read from existing canonical text; original citations, records and decision entries remain in
+  the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original custody and
+  receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2155
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2155
+preserved_exact_tokens:
+- browser.context_captured
+- 1877201127ce7bd56e678636df559d819347611ad0b761fc4bb4d24a9db73dd9
+- 2026-11-19.7
+- 2026-11-19.8
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2459: Event Authority corrects browser.context_share_revoked (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2459
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for browser.context_share_revoked only, under DL-077 and DL-400, resolving post-landing Astra
+  finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2156; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 620d220923c921849b3e600c1daf579a65af643d8e929600b99cbad35f1b9820.
+  Its scope is application_or_project. Payload editions: application `pm.ds15.browser_context_share_revoked.payload.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.ds15.browser_context_share_revoked.payload.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.8, 518 families, SHA-256 1a13be381c92ff687e3f3cc49eed53aa80689e4e36332ab40636685c9b162ccc,
+  to 2026-11-19.9, 518 families, SHA-256 21275b6079787147cf8907652912b4983113c77884a85f44142bdb65919507e7, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/browser.context_share_revoked.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/browser.context_share_revoked.json, SHA-256 a07b35c89228d5f57eca20ff52725b337bc961d6dd0ce97b5e66e34417483baa.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.19 SHA-256 6f4d7cc2f5e98f707685227c0f42a4d52cb6aa5f4aa90b53934b1846bec4f2af;
+  after 2026-11-16.20 SHA-256 111a17ab633a198a96701fe42f95f2f7f6e6aac61c0efdb6cb513e34c815ffd5. Existing semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321,
+  payload owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321, resource Plans/ds15_browser_context_share_revoked.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2156
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2156
+preserved_exact_tokens:
+- browser.context_share_revoked
+- 620d220923c921849b3e600c1daf579a65af643d8e929600b99cbad35f1b9820
+- 2026-11-19.8
+- 2026-11-19.9
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2460: Event Authority corrects browser.context_shared (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2460
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for browser.context_shared only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2157; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 609e928478ec586468e5e4e7a847d58d227be526fe65e5edcdf3e2839b5f52c7.
+  Its scope is application_or_project. Payload editions: application `pm.ds15.browser_context_shared.payload.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.ds15.browser_context_shared.payload.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer
+  requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.9, 518 families, SHA-256 21275b6079787147cf8907652912b4983113c77884a85f44142bdb65919507e7,
+  to 2026-11-19.10, 518 families, SHA-256 b3290c582f0fad7a5f843dd942fa6d3bffb16ed636614dfebd4aad3727aeb066, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/browser.context_shared.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/browser.context_shared.json, SHA-256 9c92ae613ed54de30e48454d1d73f1792554b57b3847dcc74edf6a659d56505f.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.20 SHA-256 111a17ab633a198a96701fe42f95f2f7f6e6aac61c0efdb6cb513e34c815ffd5;
+  after 2026-11-16.21 SHA-256 189b384040c1a6a085fde81c2ce6ec6560e285180cd09315b1fecf8b7d4b464b. Existing semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-320,
+  payload owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-320, resource Plans/ds15_browser_context_shared.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2157
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2157
+preserved_exact_tokens:
+- browser.context_shared
+- 609e928478ec586468e5e4e7a847d58d227be526fe65e5edcdf3e2839b5f52c7
+- 2026-11-19.9
+- 2026-11-19.10
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2461: Event Authority corrects bundle.annotation_state_changed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2461
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for bundle.annotation_state_changed only, under DL-077 and DL-400, resolving post-landing Astra
+  finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2224; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 79bcbe1a2264a8c24a53edb9553c6a0a8d4179e7e81fb064d7e3ede6cab9a7db.
+  Its scope is project_only. Payload editions: project `pm.card5.bundle_annotation_state_changed.payload.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.10, 518 families, SHA-256 b3290c582f0fad7a5f843dd942fa6d3bffb16ed636614dfebd4aad3727aeb066,
+  to 2026-11-19.11, 518 families, SHA-256 b17f7d44ac08cba4e312a62b384dfd6346208fe2403020b5d687538b31bdf9d7, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/bundle.annotation_state_changed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/bundle.annotation_state_changed.json, SHA-256
+  a9f672224d9bfb0081752e9c2342184a75e00d8ac290fa999d658c80b8217802.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.87 SHA-256 b890558c9fdcee820301a72364020f8a59bf3fbdfa794635e1ffa08b251cd511;
+  after 2026-11-16.88 SHA-256 131aef109ea2820046b2bbc2eb7ba98c2a7875f46a164c17f62bb4d426455a20. Existing semantic owner Plans/FinalGUISpec.md#F3-708,
+  payload owner Plans/FinalGUISpec.md#F3-708, resource Plans/card5_event_contracts/bundle_annotation_state_changed.payload.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2224
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2224
+preserved_exact_tokens:
+- bundle.annotation_state_changed
+- 79bcbe1a2264a8c24a53edb9553c6a0a8d4179e7e81fb064d7e3ede6cab9a7db
+- 2026-11-19.10
+- 2026-11-19.11
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2462: Event Authority corrects bundle.note_created (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2462
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for bundle.note_created only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2225; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 1bacce2a35120e6b59569955456000f26a71a5558fd294e56474b33e9979fc2d.
+  Its scope is project_only. Payload editions: project `pm.card5.bundle_note_created.payload.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.11, 518 families, SHA-256 b17f7d44ac08cba4e312a62b384dfd6346208fe2403020b5d687538b31bdf9d7,
+  to 2026-11-19.12, 518 families, SHA-256 c3c4711c2932a48748ce55f1075be3ce170758d8e571c9c943dcd19b7db92dc2, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/bundle.note_created.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/bundle.note_created.json, SHA-256 7dab080bec6fa526c48e0eb0d5525e4bbabbdc8d34ba99c176d64ce5ce50cf7e.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.88 SHA-256 131aef109ea2820046b2bbc2eb7ba98c2a7875f46a164c17f62bb4d426455a20;
+  after 2026-11-16.89 SHA-256 898b797f80997142cd47deca748db26c4170172f76f9baed3494b1ee6227c474. Existing semantic owner Plans/FinalGUISpec.md#F3-706,
+  payload owner Plans/FinalGUISpec.md#F3-706, resource Plans/card5_event_contracts/bundle_note_created.payload.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2225
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2225
+preserved_exact_tokens:
+- bundle.note_created
+- 1bacce2a35120e6b59569955456000f26a71a5558fd294e56474b33e9979fc2d
+- 2026-11-19.11
+- 2026-11-19.12
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2463: Event Authority corrects bundle.note_status_changed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2463
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for bundle.note_status_changed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2226; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 1b49dead8f0c9ea8bc47ebdba5b30ab957cdf34215e721a83bb0776e7853a312.
+  Its scope is project_only. Payload editions: project `pm.card5.bundle_note_status_changed.payload.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.12, 518 families, SHA-256 c3c4711c2932a48748ce55f1075be3ce170758d8e571c9c943dcd19b7db92dc2,
+  to 2026-11-19.13, 518 families, SHA-256 1e5390eba08a8b0840ef283745671d065a67aecc9e4391592ea11d25663d0676, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/bundle.note_status_changed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/bundle.note_status_changed.json, SHA-256 300a28f40543d66a910532e58b6490ba56794d6d9effc6be1678ce06cc06bf14.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.89 SHA-256 898b797f80997142cd47deca748db26c4170172f76f9baed3494b1ee6227c474;
+  after 2026-11-16.90 SHA-256 63b45ffeed46cc976b44b89b1d24de53e3f3f0e0d6ad59dd2b10e4a204596dcc. Existing semantic owner Plans/FinalGUISpec.md#F3-707,
+  payload owner Plans/FinalGUISpec.md#F3-707, resource Plans/card5_event_contracts/bundle_note_status_changed.payload.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2226
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2226
+preserved_exact_tokens:
+- bundle.note_status_changed
+- 1b49dead8f0c9ea8bc47ebdba5b30ab957cdf34215e721a83bb0776e7853a312
+- 2026-11-19.12
+- 2026-11-19.13
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2464: Event Authority corrects bundle.revision_completed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2464
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for bundle.revision_completed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2227; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 b9a176cb9b7f5cf9a2eaa197ab8d319f98aaae6cb943d47947022d0f240f9bdd.
+  Its scope is project_only. Payload editions: project `pm.event_payload.bundle.revision_completed.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.13, 518 families, SHA-256 1e5390eba08a8b0840ef283745671d065a67aecc9e4391592ea11d25663d0676,
+  to 2026-11-19.14, 518 families, SHA-256 c4e35f945de8a1d9214e916f88ce8087d27ee8d0a9dddfe2d7dbbfee515f7839, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/bundle.revision_completed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/bundle.revision_completed.json, SHA-256 22ea9e7f7b5a3fade9cc6111183c602a354e6c6fcb25171b7ff0d70a88d78f75.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.90 SHA-256 63b45ffeed46cc976b44b89b1d24de53e3f3f0e0d6ad59dd2b10e4a204596dcc;
+  after 2026-11-16.91 SHA-256 645b511bbbadc184f657902c58fae4f27fb07d0c11b0103b062df7037ca0f94e. Existing semantic owner Plans/assistant-chat-design.md#ACD-573,
+  payload owner Plans/Contracts_V0.md#CV-592, resource Plans/event_payloads/bundle_revision/revision_completed.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2227
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2227
+preserved_exact_tokens:
+- bundle.revision_completed
+- b9a176cb9b7f5cf9a2eaa197ab8d319f98aaae6cb943d47947022d0f240f9bdd
+- 2026-11-19.13
+- 2026-11-19.14
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2465: Event Authority corrects bundle.revision_interrupted (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2465
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for bundle.revision_interrupted only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2228; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 36bf05721352c5171c57cc9e527260ff44f17264f62c6d86b3325b443df36620.
+  Its scope is project_only. Payload editions: project `pm.event_payload.bundle.revision_interrupted.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.14, 518 families, SHA-256 c4e35f945de8a1d9214e916f88ce8087d27ee8d0a9dddfe2d7dbbfee515f7839,
+  to 2026-11-19.15, 518 families, SHA-256 8e6cc59ee8d72e750f3a51928eb5aefa91164ad4ffa9babb0ee8e681f5801f66, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/bundle.revision_interrupted.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/bundle.revision_interrupted.json, SHA-256 5cb2ffcd96aa3f16a78b0e660bc2f7939bf378623fd14f70fbdba432f4d5ebc0.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.91 SHA-256 645b511bbbadc184f657902c58fae4f27fb07d0c11b0103b062df7037ca0f94e;
+  after 2026-11-16.92 SHA-256 407ff851a88d9e7bb1d51afc45ca625526bf8fd359efd4e767fe5d76fd9cf34e. Existing semantic owner Plans/assistant-chat-design.md#ACD-574,
+  payload owner Plans/Contracts_V0.md#CV-593, resource Plans/event_payloads/bundle_revision/revision_interrupted.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2228
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2228
+preserved_exact_tokens:
+- bundle.revision_interrupted
+- 36bf05721352c5171c57cc9e527260ff44f17264f62c6d86b3325b443df36620
+- 2026-11-19.14
+- 2026-11-19.15
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2466: Event Authority corrects bundle.revision_requested (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2466
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for bundle.revision_requested only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2229; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 ddfe0f5e2ad32bd6a2aa5af91fa6efdf7a52e1830530a95c688bb131167bb3b1.
+  Its scope is project_only. Payload editions: project `pm.event_payload.bundle.revision_requested.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.15, 518 families, SHA-256 8e6cc59ee8d72e750f3a51928eb5aefa91164ad4ffa9babb0ee8e681f5801f66,
+  to 2026-11-19.16, 518 families, SHA-256 a8591ab88f6cd2f887e8db2905b8a8702f22eea83abaa0fbb117d25b8191593f, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/bundle.revision_requested.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/bundle.revision_requested.json, SHA-256 37f6fd91f9959f248684466f0bb45df9cf446c23566c04fc81419b3073565d69.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.92 SHA-256 407ff851a88d9e7bb1d51afc45ca625526bf8fd359efd4e767fe5d76fd9cf34e;
+  after 2026-11-16.93 SHA-256 b792a9c1340cdeb0877068ddf67bd603cd29c85cfa8c1608628550992fecbbe7. Existing semantic owner Plans/assistant-chat-design.md#ACD-571,
+  payload owner Plans/Contracts_V0.md#CV-590, resource Plans/event_payloads/bundle_revision/revision_requested.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2229
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2229
+preserved_exact_tokens:
+- bundle.revision_requested
+- ddfe0f5e2ad32bd6a2aa5af91fa6efdf7a52e1830530a95c688bb131167bb3b1
+- 2026-11-19.15
+- 2026-11-19.16
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2467: Event Authority corrects bundle.revision_started (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2467
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for bundle.revision_started only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2230; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 69c32706c55f58bfd07110955facf544efadcb083452390251fac6a1162b57e5.
+  Its scope is project_only. Payload editions: project `pm.event_payload.bundle.revision_started.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.16, 518 families, SHA-256 a8591ab88f6cd2f887e8db2905b8a8702f22eea83abaa0fbb117d25b8191593f,
+  to 2026-11-19.17, 518 families, SHA-256 35a6bb7e068679b19f65cdb5f7e5a69c4dcc9f8b17a194c8d4bdbccf32c83768, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/bundle.revision_started.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/bundle.revision_started.json, SHA-256 0f781301119082a0da1af13a5d2c6890a7d4a23ea1f210479df43dd9fe4813f3.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.93 SHA-256 b792a9c1340cdeb0877068ddf67bd603cd29c85cfa8c1608628550992fecbbe7;
+  after 2026-11-16.94 SHA-256 075d46f4e58c0873b41850e29092af14776c0ebdcd6ab1d0ce19911b069337ba. Existing semantic owner Plans/assistant-chat-design.md#ACD-572,
+  payload owner Plans/Contracts_V0.md#CV-591, resource Plans/event_payloads/bundle_revision/revision_started.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2230
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2230
+preserved_exact_tokens:
+- bundle.revision_started
+- 69c32706c55f58bfd07110955facf544efadcb083452390251fac6a1162b57e5
+- 2026-11-19.16
+- 2026-11-19.17
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2468: Event Authority corrects bundle.selection_forward_blocked (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2468
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for bundle.selection_forward_blocked only, under DL-077 and DL-400, resolving post-landing Astra
+  finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2231; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 43594d3dee7a946d7bc34f46481353ec88f3163e077e41c27b8576fcc7ff3695.
+  Its scope is application_or_project. Payload editions: application `pm.dch_event.bundle_selection_forward_blocked.application.v1`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption); project `pm.dch_event.bundle_selection_forward_blocked.project.v1`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.17, 518 families, SHA-256 35a6bb7e068679b19f65cdb5f7e5a69c4dcc9f8b17a194c8d4bdbccf32c83768,
+  to 2026-11-19.18, 518 families, SHA-256 786520609c6429497758c32cbe4fa8f0f4d2260d3c39c42b194597b95d31b9bd, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/bundle.selection_forward_blocked.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/bundle.selection_forward_blocked.json, SHA-256
+  8fac7784d58d329085013f479db608707cc54a1f560ae868e00dd0ea6a73cde1.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.94 SHA-256 075d46f4e58c0873b41850e29092af14776c0ebdcd6ab1d0ce19911b069337ba;
+  after 2026-11-16.95 SHA-256 f2cb952f9930a5e1cce3ed684c42a9b2cf0f5ad2bc97327cd18c7ca885b36bc8. Existing semantic owner Plans/assistant-chat-design.md#ACD-610,
+  payload owner Plans/Contracts_V0.md#CV-630, resource Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json#/$defs/project
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2231
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2231
+preserved_exact_tokens:
+- bundle.selection_forward_blocked
+- 43594d3dee7a946d7bc34f46481353ec88f3163e077e41c27b8576fcc7ff3695
+- 2026-11-19.17
+- 2026-11-19.18
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2469: Event Authority corrects bundle.selection_sent_to_chat (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2469
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for bundle.selection_sent_to_chat only, under DL-077 and DL-400, resolving post-landing Astra
+  finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2232; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 5056dba6d6238f6c5fc611fd2a8a594c981500bb8bbc1c69069d2718610f7adb.
+  Its scope is application_or_project. Payload editions: application `pm.dch_event.bundle_selection_sent_to_chat.application.v1`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption); project `pm.dch_event.bundle_selection_sent_to_chat.project.v1`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.18, 518 families, SHA-256 786520609c6429497758c32cbe4fa8f0f4d2260d3c39c42b194597b95d31b9bd,
+  to 2026-11-19.19, 518 families, SHA-256 fb8b6826e0851592a3b1f2da475c0ad09d6c4fb67ac8eaf7edd35c599d4e1acf, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/bundle.selection_sent_to_chat.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/bundle.selection_sent_to_chat.json, SHA-256 689b600ddf8aafb04c41cbf73e4d1efe8e67f53eaa3660f94b07132d88e1ed65.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.95 SHA-256 f2cb952f9930a5e1cce3ed684c42a9b2cf0f5ad2bc97327cd18c7ca885b36bc8;
+  after 2026-11-16.96 SHA-256 cbc321e92528f9d9337b1b5532fa2eae98cf5a0c1fec6ef8982d4da15bb4ee67. Existing semantic owner Plans/assistant-chat-design.md#ACD-611,
+  payload owner Plans/Contracts_V0.md#CV-631, resource Plans/dch_event_payloads/bundle_selection_sent_to_chat.schema.json#/$defs/project
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2232
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2232
+preserved_exact_tokens:
+- bundle.selection_sent_to_chat
+- 5056dba6d6238f6c5fc611fd2a8a594c981500bb8bbc1c69069d2718610f7adb
+- 2026-11-19.18
+- 2026-11-19.19
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2470: Event Authority corrects catalog.install.completed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2470
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for catalog.install.completed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2233; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 bbe37e678a4269b6a01666de7103842a7bd4955c9c0b87fc7447c9badb8856e8.
+  Its scope is application_or_project. Payload editions: application `pm.ds15.catalog_install_completed.payload.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption); project `pm.ds15.catalog_install_completed.payload.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.19, 518 families, SHA-256 fb8b6826e0851592a3b1f2da475c0ad09d6c4fb67ac8eaf7edd35c599d4e1acf,
+  to 2026-11-19.20, 518 families, SHA-256 21aeda54d767d0ab19cee8fa5d6a322603d996a7d61d8353dea7e8df0beec0cd, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/catalog.install.completed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/catalog.install.completed.json, SHA-256 e1f8d2807889dfa59424fefb97677436b416b599c5ee6f64ba4f88d372d96662.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.96 SHA-256 cbc321e92528f9d9337b1b5532fa2eae98cf5a0c1fec6ef8982d4da15bb4ee67;
+  after 2026-11-16.97 SHA-256 1b2e6b4a4b792d5bdcbe6aea87737e9a4be4896bfe13909434d8fec59708c5ae. Existing semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-319,
+  payload owner Plans/Contracts_V0.md#CV-678, resource Plans/ds15_catalog_install_completed.schema.json# retain their contracts.
+  Current citations were re-read from existing canonical text; original citations, records and decision entries remain in
+  the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original custody and
+  receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2233
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2233
+preserved_exact_tokens:
+- catalog.install.completed
+- bbe37e678a4269b6a01666de7103842a7bd4955c9c0b87fc7447c9badb8856e8
+- 2026-11-19.19
+- 2026-11-19.20
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2471: Event Authority corrects catalog.install.started (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2471
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for catalog.install.started only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2234; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 e5f67999c70dd41c0b2efce723bf55fff3f700f4c15474d023df17d426a4577f.
+  Its scope is application_or_project. Payload editions: application `pm.ds15.catalog_install_started.payload.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption); project `pm.ds15.catalog_install_started.payload.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.20, 518 families, SHA-256 21aeda54d767d0ab19cee8fa5d6a322603d996a7d61d8353dea7e8df0beec0cd,
+  to 2026-11-19.21, 518 families, SHA-256 e32c9ec6d5c4127d87e5dc594bd742c9e14ff9a70a80627a550b8ee7d280792b, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/catalog.install.started.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/catalog.install.started.json, SHA-256 711d43ce6593a2981ce84ce17b31792b1842ba21f090b667575c039b80d2b796.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.97 SHA-256 1b2e6b4a4b792d5bdcbe6aea87737e9a4be4896bfe13909434d8fec59708c5ae;
+  after 2026-11-16.98 SHA-256 4853878504095979ebb4e4ead17a78c6a1cf10a893e04549b3b78250c3aaa379. Existing semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-318,
+  payload owner Plans/Contracts_V0.md#CV-677, resource Plans/ds15_catalog_install_started.schema.json# retain their contracts.
+  Current citations were re-read from existing canonical text; original citations, records and decision entries remain in
+  the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original custody and
+  receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2234
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2234
+preserved_exact_tokens:
+- catalog.install.started
+- e5f67999c70dd41c0b2efce723bf55fff3f700f4c15474d023df17d426a4577f
+- 2026-11-19.20
+- 2026-11-19.21
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2472: Event Authority corrects catalog.remove.completed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2472
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for catalog.remove.completed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2235; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 0e30a801f20c9ed0a27bdc3be562a5ca78dc940a918c0c301f083416456f30c5.
+  Its scope is application_or_project. Payload editions: application `pm.ds15.catalog_remove_completed.payload.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption); project `pm.ds15.catalog_remove_completed.payload.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.21, 518 families, SHA-256 e32c9ec6d5c4127d87e5dc594bd742c9e14ff9a70a80627a550b8ee7d280792b,
+  to 2026-11-19.22, 518 families, SHA-256 2ded6b3862c40e47ea1f98b7441a3521a21b5935e2a579ba6ac498d9193eb7f0, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/catalog.remove.completed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/catalog.remove.completed.json, SHA-256 75489640ea3a2d36088f406ca210467f6c6dcea4f0799fc3f23c76bbaa67f558.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.98 SHA-256 4853878504095979ebb4e4ead17a78c6a1cf10a893e04549b3b78250c3aaa379;
+  after 2026-11-16.99 SHA-256 05a72551616209580909e316a201a92b71e3ce86bd6fc15da68f3867a1b72264. Existing semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-325,
+  payload owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-325, resource Plans/ds15_catalog_remove_completed.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2235
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2235
+preserved_exact_tokens:
+- catalog.remove.completed
+- 0e30a801f20c9ed0a27bdc3be562a5ca78dc940a918c0c301f083416456f30c5
+- 2026-11-19.21
+- 2026-11-19.22
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2473: Event Authority corrects catalog.remove.started (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2473
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for catalog.remove.started only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2236; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 bf4d385c55c157c3b504c923a3ae9025ea91be5b83f5adc30d44a1c9f3ef7c05.
+  Its scope is application_or_project. Payload editions: application `pm.ds15.catalog_remove_started.payload.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption); project `pm.ds15.catalog_remove_started.payload.v1` (RP-AUTHORITY-INDEFINITE@1.0.0, producer
+  requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.22, 518 families, SHA-256 2ded6b3862c40e47ea1f98b7441a3521a21b5935e2a579ba6ac498d9193eb7f0,
+  to 2026-11-19.23, 518 families, SHA-256 2540a35477bb7c3fe3d6f12109ea0323c5c902adef5c63bf4119720e7da8e389, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/catalog.remove.started.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/catalog.remove.started.json, SHA-256 9d8e11bba31c1b3a2bb18ceaeb8788765756af4bdda1888de40791ede9003e21.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.99 SHA-256 05a72551616209580909e316a201a92b71e3ce86bd6fc15da68f3867a1b72264;
+  after 2026-11-16.100 SHA-256 1d926ffc0000d9c8d0661a4e02effb6e157f3e485921ed7ac9485150cd1cb70b. Existing semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-324,
+  payload owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-324, resource Plans/ds15_catalog_remove_started.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2236
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2236
+preserved_exact_tokens:
+- catalog.remove.started
+- bf4d385c55c157c3b504c923a3ae9025ea91be5b83f5adc30d44a1c9f3ef7c05
+- 2026-11-19.22
+- 2026-11-19.23
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2474: Event Authority corrects catalog.update.completed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2474
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for catalog.update.completed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2237; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 704ff3bcf1ca5894e0635a24b1a5809cdce915b713f4cd9dc04592fc44a35503.
+  Its scope is application_or_project. Payload editions: application `pm.ds15.catalog_update_completed.payload.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption); project `pm.ds15.catalog_update_completed.payload.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.23, 518 families, SHA-256 2540a35477bb7c3fe3d6f12109ea0323c5c902adef5c63bf4119720e7da8e389,
+  to 2026-11-19.24, 518 families, SHA-256 d822ed3ad442b2ea39d4c16c46196f88e50e8d0b1337fea0c2607bae490618ab, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/catalog.update.completed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/catalog.update.completed.json, SHA-256 8d233932c09a287783fffda5afe00b4f4434920f4f303b392a37af1f7d981306.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.100 SHA-256 1d926ffc0000d9c8d0661a4e02effb6e157f3e485921ed7ac9485150cd1cb70b;
+  after 2026-11-16.101 SHA-256 320f90061812c145ac19843fd808d9b401a44cd85ea929018349c5f2f63e58f7. Existing semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-323,
+  payload owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-323, resource Plans/ds15_catalog_update_completed.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2237
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2237
+preserved_exact_tokens:
+- catalog.update.completed
+- 704ff3bcf1ca5894e0635a24b1a5809cdce915b713f4cd9dc04592fc44a35503
+- 2026-11-19.23
+- 2026-11-19.24
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2475: Event Authority corrects catalog.update.started (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2475
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for catalog.update.started only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2238; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 2cb70bab7c6f6f8ee9eecf645449b6cd1b00a0880f18db2a4870efb111fcad43.
+  Its scope is application_or_project. Payload editions: application `pm.ds15.catalog_update_started.payload.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption); project `pm.ds15.catalog_update_started.payload.v1` (RP-AUTHORITY-INDEFINITE@1.0.0, producer
+  requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.24, 518 families, SHA-256 d822ed3ad442b2ea39d4c16c46196f88e50e8d0b1337fea0c2607bae490618ab,
+  to 2026-11-19.25, 518 families, SHA-256 06b62d85bee98d0d5268eddaf5afb5f9e1e6bcc4358025f7146be3a1ef674c91, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/catalog.update.started.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/catalog.update.started.json, SHA-256 4168fd5ece75ea44344488125d308f89c6e77db996475ad8e6f42cf1e1fc49ee.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.101 SHA-256 320f90061812c145ac19843fd808d9b401a44cd85ea929018349c5f2f63e58f7;
+  after 2026-11-16.102 SHA-256 cf5b7c6cad2330fb06f616d117d7a2fd310cfc0b0d4626cf5f944e07fefd1c7a. Existing semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-322,
+  payload owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-322, resource Plans/ds15_catalog_update_started.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2238
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2238
+preserved_exact_tokens:
+- catalog.update.started
+- 2cb70bab7c6f6f8ee9eecf645449b6cd1b00a0880f18db2a4870efb111fcad43
+- 2026-11-19.24
+- 2026-11-19.25
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2476: Event Authority corrects chat.message (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2476
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for chat.message only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4]. The
+  original admission authority remains Plans/Decision_Log.md#DL-2239; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 dadbeac944e679bdcf2441de64fa0bccf469040824f741c71fd10920b98782e0.
+  Its scope is application_or_project. Payload editions: application `pm.dch_event.chat_message.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.dch_event.chat_message.project.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer
+  requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.25, 518 families, SHA-256 06b62d85bee98d0d5268eddaf5afb5f9e1e6bcc4358025f7146be3a1ef674c91,
+  to 2026-11-19.26, 518 families, SHA-256 45ebc70155d6cbe58fef42dad3cabb063a8a59a73bfaa09b5386b948558e0014, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/chat.message.json. Depth
+  assessment: reports/event-authority-20261116/admission-merge-2/depth/chat.message.json, SHA-256 004779d49ea91273d274684d815b5e05c504674059c537694bef44dcc7ff85e5.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.102 SHA-256 cf5b7c6cad2330fb06f616d117d7a2fd310cfc0b0d4626cf5f944e07fefd1c7a;
+  after 2026-11-16.103 SHA-256 a03a56451c36ed741b61aace711e3ff5b08f9e686cecf03553089c000e7a50c8. Existing semantic owner Plans/assistant-chat-design.md#ACD-612,
+  payload owner Plans/Contracts_V0.md#CV-632, resource Plans/dch_event_payloads/chat_message.schema.json#/$defs/project retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2239
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2239
+preserved_exact_tokens:
+- chat.message
+- dadbeac944e679bdcf2441de64fa0bccf469040824f741c71fd10920b98782e0
+- 2026-11-19.25
+- 2026-11-19.26
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2477: Event Authority corrects chat.response_stop_requested (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2477
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for chat.response_stop_requested only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2240; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 c6f7ddf0dcde3bfdacd596a38bdb7f7383bb0f6b91d323ac4160e0a402047304.
+  Its scope is application_or_project. Payload editions: application `pm.dch_stop.request.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.dch_stop.request.project.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.26, 518 families, SHA-256 45ebc70155d6cbe58fef42dad3cabb063a8a59a73bfaa09b5386b948558e0014,
+  to 2026-11-19.27, 518 families, SHA-256 1898cc33c8f7c72002ac85ea40ee41c47051e41041d34f52bc8bc02646becc04, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/chat.response_stop_requested.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/chat.response_stop_requested.json, SHA-256 2ebd04e8d18860c4cb608b9ab10733987fc8b5c5b013927d8510b7f861f72aa0.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.103 SHA-256 a03a56451c36ed741b61aace711e3ff5b08f9e686cecf03553089c000e7a50c8;
+  after 2026-11-16.104 SHA-256 c538effdf00626511ac849ebfe41afd36c80a9986b29b7b8b399701067a107f0. Existing semantic owner Plans/assistant-chat-design.md#ACD-627,
+  payload owner Plans/Contracts_V0.md#CV-647, resource Plans/dch_stop_request.schema.json#/$defs/project retain their contracts.
+  Current citations were re-read from existing canonical text; original citations, records and decision entries remain in
+  the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original custody and
+  receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2240
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2240
+preserved_exact_tokens:
+- chat.response_stop_requested
+- c6f7ddf0dcde3bfdacd596a38bdb7f7383bb0f6b91d323ac4160e0a402047304
+- 2026-11-19.26
+- 2026-11-19.27
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2478: Event Authority corrects chat.thread_archived (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2478
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for chat.thread_archived only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2241; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 fc9b24cc562a314e5b9a364d8ead1055a761791233a49b6ad8cf53d143408bb6.
+  Its scope is application_or_project. Payload editions: application `pm.dch_event.chat_thread_archived.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.dch_event.chat_thread_archived.project.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.27, 518 families, SHA-256 1898cc33c8f7c72002ac85ea40ee41c47051e41041d34f52bc8bc02646becc04,
+  to 2026-11-19.28, 518 families, SHA-256 5ed844e6890ad37b9f65d362002662bf6ca32ba729316c9bfb7a95389a5a632d, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/chat.thread_archived.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/chat.thread_archived.json, SHA-256 4fc7f873fde8fbe32194c967df66724c56eed0c10a5a96906c515f6ebc25d92d.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.104 SHA-256 c538effdf00626511ac849ebfe41afd36c80a9986b29b7b8b399701067a107f0;
+  after 2026-11-16.105 SHA-256 8cfeba9b1f46a9408adb65e0a0d033c1c3ea2aea93de937e6b5cb78bc6eece14. Existing semantic owner Plans/assistant-chat-design.md#ACD-613,
+  payload owner Plans/Contracts_V0.md#CV-633, resource Plans/dch_event_payloads/chat_thread_archived.schema.json#/$defs/project
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2241
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2241
+preserved_exact_tokens:
+- chat.thread_archived
+- fc9b24cc562a314e5b9a364d8ead1055a761791233a49b6ad8cf53d143408bb6
+- 2026-11-19.27
+- 2026-11-19.28
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2479: Event Authority corrects chat.thread_created (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2479
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for chat.thread_created only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2242; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 eb54296d348cc34bb6fbe7337ac1d2b09076086ee450e7eea60655976da19fc2.
+  Its scope is application_or_project. Payload editions: application `pm.dch_event.chat_thread_created.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.dch_event.chat_thread_created.project.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.28, 518 families, SHA-256 5ed844e6890ad37b9f65d362002662bf6ca32ba729316c9bfb7a95389a5a632d,
+  to 2026-11-19.29, 518 families, SHA-256 862869a034e56920107c3d79df9e42becbdd778ee9ab97eaf565a08bbe03d8dc, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/chat.thread_created.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/chat.thread_created.json, SHA-256 7baa3636274f644586f7437344f56c12590f7835722dd96d6490a7d947dc0eea.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.105 SHA-256 8cfeba9b1f46a9408adb65e0a0d033c1c3ea2aea93de937e6b5cb78bc6eece14;
+  after 2026-11-16.106 SHA-256 7f42200adb3cde8b0af1d0295b269ee2a6a2b10152a2a18261caa7900d381e7a. Existing semantic owner Plans/assistant-chat-design.md#ACD-614,
+  payload owner Plans/Contracts_V0.md#CV-634, resource Plans/dch_event_payloads/chat_thread_created.schema.json#/$defs/project
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2242
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2242
+preserved_exact_tokens:
+- chat.thread_created
+- eb54296d348cc34bb6fbe7337ac1d2b09076086ee450e7eea60655976da19fc2
+- 2026-11-19.28
+- 2026-11-19.29
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2480: Event Authority corrects chat.thread_deleted (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2480
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for chat.thread_deleted only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2243; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 e4d01e434e04caf46b91cbbd69499c371b62fae458d732bcdde5d5fad9d4e13e.
+  Its scope is application_or_project. Payload editions: application `pm.dch_event.chat_thread_deleted.application.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption); project `pm.dch_event.chat_thread_deleted.project.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.29, 518 families, SHA-256 862869a034e56920107c3d79df9e42becbdd778ee9ab97eaf565a08bbe03d8dc,
+  to 2026-11-19.30, 518 families, SHA-256 4bed185a2853f865c767a760937c2bcf26ff096b49e046eefbd6f7e083e2335a, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/chat.thread_deleted.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/chat.thread_deleted.json, SHA-256 3feeb22a3d9d3bf018cefbcfbd6db12406964d6d2dea418b0addc732ffb4e872.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.106 SHA-256 7f42200adb3cde8b0af1d0295b269ee2a6a2b10152a2a18261caa7900d381e7a;
+  after 2026-11-16.107 SHA-256 ee3fc066072c8c3033340a8c148e4d630827697999c67e631613ebaef0166349. Existing semantic owner Plans/assistant-chat-design.md#ACD-615,
+  payload owner Plans/Contracts_V0.md#CV-635, resource Plans/dch_event_payloads/chat_thread_deleted.schema.json#/$defs/project
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2243
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2243
+preserved_exact_tokens:
+- chat.thread_deleted
+- e4d01e434e04caf46b91cbbd69499c371b62fae458d732bcdde5d5fad9d4e13e
+- 2026-11-19.29
+- 2026-11-19.30
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2481: Event Authority corrects chat.thread_worktree_bound (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2481
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for chat.thread_worktree_bound only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2244; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 5c081c7d539d18c586b310355a67d273f7a23acb5c4b7a859d571256ad280ebc.
+  Its scope is application_or_project. Payload editions: application `pm.dch_event.chat_thread_worktree_bound.application.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption); project `pm.dch_event.chat_thread_worktree_bound.project.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.30, 518 families, SHA-256 4bed185a2853f865c767a760937c2bcf26ff096b49e046eefbd6f7e083e2335a,
+  to 2026-11-19.31, 518 families, SHA-256 13505b2be63df35c95e3f8a085790adebc77ddd2e2983f7eb3f30f138fd2ea72, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/chat.thread_worktree_bound.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/chat.thread_worktree_bound.json, SHA-256 bf59805788e219d65394306aff9766a8b429e376f48f78990ae3a44565cc4918.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.107 SHA-256 ee3fc066072c8c3033340a8c148e4d630827697999c67e631613ebaef0166349;
+  after 2026-11-16.108 SHA-256 5975bccd405c0e3c262c6e3c9d7e3f2cd4cb21d9cbb150eb6e8c3b63cb946d53. Existing semantic owner Plans/assistant-chat-design.md#ACD-616,
+  payload owner Plans/Contracts_V0.md#CV-636, resource Plans/dch_event_payloads/chat_thread_worktree_bound.schema.json#/$defs/project
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2244
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2244
+preserved_exact_tokens:
+- chat.thread_worktree_bound
+- 5c081c7d539d18c586b310355a67d273f7a23acb5c4b7a859d571256ad280ebc
+- 2026-11-19.30
+- 2026-11-19.31
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2482: Event Authority corrects chat.thread_worktree_create_failed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2482
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for chat.thread_worktree_create_failed only, under DL-077 and DL-400, resolving post-landing Astra
+  finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2245; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 9238a245b7b4646789fdb5c6313c03a9cfb38bb0925d5aca43573cafc1621549.
+  Its scope is application_or_project. Payload editions: application `pm.dch_event.chat_thread_worktree_create_failed.application.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption); project `pm.dch_event.chat_thread_worktree_create_failed.project.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.31, 518 families, SHA-256 13505b2be63df35c95e3f8a085790adebc77ddd2e2983f7eb3f30f138fd2ea72,
+  to 2026-11-19.32, 518 families, SHA-256 933fee106c1f2e8ec6fa92edacefa0e79e3d8009af012211bbb6da9629274dbf, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/chat.thread_worktree_create_failed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/chat.thread_worktree_create_failed.json, SHA-256
+  e96e885c54f01585a02bccc3a085f15e2cc549b0b4a0ba74c5acda747188872b.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.108 SHA-256 5975bccd405c0e3c262c6e3c9d7e3f2cd4cb21d9cbb150eb6e8c3b63cb946d53;
+  after 2026-11-16.109 SHA-256 5cbdd36b80bcbabf07c7c154bdf07c2997c844034bafa1cf62e7173f1ad5f768. Existing semantic owner Plans/assistant-chat-design.md#ACD-617,
+  payload owner Plans/Contracts_V0.md#CV-637, resource Plans/dch_event_payloads/chat_thread_worktree_create_failed.schema.json#/$defs/project
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2245
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2245
+preserved_exact_tokens:
+- chat.thread_worktree_create_failed
+- 9238a245b7b4646789fdb5c6313c03a9cfb38bb0925d5aca43573cafc1621549
+- 2026-11-19.31
+- 2026-11-19.32
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2483: Event Authority corrects chat.thread_worktree_merge_failed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2483
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for chat.thread_worktree_merge_failed only, under DL-077 and DL-400, resolving post-landing Astra
+  finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2246; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 190fae6ef8a3c1b450956caf184fdfe94abb2ea693f972fe69afaa60b03abaf0.
+  Its scope is application_or_project. Payload editions: application `pm.dch_event.chat_thread_worktree_merge_failed.application.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption); project `pm.dch_event.chat_thread_worktree_merge_failed.project.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.32, 518 families, SHA-256 933fee106c1f2e8ec6fa92edacefa0e79e3d8009af012211bbb6da9629274dbf,
+  to 2026-11-19.33, 518 families, SHA-256 7cc50d05d0bc2be46b342a12cd9edc62d6f65b1c65753aa137777666fad86790, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/chat.thread_worktree_merge_failed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/chat.thread_worktree_merge_failed.json, SHA-256
+  041a8cf720bfa3fe8a675ce6777c2162fed2aee2ac329407b3e594b8a6f43c36.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.109 SHA-256 5cbdd36b80bcbabf07c7c154bdf07c2997c844034bafa1cf62e7173f1ad5f768;
+  after 2026-11-16.110 SHA-256 69a5268981b96a4c8fdad192a8f2c2c905f10517b839edc449b4ace930686bdc. Existing semantic owner Plans/assistant-chat-design.md#ACD-618,
+  payload owner Plans/Contracts_V0.md#CV-638, resource Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json#/$defs/project
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2246
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2246
+preserved_exact_tokens:
+- chat.thread_worktree_merge_failed
+- 190fae6ef8a3c1b450956caf184fdfe94abb2ea693f972fe69afaa60b03abaf0
+- 2026-11-19.32
+- 2026-11-19.33
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2484: Event Authority corrects chat.thread_worktree_merged (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2484
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for chat.thread_worktree_merged only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2247; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 1bc4a5a898763576d87be4cfe16dd69eca27628ace5d770f6b7fc6f060a27ece.
+  Its scope is application_or_project. Payload editions: application `pm.dch_event.chat_thread_worktree_merged.application.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption); project `pm.dch_event.chat_thread_worktree_merged.project.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.33, 518 families, SHA-256 7cc50d05d0bc2be46b342a12cd9edc62d6f65b1c65753aa137777666fad86790,
+  to 2026-11-19.34, 518 families, SHA-256 ed0856a18b0ca204826bb08a2a2e0c1c4b2d124f1239596e60419e824b10b1c4, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/chat.thread_worktree_merged.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/chat.thread_worktree_merged.json, SHA-256 cf0002cee531623728719f69f925e80681747e57ed3eeb029564dbee48ced62f.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.110 SHA-256 69a5268981b96a4c8fdad192a8f2c2c905f10517b839edc449b4ace930686bdc;
+  after 2026-11-16.111 SHA-256 360bcadd66f887db57dca456d3160eaf6eb26f325424de55c1e617d3cabe3ad7. Existing semantic owner Plans/assistant-chat-design.md#ACD-619,
+  payload owner Plans/Contracts_V0.md#CV-639, resource Plans/dch_event_payloads/chat_thread_worktree_merged.schema.json#/$defs/project
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2247
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2247
+preserved_exact_tokens:
+- chat.thread_worktree_merged
+- 1bc4a5a898763576d87be4cfe16dd69eca27628ace5d770f6b7fc6f060a27ece
+- 2026-11-19.33
+- 2026-11-19.34
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2485: Event Authority corrects chat.thread_worktree_pr_created (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2485
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for chat.thread_worktree_pr_created only, under DL-077 and DL-400, resolving post-landing Astra
+  finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2248; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 b5aa45c4e4edfccc28764739da88cf19aedc733a92fd02a989be15a8df13feb8.
+  Its scope is application_or_project. Payload editions: application `pm.dch_event.chat_thread_worktree_pr_created.application.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption); project `pm.dch_event.chat_thread_worktree_pr_created.project.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.34, 518 families, SHA-256 ed0856a18b0ca204826bb08a2a2e0c1c4b2d124f1239596e60419e824b10b1c4,
+  to 2026-11-19.35, 518 families, SHA-256 443747a3c5c8cfede7a0ab99ea8d26f14b4de3ebab862695a939b201e6fdeb91, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/chat.thread_worktree_pr_created.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/chat.thread_worktree_pr_created.json, SHA-256
+  274f611799976be5f6a8c892d1f3fff8c742ac6e2cc7c696e5ee5b18656ba3b9.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.111 SHA-256 360bcadd66f887db57dca456d3160eaf6eb26f325424de55c1e617d3cabe3ad7;
+  after 2026-11-16.112 SHA-256 01bc9035eedc01fa8cfd13b652fd9b5752a4cf513d45b903ccfbf629c83b46c5. Existing semantic owner Plans/assistant-chat-design.md#ACD-620,
+  payload owner Plans/Contracts_V0.md#CV-640, resource Plans/dch_event_payloads/chat_thread_worktree_pr_created.schema.json#/$defs/project
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2248
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2248
+preserved_exact_tokens:
+- chat.thread_worktree_pr_created
+- b5aa45c4e4edfccc28764739da88cf19aedc733a92fd02a989be15a8df13feb8
+- 2026-11-19.34
+- 2026-11-19.35
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2486: Event Authority corrects chat.thread_worktree_pr_failed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2486
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for chat.thread_worktree_pr_failed only, under DL-077 and DL-400, resolving post-landing Astra
+  finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2249; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 41aa05fbccf1c7b270f4e8b631c0bce8bb580ccabff4f88d509612972ebebcc4.
+  Its scope is application_or_project. Payload editions: application `pm.dch_event.chat_thread_worktree_pr_failed.application.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption); project `pm.dch_event.chat_thread_worktree_pr_failed.project.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.35, 518 families, SHA-256 443747a3c5c8cfede7a0ab99ea8d26f14b4de3ebab862695a939b201e6fdeb91,
+  to 2026-11-19.36, 518 families, SHA-256 0843522150a2d5e01b7a476a86e2ada6ad8e41eb6c23ba322c1735d3e90b95ac, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/chat.thread_worktree_pr_failed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/chat.thread_worktree_pr_failed.json, SHA-256
+  93582ba45c9ff0c8322381bda0c523a628544f989c33a7a4cd7d41776f834fd8.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.112 SHA-256 01bc9035eedc01fa8cfd13b652fd9b5752a4cf513d45b903ccfbf629c83b46c5;
+  after 2026-11-16.113 SHA-256 d67453014b8941935e029360094487b2e93a8af97d3e464c25aa3ffd97a439e8. Existing semantic owner Plans/assistant-chat-design.md#ACD-621,
+  payload owner Plans/Contracts_V0.md#CV-641, resource Plans/dch_event_payloads/chat_thread_worktree_pr_failed.schema.json#/$defs/project
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2249
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2249
+preserved_exact_tokens:
+- chat.thread_worktree_pr_failed
+- 41aa05fbccf1c7b270f4e8b631c0bce8bb580ccabff4f88d509612972ebebcc4
+- 2026-11-19.35
+- 2026-11-19.36
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2487: Event Authority corrects chat.thread_worktree_pre_merge_test_failed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2487
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for chat.thread_worktree_pre_merge_test_failed only, under DL-077 and DL-400, resolving post-landing
+  Astra finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2250; this entry records no new
+  admission, verdict, policy choice or producer adoption. Current row canonical SHA-256 3821251061e9ac2bba69ed482263d13beb3296c5109d98ae08f37fa15538f4e5.
+  Its scope is application_or_project. Payload editions: application `pm.dch_event.chat_thread_worktree_pre_merge_test_failed.application.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption); project `pm.dch_event.chat_thread_worktree_pre_merge_test_failed.project.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.36, 518 families, SHA-256 0843522150a2d5e01b7a476a86e2ada6ad8e41eb6c23ba322c1735d3e90b95ac,
+  to 2026-11-19.37, 518 families, SHA-256 e2b08df9a279ade1256a969b0b79dd8b3388fa942821b47751749ec97a5a5b01, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/chat.thread_worktree_pre_merge_test_failed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/chat.thread_worktree_pre_merge_test_failed.json,
+  SHA-256 391e4cc02eba263a469e7a759cb4f9c13a3cf0b2baa8616d419f61fb478f8638.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.113 SHA-256 d67453014b8941935e029360094487b2e93a8af97d3e464c25aa3ffd97a439e8;
+  after 2026-11-16.114 SHA-256 a94f16e440ebf0cc6ab03befc4f4a6533e1fca7ba8ac1abfc4261d870f2e0ea4. Existing semantic owner Plans/assistant-chat-design.md#ACD-622,
+  payload owner Plans/Contracts_V0.md#CV-642, resource Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_failed.schema.json#/$defs/project
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2250
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2250
+preserved_exact_tokens:
+- chat.thread_worktree_pre_merge_test_failed
+- 3821251061e9ac2bba69ed482263d13beb3296c5109d98ae08f37fa15538f4e5
+- 2026-11-19.36
+- 2026-11-19.37
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2488: Event Authority corrects chat.thread_worktree_pre_merge_test_passed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2488
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for chat.thread_worktree_pre_merge_test_passed only, under DL-077 and DL-400, resolving post-landing
+  Astra finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2251; this entry records no new
+  admission, verdict, policy choice or producer adoption. Current row canonical SHA-256 82ad3232455910fcef5f49d79d69d4709149b509695f7b275367c8313ac425ee.
+  Its scope is application_or_project. Payload editions: application `pm.dch_event.chat_thread_worktree_pre_merge_test_passed.application.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption); project `pm.dch_event.chat_thread_worktree_pre_merge_test_passed.project.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.37, 518 families, SHA-256 e2b08df9a279ade1256a969b0b79dd8b3388fa942821b47751749ec97a5a5b01,
+  to 2026-11-19.38, 518 families, SHA-256 7fa7c892a633179d9dd08e6445257ae5ef0dea2ee974269bf6ac48729be35f4d, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/chat.thread_worktree_pre_merge_test_passed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/chat.thread_worktree_pre_merge_test_passed.json,
+  SHA-256 2644964abb80f8f816c9e856386bcdea0c73b2e3c4ae36cc183ac10f5c24b6ee.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.114 SHA-256 a94f16e440ebf0cc6ab03befc4f4a6533e1fca7ba8ac1abfc4261d870f2e0ea4;
+  after 2026-11-16.115 SHA-256 4e98aea9ebac9e8c817cb30d95633eb581c508da16151e391abd1a1f334b72d0. Existing semantic owner Plans/assistant-chat-design.md#ACD-623,
+  payload owner Plans/Contracts_V0.md#CV-643, resource Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_passed.schema.json#/$defs/project
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2251
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2251
+preserved_exact_tokens:
+- chat.thread_worktree_pre_merge_test_passed
+- 82ad3232455910fcef5f49d79d69d4709149b509695f7b275367c8313ac425ee
+- 2026-11-19.37
+- 2026-11-19.38
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2489: Event Authority corrects chat.thread_worktree_pre_merge_test_started (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2489
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for chat.thread_worktree_pre_merge_test_started only, under DL-077 and DL-400, resolving post-landing
+  Astra finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2252; this entry records no new
+  admission, verdict, policy choice or producer adoption. Current row canonical SHA-256 c77544816e9b8cf969200eac1437b4fc99bf28eb349890c23079d302f410bb93.
+  Its scope is application_or_project. Payload editions: application `pm.dch_event.chat_thread_worktree_pre_merge_test_started.application.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption); project `pm.dch_event.chat_thread_worktree_pre_merge_test_started.project.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.38, 518 families, SHA-256 7fa7c892a633179d9dd08e6445257ae5ef0dea2ee974269bf6ac48729be35f4d,
+  to 2026-11-19.39, 518 families, SHA-256 cd75fe95ec611b10f96b6c85b89492bf2b7a5b9089ff5a478946a288488072d3, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/chat.thread_worktree_pre_merge_test_started.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/chat.thread_worktree_pre_merge_test_started.json,
+  SHA-256 d5746ad2130b38299e78091d139f5449a7a60ff3029a2733dab3007562de0063.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.115 SHA-256 4e98aea9ebac9e8c817cb30d95633eb581c508da16151e391abd1a1f334b72d0;
+  after 2026-11-16.116 SHA-256 40a826d9d04295c047b836e9e43a7a81a80ebf4a381d6624fca993923854499a. Existing semantic owner Plans/assistant-chat-design.md#ACD-624,
+  payload owner Plans/Contracts_V0.md#CV-644, resource Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_started.schema.json#/$defs/project
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2252
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2252
+preserved_exact_tokens:
+- chat.thread_worktree_pre_merge_test_started
+- c77544816e9b8cf969200eac1437b4fc99bf28eb349890c23079d302f410bb93
+- 2026-11-19.38
+- 2026-11-19.39
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2490: Event Authority corrects chat.thread_worktree_renamed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2490
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for chat.thread_worktree_renamed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2253; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 1c627370ad36e4b8eb9d3e2da2a7e9f5d4834e83d98f3348bb7b7c1119dedf5b.
+  Its scope is application_or_project. Payload editions: application `pm.dch_event.chat_thread_worktree_renamed.application.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption); project `pm.dch_event.chat_thread_worktree_renamed.project.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.39, 518 families, SHA-256 cd75fe95ec611b10f96b6c85b89492bf2b7a5b9089ff5a478946a288488072d3,
+  to 2026-11-19.40, 518 families, SHA-256 0966374be99f91bd2739c2c494dc0a9e275f31c758f309ffd74f7d626243f2c2, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/chat.thread_worktree_renamed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/chat.thread_worktree_renamed.json, SHA-256 791a59de31cfd909824c518404517f233a5a986c14ba2e3695507ef920a2a515.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.116 SHA-256 40a826d9d04295c047b836e9e43a7a81a80ebf4a381d6624fca993923854499a;
+  after 2026-11-16.117 SHA-256 d958488e8b810d0094c4c071d8e10ecbaaaff136a6ccebb85ad30a78fcd43934. Existing semantic owner Plans/assistant-chat-design.md#ACD-625,
+  payload owner Plans/Contracts_V0.md#CV-645, resource Plans/dch_event_payloads/chat_thread_worktree_renamed.schema.json#/$defs/project
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2253
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2253
+preserved_exact_tokens:
+- chat.thread_worktree_renamed
+- 1c627370ad36e4b8eb9d3e2da2a7e9f5d4834e83d98f3348bb7b7c1119dedf5b
+- 2026-11-19.39
+- 2026-11-19.40
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2491: Event Authority corrects chat.thread_worktree_unbound (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2491
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for chat.thread_worktree_unbound only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2254; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 99cee1a9498a8fc0856e015840e7aa13c80c61148e5e9701a523f6206aaf3fd1.
+  Its scope is application_or_project. Payload editions: application `pm.dch_event.chat_thread_worktree_unbound.application.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption); project `pm.dch_event.chat_thread_worktree_unbound.project.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.40, 518 families, SHA-256 0966374be99f91bd2739c2c494dc0a9e275f31c758f309ffd74f7d626243f2c2,
+  to 2026-11-19.41, 518 families, SHA-256 b7cd06b800e1ce30fc361e1929fbe92365a2c475403ec962664c1825d8ff9cb7, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/chat.thread_worktree_unbound.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/chat.thread_worktree_unbound.json, SHA-256 35ef732b23f3927e895cf38bd62bd89e86a07e6875d5e8f5702312faf5029905.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.117 SHA-256 d958488e8b810d0094c4c071d8e10ecbaaaff136a6ccebb85ad30a78fcd43934;
+  after 2026-11-16.118 SHA-256 7fabbcdb79da535eff7c88ba3cae7378a123d2f3beae3dc10263c21b64ccad7e. Existing semantic owner Plans/assistant-chat-design.md#ACD-626,
+  payload owner Plans/Contracts_V0.md#CV-646, resource Plans/dch_event_payloads/chat_thread_worktree_unbound.schema.json#/$defs/project
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2254
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2254
+preserved_exact_tokens:
+- chat.thread_worktree_unbound
+- 99cee1a9498a8fc0856e015840e7aa13c80c61148e5e9701a523f6206aaf3fd1
+- 2026-11-19.40
+- 2026-11-19.41
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2492: Event Authority corrects concern.assigned (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2492
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for concern.assigned only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4].
+  The original admission authority remains Plans/Decision_Log.md#DL-2267; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 d2284f5c66367380f135f59bee31ee474022114836c9711f0608c3d57535f1bf.
+  Its scope is project_only. Payload editions: project `pm.card5.concern_assigned.payload.v2` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.41, 518 families, SHA-256 b7cd06b800e1ce30fc361e1929fbe92365a2c475403ec962664c1825d8ff9cb7,
+  to 2026-11-19.42, 518 families, SHA-256 e38e2943b332aff8d4ade99e0d63ce3e9e2a19d0b0dee048e85be768ddab4a71, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/concern.assigned.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/concern.assigned.json, SHA-256 a51668a132af3a3c147176060ee27b9d0ffa912d9ab6194519604828fbb0a65a.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.130 SHA-256 2930bd6f79b84f75051b13767fa84aab3ca0da8d55f231d44f5e5a30caaf17ef;
+  after 2026-11-16.131 SHA-256 2a1cb7cb26b9f08f5e56ea6be5ded35719a5d0c88833f9e99e285f46a52a3000. Existing semantic owner Plans/FinalGUISpec.md#F3-709,
+  payload owner Plans/FinalGUISpec.md#F3-709, resource Plans/card5_event_contracts/concern_assigned.payload.schema.json# retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2267
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2267
+preserved_exact_tokens:
+- concern.assigned
+- d2284f5c66367380f135f59bee31ee474022114836c9711f0608c3d57535f1bf
+- 2026-11-19.41
+- 2026-11-19.42
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2493: Event Authority corrects concern.created (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2493
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for concern.created only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4].
+  The original admission authority remains Plans/Decision_Log.md#DL-2268; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 99327ea273530958f5d6875f2e190a3e962896093f632bb7cb89488cf221773e.
+  Its scope is project_only. Payload editions: project `pm.concern_event.concern_created.schema.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.42, 518 families, SHA-256 e38e2943b332aff8d4ade99e0d63ce3e9e2a19d0b0dee048e85be768ddab4a71,
+  to 2026-11-19.43, 518 families, SHA-256 da0bc51789dd36df7cc25d91ed9c5d5c3c8fb164fdeac8ad4821c50ec27415db, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/concern.created.json. Depth
+  assessment: reports/event-authority-20261116/admission-merge-2/depth/concern.created.json, SHA-256 70572636a3825366b46302e462b4775bfb3625fd7c568785045dcdae1bf25ce4.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.131 SHA-256 2a1cb7cb26b9f08f5e56ea6be5ded35719a5d0c88833f9e99e285f46a52a3000;
+  after 2026-11-16.132 SHA-256 b5789a3aff06fe51e39ee3e397f5e93661a0ee0a14cd2639553e1b5ecd09a0af. Existing semantic owner Plans/Orchestrator_Page.md#OP-004,
+  payload owner Plans/Contracts_V0.md#CV-686, resource Plans/event_payloads/concern/concern_created.schema.json# retain their
+  contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2268
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2268
+preserved_exact_tokens:
+- concern.created
+- 99327ea273530958f5d6875f2e190a3e962896093f632bb7cb89488cf221773e
+- 2026-11-19.42
+- 2026-11-19.43
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2494: Event Authority corrects concern.evidence_linked (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2494
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for concern.evidence_linked only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2269; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 b55f068779f19caa1a4b791d15d70d912d550f98e8a394475dcbd1d34d8160be.
+  Its scope is project_only. Payload editions: project `pm.card5.concern_evidence_linked.payload.v2` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.43, 518 families, SHA-256 da0bc51789dd36df7cc25d91ed9c5d5c3c8fb164fdeac8ad4821c50ec27415db,
+  to 2026-11-19.44, 518 families, SHA-256 ca86d019af6d46f6e39781e45ec5cca10fb84571e11ffc9800fcb5efb7e5af5a, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/concern.evidence_linked.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/concern.evidence_linked.json, SHA-256 6ad4ccb0ea5c6b2cbfb696581059cb5d2db189ef1c353e97a7b32204301aa10c.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.132 SHA-256 b5789a3aff06fe51e39ee3e397f5e93661a0ee0a14cd2639553e1b5ecd09a0af;
+  after 2026-11-16.133 SHA-256 e694007d07923ee7c6fb516f2381fcbc122aa6e2f361704d2388f0e3ff3b8e92. Existing semantic owner Plans/FinalGUISpec.md#F3-710,
+  payload owner Plans/FinalGUISpec.md#F3-710, resource Plans/card5_event_contracts/concern_evidence_linked.payload.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2269
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2269
+preserved_exact_tokens:
+- concern.evidence_linked
+- b55f068779f19caa1a4b791d15d70d912d550f98e8a394475dcbd1d34d8160be
+- 2026-11-19.43
+- 2026-11-19.44
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2495: Event Authority corrects concern.promoted (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2495
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for concern.promoted only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4].
+  The original admission authority remains Plans/Decision_Log.md#DL-2270; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 14121dbe9c1d9334255c11148a223fa8b444981c17778cf729e69f3515183232.
+  Its scope is project_only. Payload editions: project `pm.card5.concern_promoted.payload.v2` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.44, 518 families, SHA-256 ca86d019af6d46f6e39781e45ec5cca10fb84571e11ffc9800fcb5efb7e5af5a,
+  to 2026-11-19.45, 518 families, SHA-256 6e9cfcefef2ce4abaaff8474c541747d7159c754ad32233054209d4acf2261a2, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/concern.promoted.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/concern.promoted.json, SHA-256 bfe03a064a77dfd3f04af7916988523562db435c999bc60ad465dcb6c6319cce.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.133 SHA-256 e694007d07923ee7c6fb516f2381fcbc122aa6e2f361704d2388f0e3ff3b8e92;
+  after 2026-11-16.134 SHA-256 84502abdb8e0c80fe5d007c5adde84a871d4bd52c83930c7c0c206dee8e5b422. Existing semantic owner Plans/FinalGUISpec.md#F3-711,
+  payload owner Plans/FinalGUISpec.md#F3-711, resource Plans/card5_event_contracts/concern_promoted.payload.schema.json# retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2270
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2270
+preserved_exact_tokens:
+- concern.promoted
+- 14121dbe9c1d9334255c11148a223fa8b444981c17778cf729e69f3515183232
+- 2026-11-19.44
+- 2026-11-19.45
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2496: Event Authority corrects concern.reopened (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2496
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for concern.reopened only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4].
+  The original admission authority remains Plans/Decision_Log.md#DL-2271; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 9db0fab6e7a58273e93c30d3cfa2d84807a5f873ac8f2c3a6df4184af911c837.
+  Its scope is project_only. Payload editions: project `pm.card5.concern_reopened.payload.v2` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.45, 518 families, SHA-256 6e9cfcefef2ce4abaaff8474c541747d7159c754ad32233054209d4acf2261a2,
+  to 2026-11-19.46, 518 families, SHA-256 770dd42833b6dc4dbcdce8f5922b0ce312347125cebf5c13333e74d2f7c6255b, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/concern.reopened.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/concern.reopened.json, SHA-256 68444575d9d8c49cf91c46d51b3b90f276d7e3262b6f5e939ffd7828cdcc36d5.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.134 SHA-256 84502abdb8e0c80fe5d007c5adde84a871d4bd52c83930c7c0c206dee8e5b422;
+  after 2026-11-16.135 SHA-256 0c9077b40707f45d02e07164cce7d0832377b71aeca92faccec9ca99a85ef14f. Existing semantic owner Plans/FinalGUISpec.md#F3-712,
+  payload owner Plans/FinalGUISpec.md#F3-712, resource Plans/card5_event_contracts/concern_reopened.payload.schema.json# retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2271
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2271
+preserved_exact_tokens:
+- concern.reopened
+- 9db0fab6e7a58273e93c30d3cfa2d84807a5f873ac8f2c3a6df4184af911c837
+- 2026-11-19.45
+- 2026-11-19.46
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2497: Event Authority corrects concern.resolved (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2497
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for concern.resolved only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4].
+  The original admission authority remains Plans/Decision_Log.md#DL-2272; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 10ba2f562e4872dddf3ace9fcacd8d93811510adc10ee7e806afaffafbf48882.
+  Its scope is project_only. Payload editions: project `pm.card5.concern_resolved.payload.v2` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.46, 518 families, SHA-256 770dd42833b6dc4dbcdce8f5922b0ce312347125cebf5c13333e74d2f7c6255b,
+  to 2026-11-19.47, 518 families, SHA-256 7f588f1dea75dc6b7bdf74e308aeaaebb88790cbed4c3c35b5bd2319e2c88bf0, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/concern.resolved.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/concern.resolved.json, SHA-256 a367b3dc55235edcd3cc58dcec6f0336c572a590bd9cb031bdc9ee4990ee745f.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.135 SHA-256 0c9077b40707f45d02e07164cce7d0832377b71aeca92faccec9ca99a85ef14f;
+  after 2026-11-16.136 SHA-256 567b0568f71aa44749c8286bc82753b783def6ccc3a5e2910c7ee1889d3fffb9. Existing semantic owner Plans/FinalGUISpec.md#F3-713,
+  payload owner Plans/FinalGUISpec.md#F3-713, resource Plans/card5_event_contracts/concern_resolved.payload.schema.json# retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2272
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2272
+preserved_exact_tokens:
+- concern.resolved
+- 10ba2f562e4872dddf3ace9fcacd8d93811510adc10ee7e806afaffafbf48882
+- 2026-11-19.46
+- 2026-11-19.47
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2498: Event Authority corrects concern.updated (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2498
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for concern.updated only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4].
+  The original admission authority remains Plans/Decision_Log.md#DL-2273; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 c09b7bcf120ab7694b79e51ba93f9c5b05d19b34e55a809a7ecc3233ae3c65d3.
+  Its scope is project_only. Payload editions: project `pm.card5.concern_updated.payload.v2` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.47, 518 families, SHA-256 7f588f1dea75dc6b7bdf74e308aeaaebb88790cbed4c3c35b5bd2319e2c88bf0,
+  to 2026-11-19.48, 518 families, SHA-256 bfe9ccec0938e9f9fe7830059761e53acf545f939013b4e575340bd6c54f0ce6, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/concern.updated.json. Depth
+  assessment: reports/event-authority-20261116/admission-merge-2/depth/concern.updated.json, SHA-256 bb63e51935b906238cb6ce8fcdc39269412e776f2001f08844d4c940507a22fc.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.136 SHA-256 567b0568f71aa44749c8286bc82753b783def6ccc3a5e2910c7ee1889d3fffb9;
+  after 2026-11-16.137 SHA-256 bbe44daa64e385c0833b4ba8dfcd61ba6ec0821b1e5ab4463f4b2e06c4c43046. Existing semantic owner Plans/FinalGUISpec.md#F3-714,
+  payload owner Plans/FinalGUISpec.md#F3-714, resource Plans/card5_event_contracts/concern_updated.payload.schema.json# retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2273
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2273
+preserved_exact_tokens:
+- concern.updated
+- c09b7bcf120ab7694b79e51ba93f9c5b05d19b34e55a809a7ecc3233ae3c65d3
+- 2026-11-19.47
+- 2026-11-19.48
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2499: Event Authority corrects config.migrated (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2499
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for config.migrated only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4].
+  The original admission authority remains Plans/Decision_Log.md#DL-2274; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 328044b5b0ad713ba06da6e000d1fcdb8298c278ccd822b47d63c1cc291746fe.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.config_migrated.v1` (RP-OPERATIONAL-2555D@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.config_migrated.v1` (RP-OPERATIONAL-2555D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.48, 518 families, SHA-256 bfe9ccec0938e9f9fe7830059761e53acf545f939013b4e575340bd6c54f0ce6,
+  to 2026-11-19.49, 518 families, SHA-256 c0d4184e97464de132768075ea5c403fcfc359469ce0e9d57a35233f6ad48a33, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/config.migrated.json. Depth
+  assessment: reports/event-authority-20261116/admission-merge-2/depth/config.migrated.json, SHA-256 dde8adf13e535fd7d548992aadbd71e975e30e2fce1ce2b8879fcf81b6a141dc.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.137 SHA-256 bbe44daa64e385c0833b4ba8dfcd61ba6ec0821b1e5ab4463f4b2e06c4c43046;
+  after 2026-11-16.138 SHA-256 b0ec11a0f0c5cff85ad74ceb65455d2c65e75a2b1d49ac4c2e4aa7e814e66ba0. Existing semantic owner Plans/Contracts_V0.md#CV-604,
+  payload owner Plans/Contracts_V0.md#CV-604, resource Plans/dt_event_contracts.schema.json#/$defs/config_migrated retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2274
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2274
+preserved_exact_tokens:
+- config.migrated
+- 328044b5b0ad713ba06da6e000d1fcdb8298c278ccd822b47d63c1cc291746fe
+- 2026-11-19.48
+- 2026-11-19.49
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2500: Event Authority corrects config.validation.failed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2500
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for config.validation.failed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [2]. The original admission authority remains Plans/Decision_Log.md#DL-2275; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 fe50eff361c353e716ab86eaf306945bcbe9f30fdea7a0079b71508558f12814.
+  Its scope is project_only. Payload editions: project `pm.event_payload.config_validation_failed.v1@1.0.0` (RP-RUNTIME-365D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.49, 518 families, SHA-256 c0d4184e97464de132768075ea5c403fcfc359469ce0e9d57a35233f6ad48a33,
+  to 2026-11-19.50, 518 families, SHA-256 a132806c2808ae39c8c9aecd8f425beae3801a4a2f31dab4fdba5773a36569e6, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/config.validation.failed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/config.validation.failed.json, SHA-256 e2dee17a515b0edfae72f1e0a7e49d9c2cbc9ad32c677d17df77d2b41aa0debb.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.138 SHA-256 b0ec11a0f0c5cff85ad74ceb65455d2c65e75a2b1d49ac4c2e4aa7e814e66ba0;
+  after 2026-11-16.139 SHA-256 f7a95b2a5f161ea9f48a310dcbc891c7ef5e860567727e2cc277f88d8f067a8a. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-680,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-680, resource Plans/orchestrator_event_payloads.schema.json#/$defs/config_validation_failed
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2275
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2275
+preserved_exact_tokens:
+- config.validation.failed
+- fe50eff361c353e716ab86eaf306945bcbe9f30fdea7a0079b71508558f12814
+- 2026-11-19.49
+- 2026-11-19.50
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2501: Event Authority corrects crew.board_message_posted (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2501
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for crew.board_message_posted only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [2, 4, 5]. The original admission authority remains Plans/Decision_Log.md#DL-2280; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 26eedb55fe5ece4133cd876a569a451c58d7fc04ff63895bbf4fd167717fb020.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.crew_board_message_posted.v1@1.0.0`
+  (RP-COORDINATION-180D@1.0.0, producer requires_owner_adoption); project `pm.event_payload.crew_board_message_posted.v1@1.0.0`
+  (RP-COORDINATION-180D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.50, 518 families, SHA-256 a132806c2808ae39c8c9aecd8f425beae3801a4a2f31dab4fdba5773a36569e6,
+  to 2026-11-19.51, 518 families, SHA-256 c1346ec8a6ac13fc997579befba115fa615c55451d54f946d86e68ecbaf6e1da, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/crew.board_message_posted.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/crew.board_message_posted.json, SHA-256 24519ae8d7fa18fa593c57399f228814d632d64ed30dffdb852b91897a265550.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.143 SHA-256 966928cf1eb74cfa35c8d0d880689188232e2b197242c262f2dcf578573639f9;
+  after 2026-11-16.144 SHA-256 6ab7d61f5bdbaff06115ff6e36fc07a3d887dcc53df7b42e0f294806dbf1ada7. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-681,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-681, resource Plans/event_payloads/admission_merge2/crew_board_message_posted.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2280
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2280
+preserved_exact_tokens:
+- crew.board_message_posted
+- 26eedb55fe5ece4133cd876a569a451c58d7fc04ff63895bbf4fd167717fb020
+- 2026-11-19.50
+- 2026-11-19.51
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2502: Event Authority corrects crew.board_message_read (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2502
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for crew.board_message_read only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [2, 4, 5]. The original admission authority remains Plans/Decision_Log.md#DL-2281; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 939940ecf8f2a80a59f848333d85bd6f0c36a5fc8653b163b685e5f45d0d72af.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.crew_board_message_read.v1@1.0.0` (RP-COORDINATION-180D@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.crew_board_message_read.v1@1.0.0` (RP-COORDINATION-180D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.51, 518 families, SHA-256 c1346ec8a6ac13fc997579befba115fa615c55451d54f946d86e68ecbaf6e1da,
+  to 2026-11-19.52, 518 families, SHA-256 f4093ddb90b5cea532c76f5fc993cdbcd9e211c85f2268114e33a200b6a6dd2d, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/crew.board_message_read.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/crew.board_message_read.json, SHA-256 fbb1894442e7fbe255ed43cc92da080194e8e7d81ae905f3c9007e2b38a4deee.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.144 SHA-256 6ab7d61f5bdbaff06115ff6e36fc07a3d887dcc53df7b42e0f294806dbf1ada7;
+  after 2026-11-16.145 SHA-256 bb25d3e1ebbe2daba9f46a443ab2645dfce4dfacc71c03d8986493ae2033c452. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-682,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-682, resource Plans/event_payloads/admission_merge2/crew_board_message_read.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2281
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2281
+preserved_exact_tokens:
+- crew.board_message_read
+- 939940ecf8f2a80a59f848333d85bd6f0c36a5fc8653b163b685e5f45d0d72af
+- 2026-11-19.51
+- 2026-11-19.52
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2503: Event Authority corrects crew.board_messages_archived (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2503
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for crew.board_messages_archived only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [2, 4, 5]. The original admission authority remains Plans/Decision_Log.md#DL-2282; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 d918c13964683a915ffcda4a457ad5cd346e70d193a501e87b6a538219026125.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.crew_board_messages_archived.v1@1.0.0`
+  (RP-COORDINATION-180D@1.0.0, producer requires_owner_adoption); project `pm.event_payload.crew_board_messages_archived.v1@1.0.0`
+  (RP-COORDINATION-180D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.52, 518 families, SHA-256 f4093ddb90b5cea532c76f5fc993cdbcd9e211c85f2268114e33a200b6a6dd2d,
+  to 2026-11-19.53, 518 families, SHA-256 f92ee9411d0651178e7af031c9425af74c0470e9521d54d4638dd95e804a51bc, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/crew.board_messages_archived.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/crew.board_messages_archived.json, SHA-256 5729ba854385a159707c889d776aaa329a147eee13f5f6e168f97d3ec51980a3.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.145 SHA-256 bb25d3e1ebbe2daba9f46a443ab2645dfce4dfacc71c03d8986493ae2033c452;
+  after 2026-11-16.146 SHA-256 e22bb9fc6fd8f84caba017badf8923231c87240d286881ee4374a7692d5c98c2. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-683,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-683, resource Plans/event_payloads/admission_merge2/crew_board_messages_archived.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2282
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2282
+preserved_exact_tokens:
+- crew.board_messages_archived
+- d918c13964683a915ffcda4a457ad5cd346e70d193a501e87b6a538219026125
+- 2026-11-19.52
+- 2026-11-19.53
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2504: Event Authority corrects debug.investigation.context_item_added (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2504
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for debug.investigation.context_item_added only, under DL-077 and DL-400, resolving post-landing
+  Astra finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2283; this entry records no new
+  admission, verdict, policy choice or producer adoption. Current row canonical SHA-256 3e0ea2c28125bac7e42e8643fe98e12cd7c3e89b19d2e73408772b1b1cabbe38.
+  Its scope is project_only. Payload editions: project `pm.debug_investigation.context_item_added.schema.v1` (RP-OPERATIONAL-2555D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.53, 518 families, SHA-256 f92ee9411d0651178e7af031c9425af74c0470e9521d54d4638dd95e804a51bc,
+  to 2026-11-19.54, 518 families, SHA-256 f5bf7efc3894425f4edeb24805c6f64b1ab16319003bbae4116b5547676656b6, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/debug.investigation.context_item_added.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/debug.investigation.context_item_added.json,
+  SHA-256 e45c72177fbcfd35301294d6086a515ab2a605478c0d4952d610190dec1bcaa7.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.146 SHA-256 e22bb9fc6fd8f84caba017badf8923231c87240d286881ee4374a7692d5c98c2;
+  after 2026-11-16.147 SHA-256 e1d958ad61ec96cbab886e424d7a8a624f604aaa9df94a6fb0d86577aaf5236d. Existing semantic owner Plans/Contracts_V0.md#CV-570,
+  payload owner Plans/Contracts_V0.md#CV-570, resource Plans/debug_investigation_event_payloads.schema.json#/$defs/context_item_added
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2283
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2283
+preserved_exact_tokens:
+- debug.investigation.context_item_added
+- 3e0ea2c28125bac7e42e8643fe98e12cd7c3e89b19d2e73408772b1b1cabbe38
+- 2026-11-19.53
+- 2026-11-19.54
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2505: Event Authority corrects debug.investigation.context_item_state_changed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2505
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for debug.investigation.context_item_state_changed only, under DL-077 and DL-400, resolving post-landing
+  Astra finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2284; this entry records no new
+  admission, verdict, policy choice or producer adoption. Current row canonical SHA-256 8dc77992ec6fbfb3a4a8f5caecf96b2f9eaa4a1e532e34e53618ae1b0d7a0e61.
+  Its scope is project_only. Payload editions: project `pm.debug_investigation.context_item_state_changed.schema.v1` (RP-OPERATIONAL-2555D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.54, 518 families, SHA-256 f5bf7efc3894425f4edeb24805c6f64b1ab16319003bbae4116b5547676656b6,
+  to 2026-11-19.55, 518 families, SHA-256 249a197559f34c1045f21fc366c9b415becc8abe9c212c9b8e234b83d081e01d, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/debug.investigation.context_item_state_changed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/debug.investigation.context_item_state_changed.json,
+  SHA-256 3341fa1283d4d4ded537d4c089db0ea4ac6a5530861789470c02b7ec369e4d80.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.147 SHA-256 e1d958ad61ec96cbab886e424d7a8a624f604aaa9df94a6fb0d86577aaf5236d;
+  after 2026-11-16.148 SHA-256 37986a5cf5754b0465615ce0583eb6345fa73486effac207f7b26885a9857e16. Existing semantic owner Plans/Contracts_V0.md#CV-571,
+  payload owner Plans/Contracts_V0.md#CV-571, resource Plans/debug_investigation_event_payloads.schema.json#/$defs/context_item_state_changed
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2284
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2284
+preserved_exact_tokens:
+- debug.investigation.context_item_state_changed
+- 8dc77992ec6fbfb3a4a8f5caecf96b2f9eaa4a1e532e34e53618ae1b0d7a0e61
+- 2026-11-19.54
+- 2026-11-19.55
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2506: Event Authority corrects debug.investigation.exported (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2506
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for debug.investigation.exported only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2285; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 c8b97878f44489abe187ef7dafaf85ce8dd5177eed33fcbadc71f44929fb6f98.
+  Its scope is project_only. Payload editions: project `pm.debug_investigation.exported.schema.v1` (RP-OPERATIONAL-2555D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.55, 518 families, SHA-256 249a197559f34c1045f21fc366c9b415becc8abe9c212c9b8e234b83d081e01d,
+  to 2026-11-19.56, 518 families, SHA-256 b2d46e39f686ff8c59ac92d0d85d1b5df85b82db99667b72bec22be4ac348774, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/debug.investigation.exported.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/debug.investigation.exported.json, SHA-256 9a8b86580dc654bc8accb1b5548da0408b901995f2ce84dc179bb62ab3bbcba5.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.148 SHA-256 37986a5cf5754b0465615ce0583eb6345fa73486effac207f7b26885a9857e16;
+  after 2026-11-16.149 SHA-256 1d5aabbc7f2e989bda4f6267164c75d17387d8367da2f607b02b92a2012f8206. Existing semantic owner Plans/Contracts_V0.md#CV-572,
+  payload owner Plans/Contracts_V0.md#CV-572, resource Plans/debug_investigation_event_payloads.schema.json#/$defs/exported
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2285
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2285
+preserved_exact_tokens:
+- debug.investigation.exported
+- c8b97878f44489abe187ef7dafaf85ce8dd5177eed33fcbadc71f44929fb6f98
+- 2026-11-19.55
+- 2026-11-19.56
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2507: Event Authority corrects debug.investigation.imported (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2507
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for debug.investigation.imported only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2286; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 36db74477afe14cc19a6b6b21521132f3fb46ff077bbe037e9cc2dd0c5704dd6.
+  Its scope is project_only. Payload editions: project `pm.debug_investigation.imported.schema.v1` (RP-OPERATIONAL-2555D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.56, 518 families, SHA-256 b2d46e39f686ff8c59ac92d0d85d1b5df85b82db99667b72bec22be4ac348774,
+  to 2026-11-19.57, 518 families, SHA-256 9eb778b20002bd35b7f05154031d207a211f2eb4d7a16db150e21880e64bde2c, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/debug.investigation.imported.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/debug.investigation.imported.json, SHA-256 c29f6f965793d9d3bffa8cc67cd23b1a516891e318a6d489693e2e6b7c3ca9d4.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.149 SHA-256 1d5aabbc7f2e989bda4f6267164c75d17387d8367da2f607b02b92a2012f8206;
+  after 2026-11-16.150 SHA-256 f74f56e1b5f10e7db5459aae42d691089b331950d0027fbb39ea59e89b14b797. Existing semantic owner Plans/Contracts_V0.md#CV-573,
+  payload owner Plans/Contracts_V0.md#CV-573, resource Plans/debug_investigation_event_payloads.schema.json#/$defs/imported
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2286
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2286
+preserved_exact_tokens:
+- debug.investigation.imported
+- 36db74477afe14cc19a6b6b21521132f3fb46ff077bbe037e9cc2dd0c5704dd6
+- 2026-11-19.56
+- 2026-11-19.57
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2508: Event Authority corrects debug.investigation.started (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2508
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for debug.investigation.started only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2287; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 368a012ef4af0bb969779fd599c199861943f39b8222733274cf8d37a59f7b7b.
+  Its scope is project_only. Payload editions: project `pm.debug_investigation.started.schema.v1` (RP-OPERATIONAL-2555D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.57, 518 families, SHA-256 9eb778b20002bd35b7f05154031d207a211f2eb4d7a16db150e21880e64bde2c,
+  to 2026-11-19.58, 518 families, SHA-256 ba90b7d4e7b7f278860d35749dd2478b50945dd186881aecf486eed99d2efb7a, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/debug.investigation.started.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/debug.investigation.started.json, SHA-256 e7556e68b1a888ba30c1669dba6f8d3703c67948f5b76cffb0c2bfc654b5b300.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.150 SHA-256 f74f56e1b5f10e7db5459aae42d691089b331950d0027fbb39ea59e89b14b797;
+  after 2026-11-16.151 SHA-256 3231e2b0c570f91e5e10692a8b9f192d1bde858b93a37f4e3dd743280810e8a3. Existing semantic owner Plans/Contracts_V0.md#CV-575,
+  payload owner Plans/Contracts_V0.md#CV-575, resource Plans/debug_investigation_event_payloads.schema.json#/$defs/started
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2287
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2287
+preserved_exact_tokens:
+- debug.investigation.started
+- 368a012ef4af0bb969779fd599c199861943f39b8222733274cf8d37a59f7b7b
+- 2026-11-19.57
+- 2026-11-19.58
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2509: Event Authority corrects debug.investigation.target_bound (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2509
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for debug.investigation.target_bound only, under DL-077 and DL-400, resolving post-landing Astra
+  finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2288; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 43e27751a1071f2c3b58bf2f7304e9f82514c7d03622c092792a49f953a0a492.
+  Its scope is project_only. Payload editions: project `pm.debug_investigation.target_bound.schema.v1` (RP-OPERATIONAL-2555D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.58, 518 families, SHA-256 ba90b7d4e7b7f278860d35749dd2478b50945dd186881aecf486eed99d2efb7a,
+  to 2026-11-19.59, 518 families, SHA-256 3d2bdeaac21882ce568b29b8aaa60f828e4a036d031352676e552fd5cdfceb92, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/debug.investigation.target_bound.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/debug.investigation.target_bound.json, SHA-256
+  a220d961c2e2c95401c3cde99bfc89514f2c1e3cceefcaf1d2e5e1efa1d846c4.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.151 SHA-256 3231e2b0c570f91e5e10692a8b9f192d1bde858b93a37f4e3dd743280810e8a3;
+  after 2026-11-16.152 SHA-256 93667d7c3cce3b58b39ca8b8d48d8587a8857fa55d1e02789227b9f3ccd52b78. Existing semantic owner Plans/Contracts_V0.md#CV-576,
+  payload owner Plans/Contracts_V0.md#CV-576, resource Plans/debug_investigation_event_payloads.schema.json#/$defs/target_bound
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2288
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2288
+preserved_exact_tokens:
+- debug.investigation.target_bound
+- 43e27751a1071f2c3b58bf2f7304e9f82514c7d03622c092792a49f953a0a492
+- 2026-11-19.58
+- 2026-11-19.59
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2510: Event Authority corrects debug.investigation.verification_recorded (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2510
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for debug.investigation.verification_recorded only, under DL-077 and DL-400, resolving post-landing
+  Astra finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2289; this entry records no new
+  admission, verdict, policy choice or producer adoption. Current row canonical SHA-256 c715ad566c840c3fe70c81f14ccd7fd3f989d6c03b4a0bf5c73a1eb294020151.
+  Its scope is project_only. Payload editions: project `pm.debug_investigation.verification_recorded.schema.v1` (RP-OPERATIONAL-2555D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.59, 518 families, SHA-256 3d2bdeaac21882ce568b29b8aaa60f828e4a036d031352676e552fd5cdfceb92,
+  to 2026-11-19.60, 518 families, SHA-256 bbb8138a7d746598a4a466ef8ebf27baa1aa57cc0e8ae5c73a8729b148863919, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/debug.investigation.verification_recorded.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/debug.investigation.verification_recorded.json,
+  SHA-256 fdb8cc7450c8035df40a74f72ac79306b04b4bc735227f9df95054b70079509e.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.152 SHA-256 93667d7c3cce3b58b39ca8b8d48d8587a8857fa55d1e02789227b9f3ccd52b78;
+  after 2026-11-16.153 SHA-256 45a3b06494273c15e83c7a1e8e248e43a6455c1bca7eb9b510299ed0807d5d19. Existing semantic owner Plans/Contracts_V0.md#CV-577,
+  payload owner Plans/Contracts_V0.md#CV-577, resource Plans/debug_investigation_event_payloads.schema.json#/$defs/verification_recorded
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2289
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2289
+preserved_exact_tokens:
+- debug.investigation.verification_recorded
+- c715ad566c840c3fe70c81f14ccd7fd3f989d6c03b4a0bf5c73a1eb294020151
+- 2026-11-19.59
+- 2026-11-19.60
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2511: Event Authority corrects dev.session.restarting (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2511
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for dev.session.restarting only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2290; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 6cc16e13ee1606ebd0e2808ad565848a01346a1d023733982cff7c7817c262f2.
+  Its scope is project_only. Payload editions: project `pm.ds15.dev_session_restarting.payload.v1` (RP-TELEMETRY-90D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.60, 518 families, SHA-256 bbb8138a7d746598a4a466ef8ebf27baa1aa57cc0e8ae5c73a8729b148863919,
+  to 2026-11-19.61, 518 families, SHA-256 87dbdafc2448d797e3f847f0791f8c6d5b48b1d154955619e995b9ec4ebd30fb, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/dev.session.restarting.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/dev.session.restarting.json, SHA-256 a9b1604cc2d2d51bf6d0a198aae5d6fa347454f5b641c803c8878296804d788c.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.153 SHA-256 45a3b06494273c15e83c7a1e8e248e43a6455c1bca7eb9b510299ed0807d5d19;
+  after 2026-11-16.154 SHA-256 57cd43745b649526bf9ef9984130e7275bc3f837c879f82284079920349496b8. Existing semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-314,
+  payload owner Plans/Contracts_V0.md#CV-671, resource Plans/ds15_dev_session_restarting.schema.json# retain their contracts.
+  Current citations were re-read from existing canonical text; original citations, records and decision entries remain in
+  the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original custody and
+  receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2290
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2290
+preserved_exact_tokens:
+- dev.session.restarting
+- 6cc16e13ee1606ebd0e2808ad565848a01346a1d023733982cff7c7817c262f2
+- 2026-11-19.60
+- 2026-11-19.61
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2512: Event Authority corrects dev.session.started (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2512
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for dev.session.started only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2291; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 54e1abbcc503563b793b7aa09ea236135655c50c8c10aee0e8c8997956957128.
+  Its scope is project_only. Payload editions: project `pm.ds15.dev_session_started.payload.v1` (RP-TELEMETRY-90D@1.0.0, producer
+  requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.61, 518 families, SHA-256 87dbdafc2448d797e3f847f0791f8c6d5b48b1d154955619e995b9ec4ebd30fb,
+  to 2026-11-19.62, 518 families, SHA-256 154a68452efc5d59a16ee8195ff7fca466f560ae9438e06dba81275d52e2e77b, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/dev.session.started.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/dev.session.started.json, SHA-256 8e526f0436b74a9a36e55cd7869bde8a53a7846c25047293ba7b2f70b74e644b.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.154 SHA-256 57cd43745b649526bf9ef9984130e7275bc3f837c879f82284079920349496b8;
+  after 2026-11-16.155 SHA-256 4739a1bf2d1bc83c53ee74ef3eb4a6589945ea45a9becaabc12b5f76724ca10a. Existing semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-311,
+  payload owner Plans/Contracts_V0.md#CV-668, resource Plans/ds15_dev_session_started.schema.json# retain their contracts.
+  Current citations were re-read from existing canonical text; original citations, records and decision entries remain in
+  the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original custody and
+  receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2291
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2291
+preserved_exact_tokens:
+- dev.session.started
+- 54e1abbcc503563b793b7aa09ea236135655c50c8c10aee0e8c8997956957128
+- 2026-11-19.61
+- 2026-11-19.62
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2513: Event Authority corrects dev.session.stopped (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2513
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for dev.session.stopped only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2292; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 843aa676280bfd1bdd4f736630939c403c9643da0b11755313e0bac1e64364c0.
+  Its scope is project_only. Payload editions: project `pm.ds15.dev_session_stopped.payload.v1` (RP-TELEMETRY-90D@1.0.0, producer
+  requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.62, 518 families, SHA-256 154a68452efc5d59a16ee8195ff7fca466f560ae9438e06dba81275d52e2e77b,
+  to 2026-11-19.63, 518 families, SHA-256 891737d3b86a446b33d68969e7c490b34d1efbd6543a0c0de0e26cd30d973a09, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/dev.session.stopped.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/dev.session.stopped.json, SHA-256 c3a8f2ba9bf7aeefc5d2fcb51932602e520bc53e3f1c1ad81a5d6d91085d6b43.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.155 SHA-256 4739a1bf2d1bc83c53ee74ef3eb4a6589945ea45a9becaabc12b5f76724ca10a;
+  after 2026-11-16.156 SHA-256 b4a7c7623a0a7a9a428deddafd0566ba4d58a4bb93480d969e47d8bd86e0d879. Existing semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-313,
+  payload owner Plans/Contracts_V0.md#CV-670, resource Plans/ds15_dev_session_stopped.schema.json# retain their contracts.
+  Current citations were re-read from existing canonical text; original citations, records and decision entries remain in
+  the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original custody and
+  receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2292
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2292
+preserved_exact_tokens:
+- dev.session.stopped
+- 843aa676280bfd1bdd4f736630939c403c9643da0b11755313e0bac1e64364c0
+- 2026-11-19.62
+- 2026-11-19.63
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2514: Event Authority corrects dev.session.stopping (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2514
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for dev.session.stopping only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2293; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 a19c87a3184b60c758dbdcd8ceffde2cc6866211654178594e7ed7d2f58333cb.
+  Its scope is project_only. Payload editions: project `pm.ds15.dev_session_stopping.payload.v1` (RP-TELEMETRY-90D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.63, 518 families, SHA-256 891737d3b86a446b33d68969e7c490b34d1efbd6543a0c0de0e26cd30d973a09,
+  to 2026-11-19.64, 518 families, SHA-256 606f9a7f44d7a35f7decf2638b7d942a0957c312ec49473d2f0e50ebd3e8521e, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/dev.session.stopping.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/dev.session.stopping.json, SHA-256 a1817eedd3e9ed1d89d4f8917f966c2c37d6b4da0abb99ff3ff3cc96b1c850f9.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.156 SHA-256 b4a7c7623a0a7a9a428deddafd0566ba4d58a4bb93480d969e47d8bd86e0d879;
+  after 2026-11-16.157 SHA-256 40f00ed142631d217f6db2955fd8cdf8c331ebdf180563451da4f13895e641cb. Existing semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-312,
+  payload owner Plans/Contracts_V0.md#CV-669, resource Plans/ds15_dev_session_stopping.schema.json# retain their contracts.
+  Current citations were re-read from existing canonical text; original citations, records and decision entries remain in
+  the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original custody and
+  receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2293
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2293
+preserved_exact_tokens:
+- dev.session.stopping
+- a19c87a3184b60c758dbdcd8ceffde2cc6866211654178594e7ed7d2f58333cb
+- 2026-11-19.63
+- 2026-11-19.64
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2515: Event Authority corrects doctor.custom_headless.checked (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2515
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for doctor.custom_headless.checked only, under DL-077 and DL-400, resolving post-landing Astra
+  finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2294; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 33d3505655db2bc52e8f14b04be4ebeb5dc4eb9e11a892339ada8d8a1aa99876.
+  Its scope is project_only. Payload editions: project `pm.ds15.doctor_custom_headless_checked.payload.v1` (RP-OPERATIONAL-2555D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.64, 518 families, SHA-256 606f9a7f44d7a35f7decf2638b7d942a0957c312ec49473d2f0e50ebd3e8521e,
+  to 2026-11-19.65, 518 families, SHA-256 2fde9c4414db1a9477d60ebb4e1e7d8fa7412f435392d2d8404aacb3dba1a251, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/doctor.custom_headless.checked.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/doctor.custom_headless.checked.json, SHA-256
+  e317d8df6970351b98f57357155c8c3fb07d8f2bd2133d22106583fc0be105fc.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.157 SHA-256 40f00ed142631d217f6db2955fd8cdf8c331ebdf180563451da4f13895e641cb;
+  after 2026-11-16.158 SHA-256 339e1107b6de8e3ceb3604049b3f9d66ee9b08c3fbea9d616af025398454e6cd. Existing semantic owner Plans/newtools.md#N2-217,
+  payload owner Plans/Contracts_V0.md#CV-660, resource Plans/ds15_doctor_custom_headless_checked.schema.json# retain their
+  contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2294
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2294
+preserved_exact_tokens:
+- doctor.custom_headless.checked
+- 33d3505655db2bc52e8f14b04be4ebeb5dc4eb9e11a892339ada8d8a1aa99876
+- 2026-11-19.64
+- 2026-11-19.65
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2516: Event Authority corrects filesafe.command_denied (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2516
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for filesafe.command_denied only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2301; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 dc5d2e57eac4127858f6f27149100664db008d7c2e0d74a286dcbb2f538e4d41.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/event_payloads/filesafe_command_denied/2.0.0`
+  (RP-FILESAFE-BLOCKED-COMMAND-APPLICATION-2555D@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/event_payloads/filesafe_command_denied/2.0.0`
+  (RP-OPERATIONAL-2555D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.65, 518 families, SHA-256 2fde9c4414db1a9477d60ebb4e1e7d8fa7412f435392d2d8404aacb3dba1a251,
+  to 2026-11-19.66, 518 families, SHA-256 2ad85df397b4d7342e6e7c02b9f2a263e3c3a352665a32c164586abd2fd7c1e8, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/filesafe.command_denied.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/filesafe.command_denied.json, SHA-256 7422c7202bee314dd058199b7ad3698a3722639d1fd707748b4bf87533ad279b.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.164 SHA-256 530b40eb371b22585ece0efef4d31cbf961f746919cb9ebebee274a457de9b03;
+  after 2026-11-16.165 SHA-256 679fa9e46e552241c5265a5e5eaef386f184dc00e714d5d753bb22ca1134075c. Existing semantic owner Plans/Contracts_V0.md#CV-550,
+  payload owner Plans/Contracts_V0.md#CV-550, resource Plans/event_payloads/filesafe_command_denied_v2.schema.json# retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2301
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2301
+preserved_exact_tokens:
+- filesafe.command_denied
+- dc5d2e57eac4127858f6f27149100664db008d7c2e0d74a286dcbb2f538e4d41
+- 2026-11-19.65
+- 2026-11-19.66
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2517: Event Authority corrects filesafe.destructive_override_denied (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2517
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for filesafe.destructive_override_denied only, under DL-077 and DL-400, resolving post-landing
+  Astra finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2302; this entry records no new
+  admission, verdict, policy choice or producer adoption. Current row canonical SHA-256 859170d0c67fbaf390bb13fde8b64011dbfe807d049e510a892651f28bb008cd.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_denied/2.0.0`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_denied/2.0.0`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.66, 518 families, SHA-256 2ad85df397b4d7342e6e7c02b9f2a263e3c3a352665a32c164586abd2fd7c1e8,
+  to 2026-11-19.67, 518 families, SHA-256 42261a78209a81ad1f416bba1351363f3d40d018117f5b6fdeb45730e9b6fbd4, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/filesafe.destructive_override_denied.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/filesafe.destructive_override_denied.json, SHA-256
+  79c5b5a4a17ec6f9cbd3dca3196a8caa96eb5cd2fc02768cd44d41707c6aad43.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.165 SHA-256 679fa9e46e552241c5265a5e5eaef386f184dc00e714d5d753bb22ca1134075c;
+  after 2026-11-16.166 SHA-256 653af5374b38f72c9925b303e8f57c4a74dbb455408b06972c17e00c8fb705be. Existing semantic owner Plans/Contracts_V0.md#CV-551,
+  payload owner Plans/Contracts_V0.md#CV-551, resource Plans/event_payloads/filesafe_destructive_override_denied_v2.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2302
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2302
+preserved_exact_tokens:
+- filesafe.destructive_override_denied
+- 859170d0c67fbaf390bb13fde8b64011dbfe807d049e510a892651f28bb008cd
+- 2026-11-19.66
+- 2026-11-19.67
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2518: Event Authority corrects filesafe.destructive_override_requested (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2518
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for filesafe.destructive_override_requested only, under DL-077 and DL-400, resolving post-landing
+  Astra finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2304; this entry records no new
+  admission, verdict, policy choice or producer adoption. Current row canonical SHA-256 d43468637f353979cefd64a75e14a7cffea801dac6fc85345f627baa0b5d02fd.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_requested/2.0.0`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_requested/2.0.0`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.67, 518 families, SHA-256 42261a78209a81ad1f416bba1351363f3d40d018117f5b6fdeb45730e9b6fbd4,
+  to 2026-11-19.68, 518 families, SHA-256 30e306590330a65dbb87693ff38fecf090b056502d5d30ac8da6700cb1653960, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/filesafe.destructive_override_requested.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/filesafe.destructive_override_requested.json,
+  SHA-256 05ab673bd9dffd6523190db9aa689eab4187756b27d7c8c319d52379cd6b4321.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.167 SHA-256 104efa77e535c3461d0aa021ef205e0c83ce8ea253d02db74bb4cd260779eb83;
+  after 2026-11-16.168 SHA-256 9119787e6919735f0891430bffcbeda88a6cc9e01672915caa22abadc24fbe23. Existing semantic owner Plans/Contracts_V0.md#CV-553,
+  payload owner Plans/Contracts_V0.md#CV-553, resource Plans/event_payloads/filesafe_destructive_override_requested_v2.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2304
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2304
+preserved_exact_tokens:
+- filesafe.destructive_override_requested
+- d43468637f353979cefd64a75e14a7cffea801dac6fc85345f627baa0b5d02fd
+- 2026-11-19.67
+- 2026-11-19.68
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2519: Event Authority corrects filesafe.guard_init_failed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2519
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for filesafe.guard_init_failed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2305; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 f2f44153e03536ee5ca4b3af9bcea174b88fa3868a8e3027c1414af46d945c03.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/event_payloads/filesafe_guard_init_failed/2.0.0`
+  (RP-FILESAFE-GUARD-FAILURE-APPLICATION-2555D@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/event_payloads/filesafe_guard_init_failed/2.0.0`
+  (RP-OPERATIONAL-2555D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.68, 518 families, SHA-256 30e306590330a65dbb87693ff38fecf090b056502d5d30ac8da6700cb1653960,
+  to 2026-11-19.69, 518 families, SHA-256 69d36c703fac80d7ce999d40696510c23ca261845d23161e439d8e9452ac82aa, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/filesafe.guard_init_failed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/filesafe.guard_init_failed.json, SHA-256 4b0eb2c568e7ce44de0824eb9e742190c00a17104d91715be94510ce76d27cb4.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.168 SHA-256 9119787e6919735f0891430bffcbeda88a6cc9e01672915caa22abadc24fbe23;
+  after 2026-11-16.169 SHA-256 a1cf33a77331217e352424314853818323978524601b1abbf1686a7ed9809835. Existing semantic owner Plans/Contracts_V0.md#CV-554,
+  payload owner Plans/Contracts_V0.md#CV-554, resource Plans/event_payloads/filesafe_guard_init_failed_v2.schema.json# retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2305
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2305
+preserved_exact_tokens:
+- filesafe.guard_init_failed
+- f2f44153e03536ee5ca4b3af9bcea174b88fa3868a8e3027c1414af46d945c03
+- 2026-11-19.68
+- 2026-11-19.69
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2520: Event Authority corrects filesafe.path_denied (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2520
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for filesafe.path_denied only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2306; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 7df8429f25c768e5a8889c2e1e0420ca383fe39745b87bb9552c746b46c68bb2.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/event_payloads/filesafe_path_denied/2.0.0`
+  (RP-FILESAFE-DENIED-PATH-APPLICATION-2555D@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/event_payloads/filesafe_path_denied/2.0.0`
+  (RP-OPERATIONAL-2555D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.69, 518 families, SHA-256 69d36c703fac80d7ce999d40696510c23ca261845d23161e439d8e9452ac82aa,
+  to 2026-11-19.70, 518 families, SHA-256 1637f870cf9834bcef8eb0e668792d6219e0e8dc2c3895b4eac0dc7522509f80, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/filesafe.path_denied.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/filesafe.path_denied.json, SHA-256 89a1447fcb756fd2f52857742b8ad29d9027d2ac417e15754811837b2a5224b6.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.169 SHA-256 a1cf33a77331217e352424314853818323978524601b1abbf1686a7ed9809835;
+  after 2026-11-16.170 SHA-256 3ea6f3955d6e738628baac1c812191ab15cf218d8ef1feaef43e0d16bfa4f20a. Existing semantic owner Plans/Contracts_V0.md#CV-555,
+  payload owner Plans/Contracts_V0.md#CV-555, resource Plans/event_payloads/filesafe_path_denied_v2.schema.json# retain their
+  contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2306
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2306
+preserved_exact_tokens:
+- filesafe.path_denied
+- 7df8429f25c768e5a8889c2e1e0420ca383fe39745b87bb9552c746b46c68bb2
+- 2026-11-19.69
+- 2026-11-19.70
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2521: Event Authority corrects filesafe.policy_degraded (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2521
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for filesafe.policy_degraded only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4, 6]. The original admission authority remains Plans/Decision_Log.md#DL-2307; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 5e86a1bddc6459c0adfe91481137086c47f34fa4431af2d85ab3123014fb53e8.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/event_payloads/filesafe_policy_degraded/2.0.0`
+  (RP-OPERATIONAL-2555D@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/event_payloads/filesafe_policy_degraded/2.0.0`
+  (RP-OPERATIONAL-2555D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.70, 518 families, SHA-256 1637f870cf9834bcef8eb0e668792d6219e0e8dc2c3895b4eac0dc7522509f80,
+  to 2026-11-19.71, 518 families, SHA-256 902f66e79010389666598e4b6a3a7732ffc2c4a89f271fe9d04e94393c47c608, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/filesafe.policy_degraded.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/filesafe.policy_degraded.json, SHA-256 e44d3679b42ea55d66d33c49f1649e409494aaa04598fa97da99b3558d4c8954.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.170 SHA-256 3ea6f3955d6e738628baac1c812191ab15cf218d8ef1feaef43e0d16bfa4f20a;
+  after 2026-11-16.171 SHA-256 3cd5d9943a97d76ab421adfbe5906c4d765e6821ab2b39ced85faf966a235039. Existing semantic owner Plans/Contracts_V0.md#CV-556,
+  payload owner Plans/Contracts_V0.md#CV-556, resource Plans/event_payloads/filesafe_policy_degraded_v2.schema.json# retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2307
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2307
+- Plans/Decision_Log.md#DL-2450
+preserved_exact_tokens:
+- filesafe.policy_degraded
+- 5e86a1bddc6459c0adfe91481137086c47f34fa4431af2d85ab3123014fb53e8
+- 2026-11-19.70
+- 2026-11-19.71
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2522: Event Authority corrects live.artifact.created (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2522
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for live.artifact.created only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2319; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 a923ee9ea95bcd7a766c4d670429990f87ab830f47f131071b1c102860c5cee0.
+  Its scope is project_only. Payload editions: project `pm.ds15.live_artifact_created.payload.v1` (RP-RUNTIME-365D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.71, 518 families, SHA-256 902f66e79010389666598e4b6a3a7732ffc2c4a89f271fe9d04e94393c47c608,
+  to 2026-11-19.72, 518 families, SHA-256 8cb45cc30d5226590367ad8cbd62f83bb62d2b0038cf252514d2bfd257c0dae4, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/live.artifact.created.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/live.artifact.created.json, SHA-256 3f751292586096f79317b8efa22f5136815767f933b4bd4022eaef16548ed53d.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.182 SHA-256 42b629830598d98e34a6bf96e95b33bea4cbc9b78a361ea4a515f49d8e511285;
+  after 2026-11-16.183 SHA-256 b96d18e406d2d14e52d57829fc293b553a68e6d0ca73e0c8cdba5eaeb516010e. Existing semantic owner Plans/newtools.md#N2-221,
+  payload owner Plans/Contracts_V0.md#CV-664, resource Plans/ds15_live_artifact_created.schema.json# retain their contracts.
+  Current citations were re-read from existing canonical text; original citations, records and decision entries remain in
+  the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original custody and
+  receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2319
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2319
+preserved_exact_tokens:
+- live.artifact.created
+- a923ee9ea95bcd7a766c4d670429990f87ab830f47f131071b1c102860c5cee0
+- 2026-11-19.71
+- 2026-11-19.72
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2523: Event Authority corrects live.session.completed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2523
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for live.session.completed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2320; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 91cfa83c27cf5a901210a0ab91ea80f03941dd105dbafade788b28b33ae14059.
+  Its scope is project_only. Payload editions: project `pm.ds15.live_session_completed.payload.v1` (RP-RUNTIME-365D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.72, 518 families, SHA-256 8cb45cc30d5226590367ad8cbd62f83bb62d2b0038cf252514d2bfd257c0dae4,
+  to 2026-11-19.73, 518 families, SHA-256 b7645d19a015c11c66421238675dbf36c243b5f2dc18f7225c8f5afa087d73e7, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/live.session.completed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/live.session.completed.json, SHA-256 93215c060cc804d54afce4d6ba42f7b8668e3b8f814787cc594263051d2867fc.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.183 SHA-256 b96d18e406d2d14e52d57829fc293b553a68e6d0ca73e0c8cdba5eaeb516010e;
+  after 2026-11-16.184 SHA-256 e57a1710489e1441a211521ee6afddab4547de07e9502145184595854295412e. Existing semantic owner Plans/newtools.md#N2-222,
+  payload owner Plans/Contracts_V0.md#CV-665, resource Plans/ds15_live_session_completed.schema.json# retain their contracts.
+  Current citations were re-read from existing canonical text; original citations, records and decision entries remain in
+  the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original custody and
+  receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2320
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2320
+preserved_exact_tokens:
+- live.session.completed
+- 91cfa83c27cf5a901210a0ab91ea80f03941dd105dbafade788b28b33ae14059
+- 2026-11-19.72
+- 2026-11-19.73
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2524: Event Authority corrects live.session.degraded (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2524
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for live.session.degraded only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2321; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 b8c57c9840bcee9ea7b4d9075e76ed6a106d8afb865cdc9eb578eec77af58fc5.
+  Its scope is project_only. Payload editions: project `pm.ds15.live_session_degraded.payload.v1` (RP-RUNTIME-365D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.73, 518 families, SHA-256 b7645d19a015c11c66421238675dbf36c243b5f2dc18f7225c8f5afa087d73e7,
+  to 2026-11-19.74, 518 families, SHA-256 b051c73e47843bafa6ee3b38958536a86f080180bd882013289c2a926d1ee1d6, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/live.session.degraded.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/live.session.degraded.json, SHA-256 e7003e7fc2615493d2cf6deabd1422770a33a970fdb49100ecb113b90f770822.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.184 SHA-256 e57a1710489e1441a211521ee6afddab4547de07e9502145184595854295412e;
+  after 2026-11-16.185 SHA-256 2b3b496f744baa209ad4ca04ee1ba5d026707175faf35d53b213333bd973286e. Existing semantic owner Plans/newtools.md#N2-223,
+  payload owner Plans/Contracts_V0.md#CV-666, resource Plans/ds15_live_session_degraded.schema.json# retain their contracts.
+  Current citations were re-read from existing canonical text; original citations, records and decision entries remain in
+  the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original custody and
+  receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2321
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2321
+preserved_exact_tokens:
+- live.session.degraded
+- b8c57c9840bcee9ea7b4d9075e76ed6a106d8afb865cdc9eb578eec77af58fc5
+- 2026-11-19.73
+- 2026-11-19.74
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2525: Event Authority corrects live.session.started (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2525
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for live.session.started only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2322; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 970cc745644d57c08690ed5287e30e0f9c798abb119d49d7b62b0f295404498e.
+  Its scope is project_only. Payload editions: project `pm.ds15.live_session_started.payload.v1` (RP-RUNTIME-365D@1.0.0, producer
+  requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.74, 518 families, SHA-256 b051c73e47843bafa6ee3b38958536a86f080180bd882013289c2a926d1ee1d6,
+  to 2026-11-19.75, 518 families, SHA-256 bf7a8c9b9b6c08691dfb567e8115a50b05ea22eb5aa1a362f8c59a18c0b8db7a, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/live.session.started.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/live.session.started.json, SHA-256 072f74fd3f8af17043820da5eac4be206d78a5da6ffeacc6c3437a0343e917b7.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.185 SHA-256 2b3b496f744baa209ad4ca04ee1ba5d026707175faf35d53b213333bd973286e;
+  after 2026-11-16.186 SHA-256 05e7c00788b54466b504773636fd331d2b8f17147dcdbc0e29cc9f153f144d11. Existing semantic owner Plans/newtools.md#N2-219,
+  payload owner Plans/Contracts_V0.md#CV-662, resource Plans/ds15_live_session_started.schema.json# retain their contracts.
+  Current citations were re-read from existing canonical text; original citations, records and decision entries remain in
+  the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original custody and
+  receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2322
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2322
+preserved_exact_tokens:
+- live.session.started
+- 970cc745644d57c08690ed5287e30e0f9c798abb119d49d7b62b0f295404498e
+- 2026-11-19.74
+- 2026-11-19.75
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2526: Event Authority corrects live.step.updated (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2526
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for live.step.updated only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4].
+  The original admission authority remains Plans/Decision_Log.md#DL-2323; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 c9f9e5af2ac4d798d48132b5d3b0237b938c215d5229582b0b08abac8110f142.
+  Its scope is project_only. Payload editions: project `pm.ds15.live_step_updated.payload.v1` (RP-RUNTIME-365D@1.0.0, producer
+  requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.75, 518 families, SHA-256 bf7a8c9b9b6c08691dfb567e8115a50b05ea22eb5aa1a362f8c59a18c0b8db7a,
+  to 2026-11-19.76, 518 families, SHA-256 295ec06204b842aca40dfc36c5341b16a15cc35ca366985c00da36b2c8597ed5, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/live.step.updated.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/live.step.updated.json, SHA-256 2883772b84391cbdfbe49fc6e81a5c517e7a92f4e5a5e22599e5833edc3b5c43.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.186 SHA-256 05e7c00788b54466b504773636fd331d2b8f17147dcdbc0e29cc9f153f144d11;
+  after 2026-11-16.187 SHA-256 bdc47259bc566aae55e34b5960a078efe3342791379d567f55c952a2411501e1. Existing semantic owner Plans/newtools.md#N2-220,
+  payload owner Plans/Contracts_V0.md#CV-663, resource Plans/ds15_live_step_updated.schema.json# retain their contracts. Current
+  citations were re-read from existing canonical text; original citations, records and decision entries remain in the named
+  Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original custody and receipt/publication
+  fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2323
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2323
+preserved_exact_tokens:
+- live.step.updated
+- c9f9e5af2ac4d798d48132b5d3b0237b938c215d5229582b0b08abac8110f142
+- 2026-11-19.75
+- 2026-11-19.76
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2527: Event Authority corrects model.catalog_refreshed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2527
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for model.catalog_refreshed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2337; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 84bbfad129f762ac02993231fe8ea86b11996ab4ee5371bd04f1c8ad0a7788a6.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.model_catalog_refreshed.v1` (RP-MODEL-CATALOG-APPLICATION-90D@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.model_catalog_refreshed.v1` (RP-TELEMETRY-90D@1.0.0, producer
+  requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.76, 518 families, SHA-256 295ec06204b842aca40dfc36c5341b16a15cc35ca366985c00da36b2c8597ed5,
+  to 2026-11-19.77, 518 families, SHA-256 b115975a43d4b41510c4267443f99af47deb18be58e50ef992822be08cec13cb, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/model.catalog_refreshed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/model.catalog_refreshed.json, SHA-256 9d8ad3675473f7832020d1b2e7db09f104c7f6d22e0eb525b9c32e2b04136bfa.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.200 SHA-256 3c6e0b724fa9841333695eac3d6732932239937028bcf6537b8d45c67349d79d;
+  after 2026-11-16.201 SHA-256 4acb8cf26b8e84ca4b61a033c288ae8d779f776fd1d809e841e1d208f31070d4. Existing semantic owner Plans/Models_System.md#MS-199,
+  payload owner Plans/Contracts_V0.md#CV-622, resource Plans/event_payloads/model_catalog_refreshed.schema.json# retain their
+  contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2337
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2337
+preserved_exact_tokens:
+- model.catalog_refreshed
+- 84bbfad129f762ac02993231fe8ea86b11996ab4ee5371bd04f1c8ad0a7788a6
+- 2026-11-19.76
+- 2026-11-19.77
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2528: Event Authority corrects panel.redocked (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2528
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for panel.redocked only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [1,
+  3]. The original admission authority remains Plans/Decision_Log.md#DL-2338; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 4181c9dd6a71b07c7506a201a06c49a04a4ded6f2236632dbf233690a737f0d8.
+  Its scope is application_or_project. Payload editions: application `pm.event.panel_redocked.v2` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption); project `pm.event.panel_redocked.v2` (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.77, 518 families, SHA-256 b115975a43d4b41510c4267443f99af47deb18be58e50ef992822be08cec13cb,
+  to 2026-11-19.78, 518 families, SHA-256 edac74f36ae06e36ef4017c5a4812dd694cace0296a753ade9866090b5834709, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/panel.redocked.json. Depth
+  assessment: reports/event-authority-20261116/admission-merge-2/depth/panel.redocked.json, SHA-256 63beb7f49d146b2d073e42e5b06ff13b25340e5cf70ef66092ef7d6a072831aa.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.201 SHA-256 4acb8cf26b8e84ca4b61a033c288ae8d779f776fd1d809e841e1d208f31070d4;
+  after 2026-11-16.202 SHA-256 d1674a0facf6fc2eab938595386733802ba3c77af1f387bed8022d49ca72165e. Existing semantic owner Plans/FinalGUISpec.md#F3-704,
+  payload owner Plans/Contracts_V0.md#CV-684, resource Plans/event_payloads/panel_redocked_v2.schema.json# retain their contracts.
+  Current citations were re-read from existing canonical text; original citations, records and decision entries remain in
+  the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original custody and
+  receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2338
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2338
+preserved_exact_tokens:
+- panel.redocked
+- 4181c9dd6a71b07c7506a201a06c49a04a4ded6f2236632dbf233690a737f0d8
+- 2026-11-19.77
+- 2026-11-19.78
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2529: Event Authority corrects panel.undocked (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2529
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for panel.undocked only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [1,
+  3]. The original admission authority remains Plans/Decision_Log.md#DL-2339; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 9eaaaf274a4b50ffbf2460256e7e36d48082ab2a1e4e129f1ba93b68c8bcc0b1.
+  Its scope is application_or_project. Payload editions: application `pm.event.panel_undocked.v2` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption); project `pm.event.panel_undocked.v2` (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.78, 518 families, SHA-256 edac74f36ae06e36ef4017c5a4812dd694cace0296a753ade9866090b5834709,
+  to 2026-11-19.79, 518 families, SHA-256 8dda8f1082e22ba7fe0b018b2b4f237b2fea818f65614f4b8e370f9c41df8801, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/panel.undocked.json. Depth
+  assessment: reports/event-authority-20261116/admission-merge-2/depth/panel.undocked.json, SHA-256 d866b6503da170ecedfd4ebb2a1e47e1e0a79c2ee641be12e14289051f51e8ab.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.202 SHA-256 d1674a0facf6fc2eab938595386733802ba3c77af1f387bed8022d49ca72165e;
+  after 2026-11-16.203 SHA-256 ba1fd685b6fa785d4ae0a976b983a6129eb346cda97b79641a41704f4b171800. Existing semantic owner Plans/FinalGUISpec.md#F3-705,
+  payload owner Plans/Contracts_V0.md#CV-685, resource Plans/event_payloads/panel_undocked_v2.schema.json# retain their contracts.
+  Current citations were re-read from existing canonical text; original citations, records and decision entries remain in
+  the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original custody and
+  receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2339
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2339
+preserved_exact_tokens:
+- panel.undocked
+- 9eaaaf274a4b50ffbf2460256e7e36d48082ab2a1e4e129f1ba93b68c8bcc0b1
+- 2026-11-19.78
+- 2026-11-19.79
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2530: Event Authority corrects parser.error (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2530
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for parser.error only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [2]. The
+  original admission authority remains Plans/Decision_Log.md#DL-2340; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 993b7e233dc30f201a954e3630a1437a0c2e196973421126abc9291a03e4339c.
+  Its scope is project_only. Payload editions: project `pm.event_payload.parser_error.v1@1.0.0` (RP-RUNTIME-365D@1.0.0, producer
+  requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.79, 518 families, SHA-256 8dda8f1082e22ba7fe0b018b2b4f237b2fea818f65614f4b8e370f9c41df8801,
+  to 2026-11-19.80, 518 families, SHA-256 85691e3b0dc7c029ee9224cc4a953833a582f931a0ff7eea09dc6640f8763c60, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/parser.error.json. Depth
+  assessment: reports/event-authority-20261116/admission-merge-2/depth/parser.error.json, SHA-256 b8ed6d188c15fb690685faf2289ca732da104c64c349b5d7d5f8be5b2a74a83b.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.203 SHA-256 ba1fd685b6fa785d4ae0a976b983a6129eb346cda97b79641a41704f4b171800;
+  after 2026-11-16.204 SHA-256 011f4a31e87c8026e925e9c689f60402c2ebe2ade81059e92920a30113249c99. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-684,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-684, resource Plans/orchestrator_event_payloads.schema.json#/$defs/parser_error
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2340
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2340
+preserved_exact_tokens:
+- parser.error
+- 993b7e233dc30f201a954e3630a1437a0c2e196973421126abc9291a03e4339c
+- 2026-11-19.79
+- 2026-11-19.80
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2531: Event Authority corrects persona.created (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2531
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for persona.created only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4].
+  The original admission authority remains Plans/Decision_Log.md#DL-2341; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 c9fe0bbb51b66d9f757fc0c9e1a15d378a86b9d141907aae9621e9f9c1738b09.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_created`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_created`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.80, 518 families, SHA-256 85691e3b0dc7c029ee9224cc4a953833a582f931a0ff7eea09dc6640f8763c60,
+  to 2026-11-19.81, 518 families, SHA-256 d929710105e23521af996de1af38bd5c440443c8436b90b4bbe498982f1c6e1d, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/persona.created.json. Depth
+  assessment: reports/event-authority-20261116/admission-merge-2/depth/persona.created.json, SHA-256 0c6d5a60d0ba37560f3edd378262b301281bbd7c49a8ec17c882338176ca150d.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.204 SHA-256 011f4a31e87c8026e925e9c689f60402c2ebe2ade81059e92920a30113249c99;
+  after 2026-11-16.205 SHA-256 ae6055bf22a8ecf647bd2955590ec288e26b9df2a0b51033bbe206f949fac18c. Existing semantic owner Plans/Personas.md#P-120,
+  payload owner Plans/Contracts_V0.md#CV-691, resource Plans/dg6b_event_contracts.schema.json#/$defs/persona_created retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2341
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2341
+preserved_exact_tokens:
+- persona.created
+- c9fe0bbb51b66d9f757fc0c9e1a15d378a86b9d141907aae9621e9f9c1738b09
+- 2026-11-19.80
+- 2026-11-19.81
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2532: Event Authority corrects persona.deleted (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2532
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for persona.deleted only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4].
+  The original admission authority remains Plans/Decision_Log.md#DL-2342; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 4c046a3523f34e71a48ca0fa256868fb988bd868d4abc3238c1eb9cafe7bbe6d.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_deleted`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_deleted`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.81, 518 families, SHA-256 d929710105e23521af996de1af38bd5c440443c8436b90b4bbe498982f1c6e1d,
+  to 2026-11-19.82, 518 families, SHA-256 b6ac2a40c88dc90eb4876955d185ac9343ffc3604a34c424548f525f44839382, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/persona.deleted.json. Depth
+  assessment: reports/event-authority-20261116/admission-merge-2/depth/persona.deleted.json, SHA-256 e1e2a860d965654e40fb5d29c42b9fc00e49ac73ff8be9608699d522e23afd68.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.205 SHA-256 ae6055bf22a8ecf647bd2955590ec288e26b9df2a0b51033bbe206f949fac18c;
+  after 2026-11-16.206 SHA-256 ddd13c68da7fa3a27809383be4338ae4a9e2b47ac399fdb0b806ee8fae366f5a. Existing semantic owner Plans/Personas.md#P-121,
+  payload owner Plans/Contracts_V0.md#CV-691, resource Plans/dg6b_event_contracts.schema.json#/$defs/persona_deleted retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2342
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2342
+preserved_exact_tokens:
+- persona.deleted
+- 4c046a3523f34e71a48ca0fa256868fb988bd868d4abc3238c1eb9cafe7bbe6d
+- 2026-11-19.81
+- 2026-11-19.82
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2533: Event Authority corrects persona.exported (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2533
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for persona.exported only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4].
+  The original admission authority remains Plans/Decision_Log.md#DL-2343; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 67e5dad8d422d24bde3636d41fdc1c40072de15499bf6ad4230ebf744ec9555a.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_exported`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_exported`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.82, 518 families, SHA-256 b6ac2a40c88dc90eb4876955d185ac9343ffc3604a34c424548f525f44839382,
+  to 2026-11-19.83, 518 families, SHA-256 ad094fc9c6c2118815eff8d6de0c0753a2499c5e5eb5b1f3c2bb949b3de98115, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/persona.exported.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/persona.exported.json, SHA-256 33e3501dec4b5bd438c793b3d7119b79820664e0f49bb8ac01367e01cd12e558.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.206 SHA-256 ddd13c68da7fa3a27809383be4338ae4a9e2b47ac399fdb0b806ee8fae366f5a;
+  after 2026-11-16.207 SHA-256 67b476ee2139d3cd8ca1d9470b833f5f9a5b8480494d65acd00a62fc50813c53. Existing semantic owner Plans/Personas.md#P-122,
+  payload owner Plans/Contracts_V0.md#CV-691, resource Plans/dg6b_event_contracts.schema.json#/$defs/persona_exported retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2343
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2343
+preserved_exact_tokens:
+- persona.exported
+- 67e5dad8d422d24bde3636d41fdc1c40072de15499bf6ad4230ebf744ec9555a
+- 2026-11-19.82
+- 2026-11-19.83
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2534: Event Authority corrects persona.imported (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2534
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for persona.imported only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4].
+  The original admission authority remains Plans/Decision_Log.md#DL-2344; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 52232b55d7b3b9ba2f6ba544fe49a40fd0847ed6c22579edd3e47a41536f9c19.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_imported`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_imported`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.83, 518 families, SHA-256 ad094fc9c6c2118815eff8d6de0c0753a2499c5e5eb5b1f3c2bb949b3de98115,
+  to 2026-11-19.84, 518 families, SHA-256 04346d1b60190d6f63e7e59ada42db66267ab8e2b30e57666e9179231ff8f996, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/persona.imported.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/persona.imported.json, SHA-256 447074cf25000900b0c535d879f06a61fdc0bf6ef3bcaa986f79982fb29b8f7b.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.207 SHA-256 67b476ee2139d3cd8ca1d9470b833f5f9a5b8480494d65acd00a62fc50813c53;
+  after 2026-11-16.208 SHA-256 cacc87187464fa31e8d7f0c7d3f3c5991fcddb5977b929b634f4194dd66bb884. Existing semantic owner Plans/Personas.md#P-123,
+  payload owner Plans/Contracts_V0.md#CV-691, resource Plans/dg6b_event_contracts.schema.json#/$defs/persona_imported retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2344
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2344
+preserved_exact_tokens:
+- persona.imported
+- 52232b55d7b3b9ba2f6ba544fe49a40fd0847ed6c22579edd3e47a41536f9c19
+- 2026-11-19.83
+- 2026-11-19.84
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2535: Event Authority corrects persona.selected (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2535
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for persona.selected only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4].
+  The original admission authority remains Plans/Decision_Log.md#DL-2345; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 98e927ee1728fbf5cb2cf4f0db9f149f1254571dc0c704fdb3f5f3749da076e3.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_selected`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_selected`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.84, 518 families, SHA-256 04346d1b60190d6f63e7e59ada42db66267ab8e2b30e57666e9179231ff8f996,
+  to 2026-11-19.85, 518 families, SHA-256 eb53ed285604b976eece78d091b81e913e7e97df368b7c1424bf721c14e4513d, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/persona.selected.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/persona.selected.json, SHA-256 8c3e594874908d551d4377e4a646b32c0333e9b00553019f4a022206e43499bd.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.208 SHA-256 cacc87187464fa31e8d7f0c7d3f3c5991fcddb5977b929b634f4194dd66bb884;
+  after 2026-11-16.209 SHA-256 ea1accd9c780cb07c828e1c94e7731ae7b36b7ac81d24981367579020db027b6. Existing semantic owner Plans/Personas.md#P-124,
+  payload owner Plans/Contracts_V0.md#CV-691, resource Plans/dg6b_event_contracts.schema.json#/$defs/persona_selected retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2345
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2345
+preserved_exact_tokens:
+- persona.selected
+- 98e927ee1728fbf5cb2cf4f0db9f149f1254571dc0c704fdb3f5f3749da076e3
+- 2026-11-19.84
+- 2026-11-19.85
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2536: Event Authority corrects persona.updated (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2536
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for persona.updated only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4].
+  The original admission authority remains Plans/Decision_Log.md#DL-2346; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 e08a93ea2753f97e8d27ad215fda5097124550becbcd2b0df26de1970579f21d.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_updated`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_updated`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.85, 518 families, SHA-256 eb53ed285604b976eece78d091b81e913e7e97df368b7c1424bf721c14e4513d,
+  to 2026-11-19.86, 518 families, SHA-256 edf0286ff269e6d77ed27239850a84f26d6c90292c508043c7232a2ab17d2551, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/persona.updated.json. Depth
+  assessment: reports/event-authority-20261116/admission-merge-2/depth/persona.updated.json, SHA-256 28fbed44ec9d1e260a84190b801df0ab32a0919ab7c858137e60c28650fefba7.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.209 SHA-256 ea1accd9c780cb07c828e1c94e7731ae7b36b7ac81d24981367579020db027b6;
+  after 2026-11-16.210 SHA-256 72cfc1bd5c4761750173d5fa2572862fb89a40619c05d004da9d24df23ef37e0. Existing semantic owner Plans/Personas.md#P-125,
+  payload owner Plans/Contracts_V0.md#CV-691, resource Plans/dg6b_event_contracts.schema.json#/$defs/persona_updated retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2346
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2346
+preserved_exact_tokens:
+- persona.updated
+- e08a93ea2753f97e8d27ad215fda5097124550becbcd2b0df26de1970579f21d
+- 2026-11-19.85
+- 2026-11-19.86
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2537: Event Authority corrects phase.force_completed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2537
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for phase.force_completed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [2]. The original admission authority remains Plans/Decision_Log.md#DL-2347; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 8ab63b1646b321c0f86eeba9975f2cde481cb0d1ce3aa8a757be5a7c223a77d4.
+  Its scope is project_only. Payload editions: project `pm.event_payload.phase_force_completed.v1@1.0.0` (RP-RUNTIME-365D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.86, 518 families, SHA-256 edf0286ff269e6d77ed27239850a84f26d6c90292c508043c7232a2ab17d2551,
+  to 2026-11-19.87, 518 families, SHA-256 491faa7f2c7725bb6b5836e0bd135a0547bf53658b3a9d6ef4303aa476788b2c, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/phase.force_completed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/phase.force_completed.json, SHA-256 201b162e11a5095668b5cc5848724c8cf1a0acead6d20cb962b897fbc4697dd0.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.210 SHA-256 72cfc1bd5c4761750173d5fa2572862fb89a40619c05d004da9d24df23ef37e0;
+  after 2026-11-16.211 SHA-256 d9a26f75ceefbb6fc3e0b843a50347d75968b005aad18a3861c76fb845a51b91. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-685,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-685, resource Plans/orchestrator_event_payloads.schema.json#/$defs/phase_force_completed
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2347
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2347
+preserved_exact_tokens:
+- phase.force_completed
+- 8ab63b1646b321c0f86eeba9975f2cde481cb0d1ce3aa8a757be5a7c223a77d4
+- 2026-11-19.86
+- 2026-11-19.87
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2538: Event Authority corrects plugin.hook.blocked (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2538
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for plugin.hook.blocked only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2348; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 378401b9f0721580bebddc322285824e13adf8b314171a2b96923f68b4fa99c9.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_blocked`
+  (RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_blocked`
+  (RP-TELEMETRY-90D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.87, 518 families, SHA-256 491faa7f2c7725bb6b5836e0bd135a0547bf53658b3a9d6ef4303aa476788b2c,
+  to 2026-11-19.88, 518 families, SHA-256 a9719fe5ee4c292f6d19fcfe513a678e1baf5520c9e51bb2af82c395547afc1e, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/plugin.hook.blocked.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/plugin.hook.blocked.json, SHA-256 e05a0858376575a741092e34745ef0e2603077f85e4541a9c514039b70da7dbc.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.211 SHA-256 d9a26f75ceefbb6fc3e0b843a50347d75968b005aad18a3861c76fb845a51b91;
+  after 2026-11-16.212 SHA-256 6278a749b3ac8eb1de3363ea7568ee1e8e3fbd4b61b5aabef4f1916ad8c700f9. Existing semantic owner Plans/Plugins_System.md#PLUG-131,
+  payload owner Plans/Contracts_V0.md#CV-690, resource Plans/dg6b_event_contracts.schema.json#/$defs/plugin_hook_blocked retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2348
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2348
+preserved_exact_tokens:
+- plugin.hook.blocked
+- 378401b9f0721580bebddc322285824e13adf8b314171a2b96923f68b4fa99c9
+- 2026-11-19.87
+- 2026-11-19.88
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2539: Event Authority corrects plugin.hook.error (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2539
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for plugin.hook.error only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4].
+  The original admission authority remains Plans/Decision_Log.md#DL-2349; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 0a491af1a7d00246283ba81900364bb71649ae6466bf158f3f6d593a03a3342e.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_error`
+  (RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_error`
+  (RP-TELEMETRY-90D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.88, 518 families, SHA-256 a9719fe5ee4c292f6d19fcfe513a678e1baf5520c9e51bb2af82c395547afc1e,
+  to 2026-11-19.89, 518 families, SHA-256 b28248cebd0023aa632e9bb2a144cdb468a570e69ac0e325cce9eb5566f20304, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/plugin.hook.error.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/plugin.hook.error.json, SHA-256 0ef3f8e0a0ef6ae58f72794e6a7d70e483337466a1879e2698f81aa33419b7de.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.212 SHA-256 6278a749b3ac8eb1de3363ea7568ee1e8e3fbd4b61b5aabef4f1916ad8c700f9;
+  after 2026-11-16.213 SHA-256 fc6376f604ee5613d5c8f0e71ade98862bdc3f47ac4e6895c96327a106713c17. Existing semantic owner Plans/Plugins_System.md#PLUG-132,
+  payload owner Plans/Contracts_V0.md#CV-690, resource Plans/dg6b_event_contracts.schema.json#/$defs/plugin_hook_error retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2349
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2349
+preserved_exact_tokens:
+- plugin.hook.error
+- 0a491af1a7d00246283ba81900364bb71649ae6466bf158f3f6d593a03a3342e
+- 2026-11-19.88
+- 2026-11-19.89
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2540: Event Authority corrects plugin.hook.invoked (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2540
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for plugin.hook.invoked only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2350; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 7d5820abc8785c2db913c1ee0d273fc3fd86426607b88e38de43cc222f0b34b2.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_invoked`
+  (RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_invoked`
+  (RP-TELEMETRY-90D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.89, 518 families, SHA-256 b28248cebd0023aa632e9bb2a144cdb468a570e69ac0e325cce9eb5566f20304,
+  to 2026-11-19.90, 518 families, SHA-256 7ab8ed0a494fd3c19a0216c666773a2c4b1a4bf562d2ce82fdb3aadb17512cbc, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/plugin.hook.invoked.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/plugin.hook.invoked.json, SHA-256 d3d6ef89699596fde50dacf8297b8fb91eb2712a6cbd67a5bab4e6905420710f.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.213 SHA-256 fc6376f604ee5613d5c8f0e71ade98862bdc3f47ac4e6895c96327a106713c17;
+  after 2026-11-16.214 SHA-256 b33a81d441c8eed8eb31a8886e81d36b187e06061c66a4253772e3c384c4142a. Existing semantic owner Plans/Plugins_System.md#PLUG-133,
+  payload owner Plans/Contracts_V0.md#CV-690, resource Plans/dg6b_event_contracts.schema.json#/$defs/plugin_hook_invoked retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2350
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2350
+preserved_exact_tokens:
+- plugin.hook.invoked
+- 7d5820abc8785c2db913c1ee0d273fc3fd86426607b88e38de43cc222f0b34b2
+- 2026-11-19.89
+- 2026-11-19.90
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2541: Event Authority corrects plugin.load_failed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2541
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for plugin.load_failed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2351; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 e00800aaeafc360372292350dcb42f5c1bb12356350fc2ab5a71363caa28a08c.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_load_failed`
+  (RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_load_failed`
+  (RP-OPERATIONAL-2555D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.90, 518 families, SHA-256 7ab8ed0a494fd3c19a0216c666773a2c4b1a4bf562d2ce82fdb3aadb17512cbc,
+  to 2026-11-19.91, 518 families, SHA-256 94cbfa0f0e861b280b080092ce772064f96bebc429b887c8ea2ddb375a2fdbb5, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/plugin.load_failed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/plugin.load_failed.json, SHA-256 86afa3babaf5abdf1e1f1805180c2ec9e0a07af246c9692af9da37c19acd4723.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.214 SHA-256 b33a81d441c8eed8eb31a8886e81d36b187e06061c66a4253772e3c384c4142a;
+  after 2026-11-16.215 SHA-256 c84fd8795b8bb13190748e0f42b352743b9d8991609fa8c87d4a8374dda16226. Existing semantic owner Plans/Plugins_System.md#PLUG-134,
+  payload owner Plans/Contracts_V0.md#CV-690, resource Plans/dg6b_event_contracts.schema.json#/$defs/plugin_load_failed retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2351
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2351
+preserved_exact_tokens:
+- plugin.load_failed
+- e00800aaeafc360372292350dcb42f5c1bb12356350fc2ab5a71363caa28a08c
+- 2026-11-19.90
+- 2026-11-19.91
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2542: Event Authority corrects plugin.loaded (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2542
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for plugin.loaded only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4].
+  The original admission authority remains Plans/Decision_Log.md#DL-2352; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 47a1abfa9994bd6e342d364b3b48896d5ed342832002467cac8af32ed25c723b.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_loaded`
+  (RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_loaded`
+  (RP-OPERATIONAL-2555D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.91, 518 families, SHA-256 94cbfa0f0e861b280b080092ce772064f96bebc429b887c8ea2ddb375a2fdbb5,
+  to 2026-11-19.92, 518 families, SHA-256 03d87171d176a1f56dd18c64b839fd20ac8075bafacebc1abcd8870f889fd98a, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/plugin.loaded.json. Depth
+  assessment: reports/event-authority-20261116/admission-merge-2/depth/plugin.loaded.json, SHA-256 501e86f120248bf2c352262fbb10e68a466b91c9a003642ec5226b82923a4bbe.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.215 SHA-256 c84fd8795b8bb13190748e0f42b352743b9d8991609fa8c87d4a8374dda16226;
+  after 2026-11-16.216 SHA-256 310c968171ce9ad26d6d40bd11fde60ccfb1167e0f7c32a80fdde990b55108c4. Existing semantic owner Plans/Plugins_System.md#PLUG-135,
+  payload owner Plans/Contracts_V0.md#CV-690, resource Plans/dg6b_event_contracts.schema.json#/$defs/plugin_loaded retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2352
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2352
+preserved_exact_tokens:
+- plugin.loaded
+- 47a1abfa9994bd6e342d364b3b48896d5ed342832002467cac8af32ed25c723b
+- 2026-11-19.91
+- 2026-11-19.92
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2543: Event Authority corrects plugin.permission.override (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2543
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for plugin.permission.override only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2353; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 996291f7753a2237399ff00bcaf85e5799181d267a53e9f9d9fd25694a351e17.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_permission_override`
+  (RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_permission_override`
+  (RP-OPERATIONAL-2555D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.92, 518 families, SHA-256 03d87171d176a1f56dd18c64b839fd20ac8075bafacebc1abcd8870f889fd98a,
+  to 2026-11-19.93, 518 families, SHA-256 72c7dd7165cd8a0733916c2790ecf5e1e75577fe530ade9dbd4e61e9bce0dc4d, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/plugin.permission.override.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/plugin.permission.override.json, SHA-256 441940c3bfcf6f82ef346f7c5663e2c45661bb04e4be461a33f52b6d25410f16.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.216 SHA-256 310c968171ce9ad26d6d40bd11fde60ccfb1167e0f7c32a80fdde990b55108c4;
+  after 2026-11-16.217 SHA-256 5a1950cdbbd93f3eaa196842240e2e1aa43889689faa658530c3df84a8ec6fe1. Existing semantic owner Plans/Plugins_System.md#PLUG-136,
+  payload owner Plans/Contracts_V0.md#CV-690, resource Plans/dg6b_event_contracts.schema.json#/$defs/plugin_permission_override
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2353
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2353
+preserved_exact_tokens:
+- plugin.permission.override
+- 996291f7753a2237399ff00bcaf85e5799181d267a53e9f9d9fd25694a351e17
+- 2026-11-19.92
+- 2026-11-19.93
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2544: Event Authority corrects plugin.tool.collision (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2544
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for plugin.tool.collision only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2354; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 3b960902f5974f0fdca9b722ecaf0d931df2d788360cf6e4fc62807b8893848a.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_tool_collision`
+  (RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_tool_collision`
+  (RP-OPERATIONAL-2555D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.93, 518 families, SHA-256 72c7dd7165cd8a0733916c2790ecf5e1e75577fe530ade9dbd4e61e9bce0dc4d,
+  to 2026-11-19.94, 518 families, SHA-256 4cada803b4b8dad2d608a882ff760448d1d843db43ab58e7bf7a2451365cf6d9, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/plugin.tool.collision.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/plugin.tool.collision.json, SHA-256 2a989bcd601e93b21133f3cbe0bff1ce0e8795fb2309bd003e080626dbb6f7a5.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.217 SHA-256 5a1950cdbbd93f3eaa196842240e2e1aa43889689faa658530c3df84a8ec6fe1;
+  after 2026-11-16.218 SHA-256 e0febb5861d44a6c145e92553a0eff1e619e544f84aba97e13e5eba12ee14c1d. Existing semantic owner Plans/Plugins_System.md#PLUG-137,
+  payload owner Plans/Contracts_V0.md#CV-690, resource Plans/dg6b_event_contracts.schema.json#/$defs/plugin_tool_collision
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2354
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2354
+preserved_exact_tokens:
+- plugin.tool.collision
+- 3b960902f5974f0fdca9b722ecaf0d931df2d788360cf6e4fc62807b8893848a
+- 2026-11-19.93
+- 2026-11-19.94
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2545: Event Authority corrects plugin.tool.registered (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2545
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for plugin.tool.registered only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2355; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 fb45e6e0f865806b2c61450c8cf4d6e1921b0c8b9974cefaadf45080cfda84f5.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_tool_registered`
+  (RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_tool_registered`
+  (RP-OPERATIONAL-2555D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.94, 518 families, SHA-256 4cada803b4b8dad2d608a882ff760448d1d843db43ab58e7bf7a2451365cf6d9,
+  to 2026-11-19.95, 518 families, SHA-256 a3e98bf3020cbdf6d630ebec4957d7881930782ce5eee2e2f78fbc8d69185a67, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/plugin.tool.registered.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/plugin.tool.registered.json, SHA-256 2266f8165656659eea5364462b5a20fade9993e4c2e9c7b460a5180ddc77770f.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.218 SHA-256 e0febb5861d44a6c145e92553a0eff1e619e544f84aba97e13e5eba12ee14c1d;
+  after 2026-11-16.219 SHA-256 00979b82e2e1dcbdabe75124bbe5c58886dfa4a6b2f617e71dcf000e279f7a7a. Existing semantic owner Plans/Plugins_System.md#PLUG-138,
+  payload owner Plans/Contracts_V0.md#CV-690, resource Plans/dg6b_event_contracts.schema.json#/$defs/plugin_tool_registered
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2355
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2355
+preserved_exact_tokens:
+- plugin.tool.registered
+- fb45e6e0f865806b2c61450c8cf4d6e1921b0c8b9974cefaadf45080cfda84f5
+- 2026-11-19.94
+- 2026-11-19.95
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2546: Event Authority corrects preview.session.refreshed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2546
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for preview.session.refreshed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2356; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 caabe5a07628e79be67a7bd7f17a847e0251a91108dd55e192e1f410a61d8d46.
+  Its scope is project_only. Payload editions: project `pm.ds15.preview_session_refreshed.payload.v1` (RP-TELEMETRY-90D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.95, 518 families, SHA-256 a3e98bf3020cbdf6d630ebec4957d7881930782ce5eee2e2f78fbc8d69185a67,
+  to 2026-11-19.96, 518 families, SHA-256 2eaf15ecf3aea6947fc759f074c1f9e908ccfb00e8976556b572449bcf76b8c7, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/preview.session.refreshed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/preview.session.refreshed.json, SHA-256 b991f4089aa4b3389c6ecaf4bf4cf81434d4a03516241cb32734b3f4c8ef945f.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.219 SHA-256 00979b82e2e1dcbdabe75124bbe5c58886dfa4a6b2f617e71dcf000e279f7a7a;
+  after 2026-11-16.220 SHA-256 693e3d21a4f8dd305cd1287dfa9cb50afb5a6871cf199575120ae681f3f834ec. Existing semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-316,
+  payload owner Plans/Contracts_V0.md#CV-673, resource Plans/ds15_preview_session_refreshed.schema.json# retain their contracts.
+  Current citations were re-read from existing canonical text; original citations, records and decision entries remain in
+  the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original custody and
+  receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2356
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2356
+preserved_exact_tokens:
+- preview.session.refreshed
+- caabe5a07628e79be67a7bd7f17a847e0251a91108dd55e192e1f410a61d8d46
+- 2026-11-19.95
+- 2026-11-19.96
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2547: Event Authority corrects preview.session.started (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2547
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for preview.session.started only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2357; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 e627698877884db59923390e84e8aaccc889c9cb827f634b3b9acf08633a1e96.
+  Its scope is project_only. Payload editions: project `pm.ds15.preview_session_started.payload.v1` (RP-TELEMETRY-90D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.96, 518 families, SHA-256 2eaf15ecf3aea6947fc759f074c1f9e908ccfb00e8976556b572449bcf76b8c7,
+  to 2026-11-19.97, 518 families, SHA-256 cbb86242eaf7121a4f65a7a69532543138280f0755b1022d084a8d75aa85a7ce, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/preview.session.started.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/preview.session.started.json, SHA-256 9e2d30955aeb61a8bcb45c5d3e47e4be38fb6f0bf9727857877b4706b62f4725.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.220 SHA-256 693e3d21a4f8dd305cd1287dfa9cb50afb5a6871cf199575120ae681f3f834ec;
+  after 2026-11-16.221 SHA-256 698f874f4bd51501d5f47dd23ebe884f524fda545d8f172307598a236e55977e. Existing semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-315,
+  payload owner Plans/Contracts_V0.md#CV-672, resource Plans/ds15_preview_session_started.schema.json# retain their contracts.
+  Current citations were re-read from existing canonical text; original citations, records and decision entries remain in
+  the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original custody and
+  receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2357
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2357
+preserved_exact_tokens:
+- preview.session.started
+- e627698877884db59923390e84e8aaccc889c9cb827f634b3b9acf08633a1e96
+- 2026-11-19.96
+- 2026-11-19.97
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2548: Event Authority corrects preview.session.stopped (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2548
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for preview.session.stopped only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2358; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 76f612e6daa5d4fda5ac512abbdc56668b5e5fa736bf40f39c5bc1037ed1c42e.
+  Its scope is project_only. Payload editions: project `pm.ds15.preview_session_stopped.payload.v1` (RP-TELEMETRY-90D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.97, 518 families, SHA-256 cbb86242eaf7121a4f65a7a69532543138280f0755b1022d084a8d75aa85a7ce,
+  to 2026-11-19.98, 518 families, SHA-256 a3f9fa640ed51f46c189da72f1e8c8e8d957467edda3e9e197c0953125de679c, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/preview.session.stopped.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/preview.session.stopped.json, SHA-256 1e78e0ed2dc27e5d44379c411b2fbf846706de150e227291370fd871bbfe6cda.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.221 SHA-256 698f874f4bd51501d5f47dd23ebe884f524fda545d8f172307598a236e55977e;
+  after 2026-11-16.222 SHA-256 55ce648c196bd112443beba7591c9d35ffd7fbbf33483e819d0de706d54ef073. Existing semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-317,
+  payload owner Plans/Contracts_V0.md#CV-674, resource Plans/ds15_preview_session_stopped.schema.json# retain their contracts.
+  Current citations were re-read from existing canonical text; original citations, records and decision entries remain in
+  the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original custody and
+  receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2358
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2358
+preserved_exact_tokens:
+- preview.session.stopped
+- 76f612e6daa5d4fda5ac512abbdc56668b5e5fa736bf40f39c5bc1037ed1c42e
+- 2026-11-19.97
+- 2026-11-19.98
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2549: Event Authority corrects remote_access.private_endpoint_state_changed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2549
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for remote_access.private_endpoint_state_changed only, under DL-077 and DL-400, resolving post-landing
+  Astra finding(s) [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2361; this entry records no new
+  admission, verdict, policy choice or producer adoption. Current row canonical SHA-256 47577b7861db4c3b6a00280a478abd6f2b1866063d876873aef611e498dc743e.
+  Its scope is application_only. Payload editions: application `pm.event_payload.remote_access.private_endpoint_state_changed.v1`
+  (RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.98, 518 families, SHA-256 a3f9fa640ed51f46c189da72f1e8c8e8d957467edda3e9e197c0953125de679c,
+  to 2026-11-19.99, 518 families, SHA-256 255c6eb5ca427b0333855c2664f7db26157f79b911ff2b69624996088cb2fdf3, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/remote_access.private_endpoint_state_changed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/remote_access.private_endpoint_state_changed.json,
+  SHA-256 8d4d81a042a970f5555a9aa1f41560c54647b30c291c0ef1d32c9e3d1fb513d1.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.224 SHA-256 29dfd5a15d548fe0299279d538fda18c1cf1c0958430c9a926a76ea7ee948254;
+  after 2026-11-16.225 SHA-256 e81e51faff696241375addd431e83ee553a17bd779fe8d1dfab7414da95bceef. Existing semantic owner Plans/Remote_Access_System.md#RAS-1402,
+  payload owner Plans/Contracts_V0.md#CV-1402, resource Plans/event_payloads/w3e/remote_access_private_endpoint_state_changed.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2361
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2361
+preserved_exact_tokens:
+- remote_access.private_endpoint_state_changed
+- 47577b7861db4c3b6a00280a478abd6f2b1866063d876873aef611e498dc743e
+- 2026-11-19.98
+- 2026-11-19.99
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2550: Event Authority corrects remote_access.proxy_state_changed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2550
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for remote_access.proxy_state_changed only, under DL-077 and DL-400, resolving post-landing Astra
+  finding(s) [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2362; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 cec564ab3ff224d09994323a1b49b16b50a4f85b60ffd243f4a3f1b359f8c995.
+  Its scope is application_only. Payload editions: application `pm.event_payload.remote_access.proxy_state_changed.v1` (RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.99, 518 families, SHA-256 255c6eb5ca427b0333855c2664f7db26157f79b911ff2b69624996088cb2fdf3,
+  to 2026-11-19.100, 518 families, SHA-256 36ea4ef06357a11255a28a598b2fd1503139afb0afaf30a6517f0e253be6e4c4, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/remote_access.proxy_state_changed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/remote_access.proxy_state_changed.json, SHA-256
+  584a16fea4288bd71aedc3177bfc3b3e3143377688f4975def54f24a7103d437.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.225 SHA-256 e81e51faff696241375addd431e83ee553a17bd779fe8d1dfab7414da95bceef;
+  after 2026-11-16.226 SHA-256 4940071fa5c5c2f47e29e28fe7679b2e16440ff0040bd70cfa73761b0cba9ef4. Existing semantic owner Plans/Remote_Access_System.md#RAS-1403,
+  payload owner Plans/Contracts_V0.md#CV-1403, resource Plans/event_payloads/w3e/remote_access_proxy_state_changed.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2362
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2362
+preserved_exact_tokens:
+- remote_access.proxy_state_changed
+- cec564ab3ff224d09994323a1b49b16b50a4f85b60ffd243f4a3f1b359f8c995
+- 2026-11-19.99
+- 2026-11-19.100
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2551: Event Authority corrects remote_access.public_security_violation_detected (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2551
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for remote_access.public_security_violation_detected only, under DL-077 and DL-400, resolving
+  post-landing Astra finding(s) [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2363; this entry
+  records no new admission, verdict, policy choice or producer adoption. Current row canonical SHA-256 c93ed85722edad386e1a2cdf405ff74da33107331c8e71f2d04f50ffdb9182fe.
+  Its scope is application_only. Payload editions: application `pm.event_payload.remote_access.public_security_violation_detected.v1`
+  (RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.100, 518 families, SHA-256 36ea4ef06357a11255a28a598b2fd1503139afb0afaf30a6517f0e253be6e4c4,
+  to 2026-11-19.101, 518 families, SHA-256 37a1dddc8125cc9a7fa41f115b55636231eab45ae1587de2badab46ed9c47595, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/remote_access.public_security_violation_detected.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/remote_access.public_security_violation_detected.json,
+  SHA-256 a95b871b03c71d66dae0f82d1bc969af737948153fcb072fa311944eefda77b6.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.226 SHA-256 4940071fa5c5c2f47e29e28fe7679b2e16440ff0040bd70cfa73761b0cba9ef4;
+  after 2026-11-16.227 SHA-256 50c7b8546d5423ca1b79b38593834980678c4392e70f45a2ac02581cb1fb42ca. Existing semantic owner Plans/Remote_Access_System.md#RAS-1404,
+  payload owner Plans/Contracts_V0.md#CV-1404, resource Plans/event_payloads/w3e/remote_access_public_security_violation_detected.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2363
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2363
+preserved_exact_tokens:
+- remote_access.public_security_violation_detected
+- c93ed85722edad386e1a2cdf405ff74da33107331c8e71f2d04f50ffdb9182fe
+- 2026-11-19.100
+- 2026-11-19.101
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2552: Event Authority corrects remote_access.remote_link_state_changed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2552
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for remote_access.remote_link_state_changed only, under DL-077 and DL-400, resolving post-landing
+  Astra finding(s) [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2364; this entry records no new
+  admission, verdict, policy choice or producer adoption. Current row canonical SHA-256 d7362fd743be8a58da560a25bc76fd884e40ae3966277497138dc537a14e1543.
+  Its scope is application_only. Payload editions: application `pm.event_payload.remote_access.remote_link_state_changed.v1`
+  (RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.101, 518 families, SHA-256 37a1dddc8125cc9a7fa41f115b55636231eab45ae1587de2badab46ed9c47595,
+  to 2026-11-19.102, 518 families, SHA-256 3b572b8ca597fff898ff6069803bca5c49a2af77bcc4ca2fb137e273b3df64ad, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/remote_access.remote_link_state_changed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/remote_access.remote_link_state_changed.json,
+  SHA-256 15bf0e8f0e16874600ca48e41153795bbf36f9a91839744970875f62a4abedbf.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.227 SHA-256 50c7b8546d5423ca1b79b38593834980678c4392e70f45a2ac02581cb1fb42ca;
+  after 2026-11-16.228 SHA-256 dd249beb82582c580dddf7ca1fd7b179d82bb6926b727ae9ff74ef78415386be. Existing semantic owner Plans/Remote_Access_System.md#RAS-1405,
+  payload owner Plans/Contracts_V0.md#CV-1405, resource Plans/event_payloads/w3e/remote_access_remote_link_state_changed.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2364
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2364
+preserved_exact_tokens:
+- remote_access.remote_link_state_changed
+- d7362fd743be8a58da560a25bc76fd884e40ae3966277497138dc537a14e1543
+- 2026-11-19.101
+- 2026-11-19.102
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2553: Event Authority corrects remote_access.route_migration_state_changed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2553
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for remote_access.route_migration_state_changed only, under DL-077 and DL-400, resolving post-landing
+  Astra finding(s) [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2365; this entry records no new
+  admission, verdict, policy choice or producer adoption. Current row canonical SHA-256 197419038a8b413c317f247f6e5f7ea8a276b61d1457fab6eb7299026e0e3987.
+  Its scope is application_only. Payload editions: application `pm.event_payload.remote_access.route_migration_state_changed.v1`
+  (RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.102, 518 families, SHA-256 3b572b8ca597fff898ff6069803bca5c49a2af77bcc4ca2fb137e273b3df64ad,
+  to 2026-11-19.103, 518 families, SHA-256 78ea2e0cdf33fbcc3d88ebde9afce75f5cc96dc670348abd51768c4202fc5685, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/remote_access.route_migration_state_changed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/remote_access.route_migration_state_changed.json,
+  SHA-256 6bafa354e8fdb6999d41fb12bd9becb18002eccc00b31ff0ec4e946a292657a2.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.228 SHA-256 dd249beb82582c580dddf7ca1fd7b179d82bb6926b727ae9ff74ef78415386be;
+  after 2026-11-16.229 SHA-256 fc569b0ee6e216371c480d426a64c1f97694bb5a1800ac62f3bb37e8e4465c36. Existing semantic owner Plans/Remote_Access_System.md#RAS-1406,
+  payload owner Plans/Contracts_V0.md#CV-1406, resource Plans/event_payloads/w3e/remote_access_route_migration_state_changed.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2365
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2365
+preserved_exact_tokens:
+- remote_access.route_migration_state_changed
+- 197419038a8b413c317f247f6e5f7ea8a276b61d1457fab6eb7299026e0e3987
+- 2026-11-19.102
+- 2026-11-19.103
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2554: Event Authority corrects remote_access.route_preference_changed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2554
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for remote_access.route_preference_changed only, under DL-077 and DL-400, resolving post-landing
+  Astra finding(s) [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2366; this entry records no new
+  admission, verdict, policy choice or producer adoption. Current row canonical SHA-256 2fb57b01a49c33e7d109767ace9400af79dac274467e83ab72d59447771cf986.
+  Its scope is application_only. Payload editions: application `pm.event_payload.remote_access.route_preference_changed.v1`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.103, 518 families, SHA-256 78ea2e0cdf33fbcc3d88ebde9afce75f5cc96dc670348abd51768c4202fc5685,
+  to 2026-11-19.104, 518 families, SHA-256 9908fcbfda36cdc2f246ac3057d1241d07c9b3899bf3b7b74d227dd018ffea7a, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/remote_access.route_preference_changed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/remote_access.route_preference_changed.json,
+  SHA-256 e844f8a73756a992e4aad115d4bf7c885f00ed86f135c746026367a527b3184f.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.229 SHA-256 fc569b0ee6e216371c480d426a64c1f97694bb5a1800ac62f3bb37e8e4465c36;
+  after 2026-11-16.230 SHA-256 7d27f7672135414ace8b47b46d7f8be0277ab23f6764a5cd8d6aa339e3043d91. Existing semantic owner Plans/Remote_Access_System.md#RAS-1407,
+  payload owner Plans/Contracts_V0.md#CV-1407, resource Plans/event_payloads/w3e/remote_access_route_preference_changed.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2366
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2366
+preserved_exact_tokens:
+- remote_access.route_preference_changed
+- 2fb57b01a49c33e7d109767ace9400af79dac274467e83ab72d59447771cf986
+- 2026-11-19.103
+- 2026-11-19.104
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2555: Event Authority corrects remote_access.route_state_changed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2555
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for remote_access.route_state_changed only, under DL-077 and DL-400, resolving post-landing Astra
+  finding(s) [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2367; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 4dd89770514ea6f36efba2c0861f1d7584e41425a7bf3a785075bfd8be6bc495.
+  Its scope is application_only. Payload editions: application `pm.event_payload.remote_access.route_state_changed.v1` (RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.104, 518 families, SHA-256 9908fcbfda36cdc2f246ac3057d1241d07c9b3899bf3b7b74d227dd018ffea7a,
+  to 2026-11-19.105, 518 families, SHA-256 e8b1edcd8c6c052a1ef0341b6aff9b9cbf3338adabe70d441822602f718c7548, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/remote_access.route_state_changed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/remote_access.route_state_changed.json, SHA-256
+  16dbce8f40d3d31c997db91874074006e6a4baf6bc9398806f023277e067816c.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.230 SHA-256 7d27f7672135414ace8b47b46d7f8be0277ab23f6764a5cd8d6aa339e3043d91;
+  after 2026-11-16.231 SHA-256 c0872dedd7fbbc06cb0900f2a3a22042af25524442a22e0bc738391e466bb387. Existing semantic owner Plans/Remote_Access_System.md#RAS-1408,
+  payload owner Plans/Contracts_V0.md#CV-1408, resource Plans/event_payloads/w3e/remote_access_route_state_changed.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2367
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2367
+preserved_exact_tokens:
+- remote_access.route_state_changed
+- 4dd89770514ea6f36efba2c0861f1d7584e41425a7bf3a785075bfd8be6bc495
+- 2026-11-19.104
+- 2026-11-19.105
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2556: Event Authority corrects remote_access.route_test_completed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2556
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for remote_access.route_test_completed only, under DL-077 and DL-400, resolving post-landing Astra
+  finding(s) [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2368; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 6d15df4bdc64c7b55ad7d3d1e9bd197fa57eab51371847279e8fe1d893e9c1a4.
+  Its scope is application_only. Payload editions: application `pm.event_payload.remote_access.route_test_completed.v1` (RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.105, 518 families, SHA-256 e8b1edcd8c6c052a1ef0341b6aff9b9cbf3338adabe70d441822602f718c7548,
+  to 2026-11-19.106, 518 families, SHA-256 5b33f1924c0d8875409f5ac6c69de346bcf4c55d4e291a26ade5935d7fdaa3f0, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/remote_access.route_test_completed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/remote_access.route_test_completed.json, SHA-256
+  7249c143c1954b38fa1867ec267f52d138b10b0f072cc6257166925f2365fa92.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.231 SHA-256 c0872dedd7fbbc06cb0900f2a3a22042af25524442a22e0bc738391e466bb387;
+  after 2026-11-16.232 SHA-256 9b3ddee04154b9ccba18d28a812def09d37a90cc396fe765fe7bad86a011d77e. Existing semantic owner Plans/Remote_Access_System.md#RAS-1409,
+  payload owner Plans/Contracts_V0.md#CV-1409, resource Plans/event_payloads/w3e/remote_access_route_test_completed.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2368
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2368
+preserved_exact_tokens:
+- remote_access.route_test_completed
+- 6d15df4bdc64c7b55ad7d3d1e9bd197fa57eab51371847279e8fe1d893e9c1a4
+- 2026-11-19.105
+- 2026-11-19.106
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2557: Event Authority corrects restore.state_changed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2557
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for restore.state_changed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2370; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 c6f66a1d1ba096687dfad76a754322f69bc0933dfc05372980acaf379cf8b31b.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.restore.state_changed.v1` (RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.restore.state_changed.v1` (RP-OPERATIONAL-2555D@1.0.0, producer
+  requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.106, 518 families, SHA-256 5b33f1924c0d8875409f5ac6c69de346bcf4c55d4e291a26ade5935d7fdaa3f0,
+  to 2026-11-19.107, 518 families, SHA-256 f04798a9a82320eeea5a2c7928d8b3d881ffcbf980f10cecdc1bb237172ad634, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/restore.state_changed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/restore.state_changed.json, SHA-256 beecde6d02231b02ee4a6d7f18da85f5a09c50dc64e1db083c8db8ec13e08b8f.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.233 SHA-256 9c712be717d4c5d02dc6bbd1206e5ac6f2ddcaef9ac1b4197314cc3f8f0bf5c7;
+  after 2026-11-16.234 SHA-256 83ee98616bc80d5cf211e7ec7e6b71e27c18a0a62645eec00bd8c98d0bd422b4. Existing semantic owner Plans/Backup_Restore_System.md#BRS-1410,
+  payload owner Plans/Contracts_V0.md#CV-1410, resource Plans/event_payloads/w3e/restore_state_changed.schema.json# retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2370
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2370
+preserved_exact_tokens:
+- restore.state_changed
+- c6f66a1d1ba096687dfad76a754322f69bc0933dfc05372980acaf379cf8b31b
+- 2026-11-19.106
+- 2026-11-19.107
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2558: Event Authority corrects run.background_enqueued (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2558
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for run.background_enqueued only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2374; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 bb343a49d02cb302cc3b17a18b4812718d89d2273ba36113c62b31fe9cceb082.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.run_background_enqueued.v1` (RP-RUNTIME-365D@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.run_background_enqueued.v1` (RP-RUNTIME-365D@1.0.0, producer
+  requires_owner_adoption).
+  The current retention evidence cites Plans/Decision_Log.md#DL-2597 and the Case L-3 assignment at Plans/storage-plan.md:18341 for the separate Application count.
+
+  The correction moves the full registry from 2026-11-19.107, 518 families, SHA-256 f04798a9a82320eeea5a2c7928d8b3d881ffcbf980f10cecdc1bb237172ad634,
+  to 2026-11-19.108, 518 families, SHA-256 5ecfe34e318981d4f866a4aa56521b6e45262c1254808b3f012b8ecb8e6fc86a, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/run.background_enqueued.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/run.background_enqueued.json, SHA-256 59930805528b2261b84e62360c85466fe806206a9c6c7acf2930b94a4f9c8192.
+
+  The original append checkpoints are preserved: before 2026-11-16.237 SHA-256 17bafc740144ba7b28698704240d9f279477696107e03991f8e3de99e971663f;
+  after 2026-11-16.238 SHA-256 00ee0f0b2999b95c5cf144b1ba9b70fdda03a9e0e14f0d1a2e6e5a6554c0ada2. Existing semantic owner Plans/Contracts_V0.md#CV-609,
+  payload owner Plans/Contracts_V0.md#CV-609, resource Plans/dt_event_contracts.schema.json#/$defs/run_background_enqueued
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2374
+- DL-2597
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2374
+preserved_exact_tokens:
+- run.background_enqueued
+- bb343a49d02cb302cc3b17a18b4812718d89d2273ba36113c62b31fe9cceb082
+- 2026-11-19.107
+- 2026-11-19.108
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2559: Event Authority corrects server.catalog_changed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2559
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for server.catalog_changed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2396; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 d1ad2a97df18330b394635d2e30133e6468730180d3dbd250a54c67acf5b886a.
+  Its scope is application_only. Payload editions: application `pm.event_payload.server.catalog_changed.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.108, 518 families, SHA-256 5ecfe34e318981d4f866a4aa56521b6e45262c1254808b3f012b8ecb8e6fc86a,
+  to 2026-11-19.109, 518 families, SHA-256 90853c922a28070e9f1e080c7e73d7c5e264b5592603ebcb17235d7e62e29d44, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/server.catalog_changed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/server.catalog_changed.json, SHA-256 ede4404ef10ef1c6fc4dd7e5f11169241c741491ce9784a7e71095b41a0be3bb.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.259 SHA-256 18551aa60f68e4e073049ef74ceb5c5e0dd4dc7edf6a6f38c198a3e057d96c9d;
+  after 2026-11-16.260 SHA-256 9f2fb9c2aa7e705ad37fd5df4fab75c728204b61fef4765ba7bcf02dc2539950. Existing semantic owner Plans/Server_System.md#SRV-1411,
+  payload owner Plans/Contracts_V0.md#CV-1411, resource Plans/event_payloads/w3e/server_catalog_changed.schema.json# retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2396
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2396
+preserved_exact_tokens:
+- server.catalog_changed
+- d1ad2a97df18330b394635d2e30133e6468730180d3dbd250a54c67acf5b886a
+- 2026-11-19.108
+- 2026-11-19.109
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2560: Event Authority corrects server.client_pairing_state_changed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2560
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for server.client_pairing_state_changed only, under DL-077 and DL-400, resolving post-landing
+  Astra finding(s) [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2397; this entry records no new
+  admission, verdict, policy choice or producer adoption. Current row canonical SHA-256 3bf4d40390a3abf37e8a913bc53b2867357f64b3813b2c1caf55377efcb9317a.
+  Its scope is application_only. Payload editions: application `pm.event_payload.server.client_pairing_state_changed.v1` (RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.109, 518 families, SHA-256 90853c922a28070e9f1e080c7e73d7c5e264b5592603ebcb17235d7e62e29d44,
+  to 2026-11-19.110, 518 families, SHA-256 299b55bc8da57075bed025a50fdb5566251896afb74bbe1eff033cb12d728909, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/server.client_pairing_state_changed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/server.client_pairing_state_changed.json, SHA-256
+  6e8f4805ed2f1743b9bd3f17ba727998e4317d00b12ebdb7df61fed543eefb67.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.260 SHA-256 9f2fb9c2aa7e705ad37fd5df4fab75c728204b61fef4765ba7bcf02dc2539950;
+  after 2026-11-16.261 SHA-256 28114aec3ae5472f36cf40bf130394530a4bdda2374e7ba411614733e8fc7d65. Existing semantic owner Plans/Server_System.md#SRV-1412,
+  payload owner Plans/Contracts_V0.md#CV-1412, resource Plans/event_payloads/w3e/server_client_pairing_state_changed.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2397
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2397
+preserved_exact_tokens:
+- server.client_pairing_state_changed
+- 3bf4d40390a3abf37e8a913bc53b2867357f64b3813b2c1caf55377efcb9317a
+- 2026-11-19.109
+- 2026-11-19.110
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2561: Event Authority corrects server.client_revoked (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2561
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for server.client_revoked only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2398; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 bfafaf4b9ecfd4bea6a2e6f2cf268729fd5ac796ce15d4665f9d95d0cf7cd212.
+  Its scope is application_only. Payload editions: application `pm.event_payload.server.client_revoked.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.110, 518 families, SHA-256 299b55bc8da57075bed025a50fdb5566251896afb74bbe1eff033cb12d728909,
+  to 2026-11-19.111, 518 families, SHA-256 a994a852a99ad4f74431532c27ddeae0b7b698802e69f7a84fc1eb16baa75908, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/server.client_revoked.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/server.client_revoked.json, SHA-256 e3640a2a52f9ca69976fe0d8cdffd8e59f9d1a8f1603803e1b4602ccf1f240b0.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.261 SHA-256 28114aec3ae5472f36cf40bf130394530a4bdda2374e7ba411614733e8fc7d65;
+  after 2026-11-16.262 SHA-256 b4fa63143234a384de21733f64564f5b9ea6ddab789b7bd1f44739c340091b3a. Existing semantic owner Plans/Server_System.md#SRV-1413,
+  payload owner Plans/Contracts_V0.md#CV-1413, resource Plans/event_payloads/w3e/server_client_revoked.schema.json# retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2398
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2398
+preserved_exact_tokens:
+- server.client_revoked
+- bfafaf4b9ecfd4bea6a2e6f2cf268729fd5ac796ce15d4665f9d95d0cf7cd212
+- 2026-11-19.110
+- 2026-11-19.111
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2562: Event Authority corrects server.client_trust_changed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2562
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for server.client_trust_changed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2399; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 3c39fdb10db7f42c0db1c408cfef441f9063d1e582a7a4a29f1379ddc3895f4e.
+  Its scope is application_only. Payload editions: application `pm.event_payload.server.client_trust_changed.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.111, 518 families, SHA-256 a994a852a99ad4f74431532c27ddeae0b7b698802e69f7a84fc1eb16baa75908,
+  to 2026-11-19.112, 518 families, SHA-256 2ce5c8f6a527ea49f3bffc62be2065c7e4cb083f3d919bb6eac0854bd478373f, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/server.client_trust_changed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/server.client_trust_changed.json, SHA-256 229b928dccb1d9ea03b08feb23466c5503fcea343d37b405063587088956d4c1.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.262 SHA-256 b4fa63143234a384de21733f64564f5b9ea6ddab789b7bd1f44739c340091b3a;
+  after 2026-11-16.263 SHA-256 5cbecbbfead36a50c7758a0e7157dd5a4196ec9ba367bf4a0051dd72b27a48c9. Existing semantic owner Plans/Server_System.md#SRV-1414,
+  payload owner Plans/Contracts_V0.md#CV-1414, resource Plans/event_payloads/w3e/server_client_trust_changed.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2399
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2399
+preserved_exact_tokens:
+- server.client_trust_changed
+- 3c39fdb10db7f42c0db1c408cfef441f9063d1e582a7a4a29f1379ddc3895f4e
+- 2026-11-19.111
+- 2026-11-19.112
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2563: Event Authority corrects server.connection_state_changed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2563
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for server.connection_state_changed only, under DL-077 and DL-400, resolving post-landing Astra
+  finding(s) [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2400; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 8fa763e432d67ace5609a67d1d4f98d08860ad8c91eb955adb436d266e5bac54.
+  Its scope is application_only. Payload editions: application `pm.event_payload.server.connection_state_changed.v1` (RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.112, 518 families, SHA-256 2ce5c8f6a527ea49f3bffc62be2065c7e4cb083f3d919bb6eac0854bd478373f,
+  to 2026-11-19.113, 518 families, SHA-256 42b286d9b8dc6201f9167f59a074c7c200c9b8edb683e0543c9aedb937449436, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/server.connection_state_changed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/server.connection_state_changed.json, SHA-256
+  9c43f8171290df9461895624efb8d507e968439abde3e60ea05f614794c34057.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.263 SHA-256 5cbecbbfead36a50c7758a0e7157dd5a4196ec9ba367bf4a0051dd72b27a48c9;
+  after 2026-11-16.264 SHA-256 f381dc68caa04c23af1387852ea2d777e92e1c98ebd66c4477e8990f8f3a741b. Existing semantic owner Plans/Server_System.md#SRV-1415,
+  payload owner Plans/Contracts_V0.md#CV-1415, resource Plans/event_payloads/w3e/server_connection_state_changed.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2400
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2400
+preserved_exact_tokens:
+- server.connection_state_changed
+- 8fa763e432d67ace5609a67d1d4f98d08860ad8c91eb955adb436d266e5bac54
+- 2026-11-19.112
+- 2026-11-19.113
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2564: Event Authority corrects server.discovery_expired (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2564
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for server.discovery_expired only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2401; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 4c462457ceb518cdc1aac4c92d8a8abafd13597ead80dad3759485f7dbe0bad8.
+  Its scope is application_only. Payload editions: application `pm.event_payload.server.discovery_expired.v1` (RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.113, 518 families, SHA-256 42b286d9b8dc6201f9167f59a074c7c200c9b8edb683e0543c9aedb937449436,
+  to 2026-11-19.114, 518 families, SHA-256 ecf895ca73272015369da480ea240f6312eef1fff6ae6f04d079915c968fbe90, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/server.discovery_expired.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/server.discovery_expired.json, SHA-256 60d3213ce462b55da76e9653fe107665e8f9017dbf8dcb53c9b38b53ff93bb67.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.264 SHA-256 f381dc68caa04c23af1387852ea2d777e92e1c98ebd66c4477e8990f8f3a741b;
+  after 2026-11-16.265 SHA-256 060bb50648dc83e055a180406cdea14992b1ea0173df2bee699ef8b3799350fd. Existing semantic owner Plans/Server_System.md#SRV-1416,
+  payload owner Plans/Contracts_V0.md#CV-1416, resource Plans/event_payloads/w3e/server_discovery_expired.schema.json# retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2401
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2401
+preserved_exact_tokens:
+- server.discovery_expired
+- 4c462457ceb518cdc1aac4c92d8a8abafd13597ead80dad3759485f7dbe0bad8
+- 2026-11-19.113
+- 2026-11-19.114
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2565: Event Authority corrects server.discovery_observed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2565
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for server.discovery_observed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2402; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 9ed34882969ca27abbbd986269af9a8174918e0cdaa7b18510e113f97eaef26a.
+  Its scope is application_only. Payload editions: application `pm.event_payload.server.discovery_observed.v1` (RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.114, 518 families, SHA-256 ecf895ca73272015369da480ea240f6312eef1fff6ae6f04d079915c968fbe90,
+  to 2026-11-19.115, 518 families, SHA-256 ce690a12a414016c797e9838fa5b75373cb266255d81e556f8cbcdb5de89bb84, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/server.discovery_observed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/server.discovery_observed.json, SHA-256 e5430c388d9723d03eba8ecbf84bb222ffe194dea799d527d9e67d48cdfef085.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.265 SHA-256 060bb50648dc83e055a180406cdea14992b1ea0173df2bee699ef8b3799350fd;
+  after 2026-11-16.266 SHA-256 d9fd2890899f1a3539708806d797b90afcd5998c35d56abadc75bdfa27be2def. Existing semantic owner Plans/Server_System.md#SRV-1417,
+  payload owner Plans/Contracts_V0.md#CV-1417, resource Plans/event_payloads/w3e/server_discovery_observed.schema.json# retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2402
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2402
+preserved_exact_tokens:
+- server.discovery_observed
+- 9ed34882969ca27abbbd986269af9a8174918e0cdaa7b18510e113f97eaef26a
+- 2026-11-19.114
+- 2026-11-19.115
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2566: Event Authority corrects server.endpoint_changed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2566
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for server.endpoint_changed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2403; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 7477c0a92f951480a9efde2a66365d82036b5cfa15eea658f9c30a75f1b71208.
+  Its scope is application_only. Payload editions: application `pm.event_payload.server.endpoint_changed.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.115, 518 families, SHA-256 ce690a12a414016c797e9838fa5b75373cb266255d81e556f8cbcdb5de89bb84,
+  to 2026-11-19.116, 518 families, SHA-256 6f1c1aa09bfa2b3254c0ff86832a6451e944d37206ef3854ac3ea4da14169ea6, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/server.endpoint_changed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/server.endpoint_changed.json, SHA-256 f05c01d811f5bb450be554365c7c11aad903fc64c99471389b7316493570a356.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.266 SHA-256 d9fd2890899f1a3539708806d797b90afcd5998c35d56abadc75bdfa27be2def;
+  after 2026-11-16.267 SHA-256 41b80fd36833500c144fb26d49aaddfe481525444fe19777b359f11775e9b407. Existing semantic owner Plans/Server_System.md#SRV-1418,
+  payload owner Plans/Contracts_V0.md#CV-1418, resource Plans/event_payloads/w3e/server_endpoint_changed.schema.json# retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2403
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2403
+preserved_exact_tokens:
+- server.endpoint_changed
+- 7477c0a92f951480a9efde2a66365d82036b5cfa15eea658f9c30a75f1b71208
+- 2026-11-19.115
+- 2026-11-19.116
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2567: Event Authority corrects server.identity_mismatch_detected (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2567
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for server.identity_mismatch_detected only, under DL-077 and DL-400, resolving post-landing Astra
+  finding(s) [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2404; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 838289ef271e23993015438faab2fd9827e1bf3bee3dd26e46997c6a7da5f0a7.
+  Its scope is application_only. Payload editions: application `pm.event_payload.server.identity_mismatch_detected.v1` (RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.116, 518 families, SHA-256 6f1c1aa09bfa2b3254c0ff86832a6451e944d37206ef3854ac3ea4da14169ea6,
+  to 2026-11-19.117, 518 families, SHA-256 cb7770fcb467ba8ca7e3ba3280894d1a1da4ead33f344ca87c21e29b45b219ae, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/server.identity_mismatch_detected.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/server.identity_mismatch_detected.json, SHA-256
+  356e8647fe1279adc2a26b8116ef89231d527611cd87accc0f80093a1d6bb67c.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.267 SHA-256 41b80fd36833500c144fb26d49aaddfe481525444fe19777b359f11775e9b407;
+  after 2026-11-16.268 SHA-256 fffbf1dd7bba37cbb0f8fc999df49998433583278fc7668cff1bf8b07a07fb07. Existing semantic owner Plans/Server_System.md#SRV-1419,
+  payload owner Plans/Contracts_V0.md#CV-1419, resource Plans/event_payloads/w3e/server_identity_mismatch_detected.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2404
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2404
+preserved_exact_tokens:
+- server.identity_mismatch_detected
+- 838289ef271e23993015438faab2fd9827e1bf3bee3dd26e46997c6a7da5f0a7
+- 2026-11-19.116
+- 2026-11-19.117
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2568: Event Authority corrects subagent.budget_warning (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2568
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for subagent.budget_warning only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [2]. The original admission authority remains Plans/Decision_Log.md#DL-2405; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 b0ca0e495406c96929a5e6969f8bde99a8b6885cbd1db7a872953f99e9150950.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.subagent_budget_warning.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.subagent_budget_warning.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.117, 518 families, SHA-256 cb7770fcb467ba8ca7e3ba3280894d1a1da4ead33f344ca87c21e29b45b219ae,
+  to 2026-11-19.118, 518 families, SHA-256 1511714811ba33a7980c2827e18871000c86371563364d3a9070cf9be15076fc, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/subagent.budget_warning.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/subagent.budget_warning.json, SHA-256 4d1b6aefc4963667fc50eeacb62c9dedc0997b534cb36d3b31970fb930db3291.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.268 SHA-256 fffbf1dd7bba37cbb0f8fc999df49998433583278fc7668cff1bf8b07a07fb07;
+  after 2026-11-16.269 SHA-256 e1254dece5408810746b59fae602636985418a86d2836522378da76e84a2a18c. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-686,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-686, resource Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_budget_warning
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2405
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2405
+preserved_exact_tokens:
+- subagent.budget_warning
+- b0ca0e495406c96929a5e6969f8bde99a8b6885cbd1db7a872953f99e9150950
+- 2026-11-19.117
+- 2026-11-19.118
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2569: Event Authority corrects subagent.cancelled (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2569
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for subagent.cancelled only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [2]. The original admission authority remains Plans/Decision_Log.md#DL-2406; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 66d89638fde596ba44e81aaf3dac56e51794aadf07f762058482d0cd5daf0167.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.subagent_cancelled.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.subagent_cancelled.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.118, 518 families, SHA-256 1511714811ba33a7980c2827e18871000c86371563364d3a9070cf9be15076fc,
+  to 2026-11-19.119, 518 families, SHA-256 547bc398e37f61d895c3e0bb8b10c9dc0d728c53ab17d4e6a701cd118778a1a7, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/subagent.cancelled.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/subagent.cancelled.json, SHA-256 eceb828cf38952f48c2987dc65487ab71e5bd231c3cc8c0f2a1e62c39df2cec6.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.269 SHA-256 e1254dece5408810746b59fae602636985418a86d2836522378da76e84a2a18c;
+  after 2026-11-16.270 SHA-256 342d28330615f17db7cd8a92e464e8d680b2e5a3dc06f4d0972897ebaca928f4. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-687,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-687, resource Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_cancelled
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2406
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2406
+preserved_exact_tokens:
+- subagent.cancelled
+- 66d89638fde596ba44e81aaf3dac56e51794aadf07f762058482d0cd5daf0167
+- 2026-11-19.118
+- 2026-11-19.119
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2570: Event Authority corrects subagent.completed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2570
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for subagent.completed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [2]. The original admission authority remains Plans/Decision_Log.md#DL-2407; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 4d6af22d846c5132c3f8961b11ecbdb8bcb5569797290136985fdccea4784f29.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.subagent_completed.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.subagent_completed.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.119, 518 families, SHA-256 547bc398e37f61d895c3e0bb8b10c9dc0d728c53ab17d4e6a701cd118778a1a7,
+  to 2026-11-19.120, 518 families, SHA-256 79aa48119c38183fa8078a7bc54274cb450a6ef4a4aa0488b87bd40c55f26897, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/subagent.completed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/subagent.completed.json, SHA-256 12157b164253daab2ab7d93e6b814554f55e0d370a4240863a81a69c9c92c5a0.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.270 SHA-256 342d28330615f17db7cd8a92e464e8d680b2e5a3dc06f4d0972897ebaca928f4;
+  after 2026-11-16.271 SHA-256 58d1b64a11cb8d75e883bbf28a8bd13182d36069dae591193a0a09f48f2a3877. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-688,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-688, resource Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_completed
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2407
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2407
+preserved_exact_tokens:
+- subagent.completed
+- 4d6af22d846c5132c3f8961b11ecbdb8bcb5569797290136985fdccea4784f29
+- 2026-11-19.119
+- 2026-11-19.120
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2571: Event Authority corrects subagent.context_warning (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2571
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for subagent.context_warning only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [2]. The original admission authority remains Plans/Decision_Log.md#DL-2408; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 b577081df81c49e10908bdbe365fceb448a5d1b0ad4e1e6e8845bbc78226e28d.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.subagent_context_warning.v1@1.0.0`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption); project `pm.event_payload.subagent_context_warning.v1@1.0.0`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.120, 518 families, SHA-256 79aa48119c38183fa8078a7bc54274cb450a6ef4a4aa0488b87bd40c55f26897,
+  to 2026-11-19.121, 518 families, SHA-256 72a458a47df80bb297cbceb0cba477396b93852d0564a5a53e8ee86f70cc586c, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/subagent.context_warning.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/subagent.context_warning.json, SHA-256 f0285c77256ee0096c4f2113726fe450fbf87ff8689c307e3fe4bdf15ff949d4.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.271 SHA-256 58d1b64a11cb8d75e883bbf28a8bd13182d36069dae591193a0a09f48f2a3877;
+  after 2026-11-16.272 SHA-256 f97f63866032765530427ab897686425609d74c3369343fcaedca62b32871873. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-689,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-689, resource Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_context_warning
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2408
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2408
+preserved_exact_tokens:
+- subagent.context_warning
+- b577081df81c49e10908bdbe365fceb448a5d1b0ad4e1e6e8845bbc78226e28d
+- 2026-11-19.120
+- 2026-11-19.121
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2572: Event Authority corrects subagent.escalated (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2572
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for subagent.escalated only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [2]. The original admission authority remains Plans/Decision_Log.md#DL-2409; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 9171135a40b0554ada69ca7d0bfbfeb8da93472622ba192cd15b24ea01e2e1c8.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.subagent_escalated.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.subagent_escalated.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.121, 518 families, SHA-256 72a458a47df80bb297cbceb0cba477396b93852d0564a5a53e8ee86f70cc586c,
+  to 2026-11-19.122, 518 families, SHA-256 f38ea2af9204838a89b074884d68c191750de7b653dc33689e7b9f445599a965, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/subagent.escalated.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/subagent.escalated.json, SHA-256 74d8b1ed9558c0f984c62f8c74311678455babc4e4bbe195976d8f8d6f204a34.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.272 SHA-256 f97f63866032765530427ab897686425609d74c3369343fcaedca62b32871873;
+  after 2026-11-16.273 SHA-256 0616ce1fd12d1195764d8d0010ea56aab3d4b3b247dd77f56bbccd9597cd606c. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-690,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-690, resource Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_escalated
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2409
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2409
+preserved_exact_tokens:
+- subagent.escalated
+- 9171135a40b0554ada69ca7d0bfbfeb8da93472622ba192cd15b24ea01e2e1c8
+- 2026-11-19.121
+- 2026-11-19.122
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2573: Event Authority corrects subagent.failed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2573
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for subagent.failed only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [2].
+  The original admission authority remains Plans/Decision_Log.md#DL-2410; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 4a212403370c8f6ce6799e03e43546a4916167432b9ea15f1e5226fa4bbc0631.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.subagent_failed.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.subagent_failed.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer
+  requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.122, 518 families, SHA-256 f38ea2af9204838a89b074884d68c191750de7b653dc33689e7b9f445599a965,
+  to 2026-11-19.123, 518 families, SHA-256 07548071d945e6668a48442a504cd09a607e22036b20078c7e7724ad1bae2970, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/subagent.failed.json. Depth
+  assessment: reports/event-authority-20261116/admission-merge-2/depth/subagent.failed.json, SHA-256 5f04081e179f344ab96944e50f16df3a34669855164c11684f303583337a8f67.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.273 SHA-256 0616ce1fd12d1195764d8d0010ea56aab3d4b3b247dd77f56bbccd9597cd606c;
+  after 2026-11-16.274 SHA-256 ec703247d0d906fc0d2815d39a4b38668666897e4b56f14aa69333924903c5fd. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-691,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-691, resource Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_failed
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2410
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2410
+preserved_exact_tokens:
+- subagent.failed
+- 4a212403370c8f6ce6799e03e43546a4916167432b9ea15f1e5226fa4bbc0631
+- 2026-11-19.122
+- 2026-11-19.123
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2574: Event Authority corrects subagent.message_received (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2574
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for subagent.message_received only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [2]. The original admission authority remains Plans/Decision_Log.md#DL-2411; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 addabae3aef5614f49a089b83bfd2ec95602025983e212c54c40490fd8f61a51.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.subagent_message_received.v1@1.0.0`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption); project `pm.event_payload.subagent_message_received.v1@1.0.0`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.123, 518 families, SHA-256 07548071d945e6668a48442a504cd09a607e22036b20078c7e7724ad1bae2970,
+  to 2026-11-19.124, 518 families, SHA-256 57969ee8200d01fae869c7108d92ef2034ef044d4c3c13959da80492812844f3, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/subagent.message_received.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/subagent.message_received.json, SHA-256 7236987933f2ed1a08695a5fafc2d7194a0e8bab70926b465991f4f248180829.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.274 SHA-256 ec703247d0d906fc0d2815d39a4b38668666897e4b56f14aa69333924903c5fd;
+  after 2026-11-16.275 SHA-256 89ed3c5511e32d95962b9ad65b69c1c4b9a00f5204eecbc971b12818d8afac06. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-692,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-692, resource Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_message_received
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2411
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2411
+preserved_exact_tokens:
+- subagent.message_received
+- addabae3aef5614f49a089b83bfd2ec95602025983e212c54c40490fd8f61a51
+- 2026-11-19.123
+- 2026-11-19.124
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2575: Event Authority corrects subagent.message_sent (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2575
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for subagent.message_sent only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [2]. The original admission authority remains Plans/Decision_Log.md#DL-2412; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 cd13aab836b3cef6b49f8d8406996f1089c0626c610e29669aa58dfdac5cd1a6.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.subagent_message_sent.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.subagent_message_sent.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.124, 518 families, SHA-256 57969ee8200d01fae869c7108d92ef2034ef044d4c3c13959da80492812844f3,
+  to 2026-11-19.125, 518 families, SHA-256 f5e2ea65f97a6645cc7ac646266dc4395597107d6af9788dc9355ff82396d4db, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/subagent.message_sent.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/subagent.message_sent.json, SHA-256 d97936c39f23f6107ae4bf82774a5f03cc8ede8ec481bc4fd190efa32e86a8db.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.275 SHA-256 89ed3c5511e32d95962b9ad65b69c1c4b9a00f5204eecbc971b12818d8afac06;
+  after 2026-11-16.276 SHA-256 8f54ca5c4435fcbab9032a54782f1df6318e0dc235462b439dd6a75242c6c0f6. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-693,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-693, resource Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_message_sent
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2412
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2412
+preserved_exact_tokens:
+- subagent.message_sent
+- cd13aab836b3cef6b49f8d8406996f1089c0626c610e29669aa58dfdac5cd1a6
+- 2026-11-19.124
+- 2026-11-19.125
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2576: Event Authority corrects subagent.model_switched (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2576
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for subagent.model_switched only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [2]. The original admission authority remains Plans/Decision_Log.md#DL-2413; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 396386478ac94d98f0051c4ae6b0a4e5e638aa01f8ad64f4c108bc7c13f54416.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.subagent_model_switched.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.subagent_model_switched.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.125, 518 families, SHA-256 f5e2ea65f97a6645cc7ac646266dc4395597107d6af9788dc9355ff82396d4db,
+  to 2026-11-19.126, 518 families, SHA-256 a9b251cb3a7868dd2de6237e11e3eddae9446b66e1cc5b16e549347abc63b4ce, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/subagent.model_switched.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/subagent.model_switched.json, SHA-256 e1a98469e94591fd318aa5694d7103b42f3bdb8a4ecb3740ab0f6ff9b9a8b0ad.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.276 SHA-256 8f54ca5c4435fcbab9032a54782f1df6318e0dc235462b439dd6a75242c6c0f6;
+  after 2026-11-16.277 SHA-256 fdfb61952222fe07de372e2b088ee4d4e40039198361cce2a8c0cbfdedcdf976. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-694,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-694, resource Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_model_switched
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2413
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2413
+preserved_exact_tokens:
+- subagent.model_switched
+- 396386478ac94d98f0051c4ae6b0a4e5e638aa01f8ad64f4c108bc7c13f54416
+- 2026-11-19.125
+- 2026-11-19.126
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2577: Event Authority corrects subagent.output_truncated (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2577
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for subagent.output_truncated only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [2]. The original admission authority remains Plans/Decision_Log.md#DL-2414; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 5dc27f8fb16b15cda6626581b85bea7031537719d57b6d34d4ce5800f8642044.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.subagent_output_truncated.v1@1.0.0`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption); project `pm.event_payload.subagent_output_truncated.v1@1.0.0`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.126, 518 families, SHA-256 a9b251cb3a7868dd2de6237e11e3eddae9446b66e1cc5b16e549347abc63b4ce,
+  to 2026-11-19.127, 518 families, SHA-256 6ed312435cde365f1f0732eac0edb7fd988fac4425abe5973e476152b0bcac97, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/subagent.output_truncated.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/subagent.output_truncated.json, SHA-256 967c8d6dd7f54f99f3c4096d8dd8d8ff00033774dfe018c0c02901f4b9579759.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.277 SHA-256 fdfb61952222fe07de372e2b088ee4d4e40039198361cce2a8c0cbfdedcdf976;
+  after 2026-11-16.278 SHA-256 6ad4035ada58707a2a031d8becfe6e219c94d7b8d1cee01e79093c016f9c0ea7. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-695,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-695, resource Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_output_truncated
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2414
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2414
+preserved_exact_tokens:
+- subagent.output_truncated
+- 5dc27f8fb16b15cda6626581b85bea7031537719d57b6d34d4ce5800f8642044
+- 2026-11-19.126
+- 2026-11-19.127
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2578: Event Authority corrects subagent.paused (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2578
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for subagent.paused only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [2].
+  The original admission authority remains Plans/Decision_Log.md#DL-2415; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 d83e09021f77d4a9272cdd9b197ba32d4a37e5422995fb6b2a0d270b0d8d94b1.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.subagent_paused.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.subagent_paused.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer
+  requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.127, 518 families, SHA-256 6ed312435cde365f1f0732eac0edb7fd988fac4425abe5973e476152b0bcac97,
+  to 2026-11-19.128, 518 families, SHA-256 b78e0b1b38ed4a687e0416612a50583d8152ec94c677fd492b339e1f534d3f13, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/subagent.paused.json. Depth
+  assessment: reports/event-authority-20261116/admission-merge-2/depth/subagent.paused.json, SHA-256 8a657f54f8a1c1c5b8049591f8e4bec80d17492150c6207731b2487a6318fb40.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.278 SHA-256 6ad4035ada58707a2a031d8becfe6e219c94d7b8d1cee01e79093c016f9c0ea7;
+  after 2026-11-16.279 SHA-256 75af8f54257f819a6d1d00d1bcdf9405318b9577a14f048c4c57b10a924034f4. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-696,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-696, resource Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_paused
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2415
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2415
+preserved_exact_tokens:
+- subagent.paused
+- d83e09021f77d4a9272cdd9b197ba32d4a37e5422995fb6b2a0d270b0d8d94b1
+- 2026-11-19.127
+- 2026-11-19.128
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2579: Event Authority corrects subagent.progress (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2579
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for subagent.progress only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [2].
+  The original admission authority remains Plans/Decision_Log.md#DL-2416; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 a63f949225c5bdd21324c91ed9f1ddb87c10aa1dfe0ba8ee22120fbefba80abf.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.subagent_progress.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.subagent_progress.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.128, 518 families, SHA-256 b78e0b1b38ed4a687e0416612a50583d8152ec94c677fd492b339e1f534d3f13,
+  to 2026-11-19.129, 518 families, SHA-256 9c417130fe49ee60df7b5049d553052b7919f19ee0dc7cf94afeb6058ed06979, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/subagent.progress.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/subagent.progress.json, SHA-256 ee6a0d691fa8f2f7a7676b39c6783b140b54f39e17ef598b16381fc26791a815.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.279 SHA-256 75af8f54257f819a6d1d00d1bcdf9405318b9577a14f048c4c57b10a924034f4;
+  after 2026-11-16.280 SHA-256 6f29e8e5714a78b87b06780ab499047eff5553daf24a1184dfe7ea4ed74944ea. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-697,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-697, resource Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_progress
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2416
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2416
+preserved_exact_tokens:
+- subagent.progress
+- a63f949225c5bdd21324c91ed9f1ddb87c10aa1dfe0ba8ee22120fbefba80abf
+- 2026-11-19.128
+- 2026-11-19.129
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2580: Event Authority corrects subagent.resumed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2580
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for subagent.resumed only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [2].
+  The original admission authority remains Plans/Decision_Log.md#DL-2417; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 2a61edc4acc9615cd1b0bf992764db9eba796d04f63464faab5efd7e4b2e14df.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.subagent_resumed.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.subagent_resumed.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.129, 518 families, SHA-256 9c417130fe49ee60df7b5049d553052b7919f19ee0dc7cf94afeb6058ed06979,
+  to 2026-11-19.130, 518 families, SHA-256 9e6a38e9dfe377e03fbe9f777cb0f074edc0883251481fec269596985a2dee23, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/subagent.resumed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/subagent.resumed.json, SHA-256 897605fb82c78cc6d76824b64238f3fe843bceb2084747a9f347156c255d27a0.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.280 SHA-256 6f29e8e5714a78b87b06780ab499047eff5553daf24a1184dfe7ea4ed74944ea;
+  after 2026-11-16.281 SHA-256 54c51e5022030c6e90d7ca512098fe9da85c54f7fd4250a13ebaad23d266187a. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-698,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-698, resource Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_resumed
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2417
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2417
+preserved_exact_tokens:
+- subagent.resumed
+- 2a61edc4acc9615cd1b0bf992764db9eba796d04f63464faab5efd7e4b2e14df
+- 2026-11-19.129
+- 2026-11-19.130
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2581: Event Authority corrects subagent.retried (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2581
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for subagent.retried only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [2].
+  The original admission authority remains Plans/Decision_Log.md#DL-2418; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 977a29c384b88e4cd6f39727dbc78d64ddabd6f14a53b847eb4c1d3576d92858.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.subagent_retried.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.subagent_retried.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.130, 518 families, SHA-256 9e6a38e9dfe377e03fbe9f777cb0f074edc0883251481fec269596985a2dee23,
+  to 2026-11-19.131, 518 families, SHA-256 41339fdc1f372e47562ed0dc53fc903f4fb67749d52d86504636e37799014456, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/subagent.retried.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/subagent.retried.json, SHA-256 6e7b9bb73ba191776f1478230e435adb7442c8b25c6a98c1b44dfa6efa7ffb69.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.281 SHA-256 54c51e5022030c6e90d7ca512098fe9da85c54f7fd4250a13ebaad23d266187a;
+  after 2026-11-16.282 SHA-256 faecfba1542fb4218c633a3f22423f3f29217493fdffe7c16cc69295ec41bf96. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-699,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-699, resource Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_retried
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2418
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2418
+preserved_exact_tokens:
+- subagent.retried
+- 977a29c384b88e4cd6f39727dbc78d64ddabd6f14a53b847eb4c1d3576d92858
+- 2026-11-19.130
+- 2026-11-19.131
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2582: Event Authority corrects subagent.spawned (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2582
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for subagent.spawned only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [2].
+  The original admission authority remains Plans/Decision_Log.md#DL-2419; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 a076032ac0ba036f8b7cd939dc250a21574599efa5444b7057887e7342a4b7d7.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.subagent_spawned.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.subagent_spawned.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.131, 518 families, SHA-256 41339fdc1f372e47562ed0dc53fc903f4fb67749d52d86504636e37799014456,
+  to 2026-11-19.132, 518 families, SHA-256 bc2279b45b57ede18f43313ab2b8fa9e8a8c25fea7527f1550ba7315fc0adc7b, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/subagent.spawned.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/subagent.spawned.json, SHA-256 cf333ab3a3dc916d5a5b8426416e92c0b121eab9ae10a2d2890e3d6ca928da5e.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.282 SHA-256 faecfba1542fb4218c633a3f22423f3f29217493fdffe7c16cc69295ec41bf96;
+  after 2026-11-16.283 SHA-256 08458493a0ac78c877f785d40a2d139d20673101325fb605ba1ce975ac15316c. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-700,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-700, resource Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_spawned
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2419
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2419
+preserved_exact_tokens:
+- subagent.spawned
+- a076032ac0ba036f8b7cd939dc250a21574599efa5444b7057887e7342a4b7d7
+- 2026-11-19.131
+- 2026-11-19.132
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2583: Event Authority corrects subagent.started (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2583
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for subagent.started only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [2].
+  The original admission authority remains Plans/Decision_Log.md#DL-2420; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 aebfd6ce36dbc517d4acbb0e79b75e1c12e84243609e89519b26128ef120f1f3.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.subagent_started.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.subagent_started.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.132, 518 families, SHA-256 bc2279b45b57ede18f43313ab2b8fa9e8a8c25fea7527f1550ba7315fc0adc7b,
+  to 2026-11-19.133, 518 families, SHA-256 f746edeb430827fc5ca8df64978b17d371b5dc5f2906ee5b0ce54a33d1853145, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/subagent.started.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/subagent.started.json, SHA-256 36cdaba47140b438dc5e416b872a45a3f6146cc4f0084c1707fce1e68ffdf19b.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.283 SHA-256 08458493a0ac78c877f785d40a2d139d20673101325fb605ba1ce975ac15316c;
+  after 2026-11-16.284 SHA-256 7353789a5fff19a44087476db5591dfcb1ca4790708a3a886bd9f42972a4a8c7. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-701,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-701, resource Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_started
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2420
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2420
+preserved_exact_tokens:
+- subagent.started
+- aebfd6ce36dbc517d4acbb0e79b75e1c12e84243609e89519b26128ef120f1f3
+- 2026-11-19.132
+- 2026-11-19.133
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2584: Event Authority corrects subagent.timeout (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2584
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for subagent.timeout only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [2].
+  The original admission authority remains Plans/Decision_Log.md#DL-2421; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 9296ec24eb9c728563158ba06ff3fa3a78a9d789d7c2bd2e24b0669bd0286ee3.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.subagent_timeout.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.subagent_timeout.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.133, 518 families, SHA-256 f746edeb430827fc5ca8df64978b17d371b5dc5f2906ee5b0ce54a33d1853145,
+  to 2026-11-19.134, 518 families, SHA-256 cc0feddd73a513cfb8d1ac19625b3f280d0c2f0ab9d40dc62d6fce8b64f815d3, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/subagent.timeout.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/subagent.timeout.json, SHA-256 4481d05a63bfdc7d0538ad829bf4b10f820e659f9c3e35da02a835052ab5a7fc.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.284 SHA-256 7353789a5fff19a44087476db5591dfcb1ca4790708a3a886bd9f42972a4a8c7;
+  after 2026-11-16.285 SHA-256 bdc8a6d22c682b727e5cfde342667e670586c0e67842fb6a2b52e64dcc18bc68. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-702,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-702, resource Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_timeout
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2421
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2421
+preserved_exact_tokens:
+- subagent.timeout
+- 9296ec24eb9c728563158ba06ff3fa3a78a9d789d7c2bd2e24b0669bd0286ee3
+- 2026-11-19.133
+- 2026-11-19.134
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2585: Event Authority corrects subagent.tool_called (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2585
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for subagent.tool_called only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [2]. The original admission authority remains Plans/Decision_Log.md#DL-2422; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 33fedc90705ded289788911d0aff6487005253633cfda45bb8a31a63a772cf21.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.subagent_tool_called.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.subagent_tool_called.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.134, 518 families, SHA-256 cc0feddd73a513cfb8d1ac19625b3f280d0c2f0ab9d40dc62d6fce8b64f815d3,
+  to 2026-11-19.135, 518 families, SHA-256 81c3140f998863798ca7d630216d81ff852eb6d0df6bce8f6230d5c297d4aea5, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/subagent.tool_called.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/subagent.tool_called.json, SHA-256 9a102ed0587221dd7fb590b6175e88099af1fd2b0ee210334d00cbb7828d1403.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.285 SHA-256 bdc8a6d22c682b727e5cfde342667e670586c0e67842fb6a2b52e64dcc18bc68;
+  after 2026-11-16.286 SHA-256 6eb4a977a97e5b68c9fc611de7161db81dbf99b47541a8d322f8c34076df395c. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-703,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-703, resource Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_tool_called
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2422
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2422
+preserved_exact_tokens:
+- subagent.tool_called
+- 33fedc90705ded289788911d0aff6487005253633cfda45bb8a31a63a772cf21
+- 2026-11-19.134
+- 2026-11-19.135
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2586: Event Authority corrects subagent.tool_completed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2586
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for subagent.tool_completed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [2]. The original admission authority remains Plans/Decision_Log.md#DL-2423; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 8ff6ec2b9fc85315f674b1cfd942c3b90d3490c56177b3f75850ac4fefff9d3e.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.subagent_tool_completed.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.subagent_tool_completed.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.135, 518 families, SHA-256 81c3140f998863798ca7d630216d81ff852eb6d0df6bce8f6230d5c297d4aea5,
+  to 2026-11-19.136, 518 families, SHA-256 0f5f0863a6def9d3db0a41c99dbf557f13949d6871491b3962a396e0144e5eb4, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/subagent.tool_completed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/subagent.tool_completed.json, SHA-256 eaa79dc6cf8df129b9cc84ccbc090df4ea03bd2aac5701b177ee36acaab3b16f.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.286 SHA-256 6eb4a977a97e5b68c9fc611de7161db81dbf99b47541a8d322f8c34076df395c;
+  after 2026-11-16.287 SHA-256 11cbbbb869333ca166f000b3d86fbb1b4d3b1915ba8d08f45003c075dd9e001e. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-704,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-704, resource Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_tool_completed
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2423
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2423
+preserved_exact_tokens:
+- subagent.tool_completed
+- 8ff6ec2b9fc85315f674b1cfd942c3b90d3490c56177b3f75850ac4fefff9d3e
+- 2026-11-19.135
+- 2026-11-19.136
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2587: Event Authority corrects tool.denied (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2587
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for tool.denied only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4]. The
+  original admission authority remains Plans/Decision_Log.md#DL-2425; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 89cba62d04987d23e2bf771d959863f9c273a01b36e75580f6a32d56dd34ed9c.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.tool_denied.v1` (RP-RUNTIME-365D@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.tool_denied.v1` (RP-RUNTIME-365D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.136, 518 families, SHA-256 0f5f0863a6def9d3db0a41c99dbf557f13949d6871491b3962a396e0144e5eb4,
+  to 2026-11-19.137, 518 families, SHA-256 0afdc70f5c6b841f8fe865639e11e71bf450a697ff58d91396c62636a64b439e, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/tool.denied.json. Depth
+  assessment: reports/event-authority-20261116/admission-merge-2/depth/tool.denied.json, SHA-256 8c4c9c039d41b41d675b86171bb2325d1e2d1ddd0e3fd4c642c211d73312a1aa.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.288 SHA-256 2af0157daa2c66604012c1bc01dc4f9ce7402d6d731f17c7aaaaab7859577835;
+  after 2026-11-16.289 SHA-256 b70b778d811fc11bf541106f1e536da2240ab22e2f5cbddfa09ec2d8b2641611. Existing semantic owner Plans/Contracts_V0.md#CV-610,
+  payload owner Plans/Contracts_V0.md#CV-610, resource Plans/dt_event_contracts.schema.json#/$defs/tool_denied retain their
+  contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2425
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2425
+preserved_exact_tokens:
+- tool.denied
+- 89cba62d04987d23e2bf771d959863f9c273a01b36e75580f6a32d56dd34ed9c
+- 2026-11-19.136
+- 2026-11-19.137
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2588: Event Authority corrects tool.execution_completed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2588
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for tool.execution_completed only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2426; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 930dd1d98a271acb881ed8ef22d0bd3bfcd0dab9785de14c7cd7791c9f8bb17b.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.tool_execution_completed.v1` (RP-RUNTIME-365D@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.tool_execution_completed.v1` (RP-RUNTIME-365D@1.0.0, producer
+  requires_owner_adoption).
+  The current retention evidence cites Plans/Decision_Log.md#DL-2597 and the Case L-3 assignment at Plans/storage-plan.md:18341 for the separate Application count.
+
+  The correction moves the full registry from 2026-11-19.137, 518 families, SHA-256 0afdc70f5c6b841f8fe865639e11e71bf450a697ff58d91396c62636a64b439e,
+  to 2026-11-19.138, 518 families, SHA-256 d315c0c68afbe54990be7f4514f46ad2a50cba085dbdf43bae6f62bd2455eb36, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/tool.execution_completed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/tool.execution_completed.json, SHA-256 fa58175e5d5150aab587e7b29ddd07599dace89b7e8549ed658570c8aa3c0fe4.
+
+  The original append checkpoints are preserved: before 2026-11-16.289 SHA-256 b70b778d811fc11bf541106f1e536da2240ab22e2f5cbddfa09ec2d8b2641611;
+  after 2026-11-16.290 SHA-256 5f01dba78ca99afb04fb698533a02b5c517aeaf3b62a7a40c27dfeac23c6e11d. Existing semantic owner Plans/Contracts_V0.md#CV-611,
+  payload owner Plans/Contracts_V0.md#CV-611, resource Plans/dt_event_contracts.schema.json#/$defs/tool_execution_completed
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2426
+- DL-2597
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2426
+preserved_exact_tokens:
+- tool.execution_completed
+- 930dd1d98a271acb881ed8ef22d0bd3bfcd0dab9785de14c7cd7791c9f8bb17b
+- 2026-11-19.137
+- 2026-11-19.138
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2589: Event Authority corrects tool.execution_started (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2589
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for tool.execution_started only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2427; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 ce16c5e3dff7493472ba315fc6b25393d03b62cbf015c218bf097e8fc1d28903.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.tool_execution_started.v1` (RP-RUNTIME-365D@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.tool_execution_started.v1` (RP-RUNTIME-365D@1.0.0, producer
+  requires_owner_adoption).
+  The current retention evidence cites Plans/Decision_Log.md#DL-2597 and the Case L-3 assignment at Plans/storage-plan.md:18341 for the separate Application count.
+
+  The correction moves the full registry from 2026-11-19.138, 518 families, SHA-256 d315c0c68afbe54990be7f4514f46ad2a50cba085dbdf43bae6f62bd2455eb36,
+  to 2026-11-19.139, 518 families, SHA-256 838c3f4101028e92367fdc4101766373149c8d9ce26a0653dded644374679a02, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/tool.execution_started.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/tool.execution_started.json, SHA-256 9789f11f741d016b802fe2c289dc703202daaa3f83bb57ec9b3705c4eaf89798.
+
+  The original append checkpoints are preserved: before 2026-11-16.290 SHA-256 5f01dba78ca99afb04fb698533a02b5c517aeaf3b62a7a40c27dfeac23c6e11d;
+  after 2026-11-16.291 SHA-256 c9be126046fa84f3a4b0e6c8b3f7481bc2effcc7b669c81ef7fcb218cb3dbb96. Existing semantic owner Plans/Contracts_V0.md#CV-612,
+  payload owner Plans/Contracts_V0.md#CV-612, resource Plans/dt_event_contracts.schema.json#/$defs/tool_execution_started
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2427
+- DL-2597
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2427
+preserved_exact_tokens:
+- tool.execution_started
+- ce16c5e3dff7493472ba315fc6b25393d03b62cbf015c218bf097e8fc1d28903
+- 2026-11-19.138
+- 2026-11-19.139
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2590: Event Authority corrects tool.invoked (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2590
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for tool.invoked only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4]. The
+  original admission authority remains Plans/Decision_Log.md#DL-2428; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 c94926c36b67ec83687fc29e4801ada77c08bcc961e9e978b4b1b5b4ba38167c.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.tool_invoked.v1` (RP-RUNTIME-365D@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.tool_invoked.v1` (RP-RUNTIME-365D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.139, 518 families, SHA-256 838c3f4101028e92367fdc4101766373149c8d9ce26a0653dded644374679a02,
+  to 2026-11-19.140, 518 families, SHA-256 6a7bafb6768c94bdb693e2f630a4f371e8513561c1563f0ae2d1954b8e89de14, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/tool.invoked.json. Depth
+  assessment: reports/event-authority-20261116/admission-merge-2/depth/tool.invoked.json, SHA-256 4de90a2f03867c1b73de106d4aef2717232cd8bac2826c135a762fa0a0808ef6.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.291 SHA-256 c9be126046fa84f3a4b0e6c8b3f7481bc2effcc7b669c81ef7fcb218cb3dbb96;
+  after 2026-11-16.292 SHA-256 f6a6ab6aaca5acbee8ca025c3d1a4acdae45a9efaacab1ec25e2247a7a4dfacf. Existing semantic owner Plans/Contracts_V0.md#CV-613,
+  payload owner Plans/Contracts_V0.md#CV-613, resource Plans/dt_event_contracts.schema.json#/$defs/tool_invoked retain their
+  contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2428
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2428
+preserved_exact_tokens:
+- tool.invoked
+- c94926c36b67ec83687fc29e4801ada77c08bcc961e9e978b4b1b5b4ba38167c
+- 2026-11-19.139
+- 2026-11-19.140
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2591: Event Authority corrects usage.event (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2591
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for usage.event only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4]. The
+  original admission authority remains Plans/Decision_Log.md#DL-2444; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 e8acb218b20549a1acde148e99c63fa322437cbd5d23ab21ff45e200b9053bb7.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.usage_event.v1` (ai.usage.usage-retention,
+  producer requires_owner_adoption); project `pm.event_payload.usage_event.v1` (ai.usage.usage-retention, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.140, 518 families, SHA-256 6a7bafb6768c94bdb693e2f630a4f371e8513561c1563f0ae2d1954b8e89de14,
+  to 2026-11-19.141, 518 families, SHA-256 07c47ebf5ccfc886ff7f4fce66a096c5b9a2c0732e3eca27253f9baa70dd2fe6, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/usage.event.json. Depth
+  assessment: reports/event-authority-20261116/admission-merge-2/depth/usage.event.json, SHA-256 97888ab988d5f0c0597c785939385d7bfdd243d3b2918bc3e1be20b464b68354.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.306 SHA-256 774f6d49c5662d6115e42b880c855b5d415fd3eb234627e7405a3f493bd83204;
+  after 2026-11-18.1 SHA-256 aa6188dd713badcfa9c902d24d917b764b23a6a9e2290bdb58de8776a2f79a5e. Existing semantic owner Plans/Contracts_V0.md#CV-614,
+  payload owner Plans/Contracts_V0.md#CV-614, resource Plans/dt_event_contracts.schema.json#/$defs/usage_event retain their
+  contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2444
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2444
+preserved_exact_tokens:
+- usage.event
+- e8acb218b20549a1acde148e99c63fa322437cbd5d23ab21ff45e200b9053bb7
+- 2026-11-19.140
+- 2026-11-19.141
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2592: Event Authority corrects wizard.blocked (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2592
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for wizard.blocked only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [1].
+  The original admission authority remains Plans/Decision_Log.md#DL-2429; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 87ea65cf586a8d28d853a0e61200dcd5bbc37acdbbbe636ef24441f93c407bf1.
+  Its scope is project_only. Payload editions: project `pm.event_payload.wizard.blocked.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.141, 518 families, SHA-256 07c47ebf5ccfc886ff7f4fce66a096c5b9a2c0732e3eca27253f9baa70dd2fe6,
+  to 2026-11-19.142, 518 families, SHA-256 bd5a646ab633821d93836179591335ed28f4f370ae03dc52d9c1db93d006818a, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/wizard.blocked.json. Depth
+  assessment: reports/event-authority-20261116/admission-merge-2/depth/wizard.blocked.json, SHA-256 d2c9b6505ece9dbbb7ddb746ed99f105186626b0d37c82c19cdbb8b5e013ea8d.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.292 SHA-256 f6a6ab6aaca5acbee8ca025c3d1a4acdae45a9efaacab1ec25e2247a7a4dfacf;
+  after 2026-11-16.293 SHA-256 73f62c4fdddca145f2e7881c30541cf32d2f4dc1cbb1c8fb8e9428bb5aca6173. Existing semantic owner Plans/Contracts_V0.md#CV-596,
+  payload owner Plans/Contracts_V0.md#CV-596, resource Plans/event_payloads/planning_wizard/wizard_blocked.schema.json# retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2429
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2429
+preserved_exact_tokens:
+- wizard.blocked
+- 87ea65cf586a8d28d853a0e61200dcd5bbc37acdbbbe636ef24441f93c407bf1
+- 2026-11-19.141
+- 2026-11-19.142
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2593: Event Authority corrects wizard.deferred_payload.loaded (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2593
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for wizard.deferred_payload.loaded only, under DL-077 and DL-400, resolving post-landing Astra
+  finding(s) [1]. The original admission authority remains Plans/Decision_Log.md#DL-2430; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 fcd292bf19a0f13b37d8f1497da0e73d8854860a98faeaded8c9821af674e1d7.
+  Its scope is project_only. Payload editions: project `pm.event_payload.wizard.deferred_payload.loaded.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.142, 518 families, SHA-256 bd5a646ab633821d93836179591335ed28f4f370ae03dc52d9c1db93d006818a,
+  to 2026-11-19.143, 518 families, SHA-256 9a3f2820e9a160936630c1245a0f479d0ce0d1a0e20871d2521cea30771d7b28, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/wizard.deferred_payload.loaded.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/wizard.deferred_payload.loaded.json, SHA-256
+  f2bdda83b2a65e3efad6905788691c27889e92772e76eeea4fcb9d8378cec3b4.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.293 SHA-256 73f62c4fdddca145f2e7881c30541cf32d2f4dc1cbb1c8fb8e9428bb5aca6173;
+  after 2026-11-16.294 SHA-256 bbdd96dabae4de692ba73caf8a03281eff7363523a1b2aa2db05b6dea25f5a3b. Existing semantic owner Plans/Planning_Wizard.md#PWIZ-098,
+  payload owner Plans/Contracts_V0.md#CV-595, resource Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2430
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2430
+preserved_exact_tokens:
+- wizard.deferred_payload.loaded
+- fcd292bf19a0f13b37d8f1497da0e73d8854860a98faeaded8c9821af674e1d7
+- 2026-11-19.142
+- 2026-11-19.143
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2594: Event Authority corrects wizard.opened (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2594
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for wizard.opened only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [1].
+  The original admission authority remains Plans/Decision_Log.md#DL-2431; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 e5f90088fe115f2de3fbce4dd8ef706521394bdfb327f46b40b83f06040e26c0.
+  Its scope is project_only. Payload editions: project `pm.event_payload.wizard.opened.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.143, 518 families, SHA-256 9a3f2820e9a160936630c1245a0f479d0ce0d1a0e20871d2521cea30771d7b28,
+  to 2026-11-19.144, 518 families, SHA-256 8e56bd6e131652580604cc6d7f734c6b994c1601433f5d79f2c99f2a98ee7d92, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/wizard.opened.json. Depth
+  assessment: reports/event-authority-20261116/admission-merge-2/depth/wizard.opened.json, SHA-256 32f49b9a3e48968f4a7ad77438d29d1c8f3523d99a0d43ffae66b2e9afee83fd.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.294 SHA-256 bbdd96dabae4de692ba73caf8a03281eff7363523a1b2aa2db05b6dea25f5a3b;
+  after 2026-11-16.295 SHA-256 72d43d91c0f10ded3cbca67ef3a157bd65dec0ed3eecfbd04a301283a61aaf19. Existing semantic owner Plans/Planning_Wizard.md#PWIZ-097,
+  payload owner Plans/Contracts_V0.md#CV-594, resource Plans/event_payloads/planning_wizard/wizard_opened.schema.json# retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2431
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2431
+preserved_exact_tokens:
+- wizard.opened
+- e5f90088fe115f2de3fbce4dd8ef706521394bdfb327f46b40b83f06040e26c0
+- 2026-11-19.143
+- 2026-11-19.144
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2595: Event Authority corrects wizard.unblocked (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2595
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for wizard.unblocked only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [1].
+  The original admission authority remains Plans/Decision_Log.md#DL-2432; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 c79a0e2a85627074700ca35e9a11c3345090cb883a97d62f3c4897bd62abdb36.
+  Its scope is project_only. Payload editions: project `pm.event_payload.wizard.unblocked.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.144, 518 families, SHA-256 8e56bd6e131652580604cc6d7f734c6b994c1601433f5d79f2c99f2a98ee7d92,
+  to 2026-11-19.145, 518 families, SHA-256 e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/wizard.unblocked.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/wizard.unblocked.json, SHA-256 78e4609f778addae4c64878328ac36e0097cb5336d8b556bf12a2bf2458b5810.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.295 SHA-256 72d43d91c0f10ded3cbca67ef3a157bd65dec0ed3eecfbd04a301283a61aaf19;
+  after 2026-11-16.296 SHA-256 cfa10c4f1f5f5d303e9d209aae38b1628a8a5c9943f1ba952526e373f3efa02b. Existing semantic owner Plans/Contracts_V0.md#CV-597,
+  payload owner Plans/Contracts_V0.md#CV-597, resource Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2432
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2432
+preserved_exact_tokens:
+- wizard.unblocked
+- c79a0e2a85627074700ca35e9a11c3345090cb883a97d62f3c4897bd62abdb36
+- 2026-11-19.144
+- 2026-11-19.145
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2597: Queue and tool histories outside a Project have separate Application counts
+
+```yaml
+plan_unit_id: DL-2597
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  On 2026-11-20 at 3:26 PM EST, Jared answered card E17-1 on the Status tab by selecting A, "Each history gets its own whole-app limit". The signed answer vm.pm-ea-lead--E17-1 records A at 2026-11-20T20:26:03.747Z, with no added words. The card SHA-256 is a731e432796490d95012b761ebd6238d20faab33a288333f312317e3b1fcb523.
+
+  E17-1 A gives run.background_enqueued, tool.execution_started and tool.execution_completed one separate SP-349 Server-wide Application count per family. Plans/storage-plan.md Case L-3 records the assignment under RP-RUNTIME-365D@1.0.0, with 5,000,000 per Puppet Master Server and Storage instance per family and 1,000,000 per actual Run. Project records keep the per-Run and per-Project limits. The existing run-completion anchor, 365-day term, successor compaction and holds apply.
+gui_related: false
+gui_classification_reason: Applies to three internal event history counts.
+depends_on: [SP-349]
+unblocks: []
+acceptance_criteria:
+- The three named Application EventRecord families count in separate Server-wide counterpart buckets under Case L-3.
+- Each Application bucket has the 5,000,000 cap in addition to the existing 1,000,000 per actual Run.
+- Project limits, the run-completion anchor, expiry, compaction and holds follow the selected existing policy.
+validation_surfaces:
+- python3 scripts/pm-ea-retention-citation-check.py --self-test
+risk_class: event_authority_retention
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_dt_application_count
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge3-postfix/evidence/deep-pair-r3/dt-signed-answer.json
+- Plans/Decision_Log.md#DL-2558
+- Plans/Decision_Log.md#DL-2588
+- Plans/Decision_Log.md#DL-2589
+preserved_exact_tokens:
+- E17-1
+- "Each history gets its own whole-app limit"
+- run.background_enqueued
+- tool.execution_started
+- tool.execution_completed
+- RP-RUNTIME-365D@1.0.0
+- SP-349
+negative_constraints:
+- No change to Project count limits, other families, policy object values, native adoption or governance seal.
+```
+
+### DL-2598: Event Authority cites the approved safe_point.created count
+
+```yaml
+plan_unit_id: DL-2598
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Citation correction for safe_point.created under DL-077 and DL-400. Original admission: Plans/Decision_Log.md#DL-2394.
+  The current retention assessment cites Plans/storage-plan.md:56213 (SP-557), which records DL-401 G28. The selected RP-RUNTIME-365D
+  policy counts up to 1,000,000 records per actual Run. The 5,000,000 per-Project count applies only when there is a real
+  Project. An Application Run uses its actual Run identity. Its scope is application_or_project. Payload editions:
+  application `https://puppetmaster.local/schemas/event_payloads/safe_point_created/2.0.0` (RP-RUNTIME-365D@1.0.0, producer requires_owner_adoption);
+  project `https://puppetmaster.local/schemas/event_payloads/safe_point_created/2.0.0` (RP-RUNTIME-365D@1.0.0, producer requires_owner_adoption).
+
+
+  The registry remains at 2026-11-19.145, 518 families, SHA-256 e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30.
+  This family row retains canonical SHA-256 6f93e46a3b0e227ff39ac4327352fb364bac964c6cc9770fdd0bb7a57a86d532. Revision witness:
+  reports/event-authority-20261116/admission-merge-3/corrections/safe_point.created.json. Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/safe_point.created.json,
+  SHA-256 eae30c9d959f5fb08b73af83b3d3ea2ad8dcfee169006b5be744540ab4488ac1.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.257 SHA-256 1db657d7032049048594bd059b23bc7eafc261aa91e8845236171282a4e5993a;
+  after 2026-11-16.258 SHA-256 50bf2a46c07bcb8dfc3684ae05ef84c085cb784c87eeab47016927f593e9a8ed. The original assessment,
+  record and decision remain at the named Git predecessor. Native execution remains NOT_RUN.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission citation.
+depends_on:
+- DL-077
+- DL-400
+- DL-401
+- DL-2394
+- SP-557
+unblocks: []
+acceptance_criteria:
+- The retention union cites the existing Application count assignment within its own Storage unit.
+- The DL-077 record and correction witness retain the existing registry and original append checkpoints.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-correction-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE3A-R3-opus55high/REVIEW.md
+- Plans/Decision_Log.md#DL-2394
+- Plans/storage-plan.md#SP-557
+preserved_exact_tokens:
+- safe_point.created
+- RP-RUNTIME-365D
+- the Project count applies only when there is a real Project
+negative_constraints:
+- No new admission, policy decision, verdict change, producer adoption or governance seal.
+```
+
+### DL-2599: Event Authority cites the approved safe_point.restored count
+
+```yaml
+plan_unit_id: DL-2599
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Citation correction for safe_point.restored under DL-077 and DL-400. Original admission: Plans/Decision_Log.md#DL-2395.
+  The current retention assessment cites Plans/storage-plan.md:56284 (SP-558), which records DL-401 G28. The selected RP-RUNTIME-365D
+  policy counts up to 1,000,000 records per actual Run. The 5,000,000 per-Project count applies only when there is a real
+  Project. An Application Run uses its actual Run identity. Its scope is application_or_project. Payload editions:
+  application `https://puppetmaster.local/schemas/event_payloads/safe_point_restored/2.0.0` (RP-RUNTIME-365D@1.0.0, producer requires_owner_adoption);
+  project `https://puppetmaster.local/schemas/event_payloads/safe_point_restored/2.0.0` (RP-RUNTIME-365D@1.0.0, producer requires_owner_adoption).
+
+
+  The registry remains at 2026-11-19.145, 518 families, SHA-256 e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30.
+  This family row retains canonical SHA-256 e25baaef13bce352937a53e2b62beddf8b19e9244bbc3b51367a1a58f31169a7. Revision witness:
+  reports/event-authority-20261116/admission-merge-3/corrections/safe_point.restored.json. Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/safe_point.restored.json,
+  SHA-256 402be675576307c78eea565fdd089382c39634c99ce3af59f7827081bb3c2465.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.258 SHA-256 50bf2a46c07bcb8dfc3684ae05ef84c085cb784c87eeab47016927f593e9a8ed;
+  after 2026-11-16.259 SHA-256 18551aa60f68e4e073049ef74ceb5c5e0dd4dc7edf6a6f38c198a3e057d96c9d. The original assessment,
+  record and decision remain at the named Git predecessor. Native execution remains NOT_RUN.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission citation.
+depends_on:
+- DL-077
+- DL-400
+- DL-401
+- DL-2395
+- SP-558
+unblocks: []
+acceptance_criteria:
+- The retention union cites the existing Application count assignment within its own Storage unit.
+- The DL-077 record and correction witness retain the existing registry and original append checkpoints.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-correction-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE3A-R3-opus55high/REVIEW.md
+- Plans/Decision_Log.md#DL-2395
+- Plans/storage-plan.md#SP-558
+preserved_exact_tokens:
+- safe_point.restored
+- RP-RUNTIME-365D
+- the Project count applies only when there is a real Project
+negative_constraints:
+- No new admission, policy decision, verdict change, producer adoption or governance seal.
+```

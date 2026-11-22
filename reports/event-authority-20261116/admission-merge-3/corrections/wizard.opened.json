@@ -1,0 +1,118 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "wizard.opened",
+ "findings": [
+  1
+ ],
+ "source_commit": "8d9ceb12718d10af72aa9a966818d64c1c28064b",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2431",
+ "decision_ref": "Plans/Decision_Log.md#DL-2594",
+ "registry_before": {
+  "revision": "2026-11-19.143",
+  "sha256": "9a3f2820e9a160936630c1245a0f479d0ce0d1a0e20871d2521cea30771d7b28",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.144",
+  "sha256": "8e56bd6e131652580604cc6d7f734c6b994c1601433f5d79f2c99f2a98ee7d92",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-wizard-opened",
+  "family_revision": "1.0.0",
+  "event_type": "wizard.opened",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/Planning_Wizard.md#PWIZ-097",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-594",
+  "payload_schema_id": "https://puppetmaster.local/schemas/dcw/wizard_opened.schema.json",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/planning_wizard/wizard_opened.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/dcw/wizard_opened.schema.json"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Planning_Wizard.md#PWIZ-097",
+   "Plans/Contracts_V0.md#CV-594",
+   "Plans/event_payloads/planning_wizard/wizard_opened.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  }
+ },
+ "registry_row": {
+  "family_id": "event-family-wizard-opened",
+  "family_revision": "1.0.0",
+  "event_type": "wizard.opened",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/Planning_Wizard.md#PWIZ-097",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-594",
+  "payload_schema_id": "pm.event_payload.wizard.opened.v1",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/planning_wizard/wizard_opened.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/dcw/wizard_opened.schema.json"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Planning_Wizard.md#PWIZ-097",
+   "Plans/Contracts_V0.md#CV-594",
+   "Plans/event_payloads/planning_wizard/wizard_opened.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+   "Plans/dcw_event_contract_fixtures.json#/families/4/positive/event/payload_schema_id"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  }
+ },
+ "predecessor_record_sha256": "08be224a0240ed32cf26727d15703fb195bc5327c6a9682ceec3abd1214c6f5e",
+ "predecessor_assessment_sha256": "f3288b3f6afaba37cfd41927602c9933b86e0aa73cb0e7f84b076eb2d04f0f39",
+ "applied_record_sha256": "1634db523faf1bacc7a0c68a8ab5ec1310f4ece9dad617c963d9bb05b9b94e40",
+ "applied_assessment_sha256": "7b82d30d90711bf166a5a46140d9817db1a1dc1358651964b3f733239e8a9a88",
+ "citation_changes": [],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

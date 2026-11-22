@@ -1,0 +1,172 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "live.step.updated",
+ "findings": [
+  4
+ ],
+ "source_commit": "82fcd08be4eff14dded876c2aa982cb389dfdf22",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2323",
+ "decision_ref": "Plans/Decision_Log.md#DL-2526",
+ "registry_before": {
+  "revision": "2026-11-19.75",
+  "sha256": "bf7a8c9b9b6c08691dfb567e8115a50b05ea22eb5aa1a362f8c59a18c0b8db7a",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.76",
+  "sha256": "295ec06204b842aca40dfc36c5341b16a15cc35ca366985c00da36b2c8597ed5",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-live-step-updated",
+  "family_revision": "1.0.0",
+  "event_type": "live.step.updated",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/newtools.md#N2-220",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-663",
+  "payload_schema_id": "pm.ds15.live_step_updated.payload.v1",
+  "payload_schema_ref": {
+   "path": "Plans/ds15_live_step_updated.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.ds15.live_step_updated.payload.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [],
+    "run_id": [
+     "/payload/run_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/newtools.md#N2-220",
+   "Plans/Contracts_V0.md#CV-663",
+   "Plans/storage-plan.md#SP-643",
+   "Plans/ds15_live_step_updated.schema.json#",
+   "Plans/ds15_event_contracts.json#/2",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-RUNTIME-365D",
+   "policy_version": "1.0.0"
+  }
+ },
+ "registry_row": {
+  "family_id": "event-family-live-step-updated",
+  "family_revision": "1.0.0",
+  "event_type": "live.step.updated",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/newtools.md#N2-220",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-663",
+  "payload_schema_id": "pm.ds15.live_step_updated.payload.v1",
+  "payload_schema_ref": {
+   "path": "Plans/ds15_live_step_updated.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.ds15.live_step_updated.payload.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [],
+    "run_id": [
+     "/payload/run_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/newtools.md#N2-220",
+   "Plans/Contracts_V0.md#CV-663",
+   "Plans/storage-plan.md#SP-643",
+   "Plans/ds15_live_step_updated.schema.json#",
+   "Plans/ds15_event_contracts.json#/2",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-RUNTIME-365D",
+   "policy_version": "1.0.0"
+  }
+ },
+ "predecessor_record_sha256": "54e6a50fd2bffdf9f0b54c18c63cc1409692fa306ccc5189631074b2770095d3",
+ "predecessor_assessment_sha256": "34e7a0d02c53baf1798fa42af1f8159dbedd3787b04e2200fc45c90df12a205c",
+ "applied_record_sha256": "fb9e21423243331f3846b28c2ce54bd72742ed32f51c241a1f291571e6fb87d5",
+ "applied_assessment_sha256": "2a131caa82f7ad2f512f706cb16b38f5d37ed735d335babb4b153dd957ca9fb5",
+ "citation_changes": [
+  {
+   "ordinal": 0,
+   "old": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-643",
+    "line_start": 49311,
+    "line_end": 49311,
+    "quote": "Current selected assignment (2026-11-19): live.step.updated@1.0.0 is registered for project_only in Plans/event_family_registry.json,",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-643, Plans/storage-plan.md:49246-49350",
+    "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+    "source_citation": {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-643",
+     "line_start": 48974,
+     "line_end": 48974,
+     "quote": "\\ history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing\\",
+     "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+    },
+    "reanchor": {
+     "method": "exact_normalized",
+     "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+     "unit": "SP-643",
+     "old_quote": "\\ history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing\\",
+     "new_quote": "history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\n\n  Use the existing",
+     "normalizations": [
+      "whitespace/line wrapping",
+      "YAML quoting/escaping",
+      "Markdown escaping"
+     ],
+     "owner_change_commit": "ea68abacca470d9dd49885294f5bd5c4d0771024"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-643",
+    "line_start": 49313,
+    "line_end": 49322,
+    "quote": "  Current selected assignment (2026-11-19): live.step.updated@1.0.0 is registered for project_only in Plans/event_family_registry.json,\n  as recorded by Plans/Decision_Log.md#DL-2323. Its event history selects RP-RUNTIME-365D@1.0.0; Plans/storage-plan.md#SP-643\n  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:\n  ds15_live_step_updated_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns\n  that stored value, not event history. Separate checkpoint assignment: ds15_live_step_updated_checkpoint uses RP-PROJECTION-3GEN@1.0.0\n  under its existing Plans/storage-plan.md#SP-643 contract; checkpoint retention grants no event/source deletion.\n  Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred\n  to them. Current append/publication still requires the exact selected schema/scope, original custody, current\n  permission, receipt and required producer adoption. Actual missing registration or unresolved required custody\n  refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-643, Plans/storage-plan.md:49248-49352"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

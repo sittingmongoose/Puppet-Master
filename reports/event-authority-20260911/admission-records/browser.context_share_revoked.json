@@ -3,8 +3,8 @@
  "event_type": "browser.context_share_revoked",
  "family_id": "event-family-browser-context-share-revoked",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
- "decision_ref": "Plans/Decision_Log.md#DL-2156",
- "decision_section_sha256": "8b1fc1722e84aeae42a2e458b6e87802fb9e3c0919d7b3d17b0d056a65e4a65d",
+ "decision_ref": "Plans/Decision_Log.md#DL-2459",
+ "decision_section_sha256": "f228c5975817cea6bf7965a3c7d539d5bcd0f2d9963365fc3c64ff7a629cc20e",
  "registry_before": {
   "revision": "2026-11-16.19",
   "sha256": "6f4d7cc2f5e98f707685227c0f42a4d52cb6aa5f4aa90b53934b1846bec4f2af",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "620d220923c921849b3e600c1daf579a65af643d8e929600b99cbad35f1b9820",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/browser.context_share_revoked.json",
-  "sha256": "7493f75c8ba9ed33617b94932d06e545a12984c0b96fa67fca38a6368527a874"
+  "sha256": "a07b35c89228d5f57eca20ff52725b337bc961d6dd0ce97b5e66e34417483baa"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,13 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_record_sha256": "2292a72a2d173c5f1947fee5d45498efd2e2a5ad591ff606fb0f05b0cf054629",
-  "source_assessment_sha256": "0a1ea8d58439b265b6b879832c9fbdcc46ea63db5c62d09447bb650039ca4ccb",
-  "source_decision_section_sha256": "b695bb2b39285f85cda0591be38c005d480a3075ec139c024863b3ac3202e77b",
+  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
+  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
+  "source_record_sha256": "e1d256abe16721fe3b29bef1b0e29c7e0e240dd375524789909ff48debed97f6",
+  "source_assessment_sha256": "c15249c17132b889cade71cace46e4a93351a9f2b600391ea5e34065340361b9",
+  "source_decision_section_sha256": "e1587d139981eb9ceed98020b17ff4aa0a6c6de347a27660374c0c071e43d27b",
   "original_registry_checkpoints_preserved": true
- }
+ },
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2156",
+ "postfix_correction": "reports/event-authority-20261116/admission-merge-3/corrections/browser.context_share_revoked.json"
 }

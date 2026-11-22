@@ -11,7 +11,7 @@
   function sync() {
     const e = P.song(), song = e.song, bpm = song.meter === 6 ? Math.round(song.bpm / 3) : Math.round(song.bpm);
     if (hint) hint.hidden = P.unlocked;
-    const text = P.muted ? 'Sound is off' : NAMES[P.kit] + ' · ' + (e.title === 'Original' ? 'the original tune' : '“' + e.title + '”') + ' · ' + bpm + ' BPM' + (P.jukebox ? ' · jukebox' : '');
+    const text = P.muted ? 'Sound is off' : NAMES[e.kit] + ' · ' + (e.title === 'Original' ? 'the original tune' : '“' + e.title + '”') + ' · ' + bpm + ' BPM' + (P.jukebox ? ' · jukebox' : '');
     const seen = {}, rows = P.parts().filter((q) => q.role && PART[q.role]).filter((q) => { const k = q.role; if (seen[k] != null) { seen[k].on = seen[k].on || q.on; return false; } seen[k] = q; return true; });
     const html = rows.map((q) => '<i class="' + (q.on ? 'on' : '') + '">' + PART[q.role] + '</i>').join('');
     // (written only when it changes: a write of the same text still restyles)

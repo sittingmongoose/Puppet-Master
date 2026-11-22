@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/432"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/432 (canonical row SHA-256 7d5820abc8785c2db913c1ee0d273fc3fd86426607b88e38de43cc222f0b34b2). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/432, canonical row SHA-256 7d5820abc8785c2db913c1ee0d273fc3fd86426607b88e38de43cc222f0b34b2. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/432",
-       "line_start": 28104,
-       "line_end": 28183,
+       "line_start": 28205,
+       "line_end": 28284,
        "quote": "\"event_type\": \"plugin.hook.invoked\"",
-       "quote_line": 28107,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 28208,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/432",
-       "quote_scope": "unit #/families/432, Plans/event_family_registry.json:28104-28183"
+       "quote_scope": "unit #/families/432, Plans/event_family_registry.json:28205-28284"
       }
      ]
     },
@@ -90,13 +90,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-671",
-       "line_start": 37010,
-       "line_end": 37010,
+       "line_start": 37016,
+       "line_end": 37016,
        "quote": "The sole producer `hook dispatch completion observer` first validates actual source/permission/receipt ownership, the closed payload and installed writer/schema/retention admission. The exis",
        "excerpt_sha256": "6e1aee5851bfa9eb2f9c931c38e1530ce97b4887b9e9e805338238ce8930da80",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36284-37151",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -111,13 +111,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-671",
-       "line_start": 37017,
-       "line_end": 37017,
+       "line_start": 37023,
+       "line_end": 37023,
        "quote": "For `plugin.hook.invoked`, the newly authored physical operation binding measures the complete canonical MessagePack value, independently of EventRecord body size. The closed `plugin_hook_invoked_oper",
        "excerpt_sha256": "9481ce478af469b0b7fe952f64cb142278b9de4a60ae3fe0dd759ea758a2e262",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36284-37151",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -222,13 +222,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-671",
-       "line_start": 36966,
-       "line_end": 36966,
+       "line_start": 36972,
+       "line_end": 36972,
        "quote": "application@1:{hex(server_id)}:{hex(owner_operation_id)}",
        "excerpt_sha256": "f021b441a447da8dc6d75d05b73da15284e77fb8544fd86b7d77fb6639093933",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36284-37151",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -298,13 +298,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-671",
-       "line_start": 37014,
-       "line_end": 37014,
+       "line_start": 37020,
+       "line_end": 37020,
        "quote": "`plugin.hook.invoked` selects current-writer `replay_policy=dedupe_by_idempotency_key`",
        "excerpt_sha256": "1c98287c98722a8a726f52e5fb2b9496843b41765450455433f86a4d59db33be",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36284-37151",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -416,45 +416,89 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-671",
-       "line_start": 36788,
-       "line_end": 36788,
-       "quote": "Current selected assignment (2026-11-19): plugin.hook.invoked@1.0.0 is registered for application_or_project in",
+       "line_start": 36794,
+       "line_end": 36815,
+       "quote": "  Current selected assignment (2026-11-19): plugin.hook.invoked@1.0.0 is registered for application_or_project in\n  Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2350. Its event history selects Application\n  = RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project = RP-TELEMETRY-90D@1.0.0\n  (anchor_kind=creation, cardinality_scope=project); Plans/storage-plan.md#SP-671 owns the event policy''s existing\n  anchors, counts, holds and deletion rules. Separate stored-value assignment: plugin_hook_blocked_operation uses\n  RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event\n  history. Separate stored-value assignment: plugin_hook_error_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0\n  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:\n  plugin_hook_invoked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this\n  assigns that stored value, not event history. Separate stored-value assignment: plugin_load_failed_operation uses\n  RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value,\n  not event history. Separate stored-value assignment: plugin_loaded_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\n  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:\n  plugin_permission_override_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503;\n  this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_collision_operation\n  uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored\n  value, not event history. Separate stored-value assignment: plugin_tool_registered_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\n  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Original sources and coherent\n  backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication\n  still requires the exact selected schema/scope, original custody, current permission, receipt and required producer\n  adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN.\n  No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36284-37151",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-671",
-        "line_start": 35972,
-        "line_end": 35972,
-        "quote": "Event history `retention_policy_ref = RP-TELEMETRY-90D@1.0.0`, under DL-401, DL-419, DL-415, DL-503.\\n\\",
-        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        "line_start": 36788,
+        "line_end": 36788,
+        "quote": "Current selected assignment (2026-11-19): plugin.hook.invoked@1.0.0 is registered for application_or_project in",
+        "quote_check": "exact",
+        "quote_scope": "unit SP-671, Plans/storage-plan.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:36278-37145",
+        "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "source_citation": {
+         "path": "Plans/storage-plan.md",
+         "unit": "SP-671",
+         "line_start": 35972,
+         "line_end": 35972,
+         "quote": "Event history `retention_policy_ref = RP-TELEMETRY-90D@1.0.0`, under DL-401, DL-419, DL-415, DL-503.\\n\\",
+         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "line": 36788
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "1cc40ae1fcd6aa87156569b6b7ace12263e8591d",
+        "old_quote": "Current selected assignment (2026-11-19): plugin.hook.invoked@1.0.0 is registered for application_or_project in",
+        "old_path": "Plans/storage-plan.md",
+        "old_unit": "SP-671",
+        "old_line_start": 36788,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-671",
-       "line_start": 36788,
-       "line_end": 36788,
-       "quote": "Current selected assignment (2026-11-19): plugin.hook.invoked@1.0.0 is registered for application_or_project in",
+       "line_start": 36794,
+       "line_end": 36815,
+       "quote": "  Current selected assignment (2026-11-19): plugin.hook.invoked@1.0.0 is registered for application_or_project in\n  Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2350. Its event history selects Application\n  = RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project = RP-TELEMETRY-90D@1.0.0\n  (anchor_kind=creation, cardinality_scope=project); Plans/storage-plan.md#SP-671 owns the event policy''s existing\n  anchors, counts, holds and deletion rules. Separate stored-value assignment: plugin_hook_blocked_operation uses\n  RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event\n  history. Separate stored-value assignment: plugin_hook_error_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0\n  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:\n  plugin_hook_invoked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this\n  assigns that stored value, not event history. Separate stored-value assignment: plugin_load_failed_operation uses\n  RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value,\n  not event history. Separate stored-value assignment: plugin_loaded_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\n  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:\n  plugin_permission_override_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503;\n  this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_collision_operation\n  uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored\n  value, not event history. Separate stored-value assignment: plugin_tool_registered_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\n  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Original sources and coherent\n  backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication\n  still requires the exact selected schema/scope, original custody, current permission, receipt and required producer\n  adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN.\n  No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36284-37151",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-671",
-        "line_start": 36096,
-        "line_end": 36096,
-        "quote": "\\ or other values.\\n\\nExact stored value `plugin_hook_invoked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0`\\",
-        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        "line_start": 36788,
+        "line_end": 36788,
+        "quote": "Current selected assignment (2026-11-19): plugin.hook.invoked@1.0.0 is registered for application_or_project in",
+        "quote_check": "exact",
+        "quote_scope": "unit SP-671, Plans/storage-plan.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:36278-37145",
+        "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "source_citation": {
+         "path": "Plans/storage-plan.md",
+         "unit": "SP-671",
+         "line_start": 36096,
+         "line_end": 36096,
+         "quote": "\\ or other values.\\n\\nExact stored value `plugin_hook_invoked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0`\\",
+         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "line": 36788
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "1cc40ae1fcd6aa87156569b6b7ace12263e8591d",
+        "old_quote": "Current selected assignment (2026-11-19): plugin.hook.invoked@1.0.0 is registered for application_or_project in",
+        "old_path": "Plans/storage-plan.md",
+        "old_unit": "SP-671",
+        "old_line_start": 36788,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       }
      ],
@@ -473,13 +517,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-671",
-       "line_start": 36977,
-       "line_end": 36977,
+       "line_start": 36983,
+       "line_end": 36983,
        "quote": "Custody: the operation record holds only the closed payload, actual actor/scope and original receipt reference. Credential secret custody remains github_api/OS-store only; plugin original re",
        "excerpt_sha256": "aa80c6b160a9250e49c5e912cd520b75dff4581b36a98cebbea3f95bfd629f4e",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36284-37151",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -583,13 +627,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-671",
-       "line_start": 37021,
-       "line_end": 37021,
+       "line_start": 37027,
+       "line_end": 37027,
        "quote": "Consumer **`consumer.plugin_hook_invoked.history@1.0.0`** serves only the existing authenticated plugin audit/history reader. It explicitly adopts **SP-278** and reads through `projector.sto",
        "excerpt_sha256": "3d2264bc47299748d56bf9f6b506733cd3bfbbb03dea52ef96717c2bc769b186",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36284-37151",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -617,13 +661,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-671",
-       "line_start": 36979,
-       "line_end": 36979,
+       "line_start": 36985,
+       "line_end": 36985,
        "quote": "Compatibility: no legacy tuple or unversioned sketch can be a native writer; unsupported version quarantines before append/read. A versioned migration must retain original ID/receipt and ver",
        "excerpt_sha256": "ee71b229878797ef387c1f44922417b4202c3cf67fbddac43ca0f064a7c0d439",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36284-37151",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -739,7 +783,7 @@
        "line_end": 7407,
        "quote": "- `plugin.hook.invoked`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed",
        "excerpt_sha256": "b3bbc7c0c6f184f26f3b94ede6cfdd6e9388abd78f6c70f7505937ab0dfcc08c",
-       "file_sha256": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
+       "file_sha256": "eb4a9e10a80cc73e94ade88cd2fa4494dc396127505d2ea0529a526542ed37c8",
        "quote_check": "exact",
        "quote_scope": "unit ATS-335, Plans/Automated_Testing_System.md:7372-7417",
        "excerpt_digest_convention": "literal_quote",
@@ -793,10 +837,10 @@
   "row_pointer": "#/families/432"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "772f5529b2a1aa96edeeda257b558842ec7e2a3ccb621d1a4035e0d784aa72de",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "46ae3e51b4cd47fed6d7b74de12b6447e71b1e637b5f1d2a997e2fad8580c609",
+  "verdicts_changed": false,
+  "native_execution": "NOT_RUN"
  }
 }

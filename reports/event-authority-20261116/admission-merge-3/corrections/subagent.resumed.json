@@ -1,0 +1,207 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "subagent.resumed",
+ "findings": [
+  2
+ ],
+ "source_commit": "7dccd7d655106ab8833b3d55fd81b4280d315253",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2417",
+ "decision_ref": "Plans/Decision_Log.md#DL-2580",
+ "registry_before": {
+  "revision": "2026-11-19.129",
+  "sha256": "9c417130fe49ee60df7b5049d553052b7919f19ee0dc7cf94afeb6058ed06979",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.130",
+  "sha256": "9e6a38e9dfe377e03fbe9f777cb0f074edc0883251481fec269596985a2dee23",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-subagent-resumed",
+  "family_revision": "1.0.0",
+  "event_type": "subagent.resumed",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-698",
+  "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-698",
+  "payload_schema_id": "pm.event_payload.subagent_resumed.v1",
+  "payload_schema_ref": {
+   "path": "Plans/orchestrator_event_payloads.schema.json",
+   "json_pointer": "#/$defs/subagent_resumed",
+   "schema_id": "pm.event_payload.subagent_resumed.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ],
+    "run_id": [
+     "/payload/run_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/orchestrator-subagent-integration.md#OSI-698",
+   "Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_resumed",
+   "Plans/orchestrator_event_contract_fixtures.json#/contracts/18",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-CHAT-THREAD-LIFETIME",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "pm.event_payload.subagent_resumed.v1",
+    "payload_schema_ref": {
+     "path": "Plans/orchestrator_event_payloads.schema.json",
+     "json_pointer": "#/$defs/subagent_resumed",
+     "schema_id": "pm.event_payload.subagent_resumed.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-698",
+    "read_owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-698",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-CHAT-THREAD-LIFETIME",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "pm.event_payload.subagent_resumed.v1",
+    "payload_schema_ref": {
+     "path": "Plans/orchestrator_event_payloads.schema.json",
+     "json_pointer": "#/$defs/subagent_resumed",
+     "schema_id": "pm.event_payload.subagent_resumed.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-698",
+    "read_owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-698",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-CHAT-THREAD-LIFETIME",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "registry_row": {
+  "family_id": "event-family-subagent-resumed",
+  "family_revision": "1.0.0",
+  "event_type": "subagent.resumed",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-698",
+  "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-698",
+  "payload_schema_id": "pm.event_payload.subagent_resumed.v1@1.0.0",
+  "payload_schema_ref": {
+   "path": "Plans/orchestrator_event_payloads.schema.json",
+   "json_pointer": "#/$defs/subagent_resumed",
+   "schema_id": "pm.event_payload.subagent_resumed.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ],
+    "run_id": [
+     "/payload/run_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/orchestrator-subagent-integration.md#OSI-698",
+   "Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_resumed",
+   "Plans/orchestrator_event_contract_fixtures.json#/contracts/18",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+   "Plans/orchestrator_event_contract_fixtures.json#/event_cases/33/event/payload_schema_id",
+   "Plans/orchestrator_event_contract_fixtures.json#/event_cases/34/event/payload_schema_id"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-CHAT-THREAD-LIFETIME",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "pm.event_payload.subagent_resumed.v1@1.0.0",
+    "payload_schema_ref": {
+     "path": "Plans/orchestrator_event_payloads.schema.json",
+     "json_pointer": "#/$defs/subagent_resumed",
+     "schema_id": "pm.event_payload.subagent_resumed.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-698",
+    "read_owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-698",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-CHAT-THREAD-LIFETIME",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "pm.event_payload.subagent_resumed.v1@1.0.0",
+    "payload_schema_ref": {
+     "path": "Plans/orchestrator_event_payloads.schema.json",
+     "json_pointer": "#/$defs/subagent_resumed",
+     "schema_id": "pm.event_payload.subagent_resumed.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-698",
+    "read_owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-698",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-CHAT-THREAD-LIFETIME",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "predecessor_record_sha256": "59376b25c751eaab5ed6f41814543e5209c4a604e482990f2ac91379d1f40a52",
+ "predecessor_assessment_sha256": "21404541084e78ba68384d1b30fcf4d1ae034435391261410e0eca9d7565e844",
+ "applied_record_sha256": "8e4eeb7256f4332b3c9c2f092afdfdfd1e20b79f16fe9a91c48c39b8219cae8f",
+ "applied_assessment_sha256": "cab5e2b9a960928d95f27dbf9c3791db8ab6fed034db91dbaea431e7c1c5cc3e",
+ "citation_changes": [],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

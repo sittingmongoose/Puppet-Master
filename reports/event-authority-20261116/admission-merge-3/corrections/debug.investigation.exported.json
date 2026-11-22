@@ -1,0 +1,178 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "debug.investigation.exported",
+ "findings": [
+  4
+ ],
+ "source_commit": "98de025457713f0fb929e72c1ce3d62ee34ad571",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2285",
+ "decision_ref": "Plans/Decision_Log.md#DL-2506",
+ "registry_before": {
+  "revision": "2026-11-19.55",
+  "sha256": "249a197559f34c1045f21fc366c9b415becc8abe9c212c9b8e234b83d081e01d",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.56",
+  "sha256": "b2d46e39f686ff8c59ac92d0d85d1b5df85b82db99667b72bec22be4ac348774",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-debug-investigation-exported",
+  "family_revision": "1.0.0",
+  "event_type": "debug.investigation.exported",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/Contracts_V0.md#CV-572",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-572",
+  "payload_schema_id": "pm.debug_investigation.exported.schema.v1",
+  "payload_schema_ref": {
+   "path": "Plans/debug_investigation_event_payloads.schema.json",
+   "json_pointer": "#/$defs/exported",
+   "schema_id": "pm.debug_investigation.exported.schema.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Contracts_V0.md#CV-572",
+   "Plans/debug_investigation_event_payloads.schema.json#/$defs/exported",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-OPERATIONAL-2555D",
+   "policy_version": "1.0.0"
+  }
+ },
+ "registry_row": {
+  "family_id": "event-family-debug-investigation-exported",
+  "family_revision": "1.0.0",
+  "event_type": "debug.investigation.exported",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/Contracts_V0.md#CV-572",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-572",
+  "payload_schema_id": "pm.debug_investigation.exported.schema.v1",
+  "payload_schema_ref": {
+   "path": "Plans/debug_investigation_event_payloads.schema.json",
+   "json_pointer": "#/$defs/exported",
+   "schema_id": "pm.debug_investigation.exported.schema.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Contracts_V0.md#CV-572",
+   "Plans/debug_investigation_event_payloads.schema.json#/$defs/exported",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-OPERATIONAL-2555D",
+   "policy_version": "1.0.0"
+  }
+ },
+ "predecessor_record_sha256": "b5c90eddca6edd66c437876ca7d65988bfd80407d347133c6c78f50a168aa03e",
+ "predecessor_assessment_sha256": "62168d3be49a4dd0c779567f1956492592a7c49b09df1133f1c967c2578b65b7",
+ "applied_record_sha256": "d7d2b756702f596c191fe92a537bf3037da215cf1b8b87ca38eeaf4bcf47a1b6",
+ "applied_assessment_sha256": "4e5253d30a5087e29a334fbb530093aeb7313a2c985756c143dbaf592ca71196",
+ "citation_changes": [
+  {
+   "ordinal": 0,
+   "old": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-570",
+    "line_start": 1390,
+    "line_end": 1390,
+    "quote": "Current selected assignment (2026-11-19): debug.investigation.exported@1.0.0 is registered for project_only in",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-570, Plans/storage-plan.md:1057-1842",
+    "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+    "source_citation": {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-570",
+     "line_start": 1192,
+     "line_end": 1192,
+     "quote": "\\ (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under DL-401,\\",
+     "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-570",
+    "line_start": 1390,
+    "line_end": 1399,
+    "quote": "  Current selected assignment (2026-11-19): debug.investigation.exported@1.0.0 is registered for project_only in\n  Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2285. Its event history selects RP-OPERATIONAL-2555D@1.0.0;\n  Plans/storage-plan.md#SP-570 owns the event policy''s existing anchors, counts, holds and deletion rules. Separate\n  stored-value assignment: dev_session_record uses RP-DEBUG-30D@1.0.0 under Plans/Decision_Log.md#DL-506; this assigns\n  that stored value, not event history. Separate stored-value assignment: revision_run uses RP-CHAT-THREAD-LIFETIME@1.0.0\n  under Plans/Decision_Log.md#DL-508; this assigns that stored value, not event history. Original sources and coherent\n  backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication\n  still requires the exact selected schema/scope, original custody, current permission, receipt and required producer\n  adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN.\n  No native adoption, new retention choice or governance seal follows.",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-570, Plans/storage-plan.md:1057-1842"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  },
+  {
+   "ordinal": 1,
+   "old": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-570",
+    "line_start": 1390,
+    "line_end": 1390,
+    "quote": "Current selected assignment (2026-11-19): debug.investigation.exported@1.0.0 is registered for project_only in",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-570, Plans/storage-plan.md:1057-1842",
+    "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+    "source_citation": {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-570",
+     "line_start": 1196,
+     "line_end": 1196,
+     "quote": "\\ selects `RP-DEBUG-APPLICATION-2555D@1.0.0`; Project records select the Project policy and never count\\",
+     "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-570",
+    "line_start": 1390,
+    "line_end": 1399,
+    "quote": "  Current selected assignment (2026-11-19): debug.investigation.exported@1.0.0 is registered for project_only in\n  Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2285. Its event history selects RP-OPERATIONAL-2555D@1.0.0;\n  Plans/storage-plan.md#SP-570 owns the event policy''s existing anchors, counts, holds and deletion rules. Separate\n  stored-value assignment: dev_session_record uses RP-DEBUG-30D@1.0.0 under Plans/Decision_Log.md#DL-506; this assigns\n  that stored value, not event history. Separate stored-value assignment: revision_run uses RP-CHAT-THREAD-LIFETIME@1.0.0\n  under Plans/Decision_Log.md#DL-508; this assigns that stored value, not event history. Original sources and coherent\n  backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication\n  still requires the exact selected schema/scope, original custody, current permission, receipt and required producer\n  adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN.\n  No native adoption, new retention choice or governance seal follows.",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-570, Plans/storage-plan.md:1057-1842"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

@@ -1,0 +1,222 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3A R3 / cheap recheck finding 1",
+ "event_type": "safe_point.created",
+ "findings": [
+  1
+ ],
+ "source_commit": "5c5570cb4a8018e0aeea6619244d1b793179dace",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2394",
+ "decision_ref": "Plans/Decision_Log.md#DL-2598",
+ "registry_before": {
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-safe-point-created",
+  "family_revision": "2.0.0",
+  "event_type": "safe_point.created",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/Contracts_V0.md#CV-557",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-557",
+  "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/safe_point_created/2.0.0",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/safe_point_created_v2.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/event_payloads/safe_point_created/2.0.0"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [],
+    "thread_id": [],
+    "run_id": [
+     "/payload/run_id"
+    ],
+    "node_id": [
+     "/payload/node_id"
+    ],
+    "attempt_id": [
+     "/payload/attempt_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Contracts_V0.md#CV-557",
+   "Plans/event_payloads/safe_point_created_v2.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-RUNTIME-365D",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/safe_point_created/2.0.0",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/safe_point_created_v2.schema.json",
+     "json_pointer": "#",
+     "schema_id": "https://puppetmaster.local/schemas/event_payloads/safe_point_created/2.0.0"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Contracts_V0.md#CV-557",
+    "read_owner_ref": "Plans/Contracts_V0.md#CV-557",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-RUNTIME-365D",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/safe_point_created/2.0.0",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/safe_point_created_v2.schema.json",
+     "json_pointer": "#",
+     "schema_id": "https://puppetmaster.local/schemas/event_payloads/safe_point_created/2.0.0"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Contracts_V0.md#CV-557",
+    "read_owner_ref": "Plans/Contracts_V0.md#CV-557",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-RUNTIME-365D",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "registry_row": {
+  "family_id": "event-family-safe-point-created",
+  "family_revision": "2.0.0",
+  "event_type": "safe_point.created",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/Contracts_V0.md#CV-557",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-557",
+  "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/safe_point_created/2.0.0",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/safe_point_created_v2.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/event_payloads/safe_point_created/2.0.0"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [],
+    "thread_id": [],
+    "run_id": [
+     "/payload/run_id"
+    ],
+    "node_id": [
+     "/payload/node_id"
+    ],
+    "attempt_id": [
+     "/payload/attempt_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Contracts_V0.md#CV-557",
+   "Plans/event_payloads/safe_point_created_v2.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-RUNTIME-365D",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/safe_point_created/2.0.0",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/safe_point_created_v2.schema.json",
+     "json_pointer": "#",
+     "schema_id": "https://puppetmaster.local/schemas/event_payloads/safe_point_created/2.0.0"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Contracts_V0.md#CV-557",
+    "read_owner_ref": "Plans/Contracts_V0.md#CV-557",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-RUNTIME-365D",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/safe_point_created/2.0.0",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/safe_point_created_v2.schema.json",
+     "json_pointer": "#",
+     "schema_id": "https://puppetmaster.local/schemas/event_payloads/safe_point_created/2.0.0"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Contracts_V0.md#CV-557",
+    "read_owner_ref": "Plans/Contracts_V0.md#CV-557",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-RUNTIME-365D",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "predecessor_record_sha256": "17222242ce742931a67b1c54d49076eec6fa99bdee852c746269b991afc164a4",
+ "predecessor_assessment_sha256": "912124ac777c39e91e1c0b961f85ebcc8b0793b269cd320807263209f869a103",
+ "applied_record_sha256": "4226d7ecfa7ebdfddc723059cfb3156c9b1750182fbaf69a422c69d6a659a402",
+ "applied_assessment_sha256": "eae30c9d959f5fb08b73af83b3d3ea2ad8dcfee169006b5be744540ab4488ac1",
+ "citation_changes": [
+  {
+   "ordinal": 3,
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-557",
+    "line_start": 56213,
+    "line_end": 56213,
+    "quote": "**Retention — DL-401 G28 (sweep part 1, R7-B1).** `safe_point.created` EventRecord history adopts `retention_policy_ref = RP-RUNTIME-365D`, the existing Run year policy: one year (31,536,000 seconds) after the actual run completes, up to 1,000,000 records per run and the applicable 5,000,000 records per Project, then history continues in a linked successor without dropping records early. Both Project and application safe points require their real run identity; an application run does not acquire a fabricated Project or Orchestrator identity, and the Project count applies only when there is a real Project. A running run has no completion expiry anchor. Legal holds, recovery anchors, the automatic keep on each Project's latest 25 runs, live references and backups override expiry; existing authorized retention extensions and rollback/maintenance protections remain. Retries, replay, recovery and observation do not reset run completion. This is the approved G28 row, \"The 2 restore-point records: Run year,\" applied to the two original RT-G28 safe-point names, not to the separate Chat restore_point.* families. The source premises remain CV-557, FileSafe F2-213 and the required real run in the closed own payload. Released snapshot/body lifetimes and original restore journals remain separate under their existing policies. This binding decides no application-scope FileSafe security-event retention rule and grants no access to deleted or inaccessible bodies.",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-557, Plans/storage-plan.md:56162-56232",
+    "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888"
+   },
+   "reason": "Cites the existing DL-401 G28 count assignment for the Application edition."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE3A-R3-opus55high/REVIEW.md",
+  "sha256": "4b767a7ffcd1e4cb3f32ec541f19ef29390655a5e99cd63bcc798fa4305271e8"
+ },
+ "native_execution": "NOT_RUN"
+}

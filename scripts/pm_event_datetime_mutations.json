@@ -1878,10 +1878,68 @@
    },
    "data:value_arithmetic:datetime_inventory:nested_resource_pointer:plus_one nested_resource_pointer: 5 in :5#1": {
     "witness": "check:datetime_nested_resource_pointer_boundaries"
+   },
+   "site:datetime_inventory:scan:ValueError:exclusion_purpose_citation_ephemeral#1": {
+    "witness": "check:datetime_unit_snapshot_refuse_ephemeral_exclusion_citation"
+   },
+   "predicate:site:datetime_inventory:scan:ValueError:exclusion_purpose_citation_ephemeral#1:false citation == 'Plans/.plan_migration'#1": {
+    "witness": "check:datetime_unit_snapshot_refuse_ephemeral_citation_of_migration_directory"
+   },
+   "predicate:site:datetime_inventory:scan:ValueError:exclusion_purpose_citation_ephemeral#1:false citation.startswith('Plans/.plan_migration/')#1": {
+    "witness": "check:datetime_unit_snapshot_refuse_ephemeral_exclusion_citation"
+   },
+   "site:datetime_inventory:scan:ValueError:exclusion_path_ephemeral#1": {
+    "witness": "check:datetime_unit_snapshot_refuse_exclusion_on_snapshot_path"
+   },
+   "site:datetime_inventory:scan:dynamic#1": {
+    "witness": "check:datetime_unit_snapshot_refuse_unlisted_run"
+   },
+   "boundary:datetime_inventory:snapshot_run:len(parts) >= 4:0#1": {
+    "witness": "check:datetime_unit_snapshot_accept_span_over_excluded_owner_fence"
+   },
+   "boundary:datetime_inventory:adjudicate_snapshot_line:0 <= value['byte_start'] < value['byte_end']:0#1": {
+    "witness": "check:datetime_unit_snapshot_accept_span_at_byte_zero"
+   },
+   "boundary:datetime_inventory:adjudicate_snapshot_line:0 <= value['byte_start'] < value['byte_end']:1#1": {
+    "witness": "check:datetime_unit_snapshot_refuse_empty_span"
+   },
+   "boundary:datetime_inventory:adjudicate_snapshot_line:end > len(data):0#1": {
+    "witness": "check:datetime_unit_snapshot_accept_span_over_excluded_owner_fence"
+   },
+   "boundary:datetime_inventory:adjudicate_snapshot_line:lo <= last:0#1": {
+    "witness": "check:datetime_unit_snapshot_refuse_span_ending_on_uncovered_fence_line"
+   },
+   "boundary:datetime_inventory:adjudicate_snapshot_line:hi >= first:0#1": {
+    "witness": "check:datetime_unit_snapshot_refuse_span_starting_on_uncovered_fence_close"
+   },
+   "boundary:datetime_inventory:SnapshotHistory.verify:end > len(owner):0#1": {
+    "witness": "check:datetime_unit_snapshot_accept_history_stale_current_run"
+   },
+   "boundary:datetime_inventory:scan.container:len(rows) > before:0#1": {
+    "witness": "check:datetime_unit_snapshot_refuse_uncovered_owner_span"
+   },
+   "data:walk_domain:datetime_inventory:scan:walk_first snapshot_lines#1": {
+    "witness": "check:datetime_unit_snapshot_refuse_unmapped_snapshot_line"
    }
   }
  },
  "mutations": [
+  {
+   "id": "review-M02-comma-fraction-separator",
+   "module": "pm_event_datetime",
+   "find": "(?:\\.([0-9]+))?",
+   "replace": "(?:[.,]([0-9]+))?",
+   "witness": "check:datetime_eventrecord_comma_fraction_refused",
+   "rule": "predicate.whole-string"
+  },
+  {
+   "id": "review-B03-omit-century",
+   "module": "pm_event_datetime",
+   "find": " + previous // 4 - previous // 100 + previous // 400",
+   "replace": " + previous // 4 + previous // 400",
+   "survives": "The year-dependent ordinal shift cancels for each frozen insertion and every local date close enough to map to it. A check of every four-digit year's ordinal boundaries and the three one-day-neighborhood dates of each of the 27 insertions found identical relative candidate dates. The signed offset is less than one day. Other seconds bypass this arithmetic.",
+   "rule": "predicate.leap-second-instant"
+  },
   {
    "id": "hw-predicate-prefix-match",
    "module": "pm_event_datetime",
@@ -2780,6 +2838,14 @@
    "rule": "composition.storage-utc-z"
   },
   {
+   "id": "review-B16-storage-terminal-z-anchor",
+   "module": "pm_event_datetime",
+   "find": "\"pattern\": r\"Z(?![\\s\\S])\"",
+   "replace": "\"pattern\": r\"Z\"",
+   "witness": "check:datetime_nested_preloaded_terminal_z_diagnostics",
+   "rule": "composition.storage-utc-z"
+  },
+  {
    "id": "hw-fix17-composition-pattern-dropped",
    "module": "pm_event_datetime",
    "find": "\"format\": \"date-time\",\n                                                              \"pattern\": r\"Z(?![\\s\\S])\"},",
@@ -3069,6 +3135,7 @@
    "mutations": [
     "site:datetime:date_time:date_time_syntax#1",
     "hw-predicate-prefix-match",
+    "review-M02-comma-fraction-separator",
     "hw-tb4-unicode-digit-year",
     "hw-tb4-unicode-digit-month",
     "hw-tb4-unicode-digit-day",
@@ -3443,6 +3510,7 @@
     "hw-fix17-B08-composition-type-dropped",
     "hw-fix17-composition-format-dropped",
     "hw-fix17-composition-pattern-dropped",
+    "review-B16-storage-terminal-z-anchor",
     "hw-fix17-composition-descend-dropped"
    ]
   },

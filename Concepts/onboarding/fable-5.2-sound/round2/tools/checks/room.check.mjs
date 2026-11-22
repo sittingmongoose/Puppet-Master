@@ -105,5 +105,45 @@ export const tests = {
 		await t.page.locator('#rmLook').selectOption('glass-dark'); await sleep(1500);
 		const looked = await take();
 		await t.check(`a change of look while nothing plays sets off no fanfare (${looked.join(', ') || 'none'})`, !looked.some((n) => /chapter|snore/.test(n)), JSON.stringify(looked));
+	},
+	/* A level turns down what it names, echo and all. Found by ear (Jared, 21 Nov 2026: "the volume controls dont work,
+	   they just make things sound more far away, not lower volume"): a sound's send to the room left before its level
+	   and the room's return joined after it, so a slider took away the sound and left its echo at full. Measured two
+	   ways: rendered, where a quarter of the level must be 12 dB less of everything and none must be nothing; and on
+	   the page, where the menu's own sliders at nothing must leave nothing of a song in the largest room. */
+	async 'a level turns it down'(t) {
+		await t.goto(String(t.args.page || 'index.html'));
+		await t.page.waitForFunction(() => !!(window.__room && window.PipSound && window.PS5 && window.__room.stage()));
+		const r = await t.page.evaluate(async () => {
+			const P = window.PipSound, MIX = window.PS5.MIX || { music: 0.85, voice: 1, sfx: 1 }, out = {};
+			const rms = (b) => { let s = 0, n = 0; for (let c = 0; c < b.numberOfChannels; c++) { const d = b.getChannelData(c); for (let i = 0; i < d.length; i++) s += d[i] * d[i]; n += d.length; } return Math.sqrt(s / n); };
+			const what = { music: { kit: 'glass', seconds: 8, chapter: 4, index: 10 }, voice: { kit: 'nier', seconds: 5, music: false, script: [{ at: 0.2, say: 'Right here works great.', mood: 'happy' }] }, sfx: { kit: 'glass', seconds: 5, music: false, chapter: 2, script: [{ at: 0.2, play: 'confetti', op: { index: 1, count: 4 } }] } };
+			for (const bus of Object.keys(what)) {
+				const at = async (v) => rms(await P.render(Object.assign({ limit: false, vol: { [bus]: v } }, what[bus])));
+				const full = await at(MIX[bus]), quarter = await at(MIX[bus] / 4), none = await at(0);
+				out[bus] = { full: +full.toFixed(5), db: +(20 * Math.log10(quarter / full)).toFixed(2), none };
+			}
+			return out;
+		});
+		for (const [bus, name] of [['music', 'the music'], ['sfx', 'the effects'], ['voice', 'Pip']])
+			await t.check(`${name}: a quarter of the level is ${r[bus].db} dB of the whole sound, room and all (12.04 dB less is exact), and none is silence`, r[bus].full > 0.001 && Math.abs(r[bus].db + 12.04) < 0.15 && r[bus].none < 1e-6, JSON.stringify(r[bus]));
+		// on the page: a Glass song in its hall, then the menu's music slider drawn to nothing
+		const level = (ms) => t.page.evaluate(async (ms) => { const an = window.PipSound.analyser(), buf = new Float32Array(an.fftSize); let s = 0, n = 0; const t0 = performance.now(); while (performance.now() - t0 < ms) { an.getFloatTimeDomainData(buf); for (let i = 0; i < buf.length; i++) s += buf[i] * buf[i]; n += buf.length; await new Promise((r) => setTimeout(r, 40)); } return Math.sqrt(s / Math.max(1, n)); }, ms);
+		await t.page.locator('.rm-cell[data-k="glass"][data-song="waltz"]').click();
+		await t.page.waitForFunction(() => window.PipSound.transport().playing && window.PipSound.transport().song === 'c3-glass', null, { timeout: 15000 });
+		await t.page.locator('#rmSteps [data-step="5"]').click(); await sleep(5000);
+		const loud = await level(4000);
+		await t.page.locator('#rmSound').click();
+		await t.page.waitForSelector('#psmMenu:not([hidden])');
+		// (all three: while a song plays the stage has quiet sounds of its own, a string swinging, which are Effects)
+		for (const k of ['music', 'sfx', 'voice']) await t.page.locator(`#psmMenu [data-psm-vol="${k}"]`).fill('0');
+		await sleep(6000);   // (the hall rings for 2.3 s)
+		const quiet = await level(5000), still = await t.page.evaluate(() => window.PipSound.transport().playing);
+		await t.check(`the menu's three sliders at nothing leave nothing of a song still playing in Glass's hall (level ${loud.toFixed(4)} before, ${quiet.toFixed(6)} after)`, still && loud > 0.01 && quiet < loud / 1000, JSON.stringify({ loud, quiet, still }));
+		await t.page.locator('#psmMenu [data-psm-vol="music"]').fill('42'); await sleep(6000);
+		const half = await level(8000), db = 20 * Math.log10(half / loud);
+		await t.check(`at half its starting level it is the same song about 6 dB down (${db.toFixed(1)} dB), not the same echo over less sound`, db < -3.5 && db > -9, JSON.stringify({ loud, half }));
+		await t.page.keyboard.press('Escape');
+		await t.page.locator('#rmStop').click();
 	}
 };

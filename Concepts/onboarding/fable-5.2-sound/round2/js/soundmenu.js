@@ -1,7 +1,8 @@
 /* Pip's sound, round two (Fable 5.2). soundmenu.js: the sound menu.
    Press the speaker and a small menu drops under it, built the way PMConcept7's theme picker is (a row of choices on
    top, then rows to pick from, hung under its button and over the page): sound on or off, the levels of the music, the
-   effects and Pip, the four songs of the look on show, and the jukebox. There is one menu; it hangs under whichever
+   effects and Pip, the four songs of the look on show, and the jukebox, which plays any song of any look and says
+   which one is on. There is one menu; it hangs under whichever
    speaker was pressed (the window's, or the app's beside the theme picker). It only talks to window.PipSound, and it
    keeps nothing itself: PipSound remembers what was set. */
 (function (G) {
@@ -34,6 +35,7 @@
       <div data-psm-songs role="radiogroup" aria-label="Song"></div>
       <div class="psm-divider" aria-hidden="true"></div>
       <button type="button" class="psm-item psm-juke" role="switch" data-psm-juke>${IC.juke}<span class="psm-name">Jukebox</span><span class="psm-meta" data-psm-juke-state></span></button>
+      <div class="psm-item psm-now" data-psm-now hidden><span class="psm-mark">${IC.bars}</span><span class="psm-name" data-psm-now-name></span><span class="psm-meta" data-psm-now-look></span></div>
       <button type="button" class="psm-item psm-skip" data-psm-skip hidden>${IC.next}<span class="psm-name">Next song</span></button>`;
     document.body.appendChild(el);
     el.addEventListener('click', onClick);
@@ -65,6 +67,10 @@
     el.querySelector('[data-psm-songs]').innerHTML = list.map((s) => `<button type="button" class="psm-item psm-song" role="radio" aria-checked="${s.chosen}" data-psm-song="${s.id}"${s.playing && on ? ' data-playing' : ''}><span class="psm-mark">${s.playing && on ? IC.bars : s.chosen ? IC.check : ''}</span><span class="psm-name">${s.title}</span>${s.isDefault ? '<span class="psm-meta">Default</span>' : ''}</button>`).join('');
     const j = el.querySelector('[data-psm-juke]'); j.setAttribute('aria-checked', String(S.jukebox)); el.querySelector('[data-psm-juke-state]').textContent = S.jukebox ? 'On' : '';
     el.querySelector('[data-psm-skip]').hidden = !S.jukebox;
+    // what the jukebox has on: it may be a song of another look, which the four above do not list
+    const cur = S.song(), now = el.querySelector('[data-psm-now]'), tr = S.transport();
+    now.hidden = !(S.jukebox && on && tr.playing);
+    el.querySelector('[data-psm-now-name]').textContent = cur.title; el.querySelector('[data-psm-now-look]').textContent = LOOK[cur.kit] || '';
     el.toggleAttribute('data-off', !on);
     void playing;
   }

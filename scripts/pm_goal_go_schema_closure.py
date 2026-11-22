@@ -1606,7 +1606,7 @@ def main():
                         'copy the clauses FILE classified by a witness (KILLED, COVERED_LATER; across files a KILLED witness wins) and '
                         'classify every other clause again')
     parser.add_argument('--merge', nargs='*', help='merge reports into --out (no collection); FILE or FILE@TOOL_COMMIT; '
-                        'later files replace earlier ones root by root')
+                        'repeated roots must make identical closure claims')
     args = parser.parse_args()
     if args.self_test:
         return self_test()
@@ -1705,6 +1705,11 @@ def main():
 
 
 def merge(paths, out):
+    def claim(record):
+        # The source filename is assigned by this merge. The rest pins
+        # the root inventory, tool, seeds, and per-clause replay claims.
+        return json.dumps({k: v for k, v in record.items() if k != 'source_report'}, sort_keys=True)
+
     reports = []
     for item in paths:
         path, _, commit = str(item).partition('@')
@@ -1716,7 +1721,13 @@ def merge(paths, out):
         reports.append(data)
     report = dict(reports[0], roots={}, shard='merged:' + ','.join(r['shard'] for r in reports))
     for r in reports:
-        report['roots'].update(r['roots'])
+        for root, entry in r['roots'].items():
+            previous = report['roots'].get(root)
+            if previous is not None and claim(previous) != claim(entry):
+                print(f"duplicate root {root!r} has conflicting closure claims in "
+                      f"{previous['source_report']} and {entry['source_report']}", file=sys.stderr)
+                return 1
+            report['roots'][root] = entry
     expected = set(reports[0]['all_roots'])
     report['missing_roots'] = sorted(expected - set(report['roots']))
     summarize(report)

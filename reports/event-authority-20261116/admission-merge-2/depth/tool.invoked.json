@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/510"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/510 (canonical row SHA-256 c94926c36b67ec83687fc29e4801ada77c08bcc961e9e978b4b1b5b4ba38167c). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/510, canonical row SHA-256 c94926c36b67ec83687fc29e4801ada77c08bcc961e9e978b4b1b5b4ba38167c. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/510",
-       "line_start": 33191,
-       "line_end": 33282,
+       "line_start": 33348,
+       "line_end": 33439,
        "quote": "\"event_type\": \"tool.invoked\"",
-       "quote_line": 33194,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 33351,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/510",
-       "quote_scope": "unit #/families/510, Plans/event_family_registry.json:33191-33282"
+       "quote_scope": "unit #/families/510, Plans/event_family_registry.json:33348-33439"
       }
      ]
     },
@@ -61,7 +61,7 @@
        "quote": "Newly authored owner contract under DL-045 for tool.invoked@1.0.0 only",
        "quote_check": "exact",
        "quote_scope": "unit CV-613, Plans/Contracts_V0.md:35760-35800",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-613",
@@ -87,12 +87,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-593",
-       "line_start": 40594,
-       "line_end": 40594,
+       "line_start": 40600,
+       "line_end": 40600,
        "quote": "For tool.invoked alone, the newly authored original-source custody",
        "quote_check": "exact",
-       "quote_scope": "unit SP-593, Plans/storage-plan.md:40585-40626",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-593, Plans/storage-plan.md:40591-40632",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-593",
@@ -142,7 +142,7 @@
        "quote": "sources_ref, content_ref and map_ref are opaque permission-checked refs",
        "quote_check": "exact",
        "quote_scope": "unit CV-613, Plans/Contracts_V0.md:35760-35800",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-613",
@@ -196,7 +196,7 @@
        "quote": "For tool.invoked alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
        "quote_scope": "unit CV-613, Plans/Contracts_V0.md:35760-35800",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-613",
@@ -222,12 +222,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-593",
-       "line_start": 40596,
-       "line_end": 40596,
+       "line_start": 40602,
+       "line_end": 40602,
        "quote": "For tool.invoked alone, source codec",
        "quote_check": "exact",
-       "quote_scope": "unit SP-593, Plans/storage-plan.md:40585-40626",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-593, Plans/storage-plan.md:40591-40632",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-593",
@@ -258,7 +258,7 @@
        "quote": "For tool.invoked alone, current writer and retry paths refuse",
        "quote_check": "exact",
        "quote_scope": "unit CV-613, Plans/Contracts_V0.md:35760-35800",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-613",
@@ -312,7 +312,7 @@
        "quote": "For tool.invoked alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
        "quote_scope": "unit CV-613, Plans/Contracts_V0.md:35760-35800",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-613",
@@ -338,19 +338,41 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-593",
-       "line_start": 40593,
-       "line_end": 40593,
-       "quote": "retention_policy_ref = RP-RUNTIME-365D",
+       "line_start": 40591,
+       "line_end": 40601,
+       "quote": "### SP-593 - tool.invoked prepared event contract\n\n```yaml\nplan_unit_id: SP-593\nunit_type: schema_contract\nstatus: accepted\nowner_doc: Plans/storage-plan.md\ncanonical_text: |-\n  Newly authored owner contract under DL-045 for tool.invoked only. Producer ToolDispatcher.completed_invocation calls storage.dt.tool_invoked.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, including full-value custody, and SP-336/SP-347 group durability. First AppendReceipt follows committed group durability; approval/receipt barriers require full flush. Publish terminal result, progression or queue release only after the original receipt resolves. Uncertain append fences later subject work until resolution; missing receipt never authorizes a fresh identity or repeated external effect. Replay retrieves original source/result and never dispatches a tool, issues approval, recreates/deletes a worktree, enqueues work, charges usage or sends a notification. For tool.invoked, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, run_id, tool_use_id, attempt_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. The operating consumer storage.dt.tool_invoked.reader.v1@1.0.0 serves tool_usage analytics, history and inspection; it directly filters verified EventRecord index reads for this exact family, not an invented second domain database. It explicitly adopts SP-278 and DL-076's nine-field durable token, never persisted redb_snapshot_id. Checkpoint key projector.checkpoint.dt.tool_invoked:{storage_instance_id}:{scope_partition} stores Plans/dt_event_contracts.schema.json#/$defs/tool_invoked_checkpoint. The inclusive examined_through_sequence_id advances over every examined source row, including nonmatching rows; last_applied_event_id is the last matching row or null. Validate storage instance, partition, token generation/frontier/coverage/source selection and exact admitted family/version before publication. Process a prefix and publish the cursor/token/filter completeness atomically under exact previous-value CAS and a fenced writer lease; losing CAS publishes nothing. Empty source is proven by the source token, never guessed from no matches. Readers require current/healthy/filter_complete coverage for their requested prefix and recheck current permission, tombstones, source selection and withdrawal before returning any record. Rebuild from verified retained source with recovery holds, never from checkpoint alone; source gaps return unavailable, never silently skip them. Derived checkpoint retention is RP-PROJECTION-3GEN with source holds and at most three same-key generations. Canonical seglog originals and referenced bodies remain under mandatory coherent backup/restore, source access and deletion checks; opaque refs grant no access. Keep credentials, tool arguments, raw output and private file contents out of this payload; refs are opaque permission-checked locators, bounded reasons/previews are redacted before persistence. Backup restores original source, dedupe/receipt custody and references coherently or fences mutation; checkpoints rebuild, and an older restore never revives a resolved approval or deleted worktree. Unknown version refuses current mutation and disclosure until a validating reader/upgrader is installed; legacy aliases normalize before persistence only with original source proof, never by replay side effects. Withdrawal first cuts off this family's append admission, then fences its consumer/readers and marks checkpoint withdrawn with a fixed timestamp. No advance or ordinary read follows; governed compatible rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or history rewrite. retention_policy_ref = RP-RUNTIME-365D for tool.invoked runtime-attributed actual-run/attempt history (Contracts runtime attribution; Case L-3): 365 days after actual run completion, 1,000,000/run and 5,000,000/Project, successor compaction under every existing hold, including recent-run and backup dependencies. SP-349 binds one Server-wide app counterpart bucket per family with the same limits/TTL/holds, never a per-chat reset. No run completion means no expiry anchor. This assignment covers this drafted runtime population only; it invents no separate non-authority diagnostic population or class choice. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-296. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.\n  For tool.invoked alone, the newly authored original-source custody is dt_tool_invoked_source at storage/event-sources/dt/tool_invoked/{event_id}/{stage}.json, strict Plans/dt_event_contracts.schema.json#/$defs/tool_invoked_source; no sibling source is accepted. The codec is pm.dt.source.json.v1 canonical UTF-8 JSON without BOM/newline, maximum 1048576 bytes per stage; reject duplicate keys, nonfinite numbers, malformed Unicode, unknown fields and unsupported version. SHA-256 binds exact bytes; file paths are derived from the validated event_id and literal stage under this Storage instance, never caller paths. ToolDispatcher.completed_invocation owns preparation and authenticates ToolDispatcher.completed_invocation.resolve_original against the actual original Tools.md owner_ref/revision, not the caller's witness or today's reconstructed configuration. Install the exact source schema/codec and append admission via StorageMigrationCoordinator, then validate current family admission, scope, actor and all family predicates before preparing or performing work. Publish prepared.json once under the subject owner lock using SP-131 same-directory temp/fsync/no-overwrite promotion and synchronized parent entries; allocate the original identity first. A byte-identical existing stage is reused; different bytes fence the subject. The owner's existing operation commits its result with this source identity in its original outcome; the resolver proves that join against the actual owner transaction/receipt before completed.json is durably promoted. This is a recoverable prepare/outcome handshake, not an atomic commit across an external tool or Git and Storage. A crash after prepare but before provable outcome remains fenced; query the original owner operation by this exact allocated identity. If it cannot prove original outcome, return unavailable and do not repeat any effect. completed.json is immutable, links prepared_sha256, carries the exact redacted closed payload and frozen envelope_context, and names the immutable owner_outcome_ref. Only then append the exact EventRecord; SP-286/CV-339 full-value v2 resolves the first eleven-field receipt, including its original seal-time timestamp. Source and completed payload/identity/envelope joins and current owner permissions/deletion are revalidated under the final owner lock after every helper. For this family require a barrier-class full flush through original outcome/source files, packs, segment commit frame and canonical receipt before terminal publication or authorizing dependent work. This is a stronger event-specific barrier within SP-336/SP-347, not a change to ordinary receipt loss. Lost acknowledgement returns the original full value and receipt; no fabricated replacement time/result/identity. Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure. An older restore missing any delivered member fences retry/mutation and discloses unavailable; no restore manufactures or replays an external result. Original source retention is the event's exact RP-RUNTIME-365D dependency, including all owner holds/backups; no new expiry/count/deletion choice. This retention binding grants no Event Authority admission. Source bytes are bounded redacted metadata and permission-checked original refs, never raw config/tool output/credentials. The exact new source schema and resolver are technical custody bindings only; no new command, feature or user-visible frequency is selected.\n  For tool.invoked alone, its SP-278/DL-076 checkpoint uses null examined_through_sequence_id and null last_applied_event_id for a proven empty prefix; sequence zero is not a fabricated cursor. A nonempty prefix stores the final globally examined sequence, including nonmatching events. The nine-field durable token must equal the actual current generic-index capture (storage instance, root/node/dataset, generation anchor, frontier revision/hash and source_selection); reacquire the live redb snapshot without persisting its id. Capture complete global source coverage, source-frame verification and exact filter/version before evaluating any matching row. The source-verified rows are authoritative; a matching witness hash alone is insufficient. Under the source/maintenance fence and the exact consumer writer lease, recheck the entire old checkpoint value, current token, admission/installed-reader, permissions, tombstones and withdrawal; one redb transaction CASes the entire checkpoint. Failed CAS, changed frontier/source, missing retained prefix, future source version or any failed final guard publishes nothing and returns unavailable. Rows from any Project/application partition remain part of global examined coverage even when filtered out. Empty global source and a nonempty prefix with zero family matches are separate cases. Withdraw first cuts off new append admission under coordinator exclusion; drain admitted receipts, fence reader CAS and fix withdrawn_at_utc once. A withdrawn checkpoint cannot advance or disclose; reinstallation requires fresh governed source verification/rebuild, never zero reset. Rebuild reads retained canonical source and original source/receipt closures under recovery holds; at most three same-key generations, no source eviction from checkpoint pressure. Readers only inspect; recovery never performs a tool, approval, enqueue, notification, Settings or worktree action.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-593, Plans/storage-plan.md:40585-40626",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-593, Plans/storage-plan.md:40591-40632",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-593",
-        "line_start": 39117,
-        "line_end": 39117,
+        "line_start": 40593,
+        "line_end": 40593,
         "quote": "retention_policy_ref = RP-RUNTIME-365D",
-        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        "quote_check": "exact",
+        "quote_scope": "unit SP-593, Plans/storage-plan.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:40585-40626",
+        "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "source_citation": {
+         "path": "Plans/storage-plan.md",
+         "unit": "SP-593",
+         "line_start": 39117,
+         "line_end": 39117,
+         "quote": "retention_policy_ref = RP-RUNTIME-365D",
+         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "line": 40593
+       },
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "356e17207d2baa694ba765e04204a733302dfe09",
+        "old_quote": "retention_policy_ref = RP-RUNTIME-365D",
+        "old_path": "Plans/storage-plan.md",
+        "old_unit": "SP-593",
+        "old_line_start": 40593,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       },
       {
@@ -370,6 +392,33 @@
         "quote": "now_refusal, now = exact_instant(value['now'])",
         "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
        }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-613",
+       "line_start": 35768,
+       "line_end": 35768,
+       "quote": "  Newly authored owner contract under DL-045 for tool.invoked@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Tools.md (Tools.md 8.0/8.2/8.4; Contracts_V0.md 3 and 3.4). A completed or attempted-completed operation emits exactly one record; success=false contributes to error_count. Refused calls use tool.denied and never increment executed-call rollups. index_used describes actual acceleration and never guesses. Web operations stay this family, never web.operation.*. The closed payload is Plans/dt_event_contracts.schema.json#/$defs/tool_invoked with schema_id pm.event_payload.tool_invoked.v1, schema_version 1.0.0. Adopt Contracts_V0 EventRecord without a local envelope. Scope policy is application_or_project; payload identity and timestamp fields equal their envelope joins where present. Actual Project-native node/gate/worktree identity never becomes nullable app identity. An application-capable record must use the genuine CV-365/366 admitted source and captured scope, never infer it from missing Project. Tool node/attempt/lane/package/role/provider/account/operational refs are mandatory when applicable to the captured runtime source; optional absence is accepted only when the authenticated source proves inapplicability. Approval tool_use_id echoes its request and is present exactly for a tool request. For tool.invoked, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, run_id, tool_use_id, attempt_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-296. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-613, Plans/Contracts_V0.md:35760-35800",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-613",
+        "line_start": 35768,
+        "line_end": 35768,
+        "quote": "  Newly authored owner contract under DL-045 for tool.invoked@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Tools.md (Tools.md 8.0/8.2/8.4; Contracts_V0.md 3 and 3.4). A completed or attempted-completed operation emits exactly one record; success=false contributes to error_count. Refused calls use tool.denied and never increment executed-call rollups. index_used describes actual acceleration and never guesses. Web operations stay this family, never web.operation.*. The closed payload is Plans/dt_event_contracts.schema.json#/$defs/tool_invoked with schema_id pm.event_payload.tool_invoked.v1, schema_version 1.0.0. Adopt Contracts_V0 EventRecord without a local envelope. Scope policy is application_or_project; payload identity and timestamp fields equal their envelope joins where present. Actual Project-native node/gate/worktree identity never becomes nullable app identity. An application-capable record must use the genuine CV-365/366 admitted source and captured scope, never infer it from missing Project. Tool node/attempt/lane/package/role/provider/account/operational refs are mandatory when applicable to the captured runtime source; optional absence is accepted only when the authenticated source proves inapplicability. Approval tool_use_id echoes its request and is present exactly for a tool request. For tool.invoked, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, run_id, tool_use_id, attempt_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-296. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.",
+        "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+        "quote_check": "exact",
+        "quote_scope": "unit CV-613, Plans/Contracts_V0.md@20697031603d52f52b3dba3d4d621f909be15e88:35760-35800",
+        "commit": "20697031603d52f52b3dba3d4d621f909be15e88",
+        "sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+        "line": 35768
+       },
+       "locator_maintenance": {
+        "authority": "MERGE3-POSTFIX fix round 2 / finding 1",
+        "reason": "Existing exact family-owner EventRecord edition clause; selected policies and every verdict remain unchanged."
+       }
       }
      ],
      "carried_from": {
@@ -387,12 +436,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-593",
-       "line_start": 40594,
-       "line_end": 40594,
+       "line_start": 40600,
+       "line_end": 40600,
        "quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-593, Plans/storage-plan.md:40585-40626",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-593, Plans/storage-plan.md:40591-40632",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-593",
@@ -423,7 +472,7 @@
        "quote": "For tool.invoked alone, the explicit lifecycle transition is",
        "quote_check": "exact",
        "quote_scope": "unit CV-613, Plans/Contracts_V0.md:35760-35800",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-613",
@@ -449,12 +498,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-593",
-       "line_start": 40595,
-       "line_end": 40595,
+       "line_start": 40601,
+       "line_end": 40601,
        "quote": "For tool.invoked alone, its SP-278/DL-076 checkpoint",
        "quote_check": "exact",
-       "quote_scope": "unit SP-593, Plans/storage-plan.md:40585-40626",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-593, Plans/storage-plan.md:40591-40632",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-593",
@@ -498,12 +547,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-593",
-       "line_start": 40593,
-       "line_end": 40593,
+       "line_start": 40599,
+       "line_end": 40599,
        "quote": "Withdrawal first cuts off this family's append admission",
        "quote_check": "exact",
-       "quote_scope": "unit SP-593, Plans/storage-plan.md:40585-40626",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-593, Plans/storage-plan.md:40591-40632",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-593",
@@ -539,7 +588,7 @@
        "quote": "For tool.invoked alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
        "quote_scope": "unit CV-613, Plans/Contracts_V0.md:35760-35800",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-613",
@@ -570,7 +619,7 @@
        "unit": "ATS-296",
        "quote_check": "exact",
        "quote_scope": "unit ATS-296, Plans/Automated_Testing_System.md:9270-9308",
-       "file_sha256": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
+       "file_sha256": "eb4a9e10a80cc73e94ade88cd2fa4494dc396127505d2ea0529a526542ed37c8",
        "source_citation": {
         "line_end": 9273,
         "line_start": 9273,
@@ -600,14 +649,14 @@
        "json_pointer": "#/families/13"
       },
       {
-       "line_end": 40597,
-       "line_start": 40597,
+       "line_end": 40603,
+       "line_start": 40603,
        "path": "Plans/storage-plan.md",
        "quote": "For tool.invoked, boolean authority/context flags are exact booleans",
        "unit": "SP-593",
        "quote_check": "exact",
-       "quote_scope": "unit SP-593, Plans/storage-plan.md:40585-40626",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-593, Plans/storage-plan.md:40591-40632",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "line_end": 39121,
         "line_start": 39121,
@@ -744,10 +793,10 @@
   "row_pointer": "#/families/510"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "ae11bf47be14ca3f43767f329672d0dbe0ba143b8f8f0653a9450f68879f3478",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "2c58ff3162b5080e9eadd1deb84e6d0f0bfb44b127e8e2c8686d9c2a577b8ea3",
+  "verdicts_changed": false,
+  "native_execution": "NOT_RUN"
  }
 }

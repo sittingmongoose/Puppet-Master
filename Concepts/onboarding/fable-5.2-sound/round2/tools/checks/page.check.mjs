@@ -77,9 +77,21 @@ export const tests = {
 		// (in T3's sandboxed frame there is no storage to remember in: there the choice has to hold for the visit, and nothing may throw)
 		const kept = set.stored === null ? !!t.sandboxed : set.stored.jukebox === true && Math.abs(set.stored.vol.music - 0.3) < 0.01;
 		await t.check(`the music slider and the jukebox switch set what they say, and it is ${set.stored === null ? 'kept for the visit (no storage in a sandboxed frame)' : 'remembered'}`, Math.abs(set.vol - 0.3) < 0.01 && set.juke === true && set.skip && kept, JSON.stringify(set));
-		await t.page.locator('#psmMenu [data-psm-skip]').click();
-		await t.page.waitForFunction((id) => window.PipSound.song().id !== id && window.PipSound.transport().playing, other.id, { timeout: 12000 });
-		await t.check('Next song moves the jukebox on', true);
+		// the jukebox plays any song of any look: twenty-four draws from here are the other twenty-three songs, each once,
+		// and then one again; the look on show stays, and the menu says which song is on and whose it is
+		const juke = await t.page.evaluate(async () => {
+			const P = window.PipSound, first = P.song(), seen = [first.kit + ':' + first.id], look = P.kit; let twoOriginals = 0, prev = first.id;
+			for (let i = 0; i < 23; i++) { document.querySelector('#psmMenu [data-psm-skip]').click(); const s = P.song(); seen.push(s.kit + ':' + s.id); if (s.id === 'original' && prev === 'original') twoOriginals++; prev = s.id; }
+			await new Promise((r) => setTimeout(r, 50));
+			const s = P.song(), row = document.querySelector('#psmMenu [data-psm-now]');
+			return { distinct: new Set(seen).size, kits: new Set(seen.map((x) => x.split(':')[0])).size, twoOriginals, look, lookNow: P.kit, last: s.kit + ':' + s.id, guest: s.kit !== P.kit, name: row.querySelector('[data-psm-now-name]').textContent, of: row.querySelector('[data-psm-now-look]').textContent, title: s.title };
+		});
+		await t.check(`the jukebox draws from every look: 24 songs in 24 turns, of ${juke.kits} looks, the original tune never twice running, and the look on show stays`, juke.distinct === 24 && juke.kits === 6 && juke.twoOriginals === 0 && juke.look === juke.lookNow, JSON.stringify(juke));
+		await t.page.waitForFunction((want) => { const P = window.PipSound, s = P.song(), tr = P.transport(); return tr.playing && tr.song === s.song.id && s.kit + ':' + s.id === want && !document.querySelector('#psmMenu [data-psm-now]').hidden; }, juke.last, { timeout: 15000 });
+		await t.check(`the last of them comes on, and the menu says which and whose: “${juke.name}”, ${juke.of}`, juke.name === juke.title && !!juke.of);
+		// another look while the jukebox is on: its song stays on
+		const stay = await t.page.evaluate(async () => { const P = window.PipSound, ob = window.__ob, was = P.transport().song, k0 = P.kit, other = P.KITS.find((k) => k !== k0 && k !== P.song().kit), th = ob.S.theme, look = (x) => { ob.S.theme = x; ob.applyTheme(); }; look(other === 'phosphor' ? 'retro-dark' : other === 'teletype' ? 'retro-light' : other + '-dark'); await new Promise((r) => setTimeout(r, 1300)); const r = { was, now: P.transport().song, playing: P.transport().playing, kit: P.kit, other }; look(th); await new Promise((r2) => setTimeout(r2, 700)); return r; });
+		await t.check(`a change of look leaves the jukebox's song on (${stay.other}: ${stay.now})`, stay.playing && stay.now === stay.was && stay.kit === stay.other, JSON.stringify(stay));
 		await t.page.locator('#psmMenu [data-psm-juke]').click();
 		await t.page.locator('#psmMenu [data-psm-sound="off"]').click(); await sleep(400);
 		const off = await t.page.evaluate(() => ({ playing: window.PipSound.transport().playing, muted: window.PipSound.muted }));
