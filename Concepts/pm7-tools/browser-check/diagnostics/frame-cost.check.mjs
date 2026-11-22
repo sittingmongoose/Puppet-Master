@@ -155,11 +155,14 @@ export function scrollMovedOk({ scroller, range, travel }) {
 }
 
 // R135-F7: the scroll window with nothing but the wheel inside the trace (frame-trace.mjs measures "with nothing
-// added to the page"). Discovery, marking, scrollTop = 0 and the pointer aim run BEFORE traceWindow; a passive
-// scroll listener installed before it accumulates the travel and pushes the live top through a CDP binding, so
-// the wheel loop turns at the bounds (scrollStep) without one f.evaluate per tick; cleanup and the moved verdict
-// run AFTER the trace. PM7-FRAMECOST-SCROLL-START / HOME-NOSCROLL: the walk still starts at the scroller's top,
-// aims at the scroller itself (Home's divider line scrolls nothing) and fails when nothing moved. Exported for
+// added to the page"). Discovery, marking, the instant reset to the top and the pointer aim run BEFORE traceWindow;
+// a passive scroll listener installed before it accumulates the travel and pushes the live top through a CDP
+// binding, so the wheel loop turns at the bounds (scrollStep) without one f.evaluate per tick; cleanup and the
+// moved verdict run AFTER the trace. R136-N4: Settings' scroller is scroll-behavior:smooth — a bare scrollTop = 0
+// animates back to the top INSIDE the trace and credits the reset to travel, so the reset jumps instantly (inline
+// scroll-behavior:auto, restored after) and must read 0 stable for two frames before the watch starts counting.
+// PM7-FRAMECOST-SCROLL-START / HOME-NOSCROLL: the walk still starts at the scroller's top, aims at the scroller
+// itself (Home's divider line scrolls nothing) and fails when nothing moved. Exported for
 // tools/frame-cost-scroll.selftest.mjs, which drives it with a fake trace, CDP session and page.
 export async function measureScroll(cdp, f, t, { ms, url, keep, label, trace = traceWindow }) {
 	const cands = await f.evaluate(() => {
@@ -179,7 +182,7 @@ export async function measureScroll(cdp, f, t, { ms, url, keep, label, trace = t
 		return out;
 	});
 	const best = pickScroller(cands);
-	let liveTop = 0, onBinding = null;
+	let liveTop = 0, onBinding = null, settled = true;
 	if (best) {
 		await cdp.send('Runtime.enable');
 		await cdp.send('Runtime.addBinding', { name: '__fcTop' });
@@ -188,12 +191,29 @@ export async function measureScroll(cdp, f, t, { ms, url, keep, label, trace = t
 		await f.evaluate((i) => {
 			const el = document.querySelector(`[data-fc-cand="${i}"]`);
 			el.setAttribute('data-fc-scroller', '1');
+			el.__fcBehavior = el.style.getPropertyValue('scroll-behavior');
+			el.style.setProperty('scroll-behavior', 'auto');
 			el.scrollTop = 0;
-			const watch = { travel: 0, last: 0 };
+		}, best.i);
+		settled = await f.evaluate(() => new Promise((resolve) => {
+			const el = document.querySelector('[data-fc-scroller]');
+			const deadline = performance.now() + 2000;
+			let stable = 0;
+			const check = () => {
+				if (el.scrollTop === 0) { if (++stable >= 2) return resolve(true); }
+				else stable = 0;
+				if (performance.now() >= deadline) return resolve(false);
+				requestAnimationFrame(check);
+			};
+			requestAnimationFrame(check);
+		}));
+		await f.evaluate(() => {
+			const el = document.querySelector('[data-fc-scroller]');
+			const watch = { travel: 0, last: el.scrollTop };
 			watch.fn = () => { const top = el.scrollTop; watch.travel += Math.abs(top - watch.last); watch.last = top; if (window.__fcTop) window.__fcTop(String(top)); };
 			el.__fcWatch = watch;
 			el.addEventListener('scroll', watch.fn, { passive: true });
-		}, best.i);
+		});
 		await t.page.mouse.move(Math.round(best.x), Math.round(best.y));
 	}
 	const during = best ? async (until) => {
@@ -212,7 +232,14 @@ export async function measureScroll(cdp, f, t, { ms, url, keep, label, trace = t
 			const w = el && el.__fcWatch;
 			if (w) { el.removeEventListener('scroll', w.fn); delete el.__fcWatch; }
 			document.querySelectorAll('[data-fc-cand]').forEach((e) => e.removeAttribute('data-fc-cand'));
-			if (el) el.removeAttribute('data-fc-scroller');
+			if (el) {
+				if (el.__fcBehavior !== undefined) {
+					if (el.__fcBehavior) el.style.setProperty('scroll-behavior', el.__fcBehavior);
+					else el.style.removeProperty('scroll-behavior');
+					delete el.__fcBehavior;
+				}
+				el.removeAttribute('data-fc-scroller');
+			}
 			return w ? w.travel : 0;
 		});
 		cdp.off('Runtime.bindingCalled', onBinding);
@@ -220,7 +247,7 @@ export async function measureScroll(cdp, f, t, { ms, url, keep, label, trace = t
 		await cdp.send('Runtime.disable').catch(() => {});
 	}
 	const scrollMoved = { scroller: best ? best.name : null, range: best ? best.range : 0, travel: Math.round(travel) };
-	await t.check(`${label} scroll window: the view's main scroller moved under the wheel`, scrollMovedOk(scrollMoved), JSON.stringify(scrollMoved));
+	await t.check(`${label} scroll window: the view's main scroller moved under the wheel`, settled && scrollMovedOk(scrollMoved), JSON.stringify({ ...scrollMoved, settled }));
 	return { result, scrollMoved };
 }
 

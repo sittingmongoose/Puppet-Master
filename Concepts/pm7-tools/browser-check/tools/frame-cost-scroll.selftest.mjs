@@ -58,6 +58,7 @@ assert.equal(typeof measureScroll, 'function', 'the scroll window needs a trace-
 	const scroller = {
 		id: 'pmuScroll', className: 'board', attrs: new Map(), listeners: [], __fcWatch: null,
 		scrollTop: 300, scrollHeight: 600 + RANGE, clientHeight: 600,
+		style: (() => { const m = new Map(); return { getPropertyValue: (p) => m.get(p) || '', setProperty: (p, v) => m.set(p, v), removeProperty: (p) => m.delete(p) }; })(),
 		getBoundingClientRect: () => ({ left: 100, top: 50, width: 1200, height: 600 }),
 		setAttribute(n, v) { this.attrs.set(n, v); },
 		removeAttribute(n) { this.attrs.delete(n); },
@@ -87,14 +88,15 @@ assert.equal(typeof measureScroll, 'function', 'the scroll window needs a trace-
 		evaluate: async (fn, arg) => {
 			events.push([phase, 'evaluate']);
 			const saved = { document: globalThis.document, window: globalThis.window, getComputedStyle: globalThis.getComputedStyle };
-			Object.assign(globalThis, { document: doc, window: win, getComputedStyle: (x) => ({ overflowY: x === scroller ? 'auto' : 'visible' }) });
+			// rAF stays installed like a real page global: the settle promise's later frames call it after evaluate returns
+			Object.assign(globalThis, { document: doc, window: win, getComputedStyle: (x) => ({ overflowY: x === scroller ? 'auto' : 'visible' }), requestAnimationFrame: (cb) => setTimeout(cb, 0) });
 			try { return fn(arg); } finally { Object.assign(globalThis, saved); }
 		},
 	};
 	const wheels = [];
 	const checks = [];
 	const t = {
-		page: { mouse: {
+		page: { mainFrame: () => f, context: () => ({ newCDPSession: async () => cdp }), mouse: {
 			move: async (x, y) => { events.push([phase, 'move', x, y]); },
 			wheel: async (x, dy) => {
 				events.push([phase, 'wheel', dy]); wheels.push(dy);
@@ -151,4 +153,91 @@ assert.equal(typeof measureScroll, 'function', 'the scroll window needs a trace-
 	assert.deepEqual(checks, [false], 'a view that cannot scroll fails its window');
 	assert.ok(!events.includes('Runtime.addBinding') && !events.includes('wheel'));
 }
-console.log('PASS frame-cost trace hygiene: discovery, marking, scrollTop=0 and the pointer aim run before the trace, only the wheel runs inside (turning from the passive listener\'s pushed top), and cleanup plus the moved verdict run after; a view with no scroller fails its window');
+
+// R136-N4 RED: Settings' scroller is scroll-behavior:smooth (PMConcept7.html #settings-document). A bare
+// el.scrollTop = 0 starts an async reset animation that runs INSIDE the trace: the watch (last: 0) credits the
+// animation to travel, so scrollMovedOk passes even when the wheel moved nothing. The reset must jump instantly
+// (inline scroll-behavior:auto, restored after), settle at 0 for two frames before the watch starts, and a wheel
+// that moved nothing must fail. The fake scroller animates any smooth scrollTop write 300 px per wheel tick;
+// the wheel itself moves nothing (mis-aimed pointer / blocked container).
+{
+	const events = [];
+	let phase = 'setup';
+	const styleMap = new Map();
+	const RANGE = 1800;
+	const scroller = {
+		id: 'settings-document', className: 'document-scroll', attrs: new Map(), listeners: [], __fcWatch: null,
+		_top: 1800, anim: null, scrollHeight: 600 + RANGE, clientHeight: 600,
+		get scrollTop() { return this._top; },
+		set scrollTop(v) {
+			const behavior = styleMap.get('scroll-behavior') || 'smooth'; // the stylesheet's smooth behavior
+			if (behavior === 'smooth' && v !== this._top) this.anim = { target: v };
+			else { this._top = v; this.anim = null; }
+		},
+		style: {
+			getPropertyValue: (p) => styleMap.get(p) || '',
+			setProperty: (p, v) => { styleMap.set(p, v); events.push([phase, 'style', p, v]); },
+			removeProperty: (p) => { styleMap.delete(p); },
+		},
+		getBoundingClientRect: () => ({ left: 100, top: 50, width: 1200, height: 600 }),
+		setAttribute(n, v) { this.attrs.set(n, v); },
+		removeAttribute(n) { this.attrs.delete(n); },
+		addEventListener(kind, fn) { this.listeners.push(fn); },
+		removeEventListener(kind, fn) { this.listeners = this.listeners.filter((x) => x !== fn); },
+	};
+	const root = { querySelectorAll: () => [scroller] };
+	const doc = {
+		body: root,
+		querySelector: (s) => {
+			if (s === '.page.active') return root;
+			if (s === '[data-fc-scroller]') return scroller.attrs.has('data-fc-scroller') ? scroller : null;
+			const m = /^\[data-fc-cand="(\d+)"\]$/.exec(s);
+			if (m) return scroller.attrs.get('data-fc-cand') === m[1] ? scroller : null;
+			return null;
+		},
+		querySelectorAll: (s) => (s === '[data-fc-cand]' && scroller.attrs.has('data-fc-cand') ? [scroller] : []),
+	};
+	const win = {};
+	const cdp = { send: async (method) => { events.push([phase, 'cdp', method]); return {}; }, on: () => {}, off: () => {} };
+	const f = {
+		evaluate: async (fn, arg) => {
+			events.push([phase, 'evaluate']);
+			const saved = { document: globalThis.document, window: globalThis.window, getComputedStyle: globalThis.getComputedStyle };
+			Object.assign(globalThis, { document: doc, window: win, getComputedStyle: (x) => ({ overflowY: x === scroller ? 'auto' : 'visible' }), requestAnimationFrame: (cb) => setTimeout(cb, 0) });
+			try { return fn(arg); } finally { Object.assign(globalThis, saved); }
+		},
+	};
+	const checks = [];
+	const t = {
+		page: {
+			mainFrame: () => f, context: () => ({ newCDPSession: async () => cdp }),
+			mouse: {
+				move: async () => {},
+				wheel: async (x, dy) => {
+					events.push([phase, 'wheel', dy]);
+					// the wheel moves NOTHING; only a pending smooth reset animates
+					if (scroller.anim) {
+						scroller._top = Math.max(scroller.anim.target, scroller._top - 300);
+						if (scroller._top === scroller.anim.target) scroller.anim = null;
+						const saved = { window: globalThis.window };
+						globalThis.window = win;
+						try { for (const fn of scroller.listeners) fn(); } finally { Object.assign(globalThis, saved); }
+					}
+				},
+			},
+		},
+		check: async (name, ok, detail) => { checks.push({ name, ok, detail }); },
+	};
+	const trace = async (cdp2, { during }) => { phase = 'inside'; if (during) await during(Date.now() + 300); phase = 'after'; return {}; };
+	const { scrollMoved } = await measureScroll(cdp, f, t, { ms: 300, url: 'file://page', keep: null, label: 'basic-dark settings', trace });
+	assert.equal(checks.length, 1);
+	assert.equal(checks[0].ok, false, 'a wheel that moved nothing fails the window even when a smooth reset animates inside the trace');
+	assert.equal(scrollMoved.travel, 0, 'the reset animation is not travel');
+	assert.equal(scrollMoved.scroller, 'settings-document');
+	assert.equal(scrollMoved.range, RANGE);
+	assert.equal(scroller.listeners.length, 0, 'the scroll listener is removed');
+	assert.ok(!styleMap.has('scroll-behavior'), 'the inline scroll-behavior is restored after the window');
+	assert.ok(events.some((e) => e[0] === 'setup' && e[1] === 'style' && e[2] === 'scroll-behavior' && e[3] === 'auto'), 'the reset jumps instantly before the trace');
+	assert.equal(scroller.scrollTop, 0, 'the scroller settled at its top');
+}
+console.log('PASS frame-cost trace hygiene: discovery, marking, scrollTop=0 and the pointer aim run before the trace, only the wheel runs inside (turning from the passive listener\'s pushed top), and cleanup plus the moved verdict run after; a view with no scroller fails its window; a smooth-behavior scroller resets instantly and settles before the watch starts, so a wheel that moved nothing fails even when the reset would have animated');
