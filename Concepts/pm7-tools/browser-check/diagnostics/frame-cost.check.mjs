@@ -183,40 +183,49 @@ export async function measureScroll(cdp, f, t, { ms, url, keep, label, trace = t
 	});
 	const best = pickScroller(cands);
 	let liveTop = 0, onBinding = null, settled = true;
+	let frameCdp = cdp, frameSessionFailed = false;
 	if (best) {
-		await cdp.send('Runtime.enable');
-		await cdp.send('Runtime.addBinding', { name: '__fcTop' });
-		onBinding = (e) => { if (e.name === '__fcTop') liveTop = Number(e.payload) || 0; };
-		cdp.on('Runtime.bindingCalled', onBinding);
-		await f.evaluate((i) => {
-			const el = document.querySelector(`[data-fc-cand="${i}"]`);
-			el.setAttribute('data-fc-scroller', '1');
-			el.__fcBehavior = el.style.getPropertyValue('scroll-behavior');
-			el.style.setProperty('scroll-behavior', 'auto');
-			el.scrollTop = 0;
-		}, best.i);
-		settled = await f.evaluate(() => new Promise((resolve) => {
-			const el = document.querySelector('[data-fc-scroller]');
-			const deadline = performance.now() + 2000;
-			let stable = 0;
-			const check = () => {
-				if (el.scrollTop === 0) { if (++stable >= 2) return resolve(true); }
-				else stable = 0;
-				if (performance.now() >= deadline) return resolve(false);
+		// R136-N5: under --set sandbox=1 the app is an opaque-origin OOPIF; Runtime.addBinding on the page's
+		// session never injects __fcTop into the frame, liveTop stayed 0 and the wheel pinned at the bottom
+		// bound while travel still passed. The binding lives on the frame's own CDP session (kit convention);
+		// Tracing stays on cdp. Without a frame session the window says could-not-judge, never a silent pass.
+		if (f !== t.page.mainFrame()) frameCdp = await t.page.context().newCDPSession(f).catch(() => null);
+		if (!frameCdp) frameSessionFailed = true;
+		else {
+			await frameCdp.send('Runtime.enable');
+			await frameCdp.send('Runtime.addBinding', { name: '__fcTop' });
+			onBinding = (e) => { if (e.name === '__fcTop') liveTop = Number(e.payload) || 0; };
+			frameCdp.on('Runtime.bindingCalled', onBinding);
+			await f.evaluate((i) => {
+				const el = document.querySelector(`[data-fc-cand="${i}"]`);
+				el.setAttribute('data-fc-scroller', '1');
+				el.__fcBehavior = el.style.getPropertyValue('scroll-behavior');
+				el.style.setProperty('scroll-behavior', 'auto');
+				el.scrollTop = 0;
+			}, best.i);
+			settled = await f.evaluate(() => new Promise((resolve) => {
+				const el = document.querySelector('[data-fc-scroller]');
+				const deadline = performance.now() + 2000;
+				let stable = 0;
+				const check = () => {
+					if (el.scrollTop === 0) { if (++stable >= 2) return resolve(true); }
+					else stable = 0;
+					if (performance.now() >= deadline) return resolve(false);
+					requestAnimationFrame(check);
+				};
 				requestAnimationFrame(check);
-			};
-			requestAnimationFrame(check);
-		}));
-		await f.evaluate(() => {
-			const el = document.querySelector('[data-fc-scroller]');
-			const watch = { travel: 0, last: el.scrollTop };
-			watch.fn = () => { const top = el.scrollTop; watch.travel += Math.abs(top - watch.last); watch.last = top; if (window.__fcTop) window.__fcTop(String(top)); };
-			el.__fcWatch = watch;
-			el.addEventListener('scroll', watch.fn, { passive: true });
-		});
-		await t.page.mouse.move(Math.round(best.x), Math.round(best.y));
+			}));
+			await f.evaluate(() => {
+				const el = document.querySelector('[data-fc-scroller]');
+				const watch = { travel: 0, last: el.scrollTop };
+				watch.fn = () => { const top = el.scrollTop; watch.travel += Math.abs(top - watch.last); watch.last = top; if (window.__fcTop) window.__fcTop(String(top)); };
+				el.__fcWatch = watch;
+				el.addEventListener('scroll', watch.fn, { passive: true });
+			});
+			await t.page.mouse.move(Math.round(best.x), Math.round(best.y));
+		}
 	}
-	const during = best ? async (until) => {
+	const during = best && !frameSessionFailed ? async (until) => {
 		let dir = 1;
 		while (Date.now() < until) {
 			await t.page.mouse.wheel(0, dir * 40);
@@ -224,30 +233,41 @@ export async function measureScroll(cdp, f, t, { ms, url, keep, label, trace = t
 			dir = scrollStep({ top: liveTop, max: best.range, dir });
 		}
 	} : undefined;
-	const result = await trace(cdp, { ms, during, url, keep });
-	let travel = 0;
-	if (best) {
-		travel = await f.evaluate(() => {
-			const el = document.querySelector('[data-fc-scroller]');
-			const w = el && el.__fcWatch;
-			if (w) { el.removeEventListener('scroll', w.fn); delete el.__fcWatch; }
-			document.querySelectorAll('[data-fc-cand]').forEach((e) => e.removeAttribute('data-fc-cand'));
-			if (el) {
-				if (el.__fcBehavior !== undefined) {
-					if (el.__fcBehavior) el.style.setProperty('scroll-behavior', el.__fcBehavior);
-					else el.style.removeProperty('scroll-behavior');
-					delete el.__fcBehavior;
+	let result, travel = 0;
+	try {
+		result = await trace(cdp, { ms, during, url, keep });
+	} finally {
+		// R136-C1: teardown runs even when the trace throws — no leaked listener, marks or binding into the next look.
+		if (best) {
+			travel = await f.evaluate(() => {
+				const el = document.querySelector('[data-fc-scroller]');
+				const w = el && el.__fcWatch;
+				if (w) { el.removeEventListener('scroll', w.fn); delete el.__fcWatch; }
+				document.querySelectorAll('[data-fc-cand]').forEach((e) => e.removeAttribute('data-fc-cand'));
+				if (el) {
+					if (el.__fcBehavior !== undefined) {
+						if (el.__fcBehavior) el.style.setProperty('scroll-behavior', el.__fcBehavior);
+						else el.style.removeProperty('scroll-behavior');
+						delete el.__fcBehavior;
+					}
+					el.removeAttribute('data-fc-scroller');
 				}
-				el.removeAttribute('data-fc-scroller');
+				return w ? w.travel : 0;
+			});
+			if (onBinding) {
+				frameCdp.off('Runtime.bindingCalled', onBinding);
+				await frameCdp.send('Runtime.removeBinding', { name: '__fcTop' }).catch(() => {});
+				await frameCdp.send('Runtime.disable').catch(() => {});
 			}
-			return w ? w.travel : 0;
-		});
-		cdp.off('Runtime.bindingCalled', onBinding);
-		await cdp.send('Runtime.removeBinding', { name: '__fcTop' }).catch(() => {});
-		await cdp.send('Runtime.disable').catch(() => {});
+			if (frameCdp && frameCdp !== cdp) await frameCdp.detach().catch(() => {});
+		}
 	}
 	const scrollMoved = { scroller: best ? best.name : null, range: best ? best.range : 0, travel: Math.round(travel) };
-	await t.check(`${label} scroll window: the view's main scroller moved under the wheel`, settled && scrollMovedOk(scrollMoved), JSON.stringify({ ...scrollMoved, settled }));
+	const movedOk = !frameSessionFailed && settled && scrollMovedOk(scrollMoved);
+	const detail = frameSessionFailed
+		? 'could not judge: the sandbox frame\'s CDP session is unavailable, so the wheel cannot turn at the scroller\'s bounds (R136-N5); ' + JSON.stringify(scrollMoved)
+		: JSON.stringify({ ...scrollMoved, settled });
+	await t.check(`${label} scroll window: the view's main scroller moved under the wheel`, movedOk, detail);
 	return { result, scrollMoved };
 }
 
