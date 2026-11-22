@@ -977,7 +977,12 @@
     open = true;
     panelEl.hidden = false;
     panelEl.setAttribute('data-open', '');
-    panelEl.querySelector('.pmn-chrome').setAttribute('data-lg-surface', 'menu');
+    /* data-lg-dense: the inbox is the app's largest dense text menu, so it takes Liquid Glass's dense menu tint (glass.css,
+       the rail's narrow overlay's opt-in): at the light menu tint the live blur behind its 580 px of list mottled the page
+       through it past glass-backing's bar (PM7-GLASSDARK-NOTIF-BACKING-OVER-BAR) */
+    const chromeEl = panelEl.querySelector('.pmn-chrome');
+    chromeEl.setAttribute('data-lg-surface', 'menu');
+    chromeEl.setAttribute('data-lg-dense', '');
     stackEl.setAttribute('aria-expanded', 'true');
     renderPanel(false);
     placePanel();
@@ -1009,7 +1014,7 @@
     panelEl.removeAttribute('data-open');
     pushStage();
     const chrome = panelEl.querySelector('.pmn-chrome');
-    const finish = () => { if (open) return; panelEl.hidden = true; chrome.removeAttribute('data-lg-surface'); if (listStale) resetList(); };
+    const finish = () => { if (open) return; panelEl.hidden = true; chrome.removeAttribute('data-lg-surface'); chrome.removeAttribute('data-lg-dense'); if (listStale) resetList(); };
     if (panelEl.contains(doc.activeElement) && !keepFocus) stackEl.focus({ preventScroll: true });
     if (!still() && quick !== 'instant') sound('close', 0.3);
     /* it folds back into the stack through the menu sprout */
