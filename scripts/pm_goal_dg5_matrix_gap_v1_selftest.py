@@ -70,12 +70,22 @@ def entry(clause, uncovered=(), unsearched=(), section='A', mark='none', bound='
                 roots_unsearched=list(unsearched), sources=sources, ids=[clause])
 
 
+def census_of(entries, extra=(), closed=()):
+    """The fixture's root census: every uncovered root EXHAUSTED, root 109 NOT COMPLETE, plus extras."""
+    rows = {r: 'EXHAUSTED' for e in entries for r in e['roots_uncovered']}
+    rows.update({r: 'CLOSED' for r in closed})
+    rows.update(dict(extra))
+    rows.setdefault(ROOT_109, 'NOT COMPLETE')
+    return [dict(root=r, status=st) for r, st in sorted(rows.items())]
+
+
 def write_gap_list(directory, entries, family=FAMILY, row=ROW, reopen=REOPEN, definition=DEFINITION,
-                   schema='dg5-gap-list.v1.1'):
+                   schema='dg5-gap-list.v1.1', census=None):
     directory = Path(directory)
     directory.mkdir(parents=True, exist_ok=True)
     doc = dict(schema=schema, generated_utc='2026-11-23T00:00:00Z', row=row, family=family,
-               decision='E-GC-GAP option B', definition=definition, reopen_rule=reopen, entries=entries)
+               decision='E-GC-GAP option B', definition=definition, reopen_rule=reopen,
+               root_census=census_of(entries) if census is None else census, entries=entries)
     (directory / 'GAP-LIST-v1.1.json').write_text(json.dumps(doc, indent=1) + '\n')
     (directory / 'GAP-LIST-v1.1.md').write_text('# GAP-LIST v1.1 (fixture)\n')
     lines = ['%s  %s\n' % (hashlib.sha256((directory / n).read_bytes()).hexdigest(), n)
@@ -243,7 +253,8 @@ class Edition(Base):
         self.assertOthersUnchanged(before, m)
 
     def test_3b_canonical_match_on_another_root_does_not_count(self):
-        g = self.gaplist([entry(C1, [ROOT_A]), entry(C2, [ROOT_A])])
+        es = [entry(C1, [ROOT_A]), entry(C2, [ROOT_A])]
+        g = self.gaplist(es, census=census_of(es, closed=[ROOT_B]))
         m = matrix(target_roots=((ROOT_A, [C1]), (ROOT_B, [C2])))
         gap.apply_edition(m, g)
         row = target_of(m)
@@ -378,6 +389,80 @@ class Edition(Base):
         self.assertOthersUnchanged(matrix(), after)
         self.assertEqual(after['documented_gap_edition']['source']['stock'], str(stock))
 
+    def test_8_a_census_root_missing_from_the_matrix_keeps_the_row_open(self):
+        es = [entry(C1, [ROOT_A]), entry(C2, [ROOT_A])]
+        g = self.gaplist(es, census=census_of(es, extra=[(ROOT_B, 'NOT COMPLETE')]))
+        m = matrix()
+        before = copy.deepcopy(m)
+        report = gap.apply_edition(m, g)
+        row = target_of(m)
+        self.assertFalse(report['applied'])
+        self.assertEqual((row['status'], row['reason']), ('OPEN', 'clause closure leaves 2 uncovered'))
+        self.assertEqual(row['documented_gap']['missing_roots'], [ROOT_B])
+        self.assertEqual(row['documented_gap']['missing_by_status'], {'NOT COMPLETE': 1})
+        self.assertIn(ROOT_B, row['documented_gap']['why'])
+        self.assertOthersUnchanged(before, m)
+
+    def test_8b_a_closed_census_root_missing_also_keeps_it_open(self):
+        es = [entry(C1, [ROOT_A]), entry(C2, [ROOT_A])]
+        g = self.gaplist(es, census=census_of(es, closed=[ROOT_B]))
+        m = matrix()
+        self.assertFalse(gap.apply_edition(m, g)['applied'])
+        self.assertEqual(target_of(m)['documented_gap']['missing_roots'], [ROOT_B])
+
+    def test_8c_only_root_109_missing_is_documented_gap_and_reports_section_b(self):
+        es = [entry(C1, [ROOT_A]), entry(C2, [ROOT_A]), entry(C3, unsearched=[ROOT_109], section='B')]
+        g = self.gaplist(es)
+        m = matrix()
+        self.assertTrue(gap.apply_edition(m, g)['applied'])
+        row = target_of(m)
+        self.assertEqual(row['status'], 'DOCUMENTED_GAP')
+        sb = row['documented_gap']['section_b']
+        self.assertEqual((sb['root'], sb['in_matrix'], sb['entries'], sb['occurrences']), (ROOT_109, False, 1, 1))
+        self.assertIn('never covered', sb['note'])
+        self.assertIn('section B', row['reason'])
+
+    def test_8d_a_root_outside_the_census_keeps_the_row_open(self):
+        es = [entry(C1, [ROOT_A]), entry(C2, [ROOT_A])]
+        g = self.gaplist(es)
+        m = matrix(target_roots=((ROOT_A, [C1, C2]), (ROOT_B, [])))
+        self.assertFalse(gap.apply_edition(m, g)['applied'])
+        row = target_of(m)
+        self.assertEqual(row['status'], 'OPEN')
+        self.assertEqual(row['documented_gap']['extra_roots'], [ROOT_B])
+
+    def test_8e_a_census_root_carried_without_a_report_keeps_it_open(self):
+        es = [entry(C1, [ROOT_A]), entry(C2, [ROOT_A])]
+        g = self.gaplist(es, census=census_of(es, extra=[(ROOT_B, 'NOT COMPLETE')]))
+        m = matrix(target_roots=((ROOT_A, [C1, C2]), (ROOT_B, [])))
+        target_of(m)['schema_closure']['roots'][1]['report'] = None
+        self.assertFalse(gap.apply_edition(m, g)['applied'])
+        self.assertIn('no clause-closure report', target_of(m)['documented_gap']['why'])
+
+    def test_8f_a_not_complete_root_carried_with_unlisted_clauses_stays_open(self):
+        es = [entry(C1, [ROOT_A]), entry(C2, [ROOT_A])]
+        g = self.gaplist(es, census=census_of(es, extra=[(ROOT_B, 'NOT COMPLETE')]))
+        m = matrix(target_roots=((ROOT_A, [C1, C2]), (ROOT_B, [C3])))
+        self.assertFalse(gap.apply_edition(m, g)['applied'])
+        self.assertEqual(target_of(m)['documented_gap']['unlisted_clauses'], [[ROOT_B, C3]])
+
+    def test_8g_a_census_that_is_missing_malformed_or_without_root_109_refuses(self):
+        es = [entry(C1, [ROOT_A])]
+        self.refuses(es, census=[])
+        self.refuses(es, census=[dict(root=ROOT_A, status='EXHAUSTED')])                      # no root 109
+        self.refuses(es, census=census_of(es) + [dict(root=ROOT_A, status='EXHAUSTED')])     # twice
+        self.refuses(es, census=census_of(es, extra=[(ROOT_B, 'WALKING')]))                  # unknown status
+        self.refuses(es, census=census_of(es, extra=[('dg5:xyz', 'CLOSED')]))                # bad id
+        self.refuses(es, census=[dict(root=ROOT_A, status='CLOSED'), dict(root=ROOT_109, status='NOT COMPLETE')])
+
+    def test_9_the_self_check_refuses_an_added_family(self):
+        before = matrix()
+        after = copy.deepcopy(before)
+        after['families']['goal.updated'] = family([checker_row('x')])
+        after['documented_gap_edition'] = {}
+        with self.assertRaises(gap.Refusal):
+            gap._assert_only_target_changed(before, after)
+
     def test_7_the_real_signed_gap_list_verifies_against_the_pin(self):
         directory = Path(getattr(gap, 'GAP_LIST_DIR', '/nonexistent'))
         if not (directory / 'SHA256SUMS').exists():
@@ -386,6 +471,10 @@ class Edition(Base):
         sections = {e['section'] for e in g['entries']}
         self.assertLessEqual(sections, {'A', 'B', 'T371'})
         self.assertTrue(all(root == ROOT_109 for (_, root), (_, kind) in g['index'].items() if kind == gap.REMAINDER))
+        census = g['census']
+        self.assertEqual(census[ROOT_109], 'NOT COMPLETE')
+        self.assertTrue(all(census[root] == 'EXHAUSTED' for (_, root), (_, kind) in g['index'].items()
+                            if kind == gap.EXHAUSTED))
 
 
 def main():
