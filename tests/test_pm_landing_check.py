@@ -12,6 +12,7 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -3030,6 +3031,277 @@ class BaselineReading(unittest.TestCase):
             path.write_text(json.dumps({"schema_id": "something.else"}), encoding="utf-8")
             with self.assertRaises(ValueError):
                 M.load_baseline(path)
+
+
+class WhatEachRunAlsoReports(LandingRun):
+    """Lines added for comparing one run with the next. Nothing judges them and the baseline does not hold them."""
+
+    ADDED = re.compile(r"^(?:  \[gone\] .*|Subcheck totals this run: \d+|  \[total\] .*|Bucket counts this run: \d+|  \[count\] .*)\n", re.M)
+
+    @staticmethod
+    def row(ref, path="Plans/A.md"):
+        return {"path": path, "error": "missing_ref", "ref": ref}
+
+    def without_additions(self, text):
+        return self.ADDED.sub("", text)
+
+    def row_report(self, *argv):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "rows.json"
+            code, out = self.compare("--row-report", str(path), *argv)
+            return code, out, json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
+
+    def test_the_ids_of_the_gone_buckets_follow_their_count(self):
+        self.stub(gates={"lint_path_refs": [self.row("#1", "Plans/B.md"), self.row("#2", "Plans/A.md"), self.row("#3", "Plans/C.md")]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"lint_path_refs": [self.row("#3", "Plans/C.md")]})
+        code, out = self.compare()
+        self.assertIn("Gone since the baseline (nothing to do): 2\n"
+                      "  [gone] run-gates|lint_path_refs|missing_ref|Plans/A.md\n"
+                      "  [gone] run-gates|lint_path_refs|missing_ref|Plans/B.md\n"
+                      "Subcheck totals this run: ", out)
+        self.assertEqual(code, 0, out)
+
+    def test_nothing_gone_prints_no_id(self):
+        self.stub(gates={"lint_path_refs": [self.row("#1")]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        _code, out = self.compare()
+        self.assertIn("Gone since the baseline (nothing to do): 0\nSubcheck totals this run: ", out)
+        self.assertNotIn("[gone]", out)
+
+    def test_every_subchecks_total_is_printed_each_run_passing_ones_too(self):
+        self.stub(gates={"lint_path_refs": [self.row("#1")], "lint_x": [], "big": ([self.row(f"#{n}", "Plans/D.md") for n in range(60)], 120)},
+                  audit={"evidence": [], "plan_graph": [self.row("#2", "Plans/E.md")]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        _code, out = self.compare()
+        self.assertIn("Subcheck totals this run: 6\n"
+                      "  [total] run-gates/big  120\n"
+                      "  [total] run-gates/lint_path_refs  1\n"
+                      "  [total] run-gates/lint_x  0\n"
+                      "  [total] audit-governance/evidence  0\n"
+                      "  [total] audit-governance/plan_graph  1\n"
+                      "  [total] plan-migration-validate/-  0\n", out)
+
+    def test_a_subcheck_that_timed_out_has_no_total(self):
+        self.stub(gates={"lint_contractrefs": [MISSING_REF]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"lint_contractrefs": [timeout_row()]})
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)
+        self.assertIn("  [total] run-gates/lint_contractrefs  timed out\n", out)
+
+    def test_they_are_in_the_json_report(self):
+        self.stub(gates={"lint_path_refs": [self.row("#1"), self.row("#2", "Plans/B.md")], "gone_too": [self.row("#9", "Plans/G.md")]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"lint_path_refs": [self.row("#1")], "lint_contractrefs": [timeout_row()]})
+        _code, out = self.compare("--json")
+        doc = json.loads(out)
+        self.assertEqual(doc["resolved_buckets"], ["run-gates|gone_too|missing_ref|Plans/G.md",
+                                                   "run-gates|lint_path_refs|missing_ref|Plans/B.md"])
+        self.assertEqual(doc["subcheck_totals"], {"plan-migration-validate/-": 0, "run-gates/lint_contractrefs": None,
+                                                  "run-gates/lint_path_refs": 1})
+
+    def test_every_buckets_count_is_printed_each_run(self):
+        self.stub(gates={"lint_path_refs": [self.row("#1", "Plans/B.md"), self.row("#2", "Plans/B.md"), self.row("#3")],
+                         "big": ([self.row(f"#{n}", "Plans/D.md") for n in range(60)], 120)})
+        self.record()
+        self.touch("Plans/Touched.md")
+        _code, out = self.compare()
+        self.assertIn("Bucket counts this run: 2\n"
+                      "  [count] run-gates|lint_path_refs|missing_ref|Plans/A.md  1\n"
+                      "  [count] run-gates|lint_path_refs|missing_ref|Plans/B.md  2\n", out)
+        self.assertNotIn("Plans/D.md  ", out[out.index("Bucket counts this run"):], "a subcheck that prints a sample has only its total")
+        doc = json.loads(self.compare("--json")[1])
+        self.assertEqual(doc["bucket_counts"], {"run-gates|lint_path_refs|missing_ref|Plans/A.md": 1,
+                                                "run-gates|lint_path_refs|missing_ref|Plans/B.md": 2})
+
+    def test_one_bucket_raised_as_another_falls_shows_in_their_counts_and_nowhere_else(self):
+        """Exit 0 and the same total: only the counts tell these two runs apart. Alone this stops, see scripts/pm-land.py."""
+        first, second = [self.row("#1", "Plans/B.md"), self.row("#1", "Plans/C.md"), self.row("#2", "Plans/C.md")], \
+            [self.row("#1", "Plans/B.md"), self.row("#2", "Plans/B.md"), self.row("#1", "Plans/C.md")]
+        self.stub(gates={"lint_path_refs": first + [self.row("#2", "Plans/B.md")]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"lint_path_refs": first})
+        code_one, one = self.compare()
+        self.stub(gates={"lint_path_refs": second})
+        code_two, two = self.compare()
+        self.assertEqual((code_one, code_two), (0, 0))
+        self.assertIn("  [count] run-gates|lint_path_refs|missing_ref|Plans/B.md  1\n", one)
+        self.assertIn("  [count] run-gates|lint_path_refs|missing_ref|Plans/B.md  2\n", two)
+        self.assertEqual(re.sub(r"^  \[count\] .*\n", "", one, flags=re.M), re.sub(r"^  \[count\] .*\n", "", two, flags=re.M))
+
+    def test_the_row_report_holds_every_row_of_a_complete_subcheck_and_what_each_stale_row_names(self):
+        stale = {"path": "Plans/A.md", "error": "stale_hash", "actual": "1", "expected": "2"}
+        shard = {"path": "Plans/.evidence/e.json", "error": "artifact_hash_stale", "artifact": "Plans/_shards/A/001.md"}
+        other = {"path": "Plans/Untouched.md", "error": "stale_hash"}
+        plain = self.row("#1", "Plans/A.md")
+        self.stub(gates={"verify_spec_lock": [stale, shard, other], "lint_path_refs": [plain], "lint_x": []})
+        self.record()
+        self.touch("Plans/A.md")
+        self.touch("Plans/_shards/A/001.md")
+        code, _out, doc = self.row_report()
+        self.assertEqual(doc["schema_id"], "pm.landing_check.rows.v1")
+        rows = doc["subchecks"]["run-gates/verify_spec_lock"]
+        self.assertEqual((rows["reported"], rows["complete"]), (3, True))
+        self.assertEqual([row["stale"] for row in rows["rows"]], [True, True, True])
+        self.assertEqual([row["names"] for row in rows["rows"]], [["Plans/A.md"], ["Plans/_shards/A/001.md"], []])
+        self.assertTrue(rows["rows"][0]["key"].startswith("run-gates|verify_spec_lock|stale_hash|Plans/A.md|"))
+        self.assertEqual(doc["subchecks"]["run-gates/lint_path_refs"]["rows"][0]["stale"], False)
+        self.assertEqual(doc["subchecks"]["run-gates/lint_path_refs"]["rows"][0]["names"], [], "only staleness rows are attributed")
+        self.assertEqual(doc["subchecks"]["run-gates/lint_x"], {"reported": 0, "complete": True, "rows": []})
+        self.assertEqual(doc["subchecks"]["plan-migration-validate/-"], {"reported": 0, "complete": True, "rows": []})
+        self.assertEqual(code, 1)
+
+    def test_the_row_report_says_what_the_check_calls_that_rows_bucket_growing(self):
+        """Review F1: a row can be stale by its detail text, and a rise in its bucket still blocks."""
+        by_kind = {"path": "Plans/A.md", "error": "stale_hash"}
+        by_detail = {"path": "Plans/A.md", "error": "registry_entry_mismatch", "detail": "entry for Plans/A.md is stale"}
+        plain = {"path": "Plans/A.md", "error": "missing_ref", "ref": "#1"}
+        self.stub(gates={"verify_spec_lock": [by_kind, by_detail, plain]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        _code, _out, doc = self.row_report()
+        rows = {row["key"].split("|")[2]: row for row in doc["subchecks"]["run-gates/verify_spec_lock"]["rows"]}
+        self.assertEqual((rows["stale_hash"]["stale"], rows["stale_hash"]["grown_stale"]), (True, True))
+        self.assertEqual((rows["registry_entry_mismatch"]["stale"], rows["registry_entry_mismatch"]["grown_stale"]), (True, False))
+        self.assertEqual((rows["missing_ref"]["stale"], rows["missing_ref"]["grown_stale"]), (False, False))
+        for name in rows:
+            bucket = f"run-gates|verify_spec_lock|{name}|Plans/A.md"
+            self.assertEqual(rows[name]["grown_stale"], self.module.grown_buckets({bucket: 2}, {bucket: 1})[0]["stale"], name)
+
+    def test_a_renamed_shard_row_is_grown_stale_exactly_where_the_check_counts_it_as_renamed(self):
+        """Main's third grown_buckets argument: a `missing_ref` row the rename rule excuses, and a sample it does not."""
+        item = {"check": "run-gates", "subcheck": "lint_path_refs", "error": "missing_ref", "path": "Plans/A.md",
+                "key": "run-gates|lint_path_refs|missing_ref|Plans/A.md|-", "stale": True, "fields": {}, "_raw": {}}
+        counts = {"run-gates": {"lint_path_refs": {"reported": 1, "sampled": 1}}}
+        for partial, paired, expected in ((set(), set(), True),
+                                          ({("run-gates", "lint_path_refs")}, set(), False),
+                                          (set(), {("run-gates", "lint_path_refs")}, False)):
+            with self.subTest(partial=bool(partial), paired=bool(paired)), tempfile.TemporaryDirectory() as folder:
+                path = Path(folder) / "rows.json"
+                self.module.write_row_report(path, self.repo, self.base, [dict(item)], counts, {}, set(), partial, paired)
+                row = json.loads(path.read_text(encoding="utf-8"))["subchecks"]["run-gates/lint_path_refs"]["rows"][0]
+                self.assertEqual(row["grown_stale"], expected)
+
+    def test_the_row_report_names_a_path_git_would_read_as_renamed(self):
+        (self.repo / "Plans" / "Old.md").write_text("".join(f"line {n}\n" for n in range(30)), encoding="utf-8")
+        self.git("add", "Plans/Old.md")
+        self.git("commit", "-qm", "old")
+        self.base = self.git("rev-parse", "HEAD").strip()
+        gone = {"path": "Plans/.evidence/e.json", "error": "artifact_hash_stale", "artifact": "Plans/Old.md"}
+        self.stub(gates={"validate_evidence": [gone]})
+        self.record()
+        self.git("mv", "Plans/Old.md", "Plans/New.md")
+        self.git("commit", "-qm", "renamed")
+        _code, _out, doc = self.row_report()
+        self.assertEqual(doc["subchecks"]["run-gates/validate_evidence"]["rows"][0]["names"], ["Plans/Old.md"])
+
+    def test_a_subcheck_that_prints_a_sample_is_not_complete_and_lists_no_rows(self):
+        rows = [self.row(f"#{n}", "Plans/D.md") for n in range(60)]
+        self.stub(gates={"big": (rows, 120)})
+        self.record()
+        self.touch("Plans/Touched.md")
+        _code, _out, doc = self.row_report()
+        self.assertEqual(doc["subchecks"]["run-gates/big"], {"reported": 120, "complete": False, "rows": []})
+
+    def test_a_subcheck_that_timed_out_is_not_complete(self):
+        self.stub(gates={"lint_contractrefs": [MISSING_REF]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"lint_contractrefs": [timeout_row()]})
+        _code, _out, doc = self.row_report()
+        self.assertEqual(doc["subchecks"]["run-gates/lint_contractrefs"], {"reported": None, "complete": False, "rows": []})
+
+    def test_the_row_report_changes_nothing_else(self):
+        self.stub(gates={"lint_path_refs": [self.row("#1")], "lint_x": [self.row("#2", "Plans/B.md")]})
+        self.record()
+        self.touch("Plans/A.md")
+        without = self.compare()
+        with_report = self.row_report()
+        self.assertEqual((with_report[0], with_report[1]), without)
+
+    def test_ro_still_means_root_as_it_did_before_row_report_existed(self):
+        """Gate 3 SG3-7S: the abbreviation was accepted, so an added option must not make it ambiguous."""
+        self.stub(gates={"lint_path_refs": [self.row("#1")]})
+        self.record()
+        self.touch("Plans/A.md")
+        by_root = self.compare()
+        for argv in (("--ro", str(self.repo)), (f"--ro={self.repo}",)):
+            self.assertEqual(self.compare(*argv), by_root, argv)
+
+    def test_ro_is_accepted_on_the_command_line_and_hidden_from_help(self):
+        script = ROOT / "scripts" / "pm-landing-check.py"
+        run = subprocess.run([sys.executable, "-B", str(script), "--ro", str(self.repo), "--help"], capture_output=True, text=True)
+        self.assertEqual(run.returncode, 0, run.stderr)
+        self.assertNotIn("ambiguous", run.stderr)
+        self.assertNotIn("--ro ", run.stdout.replace("--root", ""))
+        self.assertIn("--root ROOT", run.stdout)
+        self.assertIn("--row-report FILE", run.stdout)
+
+    def test_the_row_report_must_be_outside_the_repository(self):
+        self.stub(gates={"lint_path_refs": [self.row("#1")]})
+        self.record()
+        code, _out = self.compare("--row-report", str(self.repo / "rows.json"))
+        self.assertEqual(code, 3)
+        self.assertIn("--row-report must name a file outside the repository", self.stderr)
+        self.assertFalse((self.repo / "rows.json").exists())
+
+    def test_a_bucket_id_holding_a_newline_stays_on_one_line(self):
+        """A real validator's YAML error holds newlines, and the error is part of the bucket's id."""
+        odd = {"path": "Plans/B.md", "error": "mapping values are not allowed here\n  in line 7"}
+        self.stub(gates={"lint_path_refs": [odd], "gone_soon": [{"path": "Plans/C.md", "error": "first\nsecond"}]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"lint_path_refs": [odd]})
+        _code, out = self.compare()
+        self.assertIn("  [gone] run-gates|gone_soon|first\\nsecond|Plans/C.md\n", out)
+        self.assertIn("  [count] run-gates|lint_path_refs|mapping values are not allowed here\\n  in line 7|Plans/B.md  1\n", out)
+
+    def test_the_baseline_holds_none_of_it_and_recording_prints_none_of_it(self):
+        self.stub(gates={"lint_path_refs": [self.row("#1")]})
+        code, out = self.run_main("--record-baseline", "--baseline", "baseline.json")
+        self.assertEqual(code, 0, out)
+        self.assertIsNone(self.ADDED.search(out))
+        doc = json.loads((self.repo / "baseline.json").read_text(encoding="utf-8"))
+        self.assertEqual(sorted(key for key in doc if "total" in key or "gone" in key or "bucket_count" in key), [])
+
+    def test_the_report_is_the_report_it_was_with_these_lines_added(self):
+        """The tail of a report as scripts/pm-landing-check.py printed it before these lines, byte for byte."""
+        kept, gone, fresh = self.row("#kept"), self.row("#gone", "Plans/Gone.md"), self.row("#new", "Plans/Other.md")
+        self.stub(gates={"lint_path_refs": [kept, gone], "lint_x": []}, audit={"evidence": []})
+        self.record()
+        self.touch("Plans/A.md")
+        self.stub(gates={"lint_path_refs": [kept], "lint_x": [fresh]}, audit={"evidence": []})
+        code, out = self.compare()
+        self.assertEqual(code, 1)
+        self.assertIsNotNone(self.ADDED.search(out))
+        tail = self.without_additions(out[out.index("New since the baseline"):])
+        self.assertEqual(re.sub(r"\b[0-9a-f]{12}\b", "<sha>", tail), TAIL_BEFORE_THE_COMPARISON_LINES)
+
+
+TAIL_BEFORE_THE_COMPARISON_LINES = (
+    "New since the baseline: 1\n"
+    "  [new         ] run-gates/lint_x  missing_ref  Plans/Other.md  {\"ref\":\"#new\"}\n"
+    "Pre-existing, in a baseline bucket whose count has not risen (never blocks): 1\n"
+    "  counted against the baseline recorded at <sha>, not against main: a failure main fixed after that commit and this branch brings back reads as pre-existing\n"
+    "  [pre-existing] run-gates/lint_path_refs  missing_ref  Plans/A.md  1 -> 1  {\"ref\":\"#kept\"}  (names Plans/A.md)\n"
+    "Checks whose failure count rose: 0\n"
+    "Subchecks reporting more failures than the baseline: 1\n"
+    "  [off-branch] run-gates/lint_x  0 -> 1\n"
+    "Naming a path this branch touches: 1\n"
+    "  of which pre-existing or improved, listed above: 1\n"
+    "  [pre-existing] run-gates/lint_path_refs  missing_ref  Plans/A.md  1 -> 1  {\"ref\":\"#kept\"}\n"
+    "Infrastructure results, not failures of this tree (never new, growth or blocking): 0\n"
+    "Gone since the baseline (nothing to do): 1\n"
+    "\n"
+    "Nothing reported stops the landing: it is pre-existing failures whose count has not risen, so nothing for this branch to fix; and new but names no file this branch touched, so report it to Jared; and a subcheck that reports more than the baseline, with every failure still printed.\n"
+)
 
 
 if __name__ == "__main__":

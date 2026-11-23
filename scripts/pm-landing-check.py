@@ -1390,6 +1390,80 @@ def listed_totals(check: str, report: dict[str, Any]) -> dict[str, int]:
     }
 
 
+def escape_newlines(text: str) -> str:
+    return text.replace("\\", "\\\\").replace("\n", "\\n")
+
+
+def subcheck_totals(
+    counts: dict[str, dict[str, dict[str, int]]],
+    listed: dict[str, dict[str, int]],
+    timed_out: set[tuple[str, str]],
+) -> dict[str, int | None]:
+    """Every subcheck's total in this run by `check/subcheck`, passing ones too; None for one that timed out.
+
+    Reported only, for comparing one run with the next (scripts/pm-land.py does, inside a batch). Nothing here
+    judges it, and the baseline does not record it.
+    """
+    totals: dict[str, int | None] = {}
+    for check in CHECKS:
+        here, others = counts.get(check) or {}, listed.get(check) or {}
+        for name in sorted(set(here) | set(others)):
+            total = None if (check, name) in timed_out else here[name]["reported"] if name in here else others[name]
+            totals[f"{check}/{name or '-'}"] = total
+    return totals
+
+
+def write_row_report(
+    path: Path,
+    root: Path,
+    base: str,
+    items: list[dict[str, Any]],
+    counts: dict[str, dict[str, dict[str, int]]],
+    listed: dict[str, dict[str, int]],
+    timed_out: set[tuple[str, str]],
+    partial: set[tuple[str, str]],
+    paired: set[tuple[str, str]],
+) -> None:
+    """--row-report: every row each subcheck gave in this run, for telling what one run added since another.
+
+    A subcheck is `complete` when every row it counted is here: it printed them all, or is keyed from an export whose
+    total matches. Each staleness row carries `names`, the paths of `git diff --name-only --no-renames <base>..HEAD` it
+    names, the regenerated ones too, and a deleted or renamed path, since evidence rows name shards. `grown_stale` is what
+    grown_buckets calls a rise in the row's bucket, asked of it so that the two cannot differ: a row can be `stale` by its
+    detail text alone, and that does not excuse its bucket growing. A renamed shard is counted as renamed only where the
+    check's own loop counts it, in a subcheck compared by its rows rather than a sample or a paired copy. Nothing here
+    judges any of it, and it is written only when asked for. scripts/pm-land.py reads it inside a batch.
+    """
+    proc = subprocess.run(["git", "diff", "--name-only", "--no-renames", f"{base}..HEAD"], cwd=root, capture_output=True, text=True)
+    direct, derived = split_touched(proc.stdout.splitlines() if proc.returncode == 0 else [])
+    tokens = path_tokens(direct) + [(name, "") for name in derived]
+    units = units_of_touched_docs(root, direct)
+    named: dict[tuple[str, str], list[str]] = {}
+    rows: dict[str, list[dict[str, Any]]] = {}
+    for item in items:
+        names: list[str] = []
+        if item["stale"]:
+            seen = (canonical(item["_raw"]), item["path"])
+            if seen not in named:
+                named[seen] = names_branch_path(item, tokens, root, units)
+            names = named[seen]
+        bucket = bucket_of(item)
+        renamed = ({bucket: 1} if item["error"] == "missing_ref" and item["stale"]
+                   and (item["check"], item["subcheck"]) not in partial
+                   and (item["check"], item["subcheck"]) not in paired else {})
+        rows.setdefault(f"{item['check']}/{item['subcheck'] or '-'}", []).append(
+            {"key": item["key"], "stale": item["stale"],
+             "grown_stale": grown_buckets({bucket: 1}, {bucket: 0}, renamed)[0]["stale"], "names": names})
+    subchecks = {}
+    for name, total in subcheck_totals(counts, listed, timed_out).items():
+        mine = rows.get(name, [])
+        complete = total is not None and len(mine) == total
+        subchecks[name] = {"reported": total, "complete": complete, "rows": mine if complete else []}
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({"schema_id": "pm.landing_check.rows.v1", "base": base, "subchecks": subchecks}, sort_keys=True) + "\n",
+                    encoding="utf-8")
+
+
 def aggregate_subcheck_commands(
     root: Path,
     names: dict[str, set[str]],
@@ -1834,7 +1908,11 @@ def describe(item: dict[str, Any], tag: str, width: int = 150) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--root", default=str(ROOT), help="repository root (default: this checkout)")
+    # --ro abbreviated --root before --row-report existed; named here so that it still does.
+    parser.add_argument("--ro", dest="root", help=argparse.SUPPRESS)
     parser.add_argument("--base", default="origin/main", help="revision this branch is measured against")
+    parser.add_argument("--row-report", metavar="FILE", help="also write every row of each subcheck to FILE, outside the "
+                                                             "repository, for comparing one run with another; judges nothing")
     parser.add_argument("--baseline", default=DEFAULT_BASELINE, help=f"baseline file (default: {DEFAULT_BASELINE})")
     parser.add_argument("--record-baseline", action="store_true", help="run the three checks and write the baseline")
     parser.add_argument("--run-dir", default=None, help="plan-migration run directory (default: the current run)")
@@ -1899,6 +1977,11 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         except OSError as exc:
             print(f"pm-landing-check: cannot create {keep_dir}: {exc}", file=sys.stderr)
             return 3
+
+    if args.row_report and (Path(args.row_report).resolve() == root or root in Path(args.row_report).resolve().parents):
+        print("pm-landing-check: --row-report must name a file outside the repository; nothing is written inside it.",
+              file=sys.stderr)
+        return 3
 
     try:
         run_dir = args.run_dir or current_run_dir(root)
@@ -2058,6 +2141,11 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     pairs = pair_validators(counts, listed, baseline.get("checks") or {}, timed_out, items, commands,
                             version_change(before, after), keyed_now | from_export)
     paired = {("run-gates", row["run_gates"]) for row in pairs if row["paired"]}
+    if args.row_report:
+        # Rows a sample or a paired copy holds are not counted as renamed by the loop below, so the row report
+        # asks grown_buckets with the same set and its `grown_stale` cannot disagree with the check.
+        write_row_report(Path(args.row_report).resolve(), root, args.base, items, counts, listed, timed_out,
+                         partial_subchecks(compared, baseline.get("checks") or {}), paired)
     items = [item for item in items if (item["check"], item["subcheck"]) not in paired]
     compared = {
         check: {name: counted for name, counted in compared[check].items() if (check, name) not in paired}
@@ -2159,6 +2247,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     )
     reported = [item for item in items if item["key"] in reported_keys]
     blocking = blocking_items(on_branch, grown, subcheck_growth)
+    totals = subcheck_totals(counts, listed, timed_out)
 
     if args.json:
         if not rule_two:
@@ -2205,6 +2294,8 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                 "rename_excuse_lost": dict(sorted(rename_context.why.items())) if rename_context else {},
                 "excused_by_kind": excused_by_kind(on_branch),
                 "resolved_buckets": resolved,
+                "subcheck_totals": totals,
+                "bucket_counts": seen_buckets,
                 "infrastructure": infrastructure,
                 "subcheck_timeout_seconds": args.subcheck_timeout_seconds,
                 "kept_check_reports": str(keep_dir) if keep_dir else None,
@@ -2346,6 +2437,15 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         for row in infrastructure:
             print(describe_infrastructure(row))
         print(f"Gone since the baseline (nothing to do): {len(resolved)}")
+        # One line each: a validator's error text can hold a newline, and it is part of the bucket's id.
+        for name in resolved:
+            print(f"  [gone] {escape_newlines(name)}")
+        print(f"Subcheck totals this run: {len(totals)}")
+        for name, total in totals.items():
+            print(f"  [total] {name}  {'timed out' if total is None else total}")
+        print(f"Bucket counts this run: {len(seen_buckets)}")
+        for name, count in sorted(seen_buckets.items()):
+            print(f"  [count] {escape_newlines(name)}  {count}")
         print()
         if not reported and not grown and not subcheck_growth:
             if infrastructure:
