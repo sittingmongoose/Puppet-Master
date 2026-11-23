@@ -1974,7 +1974,8 @@ def batch_check_lines(report: dict[str, Any]) -> list[str]:
 
 def judge_batch_member(shared: Path, start: str, code: int, report_text: str,
                        previous_text: Optional[str], rows: Optional[dict[str, Any]],
-                       previous_rows: Optional[dict[str, Any]], own_base: Optional[str], head: str,
+                       previous_rows: Optional[dict[str, Any]], rows_unread: Sequence[str],
+                       own_base: Optional[str], head: str,
                        earlier_rows: Sequence[dict[str, str]], check_source: Optional[str]) -> tuple[int, list[str]]:
     """One member's report against the previous member's: (exit code, lines). Read-only."""
     lines: list[str] = []
@@ -2039,7 +2040,13 @@ def judge_batch_member(shared: Path, start: str, code: int, report_text: str,
             own = sorted(changed_paths(shared, own_base, head))
         return why_not_exempt(subcheck, rows, previous_rows, own)
 
-    gap = batch_gap(report, earlier, exempt, row_count_rises(rows, previous_rows))
+    if rows_unread:
+        # A row report the batch needs and cannot read is a trigger, not silence: a rise counted only from the row
+        # reports would otherwise go unseen and the landing would stay on a record nothing can vouch for.
+        gap = ("batch_row_report_unreadable", "a row report this batch needs could not be read ("
+               + "; ".join(rows_unread) + "), so what rose since the previous report cannot be judged")
+    else:
+        gap = batch_gap(report, earlier, exempt, row_count_rises(rows, previous_rows))
     if not gap and own_base:
         reverted = sorted(changed_paths(shared, own_base, head) - changed_paths(shared, start, head))
         if reverted:
@@ -2099,23 +2106,30 @@ def receipt_report(record: dict[str, Any], label: str) -> str:
     return raw.decode("utf-8", errors="replace")
 
 
-def receipt_rows(record: dict[str, Any]) -> Optional[dict[str, Any]]:
-    """The row report a receipt binds, or None when the receipt records none or it cannot be read."""
+def receipt_rows(record: dict[str, Any]) -> tuple[Optional[dict[str, Any]], bool]:
+    """The row report a receipt binds, and whether the check was asked for one.
+
+    None with `asked` true is a row report the batch cannot read: missing, corrupt, not the schema, or no longer the
+    bytes the receipt recorded. The caller makes that a trigger, never silence, because a rise the row reports alone
+    can show would otherwise pass unseen.
+    """
     path = record.get("row_report")
+    argv = record.get("argv") if isinstance(record.get("argv"), list) else []
+    asked = isinstance(path, str) or "--row-report" in argv
     if not isinstance(path, str):
-        return None
+        return None, asked
     try:
         raw = Path(path).read_bytes()
     except OSError:
-        return None
+        return None, asked
     recorded = record.get("row_report_sha256")
     if isinstance(recorded, str) and hashlib.sha256(raw).hexdigest() != recorded:
-        return None
+        return None, asked
     try:
         doc = json.loads(raw)
     except ValueError:
-        return None
-    return doc if isinstance(doc, dict) and doc.get("schema_id") == ROW_REPORT_SCHEMA else None
+        return None, asked
+    return (doc if isinstance(doc, dict) and doc.get("schema_id") == ROW_REPORT_SCHEMA else None), asked
 
 
 def batch_check(shared: Path, lock_dir: Path, receipt_path: Path,
@@ -2133,7 +2147,13 @@ def batch_check(shared: Path, lock_dir: Path, receipt_path: Path,
         raise Refusal(f"the receipt's commit {resolved_head} is not a descendant of its batch-start {start}:"
                       " a batch member is rebased on the batch-start")
     report_text = receipt_report(record, "receipt")
-    rows = receipt_rows(record)
+    rows, rows_asked = receipt_rows(record)
+    rows_unread: list[str] = []
+    if rows is None and rows_asked and code in (0, 1):
+        rows_unread.append("this member's, which its receipt records and cannot be read")
+    elif rows is not None and rows.get("base") != start:
+        rows_unread.append(f"this member's, which was written against {rows.get('base') or 'no base'}")
+        rows = None
     previous_text = None
     if previous_path is not None:
         try:
@@ -2141,6 +2161,11 @@ def batch_check(shared: Path, lock_dir: Path, receipt_path: Path,
         except OSError as exc:
             raise Refusal(f"cannot read the previous member's report {previous_path}: {exc}") from exc
     previous_rows = read_row_report(previous_rows_path) if previous_rows_path is not None else None
+    if previous_rows_path is not None and previous_rows is None:
+        rows_unread.append(f"the previous member's ({previous_rows_path})")
+    elif previous_rows is not None and previous_rows.get("base") != start:
+        rows_unread.append(f"the previous member's, which was written against {previous_rows.get('base') or 'no base'}")
+        previous_rows = None
     holder = holder_verdict(lock_dir)
     if not holder["held"]:
         raise Refusal(f"no batch is open: the landing lock is free, so there is nothing for this landing to stay in")
@@ -2167,7 +2192,7 @@ def batch_check(shared: Path, lock_dir: Path, receipt_path: Path,
         except OSError as exc:
             raise Refusal(f"cannot read --check-source {check_source}: {exc}") from exc
     code_out, lines = judge_batch_member(shared, start, code, report_text, previous_text, rows, previous_rows,
-                                         own_base, resolved_head, earlier_rows, source_text)
+                                         rows_unread, own_base, resolved_head, earlier_rows, source_text)
     for line in lines:
         say(line)
     return code_out

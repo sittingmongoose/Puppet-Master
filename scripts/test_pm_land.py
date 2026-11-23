@@ -1857,6 +1857,59 @@ class BatchCheckTests(BatchFixture):
         self.assertEqual(code, 3)
         self.assertIn("previous member's main SHA", self.stderr)
 
+    def test_a_corrupt_row_report_this_member_needs_closes_the_batch(self):
+        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        bad = self.reports / "m2.rows.json"
+        bad.write_text("{corrupt json", encoding="utf-8")
+        code, out = self.check(current, previous, rows=bad)
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_row_report_unreadable", out)
+        self.assertIn("this member's", out)
+
+    def test_a_row_report_missing_from_disk_closes_the_batch(self):
+        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        rows = self.rows_file("m2.rows.json", {})
+        receipt = self.receipt(current, rows=rows)
+        rows.unlink()
+        code, out = self.batch_check("--receipt", receipt, "--repo", self.shared, "--previous", previous,
+                                     "--check-source", self.source_file(), "--lock-dir", self.lock)
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_row_report_unreadable", out)
+
+    def test_a_row_report_that_no_longer_matches_its_receipt_closes_the_batch(self):
+        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        rows = self.rows_file("m2.rows.json", {})
+        receipt = self.receipt(current, rows=rows)
+        rows.write_text(json.dumps({"schema_id": land.ROW_REPORT_SCHEMA, "base": self.base,
+                                    "subchecks": {"run-gates/x": {"reported": 0, "complete": True, "rows": []}}}),
+                        encoding="utf-8")
+        code, out = self.batch_check("--receipt", receipt, "--repo", self.shared, "--previous", previous,
+                                     "--check-source", self.source_file(), "--lock-dir", self.lock)
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_row_report_unreadable", out)
+
+    def test_a_previous_row_report_that_cannot_be_read_closes_the_batch(self):
+        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        bad = self.reports / "m1.rows.json"
+        bad.write_text("{corrupt json", encoding="utf-8")
+        code, out = self.check(current, previous, previous_rows=bad)
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_row_report_unreadable", out)
+        self.assertIn("the previous member's", out)
+
+    def test_a_row_report_written_against_another_base_closes_the_batch(self):
+        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        rows = self.rows_file("m2.rows.json", {}, base=self.member1)
+        code, out = self.check(current, previous, rows=rows)
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_row_report_unreadable", out)
+        self.assertIn("written against", out)
+
     def test_a_total_rise_closes_the_batch(self):
         previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
         current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))

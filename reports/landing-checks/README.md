@@ -880,8 +880,10 @@ When the batch cannot tell:
 
 7. An earlier member's report is not on record (a hand landing).
 8. A report's gone ids, totals or counts don't add up.
-9. A rise with no row report, or a row report the batch asked for that cannot be read (this landing's or
-   the previous member's).
+9. A row report the batch needs that cannot be read: this landing's, which its receipt records, or the previous
+   member's `--previous-rows`. Missing, corrupt, not the schema, written against another base, or no longer the
+   bytes its receipt records all read the same way, because a rise only the row reports can show would otherwise
+   go unseen.
 
 From the diff, with no exemption:
 
