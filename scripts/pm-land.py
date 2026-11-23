@@ -1424,6 +1424,24 @@ def read_json_report(doc: dict[str, Any]) -> dict[str, Any]:
         check, _, subcheck = str(name).partition("/")
         if check and subcheck:
             partial.add((check, subcheck))
+    # And `exports.subchecks` says why each of them is a sample. `no_export` and `baseline_sample` are the
+    # subcheck's permanent samples: no export can complete it, so its total is the whole comparison. Any other
+    # case means an export was attempted and did not key its rows (`export_timeout`, `export_unreadable`,
+    # `total_mismatch`, `rows_mismatch`), and then its counts are not known, only its total. A paired run-gates
+    # copy is judged by its audit-governance twin's rows, so an export of its own is not read here.
+    rows_read = (doc.get("exports") or {}).get("subchecks") if isinstance(doc.get("exports"), dict) else None
+    export_failed: set[tuple[str, str]] = set()
+    permanent: set[tuple[str, str]] = set()
+    for row in rows_read if isinstance(rows_read, list) else []:
+        if not isinstance(row, dict) or row.get("keyed"):
+            continue
+        key = (str(row.get("check")), str(row.get("subcheck")))
+        if key in pairs:
+            continue
+        if row.get("case") in ("no_export", "baseline_sample"):
+            permanent.add(key)
+        elif row.get("case") is not None:
+            export_failed.add(key)
     return {
         "infrastructure": len(doc.get("infrastructure") or []),
         "crashed": False,
@@ -1439,6 +1457,11 @@ def read_json_report(doc: dict[str, Any]) -> dict[str, Any]:
         "ids_unread": totals is not None and gone_ids is None,
         "pairs": pairs,
         "partial": partial,
+        # What the report says about the samples it compared by their totals only: the permanent ones, and the
+        # ones an export was attempted for and failed (review R4-B1). A field a report does not carry reads as
+        # an empty set, which makes no sample permanent: unknown, never known.
+        "permanent": permanent,
+        "export_failed": export_failed,
     }
 
 
@@ -1586,6 +1609,69 @@ def bucket_was_not_printed(report: dict[str, Any], bucket: str) -> bool:
     return (pieces[0], pieces[1]) in (report.get("pairs") or {})
 
 
+def member_place(index: int, total: int) -> str:
+    """A report's place in its batch, named: `this landing's report`, `the previous member's report`, or member N."""
+    if index == total - 1:
+        return "this landing's report"
+    if index == total - 2:
+        return f"the previous member's report (member {index + 1} of {total})"
+    return f"member {index + 1}'s report (of {total})"
+
+
+def counts_unknown(report: dict[str, Any], earlier: Sequence[dict[str, Any]]) -> Optional[tuple[str, str]]:
+    """The rule before any comparison: a subcheck whose counts are not fully known in a member of this batch.
+
+    A batch compares counts, and a count a member does not have is neither a zero nor a smaller number. A subcheck's
+    counts are not fully known in a report when it timed out there (`subcheck_totals` has null), when it is compared
+    by its total only for any reason other than a permanent sample (`no_export`, `baseline_sample`), or when an export
+    of it failed or could not be read (`exports.subchecks`: `export_timeout`, `export_unreadable`, `total_mismatch`,
+    `rows_mismatch`). They are not fully known in the batch when one member printed them in full while another has
+    only its total. The one exception is a subcheck that is a permanent sample in every member: no complete row set
+    exists anywhere to compare it by, so its printed total is the whole comparison, as in the landing check itself.
+
+    This runs before every comparison, so no later step has to tell an unknown count from an observed one (review
+    R4-B1: a sample in the current member was compared as if its counts were known). Returns (stop code, why), naming
+    the subcheck and the member: the batch closes and this landing is judged alone.
+    """
+    members = list(earlier) + [report]
+    total = len(members)
+    suspects: set[tuple[str, str]] = set()
+    for member in members:
+        suspects |= set(member.get("partial") or set())
+        suspects |= set(member.get("export_failed") or set())
+        for name, value in (member.get("totals") or {}).items():
+            if value is None:
+                check, _, subcheck = name.partition("/")
+                suspects.add((check, subcheck))
+    for check, subcheck in sorted(suspects):
+        name = f"{check}/{subcheck}"
+        for index, member in enumerate(members):
+            if (member.get("totals") or {}).get(name, 0) is None:
+                where = ("this landing's report" if index == total - 1
+                         else f"an earlier member's report (member {index + 1} of {total})")
+                return ("batch_counts_unknown", f"{name} timed out in {where}, so its counts are unknown and this "
+                                                "landing cannot be compared with the batch")
+        for index, member in enumerate(members):
+            if (check, subcheck) in (member.get("export_failed") or set()):
+                return ("batch_counts_unknown", f"{name}'s export did not complete in {member_place(index, total)}, so "
+                                                "its counts are unknown and this landing cannot be compared with the "
+                                                "batch")
+        sampled = [step for step, row in enumerate(members) if (check, subcheck) in (row.get("partial") or set())]
+        printed = [step for step in range(total) if step not in sampled]
+        if printed:
+            return ("batch_counts_unknown",
+                    f"{name} was compared by its total only in {member_place(sampled[0], total)}, and "
+                    f"{member_place(printed[0], total)} printed it in full, so its bucket counts are unknown and this "
+                    "landing cannot be compared with the batch")
+        for index, member in enumerate(members):
+            if (check, subcheck) not in (member.get("permanent") or set()):
+                return ("batch_counts_unknown",
+                        f"{name} was compared by its total only in {member_place(index, total)} as a sample that is "
+                        "not a permanent one, so its bucket counts are unknown and this landing cannot be compared "
+                        "with the batch")
+    return None
+
+
 def batch_gap(report: dict[str, Any], earlier: Sequence[dict[str, Any]],
               exempt: Optional[Callable[[str], Optional[str]]] = None, row_rises: Sequence[tuple] = ()) -> Optional[tuple]:
     """Why this member's report, fine inside the batch, may not hold alone after the earlier members' follow-up.
@@ -1606,6 +1692,11 @@ def batch_gap(report: dict[str, Any], earlier: Sequence[dict[str, Any]],
     if not shows_what_changed(report, earlier):
         return ("batch_check_too_old", "a report here prints no gone ids, subcheck totals or bucket counts, so what moved "
                                        "between the reports cannot be seen")
+    # Counts that are not fully known are decided before any of them is compared: a sample is not an observed zero,
+    # and no comparison below can tell the two apart once it has started (review R4-B1).
+    unknown = counts_unknown(report, earlier)
+    if unknown:
+        return unknown
     if report["pre_unread"] or any(row.get("pre_unread") for row in earlier):
         if mine or report["pre_unread"] or report["compare"]:
             return ("batch_rows_overlap", "this report lists pre-existing rows, and an earlier member's report printed "
@@ -1642,11 +1733,9 @@ def moved_since_earlier(report: dict[str, Any], earlier: Sequence[dict[str, Any]
     """What the printed ids, totals and counts say rose since the previous report, unless it is only this member's own
     staleness. Each report is compared with the one before it, so one rise excused here is not held against the next.
 
-    A subcheck that timed out in an earlier member's report has no count there: the batch cannot tell whether this
-    report's number is a rise, so it closes and the landing is judged alone (review SOL D5). A subcheck an earlier
-    report compared by its total only (a sample, or an export that failed or timed out) printed no buckets either,
-    so its counts are unknown, never zero; only a complete subcheck or a complete paired twin has an observed zero
-    (review ASTRA F7, R3-B1).
+    Every report here is fully known: `counts_unknown` runs before this and closes the batch when a subcheck timed
+    out, fell back to a sample that is not permanent, or lost its export in any member (reviews SOL D5, R4-B1). So
+    an absent bucket below is an observed zero or a paired copy's twin, and never a sample read as one (ASTRA F7).
     """
     if report.get("totals") is None:
         return None
@@ -1655,10 +1744,6 @@ def moved_since_earlier(report: dict[str, Any], earlier: Sequence[dict[str, Any]
                                       "between the reports cannot be told")
     if not earlier:
         return None
-    timed = sorted({name for row in earlier for name, total in (row.get("totals") or {}).items() if total is None})
-    if timed:
-        return ("batch_counts_unknown", f"{', '.join(timed[:10])} timed out in an earlier member's report, so its counts "
-                                        "are unknown and this landing cannot be compared with the batch")
     latest = earlier[-1]
     rises = []
     for bucket in sorted(set(latest.get("gone_ids") or []) - set(report.get("gone_ids") or [])):
@@ -1679,10 +1764,11 @@ def moved_since_earlier(report: dict[str, Any], earlier: Sequence[dict[str, Any]
     for name, count in sorted((report.get("bucket_counts") or {}).items()):
         was = prior_bucket_count(latest, name)
         if was is None:
+            # `counts_unknown` above makes this unreachable; if it is ever reached, the previous report's counts for
+            # this subcheck are a sample, and reading them as a zero is the false pass the rule exists to stop.
             return ("batch_counts_unknown",
-                    f"{subcheck_of(name)} was compared by its total only in the previous member's report (a sample, or "
-                    "an export that failed or timed out), so its bucket counts are unknown and this landing cannot be "
-                    "compared with the batch")
+                    f"{subcheck_of(name)} was compared by its total only in the previous member's report, so its bucket "
+                    "counts are unknown and this landing cannot be compared with the batch")
         if count > was:
             rises.append((subcheck_of(name), "batch_total_rise",
                           f"bucket {name} rose from {was} to {count} since the last report, which no total shows"))
