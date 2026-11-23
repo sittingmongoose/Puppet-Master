@@ -1,21 +1,26 @@
-/* Refine, third pass (Jared, 2026-11-23): the things that looked wrong or untidy. Styles only; no option moves.
-   The shared switcher (liquid-glass) paints a chosen row as a solid slab in the Basic and Friendly looks. On a list of
-   things with icons and status lights that slab washed the icon out and put a ring round the light, so inside
-   Settings' lists the chosen row is a soft tint with an accent edge instead. Retro, NieR and Glass keep their own. */
+/* Refine, third and fourth pass (Jared, 2026-11-23): the things that looked wrong or untidy. Styles only; no option moves.
+   The shared switcher (liquid-glass) paints a chosen row as a solid slab in the Basic, Friendly and Retro looks. On a
+   list of things with icons and status lights that slab washed the icon out and boxed the light, so inside Settings'
+   lists the chosen row is a soft fill with a thin outline instead. No coloured stripe on one side, anywhere (Jared,
+   2026-11-23: "DO NOT USE THESE SIDE COLORED TABS!"). Glass and NieR keep their own chosen row. */
 
 /* ---- the chosen row of a list (services, personas, servers ...) ---- */
-:is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-roster .resource-row[aria-current="true"] {
-  background: color-mix(in srgb, var(--k3-accent) 13%, transparent) !important;
-  box-shadow: inset 3px 0 0 var(--k3-accent) !important;
+:is(html[data-theme^="basic"], html[data-theme^="friendly"], html[data-theme^="retro"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-roster .resource-row[aria-current="true"] {
+  background: color-mix(in srgb, var(--pm-switch-mark, var(--k3-accent)) 14%, transparent) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pm-switch-mark, var(--k3-accent)) 46%, transparent) !important;
   border-color: transparent !important;
   color: var(--k3-text-1) !important;
 }
-:is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-roster .resource-row[aria-current="true"] .resource-row-name { color: var(--k3-text-1) !important; }
-:is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-roster .resource-row[aria-current="true"] .resource-row-meta { color: var(--k3-text-2) !important; }
-:is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-roster .resource-row[aria-current="true"] .resource-avatar { color: var(--k3-accent) !important; }
-/* the status light is a light, with no ring */
-:is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-roster .resource-row[aria-current="true"] .status-dot { box-shadow: none !important; }
-:is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-roster .resource-row:not([aria-current="true"]):hover { background: color-mix(in srgb, var(--k3-text-1) 5%, transparent) !important; }
+:is(html[data-theme^="basic"], html[data-theme^="friendly"], html[data-theme^="retro"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-roster .resource-row[aria-current="true"] .resource-row-name { color: var(--k3-text-1) !important; }
+:is(html[data-theme^="basic"], html[data-theme^="friendly"], html[data-theme^="retro"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-roster .resource-row[aria-current="true"] .resource-row-meta { color: var(--k3-text-2) !important; }
+:is(html[data-theme^="basic"], html[data-theme^="friendly"], html[data-theme^="retro"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-roster .resource-row[aria-current="true"] .resource-avatar { color: var(--k3-accent) !important; }
+/* the status light is a light, with no ring or box */
+:is(html[data-theme^="basic"], html[data-theme^="friendly"], html[data-theme^="retro"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-roster .resource-row[aria-current="true"] .status-dot { box-shadow: none !important; }
+:is(html[data-theme^="basic"], html[data-theme^="friendly"], html[data-theme^="retro"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-roster .resource-row:not([aria-current="true"]):hover { background: color-mix(in srgb, var(--k3-text-1) 5%, transparent) !important; }
+
+/* NieR keeps its ink bar. On it the light is a solid mark in the bar's ink; the ring round its square box read as an
+   empty checkbox (Jared: "there is a box around the indicator light"). */
+html[data-o55-nier="on"]:not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-roster .resource-row[aria-current="true"] .status-dot { box-shadow: none !important; --pm-status-ink: var(--pm-switch-ink-on) !important; }
 
 /* ---- the list's head: the name and its count never sit under the add button ---- */
 #panel-settings .pm51-mgr .pm51-roster .roster-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 8px; }
@@ -23,16 +28,17 @@
 #panel-settings .pm51-mgr .pm51-roster .roster-head > .pm51-icon-btn[aria-label]::after { content: "Add"; }
 #panel-settings .pm51-mgr .pm51-roster .roster-head > .pm51-icon-btn[aria-label^="New"]::after { content: "New"; }
 
-/* ---- the side column: the place you are reading is a quiet mark that does not travel or change the text ---- */
-:is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root nav.page-index-card > .lg-lenses-under { display: none !important; }
-:is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .page-index-card .pm51-index-group > .index-link.is-active {
-  background: color-mix(in srgb, var(--k3-accent) 13%, transparent) !important;
-  box-shadow: inset 3px 0 0 var(--k3-accent) !important;
-  color: var(--k3-text-1) !important;
+/* ---- the side column: the place you are reading ----
+   The shared chip marks it and travels between rows, as on every other strip of the app. While it travels it carries
+   copies of the rows' words in its own ink (liquid-glass: .lg-twin). The copies had no bullet, so a row's words sat
+   9 px to the left for as long as the chip moved, and jumped back when it landed: Jared, "it moves the text over as
+   you scroll through them". The copies get the bullet. A chosen sub-row no longer turns bold (that reflowed it) and
+   takes the page's ink, not the chip's (it has no chip under it, so the chip's ink was dark on dark). */
+html:not([data-theme^="glass"]):not(#lgz):not(#lgy) #pm-settings-root nav.page-index-card lg-over.lg-hops .lg-twin[style*="font-weight: 400"]::before {
+  content: ""; flex: 0 0 auto; width: 4px; height: 4px; border-radius: 50%; background: var(--pm-switch-mark, currentColor); transform: scale(1.55);
 }
-:is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .page-index-card .pm51-index-sub > .index-link.is-active {
-  color: var(--k3-text-1) !important; font-weight: inherit !important;
-}
+html:not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .page-index-card .pm51-index-sub > .index-link.is-active { color: var(--k3-text-1) !important; }
+html:not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .page-index-card .pm51-index-sub > .index-link.is-active { font-weight: inherit !important; }
 
 /* ---- a manager's tab strip that has stuck to the top floats; it no longer lays a band across the page ---- */
 #panel-settings .workspace-block .pm51-mgr.has-manager-tabs > .manager-tabs.pm51-tabs.is-stuck {
@@ -69,9 +75,6 @@
 #panel-settings .pm51-providers-acc .pm51-acc-item.is-open .pm51-acc-toggle { border-color: color-mix(in srgb, var(--k3-accent) 55%, var(--k3-line)); }
 #panel-settings .pm51-providers-acc .pm51-acc-item.is-open .pm51-acc-inner { padding-left: 38px; }
 #panel-settings .pm51-providers-acc .pm51-meter-track { height: 5px; }
-
-/* ---- the side column's tab rows keep one inset whether chosen or not, so a mark beside them never touches the text ---- */
-#panel-settings .page-index-card .pm51-index-group > .pm51-index-tab { padding-left: 10px; }
 
 /* ---- Providers: Add a service is the catalogue, grouped by how you pay ---- */
 .rf-add-panel .rf-add { display: grid; gap: 4px; }
@@ -145,3 +148,21 @@
 #panel-settings .rf-policy-h { font-size: 11px; font-weight: 600; color: var(--k3-text-3); white-space: nowrap; }
 #panel-settings .rf-policy-row .setting-label { display: flex; align-items: baseline; gap: 12px; white-space: nowrap; }
 #panel-settings .rf-policy-headrow + .rf-policy-row { border-top: 0; }
+
+/* ---- a list and its detail are one card ----
+   The list is sticky, so it is only as tall as its rows, and its fill and its dividing line stopped where the rows
+   did while the detail ran on (Jared: "it just looks unfinished because it ends abruptly"). The card draws the
+   list's column itself, the whole height; the list sits on it. Not where the list is a drawer (narrow hosts). */
+@container settings-host (min-width: 720.02px) {
+  #panel-settings .pm51-mgr .split-manager.pm51-split::before { content: ""; grid-column: 1; grid-row: 1; border-right: 1px solid var(--k3-line); background: color-mix(in srgb, var(--k3-bg-1) 60%, transparent); pointer-events: none; }
+  #panel-settings .pm51-mgr .split-manager.pm51-split > .pm51-roster { grid-column: 1; grid-row: 1; border-right-color: transparent; background: none; }
+  #panel-settings .pm51-mgr .split-manager.pm51-split > .pm51-detail { grid-column: 2; grid-row: 1; }
+}
+/* Glass: a card straight on the wallpaper gets a dark ground so its words can be read. A section inside a detail
+   counted as such a card, so the detail showed a dark box that began and ended short of its own card (Jared: "This
+   black box behind sections ... looks cut off and unfinished"). The whole list-and-detail card takes the ground; the
+   sections inside it are plain. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy):not(#lgx) #panel-settings .pm51-mgr .split-manager.pm51-split { background: var(--lg-tint-card) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy):not(#lgx) #panel-settings .pm51-mgr .pm51-detail .pm51-section.panel-card { background: none !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy):not(#lgx) #panel-settings .pm51-mgr .pm51-detail .pm51-advanced { background: none !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy):not(#lgx) #panel-settings .pm51-mgr .pm51-detail .settings-section.o55-group { background: none !important; }
