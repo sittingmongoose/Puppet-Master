@@ -670,6 +670,9 @@ Anyone who writes a checker input in the shared checkout, including readiness re
    rule to the remote shard result too.
 4. In the shared checkout, set `PM_LAND_RECEIPT` to the receipt and `PM_LAND_COMMIT` and
    `PM_LAND_BASE` to its full `head` and `base` SHAs. Fetch and run `verify` under the lock.
+   Inside a batch, pass `--batch-start <batch-start>` instead of `--base`: the batch-start is the
+   receipt's base, and `verify` refuses unless holder.txt still opens that batch and lists every
+   landing since it. A pushed landing missing from holder.txt refuses: repair the holder, then rerun.
    The shared checkout is for landing only. Verification refuses any staged or unstaged tracked
    change, including deletions, any skip-worktree or assume-unchanged flag, and visible
    untracked checker inputs anywhere in the checkout. It names the affected paths.
@@ -685,7 +688,9 @@ Anyone who writes a checker input in the shared checkout, including readiness re
    paths, confirm the shard exists in HEAD and its HEAD manifest references it. Report those
    paths to Jared.
 7. Fetch and run `verify` again under the lock. Push only after it passes immediately beforehand.
-8. Push the exact checked commit to primary main with a lease on the checked base. After a
+8. Push the exact checked commit to primary main with a lease on the `PUBLISH_LEASE` the
+   verification just printed (in a batch too: it is the `origin/main` the batch's previous
+   landings left), never on a reread of `origin/main`. After a
    completed fast-forward fails publication, use freshly fetched primary main. If a push
    returned an uncertain result, check primary first and reconcile against what it accepted.
    For an unpublished candidate, run `rollback_unpublished` below under the lock. It confirms
@@ -697,7 +702,8 @@ Anyone who writes a checker input in the shared checkout, including readiness re
    fetched target, HEAD, `git status --porcelain` and the refusal paths without resetting. If
    you no longer hold the lock, hand off to the current holder. Never use `--hard` in the shared checkout.
 9. Complete the Plans follow-up below under the same lock. Reseals follow the assigned
-   reseal record.
+   reseal record. A batch member defers this to the batch's close: its own follow-up runs once,
+   at the final `main`, by whoever holds the lock then.
 10. Confirm primary main contains the exact topic tip, then check the original worktree and
     branch before removal. Inspect porcelain, `git ls-files -v` and
     `git ls-files --others --ignored --exclude-standard`. Hand off a switched, changed or
@@ -724,11 +730,16 @@ verify_checked() {
     git fetch origin || return
     if test -n "${PM_LAND_BATCH_START:-}"; then
         python3 -B "$PM_LAND_SCRIPT" verify --receipt "$PM_LAND_RECEIPT" \
-            --commit "$PM_LAND_COMMIT" --batch-start "$PM_LAND_BATCH_START"
+            --commit "$PM_LAND_COMMIT" --batch-start "$PM_LAND_BATCH_START" \
+            > "$PM_LAND_VERIFY_LOG" || return
     else
         python3 -B "$PM_LAND_SCRIPT" verify --receipt "$PM_LAND_RECEIPT" \
-            --commit "$PM_LAND_COMMIT" --base "$PM_LAND_BASE"
+            --commit "$PM_LAND_COMMIT" --base "$PM_LAND_BASE" \
+            > "$PM_LAND_VERIFY_LOG" || return
     fi
+    cat "$PM_LAND_VERIFY_LOG"
+    PM_LAND_PUBLISH_LEASE=$(sed -n 's/^PUBLISH_LEASE=//p' "$PM_LAND_VERIFY_LOG")
+    test -n "$PM_LAND_PUBLISH_LEASE"
 }
 
 fast_forward_checked() {
@@ -740,7 +751,10 @@ push_checked() {
     primary=$(git remote get-url --push origin) || return
     test "$(git rev-parse HEAD)" = "$PM_LAND_COMMIT" || return
     verify_checked || return
-    lease=$(git rev-parse --verify 'origin/main^{commit}') || return
+    lease=$PM_LAND_PUBLISH_LEASE
+    test -n "$lease" || return
+    test "$(git rev-parse --verify 'origin/main^{commit}')" = "$lease" || return
+    git merge-base --is-ancestor "$lease" "$PM_LAND_COMMIT" || return
     git push --force-with-lease="refs/heads/main:$lease" \
         "$primary" "$PM_LAND_COMMIT:refs/heads/main"
 }
@@ -756,8 +770,9 @@ rollback_unpublished() {
 ```
 
 Inside a batch, set `PM_LAND_BATCH_START` to the batch-start and leave `PM_LAND_BASE` unset: `verify_checked` then
-passes `--batch-start`, and `push_checked` leases against the `origin/main` the fetch in `verify_checked` just
-brought, which is where the batch's previous landings have left main, not the batch-start.
+passes `--batch-start`. In both routes, `verify` reads `origin/main` once and prints `PUBLISH_LEASE=<that tip>`;
+`push_checked` leases on exactly that value, never on a reread of `origin/main`, and refuses when the ref or the
+candidate moved after verification. Set `PM_LAND_VERIFY_LOG` to a scratch path first.
 
 Run `fast_forward_checked` after judging the remote result. After the shared shard
 check, run `push_checked`. If it fails, follow step 8 immediately. If the checkout
@@ -837,16 +852,21 @@ follow-up and releasing the landing lock.
 The rule is "Land in batches" in `AGENTS.md` and `.claude/CLAUDE.md`: one continuous hold of the landing
 lock, up to four landings, two hours from the first push, one follow-up at the final `main`.
 `holder.txt` is its record. `python3 -B "$PM_LAND_SCRIPT" batch-status` prints what it holds, writing
-nothing: the open batch's `batch-start`, its `batch-landing: <branch> <main SHA>` rows (a row that is
-not that shape is named, never dropped), and one `[ok]` or `[stop]` line for each of the rule's four
-limits — four landings; two hours from `batch-first-push:` (the first row's commit time stands in
-for a missing `batch-first-push:`, so a branch committed long before it was pushed reads as past the
-two hours at once); a holder whose latest time is under 90 minutes old; and a baseline less than two
-hours short of rule 2's seven days when measured from `batch-start`. It also says whether main is
-past the last row, whether any member touched `Plans/` (so a follow-up is owed), and whether a dead
-holder's batch landed something, which means it is closed, not cleared. `batch-check` and `verify
---batch-start` refuse a landing the same rows stop, with the same sentence, so what status shows as a
-`[stop]` never lands inside the batch. It takes no lock, fetches nothing and writes nothing.
+nothing: the open batch's `batch-start`, its `batch-landing: <branch> <main SHA it pushed> <the
+record.json its check printed>` rows with each receipt path (a row that is not that shape is named,
+never dropped, and a row whose receipt cannot be read says so), and one `[ok]` or `[stop]` line for
+each of the rule's four limits — four landings; two hours from `batch-first-push:` (the first row's
+commit time stands in for a missing `batch-first-push:`, so a branch committed long before it was
+pushed reads as past the two hours at once); a holder whose latest time is under 90 minutes old; and
+a baseline less than two hours short of rule 2's seven days when measured from `batch-start`
+("within 2 h of its seven-day edge"), or past them ("past its seven-day edge"). It also says whether
+main is past the last row, whether any member touched `Plans/` (so a follow-up is owed), and whether
+a dead holder's batch landed something, which means it is closed, not cleared. `batch-check` and
+`verify --batch-start` refuse a landing the same rows stop, with the same sentence, so what status
+shows as a `[stop]` never lands inside the batch. Both check the chain from the batch-start to
+current `main` before they number or judge a member: a landing on `main` that the holder does not
+list refuses with "repair the holder, then rerun". It takes no lock, fetches nothing and writes
+nothing.
 
 ### Batch triggers
 
@@ -856,54 +876,66 @@ bucket ids, every subcheck's total, per-bucket counts, and `--row-report`. Witho
 batch: `pm-land.py batch-check` says to land alone, or to close an open batch, on a landing check that
 does not print them, and a hand lander on such a check lands alone too. `pm-land.py check --base
 <batch-start>` asks the remote check for the row report, and the receipt records its path and SHA-256.
+A batch compares the JSON report `check` writes, never the text report: text names a row by its
+clipped display fields and JSON by its key, and the two are not one identity.
 
-`python3 -B "$PM_LAND_SCRIPT" batch-check --receipt <the record.json the check printed> [--previous <an
-earlier member's report, text or JSON, repeated oldest first>] [--previous-rows <the last earlier member's row
-report>]` prints the comparison lines it read and each trigger with its reason, then a verdict. The receipt names
-this member's commit, the batch-start it was measured against, its report, its row report and the landing check's
-own exit, so none of them is read from another checkout's `HEAD`; run it in this member's worktree, or pass `--repo
-<checkout>`. Pass one `--previous` per earlier landing: a member three deep then compares with member 2's report and
-with member 1's, so a subcheck that timed out in the middle one does not read as a rise from zero. Its exit codes are
-its own, not the landing check's: 0 means judged, no trigger, the landing may stay; 1 means a trigger fires or a
-judgement is owed first (it says which); 3 means it was refused (an unreadable receipt or report, a receipt base
-that is not the open batch's full `batch-start`, or no open batch at all). `--own-base` defaults to the last
-`batch-landing` row's SHA, this member's own range. `--check-source` overrides the landing check read at the
-receipt's commit in `--repo`.
+`python3 -B "$PM_LAND_SCRIPT" batch-check --receipt <the record.json the check printed>` prints the
+comparison lines it read and each trigger with its reason, then a verdict. The receipt names this
+member's commit, the batch-start it was measured against, its report, its row report and the landing
+check's own exit, so none of them is read from another checkout's `HEAD`; run it in this member's
+worktree, or pass `--repo <checkout>`. The earlier members come from their `batch-landing` rows in
+`holder.txt`, in order: each row names that landing's receipt, and the report and row report it binds
+are re-hashed against the digests the receipt records. A swapped, edited or wrong-member file is a
+trigger, never a comparison. A member three deep therefore compares with member 2's report and with
+member 1's. Its exit codes are its own, not the landing check's: 0 means judged, no trigger, the
+landing may stay; 1 means a trigger fires or a judgement is owed first (it says which); 3 means it was
+refused (an unreadable receipt or report, a receipt base that is not the open batch's full
+`batch-start`, a row the holder cannot read, a landing missing from the holder, or no open batch at
+all). The member's own range is the last `batch-landing` row's SHA to this member's commit; there is
+no override. `--check-source` overrides the landing check read at the receipt's commit in `--repo`.
 
 From what moved since the previous member's report, unless exempt:
 
 1. A bucket the previous report listed as gone is not gone in this one.
 2. A subcheck's total is above the previous report's.
 3. A bucket's count is above the previous report's, printed or counted from both row reports (a subcheck
-   the baseline holds as a sample prints no count line).
+   the baseline holds as a sample prints no count line). A bucket the previous report did not print because
+   its run-gates copy was judged by its audit-governance twin is read from that twin, never as an observed 0.
 
 The exemption: a rising subcheck does not close the batch only if every row it added since the previous
 report, compared by row key, is (a) seen: the subcheck is complete in both reports, its rows adding up
 to its total, because it printed them all or is keyed from a complete export whose total matches; (b)
-governance staleness of a kind the landing check also excuses when its bucket grows (a row stale by its
-detail text alone, or a renamed-shard `missing_ref` row in a subcheck compared by its total, is not
-enough); and (c) this member's: it names a path in this member's own range (the previous member's
+governance staleness of a kind the landing check also excuses when its bucket grows, which is the
+`grown_stale` the check's own whole-bucket classification writes (a row stale by its detail text
+alone, or a renamed-shard `missing_ref` row in a subcheck compared by its total, is not enough; the
+audit-closure exemption counts only when every current non-stale row is one recorded baseline
+fingerprint); and (c) this member's: it names a path in this member's own range (the previous member's
 `main` SHA to its own, regenerated and deleted paths included) and no other path of the batch.
 
 From the printed rows, with no exemption:
 
-4. Pre-existing or improved rows differ, by count or text, from the latest earlier report's, in a bucket
+4. Pre-existing or improved rows differ, by key, from the latest earlier report's, in a bucket
    an earlier report marked changed.
 5. A `(content changed)` row no earlier report listed.
-6. Pre-existing rows past the report's print cap, when this report lists any.
+6. A report that lists pre-existing rows only in part (a print cap), when every report from this check
+   is complete: a JSON report is, so this never fires on one.
 
 When the batch cannot tell:
 
-7. An earlier member's report is not on record (a hand landing).
+7. An earlier member's receipt or report is not on record or cannot be read: a hand landing leaves no
+   row, and a row whose receipt, report or row report is missing, corrupt, bound to another commit or
+   base, or no longer the bytes its SHA-256 records closes the batch.
 8. A report's gone ids, totals or counts don't add up.
-9. A row report the batch needs that cannot be read: this landing's, which its receipt records, or the previous
-   member's `--previous-rows`. Missing, corrupt, not the schema, written against another base, or no longer the
-   bytes its receipt records all read the same way, because a rise only the row reports can show would otherwise
-   go unseen.
+9. A row report the batch needs that cannot be read: this landing's, which its receipt records, or an
+   earlier member's, which its own receipt records. Missing, corrupt, not the schema, written against
+   another base, or no longer the bytes its receipt records all read the same way, because a rise only
+   the row reports can show would otherwise go unseen.
+10. A subcheck that timed out in an earlier member's report has no count there. Its counts are unknown,
+    so this landing is judged alone and the reason names the subcheck; growth is never reported from 0.
 
 From the diff, with no exemption:
 
-10. A path in this member's own range is not in the batch's diff: it put back what an earlier member
+11. A path in this member's own range is not in the batch's diff: it put back what an earlier member
     changed, so the check, measuring from `batch-start`, does not read it as touched.
 
 Unchanged: exit 2 or the two hours running out during its checks closes the batch; a baseline within two hours
