@@ -1785,16 +1785,25 @@ class BatchCheckTests(BatchFixture):
         self.head = self.commit("member 2")
         self.holder(start=self.base, rows=[f"fix/a {self.member1}"])
 
+    def receipt(self, report, code=0, base=None, rows=None, head=None):
+        """The record.json `check` prints: this member's commit, base, report, row report and checker exit."""
+        path = self.reports / "record.json"
+        record = {"schema": 2, "host": "nas1", "head": head or self.head, "base": base or self.base,
+                  "exit_code": code, "report": str(report), "report_sha256": land.file_hash(report),
+                  "row_report": str(rows) if rows is not None else None,
+                  "row_report_sha256": land.file_hash(rows) if rows is not None else None,
+                  "argv": ["python3", "-B", "scripts/pm-landing-check.py", "--base", base or self.base, "--json"]}
+        land.write_json(path, record)
+        return path
+
     def check(self, report, previous=None, rows=None, previous_rows=None, code=0, source=True, base=None, lock=None,
-              **extra):
-        argv = ["--base", base or self.base, "--exit", str(code), "--report", report, "--repo", self.shared,
-                "--head", self.head, "--lock-dir", lock or self.lock]
+              head=None, **extra):
+        argv = ["--receipt", self.receipt(report, code=code, base=base, rows=rows, head=head), "--repo", self.shared,
+                "--lock-dir", lock or self.lock]
         if source is not None:
             argv += ["--check-source", self.source_file(marked=bool(source)) if source is not True else self.source_file()]
         if previous is not None:
             argv += ["--previous", previous]
-        if rows is not None:
-            argv += ["--rows", rows]
         if previous_rows is not None:
             argv += ["--previous-rows", previous_rows]
         for name, value in extra.items():
@@ -1807,6 +1816,34 @@ class BatchCheckTests(BatchFixture):
         self.assertEqual(code, 0, out)
         self.assertIn("first member of the batch", out)
         self.assertIn("[total] run-gates/lint-x  1", out)
+
+    def test_a_json_report_from_the_receipt_that_shows_no_rise_keeps_the_landing(self):
+        """What `check` actually writes: a text-only reader finds no totals in it and false-stops every member."""
+        same = {"run-gates/lint-x": 1}
+        counts = {"run-gates|lint-x|missing_ref|src/x.txt": 1}
+        previous = self.report_file("m1.json", json_report(totals=same, counts=counts))
+        current = self.report_file("m2.json", json_report(totals=same, counts=counts))
+        code, out = self.check(current, previous)
+        self.assertEqual(code, 0, out)
+        self.assertIn("no trigger", out)
+        self.assertIn("[total] run-gates/lint-x  1", out)
+        self.assertIn("[count] run-gates|lint-x|missing_ref|src/x.txt  1", out)
+
+    def test_a_rise_in_the_json_report_closes_the_batch(self):
+        previous = self.report_file("m1.json", json_report(totals={"run-gates/lint-x": 1},
+                                                           counts={"run-gates|lint-x|missing_ref|src/x.txt": 1}))
+        current = self.report_file("m2.json", json_report(totals={"run-gates/lint-x": 2},
+                                                          counts={"run-gates|lint-x|missing_ref|src/x.txt": 2}))
+        code, out = self.check(current, previous)
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_total_rise", out)
+        self.assertIn("run-gates/lint-x's total rose from 1 to 2", out)
+
+    def test_a_receipt_whose_commit_is_the_previous_main_is_refused(self):
+        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        code, _out = self.check(current, head=self.member1)
+        self.assertEqual(code, 3)
+        self.assertIn("previous member's main SHA", self.stderr)
 
     def test_a_total_rise_closes_the_batch(self):
         previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
@@ -1967,8 +2004,14 @@ class PutBackTests(BatchFixture):
         self.holder(start=self.base, rows=[f"fix/a {self.member1}"])
         previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
         current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 1}))
-        code, out = self.batch_check("--base", self.base, "--exit", "0", "--report", current, "--repo", self.shared,
-                                     "--head", self.head, "--previous", previous, "--lock-dir", self.lock)
+        receipt = self.reports / "record.json"
+        # The shared checkout is still at member 1: only the receipt names member 2's commit.
+        land.write_json(receipt, {"schema": 2, "host": "nas1", "head": self.head, "base": self.base,
+                                  "exit_code": 0, "report": str(current),
+                                  "report_sha256": land.file_hash(current), "row_report": None,
+                                  "row_report_sha256": None})
+        code, out = self.batch_check("--receipt", receipt, "--repo", self.shared, "--previous", previous,
+                                     "--lock-dir", self.lock)
         self.assertEqual(code, 1, out)
         self.assertIn("TRIGGER batch_reverted_path", out)
         self.assertIn("src/a.txt", out)

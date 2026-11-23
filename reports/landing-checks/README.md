@@ -843,14 +843,16 @@ batch: `pm-land.py batch-check` says to land alone, or to close an open batch, o
 does not print them, and a hand lander on such a check lands alone too. `pm-land.py check --base
 <batch-start>` asks the remote check for the row report, and the receipt records its path and SHA-256.
 
-`python3 -B "$PM_LAND_SCRIPT" batch-check --base <batch-start> --exit <the check's exit> --report
-<its text report> --previous <the previous member's text report> [--rows <its row report>]
-[--previous-rows <the previous member's row report>]` prints the comparison lines it read and each
-trigger with its reason, then a verdict. Its exit codes are its own, not the landing check's: 0 means
-judged, no trigger, the landing may stay; 1 means a trigger fires or a judgement is owed first (it says
-which); 3 means it was refused (an unreadable report, a base that is not the open batch's full
-`batch-start`, or no open batch at all). `--own-base` defaults to the last `batch-landing` row's SHA,
-this member's own range. `--check-source` overrides the landing check read at `--head` in `--repo`.
+`python3 -B "$PM_LAND_SCRIPT" batch-check --receipt <the record.json the check printed> [--previous <the
+previous member's report>] [--previous-rows <the previous member's row report>]` prints the comparison lines it
+read and each trigger with its reason, then a verdict. The receipt names this member's commit, the batch-start it
+was measured against, its report, its row report and the landing check's own exit, so none of them is read from
+another checkout's `HEAD`; run it in this member's worktree, or pass `--repo <checkout>`. Its exit codes are its
+own, not the landing check's: 0 means judged, no trigger, the landing may stay; 1 means a trigger fires or a
+judgement is owed first (it says which); 3 means it was refused (an unreadable receipt or report, a receipt base
+that is not the open batch's full `batch-start`, or no open batch at all). `--own-base` defaults to the last
+`batch-landing` row's SHA, this member's own range. `--check-source` overrides the landing check read at the
+receipt's commit in `--repo`.
 
 From what moved since the previous member's report, unless exempt:
 

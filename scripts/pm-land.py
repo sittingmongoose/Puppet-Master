@@ -2057,35 +2057,95 @@ def judge_batch_member(shared: Path, start: str, code: int, report_text: str,
     return 1 if owed else 0, lines
 
 
-def batch_check(shared: Path, lock_dir: Path, start: str, code: int, report_path: Path,
-                previous_path: Optional[Path], rows_path: Optional[Path], previous_rows_path: Optional[Path],
-                own_base: Optional[str], head: Optional[str], check_source: Optional[Path]) -> int:
-    if not valid_full_sha(start):
-        raise Refusal(f"--base must be the batch-start as a full 40-character SHA, never a moving name: {start!r}")
+def batch_receipt(path: Path) -> dict[str, Any]:
+    """What a batch judges a member by, read from the record.json `check` printed.
+
+    There is no checkout to fall back on: the receipt names the checked commit, the batch-start it was measured
+    against, the report and row report it binds and the landing check's own exit, so a lander cannot leave any of
+    them to another checkout's HEAD.
+    """
+    try:
+        record = json.loads(path.read_bytes())
+    except OSError as exc:
+        raise Refusal(f"cannot read the receipt {path}: {exc}") from exc
+    except ValueError as exc:
+        raise Refusal(f"the receipt {path} is not JSON: {exc}") from exc
+    if not isinstance(record, dict):
+        raise Refusal(f"the receipt {path} is not a JSON object")
+    for key in ("head", "base", "exit_code", "report"):
+        if key not in record:
+            raise Refusal(f"the receipt {path} records no {key}: it is not the record.json pm-land.py check prints")
+    for key, label in (("head", "target commit"), ("base", "checked base")):
+        if not valid_full_sha(record[key]):
+            raise Refusal(f"receipt {label} must be a full 40-character SHA, never a moving name: {record[key]!r}")
+    if record["exit_code"] not in (0, 1, 2, 3):
+        raise Refusal(f"receipt exit_code is not a landing check exit: {record['exit_code']!r}")
+    return record
+
+
+def receipt_report(record: dict[str, Any], label: str) -> str:
+    """The report a receipt binds, refused when it is missing or no longer the bytes the receipt recorded."""
+    path = record.get("report")
+    if not isinstance(path, str) or not path:
+        raise Refusal(f"the {label} records no landing check report")
+    try:
+        raw = Path(path).read_bytes()
+    except OSError as exc:
+        raise Refusal(f"cannot read the {label}'s report {path}: {exc}") from exc
+    recorded = record.get("report_sha256")
+    if isinstance(recorded, str) and hashlib.sha256(raw).hexdigest() != recorded:
+        raise Refusal(f"the {label}'s report {path} no longer matches the SHA-256 its receipt records")
+    return raw.decode("utf-8", errors="replace")
+
+
+def receipt_rows(record: dict[str, Any]) -> Optional[dict[str, Any]]:
+    """The row report a receipt binds, or None when the receipt records none or it cannot be read."""
+    path = record.get("row_report")
+    if not isinstance(path, str):
+        return None
+    try:
+        raw = Path(path).read_bytes()
+    except OSError:
+        return None
+    recorded = record.get("row_report_sha256")
+    if isinstance(recorded, str) and hashlib.sha256(raw).hexdigest() != recorded:
+        return None
+    try:
+        doc = json.loads(raw)
+    except ValueError:
+        return None
+    return doc if isinstance(doc, dict) and doc.get("schema_id") == ROW_REPORT_SCHEMA else None
+
+
+def batch_check(shared: Path, lock_dir: Path, receipt_path: Path,
+                previous_path: Optional[Path], previous_rows_path: Optional[Path],
+                own_base: Optional[str], check_source: Optional[Path]) -> int:
+    record = batch_receipt(receipt_path)
+    start, head, code = record["base"], record["head"], record["exit_code"]
     shown = git(shared, "rev-parse", ORIGIN_MAIN + "^{commit}", check=False)
     if shown.returncode:
         raise Refusal(f"cannot read the fetched origin/main in {shared}; fetch it first")
     if not is_ancestor(shared, start, shown.stdout.strip()):
-        raise Refusal(f"batch-start {start} is not on the fetched origin/main")
-    resolved_head = commit_or_refuse(shared, head or "HEAD", "this member's commit (--head)")
-    try:
-        report_text = report_path.read_text(encoding="utf-8", errors="replace")
-    except OSError as exc:
-        raise Refusal(f"cannot read this member's report {report_path}: {exc}") from exc
+        raise Refusal(f"the receipt's batch-start {start} is not on the fetched origin/main")
+    resolved_head = commit_or_refuse(shared, head, "the receipt's commit")
+    if not is_ancestor(shared, start, resolved_head):
+        raise Refusal(f"the receipt's commit {resolved_head} is not a descendant of its batch-start {start}:"
+                      " a batch member is rebased on the batch-start")
+    report_text = receipt_report(record, "receipt")
+    rows = receipt_rows(record)
     previous_text = None
     if previous_path is not None:
         try:
             previous_text = previous_path.read_text(encoding="utf-8", errors="replace")
         except OSError as exc:
             raise Refusal(f"cannot read the previous member's report {previous_path}: {exc}") from exc
-    rows = read_row_report(rows_path) if rows_path is not None else None
     previous_rows = read_row_report(previous_rows_path) if previous_rows_path is not None else None
     holder = holder_verdict(lock_dir)
     if not holder["held"]:
         raise Refusal(f"no batch is open: the landing lock is free, so there is nothing for this landing to stay in")
     fields = holder["fields"]
     if fields.get("batch-start") != start:
-        raise Refusal(f"--base {start} is not the open batch's batch-start "
+        raise Refusal(f"the receipt's base {start} is not the open batch's batch-start "
                       f"({fields.get('batch-start') or 'none'} in holder.txt)")
     earlier_rows, malformed = batch_rows(fields)
     if malformed:
@@ -2094,6 +2154,11 @@ def batch_check(shared: Path, lock_dir: Path, start: str, code: int, report_path
         own_base = earlier_rows[-1]["sha"]
     if own_base is not None:
         own_base = commit_or_refuse(shared, own_base, "the previous member's main commit (--own-base)")
+        if head == own_base:
+            raise Refusal(f"the receipt's commit {head} is the previous member's main SHA: --receipt must name this "
+                          "member's own commit, never one already on main")
+        if not is_ancestor(shared, own_base, head):
+            raise Refusal(f"the receipt's commit {head} is not a descendant of the previous member's main {own_base}")
     source_text = None
     if check_source is not None:
         try:
@@ -2276,19 +2341,17 @@ def main(argv=None):
         status.add_argument("--shared", type=Path, default=SHARED)
         status.add_argument("--lock-dir", type=Path, default=LOCK_DIR)
         member = commands.add_parser("batch-check", help="judge one batch member's report against the previous one's")
-        member.add_argument("--base", required=True, help="the batch-start, as a full 40-character SHA")
-        member.add_argument("--exit", dest="checker_exit", type=int, choices=(0, 1, 2, 3), required=True,
-                            help="the landing check's own exit code for this member (not this command's)")
-        member.add_argument("--report", type=Path, required=True, help="this member's landing-check report, as text")
-        member.add_argument("--previous", type=Path, help="the previous member's landing-check report, as text")
-        member.add_argument("--rows", type=Path, help="this member's --row-report JSON")
+        member.add_argument("--receipt", type=Path, required=True,
+                            help="the record.json pm-land.py check printed for this member: its commit, batch-start, "
+                                 "report, row report and the landing check's exit")
+        member.add_argument("--previous", type=Path, help="the previous member's landing-check report, as text or JSON")
         member.add_argument("--previous-rows", type=Path, help="the previous member's --row-report JSON")
         member.add_argument("--own-base", help="the previous member's main SHA (default: holder.txt's last batch-landing row)")
-        member.add_argument("--head", help="this member's commit (default: HEAD)")
-        member.add_argument("--repo", type=Path, default=SHARED, help="checkout to read the diffs and the check's source from")
+        member.add_argument("--repo", type=Path, default=None,
+                            help="checkout the receipt's commit and the check's source are read from (default: this worktree)")
         member.add_argument("--lock-dir", type=Path, default=LOCK_DIR, help="the rule's lock directory (default: the landing lock)")
-        member.add_argument("--check-source", type=Path, help="the landing check's source at this member's commit "
-                                                              "(default: scripts/pm-landing-check.py at --head in --repo)")
+        member.add_argument("--check-source", type=Path, help="the landing check's source at the receipt's commit "
+                                                              "(default: scripts/pm-landing-check.py at that commit in --repo)")
         args = parser.parse_args(argv)
         if args.command == "check":
             root = Path(git(Path.cwd(), "rev-parse", "--show-toplevel").stdout.strip())
@@ -2298,8 +2361,9 @@ def main(argv=None):
         if args.command == "batch-status":
             return batch_status(args.shared, args.lock_dir)
         if args.command == "batch-check":
-            return batch_check(args.repo, args.lock_dir, args.base, args.checker_exit, args.report, args.previous,
-                               args.rows, args.previous_rows, args.own_base, args.head, args.check_source)
+            repo = args.repo or Path(git(Path.cwd(), "rev-parse", "--show-toplevel").stdout.strip())
+            return batch_check(repo, args.lock_dir, args.receipt, args.previous, args.previous_rows,
+                               args.own_base, args.check_source)
         if args.rollback_check:
             if args.batch_start is not None:
                 verify.error("--batch-start verifies a receipt and does not go with --rollback-check")
