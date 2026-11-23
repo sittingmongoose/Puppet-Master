@@ -5,69 +5,49 @@
    "count": 1,
    "error": "audit_closure_reopened_rows_present",
    "fingerprints": [
-    "d852687439dc"
+    "1630f7fbda6c"
    ],
    "path": "Plans/.audits/_semantic_closure_registry.jsonl",
    "subcheck": "audit_closure"
   },
   {
    "check": "audit-governance",
-   "count": 53,
+   "count": 33,
    "error": "audit_closure_validator_error",
    "fingerprints": [
-    "012e9ecd9bd1",
-    "049ea2d895f1",
     "09b580e0b418",
-    "1a87da077213",
     "247c5f7c2e20",
-    "2531b2cc5551",
     "2c5f33669aee",
     "2e533fa483ef",
     "30c340e1cdc2",
     "45b066cf1641",
-    "48c386eb6806",
-    "4cfff707f0a0",
     "5c137ac47696",
-    "628de07d08e1",
     "63d4614e04cb",
-    "683308639b4a",
-    "743032d61af8",
-    "79c68e726644",
-    "7fa1ca4c40fb",
-    "81383beccb6e",
+    "76c4a6b65a66",
     "84d7b59b8a63",
     "8796f670028c",
-    "8a8a97287f59",
-    "8a9a8ac86f7c",
-    "8e6ae899e5d4",
     "962c8150aeb3",
     "9a9824b14d0b",
     "a24f1f96a2c3",
-    "a50defdf4fd2",
     "a522d78532e9",
+    "a5571ce5084c",
     "aac113588a00",
     "ae996c3ba33a",
     "b0177ecbc599",
-    "ba2e2e187905",
+    "b874c9dc8f40",
     "bc9737ea5585",
     "c0d488bd89eb",
     "c2d352388369",
     "c3aa89b7219d",
-    "c83d475e4fa0",
     "cadec0b0b291",
     "cd40f6a20e94",
     "cd9d5ba74892",
     "d035c44e6079",
-    "d154ae019da5",
     "d70733c932f9",
-    "db2764899eb9",
     "de84fc67d0e6",
     "e1824239ee90",
     "e220de5c10c5",
-    "ee381f491c7c",
-    "eec4834e08f2",
-    "f81b99ccc0c0",
-    "fc8d6fa63f7d"
+    "fb61317b43b8"
    ],
    "path": "Plans/.audits/_semantic_closure_registry.jsonl",
    "subcheck": "audit_closure"
@@ -607,59 +587,52 @@
   },
   {
    "check": "run-gates",
-   "count": 50,
+   "count": 1,
+   "error": "audit_closure_reopened_rows_present",
+   "fingerprints": [
+    "1630f7fbda6c"
+   ],
+   "path": "Plans/.audits/_semantic_closure_registry.jsonl",
+   "subcheck": "validate_audit_closure"
+  },
+  {
+   "check": "run-gates",
+   "count": 33,
    "error": "audit_closure_validator_error",
    "fingerprints": [
-    "012e9ecd9bd1",
-    "049ea2d895f1",
     "09b580e0b418",
-    "1a87da077213",
     "247c5f7c2e20",
-    "2531b2cc5551",
     "2c5f33669aee",
     "2e533fa483ef",
     "30c340e1cdc2",
     "45b066cf1641",
-    "48c386eb6806",
-    "4cfff707f0a0",
     "5c137ac47696",
-    "628de07d08e1",
     "63d4614e04cb",
-    "683308639b4a",
-    "743032d61af8",
-    "79c68e726644",
-    "7fa1ca4c40fb",
+    "76c4a6b65a66",
     "84d7b59b8a63",
     "8796f670028c",
-    "8a8a97287f59",
-    "8a9a8ac86f7c",
     "962c8150aeb3",
     "9a9824b14d0b",
     "a24f1f96a2c3",
-    "a50defdf4fd2",
     "a522d78532e9",
+    "a5571ce5084c",
     "aac113588a00",
     "ae996c3ba33a",
     "b0177ecbc599",
-    "ba2e2e187905",
+    "b874c9dc8f40",
     "bc9737ea5585",
     "c0d488bd89eb",
     "c2d352388369",
     "c3aa89b7219d",
-    "c83d475e4fa0",
     "cadec0b0b291",
     "cd40f6a20e94",
     "cd9d5ba74892",
     "d035c44e6079",
-    "d154ae019da5",
     "d70733c932f9",
-    "db2764899eb9",
     "de84fc67d0e6",
     "e1824239ee90",
     "e220de5c10c5",
-    "ee381f491c7c",
-    "eec4834e08f2",
-    "f81b99ccc0c0"
+    "fb61317b43b8"
    ],
    "path": "Plans/.audits/_semantic_closure_registry.jsonl",
    "subcheck": "validate_audit_closure"
@@ -1022,12 +995,12 @@
  ],
  "checks": {
   "audit-governance": {
-   "failure_total": 5863,
+   "failure_total": 5843,
    "status": "fail",
    "subchecks": {
     "audit_closure": {
-     "reported": 54,
-     "sampled": 54
+     "reported": 34,
+     "sampled": 34
     },
     "evidence": {
      "exported": 2863,
@@ -1060,12 +1033,12 @@
    }
   },
   "run-gates": {
-   "failure_total": 5863,
+   "failure_total": 5843,
    "status": "fail",
    "subchecks": {
     "validate_audit_closure": {
-     "reported": 54,
-     "sampled": 50
+     "reported": 34,
+     "sampled": 34
     },
     "validate_evidence": {
      "exported": 2863,
@@ -1089,7 +1062,7 @@
    }
   }
  },
- "commit": "12ef4d03ac218c59edb7b8dccbf71a34659cc76e",
+ "commit": "ca00293755a382e27cdd4c75072d5e9df1080f1f",
  "export_buckets": [
   {
    "check": "audit-governance",
@@ -2056,8 +2029,8 @@
   },
   "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
  },
- "recorded_at_utc": "2026-11-22T01:53:24Z",
- "run_dir": "Plans/.plan_migration/pds-20261122-001-current-planunit-snapshot",
+ "recorded_at_utc": "2026-11-22T22:35:36Z",
+ "run_dir": "Plans/.plan_migration/pds-20261122-002-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
  "untracked_inputs": [
   "tests/agent_packet_restrictions"
