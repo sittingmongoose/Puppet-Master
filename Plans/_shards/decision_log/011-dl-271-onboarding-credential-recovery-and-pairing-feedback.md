@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L28747-L63282
 
-Source SHA256: `6d740c8376011a7798f9e1991c9d71b22887687565e731c588f68b1200d117a8`
+Source SHA256: `718efdea26b3a0037394fd47127a5fef2b6ffcc72240e9b5c5c03b74ecf29f0e`
 
 ---
 
@@ -34504,8 +34504,8 @@ gui_classification_reason: Records how one test-coverage row of one event family
 depends_on: [DL-039, DL-045, DL-400]
 unblocks: []
 acceptance_criteria:
-- "scripts/pm_goal_dg5_matrix_gap_v1.py marks goal.cancelled dg5/roots/schema DOCUMENTED_GAP only when every UNCOVERED clause of that row is on GAP-LIST v1.1 under its own root, and leaves every other row and family unchanged."
-- "A clause not on the list under its own root, a root error, an open checker verdict or a gap list whose SHA256SUMS does not match the pinned SHA-256 keeps the row OPEN or refuses."
+- "scripts/pm_goal_dg5_matrix_gap_v1.py marks goal.cancelled dg5/roots/schema DOCUMENTED_GAP only when its checker verdict is closed, every root of the signed list's census except root 109 has a completed walk (a clause-closure report) with no root error, and every UNCOVERED clause of that row is on GAP-LIST v1.1 under its own root, and leaves every other row and family unchanged."
+- "A census root the matrix leaves out, a root outside the census, a clause not on the list under its own root, a root error, an open checker verdict or a gap list whose SHA256SUMS does not match the pinned SHA-256 keeps the row OPEN or refuses."
 - "goal.cancelled's criterion-12 PASS cites this entry and the list as a documented partial, never as full coverage; an entry leaves the list only by a published, verified result."
 validation_surfaces:
 - python3 -B scripts/pm_goal_dg5_matrix_gap_v1_selftest.py

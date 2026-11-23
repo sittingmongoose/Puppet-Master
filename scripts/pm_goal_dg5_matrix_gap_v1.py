@@ -330,6 +330,17 @@ def apply_edition(matrix, gap_list):
     return report
 
 
+def _open_row_name(entry):
+    """The row name of one entry of a family's 'open' list. pm_goal_dg5_matrix.py writes {row, reason} dicts;
+    admit-goal-cancelled.py rewrites the list as bare row names. Both are read; anything else is refused."""
+    if isinstance(entry, str):
+        return entry
+    if isinstance(entry, dict) and isinstance(entry.get('row'), str):
+        return entry['row']
+    raise Refusal('family %s open list has an entry that is neither a row name nor a {row: ...} record: %r'
+                  % (FAMILY, entry))
+
+
 def _apply_row(family, row, gap_list):
     base = dict(status=row.get('status'), reason=row.get('reason'))
     match = REASON.fullmatch(str(row.get('reason')))
@@ -393,7 +404,7 @@ def _apply_row(family, row, gap_list):
         row['documented_gap'] = note
         return dict(applied=False, why=note['why'], listed=len(matches), unlisted=len(unlisted))
     status = family.get('status')
-    opened = [o for o in family.get('open', []) if o.get('row') == ROW]
+    opened = [o for o in family.get('open', []) if _open_row_name(o) == ROW]
     if not isinstance(status, dict) or status.get('OPEN', 0) < 1 or len(opened) != 1:
         raise Refusal('family %s tallies do not show %s as one OPEN row' % (FAMILY, ROW))
     row['status'] = STATUS
@@ -405,7 +416,7 @@ def _apply_row(family, row, gap_list):
     if not status['OPEN']:
         del status['OPEN']
     status[STATUS] = status.get(STATUS, 0) + 1
-    family['open'] = [o for o in family['open'] if o.get('row') != ROW]
+    family['open'] = [o for o in family['open'] if _open_row_name(o) != ROW]
     return dict(applied=True, listed=len(matches), unlisted=0, by_kind=dict(by_kind), by_mark=dict(by_mark))
 
 
