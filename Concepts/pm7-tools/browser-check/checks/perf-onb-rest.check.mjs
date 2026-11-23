@@ -31,6 +31,14 @@
 //            (PM7PERF-ONBREST-NO-RENDERER-READS-ZERO; helpers/onb-rest-rows.mjs);
 //   counts   the kept nodes stay in step with the stage: Friendly's and Glass's shadows are Pip's and one per placed prop,
 //            Basic's protractor its seven parts, NieR's brackets 6 to 9 parts with a target and none without.
+//   draw     a second pass after the cost cells (so its inputs never perturb them): the cached draw equals a fresh draw
+//            (TOOLS-STAGEREST-K2, opus-review-stagerest's oracle): at frames 0,1,2,4,8,16,30 after each input the stage draws on its caches,
+//            its kept nodes are serialised, every cache lane W added is dropped (gShadow.__pt, gHud.__b, hudEl.__tg/__co)
+//            and it draws again from scratch at the same stage time; the two must match, and NieR's kept box must equal
+//            a fresh boxInScene (nierKey is not dropped: that would heal the box). Inputs: at rest, a note open and
+//            closed, a new long line typing and typed, resize across the layout change and back, resize within the
+//            layout, a live look switch away and back, Reduced Motion on and off. --set draw=0 leaves the rows out;
+//            --set drawFrames= picks the frames (helpers/onb-rest-draw.mjs).
 // Before each sample (the trace, then the observer) the cell must be at rest as it says (PM7PERF-ONBREST-AWAKE-NOT-
 // ASSERTED): Pip awake past Welcome (the stage's sleepZ off and its pose not asleep) and asleep on Welcome; its line typed
 // and every prop in and settled; and its pose settled: no hop under way, no passing feeling on show (the wake's alert and
@@ -41,13 +49,14 @@
 // Logged per cell: main thread ms a second, style elements a second, layouts and forced layouts a second, forced style
 // recalcs a second, main frames a second, the stage's draws a second and its writes by group.
 // --set looks= (default all ten; `dark` the five Dark looks) --set screens= (default welcome,where,ready)
-// --set settle= (default 20000) --set viewSettle= (default 6000) --set ms= --set same= --set writes= --set forced=
+// --set settle= (default 20000) --set viewSettle= (default 6000) --set ms= --set same= --set writes= --set forced= --set draw=0 --set drawFrames=
 // --set journey=0
-// Both surfaces. About 7 minutes with the defaults.
+// Both surfaces. About 11 minutes with the defaults (the draw rows add about 4).
 import { traceEvents, summarise } from '../helpers/frame-trace.mjs';
 import { muteSound } from '../helpers/quiet-page.mjs';
 import { forcedLayoutRow } from '../helpers/onb-rest-rows.mjs';
 import { createdAdded } from '../helpers/onb-rest-created.mjs';
+import { DRAW_WATCH } from '../helpers/onb-rest-draw.mjs';
 
 const ALL = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
 const SCRIPT = new Set(['FireAnimationFrame', 'FunctionCall', 'TimerFire', 'EventDispatch', 'RunMicrotasks', 'FireIdleCallback', 'v8.callFunction', 'V8.Execute']);
@@ -289,6 +298,61 @@ export default async function (t) {
 				}
 			}
 			await t.check(`${cell}: the stage's kept ${counts ? counts.what : 'nodes'} match what it shows`, !!counts && counts.ok, counts ? `${counts.got}, want ${counts.want}` : 'no stage');
+		}
+	}
+	// The cached draw against a fresh draw (TOOLS-STAGEREST-K2), in a second pass after every cost cell above: the
+	// oracle's inputs (resize, live look switch, Reduced Motion) can park the stage's loop, which would read as 0 draws
+	// in a later cost cell. The oracle draws on demand (render()), so it judges a parked stage too; the cost cells stay
+	// unperturbed. Each look is re-applied and opened at the last screen, awake and settled, before the inputs.
+	if (String(t.args.draw ?? '1') !== '0') {
+		const dframes = String(t.args.drawFrames || '0,1,2,4,8,16,30').split(',').map(Number);
+		const lastScreen = screens[screens.length - 1];
+		const dwant = lastScreen === 'welcome' ? 'asleep' : 'awake';
+		for (const look of looks) {
+			const [fam0, mode0] = look.split('-');
+			await f.evaluate(([fm, m]) => window.O55.ui.applyLook(fm, m), [fam0, mode0]);
+			await f.waitForFunction(([fm, m]) => { const th = document.documentElement.getAttribute('data-theme') || '', nier = document.documentElement.getAttribute('data-o55-nier') === 'on'; return (fm === 'nier' ? nier : !nier && th.startsWith(fm + '-')) && th.endsWith('-' + m); }, [fam0, mode0], { timeout: 20000 }).catch(() => {});
+			await t.page.waitForTimeout(Number(t.args.lookSettle ?? 4000));
+			await f.evaluate((id) => { try { window.O55.ui.go(id, { noHistory: true }); } catch (e) { /* judged below */ } }, lastScreen);
+			if (lastScreen !== 'welcome' && t.args.journey !== '0' && t.args.journey !== 0) {
+				await t.page.waitForTimeout(1200);
+				for (let i = 0; i < 12; i++) await t.page.mouse.move(700 + i * 30, 500 + (i % 2) * 40);
+				await t.page.mouse.move(W - 6, Math.round(H / 2));
+			}
+			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 6000));
+			const watch = async (label) => {
+				const r = await f.evaluate(DRAW_WATCH, dframes);
+				await t.check(`${look} ${label}: the cached draw equals a fresh draw (${r.fam}, ${r.layout}, ${r.checks} draws, ${r.boxes} NieR boxes)`, r.nbad === 0 && r.checks > 0, r.nbad ? `${r.nbad} differences: ${r.bad.join(' || ')}` : 'same');
+			};
+			const dw = await restWait(f, dwant, 10000);
+			t.log(`${look} draw oracle: before the inputs: ${dw.v.why}`);
+			if (!dw.v.ok) { await t.check(`${look}: the draw oracle's cell is at rest`, false, `${dw.v.why}: could not judge`); continue; }
+			await watch('at rest');
+			await f.evaluate(() => { document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage.tip({ id: 'onbr-draw-tip', title: 'A note', text: 'What this choice means, in a few words.' }); });
+			await watch('note open');
+			await f.evaluate(() => { document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage.tip(null); });
+			await watch('note closed');
+			await f.evaluate(() => { document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage.say('A longer line now, one that takes two or three lines in the box so the box grows taller than it was before.', null, false); });
+			await watch('new long line');
+			await t.page.waitForTimeout(3000);
+			await watch('long line typed');
+			await t.viewport(740, 900); await watch('resized to 740 (the layout change)');
+			await t.page.waitForTimeout(800);
+			await t.viewport(W, H); await watch('back to 1920');
+			await t.page.waitForTimeout(800);
+			await t.viewport(1280, H - 120); await watch('resized within the layout');
+			await t.viewport(W, H); await watch('back again');
+			await t.page.waitForTimeout(800);
+			const painted = (fm, m) => f.waitForFunction(([fm, m]) => { const th = document.documentElement.getAttribute('data-theme') || '', nier = document.documentElement.getAttribute('data-o55-nier') === 'on'; return (fm === 'nier' ? nier : !nier && th.startsWith(fm + '-')) && th.endsWith('-' + m); }, [fm, m], { timeout: 20000 }).then(() => true, () => false);
+			await f.evaluate(([fm, m]) => window.O55.ui.applyLook(fm, m), [fam0, mode0 === 'light' ? 'dark' : 'light']);
+			await painted(fam0, mode0 === 'light' ? 'dark' : 'light');
+			await watch('live look switch away');
+			await f.evaluate(([fm, m]) => window.O55.ui.applyLook(fm, m), [fam0, mode0]);
+			await painted(fam0, mode0);
+			await t.page.waitForTimeout(1500);
+			await watch('live look switch back');
+			await t.emulate({ reducedMotion: 'reduce' }); await t.page.waitForTimeout(500); await watch('Reduced Motion on');
+			await t.emulate({ reducedMotion: 'no-preference' }); await t.page.waitForTimeout(500); await watch('Reduced Motion off');
 		}
 	}
 	await cdp.detach().catch(() => {});

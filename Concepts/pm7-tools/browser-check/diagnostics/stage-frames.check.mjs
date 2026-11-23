@@ -26,6 +26,12 @@
 // show), quiet (the bubble put away). On the first Welcome Pip is asleep (no pointer has moved); every later screen, and the second
 // Welcome (welcome-awake), is woken first by a real pointer journey. Screens are walked in an order that adds and removes props (0, 6, 1, 4, 1,
 // 1-2 then 0).
+// Transition variants (TOOLS-STAGEREST-K1: frozen end states alone pass a cache that misses an input it never applies):
+// textsize (a font-size and line-height stylesheet on the box, as the Text size setting restates it) and resized (the
+// layout change) both capture in the banner layout at 740x900, where a stale NieR box changes the drawing, and restore
+// 1920x1080 after; motion (the app's Reduced Motion toggled live and back before the freeze). Ask for them in
+// --set variants=; the default walk is unchanged, so a default run still compares with an archived matrix. A live look
+// switch is covered by perf-onb-rest's draw oracle (TOOLS-STAGEREST-K2), which judges it at one stage time within a run.
 // Writes <out>/<look>/<nn>-<screen>-<variant>.png (the stage's box; .b.png the same state 20 frames later), .dom.txt (the stage's DOM: elements with their
 // attributes sorted, text, ids renamed in order of appearance) and <out>/index.json, and first <out>/matrix.json: what the
 // run was asked for (the requested looks x screens x variants, named as the files are, and the freeze settings), which
@@ -219,7 +225,7 @@ export default async function (t) {
 		if (!ok) { await t.check(`${look}: the look is applied`, false, 'not applied'); continue; }
 		await t.page.waitForTimeout(Number(t.args.lookSettle ?? 5000));
 		fs.mkdirSync(path.join(out, look), { recursive: true });
-		let n = 0, lastOpen = false;
+		let n = 0, lastOpen = false, lastLine = '';
 		for (const [si, screen] of screens.entries()) {
 			const name = names[si], awake = name === 'welcome-awake';
 			const at = await f.evaluate((id) => { try { window.O55.ui.go(id, { noHistory: true }); } catch (e) { return String(e); } return window.O55.S.sess.screen; }, screen);
@@ -235,13 +241,32 @@ export default async function (t) {
 			}
 			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 6000));
 			await f.waitForFunction(SETTLED, null, { timeout: 10000, polling: 250 }).catch(() => t.log(`${look} ${screen}: NOTE not settled after 16 s; captured as it was`));
+			// the screen's line as said, kept for the unfrozen capture: the quiet variant below puts it away (R135-F8)
+			lastLine = await f.evaluate(() => { const st = document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage; return st ? (st.saying || '') : ''; });
 			for (const [vi, v] of variants.entries()) {
 				if (v === 'quiet') await f.evaluate(() => { const host = document.querySelector('#pm-o55-onboarding .o55-stage'); host.__pipStage.say('', null, true); });
 				if (v === 'tip') await f.evaluate(() => { const host = document.querySelector('#pm-o55-onboarding .o55-stage'); host.__pipStage.tip({ id: 'stage-frames-tip', title: 'A note on this', text: 'What this choice means, written out in a few words.' }, true); });
+				// transition variants (TOOLS-STAGEREST-K1): an input the caches must survive, applied before the freeze.
+				// textsize and resized capture in the banner layout (740x900), where a stale NieR box changes the drawing.
+				if (v === 'textsize' || v === 'resized') { await t.viewport(740, 900); await t.page.waitForTimeout(1200); await f.waitForFunction(SETTLED, null, { timeout: 10000, polling: 250 }).catch(() => {}); }
+				// the stylesheet after the resize is settled: a later map change would re-measure the box and heal the
+				// font staleness this variant exists to catch (the resize itself is the resized variant's input)
+				if (v === 'textsize') { await f.evaluate(() => { const s = document.createElement('style'); s.id = 'sf-textsize'; s.textContent = '#pm-o55-onboarding .pst-bubble{font-size:17px !important;line-height:1.7 !important}'; document.head.appendChild(s); }); await t.page.waitForTimeout(400); }
+				if (v === 'motion') {
+					const on = await f.evaluate(() => document.documentElement.getAttribute('data-motion') === 'reduced');
+					await f.evaluate((on) => { const r = document.documentElement; if (on) r.removeAttribute('data-motion'); else r.setAttribute('data-motion', 'reduced'); }, on);
+					await t.page.waitForTimeout(600);
+					await f.evaluate((on) => { const r = document.documentElement; if (on) r.setAttribute('data-motion', 'reduced'); else r.removeAttribute('data-motion'); }, on);
+					await t.page.waitForTimeout(600);
+				}
+				const undo = async () => {
+					if (v === 'textsize') await f.evaluate(() => { const s = document.getElementById('sf-textsize'); if (s) s.remove(); });
+					if (v === 'textsize' || v === 'resized') { await t.viewport(W, H); await t.page.waitForTimeout(1200); await f.waitForFunction(SETTLED, null, { timeout: 10000, polling: 250 }).catch(() => {}); }
+				};
 				/* (live=1: no freeze at all, the stage as it is at rest, swaying; for how a part is drawn at rest, not for a
 				   pixel comparison: two pictures of a swaying stage differ) */
 				const err = live ? '' : await f.evaluate(FREEZE, { t: 40, blink: v === 'blink', frames, cssT, repaint, nudge });
-				if (err) { await t.check(`${look} ${name} ${v}: frozen`, false, err); await f.evaluate(THAW); continue; }
+				if (err) { await t.check(`${look} ${name} ${v}: frozen`, false, err); await f.evaluate(THAW); await undo(); continue; }
 				const info = await f.evaluate(INFO), dom = await f.evaluate(DOM);
 				const file = captureFile(si, vi, variants.length, name, v); n++;
 				const b = info.box;
@@ -259,12 +284,16 @@ export default async function (t) {
 				fs.writeFileSync(path.join(out, look, file + '.dom.txt'), dom);
 				index.push({ look, file, screen: name, variant: v, ...info });
 				if (!live) await f.evaluate(THAW, v === 'tip'); else if (v === 'tip') await f.evaluate(() => { document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage.tip(null); });
+				await undo();
 			}
 			// the screen's own line back for the next screen (the quiet variant put it away)
 		}
 		/* one unfrozen capture of the last screen: the clock running and the animations allowed, as a person sees it */
 		const last = plan.find((e) => e.look === look && e.unfrozen);
 		if (last && lastOpen) {
+			// R135-F8: restore the line the quiet variant put away, whole and at once (sayKept is the product's own
+			// keep-the-line across a change), so the unfrozen capture shows the live speech bubble, not a muted stage
+			if (lastLine) await f.evaluate((line) => { const st = document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage; if (st) { st.saying = line; if (typeof st.sayKept === 'function') st.sayKept(line); else st.say(line, null, true); } }, lastLine);
 			await t.page.waitForTimeout(1500);
 			const info = await f.evaluate(INFO), dom = await f.evaluate(DOM), b = info.box;
 			const clip = { x: Math.max(0, Math.floor(b.x)), y: Math.max(0, Math.floor(b.y)), width: Math.ceil(b.w), height: Math.ceil(b.h) };
