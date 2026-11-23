@@ -24,6 +24,16 @@
 #panel-settings > #pm-settings-root:not([data-rf-explain="on"]) .setting-row.o55-row { min-height: 42px; padding-top: 6px; padding-bottom: 6px; }
 #panel-settings > #pm-settings-root:not([data-rf-explain="on"]) .pm51-row { min-height: 40px; padding: 5px 0; }
 #panel-settings > #pm-settings-root:not([data-rf-explain="on"]) .pm51-section-head { padding: 11px 16px 9px; }
+/* (fifth pass, Jared 2026-11-23: "some spots where the text seems uneven ... the alignment, spacing")
+   A section inside a list's detail, inside More options or inside an opened row has no side padding of its own: its
+   title starts where its rows start. The rule above had pushed those titles 16 px to the right of their rows. */
+#panel-settings > #pm-settings-root:not([data-rf-explain="on"]) :is(.pm51-detail-content, .pm51-advanced-body, .pm51-acc-inner) .pm51-section .pm51-section-head { padding: 12px 0 6px; }
+/* A card's own rows start under its title: the body had 18 px of side padding against the title's 16. */
+#panel-settings .pm51-mgr .pm51-section-body { padding-left: 16px; padding-right: 16px; }
+/* Every one-line row of a page is one height, whatever its control (a switch made a 42 px row, a menu 46, a number
+   box 48, a plain value 40, so a card's lines were unevenly spaced). Pages only: the Customize dialogs keep theirs. */
+#panel-settings > #pm-settings-root:not([data-rf-explain="on"]) .workspace-block .setting-row.o55-row:not(.rf-policy-headrow) { min-height: 48px; }
+#panel-settings > #pm-settings-root:not([data-rf-explain="on"]) .workspace-block .pm51-rows > .pm51-row { min-height: 48px; }
 #panel-settings > #pm-settings-root:not([data-rf-explain="on"]) .o55-group-head { padding-top: 12px; padding-bottom: 2px; }
 
 /* ---- one tab strip per level: a chapter with one manager shows no chapter strip (the strips stay centred) ---- */
@@ -41,7 +51,7 @@
 
 /* ---- More options: a quiet line, not a dashed box ---- */
 #panel-settings .pm51-mgr .pm51-advanced, #panel-settings .pm51-mgr .pm51-advanced[open] { border: 0; border-radius: 0; background: none; }
-#panel-settings .pm51-mgr .pm51-advanced > summary { display: inline-flex; min-height: 30px; padding: 0 4px; color: var(--k3-text-3); font-weight: 600; }
+#panel-settings .pm51-mgr .pm51-advanced > summary { display: inline-flex; min-height: 30px; padding: 0; color: var(--k3-text-3); font-weight: 600; }
 #panel-settings .pm51-mgr .pm51-advanced > summary:is(:hover, :focus-visible) { color: var(--k3-text-1); }
 #panel-settings .pm51-mgr .pm51-advanced[open] > .pm51-advanced-body { margin-top: 6px; padding: 2px 16px 12px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-md, 10px); background: var(--k3-surface-1); }
 

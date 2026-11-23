@@ -166,3 +166,10 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy):not(#lgx) #panel-set
 html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy):not(#lgx) #panel-settings .pm51-mgr .pm51-detail .pm51-section.panel-card { background: none !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy):not(#lgx) #panel-settings .pm51-mgr .pm51-detail .pm51-advanced { background: none !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy):not(#lgx) #panel-settings .pm51-mgr .pm51-detail .settings-section.o55-group { background: none !important; }
+
+/* ---- a list's detail has no ground of its own (fifth pass) ----
+   The detail was painted one tone off its card and was only as tall as its rows, so under a short detail the card
+   showed again: a box that stops short, in every look (Jared: "There is still a black box or color box behind the
+   managers that looks unfinished"). The rows of a detail sit on the card, as the rows of every other card do; the
+   list's column keeps its own tone, the whole height. */
+html:not(#lgz):not(#lgy):not(#lgx) #panel-settings .pm51-mgr .split-manager.pm51-split > .pm51-detail { background: none !important; }
