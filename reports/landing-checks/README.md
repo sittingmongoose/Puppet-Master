@@ -822,6 +822,75 @@ If `--record-baseline` refuses with exit 3 because a subcheck timed out, rerun i
 `--subcheck-timeout-seconds` before committing the
 follow-up and releasing the landing lock.
 
+## A batch of landings shares one follow-up
+
+The rule is "Land in batches" in `AGENTS.md` and `.claude/CLAUDE.md`: one continuous hold of the landing
+lock, up to four landings, two hours from the first push, one follow-up at the final `main`.
+`holder.txt` is its record. `python3 -B "$PM_LAND_SCRIPT" batch-status` prints what it holds, writing
+nothing: the open batch's `batch-start`, its `batch-landing: <branch> <main SHA>` rows (a row that is
+not that shape is named, never dropped), the four-landing and two-hour limits (the first row's commit
+time stands in for a missing `batch-first-push`), the baseline's age against rule 2's seven days and
+the two hours before which no batch opens, main past the batch-start with no row, whether any member
+touched `Plans/` (so a follow-up is owed), and whether a dead holder's batch landed something, which
+means it is closed, not cleared. It takes no lock, fetches nothing and writes nothing.
+
+### Batch triggers
+
+A batch member after the first is rechecked alone (the batch closes with its follow-up at the current
+`main`) when any of these holds, on exit 0 or 1. They need the landing check's comparison lines: gone
+bucket ids, every subcheck's total, per-bucket counts, and `--row-report`. Without them there is no
+batch: `pm-land.py batch-check` says to land alone, or to close an open batch, on a landing check that
+does not print them, and a hand lander on such a check lands alone too. `pm-land.py check --base
+<batch-start>` asks the remote check for the row report, and the receipt records its path and SHA-256.
+
+`python3 -B "$PM_LAND_SCRIPT" batch-check --base <batch-start> --exit <the check's exit> --report
+<its text report> --previous <the previous member's text report> [--rows <its row report>]
+[--previous-rows <the previous member's row report>]` prints the comparison lines it read and each
+trigger with its reason, then a verdict. Its exit codes are its own, not the landing check's: 0 means
+judged, no trigger, the landing may stay; 1 means a trigger fires or a judgement is owed first (it says
+which); 3 means it was refused (an unreadable report, a base that is not the open batch's full
+`batch-start`, or no open batch at all). `--own-base` defaults to the last `batch-landing` row's SHA,
+this member's own range. `--check-source` overrides the landing check read at `--head` in `--repo`.
+
+From what moved since the previous member's report, unless exempt:
+
+1. A bucket the previous report listed as gone is not gone in this one.
+2. A subcheck's total is above the previous report's.
+3. A bucket's count is above the previous report's, printed or counted from both row reports (a subcheck
+   the baseline holds as a sample prints no count line).
+
+The exemption: a rising subcheck does not close the batch only if every row it added since the previous
+report, compared by row key, is (a) seen: the subcheck is complete in both reports, its rows adding up
+to its total, because it printed them all or is keyed from a complete export whose total matches; (b)
+governance staleness of a kind the landing check also excuses when its bucket grows (a row stale by its
+detail text alone, or a renamed-shard `missing_ref` row in a subcheck compared by its total, is not
+enough); and (c) this member's: it names a path in this member's own range (the previous member's
+`main` SHA to its own, regenerated and deleted paths included) and no other path of the batch.
+
+From the printed rows, with no exemption:
+
+4. Pre-existing or improved rows differ, by count or text, from the latest earlier report's, in a bucket
+   an earlier report marked changed.
+5. A `(content changed)` row no earlier report listed.
+6. Pre-existing rows past the report's print cap, when this report lists any.
+
+When the batch cannot tell:
+
+7. An earlier member's report is not on record (a hand landing).
+8. A report's gone ids, totals or counts don't add up.
+9. A rise with no row report, or a row report the batch asked for that cannot be read (this landing's or
+   the previous member's).
+
+From the diff, with no exemption:
+
+10. A path in this member's own range is not in the batch's diff: it put back what an earlier member
+    changed, so the check, measuring from `batch-start`, does not read it as touched.
+
+Unchanged: exit 2 or the two hours running out during its checks closes the batch; a baseline past
+seven days stops the member; changed pre-existing rows or timeouts with no other trigger stop it for
+judgement. A member whose check stood on a landing check without the comparison lines cannot batch at
+all, and neither can a batch whose first member left no report: land alone.
+
 ## Related branch
 
 `plans/acceptance-and-landing-baseline-20260917` records the decisions behind this rule, DL-059 and

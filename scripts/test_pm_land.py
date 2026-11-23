@@ -1155,14 +1155,19 @@ print(json.dumps({{"schema_id": "pm.landing_check.report.v1", "commit": {self.he
                 else:
                     note_path.write_text("base note\n", encoding="utf-8")
 
-    def test_landing_rules_describe_the_remote_route_only(self):
+    def test_landing_rules_describe_the_remote_route_and_the_batch(self):
         repo = Path(__file__).resolve().parents[1]
         sections = [path.read_text().split("### How to land on main\n")[1].split("### Never\n")[0]
                     for path in (repo / "AGENTS.md", repo / ".claude/CLAUDE.md")]
         self.assertEqual(sections[0], sections[1])
         for phrase in ("check <branch> --on <host>", "PM_LAND_SCRIPT", "verify --receipt", "--no-overwrite-ignore",
                        "default `nas1`", "verify` exiting 0 confirms only", "every 25 minutes",
-                       "commit", "tree", "base", "ignored-input inventory", "report SHA-256", "exit"):
+                       "commit", "tree", "base", "ignored-input inventory", "report SHA-256", "exit",
+                       "Land in batches", "check <branch> --on nas1 --base <batch-start>",
+                       "verify --receipt <path> --commit <full SHA> --batch-start <batch-start>",
+                       "batch-start: <full SHA of origin/main before the batch's first landing>",
+                       "batch-landing: <branch> <main SHA it pushed>", "batch-check", "batch-status",
+                       "four landings and two hours", "never refresh the snapshot or baseline in the middle of a batch"):
             self.assertIn(phrase, sections[0])
         # The local-copy route and the scripted Plans follow-up move to the batching task (pm7-build, option B).
         self.assertNotIn("Checks on a local copy", sections[0])
