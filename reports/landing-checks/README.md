@@ -896,6 +896,10 @@ refused (an unreadable receipt or report, a receipt base that is not the open ba
 all). The member's own range is the last `batch-landing` row's SHA to this member's commit; there is
 no override. `--check-source` overrides the landing check read at the receipt's commit in `--repo`.
 
+A batch compares counts, so a count a member does not have is a trigger before any comparison: one
+subcheck whose counts are not fully known in any member stops the batch (10), and the one exception is a
+subcheck that is a permanent sample in every member, which is compared by its printed total alone.
+
 From what moved since the previous member's report, unless exempt:
 
 1. A bucket the previous report listed as gone is not gone in this one.
@@ -932,8 +936,14 @@ When the batch cannot tell:
    earlier member's, which its own receipt records. Missing, corrupt, not the schema, written against
    another base, or no longer the bytes its receipt records all read the same way, because a rise only
    the row reports can show would otherwise go unseen.
-10. A subcheck that timed out in an earlier member's report has no count there. Its counts are unknown,
-    so this landing is judged alone and the reason names the subcheck; growth is never reported from 0.
+10. A subcheck whose counts are not fully known in any member of the batch: it timed out, it is compared by
+    its total only for a reason other than a permanent sample, its export failed or could not be read
+    (`export_timeout`, `export_unreadable`, `total_mismatch`, `rows_mismatch`), or one member printed it in
+    full while another has only its total. Its counts have no number to compare, so this landing is judged
+    alone and the reason names the subcheck and the member; growth is never reported from 0. The one
+    exception is a subcheck that is a permanent sample (`no_export`, `baseline_sample`) in every member: no
+    complete row set exists anywhere to compare it by, so its printed total is the whole comparison, as in
+    the landing check itself.
 
 From the diff, with no exemption:
 
