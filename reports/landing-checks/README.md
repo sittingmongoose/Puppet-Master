@@ -673,6 +673,9 @@ Anyone who writes a checker input in the shared checkout, including readiness re
    Inside a batch, pass `--batch-start <batch-start>` instead of `--base`: the batch-start is the
    receipt's base, and `verify` refuses unless holder.txt still opens that batch and lists every
    landing since it. A pushed landing missing from holder.txt refuses: repair the holder, then rerun.
+   A plain `verify --base <the current main>` is refused once an open batch's batch-start is behind
+   `origin/main`: only a member (`--batch-start`) or the batch's closing follow-up (`--batch-close`,
+   step 9) lands inside a batch.
    The shared checkout is for landing only. Verification refuses any staged or unstaged tracked
    change, including deletions, any skip-worktree or assume-unchanged flag, and visible
    untracked checker inputs anywhere in the checkout. It names the affected paths.
@@ -703,7 +706,11 @@ Anyone who writes a checker input in the shared checkout, including readiness re
    you no longer hold the lock, hand off to the current holder. Never use `--hard` in the shared checkout.
 9. Complete the Plans follow-up below under the same lock. Reseals follow the assigned
    reseal record. A batch member defers this to the batch's close: its own follow-up runs once,
-   at the final `main`, by whoever holds the lock then.
+   at the final `main`, by whoever holds the lock then. That closing follow-up is verified with
+   `verify --batch-close` (its receipt is checked against the current `origin/main`, which must be
+   the batch's last `batch-landing` row), because a plain `verify` is refused while the batch is
+   open. The commit may change only `Plans/.plan_migration/**` and
+   `reports/landing-checks/baseline.json`; anything else is its own landing outside the batch.
 10. Confirm primary main contains the exact topic tip, then check the original worktree and
     branch before removal. Inspect porcelain, `git ls-files -v` and
     `git ls-files --others --ignored --exclude-standard`. Hand off a switched, changed or
@@ -730,7 +737,11 @@ numbered steps.
 ```sh
 verify_checked() {
     git fetch origin || return
-    if test -n "${PM_LAND_BATCH_START:-}"; then
+    if test -n "${PM_LAND_BATCH_CLOSE:-}"; then
+        python3 -B "$PM_LAND_SCRIPT" verify --receipt "$PM_LAND_RECEIPT" \
+            --commit "$PM_LAND_COMMIT" --batch-close \
+            > "$PM_LAND_VERIFY_LOG" || return
+    elif test -n "${PM_LAND_BATCH_START:-}"; then
         python3 -B "$PM_LAND_SCRIPT" verify --receipt "$PM_LAND_RECEIPT" \
             --commit "$PM_LAND_COMMIT" --batch-start "$PM_LAND_BATCH_START" \
             > "$PM_LAND_VERIFY_LOG" || return
@@ -772,7 +783,10 @@ rollback_unpublished() {
 ```
 
 Inside a batch, set `PM_LAND_BATCH_START` to the batch-start and leave `PM_LAND_BASE` unset: `verify_checked` then
-passes `--batch-start`. In both routes, `verify` reads `origin/main` once and prints `PUBLISH_LEASE=<that tip>`;
+passes `--batch-start`. For the batch's closing follow-up, set `PM_LAND_BATCH_CLOSE=1` instead (and leave both
+`PM_LAND_BATCH_START` and `PM_LAND_BASE` unset): `verify_checked` then passes `--batch-close`, which requires the
+batch to still be open, `origin/main` to be its last `batch-landing` row, and this commit to change only the
+snapshot and the baseline. In every route, `verify` reads `origin/main` once and prints `PUBLISH_LEASE=<that tip>`;
 `push_checked` leases on exactly that value, never on a reread of `origin/main`, and refuses when the ref or the
 candidate moved after verification.
 
@@ -859,7 +873,8 @@ record.json its check printed>` rows with each receipt path (a row that is not t
 never dropped, and a row whose receipt cannot be read says so), and one `[ok]` or `[stop]` line for
 each of the rule's four limits — four landings; two hours from `batch-first-push:` (the first row's
 commit time stands in for a missing `batch-first-push:`, so a branch committed long before it was
-pushed reads as past the two hours at once); a holder whose latest time is under 90 minutes old; and
+pushed reads as past the two hours at once; two `batch-first-push:` lines are a stop, never the
+first taken silently); a holder whose latest time is under 90 minutes old; and
 a baseline less than two hours short of rule 2's seven days when measured from `batch-start`
 ("within 2 h of its seven-day edge"), or past them ("past its seven-day edge"). It also says whether
 main is past the last row, whether any member touched `Plans/` (so a follow-up is owed), and whether
@@ -869,6 +884,13 @@ shows as a `[stop]` never lands inside the batch. Both check the chain from the 
 current `main` before they number or judge a member: a landing on `main` that the holder does not
 list refuses with "repair the holder, then rerun". It takes no lock, fetches nothing and writes
 nothing.
+
+Nothing else lands while a batch is open: once its `batch-start` is behind `origin/main`, a plain
+`verify --base <the current main>` is refused, so a member is verified with `--batch-start` and the
+batch's closing follow-up with `--batch-close`. `--batch-close` requires `holder.txt` to still open
+the batch, `origin/main` to be its last `batch-landing` row, and the follow-up commit to change only
+`Plans/.plan_migration/**` and `reports/landing-checks/baseline.json`. It prints `PUBLISH_LEASE`
+like any other verification, so the follow-up is pushed on the same leased value.
 
 ### The strict batch rule
 
@@ -932,9 +954,16 @@ One further check is not a comparison of reports: a path in this member's own ra
 diff lacks is a put-back of what an earlier member changed, so the check, measuring from `batch-start`,
 does not read it as touched, and the landing is judged alone.
 
+One known, safe stop: a run-gates copy the check pairs with a complete audit-governance twin is
+judged by the twin and left out of its own bucket counts. That pairing starts at the run-gates print
+cap (50 rows), so a later member whose own fully printed staleness pushes the copy's total from 50 to
+51 changes the pairing between the two reports; `batch-check` sees a mapping it cannot read and
+stops with `batch_mapping_unreadable`. That landing simply goes alone, and no fix is owed.
+
 **`verify --batch-start` runs the judgment itself, under the lock.** It judges this member's existing
-receipt against the same pinned predecessor it publishes on, reading the previous member's receipt from
-`holder.txt` afresh, immediately before the fast-forward and again immediately before the push. An
+receipt against the same pinned predecessor it publishes on, reading the previous member's receipt
+from the `batch-landing` rows `holder.txt` was validated to hold (one read, never a second that could
+see a cleared holder), immediately before the fast-forward and again immediately before the push. An
 earlier `batch-check` result is never enough: the handoff between two landers can change which member a
 receipt is, and a candidate admitted as the first member may be the second member's report by the time
 it is verified (review ASTRA A2-4). A difference here refuses the landing exactly as `batch-check`

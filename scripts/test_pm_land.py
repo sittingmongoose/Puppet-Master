@@ -1170,6 +1170,12 @@ print(json.dumps({{"schema_id": "pm.landing_check.report.v1", "commit": {self.he
                        "batch-landing: <branch> <main SHA it pushed> <the record.json its check printed>",
                        "batch-check", "batch-status", "PUBLISH_LEASE",
                        "four landings and two hours", "never refresh the snapshot or baseline in the middle of a batch",
+                       # Round 6: the single-landing route refuses inside an open batch, and the close has its own
+                       # bound route; a handoff keeps the rows and the first push.
+                       "A plain `verify --base <the current main>` is refused",
+                       "verify --receipt <path> --commit <full SHA> --batch-close",
+                       "`origin/main` must be its last `batch-landing` row",
+                       "every `batch-landing` row and `batch-first-push` line kept",
                        # Round 5's strict rule, in both files' one section: identical, but for this landing's own
                        # fully printed staleness; an earlier batch-check is never enough.
                        "The strict rule, for the second and later landing",
@@ -1386,7 +1392,6 @@ print(json.dumps({{"schema_id": "pm.landing_check.report.v1", "commit": {self.he
 
 
 READINESS = "run-gates/validate_implementation_readiness"
-BUCKET = "run-gates/lint-x  missing_ref  src/x.txt"
 
 
 def pre_row(bucket: str, baseline: int, count: int, fields: str = '{"n":1}', where: str = "(names src/x.txt)",
