@@ -334,21 +334,26 @@ class AggregateSubcheckSubprocessTests(unittest.TestCase):
     def test_run_named_check_slow_subprocess_returns_structured_timeout(self) -> None:
         """A slow aggregate subcheck returns subprocess_timeout, not a hang.
 
-        json_syntax scans every JSON/JSONL file in the repo (~2s). With a 1s bound it
-        must be killed via the process group and surface a structured subprocess_timeout
-        with process_group_killed=True and the kill mechanism recorded.
+        A real repo scan's runtime depends on the page cache (json_syntax finished in
+        under a second on a warm tree and this test then read it as a pass), so the
+        child that must be killed is a stub that sleeps. The command line and the
+        process-group timeout are the ones run_named_check builds for a subcheck.
         """
         import argparse
 
         ns = argparse.Namespace()
-        started = time.monotonic()
-        name, report = pm_plans_verify.run_named_check(
-            "json_syntax",
-            pm_plans_verify.cmd_json_syntax,
-            ns,
-            progress=False,
-            timeout_seconds=1,
-        )
+        with tempfile.TemporaryDirectory() as scratch:
+            stub = Path(scratch) / "slow_subcheck.py"
+            write_stub_validator(stub, "import time; time.sleep(30)\n")
+            started = time.monotonic()
+            with mock.patch.object(pm_plans_verify.sys, "executable", str(stub)):
+                name, report = pm_plans_verify.run_named_check(
+                    "json_syntax",
+                    pm_plans_verify.cmd_json_syntax,
+                    ns,
+                    progress=False,
+                    timeout_seconds=1,
+                )
         elapsed = time.monotonic() - started
         self.assertEqual(report["check"], "json-syntax")
         self.assertEqual(report["status"], "fail")
