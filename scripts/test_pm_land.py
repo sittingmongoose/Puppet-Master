@@ -2294,6 +2294,21 @@ class BatchCheckTests(BatchFixture):
         self.assertIn("no trigger", out)
         self.assertIn("[total] run-gates/lint-x  4", out)
 
+    def test_a_sample_the_baseline_recorded_alone_is_compared_by_its_total(self):
+        """A subcheck the batch-start baseline holds as a sample, which this run printed in full, has no export row.
+
+        The baseline's sample is why it is compared by its total only, and no export completes the baseline
+        either, so it is permanent in every member: stopping on it would close a batch for a count it does have.
+        """
+        totals = {"run-gates/lint-x": 4}
+        row = {"run-gates/other": {"reported": 0, "complete": True, "rows": []}}
+        m1 = self.member("m1-baseline-sample", head=self.member1, totals=totals, counts={}, partial=["lint-x"],
+                         subchecks=row, exports=[])
+        self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
+        code, out = self.check(self.report("m2.json", totals=totals, counts={}, partial=["lint-x"], exports=[]))
+        self.assertEqual(code, 0, out)
+        self.assertIn("no trigger", out)
+
     def test_a_sample_in_the_previous_report_makes_this_reports_buckets_unknown(self):
         """R3-B1: member 1's validate-evidence export timed out (compared by total only), so member 2's buckets are
         unknown against it even though its total fell: the real 0a3c65cab2 -> 87cd6daac0 replay exits 2 alone."""

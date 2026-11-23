@@ -1430,18 +1430,28 @@ def read_json_report(doc: dict[str, Any]) -> dict[str, Any]:
     # `total_mismatch`, `rows_mismatch`), and then its counts are not known, only its total. A paired run-gates
     # copy is judged by its audit-governance twin's rows, so an export of its own is not read here.
     rows_read = (doc.get("exports") or {}).get("subchecks") if isinstance(doc.get("exports"), dict) else None
+    rows_read = rows_read if isinstance(rows_read, list) else None
     export_failed: set[tuple[str, str]] = set()
     permanent: set[tuple[str, str]] = set()
-    for row in rows_read if isinstance(rows_read, list) else []:
-        if not isinstance(row, dict) or row.get("keyed"):
+    seen: set[tuple[str, str]] = set()
+    for row in rows_read or []:
+        if not isinstance(row, dict):
             continue
         key = (str(row.get("check")), str(row.get("subcheck")))
         if key in pairs:
+            continue
+        seen.add(key)
+        if row.get("keyed"):
             continue
         if row.get("case") in ("no_export", "baseline_sample"):
             permanent.add(key)
         elif row.get("case") is not None:
             export_failed.add(key)
+    if rows_read is not None:
+        # Every subcheck sampled in this run has a row there. One compared by its total only with no row printed
+        # every row here: the baseline's sample is why it is still compared by its total, and no export completes
+        # the baseline either, so that sample is permanent in every member of the batch.
+        permanent |= partial - seen
     return {
         "infrastructure": len(doc.get("infrastructure") or []),
         "crashed": False,
@@ -1658,7 +1668,7 @@ def counts_unknown(report: dict[str, Any], earlier: Sequence[dict[str, Any]]) ->
                                                 "batch")
         sampled = [step for step, row in enumerate(members) if (check, subcheck) in (row.get("partial") or set())]
         printed = [step for step in range(total) if step not in sampled]
-        if printed:
+        if sampled and printed:
             return ("batch_counts_unknown",
                     f"{name} was compared by its total only in {member_place(sampled[0], total)}, and "
                     f"{member_place(printed[0], total)} printed it in full, so its bucket counts are unknown and this "
