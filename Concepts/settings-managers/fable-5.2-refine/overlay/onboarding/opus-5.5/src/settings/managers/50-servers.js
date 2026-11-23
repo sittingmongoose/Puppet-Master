@@ -1357,7 +1357,7 @@
       ]; })(),
       move: [{ title: 'Destination reachable', desc: S.move.destination || 'No destination chosen' }, { title: 'Open conflicts', desc: String(S.conflicts.open || 0) }, { title: 'SSH computers reachable', desc: `${sshRemotes().length} saved`, status: 'Example', tone: 'info' }]
     }[scope] || [];
-    PM51.check({ title: 'Server & Project Location diagnostics', steps });
+    PM51.check({ title: 'Servers & Remote Access check', steps });
   }
 
   /* ---------- actions ------------------------------------------------------ */

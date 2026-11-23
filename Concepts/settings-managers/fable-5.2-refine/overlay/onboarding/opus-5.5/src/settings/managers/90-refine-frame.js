@@ -168,6 +168,20 @@
   document.addEventListener('input', onCz, true);
   document.addEventListener('change', onCz, true);
 
+  /* ---- the chapter's name is the same wherever Settings mentions it ----------------------------------------------
+     The manager was called "Server & Project Location"; a few sentences elsewhere in Settings still sent people there
+     (Containers, Readiness & Doctor). They name the chapter as it is now. The words outside Settings (the first-run
+     tour, Pip) are PMConcept7's own copy files and are listed in the README for the merge. */
+  (function rfChapterName() {
+    const OLD = /Server (?:&|and) Project Location/g, NEW = 'Servers & Remote Access';
+    const seen = new WeakSet();
+    const walk = o => {
+      if (!o || typeof o !== 'object' || seen.has(o)) return; seen.add(o);
+      for (const k of Object.keys(o)) { const v = o[k]; if (typeof v === 'string') { if (OLD.test(v)) o[k] = v.replace(OLD, NEW); OLD.lastIndex = 0; } else if (v && typeof v === 'object') walk(v); }
+    };
+    try { walk(DATA); walk(PM51.placement); walk(D.domains.filter(d => d.id !== CHAPTER)); } catch (_) { /* a frozen object: its words stay */ }
+  })();
+
   /* ---- "Add" shows what there is to add (Jared, 2026-11-23: Providers' "add a new service pop up menu is not at all
      sufficient"; the new sheet "looks good"; "apply it to all the managers") --------------------------------------
      Two more managers opened a bare form whose first field was a closed "Type" list: a newcomer had to open the list

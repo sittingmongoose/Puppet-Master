@@ -71,3 +71,24 @@
 #panel-settings .dialog-body > .form-field + .form-field,
 #panel-settings .dialog-body > .form-field + .check-row,
 #panel-settings .dialog-body > .check-row + .form-field { margin-top: 14px; }
+
+/* ---- Testing and Debug, History, Captured evidence: a fact is its name beside its value ----
+   The facts sat in two columns with each value pushed to the right, so a value that did not fit dropped under its
+   name and started in the middle of the card. One column, the names in one line down the left. Words unchanged. */
+#panel-settings .pm51-mgr .capture-fixture-list .info-grid { grid-template-columns: minmax(0, 1fr); gap: 5px 0; }
+#panel-settings .pm51-mgr .capture-fixture-list .info-row { display: grid; grid-template-columns: 170px minmax(0, 1fr); column-gap: 14px; align-items: baseline; }
+#panel-settings .pm51-mgr .capture-fixture-list .info-row > .info-value { text-align: left; }
+
+/* ---- App Updates, History: the row's last button is "Details", as in Readiness and Doctor ---- */
+#panel-settings .pm51-icon-btn[data-action="pm51-updates-details"] {
+  width: 78px; height: 30px; padding: 0 10px; border: 1px solid var(--k3-line); border-radius: 8px;
+  background: color-mix(in srgb, var(--k3-text-1) 4%, transparent); font-size: 12px; font-weight: 620; color: var(--k3-text-1);
+}
+#panel-settings .pm51-icon-btn[data-action="pm51-updates-details"] > .icon { display: none; }
+#panel-settings .pm51-icon-btn[data-action="pm51-updates-details"]::after { content: "Details"; }
+
+/* ---- a wide row in a detail ends where the rows around it end ----
+   "Web services" and "For deep research" (Web and Research) put their Change button 46 px to the right of "AI model"'s
+   Change under them, because a wide row's control ran across the column the others keep for "?". */
+#panel-settings .pm51-mgr .pm51-detail .setting-row.o55-row.o55-scoped.is-wide > .setting-control { padding-right: 46px; }
+@container pm51-detail (max-width: 540px) { #panel-settings .pm51-mgr .pm51-detail .setting-row.o55-row.o55-scoped.is-wide > .setting-control { padding-right: 0; } }

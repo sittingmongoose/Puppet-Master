@@ -23,13 +23,59 @@ byte-identical to `Concepts/PMConcept7.html` at that commit.
 browser-check run Concepts/settings-managers/fable-5.2-refine/tools --set page=<refined.html> --set before=<PMConcept7.html of the same base>
 ```
 
-Eleven tests by real clicks (`tools/refine.check.mjs`): the chapter move and old links; Explain; the centred tab
-strips and the side column, left as they are; Servers' Overview map at two sizes; the five things that looked wrong
-(the band, the covered title, the chosen row, the light, the side column); Providers' account rows and Add a
-service; the one home of a service's switching rules; the example staying in view in Editor and
-Terminal Customize, Customize Pip and Adjust NieR; the examples being as wide as they were and the editor's
-following what is typed; and **nothing was dropped**: every setting id and every action of
-the unchanged page is still on some page of the refined one (920 settings, 73 views, on 2026-11-20).
+Twelve tests by real clicks (`tools/refine.check.mjs`): the chapter move and old links; Explain; the centred tab
+strips and the side column, left as they are; Servers' Overview map at two sizes; the things that looked wrong
+(the band, the covered title, the chosen row, the light, no stripe down one side, the side column's chip and the
+words it carries); Providers' account rows and Add a service; the fourth pass (the list column, the row grids of
+Search services and Doctor, the two Add a destination sheets and their forms, one right edge in a detail); the one
+home of a service's switching rules; the example staying in view in Editor and Terminal Customize, Customize Pip
+and Adjust NieR; the examples being as wide as they were and the editor's following what is typed; and **nothing
+was dropped**: every setting id and every action of the unchanged page is still on some page of the refined one
+(920 settings, 73 views, on 2026-11-20).
+
+Three more tools, for looking rather than asserting, live with the evidence (not in this repository):
+`shots.check.mjs` (a list of steps and pictures, any of the ten looks), `adds.check.mjs` (opens every Add, New, Link
+or Connect button and pictures what appears) and `icons.check.mjs` (lists every button that shows no word).
+
+## Fourth pass (2026-11-23), after Jared's third review
+
+Jared: "This approach looks MUCH better. Now you just need to take this new approach and apply it to all the
+managers.(excluding Pip, Terminal, Editor, Nier). I reviewed the ai providers and the server changes, they look
+good." With four things marked on screenshots.
+
+| What he marked | Cause | Now |
+|---|---|---|
+| "DO NOT USE THESE SIDE COLORED TABS!" (a chosen list row and a chosen side-column entry, each with an accent edge) | The third pass marked both with a 3 px stripe | No stripe anywhere. A chosen list row is a soft fill with a thin outline all round, in the colour of that look's own chip. The side column has the app's own chip again |
+| "As you scroll, the side bar has the indicator jump, it also doesnt display correctly, for example the friendly theme is wrong" | The third pass hid the chip's resting copy and drew its own mark. The chip's travelling copy still played, so in Friendly a green slab flew across after the mark had already moved | The shared chip does all of it, as on every other strip. What made the words move in the first place is corrected at its cause: while the chip travels it carries copies of the rows' words (liquid-glass `.lg-twin`), and the copies had no bullet, so the words sat 9 px to the left until it landed. The copies get the bullet. A chosen sub-row is no longer bold |
+| The list of a list-and-detail card: "it just looks unfinished because it ends abruptly" | The list is sticky and only as tall as its rows; its fill and its dividing line stopped there | The card draws the list's column the whole height (`.pm51-split::before`); the list sits on it |
+| "This black box behind sections doesnt look good. It looks cut off and unfinished" (Glass) | Glass gives a card on the wallpaper a dark ground. A section inside a detail counted as such a card, inset from its own card | The whole list-and-detail card takes the ground; the sections in it are plain |
+| "there is a box around the indicator light" (from the review before; still there in Retro and NieR) | The ring was drawn on the light's 1 em square box | No ring in Basic, Friendly and Retro; in NieR the light is a solid mark in the bar's ink |
+
+All of it was looked at in the ten looks (Basic, Friendly, Glass, Retro, NieR, each dark and light), and a tour of the
+75 views in Glass found no other inset dark box.
+
+The approach of Providers and Servers, on the other managers:
+
+| Where | Was | Now |
+|---|---|---|
+| Readiness & Doctor | The time and the fix button of a check were as wide as their words; each row ended in a bare ">" | One grid: when it was checked, the one thing to do, "Details". The rows run to the card's edge, under "Check Again" |
+| Web & Research › Search services | The state words started at different places; a bare ">" | State, switch and "Manage" each in their own column |
+| Notifications › Destinations › Add; Backup › Destinations › Add | A form whose first field was a closed "Type" list | The sheet Providers has: every kind, grouped, with what it is and what it will ask for. Picking one goes on to the form that was there, with that kind chosen; a destination on this computer is not asked for an address |
+| Notifications › Events; App Updates › History | Bare ">" | "Edit"; "Details" |
+| Source Control › Actions & Pipelines | An icon-only pin | "Pin" / "Unpin" |
+| A list's detail (Source Control, Toolchain, Web & Research and others) | Two right edges: a manager's own rows ran 50 px further than the setting rows under them, and a wide row's button 46 px further | One right edge |
+| Permissions › a profile | "4 rules" sat over its "See rules" button | Beside it: a value of up to 14 characters is placed by its own width |
+| Every plain form | A field's name sat right under the field before it | 14 px between fields |
+| Testing & Debug › History › Captured evidence | Each fact's value was pushed right and dropped under its name when it did not fit | Name and value side by side, one column. The words are another stream's and are unchanged |
+| Containers, Doctor, Source Control | Sentences that still sent people to "Server & Project Location" | They name the chapter as it is: "Servers & Remote Access" |
+
+Found and left alone: most other "Add" buttons already open a guided setup that shows the choices as tiles (language
+servers, formatters, MCP servers, skills, plugins, test and debug profiles, templates, personas, crews, repositories).
+The short forms that remain have no list of kinds to show (Add memory, New session, Add rule, Add protected path,
+Create worktree).
+
+**For the merge:** the first-run tour and Pip still say "Settings › Server & Project Location" in PMConcept7's copy
+files (`src/copy.json`, `src/copy.d/48-pip.json`); they should say "Servers & Remote Access".
 
 ## Third pass (2026-11-23), after Jared's second review
 
@@ -43,9 +89,9 @@ at his request (`consult/`); they agree on the main points, and those are what w
 |---|---|---|
 | "Black bars when you scroll" | A manager's stuck tab strip laid a band of the page's colour across the grey card | The strip floats with a shadow; no band |
 | "the persona word is covered by adding a new persona button" | The list's add button carried its whole label | A short "New", "Add" or "Link"; the title has its own column |
-| "the left side icons are washed out by the highlight" | The shared switcher paints a chosen row as a solid slab | A soft tint with an accent edge; the icon keeps its colours |
+| "the left side icons are washed out by the highlight" | The shared switcher paints a chosen row as a solid slab | A soft tint; the icon keeps its colours (the accent edge of this pass went in the fourth) |
 | "a box around the indicator light" | The same rule ringed the status light | A plain light |
-| "the label highlight on the left ... moves the text over as you scroll" | The slab travelled between the side column's rows, and a chosen row's text turned bold | A mark that changes in place; one text weight |
+| "the label highlight on the left ... moves the text over as you scroll" | The slab travelled between the side column's rows, and a chosen row's text turned bold | One text weight (the in-place mark of this pass went in the fourth; the chip is back and its words are aligned) |
 | Providers: "The bars are all uneven, the text isnt even, and there are 3 different arrows" | The account row was a wrapping line | One grid: bars of one length in two columns, a status column that never wraps, the two order arrows, and a named "Manage" button in place of the third arrow |
 | "The add a new service pop up menu is not at all sufficient" | It was a three-field form for a service not in the list | A sheet with every service grouped by how you pay, a search, each one's state and its next step; the old form is its last row |
 | Servers: "It isnt clear where my files are stored, where work is being done" | The first tab was three rows | "Overview": a map. Files are kept on / Work runs on / You steer from, with Away from home under them. Each setting sits in the card it is about |
@@ -59,12 +105,14 @@ nightly's Link and Connect); the headings of Limits & switching's table sit over
 "When both sides changed" field shows a short name instead of a cut-off sentence; the order buttons of Away From
 Home are arrows, as in Providers. The example has four more computers, so the map shows a setup of several.
 
-**Not yet done for this pass:** stream F's kit has not been run on this build, and the list of its checks below
-still describes the second pass. Jared asked to see looks first; the kit is to be run, against the unchanged page
-too, before any landing. It will need at least these: the first Servers tab is "Overview" (was "Home & Location")
-and its three rows are in the map's cards; "Connect a device" (was "Pair another device"), "Your devices" (was
-"Paired devices"), "Link a server" (was "Add a server"); four more example servers; Add a service opens a sheet;
-the stuck tab strip has no band; a list's add button reads "Add", "New" or "Link".
+**Not yet done for the third and fourth passes:** stream F's kit has not been run on this build, and the list of
+its checks below still describes the second pass. Jared asked to see looks first; the kit is to be run, against the
+unchanged page too, before any landing. It will need at least these: the first Servers tab is "Overview" (was "Home
+& Location") and its three rows are in the map's cards; "Connect a device" (was "Pair another device"), "Your
+devices" (was "Paired devices"), "Link a server" (was "Add a server"); four more example servers; Add a service and
+the two Add a destination buttons open a sheet first; the stuck tab strip has no band; a list's add button reads
+"Add", "New" or "Link"; Doctor's, Events' and Updates' last button and the pin carry a word; a chosen list row is not
+the solid chip.
 
 ## What changed, everywhere
 

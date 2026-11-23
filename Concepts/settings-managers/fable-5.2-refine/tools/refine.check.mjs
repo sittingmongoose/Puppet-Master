@@ -162,7 +162,66 @@ export const tests = {
 		const after = await f.evaluate(() => ({ rows: [...document.querySelectorAll('#pm-settings-root .page-index-card .index-link')].filter((n) => n.getClientRects().length).map((n) => { const r = document.createRange(); r.selectNodeContents(n); const b = r.getBoundingClientRect(); return [(n.classList.contains('pm51-index-tab') ? 'tab:' : 'link:') + n.textContent.trim().slice(0, 24), Math.round(b.left), Math.round(b.width), getComputedStyle(n).fontWeight]; }), active: (document.querySelector('#pm-settings-root .page-index-card .index-link.is-active') || {}).textContent, lens: [...document.querySelectorAll('#pm-settings-root nav.page-index-card > .lg-lenses-under')].filter((n) => getComputedStyle(n).display !== 'none').length }));
 		const moved = before.filter((b) => { const a = after.rows.find((x) => x[0] === b[0]); return a && (a[1] !== b[1] || a[2] !== b[2] || a[3] !== b[3]); });
 		await t.check('scrolling moved the side column\'s mark to another entry', !!after.active && after.active.trim() !== wasAt, `${wasAt} -> ${String(after.active).trim()}`);
-		await t.check('no entry\'s words moved or changed weight while it did', moved.length === 0 && after.lens === 0, JSON.stringify({ moved, lens: after.lens }));
+		await t.check('no entry\'s words moved or changed weight while it did, and the app\'s own chip marks the place', moved.length === 0 && after.lens >= 1, JSON.stringify({ moved, lens: after.lens }));
+		/* Jared, 2026-11-23: "DO NOT USE THESE SIDE COLORED TABS!" A chosen row or entry has no stripe down one side. */
+		const stripes = await f.evaluate(() => {
+			const oneSide = (n) => { const c = getComputedStyle(n); const sh = c.boxShadow.split(/,(?![^(]*\))/).some((x) => /inset/.test(x) && /(^|\s)-?[1-9][\d.]*px\s+-?[\d.]+px\s+[\d.]+px\s+[\d.]+px/.test(x.replace(/(rgba?|color)\([^)]*\)/g, '').trim())); const w = [c.borderLeftWidth, c.borderRightWidth, c.borderTopWidth, c.borderBottomWidth].map(parseFloat); const col = [c.borderLeftColor, c.borderRightColor]; return sh || (w[0] >= 2 && w[0] > w[1] && col[0] !== 'rgba(0, 0, 0, 0)'); };
+			return [...document.querySelectorAll('#pm-settings-root .page-index-card .index-link.is-active, #pm-settings-root .pm51-roster .resource-row[aria-current="true"], #pm-settings-root .domain-link.active')].filter((n) => n.getClientRects().length && oneSide(n)).map((n) => n.className + ':' + n.textContent.trim().slice(0, 20));
+		});
+		await t.check('no chosen row or side-column entry carries a coloured stripe down one side', stripes.length === 0, JSON.stringify(stripes));
+		/* while the chip travels it carries copies of the rows' words; they must sit exactly on the words themselves */
+		let seen = 0, worst = 0;
+		for (let round = 0; round < 3 && !seen; round++) {
+			await f.evaluate(() => {
+				const nav = document.querySelector('#pm-settings-root nav.page-index-card'); window.__rfTw = { seen: 0, worst: 0 };
+				const t0 = performance.now();
+				(async () => { while (performance.now() - t0 < 1800) { await new Promise((r) => requestAnimationFrame(() => setTimeout(r, 0)));
+					const hop = nav.querySelector('lg-over.lg-hops .lg-carry'); if (!hop) continue;
+					const hopTf = new DOMMatrixReadOnly(getComputedStyle(hop).transform === 'none' ? undefined : getComputedStyle(hop).transform);
+					const tw = nav.querySelector('lg-over.lg-hops .lg-carry-twins'); if (!tw) continue;
+					for (const twin of tw.querySelectorAll('.lg-twin')) { const real = [...nav.querySelectorAll('.pm51-index-group > .index-link')].find((a) => a.textContent.trim() === twin.textContent.trim()); if (!real) continue;
+						const rg = document.createRange(); rg.selectNodeContents(twin); const a = rg.getBoundingClientRect(); rg.selectNodeContents(real); const b = rg.getBoundingClientRect(); if (!a.width || !b.width) continue;
+						window.__rfTw.seen++; window.__rfTw.worst = Math.max(window.__rfTw.worst, Math.abs(a.left - b.left)); }
+				} })();
+			});
+			await t.page.mouse.move(1100, 600); await t.page.mouse.wheel(0, round % 2 ? -520 : 520); await sleep(f, 2000);
+			const r = await f.evaluate(() => window.__rfTw); seen = r.seen; worst = r.worst;
+		}
+		await t.check('the words the travelling chip carries sit on the rows\' own words (they sat 9 px to the left)', seen > 0 && worst <= 1.5, JSON.stringify({ samples: seen, worstPx: Math.round(worst * 10) / 10 }));
+	},
+	async 'fourth pass: one card for a list and its detail, rows on one grid, Add shows what there is to add'(t) {
+		const f = await openSettings(t);
+		await go(f, 'ai', 'web');
+		const col = await f.evaluate((sel) => { const s = document.querySelector(`${sel} .split-manager.pm51-split`), r = s.querySelector('.pm51-roster'); const c = getComputedStyle(s, '::before'); const sb = s.getBoundingClientRect(), rb = r.getBoundingClientRect(); return { split: Math.round(sb.height), list: Math.round(rb.height), column: c.content !== 'none' ? Math.round(parseFloat(c.height)) : 0, line: c.borderRightWidth, listLine: getComputedStyle(r).borderRightColor }; }, block('web'));
+		await t.check('the list\'s column and its dividing line run the whole height of the card, however short the list', col.column >= col.split - 3 && col.split > col.list && parseFloat(col.line) >= 1, JSON.stringify(col));
+		const webEdge = await f.evaluate((sel) => [...new Set([...document.querySelectorAll(`${sel} .pm51-detail-content .setting-row.o55-row > .setting-control > *:last-child`)].filter((n) => n.getClientRects().length && !n.closest('details')).map((n) => Math.round(n.getBoundingClientRect().right)))], block('web'));
+		await t.check('Web & Research: every control of an ability ends at one edge, the wide rows too', webEdge.length === 1, JSON.stringify(webEdge));
+		await tab(f, 'web', 'services');
+		const svc = await f.evaluate((sel) => { const rows = [...document.querySelectorAll(`${sel} .o55-web-services .pm51-acc-head`)]; const L = (n) => (n ? Math.round(n.getBoundingClientRect().left) : null), R = (n) => (n ? Math.round(n.getBoundingClientRect().right) : null); return { n: rows.length, state: [...new Set(rows.map((r) => L(r.querySelector('.pm51-status'))))], sw: [...new Set(rows.map((r) => R(r.querySelector('.pm51-toggle'))).filter((x) => x != null))], btn: [...new Set(rows.map((r) => R(r.querySelector('.pm51-acc-toggle'))))], word: [...new Set(rows.map((r) => getComputedStyle(r.querySelector('.pm51-acc-toggle'), '::after').content))] }; }, block('web'));
+		await t.check('Search services: every state starts at one place, the switches and the Manage buttons each end at one place', svc.n >= 6 && svc.state.length === 1 && svc.sw.length === 1 && svc.btn.length === 1 && svc.word.join() === '"Manage"', JSON.stringify(svc));
+		await go(f, 'system', 'doctor');
+		const doc = await f.evaluate((sel) => { const rows = [...document.querySelectorAll(`${sel} .pm51-doctor-row`)]; const L = (n) => (n ? Math.round(n.getBoundingClientRect().left) : null), R = (n) => (n ? Math.round(n.getBoundingClientRect().right) : null); return { n: rows.length, when: [...new Set(rows.map((r) => L(r.querySelector('.pm51-doctor-checked'))))], fix: [...new Set(rows.map((r) => L(r.querySelector('.pm51-row-control > .pm51-btn'))).filter((x) => x != null))], fixW: [...new Set(rows.map((r) => { const b = r.querySelector('.pm51-row-control > .pm51-btn'); return b ? Math.round(b.getBoundingClientRect().width) : null; }).filter((x) => x != null))], det: [...new Set(rows.map((r) => R(r.querySelector('.pm51-row-control > .pm51-icon-btn'))))], word: [...new Set(rows.map((r) => getComputedStyle(r.querySelector('.pm51-row-control > .pm51-icon-btn'), '::after').content))] }; }, block('doctor'));
+		await t.check('Readiness & Doctor: the times, the fix buttons and Details each form one column', doc.n >= 8 && doc.when.length === 1 && doc.fix.length === 1 && doc.fixW.length === 1 && doc.det.length === 1 && doc.word.join() === '"Details"', JSON.stringify(doc));
+		await f.locator(`${block('doctor')} .pm51-doctor-row .pm51-icon-btn[data-action="pm51-doctor-open"]`).first().click(); await sleep(f, 700);
+		await t.check('Details still opens the check', (await shown(f, '.overlay .dialog, .overlay .drawer, .drawer-wrap .drawer')) > 0, '');
+		await closeAll(f);
+		for (const [d, ws, tabId, action, pick, selects, group] of [['general', 'notifications', 'destinations', 'pm51-notifications-add-dest', 'ntfy', { type: 'ntfy' }, 'Your phone'], ['system', 'backup', 'destinations', 'pm51-backup-dest-add', 'Folder / NAS share', { family: 'Another computer or NAS', type: 'Folder / NAS share' }, 'Another computer or NAS']]) {
+			await go(f, d, ws); await tab(f, ws, tabId);
+			await f.locator(`${block(ws)} [data-action="${action}"]`).first().click(); await sleep(f, 800);
+			const sheet = await f.evaluate(`(() => { const p = document.querySelector('.rf-add-panel'); if (!p) return null; const T = ${T}; return { groups: [...p.querySelectorAll('.rf-add-title')].map((n) => T(n).replace(/\\s*\\d+$/, '')), kinds: p.querySelectorAll('.rf-add-row').length, needs: [...p.querySelectorAll('.rf-add-needs')].filter((n) => T(n)).length, clipped: [...p.querySelectorAll('.rf-add-name')].filter((n) => n.scrollWidth > n.clientWidth + 1).map(T) }; })()`);
+			await t.check(`${ws}: Add opens a sheet of every kind, grouped, each with what it will ask for`, !!sheet && sheet.groups.includes(group) && sheet.kinds >= 8 && sheet.needs === sheet.kinds && !sheet.clipped.length, JSON.stringify(sheet));
+			await f.locator(`.rf-add-panel [data-action="pm51-rf-cat-pick"][data-pick="${pick}"]`).first().click(); await sleep(f, 800);
+			const form = await f.evaluate(() => { const o = document.querySelector('.overlay .dialog'); if (!o) return null; const fs = [...o.querySelectorAll('.dialog-body > .form-field')].filter((n) => n.getClientRects().length); return { title: (o.querySelector('.dialog-title') || {}).textContent, selects: Object.fromEntries([...o.querySelectorAll('select')].map((x) => [x.name, x.value])), gaps: fs.slice(1).map((n, i) => Math.round(n.getBoundingClientRect().top - fs[i].getBoundingClientRect().bottom)) }; });
+			await t.check(`${ws}: picking a kind goes on to the form that was there before, with that kind chosen`, !!form && Object.entries(selects).every(([k, v]) => form.selects[k] === v) && form.title.includes(pick.split(' / ')[0]), JSON.stringify(form));
+			await t.check(`${ws}: the form's fields stand apart`, !!form && form.gaps.length >= 2 && form.gaps.every((g) => g >= 10), JSON.stringify(form && form.gaps));
+			await closeAll(f);
+		}
+		await go(f, 'safety', 'permissions');
+		const pair = await f.evaluate((sel) => [...document.querySelectorAll(`${sel} .pm51-detail .pm51-row-control`)].filter((c) => c.querySelector('.pm51-row-value') && c.querySelector('.pm51-btn')).map((c) => { const v = c.querySelector('.pm51-row-value').getBoundingClientRect(), b = c.querySelector('.pm51-btn').getBoundingClientRect(); return { value: c.querySelector('.pm51-row-value').textContent.trim(), oneLine: Math.abs((v.top + v.bottom) / 2 - (b.top + b.bottom) / 2) < 8 }; }), block('permissions'));
+		await t.check('Permissions: a short value sits beside its button, not over it', pair.length >= 2 && pair.every((x) => x.oneLine), JSON.stringify(pair));
+		await go(f, 'source', 'source-manager');
+		const edge = await f.evaluate((sel) => { const d = document.querySelector(`${sel} .pm51-detail-content`); const ends = [...d.querySelectorAll(':scope > .pm51-rows > .pm51-row > .pm51-row-control > *:last-child, .pm51-section-body .setting-row.o55-row > .setting-control > *:last-child, .pm51-section-body .pm51-rows > .pm51-row > .pm51-row-control > *:last-child')].filter((n) => n.getClientRects().length && !n.closest('details')).map((n) => Math.round(n.getBoundingClientRect().right)); return [...new Set(ends)]; }, block('source-manager'));
+		await t.check('Source Control: the values and the controls of a service end at one edge', edge.length === 1, JSON.stringify(edge));
 	},
 
 	async 'Providers: the accounts line up, and Add a service is the catalogue'(t) {

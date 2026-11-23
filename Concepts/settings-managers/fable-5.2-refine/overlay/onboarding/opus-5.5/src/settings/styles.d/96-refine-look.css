@@ -154,7 +154,7 @@ html:not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .page-index-card .pm51-inde
    did while the detail ran on (Jared: "it just looks unfinished because it ends abruptly"). The card draws the
    list's column itself, the whole height; the list sits on it. Not where the list is a drawer (narrow hosts). */
 @container settings-host (min-width: 720.02px) {
-  #panel-settings .pm51-mgr .split-manager.pm51-split::before { content: ""; grid-column: 1; grid-row: 1; border-right: 1px solid var(--k3-line); background: color-mix(in srgb, var(--k3-bg-1) 60%, transparent); pointer-events: none; }
+  #panel-settings .pm51-mgr .split-manager.pm51-split::before { content: ""; grid-column: 1; grid-row: 1; align-self: stretch; border-right: 1px solid var(--k3-line); background: color-mix(in srgb, var(--k3-bg-1) 60%, transparent); pointer-events: none; }
   #panel-settings .pm51-mgr .split-manager.pm51-split > .pm51-roster { grid-column: 1; grid-row: 1; border-right-color: transparent; background: none; }
   #panel-settings .pm51-mgr .split-manager.pm51-split > .pm51-detail { grid-column: 2; grid-row: 1; }
 }
