@@ -1,6 +1,7 @@
 """Remote check and read-only receipt verification with private Git fixtures."""
 
 from contextlib import redirect_stderr, redirect_stdout
+from datetime import datetime, timedelta, timezone
 import importlib.util
 import io
 import json
@@ -158,6 +159,8 @@ class LandingFixture(unittest.TestCase):
                   "worktree": str(self.remote), "full": True, "clean": True, "job": land.job_name(self.folder),
                   "head": self.head, "tree": self.tree, "base": self.base, "exit_code": code,
                   "report": str(report), "report_sha256": land.file_hash(report),
+                  "row_report": None,
+                  "row_report_sha256": None,
                   "started_utc": "2026-11-21T15:00:00+00:00", "ended_utc": "2026-11-21T15:20:00+00:00",
                   "ignored_inputs": self.manifest, "shard_exit_code": 0}
         record.update(changes)
@@ -201,11 +204,11 @@ class LandingFixture(unittest.TestCase):
         with patch.object(land, "command", side_effect=local_status):
             land.remote_cleanup(self.folder, "nas1")
 
-    def test_public_cli_only_accepts_check_and_verify(self):
+    def test_public_cli_only_accepts_check_verify_and_the_two_batch_readers(self):
         script = Path(__file__).with_name("pm-land.py")
         result = subprocess.run(["python3", "-B", str(script), "--help"], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0)
-        self.assertIn("{check,verify}", result.stdout)
+        self.assertIn("{check,verify,batch-status,batch-check}", result.stdout)
         for removed in ("run", "inventory", "preflight", "fetch-main", "push-main", "_remote"):
             with self.subTest(command=removed):
                 result = subprocess.run(["python3", "-B", str(script), removed], capture_output=True, text=True)
@@ -235,7 +238,8 @@ class LandingFixture(unittest.TestCase):
                       patch.object(land, "start_remote_job") as start,
                       patch.object(land, "cleanup_after_check") as clean, redirect_stdout(output)):
                     self.assertEqual(land.check_topic(self.shared, self.branch, "nas1"), 0)
-                start.assert_called_once_with(self.folder, "nas1", self.ref, self.head, self.tree, self.base)
+                start.assert_called_once_with(self.folder, "nas1", self.ref, self.head, self.tree, self.base, self.base,
+                                              False)
                 clean.assert_called_once_with(self.folder, "nas1")
                 self.assertIn(str(self.path), output.getvalue())
                 self.assertIn(f"Landing checker exit {code}", output.getvalue())
@@ -280,6 +284,38 @@ class LandingFixture(unittest.TestCase):
         self.assertEqual(record["ignored_inputs"], self.manifest)
         self.assertEqual(record["cleanup_receipt"], str(fresh_run / "cleanup-receipt.json"))
         self.assertEqual(land.receipt_witness(fresh_run).read_text().strip(), land.file_hash(path))
+
+    def test_a_batch_members_remote_check_asks_for_the_row_report_and_binds_it(self):
+        self.cleanup()
+        fresh_run = self.runs / "fresh-batch"
+        fresh_run.mkdir()
+        calls = []
+
+        def fake_capture(args, cwd, stdout, stderr):
+            calls.append(args)
+            if args == land.SHARD:
+                stdout.write_text("{}")
+                return 0, 1
+            if "--row-report" in args:
+                rows = Path(args[args.index("--row-report") + 1])
+                rows.write_text(json.dumps({"schema_id": land.ROW_REPORT_SCHEMA, "base": self.base, "subchecks": {}}))
+            land.write_json(stdout, {"schema_id": "pm.landing_check.report.v1", "commit": self.head,
+                                     "base": self.base, "blocking": 0, "subcheck_timeout_seconds": 1800})
+            return 0, 2
+
+        # This runs in the test process: a child subreaper set here would reparent the setsid test's orphan.
+        with patch.object(land, "capture", side_effect=fake_capture), \
+                patch.object(land, "enable_child_subreaper", return_value=False):
+            land.remote_check(fresh_run, "nas1", self.ref, self.head, self.tree, self.base, self.base, True)
+        self.assertIn("--row-report", calls[1])
+        path = fresh_run / "record.json"
+        record = land.read_json(path)
+        self.assertEqual(record["row_report"], str(fresh_run / "rows.json"))
+        self.assertEqual(record["row_report_sha256"], land.file_hash(fresh_run / "rows.json"))
+        land.verify_record(fresh_run, record, "nas1", self.ref, self.head, self.tree, self.base)
+        (fresh_run / "rows.json").write_text("{}", encoding="utf-8")
+        with self.assertRaisesRegex(land.Refusal, "row report path or SHA-256 changed"):
+            land.verify_record(fresh_run, record, "nas1", self.ref, self.head, self.tree, self.base)
 
     def test_transport_failure_preserves_evidence_and_avoids_cleanup(self):
         output = io.StringIO()
@@ -1330,6 +1366,712 @@ print(json.dumps({{"schema_id": "pm.landing_check.report.v1", "commit": {self.he
         manifest = land.copy_inputs(self.shared, fresh)
         for name in names:
             self.assertEqual(manifest[name], land.file_hash(fresh / name))
+
+
+READINESS = "run-gates/validate_implementation_readiness"
+BUCKET = "run-gates/lint-x  missing_ref  src/x.txt"
+
+
+def pre_row(bucket: str, baseline: int, count: int, fields: str = '{"n":1}', where: str = "(names src/x.txt)",
+            tag: str = "pre-existing") -> str:
+    return f"  [{tag:<12}] {bucket}  {baseline} -> {count}  {fields}  {where}"
+
+
+def landing_report(pre=(), more: int = 0, counter=(), compare: int = 0, timeouts: int = 0, tail: str = "", gone: int = 0,
+                   gone_ids=None, totals=None, counts=None, older: bool = False) -> str:
+    """A landing check's text report, line for line as main() in scripts/pm-landing-check.py prints it. `older`: from
+    before the lines for comparing one run with the next."""
+    lines = ["pm-landing-check: baseline reports/landing-checks/baseline.json recorded at aaaaaaaaaaaa; this checkout is at bbbbbbbbbbbb",
+             "  the baseline is current, so rule 2 applies: its commit aaaaaaaaaaaa is an ancestor of the base", "",
+             "New since the baseline: 0",
+             f"Pre-existing, in a baseline bucket whose count has not risen (never blocks): {len(pre) + more}"]
+    if pre:
+        lines.append("  counted against the baseline recorded at aaaaaaaaaaaa, not against main: a failure main fixed "
+                     "after that commit and this branch brings back reads as pre-existing")
+    lines += list(pre)
+    if more:
+        lines.append(f"  ... {more} more")
+    lines += ["Checks whose failure count rose: 0", f"Subchecks reporting more failures than the baseline: {len(counter)}"]
+    for name, was, now in counter:
+        lines.append(f"  [staleness] {name}  {was} -> {now} (the readiness growth counter: its printed rows show stale "
+                     "readiness rows growing on this branch's files and nothing else new)")
+    lines += ["Naming a path this branch touches: 0",
+              f"Infrastructure results, not failures of this tree (never new, growth or blocking): {timeouts}"]
+    lines += [f"  [infrastructure] run-gates/x{index}  subprocess_timeout (lint-x)  killed after 600 s" for index in range(timeouts)]
+    lines += [f"Gone since the baseline (nothing to do): {gone}"]
+    lines += [f"  [gone] {name}" for name in gone_ids or []]
+    if not older:
+        lines.append(f"Subcheck totals this run: {len(totals or {})}")
+        lines += [f"  [total] {name}  {'timed out' if total is None else total}" for name, total in (totals or {}).items()]
+        lines.append(f"Bucket counts this run: {len(counts or {})}")
+        lines += [f"  [count] {name}  {count}" for name, count in (counts or {}).items()]
+    lines.append("")
+    advice = []
+    if pre and compare:
+        advice.append(f"pre-existing failures whose count has not risen, {compare} of them with changed content on files this "
+                      "branch touched, so compare those with the baseline's rows: the same count can hide one failure fixed "
+                      "and another added")
+    elif pre:
+        advice.append("pre-existing failures whose count has not risen, so nothing for this branch to fix")
+    if counter:
+        advice.append("the readiness growth counter of stale readiness rows, so include it in the reseal request to Jared")
+    if advice:
+        lines.append("Nothing reported stops the landing: it is " + "; and ".join(advice) + ".")
+    if tail:
+        lines.append(tail)
+    return "\n".join(lines)
+
+
+CRASH = 'Traceback (most recent call last):\n  File "scripts/pm-landing-check.py", line 9, in main\nKeyError: \'x\''
+
+
+class ReportFormatTests(unittest.TestCase):
+    """Hold what the tool reads to what the real landing check prints: a detector that silently stopped matching
+    would wave through exactly what it exists to stop."""
+
+    @classmethod
+    def setUpClass(cls):
+        path = Path(__file__).with_name("pm-landing-check.py")
+        spec = importlib.util.spec_from_file_location("pm_landing_check_for_format", path)
+        cls.real = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = cls.real
+        spec.loader.exec_module(cls.real)
+        # The source with adjacent string literals joined, so a phrase split over two lines reads whole.
+        cls.source = re.sub(r"\"\s*\n\s*f?\"", "", path.read_text(encoding="utf-8"))
+
+    def item(self, **fields):
+        return dict({"path": "src/x.txt", "check": "run-gates", "subcheck": "lint-x", "error": "missing_ref", "fields": {"n": 1},
+                     "stale": False, "standing": "pre-existing", "baseline_count": 5, "count": 5}, **fields)
+
+    def test_the_real_describe_prints_rows_the_tool_reads(self):
+        for standing, count in (("pre-existing", 5), ("improved", 4)):
+            for where in ("  (names src/x.txt)", "  (content changed)"):
+                item = self.item(standing=standing, count=count)
+                line = self.real.describe(item, self.real.item_tag(item, True)) + where
+                text = f"Pre-existing, in a baseline bucket whose count has not risen (never blocks): 1\n{line}\nChecks whose failure count rose: 0"
+                entry = land.read_report(text)["pre"][BUCKET]
+                self.assertEqual((entry["baseline"], entry["count"], entry["improved"]), (5, count, standing == "improved"), line)
+                self.assertEqual(bool(entry["content_rows"]), where.endswith("(content changed)"), line)
+                self.assertFalse(land.read_report(text)["pre_unread"], line)
+
+    def test_a_row_with_no_path_is_read_too(self):
+        item = self.item(path=None)
+        line = self.real.describe(item, "pre-existing") + "  (content changed)"
+        text = f"Pre-existing, in a baseline bucket whose count has not risen (never blocks): 1\n{line}\nChecks whose failure count rose: 0"
+        self.assertIn("run-gates/lint-x  missing_ref  (no path)", land.read_report(text)["pre"])
+
+    def test_every_phrase_the_tool_looks_for_is_in_the_real_script(self):
+        for phrase in ("Infrastructure results, not failures of this tree (never new, growth or blocking): ",
+                       "Pre-existing, in a baseline bucket whose count has not risen (never blocks): ",
+                       "Checks whose failure count rose: ",
+                       "Gone since the baseline (nothing to do): ",
+                       'print(f"  [gone] {escape_newlines(name)}")',
+                       'print(f"Subcheck totals this run: {len(totals)}")',
+                       """print(f"  [total] {name}  {'timed out' if total is None else total}")""",
+                       'print(f"Bucket counts this run: {len(seen_buckets)}")',
+                       'print(f"  [count] {escape_newlines(name)}  {count}")',
+                       "Nothing reported stops the landing: it is ",
+                       "of them with changed content on files this branch touched, so compare those with the baseline's rows",
+                       "{row['baseline_reported']} -> {row['reported']}{note}",
+                       'tag = "staleness"',
+                       "more\")"):
+            self.assertIn(phrase, self.source, phrase)
+
+    def test_the_report_helper_here_prints_what_the_tool_reads(self):
+        report = land.read_report(landing_report(pre=[pre_row(BUCKET, 5, 5), pre_row(BUCKET, 5, 5, '{"n":2}')],
+                                                 counter=[(READINESS, 124, 218)], compare=2, timeouts=3))
+        self.assertEqual(report["infrastructure"], 3)
+        self.assertEqual(report["compare"], 2)
+        self.assertEqual(report["pre"][BUCKET]["rows"], ['{"n":1}', '{"n":2}'])
+        self.assertEqual(land.read_report(landing_report(gone=4))["gone"], 4)
+        self.assertIsNone(land.read_report("no such line")["gone"])
+        self.assertFalse(report["pre_unread"])
+        self.assertFalse(report["crashed"])
+
+    def test_rows_past_the_print_cap_or_unreadable_are_said_to_be(self):
+        self.assertTrue(land.read_report(landing_report(pre=[pre_row(BUCKET, 5, 5)], more=3))["pre_unread"])
+        text = landing_report(pre=[pre_row(BUCKET, 5, 5)]).replace("  [pre-existing]", "  [some-new-tag]")
+        self.assertTrue(land.read_report(text)["pre_unread"])
+
+    def test_a_traceback_quoted_inside_a_failure_row_is_no_crash(self):
+        """README and pm-landing-check.py: failure details quote validators' tracebacks. Only one that ran here counts."""
+        quoted = pre_row(BUCKET, 5, 5, '{"detail":"Traceback (most recent call last):\\n  File \\"x.py\\""}')
+        self.assertFalse(land.read_report(landing_report(pre=[quoted]))["crashed"])
+        self.assertTrue(land.read_report(landing_report(tail=CRASH))["crashed"])
+        self.assertTrue(land.read_report(landing_report() + "\n  + Exception Group Traceback (most recent call last):\n")["crashed"])
+
+    def test_an_unknown_pre_existing_row_is_not_read_as_an_unreadable_row(self):
+        """Main prints those in their own section, tagged otherwise, and outside the declared count."""
+        text = landing_report(pre=[pre_row(BUCKET, 5, 5)])
+        text = text.replace("Checks whose failure count rose: 0",
+                            "In a subcheck the baseline only sampled, its reported total covering this run's rows, "
+                            "so neither provably old nor new (never blocks): 1\n"
+                            "  [unknown-pre-existing] run-gates|lint-x  missing_ref  src/y.txt  {\"ref\":\"#y\"}  "
+                            "(baseline reported 40, printed 12, 28 never keyed)\n"
+                            "Checks whose failure count rose: 0")
+        report = land.read_report(text)
+        self.assertFalse(report["pre_unread"])
+        self.assertEqual(list(report["pre"]), [BUCKET])
+
+
+class BatchFixture(unittest.TestCase):
+    """A small repository, the rule's lock directory, and reports written by hand: no remote, no lock, no push."""
+
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory(prefix="test-pm-batch-")
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name)
+        self.shared = self.root / "shared"
+        self.lock = self.root / "lock"
+        self.shared.mkdir()
+        self.git(self.shared, "init", "-q", "-b", "main")
+        self.git(self.shared, "config", "user.email", "fixture@example.invalid")
+        self.git(self.shared, "config", "user.name", "Batch fixture")
+        self.git(self.shared, "config", "core.hooksPath", str(self.root / "no-hooks"))
+        self.put("src/x.txt", "one\n")
+        self.put("Plans/A.md", "a\n")
+        self.commit("base")
+        self.base = self.rev("HEAD")
+        self.set_main(self.base)
+        self.reports = self.root / "reports"
+        self.reports.mkdir()
+
+    def git(self, repository, *args, env=None):
+        return subprocess.run(["git", "-C", str(repository), *args], capture_output=True, text=True, check=True,
+                              env={**os.environ, **(env or {})}).stdout
+
+    def rev(self, ref):
+        return self.git(self.shared, "rev-parse", ref).strip()
+
+    def put(self, rel, text):
+        path = self.shared / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text, encoding="utf-8")
+        return path
+
+    def commit(self, message, env=None):
+        self.git(self.shared, "add", "-A")
+        self.git(self.shared, "commit", "-q", "--allow-empty", "-m", message, env=env)
+        return self.rev("HEAD")
+
+    def set_main(self, sha):
+        self.git(self.shared, "update-ref", land.ORIGIN_MAIN, sha)
+
+    def holder(self, start=None, rows=(), first_push=None, agent="fixture", time=None):
+        held = self.lock / "held"
+        held.mkdir(parents=True, exist_ok=True)
+        lines = [f"agent: {agent}", "branch: fix/topic", f"time: {time or land.iso()}"]
+        if start:
+            lines.append(f"batch-start: {start}")
+        if first_push:
+            lines.append(f"batch-first-push: {first_push}")
+        lines += [f"batch-landing: {row}" for row in rows]
+        (held / "holder.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
+        return held
+
+    def age_holder(self, minutes):
+        when = time.time() - minutes * 60
+        for path in ((self.lock / "held" / "holder.txt"), (self.lock / "held")):
+            os.utime(path, (when, when))
+
+    def report_file(self, name, text):
+        path = self.reports / name
+        path.write_text(text, encoding="utf-8")
+        return path
+
+    def rows_file(self, name, subchecks, base=None):
+        path = self.reports / name
+        path.write_text(json.dumps({"schema_id": land.ROW_REPORT_SCHEMA, "base": base or self.base,
+                                    "subchecks": subchecks}), encoding="utf-8")
+        return path
+
+    def source_file(self, marked=True, name="check.py"):
+        marks = "--row-report grown_stale Subcheck totals this run Bucket counts this run" if marked else "an older check"
+        path = self.reports / name
+        path.write_text(marks + "\n", encoding="utf-8")
+        return path
+
+    @staticmethod
+    def row(key, stale=False, grown_stale=False, names=()):
+        return {"key": key, "stale": stale, "grown_stale": grown_stale, "names": list(names)}
+
+    def batch_check(self, *argv):
+        out, err = io.StringIO(), io.StringIO()
+        with redirect_stdout(out), redirect_stderr(err):
+            code = land.main(["batch-check", *map(str, argv)])
+        self.stderr = err.getvalue()
+        return code, out.getvalue()
+
+    def status(self):
+        out = io.StringIO()
+        with redirect_stdout(out), redirect_stderr(io.StringIO()):
+            code = land.batch_status(self.shared, self.lock)
+        return code, out.getvalue()
+
+
+class BatchStatusTests(BatchFixture):
+    def test_no_lock_is_no_batch(self):
+        code, out = self.status()
+        self.assertEqual(code, 0)
+        self.assertIn("no batch is open", out)
+
+    def test_a_held_batch_shows_its_landings_the_limits_and_the_follow_up(self):
+        self.holder(start=self.base, rows=[f"fix/a {self.base}"], first_push=land.iso())
+        code, out = self.status()
+        self.assertEqual(code, 0, out)
+        self.assertIn(f"batch: open at batch-start {self.base}", out)
+        self.assertIn("landings: 1 of 4", out)
+        self.assertIn(f"[landing] fix/a {self.base}", out)
+        self.assertIn("Plans/: no path changed since batch-start", out)
+
+    def test_malformed_rows_are_named_not_dropped(self):
+        self.holder(start=self.base, rows=[f"fix/a {self.base}", "fix/b not-a-sha"])
+        code, out = self.status()
+        self.assertEqual(code, 0, out)
+        self.assertIn("[unreadable]", out)
+        self.assertIn("fix/b not-a-sha", out)
+        self.assertIn("landings: 1 of 4", out)
+
+    def test_main_past_the_start_with_no_rows_is_said_to_need_rows(self):
+        member = self.commit("member 1")
+        self.set_main(member)
+        self.holder(start=self.base)
+        code, out = self.status()
+        self.assertEqual(code, 0, out)
+        self.assertIn("[missing] 1 commit(s) on main since batch-start have no `batch-landing` row", out)
+        self.assertIn(member[:12], out)
+
+    def test_a_full_batch_and_a_past_two_hours_batch_say_the_next_is_judged_alone(self):
+        rows = [f"fix/{index} {self.base}" for index in range(4)]
+        old = land.iso(datetime.now(timezone.utc) - timedelta(hours=3))
+        self.holder(start=self.base, rows=rows, first_push=old)
+        code, out = self.status()
+        self.assertEqual(code, 0, out)
+        self.assertIn("landings: 4 of 4 (full: the next landing is judged alone)", out)
+        self.assertIn("past the two hours: the next landing is judged alone", out)
+
+    def test_the_first_pushes_time_stands_in_from_the_first_rows_commit_time(self):
+        member = self.commit("member 1")
+        self.set_main(member)
+        self.holder(start=self.base, rows=[f"fix/a {member}"])
+        code, out = self.status()
+        self.assertEqual(code, 0, out)
+        self.assertIn("from the first row's commit time: no batch-first-push line", out)
+
+    def test_a_dead_holder_whose_batch_landed_is_closed_not_cleared(self):
+        member = self.commit("member 1")
+        self.set_main(member)
+        self.holder(start=self.base, rows=[f"fix/a {member}"], time=land.iso(
+            datetime.now(timezone.utc) - timedelta(minutes=100)))
+        self.age_holder(100)
+        code, out = self.status()
+        self.assertEqual(code, 0, out)
+        self.assertIn("PROVEN DEAD", out)
+        self.assertIn("it landed something, so it is closed, not cleared:", out)
+
+    def test_a_baseline_near_and_past_the_seven_days_limit_is_said_to_be(self):
+        old = land.iso(datetime.now(timezone.utc) - timedelta(days=6, hours=23))
+        self.put("src/x.txt", "two\n")
+        self.commit("base", env={"GIT_COMMITTER_DATE": old, "GIT_AUTHOR_DATE": old})
+        self.base = self.rev("HEAD")
+        self.put("reports/landing-checks/baseline.json", json.dumps({"commit": self.base}))
+        baseline = self.commit("baseline")
+        self.set_main(baseline)
+        self.holder(start=self.base, rows=[f"fix/a {baseline}"])
+        code, out = self.status()
+        self.assertEqual(code, 0, out)
+        self.assertIn("days old, within 2 h of the 7 rule 2 allows: no new batch opens now", out)
+
+    def test_a_baseline_past_the_limit_says_the_member_is_judged_alone(self):
+        old = land.iso(datetime.now(timezone.utc) - timedelta(days=8))
+        self.put("src/x.txt", "two\n")
+        self.commit("base", env={"GIT_COMMITTER_DATE": old, "GIT_AUTHOR_DATE": old})
+        self.base = self.rev("HEAD")
+        self.put("reports/landing-checks/baseline.json", json.dumps({"commit": self.base}))
+        baseline = self.commit("baseline")
+        self.set_main(baseline)
+        self.holder(start=self.base, rows=[f"fix/a {baseline}"])
+        code, out = self.status()
+        self.assertEqual(code, 0, out)
+        self.assertIn("past the 7 rule 2 allows: this member is judged alone", out)
+
+
+class BatchCheckTests(BatchFixture):
+    """One member's report against the previous member's: the triggers of README "Batch triggers", nothing else."""
+
+    def setUp(self):
+        super().setUp()
+        self.put("scripts/pm-landing-check.py", " ".join(land.BATCH_CHECK_MARKS) + "\n")
+        self.commit("landing check with the comparison lines")
+        self.base = self.rev("HEAD")
+        self.set_main(self.base)
+        self.member1 = self.commit("member 1")
+        self.set_main(self.member1)
+        self.put("src/own.txt", "own\n")
+        self.head = self.commit("member 2")
+        self.holder(start=self.base, rows=[f"fix/a {self.member1}"])
+
+    def check(self, report, previous=None, rows=None, previous_rows=None, code=0, source=True, base=None, lock=None,
+              **extra):
+        argv = ["--base", base or self.base, "--exit", str(code), "--report", report, "--repo", self.shared,
+                "--head", self.head, "--lock-dir", lock or self.lock]
+        if source is not None:
+            argv += ["--check-source", self.source_file(marked=bool(source)) if source is not True else self.source_file()]
+        if previous is not None:
+            argv += ["--previous", previous]
+        if rows is not None:
+            argv += ["--rows", rows]
+        if previous_rows is not None:
+            argv += ["--previous-rows", previous_rows]
+        for name, value in extra.items():
+            argv += [f"--{name.replace('_', '-')}", value]
+        return self.batch_check(*argv)
+
+    def test_the_first_member_may_stay_and_says_why(self):
+        self.holder(start=self.base)
+        code, out = self.check(self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1})))
+        self.assertEqual(code, 0, out)
+        self.assertIn("first member of the batch", out)
+        self.assertIn("[total] run-gates/lint-x  1", out)
+
+    def test_a_total_rise_closes_the_batch(self):
+        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
+        code, out = self.check(current, previous)
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_total_rise", out)
+        self.assertIn("run-gates/lint-x's total rose from 1 to 2", out)
+        self.assertIn("judged alone", out)
+
+    def test_a_rise_that_is_only_this_members_own_staleness_keeps_the_landing(self):
+        key1, key2 = "run-gates|lint-x|stale_hash|src/a.md|1", "run-gates|lint-x|stale_hash|src/own.txt|2"
+        previous_rows = self.rows_file("m1.rows.json", {"run-gates/lint-x": {
+            "reported": 1, "complete": True, "rows": [self.row(key1, stale=True, grown_stale=True, names=["src/a.md"])]}})
+        rows = self.rows_file("m2.rows.json", {"run-gates/lint-x": {
+            "reported": 2, "complete": True,
+            "rows": [self.row(key1, stale=True, grown_stale=True, names=["src/a.md"]),
+                     self.row(key2, stale=True, grown_stale=True, names=["src/own.txt"])]}})
+        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
+        code, out = self.check(current, previous, rows, previous_rows)
+        self.assertEqual(code, 0, out)
+        self.assertIn("no trigger", out)
+        self.assertIn("may stay", out)
+
+    def test_an_added_row_on_another_members_file_closes_the_batch(self):
+        key1, key2 = "run-gates|lint-x|stale_hash|src/a.md|1", "run-gates|lint-x|stale_hash|src/other.txt|2"
+        previous_rows = self.rows_file("m1.rows.json", {"run-gates/lint-x": {
+            "reported": 1, "complete": True, "rows": [self.row(key1, stale=True, grown_stale=True, names=["src/a.md"])]}})
+        rows = self.rows_file("m2.rows.json", {"run-gates/lint-x": {
+            "reported": 2, "complete": True,
+            "rows": [self.row(key1, stale=True, grown_stale=True, names=["src/a.md"]),
+                     self.row(key2, stale=True, grown_stale=True, names=["src/other.txt"])]}})
+        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
+        code, out = self.check(current, previous, rows, previous_rows)
+        self.assertEqual(code, 1, out)
+        self.assertIn("names another member's file", out)
+
+    def test_staleness_by_detail_text_alone_does_not_excuse_the_rise(self):
+        key1, key2 = "run-gates|lint-x|stale_hash|src/a.md|1", "run-gates|lint-x|registry_entry_mismatch|src/own.txt|2"
+        previous_rows = self.rows_file("m1.rows.json", {"run-gates/lint-x": {
+            "reported": 1, "complete": True, "rows": [self.row(key1, stale=True, grown_stale=True, names=["src/a.md"])]}})
+        rows = self.rows_file("m2.rows.json", {"run-gates/lint-x": {
+            "reported": 2, "complete": True,
+            "rows": [self.row(key1, stale=True, grown_stale=True, names=["src/a.md"]),
+                     self.row(key2, stale=True, grown_stale=False, names=["src/own.txt"])]}})
+        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
+        code, out = self.check(current, previous, rows, previous_rows)
+        self.assertEqual(code, 1, out)
+        self.assertIn("staleness only by its detail text", out)
+
+    def test_a_rise_with_no_row_reports_cannot_be_excused(self):
+        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
+        code, out = self.check(current, previous)
+        self.assertEqual(code, 1, out)
+        self.assertIn("wrote no row report", out)
+        self.assertIn("TRIGGER batch_total_rise", out)
+
+    def test_a_report_without_the_comparison_lines_closes_the_batch(self):
+        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        current = self.report_file("m2.txt", landing_report(older=True))
+        code, out = self.check(current, previous)
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_check_too_old", out)
+
+    def test_a_bucket_that_was_gone_and_is_back_closes_the_batch(self):
+        previous = self.report_file("m1.txt", landing_report(gone=1, gone_ids=["run-gates|lint-x|missing_ref|src/x.txt"],
+                                                             totals={"run-gates/lint-x": 0}))
+        current = self.report_file("m2.txt", landing_report(gone=0, totals={"run-gates/lint-x": 1}))
+        code, out = self.check(current, previous)
+        self.assertEqual(code, 1, out)
+        self.assertIn("listed as gone is back", out)
+
+    def test_gone_ids_that_do_not_add_up_close_the_batch(self):
+        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        text = landing_report(totals={"run-gates/lint-x": 2}).replace("Subcheck totals this run: 1",
+                                                                       "Subcheck totals this run: 2")
+        current = self.report_file("m2.txt", text)
+        code, out = self.check(current, previous)
+        self.assertEqual(code, 1, out)
+        self.assertIn("do not add up", out)
+
+    def test_the_previous_members_report_not_on_record_is_a_trigger(self):
+        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
+        code, out = self.check(current)
+        self.assertEqual(code, 1, out)
+        self.assertIn("not on record", out)
+
+    def test_an_unreadable_previous_report_is_refused(self):
+        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
+        code, _out = self.check(current, self.reports / "no-such-report.txt")
+        self.assertEqual(code, 3)
+
+    def test_a_landing_check_that_cannot_batch_lands_alone_or_closes(self):
+        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
+        code, out = self.check(current, source=False)
+        self.assertEqual(code, 1, out)
+        self.assertIn("judged alone", out)
+        self.holder(start=self.base)
+        code, out = self.check(current, source=False)
+        self.assertEqual(code, 1, out)
+        self.assertIn("land it alone", out)
+
+    def test_the_landing_checks_own_exit_decides_when_it_is_not_zero_or_one(self):
+        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
+        for exit_code in (2, 3):
+            with self.subTest(exit_code=exit_code):
+                code, out = self.check(current, code=exit_code)
+                self.assertEqual(code, 1, out)
+                self.assertIn(f"the landing check exited {exit_code}", out)
+
+    def test_a_traceback_means_the_check_did_not_finish_judging(self):
+        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}, tail=CRASH))
+        code, out = self.check(current)
+        self.assertEqual(code, 1, out)
+        self.assertIn("did not finish judging", out)
+
+    def test_the_base_must_be_a_full_sha(self):
+        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
+        code, _out = self.check(current, base="origin/main")
+        self.assertEqual(code, 3)
+
+    def test_no_open_batch_is_refused(self):
+        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
+        code, _out = self.check(current, lock=self.root / "free-lock")
+        self.assertEqual(code, 3)
+        self.assertIn("no batch is open", self.stderr)
+
+    def test_the_base_must_be_the_open_batch(self):
+        self.holder(start=self.member1, rows=[])
+        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
+        code, _out = self.check(current)
+        self.assertEqual(code, 3)
+
+    def test_the_check_source_defaults_to_the_script_at_the_members_commit(self):
+        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        code, out = self.check(current, previous, source=None)
+        self.assertEqual(code, 0, out)
+        self.assertIn("no trigger", out)
+
+
+class PutBackTests(BatchFixture):
+    def test_a_path_in_the_members_own_range_that_the_batch_diff_lacks_closes_it(self):
+        self.put("scripts/pm-landing-check.py", " ".join(land.BATCH_CHECK_MARKS) + "\n")
+        self.put("src/a.txt", "one\n")
+        self.commit("landing check and the file")
+        self.base = self.rev("HEAD")
+        self.set_main(self.base)
+        self.put("src/a.txt", "two\n")
+        self.member1 = self.commit("member 1 changes it")
+        self.set_main(self.member1)
+        self.put("src/a.txt", "one\n")
+        self.head = self.commit("member 2 puts it back")
+        self.holder(start=self.base, rows=[f"fix/a {self.member1}"])
+        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        code, out = self.batch_check("--base", self.base, "--exit", "0", "--report", current, "--repo", self.shared,
+                                     "--head", self.head, "--previous", previous, "--lock-dir", self.lock)
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_reverted_path", out)
+        self.assertIn("src/a.txt", out)
+
+
+class BatchVerifyTests(unittest.TestCase):
+    """Batch mode: a member's receipt base is its batch-start, accepted only while the rule's record names it and
+    lists every commit main has landed since. The fixture's setUp and helpers, not its tests."""
+
+    setUp = LandingFixture.setUp
+    git = LandingFixture.git
+    put = LandingFixture.put
+    make_record = LandingFixture.make_record
+
+    def setUp(self):
+        LandingFixture.setUp(self)
+        self.lock = self.root / "lock"
+
+    def history(self):
+        """Member 1 lands on main; the candidate is a commit on top of it; the shared checkout stays at base."""
+        self.put(self.shared, "tracked.txt", "member one\n")
+        self.git(self.shared, "commit", "-am", "member 1")
+        member1 = land.revision(self.shared, "HEAD")
+        self.git(self.shared, "push", "origin", f"{member1}:{land.MAIN_REF}")
+        self.put(self.shared, "tracked.txt", "member two\n")
+        self.git(self.shared, "commit", "-am", "member 2")
+        head = land.revision(self.shared, "HEAD")
+        self.git(self.shared, "branch", "-f", self.branch, head)
+        self.git(self.shared, "push", "-f", "origin", f"{head}:{self.ref}")
+        self.git(self.shared, "reset", "--keep", self.base)
+        return member1, head
+
+    def holder(self, start=None, rows=(), text=None):
+        held = self.lock / "held"
+        held.mkdir(parents=True, exist_ok=True)
+        if text is not None:
+            (held / "holder.txt").write_text(text, encoding="utf-8")
+            return
+        lines = ["agent: fixture", "branch: fix/topic", f"time: {land.iso()}"]
+        if start:
+            lines.append(f"batch-start: {start}")
+        lines += [f"batch-landing: {row}" for row in rows]
+        (held / "holder.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+    def receipt(self, head, base=None, rows=True):
+        base = base or self.base
+        report = self.folder / "landing-check.json"
+        land.write_json(report, {"schema_id": "pm.landing_check.report.v1", "commit": head, "base": base,
+                                 "blocking": 0, "subcheck_timeout_seconds": land.TIMEOUT})
+        row_report = self.folder / "rows.json"
+        if rows:
+            land.write_json(row_report, {"schema_id": land.ROW_REPORT_SCHEMA, "base": base, "subchecks": {}})
+        tree = land.revision(self.shared, head + "^{tree}")
+        record = {"schema": 2, "host": "nas1", "machine": socket.gethostname(), "topic": self.ref,
+                  "worktree": str(self.remote), "full": True, "clean": True, "job": land.job_name(self.folder),
+                  "head": head, "tree": tree, "base": base, "exit_code": 0,
+                  "report": str(report), "report_sha256": land.file_hash(report),
+                  "row_report": str(row_report) if rows else None,
+                  "row_report_sha256": land.file_hash(row_report) if rows else None,
+                  "started_utc": "2026-11-21T15:00:00+00:00", "ended_utc": "2026-11-21T15:20:00+00:00",
+                  "ignored_inputs": self.manifest, "shard_exit_code": 0}
+        land.write_json(self.path, record)
+        witness = land.receipt_witness(self.folder)
+        witness.parent.mkdir(exist_ok=True)
+        witness.write_text(land.file_hash(self.path) + "\n", encoding="ascii")
+        return record
+
+    def verify(self, batch_start=None):
+        with (patch.object(land, "LOCK_DIR", self.lock),
+              patch.object(land, "ssh", return_value=subprocess.CompletedProcess([], 0, "", ""))):
+            return land.verify_receipt(self.path, None, None, batch_start or self.base)
+
+    def test_a_member_whose_base_is_the_batch_start_and_whose_landings_are_listed_is_verified(self):
+        member1, head = self.history()
+        self.holder(self.base, [f"fix/a {member1}"])
+        self.receipt(head)
+        output = io.StringIO()
+        with redirect_stdout(output):
+            self.assertEqual(self.verify(), 0)
+        self.assertIn(f"Verified {head} against batch-start {self.base}", output.getvalue())
+
+    def test_a_commit_on_main_that_no_batch_landing_row_names_is_refused(self):
+        member1, head = self.history()
+        self.holder(self.base, [])
+        self.receipt(head)
+        with self.assertRaisesRegex(land.Refusal, "not listed as a `batch-landing"):
+            self.verify()
+
+    def test_a_batch_start_that_is_not_the_open_batch_is_refused(self):
+        member1, head = self.history()
+        self.holder(member1, [f"fix/a {member1}"])
+        self.receipt(head)
+        with self.assertRaisesRegex(land.Refusal, "is not the open batch's batch-start"):
+            self.verify()
+
+    def test_a_closed_or_missing_batch_is_refused(self):
+        member1, head = self.history()
+        self.receipt(head)
+        with self.assertRaisesRegex(land.Refusal, "no open batch"):
+            self.verify()
+
+    def test_a_moving_name_instead_of_a_full_sha_is_refused(self):
+        member1, head = self.history()
+        self.holder(self.base, [f"fix/a {member1}"])
+        self.receipt(head)
+        with self.assertRaisesRegex(land.Refusal, "must be a full 40-character commit or tree SHA"):
+            self.verify("origin/main")
+
+    def test_a_receipt_whose_base_is_not_the_batch_start_is_refused(self):
+        member1, head = self.history()
+        self.holder(self.base, [f"fix/a {member1}"])
+        self.receipt(head, base=member1)
+        with self.assertRaisesRegex(land.Refusal, "receipt base is .*--batch-start is"):
+            self.verify()
+
+    def test_a_candidate_that_does_not_contain_main_is_refused(self):
+        member1, _head = self.history()
+        self.holder(self.base, [f"fix/a {member1}"])
+        self.receipt(self.head)  # the fixture's original candidate, a child of base only
+        with self.assertRaisesRegex(land.Refusal, "is not an ancestor of the checked commit"):
+            self.verify()
+
+    def test_a_receipt_with_no_row_report_cannot_be_a_batch_member(self):
+        member1, head = self.history()
+        self.holder(self.base, [f"fix/a {member1}"])
+        self.receipt(head, rows=False)
+        with self.assertRaisesRegex(land.Refusal, "records no row report"):
+            self.verify()
+
+    def test_a_malformed_batch_landing_row_is_refused_not_dropped(self):
+        member1, head = self.history()
+        self.holder(self.base, [f"fix/a {member1}", "fix/b nope"])
+        self.receipt(head)
+        with self.assertRaisesRegex(land.Refusal, "cannot read"):
+            self.verify()
+
+
+class CheckBatchBaseTests(unittest.TestCase):
+    setUp = LandingFixture.setUp
+    git = LandingFixture.git
+    put = LandingFixture.put
+    make_record = LandingFixture.make_record
+
+    def test_check_measures_a_member_against_its_batch_start_on_main(self):
+        self.put(self.shared, "tracked.txt", "member one\n")
+        self.git(self.shared, "commit", "-am", "member 1")
+        member1 = land.revision(self.shared, "HEAD")
+        self.git(self.shared, "push", "origin", f"{member1}:{land.MAIN_REF}")
+        self.git(self.shared, "reset", "--keep", self.base)
+        with (patch.object(land, "start_remote_job") as start, patch.object(land, "new_run", return_value=self.folder),
+              patch.object(land, "cleanup_after_check")):
+            self.assertEqual(land.check_topic(self.shared, self.branch, "nas1", self.base), 0)
+        start.assert_called_once_with(self.folder, "nas1", self.ref, self.head, self.tree, self.base, member1, False)
+
+    def test_a_batch_capable_check_is_asked_for_its_row_report(self):
+        self.put(self.shared, "tracked.txt", "member one\n")
+        self.git(self.shared, "commit", "-am", "member 1")
+        member1 = land.revision(self.shared, "HEAD")
+        self.git(self.shared, "push", "origin", f"{member1}:{land.MAIN_REF}")
+        self.put(self.shared, "scripts/pm-landing-check.py", " ".join(land.BATCH_CHECK_MARKS) + "\n")
+        self.git(self.shared, "add", "scripts/pm-landing-check.py")
+        self.git(self.shared, "commit", "-qm", "the comparison lines")
+        head = land.revision(self.shared, "HEAD")
+        tree = land.revision(self.shared, "HEAD^{tree}")
+        self.git(self.shared, "branch", "-f", self.branch, head)
+        self.git(self.shared, "push", "-f", "origin", f"{head}:{self.ref}")
+        self.git(self.shared, "reset", "--keep", self.base)
+        self.head, self.tree = head, tree
+        self.make_record(1)
+        with (patch.object(land, "start_remote_job") as start, patch.object(land, "new_run", return_value=self.folder),
+              patch.object(land, "cleanup_after_check")):
+            self.assertEqual(land.check_topic(self.shared, self.branch, "nas1", self.base), 0)
+        start.assert_called_once_with(self.folder, "nas1", self.ref, head, tree, self.base, member1, True)
+
+    def test_a_base_that_is_not_on_main_is_refused(self):
+        with self.assertRaisesRegex(land.Refusal, "is not on the fetched origin/main"):
+            land.check_topic(self.shared, self.branch, "nas1", self.head)
 
 
 if __name__ == "__main__":
