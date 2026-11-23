@@ -38,7 +38,8 @@ async function inventory(f) {
 			const tabs = [...b.querySelectorAll('[role=tablist]')].filter((n) => n.getClientRects().length)[0];
 			const n = tabs ? tabs.querySelectorAll('[role=tab]').length : 1;
 			for (let i = 0; i < n; i++) {
-				if (tabs) { find().querySelectorAll('[role=tablist]')[0].querySelectorAll('[role=tab]')[i].click(); await wait(900); }
+				/* wait for the clicked tab to be the chosen one, then for its page: a fixed wait once read the tab before */
+				if (tabs) { const tl = () => find().querySelectorAll('[role=tablist]')[0].querySelectorAll('[role=tab]'); tl()[i].click(); for (let k = 0; k < 30; k++) { await wait(150); const cur = tl()[i]; if (cur && cur.getAttribute('aria-selected') === 'true') break; } await wait(700); }
 				b = find(); if (!b) break;
 				views.push(`${d.id}/${w.id}/${i}`);
 				b.querySelectorAll('[id^="setting-"], [data-setting-id]').forEach((r) => ids.add((r.id && r.id.indexOf('setting-') === 0 ? r.id.slice(8) : '') || r.getAttribute('data-setting-id')));
