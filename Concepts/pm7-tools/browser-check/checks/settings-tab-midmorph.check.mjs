@@ -7,24 +7,26 @@
 // mid-morph (the morph runs about 300 ms plus its after-paint start), on three tabbed managers in three chapters.
 // The page's own click log measures the interval the two trusted clicks actually landed at (a busy main thread can
 // stretch the sent interval) and the morph state at click 2; each rep is judged only when click 2 really landed
-// mid-morph (.o55-leaving or data-o55-morph present on the host), else it is logged as not judged. Four looks at
-// 1440x900 and 860x900, both surfaces; a Reduced Motion case keeps the immediate swap covered (no morph state is
-// asked for there: every swap is immediate by design). Asserts after the animation: exactly one body, no
+// mid-morph (.o55-leaving or data-o55-morph present on the host — never qualified by a time window), else it is
+// logged as not judged and never counted as a pass. Before every timing rep, the baseline tab/selection is reset and
+// verified (including detail title and Edit/primary target for item/formatter rows); if the baseline cannot be
+// reached, the rep is not judged, and any manager/row with fewer than 2 judged reps (1 when 1-2 gaps are requested) fails.
+// Four looks at 1440x900 and 860x900, both surfaces; a Reduced Motion case keeps the immediate swap covered (no morph
+// state is asked for there: every swap is immediate by design). Asserts after the animation: exactly one body, no
 // .o55-leaving copy, the visible body is tab C's (its own marker present, tab B's marker absent, strip active on C),
 // its rows are drawn, and no morph state is stuck on the manager. --set looks=, gaps= pick subsets; each gap is one rep.
 // The same file carries FO-S1b, the detail-swap twin (batch 18): a second item click mid-morph keeps the arriving
-// detail, and FO-S1b-insp, the Details-inspector twin: a second About click mid-morph keeps the arriving inspector
-// page. Their rows, helpers and judges are below the tab ones; --set dws= picks the detail managers.
-// Neon's FO-S2 recheck lows are fixed here: the look is saved ({ save: true }) and asserted still painted every rep
-// (PM51.go used to paint glass-light and retro-light back to the saved basic-dark), the crops are taken right after
-// the second click lands (before the reset to the start tab), and mid-morph is qualified by the host's state at
-// click 2, not only by the click interval (a height-equal morph can finish at dur * 0.6).
+// detail; FO-S1b-insp, the Details-inspector twin: a second About click mid-morph keeps the arriving inspector page;
+// and FO-S1b tab-then-item (Code > Toolchain Formatters tab then rustfmt): clicking a formatter while the Formatters
+// tab body is arriving keeps rustfmt's detail, Edit target, and roster. --set dws= picks detail managers; --set tigaps=
+// picks tab-then-item gaps.
 
 import { lookHeld } from '../helpers/settings-look.mjs';
 
 const LOOKS = ['basic-dark', 'glass-light', 'nier-dark', 'retro-light'];
 const SIZES = [[1440, 900], [860, 900]];
 const GAPS = [55, 85, 115];
+const INSP_GAPS = [35, 65, 95];
 const ROWS = '.pm51-row, .pm51-item, .resource-row, .pm51-acc-item';
 const CONTENT = ROWS + ', .pm51-section-title, .pm51-note, .o55-quiet-line';
 const MANAGERS = [
@@ -33,6 +35,12 @@ const MANAGERS = [
 	{ domain: 'ai', ws: 'web', start: 'limits', B: 'services', C: 'abilities', bMark: '.o55-web-services', cMark: '.resource-detail' },
 ];
 
+const minJudgedFor = (arr) => (arr.length >= 3 ? 2 : 1);
+const repCounts = (judged, baselineUnjudged, settledUnjudged, deliveryFailed, total, minJudged) => {
+	const notJudged = baselineUnjudged + settledUnjudged;
+	return `${judged} judged, ${notJudged} not judged (baseline ${baselineUnjudged}, settled ${settledUnjudged}${deliveryFailed ? `, delivery-failed ${deliveryFailed}` : ''}) of ${total} reps (need >= ${minJudged})`;
+};
+
 async function settings(t, surface, [w, h]) {
 	await t.viewport(w, h);
 	const f = await t.app.open({ sandbox: surface === 'sandbox' });
@@ -40,7 +48,7 @@ async function settings(t, surface, [w, h]) {
 	await f.locator('#tab-settings').click();
 	await t.settle();
 	/* Capture-phase click log: what was clicked, when, trusted, and the morph state of the click's own host at the
-	   moment of the click (before the engine's handler runs), so click 2 can be qualified as mid-morph by state. */
+	   moment of the click (before the engine's handler runs), so click 2 can be qualified as mid-morph by DOM state. */
 	await f.evaluate(() => {
 		window.__foS2Clicks = [];
 		window.__foS1bClicks = [];
@@ -72,13 +80,32 @@ async function go(t, f, domain, ws) {
 	await f.waitForSelector(`${BODY(ws)}[data-workspace-mounted="true"]`, { timeout: 15000 });
 	await t.settle();
 }
+async function waitMgrClear(f, ws, timeout = 2000) {
+	await f.waitForFunction((w) => {
+		const body = document.querySelector(`[data-continuous-workspace-body="${w}"]`);
+		const page = body && body.querySelector('.pm51-mgr');
+		if (!page) return false;
+		const split = [...page.querySelectorAll('.pm51-split')].find((el) => !el.closest('.o55-leaving'));
+		return page.querySelectorAll('.o55-leaving').length === 0 && page.dataset.o55Morph == null && (!split || split.dataset.o55Morph == null);
+	}, ws, { timeout }).catch(() => {});
+}
+async function frameOffset(t, f) {
+	let ox = 0, oy = 0;
+	if (f !== t.page.mainFrame()) {
+		const el = await f.frameElement().catch(() => null);
+		const fb = el && (await el.boundingBox());
+		if (fb) { ox = fb.x; oy = fb.y; }
+	}
+	return { ox, oy };
+}
 const tabBtn = (f, ws, tab) => f.locator(`${BODY(ws)} .pm51-tabs .manager-tab[data-tab="${tab}"]`).first();
 async function slowTab(t, f, ws, tab) {
 	const b = tabBtn(f, ws, tab);
 	await b.scrollIntoViewIfNeeded();
 	await b.click();
+	await t.page.waitForTimeout(200);
+	await waitMgrClear(f, ws, 2000);
 	await t.settle();
-	await t.page.waitForTimeout(450);
 }
 /* Two real mouse clicks at the tabs' own centres, gap ms apart; no actionability wait between them. */
 async function rapid(t, f, m, gap) {
@@ -92,7 +119,8 @@ async function rapid(t, f, m, gap) {
 	await t.page.waitForTimeout(gap);
 	await t.page.mouse.click(cb.x + cb.width / 2, cb.y + cb.height / 2);
 	const landed = Date.now() - t0;
-	await t.page.waitForTimeout(800);
+	await t.page.waitForTimeout(250);
+	await waitMgrClear(f, m.ws, 1200);
 	await t.settle();
 	const clicks = await f.evaluate((ws) => window.__foS2Clicks.filter((x) => x.ws === ws), m.ws);
 	return { gap, landed, clicks };
@@ -130,25 +158,44 @@ const readState = (f, m) => f.evaluate(([ws, bMark, cMark, rowsSel, contentSel])
 	};
 }, [m.ws, m.bMark, m.cMark, ROWS, CONTENT]);
 
-/* Returns true/false for a judged rep, or 'unjudged' when click 2 landed after the first morph had already settled
-   (such a rep does not exercise the bug; it is logged, not counted). Reduced motion swaps immediately: no morph
+async function resetTabBaseline(t, f, m) {
+	const okState = (s) => !s.err && s.bodies === 1 && s.leaving === 0 && s.morph === null && s.active.join(',') === m.start && !s.bMark && !s.cMark;
+	let s = await readState(f, m);
+	if (!okState(s)) {
+		await slowTab(t, f, m.ws, m.start);
+		s = await readState(f, m);
+	}
+	if (!okState(s)) {
+		await t.page.waitForTimeout(350);
+		await waitMgrClear(f, m.ws, 1500);
+		s = await readState(f, m);
+	}
+	return {
+		ok: okState(s),
+		detail: s.err || `active [${s.active.join(',')}] (want ${m.start}), bodies ${s.bodies}, leaving ${s.leaving}, morph ${s.morph}, bMark ${s.bMark}, cMark ${s.cMark}`,
+	};
+}
+
+/* Returns true/false for a judged rep, 'unjudged-settled' when click 2 landed after the first morph had already settled,
+   or 'failed-delivery' when the two trusted clicks did not land. Mid-morph is qualified purely by DOM state at click 2
+   (.o55-leaving or data-o55-morph on the host), never by a time window. Reduced motion swaps immediately: no morph
    state is asked for, every landed rep is judged. */
 async function judge(t, f, m, timing, look, reduced = false) {
 	const { gap, landed, clicks } = timing;
 	const tag = `${m.ws} ${m.B}->${m.C} gap ${gap} ms`;
 	const pair = clicks.length >= 2 ? clicks.slice(-2) : [];
 	const inPage = pair.length === 2 ? Math.round(pair[1].at - pair[0].at) : null;
-	const landed2 = pair.length === 2 && pair[0].tab === m.B && pair[1].tab === m.C && pair.every((x) => x.trusted) && inPage > 5 && inPage < 450;
+	const landed2 = pair.length === 2 && pair[0].tab === m.B && pair[1].tab === m.C && pair.every((x) => x.trusted) && inPage > 5;
 	await t.check(`${tag}: two trusted clicks landed (sent ${gap} ms apart, ${landed} ms wall)`, landed2,
-		`clicks ${JSON.stringify(pair.map((x) => ({ tab: x.tab, trusted: x.trusted })))}, in-page interval ${inPage} ms (must be 5-450 ms)`);
-	if (!landed2) return false;
+		`clicks ${JSON.stringify(clicks.map((x) => ({ tab: x.tab, trusted: x.trusted })))}, in-page interval ${inPage} ms`);
+	if (!landed2) return 'failed-delivery';
 	const got = await paintedRead(f);
 	await t.check(`${tag}: still painted ${look}`, lookHeld(look, got), `painted ${got.theme}${got.nier ? ', NieR on' : ''}`);
 	if (!reduced) {
 		const midState = pair[1].leaving > 0 || pair[1].morph != null;
 		if (!midState) {
 			t.log(`${tag}: rep not judged — the first morph had already settled at click 2 (leaving ${pair[1].leaving}, data-o55-morph ${pair[1].morph}); in-page interval ${inPage} ms`);
-			return 'unjudged';
+			return 'unjudged-settled';
 		}
 		t.log(`${tag}: mid-morph at click 2 (leaving ${pair[1].leaving}, data-o55-morph ${pair[1].morph}); two trusted clicks ${inPage} ms apart in the page (sent ${gap} ms, wall ${landed} ms)`);
 	}
@@ -166,33 +213,36 @@ async function judge(t, f, m, timing, look, reduced = false) {
 
 /* ---------- FO-S1b: the detail-swap twin ------------------------------------------------------------------------
    A second item click while the first detail swap is still morphing (about 260 ms) drops the arriving detail:
-   PM51.swapDetail read the old detail with '.resource-detail', which matches the .o55-leaving copy of the interrupted
+   PM51.swapDetail read the old detail with '.resource-detail', which matches the .o55-leaving copy of an interrupted
    morph (it precedes the arriving detail in document order). o55Morph then removes that leaving copy — its own oldEl —
    before inserting the new one, so oldEl.after(newEl) places nothing: the roster highlight, the item's More button and
    the state move to the last-clicked item while the first-clicked item's detail stays on screen, and the split keeps
    the interrupted morph's data-o55-morph and inline position:relative (the arriving detail never connects, so its
    ResizeObserver never fires and no cleanup runs). Real mouse clicks: item B, then item C 55/85/115 ms later, on
    Personas, Goals > Templates and Servers (two roster items there: B, then back to the first as C), in four looks at
-   1440x900, both surfaces. Asserts after the animation: the visible detail is item C's (its title, the roster's active
-   row), its content drawn, the side index names the open tab and its group anchors are live (none stranded in a stale
-   detail), and no .o55-leaving copy or stuck morph state remains on the split. Fails on the base page; the fix selects
-   '.resource-detail:not(.o55-leaving)'. */
+   1440x900, both surfaces. Before every rep, resets to the first item and verifies its baseline title, primary/Edit
+   target, and active roster row. Asserts after the animation: the visible detail is item C's (its title, primary/Edit
+   target, and roster active row), its content drawn, the side index names the open tab and its group anchors are live
+   (none stranded in a stale detail), and no .o55-leaving copy or stuck morph state remains on the split. */
 const DETAIL_MANAGERS = [
 	{ domain: 'memory', ws: 'personas', tab: 'personas' },
 	{ domain: 'memory', ws: 'goals', tab: 'templates' },
 	{ domain: 'system', ws: 'servers', tab: 'servers' },
 ];
-const rowBtn = (f, ws, id) => f.locator(`${BODY(ws)} .resource-roster .resource-row[data-id="${id}"]`).first();
+const rowBtn = (f, ws, id) => f.locator(`${BODY(ws)} .pm51-mgr > .manager-body:not(.o55-leaving) .resource-roster .resource-row[data-id="${id}"]`).first();
 async function slowRow(t, f, ws, id) {
 	const b = rowBtn(f, ws, id);
 	await b.scrollIntoViewIfNeeded();
 	await b.click();
+	await t.page.waitForTimeout(100);
+	await waitMgrClear(f, ws, 2000);
 	await t.settle();
-	await t.page.waitForTimeout(450);
 }
 const readRoster = (f, ws) => f.evaluate((w) => {
 	const body = document.querySelector(`[data-continuous-workspace-body="${w}"]`);
-	const rows = body ? [...body.querySelectorAll('.resource-roster .resource-row')] : [];
+	const page = body && body.querySelector('.pm51-mgr');
+	const live = page && page.querySelector(':scope > .manager-body:not(.o55-leaving)');
+	const rows = live ? [...live.querySelectorAll('.resource-roster .resource-row')] : [];
 	return rows.map((r) => { const b = r.getBoundingClientRect(); return { id: r.dataset.id, name: ((r.querySelector('.resource-row-name') || {}).textContent || '').trim(), laid: b.width > 0 && b.height > 0 }; }).filter((r) => r.laid && r.id);
 }, ws);
 const readRestPos = (f, ws) => f.evaluate((w) => {
@@ -212,25 +262,30 @@ async function rapidRows(t, f, ws, B, C, gap) {
 	await t.page.waitForTimeout(gap);
 	await t.page.mouse.click(cb.x + cb.width / 2, cb.y + cb.height / 2);
 	const landed = Date.now() - t0;
-	await t.page.waitForTimeout(800);
+	await t.page.waitForTimeout(250);
+	await waitMgrClear(f, ws, 1200);
 	await t.settle();
 	const clicks = await f.evaluate((w) => window.__foS1bClicks.filter((x) => x.ws === w), ws);
 	return { gap, landed, clicks };
 }
 /* Everything judged is scoped to the manager's own split: the in-flow detail (never a leaving copy), the roster,
-   the side index's anchors, and the split's own morph state against its position at rest. */
+   its primary/Edit action target, the side index's anchors, and the split's own morph state against its position at rest. */
 const readDetailState = (f, m, restPos) => f.evaluate(([ws, rest]) => {
 	const body = document.querySelector(`[data-continuous-workspace-body="${ws}"]`);
 	const page = body && body.querySelector('.pm51-mgr');
 	if (!page) return { err: 'no manager page' };
-	const split = [...page.querySelectorAll('.pm51-split')].find((el) => !el.closest('.o55-leaving'));
+	const liveBody = page.querySelector(':scope > .manager-body:not(.o55-leaving)');
+	const split = liveBody && liveBody.querySelector('.pm51-split');
 	if (!split) return { err: 'no live split' };
 	const details = [...split.querySelectorAll(':scope > .resource-detail')];
 	const flow = details.find((d) => !d.classList.contains('o55-leaving')) || null;
 	const laid = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
 	const title = flow ? ((flow.querySelector('.pm51-detail-title') || {}).textContent || '').trim() : '';
+	const primaryBtn = flow ? flow.querySelector('.pm51-detail-actions > button[data-id]') : null;
+	const primaryId = primaryBtn ? (primaryBtn.dataset.id || null) : null;
+	const primaryLaid = primaryBtn ? laid(primaryBtn) : false;
 	const content = flow ? [...flow.querySelectorAll('.setting-row, .pm51-row, .pm51-step, .pm51-kv-row, .pm51-section-title, .pm51-note, .o55-quiet-line, .o55-goals-phase')].filter((el) => laid(el) && (el.innerText || '').trim().length > 0) : [];
-	const active = [...page.querySelectorAll('.resource-roster .resource-row.active')].map((r) => r.dataset.id);
+	const active = [...liveBody.querySelectorAll('.resource-roster .resource-row.active')].map((r) => r.dataset.id);
 	const group = document.querySelector(`.pm51-index-group[data-index-ws="${ws}"]`);
 	const entries = group ? [...group.querySelectorAll('.index-link:not(.pm51-index-tab)')].map((b) => b.dataset.section) : [];
 	const anchors = entries.map((id) => {
@@ -244,38 +299,61 @@ const readDetailState = (f, m, restPos) => f.evaluate(([ws, rest]) => {
 	return {
 		details: details.length,
 		leaving: page.querySelectorAll('.o55-leaving').length,
-		title, active,
+		title, primaryId, primaryLaid, active,
 		rows: content.length,
 		text: flow ? (flow.innerText || '').trim().length : 0,
 		opacity: flow ? getComputedStyle(flow).opacity : null,
 		overlap: r ? Math.min(r.bottom, innerHeight) - Math.max(r.top, 0) : 0,
 		morph: split.dataset.o55Morph || null,
+		pageMorph: page.dataset.o55Morph || null,
 		inlinePos: split.style.position || '', inlineOverflow: split.style.overflow || '',
 		pos: getComputedStyle(split).position, restPos: rest,
 		entries: entries.length, anchors, openTab,
 	};
 }, [m.ws, restPos]);
+
+async function resetDetailBaseline(t, f, m, A, B, restPos) {
+	const okState = (s) => !s.err && s.details === 1 && s.leaving === 0 && s.morph === null && s.pageMorph === null
+		&& s.active.join(',') === A.id && s.title.startsWith(A.name) && !s.title.startsWith(B.name)
+		&& s.primaryId === A.id && s.primaryLaid;
+	let s = await readDetailState(f, m, restPos);
+	if (!okState(s)) {
+		await slowRow(t, f, m.ws, A.id);
+		s = await readDetailState(f, m, restPos);
+	}
+	if (!okState(s)) {
+		await t.page.waitForTimeout(350);
+		await waitMgrClear(f, m.ws, 1500);
+		s = await readDetailState(f, m, restPos);
+	}
+	return {
+		ok: okState(s),
+		detail: s.err || `title "${s.title}" (want "${A.name}", not "${B.name}"), primary data-id ${s.primaryId} (laid ${s.primaryLaid}), roster active [${s.active.join(',')}], details ${s.details}, leaving ${s.leaving}, morph ${s.morph}, pageMorph ${s.pageMorph}`,
+	};
+}
+
 async function judgeDetail(t, f, m, B, C, timing, restPos, look) {
 	const { gap, landed, clicks } = timing;
 	const tag = `${m.ws} ${B.id}->${C.id} gap ${gap} ms`;
 	const pair = clicks.length >= 2 ? clicks.slice(-2) : [];
 	const inPage = pair.length === 2 ? Math.round(pair[1].at - pair[0].at) : null;
-	const landed2 = pair.length === 2 && pair[0].id === B.id && pair[1].id === C.id && pair.every((x) => x.trusted) && inPage > 5 && inPage < 450;
+	const landed2 = pair.length === 2 && pair[0].id === B.id && pair[1].id === C.id && pair.every((x) => x.trusted) && inPage > 5;
 	await t.check(`${tag}: two trusted item clicks landed (sent ${gap} ms apart, ${landed} ms wall)`, landed2,
-		`clicks ${JSON.stringify(pair.map((x) => ({ id: x.id, trusted: x.trusted })))}, in-page interval ${inPage} ms (must be 5-450 ms)`);
-	if (!landed2) return false;
+		`clicks ${JSON.stringify(clicks.map((x) => ({ id: x.id, trusted: x.trusted })))}, in-page interval ${inPage} ms`);
+	if (!landed2) return 'failed-delivery';
 	const got = await paintedRead(f);
 	await t.check(`${tag}: still painted ${look}`, lookHeld(look, got), `painted ${got.theme}${got.nier ? ', NieR on' : ''}`);
 	const midState = pair[1].leaving > 0 || pair[1].morph != null;
 	if (!midState) {
 		t.log(`${tag}: rep not judged — the first morph had already settled at click 2 (leaving ${pair[1].leaving}, data-o55-morph ${pair[1].morph}); in-page interval ${inPage} ms`);
-		return 'unjudged';
+		return 'unjudged-settled';
 	}
 	t.log(`${tag}: mid-morph at click 2 (leaving ${pair[1].leaving}, data-o55-morph ${pair[1].morph}); two trusted clicks ${inPage} ms apart in the page (sent ${gap} ms, wall ${landed} ms)`);
 	const s = await readDetailState(f, m, restPos);
 	if (s.err) { await t.check(`${tag}: manager page present`, false, s.err); return false; }
-	const right = await t.check(`${tag}: visible detail is item ${C.id}'s`, s.title.startsWith(C.name) && !s.title.startsWith(B.name) && s.active.join(',') === C.id,
-		`detail title "${s.title}" (want "${C.name}", not "${B.name}"), roster active [${s.active.join(',')}]`);
+	const right = await t.check(`${tag}: visible detail is item ${C.id}'s (title, primary/Edit target, roster)`,
+		s.title.startsWith(C.name) && !s.title.startsWith(B.name) && s.primaryId === C.id && s.primaryLaid && s.active.join(',') === C.id,
+		`detail title "${s.title}" (want "${C.name}", not "${B.name}"), primary data-id ${s.primaryId} (laid ${s.primaryLaid}), roster active [${s.active.join(',')}]`);
 	const one = await t.check(`${tag}: one detail, no leaving copy left`, s.details === 1 && s.leaving === 0, `${s.details} details, ${s.leaving} leaving`);
 	const drawn = await t.check(`${tag}: item ${C.id}'s detail content is drawn`, s.rows >= 3 && s.overlap >= 100 && s.text >= 40 && s.opacity === '1',
 		`${s.rows} laid-out content elements, overlap ${Math.round(s.overlap)} px, ${s.text} chars, opacity ${s.opacity}`);
@@ -293,9 +371,9 @@ async function judgeDetail(t, f, m, B, C, timing, restPos, look) {
    the last-clicked one, with data-o55-morph stuck on .detail-inspector. Its sibling PM51.syncInspector already
    selects ':scope > .o55-insp-page:not(.o55-leaving)'. The panel is an absolute overlay, so once open the rows'
    About buttons are covered; the real clicks that move it are its "Next to it" neighbour buttons. A's About opens
-   the panel (General > App & Input), then neighbour B, then neighbour C 55/85/115 ms later (C's box re-read from the
-   arriving page so the press lands mid-morph). Asserts: the visible inspector page is C's (its own Setting name),
-   one page, no leaving copy, its now-value and title drawn, no stuck morph state. */
+   the panel (General > App & Input), then neighbour B, then neighbour C mid-morph (C's untransformed target box is
+   computed in one evaluate so the real click lands inside the ~18 px inline button across the 8 px vertical rise).
+   Before every rep, closes and reopens A and verifies the baseline setting is on screen with no stuck morph. */
 const INSP_WS = 'app-input';
 const INSP = '#panel-settings .detail-inspector';
 const aboutBtn = (f, setting) => f.locator(`${BODY(INSP_WS)} [data-action="setting-details"][data-setting="${setting}"]`).first();
@@ -307,29 +385,33 @@ const readAbouts = (f) => f.evaluate((ws) => {
 		return { setting: b.dataset.setting, laid: r.width > 0 && r.height > 0 };
 	}).filter((x) => x.laid && x.setting && !seen.has(x.setting) && seen.add(x.setting));
 }, INSP_WS);
-/* About buttons re-render when the panel opens or closes (the row's aria-expanded flips), so a Playwright
-   locator.click waits on a node that keeps being replaced and times out. Press at the button's own centre with the
-   mouse instead, scrolling it into view through the page (no actionability wait). boundingBox is window coordinates,
-   correct in the sandbox's offset frame too. */
 const scrollAbout = (f, setting) => f.evaluate((s) => {
 	const b = document.querySelector(`[data-continuous-workspace-body="app-input"] [data-action="setting-details"][data-setting="${s}"]`);
 	if (b) b.scrollIntoView({ block: 'center' });
 }, setting);
+async function waitInspClosed(f, timeout = 2500) {
+	await f.waitForFunction((insp) => {
+		const el = document.querySelector(insp);
+		if (!el) return true;
+		return !el.classList.contains('is-open') && !el.classList.contains('is-closing') && getComputedStyle(el).display === 'none';
+	}, INSP, { timeout }).catch(() => {});
+}
+async function waitInspClear(f, timeout = 1200) {
+	await f.waitForFunction((insp) => {
+		const el = document.querySelector(insp);
+		return !!el && el.querySelectorAll('.o55-leaving').length === 0 && el.dataset.o55Morph == null;
+	}, INSP, { timeout }).catch(() => {});
+}
 async function clickAbout(t, f, setting) {
 	await scrollAbout(f, setting);
-	await t.page.waitForTimeout(120);
+	await t.page.waitForTimeout(80);
 	const box = await aboutBtn(f, setting).boundingBox();
 	if (!box || box.width <= 0) throw new Error(`inspector: About ${setting} has no box on screen`);
 	await t.page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+	await f.waitForSelector(`${INSP}.is-open.is-settled`, { timeout: 5000 }).catch(() => {});
+	await waitInspClear(f, 1500);
 	await t.settle();
-	await t.page.waitForTimeout(550);
 }
-/* The panel is an absolute overlay over the document's right edge, so once it is open the rows' own About buttons
-   are covered (a press there hits the panel). The real way to move to another setting while it is open is its
-   "Next to it" neighbour buttons. The first open is the engine's (head+body directly under .detail-inspector); a
-   morph wraps the outgoing content in .o55-insp-page, so a neighbour lives either in the flow .o55-insp-page or,
-   before any morph, directly in .detail-body. */
-const neighLoc = (f, setting) => f.locator(`${INSP} .o55-insp-page:not(.o55-leaving) .o55-insp-near [data-setting="${setting}"], ${INSP} > .detail-body .o55-insp-near [data-setting="${setting}"]`).first();
 const readNeighbours = (f) => f.evaluate((insp) => {
 	const el = document.querySelector(insp);
 	return el ? [...el.querySelectorAll('.o55-insp-near [data-setting]')].filter((b) => !b.closest('.o55-leaving')).map((b) => b.dataset.setting) : [];
@@ -338,33 +420,37 @@ const inspRestPos = (f) => f.evaluate((insp) => {
 	const el = document.querySelector(insp);
 	return el ? getComputedStyle(el).position : null;
 }, INSP);
-/* "Next to it" sits at the foot of the panel body, which scrolls; bring the neighbour into view before measuring,
-   else its box is below the fold and the press lands on nothing. Scope to the flow page (never a leaving copy). */
-const scrollNeigh = (f, setting) => f.evaluate(([insp, s]) => {
+/* Bring the neighbour into view in the in-flow inspector page and return a click point that lies inside the ~18 px
+   button throughout o55Morph's 8 px vertical entrance (dy = 8 -> 0) by subtracting any live transform on the page. */
+const locateNeigh = (f, setting, risePad = 0) => f.evaluate(([insp, s, pad]) => {
 	const el = document.querySelector(insp);
-	if (!el) return;
+	if (!el) return null;
 	const flow = [...el.querySelectorAll(':scope > .o55-insp-page')].find((p) => !p.classList.contains('o55-leaving')) || el;
 	const b = flow.querySelector(`.o55-insp-near [data-setting="${s}"]`);
-	if (b) b.scrollIntoView({ block: 'center' });
-}, [INSP, setting]);
-/* B is pressed at its settled box in A's page; C's box is re-read from the flow page after the gap, so the press
-   lands on C's neighbour where the arriving page actually paints it mid-morph (the neighbour row reflows between
-   settings, so a box measured before B would miss). Both are real mouse clicks at the button's own centre. */
+	if (!b) return null;
+	b.scrollIntoView({ block: 'center', behavior: 'instant' });
+	const r = b.getBoundingClientRect();
+	if (r.width <= 0 || r.height <= 0) return null;
+	const tr = getComputedStyle(flow).transform;
+	const ty = tr && tr !== 'none' ? new DOMMatrixReadOnly(tr).f : 0;
+	const restTop = r.top - ty;
+	const yOff = pad > 0 ? Math.min(r.height - 2, Math.max(r.height / 2, (pad + r.height) / 2)) : r.height / 2;
+	return { x: r.left + r.width / 2, y: restTop + yOff };
+}, [INSP, setting, risePad]);
 async function rapidInsp(t, f, B, C, gap) {
-	await scrollNeigh(f, B.setting);
-	await t.page.waitForTimeout(120);
-	const bb = await neighLoc(f, B.setting).boundingBox();
-	if (!bb) throw new Error(`inspector: neighbour ${B.setting} has no box on screen`);
+	const { ox, oy } = await frameOffset(t, f);
+	const bp = await locateNeigh(f, B.setting, 0);
+	if (!bp) throw new Error(`inspector: neighbour ${B.setting} has no box on screen`);
 	await f.evaluate(() => { window.__foS1bInspClicks = []; });
 	const t0 = Date.now();
-	await t.page.mouse.click(bb.x + bb.width / 2, bb.y + bb.height / 2);
+	await t.page.mouse.click(ox + bp.x, oy + bp.y);
 	await t.page.waitForTimeout(gap);
-	await scrollNeigh(f, C.setting);
-	const cb = await neighLoc(f, C.setting).boundingBox();
-	if (!cb) throw new Error(`inspector: neighbour ${C.setting} has no box mid-morph`);
-	await t.page.mouse.click(cb.x + cb.width / 2, cb.y + cb.height / 2);
+	const cp = await locateNeigh(f, C.setting, 8);
+	if (!cp) throw new Error(`inspector: neighbour ${C.setting} has no box mid-morph`);
+	await t.page.mouse.click(ox + cp.x, oy + cp.y);
 	const landed = Date.now() - t0;
-	await t.page.waitForTimeout(800);
+	await t.page.waitForTimeout(250);
+	await waitInspClear(f, 1200);
 	await t.settle();
 	const clicks = await f.evaluate(() => window.__foS1bInspClicks);
 	return { gap, landed, clicks };
@@ -385,6 +471,7 @@ const readInspState = (f, restPos) => f.evaluate(([ws, rest]) => {
 		leaving: insp.querySelectorAll('.o55-leaving').length,
 		settingId: code ? code.textContent.trim() : '',
 		title, now,
+		open: insp.classList.contains('is-open'),
 		laid: !!(r && r.width > 0 && r.height > 0),
 		opacity: flow ? getComputedStyle(flow).opacity : null,
 		morph: insp.dataset.o55Morph || null,
@@ -392,21 +479,44 @@ const readInspState = (f, restPos) => f.evaluate(([ws, rest]) => {
 		pos: getComputedStyle(insp).position, restPos: rest,
 	};
 }, [INSP_WS, restPos]);
+
+async function resetInspBaseline(t, f, A, B, C, restPos) {
+	const okState = (s) => !s.err && s.open && s.laid && s.leaving === 0 && s.morph === null
+		&& s.settingId === A.setting && s.settingId !== B.setting && s.settingId !== C.setting;
+	const xb = await f.locator(`${INSP} [data-action="close-details"]`).first().boundingBox().catch(() => null);
+	if (xb && xb.width > 0) {
+		await t.page.mouse.click(xb.x + xb.width / 2, xb.y + xb.height / 2);
+		await waitInspClosed(f, 2500);
+		await t.settle();
+	}
+	await clickAbout(t, f, A.setting);
+	let s = await readInspState(f, restPos);
+	if (!okState(s)) {
+		await t.page.waitForTimeout(300);
+		await waitInspClear(f, 1200);
+		s = await readInspState(f, restPos);
+	}
+	return {
+		ok: okState(s),
+		detail: s.err || `setting "${s.settingId}" (want "${A.setting}"), open ${s.open}, laid ${s.laid}, leaving ${s.leaving}, morph ${s.morph}`,
+	};
+}
+
 async function judgeInsp(t, f, B, C, timing, restPos, look) {
 	const { gap, landed, clicks } = timing;
 	const tag = `inspector ${B.setting}->${C.setting} gap ${gap} ms`;
 	const pair = clicks.length >= 2 ? clicks.slice(-2) : [];
 	const inPage = pair.length === 2 ? Math.round(pair[1].at - pair[0].at) : null;
-	const landed2 = pair.length === 2 && pair[0].setting === B.setting && pair[1].setting === C.setting && pair.every((x) => x.trusted) && inPage > 5 && inPage < 450;
+	const landed2 = pair.length === 2 && pair[0].setting === B.setting && pair[1].setting === C.setting && pair.every((x) => x.trusted) && inPage > 5;
 	await t.check(`${tag}: two trusted About clicks landed (sent ${gap} ms apart, ${landed} ms wall)`, landed2,
-		`clicks ${JSON.stringify(pair.map((x) => ({ setting: x.setting, trusted: x.trusted })))}, in-page interval ${inPage} ms (must be 5-450 ms)`);
-	if (!landed2) return false;
+		`clicks ${JSON.stringify(clicks.map((x) => ({ setting: x.setting, trusted: x.trusted })))}, in-page interval ${inPage} ms`);
+	if (!landed2) return 'failed-delivery';
 	const got = await paintedRead(f);
 	await t.check(`${tag}: still painted ${look}`, lookHeld(look, got), `painted ${got.theme}${got.nier ? ', NieR on' : ''}`);
 	const midState = pair[1].leaving > 0 || pair[1].morph != null;
 	if (!midState) {
 		t.log(`${tag}: rep not judged — the first morph had already settled at click 2 (leaving ${pair[1].leaving}, data-o55-morph ${pair[1].morph}); in-page interval ${inPage} ms`);
-		return 'unjudged';
+		return 'unjudged-settled';
 	}
 	t.log(`${tag}: mid-morph at click 2 (leaving ${pair[1].leaving}, data-o55-morph ${pair[1].morph}); two trusted clicks ${inPage} ms apart in the page (sent ${gap} ms, wall ${landed} ms)`);
 	const s = await readInspState(f, restPos);
@@ -426,11 +536,97 @@ async function judgeInsp(t, f, B, C, timing, restPos, look) {
    leaving, so '.resource-detail:not(.o55-leaving)' still matched the detail in the LEAVING tab body. Clicking an item
    as the new tab body arrives (Toolchain > Formatters, rustfmt) then morphed the wrong detail: the roster selected
    rustfmt while the title stayed Prettier and Edit still targeted prettier. The fix scopes swapDetail to the live
-   ':scope > .manager-body:not(.o55-leaving)'. Real clicks: the Formatters tab, then the rustfmt row ~200-290 ms later
-   while the tab body is still arriving. Asserts the detail is rustfmt's (title + Edit data-id + roster), its content
-   drawn, and no stuck detail or tab morph. --set tigaps= picks the gaps. */
-const TI_WS = 'toolchain', TI_TAB = 'formatters', TI_ITEM = 'rustfmt', TI_NAME = 'rustfmt';
-const TI_GAPS = [150, 200, 250];
+   ':scope > .manager-body:not(.o55-leaving)'.
+   Before EVERY rep: resets the Formatters selection back to Prettier and verifies the baseline (Prettier title, Edit
+   data-id="prettier", active roster row prettier, settled morphs), then switches cleanly to Language Servers and
+   verifies it is settled. Real clicks: the Formatters tab, then the rustfmt row mid-tab-morph. Qualifies mid-morph
+   strictly by actual DOM state at click 2 (tabLeaving > 0 || tabMorph != null), with no time-window mask. Asserts the
+   detail is rustfmt's (title + Edit data-id + roster), its content drawn, and no stuck detail or tab morph. */
+const TI_WS = 'toolchain', TI_START_TAB = 'servers', TI_TAB = 'formatters';
+const TI_BASE = 'prettier', TI_BASE_NAME = 'Prettier';
+const TI_ITEM = 'rustfmt', TI_NAME = 'rustfmt';
+const TI_GAPS = [100, 140, 180];
+
+const readTabItemExtra = (f) => f.evaluate((ws) => {
+	const body = document.querySelector(`[data-continuous-workspace-body="${ws}"]`);
+	const page = body && body.querySelector('.pm51-mgr');
+	if (!page) return { err: 'no manager page' };
+	const laid = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
+	const activeTabs = [...page.querySelectorAll(':scope > .pm51-tabs .manager-tab.active')].map((b) => b.dataset.tab);
+	const bodies = page.querySelectorAll(':scope > .manager-body').length;
+	const tabLeaving = page.querySelectorAll(':scope > .manager-body.o55-leaving').length;
+	const leaving = page.querySelectorAll('.o55-leaving').length;
+	const liveBody = page.querySelector(':scope > .manager-body:not(.o55-leaving)');
+	const split = liveBody && liveBody.querySelector('.pm51-split');
+	const flow = split && [...split.querySelectorAll(':scope > .resource-detail')].find((d) => !d.classList.contains('o55-leaving'));
+	const btn = flow && flow.querySelector('[data-action="pm51-toolchain-edit-fmt"]');
+	return {
+		activeTabs,
+		bodies,
+		tabLeaving,
+		leaving,
+		editId: btn ? (btn.dataset.id || null) : null,
+		editLaid: btn ? laid(btn) : false,
+		pageMorph: page.dataset.o55Morph || null,
+		splitMorph: split ? (split.dataset.o55Morph || null) : null,
+	};
+}, TI_WS);
+
+async function resetTabItemBaseline(t, f, savedRestPos) {
+	const okFmt = (s, ex) => !s.err && !ex.err
+		&& ex.activeTabs.join(',') === TI_TAB
+		&& s.details === 1 && s.leaving === 0 && ex.tabLeaving === 0
+		&& s.morph === null && ex.pageMorph === null
+		&& s.title.startsWith(TI_BASE_NAME) && !s.title.startsWith(TI_NAME)
+		&& ex.editId === TI_BASE && ex.editLaid
+		&& s.active.join(',') === TI_BASE;
+
+	let ex = await readTabItemExtra(f);
+	if (ex.err || ex.activeTabs.join(',') !== TI_TAB) {
+		await slowTab(t, f, TI_WS, TI_TAB);
+		ex = await readTabItemExtra(f);
+	} else {
+		await waitMgrClear(f, TI_WS, 2000);
+	}
+	let s = await readDetailState(f, { ws: TI_WS }, savedRestPos);
+	if (!okFmt(s, ex)) {
+		const baseRow = rowBtn(f, TI_WS, TI_BASE);
+		if (await baseRow.count()) await slowRow(t, f, TI_WS, TI_BASE);
+		s = await readDetailState(f, { ws: TI_WS }, savedRestPos);
+		ex = await readTabItemExtra(f);
+	}
+	if (!okFmt(s, ex)) {
+		await t.page.waitForTimeout(350);
+		await waitMgrClear(f, TI_WS, 1500);
+		s = await readDetailState(f, { ws: TI_WS }, savedRestPos);
+		ex = await readTabItemExtra(f);
+	}
+	if (!okFmt(s, ex)) {
+		return {
+			ok: false,
+			restPos: savedRestPos,
+			detail: s.err || ex.err || `formatters baseline failed: tab [${ex.activeTabs.join(',')}], title "${s.title}" (want "${TI_BASE_NAME}"), Edit data-id ${ex.editId} (laid ${ex.editLaid}), roster active [${s.active.join(',')}], details ${s.details}, leaving ${s.leaving}, tabLeaving ${ex.tabLeaving}, splitMorph ${s.morph}, pageMorph ${ex.pageMorph}`,
+		};
+	}
+	const restPos = savedRestPos || (await readRestPos(f, TI_WS));
+	await slowTab(t, f, TI_WS, TI_START_TAB);
+	let srv = await readTabItemExtra(f);
+	const okSrv = (x) => !x.err && x.activeTabs.join(',') === TI_START_TAB && x.bodies === 1 && x.leaving === 0 && x.tabLeaving === 0 && x.pageMorph === null;
+	if (!okSrv(srv)) {
+		await t.page.waitForTimeout(350);
+		await waitMgrClear(f, TI_WS, 1500);
+		srv = await readTabItemExtra(f);
+	}
+	if (!okSrv(srv)) {
+		return {
+			ok: false,
+			restPos,
+			detail: srv.err || `servers tab baseline failed: tab [${srv.activeTabs.join(',')}], bodies ${srv.bodies}, leaving ${srv.leaving}, tabLeaving ${srv.tabLeaving}, pageMorph ${srv.pageMorph}`,
+		};
+	}
+	return { ok: true, restPos, detail: `verified ${TI_BASE} (title "${s.title}", Edit data-id ${ex.editId}) then settled on ${TI_START_TAB}` };
+}
+
 async function rapidTabItem(t, f, gap) {
 	const tb = tabBtn(f, TI_WS, TI_TAB);
 	await tb.scrollIntoViewIfNeeded();
@@ -440,12 +636,13 @@ async function rapidTabItem(t, f, gap) {
 	const t0 = Date.now();
 	await t.page.mouse.click(tbox.x + tbox.width / 2, tbox.y + tbox.height / 2);
 	await t.page.waitForTimeout(gap);
-	const ib = f.locator(`${BODY(TI_WS)} .resource-roster .resource-row[data-id="${TI_ITEM}"]`).first();
-	const ibox = await ib.boundingBox();
+	const ib = rowBtn(f, TI_WS, TI_ITEM);
+	const ibox = await ib.boundingBox({ timeout: 5000 });
 	if (!ibox) throw new Error('toolchain: rustfmt row has no box mid-tab-morph');
 	await t.page.mouse.click(ibox.x + ibox.width / 2, ibox.y + ibox.height / 2);
 	const landed = Date.now() - t0;
-	await t.page.waitForTimeout(900);
+	await t.page.waitForTimeout(250);
+	await waitMgrClear(f, TI_WS, 1200);
 	await t.settle();
 	const tabClicks = await f.evaluate(() => window.__foS2Clicks.filter((x) => x.ws === 'toolchain' && x.tab === 'formatters'));
 	const itemClicks = await f.evaluate(() => window.__foS1bClicks.filter((x) => x.ws === 'toolchain'));
@@ -460,27 +657,22 @@ async function judgeTabItem(t, f, timing, restPos, look) {
 	const landed2 = !!tc && !!ic && tc.trusted && ic.trusted && ic.id === TI_ITEM && inPage > 5;
 	await t.check(`${tag}: trusted tab then item clicks landed (sent ${gap} ms apart, ${landed} ms wall)`, landed2,
 		`tab ${tc && tc.tab} trusted ${tc && tc.trusted}, item ${ic && ic.id} trusted ${ic && ic.trusted}, in-page ${inPage} ms`);
-	if (!landed2) return false;
+	if (!landed2) return 'failed-delivery';
 	const got = await paintedRead(f);
 	await t.check(`${tag}: still painted ${look}`, lookHeld(look, got), `painted ${got.theme}${got.nier ? ', NieR on' : ''}`);
-	const midState = (ic.tabLeaving > 0 || ic.tabMorph != null) && inPage < 450;
+	const midState = ic.tabLeaving > 0 || ic.tabMorph != null;
 	if (!midState) {
-		t.log(`${tag}: rep not judged — the tab morph had settled at the item click (tabLeaving ${ic.tabLeaving}, tabMorph ${ic.tabMorph}); in-page ${inPage} ms`);
-		return 'unjudged';
+		t.log(`${tag}: rep not judged — the tab morph had already settled at the item click (tabLeaving ${ic.tabLeaving}, tabMorph ${ic.tabMorph}); in-page ${inPage} ms`);
+		return 'unjudged-settled';
 	}
 	t.log(`${tag}: mid-tab-morph at item click (tabLeaving ${ic.tabLeaving}, tabMorph ${ic.tabMorph}); in-page ${inPage} ms`);
 	const s = await readDetailState(f, { ws: TI_WS }, restPos);
 	if (s.err) { await t.check(`${tag}: manager page present`, false, s.err); return false; }
-	const extra = await f.evaluate((ws) => {
-		const body = document.querySelector(`[data-continuous-workspace-body="${ws}"]`);
-		const page = body && body.querySelector('.pm51-mgr');
-		const split = page && [...page.querySelectorAll('.pm51-split')].find((el) => !el.closest('.o55-leaving'));
-		const flow = split && [...split.querySelectorAll(':scope > .resource-detail')].find((d) => !d.classList.contains('o55-leaving'));
-		const btn = flow && flow.querySelector('[data-action="pm51-toolchain-edit-fmt"]');
-		return { editId: btn ? btn.dataset.id : null, pageMorph: page ? (page.dataset.o55Morph || null) : null, tabLeaving: page ? page.querySelectorAll(':scope > .manager-body.o55-leaving').length : 0 };
-	}, TI_WS);
-	const right = await t.check(`${tag}: detail is rustfmt's (title, Edit target, roster)`, s.title.startsWith(TI_NAME) && extra.editId === TI_ITEM && s.active.join(',') === TI_ITEM,
-		`title "${s.title}" (want rustfmt), Edit data-id ${extra.editId}, roster active [${s.active.join(',')}]`);
+	const extra = await readTabItemExtra(f);
+	if (extra.err) { await t.check(`${tag}: manager page present`, false, extra.err); return false; }
+	const right = await t.check(`${tag}: detail is rustfmt's (title, Edit target, roster)`,
+		s.title.startsWith(TI_NAME) && !s.title.startsWith(TI_BASE_NAME) && extra.editId === TI_ITEM && extra.editLaid && s.active.join(',') === TI_ITEM,
+		`title "${s.title}" (want ${TI_NAME}, not ${TI_BASE_NAME}), Edit data-id ${extra.editId} (laid ${extra.editLaid}), roster active [${s.active.join(',')}]`);
 	const one = await t.check(`${tag}: one detail, no leaving copy left`, s.details === 1 && s.leaving === 0 && extra.tabLeaving === 0, `${s.details} details, ${s.leaving} leaving, ${extra.tabLeaving} tab bodies leaving`);
 	const drawn = await t.check(`${tag}: rustfmt's detail content is drawn`, s.rows >= 3 && s.overlap >= 100 && s.text >= 40 && s.opacity === '1',
 		`${s.rows} content els, overlap ${Math.round(s.overlap)} px, ${s.text} chars, opacity ${s.opacity}`);
@@ -494,6 +686,7 @@ for (const surface of ['normal', 'sandbox']) {
 	const T = (name, fn) => { tests[`${name} (${surface})`] = async (t) => { if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; } await fn(t); }; };
 	const looks = (t) => String(t.args.looks || LOOKS.join(',')).split(',').map((x) => x.trim()).filter(Boolean);
 	const gaps = (t) => String(t.args.gaps || GAPS.join(',')).split(',').map((x) => parseInt(x, 10)).filter((x) => x > 0);
+	const inspGapsFor = (t) => String(t.args.inspgaps || t.args.gaps || INSP_GAPS.join(',')).split(',').map((x) => parseInt(x, 10)).filter((x) => x > 0);
 
 	for (const look of LOOKS) {
 		for (const [w, h] of SIZES) {
@@ -501,14 +694,24 @@ for (const surface of ['normal', 'sandbox']) {
 				if (!looks(t).includes(look)) { await t.check(`${look} not asked for`, true); return; }
 				const f = await settings(t, surface, [w, h]);
 				await t.app.look(t, look, { save: true });
+				const repGaps = gaps(t);
+				const minJudged = minJudgedFor(repGaps);
 				for (const m of MANAGERS) {
 					await go(t, f, m.domain, m.ws);
-					await slowTab(t, f, m.ws, m.start);
-					let ok = true, judged = 0, failCropped = false, passCropped = false;
-					for (const gap of gaps(t)) {
+					let judged = 0, baselineUnjudged = 0, settledUnjudged = 0, deliveryFailed = 0;
+					let failCropped = false, passCropped = false;
+					for (const gap of repGaps) {
+						const base = await resetTabBaseline(t, f, m);
+						if (!base.ok) {
+							baselineUnjudged++;
+							t.log(`${m.ws} ${m.B}->${m.C} gap ${gap} ms: rep not judged — baseline ${m.start} not reached (${base.detail})`);
+							continue;
+						}
 						const timing = await rapid(t, f, m, gap);
 						const r = await judge(t, f, m, timing, look);
-						if (r !== 'unjudged') { judged++; ok = r && ok; }
+						if (r === 'unjudged-settled') { settledUnjudged++; }
+						else if (r === 'failed-delivery') { deliveryFailed++; }
+						else { judged++; }
 						if (r === false && !failCropped) {
 							failCropped = true;
 							await t.crop(`${m.ws}-after-midmorph`, f.locator(`${BODY(m.ws)} .pm51-mgr`), 'the manager right after the rapid B then C clicks: which body is on screen');
@@ -517,9 +720,10 @@ for (const surface of ['normal', 'sandbox']) {
 							passCropped = true;
 							await t.crop('notifications-after-midmorph', f.locator(`${BODY(m.ws)} .pm51-mgr`), 'the last-clicked tab body, fully drawn, right after the rapid clicks');
 						}
-						await slowTab(t, f, m.ws, m.start);
 					}
-					await t.check(`${m.ws}: at least one rep landed mid-morph`, judged > 0, `${judged} of ${gaps(t).length} reps judged mid-morph by the host's state at click 2`);
+					const summary = repCounts(judged, baselineUnjudged, settledUnjudged, deliveryFailed, repGaps.length, minJudged);
+					t.log(`${m.ws}: ${summary}`);
+					await t.check(`${m.ws}: enough reps judged mid-morph (>= ${minJudged})`, judged >= minJudged, summary);
 				}
 			});
 		}
@@ -530,14 +734,26 @@ for (const surface of ['normal', 'sandbox']) {
 		const f = await settings(t, surface, [1440, 900]);
 		await t.app.look(t, 'basic-dark', { save: true });
 		await t.check('the page reads Reduced Motion', await f.evaluate(() => O55.motion.reduced()));
+		const repGaps = gaps(t);
+		const minJudged = minJudgedFor(repGaps);
 		for (const m of MANAGERS) {
 			await go(t, f, m.domain, m.ws);
-			await slowTab(t, f, m.ws, m.start);
-			for (const gap of gaps(t)) {
+			let judged = 0, baselineUnjudged = 0, deliveryFailed = 0;
+			for (const gap of repGaps) {
+				const base = await resetTabBaseline(t, f, m);
+				if (!base.ok) {
+					baselineUnjudged++;
+					t.log(`${m.ws} ${m.B}->${m.C} gap ${gap} ms (reduced): rep not judged — baseline ${m.start} not reached (${base.detail})`);
+					continue;
+				}
 				const timing = await rapid(t, f, m, gap);
-				await judge(t, f, m, timing, 'basic-dark', true);
-				await slowTab(t, f, m.ws, m.start);
+				const r = await judge(t, f, m, timing, 'basic-dark', true);
+				if (r === 'failed-delivery') deliveryFailed++;
+				else judged++;
 			}
+			const summary = repCounts(judged, baselineUnjudged, 0, deliveryFailed, repGaps.length, minJudged);
+			t.log(`${m.ws} (reduced): ${summary}`);
+			await t.check(`${m.ws}: enough reps judged under Reduced Motion (>= ${minJudged})`, judged >= minJudged, summary);
 		}
 		await t.emulate({ reducedMotion: 'no-preference' });
 	});
@@ -548,20 +764,30 @@ for (const surface of ['normal', 'sandbox']) {
 			const dws = String(t.args.dws || DETAIL_MANAGERS.map((m) => m.ws).join(',')).split(',').map((x) => x.trim()).filter(Boolean);
 			const f = await settings(t, surface, [1440, 900]);
 			await t.app.look(t, look, { save: true });
+			const repGaps = gaps(t);
+			const minJudged = minJudgedFor(repGaps);
 			for (const m of DETAIL_MANAGERS) {
 				if (!dws.includes(m.ws)) continue;
 				await go(t, f, m.domain, m.ws);
 				await slowTab(t, f, m.ws, m.tab);
 				const rows = await readRoster(f, m.ws);
 				if (rows.length < 2) { await t.check(`${m.ws}: roster has two or more items`, false, `${rows.length} laid-out rows`); continue; }
-				const B = rows[1], C = rows[2] || rows[0];
-				await slowRow(t, f, m.ws, rows[0].id);
-				let ok = true, judged = 0, failCropped = false, passCropped = false;
-				for (const gap of gaps(t)) {
-					const restPos = await readRestPos(f, m.ws);
+				const A = rows[0], B = rows[1], C = rows[2] || rows[0];
+				const restPos = await readRestPos(f, m.ws);
+				let judged = 0, baselineUnjudged = 0, settledUnjudged = 0, deliveryFailed = 0;
+				let failCropped = false, passCropped = false;
+				for (const gap of repGaps) {
+					const base = await resetDetailBaseline(t, f, m, A, B, restPos);
+					if (!base.ok) {
+						baselineUnjudged++;
+						t.log(`${m.ws} ${B.id}->${C.id} gap ${gap} ms: rep not judged — baseline ${A.id} not reached (${base.detail})`);
+						continue;
+					}
 					const timing = await rapidRows(t, f, m.ws, B, C, gap);
 					const r = await judgeDetail(t, f, m, B, C, timing, restPos, look);
-					if (r !== 'unjudged') { judged++; ok = r && ok; }
+					if (r === 'unjudged-settled') { settledUnjudged++; }
+					else if (r === 'failed-delivery') { deliveryFailed++; }
+					else { judged++; }
 					if (r === false && !failCropped) {
 						failCropped = true;
 						await t.crop(`${m.ws}-after-detail-midmorph`, f.locator(`${BODY(m.ws)} .pm51-split`), 'the split right after the rapid item B then C clicks: which detail is on screen');
@@ -570,9 +796,10 @@ for (const surface of ['normal', 'sandbox']) {
 						passCropped = true;
 						await t.crop('personas-after-detail-midmorph', f.locator(`${BODY(m.ws)} .pm51-split`), 'the last-clicked item detail, fully drawn, right after the rapid clicks');
 					}
-					await slowRow(t, f, m.ws, rows[0].id);
 				}
-				await t.check(`${m.ws}: at least one rep landed mid-morph`, judged > 0, `${judged} of ${gaps(t).length} reps judged mid-morph by the split's state at click 2`);
+				const summary = repCounts(judged, baselineUnjudged, settledUnjudged, deliveryFailed, repGaps.length, minJudged);
+				t.log(`${m.ws}: ${summary}`);
+				await t.check(`${m.ws}: enough reps judged mid-morph (>= ${minJudged})`, judged >= minJudged, summary);
 			}
 		});
 	}
@@ -595,18 +822,23 @@ for (const surface of ['normal', 'sandbox']) {
 			const neigh = await readNeighbours(f);
 			if (neigh.length < 2) { await t.check(`${A.setting} lists two Next-to-it neighbours`, false, `${neigh.length} neighbours`); return; }
 			const B = { setting: neigh[0] }, C = { setting: neigh[1] };
-			let ok = true, judged = 0, failCropped = false, passCropped = false;
-			for (const gap of gaps(t)) {
-				/* reset to A: close the panel (its own X), then reopen A from the now-uncovered document row */
-				const xb = await f.locator(`${INSP} [data-action="close-details"]`).first().boundingBox();
-				if (xb) { await t.page.mouse.click(xb.x + xb.width / 2, xb.y + xb.height / 2); await t.settle(); await t.page.waitForTimeout(350); }
-				await clickAbout(t, f, A.setting);
-				/* let the panel's open spring land before the rapid pair, so the neighbour boxes are at rest */
-				await f.waitForSelector(`${INSP}.is-open.is-settled`, { timeout: 8000 }).catch(() => {});
-				const restPos = await inspRestPos(f);
+			const restPos = await inspRestPos(f);
+			const repGaps = inspGapsFor(t);
+			const minJudged = minJudgedFor(repGaps);
+			let judged = 0, baselineUnjudged = 0, settledUnjudged = 0, deliveryFailed = 0;
+			let failCropped = false, passCropped = false;
+			for (const gap of repGaps) {
+				const base = await resetInspBaseline(t, f, A, B, C, restPos);
+				if (!base.ok) {
+					baselineUnjudged++;
+					t.log(`inspector ${B.setting}->${C.setting} gap ${gap} ms: rep not judged — baseline ${A.setting} not reached (${base.detail})`);
+					continue;
+				}
 				const timing = await rapidInsp(t, f, B, C, gap);
 				const r = await judgeInsp(t, f, B, C, timing, restPos, look);
-				if (r !== 'unjudged') { judged++; ok = r && ok; }
+				if (r === 'unjudged-settled') { settledUnjudged++; }
+				else if (r === 'failed-delivery') { deliveryFailed++; }
+				else { judged++; }
 				if (r === false && !failCropped) {
 					failCropped = true;
 					await t.crop('inspector-after-midmorph', f.locator('.detail-inspector'), 'the Details panel right after the rapid neighbour B then C clicks: which setting is on screen');
@@ -616,7 +848,9 @@ for (const surface of ['normal', 'sandbox']) {
 					await t.crop('inspector-after-midmorph-pass', f.locator('.detail-inspector'), 'the last-clicked setting inspector page, fully drawn, right after the rapid neighbour clicks');
 				}
 			}
-			await t.check('inspector: at least one rep landed mid-morph', judged > 0, `${judged} of ${gaps(t).length} reps judged mid-morph by the inspector's state at click 2`);
+			const summary = repCounts(judged, baselineUnjudged, settledUnjudged, deliveryFailed, repGaps.length, minJudged);
+			t.log(`inspector: ${summary}`);
+			await t.check(`inspector: enough reps judged mid-morph (>= ${minJudged})`, judged >= minJudged, summary);
 		});
 	}
 
@@ -626,15 +860,24 @@ for (const surface of ['normal', 'sandbox']) {
 			const f = await settings(t, surface, [1440, 900]);
 			await t.app.look(t, look, { save: true });
 			await go(t, f, 'code', TI_WS);
-			await slowTab(t, f, TI_WS, 'servers');
 			const tiGaps = String(t.args.tigaps || TI_GAPS.join(',')).split(',').map((x) => parseInt(x, 10)).filter((x) => x > 0);
-			let ok = true, judged = 0, failCropped = false, passCropped = false;
+			const minJudged = minJudgedFor(tiGaps);
+			let restPos = null;
+			let judged = 0, baselineUnjudged = 0, settledUnjudged = 0, deliveryFailed = 0;
+			let failCropped = false, passCropped = false;
 			for (const gap of tiGaps) {
-				await slowTab(t, f, TI_WS, 'servers');
-				const restPos = await readRestPos(f, TI_WS);
+				const base = await resetTabItemBaseline(t, f, restPos);
+				if (base.restPos) restPos = base.restPos;
+				if (!base.ok) {
+					baselineUnjudged++;
+					t.log(`toolchain formatters->rustfmt gap ${gap} ms: rep not judged — baseline not reached (${base.detail})`);
+					continue;
+				}
 				const timing = await rapidTabItem(t, f, gap);
 				const r = await judgeTabItem(t, f, timing, restPos, look);
-				if (r !== 'unjudged') { judged++; ok = r && ok; }
+				if (r === 'unjudged-settled') { settledUnjudged++; }
+				else if (r === 'failed-delivery') { deliveryFailed++; }
+				else { judged++; }
 				if (r === false && !failCropped) {
 					failCropped = true;
 					await t.crop('toolchain-after-tab-then-item', f.locator(`${BODY(TI_WS)} .pm51-split`), 'the Formatters split right after the Formatters-tab then rustfmt clicks: which detail is on screen');
@@ -644,7 +887,9 @@ for (const surface of ['normal', 'sandbox']) {
 					await t.crop('toolchain-after-tab-then-item-pass', f.locator(`${BODY(TI_WS)} .pm51-split`), 'rustfmt detail, fully drawn, right after the tab then item clicks');
 				}
 			}
-			await t.check('toolchain: at least one rep landed mid-tab-morph', judged > 0, `${judged} of ${tiGaps.length} reps judged mid-tab-morph by the page's state at the item click`);
+			const summary = repCounts(judged, baselineUnjudged, settledUnjudged, deliveryFailed, tiGaps.length, minJudged);
+			t.log(`toolchain: ${summary}`);
+			await t.check(`toolchain: enough reps judged mid-tab-morph (>= ${minJudged})`, judged >= minJudged, summary);
 		});
 	}
 }
