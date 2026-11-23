@@ -74,14 +74,17 @@ Exit codes: 0 nothing to report, and every subcheck finished; 1 nothing it repor
 landing, meaning governance staleness on files the branch edited, pre-existing or
 `unknown-pre-existing` failures whose count has not risen against a current baseline (see "Only
 against a current baseline" and "Pre-existing and improved failures" below), failures
-that are new but name none of the branch's files, or a subcheck that timed out, so that the run was
+that are new but name none of the branch's files, or a subcheck that did not finish (it timed out, or
+a validator was killed by a signal - an OOM kill or a watchdog), so that the run was
 not fully verified; 2 something it reports does stop the landing, meaning a failure on the branch's
 files that is neither staleness nor pre-existing, non-stale bucket growth, or a rise in a subcheck
 whose failures are truncated, other than the readiness growth
 counter; 3 the check could not run, readiness audit input identity could not be established or matched,
-or a subcheck timed out while recording a baseline. A subcheck
-that timed out in a landing run lifts an exit 0 to 1 and changes no other exit code. A subcheck keyed
-from its export is not truncated; one whose export falls back is, and the summary says why.
+`--dedupe-snapshot` was passed on a checkout that is not the run's private snapshot, a snapshot
+changed while the checks ran, or a subcheck timed out or a validator was killed while recording a
+baseline. A subcheck
+that did not finish in a landing run lifts an exit 0 to 1 and changes no other exit code. A subcheck
+keyed from its export is not truncated; one whose export falls back is, and the summary says why.
 
 **It refuses a sparse worktree**, with exit 3, in both modes. The three checks read the whole
 repository, so every file outside a sparse cone reads as missing: a dry run at `ecb77f4e6c` on a
@@ -98,6 +101,32 @@ own first commit `b29eab7b99`, because the script that records a baseline had to
 that recorded it; the rebase at landing left that commit off `main` (it landed as `2c527ce17f`), so
 against that baseline rule 2 would be off. The baseline recorded at `main` `75bcda93bc` on
 2026-09-23 replaced it.
+
+## Parallel checks, one worker budget, and the snapshot cache
+
+The three checks run at once, and each runs its own validators at once. `--jobs N` is one budget for
+the whole run, not one per check: the run makes N slot files in its scratch directory and every
+validator holds one for as long as its process runs, so at most N validators are alive at once.
+`--jobs` is capped at 8, and `--jobs 1` is the serial run, byte for byte. Before a validator starts,
+the run reads `MemAvailable`; while it is under `--memory-floor-gb` (6 GiB by default) the run waits
+and prints why, and a slot is not permission to start under the floor. A host without `/proc`
+enforces neither, which changes speed, never a result.
+
+The checker runs the target checkout's own `scripts/pm-plans-verify.py`. A target older than this
+option does not take `--jobs`, so the checker asks that verifier's `--help` once and omits the option
+when it is absent: an older `--root` keeps its legacy invocation.
+
+**The validator cache is opt-in.** `--dedupe-snapshot` says this checkout is the private, immutable
+snapshot this one run created, which is what `pm-land.py check --on <host>` makes: a linked worktree
+of its own, detached at the checked commit, filled with the ignored inputs and verified clean before
+and after. Inside that run one shared validator's report serves both aggregates and any export of it,
+so those command lines run once. The flag is refused with exit 3 on anything else: HEAD on a branch,
+the repository's main worktree, or a worktree with changes. The cache directory is created fresh for
+the invocation and removed when it ends, so nothing is reused across runs; at the end the run
+re-reads the commit, the `scripts/` digest and every ignored input's bytes and exits 3 if any of them
+moved, because a report reused from the cache would then answer for inputs that no longer exist.
+Every other invocation - the shared checkout, a lander's own worktree, `--record-baseline` - runs
+every validator on its own, still in parallel. `--record-baseline` refuses the flag.
 
 ## Readiness audit input identity
 

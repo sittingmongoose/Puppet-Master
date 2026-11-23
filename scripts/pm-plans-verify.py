@@ -370,6 +370,149 @@ def record_dedupe_event(directory: Path, event: str, request: dict[str, Any]) ->
         os.close(descriptor)
 
 
+# One shared worker budget for a whole landing check: --jobs counts every validator running at once
+# across the three checks, not N per aggregate (review N-F). The landing check creates this many slot
+# files in one directory; each validator holds one slot file for as long as its process runs, so the
+# aggregates (and an export) never exceed N between them. The same directory names the memory floor a
+# validator must find available before it starts. Without fcntl or /proc none of it is enforced: the
+# per-aggregate ThreadPool still bounds one aggregate, and a result is never changed either way.
+SLOTS_DIR_ENV = "PM_LANDING_CHECK_SLOTS_DIR"
+SLOTS_COUNT_ENV = "PM_LANDING_CHECK_SLOTS"
+MEMORY_FLOOR_MB_ENV = "PM_LANDING_CHECK_MEMORY_FLOOR_MB"
+MAX_JOBS = 8
+MEMORY_POLL_SECONDS = 5.0
+
+
+def memory_available_mb() -> int | None:
+    """MemAvailable in MiB, or None where the kernel does not say (no floor is enforced then)."""
+    try:
+        with open("/proc/meminfo", encoding="utf-8") as handle:
+            for line in handle:
+                if line.startswith("MemAvailable:"):
+                    return int(line.split()[1])
+    except (OSError, ValueError, IndexError):
+        return None
+    return None
+
+
+class ValidatorSlots:
+    """At most `count` validators at once, and none started below the memory floor.
+
+    Each slot is a file held with an exclusive flock while its validator runs, so the budget is
+    shared by every process in the landing check rather than one pool per aggregate. Before a
+    validator starts, available memory is read; while it is below the floor the pool waits and says
+    so on stderr. A slot is not permission to start below the floor: memory is read again after the
+    slot is taken, and the waiter releases it and keeps waiting when it has fallen.
+    """
+
+    def __init__(self, directory, count: int, floor_mb: int = 0, *, fcntl_module,
+                 available=memory_available_mb, sleep=time.sleep, poll_seconds: float = MEMORY_POLL_SECONDS):
+        self.directory = Path(directory)
+        self.count = count
+        self.floor_mb = max(0, floor_mb)
+        self.fcntl = fcntl_module
+        self._available = available
+        self._sleep = sleep
+        self._poll_seconds = poll_seconds
+
+    @classmethod
+    def from_environment(cls) -> "ValidatorSlots | None":
+        directory = os.environ.get(SLOTS_DIR_ENV)
+        count = os.environ.get(SLOTS_COUNT_ENV)
+        if not directory or not count:
+            return None
+        try:
+            count_value = int(count)
+        except ValueError:
+            return None
+        if count_value < 1:
+            return None
+        try:
+            import fcntl  # noqa: PLC0415 - POSIX only; a host without it keeps today's behaviour.
+        except ImportError:  # pragma: no cover - Windows
+            return None
+        floor = os.environ.get(MEMORY_FLOOR_MB_ENV)
+        try:
+            floor_value = max(0, int(floor)) if floor else 0
+        except ValueError:
+            floor_value = 0
+        return cls(directory, count_value, floor_value, fcntl_module=fcntl)
+
+    def _wait_for_memory(self, label: str) -> None:
+        if self.floor_mb <= 0:
+            return
+        available = self._available()
+        if available is None or available >= self.floor_mb:
+            return
+        print(f"[pm-plans-verify] waiting for memory: {available / 1024:.1f} GiB available, floor "
+              f"{self.floor_mb / 1024:.1f} GiB, before {label}", file=sys.stderr, flush=True)
+        while True:
+            self._sleep(self._poll_seconds)
+            available = self._available()
+            if available is None or available >= self.floor_mb:
+                found = "unknown" if available is None else f"{available / 1024:.1f} GiB"
+                print(f"[pm-plans-verify] memory is back: {found}, before {label}",
+                      file=sys.stderr, flush=True)
+                return
+
+    def _take(self):
+        """A held slot handle, None when all are busy, or False when no slot file can be opened."""
+        opened = 0
+        for index in range(self.count):
+            try:
+                handle = (self.directory / f"slot-{index}.lock").open("a+b")
+            except OSError:
+                continue
+            opened += 1
+            try:
+                self.fcntl.flock(handle.fileno(), self.fcntl.LOCK_EX | self.fcntl.LOCK_NB)
+            except OSError:
+                handle.close()
+                continue
+            return handle
+        return None if opened else False
+
+    def _release(self, handle) -> None:
+        try:
+            self.fcntl.flock(handle.fileno(), self.fcntl.LOCK_UN)
+        except OSError:
+            pass
+        finally:
+            handle.close()
+
+    @contextmanager
+    def hold(self, label: str):
+        while True:
+            self._wait_for_memory(label)
+            slot = self._take()
+            if slot is False:
+                # The budget cannot be enforced here (no slot files); run rather than hang.
+                yield
+                return
+            if slot is None:
+                self._sleep(0.25)
+                continue
+            try:
+                available = self._available()
+                if self.floor_mb > 0 and available is not None and available < self.floor_mb:
+                    continue
+                yield
+                return
+            finally:
+                self._release(slot)
+
+
+@contextmanager
+def validator_slot(label: str):
+    """Hold one shared slot, and the memory floor, for one validator's process; a no-op standalone."""
+    pool = ValidatorSlots.from_environment()
+    if pool is None:
+        yield
+        return
+    with pool.hold(label):
+        yield
+
+
 def _terminate_process_group(proc: subprocess.Popen) -> tuple[bool, str]:
     """Best-effort terminate a validator subprocess and any children holding its pipes.
 
@@ -678,13 +821,17 @@ def run_named_check(
 
 
 def default_jobs() -> int:
-    """The aggregate's default pool: four workers, or one per CPU on a smaller machine."""
-    return max(1, min(os.cpu_count() or 1, 4))
+    """A standalone aggregate runs one subcheck at a time.
+
+    Only a landing check asks for more: it passes --jobs, and it can see how much other work the
+    machine carries (review N-G: a hand-run run-gates used to take four workers by default).
+    """
+    return 1
 
 
 def aggregate_jobs(args: argparse.Namespace) -> int:
     requested = int(getattr(args, "jobs", 0) or 0)
-    return requested if requested > 0 else default_jobs()
+    return max(1, min(requested if requested > 0 else default_jobs(), MAX_JOBS))
 
 
 def run_aggregate_checks(
@@ -779,13 +926,14 @@ def _run_subprocess_check(
             str(temp_path),
         ]
         argv.extend(extra_cli_args)
-        proc, timeout_report = run_validator_subprocess(
-            name,
-            argv,
-            timeout_seconds=timeout_seconds,
-            extra_failure_fields={"command_id": command_id},
-            aggregate_child=True,
-        )
+        with validator_slot(name):
+            proc, timeout_report = run_validator_subprocess(
+                name,
+                argv,
+                timeout_seconds=timeout_seconds,
+                extra_failure_fields={"command_id": command_id},
+                aggregate_child=True,
+            )
         if timeout_report is not None:
             # Rewrite the check name to the aggregate subcheck name the caller expects.
             timeout_report["check"] = _aggregate_check_name(name)
@@ -7631,9 +7779,12 @@ def main() -> int:
                 default=default_jobs(),
                 help="Run this many independent subchecks at once, each still in its own process with its own "
                      f"temp and report paths; results are emitted in the original order (default: {default_jobs()}; "
-                     "1 is the serial run).",
+                     f"1 is the serial run; at most {MAX_JOBS}, and a landing check shares one such budget "
+                     "across its three checks).",
             )
     args = parser.parse_args()
+    if hasattr(args, "jobs") and not 1 <= int(args.jobs) <= MAX_JOBS:
+        parser.error(f"--jobs must be between 1 and {MAX_JOBS}")
     if not hasattr(args, "subcheck_timeout_seconds"):
         args.subcheck_timeout_seconds = DEFAULT_SUBCHECK_TIMEOUT_SECONDS
     if not hasattr(args, "paths"):

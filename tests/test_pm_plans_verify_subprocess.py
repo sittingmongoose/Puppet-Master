@@ -856,3 +856,126 @@ class SharedValidatorCommandLinesTests(unittest.TestCase):
         self.assertEqual(len(deduped), 34)
         for name in deduped:
             self.assertIn(command_line(name), audit_lines)
+
+
+SLOT_PROBE = """
+import importlib.util, os, sys, time
+spec = importlib.util.spec_from_file_location("v", __MODULE__)
+v = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(v)
+with v.validator_slot("probe"):
+    with open(sys.argv[1], "a", encoding="utf-8") as handle:
+        handle.write("start %.6f %d\\n" % (time.time(), os.getpid()))
+    time.sleep(float(sys.argv[2]))
+    with open(sys.argv[1], "a", encoding="utf-8") as handle:
+        handle.write("end %.6f %d\\n" % (time.time(), os.getpid()))
+"""
+
+
+class ValidatorSlotsTests(unittest.TestCase):
+    """Review N-F: --jobs is one budget for the whole check, and no validator starts below the floor."""
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+        self.directory = Path(self._tmp.name) / "slots"
+        self.directory.mkdir()
+
+    def pool(self, count, floor_mb=0, available=None, sleep=None):
+        import fcntl
+
+        return pm_plans_verify.ValidatorSlots(
+            self.directory, count, floor_mb, fcntl_module=fcntl,
+            available=available or (lambda: 8192), sleep=sleep or (lambda seconds: None))
+
+    def test_the_budget_is_shared_by_every_holder_in_one_process(self):
+        import threading
+
+        active = {"now": 0, "peak": 0}
+        lock = threading.Lock()
+
+        def work():
+            with self.pool(2).hold("probe"):
+                with lock:
+                    active["now"] += 1
+                    active["peak"] = max(active["peak"], active["now"])
+                time.sleep(0.05)
+                with lock:
+                    active["now"] -= 1
+
+        threads = [threading.Thread(target=work) for _ in range(6)]
+        for thread in threads:
+            thread.start()
+        for thread in threads:
+            thread.join()
+        self.assertGreater(active["peak"], 1)
+        self.assertLessEqual(active["peak"], 2)
+
+    def test_the_budget_is_shared_across_processes(self):
+        script = self.directory.parent / "slot_probe.py"
+        script.write_text(SLOT_PROBE.replace("__MODULE__", repr(str(MODULE_PATH))), encoding="utf-8")
+        events = self.directory.parent / "events.log"
+        env = dict(os.environ, **{pm_plans_verify.SLOTS_DIR_ENV: str(self.directory),
+                                  pm_plans_verify.SLOTS_COUNT_ENV: "2",
+                                  pm_plans_verify.MEMORY_FLOOR_MB_ENV: "0"})
+        processes = [subprocess.Popen([sys.executable, str(script), str(events), "0.4"],
+                                      cwd=ROOT, env=env) for _ in range(4)]
+        self.assertEqual([process.wait(timeout=60) for process in processes], [0, 0, 0, 0])
+        spans = []
+        for line in events.read_text(encoding="utf-8").splitlines():
+            kind, at, pid = line.split()
+            spans.append((float(at), 1 if kind == "start" else -1))
+        active = peak = 0
+        for _at, change in sorted(spans):
+            active += change
+            peak = max(peak, active)
+        self.assertEqual(peak, 2)
+
+    def test_memory_below_the_floor_is_waited_out_and_said_so(self):
+        import contextlib
+        import io
+
+        readings = iter([512, 512, 8192, 8192])
+        slept = []
+        pool = self.pool(1, 6144, available=lambda: next(readings), sleep=slept.append)
+        errors = io.StringIO()
+        with contextlib.redirect_stderr(errors):
+            with pool.hold("validate-evidence"):
+                self.assertEqual(slept, [pm_plans_verify.MEMORY_POLL_SECONDS] * 2)
+        self.assertIn("waiting for memory", errors.getvalue())
+        self.assertIn("memory is back", errors.getvalue())
+
+    def test_a_slot_is_not_permission_to_start_below_the_floor(self):
+        # Pre-wait high, post-slot low, then high: the first slot is released and the start waits.
+        readings = [8192, 512, 8192, 8192]
+        taken = []
+
+        def available():
+            taken.append(readings[len(taken)])
+            return taken[-1]
+
+        pool = self.pool(1, 6144, available=available, sleep=lambda seconds: None)
+        starts = 0
+        with pool.hold("validate-plan-graph"):
+            starts += 1
+        self.assertEqual(starts, 1)
+        # Two pre-wait reads and two post-slot reads: the low post-slot read released the slot.
+        self.assertEqual(taken, readings)
+
+    def test_a_missing_slot_directory_never_hangs_the_validator(self):
+        pool = pm_plans_verify.ValidatorSlots(
+            self.directory / "absent", 2, 0, fcntl_module=__import__("fcntl"))
+        with pool.hold("probe"):
+            pass
+
+    def test_a_standalone_run_has_no_budget(self):
+        with mock.patch.dict(os.environ, {}, clear=True):
+            self.assertIsNone(pm_plans_verify.ValidatorSlots.from_environment())
+
+    def test_the_standalone_aggregate_runs_one_subcheck_at_a_time(self):
+        import argparse
+
+        self.assertEqual(pm_plans_verify.default_jobs(), 1)
+        self.assertEqual(pm_plans_verify.aggregate_jobs(argparse.Namespace()), 1)
+        self.assertEqual(pm_plans_verify.aggregate_jobs(argparse.Namespace(jobs=4)), 4)
+        self.assertEqual(pm_plans_verify.aggregate_jobs(argparse.Namespace(jobs=99)), pm_plans_verify.MAX_JOBS)

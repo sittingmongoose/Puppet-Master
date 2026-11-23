@@ -1027,7 +1027,7 @@ class EndToEnd(unittest.TestCase):
             "plan-migration-validate": {
                 "status": "fail" if migration_failures else "pass", "failures": list(migration_failures)},
         }
-        def run_check(name, root, run_dir, timeout, jobs=1, env=None):
+        def run_check(name, root, run_dir, timeout, jobs=1, env=None, supports_jobs=True):
             report = json.loads(json.dumps(reports[name]))
             if name == "run-gates" and report["failures"]:
                 report["failures"][0]["failures"] = build(root)
@@ -1500,7 +1500,7 @@ class LandingRun(unittest.TestCase):
             "audit-governance": aggregate("audit-governance", audit, 100),
             "plan-migration-validate": {"status": "fail" if migration else "pass", "failures": list(migration)},
         }
-        def run_check(name, root, run_dir, timeout, jobs=1, env=None):
+        def run_check(name, root, run_dir, timeout, jobs=1, env=None, supports_jobs=True):
             self.timeouts.append(timeout)
             return json.loads(json.dumps(reports[name]))
         self.module.run_check = run_check
@@ -2036,6 +2036,14 @@ def timeout_row(command_id="lint-contractrefs", seconds=180):
             "command_id": command_id}
 
 
+def killed_row(command_id="validate-plan-graph", signum=9):
+    """What pm-plans-verify.py reports for a validator killed from outside: no report at all."""
+    return {"error": "validator_killed_by_signal", "signal": signum,
+            "signal_name": "SIGKILL" if signum == 9 else f"SIG{signum}", "returncode": -signum,
+            "likely_cause": "external_oom_or_signal_kill", "stdout_excerpt": "", "stderr_excerpt": "",
+            "command_id": command_id}
+
+
 MISSING_REF = {"path": "Plans/00-plans-index.md", "error": "missing_ref",
                "bad_ref": "Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json"}
 
@@ -2071,7 +2079,7 @@ class RuleThreeTimeouts(LandingRun):
         self.assertIn("New since the baseline: 0", out)
         self.assertIn("Subchecks reporting more failures than the baseline: 0", out)
         self.assertIn("1 infrastructure result among them", out)
-        self.assertIn("2 subchecks did not finish within 180 s", out)
+        self.assertIn("2 subchecks did not finish (", out)
         report = json.loads(self.compare("--json", "--subcheck-timeout-seconds", "180")[1])
         self.assertEqual([(r["check"], r["subcheck"], r["elapsed_seconds"], r["limit_seconds"])
                           for r in report["infrastructure"]],
@@ -2121,6 +2129,68 @@ class RuleThreeTimeouts(LandingRun):
         infra, rest = M.split_infrastructure([M.normalize("run-gates", "verify_spec_lock", row, CHECKOUT)])
         self.assertEqual((len(infra), rest), (1, []))
         self.assertEqual(infra[0]["elapsed_seconds"], 600)
+
+    def test_a_validator_killed_by_a_signal_did_not_finish(self):
+        self.stub(gates={"verify_spec_lock": [STALE_HASH]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"verify_spec_lock": [STALE_HASH], "lint_contractrefs": [killed_row()]},
+                  audit={"support_refs": [killed_row()]})
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)  # nothing read, so never 0; nothing found, so never 2
+        self.assertIn("New since the baseline: 0", out)
+        self.assertIn("Infrastructure results, not failures of this tree (never new, growth or blocking): 2", out)
+        self.assertIn("[infrastructure] run-gates/lint_contractrefs  validator_killed_by_signal "
+                      "(validate-plan-graph)  killed by SIGKILL (an OOM kill or a watchdog); what it would "
+                      "report is unknown", out)
+        self.assertIn("2 subchecks did not finish (run-gates/lint_contractrefs killed by SIGKILL, "
+                      "audit-governance/support_refs killed by SIGKILL)", out)
+        report = json.loads(self.compare("--json")[1])
+        self.assertEqual([(row["check"], row["subcheck"], row["kind"], row["signal_name"],
+                           row["elapsed_seconds"], row["limit_seconds"]) for row in report["infrastructure"]],
+                         [("run-gates", "lint_contractrefs", "killed", "SIGKILL", None, 1800),
+                          ("audit-governance", "support_refs", "killed", "SIGKILL", None, 1800)])
+        self.assertIn("Subchecks reporting more failures than the baseline: 0", out)
+        self.assertIn("Gone since the baseline (nothing to do): 0", out)
+
+    def test_a_killed_validator_cannot_lower_two_to_one(self):
+        self.stub(gates={"verify_spec_lock": [STALE_HASH]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        blocking = {"path": "Plans/Touched.md", "error": "brand_new_kind"}
+        self.stub(gates={"verify_spec_lock": [STALE_HASH, blocking]})
+        without, _ = self.compare()
+        self.stub(gates={"verify_spec_lock": [STALE_HASH, blocking], "lint_contractrefs": [killed_row()]},
+                  audit={"support_refs": [killed_row()]})
+        code, out = self.compare()
+        self.assertEqual((without, code), (2, 2), out)
+
+    def test_a_baseline_is_not_recorded_from_a_run_where_a_validator_was_killed(self):
+        self.stub(gates={"lint_contractrefs": [killed_row()]})
+        code, _ = self.run_main("--record-baseline", "--baseline", "baseline.json")
+        self.assertEqual(code, 3)
+        self.assertFalse((self.repo / "baseline.json").exists())
+        self.assertIn("not recording a baseline", self.stderr)
+        self.assertIn("killed by a signal", self.stderr)
+
+    def test_a_killed_validators_baseline_rows_are_not_reported_gone(self):
+        self.stub(gates={"lint_contractrefs": [MISSING_REF]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"lint_contractrefs": [killed_row()]})
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)
+        self.assertIn("Gone since the baseline (nothing to do): 0", out)
+
+    def test_split_infrastructure_takes_the_killed_row_and_keeps_a_crash_a_failure(self):
+        killed = M.normalize("run-gates", "lint_contractrefs", killed_row(), CHECKOUT)
+        infra, rest = M.split_infrastructure([killed])
+        self.assertEqual((len(infra), rest), (1, []))
+        self.assertEqual((infra[0]["kind"], infra[0]["signal_name"], infra[0]["elapsed_seconds"]),
+                         ("killed", "SIGKILL", None))
+        crash = M.normalize("run-gates", "lint_contractrefs",
+                            {"error": "subcheck_exception", "message": "boom"}, CHECKOUT)
+        self.assertEqual(M.split_infrastructure([crash]), ([], [crash]))
 
     def test_a_real_lint_contractrefs_failure_is_still_a_failure(self):
         """Only the timeout row is infrastructure: what the subcheck reports when it finishes counts,
@@ -2270,7 +2340,7 @@ class PairedValidatorCopies(LandingRun):
         self.storage_shape()
         inner = self.module.run_check
 
-        def run_check(name, root, run_dir, timeout, jobs=1, env=None):
+        def run_check(name, root, run_dir, timeout, jobs=1, env=None, supports_jobs=True):
             if name == "audit-governance":
                 (self.repo / "scripts" / "pm-plans-verify-helper.py").write_text("edited mid-run\n", encoding="utf-8")
             return inner(name, root, run_dir, timeout)
@@ -2340,8 +2410,7 @@ class TimeoutsLiftExitZero(LandingRun):
         # The timeout line names the subcheck, how long it ran and the limit.
         self.assertIn("[infrastructure] run-gates/lint_path_refs  subprocess_timeout (lint-path-refs)  "
                       "killed after 1800 s, at its limit of 1800 s", out)
-        self.assertIn("1 subcheck did not finish within 1800 s, the limit (run-gates/lint_path_refs killed after "
-                      "1800 s)", out)
+        self.assertIn("1 subcheck did not finish (run-gates/lint_path_refs killed after 1800 s)", out)
         self.assertIn("it cannot exit 0", out)
 
     def test_a_complete_run_with_nothing_to_report_still_exits_zero(self):
@@ -2372,7 +2441,11 @@ class KeptCheckReports(LandingRun):
             self.assertEqual(code, 0, out)
             self.assertIn(f"full check reports kept in {Path(keep).resolve()}", out)
             self.assertEqual(sorted(path.name for path in Path(keep).iterdir()),
-                             ["audit-governance.json", "plan-migration-validate.json", "run-gates.json"])
+                             ["audit-governance.json", "dedupe-events.jsonl",
+                              "plan-migration-validate.json", "run-gates.json"])
+            # This run cached nothing; the journal is this run's, and it is empty (review's
+            # retained-report defect: a reused keep directory kept the previous run's 40 runs).
+            self.assertEqual((Path(keep) / "dedupe-events.jsonl").read_text(encoding="utf-8"), "")
             kept = json.loads((Path(keep) / "run-gates.json").read_text(encoding="utf-8"))
             self.assertEqual(kept["failures"][0]["failures"], [STALE_HASH])
             migration = json.loads((Path(keep) / "plan-migration-validate.json").read_text(encoding="utf-8"))
@@ -2554,7 +2627,7 @@ class ExportKeyedSubchecks(LandingRun):
         self.exports = {}
         self.export_calls = []
 
-        def run_export(root, argv, timeout_seconds):
+        def run_export(root, argv, timeout_seconds, env=None, memory_floor_mb=0):
             self.export_calls.append(list(argv))
             rows = self.exports.get(argv[0], "unreadable")
             if rows == "timeout":
@@ -3451,43 +3524,63 @@ class AggregateReportsTests(unittest.TestCase):
         self.assertEqual(str(raised.exception), "audit fell over")
 
 
-STUB_VERIFIER = r'''
-import importlib.util, json, os, sys
+STUB_VERIFIER = r"""
+import importlib.util, json, os, subprocess, sys, tempfile
+from pathlib import Path
 spec = importlib.util.spec_from_file_location("real_verifier", "__REAL_VERIFIER__")
 real = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(real)
 
+SHARED = "shared-validator"
 
-def build(command):
+
+def failure_rows():
     try:
-        found = [line.strip() for line in open("Plans/failures.txt", encoding="utf-8") if line.strip()]
+        return [line.strip() for line in open("Plans/failures.txt", encoding="utf-8") if line.strip()]
     except OSError:
-        found = []
-    rows = [{"path": path, "error": "brand_new_kind"} for path in found]
+        return []
+
+
+def shared_report():
+    rows = [{"path": path, "error": "brand_new_kind"} for path in failure_rows()]
+    return {"schema_id": "pm.plans_verify.report.v1", "check": SHARED,
+            "status": "fail" if rows else "pass", "failures": rows}
+
+
+def aggregate_report(command):
+    # Both aggregates run the same validator command line, as the real ones do: under the snapshot
+    # route the second call must reuse the first report.
+    with tempfile.TemporaryDirectory() as scratch:
+        child = Path(scratch) / "shared.json"
+        subprocess.run([sys.executable, __file__, SHARED, "--report", str(child)], check=True)
+        rows = json.loads(child.read_text(encoding="utf-8"))["failures"]
     if command == "run-gates":
         return {"schema_id": "pm.plans_verify.report.v1", "check": "run-gates",
                 "status": "fail" if rows else "pass",
-                "failures": [{"check": "verify_spec_lock", "failures": rows}] if rows else [],
-                "checks": {"verify_spec_lock": {"status": "fail" if rows else "pass", "failures": len(rows)}}}
+                "failures": [{"check": SHARED, "failures": rows}] if rows else [],
+                "checks": {SHARED: {"status": "fail" if rows else "pass", "failures": len(rows)}}}
     return {"schema_id": "pm.plans_verify.report.v1", "check": "audit-governance",
             "status": "fail" if rows else "pass",
-            "failures": [{"check": "spec_lock", "failures": rows}] if rows else [],
-            "spec_lock": {"status": "fail" if rows else "pass", "failures": len(rows)}}
+            "failures": [{"check": SHARED, "failures": rows}] if rows else [],
+            SHARED: {"status": "fail" if rows else "pass", "failures": len(rows)}}
 
 
 def main():
+    if "--help" in sys.argv:
+        print("usage: pm-plans-verify.py run-gates [--jobs N] [--report FILE]")
+        raise SystemExit(0)
     command = sys.argv[1]
     report_path = sys.argv[sys.argv.index("--report") + 1]
     request = real.dedupe_request(sys.argv[1:])
     event = "run"
     if request is None:
-        report = build(command)
+        report = shared_report() if command == SHARED else aggregate_report(command)
     else:
         path, payload = request
         with real.dedupe_lock(path):
             report = real.read_dedupe(path, payload)
             if report is None:
-                report = build(command)
+                report = shared_report() if command == SHARED else aggregate_report(command)
                 real.write_dedupe(path, payload, report)
             else:
                 event = "hit"
@@ -3497,19 +3590,22 @@ def main():
     if log:
         with open(log, "a", encoding="utf-8") as handle:
             handle.write(event + ":" + command + "\n")
+    touched = os.environ.get("STUB_TOUCH_INPUT")
+    if touched and command == "run-gates":
+        Path(touched).write_text("written while the check ran\n", encoding="utf-8")
     print(json.dumps({"status": report["status"]}))
 
 
 if __name__ == "__main__":
     main()
-'''
+"""
 
 STUB_MIGRATION = 'import json\nprint(json.dumps({"status": "pass", "failures": []}))\n'
 
 # A live process named pm-landing-check.py, standing where that script stands: it writes the owner
 # record with the script's own function, primes the cache under a stamp, and stays alive while the
 # tests run. argv: cache stamp repo jobs hold-file
-OWNER_HELPER = r'''
+OWNER_HELPER = r"""
 import importlib.util, os, subprocess, sys, time
 from pathlib import Path
 spec = importlib.util.spec_from_file_location("real_landing_check", "__REAL_LANDING__")
@@ -3529,16 +3625,15 @@ for name in ("run-gates", "audit-governance"):
 (cache.parent / "owner-ready").write_text("ready", encoding="utf-8")
 while hold.exists():
     time.sleep(0.05)
-'''
+"""
 
 
 class InheritedCacheTests(unittest.TestCase):
-    """Review B1: a cache pair from another run can never change what a landing check reports.
+    """Reviews B1, A1 and A3: nothing is cached outside the snapshot route, and that route is checked.
 
-    The real main() runs over a stub repository, with real subprocess aggregates that use this
-    branch's own cache functions, and a live process named pm-landing-check.py owning a primed cache.
-    At the second commit the stub reports a new failure on a file the branch touches: exit 2. A cache
-    left at the first commit, where that subcheck passed, would answer for the second and exit 0.
+    The real main() runs over a stub repository whose two aggregates spawn one shared validator
+    command line, with real subprocesses and this branch's own cache functions. At the second commit
+    the stub reports a new failure on a file the branch touches, so the correct result is exit 2.
     """
 
     def setUp(self):
@@ -3568,21 +3663,25 @@ class InheritedCacheTests(unittest.TestCase):
         self.git("commit", "-qm", "A")
         self.base = self.git("rev-parse", "HEAD").strip()
 
-    def git(self, *args):
-        return subprocess.run(["git", *args], cwd=self.repo, capture_output=True, text=True, check=True).stdout
+    def git(self, *args, cwd=None):
+        return subprocess.run(["git", *args], cwd=cwd or self.repo, capture_output=True, text=True, check=True).stdout
 
-    def command(self, jobs, *extra):
-        return [sys.executable, "-B", str(ROOT / "scripts" / "pm-landing-check.py"), "--root", str(self.repo),
+    def command(self, root, jobs, *extra):
+        return [sys.executable, "-B", str(ROOT / "scripts" / "pm-landing-check.py"), "--root", str(root),
                 "--base", self.base, "--baseline", "Plans/.audits/baseline.json",
                 "--run-dir", "Plans/.plan_migration/run",
-                "--readiness-audit-root", str(self.repo / M.READINESS_AUDIT_REL),
+                "--readiness-audit-root", str(root / M.READINESS_AUDIT_REL),
                 "--jobs", str(jobs), *extra]
 
-    def run_check(self, jobs, environment, *extra):
+    def run_check(self, jobs, environment, *extra, root=None):
         env = {key: value for key, value in environment.items()}
         env["STUB_RUN_LOG"] = str(self.log)
-        return subprocess.run(self.command(jobs, *extra), cwd=self.repo, env=env, capture_output=True,
-                              text=True, timeout=120)
+        return subprocess.run(self.command(root or self.repo, jobs, *extra), cwd=str(root or self.repo),
+                              env=env, capture_output=True, text=True, timeout=180)
+
+    def clean_environment(self):
+        return {key: value for key, value in os.environ.items()
+                if not key.startswith("PM_PLANS_VERIFY_DEDUPE")}
 
     def start_owner(self, jobs):
         """Prime the cache at this commit, under a stamp, and keep its named owner alive."""
@@ -3616,59 +3715,122 @@ class InheritedCacheTests(unittest.TestCase):
         self.git("add", ".")
         self.git("commit", "-qm", "B: a new failure on a file this branch touches")
 
-    def assert_the_second_commit_is_blocked(self, process, environment, jobs):
-        """The primed cache says pass; this commit must still exit 2 and run both aggregates."""
+    def blocked(self, process=None, environment=None, jobs=1, root=None, extra=(), expect=None):
+        """The primed cache says pass; this commit must still exit 2 and run every validator."""
         self.log.write_text("", encoding="utf-8")
-        result = self.run_check(jobs, {**os.environ, **environment})
-        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
-        self.assertIn("Naming a path this branch touches: 2", result.stdout)
-        self.assertEqual(sorted(self.log.read_text(encoding="utf-8").splitlines()),
-                         ["run:audit-governance", "run:run-gates"])
+        result = self.run_check(jobs, {**os.environ, **(environment or {})}, *extra, root=root)
+        self.assertEqual(result.returncode, expect if expect is not None else 2,
+                         result.stdout + result.stderr)
+        events = self.log.read_text(encoding="utf-8").splitlines()
+        return result, events
+
+    def snapshot_worktree(self, name="snapshot", branch=None):
+        """The route's checkout: a linked worktree of this run, detached and filled with the inputs."""
+        path = self.work / name
+        head = self.git("rev-parse", "HEAD").strip()
+        args = (["worktree", "add", "-b", branch, str(path), head] if branch
+                else ["worktree", "add", "--detach", str(path), head])
+        self.git(*args)
+        shutil.copytree(self.repo / "Plans/.audits", path / "Plans/.audits")
+        return path
 
     def test_jobs_one_never_reads_an_inherited_cache(self):
-        clean = {key: value for key, value in os.environ.items()
-                 if not key.startswith("PM_PLANS_VERIFY_DEDUPE")}
-        recorded = self.run_check(1, clean, "--record-baseline")
-        self.assertEqual(recorded.returncode, 0, recorded.stdout + recorded.stderr)
+        self.assertEqual(self.run_check(1, self.clean_environment(), "--record-baseline").returncode, 0)
         self.commit_the_failure()
         process, environment = self.start_owner(1)
         try:
-            self.assert_the_second_commit_is_blocked(process, environment, 1)
+            _result, events = self.blocked(environment=environment, jobs=1)
         finally:
             self.stop_owner(process)
+        self.assertEqual(sorted(events), ["run:audit-governance", "run:run-gates",
+                                          "run:shared-validator", "run:shared-validator"])
 
     def test_jobs_four_on_a_dirty_tree_never_reads_an_inherited_cache(self):
-        clean = {key: value for key, value in os.environ.items()
-                 if not key.startswith("PM_PLANS_VERIFY_DEDUPE")}
-        recorded = self.run_check(1, clean, "--record-baseline")
-        self.assertEqual(recorded.returncode, 0, recorded.stdout + recorded.stderr)
+        self.assertEqual(self.run_check(1, self.clean_environment(), "--record-baseline").returncode, 0)
         self.commit_the_failure()
         (self.repo / "dirty.txt").write_text("x\n", encoding="utf-8")
         process, environment = self.start_owner(4)
         try:
-            self.assert_the_second_commit_is_blocked(process, environment, 4)
+            _result, events = self.blocked(environment=environment, jobs=4)
         finally:
             self.stop_owner(process)
 
-    def test_jobs_four_on_a_clean_tree_takes_its_own_cache(self):
-        clean = {key: value for key, value in os.environ.items()
-                 if not key.startswith("PM_PLANS_VERIFY_DEDUPE")}
-        recorded = self.run_check(1, clean, "--record-baseline")
-        self.assertEqual(recorded.returncode, 0, recorded.stdout + recorded.stderr)
+    def test_jobs_four_outside_the_snapshot_route_caches_nothing(self):
+        self.assertEqual(self.run_check(1, self.clean_environment(), "--record-baseline").returncode, 0)
         self.commit_the_failure()
         process, environment = self.start_owner(4)
-        def entries():
-            return sorted(path.name for path in self.cache.glob("*.json")
-                          if path.name != M.DEDUPE_OWNER_FILE)
-
-        primed = entries()
-        self.assertEqual(len(primed), 2)  # the two aggregate entries
+        primed = sorted(path.name for path in self.cache.glob("*.json") if path.name != M.DEDUPE_OWNER_FILE)
         try:
-            self.assert_the_second_commit_is_blocked(process, environment, 4)
+            _result, events = self.blocked(environment=environment, jobs=4)
         finally:
             self.stop_owner(process)
-        # The primed entries are untouched: this run's cache was its own scratch directory.
-        self.assertEqual(entries(), primed)
+        # Every validator ran on its own; the primed aggregate entries were not read or written.
+        self.assertEqual(sorted(events), ["run:audit-governance", "run:run-gates",
+                                          "run:shared-validator", "run:shared-validator"])
+        self.assertEqual(sorted(path.name for path in self.cache.glob("*.json")
+                                if path.name != M.DEDUPE_OWNER_FILE), primed)
+
+    def test_the_snapshot_route_reuses_one_shared_validator(self):
+        self.assertEqual(self.run_check(1, self.clean_environment(), "--record-baseline").returncode, 0)
+        self.commit_the_failure()
+        snapshot = self.snapshot_worktree()
+        _result, events = self.blocked(jobs=4, root=snapshot, extra=("--dedupe-snapshot",))
+        self.assertEqual(sorted(events), ["hit:shared-validator", "run:audit-governance",
+                                          "run:run-gates", "run:shared-validator"])
+
+    def test_two_snapshot_runs_never_share_a_cache(self):
+        self.assertEqual(self.run_check(1, self.clean_environment(), "--record-baseline").returncode, 0)
+        self.commit_the_failure()
+        snapshot = self.snapshot_worktree()
+        first = self.blocked(jobs=4, root=snapshot, extra=("--dedupe-snapshot",))[1]
+        second = self.blocked(jobs=4, root=snapshot, extra=("--dedupe-snapshot",))[1]
+        self.assertEqual(sorted(first), sorted(second))
+        self.assertEqual(second.count("run:shared-validator"), 1)
+
+    def test_the_snapshot_flag_is_refused_in_the_main_worktree(self):
+        self.commit_the_failure()
+        result = self.run_check(4, self.clean_environment(), "--dedupe-snapshot")
+        self.assertEqual(result.returncode, 3, result.stdout + result.stderr)
+        self.assertIn("not the private snapshot", result.stderr)
+        self.assertIn("HEAD is on a branch", result.stderr)
+        self.assertIn("main worktree", result.stderr)
+        self.assertEqual(result.stdout, "")
+
+    def test_the_snapshot_flag_is_refused_on_a_branch_worktree(self):
+        self.commit_the_failure()
+        checkout = self.snapshot_worktree("branch-checkout", branch="snapshot-branch")
+        result = self.run_check(4, self.clean_environment(), "--dedupe-snapshot", root=checkout)
+        self.assertEqual(result.returncode, 3, result.stdout + result.stderr)
+        self.assertIn("HEAD is on a branch", result.stderr)
+
+    def test_the_snapshot_flag_is_refused_when_the_worktree_is_dirty(self):
+        self.commit_the_failure()
+        checkout = self.snapshot_worktree()
+        (checkout / "Plans/Touched.md").write_text("edited after the snapshot\n", encoding="utf-8")
+        result = self.run_check(4, self.clean_environment(), "--dedupe-snapshot", root=checkout)
+        self.assertEqual(result.returncode, 3, result.stdout + result.stderr)
+        self.assertIn("uncommitted changes", result.stderr)
+
+    def test_a_change_during_the_check_stops_the_snapshot_route(self):
+        self.assertEqual(self.run_check(1, self.clean_environment(), "--record-baseline").returncode, 0)
+        self.commit_the_failure()
+        snapshot = self.snapshot_worktree()
+        changed = snapshot / "Plans/.audits/written-while-running.json"
+        result, events = self.blocked(jobs=4, root=snapshot, extra=("--dedupe-snapshot",), expect=3,
+                                      environment={"STUB_TOUCH_INPUT": str(changed)})
+        self.assertIn("the snapshot changed while the checks ran", result.stderr)
+        self.assertIn("hit:shared-validator", events)
+
+    def test_recording_a_baseline_never_dedupes(self):
+        import contextlib
+        import io
+
+        sys.argv = ["pm-landing-check.py", "--root", str(self.repo), "--dedupe-snapshot", "--record-baseline"]
+        errors = io.StringIO()
+        with contextlib.redirect_stderr(errors), self.assertRaises(SystemExit) as raised:
+            M.main()
+        self.assertEqual(raised.exception.code, 2)
+        self.assertIn("--dedupe-snapshot is not used when recording a baseline", errors.getvalue())
 
     def test_main_clears_every_inherited_cache_variable_before_it_runs_anything(self):
         seen = {}
@@ -3681,6 +3843,158 @@ class InheritedCacheTests(unittest.TestCase):
                 return 0
             with patch.object(M, "check_main", side_effect=fake_check_main):
                 sys.argv = ["pm-landing-check.py", "--root", str(self.repo), "--readiness-audit-root",
-                                str(self.repo / M.READINESS_AUDIT_REL)]
+                            str(self.repo / M.READINESS_AUDIT_REL)]
                 self.assertEqual(M.main(), 0)
         self.assertEqual(seen, {M.DEDUPE_DIR_ENV: None, M.DEDUPE_STAMP_ENV: None, M.DEDUPE_TOKEN_ENV: None})
+
+
+class SharedWorkerBudget(LandingRun):
+    """Review N-F: --jobs is one budget for the whole check, capped, and gated on free memory."""
+
+    def capture(self):
+        seen = []
+
+        def run_check(name, root, run_dir, timeout, jobs=1, env=None, supports_jobs=True):
+            if env is None:
+                seen.append((name, jobs, None))
+            else:
+                slot_dir = Path(env[M.SLOTS_DIR_ENV]) if M.SLOTS_DIR_ENV in env else None
+                seen.append((name, jobs, {
+                    "count": env.get(M.SLOTS_COUNT_ENV),
+                    "floor": env.get(M.MEMORY_FLOOR_MB_ENV),
+                    "files": sorted(path.name for path in slot_dir.glob("slot-*.lock")) if slot_dir else [],
+                    "dedupe": sorted(key for key in env if key.startswith("PM_PLANS_VERIFY_DEDUPE")),
+                }))
+            return {"check": name, "status": "pass", "failures": []}
+
+        self.module.run_check = run_check
+        self.module.current_run_dir = lambda root: "Plans/.plan_migration/run-017"
+        return seen
+
+    def test_the_children_get_one_budget_of_the_stated_size(self):
+        seen = self.capture()
+        code, out = self.run_main("--jobs", "4", "--record-baseline", "--baseline", "baseline.json")
+        self.assertEqual(code, 0, out + self.stderr)
+        self.assertEqual(sorted(name for name, _jobs, _env in seen), sorted(M.CHECKS))
+        for _name, jobs, environment in seen:
+            self.assertEqual(jobs, 4)
+            self.assertEqual(environment, {"count": "4", "floor": "6144",
+                                           "files": [f"slot-{index}.lock" for index in range(4)],
+                                           "dedupe": []})
+
+    def test_jobs_one_has_no_budget_and_no_floor(self):
+        seen = self.capture()
+        code, out = self.run_main("--record-baseline", "--baseline", "baseline.json")
+        self.assertEqual(code, 0, out + self.stderr)
+        for _name, jobs, environment in seen:
+            self.assertEqual(jobs, 1)
+            # Review A3: the environment is explicit even here, and carries no cache pair.
+            self.assertEqual(environment, {"count": None, "floor": None, "files": [], "dedupe": []})
+
+    def refused(self, *argv):
+        import contextlib
+        import io
+
+        self.capture()
+        errors = io.StringIO()
+        sys.argv = ["pm-landing-check.py", "--root", str(self.repo), *argv,
+                    "--record-baseline", "--baseline", "baseline.json"]
+        with contextlib.redirect_stderr(errors), self.assertRaises(SystemExit) as raised:
+            self.module.main()
+        self.assertEqual(raised.exception.code, 2)
+        return errors.getvalue()
+
+    def test_more_workers_than_the_cap_is_refused(self):
+        self.assertIn("--jobs must be between 1 and", self.refused("--jobs", str(M.MAX_JOBS + 1)))
+
+    def test_a_negative_memory_floor_is_refused(self):
+        self.assertIn("--memory-floor-gb must not be negative",
+                      self.refused("--memory-floor-gb", "-1"))
+
+    def test_the_floor_holds_the_start_and_says_so(self):
+        import contextlib
+        import io
+
+        readings = iter([1024, 1024, 8192])
+        slept = []
+        errors = io.StringIO()
+        with contextlib.redirect_stderr(errors):
+            M.wait_for_memory_floor(6144, "the three checks",
+                                    available=lambda: next(readings), sleep=slept.append)
+        self.assertEqual(len(slept), 2)
+        self.assertIn("pm-landing-check: waiting for memory: 1.0 GiB available, floor 6.0 GiB, "
+                      "before the three checks", errors.getvalue())
+        self.assertIn("memory is back: 8.0 GiB, before the three checks", errors.getvalue())
+
+    def test_a_zero_floor_and_an_unknown_reading_never_wait(self):
+        M.wait_for_memory_floor(0, "x", available=lambda: 1, sleep=lambda seconds: self.fail("waited"))
+        M.wait_for_memory_floor(6144, "x", available=lambda: None, sleep=lambda seconds: self.fail("waited"))
+
+
+OLD_TARGET_VERIFIER = '''import json, sys
+if "--help" in sys.argv:
+    print("usage: pm-plans-verify.py run-gates [--subcheck-timeout-seconds N] [--report FILE]")
+    raise SystemExit(0)
+if "--jobs" in sys.argv:
+    print("pm-plans-verify.py: error: unrecognized arguments: --jobs", file=sys.stderr)
+    raise SystemExit(2)
+with open(sys.argv[sys.argv.index("--report") + 1], "w", encoding="utf-8") as handle:
+    json.dump({"schema_id": "pm.plans_verify.report.v1", "check": sys.argv[1], "status": "pass",
+               "failures": []}, handle)
+print(json.dumps({"status": "pass"}))
+'''
+
+NEW_TARGET_VERIFIER = '''import json, sys
+if "--help" in sys.argv:
+    print("usage: pm-plans-verify.py run-gates [--jobs N] [--subcheck-timeout-seconds N] [--report FILE]")
+    raise SystemExit(0)
+if "--jobs" not in sys.argv:
+    print("pm-plans-verify.py: error: --jobs is required by this test", file=sys.stderr)
+    raise SystemExit(2)
+with open(sys.argv[sys.argv.index("--report") + 1], "w", encoding="utf-8") as handle:
+    json.dump({"schema_id": "pm.plans_verify.report.v1", "check": sys.argv[1], "status": "pass",
+               "failures": []}, handle)
+print(json.dumps({"status": "pass"}))
+'''
+
+
+class TargetJobsNegotiation(unittest.TestCase):
+    """Review A2: the checker runs a target checkout's own verifier, which may predate --jobs."""
+
+    def make_root(self, files):
+        root = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, root, True)
+        (root / "scripts").mkdir(parents=True)
+        for name, body in files.items():
+            (root / "scripts" / name).write_text(body, encoding="utf-8")
+        return root
+
+    def test_an_older_target_is_run_without_the_option(self):
+        root = self.make_root({"pm-plans-verify.py": OLD_TARGET_VERIFIER})
+        self.assertFalse(M.target_accepts_jobs(root))
+        report = M.run_check("run-gates", root, "run", 1800, 4, dict(os.environ), None)
+        self.assertEqual(report["status"], "pass")
+
+    def test_a_newer_target_gets_the_option(self):
+        root = self.make_root({"pm-plans-verify.py": NEW_TARGET_VERIFIER})
+        self.assertTrue(M.target_accepts_jobs(root))
+        report = M.run_check("run-gates", root, "run", 1800, 4, dict(os.environ), None)
+        self.assertEqual(report["status"], "pass")
+        argv = M.check_argv("run-gates", Path("/tmp/report.json"), 1800, 4, True)
+        self.assertEqual(argv[argv.index("--jobs") + 1], "4")
+        self.assertEqual(M.check_argv("run-gates", Path("/tmp/report.json"), 1800, 4, False).count("--jobs"), 0)
+
+    def test_the_base_verifier_really_predates_the_option(self):
+        """Two real versions of the same path: the base commit's verifier and this tree's."""
+        def show(path):
+            return subprocess.run(["git", "-C", str(ROOT), "show", f"9ac9e84a27:{path}"],
+                                  capture_output=True, text=True)
+
+        script, wiring = show("scripts/pm-plans-verify.py"), show("scripts/pm_wiring_inventory.py")
+        if script.returncode or wiring.returncode:
+            self.skipTest("the branch's base commit is not in this clone")
+        self.assertNotIn("--jobs", script.stdout)
+        old = self.make_root({"pm-plans-verify.py": script.stdout,
+                              "pm_wiring_inventory.py": wiring.stdout})
+        self.assertFalse(M.target_accepts_jobs(old))
+        self.assertTrue(M.target_accepts_jobs(ROOT))

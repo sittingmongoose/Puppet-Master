@@ -277,11 +277,27 @@ DEDUPE_TOKEN_ENV = "PM_PLANS_VERIFY_DEDUPE_TOKEN"
 DEDUPE_OWNER_FILE = "owner.json"
 DEDUPE_OWNER_SCHEMA_ID = "pm.landing_check.dedupe_owner.v1"
 
+# One worker budget for the whole check (review N-F). --jobs counts every validator running at once
+# across the three checks, not N per aggregate: this script creates that many slot files and passes
+# them to the aggregates and exports, which take one for each validator's lifetime (the same names
+# are read by scripts/pm-plans-verify.py). Before any validator starts, the run waits while
+# MemAvailable is below --memory-floor-gb, and says so. --jobs 1 is today's serial run: no budget,
+# no floor, nothing to wait for.
+SLOTS_DIR_ENV = "PM_LANDING_CHECK_SLOTS_DIR"
+SLOTS_COUNT_ENV = "PM_LANDING_CHECK_SLOTS"
+MEMORY_FLOOR_MB_ENV = "PM_LANDING_CHECK_MEMORY_FLOOR_MB"
+MAX_JOBS = 8
+DEFAULT_MEMORY_FLOOR_GB = 6.0
+MEMORY_POLL_SECONDS = 5.0
+
 # Failure kinds that say a subcheck did not finish, not that the tree is wrong. pm-plans-verify.py
 # kills a subcheck at --subcheck-timeout-seconds and reports that as the subcheck's only failure:
 # `subprocess_timeout` for the subchecks it runs as processes, `subcheck_timeout` for the one it runs
-# in-process.
-INFRASTRUCTURE_ERRORS = {"subprocess_timeout", "subcheck_timeout"}
+# in-process. `validator_killed_by_signal` is a validator something outside stopped - the kernel's OOM
+# killer, a watchdog - which is the same "reported nothing" (review N-A): treating it as a failure of
+# the tree under-reported the landing and let --record-baseline write the kill down as a finding.
+INFRASTRUCTURE_ERRORS = {"subprocess_timeout", "subcheck_timeout", "validator_killed_by_signal"}
+KILLED_ERROR = "validator_killed_by_signal"
 # The bound handed to the aggregate checks. lint-contractrefs alone takes about 199 s in the shared
 # checkout on the network mount, with 0 failures when run on its own at e44b9186fb; the old 180 s
 # bound killed it in both aggregates at the terminal.workgroup_moved landing of 2026-09-24.
@@ -420,8 +436,75 @@ def current_run_dir(root: Path) -> str:
     return run_path
 
 
+def snapshot_route_problems(root: Path) -> list[str]:
+    """Why this checkout is not the private, immutable snapshot a run may cache inside.
+
+    The cache is only sound when nothing writes the checkout for the run's whole length, which is
+    what scripts/pm-land.py's check route creates: its own linked worktree, detached at the checked
+    commit, filled with the ignored inputs and clean. Any other checkout - the shared one, a
+    lander's own worktree, a branch checkout - can be written while validators run, so it is refused
+    rather than cached with a weaker promise (review A1).
+    """
+    def git(*args: str) -> subprocess.CompletedProcess:
+        return subprocess.run(["git", "--no-optional-locks", *args], cwd=root,
+                              capture_output=True, text=True)
+
+    problems: list[str] = []
+    if git("symbolic-ref", "-q", "HEAD").returncode == 0:
+        problems.append("HEAD is on a branch; the snapshot is detached at the checked commit")
+    git_dir = git("rev-parse", "--git-dir").stdout.strip()
+    common = git("rev-parse", "--git-common-dir").stdout.strip()
+    if not git_dir or not common or (root / git_dir).resolve() == (root / common).resolve():
+        problems.append("this is the repository's main worktree, not a worktree created for one run")
+    status = git("status", "--porcelain", "-z", "--untracked-files=all")
+    if status.returncode != 0:
+        problems.append(f"git status failed: {status.stderr.strip()[:200]}")
+    elif status.stdout:
+        problems.append("the worktree has uncommitted changes")
+    return problems
+
+
+_TARGET_JOBS_SUPPORT: dict[str, bool] = {}
+
+
+def target_accepts_jobs(root: Path) -> bool:
+    """Does the target checkout's verifier take --jobs? Read from its own --help, once per checkout.
+
+    scripts/pm-landing-check.py runs the verifier of the tree it checks, and a tree older than this
+    branch does not know the option: passing it there is "unrecognized arguments" and exit 3 (review
+    A2). The answer is cached for the process; an unreadable help means no and the legacy invocation.
+    """
+    key = str(root.resolve())
+    if key not in _TARGET_JOBS_SUPPORT:
+        try:
+            proc = subprocess.run(
+                [sys.executable, "scripts/pm-plans-verify.py", "run-gates", "--help"],
+                cwd=root, capture_output=True, text=True)
+            _TARGET_JOBS_SUPPORT[key] = proc.returncode == 0 and "--jobs" in proc.stdout
+        except OSError:
+            _TARGET_JOBS_SUPPORT[key] = False
+    return _TARGET_JOBS_SUPPORT[key]
+
+
+def check_argv(name: str, report_file: Path | None, timeout_seconds: int, jobs: int,
+               supports_jobs: bool) -> list[str]:
+    """The command line for one aggregate check in the target checkout.
+
+    `--jobs` is only passed to a verifier that lists it, so an older `--root` keeps its legacy
+    invocation; `--quiet-progress` and the bound predate this branch and are always passed.
+    """
+    argv = [sys.executable, "scripts/pm-plans-verify.py", name, "--quiet-progress",
+            "--subcheck-timeout-seconds", str(timeout_seconds)]
+    if supports_jobs:
+        argv += ["--jobs", str(jobs)]
+    if report_file is not None:
+        argv += ["--report", str(report_file)]
+    return argv
+
+
 def run_check(name: str, root: Path, run_dir: str, timeout_seconds: int,
-              jobs: int = 1, env: dict[str, str] | None = None) -> dict[str, Any]:
+              jobs: int = 1, env: dict[str, str] | None = None,
+              supports_jobs: bool | None = None) -> dict[str, Any]:
     """Invoke one check and return its JSON report. Raises RuntimeError when it cannot be read.
 
     `pm-plan-migration.py validate` prints its whole report. `run-gates` and `audit-governance`
@@ -436,18 +519,9 @@ def run_check(name: str, root: Path, run_dir: str, timeout_seconds: int,
             report_file = None
         else:
             report_file = Path(scratch) / f"{name}.json"
-            argv = [
-                sys.executable,
-                "scripts/pm-plans-verify.py",
-                name,
-                "--quiet-progress",
-                "--subcheck-timeout-seconds",
-                str(timeout_seconds),
-                "--jobs",
-                str(jobs),
-                "--report",
-                str(report_file),
-            ]
+            if supports_jobs is None:
+                supports_jobs = target_accepts_jobs(root)
+            argv = check_argv(name, report_file, timeout_seconds, jobs, supports_jobs)
         proc = subprocess.run(argv, cwd=root, capture_output=True, text=True, env=env)
         payload = report_file.read_text(encoding="utf-8") if report_file and report_file.exists() else proc.stdout
         try:
@@ -542,6 +616,10 @@ def ignored_inputs_digest(root: Path) -> str:
         if not entry.startswith("!! "):
             continue
         relative = entry[3:]
+        if "__pycache__" in Path(relative).parts:
+            # Bytecode caches are not inputs, and the run itself writes them: the identity must not move
+            # because a child imported a module (the snapshot route re-reads this digest at the end).
+            continue
         path = root / relative
         if path.is_symlink():
             add(relative, "link " + os.readlink(path))
@@ -576,6 +654,41 @@ def index_flags_digest(root: Path) -> str:
         if line[:1] not in {"H", ""}:
             digest.update(line.encode("utf-8", "surrogateescape") + b"\0")
     return digest.hexdigest()
+
+
+def memory_available_mb() -> int | None:
+    """MemAvailable in MiB, or None where the kernel does not say (no floor is enforced then)."""
+    try:
+        with open("/proc/meminfo", encoding="utf-8") as handle:
+            for line in handle:
+                if line.startswith("MemAvailable:"):
+                    return int(line.split()[1])
+    except (OSError, ValueError, IndexError):
+        return None
+    return None
+
+
+def wait_for_memory_floor(floor_mb: int, label: str, *,
+                          available=memory_available_mb, sleep=time.sleep) -> None:
+    """Wait while available memory is below the floor, saying so; never return while it is below.
+
+    A floor of 0 disables it. An unreadable MemAvailable disables it too: a host that cannot say
+    how much memory is free gets today's behaviour rather than an unbounded wait.
+    """
+    if floor_mb <= 0:
+        return
+    available_mb = available()
+    if available_mb is None or available_mb >= floor_mb:
+        return
+    print(f"pm-landing-check: waiting for memory: {available_mb / 1024:.1f} GiB available, floor "
+          f"{floor_mb / 1024:.1f} GiB, before {label}", file=sys.stderr, flush=True)
+    while True:
+        sleep(MEMORY_POLL_SECONDS)
+        available_mb = available()
+        if available_mb is None or available_mb >= floor_mb:
+            found = "unknown" if available_mb is None else f"{available_mb / 1024:.1f} GiB"
+            print(f"pm-landing-check: memory is back: {found}, before {label}", file=sys.stderr, flush=True)
+            return
 
 
 def process_start_token(pid: int) -> str | None:
@@ -615,7 +728,7 @@ def write_dedupe_owner(directory: Path, stamp: str) -> str:
 
 
 def dedupe_stamp(root: Path, run_dir: str, audit_inputs: dict[str, Any],
-                 state: dict[str, Any]) -> str | None:
+                 state: dict[str, Any], ignored_digest: str | None = None) -> str | None:
     """One digest of everything a validator reads that its command line does not name.
 
     None means no safe stamp: the worktree has changes (so a validator would read files that HEAD
@@ -634,7 +747,8 @@ def dedupe_stamp(root: Path, run_dir: str, audit_inputs: dict[str, Any],
             "scripts_sha256": state.get("scripts_sha256"),
             "run_dir": run_dir,
             "readiness_audit_inputs": audit_inputs,
-            "ignored_inputs_sha256": ignored_inputs_digest(root),
+            "ignored_inputs_sha256": (ignored_digest if ignored_digest is not None
+                                       else ignored_inputs_digest(root)),
             "index_flags_sha256": index_flags_digest(root),
         }
     except (OSError, RuntimeError):
@@ -642,12 +756,21 @@ def dedupe_stamp(root: Path, run_dir: str, audit_inputs: dict[str, Any],
     return hashlib.sha256(canonical(payload).encode("utf-8")).hexdigest()
 
 
-def keep_dedupe_events(events: Path | None, keep_dir: Path | None) -> None:
-    """Beside the kept check reports, keep what the cache ran and what it reused."""
-    if events is None or keep_dir is None or not events.is_file():
+def dedupe_journal(events: Path | None, keep_dir: Path | None) -> None:
+    """Beside the kept check reports, keep what the cache ran and what it reused.
+
+    The current run's journal is always written, an empty one included: a keep directory reused
+    from an earlier run must not keep that run's 40 runs and 37 hits as if they were this run's
+    (review's retained-report defect).
+    """
+    if keep_dir is None:
         return
+    target = keep_dir / "dedupe-events.jsonl"
     try:
-        shutil.copyfile(events, keep_dir / "dedupe-events.jsonl")
+        if events is not None and events.is_file():
+            shutil.copyfile(events, target)
+        else:
+            target.write_text("", encoding="utf-8")
     except OSError:
         pass
 
@@ -908,11 +1031,12 @@ def excused_by_kind(on_branch: list[dict[str, Any]]) -> dict[str, int]:
 
 
 def split_infrastructure(items: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
-    """Rule 3: take out the rows that say a subcheck was killed at its time bound.
+    """Rule 3: take out the rows that say a subcheck did not finish.
 
-    Such a subcheck has no result: what it would have reported is unknown, neither zero nor one. Its
-    row is an infrastructure result, printed on its own line with how long the subcheck ran, and is
-    never a new failure, growth or a blocker. Returns (infrastructure results, the other items).
+    It was killed at its time bound, or by a signal from outside (the kernel's OOM killer, a
+    watchdog). Such a subcheck has no result: what it would have reported is unknown, neither zero nor
+    one. Its row is an infrastructure result, printed on its own line, and is never a new failure,
+    growth or a blocker. Returns (infrastructure results, the other items).
     """
     infrastructure = [infrastructure_row(item) for item in items if item["error"] in INFRASTRUCTURE_ERRORS]
     rest = [item for item in items if item["error"] not in INFRASTRUCTURE_ERRORS]
@@ -921,21 +1045,32 @@ def split_infrastructure(items: list[dict[str, Any]]) -> tuple[list[dict[str, An
 
 def infrastructure_row(item: dict[str, Any]) -> dict[str, Any]:
     raw = item["_raw"] if isinstance(item["_raw"], dict) else {}
+    killed = item["error"] == KILLED_ERROR
     bound = raw.get("timeout_seconds")
     known = isinstance(bound, (int, float)) and not isinstance(bound, bool)
-    return {
+    row = {
         "check": item["check"],
         "subcheck": item["subcheck"],
         "error": item["error"],
+        "kind": "killed" if killed else "timeout",
         "command_id": raw.get("command_id"),
-        # The subcheck is killed when its bound runs out, so the bound is how long it ran.
-        "elapsed_seconds": bound if known else None,
+        # A timeout is killed when its bound runs out, so the bound is how long it ran; a validator
+        # killed from outside reported no bound.
+        "elapsed_seconds": None if killed else (bound if known else None),
     }
+    if killed:
+        row["signal"] = raw.get("signal")
+        row["signal_name"] = raw.get("signal_name")
+    return row
 
 
 def describe_infrastructure(row: dict[str, Any]) -> str:
-    """The timeout line: the subcheck, how long it ran and the limit (review L-08)."""
+    """One line for a subcheck that did not finish: the bound it ran to, or the signal that killed it."""
     command = f" ({row['command_id']})" if row.get("command_id") else ""
+    if row.get("kind") == "killed":
+        signal_name = row.get("signal_name") or (f"signal {row['signal']}" if row.get("signal") else "a signal")
+        return (f"  [infrastructure] {row['check']}/{row['subcheck'] or '-'}  {row['error']}{command}  "
+                f"killed by {signal_name} (an OOM kill or a watchdog); what it would report is unknown")
     limit = row.get("limit_seconds")
     at = f"at its limit of {limit} s" if limit is not None else "at its time limit"
     ran = (f"killed after {row['elapsed_seconds']} s, {at}" if row["elapsed_seconds"] is not None
@@ -1164,9 +1299,10 @@ def exit_code(
 ) -> int:
     """0 only for a complete run with nothing to report (review L-08).
 
-    A subcheck that timed out hides whatever it would have reported, so a run with one was not fully
-    verified. Exit 1 means reported, nothing stops the landing, which is exactly that, so the timeout
-    lifts 0 to 1. It never turns a 1 into a 2 or a 2 into a 1.
+    A subcheck that did not finish - killed at its bound, or by a signal from outside - hides whatever
+    it would have reported, so a run with one was not fully verified. Exit 1 means reported, nothing
+    stops the landing, which is exactly that, so it lifts 0 to 1. It never turns a 1 into a 2 or a 2
+    into a 1: a result nobody read is not evidence either way.
     """
     if not reported and not grown and not subcheck_growth and not infrastructure:
         return 0
@@ -1653,7 +1789,7 @@ def escape_newlines(text: str) -> str:
 def subcheck_totals(
     counts: dict[str, dict[str, dict[str, int]]],
     listed: dict[str, dict[str, int]],
-    timed_out: set[tuple[str, str]],
+    did_not_finish: set[tuple[str, str]],
 ) -> dict[str, int | None]:
     """Every subcheck's total in this run by `check/subcheck`, passing ones too; None for one that timed out.
 
@@ -1664,7 +1800,7 @@ def subcheck_totals(
     for check in CHECKS:
         here, others = counts.get(check) or {}, listed.get(check) or {}
         for name in sorted(set(here) | set(others)):
-            total = None if (check, name) in timed_out else here[name]["reported"] if name in here else others[name]
+            total = None if (check, name) in did_not_finish else here[name]["reported"] if name in here else others[name]
             totals[f"{check}/{name or '-'}"] = total
     return totals
 
@@ -1677,7 +1813,7 @@ def write_row_report(
     items: list[dict[str, Any]],
     counts: dict[str, dict[str, dict[str, int]]],
     listed: dict[str, dict[str, int]],
-    timed_out: set[tuple[str, str]],
+    did_not_finish: set[tuple[str, str]],
     partial: set[tuple[str, str]],
     paired: set[tuple[str, str]],
     fingerprints: dict[str, set[str] | None],
@@ -1720,7 +1856,7 @@ def write_row_report(
              "kind_stale": is_staleness_kind(item["error"]),
              "grown_stale": bool(grown and grown["stale"]), "names": names})
     subchecks = {}
-    for name, total in subcheck_totals(counts, listed, timed_out).items():
+    for name, total in subcheck_totals(counts, listed, did_not_finish).items():
         mine = rows.get(name, [])
         complete = total is not None and len(mine) == total
         subchecks[name] = {"reported": total, "complete": complete, "rows": mine if complete else []}
@@ -1824,7 +1960,7 @@ def pair_validators(
     counts: dict[str, dict[str, dict[str, int]]],
     listed: dict[str, dict[str, int]],
     baseline_checks: dict[str, Any],
-    timed_out: set[tuple[str, str]],
+    did_not_finish: set[tuple[str, str]],
     items: list[dict[str, Any]],
     commands: dict[tuple[str, str], str] | str,
     changed: str | None,
@@ -1886,9 +2022,9 @@ def pair_validators(
         other = {**now("audit-governance", twin), **then("audit-governance", twin)}
         row["audit_governance"], row["audit_governance_counts"] = twin, other
         unmatched = 0
-        if ("run-gates", name) in timed_out:
+        if ("run-gates", name) in did_not_finish:
             row["reason"] = "the run-gates copy timed out"
-        elif ("audit-governance", twin) in timed_out:
+        elif ("audit-governance", twin) in did_not_finish:
             row["reason"] = "the audit-governance copy timed out"
         elif changed:
             row["reason"] = changed
@@ -1935,7 +2071,8 @@ def describe_pair(row: dict[str, Any]) -> str:
 
 
 def run_export(root: Path, argv: list[str], timeout_seconds: int,
-               base_env: dict[str, str] | None = None) -> dict[str, Any]:
+               base_env: dict[str, str] | None = None,
+               memory_floor_mb: int = 0) -> dict[str, Any]:
     """Run one subcheck's command on its own and read the report it writes: its export (the exports brief).
 
     `argv` is the command and its arguments exactly as pm-plans-verify.py builds them for the aggregates
@@ -1945,8 +2082,10 @@ def run_export(root: Path, argv: list[str], timeout_seconds: int,
     when `timeout_seconds` runs out. The file is in a scratch directory outside the repository and is
     deleted again; like the aggregates, it reads the command's stdout when the file is empty. Returns
     {"report": the report or None, "timed_out": bool, "error": why it could not be read or None,
-    "elapsed_seconds": how long it ran}.
+    "elapsed_seconds": how long it ran}. `memory_floor_mb` holds the export until the machine has
+    that much available, exactly as the aggregates' own validators are held.
     """
+    wait_for_memory_floor(memory_floor_mb, argv[0] if argv else "an export")
     started = time.monotonic()
     with tempfile.TemporaryDirectory(prefix="pm-landing-check-export-") as scratch:
         report_file = Path(scratch) / "export.json"
@@ -1999,13 +2138,14 @@ def key_from_exports(
     root: Path,
     counts: dict[str, dict[str, dict[str, int]]],
     baseline_checks: dict[str, Any] | None,
-    timed_out: set[tuple[str, str]],
+    did_not_finish: set[tuple[str, str]],
     argv_map: dict[tuple[str, str], list[str]] | str,
     timeout_seconds: int,
     keep_dir: Path | None = None,
     items: list[dict[str, Any]] | tuple[dict[str, Any], ...] = (),
     context: RenameContext | None = None,
     env: dict[str, str] | None = None,
+    memory_floor_mb: int = 0,
 ) -> tuple[dict[tuple[str, str], list[dict[str, Any]]], list[dict[str, Any]]]:
     """The exports brief: key each subcheck that prints only a sample from its complete export.
 
@@ -2024,7 +2164,7 @@ def key_from_exports(
     for check in ("run-gates", "audit-governance"):
         for name in sorted(counts.get(check) or {}):
             counted = counts[check][name]
-            if counted["sampled"] >= counted["reported"] or (check, name) in timed_out:
+            if counted["sampled"] >= counted["reported"] or (check, name) in did_not_finish:
                 continue
             row: dict[str, Any] = {
                 "check": check, "subcheck": name, "command": None, "reported": counted["reported"],
@@ -2066,9 +2206,7 @@ def key_from_exports(
     exported: dict[tuple[str, str], list[dict[str, Any]]] = {}
     commands = Counter(argv[0] for argv in planned)
     for argv in sorted(planned):
-        # The four-argument call is kept for the callers and fixtures that predate the cache.
-        result = (run_export(root, list(argv), timeout_seconds, env) if env is not None
-                  else run_export(root, list(argv), timeout_seconds))
+        result = run_export(root, list(argv), timeout_seconds, env, memory_floor_mb)
         if keep_dir is not None:
             unique = commands[argv[0]] == 1
             keep_export(keep_dir, argv[0] if unique else f"{argv[0]}-{hashlib.sha256(' '.join(argv).encode()).hexdigest()[:8]}",
@@ -2202,10 +2340,19 @@ def main() -> int:
                         help="passed to the aggregate checks; a subcheck still running at this bound is "
                              f"killed and reported as an infrastructure result (default: "
                              f"{DEFAULT_SUBCHECK_TIMEOUT_SECONDS})")
+    parser.add_argument("--dedupe-snapshot", action="store_true",
+                        help="this checkout is the private snapshot worktree this one run created (the "
+                             "scripts/pm-land.py check --on route); reuse each shared validator's report "
+                             "once per run. Never pass it in the shared checkout, a lander's own worktree "
+                             "or with --record-baseline")
     parser.add_argument("--jobs", type=int, default=min(os.cpu_count() or 1, 4),
-                        help="run this many independent checks at once and give each aggregate the same "
-                             "worker cap; results and reports are emitted in the original order, and 1 is "
-                             f"exactly the serial run (default: {min(os.cpu_count() or 1, 4)})")
+                        help="run this many validators at once across the three checks (one shared budget, "
+                             "not one per check) and overlap the checks themselves; results and reports are "
+                             "emitted in the original order, and 1 is exactly the serial run (default: "
+                             f"{min(os.cpu_count() or 1, 4)}; at most {MAX_JOBS})")
+    parser.add_argument("--memory-floor-gb", type=float, default=DEFAULT_MEMORY_FLOOR_GB,
+                        help="with --jobs above 1, no validator starts while MemAvailable is below this many "
+                             f"GiB; the run waits and says so (default: {DEFAULT_MEMORY_FLOOR_GB:g})")
     parser.add_argument("--json", action="store_true", help="print the machine-readable report instead of the summary")
     parser.add_argument("--allow-sparse", action="store_true",
                         help="run on a sparse worktree anyway; everything outside the cone reads as missing")
@@ -2216,8 +2363,13 @@ def main() -> int:
                         help="also keep each check's full report, every row it printed, as DIR/<check>.json, "
                              "so the run can be replayed exactly; DIR must be outside the repository")
     args = parser.parse_args()
-    if args.jobs < 1:
-        parser.error("--jobs must be at least 1")
+    if not 1 <= args.jobs <= MAX_JOBS:
+        parser.error(f"--jobs must be between 1 and {MAX_JOBS}")
+    if args.memory_floor_gb < 0:
+        parser.error("--memory-floor-gb must not be negative")
+    if args.dedupe_snapshot and args.record_baseline:
+        parser.error("--dedupe-snapshot is not used when recording a baseline: the run that records one "
+                     "reads every validator on its own")
 
     root = Path(args.root).resolve()
     if args.readiness_audit_root:
@@ -2260,6 +2412,20 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
               "at landing, or here after `git sparse-checkout disable`. Pass --allow-sparse to run it "
               "on this tree anyway.", file=sys.stderr)
         return 3
+
+    if args.dedupe_snapshot:
+        # The flag promises the cache's soundness on a checkout nothing writes. Check the promise
+        # rather than trust the caller: fail closed, because a run that silently cached a mutable
+        # checkout is the false pass review A1 found.
+        problems = snapshot_route_problems(root)
+        if problems:
+            print("pm-landing-check: --dedupe-snapshot was passed, but this checkout is not the private "
+                  "snapshot it promises:", file=sys.stderr)
+            for problem in problems:
+                print(f"  - {problem}", file=sys.stderr)
+            print("pm-landing-check: pass it only from scripts/pm-land.py's check route; every other "
+                  "invocation runs each validator on its own.", file=sys.stderr)
+            return 3
 
     keep_dir: Path | None = None
     if args.keep_check_reports:
@@ -2318,25 +2484,60 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     before = tree_state(root)
     after = None
     jobs = max(1, args.jobs)
+    floor_mb = int(args.memory_floor_gb * 1024) if jobs > 1 else 0
 
-    child_env: dict[str, str] | None = None
+    # Every child gets an explicit environment built here, so a cache pair this invocation did not
+    # set can never reach one (review A3). main() has already removed an inherited trio.
+    child_env: dict[str, str] = dict(os.environ)
     dedupe_events: Path | None = None
-    if jobs > 1 and args.dedupe_dir is not None:
-        # One landing check needs the 34 validator command lines both aggregates share once, and each
-        # sampled subcheck's export once more. The stamp names the tree and every ignored input those
-        # validators read; when it cannot be taken (a dirty worktree), the run simply does not dedupe.
-        stamp = dedupe_stamp(root, run_dir, audit_inputs, before)
-        if stamp is not None:
+    ignored_digest: str | None = None
+    if jobs > 1:
+        # The slot files are the whole run's worker budget: both aggregates and every export take one
+        # for each validator they run, so --jobs is a total rather than one pool per check.
+        slot_dir = None
+        if args.dedupe_dir is not None:
+            candidate = args.dedupe_dir / "slots"
             try:
-                nonce = write_dedupe_owner(args.dedupe_dir, stamp)
+                candidate.mkdir(parents=True, exist_ok=True)
+                for index in range(jobs):
+                    (candidate / f"slot-{index}.lock").touch(exist_ok=True)
+                slot_dir = candidate
             except OSError:
-                nonce = None  # a cache that cannot name its owner is not used; the run is unchanged.
-            if nonce is not None:
-                child_env = dict(os.environ)
-                child_env[DEDUPE_DIR_ENV] = str(args.dedupe_dir)
-                child_env[DEDUPE_STAMP_ENV] = stamp
-                child_env[DEDUPE_TOKEN_ENV] = nonce
-                dedupe_events = args.dedupe_dir / "events.jsonl"
+                slot_dir = None
+        if slot_dir is not None:
+            child_env[SLOTS_DIR_ENV] = str(slot_dir)
+            child_env[SLOTS_COUNT_ENV] = str(jobs)
+            child_env[MEMORY_FLOOR_MB_ENV] = str(floor_mb)
+
+    if args.dedupe_snapshot and jobs > 1:
+        # The cache is opt-in and exists for one invocation only: its directory was created fresh in
+        # main() and is removed when this returns, so nothing is reused across runs. Inside the run,
+        # one shared validator's report serves both aggregates and any export of it (review A1).
+        if args.dedupe_dir is None:
+            print("pm-landing-check: --dedupe-snapshot: no private cache directory could be created",
+                  file=sys.stderr)
+            return 3
+        try:
+            ignored_digest = ignored_inputs_digest(root)
+        except (OSError, RuntimeError) as exc:
+            print(f"pm-landing-check: --dedupe-snapshot: cannot take the snapshot's input identity: {exc}",
+                  file=sys.stderr)
+            return 3
+        stamp = dedupe_stamp(root, run_dir, audit_inputs, before, ignored_digest)
+        if stamp is None:
+            print("pm-landing-check: --dedupe-snapshot: no stamp could be taken for this snapshot",
+                  file=sys.stderr)
+            return 3
+        try:
+            nonce = write_dedupe_owner(args.dedupe_dir, stamp)
+        except OSError as exc:
+            print(f"pm-landing-check: --dedupe-snapshot: cannot write the cache owner: {exc}",
+                  file=sys.stderr)
+            return 3
+        child_env[DEDUPE_DIR_ENV] = str(args.dedupe_dir)
+        child_env[DEDUPE_STAMP_ENV] = stamp
+        child_env[DEDUPE_TOKEN_ENV] = nonce
+        dedupe_events = args.dedupe_dir / "events.jsonl"
 
     def consume(check: str, report: dict[str, Any]) -> None:
         nonlocal after
@@ -2353,18 +2554,31 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         require_same_readiness_audit_inputs(audit_inputs, readiness_audit_inputs(root),
                                           f"changed during {check}")
 
+    # Review A2: the target checkout's verifier may predate --jobs; negotiate once, before any check.
+    supports_jobs = target_accepts_jobs(root)
+    if jobs > 1 and not supports_jobs:
+        print("pm-landing-check: this checkout's scripts/pm-plans-verify.py does not take --jobs; its "
+              "aggregates run one validator at a time.", file=sys.stderr)
+    if args.dedupe_snapshot and not supports_jobs:
+        print("pm-landing-check: --dedupe-snapshot: this checkout's verifier cannot use the run's cache",
+              file=sys.stderr)
+        return 3
+
     if jobs <= 1:
         for check in CHECKS:
             try:
-                report = run_check(check, root, run_dir, args.subcheck_timeout_seconds, jobs, child_env)
+                report = run_check(check, root, run_dir, args.subcheck_timeout_seconds, jobs, child_env,
+                                   supports_jobs)
             except RuntimeError as exc:
                 print(f"pm-landing-check: {exc}", file=sys.stderr)
                 return 3
             consume(check, report)
     else:
+        wait_for_memory_floor(floor_mb, "the three checks")
         try:
             reports = aggregate_reports(
-                lambda check: run_check(check, root, run_dir, args.subcheck_timeout_seconds, jobs, child_env),
+                lambda check: run_check(check, root, run_dir, args.subcheck_timeout_seconds, jobs, child_env,
+                                        supports_jobs),
                 jobs)
         except RuntimeError as exc:
             print(f"pm-landing-check: {exc}", file=sys.stderr)
@@ -2382,7 +2596,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     infrastructure, items = split_infrastructure(items)
     for row in infrastructure:
         row["limit_seconds"] = args.subcheck_timeout_seconds
-    timed_out = {(row["check"], row["subcheck"]) for row in infrastructure}
+    did_not_finish = {(row["check"], row["subcheck"]) for row in infrastructure}
 
     if args.record_baseline and infrastructure:
         # A baseline describes what each subcheck reports on main; a subcheck that was killed reported
@@ -2391,8 +2605,13 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
               "they report is unknown:", file=sys.stderr)
         for row in infrastructure:
             print(describe_infrastructure(row), file=sys.stderr)
-        print(f"pm-landing-check: rerun with a --subcheck-timeout-seconds above "
-              f"{args.subcheck_timeout_seconds}.", file=sys.stderr)
+        if any(row.get("kind") == "killed" for row in infrastructure):
+            print("pm-landing-check: a validator killed by a signal was stopped from outside; rerun when it "
+                  "finishes, and raise --subcheck-timeout-seconds for one killed at its bound.",
+                  file=sys.stderr)
+        else:
+            print(f"pm-landing-check: rerun with a --subcheck-timeout-seconds above "
+                  f"{args.subcheck_timeout_seconds}.", file=sys.stderr)
         return 3
 
     # The exports brief: a run-gates or audit-governance subcheck that prints only a sample is keyed from
@@ -2408,10 +2627,29 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         except Exception as exc:  # noqa: BLE001 - an unreadable map only means that nothing is keyed from an export.
             argv_map = f"{type(exc).__name__}: {exc}"
     exported, export_rows = key_from_exports(
-        root, counts, None if args.record_baseline else (baseline.get("checks") or {}), timed_out, argv_map,
-        args.subcheck_timeout_seconds, keep_dir, items, context=rename_context, env=child_env)
+        root, counts, None if args.record_baseline else (baseline.get("checks") or {}), did_not_finish, argv_map,
+        args.subcheck_timeout_seconds, keep_dir, items, context=rename_context, env=child_env,
+        memory_floor_mb=floor_mb)
     require_same_readiness_audit_inputs(audit_inputs, readiness_audit_inputs(root),
                                       "changed during the exports")
+
+    if ignored_digest is not None:
+        # The cache was sound only while the snapshot stayed frozen. Read the same identity again after
+        # the last validator and export ran: if the tree state or the ignored input bytes moved, a
+        # cached report may answer for inputs that no longer exist, so nothing is published.
+        try:
+            final_digest = ignored_inputs_digest(root)
+        except (OSError, RuntimeError) as exc:
+            print(f"pm-landing-check: --dedupe-snapshot: cannot re-read the snapshot's input identity: {exc}",
+                  file=sys.stderr)
+            return 3
+        final_state = after if after is not None else tree_state(root)
+        if final_state != before or final_digest != ignored_digest:
+            print("pm-landing-check: --dedupe-snapshot: the snapshot changed while the checks ran, so a "
+                  "report reused from this run's cache may answer for inputs that no longer exist; "
+                  "nothing is reported or recorded. A snapshot used for caching must be written by "
+                  "nothing but this run.", file=sys.stderr)
+            return 3
 
     if args.record_baseline:
         untracked = untracked_check_inputs(root)
@@ -2436,7 +2674,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                                        "truncated rule for it"))
         if untracked:
             print("  recorded with these gitignored inputs present: " + ", ".join(sorted(untracked)))
-        keep_dedupe_events(dedupe_events, keep_dir)
+        dedupe_journal(dedupe_events, keep_dir)
         return 0
 
     keyed_now = set(exported)
@@ -2452,14 +2690,14 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         for check, entry in baseline_checks.items()
         for name, counted in ((entry or {}).get("subchecks") or {}).items()
         if int(counted.get("sampled", 0)) < int(counted.get("reported", 0)) <= int(counted.get("exported", 0) or 0)
-    } - current_partial - timed_out
+    } - current_partial - did_not_finish
     known, baseline_counts = baseline_index(baseline, from_export)
     direct, derived = split_touched(touched)
     tokens = path_tokens(direct)
     units = units_of_touched_docs(root, direct)
     # A subcheck that timed out has no total to compare, so it is left out of every comparison.
     compared = {
-        check: {name: counted for name, counted in counts[check].items() if (check, name) not in timed_out}
+        check: {name: counted for name, counted in counts[check].items() if (check, name) not in did_not_finish}
         for check in counts
     }
     # Review L-07: a run-gates copy judged by its complete audit-governance copy is taken out of the
@@ -2475,13 +2713,13 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
             root, names, args.subcheck_timeout_seconds)
     except Exception as exc:  # noqa: BLE001 - an unreadable map only means that no copy is paired.
         commands = f"{type(exc).__name__}: {exc}"
-    pairs = pair_validators(counts, listed, baseline.get("checks") or {}, timed_out, items, commands,
+    pairs = pair_validators(counts, listed, baseline.get("checks") or {}, did_not_finish, items, commands,
                             version_change(before, after), keyed_now | from_export)
     paired = {("run-gates", row["run_gates"]) for row in pairs if row["paired"]}
     if args.row_report:
         # Rows a sample or a paired copy holds are not counted as renamed by the loop below, so the row report
         # asks grown_buckets with the same set and its `grown_stale` cannot disagree with the check.
-        write_row_report(Path(args.row_report).resolve(), root, args.base, touched, items, counts, listed, timed_out,
+        write_row_report(Path(args.row_report).resolve(), root, args.base, touched, items, counts, listed, did_not_finish,
                          partial_subchecks(compared, baseline.get("checks") or {}), paired, known)
     items = [item for item in items if (item["check"], item["subcheck"]) not in paired]
     compared = {
@@ -2559,7 +2797,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                                                       {item["key"] for item in on_branch})
     resolved = sorted(
         name for name in set(baseline_counts) - set(seen_buckets)
-        if bucket_subcheck(name) not in partial and bucket_subcheck(name) not in timed_out
+        if bucket_subcheck(name) not in partial and bucket_subcheck(name) not in did_not_finish
         and bucket_subcheck(name) not in paired
     )
 
@@ -2571,7 +2809,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     )
     reported = [item for item in items if item["key"] in reported_keys]
     blocking = blocking_items(on_branch, grown, subcheck_growth)
-    totals = subcheck_totals(counts, listed, timed_out)
+    totals = subcheck_totals(counts, listed, did_not_finish)
 
     if args.json:
         if not rule_two:
@@ -2809,16 +3047,16 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         if infrastructure:
             ran = ", ".join(
                 f"{row['check']}/{row['subcheck'] or '-'} "
-                + (f"killed after {row['elapsed_seconds']} s" if row["elapsed_seconds"] is not None
-                   else "killed at the limit")
+                + (("killed by " + (row.get("signal_name") or "a signal")) if row.get("kind") == "killed"
+                   else f"killed after {row['elapsed_seconds']} s" if row["elapsed_seconds"] is not None
+                   else f"killed at its {args.subcheck_timeout_seconds} s limit")
                 for row in infrastructure)
-            print(f"{plural(len(infrastructure), 'subcheck')} did not finish within "
-                  f"{args.subcheck_timeout_seconds} s, the limit ({ran}), so what they would report is "
-                  "unknown and this run was not fully verified: it cannot exit 0, and it exits 1 unless "
-                  "something above stops the landing. Rerun each on its own and judge what it reports by "
-                  "the same rules before pushing main.")
+            print(f"{plural(len(infrastructure), 'subcheck')} did not finish ({ran}), so what they would "
+                  "report is unknown and this run was not fully verified: it cannot exit 0, and it exits 1 "
+                  "unless something above stops the landing. Rerun each on its own and judge what it "
+                  "reports by the same rules before pushing main.")
 
-    keep_dedupe_events(dedupe_events, keep_dir)
+    dedupe_journal(dedupe_events, keep_dir)
     return apply_pm7_inventory(
         exit_code(reported, grown, subcheck_growth, blocking, infrastructure),
         touched, root, args.json)
