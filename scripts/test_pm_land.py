@@ -1732,6 +1732,18 @@ class BatchStatusTests(BatchFixture):
         self.assertEqual(code, 0, out)
         self.assertIn("from the first row's commit time: no batch-first-push line", out)
 
+    def test_a_three_commit_landing_is_covered_by_its_one_row(self):
+        for index in range(3):
+            self.put("src/x.txt", f"version {index}\n")
+            self.commit(f"member 1, commit {index}")
+        member1 = self.rev("HEAD")
+        self.set_main(member1)
+        self.holder(start=self.base, rows=[f"fix/a {member1}"])
+        code, out = self.status()
+        self.assertEqual(code, 0, out)
+        self.assertIn("landings: 1 of 4", out)
+        self.assertNotIn("[missing]", out)
+
     def test_a_dead_holder_whose_batch_landed_is_closed_not_cleared(self):
         member = self.commit("member 1")
         self.set_main(member)
@@ -2030,10 +2042,12 @@ class BatchVerifyTests(unittest.TestCase):
         LandingFixture.setUp(self)
         self.lock = self.root / "lock"
 
-    def history(self):
-        """Member 1 lands on main; the candidate is a commit on top of it; the shared checkout stays at base."""
-        self.put(self.shared, "tracked.txt", "member one\n")
-        self.git(self.shared, "commit", "-am", "member 1")
+    def history(self, commits: int = 1):
+        """Member 1 lands `commits` commits on main as one landing; the candidate is a commit on top of it; the
+        shared checkout stays at base."""
+        for index in range(commits):
+            self.put(self.shared, "tracked.txt", f"member one, commit {index}\n")
+            self.git(self.shared, "commit", "-am", f"member 1, commit {index}")
         member1 = land.revision(self.shared, "HEAD")
         self.git(self.shared, "push", "origin", f"{member1}:{land.MAIN_REF}")
         self.put(self.shared, "tracked.txt", "member two\n")
@@ -2092,6 +2106,39 @@ class BatchVerifyTests(unittest.TestCase):
         with redirect_stdout(output):
             self.assertEqual(self.verify(), 0)
         self.assertIn(f"Verified {head} against batch-start {self.base}", output.getvalue())
+
+    def test_a_member_after_a_three_commit_landing_is_accepted(self):
+        """One `batch-landing` row names one landing, whatever the fast-forward carried: member 1 pushed 3 commits."""
+        member1, head = self.history(commits=3)
+        self.holder(self.base, [f"fix/a {member1}"])
+        self.receipt(head)
+        with redirect_stdout(io.StringIO()):
+            self.assertEqual(self.verify(), 0)
+
+    def test_an_unlisted_commit_on_top_of_the_last_listed_landing_is_refused(self):
+        member1, head = self.history()
+        self.git(self.shared, "reset", "--keep", member1)
+        self.put(self.shared, "tracked.txt", "a landing nobody wrote down\n")
+        self.git(self.shared, "commit", "-am", "unlisted landing")
+        unlisted = land.revision(self.shared, "HEAD")
+        self.git(self.shared, "push", "origin", f"{unlisted}:{land.MAIN_REF}")
+        self.holder(self.base, [f"fix/a {member1}"])
+        self.receipt(head)
+        with self.assertRaisesRegex(land.Refusal, "not listed as a `batch-landing"):
+            self.verify()
+
+    def test_a_listed_sha_that_is_not_on_main_is_refused(self):
+        member1, head = self.history()
+        self.git(self.shared, "checkout", "-q", "-B", "side", self.base)
+        self.put(self.shared, "side.txt", "side\n")
+        self.git(self.shared, "add", "-A")
+        self.git(self.shared, "commit", "-qm", "side landing, never pushed to main")
+        side = land.revision(self.shared, "HEAD")
+        self.git(self.shared, "checkout", "-q", "main")
+        self.holder(self.base, [f"fix/side {side}"])
+        self.receipt(head)
+        with self.assertRaisesRegex(land.Refusal, "is not on the fetched origin/main"):
+            self.verify()
 
     def test_a_commit_on_main_that_no_batch_landing_row_names_is_refused(self):
         member1, head = self.history()

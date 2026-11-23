@@ -1882,8 +1882,9 @@ def batch_state(shared: Path, lock_dir: Path) -> dict[str, Any]:
             batch["first_push_from_row"] = True
     batch["baseline_age"] = baseline_age(shared, main)
     batch["landed_commits"] = git(shared, "rev-list", f"{start}..{main}").stdout.split()
-    listed = {row["sha"] for row in rows}
-    batch["unlisted"] = [name for name in batch["landed_commits"] if name not in listed]
+    batch["unlisted"], why = batch_chain(shared, start, rows, main)
+    if why:
+        batch["why"] = why
     batch["plans"] = any(name.startswith("Plans/") for name in changed_paths(shared, start, main))
     state["batch"] = batch
     return state
@@ -2172,6 +2173,28 @@ def batch_check(shared: Path, lock_dir: Path, receipt_path: Path,
     return code_out
 
 
+def batch_chain(shared: Path, start: str, rows: Sequence[dict[str, str]],
+                main: str) -> tuple[list[str], Optional[str]]:
+    """Whether the `batch-landing` rows read as a chain of landings from the batch-start to main.
+
+    A row names one landing: its branch and the main SHA it pushed, which covers every commit that fast-forward
+    brought in, however many there are. So the rows climb from the batch-start, each an ancestor of the next, and
+    the last must be the current main: main commits above it, or a row off the chain, mean the record and main
+    disagree. Returns the main commits no row covers, and why the rows are not such a chain (None when they are).
+    """
+    if not is_ancestor(shared, start, main):
+        return [], f"batch-start {start} is not on the fetched origin/main {main}"
+    last = start
+    for row in rows:
+        if not is_ancestor(shared, last, row["sha"]):
+            return [], (f"the `batch-landing` rows are not a chain from the batch-start: {row['sha'][:12]} "
+                        f"({row['branch']}) does not descend from {last[:12]}")
+        last = row["sha"]
+    if not is_ancestor(shared, last, main):
+        return [], f"the last `batch-landing` row {last[:12]} is not on the fetched origin/main {main}"
+    return git(shared, "rev-list", f"{last}..{main}").stdout.split(), None
+
+
 def require_open_batch(shared: Path, start: str, main: str) -> None:
     """A batch member's base is accepted only while holder.txt still opens that batch and lists every landing since."""
     text = read_holder_text(LOCK_DIR)
@@ -2185,11 +2208,13 @@ def require_open_batch(shared: Path, start: str, main: str) -> None:
     rows, malformed = batch_rows(fields)
     if malformed:
         raise Refusal("holder.txt has batch-landing rows this check cannot read: " + "; ".join(repr(row) for row in malformed))
-    listed = {row["sha"] for row in rows}
-    unlisted = [name for name in git(shared, "rev-list", f"{start}..{main}").stdout.split() if name not in listed]
+    unlisted, why = batch_chain(shared, start, rows, main)
+    if why:
+        raise Refusal(why)
     if unlisted:
         raise Refusal(f"{len(unlisted)} commit(s) on origin/main since batch-start {start} are not listed as a "
-                      "`batch-landing: <branch> <sha>` row in holder.txt: " + ", ".join(unlisted[:10]))
+                      "`batch-landing: <branch> <sha>` row in holder.txt whose chain ends at the current main: "
+                      + ", ".join(unlisted[:10]))
 
 
 def verify_receipt(path, commit=None, base=None, batch_start=None):
