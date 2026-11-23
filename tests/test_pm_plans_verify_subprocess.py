@@ -650,14 +650,114 @@ class AggregateParallelismTests(unittest.TestCase):
         self.assertEqual(str(raised.exception), "second could not be read")
 
 
+LANDING_CHECK_PATH = ROOT / "scripts/pm-landing-check.py"
+
+# Stands where scripts/pm-landing-check.py stands: its command line names that script, it writes the
+# owner record with the real script's own function, and its children are the verifier processes.
+# argv: cache-dir stamp report [report ...]
+OWNER_HELPER = """
+import importlib.util, os, subprocess, sys
+from pathlib import Path
+spec = importlib.util.spec_from_file_location("real_landing_check", {landing!r})
+landing = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(landing)
+cache, stamp = Path(sys.argv[1]), sys.argv[2]
+nonce = landing.write_dedupe_owner(cache, stamp)
+env = dict(os.environ)
+env[landing.DEDUPE_DIR_ENV] = str(cache)
+env[landing.DEDUPE_STAMP_ENV] = stamp
+env[landing.DEDUPE_TOKEN_ENV] = nonce
+for report in sys.argv[3:]:
+    subprocess.run([sys.executable, {verifier!r}, "verify-spec-lock", "--report", report],
+                   cwd={root!r}, env=env, check=False)
+""".format(landing=str(LANDING_CHECK_PATH), verifier=str(MODULE_PATH), root=str(ROOT))
+
+
+class DedupeOwnershipTests(unittest.TestCase):
+    """Review B1: a cache is used only by the run that took it, never by an inherited environment pair."""
+
+    def setUp(self) -> None:
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+        self.scratch = Path(self._tmp.name)
+        self.cache = self.scratch / "cache"
+        self.cache.mkdir()
+        self.helper = self.scratch / "pm-landing-check.py"
+        self.helper.write_text(OWNER_HELPER, encoding="utf-8")
+
+    def events(self):
+        path = self.cache / pm_plans_verify.DEDUPE_EVENTS_FILE
+        if not path.is_file():
+            return []
+        return [json.loads(line)["event"] for line in path.read_text(encoding="utf-8").splitlines()]
+
+    def run_verifier(self, report, env):
+        proc = subprocess.run(
+            [sys.executable, str(MODULE_PATH), "verify-spec-lock", "--report", str(self.scratch / report)],
+            cwd=ROOT, env=env, capture_output=True, text=True)
+        self.assertIn(proc.returncode, (0, 1), proc.stderr)
+
+    def owner_record(self, pid, start, nonce="nonce", stamp="stamp"):
+        (self.cache / pm_plans_verify.DEDUPE_OWNER_FILE).write_text(json.dumps({
+            "schema_id": "pm.landing_check.dedupe_owner.v1", "pid": pid, "process_start": start,
+            "nonce": nonce, "stamp": stamp}) + "\n", encoding="utf-8")
+        return {pm_plans_verify.DEDUPE_DIR_ENV: str(self.cache),
+                pm_plans_verify.DEDUPE_STAMP_ENV: stamp,
+                pm_plans_verify.DEDUPE_TOKEN_ENV: nonce}
+
+    def test_a_pair_without_an_owner_record_is_refused(self):
+        env = {**os.environ, pm_plans_verify.DEDUPE_DIR_ENV: str(self.cache),
+               pm_plans_verify.DEDUPE_STAMP_ENV: "stamp"}
+        self.run_verifier("one.json", env)
+        self.assertEqual(self.events(), [])
+        # ... and the pair is gone from the process, so its own children cannot inherit it either.
+        probe = subprocess.run(
+            [sys.executable, "-c",
+             "import importlib.util, os, sys\n"
+             "s = importlib.util.spec_from_file_location('v', %r)\n"
+             "m = importlib.util.module_from_spec(s); s.loader.exec_module(m)\n"
+             "sys.argv = ['v', 'verify-spec-lock', '--report', %r]\n"
+             "m.main()\n"
+             "print('DEDUPE_ENV=' + ','.join(sorted(k for k in os.environ "
+             "if k.startswith('PM_PLANS_VERIFY_DEDUPE'))))\n"
+             % (str(MODULE_PATH), str(self.scratch / "probe.json"))],
+            cwd=ROOT, env=env, capture_output=True, text=True)
+        self.assertIn("DEDUPE_ENV=\n", probe.stdout + "\n", probe.stdout + probe.stderr)
+
+    def test_an_owner_that_is_not_a_live_landing_check_is_refused(self):
+        # The test process is the verifier's parent but its command line is not the landing check.
+        start = pm_plans_verify._process_start_token(os.getpid())
+        env = {**os.environ, **self.owner_record(os.getpid(), start)}
+        self.run_verifier("two.json", env)
+        self.assertEqual(self.events(), [])
+
+    def test_an_owner_record_with_a_reused_pid_is_refused(self):
+        start = pm_plans_verify._process_start_token(os.getpid())
+        env = {**os.environ, **self.owner_record(os.getpid(), str(int(start or 0) + 1))}
+        self.run_verifier("three.json", env)
+        self.assertEqual(self.events(), [])
+
+    def test_an_owner_that_has_exited_is_refused(self):
+        env = {**os.environ}
+        subprocess.run([sys.executable, str(self.helper), str(self.cache), "stamp",
+                        str(self.scratch / "owned.json")], cwd=ROOT, env=env, check=False)
+        self.assertEqual(self.events(), ["run"])
+        owner = json.loads((self.cache / pm_plans_verify.DEDUPE_OWNER_FILE).read_text(encoding="utf-8"))
+        inherited = {**os.environ, pm_plans_verify.DEDUPE_DIR_ENV: str(self.cache),
+                     pm_plans_verify.DEDUPE_STAMP_ENV: "stamp",
+                     pm_plans_verify.DEDUPE_TOKEN_ENV: owner["nonce"]}
+        self.run_verifier("after.json", inherited)
+        # A refused cache records nothing, so the event list is the one run the helper made: the
+        # inherited call neither added a run entry nor reused the entry as a hit.
+        self.assertEqual(self.events(), ["run"])
+
+
 class DedupeKeyTests(unittest.TestCase):
     def test_the_report_path_is_not_part_of_the_key(self):
-        import argparse
-
-        with mock.patch.dict(os.environ, {
-            pm_plans_verify.DEDUPE_DIR_ENV: tempfile.mkdtemp(),
+        with tempfile.TemporaryDirectory() as scratch, mock.patch.dict(os.environ, {
+            pm_plans_verify.DEDUPE_DIR_ENV: scratch,
             pm_plans_verify.DEDUPE_STAMP_ENV: "stamp",
-        }):
+        }), mock.patch.object(pm_plans_verify, "dedupe_owner", return_value={"pid": 1}):
             one = pm_plans_verify.dedupe_request(["cmd", "--report", "/tmp/a.json", "--flag", "1"])
             two = pm_plans_verify.dedupe_request(["cmd", "--report", "/tmp/b.json", "--flag", "1"])
             three = pm_plans_verify.dedupe_request(["cmd", "--report", "/tmp/a.json", "--flag", "2"])
@@ -676,19 +776,22 @@ class DedupeKeyTests(unittest.TestCase):
 class DedupeRunsOnceTests(unittest.TestCase):
     """One landing check runs the same command line once and gives both aggregates that report."""
 
+    def run_owned(self, cache, stamp, reports):
+        helper = cache.parent / "pm-landing-check.py"
+        helper.write_text(OWNER_HELPER, encoding="utf-8")
+        proc = subprocess.run([sys.executable, str(helper), str(cache), stamp, *map(str, reports)],
+                              cwd=ROOT, capture_output=True, text=True)
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+
+    def events(self, cache):
+        return [json.loads(line)["event"] for line in
+                (cache / pm_plans_verify.DEDUPE_EVENTS_FILE).read_text(encoding="utf-8").splitlines()]
+
     def test_the_second_caller_gets_the_first_report_byte_for_byte(self):
         with tempfile.TemporaryDirectory() as scratch:
             cache = Path(scratch) / "cache"
-            env = dict(os.environ)
-            env[pm_plans_verify.DEDUPE_DIR_ENV] = str(cache)
-            env[pm_plans_verify.DEDUPE_STAMP_ENV] = "same-tree"
             reports = [Path(scratch) / "one.json", Path(scratch) / "two.json"]
-            for report in reports:
-                proc = subprocess.run(
-                    [sys.executable, str(MODULE_PATH), "verify-spec-lock", "--report", str(report)],
-                    cwd=ROOT, env=env, capture_output=True, text=True,
-                )
-                self.assertIn(proc.returncode, (0, 1), proc.stderr)
+            self.run_owned(cache, "same-tree", reports)
             first = json.loads(reports[0].read_text(encoding="utf-8"))
             second = json.loads(reports[1].read_text(encoding="utf-8"))
             self.assertEqual(first, second)
@@ -702,18 +805,8 @@ class DedupeRunsOnceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as scratch:
             cache = Path(scratch) / "cache"
             for stamp in ("one-tree", "another-tree"):
-                env = dict(os.environ)
-                env[pm_plans_verify.DEDUPE_DIR_ENV] = str(cache)
-                env[pm_plans_verify.DEDUPE_STAMP_ENV] = stamp
-                proc = subprocess.run(
-                    [sys.executable, str(MODULE_PATH), "verify-spec-lock",
-                     "--report", str(Path(scratch) / f"{stamp}.json")],
-                    cwd=ROOT, env=env, capture_output=True, text=True,
-                )
-                self.assertIn(proc.returncode, (0, 1), proc.stderr)
-            events = [json.loads(line) for line in
-                      (cache / pm_plans_verify.DEDUPE_EVENTS_FILE).read_text(encoding="utf-8").splitlines()]
-            self.assertEqual([event["event"] for event in events], ["run", "run"])
+                self.run_owned(cache, stamp, [Path(scratch) / f"{stamp}.json"])
+            self.assertEqual(self.events(cache), ["run", "run"])
 
 
 class SharedValidatorCommandLinesTests(unittest.TestCase):

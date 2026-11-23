@@ -3449,3 +3449,238 @@ class AggregateReportsTests(unittest.TestCase):
                             fail={M.CHECKS[1]: "audit fell over", M.CHECKS[2]: "migration fell over"}),
                 3)
         self.assertEqual(str(raised.exception), "audit fell over")
+
+
+STUB_VERIFIER = r'''
+import importlib.util, json, os, sys
+spec = importlib.util.spec_from_file_location("real_verifier", "__REAL_VERIFIER__")
+real = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(real)
+
+
+def build(command):
+    try:
+        found = [line.strip() for line in open("Plans/failures.txt", encoding="utf-8") if line.strip()]
+    except OSError:
+        found = []
+    rows = [{"path": path, "error": "brand_new_kind"} for path in found]
+    if command == "run-gates":
+        return {"schema_id": "pm.plans_verify.report.v1", "check": "run-gates",
+                "status": "fail" if rows else "pass",
+                "failures": [{"check": "verify_spec_lock", "failures": rows}] if rows else [],
+                "checks": {"verify_spec_lock": {"status": "fail" if rows else "pass", "failures": len(rows)}}}
+    return {"schema_id": "pm.plans_verify.report.v1", "check": "audit-governance",
+            "status": "fail" if rows else "pass",
+            "failures": [{"check": "spec_lock", "failures": rows}] if rows else [],
+            "spec_lock": {"status": "fail" if rows else "pass", "failures": len(rows)}}
+
+
+def main():
+    command = sys.argv[1]
+    report_path = sys.argv[sys.argv.index("--report") + 1]
+    request = real.dedupe_request(sys.argv[1:])
+    event = "run"
+    if request is None:
+        report = build(command)
+    else:
+        path, payload = request
+        with real.dedupe_lock(path):
+            report = real.read_dedupe(path, payload)
+            if report is None:
+                report = build(command)
+                real.write_dedupe(path, payload, report)
+            else:
+                event = "hit"
+    with open(report_path, "w", encoding="utf-8") as handle:
+        json.dump(report, handle)
+    log = os.environ.get("STUB_RUN_LOG")
+    if log:
+        with open(log, "a", encoding="utf-8") as handle:
+            handle.write(event + ":" + command + "\n")
+    print(json.dumps({"status": report["status"]}))
+
+
+if __name__ == "__main__":
+    main()
+'''
+
+STUB_MIGRATION = 'import json\nprint(json.dumps({"status": "pass", "failures": []}))\n'
+
+# A live process named pm-landing-check.py, standing where that script stands: it writes the owner
+# record with the script's own function, primes the cache under a stamp, and stays alive while the
+# tests run. argv: cache stamp repo jobs hold-file
+OWNER_HELPER = r'''
+import importlib.util, os, subprocess, sys, time
+from pathlib import Path
+spec = importlib.util.spec_from_file_location("real_landing_check", "__REAL_LANDING__")
+landing = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(landing)
+cache, stamp, repo, jobs, hold = Path(sys.argv[1]), sys.argv[2], Path(sys.argv[3]), sys.argv[4], Path(sys.argv[5])
+nonce = landing.write_dedupe_owner(cache, stamp)
+env = dict(os.environ)
+env[landing.DEDUPE_DIR_ENV] = str(cache)
+env[landing.DEDUPE_STAMP_ENV] = stamp
+env[landing.DEDUPE_TOKEN_ENV] = nonce
+for name in ("run-gates", "audit-governance"):
+    subprocess.run([sys.executable, str(repo / "scripts/pm-plans-verify.py"), name, "--quiet-progress",
+                    "--subcheck-timeout-seconds", "1800", "--jobs", jobs,
+                    "--report", str(cache.parent / ("prime-" + jobs + "-" + name + ".json"))],
+                   cwd=str(repo), env=env, check=True, stdout=subprocess.DEVNULL)
+(cache.parent / "owner-ready").write_text("ready", encoding="utf-8")
+while hold.exists():
+    time.sleep(0.05)
+'''
+
+
+class InheritedCacheTests(unittest.TestCase):
+    """Review B1: a cache pair from another run can never change what a landing check reports.
+
+    The real main() runs over a stub repository, with real subprocess aggregates that use this
+    branch's own cache functions, and a live process named pm-landing-check.py owning a primed cache.
+    At the second commit the stub reports a new failure on a file the branch touches: exit 2. A cache
+    left at the first commit, where that subcheck passed, would answer for the second and exit 0.
+    """
+
+    def setUp(self):
+        self.scratch = tempfile.TemporaryDirectory()
+        self.addCleanup(self.scratch.cleanup)
+        self.work = Path(self.scratch.name)
+        self.repo = self.work / "repo"
+        self.repo.mkdir()
+        self.cache = self.work / "ambient-cache"
+        self.log = self.work / "runs.log"
+        self.hold = self.work / "hold"
+        (self.repo / "scripts").mkdir()
+        (self.repo / "Plans/.plan_migration/run").mkdir(parents=True)
+        (self.repo / "Plans/.audits/event-authority-2026-08-13-currentness").mkdir(parents=True)
+        (self.repo / ".gitignore").write_text("Plans/.audits/\nign/\n", encoding="utf-8")
+        (self.repo / "Plans/.plan_migration/run/key").write_text("k\n", encoding="utf-8")
+        (self.repo / "Plans/Base.md").write_text("base\n", encoding="utf-8")
+        (self.repo / "Plans/failures.txt").write_text("", encoding="utf-8")
+        (self.repo / "scripts/pm-plans-verify.py").write_text(
+            STUB_VERIFIER.replace("__REAL_VERIFIER__", str(ROOT / "scripts" / "pm-plans-verify.py")),
+            encoding="utf-8")
+        (self.repo / "scripts/pm-plan-migration.py").write_text(STUB_MIGRATION, encoding="utf-8")
+        self.git("init", "-q", "-b", "main")
+        self.git("config", "user.email", "t@example.invalid")
+        self.git("config", "user.name", "t")
+        self.git("add", ".")
+        self.git("commit", "-qm", "A")
+        self.base = self.git("rev-parse", "HEAD").strip()
+
+    def git(self, *args):
+        return subprocess.run(["git", *args], cwd=self.repo, capture_output=True, text=True, check=True).stdout
+
+    def command(self, jobs, *extra):
+        return [sys.executable, "-B", str(ROOT / "scripts" / "pm-landing-check.py"), "--root", str(self.repo),
+                "--base", self.base, "--baseline", "Plans/.audits/baseline.json",
+                "--run-dir", "Plans/.plan_migration/run",
+                "--readiness-audit-root", str(self.repo / M.READINESS_AUDIT_REL),
+                "--jobs", str(jobs), *extra]
+
+    def run_check(self, jobs, environment, *extra):
+        env = {key: value for key, value in environment.items()}
+        env["STUB_RUN_LOG"] = str(self.log)
+        return subprocess.run(self.command(jobs, *extra), cwd=self.repo, env=env, capture_output=True,
+                              text=True, timeout=120)
+
+    def start_owner(self, jobs):
+        """Prime the cache at this commit, under a stamp, and keep its named owner alive."""
+        self.cache.mkdir(exist_ok=True)
+        self.hold.write_text("hold\n", encoding="utf-8")
+        helper = self.work / "pm-landing-check.py"
+        helper.write_text(OWNER_HELPER.replace("__REAL_LANDING__", str(ROOT / "scripts" / "pm-landing-check.py")),
+                          encoding="utf-8")
+        process = subprocess.Popen([sys.executable, str(helper), str(self.cache), "smoke", str(self.repo),
+                                    str(jobs), str(self.hold)], cwd=self.work,
+                                   env={**os.environ, "STUB_RUN_LOG": str(self.log)})
+        deadline = time.monotonic() + 30
+        ready = self.cache.parent / "owner-ready"
+        while not ready.exists():
+            if process.poll() is not None or time.monotonic() > deadline:
+                process.kill()
+                self.fail("the owner helper did not prime the cache")
+            time.sleep(0.02)
+        owner = json.loads((self.cache / M.DEDUPE_OWNER_FILE).read_text(encoding="utf-8"))
+        return process, {M.DEDUPE_DIR_ENV: str(self.cache), M.DEDUPE_STAMP_ENV: "smoke",
+                         M.DEDUPE_TOKEN_ENV: owner["nonce"]}
+
+    def stop_owner(self, process):
+        self.hold.unlink()
+        process.wait(timeout=30)
+        (self.cache.parent / "owner-ready").unlink()
+
+    def commit_the_failure(self):
+        (self.repo / "Plans/Touched.md").write_text("edited\n", encoding="utf-8")
+        (self.repo / "Plans/failures.txt").write_text("Plans/Touched.md\n", encoding="utf-8")
+        self.git("add", ".")
+        self.git("commit", "-qm", "B: a new failure on a file this branch touches")
+
+    def assert_the_second_commit_is_blocked(self, process, environment, jobs):
+        """The primed cache says pass; this commit must still exit 2 and run both aggregates."""
+        self.log.write_text("", encoding="utf-8")
+        result = self.run_check(jobs, {**os.environ, **environment})
+        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+        self.assertIn("Naming a path this branch touches: 2", result.stdout)
+        self.assertEqual(sorted(self.log.read_text(encoding="utf-8").splitlines()),
+                         ["run:audit-governance", "run:run-gates"])
+
+    def test_jobs_one_never_reads_an_inherited_cache(self):
+        clean = {key: value for key, value in os.environ.items()
+                 if not key.startswith("PM_PLANS_VERIFY_DEDUPE")}
+        recorded = self.run_check(1, clean, "--record-baseline")
+        self.assertEqual(recorded.returncode, 0, recorded.stdout + recorded.stderr)
+        self.commit_the_failure()
+        process, environment = self.start_owner(1)
+        try:
+            self.assert_the_second_commit_is_blocked(process, environment, 1)
+        finally:
+            self.stop_owner(process)
+
+    def test_jobs_four_on_a_dirty_tree_never_reads_an_inherited_cache(self):
+        clean = {key: value for key, value in os.environ.items()
+                 if not key.startswith("PM_PLANS_VERIFY_DEDUPE")}
+        recorded = self.run_check(1, clean, "--record-baseline")
+        self.assertEqual(recorded.returncode, 0, recorded.stdout + recorded.stderr)
+        self.commit_the_failure()
+        (self.repo / "dirty.txt").write_text("x\n", encoding="utf-8")
+        process, environment = self.start_owner(4)
+        try:
+            self.assert_the_second_commit_is_blocked(process, environment, 4)
+        finally:
+            self.stop_owner(process)
+
+    def test_jobs_four_on_a_clean_tree_takes_its_own_cache(self):
+        clean = {key: value for key, value in os.environ.items()
+                 if not key.startswith("PM_PLANS_VERIFY_DEDUPE")}
+        recorded = self.run_check(1, clean, "--record-baseline")
+        self.assertEqual(recorded.returncode, 0, recorded.stdout + recorded.stderr)
+        self.commit_the_failure()
+        process, environment = self.start_owner(4)
+        def entries():
+            return sorted(path.name for path in self.cache.glob("*.json")
+                          if path.name != M.DEDUPE_OWNER_FILE)
+
+        primed = entries()
+        self.assertEqual(len(primed), 2)  # the two aggregate entries
+        try:
+            self.assert_the_second_commit_is_blocked(process, environment, 4)
+        finally:
+            self.stop_owner(process)
+        # The primed entries are untouched: this run's cache was its own scratch directory.
+        self.assertEqual(entries(), primed)
+
+    def test_main_clears_every_inherited_cache_variable_before_it_runs_anything(self):
+        seen = {}
+        with patch.dict(os.environ, {
+            M.DEDUPE_DIR_ENV: str(self.cache), M.DEDUPE_STAMP_ENV: "smoke", M.DEDUPE_TOKEN_ENV: "nonce",
+        }):
+            def fake_check_main(args, root, source):
+                seen.update({name: os.environ.get(name) for name in
+                             (M.DEDUPE_DIR_ENV, M.DEDUPE_STAMP_ENV, M.DEDUPE_TOKEN_ENV)})
+                return 0
+            with patch.object(M, "check_main", side_effect=fake_check_main):
+                sys.argv = ["pm-landing-check.py", "--root", str(self.repo), "--readiness-audit-root",
+                                str(self.repo / M.READINESS_AUDIT_REL)]
+                self.assertEqual(M.main(), 0)
+        self.assertEqual(seen, {M.DEDUPE_DIR_ENV: None, M.DEDUPE_STAMP_ENV: None, M.DEDUPE_TOKEN_ENV: None})

@@ -185,8 +185,84 @@ _AGGREGATE_CHILD_ENV = "PM_PLANS_VERIFY_AGGREGATE_CHILD"
 
 DEDUPE_DIR_ENV = "PM_PLANS_VERIFY_DEDUPE_DIR"
 DEDUPE_STAMP_ENV = "PM_PLANS_VERIFY_DEDUPE_STAMP"
+DEDUPE_TOKEN_ENV = "PM_PLANS_VERIFY_DEDUPE_TOKEN"
 DEDUPE_SCHEMA_ID = "pm.plans_verify.dedupe.v1"
 DEDUPE_EVENTS_FILE = "events.jsonl"
+DEDUPE_OWNER_FILE = "owner.json"
+DEDUPE_OWNER_PROGRAM = "pm-landing-check.py"
+
+
+def _proc_stat_fields(pid: int) -> list[str] | None:
+    """`/proc/<pid>/stat` after the command name: state, ppid, ..., starttime (index 19)."""
+    try:
+        stat = Path(f"/proc/{pid}/stat").read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return None
+    return stat.rsplit(")", 1)[-1].split()
+
+
+def _process_start_token(pid: int) -> str | None:
+    fields = _proc_stat_fields(pid)
+    return fields[19] if fields and len(fields) > 19 else None
+
+
+def _parent_pid(pid: int) -> int | None:
+    fields = _proc_stat_fields(pid)
+    return int(fields[1]) if fields and len(fields) > 1 and fields[1].isdigit() else None
+
+
+def _owner_is_a_live_landing_check(owner_pid: int, owner_start: Any) -> bool:
+    """Is `owner_pid` a live ancestor of this process, still the one that wrote the record, and the check?
+
+    A pid alone can be reused, so the start time written beside it must still match, and its command line
+    must still name pm-landing-check.py. Without /proc there is no way to tie a cache to the run, and no
+    cache is used: this changes speed, never a result.
+    """
+    if not Path("/proc").is_dir() or not isinstance(owner_start, str):
+        return False
+    if _process_start_token(owner_pid) != owner_start:
+        return False
+    try:
+        argv = Path(f"/proc/{owner_pid}/cmdline").read_bytes()
+    except OSError:
+        return False
+    if not any(part.decode("utf-8", "replace").endswith(DEDUPE_OWNER_PROGRAM)
+               for part in argv.split(b"\0") if part):
+        return False
+    pid = os.getpid()
+    for _ in range(64):
+        parent = _parent_pid(pid)
+        if parent is None or parent <= 1 or parent == pid:
+            return False
+        if parent == owner_pid:
+            return True
+        pid = parent
+    return False
+
+
+def dedupe_owner() -> dict[str, Any] | None:
+    """The landing check this process's cache belongs to, or None.
+
+    The record is written by scripts/pm-landing-check.py into its own scratch cache: the pid and start
+    time of that process, a nonce, and the stamp it stands for. All three require each other, and the
+    process must still be this process's live ancestor, so an environment pair inherited from an earlier
+    run, or set by hand, is refused: review B1, where one commit's cached report answered for another.
+    """
+    directory = os.environ.get(DEDUPE_DIR_ENV)
+    stamp = os.environ.get(DEDUPE_STAMP_ENV)
+    token = os.environ.get(DEDUPE_TOKEN_ENV)
+    if not directory or not stamp or not token:
+        return None
+    try:
+        owner = json.loads((Path(directory) / DEDUPE_OWNER_FILE).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    if not isinstance(owner, dict) or owner.get("nonce") != token or owner.get("stamp") != stamp:
+        return None
+    pid = owner.get("pid")
+    if not isinstance(pid, int) or isinstance(pid, bool) or pid <= 0:
+        return None
+    return owner if _owner_is_a_live_landing_check(pid, owner.get("process_start")) else None
 
 
 def dedupe_request(argv: list[str]) -> tuple[Path, dict[str, Any]] | None:
@@ -195,12 +271,12 @@ def dedupe_request(argv: list[str]) -> tuple[Path, dict[str, Any]] | None:
     The key is the command and every argument except `--report` (a scratch path, not an input),
     the caller's stamp of the checked tree and ignored inputs, and whether this ran as an
     aggregate's child. Two aggregates that run the same validator with the same arguments get the
-    same key; a standalone run has no cache directory and never looks.
+    same key; a standalone run has no owner record and never looks.
     """
-    directory = os.environ.get(DEDUPE_DIR_ENV)
-    stamp = os.environ.get(DEDUPE_STAMP_ENV)
-    if not directory or not stamp:
+    if dedupe_owner() is None:
         return None
+    directory = os.environ[DEDUPE_DIR_ENV]
+    stamp = os.environ[DEDUPE_STAMP_ENV]
     tokens: list[str] = []
     skip_next = False
     for token in argv:
@@ -7489,6 +7565,12 @@ COMMANDS = {
 
 
 def main() -> int:
+    # Review B1: a cache pair already in the environment is honoured only when this process's own
+    # ancestor wrote its owner record (dedupe_owner). A standalone run clears the pair it cannot tie
+    # to a landing check, so its children cannot inherit one either.
+    if dedupe_owner() is None:
+        for name in (DEDUPE_DIR_ENV, DEDUPE_STAMP_ENV, DEDUPE_TOKEN_ENV):
+            os.environ.pop(name, None)
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest="command", required=True)
     # Standalone validator commands whose check function reads subcheck_timeout_seconds

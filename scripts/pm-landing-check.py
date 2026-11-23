@@ -137,6 +137,7 @@ import json
 import os
 import posixpath
 import re
+import secrets
 import shutil
 import signal
 import subprocess
@@ -262,6 +263,19 @@ NO_EXPORT_COMMANDS = {
 # stays in the child's process group and dies with it when the aggregate's bound runs out. An export is
 # run the same way.
 AGGREGATE_CHILD_ENV = "PM_PLANS_VERIFY_AGGREGATE_CHILD"
+
+# The one-run cache this check gives its children. A pair of variables already in the environment is
+# never a cache for this tree: review B1 found `--jobs 1` and dirty-tree runs honouring one left by an
+# earlier commit, which hid 210 failures on real Plans and turned exit 2 into exit 0 on a stub tree.
+# This script removes any inherited pair before it runs anything, and when it takes a stamp of its own
+# it also writes an owner record and passes that record's nonce. scripts/pm-plans-verify.py serves an
+# entry only to a process whose live ancestor is this landing check and whose owner record matches, so
+# a variable pair from another run is refused even by a standalone `run-gates`.
+DEDUPE_DIR_ENV = "PM_PLANS_VERIFY_DEDUPE_DIR"
+DEDUPE_STAMP_ENV = "PM_PLANS_VERIFY_DEDUPE_STAMP"
+DEDUPE_TOKEN_ENV = "PM_PLANS_VERIFY_DEDUPE_TOKEN"
+DEDUPE_OWNER_FILE = "owner.json"
+DEDUPE_OWNER_SCHEMA_ID = "pm.landing_check.dedupe_owner.v1"
 
 # Failure kinds that say a subcheck did not finish, not that the tree is wrong. pm-plans-verify.py
 # kills a subcheck at --subcheck-timeout-seconds and reports that as the subcheck's only failure:
@@ -562,6 +576,42 @@ def index_flags_digest(root: Path) -> str:
         if line[:1] not in {"H", ""}:
             digest.update(line.encode("utf-8", "surrogateescape") + b"\0")
     return digest.hexdigest()
+
+
+def process_start_token(pid: int) -> str | None:
+    """Field 22 of /proc/<pid>/stat: when the process started, so a reused pid cannot pass for its owner."""
+    try:
+        stat = Path(f"/proc/{pid}/stat").read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return None
+    fields = stat.rsplit(")", 1)[-1].split()
+    return fields[19] if len(fields) > 19 else None
+
+
+def clear_inherited_dedupe_environment() -> None:
+    """Remove a cache this run did not take. A pair from another run must never be this run's cache."""
+    for name in (DEDUPE_DIR_ENV, DEDUPE_STAMP_ENV, DEDUPE_TOKEN_ENV):
+        os.environ.pop(name, None)
+
+
+def write_dedupe_owner(directory: Path, stamp: str) -> str:
+    """Write the owner record for this landing check's cache and return the nonce its children carry.
+
+    scripts/pm-plans-verify.py accepts an entry only when this process is a live ancestor of the child,
+    its recorded start time matches, and its command line names pm-landing-check.py.
+    """
+    nonce = secrets.token_hex(16)
+    owner = {
+        "schema_id": DEDUPE_OWNER_SCHEMA_ID,
+        "pid": os.getpid(),
+        "process_start": process_start_token(os.getpid()),
+        "nonce": nonce,
+        "stamp": stamp,
+    }
+    directory.mkdir(parents=True, exist_ok=True)
+    (directory / DEDUPE_OWNER_FILE).write_text(json.dumps(owner, indent=1, sort_keys=True) + "\n",
+                                               encoding="utf-8")
+    return nonce
 
 
 def dedupe_stamp(root: Path, run_dir: str, audit_inputs: dict[str, Any],
@@ -2134,6 +2184,9 @@ def describe(item: dict[str, Any], tag: str, width: int = 150) -> str:
 
 
 def main() -> int:
+    # Review B1: a cache this run did not take is never this run's cache, for any --jobs value and on
+    # any tree. The pair this script sets is written below, only for a run that took a stamp itself.
+    clear_inherited_dedupe_environment()
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--root", default=str(ROOT), help="repository root (default: this checkout)")
     # --ro abbreviated --root before --row-report existed; named here so that it still does.
@@ -2274,10 +2327,16 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         # validators read; when it cannot be taken (a dirty worktree), the run simply does not dedupe.
         stamp = dedupe_stamp(root, run_dir, audit_inputs, before)
         if stamp is not None:
-            child_env = dict(os.environ)
-            child_env["PM_PLANS_VERIFY_DEDUPE_DIR"] = str(args.dedupe_dir)
-            child_env["PM_PLANS_VERIFY_DEDUPE_STAMP"] = stamp
-            dedupe_events = args.dedupe_dir / "events.jsonl"
+            try:
+                nonce = write_dedupe_owner(args.dedupe_dir, stamp)
+            except OSError:
+                nonce = None  # a cache that cannot name its owner is not used; the run is unchanged.
+            if nonce is not None:
+                child_env = dict(os.environ)
+                child_env[DEDUPE_DIR_ENV] = str(args.dedupe_dir)
+                child_env[DEDUPE_STAMP_ENV] = stamp
+                child_env[DEDUPE_TOKEN_ENV] = nonce
+                dedupe_events = args.dedupe_dir / "events.jsonl"
 
     def consume(check: str, report: dict[str, Any]) -> None:
         nonlocal after
