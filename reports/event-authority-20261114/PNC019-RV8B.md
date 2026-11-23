@@ -30,8 +30,8 @@
 ## What was adopted and written
 
 **Source adoption (EP-3100, `Plans/Executor_Protocol.md:12888`).**
-- **Placement:** 74 operative members of v3 sit byte-identical under `Plans/goal_run_replan_contracts/source-v8/`: protocols, method maps, participant tuples, profile and preimage, physical families, stored routes, 19 whole schemas, the draft payload and its graph-patch source. Each equals its manifest entry and its preimage entry.
-- **Not copied:** the other 1,433 descriptor members (composition banks, inputs, originals: about 188 MB apparent). They resolve only against the frozen root, each authenticated by its preimage hash. This follows the v6 package's external-manifest pattern.
+- **Placement:** 70 operative members of v3 sit byte-identical under `Plans/goal_run_replan_contracts/source-v8/`: protocols, method maps, participant tuples, profile and preimage, physical families, stored routes, 19 whole schemas, the draft payload and its graph-patch source. Each equals its manifest entry and its preimage entry. The four case-only duplicate aliases (`coordinator/protocol.md`, `native-v8/protocol.md`, `producer-combined/protocol.md`, `replan/protocol.md`) are not placed: a case-insensitive checkout cannot hold each beside its `PROTOCOL.md` sibling, and each alias duplicates that sibling (replan's is that file minus its four-line Stop preface).
+- **Not copied:** the other 1,437 descriptor members (composition banks, inputs, originals: about 188 MB apparent). They resolve only against the frozen root, each authenticated by its preimage hash. This follows the v6 package's external-manifest pattern.
 - **Nine explicit corrections C1..C9** (`adoption.json`): payload successor, idempotency preimage, descriptor representation, SP-336/347 durability precedence, numbers and date-time, Goal-body physical edition, cancel routed to D06, replay recipe (T-REPLAY), unified run history.
 - **Adoption digest** `dd1a4b8a…a6f4` (CV-352 sorted compact JSON) in `adoption-digest.txt`. It is distinct from the frozen digest, and only it may be recorded at a v8 birth.
 
