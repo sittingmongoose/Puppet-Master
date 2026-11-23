@@ -1499,7 +1499,7 @@ def read_text_report(text: str) -> dict[str, Any]:
     counts = {name: int(value) for name, value in REPORT_COUNT_ROW.findall(text)} if counts_head else None
     ids_unread = bool(totals_head) and (
         gone is None or len(gone_ids) != int(gone.group(1)) or len(totals) != int(totals_head.group(1))
-        or (bool(counts_head) and len(counts) != int(counts_head.group(1))))
+        or counts_head is None or len(counts) != int(counts_head.group(1)))
     return {
         "infrastructure": int(infrastructure.group(1)) if infrastructure else None,
         "crashed": bool(REPORT_TRACEBACK.search(text)),
@@ -1526,8 +1526,14 @@ def check_can_batch(source: str) -> bool:
 
 
 def shows_what_changed(report: dict[str, Any], earlier: Sequence[Optional[dict[str, Any]]]) -> bool:
-    """Whether this report and every earlier one on record print the lines that say what moved between them."""
-    return report.get("totals") is not None and all(row is None or row.get("totals") is not None for row in earlier)
+    """Whether this report and every earlier one on record print the lines that say what moved between them.
+
+    All of them: the gone ids, the subcheck totals and the bucket counts. A report cut off before one of those
+    sections prints nothing that stands in for it, so the batch closes rather than comparing what is left.
+    """
+    return (report.get("totals") is not None and report.get("bucket_counts") is not None
+            and all(row is None or (row.get("totals") is not None and row.get("bucket_counts") is not None)
+                    for row in earlier))
 
 
 def read_row_report(path: Any) -> Optional[dict[str, Any]]:
@@ -2015,9 +2021,10 @@ def judge_batch_member(shared: Path, start: str, code: int, report_text: str,
     if report["pre_unread"]:
         owed.append("the report printed only part of its pre-existing rows, so a shared bucket cannot be told")
     if not later:
-        if report["totals"] is None:
-            lines.append("no batch: this report prints no Subcheck totals, so no later member could compare with it. Land "
-                         "it alone (the batch stays closed).")
+        if report["totals"] is None or report["bucket_counts"] is None or report["ids_unread"]:
+            lines.append("no batch: this report does not print the gone ids, subcheck totals and bucket counts a "
+                         "later member compares with, so no later member could compare with it. Land it alone (the "
+                         "batch stays closed).")
             return 1, lines
         lines.append("no trigger applies: this is the first member of the batch, with no earlier report to compare with. "
                      "It may stay.")

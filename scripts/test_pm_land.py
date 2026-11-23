@@ -1548,6 +1548,16 @@ class ReportFormatTests(unittest.TestCase):
         self.assertIsNone(report["totals"])
         self.assertFalse(land.shows_what_changed(report, []))
 
+    def test_a_text_report_cut_before_its_bucket_counts_is_unreadable(self):
+        """A report that stops after its totals prints nothing about per-bucket rises, so a batch cannot read it."""
+        full = landing_report(totals={"run-gates/lint-x": 2})
+        cut = full[:full.index("Bucket counts this run:")]
+        report = land.read_report(cut)
+        self.assertIsNone(report["bucket_counts"])
+        self.assertTrue(report["ids_unread"])
+        self.assertFalse(land.shows_what_changed(report, []))
+        self.assertTrue(land.shows_what_changed(land.read_report(full), []))
+
     def test_an_unknown_pre_existing_row_is_not_read_as_an_unreadable_row(self):
         """Main prints those in their own section, tagged otherwise, and outside the declared count."""
         text = landing_report(pre=[pre_row(BUCKET, 5, 5)])
@@ -1909,6 +1919,23 @@ class BatchCheckTests(BatchFixture):
         self.assertEqual(code, 1, out)
         self.assertIn("TRIGGER batch_row_report_unreadable", out)
         self.assertIn("written against", out)
+
+    def test_a_truncated_text_report_closes_the_batch(self):
+        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        full = landing_report(totals={"run-gates/lint-x": 1})
+        current = self.report_file("m2.txt", full[:full.index("Bucket counts this run:")])
+        code, out = self.check(current, previous)
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_check_too_old", out)
+
+    def test_a_first_member_whose_report_is_truncated_lands_alone(self):
+        self.holder(start=self.base)
+        full = landing_report(totals={"run-gates/lint-x": 1})
+        current = self.report_file("m1.txt", full[:full.index("Bucket counts this run:")])
+        code, out = self.check(current)
+        self.assertEqual(code, 1, out)
+        self.assertIn("no batch", out)
+        self.assertIn("bucket counts", out)
 
     def test_a_total_rise_closes_the_batch(self):
         previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
