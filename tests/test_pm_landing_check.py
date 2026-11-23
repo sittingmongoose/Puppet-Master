@@ -3180,6 +3180,24 @@ class WhatEachRunAlsoReports(LandingRun):
         self.assertEqual(decisions[0]["case"], "no_export")
         self.assertEqual(decisions[0]["command"], "validate-audit-closure")
 
+    def test_a_command_the_producer_never_classified_is_command_unread(self):
+        """R7-B2: only `NO_EXPORT_COMMANDS` is the producer's positive statement that no complete export exists.
+
+        A validator command in neither list is unaudited, so its sample's counts are unknown; the case says so, and a
+        batch reading the block cannot take it as a permanent sample however the total reads.
+        """
+        counts = {"run-gates": {"validate_new_gate": {"reported": 120, "sampled": 50}}}
+        decisions = M.key_from_exports(self.repo, counts, {}, set(),
+                                       {("run-gates", "validate_new_gate"): ["validate-new-gate"]}, 600)[1]
+        self.assertEqual(decisions[0]["case"], "command_unread")
+        self.assertEqual(decisions[0]["command"], "validate-new-gate")
+        self.assertIn("not among the commands read", decisions[0]["reason"])
+        # The positive case is still `no_export`, and it still names the command.
+        decisions = M.key_from_exports(self.repo, counts, {}, set(),
+                                       {("run-gates", "validate_new_gate"): ["validate-audit-closure"]}, 600)[1]
+        self.assertEqual(decisions[0]["case"], "no_export")
+        self.assertEqual(decisions[0]["command"], "validate-audit-closure")
+
     def test_the_row_report_says_which_stale_rows_are_stale_by_error_kind(self):
         """A2-5: `kind_stale` is the check's own classification by error kind, which a sampled baseline cannot make
         false; `grown_stale` is the whole-bucket classification that needs a complete baseline."""

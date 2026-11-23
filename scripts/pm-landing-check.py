@@ -1834,9 +1834,14 @@ def key_from_exports(
                 continue
             row["command"] = argv[0]
             if argv[0] not in EXPORT_COMMANDS:
-                row["reason"] = (f"{argv[0]} writes no complete export: {NO_EXPORT_COMMANDS[argv[0]]}"
-                                 if argv[0] in NO_EXPORT_COMMANDS else
-                                 f"{argv[0]} is not among the commands read to write a complete export")
+                if argv[0] in NO_EXPORT_COMMANDS:
+                    row["reason"] = f"{argv[0]} writes no complete export: {NO_EXPORT_COMMANDS[argv[0]]}"
+                else:
+                    # Not `no_export`: only a validator the producer positively names as writing no complete export
+                    # is a permanent sample. A command in neither list is unaudited, so its counts are unknown
+                    # (review R7-B2).
+                    row["case"] = "command_unread"
+                    row["reason"] = f"{argv[0]} is not among the commands read to write a complete export"
                 continue
             if baseline_checks is not None:
                 was = ((baseline_checks.get(check) or {}).get("subchecks") or {}).get(name) or {}

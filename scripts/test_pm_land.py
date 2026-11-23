@@ -1489,21 +1489,13 @@ class ReportFormatTests(unittest.TestCase):
 
     def test_the_json_report_is_read_as_the_lines_it_stands_for(self):
         """`check` writes `landing-check.json` (`--json`); a batch reads that, not its text rounding."""
-        pre = [json_pre('k1'), json_pre('k2', standing="improved", baseline=5, count=4),
-               json_pre('k3', paths=(), path=None)]
-        report = land.batch_report(json_report(pre=pre, compare=2, timeouts=3,
+        report = land.batch_report(json_report(compare=2, timeouts=3,
                                                gone_ids=["run-gates|lint-x|gone|src/g.txt"],
                                                totals={"run-gates/lint-x": 3, "run-gates/y-": None},
                                                counts={"run-gates|lint-x|missing_ref|src/x.txt": 2}))
         self.assertEqual(report["infrastructure"], 3)
         self.assertEqual(report["compare"], 2)
         self.assertEqual(report["crashed"], False)
-        entry = report["pre"][BUCKET]
-        self.assertEqual((entry["baseline"], entry["count"], entry["improved"]), (5, 5, False))
-        self.assertEqual(entry["rows"], ["k1", "k2"])
-        self.assertEqual(entry["content_rows"], [])
-        # A row naming no path of this branch is a `(content changed)` row.
-        self.assertEqual(report["pre"]["run-gates/lint-x  missing_ref  (no path)"]["content_rows"], ["k3"])
         self.assertEqual(report["gone"], 1)
         self.assertEqual(report["gone_ids"], ["run-gates|lint-x|gone|src/g.txt"])
         self.assertEqual(report["totals"], {"run-gates/lint-x": 3, "run-gates/y-": None})
@@ -1690,16 +1682,45 @@ class ReportFormatTests(unittest.TestCase):
         self.assertIsNone(report["totals"])
         self.assertFalse(land.shows_what_changed(report, []))
 
+    def test_an_unaudited_command_is_not_a_permanent_sample(self):
+        """R7-B2: `no_export` with a command the producer did not list in `no_complete_export` is unaudited.
+
+        A validator added to the aggregates before it is read for its export (`validate-new-gate` in the review's
+        repro) must not clear a batch as a permanent sample: its counts are unknown, so the landing is judged alone.
+        """
+        row = export_row("run-gates", "validate_new_gate", "no_export")
+        row["command"] = "validate-new-gate"
+        doc = json.loads(json_report(totals={"run-gates/validate_new_gate": 120}, counts={},
+                                     partial=["validate_new_gate"], exports=[row], samplers={}))
+        self.assertNotIn("validate-new-gate", doc["exports"]["no_complete_export"])
+        report = land.batch_report(json.dumps(doc))
+        self.assertNotIn(("run-gates", "validate_new_gate"), report["permanent"])
+        self.assertNotIn(("run-gates", "validate_new_gate"), report["export_failed"])
+        rows = self.rows_doc(**{"run-gates__validate_new_gate": self.entry(120, complete=False)})
+        gap = land.strict_difference(report, rows, report, rows, (), 2)
+        self.assertEqual(gap[0], "batch_counts_unknown", gap)
+
+    def test_a_command_the_producer_could_not_read_is_unknown_not_a_failed_export(self):
+        """`command_unread` says what it runs is unaudited: unknown, never an export that was tried and failed."""
+        row = export_row("run-gates", "validate_new_gate", "command_unread")
+        row["command"] = "validate-new-gate"
+        report = land.batch_report(json_report(totals={"run-gates/validate_new_gate": 120}, counts={},
+                                               partial=["validate_new_gate"], exports=[row]))
+        self.assertFalse(report["permanent"] or report["export_failed"])
+
     def test_a_bucket_id_keeps_a_carriage_return_from_moving_the_cursor(self):
         self.assertEqual(self.real.escape_newlines("a\rb\nc\\d"), "a\\rb\\nc\\\\d")
 
 
-def json_report(pre=(), compare: int = 0, timeouts: int = 0, gone_ids=(), totals=None, counts=None,
-                pairs=(), partial=(), exports=None, commit: str = "b" * 40, base: str = "a" * 40) -> str:
+def json_report(compare: int = 0, timeouts: int = 0, gone_ids=(), totals=None, counts=None,
+                pairs=(), partial=(), exports=None, samplers=None, commit: str = "b" * 40,
+                base: str = "a" * 40) -> str:
     """A `pm-landing-check.py --json` report: the keys a batch reads, in the shape `main()` writes them.
 
     `exports` is that block's `subchecks` list (`export_row` makes one), or None for a report written before the
-    block existed: no sample it lists is then known to be permanent.
+    block existed: no sample it lists is then known to be permanent. `samplers` overrides `no_complete_export`;
+    by default it names every `no_export` row's command, as the producer does when it decided that command writes
+    no complete export.
     """
     doc = {
         "schema_id": land.REPORT_SCHEMA,
@@ -1708,7 +1729,6 @@ def json_report(pre=(), compare: int = 0, timeouts: int = 0, gone_ids=(), totals
         "changed_on_branch": compare,
         "infrastructure": [{"check": "run-gates", "subcheck": f"x{index}", "error": "subprocess_timeout"}
                            for index in range(timeouts)],
-        "pre_existing": list(pre),
         "resolved_buckets": None if gone_ids is None else list(gone_ids),
         "subcheck_totals": totals,
         "bucket_counts": counts,
@@ -1717,7 +1737,14 @@ def json_report(pre=(), compare: int = 0, timeouts: int = 0, gone_ids=(), totals
         "subchecks_compared_by_total_only": [name if "/" in name else f"run-gates/{name}" for name in partial],
     }
     if exports is not None:
-        doc["exports"] = {"complete_export_commands": ["validate-evidence"], "no_complete_export": {},
+        # The producer lists every command it decided writes no complete export beside the subcheck rows: only a
+        # `no_export` row whose command is listed there is a permanent sample (review R7-B2).
+        named = ({row["command"]: f"{row['command']} writes no complete export"
+                  for row in exports
+                  if isinstance(row, dict) and row.get("case") == "no_export"
+                  and isinstance(row.get("command"), str) and row.get("command").strip()}
+                 if samplers is None else dict(samplers))
+        doc["exports"] = {"complete_export_commands": ["validate-evidence"], "no_complete_export": named,
                           "subchecks": [dict(row) for row in exports],
                           "compared_with_baseline_exports": []}
     return json.dumps(doc)
@@ -2499,6 +2526,24 @@ class BatchCheckTests(BatchFixture):
         self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
         code, out = self.check(self.report("m2.json", totals=totals, counts={}, partial=["validate_evidence"],
                                            exports=[row]))
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_counts_unknown", out)
+        self.assertIn("no producer named a validator", out)
+
+    def test_an_unaudited_command_at_an_unchanged_total_stops_the_batch(self):
+        """R7-B2: the review's repro — a validator added to the aggregates before it is read for its export.
+
+        The producer writes `case=no_export` and names the command, but does not list it in `no_complete_export`.
+        Two reports agreeing only in the total must not clear: the sample is unaudited, so its counts are unknown.
+        """
+        totals = {"run-gates/validate_new_gate": 120}
+        row = export_row("run-gates", "validate_new_gate", "no_export")
+        row["command"] = "validate-new-gate"
+        m1 = self.member("m1-unaudited", head=self.member1, totals=totals, counts={}, partial=["validate_new_gate"],
+                         exports=[row], samplers={})
+        self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
+        code, out = self.check(self.report("m2.json", totals=totals, counts={}, partial=["validate_new_gate"],
+                                           exports=[dict(row)], samplers={}))
         self.assertEqual(code, 1, out)
         self.assertIn("TRIGGER batch_counts_unknown", out)
         self.assertIn("no producer named a validator", out)

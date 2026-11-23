@@ -1425,16 +1425,21 @@ def read_json_report(doc: dict[str, Any]) -> dict[str, Any]:
         check, _, subcheck = str(name).partition("/")
         if check:
             partial.add((check, subcheck or "-"))
-    # And `exports.subchecks` says why each of them is a sample. Only a `no_export` whose producer names the command
-    # is a permanent sample: that producer decided no complete export exists for it, so its total is the whole
-    # comparison. A `no_export` with no command is ambiguous and reads as unknown (review ASTRA A2-1).
+    # And `exports.subchecks` says why each of them is a sample. Only a `no_export` whose producer names the command,
+    # and whose export block lists that command in `no_complete_export`, is a permanent sample: that producer decided
+    # no complete export exists for it, so its total is the whole comparison. A `no_export` with no command is
+    # ambiguous, and one naming a command the producer did not list as writing no complete export is unaudited
+    # (`command_unread`): both read as unknown (reviews ASTRA A2-1, R7-B2).
     # `baseline_sample` is NOT permanent either: it means the batch-start baseline missed its export, and the next
     # follow-up's baseline can key it, so its counts are unknown here and the landing is judged alone (R5-B1). Any
     # other case means an export was attempted and did not key its rows (`export_timeout`, `export_unreadable`,
     # `total_mismatch`, `rows_mismatch`), and then its counts are not known, only its total. A paired run-gates
     # copy is judged by its audit-governance twin's rows, so an export of its own is not read here.
-    rows_read = (doc.get("exports") or {}).get("subchecks") if isinstance(doc.get("exports"), dict) else None
+    exports = doc.get("exports") if isinstance(doc.get("exports"), dict) else {}
+    rows_read = exports.get("subchecks")
     rows_read = rows_read if isinstance(rows_read, list) else None
+    named_samplers = exports.get("no_complete_export")
+    named_samplers = named_samplers if isinstance(named_samplers, dict) else {}
     export_failed: set[tuple[str, str]] = set()
     permanent: set[tuple[str, str]] = set()
     samples: dict[tuple[str, str], tuple[Any, Any]] = {}
@@ -1448,16 +1453,18 @@ def read_json_report(doc: dict[str, Any]) -> dict[str, Any]:
             continue
         if row.get("keyed"):
             continue
-        if row.get("case") == "no_export" and isinstance(row.get("command"), str) and row["command"].strip():
-            # Only a producer that names the validator proves the sample is permanent: it decided the command writes
-            # no complete export. A `no_export` with no command is the producer saying it could not read what runs,
-            # and reading that as permanence is the false pass of review ASTRA A2-1.
+        if (row.get("case") == "no_export" and isinstance(row.get("command"), str) and row["command"].strip()
+                and row["command"] in named_samplers):
+            # Only a producer that names the validator, and lists it as writing no complete export, proves the sample
+            # is permanent. A `no_export` with no command is the producer saying it could not read what runs; one
+            # naming a command absent from `no_complete_export` is unaudited. Reading either as permanence is the
+            # false pass of reviews ASTRA A2-1 and R7-B2.
             permanent.add(key)
-        elif row.get("case") not in (None, "baseline_sample", "no_export"):
+        elif row.get("case") not in (None, "baseline_sample", "no_export", "command_unread"):
             export_failed.add(key)
-        # `no_export` with no command is neither: its status is unknown, so no sample it leaves is compared by total.
-        # A subcheck compared by its total only with no row here is likewise unknown: nothing said why its export is
-        # missing (review ASTRA A2-1).
+        # `no_export` without a listed command, and `command_unread`, are neither: their status is unknown, so no
+        # sample they leave is compared by total. A subcheck compared by its total only with no row here is likewise
+        # unknown: nothing said why its export is missing (review ASTRA A2-1).
     return {
         "infrastructure": len(doc.get("infrastructure") or []),
         "crashed": False,
