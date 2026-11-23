@@ -19,7 +19,7 @@ import stat
 import subprocess
 import sys
 import time
-from typing import Any, Callable, Optional, Sequence
+from typing import Any, Collection, Optional, Sequence
 import uuid
 
 SHARED = Path("/mnt/Cursor/PuppetMaster")
@@ -1419,40 +1419,42 @@ def read_json_report(doc: dict[str, Any]) -> dict[str, Any]:
         if isinstance(row, dict) and row.get("paired") and row.get("run_gates") and row.get("audit_governance"):
             pairs[("run-gates", str(row["run_gates"]))] = ("audit-governance", str(row["audit_governance"]))
     # A subcheck compared by its total only is left out of `bucket_counts` too: its missing bucket is not a zero.
-    partial = set()
+    # The empty subcheck name is `-` here, as `subcheck_totals` writes it, so a name from either side matches.
+    partial: set[tuple[str, str]] = set()
     for name in doc.get("subchecks_compared_by_total_only") or []:
         check, _, subcheck = str(name).partition("/")
-        if check and subcheck:
-            partial.add((check, subcheck))
-    # And `exports.subchecks` says why each of them is a sample. Only `no_export` is a permanent sample: no export
-    # can complete that subcheck, so its total is the whole comparison. `baseline_sample` is NOT permanent: it means
-    # the batch-start baseline missed its export, and the next follow-up's baseline can key it, so its counts are
-    # unknown here and the landing is judged alone (R5-B1). Any other case means an export was attempted and did not key its rows (`export_timeout`, `export_unreadable`,
+        if check:
+            partial.add((check, subcheck or "-"))
+    # And `exports.subchecks` says why each of them is a sample. Only a `no_export` whose producer names the command
+    # is a permanent sample: that producer decided no complete export exists for it, so its total is the whole
+    # comparison. A `no_export` with no command is ambiguous and reads as unknown (review ASTRA A2-1).
+    # `baseline_sample` is NOT permanent either: it means the batch-start baseline missed its export, and the next
+    # follow-up's baseline can key it, so its counts are unknown here and the landing is judged alone (R5-B1). Any
+    # other case means an export was attempted and did not key its rows (`export_timeout`, `export_unreadable`,
     # `total_mismatch`, `rows_mismatch`), and then its counts are not known, only its total. A paired run-gates
     # copy is judged by its audit-governance twin's rows, so an export of its own is not read here.
     rows_read = (doc.get("exports") or {}).get("subchecks") if isinstance(doc.get("exports"), dict) else None
     rows_read = rows_read if isinstance(rows_read, list) else None
     export_failed: set[tuple[str, str]] = set()
     permanent: set[tuple[str, str]] = set()
-    seen: set[tuple[str, str]] = set()
     for row in rows_read or []:
         if not isinstance(row, dict):
             continue
-        key = (str(row.get("check")), str(row.get("subcheck")))
+        key = (str(row.get("check")), str(row.get("subcheck") or "-"))
         if key in pairs:
             continue
-        seen.add(key)
         if row.get("keyed"):
             continue
-        if row.get("case") == "no_export":
+        if row.get("case") == "no_export" and isinstance(row.get("command"), str) and row["command"].strip():
+            # Only a producer that names the validator proves the sample is permanent: it decided the command writes
+            # no complete export. A `no_export` with no command is the producer saying it could not read what runs,
+            # and reading that as permanence is the false pass of review ASTRA A2-1.
             permanent.add(key)
-        elif row.get("case") not in (None, "baseline_sample"):
+        elif row.get("case") not in (None, "baseline_sample", "no_export"):
             export_failed.add(key)
-    if rows_read is not None:
-        # Every subcheck sampled in this run has a row there. One compared by its total only with no row printed
-        # every row here: the baseline's sample is why it is still compared by its total, and no export completes
-        # the baseline either, so that sample is permanent in every member of the batch.
-        permanent |= partial - seen
+        # `no_export` with no command is neither: its status is unknown, so no sample it leaves is compared by total.
+        # A subcheck compared by its total only with no row here is likewise unknown: nothing said why its export is
+        # missing (review ASTRA A2-1).
     return {
         "infrastructure": len(doc.get("infrastructure") or []),
         "crashed": False,
@@ -1528,97 +1530,10 @@ def subcheck_of(bucket: str) -> str:
     return f"{check}/{rest.partition('|')[0] or '-'}"
 
 
-def why_not_exempt(subcheck: str, now: Optional[dict[str, Any]], previous: Optional[dict[str, Any]],
-                   own: Sequence[str]) -> Optional[str]:
-    """None when what this subcheck added since the previous report is only this member's own staleness. Then alone,
-    after the previous member's follow-up, each added row would be staleness on this member's files, which stops nothing.
-
-    Every added row must be seen (the subcheck is complete in both reports, its rows adding up to its total), be
-    staleness of a kind the landing check also excuses when its bucket grows, and name this member's files and no other
-    file of the batch. A row stale by its detail text alone is not enough: alone, a rise in its bucket stops the landing.
-    The caller gives this member's own range, so a row on another member's file is told apart. Otherwise, says why.
-    """
-    if now is None or previous is None:
-        return "the landing check wrote no row report for one of the two runs, so what was added cannot be seen"
-    rows = {}
-    for side, doc in (("this", now), ("the previous", previous)):
-        entry = (doc.get("subchecks") or {}).get(subcheck)
-        if not isinstance(entry, dict) or not entry.get("complete") or len(entry.get("rows") or []) != entry.get("reported"):
-            return (f"{subcheck} is not complete in {side} report (no row report for it, a sample, or no complete export), "
-                    "so what was added cannot be seen")
-        rows[side] = entry["rows"]
-    added = Counter(row["key"] for row in rows["this"]) - Counter(row["key"] for row in rows["the previous"])
-    if not added:
-        return f"{subcheck} rose, but no added row can be found in it"
-    mine = set(own)
-    for row in rows["this"]:
-        if not added.get(row["key"]):
-            continue
-        if not row.get("stale"):
-            return f"an added row is not staleness: {row['key']}"
-        if not row.get("grown_stale"):
-            return f"an added row is staleness only by its detail text, which the check does not excuse when its bucket grows: {row['key']}"
-        names = row.get("names") or []
-        if not names:
-            return f"an added staleness row names no file of this batch, so it cannot be attributed: {row['key']}"
-        others = sorted(set(names) - mine)
-        if others:
-            return f"an added staleness row names another member's file ({others[0]}): {row['key']}"
-    return None
-
-
-def row_count_rises(now: Optional[dict[str, Any]], previous: Optional[dict[str, Any]]) -> list[tuple]:
-    """Buckets that rose in a subcheck complete in both row reports. A subcheck the baseline holds as a sample prints no
-    `[count]` line even when it now prints every row, so these can show what those lines do not."""
-    rises: list[tuple] = []
-    for name, entry in sorted(((now or {}).get("subchecks") or {}).items()):
-        before = ((previous or {}).get("subchecks") or {}).get(name)
-        if not (isinstance(entry, dict) and entry.get("complete") and isinstance(before, dict) and before.get("complete")):
-            continue
-        was = Counter(row["key"].rpartition("|")[0] for row in before.get("rows") or [])
-        for bucket, count in sorted(Counter(row["key"].rpartition("|")[0] for row in entry.get("rows") or []).items()):
-            if count > was[bucket]:
-                rises.append((name, "batch_total_rise", f"bucket {bucket} rose from {was[bucket]} to {count} since the last "
-                                                         "report, which no total shows"))
-    return rises
-
-
-def prior_bucket_count(report: dict[str, Any], bucket: str) -> Optional[int]:
-    """A bucket's count in an earlier report: an observed number or zero, or None when that report's count is unknown.
-
-    `bucket_counts` holds only counts of 1 or more, so an absent bucket needs telling apart from a zero. Three states:
-    a complete subcheck that printed no such bucket is an observed zero; a run-gates copy judged by its complete
-    audit-governance twin stands in as that twin's bucket, an observed zero when the twin did not print it; and a
-    subcheck compared by its total only (`partial`: a sample, or an export that failed or timed out) printed no
-    buckets at all, so its counts are unknown, never zero (review ASTRA F7, R3-B1).
-    """
-    counts = report.get("bucket_counts") or {}
-    pieces = bucket.split("|", 3)
-    if len(pieces) < 3:
-        return counts.get(bucket, 0)
-    key = (pieces[0], pieces[1])
-    if key in (report.get("partial") or set()):
-        return None
-    twin = (report.get("pairs") or {}).get(key)
-    if twin is None:
-        return counts.get(bucket, 0)
-    if twin in (report.get("partial") or set()):
-        return None
-    return counts.get("|".join([twin[0], twin[1], *pieces[2:]]), 0)
-
-
-def bucket_was_not_printed(report: dict[str, Any], bucket: str) -> bool:
-    """Whether this report left the bucket out because it is a run-gates copy judged by its complete audit-governance
-    twin: only the copy's absence is explained, and the twin's bucket is still checked on its own.
-
-    A subcheck compared by its total only is NOT this: it printed no buckets, so a bucket an earlier report held as
-    gone cannot be told apart from one that is still gone, and the batch stops (review R3-B1).
-    """
-    pieces = bucket.split("|", 3)
-    if len(pieces) < 2:
-        return False
-    return (pieces[0], pieces[1]) in (report.get("pairs") or {})
-
+# The strict batch rule (review ASTRA A2-1..A2-5, round 5). A member after the first stays only when its report is
+# the previous member's: same totals, same bucket counts, same row keys wherever both row reports are complete, same
+# known/sampled status. The one allowed difference is governance staleness in buckets that name a file this member's
+# own branch touched, fully printed. A false pass is the danger; a false stop only means the landing goes alone.
 
 def member_place(index: int, total: int) -> str:
     """A report's place in its batch, named: `this landing's report`, `the previous member's report`, or member N."""
@@ -1629,166 +1544,162 @@ def member_place(index: int, total: int) -> str:
     return f"member {index + 1}'s report (of {total})"
 
 
-def counts_unknown(report: dict[str, Any], earlier: Sequence[dict[str, Any]]) -> Optional[tuple[str, str]]:
-    """The rule before any comparison: a subcheck whose counts are not fully known in a member of this batch.
+def row_entry(rows: Optional[dict[str, Any]], name: str) -> Optional[dict[str, Any]]:
+    """One subcheck's entry in a --row-report document, or None when it has none.
 
-    A batch compares counts, and a count a member does not have is neither a zero nor a smaller number. A subcheck's
-    counts are not fully known in a report when it timed out there (`subcheck_totals` has null), when it is compared
-    by its total only for any reason other than a permanent sample (`no_export` only), or when an export
-    of it failed or could not be read (`exports.subchecks`: `export_timeout`, `export_unreadable`, `total_mismatch`,
-    `rows_mismatch`). They are not fully known in the batch when one member printed them in full while another has
-    only its total. The one exception is a subcheck that is a permanent sample in every member: no complete row set
-    exists anywhere to compare it by, so its printed total is the whole comparison, as in the landing check itself.
-
-    This runs before every comparison, so no later step has to tell an unknown count from an observed one (review
-    R4-B1: a sample in the current member was compared as if its counts were known). Returns (stop code, why), naming
-    the subcheck and the member: the batch closes and this landing is judged alone.
+    Every subcheck `subcheck_totals` names has an entry there, so a missing one is a report the rule cannot read.
     """
-    members = list(earlier) + [report]
-    total = len(members)
-    suspects: set[tuple[str, str]] = set()
-    for member in members:
-        suspects |= set(member.get("partial") or set())
-        suspects |= set(member.get("export_failed") or set())
-        for name, value in (member.get("totals") or {}).items():
-            if value is None:
-                check, _, subcheck = name.partition("/")
-                suspects.add((check, subcheck))
-    for check, subcheck in sorted(suspects):
-        name = f"{check}/{subcheck}"
-        for index, member in enumerate(members):
-            if (member.get("totals") or {}).get(name, 0) is None:
-                where = ("this landing's report" if index == total - 1
-                         else f"an earlier member's report (member {index + 1} of {total})")
-                return ("batch_counts_unknown", f"{name} timed out in {where}, so its counts are unknown and this "
-                                                "landing cannot be compared with the batch")
-        for index, member in enumerate(members):
-            if (check, subcheck) in (member.get("export_failed") or set()):
-                return ("batch_counts_unknown", f"{name}'s export did not complete in {member_place(index, total)}, so "
-                                                "its counts are unknown and this landing cannot be compared with the "
-                                                "batch")
-        sampled = [step for step, row in enumerate(members) if (check, subcheck) in (row.get("partial") or set())]
-        printed = [step for step in range(total) if step not in sampled]
-        if sampled and printed:
-            return ("batch_counts_unknown",
-                    f"{name} was compared by its total only in {member_place(sampled[0], total)}, and "
-                    f"{member_place(printed[0], total)} printed it in full, so its bucket counts are unknown and this "
-                    "landing cannot be compared with the batch")
-        for index, member in enumerate(members):
-            if (check, subcheck) not in (member.get("permanent") or set()):
-                return ("batch_counts_unknown",
-                        f"{name} was compared by its total only in {member_place(index, total)} as a sample that is "
-                        "not a permanent one, so its bucket counts are unknown and this landing cannot be compared "
-                        "with the batch")
+    entry = ((rows or {}).get("subchecks") or {}).get(name)
+    return entry if isinstance(entry, dict) else None
+
+
+def row_keys(entry: dict[str, Any]) -> Counter:
+    """A complete subcheck's rows by key, with multiplicity: the identity a batch compares."""
+    return Counter(row.get("key") for row in entry.get("rows") or []
+                   if isinstance(row, dict) and isinstance(row.get("key"), str))
+
+
+def row_at(entry: dict[str, Any], key: str) -> Optional[dict[str, Any]]:
+    for row in entry.get("rows") or []:
+        if isinstance(row, dict) and row.get("key") == key:
+            return row
     return None
 
 
-def batch_gap(report: dict[str, Any], earlier: Sequence[dict[str, Any]],
-              exempt: Optional[Callable[[str], Optional[str]]] = None, row_rises: Sequence[tuple] = ()) -> Optional[tuple]:
-    """Why this member's report, fine inside the batch, may not hold alone after the earlier members' follow-up.
+def own_staleness(row: Optional[dict[str, Any]], own: Collection[str]) -> bool:
+    """Whether this row is governance staleness the rule may excuse: this member's own files, seen in full.
 
-    Every check in a batch is judged against the baseline from before the batch, so a bucket an earlier member lowered
-    and this one raises again still reads as pre-existing, and a readiness rise is excused by the earlier member's
-    stale row. An earlier member's fix may print no row at all: a bucket it emptied is only a number in `Gone since the
-    baseline`, and one it lowered with no row naming a batch file prints nothing. `earlier` is each earlier member's
-    report digest in order, all read from its receipt. Returns (stop code, why). What a report did not print cannot be
-    seen: README, "Batch triggers". A pm-landing-check that prints gone ids, totals and bucket counts prints it all: a
-    bucket no longer gone, or a total or count above the previous report's, could not rise alone unseen. A report
-    without those lines closes the batch: nothing narrower stands in for them. `exempt` says why a subcheck's rise is
-    not only this member's own staleness, or None when it is.
+    `kind_stale` is the landing check's own classification by error kind, which no sample or missing baseline can
+    make uncertain; `grown_stale` is its whole-bucket classification, the only evidence for a renamed-shard or
+    audit-closure row. A row stale by its detail text alone is neither (review ASTRA A2-5), and a row naming any file
+    of the batch but this member's is not this member's to excuse.
     """
-    if not earlier:
-        return None
-    mine = report["pre"]
-    if not shows_what_changed(report, earlier):
-        return ("batch_check_too_old", "a report here prints no gone ids, subcheck totals or bucket counts, so what moved "
-                                       "between the reports cannot be seen")
-    # Counts that are not fully known are decided before any of them is compared: a sample is not an observed zero,
-    # and no comparison below can tell the two apart once it has started (review R4-B1).
-    unknown = counts_unknown(report, earlier)
-    if unknown:
-        return unknown
-    if report["pre_unread"] or any(row.get("pre_unread") for row in earlier):
-        if mine or report["pre_unread"] or report["compare"]:
-            return ("batch_rows_overlap", "this report lists pre-existing rows, and an earlier member's report printed "
-                                          "only part of its rows, so what they share cannot be told")
-    else:
-        shared = []
-        unlisted = []
-        for bucket, entry in sorted(mine.items()):
-            views = [row for row in earlier if bucket in row["pre"]]
-            listed = {text for row in views for text in row["pre"][bucket]["rows"]}
-            if any(text not in listed for text in entry["content_rows"]):
-                unlisted.append(bucket)
-                continue
-            if not any(row["pre"][bucket]["improved"] or row["pre"][bucket]["content_rows"] or row.get("compare")
-                       for row in views):
-                continue
-            # Every member's report lists what the earlier ones touched too, so compare with the latest view.
-            latest = views[-1]["pre"][bucket]
-            if entry["count"] != latest["count"] or set(entry["rows"]) - set(latest["rows"]):
-                shared.append(f"{bucket} ({latest['count']} -> {entry['count']})")
-        if shared:
-            return ("batch_rows_overlap", "pre-existing rows changed in a bucket an earlier member of this batch also "
-                                          "changed, so the baseline's count no longer tells: " + "; ".join(shared[:10]))
-        if unlisted:
-            return ("batch_rows_overlap", "a `(content changed)` row no earlier report listed: an earlier member may have "
-                                          "lowered its bucket without printing it, so the baseline's count no longer "
-                                          "tells: " + "; ".join(unlisted[:10]))
-    return moved_since_earlier(report, earlier, exempt, row_rises)
+    if not isinstance(row, dict) or not row.get("stale"):
+        return False
+    if not (row.get("kind_stale") or row.get("grown_stale")):
+        return False
+    names = row.get("names") or []
+    return bool(names) and set(names) <= set(own)
 
 
-def moved_since_earlier(report: dict[str, Any], earlier: Sequence[dict[str, Any]],
-                        exempt: Optional[Callable[[str], Optional[str]]] = None,
-                        row_rises: Sequence[tuple] = ()) -> Optional[tuple]:
-    """What the printed ids, totals and counts say rose since the previous report, unless it is only this member's own
-    staleness. Each report is compared with the one before it, so one rise excused here is not held against the next.
+def bucket_of_key(key: str) -> str:
+    """`check|subcheck|error|path` of a row key."""
+    return key.rpartition("|")[0]
 
-    Every report here is fully known: `counts_unknown` runs before this and closes the batch when a subcheck timed
-    out, fell back to a sample that is not permanent, or lost its export in any member (reviews SOL D5, R4-B1). So
-    an absent bucket below is an observed zero or a paired copy's twin, and never a sample read as one (ASTRA F7).
+
+def report_buckets(report: dict[str, Any]) -> dict[str, int]:
+    """Every bucket this report counted or held gone, minus the run-gates copies a complete twin judged.
+
+    A gone bucket is a count of zero. A copy the report paired with an audit-governance twin is left to the twin,
+    exactly as `pm-landing-check.py` leaves it out of its own bucket counts.
     """
-    if report.get("totals") is None:
-        return None
-    if report.get("ids_unread") or any(row.get("ids_unread") for row in earlier):
-        return ("batch_rows_overlap", "a report's gone ids, subcheck totals or bucket counts do not add up, so what moved "
-                                      "between the reports cannot be told")
-    if not earlier:
-        return None
-    latest = earlier[-1]
-    rises = []
-    for bucket in sorted(set(latest.get("gone_ids") or []) - set(report.get("gone_ids") or [])):
-        if bucket_was_not_printed(report, bucket):
+    pairs = report.get("pairs") or {}
+    counts: dict[str, int] = {}
+    for bucket, count in (report.get("bucket_counts") or {}).items():
+        pieces = bucket.split("|", 2)
+        if len(pieces) >= 2 and (pieces[0], pieces[1] or "-") in pairs:
             continue
-        rises.append((subcheck_of(bucket), "batch_rows_overlap",
-                      f"a bucket the previous member's report listed as gone is back, whatever else went: {bucket}"))
-    for name, total in sorted(report["totals"].items()):
-        if total is None:
+        counts[bucket] = int(count)
+    for bucket in report.get("gone_ids") or []:
+        pieces = bucket.split("|", 2)
+        if len(pieces) >= 2 and (pieces[0], pieces[1] or "-") in pairs:
             continue
-        was = (latest.get("totals") or {}).get(name)
-        if was is None:
-            return ("batch_counts_unknown", f"the previous member's report records no count for {name}, so this landing "
-                                            "cannot be compared with it")
-        if total > was:
-            rises.append((name, "batch_total_rise", f"{name}'s total rose from {was} to {total} since the last report, which "
-                                                    "the baseline from before the batch cannot show"))
-    for name, count in sorted((report.get("bucket_counts") or {}).items()):
-        was = prior_bucket_count(latest, name)
-        if was is None:
-            # `counts_unknown` above makes this unreachable; if it is ever reached, the previous report's counts for
-            # this subcheck are a sample, and reading them as a zero is the false pass the rule exists to stop.
-            return ("batch_counts_unknown",
-                    f"{subcheck_of(name)} was compared by its total only in the previous member's report, so its bucket "
-                    "counts are unknown and this landing cannot be compared with the batch")
-        if count > was:
-            rises.append((subcheck_of(name), "batch_total_rise",
-                          f"bucket {name} rose from {was} to {count} since the last report, which no total shows"))
-    said: dict[str, Optional[str]] = {}
-    for subcheck, code, what in rises + list(row_rises):
-        if subcheck not in said:
-            said[subcheck] = exempt(subcheck) if exempt else "the landing check wrote no row report, so what was added cannot be seen"
-        if said[subcheck]:
-            return (code, f"{what}; alone it would be a rise, and it is not this landing's own staleness: {said[subcheck]}")
+        counts.setdefault(bucket, 0)
+    return counts
+
+
+def strict_difference(report: dict[str, Any], rows: Optional[dict[str, Any]], previous: dict[str, Any],
+                      previous_rows: Optional[dict[str, Any]], own: Collection[str],
+                      total: int) -> Optional[tuple[str, str]]:
+    """Why this member's report is not the previous member's: the first difference, or None when it is.
+
+    For member N of `total`, N >= 2: the two JSON reports must agree in every subcheck total, every bucket count,
+    every row key wherever both row reports are complete, and every subcheck's known/sampled status. The one allowed
+    difference is governance staleness in buckets that name a file this member's own branch touched, fully printed in
+    this member's report. A subcheck that is a permanent sample is compared on its total only, and only when the
+    producer positively identified a validator without a complete export, it is sampled the same way in both reports,
+    and its total is unchanged. Anything else judges this landing alone.
+    """
+    where = member_place(total - 2, total)
+    now_totals, old_totals = report.get("totals") or {}, previous.get("totals") or {}
+    if report.get("ids_unread") or previous.get("ids_unread"):
+        return ("batch_counts_unknown", "the gone ids, subcheck totals or bucket counts of one of the two reports do "
+                                        "not add up, so what moved cannot be told")
+    if (report.get("pairs") or {}) != (previous.get("pairs") or {}):
+        return ("batch_mapping_unreadable", "the two reports pair different validators, so which rows are compared "
+                                            "is not known")
+    now_buckets, old_buckets = report_buckets(report), report_buckets(previous)
+    for name in sorted(set(now_totals) | set(old_totals)):
+        check, _, subcheck = name.partition("/")
+        if name not in now_totals:
+            return ("batch_status_differs", f"{name} is in {where} and not in this landing's report")
+        if name not in old_totals:
+            return ("batch_status_differs", f"{name} is in this landing's report and not in {where}")
+        if now_totals[name] is None or old_totals[name] is None:
+            side = "this landing's report" if now_totals[name] is None else where
+            return ("batch_counts_unknown", f"{name} timed out in {side}, so its count is not known")
+        if (check, subcheck) in (report.get("pairs") or {}):
+            # A run-gates copy judged by its complete audit-governance twin is compared under the twin's name.
+            continue
+        # An export that failed leaves what the check could key unknown, whatever the row report says (R4-B1).
+        for side, doc in (("this landing's report", report), (where, previous)):
+            if (check, subcheck) in (doc.get("export_failed") or set()):
+                return ("batch_counts_unknown", f"{name}'s export did not complete in {side}, so its counts are not "
+                                                "known")
+        entry_now, entry_old = row_entry(rows, name), row_entry(previous_rows, name)
+        if entry_now is None or entry_old is None:
+            side = "this landing's report" if entry_now is None else where
+            return ("batch_status_differs", f"{name} has no row report entry in {side}, so its rows cannot be read")
+        complete_now, complete_old = bool(entry_now.get("complete")), bool(entry_old.get("complete"))
+        if complete_now != complete_old:
+            full, sampled = (("this landing's report", where) if complete_now
+                             else (where, "this landing's report"))
+            return ("batch_status_differs", f"{name} printed every row in {full} and only a sample in {sampled}, so "
+                                            "its rows are not the same set")
+        if not complete_now:
+            for side, doc in (("this landing's report", report), (where, previous)):
+                if (check, subcheck) not in (doc.get("permanent") or set()):
+                    return ("batch_counts_unknown",
+                            f"{name} is compared by its total only in {side}, and no producer named a validator that "
+                            "writes no complete export, so its counts are not known")
+            if now_totals[name] != old_totals[name]:
+                return ("batch_totals_differ", f"{name}'s total changed from {old_totals[name]} to {now_totals[name]} "
+                                               f"between {where} and this landing's report, and it is compared by its "
+                                               "total only")
+            continue
+        now_keys, old_keys = row_keys(entry_now), row_keys(entry_old)
+        gone, added = old_keys - now_keys, now_keys - old_keys
+        for a_row in sorted(gone):
+            if not own_staleness(row_at(entry_old, a_row), own):
+                return ("batch_rows_differ", f"a row {where} has is gone here, and it is not governance staleness on a "
+                                             f"file this landing touched: {a_row}")
+        for a_row in sorted(added):
+            if not own_staleness(row_at(entry_now, a_row), own):
+                return ("batch_rows_differ", f"a new row is not governance staleness on a file this landing touched: "
+                                             f"{a_row}")
+        expected = old_totals[name] + sum(added.values()) - sum(gone.values())
+        if now_totals[name] != expected:
+            return ("batch_totals_differ", f"{name}'s total is {now_totals[name]} but the rows {where} and this report "
+                                           f"show {expected}")
+        # A subcheck the batch-start baseline sampled is compared by its total only, so `pm-landing-check.py` counts
+        # no buckets for it while this run's row report can still print every row: the keys above are the comparison
+        # there, never the absent counts (round-6 case; review ASTRA A2-2).
+        if any((check, subcheck) in (doc.get("partial") or set()) for doc in (report, previous)):
+            continue
+        # Every bucket count must be the previous report's, moved only by the rows this rule just excused: a count
+        # that changed for another reason is a difference the row keys alone would hide (review ASTRA A2-2).
+        seen_buckets = {b for b in now_buckets if subcheck_of(b) == name}
+        seen_buckets |= {b for b in old_buckets if subcheck_of(b) == name}
+        seen_buckets |= {bucket_of_key(a_row) for a_row in set(now_keys) | set(old_keys)}
+        for bucket in sorted(seen_buckets):
+            went = sum(count for a_row, count in gone.items() if bucket_of_key(a_row) == bucket)
+            came = sum(count for a_row, count in added.items() if bucket_of_key(a_row) == bucket)
+            expected = old_buckets.get(bucket, 0) + came - went
+            if now_buckets.get(bucket, 0) != expected:
+                return ("batch_buckets_differ",
+                        f"bucket {bucket} is counted as {now_buckets.get(bucket, 0)} here and "
+                        f"{old_buckets.get(bucket, 0)} in {where}, and the rows added or gone do not account for the "
+                        "difference")
     return None
 
 
@@ -2127,9 +2038,17 @@ def judge_batch_member(shared: Path, start: str, code: int, report: Optional[dic
                        rows: Optional[dict[str, Any]], rows_unread: Sequence[str],
                        earlier: Sequence[dict[str, Any]], earlier_unread: Sequence[str],
                        own_base: Optional[str], head: str,
-                       check_source: Optional[str]) -> tuple[int, list[str]]:
-    """One member's report against the earlier members' bound receipts: (exit code, lines). Read-only."""
+                       check_source: Optional[str]) -> tuple[int, list[str], Optional[tuple[str, str]]]:
+    """One member's report against its predecessor's bound receipt: (exit code, lines, the difference or None).
+
+    `earlier` is the predecessor's member, read from the holder's last row: the strict rule compares a member with
+    the one before it, and the earlier landings are enforced when each of them landed. The exit code is the tool's
+    own: 0 judged, no difference; 1 a difference or a judgement owed first (the lines say which). The difference is
+    None when none was found, so `verify --batch-start` can refuse on it alone and leave an owed judgement to the
+    lander, exactly as a single landing is judged.
+    """
     lines: list[str] = []
+    difference: Optional[tuple[str, str]] = None
     if check_source is None:
         shown = git(shared, "show", f"{head}:scripts/pm-landing-check.py", check=False)
         if shown.returncode:
@@ -2145,86 +2064,77 @@ def judge_batch_member(shared: Path, start: str, code: int, report: Optional[dic
                          "rebase on the new origin/main and run its check alone.")
         else:
             lines.append("land it alone: no batch opens on a landing check that does not print those lines.")
-        return 1, lines
+        return 1, lines, ("batch_check_too_old", "the landing check at this commit does not print the lines a batch "
+                                                 "compares")
     if report is None:
         lines.append("no batch: the receipt's report is not the JSON `pm-landing-check.py --json` writes, so the "
                      "comparison lines a batch reads are not there. Land it alone (the batch stays closed).")
-        return 1, lines
+        return 1, lines, ("batch_report_unreadable", "the receipt's report is not the JSON the landing check writes")
     lines.append("comparison lines this report printed:")
     lines.extend(batch_check_lines(report))
     if report["crashed"] or (code == 1 and report["infrastructure"] is None):
         lines.append("the landing check did not finish judging (" + ("a traceback" if report["crashed"] else "no Infrastructure line")
                      + " in its report), so nothing excuses it: close the batch, fix the cause, and run the check alone.")
-        return 1, lines
+        return 1, lines, ("batch_report_unreadable", "the landing check did not finish judging")
     if code not in (0, 1):
         lines.append(f"the landing check exited {code}: that alone decides this landing, and a member may only stay on exit 0 "
                      "or 1. Close the batch and treat the landing by the report.")
-        return 1, lines
+        return 1, lines, ("batch_exit", f"the landing check exited {code}")
     owed = []
     if code == 1 and report["infrastructure"]:
         owed.append(f"{report['infrastructure']} subcheck(s) timed out: rerun each on its own and judge what it reports")
     if code == 1 and report["compare"]:
         owed.append(f"{report['compare']} pre-existing failure(s) changed content on files this branch touched: compare those "
                     "with the baseline's rows")
-    if report["pre_unread"]:
-        owed.append("the report printed only part of its pre-existing rows, so a shared bucket cannot be told")
-    # A report or receipt the batch needs and cannot read is a trigger, never silence, and it is decided before any
-    # success: the first member's corrupt row report is as unreadable as the second member's (review SOL F6).
+    # A report or receipt the batch needs and cannot read is a difference, never silence, and it is decided before
+    # any success: the first member's corrupt row report is as unreadable as the second member's (review SOL F6).
     if rows_unread:
-        gap = ("batch_row_report_unreadable", "a row report this batch needs could not be read ("
-               + "; ".join(rows_unread) + "), so what rose since the previous report cannot be judged")
+        difference = ("batch_row_report_unreadable", "a row report this batch needs could not be read ("
+                      + "; ".join(rows_unread) + "), so the rows are not known")
     elif earlier_unread:
-        gap = ("batch_earlier_receipt_unreadable", "an earlier member's receipt cannot be read ("
-               + "; ".join(earlier_unread) + "), so the reports this landing is compared with are not bound to their commits")
-    else:
-        gap = None
-    if gap:
-        lines.append(f"TRIGGER {gap[0]}: {gap[1]}.")
+        difference = ("batch_earlier_receipt_unreadable", "the previous member's receipt cannot be read ("
+                      + "; ".join(earlier_unread) + "), so the report this landing is compared with is not bound to its "
+                      "commit")
+    if difference:
+        lines.append(f"TRIGGER {difference[0]}: {difference[1]}.")
         lines.append("this landing is judged alone: close the batch with its follow-up at the current main, then rebase on "
                      "the new origin/main, rerun the check alone and judge it as usual.")
-        return 1, lines
+        return 1, lines, difference
+    if report["totals"] is None or report["bucket_counts"] is None:
+        lines.append("no batch: this report does not print the subcheck totals and bucket counts a comparison reads, "
+                     "so no later member could compare with it. Land it alone (the batch stays closed).")
+        return 1, lines, ("batch_check_too_old", "this report does not print the subcheck totals and bucket counts a "
+                                                 "comparison reads")
     if not later:
-        if report["totals"] is None or report["bucket_counts"] is None or report["ids_unread"]:
-            lines.append("no batch: this report does not print the gone ids, subcheck totals and bucket counts a "
-                         "later member compares with, so no later member could compare with it. Land it alone (the "
-                         "batch stays closed).")
-            return 1, lines
+        if report["ids_unread"]:
+            lines.append("no batch: this report's gone ids do not add up, so no later member could compare with it. "
+                         "Land it alone (the batch stays closed).")
+            return 1, lines, ("batch_check_too_old", "this report's gone ids do not add up")
         lines.append("no trigger applies: this is the first member of the batch, with no earlier report to compare with. "
                      "It may stay.")
         for what in owed:
             lines.append(f"judge first: {what}; then it may stay.")
-        return 1 if owed else 0, lines
-    # Each earlier member's receipt, oldest first. Their reports and row reports are re-hashed when read, so a
-    # report for another commit or another batch is never compared as this member's predecessor (review SOL D2).
-    previous_rows = earlier[-1]["rows"]
-    own: Optional[list[str]] = None
-
-    def exempt(subcheck: str) -> Optional[str]:
-        nonlocal own
-        if own_base is None:
-            return "the batch has no earlier landing, so this landing's own range cannot be told"
-        if own is None:
-            own = sorted(changed_paths(shared, own_base, head))
-        return why_not_exempt(subcheck, rows, previous_rows, own)
-
-    gap = batch_gap(report, [member["report"] for member in earlier], exempt,
-                    row_count_rises(rows, previous_rows))
-    if not gap and own_base:
+        return (1 if owed else 0), lines, None
+    previous = earlier[-1]
+    total = len(earlier) + 1
+    own = sorted(changed_paths(shared, own_base, head)) if own_base else []
+    difference = strict_difference(report, rows, previous["report"], previous["rows"], own, total)
+    if not difference and own_base:
         reverted = sorted(changed_paths(shared, own_base, head) - changed_paths(shared, start, head))
         if reverted:
-            gap = ("batch_reverted_path", "this landing put back what an earlier member of the batch changed, so the "
-                                          "check, measuring from batch-start, does not read it as touched: "
-                                          + ", ".join(reverted[:10]))
-    if gap:
-        lines.append(f"TRIGGER {gap[0]}: {gap[1]}.")
+            difference = ("batch_reverted_path", "this landing put back what an earlier member of the batch changed, so "
+                                                 "the check, measuring from batch-start, does not read it as touched: "
+                          + ", ".join(reverted[:10]))
+    if difference:
+        lines.append(f"TRIGGER {difference[0]}: {difference[1]}.")
         lines.append("this landing is judged alone: close the batch with its follow-up at the current main, then rebase on "
                      "the new origin/main, rerun the check alone and judge it as usual.")
-        return 1, lines
-    lines.append("no trigger: every comparison line this report prints is explained by the batch's own state, so this "
-                 "landing may stay.")
+        return 1, lines, difference
+    lines.append("no trigger: this report is the previous member's, apart from this landing's own governance staleness "
+                 "printed in full, so this landing may stay.")
     for what in owed:
         lines.append(f"judge first: {what}; then it may stay.")
-    return 1 if owed else 0, lines
+    return (1 if owed else 0), lines, None
 
 
 def batch_receipt(path: Path) -> dict[str, Any]:
@@ -2416,10 +2326,12 @@ def batch_check(shared: Path, lock_dir: Path, receipt_path: Path, check_source: 
     elif rows.get("base") != start:
         rows_unread.append(f"this member's, which was written against {rows.get('base') or 'no base'}")
         rows = None
+    # The strict rule compares a member with the one before it, so only the last row's receipt is read: the earlier
+    # ones were each enforced when they landed, and re-hashing one the comparison does not read adds nothing.
     earlier: list[dict[str, Any]] = []
     earlier_unread: list[str] = []
-    for row in earlier_rows:
-        member, why = earlier_member(row, start)
+    if earlier_rows:
+        member, why = earlier_member(earlier_rows[-1], start)
         if member is None:
             earlier_unread.append(why)
         else:
@@ -2430,8 +2342,8 @@ def batch_check(shared: Path, lock_dir: Path, receipt_path: Path, check_source: 
             source_text = check_source.read_text(encoding="utf-8", errors="replace")
         except OSError as exc:
             raise Refusal(f"cannot read --check-source {check_source}: {exc}") from exc
-    code_out, lines = judge_batch_member(shared, start, code, report, rows, rows_unread, earlier, earlier_unread,
-                                         own_base, resolved_head, source_text)
+    code_out, lines, _difference = judge_batch_member(shared, start, code, report, rows, rows_unread, earlier,
+                                                      earlier_unread, own_base, resolved_head, source_text)
     for line in lines:
         say(line)
     return code_out

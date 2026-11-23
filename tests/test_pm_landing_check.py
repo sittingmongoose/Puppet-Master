@@ -3160,6 +3160,22 @@ class WhatEachRunAlsoReports(LandingRun):
         self.assertEqual(doc["subchecks"]["plan-migration-validate/-"], {"reported": 0, "complete": True, "rows": []})
         self.assertEqual(code, 1)
 
+    def test_the_row_report_says_which_stale_rows_are_stale_by_error_kind(self):
+        """A2-5: `kind_stale` is the check's own classification by error kind, which a sampled baseline cannot make
+        false; `grown_stale` is the whole-bucket classification that needs a complete baseline."""
+        by_kind = {"path": "Plans/A.md", "error": "stale_hash"}
+        by_detail = {"path": "Plans/A.md", "error": "registry_entry_mismatch", "detail": "entry for Plans/A.md is stale"}
+        plain = {"path": "Plans/A.md", "error": "missing_ref", "ref": "#1"}
+        self.stub(gates={"verify_spec_lock": [by_kind, by_detail, plain]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        _code, _out, doc = self.row_report()
+        rows = {row["key"].split("|")[2]: row for row in doc["subchecks"]["run-gates/verify_spec_lock"]["rows"]}
+        self.assertEqual((rows["stale_hash"]["stale"], rows["stale_hash"]["kind_stale"]), (True, True))
+        self.assertEqual((rows["registry_entry_mismatch"]["stale"], rows["registry_entry_mismatch"]["kind_stale"]),
+                         (True, False))
+        self.assertEqual((rows["missing_ref"]["stale"], rows["missing_ref"]["kind_stale"]), (False, False))
+
     def test_the_row_report_says_what_the_check_calls_that_rows_bucket_growing(self):
         """Review F1: a row can be stale by its detail text, and a rise in its bucket still blocks."""
         by_kind = {"path": "Plans/A.md", "error": "stale_hash"}

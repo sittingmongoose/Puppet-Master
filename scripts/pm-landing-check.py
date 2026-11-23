@@ -1506,6 +1506,10 @@ def write_row_report(
                  if mine else None)
         rows.setdefault(f"{item['check']}/{item['subcheck'] or '-'}", []).append(
             {"key": item["key"], "stale": item["stale"],
+             # Staleness by error kind alone, which no sample or missing baseline can make uncertain: `grown_stale`
+             # is the whole-bucket classification and is false when the baseline only sampled the subcheck, so a
+             # batch needs both to excuse a stale row it can see in full (review ASTRA A2-5).
+             "kind_stale": is_staleness_kind(item["error"]),
              "grown_stale": bool(grown and grown["stale"]), "names": names})
     subchecks = {}
     for name, total in subcheck_totals(counts, listed, timed_out).items():

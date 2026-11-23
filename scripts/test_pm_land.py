@@ -1505,62 +1505,135 @@ class ReportFormatTests(unittest.TestCase):
                          ("audit-governance", "validate_audit_closure"))
         self.assertIn(("run-gates", "lint-x"), report["partial"])
 
-    def test_the_three_states_of_an_unprinted_bucket_are_kept_apart(self):
-        """R3-B1: observed zero, not observed (a sample), and not printed (a paired copy) are three states, not one."""
-        bucket = "run-gates|validate_evidence|missing_ref|Plans/.evidence/x/evidence.json"
-        complete = land.batch_report(json_report(totals={"run-gates/validate_evidence": 0}, counts={}))
-        self.assertEqual(land.prior_bucket_count(complete, bucket), 0)
-        sample = land.batch_report(json_report(totals={"run-gates/validate_evidence": 2861}, counts={},
-                                               partial=["validate_evidence"]))
-        self.assertIsNone(land.prior_bucket_count(sample, bucket))
-        paired = land.batch_report(json_report(
-            totals={"run-gates/validate_evidence": 0}, counts={},
-            pairs=[("validate_evidence", "validate_evidence")]))
-        self.assertEqual(land.prior_bucket_count(paired, bucket), 0)
-        unpaired_twin = land.batch_report(json_report(
-            totals={"run-gates/validate_evidence": 0}, counts={},
-            pairs=[("validate_evidence", "validate_evidence")],
-            partial=["audit-governance/validate_evidence"]))
-        self.assertIsNone(land.prior_bucket_count(unpaired_twin, bucket))
+    def digest(self, **kw):
+        return land.batch_report(json_report(**kw))
 
-    def test_a_complete_subcheck_that_did_not_print_a_bucket_has_an_observed_zero(self):
-        """R3-B1: a rise from a complete subcheck's absent bucket is a real rise, not an unprinted one."""
+    @staticmethod
+    def entry(reported, rows=(), complete=True):
+        return {"reported": reported, "complete": complete, "rows": list(rows)}
+
+    @staticmethod
+    def rows_doc(**subchecks):
+        return {"schema_id": land.ROW_REPORT_SCHEMA, "base": "a" * 40,
+                "subchecks": {name.replace("__", "/"): entry for name, entry in subchecks.items()}}
+
+    @staticmethod
+    def row(key, stale=False, kind_stale=False, grown_stale=False, names=()):
+        return {"key": key, "stale": stale, "kind_stale": kind_stale, "grown_stale": grown_stale,
+                "names": list(names)}
+
+    def test_a_bucket_count_that_moved_with_no_row_to_show_is_a_difference(self):
+        """R3-B1: a complete subcheck's absent bucket is an observed zero, and a count of 1 there has no row for it."""
         bucket = "run-gates|lint-x|missing_ref|Plans/B.md"
-        earlier = land.batch_report(json_report(totals={"run-gates/lint-x": 1}, counts={}))
-        current = land.batch_report(json_report(totals={"run-gates/lint-x": 1}, counts={bucket: 1}))
-        gap = land.batch_gap(current, [earlier])
-        self.assertEqual(gap[0], "batch_total_rise", gap)
-        self.assertIn("rose from 0 to 1", gap[1])
+        earlier = self.digest(totals={"run-gates/lint-x": 1}, counts={})
+        current = self.digest(totals={"run-gates/lint-x": 1}, counts={bucket: 1})
+        rows = self.rows_doc(**{"run-gates__lint-x": self.entry(1)})
+        gap = land.strict_difference(current, rows, earlier, rows, (), 2)
+        self.assertEqual(gap[0], "batch_buckets_differ", gap)
+        self.assertIn(bucket, gap[1])
 
-    def test_a_bucket_from_a_sampled_subcheck_is_unknown_not_a_zero(self):
+    def test_a_sample_in_one_report_and_every_row_in_the_other_is_a_difference(self):
         """R3-B1: a sample printed no buckets, so a bucket counted here cannot be told from a rise there."""
         bucket = "run-gates|lint-x|missing_ref|Plans/B.md"
-        earlier = land.batch_report(json_report(totals={"run-gates/lint-x": 1}, counts={}, partial=["lint-x"]))
-        current = land.batch_report(json_report(totals={"run-gates/lint-x": 1}, counts={bucket: 1}))
-        gap = land.batch_gap(current, [earlier])
+        earlier = self.digest(totals={"run-gates/lint-x": 1}, counts={}, partial=["lint-x"])
+        current = self.digest(totals={"run-gates/lint-x": 1}, counts={bucket: 1})
+        gap = land.strict_difference(current, self.rows_doc(**{"run-gates__lint-x": self.entry(1)}), earlier,
+                                     self.rows_doc(**{"run-gates__lint-x": self.entry(1, complete=False)}), (), 2)
+        self.assertEqual(gap[0], "batch_status_differs", gap)
+        self.assertIn("only a sample in the previous member's report", gap[1])
+
+    def test_a_changed_key_in_the_same_bucket_is_a_difference(self):
+        """A2-2: the count is unchanged, so only the row keys can show the replacement."""
+        bucket = "run-gates|lint-x|missing_ref|src/x.txt"
+        counts = {bucket: 1}
+        earlier = self.digest(totals={"run-gates/lint-x": 1}, counts=counts)
+        current = self.digest(totals={"run-gates/lint-x": 1}, counts=counts)
+        before = self.rows_doc(**{"run-gates__lint-x": self.entry(1, [self.row(f"{bucket}|aaaaaaaaaaaa")])})
+        after = self.rows_doc(**{"run-gates__lint-x": self.entry(1, [self.row(f"{bucket}|bbbbbbbbbbbb")])})
+        gap = land.strict_difference(current, after, earlier, before, (), 2)
+        self.assertEqual(gap[0], "batch_rows_differ", gap)
+        self.assertIn("is gone here", gap[1])
+        self.assertIn(f"{bucket}|aaaaaaaaaaaa", gap[1])
+
+    def test_a_permanent_sample_is_compared_by_its_total_and_nothing_else(self):
+        """The one exception: a producer that names a validator writing no export leaves no row set to compare."""
+        total = {"run-gates/lint-x": 4}
+        rows = self.rows_doc(**{"run-gates__lint-x": self.entry(4, complete=False)})
+        permanent = [self.digest(totals=total, counts={}, partial=["lint-x"],
+                                 exports=[export_row("run-gates", "lint-x", "no_export")]) for _ in range(2)]
+        self.assertIsNone(land.strict_difference(permanent[1], rows, permanent[0], rows, (), 2))
+        changed = self.digest(totals={"run-gates/lint-x": 3}, counts={}, partial=["lint-x"],
+                              exports=[export_row("run-gates", "lint-x", "no_export")])
+        gap = land.strict_difference(changed, rows, permanent[0], rows, (), 2)
+        self.assertEqual(gap[0], "batch_totals_differ", gap)
+
+    def test_a_baseline_sampled_subcheck_is_compared_by_its_complete_rows(self):
+        """Round 6: the batch-start baseline sampled it, so the JSON counts no buckets for it. This run printed every
+        row, and the keys are the comparison: an unchanged key clears, a changed one is a difference."""
+        bucket = "run-gates|validate_evidence|missing_ref|Plans/.evidence/e.json"
+        key = f"{bucket}|1630f7fbda6c"
+        earlier = self.digest(totals={"run-gates/validate_evidence": 1}, counts={}, partial=["validate_evidence"])
+        current = self.digest(totals={"run-gates/validate_evidence": 1}, counts={}, partial=["validate_evidence"])
+        same = self.rows_doc(**{"run-gates__validate_evidence": self.entry(1, [self.row(key)])})
+        self.assertIsNone(land.strict_difference(current, same, earlier, same, (), 2))
+        changed = self.rows_doc(**{"run-gates__validate_evidence": self.entry(1, [self.row(f"{bucket}|ffffffffffff")])})
+        gap = land.strict_difference(current, changed, earlier, same, (), 2)
+        self.assertEqual(gap[0], "batch_rows_differ", gap)
+
+    def test_an_ambiguous_no_export_is_unknown_never_permanent(self):
+        """A2-1: `no_export` with no command is the producer failing to read the mapping; it proves nothing."""
+        total = {"run-gates/validate_evidence": 2861}
+        row = {"check": "run-gates", "subcheck": "validate_evidence", "command": None, "reported": 2861,
+               "sampled": 100, "keyed": False, "case": "no_export", "reason": "what it runs could not be read",
+               "exported": None}
+        report = self.digest(totals=total, counts={}, partial=["validate_evidence"], exports=[row])
+        self.assertNotIn(("run-gates", "validate_evidence"), report["permanent"])
+        rows = self.rows_doc(**{"run-gates__validate_evidence": self.entry(2861, complete=False)})
+        gap = land.strict_difference(report, rows, report, rows, (), 2)
         self.assertEqual(gap[0], "batch_counts_unknown", gap)
-        self.assertIn("run-gates/lint-x", gap[1])
+        self.assertIn("no producer named a validator", gap[1])
+
+    def test_an_export_that_failed_is_unknown_even_when_the_totals_agree(self):
+        """R4-B1: the export is what can key the rows, so its failure leaves the counts unknown."""
+        total = {"run-gates/validate_evidence": 2861}
+        rows = self.rows_doc(**{"run-gates__validate_evidence": self.entry(2861, complete=False)})
+        reports = [self.digest(totals=total, counts={}, partial=["validate_evidence"],
+                               exports=[export_row("run-gates", "validate_evidence", "export_timeout")])
+                   for _ in range(2)]
+        gap = land.strict_difference(reports[1], rows, reports[0], rows, (), 2)
+        self.assertEqual(gap[0], "batch_counts_unknown", gap)
+        self.assertIn("export did not complete", gap[1])
+
+    def test_a_timeout_is_unknown_in_either_report(self):
+        rows = self.rows_doc(**{"run-gates__lint-x": self.entry(0, complete=False)})
+        earlier = self.digest(totals={"run-gates/lint-x": None}, counts={})
+        current = self.digest(totals={"run-gates/lint-x": 3}, counts={})
+        gap = land.strict_difference(current, self.rows_doc(**{"run-gates__lint-x": self.entry(3)}), earlier, rows,
+                                     (), 2)
+        self.assertEqual(gap[0], "batch_counts_unknown", gap)
+        self.assertIn("timed out in the previous member's report", gap[1])
 
     def test_an_export_that_failed_leaves_a_sample_unknown_and_a_permanent_one_known(self):
         """R4-B1: `exports.subchecks` says whether a sample is permanent or an export was tried and failed."""
 
-        def report(case):
+        def report(case, command="validate-validate_evidence"):
+            row = export_row("run-gates", "validate_evidence", case, keyed=case == "keyed")
+            row["command"] = command
             return land.batch_report(json_report(
                 totals={"run-gates/validate_evidence": 2861}, counts={}, partial=["validate_evidence"],
-                exports=[export_row("run-gates", "validate_evidence", case, keyed=case == "keyed")]))
+                exports=[row]))
 
         for case in ("export_timeout", "export_unreadable", "total_mismatch", "rows_mismatch"):
             with self.subTest(case=case):
                 row = report(case)
                 self.assertIn(("run-gates", "validate_evidence"), row["export_failed"])
                 self.assertNotIn(("run-gates", "validate_evidence"), row["permanent"])
-        # Only `no_export` is permanent. `baseline_sample` means the batch-start baseline missed its export; the next
-        # follow-up can key it, so it is not permanent (R5-B1): unknown, judged alone, never compared by total.
+        # Only `no_export` from a producer that named the validator is permanent; `baseline_sample` is not (R5-B1).
         row = report("no_export")
         self.assertNotIn(("run-gates", "validate_evidence"), row["export_failed"])
         self.assertIn(("run-gates", "validate_evidence"), row["permanent"])
-        row = report("baseline_sample")
-        self.assertNotIn(("run-gates", "validate_evidence"), row["permanent"])
+        self.assertNotIn(("run-gates", "validate_evidence"), report("no_export", command=None)["permanent"])
+        self.assertNotIn(("run-gates", "validate_evidence"), report("baseline_sample")["permanent"])
         # An export that keyed every row made the subcheck complete, so it is neither unknown nor a sample.
         keyed = report("keyed")
         self.assertFalse(keyed["export_failed"] or keyed["permanent"])
@@ -1568,39 +1641,6 @@ class ReportFormatTests(unittest.TestCase):
         old = land.batch_report(json_report(totals={"run-gates/validate_evidence": 2861}, counts={},
                                             partial=["validate_evidence"]))
         self.assertFalse(old["permanent"])
-
-    def test_the_unknown_count_rule_runs_before_any_comparison(self):
-        """R4-B1: a sample in the current member is not an observed count, whatever the earlier report printed."""
-        bucket = "run-gates|lint-x|missing_ref|src/x.txt"
-        earlier = land.batch_report(json_report(totals={"run-gates/lint-x": 3}, counts={bucket: 3}))
-        current = land.batch_report(json_report(totals={"run-gates/lint-x": 2}, counts={}, partial=["lint-x"],
-                                                exports=[export_row("run-gates", "lint-x", "export_timeout")]))
-        gap = land.batch_gap(current, [earlier])
-        self.assertEqual(gap[0], "batch_counts_unknown", gap)
-        self.assertIn("run-gates/lint-x", gap[1])
-        self.assertIn("this landing's report", gap[1])
-        # The one exception: a permanent sample in every member has no complete row set anywhere, so its printed
-        # total is the whole comparison, exactly as in the landing check.
-        permanent = [land.batch_report(json_report(totals={"run-gates/lint-x": 2}, counts={}, partial=["lint-x"],
-                                                   exports=[export_row("run-gates", "lint-x", "no_export")]))
-                     for _ in range(2)]
-        self.assertIsNone(land.batch_gap(permanent[1], [permanent[0]]))
-        # A permanent sample in one member and a full print in the other is still two different counts.
-        mixed = land.batch_gap(earlier, [permanent[0]])
-        self.assertEqual(mixed[0], "batch_counts_unknown", mixed)
-        self.assertIn("printed it in full", mixed[1])
-        # R5-B1: a `baseline_sample` in every member is NOT the exception. The batch-start baseline missed the
-        # export; a member's follow-up baseline can key it, so a lone landing check would compare rows and can
-        # stop where this total-only comparison would clear. Its counts are unknown: judge alone.
-        sampled = [land.batch_report(json_report(totals={"run-gates/validate_evidence": n}, counts={},
-                                                 partial=["validate_evidence"],
-                                                 exports=[export_row("run-gates", "validate_evidence",
-                                                                     "baseline_sample")]))
-                   for n in (2861, 2859)]
-        gap = land.batch_gap(sampled[1], [sampled[0]])
-        self.assertIsNotNone(gap)
-        self.assertEqual(gap[0], "batch_counts_unknown", gap)
-        self.assertIn("run-gates/validate_evidence", gap[1])
 
     def test_the_real_remote_receipts_json_report_is_read_not_refused(self):
         """The report `check` wrote for fix-land-fast-r11 at 0a3c65cab2, copied into the fixtures verbatim.
@@ -1741,6 +1781,22 @@ class BatchFixture(unittest.TestCase):
                                     "subchecks": subchecks}), encoding="utf-8")
         return path
 
+    def rows_for(self, report, subchecks=None, name="record.rows.json", base=None):
+        """A row report for every subcheck the report names: complete and rowless unless one is a sample.
+
+        The strict rule compares rows by key, so a member whose report has no rows must say so for each subcheck,
+        in the shape `--row-report` writes: an entry per `subcheck_totals` name, `complete` only when the check
+        printed every row, and no rows when it printed a sample.
+        """
+        doc = json.loads(Path(report).read_text(encoding="utf-8"))
+        totals = doc.get("subcheck_totals") or {}
+        if subchecks is None:
+            sampled = set(doc.get("subchecks_compared_by_total_only") or [])
+            subchecks = {key: {"reported": total or 0,
+                               "complete": total is not None and key not in sampled, "rows": []}
+                         for key, total in totals.items()}
+        return self.rows_file(name, subchecks, base=base or doc.get("base"))
+
     def source_file(self, marked=True, name="check.py"):
         marks = "--row-report grown_stale Subcheck totals this run Bucket counts this run" if marked else "an older check"
         path = self.reports / name
@@ -1773,9 +1829,7 @@ class BatchFixture(unittest.TestCase):
         base = base or self.base
         report_path = self.report_file(f"{name}.json", json_report(
             totals=totals, counts=counts, commit=head, base=base, **report))
-        rows_path = self.rows_file(f"{name}.rows.json",
-                                   subchecks if subchecks is not None else
-                                   {"run-gates/other": {"reported": 0, "complete": True, "rows": []}}, base=base)
+        rows_path = self.rows_for(report_path, subchecks, name=f"{name}.rows.json", base=base)
         return self.receipt(f"{name}.record.json", report_path, rows_path, head, base, code)
 
     def row_line(self, branch, sha, name=None):
@@ -1786,8 +1840,9 @@ class BatchFixture(unittest.TestCase):
         return f"{branch} {sha} {path}"
 
     @staticmethod
-    def row(key, stale=False, grown_stale=False, names=()):
-        return {"key": key, "stale": stale, "grown_stale": grown_stale, "names": list(names)}
+    def row(key, stale=False, grown_stale=False, names=(), kind_stale=False):
+        return {"key": key, "stale": stale, "kind_stale": kind_stale, "grown_stale": grown_stale,
+                "names": list(names)}
 
     def batch_check(self, *argv):
         out, err = io.StringIO(), io.StringIO()
@@ -1915,7 +1970,7 @@ class BatchStatusTests(BatchFixture):
 
 
 class BatchCheckTests(BatchFixture):
-    """One member's receipt against the earlier members' receipts: the triggers of README "Batch triggers"."""
+    """One member's receipt against its predecessor's: the strict rule of README, "The strict batch rule"."""
 
     def setUp(self):
         super().setUp()
@@ -1940,9 +1995,8 @@ class BatchCheckTests(BatchFixture):
         return self.report_file(name, json_report(**kw))
 
     def current(self, report, rows=None, code=0, base=None, head=None):
-        return self.receipt("record.json", report,
-                            rows if rows is not None else self.empty_rows("record.rows.json"),
-                            head or self.head, base or self.base, code)
+        rows = rows if rows is not None else self.rows_for(report)
+        return self.receipt("record.json", report, rows, head or self.head, base or self.base, code)
 
     def check(self, report, rows=None, code=0, source=True, base=None, lock=None, head=None, receipt=None):
         argv = ["--receipt", receipt or self.current(report, rows, code, base, head), "--repo", self.shared,
@@ -1972,8 +2026,8 @@ class BatchCheckTests(BatchFixture):
                               counts={"run-gates|lint-x|missing_ref|src/x.txt": 2})
         code, out = self.check(current)
         self.assertEqual(code, 1, out)
-        self.assertIn("TRIGGER batch_total_rise", out)
-        self.assertIn("run-gates/lint-x's total rose from 1 to 2", out)
+        self.assertIn("TRIGGER batch_totals_differ", out)
+        self.assertIn("run-gates/lint-x's total is 2 but the rows", out)
 
     def test_a_member_three_deep_compares_with_every_earlier_receipt(self):
         """Member 3 is compared with member 2's receipt and with member 1's, read from the holder in order."""
@@ -2000,7 +2054,7 @@ class BatchCheckTests(BatchFixture):
                                head=head3)
         self.assertEqual(code, 1, out)
         self.assertIn("TRIGGER batch_counts_unknown", out)
-        self.assertIn("timed out in an earlier member's report", out)
+        self.assertIn("timed out in the previous member's report", out)
 
     def test_a_receipt_whose_commit_is_the_previous_main_is_refused(self):
         code, _out = self.check(self.report("m2.json", totals=self.totals, counts=self.counts), head=self.member1)
@@ -2134,70 +2188,91 @@ class BatchCheckTests(BatchFixture):
 
     def test_a_member_whose_report_is_not_the_json_check_writes_lands_alone(self):
         current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
-        code, out = self.check(current)
+        code, out = self.check(current, rows=self.empty_rows("m2-text.rows.json"))
         self.assertEqual(code, 1, out)
         self.assertIn("no batch", out)
         self.assertIn("not the JSON", out)
 
-    def test_a_total_rise_closes_the_batch(self):
+    def test_a_total_rise_with_no_row_to_show_is_a_difference(self):
+        """A total that moved while the rows did not is not the previous member's report, whatever moved it."""
         current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts=self.counts)
         code, out = self.check(current)
         self.assertEqual(code, 1, out)
-        self.assertIn("TRIGGER batch_total_rise", out)
-        self.assertIn("run-gates/lint-x's total rose from 1 to 2", out)
+        self.assertIn("TRIGGER batch_totals_differ", out)
+        self.assertIn("run-gates/lint-x's total is 2 but the rows", out)
         self.assertIn("judged alone", out)
 
+    def stale_member(self, name, key, path):
+        bucket = f"run-gates|lint-x|stale_hash|{path}"
+        receipt = self.member(name, head=self.member1, totals={"run-gates/lint-x": 1}, counts={bucket: 1},
+                              subchecks={"run-gates/lint-x": {
+                                  "reported": 1, "complete": True,
+                                  "rows": [self.row(key, stale=True, kind_stale=True, names=[path])]}})
+        self.holder(start=self.base, rows=[f"fix/a {self.member1} {receipt}"])
+        return bucket
+
     def test_a_rise_that_is_only_this_members_own_staleness_keeps_the_landing(self):
-        key1, key2 = "run-gates|lint-x|stale_hash|src/a.md|1", "run-gates|lint-x|stale_hash|src/own.txt|2"
-        bucket = "run-gates|lint-x|stale_hash|src/a.md"
-        m1 = self.member("m1-stale", head=self.member1, totals={"run-gates/lint-x": 1}, counts={bucket: 1},
-                         subchecks={"run-gates/lint-x": {
-                             "reported": 1, "complete": True,
-                             "rows": [self.row(key1, stale=True, grown_stale=True, names=["src/a.md"])]}})
-        self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
+        """A2-5: the added row is governance staleness by error kind, printed in full, on this member's own file."""
+        key1 = "run-gates|lint-x|stale_hash|src/a.md|1"
+        key2 = "run-gates|lint-x|stale_hash|src/own.txt|2"
+        self.stale_member("m1-stale", key1, "src/a.md")
         rows = self.rows_file("m2.rows.json", {"run-gates/lint-x": {
             "reported": 2, "complete": True,
-            "rows": [self.row(key1, stale=True, grown_stale=True, names=["src/a.md"]),
-                     self.row(key2, stale=True, grown_stale=True, names=["src/own.txt"])]}})
-        current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts={bucket: 2})
+            "rows": [self.row(key1, stale=True, kind_stale=True, names=["src/a.md"]),
+                     self.row(key2, stale=True, kind_stale=True, names=["src/own.txt"])]}})
+        current = self.report("m2.json", totals={"run-gates/lint-x": 2},
+                              counts={"run-gates|lint-x|stale_hash|src/a.md": 1,
+                                      "run-gates|lint-x|stale_hash|src/own.txt": 1})
         code, out = self.check(current, rows=rows)
         self.assertEqual(code, 0, out)
         self.assertIn("no trigger", out)
         self.assertIn("may stay", out)
 
-    def test_an_added_row_on_another_members_file_closes_the_batch(self):
-        key1, key2 = "run-gates|lint-x|stale_hash|src/a.md|1", "run-gates|lint-x|stale_hash|src/other.txt|2"
-        bucket = "run-gates|lint-x|stale_hash|src/a.md"
-        m1 = self.member("m1-other", head=self.member1, totals={"run-gates/lint-x": 1}, counts={bucket: 1},
-                         subchecks={"run-gates/lint-x": {
-                             "reported": 1, "complete": True,
-                             "rows": [self.row(key1, stale=True, grown_stale=True, names=["src/a.md"])]}})
-        self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
+    def test_a_kind_stale_row_is_excused_even_when_the_baseline_only_sampled_its_subcheck(self):
+        """A2-5: `grown_stale` is false for a baseline-sampled subcheck, so the kind classification must carry it."""
+        key1 = "run-gates|lint-x|stale_hash|src/a.md|1"
+        key2 = "run-gates|lint-x|stale_hash|src/own.txt|2"
+        self.stale_member("m1-sampled", key1, "src/a.md")
         rows = self.rows_file("m2.rows.json", {"run-gates/lint-x": {
             "reported": 2, "complete": True,
-            "rows": [self.row(key1, stale=True, grown_stale=True, names=["src/a.md"]),
-                     self.row(key2, stale=True, grown_stale=True, names=["src/other.txt"])]}})
-        current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts={bucket: 2})
+            "rows": [self.row(key1, stale=True, kind_stale=True, names=["src/a.md"]),
+                     self.row(key2, stale=True, kind_stale=True, names=["src/own.txt"])]}})
+        current = self.report("m2.json", totals={"run-gates/lint-x": 2},
+                              counts={"run-gates|lint-x|stale_hash|src/a.md": 1,
+                                      "run-gates|lint-x|stale_hash|src/own.txt": 1})
         code, out = self.check(current, rows=rows)
-        self.assertEqual(code, 1, out)
-        self.assertIn("names another member's file", out)
+        self.assertEqual(code, 0, out)
 
-    def test_staleness_by_detail_text_alone_does_not_excuse_the_rise(self):
-        key1, key2 = "run-gates|lint-x|stale_hash|src/a.md|1", "run-gates|lint-x|registry_entry_mismatch|src/own.txt|2"
-        bucket = "run-gates|lint-x|stale_hash|src/a.md"
-        m1 = self.member("m1-detail", head=self.member1, totals={"run-gates/lint-x": 1}, counts={bucket: 1},
-                         subchecks={"run-gates/lint-x": {
-                             "reported": 1, "complete": True,
-                             "rows": [self.row(key1, stale=True, grown_stale=True, names=["src/a.md"])]}})
-        self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
+    def test_an_added_row_on_another_members_file_is_a_difference(self):
+        key1 = "run-gates|lint-x|stale_hash|src/a.md|1"
+        key2 = "run-gates|lint-x|stale_hash|src/other.txt|2"
+        self.stale_member("m1-other", key1, "src/a.md")
         rows = self.rows_file("m2.rows.json", {"run-gates/lint-x": {
             "reported": 2, "complete": True,
-            "rows": [self.row(key1, stale=True, grown_stale=True, names=["src/a.md"]),
-                     self.row(key2, stale=True, grown_stale=False, names=["src/own.txt"])]}})
-        current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts={bucket: 2})
+            "rows": [self.row(key1, stale=True, kind_stale=True, names=["src/a.md"]),
+                     self.row(key2, stale=True, kind_stale=True, names=["src/other.txt"])]}})
+        current = self.report("m2.json", totals={"run-gates/lint-x": 2},
+                              counts={"run-gates|lint-x|stale_hash|src/a.md": 1,
+                                      "run-gates|lint-x|stale_hash|src/other.txt": 1})
         code, out = self.check(current, rows=rows)
         self.assertEqual(code, 1, out)
-        self.assertIn("staleness only by its detail text", out)
+        self.assertIn("TRIGGER batch_rows_differ", out)
+        self.assertIn("not governance staleness on a file this landing touched", out)
+
+    def test_staleness_by_detail_text_alone_does_not_excuse_the_row(self):
+        key1 = "run-gates|lint-x|stale_hash|src/a.md|1"
+        key2 = "run-gates|lint-x|registry_entry_mismatch|src/own.txt|2"
+        self.stale_member("m1-detail", key1, "src/a.md")
+        rows = self.rows_file("m2.rows.json", {"run-gates/lint-x": {
+            "reported": 2, "complete": True,
+            "rows": [self.row(key1, stale=True, kind_stale=True, names=["src/a.md"]),
+                     self.row(key2, stale=True, grown_stale=False, names=["src/own.txt"])]}})
+        current = self.report("m2.json", totals={"run-gates/lint-x": 2},
+                              counts={"run-gates|lint-x|stale_hash|src/a.md": 1,
+                                      "run-gates|lint-x|registry_entry_mismatch|src/own.txt": 1})
+        code, out = self.check(current, rows=rows)
+        self.assertEqual(code, 1, out)
+        self.assertIn("a new row is not governance staleness", out)
 
     def test_a_member_whose_receipt_records_no_row_report_cannot_batch(self):
         current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts=self.counts)
@@ -2217,23 +2292,49 @@ class BatchCheckTests(BatchFixture):
         self.assertEqual(code, 3)
         self.assertIn("does not bind this report", self.stderr)
 
-    def test_a_report_without_the_comparison_lines_closes_the_batch(self):
+    def test_a_report_without_the_comparison_lines_lands_alone(self):
         current = self.report("m2.json")
         code, out = self.check(current)
         self.assertEqual(code, 1, out)
-        self.assertIn("TRIGGER batch_check_too_old", out)
+        self.assertIn("no batch", out)
+        self.assertIn("does not print the subcheck totals and bucket counts", out)
 
-    def test_a_bucket_that_was_gone_and_is_back_closes_the_batch(self):
+    def test_a_row_that_returns_to_the_batch_starts_fingerprint_is_a_difference(self):
+        """A2-3: the bucket's count is 1 -> 1, but the row is not the one the previous member's report holds."""
         bucket = "run-gates|lint-x|missing_ref|src/x.txt"
-        m1 = self.member("m1-gone", head=self.member1, totals={"run-gates/lint-x": 0}, counts={},
-                         gone_ids=[bucket])
+        old_key = f"{bucket}|ffffffffffff"
+        new_key = f"{bucket}|1630f7fbda6c"
+        m1 = self.member("m1-return", head=self.member1, totals={"run-gates/lint-x": 1}, counts={bucket: 1},
+                         subchecks={"run-gates/lint-x": {
+                             "reported": 1, "complete": True,
+                             "rows": [self.row(old_key, names=["src/x.txt"])]}})
         self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
+        rows = self.rows_file("m2.rows.json", {"run-gates/lint-x": {
+            "reported": 1, "complete": True, "rows": [self.row(new_key, names=["src/x.txt"])]}})
         current = self.report("m2.json", totals={"run-gates/lint-x": 1}, counts={bucket: 1})
-        code, out = self.check(current)
+        code, out = self.check(current, rows=rows)
         self.assertEqual(code, 1, out)
-        self.assertIn("listed as gone is back", out)
+        self.assertIn("TRIGGER batch_rows_differ", out)
+        self.assertIn("is gone here", out)
 
-    def test_gone_ids_that_do_not_add_up_close_the_batch(self):
+    def test_a_changed_key_in_a_bucket_of_the_same_size_is_a_difference(self):
+        """A2-2: a replaced row leaves the bucket's count unchanged, so only the keys can show it."""
+        bucket = "run-gates|validate_audit_closure|audit_closure_validator_error|Plans/registry.jsonl"
+        m1 = self.member("m1-keys", head=self.member1, totals={"run-gates/validate_audit_closure": 1},
+                         counts={bucket: 1},
+                         subchecks={"run-gates/validate_audit_closure": {
+                             "reported": 1, "complete": True,
+                             "rows": [self.row(f"{bucket}|aaaaaaaaaaaa", names=["Plans/registry.jsonl"])]}})
+        self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
+        rows = self.rows_file("m2.rows.json", {"run-gates/validate_audit_closure": {
+            "reported": 1, "complete": True,
+            "rows": [self.row(f"{bucket}|bbbbbbbbbbbb", names=["Plans/registry.jsonl"])]}})
+        current = self.report("m2.json", totals={"run-gates/validate_audit_closure": 1}, counts={bucket: 1})
+        code, out = self.check(current, rows=rows)
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_rows_differ", out)
+
+    def test_gone_ids_that_do_not_add_up_are_a_difference(self):
         current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts=self.counts, gone_ids=None)
         code, out = self.check(current)
         self.assertEqual(code, 1, out)
@@ -2245,17 +2346,28 @@ class BatchCheckTests(BatchFixture):
         The twin's rows are the comparison, so the copy's own export failing changes nothing: `exports.subchecks`
         records it, and reading it as an unknown count would false-stop every batch that has a healthy pair.
         """
-        bucket = "run-gates|validate_audit_closure|audit_closure_validator_error|Plans/x.json"
         twin = "audit-governance|validate_audit_closure|audit_closure_validator_error|Plans/x.json"
         totals = {"run-gates/validate_audit_closure": 53, "audit-governance/validate_audit_closure": 53}
-        m1 = self.member("m1-paired", head=self.member1, totals=totals, counts={twin: 1},
-                         pairs=[("validate_audit_closure", "validate_audit_closure")],
+        pairs = [("validate_audit_closure", "validate_audit_closure")]
+        m1 = self.member("m1-paired", head=self.member1, totals=totals, counts={twin: 1}, pairs=pairs,
                          exports=[export_row("run-gates", "validate_audit_closure", "export_timeout")])
         self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
-        current = self.report("m2.json", totals=totals, counts={bucket: 1})
+        current = self.report("m2.json", totals=totals, counts={twin: 1}, pairs=pairs,
+                              exports=[export_row("run-gates", "validate_audit_closure", "export_timeout")])
         code, out = self.check(current)
         self.assertEqual(code, 0, out)
         self.assertIn("no trigger", out)
+
+    def test_a_pairing_that_differs_between_the_two_reports_is_a_difference(self):
+        """Which rows are compared cannot be read when the reports pair different validators."""
+        totals = {"run-gates/validate_audit_closure": 53, "audit-governance/validate_audit_closure": 53}
+        m1 = self.member("m1-paired", head=self.member1, totals=totals, counts={},
+                         pairs=[("validate_audit_closure", "validate_audit_closure")])
+        self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
+        current = self.report("m2.json", totals=totals, counts={})
+        code, out = self.check(current)
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_mapping_unreadable", out)
 
     def test_a_current_members_failed_export_is_never_read_as_a_known_count(self):
         """R4-B1, the review's repro 1: member 1's export succeeded and lowered the bucket (the real
@@ -2291,16 +2403,14 @@ class BatchCheckTests(BatchFixture):
                                            exports=[export_row("run-gates", "validate_evidence", "export_timeout")]))
         self.assertEqual(code, 1, out)
         self.assertIn("TRIGGER batch_counts_unknown", out)
-        self.assertIn("run-gates/validate_evidence's export did not complete in the previous member's report "
-                      "(member 1 of 2)", out)
+        self.assertIn("run-gates/validate_evidence's export did not complete in this landing's report", out)
 
     def test_a_permanent_sample_in_every_member_is_compared_by_its_total(self):
         """The one exception to R4-B1's rule: a subcheck no export can complete (it writes none) has no row set
         anywhere, so its printed total is the whole comparison, as in the landing check: batches stay possible."""
         totals = {"run-gates/lint-x": 4}
-        rows = {"run-gates/other": {"reported": 0, "complete": True, "rows": []}}
         m1 = self.member("m1-permanent", head=self.member1, totals=totals, counts={}, partial=["lint-x"],
-                         subchecks=rows, exports=[export_row("run-gates", "lint-x", "no_export")])
+                         exports=[export_row("run-gates", "lint-x", "no_export")])
         self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
         code, out = self.check(self.report("m2.json", totals=totals, counts={}, partial=["lint-x"],
                                            exports=[export_row("run-gates", "lint-x", "no_export")]))
@@ -2308,20 +2418,33 @@ class BatchCheckTests(BatchFixture):
         self.assertIn("no trigger", out)
         self.assertIn("[total] run-gates/lint-x  4", out)
 
-    def test_a_sample_the_baseline_recorded_alone_is_compared_by_its_total(self):
-        """A subcheck the batch-start baseline holds as a sample, which this run printed in full, has no export row.
-
-        The baseline's sample is why it is compared by its total only, and no export completes the baseline
-        either, so it is permanent in every member: stopping on it would close a batch for a count it does have.
-        """
+    def test_a_sample_with_no_export_evidence_is_unknown(self):
+        """A2-1: a subcheck compared by its total only with no export row is not a permanent sample: nothing said
+        why its export is missing, and an ambiguous sample is judged alone, never cleared by its total."""
         totals = {"run-gates/lint-x": 4}
-        row = {"run-gates/other": {"reported": 0, "complete": True, "rows": []}}
         m1 = self.member("m1-baseline-sample", head=self.member1, totals=totals, counts={}, partial=["lint-x"],
-                         subchecks=row, exports=[])
+                         exports=[])
         self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
         code, out = self.check(self.report("m2.json", totals=totals, counts={}, partial=["lint-x"], exports=[]))
-        self.assertEqual(code, 0, out)
-        self.assertIn("no trigger", out)
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_counts_unknown", out)
+        self.assertIn("no producer named a validator", out)
+
+    def test_an_ambiguous_no_export_is_not_a_permanent_sample(self):
+        """A2-1's induced case: `case=no_export` with `command=null` is the producer failing to read the mapping,
+        so two reports that agree only in totals must not clear the batch."""
+        totals = {"run-gates/validate_evidence": 2861}
+        row = {"check": "run-gates", "subcheck": "validate_evidence", "command": None, "reported": 2861,
+               "sampled": 100, "keyed": False, "case": "no_export",
+               "reason": "what it runs could not be read", "exported": None}
+        m1 = self.member("m1-ambiguous", head=self.member1, totals=totals, counts={},
+                         partial=["validate_evidence"], exports=[row])
+        self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
+        code, out = self.check(self.report("m2.json", totals=totals, counts={}, partial=["validate_evidence"],
+                                           exports=[row]))
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_counts_unknown", out)
+        self.assertIn("no producer named a validator", out)
 
     def test_a_sample_in_the_previous_report_makes_this_reports_buckets_unknown(self):
         """R3-B1: member 1's validate-evidence export timed out (compared by total only), so member 2's buckets are
@@ -2335,8 +2458,8 @@ class BatchCheckTests(BatchFixture):
         self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
         code, out = self.check(self.report("m2.json", totals=later, counts={bucket: 180, audit: 180}))
         self.assertEqual(code, 1, out)
-        self.assertIn("TRIGGER batch_counts_unknown", out)
-        self.assertIn("compared by its total only in the previous member's report", out)
+        self.assertIn("TRIGGER batch_status_differs", out)
+        self.assertIn("and only a sample in the previous member's report", out)
 
     def test_a_gone_bucket_is_not_skipped_when_this_report_is_a_sample(self):
         """R3-B1: member 1 said the bucket was gone; member 2's export fell back to a sample, so whether it returned
@@ -2352,8 +2475,8 @@ class BatchCheckTests(BatchFixture):
         code, out = self.check(self.report("m2.json", totals={"run-gates/validate_evidence": 2663}, counts={},
                                            partial=["validate_evidence"]))
         self.assertEqual(code, 1, out)
-        self.assertIn("TRIGGER batch_counts_unknown", out)
-        self.assertIn("printed it in full", out)
+        self.assertIn("TRIGGER batch_status_differs", out)
+        self.assertIn("only a sample in this landing's report", out)
 
     def test_a_landing_check_that_cannot_batch_lands_alone_or_closes(self):
         current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts=self.counts)
@@ -2417,7 +2540,8 @@ class PutBackTests(BatchFixture):
             totals={"run-gates/lint-x": 1}, counts={"run-gates|lint-x|missing_ref|src/x.txt": 1},
             commit=self.head, base=self.base))
         # The shared checkout is still at member 1: only the receipt names member 2's commit.
-        receipt = self.receipt("record.json", current, self.empty_rows("m2.rows.json"), self.head, self.base)
+        receipt = self.receipt("record.json", current, self.rows_for(current, name="m2.rows.json"),
+                               self.head, self.base)
         code, out = self.batch_check("--receipt", receipt, "--repo", self.shared, "--lock-dir", self.lock)
         self.assertEqual(code, 1, out)
         self.assertIn("TRIGGER batch_reverted_path", out)
