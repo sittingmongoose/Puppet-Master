@@ -1149,7 +1149,8 @@ class EndToEnd(unittest.TestCase):
         self.assertEqual(report["checks"]["run-gates"]["baseline_failure_total"], 1552)
         self.assertEqual(report["checks"]["run-gates"]["subchecks"]["verify_spec_lock"],
                          {"reported": 1552, "sampled": 1})
-        for key in ("new", "on_branch", "grown_buckets", "grown_subchecks", "excused_by_kind", "resolved_buckets"):
+        for key in ("new", "on_branch", "grown_buckets", "grown_subchecks", "excused_by_kind", "resolved_buckets",
+                    "changed_on_branch"):
             self.assertIn(key, report)
         self.assertNotIn("_raw", out)
         self.assertEqual(code, 0, out)
@@ -1776,6 +1777,7 @@ class RuleTwoPreExisting(LandingRun):
         self.assertIn("3 of them with changed content on files this branch touched", out)
         report = json.loads(self.compare("--json")[1])
         self.assertEqual(report["blocking"], 0)
+        self.assertEqual(report["changed_on_branch"], 3)
         self.assertEqual({(i["standing"], i["baseline_count"], i["count"]) for i in report["on_branch"]},
                          {("improved", 7, 3)})
 

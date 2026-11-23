@@ -1399,8 +1399,71 @@ REPORT_COUNTS = re.compile(r"^Bucket counts this run: (\d+)$", re.M)
 REPORT_COUNT_ROW = re.compile(r"^  \[count\] (.+)  (\d+)$", re.M)
 
 
+REPORT_SCHEMA = "pm.landing_check.report.v1"
+
+
+def read_json_report(doc: dict[str, Any]) -> dict[str, Any]:
+    """The digest of the report `pm-landing-check.py --json` writes, which `check` binds into its receipt.
+
+    It carries every row the text report prints or counts, with no print cap: `pre_unread` is False and the gone
+    ids, totals and counts are complete. An older JSON report without `subcheck_totals` or `bucket_counts` reads
+    as one without those lines, exactly as an older text report does: no batch compares with it.
+    """
+    pre: dict[str, dict[str, Any]] = {}
+    for item in doc.get("pre_existing") or []:
+        if not isinstance(item, dict):
+            continue
+        bucket = (f"{item.get('check')}/{item.get('subcheck') or '-'}  {item.get('error')}  "
+                  f"{item.get('path') or '(no path)'}")
+        entry = pre.setdefault(bucket, {"baseline": item.get("baseline_count"), "count": item.get("count"),
+                                        "improved": item.get("standing") == "improved",
+                                        "content_rows": [], "rows": []})
+        # The row's key, not its printed fields: every report from this landing check carries it, and it says
+        # which failure a row is, not just how it read.
+        entry["rows"].append(item.get("key"))
+        if not item.get("branch_paths"):
+            entry["content_rows"].append(item.get("key"))
+    totals = doc.get("subcheck_totals")
+    counts = doc.get("bucket_counts")
+    resolved = doc.get("resolved_buckets")
+    totals = {name: None if value is None else int(value) for name, value in totals.items()} \
+        if isinstance(totals, dict) else None
+    counts = {name: int(value) for name, value in counts.items()} if isinstance(counts, dict) else None
+    gone_ids = [str(name) for name in resolved] if isinstance(resolved, list) else None
+    return {
+        "infrastructure": len(doc.get("infrastructure") or []),
+        "crashed": False,
+        "compare": int(doc.get("changed_on_branch") or 0),
+        "pre": pre,
+        "pre_unread": False,
+        "gone": len(gone_ids) if gone_ids is not None else None,
+        "gone_ids": gone_ids,
+        "totals": totals,
+        "bucket_counts": counts,
+        # A JSON report has no print cap and no text to truncate; without totals there is nothing to compare,
+        # which `shows_what_changed` says.
+        "ids_unread": totals is not None and gone_ids is None,
+    }
+
+
 def read_report(text: str) -> dict[str, Any]:
-    """The parts of a landing check's report the tool acts on. `pre_unread`: rows it could not read, or past the print cap."""
+    """The parts of a landing check's report the tool acts on, from either form it writes.
+
+    `check` writes `landing-check.json` (`--json`), and that is what a receipt binds; a hand lander may paste
+    the text report instead. `pre_unread` on the text form: rows it could not read, or past the print cap.
+    """
+    if text.lstrip().startswith("{"):
+        try:
+            doc = json.loads(text)
+        except ValueError:
+            doc = None
+        if isinstance(doc, dict) and doc.get("schema_id") == REPORT_SCHEMA:
+            return read_json_report(doc)
+    return read_text_report(text)
+
+
+def read_text_report(text: str) -> dict[str, Any]:
+    """The digest of the text report `pm-landing-check.py` prints."""
     infrastructure = REPORT_INFRASTRUCTURE.search(text)
     compare = REPORT_COMPARE.search(text)
     gone = REPORT_GONE.search(text)

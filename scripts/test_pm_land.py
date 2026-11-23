@@ -1505,6 +1505,49 @@ class ReportFormatTests(unittest.TestCase):
         self.assertTrue(land.read_report(landing_report(tail=CRASH))["crashed"])
         self.assertTrue(land.read_report(landing_report() + "\n  + Exception Group Traceback (most recent call last):\n")["crashed"])
 
+    def test_the_json_report_is_read_as_the_lines_it_stands_for(self):
+        """`check` writes `landing-check.json` (`--json`); a batch reads that, not its text rounding."""
+        pre = [json_pre('k1'), json_pre('k2', standing="improved", baseline=5, count=4),
+               json_pre('k3', paths=(), path=None)]
+        report = land.read_report(json_report(pre=pre, compare=2, timeouts=3, gone_ids=["run-gates|lint-x|gone|src/g.txt"],
+                                              totals={"run-gates/lint-x": 3, "run-gates/y-": None},
+                                              counts={"run-gates|lint-x|missing_ref|src/x.txt": 2}))
+        self.assertEqual(report["infrastructure"], 3)
+        self.assertEqual(report["compare"], 2)
+        self.assertEqual(report["crashed"], False)
+        entry = report["pre"][BUCKET]
+        self.assertEqual((entry["baseline"], entry["count"], entry["improved"]), (5, 5, False))
+        self.assertEqual(entry["rows"], ["k1", "k2"])
+        self.assertEqual(entry["content_rows"], [])
+        # The text report says "(content changed)" for a pre-existing row naming no path of this branch.
+        self.assertEqual(report["pre"]["run-gates/lint-x  missing_ref  (no path)"]["content_rows"], ["k3"])
+        self.assertEqual(report["gone"], 1)
+        self.assertEqual(report["gone_ids"], ["run-gates|lint-x|gone|src/g.txt"])
+        self.assertEqual(report["totals"], {"run-gates/lint-x": 3, "run-gates/y-": None})
+        self.assertEqual(report["bucket_counts"], {"run-gates|lint-x|missing_ref|src/x.txt": 2})
+        self.assertFalse(report["ids_unread"])
+        self.assertFalse(report["pre_unread"])
+
+    def test_the_real_remote_receipts_json_report_is_read_not_refused(self):
+        """The report `check` wrote for fix-land-fast-r11 at 0a3c65cab2, copied into the fixtures verbatim.
+
+        It is the one real remote-route report in this repository: a reader that only knows the text
+        report reads every field of it as absent, so a batch false-stops on every member.
+        """
+        path = Path(__file__).resolve().parents[1] / "tests/fixtures/landing_remote_receipt/landing-check.json"
+        text = path.read_text(encoding="utf-8")
+        report = land.read_report(text)
+        self.assertEqual(json.loads(text)["schema_id"], land.REPORT_SCHEMA)
+        self.assertEqual((report["infrastructure"], report["compare"], report["crashed"]), (0, 0, False))
+        self.assertEqual(report["pre"], {})
+        self.assertEqual(report["gone_ids"], [])
+        self.assertFalse(report["ids_unread"])
+        self.assertFalse(report["pre_unread"])
+        # Written before the comparison lines existed: no totals, so no batch compares with it, and the reader
+        # says so rather than reading the JSON text as a report with nothing in it.
+        self.assertIsNone(report["totals"])
+        self.assertFalse(land.shows_what_changed(report, []))
+
     def test_an_unknown_pre_existing_row_is_not_read_as_an_unreadable_row(self):
         """Main prints those in their own section, tagged otherwise, and outside the declared count."""
         text = landing_report(pre=[pre_row(BUCKET, 5, 5)])
@@ -1517,6 +1560,32 @@ class ReportFormatTests(unittest.TestCase):
         report = land.read_report(text)
         self.assertFalse(report["pre_unread"])
         self.assertEqual(list(report["pre"]), [BUCKET])
+
+
+def json_report(pre=(), compare: int = 0, timeouts: int = 0, gone_ids=(), totals=None, counts=None,
+                commit: str = "b" * 40, base: str = "a" * 40) -> str:
+    """A `pm-landing-check.py --json` report: the keys a batch reads, in the shape `main()` writes them."""
+    return json.dumps({
+        "schema_id": land.REPORT_SCHEMA,
+        "commit": commit,
+        "base": base,
+        "changed_on_branch": compare,
+        "infrastructure": [{"check": "run-gates", "subcheck": f"x{index}", "error": "subprocess_timeout"}
+                           for index in range(timeouts)],
+        "pre_existing": list(pre),
+        "resolved_buckets": list(gone_ids),
+        "subcheck_totals": totals,
+        "bucket_counts": counts,
+    })
+
+
+def json_pre(key: str, *, standing: str = "pre-existing", baseline: int = 5, count: int = 5,
+             paths=("src/x.txt",), check: str = "run-gates", subcheck: str = "lint-x",
+             error: str = "missing_ref", path: str = "src/x.txt") -> dict:
+    """One `pre_existing` row of the JSON report, as `{**public(item), **counted, "branch_paths": hits}`."""
+    return {"key": key, "check": check, "subcheck": subcheck, "error": error, "path": path, "fields": {},
+            "stale": False, "standing": standing, "baseline_count": baseline, "count": count,
+            "branch_paths": list(paths)}
 
 
 class BatchFixture(unittest.TestCase):

@@ -2296,6 +2296,9 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                 "resolved_buckets": resolved,
                 "subcheck_totals": totals,
                 "bucket_counts": seen_buckets,
+                # The text report's "N of them with changed content on files this branch touched": a batch
+                # reads it as its own trigger input, and it is printed only when nothing blocks.
+                "changed_on_branch": changed_on_branch,
                 "infrastructure": infrastructure,
                 "subcheck_timeout_seconds": args.subcheck_timeout_seconds,
                 "kept_check_reports": str(keep_dir) if keep_dir else None,
