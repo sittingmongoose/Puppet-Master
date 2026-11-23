@@ -191,6 +191,10 @@ tests/
 !/tests/fixtures/setup_validation_history/controls.json
 !/tests/fixtures/setup_validation_history/frozen_resources.json
 !/tests/fixtures/setup_validation_history/generic_checkpoint_template.json
+# One real remote-route landing check report, so a batch reader is tested on what `check` writes.
+!/tests/fixtures/landing_remote_receipt/
+/tests/fixtures/landing_remote_receipt/*
+!/tests/fixtures/landing_remote_receipt/landing-check.json
 !/tests/fixtures/pnc019_goal_adoption_helper_witnesses.json
 !/tests/fixtures/pnc019_goal_frozen_helper_witnesses.json
 !/tests/fixtures/pnc019_goal_retained_helper_witnesses.json
