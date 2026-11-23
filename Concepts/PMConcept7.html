@@ -182728,18 +182728,33 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       this.t = 0; this.last = now(); this.frameT = 0;
       this.feed = 0; this.loops = {};
       this.idleNext = 6 + Math.random() * 4; this.idleUntil = 0; this.idleLook = null;
+      /* ro before nierRO: on a window resize or reopen, measure() refreshes this.map and this.vis first, then nierRO
+         measures the box against them; both are created once here so nierRO keeps its order after ro across rebuilds */
+      this.ro = typeof ResizeObserver === 'function' ? new ResizeObserver(() => this.measure()) : null;
+      this.nierRO = typeof ResizeObserver === 'function' ? new ResizeObserver(() => this.onNierBoxResize()) : null;
       this.build();
       this.loop = this.loop.bind(this);
       this.raf = 0; this.active = true; this.dirty = true;
       this.parts();
       const reg = window.PM_PIP_PARTS; if (reg && typeof reg.on === 'function') try { this.offParts = reg.on('change', () => this.parts()); } catch (_) {}
       this.kick();
-      this.ro = new ResizeObserver(() => this.measure());
-      this.ro.observe(root);
+      if (this.ro) this.ro.observe(root);
       /* a window resize measures again on the next frame and once the window has settled: the pane's clip can change
          with nothing on the stage itself resizing, and a span measured mid-change let a sign keep 1024's room at 860 */
       this.onWinResize = () => { if (this.dead) return; requestAnimationFrame(() => { if (!this.dead) this.measure(); }); clearTimeout(this.winRT); this.winRT = setTimeout(() => { if (!this.dead) this.measure(); }, 450); };
       window.addEventListener('resize', this.onWinResize);
+      /* follow live changes of Reduced Motion (OS prefers-reduced-motion and Settings' data-motion) and low-resource
+         mode with no polling (FO-S3): a mounted stage enters or leaves Reduced Motion at once */
+      this.syncMotion = () => { if (!this.dead && O55.motion && typeof O55.motion.reduced === 'function') this.setReduced(O55.motion.reduced()); };
+      this.onLowRes = () => { if (!this.dead) { this.dirty = true; this.frameT = -1e9; this.kick(); } };
+      this.reduceMq = typeof window.matchMedia === 'function' ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+      if (this.reduceMq) {
+        if (typeof this.reduceMq.addEventListener === 'function') this.reduceMq.addEventListener('change', this.syncMotion);
+        else if (typeof this.reduceMq.addListener === 'function') this.reduceMq.addListener(this.syncMotion);
+      }
+      this.motionMO = typeof MutationObserver === 'function' ? new MutationObserver(this.syncMotion) : null;
+      if (this.motionMO) this.motionMO.observe(document.documentElement, { attributes: true, attributeFilter: ['data-motion'] });
+      window.addEventListener('o55:lowresource', this.onLowRes);
     }
     /* ------------------------------------------------------- building */
     build() {
@@ -182824,6 +182839,22 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (this.bubbleMO) this.bubbleMO.disconnect();
       this.bubbleMO = new MutationObserver(() => { const b = this.bubble; if (!b || this.dead) return; const w = b.offsetWidth, h = b.offsetHeight; if (w !== this.bubbleW || h !== this.bubbleH) { this.bubbleW = w; this.bubbleH = h; this.frameT = -1e9; if (this.H && this.famName !== 'nier') this.placeBubble(this.H, this.ang); this.kick(); } });
       this.bubbleMO.observe(this.bubble, { childList: true, characterData: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+      /* NieR's kept box is measured again only when its key changes (map, classes, words, fonts; pm7-perf lane W). A
+         Text size or Line spacing change restyles the box with none of those changing, so the band kept clear stayed the
+         old size under the new words (P1, TOOLS-STAGEREST-K4). Observing the box and its PIP tab (border-box) lets
+         onNierBoxResize() re-measure after layout and before paint (zero forced layout) and move settled props and landed
+         stack blocks clear in the same frame — including under Reduced Motion or while the loop is parked. */
+      this.nierBox = null; this.nierKey = null;
+      if (this.nierRO) {
+        this.nierRO.disconnect();
+        if (w.fam === 'nier') {
+          this.nierRO.observe(this.bubble, { box: 'border-box' });
+          /* (and NieR's PIP tab, which boxInScene adds to the box and which stands outside the box's own rectangle: Text
+             size rescales the tab's own font-size too) */
+          const tab = this.bubble.querySelector(':scope > .pst-bn');
+          if (tab) this.nierRO.observe(tab, { box: 'border-box' });
+        }
+      }
       if (this.tube === 'phosphor') div('pst-crt', this.screen, '<i class="pst-roll"></i><i class="pst-scan"></i><i class="pst-mask"></i><i class="pst-noise"></i><i class="pst-vig"></i><i class="pst-glare"></i>');
       if (this.tube === 'teletype') { div('pst-grain', this.screen); this.head = div('pst-printer', this.screen, '<i class="pst-bail"></i><i class="pst-platen"></i><i class="pst-head"><b></b></i>').querySelector('.pst-head'); }
       this.hudHtml();
@@ -183380,7 +183411,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     }
     boxOf(g) { try { const b = g.getBBox(); return [b.x, b.y, b.width, b.height]; } catch (e) { return null; } }
     boxInScene(el, gap) {
-      if (!el || !el.classList.contains('on') || !(el.textContent || '').trim() || !this.map || !this.screen) return null;
+      if (!el || !el.classList.contains('on') || !(el.textContent || '').trim() || !this.map || !this.map.k || !this.screen) return null;
       const r0 = this.screen.getBoundingClientRect(), b = el.getBoundingClientRect(), sx = r0.width / (this.screen.offsetWidth || r0.width || 1), m = this.map;
       if (!b.width || !b.height) return null;
       /* (and its name tab: NieR's PIP tab stands 19 px above the box, outside the box's own rectangle, and the cloud on
@@ -183521,7 +183552,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     }
     sayNow(text, mood, owner) {
       const b = this.bubble, S = snd();
-      if (this.typeT) this.typeT.cancel();
+      if (this.typeT) { this.typeT.cancel(); this.typeT = null; }
       this.saying = text; this.sayOwner = text ? owner || null : null;
       if (!text) { b.classList.remove('on', 'typing'); if (S && S.hush) S.hush(); return; }
       if (!b.classList.contains('on')) { b.classList.remove('on'); void b.offsetWidth; b.classList.add('on'); }
@@ -183539,14 +183570,14 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (this.reduced) { on.textContent = text; b.classList.remove('typing'); return; }
       off.textContent = text; b.classList.add('typing');
       this.typeT = H.typer(text.length, cps, (i) => { on.textContent = text.slice(0, i); off.textContent = text.slice(i); },
-        { paused: () => !this.live(), done: () => b.classList.remove('typing') });
+        { paused: () => !this.live(), done: () => { this.typeT = null; b.classList.remove('typing'); } });
     }
     /* a new layout: the line Pip has said stays on the new bubble, whole and at once: not typed or voiced again, its box
        not popping in again (SW-23). Its time on screen runs on from when it was said */
     sayKept(text) {
       const b = this.bubble;
       clearTimeout(this.sayT); this.sayNext = null;
-      if (this.typeT) this.typeT.cancel();
+      if (this.typeT) { this.typeT.cancel(); this.typeT = null; }
       b.classList.remove('typing'); b.classList.add('on');
       b.getAnimations().forEach((a) => a.finish());
       this.btext.innerHTML = '<span class="pst-bt-on"></span><span class="pst-bt-off"></span>';
@@ -183574,7 +183605,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     }
     tipEl() { return this.overlay && this.overlay.querySelector('.pst-tip, .pst-ntip'); }
     showTip(instant) {
-      if (this.tipW) this.tipW.cancel();
+      if (this.tipW) { this.tipW.cancel(); this.tipW = null; }
       const el = this.tipEl(), t = this.tipData;
       if (!el || !t) return;
       // NieR: QUEST UPDATED gives way to a tip asked for
@@ -183600,7 +183631,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       this.feel(this.famName === 'nier' ? 'alert' : 'happy', 900); this.nod(); this.busy();
       off.textContent = t.text; el.classList.add('typing'); place();
       this.tipW = H.typer(t.text.length, cps, (i) => { on.textContent = t.text.slice(0, i); off.textContent = t.text.slice(i); },
-        { paused: () => !this.live(), done: () => el.classList.remove('typing') });
+        { paused: () => !this.live(), done: () => { this.tipW = null; el.classList.remove('typing'); } });
     }
     // where the note is, in stage units (for Pip's eyes)
     tipAt() {
@@ -183682,9 +183713,45 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         const o = this.pipOff || [0, 0], f = this.pipOff = this.pipFit(this.pipAt), ps = this.ps, dx = f[0] - o[0], dy = f[1] - o[1];
         if (dx || dy) { ps.Ct.x += dx; ps.Ct.y += dy; ps.C.x += dx; ps.C.y += dy; }
       }
-      this.nierBox = null;
+      this.nierBox = null; this.nierKey = null;
       this.dirty = true; this.frameT = -1e9; if (this.svg && this.kick) this.kick(); /* (a resize redraws the props in their new room, at once: past Retro's stepped gate too) */
       this.headTo();
+    }
+    /* NieR's fixed dialogue box (and its PIP tab) in scene units. Measured only when what it is measured from changes:
+       the stage's map (made anew by measure() on every resize), the box's classes and words, the fonts, or when nierRO
+       fires on a border-box resize (force=true). Keeps rest frames free of forced layouts (pm7-perf lane W). */
+    syncNierBox(force) {
+      if (this.famName !== 'nier') return false;
+      const b = this.bubble, k = this.nierKey, cls = b ? b.className : '', said = b ? b.textContent : '', fonts = document.fonts ? document.fonts.status : '';
+      if (!force && k && k[0] === this.map && k[1] === cls && k[2] === said && k[3] === fonts) return false;
+      const prev = this.nierBox, nb = this.boxInScene(b, 6);
+      if (nb) this.nierBox = nb;
+      if (nb || !b || !b.classList.contains('on') || !(said || '').trim()) this.nierKey = [this.map, cls, said, fonts];
+      else this.nierKey = null;
+      return !!(nb && (!prev || prev[0] !== nb[0] || prev[1] !== nb[1] || prev[2] !== nb[2] || prev[3] !== nb[3]));
+    }
+    syncNierStack() {
+      this.props.forEach((pr) => {
+        if (pr.spec.stack == null || !pr.landed || pr.state === 'out') return;
+        const tg = this.propTarget(pr);
+        pr.ax = tg.ax; pr.axv = 0; pr.len = tg.len; pr.lenv = 0;
+      });
+    }
+    /* runs in ResizeObserver after layout and before paint (zero forced layout), so a Text-size, Line-spacing or
+       stylesheet change re-measures the kept box and moves settled props and landed blocks clear in the same frame —
+       including while Reduced Motion or low-resource mode has parked the loop */
+    onNierBoxResize() {
+      if (this.dead || this.famName !== 'nier') return;
+      if (!this.syncNierBox(true)) return;
+      this.keepOff = this.nierBox || null;
+      this.syncNierStack();
+      if (this.ps && this.H && !this.held) {
+        this.renderN = (this.renderN || 0) + 1;
+        this.props.forEach((pr) => { if (pr.box || pr.pos) this.placeProp(pr); });
+        if (this.gHud) this.renderBrackets();
+      }
+      this.frameT = -1e9;
+      if (this.kick) this.kick();
     }
     toScreen(p) { const m = this.map || { k: 1, ox: 0, oy: 0 }; return [m.ox + p[0] * m.k, m.oy + p[1] * m.k]; }
     headCentre() { const ps = this.ps, H = this.H || this.headAt(ps.C.x, ps.C.y, ps.th, ps.dy); return this.headXf([32, 45], H, this.ang || 0, 1, 1); }
@@ -183712,6 +183779,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (this.still() && !this.dirty && this.t > this.moodUntil + .3 && !this.fx.length && !this.faceOut && this.faceT0 == null) return;
       this.raf = requestAnimationFrame(this.loop);
       this.t += dt;
+      if (this.famName === 'nier' && this.syncNierBox()) { this.keepOff = this.nierBox || null; this.syncNierStack(); }
       const sub = 3; for (let i = 0; i < sub; i++) this.step(dt / sub);
       this.life(dt);
       // Retro's tube refreshes in steps; the phosphor holds what was there a moment longer
@@ -183760,7 +183828,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       // the hand: springs to its spot, with a slow idle drift that keeps Pip alive
       const swayX = red ? 0 : F.sway * Math.sin(this.t * F.swayW) * (ps.asleep ? .2 : 1);
       const swayY = red || !F.bob ? 0 : F.bob * .6 * Math.sin(this.t * F.swayW * 1.7);
-      ps.lift = (ps.lift || 0) + ((ps.liftT || 0) - (ps.lift || 0)) * Math.min(1, dt * 5);
+      ps.lift = red ? (ps.liftT || 0) : (ps.lift || 0) + ((ps.liftT || 0) - (ps.lift || 0)) * Math.min(1, dt * 5);
       const tx = ps.Ct.x + swayX, ty = ps.Ct.y + swayY - ps.lift;
       if (red) { ps.C.x = tx; ps.C.y = ty; ps.C.vx = ps.C.vy = 0; ps.th = 0; ps.thv = 0; }
       else {
@@ -183777,19 +183845,21 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         const sq = clamp(-ps.dyv / 900, -.1, .1); ps.sy += ((1 + sq) - ps.sy) * Math.min(1, dt * 18); ps.sx += ((1 - sq * .7) - ps.sx) * Math.min(1, dt * 18);
       }
       // head tilt (expression) and the control's own tilt (rocking while working)
-      if (red) { ps.tilt = ps.tiltT; ps.phi = 0; }
+      if (red) { ps.tilt = ps.tiltT; ps.tiltv = 0; ps.phi = 0; }
       else {
         const tA = 90 * (ps.tiltT - ps.tilt) - 10 * ps.tiltv; ps.tiltv += tA * dt; ps.tilt += ps.tiltv * dt;
         const phiT = this.work ? Math.sin(this.t * 4.2) * (this.rockMax == null ? .12 : this.rockMax) : ps.asleep ? .08 : 0;
         ps.phi += (phiT - ps.phi) * Math.min(1, dt * 6);
       }
       // eyes follow what Pip is looking at
-      const lk = ps.lookT; ps.look[0] += (lk[0] - ps.look[0]) * Math.min(1, dt * 9); ps.look[1] += (lk[1] - ps.look[1]) * Math.min(1, dt * 9);
+      const lk = ps.lookT;
+      if (red) { ps.look[0] = lk[0]; ps.look[1] = lk[1]; }
+      else { ps.look[0] += (lk[0] - ps.look[0]) * Math.min(1, dt * 9); ps.look[1] += (lk[1] - ps.look[1]) * Math.min(1, dt * 9); }
       // props: each hangs from its own anchor above the stage
       this.props.forEach((pr, id) => {
         const tg = this.propTarget(pr);
         if (pr.state === 'out' && !red) this.holdUnder(pr, tg);
-        if (red) { pr.ax = tg.ax; pr.len = tg.len; pr.a = 0; pr.av = 0; pr.op = tg.op; pr.scale = (pr.spec.scale || 1); }
+        if (red) { pr.ax = tg.ax; pr.axv = 0; pr.len = tg.len; pr.lenv = 0; pr.a = 0; pr.av = 0; pr.sq = 0; pr.sqv = 0; pr.op = tg.op; pr.scale = (pr.spec.scale || 1); pr.sv = 0; }
         else {
           const axA = F.pk * (tg.ax - pr.ax) - F.pc * pr.axv; pr.axv += axA * dt; pr.ax += pr.axv * dt;
           // a block set on the stack is lowered, not dropped: a softer, critically damped spring, so it slows into
@@ -183886,10 +183956,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
          map, which measure() makes anew on every resize. Read in every frame after the frame's writes, it laid the page out
          a second time in each NieR frame: 238 layouts a second at rest on the owner's PC; pm7-perf lane W) */
       if (f === 'nier') {
-        const b = this.bubble, k = this.nierKey, cls = b ? b.className : '', said = b ? b.textContent : '', fonts = document.fonts ? document.fonts.status : '';
-        if (!k || k[0] !== this.map || k[1] !== cls || k[2] !== said || k[3] !== fonts) {
-          const nb = this.boxInScene(b, 6); if (nb) this.nierBox = nb;
-          this.nierKey = [this.map, cls, said, fonts];
+        if (this.syncNierBox()) {
+          this.keepOff = this.nierBox || null;
+          this.syncNierStack();
         }
       }
       this.keepOff = f === 'nier' ? this.nierBox || null : this.bubbleKeepOff || null;
@@ -184182,7 +184251,44 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       this.render(); /* (drawn in its pose before it can be painted, as setTheme: group 1, FO-40; without it the new head
          painted unposed at the stage's corner for a frame or two once no entrance covered the rebuild, SW-23) */
     }
-    setReduced(r) { if (this.reduced === !!r) return; this.reduced = !!r; this.root.dataset.reduced = r ? '1' : '0'; this.dirty = true; this.kick(); }
+    setReduced(r) {
+      r = !!r;
+      if (this.reduced === r) return;
+      this.reduced = r;
+      this.root.dataset.reduced = r ? '1' : '0';
+      if (r) {
+        /* live switch to Reduced Motion (FO-S3 r3): finish every in-flight transition at its end state (never drop it)
+           so queued speech is delivered, face swaps complete cleanly, and typers/effects finish before the loop parks */
+        if (this.tryRaf) {
+          cancelAnimationFrame(this.tryRaf); this.tryRaf = 0;
+          if (this.gPip) this.gPip.style.transform = '';
+          if (this.tryTheme && this.tryTheme !== this.pipTheme) this.buildPip(this.tryTheme);
+        }
+        this.moodOverride = null; this.moodUntil = -1;
+        this.idleLook = null; this.idleUntil = 0;
+        this.tipLook = 0; this.sliceT = null;
+        if (this.faceOut) { this.faceOut.remove(); this.faceOut = null; }
+        if (this.faceEl) {
+          this.faceEl.removeAttribute('visibility');
+          this.faceEl.querySelectorAll('.pst-part').forEach((w) => w.removeAttribute('transform'));
+        }
+        this.faceT0 = null; this.faceV = 1;
+        if (this.ps) this.ps.blinkAt = null;
+        if (this.blinkEl) attr(this.blinkEl, 'transform', `translate(0 ${this.blinkY}) scale(1 1) translate(0 ${-this.blinkY})`);
+        if (this.fx.length) { this.fx.forEach((p) => p.e && p.e.remove()); this.fx.length = 0; }
+        if (this.ghosts.length) { this.ghosts.forEach((g) => g.e && g.e.remove()); this.ghosts.length = 0; }
+        const queued = this.sayNext;
+        clearTimeout(this.sayT); this.sayNext = null;
+        if (queued && this.ownerLive(queued[2])) this.sayNow(queued[0], queued[1], queued[2]);
+        else if (this.typeT) { this.typeT.cancel(); this.typeT = null; if (this.saying) this.sayKept(this.saying); }
+        if (this.bubble) this.bubble.getAnimations().forEach((a) => a.finish());
+        if (this.tipW) { this.tipW.cancel(); this.tipW = null; if (this.tipData) this.showTip(true); }
+        if (this.decT) { this.decT.cancel(); this.decT = null; const d = this.hudEl && this.hudEl.querySelector('.pst-decode'); if (d && this.decoded != null && d.textContent !== this.decoded) d.textContent = this.decoded; }
+        if (this.cmdT) { this.cmdT.cancel(); this.cmdT = null; const inp = this.hudEl && this.hudEl.querySelector('.pst-term-in'); if (inp && this.cmdText != null && inp.textContent !== this.cmdText) { inp.textContent = this.cmdText; if (this.headTo) this.headTo(); } }
+        if (this.bootT) { this.bootT.cancel(); this.bootT = null; const pre = this.hudEl && this.hudEl.querySelector('.pst-term-boot'); if (pre && !pre.classList.contains('gone')) { pre.textContent = ''; pre.classList.add('gone'); } }
+      }
+      this.dirty = true; this.frameT = -1e9; this.kick();
+    }
     // something on the screen is being pointed at: Pip turns to it rather than to the pointer
     busy() { this.busyT = this.t; }
     // Pip tries on another look (the Pick a look screen): only Pip changes, the world stays
@@ -184191,19 +184297,22 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (t === this.pipTheme) return;
       const S = snd();
       if (theme && theme !== this.theme) this.sfx('tryOn', { kit: S && S.kitOf ? S.kitOf(t) : undefined });
-      if (this.reduced) { this.buildPip(t); return; }
+      if (this.tryRaf) { cancelAnimationFrame(this.tryRaf); this.tryRaf = 0; }
+      this.tryTheme = t;
+      if (this.reduced) { if (this.gPip) this.gPip.style.transform = ''; this.buildPip(t); return; }
       let k = 0;
       const flip = () => {
+        this.tryRaf = 0;
         k += 1;
         const sx = k <= 6 ? 1 - k / 6 : (k - 6) / 6;
         this.gPip.style.transformOrigin = `${this.ps.C.x}px 0`;
         this.gPip.style.transform = `scaleX(${R(Math.max(.02, sx))})`;
         if (k === 6) { this.buildPip(t); }
-        if (k < 12) requestAnimationFrame(flip); else this.gPip.style.transform = '';
+        if (k < 12) this.tryRaf = requestAnimationFrame(flip); else this.gPip.style.transform = '';
       };
       flip();
     }
-    destroy() { if (this.off) this.off(); clearTimeout(this.questT); cancelAnimationFrame(this.raf); clearTimeout(this.parkT); clearTimeout(this.holdT); this.dead = true; this.ro.disconnect(); window.removeEventListener('resize', this.onWinResize); clearTimeout(this.winRT); if (this.bubbleMO) this.bubbleMO.disconnect(); clearTimeout(this.wakeT); [this.tipW, this.typeT, this.decT, this.cmdT, this.bootT].forEach((w) => w && w.cancel()); this.root.innerHTML = ''; }
+    destroy() { if (this.off) this.off(); clearTimeout(this.questT); cancelAnimationFrame(this.raf); if (this.tryRaf) { cancelAnimationFrame(this.tryRaf); this.tryRaf = 0; } clearTimeout(this.parkT); clearTimeout(this.holdT); clearTimeout(this.sayT); this.dead = true; if (this.ro) this.ro.disconnect(); if (this.nierRO) this.nierRO.disconnect(); if (this.motionMO) this.motionMO.disconnect(); if (this.reduceMq) { if (typeof this.reduceMq.removeEventListener === 'function') this.reduceMq.removeEventListener('change', this.syncMotion); else if (typeof this.reduceMq.removeListener === 'function') this.reduceMq.removeListener(this.syncMotion); } window.removeEventListener('o55:lowresource', this.onLowRes); window.removeEventListener('resize', this.onWinResize); clearTimeout(this.winRT); if (this.bubbleMO) this.bubbleMO.disconnect(); clearTimeout(this.wakeT); [this.tipW, this.typeT, this.decT, this.cmdT, this.bootT].forEach((w) => w && w.cancel()); this.root.innerHTML = ''; }
 
     /* ------------------------------------------------------------- the product's own */
     /* Pip parts the stage's CSS reads: setup-world-life off holds the world's own loops (clouds, caustics, motes, the
