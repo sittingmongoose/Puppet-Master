@@ -2050,14 +2050,16 @@ def judge_batch_member(shared: Path, start: str, code: int, report: Optional[dic
                        rows: Optional[dict[str, Any]], rows_unread: Sequence[str],
                        earlier: Sequence[dict[str, Any]], earlier_unread: Sequence[str],
                        own_base: Optional[str], head: str,
-                       check_source: Optional[str]) -> tuple[int, list[str], Optional[tuple[str, str]]]:
+                       check_source: Optional[str], total: int) -> tuple[int, list[str], Optional[tuple[str, str]]]:
     """One member's report against its predecessor's bound receipt: (exit code, lines, the difference or None).
 
     `earlier` is the predecessor's member, read from the holder's last row: the strict rule compares a member with
-    the one before it, and the earlier landings are enforced when each of them landed. The exit code is the tool's
-    own: 0 judged, no difference; 1 a difference or a judgement owed first (the lines say which). The difference is
-    None when none was found, so `verify --batch-start` can refuse on it alone and leave an owed judgement to the
-    lander, exactly as a single landing is judged.
+    the one before it, and the earlier landings are enforced when each of them landed. `total` is this member's place
+    in the batch (the holder's rows plus this one), so member 3 and 4 name the predecessor as "member 2 of 3" and
+    "member 3 of 4" rather than as the second of two. The exit code is the tool's own: 0 judged, no difference; 1 a
+    difference or a judgement owed first (the lines say which). The difference is None when none was found, so
+    `verify --batch-start` can refuse on it alone and leave an owed judgement to the lander, exactly as a single
+    landing is judged.
     """
     lines: list[str] = []
     difference: Optional[tuple[str, str]] = None
@@ -2128,7 +2130,6 @@ def judge_batch_member(shared: Path, start: str, code: int, report: Optional[dic
             lines.append(f"judge first: {what}; then it may stay.")
         return (1 if owed else 0), lines, None
     previous = earlier[-1]
-    total = len(earlier) + 1
     own = sorted(changed_paths(shared, own_base, head)) if own_base else []
     difference = strict_difference(report, rows, previous["report"], previous["rows"], own, total)
     if not difference and own_base:
@@ -2355,7 +2356,8 @@ def batch_check(shared: Path, lock_dir: Path, receipt_path: Path, check_source: 
         except OSError as exc:
             raise Refusal(f"cannot read --check-source {check_source}: {exc}") from exc
     code_out, lines, _difference = judge_batch_member(shared, start, code, report, rows, rows_unread, earlier,
-                                                      earlier_unread, own_base, resolved_head, source_text)
+                                                      earlier_unread, own_base, resolved_head, source_text,
+                                                      len(earlier_rows) + 1)
     for line in lines:
         say(line)
     return code_out
@@ -2383,8 +2385,12 @@ def batch_chain(shared: Path, start: str, rows: Sequence[dict[str, str]],
     return git(shared, "rev-list", f"{last}..{main}").stdout.split(), None
 
 
-def require_open_batch(shared: Path, start: str, main: str) -> None:
-    """A batch member's base is accepted only while holder.txt still opens that batch and lists every landing since."""
+def require_open_batch(shared: Path, start: str, main: str) -> list[dict[str, str]]:
+    """A batch member's base is accepted only while holder.txt still opens that batch and lists every landing since.
+
+    Returns the validated rows. Review R7-B1: the caller hands these to `require_batch_judgment`, so nothing reads
+    `holder.txt` a second time and judges a different batch from the one this accepted.
+    """
     holder = holder_verdict(LOCK_DIR)
     if not holder["held"]:
         raise Refusal(f"no open batch: {LOCK_DIR / 'held/holder.txt'} cannot be read, and a member's receipt is verified "
@@ -2405,8 +2411,60 @@ def require_open_batch(shared: Path, start: str, main: str) -> None:
     if unlisted:
         raise Refusal(f"{len(unlisted)} commit(s) on origin/main since batch-start {start} are not listed as a "
                       "`batch-landing: <branch> <sha> <receipt>` row in holder.txt whose chain ends at the current "
-                      "main: " + ", ".join(unlisted[:10]) + ". Repair the holder, then rerun")
+                      "main: " + ", ".join(name[:12] for name in unlisted[:10]) + ". Repair the holder, then rerun")
     require_batch_limits(shared, start, fields, rows, holder)
+    return rows
+
+
+CLOSE_PATHS = ("Plans/.plan_migration/",)
+
+
+def batch_close_outside(shared: Path, base: str, head: str) -> list[str]:
+    """Paths a batch's closing follow-up may not change: the snapshot and the baseline are its own."""
+    return sorted(name for name in changed_paths(shared, base, head)
+                  if name != BASELINE_FILE and not name.startswith(CLOSE_PATHS))
+
+
+def require_batch_close(shared: Path, pinned: str, head: str) -> str:
+    """The open batch's closing follow-up, bound to its last landing, or a refusal.
+
+    Review OPUS A1: the ordinary `verify` must not be a way past the batch judgment, so the one landing the rule
+    needs after a batch's last member has its own route: `holder.txt` must still open the batch, `origin/main` must
+    be its last `batch-landing` row, and the commit may change only the plan-migration snapshot and the baseline.
+    """
+    holder = holder_verdict(LOCK_DIR)
+    if not holder["held"]:
+        raise Refusal("--batch-close closes an open batch, and the landing lock is free: there is no batch to close")
+    fields = holder["fields"]
+    if fields.get("batch-start-conflict"):
+        raise Refusal("holder.txt names two batch-starts: " + fields["batch-start-conflict"]
+                      + "; rewrite it with the one open batch's")
+    start = fields.get("batch-start")
+    if not start:
+        raise Refusal("--batch-close closes an open batch, and holder.txt names no batch-start")
+    if not valid_full_sha(start):
+        raise Refusal(f"batch-start is not a full 40-character SHA: {start!r}")
+    if not is_ancestor(shared, start, pinned):
+        raise Refusal(f"batch-start {start} is not on the fetched origin/main {pinned}")
+    rows, malformed = batch_rows(fields)
+    if malformed:
+        raise Refusal("holder.txt has batch-landing rows this check cannot read: " + "; ".join(repr(row) for row in malformed))
+    if not rows:
+        raise Refusal(f"the open batch lists no landing, and origin/main is its batch-start {start}: there is nothing to "
+                      "close, so clear the holder or release the lock instead")
+    unlisted, why = batch_chain(shared, start, rows, pinned)
+    if why:
+        raise Refusal(why + ". Repair the holder, then rerun")
+    if rows[-1]["sha"] != pinned:
+        raise Refusal(f"origin/main is {pinned}, but the batch's last landing is {rows[-1]['sha']}: a closing follow-up "
+                      "is verified against the main its last landing pushed, so fetch and verify again")
+    outside = batch_close_outside(shared, pinned, head)
+    if outside:
+        raise Refusal("a batch's closing follow-up changes only the plan-migration snapshot and "
+                      f"{BASELINE_FILE}; this commit also changes " + ", ".join(outside[:10])
+                      + ". Land that as its own landing outside the batch, or reduce this one to the snapshot and the "
+                        "baseline")
+    return start
 
 
 def require_record_bytes(path: Path, raw: bytes, record: dict[str, Any], batch: bool) -> None:
@@ -2431,23 +2489,31 @@ def require_record_bytes(path: Path, raw: bytes, record: dict[str, Any], batch: 
 
 
 def require_batch_judgment(shared: Path, start: str, head: str, predecessor: str,
-                           record: dict[str, Any]) -> None:
+                           record: dict[str, Any], rows: Sequence[dict[str, str]], total: int) -> None:
     """The strict rule, judged here and now under the lock: an earlier `batch-check` result is never enough.
 
     Review ASTRA A2-4: `batch-check` runs before the lock, and a landing can hand over between it and the push, so a
     candidate admitted as the first member can become a second member whose report is not the new one's. `verify`
     therefore judges the receipt it is about to verify against the pinned `predecessor` it publishes on, reading the
-    previous member's receipt fresh from holder.txt and re-hashing it.
+    previous member's receipt from the rows `require_open_batch` just validated.
+
+    Review R7-B1: those rows, never a second read of `holder.txt`. A read after the validation could see a cleared,
+    edited or malformed holder and fall back to "first member"; here an empty row list is only a first member when
+    the pinned predecessor is the batch-start, and anything else refuses.
     """
-    holder = holder_verdict(LOCK_DIR)
-    fields = holder["fields"] if holder["held"] else {}
-    rows, _malformed = batch_rows(fields)
-    earlier: list[dict[str, Any]] = []
-    earlier_unread: list[str] = []
     if rows:
         if rows[-1]["sha"] != predecessor:
             raise Refusal(f"the batch's last landing is {rows[-1]['sha']}, but this verification pins origin/main at "
                           f"{predecessor}: the judgment and the publication would not be about the same predecessor")
+    elif predecessor != start:
+        # The row list require_open_batch validated is empty, but origin/main is past the batch-start: the holder no
+        # longer names the landing this verification publishes on. Fail closed (review R7-B1).
+        raise Refusal(f"this verification pins origin/main at {predecessor}, but holder.txt lists no `batch-landing` "
+                      f"row and its batch-start is {start}: the record of what landed inside the batch is gone. Repair "
+                      "the holder with every landing, then rerun")
+    earlier: list[dict[str, Any]] = []
+    earlier_unread: list[str] = []
+    if rows:
         member, why = earlier_member(rows[-1], start)
         if member is None:
             earlier_unread.append(why)
@@ -2463,7 +2529,8 @@ def require_batch_judgment(shared: Path, start: str, head: str, predecessor: str
         rows_unread.append(f"this member's, which was written against {rows_doc.get('base') or 'no base'}")
         rows_doc = None
     _code, lines, difference = judge_batch_member(shared, start, record["exit_code"], report, rows_doc, rows_unread,
-                                                 earlier, earlier_unread, predecessor if rows else None, head, None)
+                                                 earlier, earlier_unread, predecessor if rows else None, head, None,
+                                                 total)
     if difference:
         raise Refusal(f"this landing cannot stay in the batch: {difference[1]}. Close the batch with its follow-up at "
                       "the current main, then rebase on the new origin/main, rerun the check alone and judge it as "
@@ -2472,7 +2539,7 @@ def require_batch_judgment(shared: Path, start: str, head: str, predecessor: str
         say(lines[-1])
 
 
-def verify_receipt(path, commit=None, base=None, batch_start=None):
+def verify_receipt(path, commit=None, base=None, batch_start=None, batch_close=False):
     path = path.absolute()
     folder = require_run_folder(path.parent)
     if path.name != "record.json" or path.is_symlink():
@@ -2492,9 +2559,30 @@ def verify_receipt(path, commit=None, base=None, batch_start=None):
     # One publication tip, read once and pinned: every later read must still be this commit, and the hand push
     # leases on exactly the value printed at the end (review SOL D1, ASTRA F1/F2).
     pinned = full_main(SHARED)
+    closing = None
     if batch_start is None:
         if pinned != checked_base:
             raise Refusal(f"shared origin/main differs from the receipt base {checked_base}; fetch and check again")
+        if batch_close:
+            closing = require_batch_close(SHARED, pinned, head)
+        else:
+            # Review OPUS A1: the single-landing route must not skip a batch's judgment. An open batch whose
+            # batch-start is behind origin/main has landed at least one member, so nothing ordinary lands until it
+            # closes; a batch with nothing landed yet is still at its batch-start and passes, as its first member
+            # is judged exactly as a single landing.
+            holder = holder_verdict(LOCK_DIR)
+            fields = holder["fields"] if holder["held"] else {}
+            if fields.get("batch-start-conflict"):
+                raise Refusal("holder.txt names two batch-starts: " + fields["batch-start-conflict"]
+                              + "; rewrite it with the one open batch's")
+            start = fields.get("batch-start")
+            if start and not valid_full_sha(start):
+                raise Refusal(f"holder.txt names a batch-start that is not a full 40-character SHA: {start!r}; rewrite "
+                              "it with the one open batch's batch-start")
+            if start and pinned != start:
+                raise Refusal(f"holder.txt names an open batch at batch-start {start}, and origin/main {pinned} has "
+                              "moved past it: a landing inside the batch is verified with --batch-start <that SHA>, and "
+                              "the batch's closing follow-up with --batch-close. Nothing else lands until it closes")
     else:
         # Batch mode: the receipt's base is the batch-start, which is behind main once the first member pushed.
         # The rule's own record must still open exactly that batch, and every commit main has landed since it
@@ -2503,7 +2591,7 @@ def verify_receipt(path, commit=None, base=None, batch_start=None):
         if checked_base != checked_batch:
             raise Refusal(f"a batch member's receipt base is {checked_base}, but --batch-start is {checked_batch}. Inside "
                           "a batch, check with --base <full batch-start> so the receipt is judged against the batch.")
-        require_open_batch(SHARED, checked_batch, pinned)
+        held_rows = require_open_batch(SHARED, checked_batch, pinned)
         if record["exit_code"] not in (0, 1):
             raise Refusal(f"the receipt records landing checker exit {record['exit_code']}: a batch member may only "
                           "stay on exit 0 or 1, so this landing is judged by its report, not as a batch member")
@@ -2514,8 +2602,9 @@ def verify_receipt(path, commit=None, base=None, batch_start=None):
             raise Refusal(f"origin/main {pinned} is not an ancestor of the checked commit {head}: rebase on the current "
                           "origin/main and check again, so the push is a fast-forward")
         # The strict rule, judged under the lock against the pinned predecessor: an earlier batch-check is never
-        # enough, because the handoff can change which member this receipt is (review ASTRA A2-4).
-        require_batch_judgment(SHARED, checked_batch, head, pinned, record)
+        # enough, because the handoff can change which member this receipt is (review ASTRA A2-4). It reads the
+        # rows validated just above, never `holder.txt` again (review R7-B1).
+        require_batch_judgment(SHARED, checked_batch, head, pinned, record, held_rows, len(held_rows) + 1)
     if git(SHARED, "symbolic-ref", "--quiet", "HEAD", check=False).stdout.strip() != MAIN_REF:
         raise Refusal("shared checkout must be on main")
     shared_head = revision(SHARED, "HEAD^{commit}")
@@ -2551,16 +2640,20 @@ def verify_receipt(path, commit=None, base=None, batch_start=None):
         moved = full_main(SHARED)
         if moved != pinned:
             raise Refusal(f"origin/main moved from {pinned} to {moved} during verification")
-        require_open_batch(SHARED, checked_base, pinned)
+        held_rows = require_open_batch(SHARED, checked_base, pinned)
         if not is_ancestor(SHARED, pinned, head):
             raise Refusal(f"origin/main {pinned} is no longer an ancestor of the checked commit {head}")
-        require_batch_judgment(SHARED, checked_batch, head, pinned, record)
+        require_batch_judgment(SHARED, checked_batch, head, pinned, record, held_rows, len(held_rows) + 1)
         say(f"Verified {head} against batch-start {checked_base} on {host}. Landing checker exit {record['exit_code']}.")
     else:
         moved = full_main(SHARED)
         if moved != pinned:
             raise Refusal(f"origin/main moved from {pinned} to {moved} during verification")
-        say(f"Verified {head} against {checked_base} on {host}. Landing checker exit {record['exit_code']}.")
+        if closing is not None:
+            say(f"Verified {head} against {checked_base} on {host} as the closing follow-up of the batch at {closing}. "
+                f"Landing checker exit {record['exit_code']}.")
+        else:
+            say(f"Verified {head} against {checked_base} on {host}. Landing checker exit {record['exit_code']}.")
     say(f"PUBLISH_LEASE={pinned}")
     return 0
 
@@ -2632,6 +2725,10 @@ def main(argv=None):
         verify.add_argument("--batch-start", metavar="SHA", help="verify a batch member: the receipt's base must be this "
                                                                  "full batch-start, still open in holder.txt with every "
                                                                  "commit main landed since it listed there")
+        verify.add_argument("--batch-close", action="store_true",
+                            help="verify a batch's closing follow-up: holder.txt must still open the batch, origin/main "
+                                 "must be its last batch-landing row, and the commit may change only the plan-migration "
+                                 "snapshot and reports/landing-checks/baseline.json")
         verify.add_argument("--from", dest="rollback_from")
         verify.add_argument("--to", dest="rollback_to")
         status = commands.add_parser("batch-status", help="read the rule's batch record in holder.txt, writing nothing")
@@ -2659,14 +2756,16 @@ def main(argv=None):
             repo = args.repo or Path(git(Path.cwd(), "rev-parse", "--show-toplevel").stdout.strip())
             return batch_check(repo, args.lock_dir, args.receipt, args.check_source)
         if args.rollback_check:
-            if args.batch_start is not None:
-                verify.error("--batch-start verifies a receipt and does not go with --rollback-check")
+            if args.batch_start is not None or args.batch_close:
+                verify.error("--batch-start and --batch-close verify a receipt and do not go with --rollback-check")
             if not (args.rollback_from and args.rollback_to) or args.commit is not None or args.base is not None:
                 verify.error("--rollback-check requires --from and --to and does not take --commit or --base")
             return verify_rollback(args.rollback_from, args.rollback_to)
         if args.rollback_from is not None or args.rollback_to is not None:
             verify.error("--from and --to require --rollback-check")
-        return verify_receipt(args.receipt, args.commit, args.base, args.batch_start)
+        if args.batch_close and args.base is not None:
+            verify.error("--batch-close takes no --base: its base is the origin/main the batch's last landing pushed")
+        return verify_receipt(args.receipt, args.commit, args.base, args.batch_start, args.batch_close)
     except (Refusal, OSError, ValueError, KeyError, TypeError) as exc:
         print(f"pm-land: {exc}", file=sys.stderr)
         return 3

@@ -101,6 +101,7 @@ class LandingFixture(unittest.TestCase):
         self.raw_capture = f"{land.RAW_LINK}/capture.jsonl"
         patches = patch.multiple(
             land, EVIDENCE=self.evidence, RUNS=self.runs, SHARED=self.shared, CLONE=self.clone,
+            LOCK_DIR=self.evidence / "scratch/landing-lock",
             MACHINES={host: socket.gethostname() for host in land.HOSTS},
         )
         patches.start()
@@ -2051,8 +2052,8 @@ class BatchCheckTests(BatchFixture):
         self.assertIn("TRIGGER batch_totals_differ", out)
         self.assertIn("run-gates/lint-x's total is 2 but the rows", out)
 
-    def test_a_member_three_deep_compares_with_every_earlier_receipt(self):
-        """Member 3 is compared with member 2's receipt and with member 1's, read from the holder in order."""
+    def test_a_member_three_deep_compares_with_the_previous_members_receipt(self):
+        """Member 3 is compared with member 2's receipt, the holder's last row; member 1's was enforced when it landed."""
         member2 = self.head
         self.set_main(member2)
         self.put("src/third.txt", "third\n")
@@ -2063,6 +2064,22 @@ class BatchCheckTests(BatchFixture):
                                head=head3)
         self.assertEqual(code, 0, out)
         self.assertIn("no trigger", out)
+
+    def test_a_member_three_deep_names_its_predecessor_by_place(self):
+        """The predecessor's place comes from the landings the batch has, not from the one receipt it reads: member 3
+        names member 2 of 3 (review R7-N3)."""
+        bucket = "run-gates|lint-x|missing_ref|src/x.txt"
+        member2 = self.head
+        self.set_main(member2)
+        head3 = self.commit("member 3")
+        m2 = self.member("m2", head=member2, totals=self.totals, counts=self.counts)
+        self.holder(start=self.base, rows=[f"fix/a {self.member1} {self.m1}", f"fix/b {member2} {m2}"])
+        rows = self.rows_file("m3.rows.json", {"run-gates/lint-x": {
+            "reported": 1, "complete": True, "rows": [self.row(f"{bucket}|bbbbbbbbbbbb")]}})
+        code, out = self.check(self.report("m3.json", totals=self.totals, counts=self.counts, commit=head3),
+                               rows=rows, head=head3)
+        self.assertEqual(code, 1, out)
+        self.assertIn("member 2 of 3", out)
 
     def test_a_timeout_in_an_earlier_members_report_judges_this_landing_alone(self):
         """D5: a timed-out subcheck has no count there, so a number here is not a measured rise from zero."""
@@ -2897,6 +2914,117 @@ class BatchVerifyTests(unittest.TestCase):
         with self.assertRaisesRegex(land.Refusal, "cannot stay in the batch: run-gates/lint-x is in this landing's "
                                                   "report and not in the previous member's report"):
             self.verify()
+
+    def test_a_plain_verify_is_refused_while_the_batch_is_open(self):
+        """OPUS A1: the single-landing route must not skip the batch judgment.
+
+        Once a member has landed, `origin/main` is past the batch-start, and the ordinary
+        `verify --base <current main>` is refused: a member passes `--batch-start`, the close passes
+        `--batch-close`, and nothing else lands until the batch closes.
+        """
+        member1, head = self.history()
+        self.holder(self.base, [self.row("fix/a", member1)])
+        self.receipt(head, base=member1)
+        with patch.object(land, "LOCK_DIR", self.lock), \
+                patch.object(land, "ssh", return_value=subprocess.CompletedProcess([], 0, "", "")):
+            with self.assertRaisesRegex(land.Refusal, "names an open batch at batch-start"):
+                land.verify_receipt(self.path, None, None)
+
+    def test_a_batch_that_has_landed_nothing_lets_the_ordinary_route_through(self):
+        """A batch still at its batch-start has no member to skip: its first landing is judged as a single one."""
+        self.holder(self.base, [])
+        _member1, head = self.history(commits=0)
+        self.receipt(head)
+        with patch.object(land, "LOCK_DIR", self.lock), \
+                patch.object(land, "ssh", return_value=subprocess.CompletedProcess([], 0, "", "")):
+            with redirect_stdout(io.StringIO()):
+                self.assertEqual(land.verify_receipt(self.path, None, None), 0)
+
+    def follow_up(self, member1, paths=("Plans/.plan_migration/snapshot-1/current_run.json",
+                                        "reports/landing-checks/baseline.json")):
+        """The batch's closing follow-up: a commit on top of the last landing, changing its own artifacts only."""
+        self.git(self.shared, "reset", "--keep", member1)
+        for name in paths:
+            self.put(self.shared, name, "{}\n")
+        self.git(self.shared, "add", "-A")
+        self.git(self.shared, "commit", "-qm", "the batch's closing follow-up")
+        head = land.revision(self.shared, "HEAD")
+        self.git(self.shared, "branch", "-f", self.branch, head)
+        self.git(self.shared, "push", "-f", "origin", f"{head}:{self.ref}")
+        self.git(self.shared, "reset", "--keep", self.base)
+        self.receipt(head, base=member1)
+        return head
+
+    def test_the_batchs_closing_follow_up_is_verified_against_its_last_landing(self):
+        member1, _head = self.history()
+        self.holder(self.base, [self.row("fix/a", member1)])
+        self.follow_up(member1)
+        output = io.StringIO()
+        with patch.object(land, "LOCK_DIR", self.lock), \
+                patch.object(land, "ssh", return_value=subprocess.CompletedProcess([], 0, "", "")):
+            with redirect_stdout(output):
+                self.assertEqual(land.verify_receipt(self.path, None, None, None, True), 0)
+        self.assertIn("closing follow-up of the batch at", output.getvalue())
+        self.assertIn(f"PUBLISH_LEASE={member1}", output.getvalue())
+
+    def test_a_closing_follow_up_may_not_carry_another_landing(self):
+        member1, _head = self.history()
+        self.holder(self.base, [self.row("fix/a", member1)])
+        self.follow_up(member1, ("Plans/.plan_migration/snapshot-1/current_run.json", "src/extra.txt"))
+        with patch.object(land, "LOCK_DIR", self.lock), \
+                patch.object(land, "ssh", return_value=subprocess.CompletedProcess([], 0, "", "")):
+            with self.assertRaisesRegex(land.Refusal, "closing follow-up changes only"):
+                land.verify_receipt(self.path, None, None, None, True)
+
+    def test_a_closing_follow_up_needs_a_landing_to_close(self):
+        _member1, head = self.history(commits=0)
+        self.holder(self.base, [])
+        self.receipt(head)
+        with patch.object(land, "LOCK_DIR", self.lock), \
+                patch.object(land, "ssh", return_value=subprocess.CompletedProcess([], 0, "", "")):
+            with self.assertRaisesRegex(land.Refusal, "there is nothing to close"):
+                land.verify_receipt(self.path, None, None, None, True)
+
+    def test_a_closing_follow_up_needs_the_open_batch(self):
+        member1, head = self.history()
+        self.holder(self.base, [self.row("fix/a", member1)])
+        self.receipt(head, base=member1)
+        with patch.object(land, "LOCK_DIR", self.root / "free-lock"), \
+                patch.object(land, "ssh", return_value=subprocess.CompletedProcess([], 0, "", "")):
+            with self.assertRaisesRegex(land.Refusal, "there is no batch to close"):
+                land.verify_receipt(self.path, None, None, None, True)
+
+    def test_an_empty_row_list_refuses_a_member_past_the_batch_start(self):
+        """R7-B1: the judgment reads the rows `require_open_batch` validated, and an empty list is a first member
+        only when the pinned predecessor is the batch-start. Anything else refuses instead of demoting it."""
+        member1, head = self.history()
+        self.receipt(head, base=member1)
+        record = json.loads(self.path.read_text(encoding="utf-8"))
+        with self.assertRaisesRegex(land.Refusal, "lists no `batch-landing`"):
+            land.require_batch_judgment(self.shared, self.base, head, member1, record, [], 2)
+
+    def test_a_holder_cleared_before_the_judgment_cannot_demote_a_member(self):
+        """R7-B1's end-to-end shape: the holder loses its rows after the last validated read, and the judgment must
+        still be the one about member 2 — never "first member", which would clear a report that differs."""
+        member1, head = self.history()
+        self.holder(self.base, [self.row("fix/a", member1)])
+        self.receipt(head, base=self.base, totals={"run-gates/lint-x": 5},
+                     counts={"run-gates|lint-x|missing_ref|src/x.txt": 5})
+        real = land.require_open_batch
+        calls = []
+
+        def clearing(*args):
+            rows = real(*args)
+            calls.append(rows)
+            if len(calls) == 3:
+                (self.lock / "held" / "holder.txt").write_text("agent: someone else\n", encoding="utf-8")
+            return rows
+
+        with patch.object(land, "LOCK_DIR", self.lock), \
+                patch.object(land, "require_open_batch", side_effect=clearing), \
+                patch.object(land, "ssh", return_value=subprocess.CompletedProcess([], 0, "", "")):
+            with self.assertRaisesRegex(land.Refusal, "cannot stay in the batch"):
+                land.verify_receipt(self.path, None, None, self.base)
 
     def test_verify_prints_the_pinned_publication_lease(self):
         """The hand push leases on this exact value, never on a reread of origin/main (D1/F2)."""
