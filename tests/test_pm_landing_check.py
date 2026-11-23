@@ -3189,9 +3189,39 @@ class WhatEachRunAlsoReports(LandingRun):
                 path = Path(folder) / "rows.json"
                 touched = self.module.branch_paths(self.repo, self.base)
                 self.module.write_row_report(path, self.repo, self.base, touched, [dict(item)], counts, {}, set(),
-                                             partial, paired)
+                                             partial, paired, {})
                 row = json.loads(path.read_text(encoding="utf-8"))["subchecks"]["run-gates/lint_path_refs"]["rows"][0]
                 self.assertEqual(row["grown_stale"], expected)
+
+    def test_the_row_report_uses_the_checks_audit_closure_exemption(self):
+        """F8: a closure bucket whose non-stale rows are all recorded baseline fingerprints is staleness, not growth.
+
+        The row writer and the check's own loop ask the same whole-bucket classification, so the batch cannot
+        order a solo run for growth the check excused. The baseline's fingerprint, an unknown one, and a sampled
+        or paired copy are the three cases.
+        """
+        fingerprint = "8e6ae899e5d4"
+        bucket = ("run-gates|validate_audit_closure|audit_closure_validator_error|"
+                  "Plans/event_family_registry.json")
+        item = {"check": "run-gates", "subcheck": "validate_audit_closure",
+                "error": "audit_closure_validator_error", "path": "Plans/event_family_registry.json",
+                "key": f"{bucket}|{fingerprint}", "stale": False, "fields": {}, "_raw": {}}
+        counts = {"run-gates": {"validate_audit_closure": {"reported": 1, "sampled": 1}}}
+        cases = ((set(), set(), {bucket: {fingerprint}}, True),
+                 (set(), set(), {bucket: {"000000000000"}}, False),
+                 ({("run-gates", "validate_audit_closure")}, set(), {bucket: {fingerprint}}, False),
+                 (set(), {("run-gates", "validate_audit_closure")}, {bucket: {fingerprint}}, False))
+        for partial, paired, fingerprints, expected in cases:
+            with self.subTest(partial=bool(partial), paired=bool(paired), expected=expected), \
+                    tempfile.TemporaryDirectory() as folder:
+                path = Path(folder) / "rows.json"
+                touched = self.module.branch_paths(self.repo, self.base)
+                self.module.write_row_report(path, self.repo, self.base, touched, [dict(item)], counts, {}, set(),
+                                             partial, paired, fingerprints)
+                row = json.loads(path.read_text(encoding="utf-8"))[
+                    "subchecks"]["run-gates/validate_audit_closure"]["rows"][0]
+                self.assertEqual(row["grown_stale"], expected)
+                self.assertFalse(row["stale"])
 
     def test_the_row_report_names_a_path_git_would_read_as_renamed(self):
         (self.repo / "Plans" / "Old.md").write_text("".join(f"line {n}\n" for n in range(30)), encoding="utf-8")
