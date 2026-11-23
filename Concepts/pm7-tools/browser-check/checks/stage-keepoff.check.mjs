@@ -29,7 +29,7 @@
 // no frames, or never saw what it is about (a leaving prop, a block, a ring); a case whose sampler saw no leaving prop
 // reruns its whole sequence up to twice more before failing as 'could not judge' (a slow GPU can drop every leaving
 // frame; TOOL-ISSUES F13-NAS1-KEEPOFF-SAMPLES), and an overlap fails at once. Both surfaces unless --set sandbox picks one.
-// --set only=nier|leave|begin|ring|textsize|textsize-astra runs one group. About 8 minutes per surface.
+// --set only=nier|leave|begin|ring|textsize|textsize-astra|live-reduced runs one group. About 8 minutes per surface.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/stage-keepoff.check.mjs --set page=<build>
 
 const LAYER = '#pm-o55-onboarding .o55-layer:not(.o55-out)';
@@ -455,6 +455,156 @@ async function textsizeAstra(t, mode) {
 		await t.emulate({ reducedMotion: null });
 	}
 }
+// Live Reduced Motion transition completion (FO-S3 round 3, astra-rejudge-18):
+// (1) Queued speech: on 'Keep your work safe', Tab from Git to Jujutsu and turn on Reduced Motion while the Jujutsu
+//     line is queued (st.sayNext != null). The queued line must be delivered at once (not discarded by sayKept).
+// (2) Mid-face-change: hover 'Add one' on 'Keep your work safe' and turn on Reduced Motion while Pip's expression swap
+//     is mid-transition (faceOut attached / faceEl hidden). The swap must finish cleanly (1 face, visible, no transforms).
+async function liveReduced(t, mode) {
+	const modes = [
+		{ kind: 'os', on: () => t.emulate({ reducedMotion: 'reduce' }), off: () => t.emulate({ reducedMotion: 'no-preference' }) },
+		{ kind: 'app', on: (f) => f.evaluate(() => document.documentElement.setAttribute('data-motion', 'reduced')), off: (f) => f.evaluate(() => document.documentElement.removeAttribute('data-motion')) }
+	];
+	try {
+		for (const tr of modes) {
+			// --- Route (1): Queued speech on Keep your work safe (Tab Git -> Jujutsu -> live Reduced Motion) ---
+			{
+				const tag = `nier-dark 1920x1080 ${mode} live-reduced (${tr.kind}) queued speech`;
+				await t.emulate({ reducedMotion: 'no-preference' });
+				await t.viewport(1920, 1080);
+				const f = await t.app.open({ onboarding: true, query: 'o55=screen=safe', sandbox: mode === 'sandbox' });
+				await f.waitForFunction(() => !!window.O55 && !!document.querySelector('#pm-o55-onboarding .o55-win'), null, { timeout: 60000 });
+				await f.evaluate(() => window.O55.ui.applyLook('nier', 'dark'));
+				await f.waitForFunction(() => document.documentElement.getAttribute('data-o55-nier') === 'on' && !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()), null, { timeout: 20000 }).catch(() => {});
+				await f.evaluate(() => document.fonts.ready.then(() => true));
+				await f.waitForFunction(() => {
+					const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage;
+					return !!st && !!st.saying && !st.bubble.classList.contains('typing') && !st.reduced;
+				}, null, { timeout: 15000 });
+				await t.page.mouse.move(2, 2);
+				await f.waitForTimeout(500);
+				// Real keyboard Tab until Git is focused, then immediately Tab to Jujutsu so Jujutsu's line queues in st.sayNext
+				let onGit = false;
+				for (let i = 0; i < 40 && !onGit; i++) {
+					await t.page.keyboard.press('Tab');
+					await f.waitForTimeout(60);
+					onGit = await f.evaluate(() => {
+						const a = document.activeElement;
+						return !!a && a.getAttribute('data-o55-do') === 'backend' && a.getAttribute('data-arg') === 'git';
+					});
+				}
+				await f.waitForFunction(() => {
+					const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage;
+					return !!st && /Git/i.test(st.saying || '');
+				}, null, { timeout: 5000 }).catch(() => {});
+				await t.page.keyboard.press('Tab');
+				const pre = await f.evaluate(() => {
+					const a = document.activeElement, st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage;
+					return {
+						onJujutsu: !!a && a.getAttribute('data-o55-do') === 'backend' && a.getAttribute('data-arg') === 'jujutsu',
+						saying: st ? st.saying : '',
+						queued: st && st.sayNext ? st.sayNext[0] : ''
+					};
+				});
+				await tr.on(f);
+				const readSpeech = () => {
+					const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage;
+					const onEl = st && st.bubble && st.bubble.querySelector('.pst-bt-on');
+					return {
+						saying: st ? st.saying : '',
+						queued: st && st.sayNext ? st.sayNext[0] : null,
+						shown: onEl ? onEl.textContent : '',
+						typing: !!(st && st.bubble && st.bubble.classList.contains('typing')),
+						app: !!(window.O55 && O55.motion && O55.motion.reduced && O55.motion.reduced()),
+						reduced: !!(st && st.reduced),
+						dom: st && st.root ? st.root.dataset.reduced : null,
+						still: !!(st && st.still && st.still()),
+						raf: st ? st.raf || 0 : null
+					};
+				};
+				await f.waitForTimeout(300);
+				await f.waitForFunction(() => { const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage; return !!st && st.reduced && !st.raf; }, null, { timeout: 1000 }).catch(() => {});
+				const atSwitch = await f.evaluate(readSpeech);
+				await f.waitForTimeout(2400);
+				const later = await f.evaluate(readSpeech);
+				await tr.off(f);
+				const wantLine = pre.queued || 'Jujutsu. Mistakes undo easily.';
+				const okPre = onGit && pre.onJujutsu && /Jujutsu/i.test(pre.queued);
+				const okState = (s) => s.app && s.reduced && s.dom === '1' && s.still && s.raf === 0 && !s.typing && s.queued === null && s.saying === wantLine && s.shown === wantLine;
+				t.log(`${tag}: pre=${JSON.stringify({ onGit, ...pre })} switch=${JSON.stringify(atSwitch)} later=${JSON.stringify(later)}`);
+				await t.check(`${tag}: queued Jujutsu line is delivered at once and persists after 2.4 s`, okPre && okState(atSwitch) && okState(later), `pre=${JSON.stringify({ onGit, ...pre })} switch=${JSON.stringify(atSwitch)} later=${JSON.stringify(later)}`);
+			}
+			// --- Route (2): Mid-face-change on Keep your work safe (hover Add one -> live Reduced Motion during swap) ---
+			{
+				const tag = `nier-dark 1920x1080 ${mode} live-reduced (${tr.kind}) face swap`;
+				await t.emulate({ reducedMotion: 'no-preference' });
+				await t.viewport(1920, 1080);
+				const f = await t.app.open({ onboarding: true, query: 'o55=screen=safe', sandbox: mode === 'sandbox' });
+				await f.waitForFunction(() => !!window.O55 && !!document.querySelector('#pm-o55-onboarding .o55-win'), null, { timeout: 60000 });
+				await f.evaluate(() => window.O55.ui.applyLook('nier', 'dark'));
+				await f.waitForFunction(() => document.documentElement.getAttribute('data-o55-nier') === 'on' && !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()), null, { timeout: 20000 }).catch(() => {});
+				await f.evaluate(() => document.fonts.ready.then(() => true));
+				await f.waitForFunction(() => {
+					const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage;
+					return !!st && st.curMood === 'idle' && !st.faceOut && st.faceT0 == null && !st.reduced;
+				}, null, { timeout: 15000 });
+				await t.page.mouse.move(2, 2);
+				await f.waitForTimeout(400);
+				let sawMid = false;
+				for (let attempt = 0; attempt < 3 && !sawMid; attempt++) {
+					if (attempt > 0) {
+						await tr.off(f);
+						await t.page.mouse.move(2, 2);
+						await f.waitForFunction(() => {
+							const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage;
+							return !!st && !st.reduced && st.curMood === 'idle' && !st.faceOut && st.faceT0 == null;
+						}, null, { timeout: 5000 }).catch(() => {});
+						await f.waitForTimeout(300);
+					}
+					const onlineBtn = f.locator(`${LAYER} [data-o55-do="online"]`).first();
+					await onlineBtn.waitFor({ state: 'visible', timeout: 10000 });
+					await onlineBtn.hover();
+					const caught = await f.waitForFunction(() => {
+						const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage;
+						return !!st && !!st.faceOut && st.faceT0 != null && st.curMood !== 'idle' && !st.moodOverride;
+					}, null, { timeout: 5000, polling: 'raf' }).then(() => true, () => false);
+					if (!caught) continue;
+					await tr.on(f);
+					sawMid = true;
+					t.log(`${tag} attempt ${attempt + 1}: caughtMidFace=true`);
+				}
+				const readFace = () => {
+					const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage;
+					const parts = st && st.faceEl ? [...st.faceEl.querySelectorAll('.pst-part')].map((w) => w.getAttribute('transform')) : [];
+					return {
+						cur: st ? st.curMood : null,
+						app: !!(window.O55 && O55.motion && O55.motion.reduced && O55.motion.reduced()),
+						reduced: !!(st && st.reduced),
+						dom: st && st.root ? st.root.dataset.reduced : null,
+						still: !!(st && st.still && st.still()),
+						raf: st ? st.raf || 0 : null,
+						faceOut: !!(st && st.faceOut),
+						faceT0: st ? st.faceT0 : -1,
+						faceV: st ? st.faceV : -1,
+						faceCount: st && st.gHead ? st.gHead.querySelectorAll(':scope > .pst-face').length : -1,
+						currentHidden: st && st.faceEl ? st.faceEl.getAttribute('visibility') : 'missing',
+						partTransforms: parts
+					};
+				};
+				await f.waitForFunction(() => { const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage; return !!st && st.reduced && !st.raf; }, null, { timeout: 1000 }).catch(() => {});
+				const atSwitch = await f.evaluate(readFace);
+				await f.waitForTimeout(2000);
+				const parked = await f.evaluate(readFace);
+				await tr.off(f);
+				const okFace = (s) => s.app && s.reduced && s.dom === '1' && s.still && s.raf === 0 && s.cur === 'watch' && !s.faceOut && s.faceT0 === null && s.faceV === 1 && s.faceCount === 1 && s.currentHidden === null && s.partTransforms.length > 0 && s.partTransforms.every((x) => x === null);
+				t.log(`${tag}: sawMid=${sawMid} switch=${JSON.stringify(atSwitch)} parked=${JSON.stringify(parked)}`);
+				await t.check(`${tag}: mid-swap Reduced Motion completes the face swap cleanly (1 visible face, no stale transforms) and stays settled after 2 s`, sawMid && okFace(atSwitch) && okFace(parked), `sawMid=${sawMid} switch=${JSON.stringify(atSwitch)} parked=${JSON.stringify(parked)}`);
+			}
+		}
+	} finally {
+		await t.emulate({ reducedMotion: null });
+	}
+}
 const all = (mode) => async (t) => {
 	if (want(t, 'nier')) await nier(t, mode);
 	if (want(t, 'leave')) await leave(t, mode);
@@ -462,6 +612,7 @@ const all = (mode) => async (t) => {
 	if (want(t, 'ring')) await ring(t, mode);
 	if (want(t, 'textsize')) await textsize(t, mode);
 	if (want(t, 'textsize') || want(t, 'textsize-astra')) await textsizeAstra(t, mode);
+	if (want(t, 'live-reduced')) await liveReduced(t, mode);
 };
 export const tests = {
 	'stage keep-off, normal page': on('normal', all('normal')),

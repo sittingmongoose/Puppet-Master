@@ -923,7 +923,7 @@
     }
     sayNow(text, mood, owner) {
       const b = this.bubble, S = snd();
-      if (this.typeT) this.typeT.cancel();
+      if (this.typeT) { this.typeT.cancel(); this.typeT = null; }
       this.saying = text; this.sayOwner = text ? owner || null : null;
       if (!text) { b.classList.remove('on', 'typing'); if (S && S.hush) S.hush(); return; }
       if (!b.classList.contains('on')) { b.classList.remove('on'); void b.offsetWidth; b.classList.add('on'); }
@@ -941,14 +941,14 @@
       if (this.reduced) { on.textContent = text; b.classList.remove('typing'); return; }
       off.textContent = text; b.classList.add('typing');
       this.typeT = H.typer(text.length, cps, (i) => { on.textContent = text.slice(0, i); off.textContent = text.slice(i); },
-        { paused: () => !this.live(), done: () => b.classList.remove('typing') });
+        { paused: () => !this.live(), done: () => { this.typeT = null; b.classList.remove('typing'); } });
     }
     /* a new layout: the line Pip has said stays on the new bubble, whole and at once: not typed or voiced again, its box
        not popping in again (SW-23). Its time on screen runs on from when it was said */
     sayKept(text) {
       const b = this.bubble;
       clearTimeout(this.sayT); this.sayNext = null;
-      if (this.typeT) this.typeT.cancel();
+      if (this.typeT) { this.typeT.cancel(); this.typeT = null; }
       b.classList.remove('typing'); b.classList.add('on');
       b.getAnimations().forEach((a) => a.finish());
       this.btext.innerHTML = '<span class="pst-bt-on"></span><span class="pst-bt-off"></span>';
@@ -976,7 +976,7 @@
     }
     tipEl() { return this.overlay && this.overlay.querySelector('.pst-tip, .pst-ntip'); }
     showTip(instant) {
-      if (this.tipW) this.tipW.cancel();
+      if (this.tipW) { this.tipW.cancel(); this.tipW = null; }
       const el = this.tipEl(), t = this.tipData;
       if (!el || !t) return;
       // NieR: QUEST UPDATED gives way to a tip asked for
@@ -1002,7 +1002,7 @@
       this.feel(this.famName === 'nier' ? 'alert' : 'happy', 900); this.nod(); this.busy();
       off.textContent = t.text; el.classList.add('typing'); place();
       this.tipW = H.typer(t.text.length, cps, (i) => { on.textContent = t.text.slice(0, i); off.textContent = t.text.slice(i); },
-        { paused: () => !this.live(), done: () => el.classList.remove('typing') });
+        { paused: () => !this.live(), done: () => { this.tipW = null; el.classList.remove('typing'); } });
     }
     // where the note is, in stage units (for Pip's eyes)
     tipAt() {
@@ -1199,7 +1199,7 @@
       // the hand: springs to its spot, with a slow idle drift that keeps Pip alive
       const swayX = red ? 0 : F.sway * Math.sin(this.t * F.swayW) * (ps.asleep ? .2 : 1);
       const swayY = red || !F.bob ? 0 : F.bob * .6 * Math.sin(this.t * F.swayW * 1.7);
-      ps.lift = (ps.lift || 0) + ((ps.liftT || 0) - (ps.lift || 0)) * Math.min(1, dt * 5);
+      ps.lift = red ? (ps.liftT || 0) : (ps.lift || 0) + ((ps.liftT || 0) - (ps.lift || 0)) * Math.min(1, dt * 5);
       const tx = ps.Ct.x + swayX, ty = ps.Ct.y + swayY - ps.lift;
       if (red) { ps.C.x = tx; ps.C.y = ty; ps.C.vx = ps.C.vy = 0; ps.th = 0; ps.thv = 0; }
       else {
@@ -1216,19 +1216,21 @@
         const sq = clamp(-ps.dyv / 900, -.1, .1); ps.sy += ((1 + sq) - ps.sy) * Math.min(1, dt * 18); ps.sx += ((1 - sq * .7) - ps.sx) * Math.min(1, dt * 18);
       }
       // head tilt (expression) and the control's own tilt (rocking while working)
-      if (red) { ps.tilt = ps.tiltT; ps.phi = 0; }
+      if (red) { ps.tilt = ps.tiltT; ps.tiltv = 0; ps.phi = 0; }
       else {
         const tA = 90 * (ps.tiltT - ps.tilt) - 10 * ps.tiltv; ps.tiltv += tA * dt; ps.tilt += ps.tiltv * dt;
         const phiT = this.work ? Math.sin(this.t * 4.2) * (this.rockMax == null ? .12 : this.rockMax) : ps.asleep ? .08 : 0;
         ps.phi += (phiT - ps.phi) * Math.min(1, dt * 6);
       }
       // eyes follow what Pip is looking at
-      const lk = ps.lookT; ps.look[0] += (lk[0] - ps.look[0]) * Math.min(1, dt * 9); ps.look[1] += (lk[1] - ps.look[1]) * Math.min(1, dt * 9);
+      const lk = ps.lookT;
+      if (red) { ps.look[0] = lk[0]; ps.look[1] = lk[1]; }
+      else { ps.look[0] += (lk[0] - ps.look[0]) * Math.min(1, dt * 9); ps.look[1] += (lk[1] - ps.look[1]) * Math.min(1, dt * 9); }
       // props: each hangs from its own anchor above the stage
       this.props.forEach((pr, id) => {
         const tg = this.propTarget(pr);
         if (pr.state === 'out' && !red) this.holdUnder(pr, tg);
-        if (red) { pr.ax = tg.ax; pr.len = tg.len; pr.a = 0; pr.av = 0; pr.op = tg.op; pr.scale = (pr.spec.scale || 1); }
+        if (red) { pr.ax = tg.ax; pr.axv = 0; pr.len = tg.len; pr.lenv = 0; pr.a = 0; pr.av = 0; pr.sq = 0; pr.sqv = 0; pr.op = tg.op; pr.scale = (pr.spec.scale || 1); pr.sv = 0; }
         else {
           const axA = F.pk * (tg.ax - pr.ax) - F.pc * pr.axv; pr.axv += axA * dt; pr.ax += pr.axv * dt;
           // a block set on the stack is lowered, not dropped: a softer, critically damped spring, so it slows into
@@ -1626,13 +1628,35 @@
       this.reduced = r;
       this.root.dataset.reduced = r ? '1' : '0';
       if (r) {
-        /* live switch to Reduced Motion: settle transient motion and finish typing so the stage parks after one still draw */
+        /* live switch to Reduced Motion (FO-S3 r3): finish every in-flight transition at its end state (never drop it)
+           so queued speech is delivered, face swaps complete cleanly, and typers/effects finish before the loop parks */
+        if (this.tryRaf) {
+          cancelAnimationFrame(this.tryRaf); this.tryRaf = 0;
+          if (this.gPip) this.gPip.style.transform = '';
+          if (this.tryTheme && this.tryTheme !== this.pipTheme) this.buildPip(this.tryTheme);
+        }
         this.moodOverride = null; this.moodUntil = -1;
         this.idleLook = null; this.idleUntil = 0;
-        this.faceOut = null; this.faceT0 = null;
+        this.tipLook = 0; this.sliceT = null;
+        if (this.faceOut) { this.faceOut.remove(); this.faceOut = null; }
+        if (this.faceEl) {
+          this.faceEl.removeAttribute('visibility');
+          this.faceEl.querySelectorAll('.pst-part').forEach((w) => w.removeAttribute('transform'));
+        }
+        this.faceT0 = null; this.faceV = 1;
+        if (this.ps) this.ps.blinkAt = null;
+        if (this.blinkEl) attr(this.blinkEl, 'transform', `translate(0 ${this.blinkY}) scale(1 1) translate(0 ${-this.blinkY})`);
         if (this.fx.length) { this.fx.forEach((p) => p.e && p.e.remove()); this.fx.length = 0; }
-        if (this.typeT) { this.typeT.cancel(); this.typeT = null; if (this.saying) this.sayKept(this.saying); }
+        if (this.ghosts.length) { this.ghosts.forEach((g) => g.e && g.e.remove()); this.ghosts.length = 0; }
+        const queued = this.sayNext;
+        clearTimeout(this.sayT); this.sayNext = null;
+        if (queued && this.ownerLive(queued[2])) this.sayNow(queued[0], queued[1], queued[2]);
+        else if (this.typeT) { this.typeT.cancel(); this.typeT = null; if (this.saying) this.sayKept(this.saying); }
+        if (this.bubble) this.bubble.getAnimations().forEach((a) => a.finish());
         if (this.tipW) { this.tipW.cancel(); this.tipW = null; if (this.tipData) this.showTip(true); }
+        if (this.decT) { this.decT.cancel(); this.decT = null; const d = this.hudEl && this.hudEl.querySelector('.pst-decode'); if (d && this.decoded != null && d.textContent !== this.decoded) d.textContent = this.decoded; }
+        if (this.cmdT) { this.cmdT.cancel(); this.cmdT = null; const inp = this.hudEl && this.hudEl.querySelector('.pst-term-in'); if (inp && this.cmdText != null && inp.textContent !== this.cmdText) { inp.textContent = this.cmdText; if (this.headTo) this.headTo(); } }
+        if (this.bootT) { this.bootT.cancel(); this.bootT = null; const pre = this.hudEl && this.hudEl.querySelector('.pst-term-boot'); if (pre && !pre.classList.contains('gone')) { pre.textContent = ''; pre.classList.add('gone'); } }
       }
       this.dirty = true; this.frameT = -1e9; this.kick();
     }
@@ -1644,19 +1668,22 @@
       if (t === this.pipTheme) return;
       const S = snd();
       if (theme && theme !== this.theme) this.sfx('tryOn', { kit: S && S.kitOf ? S.kitOf(t) : undefined });
-      if (this.reduced) { this.buildPip(t); return; }
+      if (this.tryRaf) { cancelAnimationFrame(this.tryRaf); this.tryRaf = 0; }
+      this.tryTheme = t;
+      if (this.reduced) { if (this.gPip) this.gPip.style.transform = ''; this.buildPip(t); return; }
       let k = 0;
       const flip = () => {
+        this.tryRaf = 0;
         k += 1;
         const sx = k <= 6 ? 1 - k / 6 : (k - 6) / 6;
         this.gPip.style.transformOrigin = `${this.ps.C.x}px 0`;
         this.gPip.style.transform = `scaleX(${R(Math.max(.02, sx))})`;
         if (k === 6) { this.buildPip(t); }
-        if (k < 12) requestAnimationFrame(flip); else this.gPip.style.transform = '';
+        if (k < 12) this.tryRaf = requestAnimationFrame(flip); else this.gPip.style.transform = '';
       };
       flip();
     }
-    destroy() { if (this.off) this.off(); clearTimeout(this.questT); cancelAnimationFrame(this.raf); clearTimeout(this.parkT); clearTimeout(this.holdT); this.dead = true; if (this.ro) this.ro.disconnect(); if (this.nierRO) this.nierRO.disconnect(); if (this.motionMO) this.motionMO.disconnect(); if (this.reduceMq) { if (typeof this.reduceMq.removeEventListener === 'function') this.reduceMq.removeEventListener('change', this.syncMotion); else if (typeof this.reduceMq.removeListener === 'function') this.reduceMq.removeListener(this.syncMotion); } window.removeEventListener('o55:lowresource', this.onLowRes); window.removeEventListener('resize', this.onWinResize); clearTimeout(this.winRT); if (this.bubbleMO) this.bubbleMO.disconnect(); clearTimeout(this.wakeT); [this.tipW, this.typeT, this.decT, this.cmdT, this.bootT].forEach((w) => w && w.cancel()); this.root.innerHTML = ''; }
+    destroy() { if (this.off) this.off(); clearTimeout(this.questT); cancelAnimationFrame(this.raf); if (this.tryRaf) { cancelAnimationFrame(this.tryRaf); this.tryRaf = 0; } clearTimeout(this.parkT); clearTimeout(this.holdT); clearTimeout(this.sayT); this.dead = true; if (this.ro) this.ro.disconnect(); if (this.nierRO) this.nierRO.disconnect(); if (this.motionMO) this.motionMO.disconnect(); if (this.reduceMq) { if (typeof this.reduceMq.removeEventListener === 'function') this.reduceMq.removeEventListener('change', this.syncMotion); else if (typeof this.reduceMq.removeListener === 'function') this.reduceMq.removeListener(this.syncMotion); } window.removeEventListener('o55:lowresource', this.onLowRes); window.removeEventListener('resize', this.onWinResize); clearTimeout(this.winRT); if (this.bubbleMO) this.bubbleMO.disconnect(); clearTimeout(this.wakeT); [this.tipW, this.typeT, this.decT, this.cmdT, this.bootT].forEach((w) => w && w.cancel()); this.root.innerHTML = ''; }
 
     /* ------------------------------------------------------------- the product's own */
     /* Pip parts the stage's CSS reads: setup-world-life off holds the world's own loops (clouds, caustics, motes, the
