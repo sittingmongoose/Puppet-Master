@@ -2397,9 +2397,11 @@ def verify_receipt(path, commit=None, base=None, batch_start=None):
         raise Refusal(f"invalid topic ref in receipt: {ref}")
     tree = revision(SHARED, head + "^{tree}")
     verify_record(folder, record, host, ref, head, tree, checked_base)
-    main = full_main(SHARED) if batch_start is not None else None
+    # One publication tip, read once and pinned: every later read must still be this commit, and the hand push
+    # leases on exactly the value printed at the end (review SOL D1, ASTRA F1/F2).
+    pinned = full_main(SHARED)
     if batch_start is None:
-        if full_main(SHARED) != checked_base:
+        if pinned != checked_base:
             raise Refusal(f"shared origin/main differs from the receipt base {checked_base}; fetch and check again")
     else:
         # Batch mode: the receipt's base is the batch-start, which is behind main once the first member pushed.
@@ -2409,22 +2411,22 @@ def verify_receipt(path, commit=None, base=None, batch_start=None):
         if checked_base != checked_batch:
             raise Refusal(f"a batch member's receipt base is {checked_base}, but --batch-start is {checked_batch}. Inside "
                           "a batch, check with --base <full batch-start> so the receipt is judged against the batch.")
-        require_open_batch(SHARED, checked_batch, main)
+        require_open_batch(SHARED, checked_batch, pinned)
         if record["exit_code"] not in (0, 1):
             raise Refusal(f"the receipt records landing checker exit {record['exit_code']}: a batch member may only "
                           "stay on exit 0 or 1, so this landing is judged by its report, not as a batch member")
         if not record.get("row_report"):
             raise Refusal("the receipt records no row report: inside a batch, check with --base <full batch-start> on "
                           "a landing check that prints --row-report, so the next member has what it compares with")
-        if not is_ancestor(SHARED, main, head):
-            raise Refusal(f"origin/main {main} is not an ancestor of the checked commit {head}: rebase on the current "
+        if not is_ancestor(SHARED, pinned, head):
+            raise Refusal(f"origin/main {pinned} is not an ancestor of the checked commit {head}: rebase on the current "
                           "origin/main and check again, so the push is a fast-forward")
     if git(SHARED, "symbolic-ref", "--quiet", "HEAD", check=False).stdout.strip() != MAIN_REF:
         raise Refusal("shared checkout must be on main")
     shared_head = revision(SHARED, "HEAD^{commit}")
     behind = (lambda base: shared_head != head and not is_ancestor(SHARED, shared_head, base))
     if batch_start is not None:
-        consistent = not behind(main) and is_ancestor(SHARED, checked_base, head)
+        consistent = not behind(pinned) and is_ancestor(SHARED, checked_base, head)
     else:
         consistent = not behind(checked_base) and is_ancestor(SHARED, checked_base, head)
     if not consistent:
@@ -2440,24 +2442,30 @@ def verify_receipt(path, commit=None, base=None, batch_start=None):
         raise Refusal(f"could not verify the receipt witness on {host} (exit {result.returncode}):"
                       f" {result.stderr.strip()}")
     tips = origin_refs(SHARED, MAIN_REF, ref)
+    if tips[MAIN_REF] != pinned:
+        raise Refusal(f"origin/main moved from {pinned} to {tips[MAIN_REF]} during verification")
     if batch_start is not None:
-        if tips[MAIN_REF] != main:
-            raise Refusal(f"origin/main moved from {main} to {tips[MAIN_REF]} during verification")
         # Re-read the rule's record after the witness: an open batch, every landing named, no unlisted commit.
-        require_open_batch(SHARED, checked_base, tips[MAIN_REF])
-    elif tips[MAIN_REF] != checked_base:
-        raise Refusal(f"origin/main moved from receipt base {checked_base} to {tips[MAIN_REF]}")
+        require_open_batch(SHARED, checked_base, pinned)
     if tips[ref] != head:
         raise Refusal(f"published topic {ref} changed from checked commit {head} to {tips[ref]}")
     publication_preflight(SHARED, checked_base, head, record["ignored_inputs"])
-    if path.read_bytes() != raw:
-        raise Refusal(f"receipt changed during verification: {path}")
+    require_record_bytes(path, raw, record, batch_start is not None)
     if batch_start is not None:
-        # The preflight scans the whole tree; the rule's record can move while it runs.
-        require_open_batch(SHARED, checked_base, full_main(SHARED))
+        # The preflight scans the whole tree; neither origin/main nor the rule's record may move while it runs.
+        moved = full_main(SHARED)
+        if moved != pinned:
+            raise Refusal(f"origin/main moved from {pinned} to {moved} during verification")
+        require_open_batch(SHARED, checked_base, pinned)
+        if not is_ancestor(SHARED, pinned, head):
+            raise Refusal(f"origin/main {pinned} is no longer an ancestor of the checked commit {head}")
         say(f"Verified {head} against batch-start {checked_base} on {host}. Landing checker exit {record['exit_code']}.")
     else:
+        moved = full_main(SHARED)
+        if moved != pinned:
+            raise Refusal(f"origin/main moved from {pinned} to {moved} during verification")
         say(f"Verified {head} against {checked_base} on {host}. Landing checker exit {record['exit_code']}.")
+    say(f"PUBLISH_LEASE={pinned}")
     return 0
 
 
