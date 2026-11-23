@@ -1424,9 +1424,10 @@ def read_json_report(doc: dict[str, Any]) -> dict[str, Any]:
         check, _, subcheck = str(name).partition("/")
         if check and subcheck:
             partial.add((check, subcheck))
-    # And `exports.subchecks` says why each of them is a sample. `no_export` and `baseline_sample` are the
-    # subcheck's permanent samples: no export can complete it, so its total is the whole comparison. Any other
-    # case means an export was attempted and did not key its rows (`export_timeout`, `export_unreadable`,
+    # And `exports.subchecks` says why each of them is a sample. Only `no_export` is a permanent sample: no export
+    # can complete that subcheck, so its total is the whole comparison. `baseline_sample` is NOT permanent: it means
+    # the batch-start baseline missed its export, and the next follow-up's baseline can key it, so its counts are
+    # unknown here and the landing is judged alone (R5-B1). Any other case means an export was attempted and did not key its rows (`export_timeout`, `export_unreadable`,
     # `total_mismatch`, `rows_mismatch`), and then its counts are not known, only its total. A paired run-gates
     # copy is judged by its audit-governance twin's rows, so an export of its own is not read here.
     rows_read = (doc.get("exports") or {}).get("subchecks") if isinstance(doc.get("exports"), dict) else None
@@ -1443,9 +1444,9 @@ def read_json_report(doc: dict[str, Any]) -> dict[str, Any]:
         seen.add(key)
         if row.get("keyed"):
             continue
-        if row.get("case") in ("no_export", "baseline_sample"):
+        if row.get("case") == "no_export":
             permanent.add(key)
-        elif row.get("case") is not None:
+        elif row.get("case") not in (None, "baseline_sample"):
             export_failed.add(key)
     if rows_read is not None:
         # Every subcheck sampled in this run has a row there. One compared by its total only with no row printed
@@ -1633,7 +1634,7 @@ def counts_unknown(report: dict[str, Any], earlier: Sequence[dict[str, Any]]) ->
 
     A batch compares counts, and a count a member does not have is neither a zero nor a smaller number. A subcheck's
     counts are not fully known in a report when it timed out there (`subcheck_totals` has null), when it is compared
-    by its total only for any reason other than a permanent sample (`no_export`, `baseline_sample`), or when an export
+    by its total only for any reason other than a permanent sample (`no_export` only), or when an export
     of it failed or could not be read (`exports.subchecks`: `export_timeout`, `export_unreadable`, `total_mismatch`,
     `rows_mismatch`). They are not fully known in the batch when one member printed them in full while another has
     only its total. The one exception is a subcheck that is a permanent sample in every member: no complete row set

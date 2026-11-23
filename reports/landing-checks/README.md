@@ -941,9 +941,10 @@ When the batch cannot tell:
     (`export_timeout`, `export_unreadable`, `total_mismatch`, `rows_mismatch`), or one member printed it in
     full while another has only its total. Its counts have no number to compare, so this landing is judged
     alone and the reason names the subcheck and the member; growth is never reported from 0. The one
-    exception is a subcheck that is a permanent sample (`no_export`, `baseline_sample`) in every member: no
-    complete row set exists anywhere to compare it by, so its printed total is the whole comparison, as in
-    the landing check itself.
+    exception is a subcheck that is a permanent sample (`no_export`) in every member: no complete row set
+    exists anywhere to compare it by, so its printed total is the whole comparison, as in the landing check
+    itself. A `baseline_sample` is not that exception: it means the batch-start baseline missed the export,
+    and a member's follow-up baseline can key it, so its counts are unknown and the landing is judged alone.
 
 From the diff, with no exemption:
 

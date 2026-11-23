@@ -1554,11 +1554,13 @@ class ReportFormatTests(unittest.TestCase):
                 row = report(case)
                 self.assertIn(("run-gates", "validate_evidence"), row["export_failed"])
                 self.assertNotIn(("run-gates", "validate_evidence"), row["permanent"])
-        for case in ("no_export", "baseline_sample"):
-            with self.subTest(case=case):
-                row = report(case)
-                self.assertNotIn(("run-gates", "validate_evidence"), row["export_failed"])
-                self.assertIn(("run-gates", "validate_evidence"), row["permanent"])
+        # Only `no_export` is permanent. `baseline_sample` means the batch-start baseline missed its export; the next
+        # follow-up can key it, so it is not permanent (R5-B1): unknown, judged alone, never compared by total.
+        row = report("no_export")
+        self.assertNotIn(("run-gates", "validate_evidence"), row["export_failed"])
+        self.assertIn(("run-gates", "validate_evidence"), row["permanent"])
+        row = report("baseline_sample")
+        self.assertNotIn(("run-gates", "validate_evidence"), row["permanent"])
         # An export that keyed every row made the subcheck complete, so it is neither unknown nor a sample.
         keyed = report("keyed")
         self.assertFalse(keyed["export_failed"] or keyed["permanent"])
@@ -1587,6 +1589,18 @@ class ReportFormatTests(unittest.TestCase):
         mixed = land.batch_gap(earlier, [permanent[0]])
         self.assertEqual(mixed[0], "batch_counts_unknown", mixed)
         self.assertIn("printed it in full", mixed[1])
+        # R5-B1: a `baseline_sample` in every member is NOT the exception. The batch-start baseline missed the
+        # export; a member's follow-up baseline can key it, so a lone landing check would compare rows and can
+        # stop where this total-only comparison would clear. Its counts are unknown: judge alone.
+        sampled = [land.batch_report(json_report(totals={"run-gates/validate_evidence": n}, counts={},
+                                                 partial=["validate_evidence"],
+                                                 exports=[export_row("run-gates", "validate_evidence",
+                                                                     "baseline_sample")]))
+                   for n in (2861, 2859)]
+        gap = land.batch_gap(sampled[1], [sampled[0]])
+        self.assertIsNotNone(gap)
+        self.assertEqual(gap[0], "batch_counts_unknown", gap)
+        self.assertIn("run-gates/validate_evidence", gap[1])
 
     def test_the_real_remote_receipts_json_report_is_read_not_refused(self):
         """The report `check` wrote for fix-land-fast-r11 at 0a3c65cab2, copied into the fixtures verbatim.
