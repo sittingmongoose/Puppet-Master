@@ -1837,20 +1837,86 @@ def commit_time(shared: Path, value: str) -> Optional[float]:
     return float(out) if out.isdigit() else None
 
 
-def baseline_age(shared: Path, main: str) -> Optional[float]:
-    """How old the baseline at main is by commit time, as pm-landing-check.py counts it, measured from main.
-    None when rule 2 is off anyway (it names no commit, or one not on main's history)."""
-    shown = git(shared, "show", f"{main}:{BASELINE_FILE}", check=False)
+def baseline_age(shared: Path, rev: str) -> Optional[float]:
+    """How old the baseline is by committer time when the landing check measures from `rev`.
+
+    The check compares the baseline's commit with its base's commit times (`baseline_currency`), so this is
+    `rev`'s commit time minus the baseline's: measured from the batch-start, it is the age every member's check sees.
+    None when rule 2 is off anyway (no recorded commit, or one not on `rev`'s history).
+    """
+    shown = git(shared, "show", f"{rev}:{BASELINE_FILE}", check=False)
     try:
         recorded = json.loads(shown.stdout).get("commit") if shown.returncode == 0 else None
     except (ValueError, AttributeError):
         recorded = None
     if not isinstance(recorded, str) or not recorded:
         return None
-    when, newest = commit_time(shared, recorded), commit_time(shared, main)
-    if when is None or newest is None or not is_ancestor(shared, recorded, main):
+    when, base = commit_time(shared, recorded), commit_time(shared, rev)
+    if when is None or base is None or not is_ancestor(shared, recorded, rev):
         return None
-    return max(newest, time.time()) - when
+    return base - when
+
+
+def batch_limits(shared: Path, start: str, fields: dict[str, Any], rows: Sequence[dict[str, str]],
+                 holder: dict[str, Any]) -> list[dict[str, Any]]:
+    """The rule's four limits, read-only: whether this landing is within each, and the sentence batch-status prints.
+
+    The same rows decide `batch-check` and `verify --batch-start`: something batch-status shows as a `[stop]` must
+    refuse a member, never land it. `start` is the batch-start, which is what every member's check measures the
+    baseline's age from.
+    """
+    out: list[dict[str, Any]] = []
+    landings = len(rows)
+    full = landings >= BATCH_MAX_LANDINGS
+    out.append({"name": "landings", "within": not full,
+                "text": f"landings: {landings} of {BATCH_MAX_LANDINGS}"
+                        + (" (full: the next landing is judged alone)" if full else "")})
+    first_push = fields.get("batch-first-push")
+    from_row = False
+    if not first_push and rows:
+        when = commit_time(shared, rows[0]["sha"])
+        if when is not None:
+            first_push = iso(datetime.fromtimestamp(when, timezone.utc))
+            from_row = True
+    where = " (from the first row's commit time: no batch-first-push line)" if from_row else ""
+    if not first_push:
+        out.append({"name": "two hours", "within": True, "text": "first push: none yet; the two hours start at the "
+                                                                  "first push of main"})
+    else:
+        age = age_seconds(first_push)
+        if age is None:
+            out.append({"name": "two hours", "within": False,
+                        "text": f"first push: {first_push} is not a time in the rule's format{where}"})
+        else:
+            past = age > BATCH_MAX_SECONDS
+            out.append({"name": "two hours", "within": not past,
+                        "text": f"first push: {first_push}, {int(age // 60)} min of the "
+                                f"{BATCH_MAX_SECONDS // 3600} h ago{where}"
+                                + (" (past the two hours: the next landing is judged alone)" if past else "")})
+    out.append({"name": "holder", "within": not holder["dead"],
+                "text": f"holder: {holder['reason']}"
+                        + (" (the holder is dead: the batch is closed or cleared before another landing)"
+                           if holder["dead"] else "")})
+    age = baseline_age(shared, start)
+    if age is None:
+        out.append({"name": "baseline", "within": True,
+                    "text": "baseline: no recorded commit on the batch-start's history, so rule 2 is off and nothing "
+                            "here depends on its age"})
+    else:
+        near = age > BASELINE_LIMIT_SECONDS - BASELINE_MARGIN_SECONDS
+        out.append({"name": "baseline", "within": not near,
+                    "text": f"baseline: {age / 86400:.2f} days old at batch-start of the 7 rule 2 allows"
+                            + (", within 2 h of its seven-day edge: this landing is judged alone" if near else "")})
+    return out
+
+
+def require_batch_limits(shared: Path, start: str, fields: dict[str, Any], rows: Sequence[dict[str, str]],
+                         holder: dict[str, Any]) -> None:
+    """Refuse a landing the open batch may not take: the four landings, the two hours, a dead holder, the baseline."""
+    for limit in batch_limits(shared, start, fields, rows, holder):
+        if not limit["within"]:
+            raise Refusal(f"the batch cannot take this landing ({limit['text']}). Close it with its follow-up at the "
+                          "current main, then land this one alone")
 
 
 def batch_state(shared: Path, lock_dir: Path) -> dict[str, Any]:
@@ -1869,9 +1935,7 @@ def batch_state(shared: Path, lock_dir: Path) -> dict[str, Any]:
         return state
     rows, malformed = batch_rows(fields)
     batch: dict[str, Any] = {"start": start, "rows": rows, "malformed": malformed, "on_main": False,
-                             "first_push": fields.get("batch-first-push"), "first_push_from_row": False,
-                             "baseline_age": None, "landed": batch_landed(shared, fields), "plans": None,
-                             "unlisted": []}
+                             "landed": batch_landed(shared, fields), "plans": None, "unlisted": []}
     if not valid_full_sha(start):
         batch["why"] = f"batch-start is not a full 40-character SHA: {start!r}"
         state["batch"] = batch
@@ -1881,16 +1945,11 @@ def batch_state(shared: Path, lock_dir: Path) -> dict[str, Any]:
         batch["why"] = f"batch-start {start} is not on the fetched origin/main {main}"
         state["batch"] = batch
         return state
-    if rows and not batch["first_push"]:
-        when = commit_time(shared, rows[0]["sha"])
-        if when is not None:
-            batch["first_push"] = iso(datetime.fromtimestamp(when, timezone.utc))
-            batch["first_push_from_row"] = True
-    batch["baseline_age"] = baseline_age(shared, main)
     batch["landed_commits"] = git(shared, "rev-list", f"{start}..{main}").stdout.split()
     batch["unlisted"], why = batch_chain(shared, start, rows, main)
     if why:
         batch["why"] = why
+    batch["limits"] = batch_limits(shared, start, fields, rows, holder)
     batch["plans"] = any(name.startswith("Plans/") for name in changed_paths(shared, start, main))
     state["batch"] = batch
     return state
@@ -1930,29 +1989,8 @@ def batch_status(shared: Path, lock_dir: Path) -> int:
             + ", ".join(name[:12] for name in batch["unlisted"][:10]))
     if not batch["landed_commits"] and not batch["rows"]:
         say("  no landing yet: this member opens the batch")
-    say(f"  landings: {len(batch['rows'])} of {BATCH_MAX_LANDINGS}"
-        + (" (full: the next landing is judged alone)" if len(batch["rows"]) >= BATCH_MAX_LANDINGS else ""))
-    if batch["first_push"]:
-        age = age_seconds(batch["first_push"])
-        where = " (from the first row's commit time: no batch-first-push line)" if batch["first_push_from_row"] else ""
-        if age is None:
-            say(f"  first push: {batch['first_push']}, which is not a time in the rule's format{where}")
-        else:
-            say(f"  first push: {batch['first_push']}, {int(age // 60)} min of the {BATCH_MAX_SECONDS // 3600} h ago{where}"
-                + (" (past the two hours: the next landing is judged alone)" if age > BATCH_MAX_SECONDS else ""))
-    else:
-        say("  first push: none yet; the two hours start at the first push")
-    if batch["baseline_age"] is None:
-        say("  baseline: no recorded commit on main's history, so rule 2 is off and nothing here depends on its age")
-    else:
-        days = batch["baseline_age"] / 86400
-        if batch["baseline_age"] > BASELINE_LIMIT_SECONDS:
-            say(f"  baseline: {days:.2f} days old, past the 7 rule 2 allows: this member is judged alone")
-        elif batch["baseline_age"] > BASELINE_LIMIT_SECONDS - BASELINE_MARGIN_SECONDS:
-            say(f"  baseline: {days:.2f} days old, within 2 h of the 7 rule 2 allows: no new batch opens now, this one "
-                "stays open")
-        else:
-            say(f"  baseline: {days:.2f} days old of the 7 rule 2 allows")
+    for limit in batch["limits"]:
+        say(("  [ok] " if limit["within"] else "  [stop] ") + limit["text"])
     if batch["plans"]:
         say("  Plans/: a path changed since batch-start, so the batch owes one snapshot and baseline follow-up at close")
     else:
@@ -2183,6 +2221,7 @@ def batch_check(shared: Path, lock_dir: Path, receipt_path: Path,
     earlier_rows, malformed = batch_rows(fields)
     if malformed:
         raise Refusal("holder.txt has batch-landing rows this check cannot read: " + "; ".join(repr(row) for row in malformed))
+    require_batch_limits(shared, start, fields, earlier_rows, holder)
     if own_base is None and earlier_rows:
         own_base = earlier_rows[-1]["sha"]
     if own_base is not None:
@@ -2229,11 +2268,11 @@ def batch_chain(shared: Path, start: str, rows: Sequence[dict[str, str]],
 
 def require_open_batch(shared: Path, start: str, main: str) -> None:
     """A batch member's base is accepted only while holder.txt still opens that batch and lists every landing since."""
-    text = read_holder_text(LOCK_DIR)
-    if text is None:
+    holder = holder_verdict(LOCK_DIR)
+    if not holder["held"]:
         raise Refusal(f"no open batch: {LOCK_DIR / 'held/holder.txt'} cannot be read, and a member's receipt is verified "
                       "against its batch-start only inside the batch")
-    fields = parse_holder(text)
+    fields = holder["fields"]
     named = fields.get("batch-start")
     if named != start:
         raise Refusal(f"batch-start {start} is not the open batch's batch-start ({named or 'none'} in holder.txt)")
@@ -2247,6 +2286,7 @@ def require_open_batch(shared: Path, start: str, main: str) -> None:
         raise Refusal(f"{len(unlisted)} commit(s) on origin/main since batch-start {start} are not listed as a "
                       "`batch-landing: <branch> <sha>` row in holder.txt whose chain ends at the current main: "
                       + ", ".join(unlisted[:10]))
+    require_batch_limits(shared, start, fields, rows, holder)
 
 
 def verify_receipt(path, commit=None, base=None, batch_start=None):

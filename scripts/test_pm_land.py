@@ -1765,31 +1765,31 @@ class BatchStatusTests(BatchFixture):
         self.assertIn("PROVEN DEAD", out)
         self.assertIn("it landed something, so it is closed, not cleared:", out)
 
-    def test_a_baseline_near_and_past_the_seven_days_limit_is_said_to_be(self):
+    def test_a_baseline_near_the_seven_days_limit_at_the_batch_start_is_a_stop(self):
+        """The check measures rule 2 from batch-start, so a batch opened within 2 h of the edge judges every member alone."""
         old = land.iso(datetime.now(timezone.utc) - timedelta(days=6, hours=23))
-        self.put("src/x.txt", "two\n")
-        self.commit("base", env={"GIT_COMMITTER_DATE": old, "GIT_AUTHOR_DATE": old})
-        self.base = self.rev("HEAD")
-        self.put("reports/landing-checks/baseline.json", json.dumps({"commit": self.base}))
-        baseline = self.commit("baseline")
-        self.set_main(baseline)
-        self.holder(start=self.base, rows=[f"fix/a {baseline}"])
+        self.put("src/x.txt", "the baseline's commit\n")
+        recorded = self.commit("the baseline's commit", env={"GIT_COMMITTER_DATE": old, "GIT_AUTHOR_DATE": old})
+        self.put("reports/landing-checks/baseline.json", json.dumps({"commit": recorded}))
+        start = self.commit("batch-start")
+        self.set_main(start)
+        self.holder(start=start, rows=[])
         code, out = self.status()
         self.assertEqual(code, 0, out)
-        self.assertIn("days old, within 2 h of the 7 rule 2 allows: no new batch opens now", out)
+        self.assertIn("[stop] baseline: 6.96 days old at batch-start of the 7 rule 2 allows", out)
+        self.assertIn("within 2 h of its seven-day edge: this landing is judged alone", out)
 
-    def test_a_baseline_past_the_limit_says_the_member_is_judged_alone(self):
+    def test_a_baseline_past_the_limit_at_the_batch_start_is_a_stop(self):
         old = land.iso(datetime.now(timezone.utc) - timedelta(days=8))
-        self.put("src/x.txt", "two\n")
-        self.commit("base", env={"GIT_COMMITTER_DATE": old, "GIT_AUTHOR_DATE": old})
-        self.base = self.rev("HEAD")
-        self.put("reports/landing-checks/baseline.json", json.dumps({"commit": self.base}))
-        baseline = self.commit("baseline")
-        self.set_main(baseline)
-        self.holder(start=self.base, rows=[f"fix/a {baseline}"])
+        self.put("src/x.txt", "the baseline's commit\n")
+        recorded = self.commit("the baseline's commit", env={"GIT_COMMITTER_DATE": old, "GIT_AUTHOR_DATE": old})
+        self.put("reports/landing-checks/baseline.json", json.dumps({"commit": recorded}))
+        start = self.commit("batch-start")
+        self.set_main(start)
+        self.holder(start=start, rows=[])
         code, out = self.status()
         self.assertEqual(code, 0, out)
-        self.assertIn("past the 7 rule 2 allows: this member is judged alone", out)
+        self.assertIn("[stop] baseline: 8.00 days old at batch-start of the 7 rule 2 allows", out)
 
 
 class BatchCheckTests(BatchFixture):
@@ -2109,6 +2109,71 @@ class PutBackTests(BatchFixture):
         self.assertIn("src/a.txt", out)
 
 
+class BatchLimitTests(BatchFixture):
+    """The rule's four limits: batch-check refuses what batch-status shows as a [stop], one test for each."""
+
+    def setUp(self):
+        super().setUp()
+        self.put("src/own.txt", "own\n")
+        self.head = self.commit("member 2")
+        self.holder(start=self.base, rows=[])
+        self.report = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 1}))
+
+    def receipt(self, base=None):
+        path = self.reports / "record.json"
+        land.write_json(path, {"schema": 2, "head": self.head, "base": base or self.base, "exit_code": 0,
+                               "report": str(self.report), "report_sha256": land.file_hash(self.report),
+                               "row_report": None, "row_report_sha256": None})
+        return path
+
+    def judge(self, receipt=None):
+        return self.batch_check("--receipt", receipt or self.receipt(), "--repo", self.shared,
+                                "--check-source", self.source_file(), "--lock-dir", self.lock)
+
+    def assert_stopped(self, phrase):
+        code, _out = self.judge()
+        self.assertEqual(code, 3)
+        self.assertIn("the batch cannot take this landing", self.stderr)
+        self.assertIn(phrase, self.stderr)
+        code, out = self.status()
+        self.assertEqual(code, 0, out)
+        self.assertIn("[stop]", out)
+        self.assertIn(phrase.split(":")[0], out)
+
+    def test_a_full_batch_refuses_the_next_landing(self):
+        self.holder(start=self.base, rows=[f"fix/{index} {self.base}" for index in range(4)])
+        self.assert_stopped("full: the next landing is judged alone")
+
+    def test_past_the_two_hours_the_next_landing_is_refused(self):
+        old = land.iso(datetime.now(timezone.utc) - timedelta(hours=3))
+        self.holder(start=self.base, rows=[f"fix/a {self.base}"], first_push=old)
+        self.assert_stopped("past the two hours")
+
+    def test_a_dead_holder_refuses_the_next_landing(self):
+        self.holder(start=self.base, rows=[f"fix/a {self.base}"],
+                    time=land.iso(datetime.now(timezone.utc) - timedelta(minutes=100)))
+        self.age_holder(100)
+        self.assert_stopped("the holder is dead")
+
+    def test_a_batch_started_inside_the_baselines_last_two_hours_is_refused(self):
+        old = land.iso(datetime.now(timezone.utc) - timedelta(days=6, hours=23))
+        self.put("src/x.txt", "the baseline's commit\n")
+        recorded = self.commit("the baseline's commit", env={"GIT_COMMITTER_DATE": old, "GIT_AUTHOR_DATE": old})
+        self.put("reports/landing-checks/baseline.json", json.dumps({"commit": recorded}))
+        start = self.commit("batch-start")
+        self.set_main(start)
+        self.put("src/own.txt", "own\n")
+        self.head = self.commit("member 2")
+        self.holder(start=start, rows=[])
+        receipt = self.receipt(base=start)
+        code, _out = self.judge(receipt)
+        self.assertEqual(code, 3)
+        self.assertIn("within 2 h of its seven-day edge", self.stderr)
+        code, out = self.status()
+        self.assertEqual(code, 0, out)
+        self.assertIn("[stop] baseline: 6.96 days old at batch-start", out)
+
+
 class BatchVerifyTests(unittest.TestCase):
     """Batch mode: a member's receipt base is its batch-start, accepted only while the rule's record names it and
     lists every commit main has landed since. The fixture's setUp and helpers, not its tests."""
@@ -2194,6 +2259,13 @@ class BatchVerifyTests(unittest.TestCase):
         self.receipt(head)
         with redirect_stdout(io.StringIO()):
             self.assertEqual(self.verify(), 0)
+
+    def test_verify_refuses_a_landing_the_batch_limits_do_not_allow(self):
+        member1, head = self.history()
+        self.holder(self.base, [f"fix/{index} {member1}" for index in range(4)])
+        self.receipt(head)
+        with self.assertRaisesRegex(land.Refusal, "the batch cannot take this landing"):
+            self.verify()
 
     def test_an_unlisted_commit_on_top_of_the_last_listed_landing_is_refused(self):
         member1, head = self.history()

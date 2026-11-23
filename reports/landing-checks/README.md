@@ -828,11 +828,15 @@ The rule is "Land in batches" in `AGENTS.md` and `.claude/CLAUDE.md`: one contin
 lock, up to four landings, two hours from the first push, one follow-up at the final `main`.
 `holder.txt` is its record. `python3 -B "$PM_LAND_SCRIPT" batch-status` prints what it holds, writing
 nothing: the open batch's `batch-start`, its `batch-landing: <branch> <main SHA>` rows (a row that is
-not that shape is named, never dropped), the four-landing and two-hour limits (the first row's commit
-time stands in for a missing `batch-first-push`), the baseline's age against rule 2's seven days and
-the two hours before which no batch opens, main past the batch-start with no row, whether any member
-touched `Plans/` (so a follow-up is owed), and whether a dead holder's batch landed something, which
-means it is closed, not cleared. It takes no lock, fetches nothing and writes nothing.
+not that shape is named, never dropped), and one `[ok]` or `[stop]` line for each of the rule's four
+limits — four landings; two hours from `batch-first-push:` (the first row's commit time stands in
+for a missing `batch-first-push:`, so a branch committed long before it was pushed reads as past the
+two hours at once); a holder whose latest time is under 90 minutes old; and a baseline less than two
+hours short of rule 2's seven days when measured from `batch-start`. It also says whether main is
+past the last row, whether any member touched `Plans/` (so a follow-up is owed), and whether a dead
+holder's batch landed something, which means it is closed, not cleared. `batch-check` and `verify
+--batch-start` refuse a landing the same rows stop, with the same sentence, so what status shows as a
+`[stop]` never lands inside the batch. It takes no lock, fetches nothing and writes nothing.
 
 ### Batch triggers
 
@@ -890,10 +894,10 @@ From the diff, with no exemption:
 10. A path in this member's own range is not in the batch's diff: it put back what an earlier member
     changed, so the check, measuring from `batch-start`, does not read it as touched.
 
-Unchanged: exit 2 or the two hours running out during its checks closes the batch; a baseline past
-seven days stops the member; changed pre-existing rows or timeouts with no other trigger stop it for
-judgement. A member whose check stood on a landing check without the comparison lines cannot batch at
-all, and neither can a batch whose first member left no report: land alone.
+Unchanged: exit 2 or the two hours running out during its checks closes the batch; a baseline within two hours
+of seven days at the batch-start, or past it, stops the member; changed pre-existing rows or timeouts with no
+other trigger stop it for judgement. A member whose check stood on a landing check without the comparison lines
+cannot batch at all, and neither can a batch whose first member left no report: land alone.
 
 ## Related branch
 
