@@ -13,6 +13,7 @@
 // - one of the two happens (never neither).
 // On the normal page the clipboard must take it and the toast say so (copy still works). The surface the switch picks:
 // `--set sandbox=1` (fails on main: toast without the text), `--set sandbox=0` (passes on main and on the fix).
+import { supportDetails as SUPPORT, checkupSummary as SUMMARY } from '../helpers/doctor-copy-shape.mjs';
 const sleep = (f, ms) => f.waitForTimeout(ms);
 const WS = 'doctor';
 const body = `[data-continuous-workspace-body="${WS}"]`;
@@ -111,10 +112,8 @@ async function judge(t, f, sandbox, what, doPress, isText) {
 	await closeAll(t, f);
 }
 
-/* the copied text, recognised by its shape: Support details is its six "Label: value" lines, secrets left out; the
-   checkup summary is each group's title followed by its findings, "  - title: state (checked when)" */
-const SUPPORT = (v) => { const l = String(v || '').split('\n'); return l.length === 6 && /^Computer: ./.test(l[0]) && /^Browser engine: ./.test(l[1]) && /^Screen: \d+ × \d+$/.test(l[2]) && /^Puppet Master: ./.test(l[3]) && /^Server: ./.test(l[4]) && l[5] === 'Left out: Passwords, keys, tokens and file contents'; };
-const SUMMARY = (v) => { const l = String(v || '').split('\n'), groups = l.filter((x) => /^\S/.test(x)), items = l.filter((x) => /^  - .+: .+ \(checked .+\)$/.test(x)); return groups.length >= 3 && items.length >= groups.length && groups.length + items.length === l.length; };
+/* the copied text's shape lives in helpers/doctor-copy-shape.mjs, which normalises the CRLF Chrome on Windows writes to
+   the clipboard (FO17-DOCTOR-COPY-CRLF); SUPPORT and SUMMARY are the two texts' recognisers */
 
 export const tests = {
 	async 'FO-172: Support details › Copy says copied only when the clipboard took it, else offers the text to copy by hand'(t) {
