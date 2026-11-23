@@ -1388,25 +1388,11 @@ REPORT_SCHEMA = "pm.landing_check.report.v1"
 def read_json_report(doc: dict[str, Any]) -> dict[str, Any]:
     """The digest of the report `pm-landing-check.py --json` writes, which `check` binds into its receipt.
 
-    It carries every row the text report prints or counts, with no print cap: `pre_unread` is False and the gone
-    ids, totals and counts are complete. An older JSON report without `subcheck_totals` or `bucket_counts` reads
-    as one without those lines: no batch compares with it. `pairs` is its `validator_pairs` mapping: a bucket the
-    report left out because a run-gates copy was judged by its audit-governance twin is not an observed zero.
+    It carries the comparison lines the strict rule reads, with no print cap: the gone ids, subcheck totals and
+    bucket counts are complete. An older JSON report without `subcheck_totals` or `bucket_counts` reads as one
+    without those lines: no batch compares with it. `pairs` is its `validator_pairs` mapping: a bucket the report
+    left out because a run-gates copy was judged by its audit-governance twin is not an observed zero.
     """
-    pre: dict[str, dict[str, Any]] = {}
-    for item in doc.get("pre_existing") or []:
-        if not isinstance(item, dict):
-            continue
-        bucket = (f"{item.get('check')}/{item.get('subcheck') or '-'}  {item.get('error')}  "
-                  f"{item.get('path') or '(no path)'}")
-        entry = pre.setdefault(bucket, {"baseline": item.get("baseline_count"), "count": item.get("count"),
-                                        "improved": item.get("standing") == "improved",
-                                        "content_rows": [], "rows": []})
-        # The row's key, not its printed fields: every report from this landing check carries it, and it says
-        # which failure a row is, not just how it read.
-        entry["rows"].append(item.get("key"))
-        if not item.get("branch_paths"):
-            entry["content_rows"].append(item.get("key"))
     totals = doc.get("subcheck_totals")
     counts = doc.get("bucket_counts")
     resolved = doc.get("resolved_buckets")
@@ -1469,8 +1455,6 @@ def read_json_report(doc: dict[str, Any]) -> dict[str, Any]:
         "infrastructure": len(doc.get("infrastructure") or []),
         "crashed": False,
         "compare": int(doc.get("changed_on_branch") or 0),
-        "pre": pre,
-        "pre_unread": False,
         "gone": len(gone_ids) if gone_ids is not None else None,
         "gone_ids": gone_ids,
         "totals": totals,
@@ -1509,7 +1493,6 @@ def batch_report(text: str) -> Optional[dict[str, Any]]:
 ROW_REPORT_SCHEMA = "pm.landing_check.rows.v1"
 # What a batch reads from the landing check, in the check's own source.
 BATCH_CHECK_MARKS = ("--row-report", "grown_stale", "Subcheck totals this run", "Bucket counts this run")
-REPORT_DIGEST = ("pre", "pre_unread", "compare", "gone", "gone_ids", "totals", "bucket_counts", "ids_unread")
 
 
 def check_can_batch(source: str) -> bool:
@@ -1572,11 +1555,19 @@ def row_keys(entry: dict[str, Any]) -> Counter:
                    if isinstance(row, dict) and isinstance(row.get("key"), str))
 
 
-def row_at(entry: dict[str, Any], key: str) -> Optional[dict[str, Any]]:
-    for row in entry.get("rows") or []:
-        if isinstance(row, dict) and row.get("key") == key:
-            return row
-    return None
+def rows_matching(entry: dict[str, Any], key: str) -> list[dict[str, Any]]:
+    """Every row of this entry with that key, in report order.
+
+    A scrubbed key can repeat: `names` reads the unscrubbed row while the key scrubs measured values, so two rows
+    can share a key and differ in what they name. Every one of them is inspected (review R7-N2).
+    """
+    return [row for row in entry.get("rows") or [] if isinstance(row, dict) and row.get("key") == key]
+
+
+def excused_row(entry: dict[str, Any], key: str, own: Collection[str]) -> bool:
+    """Whether every row with this key is the rule's own fully printed staleness: not only the first (R7-N2)."""
+    rows = rows_matching(entry, key)
+    return bool(rows) and all(own_staleness(row, own) for row in rows)
 
 
 def own_staleness(row: Optional[dict[str, Any]], own: Collection[str]) -> bool:
@@ -1687,13 +1678,20 @@ def strict_difference(report: dict[str, Any], rows: Optional[dict[str, Any]], pr
                                                "total only")
             continue
         now_keys, old_keys = row_keys(entry_now), row_keys(entry_old)
+        if sum(now_keys.values()) != now_totals[name] or sum(old_keys.values()) != old_totals[name]:
+            # `write_row_report` writes `complete: true` only with one row per counted failure, so a row report that
+            # does not add up is corrupt: its rows are not known, never a comparison (review R7-N2).
+            return ("batch_counts_unknown",
+                    f"{name}'s row report does not add up to its total in this landing's report "
+                    f"({sum(now_keys.values())} rows of {now_totals[name]}) or in {where} "
+                    f"({sum(old_keys.values())} rows of {old_totals[name]}), so its rows are not known")
         gone, added = old_keys - now_keys, now_keys - old_keys
         for a_row in sorted(gone):
-            if not own_staleness(row_at(entry_old, a_row), own):
+            if not excused_row(entry_old, a_row, own):
                 return ("batch_rows_differ", f"a row {where} has is gone here, and it is not governance staleness on a "
                                              f"file this landing touched: {a_row}")
         for a_row in sorted(added):
-            if not own_staleness(row_at(entry_now, a_row), own):
+            if not excused_row(entry_now, a_row, own):
                 return ("batch_rows_differ", f"a new row is not governance staleness on a file this landing touched: "
                                              f"{a_row}")
         expected = old_totals[name] + sum(added.values()) - sum(gone.values())
@@ -1702,8 +1700,15 @@ def strict_difference(report: dict[str, Any], rows: Optional[dict[str, Any]], pr
                                            f"show {expected}")
         # A subcheck the batch-start baseline sampled is compared by its total only, so `pm-landing-check.py` counts
         # no buckets for it while this run's row report can still print every row: the keys above are the comparison
-        # there, never the absent counts (round-6 case; review ASTRA A2-2).
-        if any((check, subcheck) in (doc.get("partial") or set()) for doc in (report, previous)):
+        # there, never the absent counts (round-6 case; review ASTRA A2-2). It must be the same status in both
+        # reports: one report comparing by total while the other prints every row is a status difference (R7-N1).
+        now_total_only = (check, subcheck) in (report.get("partial") or set())
+        old_total_only = (check, subcheck) in (previous.get("partial") or set())
+        if now_total_only != old_total_only:
+            side = "this landing's report" if now_total_only else where
+            return ("batch_status_differs", f"{name} is compared by its total only in {side} and by every row in the "
+                                            "other, so its known status is not the same")
+        if now_total_only:
             continue
         # Every bucket count must be the previous report's, moved only by the rows this rule just excused: a count
         # that changed for another reason is a difference the row keys alone would hide (review ASTRA A2-2).
@@ -1731,10 +1736,12 @@ def parse_holder(text: str) -> dict[str, Any]:
         key, val = match.group(1).lower(), match.group(2)
         if key == "batch-landing":
             fields["batch-landing"].append(val)
-        elif key == "batch-start" and fields.get("batch-start") not in (None, val):
-            # A rewritten holder.txt can leave the old line behind: two different batch-starts are not a choice to
-            # make silently, so the readers refuse instead of taking the first.
-            fields["batch-start-conflict"] = f"{fields['batch-start']} and {val}"
+        elif key in ("batch-start", "batch-first-push") and fields.get(key) not in (None, val):
+            # A rewritten holder.txt can leave the old line behind: two different batch-starts, or two first
+            # pushes, are not a choice to make silently, so the readers refuse instead of taking the first. For
+            # `batch-first-push` that matters: a newer line above the real one would pass a batch past its two
+            # hours (review OPUS N3).
+            fields[f"{key}-conflict"] = f"{fields[key]} and {val}"
         else:
             fields.setdefault(key, val)
     return fields
@@ -1896,27 +1903,34 @@ def batch_limits(shared: Path, start: str, fields: dict[str, Any], rows: Sequenc
                 "text": f"landings: {landings} of {BATCH_MAX_LANDINGS}"
                         + (" (full: the next landing is judged alone)" if full else "")})
     first_push = fields.get("batch-first-push")
-    from_row = False
-    if not first_push and rows:
-        when = commit_time(shared, rows[0]["sha"])
-        if when is not None:
-            first_push = iso(datetime.fromtimestamp(when, timezone.utc))
-            from_row = True
-    where = " (from the first row's commit time: no batch-first-push line)" if from_row else ""
-    if not first_push:
-        out.append({"name": "two hours", "within": True, "text": "first push: none yet; the two hours start at the "
-                                                                  "first push of main"})
+    conflict = fields.get("batch-first-push-conflict")
+    if conflict:
+        # Two lines: taking the first silently would let a newer one pass a batch past its two hours (OPUS N3).
+        out.append({"name": "first push", "within": False,
+                    "text": f"first push: holder.txt names two batch-first-push lines ({conflict}): rewrite it with "
+                            "the one real first push"})
     else:
-        age = age_seconds(first_push)
-        if age is None:
-            out.append({"name": "two hours", "within": False,
-                        "text": f"first push: {first_push} is not a time in the rule's format{where}"})
+        from_row = False
+        if not first_push and rows:
+            when = commit_time(shared, rows[0]["sha"])
+            if when is not None:
+                first_push = iso(datetime.fromtimestamp(when, timezone.utc))
+                from_row = True
+        where = " (from the first row's commit time: no batch-first-push line)" if from_row else ""
+        if not first_push:
+            out.append({"name": "two hours", "within": True, "text": "first push: none yet; the two hours start at the "
+                                                                      "first push of main"})
         else:
-            past = age > BATCH_MAX_SECONDS
-            out.append({"name": "two hours", "within": not past,
-                        "text": f"first push: {first_push}, {int(age // 60)} min of the "
-                                f"{BATCH_MAX_SECONDS // 3600} h ago{where}"
-                                + (" (past the two hours: the next landing is judged alone)" if past else "")})
+            age = age_seconds(first_push)
+            if age is None:
+                out.append({"name": "two hours", "within": False,
+                            "text": f"first push: {first_push} is not a time in the rule's format{where}"})
+            else:
+                past = age > BATCH_MAX_SECONDS
+                out.append({"name": "two hours", "within": not past,
+                            "text": f"first push: {first_push}, {int(age // 60)} min of the "
+                                    f"{BATCH_MAX_SECONDS // 3600} h ago{where}"
+                                    + (" (past the two hours: the next landing is judged alone)" if past else "")})
     out.append({"name": "holder", "within": not holder["dead"],
                 "text": f"holder: {holder['reason']}"
                         + (" (the holder is dead: the batch is closed or cleared before another landing)"
@@ -2744,8 +2758,8 @@ def main(argv=None):
         member = commands.add_parser("batch-check", help="judge one batch member's report against the previous one's")
         member.add_argument("--receipt", type=Path, required=True,
                             help="the record.json pm-land.py check printed for this member: its commit, batch-start, "
-                                 "report, row report and the landing check's exit. The earlier members' receipts come "
-                                 "from their batch-landing rows in holder.txt, in order")
+                                 "report, row report and the landing check's exit. The previous member's receipt comes "
+                                 "from the last batch-landing row in holder.txt")
         member.add_argument("--repo", type=Path, default=None,
                             help="checkout the receipt's commit and the check's source are read from (default: this worktree)")
         member.add_argument("--lock-dir", type=Path, default=LOCK_DIR, help="the rule's lock directory (default: the landing lock)")

@@ -1501,7 +1501,6 @@ class ReportFormatTests(unittest.TestCase):
         self.assertEqual(report["totals"], {"run-gates/lint-x": 3, "run-gates/y-": None})
         self.assertEqual(report["bucket_counts"], {"run-gates|lint-x|missing_ref|src/x.txt": 2})
         self.assertFalse(report["ids_unread"])
-        self.assertFalse(report["pre_unread"])
 
     def test_a_paired_copy_and_a_sample_are_kept_apart_from_an_observed_zero(self):
         """F7: the report says which subchecks it left out, so a bucket it never printed is not a 0."""
@@ -1535,7 +1534,8 @@ class ReportFormatTests(unittest.TestCase):
         bucket = "run-gates|lint-x|missing_ref|Plans/B.md"
         earlier = self.digest(totals={"run-gates/lint-x": 1}, counts={})
         current = self.digest(totals={"run-gates/lint-x": 1}, counts={bucket: 1})
-        rows = self.rows_doc(**{"run-gates__lint-x": self.entry(1)})
+        elsewhere = self.row("run-gates|lint-x|missing_ref|src/y.txt|aaaaaaaaaaaa")
+        rows = self.rows_doc(**{"run-gates__lint-x": self.entry(1, [elsewhere])})
         gap = land.strict_difference(current, rows, earlier, rows, (), 2)
         self.assertEqual(gap[0], "batch_buckets_differ", gap)
         self.assertIn(bucket, gap[1])
@@ -1562,6 +1562,40 @@ class ReportFormatTests(unittest.TestCase):
         self.assertEqual(gap[0], "batch_rows_differ", gap)
         self.assertIn("is gone here", gap[1])
         self.assertIn(f"{bucket}|aaaaaaaaaaaa", gap[1])
+
+    def test_a_partial_status_that_differs_between_the_two_reports_is_a_difference(self):
+        """R7-N1: both row reports print every row, but only one report is compared by its total: its known status
+        is not the same, so this is not the comparison the rule allows."""
+        bucket = "run-gates|lint-x|missing_ref|src/x.txt"
+        rows = self.rows_doc(**{"run-gates__lint-x": self.entry(1, [self.row(f"{bucket}|aaaaaaaaaaaa")])})
+        earlier = self.digest(totals={"run-gates/lint-x": 1}, counts={bucket: 1})
+        current = self.digest(totals={"run-gates/lint-x": 1}, counts={bucket: 1}, partial=["lint-x"])
+        gap = land.strict_difference(current, rows, earlier, rows, (), 2)
+        self.assertEqual(gap[0], "batch_status_differs", gap)
+        self.assertIn("by its total only in this landing's report", gap[1])
+
+    def test_every_row_with_a_key_must_be_this_landings_own_staleness(self):
+        """R7-N2: a scrubbed key can repeat, and excusing only its first row would hide a second, non-stale one."""
+        bucket = "run-gates|lint-x|missing_ref|src/x.txt"
+        key = f"{bucket}|aaaaaaaaaaaa"
+        earlier = self.digest(totals={"run-gates/lint-x": 1}, counts={bucket: 1})
+        current = self.digest(totals={"run-gates/lint-x": 2}, counts={bucket: 2})
+        before = self.rows_doc(**{"run-gates__lint-x": self.entry(1, [self.row(key)])})
+        after = self.rows_doc(**{"run-gates__lint-x": self.entry(2, [
+            self.row(key, stale=True, kind_stale=True, names=["src/own.txt"]),
+            self.row(key)])})
+        gap = land.strict_difference(current, after, earlier, before, ("src/own.txt",), 2)
+        self.assertEqual(gap[0], "batch_rows_differ", gap)
+        self.assertIn(key, gap[1])
+
+    def test_a_row_report_that_does_not_add_up_to_its_total_is_unknown(self):
+        """R7-N2: `complete: true` promises one row per counted failure; a report that breaks that promise is corrupt."""
+        bucket = "run-gates|lint-x|missing_ref|src/x.txt"
+        report = self.digest(totals={"run-gates/lint-x": 2}, counts={bucket: 1})
+        rows = self.rows_doc(**{"run-gates__lint-x": self.entry(2, [self.row(f"{bucket}|aaaaaaaaaaaa")])})
+        gap = land.strict_difference(report, rows, report, rows, (), 2)
+        self.assertEqual(gap[0], "batch_counts_unknown", gap)
+        self.assertIn("does not add up", gap[1])
 
     def test_a_permanent_sample_is_compared_by_its_total_and_nothing_else(self):
         """The one exception: a producer that names a validator writing no export leaves no row set to compare."""
@@ -1673,10 +1707,8 @@ class ReportFormatTests(unittest.TestCase):
         report = land.batch_report(text)
         self.assertEqual(json.loads(text)["schema_id"], land.REPORT_SCHEMA)
         self.assertEqual((report["infrastructure"], report["compare"], report["crashed"]), (0, 0, False))
-        self.assertEqual(report["pre"], {})
         self.assertEqual(report["gone_ids"], [])
         self.assertFalse(report["ids_unread"])
-        self.assertFalse(report["pre_unread"])
         # Written before the comparison lines existed: no totals, so no batch compares with it, and the reader
         # says so rather than reading the JSON text as a report with nothing in it.
         self.assertIsNone(report["totals"])
@@ -1756,15 +1788,6 @@ def export_row(check: str, subcheck: str, case: str, keyed: bool = False) -> dic
             "sampled": 100, "keyed": keyed, "case": case, "reason": "", "exported": 2861 if keyed else None}
 
 
-def json_pre(key: str, *, standing: str = "pre-existing", baseline: int = 5, count: int = 5,
-             paths=("src/x.txt",), check: str = "run-gates", subcheck: str = "lint-x",
-             error: str = "missing_ref", path: str = "src/x.txt") -> dict:
-    """One `pre_existing` row of the JSON report, as `{**public(item), **counted, "branch_paths": hits}`."""
-    return {"key": key, "check": check, "subcheck": subcheck, "error": error, "path": path, "fields": {},
-            "stale": False, "standing": standing, "baseline_count": baseline, "count": count,
-            "branch_paths": list(paths)}
-
-
 class BatchFixture(unittest.TestCase):
     """A small repository, the rule's lock directory, and reports written by hand: no remote, no lock, no push."""
 
@@ -1837,19 +1860,27 @@ class BatchFixture(unittest.TestCase):
         return path
 
     def rows_for(self, report, subchecks=None, name="record.rows.json", base=None):
-        """A row report for every subcheck the report names: complete and rowless unless one is a sample.
+        """A row report for every subcheck the report names, in the shape `--row-report` writes.
 
-        The strict rule compares rows by key, so a member whose report has no rows must say so for each subcheck,
-        in the shape `--row-report` writes: an entry per `subcheck_totals` name, `complete` only when the check
-        printed every row, and no rows when it printed a sample.
+        A complete entry holds one row per counted failure (`write_row_report` writes `complete: true` only then):
+        each counted bucket's rows carry its key, and any remainder its own `src/filler.txt` bucket, so the fixture's
+        rows add up to its total as a real report's do. A sampled subcheck has no complete rows.
         """
         doc = json.loads(Path(report).read_text(encoding="utf-8"))
         totals = doc.get("subcheck_totals") or {}
+        counts = doc.get("bucket_counts") or {}
         if subchecks is None:
             sampled = set(doc.get("subchecks_compared_by_total_only") or [])
-            subchecks = {key: {"reported": total or 0,
-                               "complete": total is not None and key not in sampled, "rows": []}
-                         for key, total in totals.items()}
+            subchecks = {}
+            for key, total in totals.items():
+                complete = total is not None and key not in sampled
+                rows = []
+                if complete:
+                    for bucket in sorted(bucket for bucket in counts if land.subcheck_of(bucket) == key):
+                        rows += [self.row(f"{bucket}|{index:012x}") for index in range(int(counts[bucket]))]
+                    filler = f"{key.replace('/', '|')}|missing_ref|src/filler.txt"
+                    rows += [self.row(f"{filler}|{index:012x}") for index in range(int(total) - len(rows))]
+                subchecks[key] = {"reported": None if total is None else int(total), "complete": complete, "rows": rows}
         return self.rows_file(name, subchecks, base=base or doc.get("base"))
 
     def source_file(self, marked=True, name="check.py"):
@@ -1984,6 +2015,16 @@ class BatchStatusTests(BatchFixture):
         self.assertEqual(code, 0, out)
         self.assertIn("holder.txt names two batch-starts", out)
 
+    def test_two_batch_first_push_lines_are_a_stop_not_the_first(self):
+        """OPUS N3: taking the first line silently would let a newer one pass a batch past its two hours."""
+        self.holder(start=self.base, rows=[self.row_line("fix/a", self.base)], first_push=land.iso())
+        path = self.lock / "held" / "holder.txt"
+        path.write_text(path.read_text(encoding="utf-8") + "batch-first-push: 2020-01-01T00:00:00Z\n",
+                        encoding="utf-8")
+        code, out = self.status()
+        self.assertEqual(code, 0, out)
+        self.assertIn("[stop] first push: holder.txt names two batch-first-push lines", out)
+
     def test_a_dead_holder_whose_batch_landed_is_closed_not_cleared(self):
         member = self.commit("member 1")
         self.set_main(member)
@@ -2077,12 +2118,13 @@ class BatchCheckTests(BatchFixture):
         self.assertIn("[count] run-gates|lint-x|missing_ref|src/x.txt  1", out)
 
     def test_a_rise_in_the_json_report_closes_the_batch(self):
+        """The raised bucket carries the added row: a new row that is not this landing's own staleness stops it."""
         current = self.report("m2.json", totals={"run-gates/lint-x": 2},
                               counts={"run-gates|lint-x|missing_ref|src/x.txt": 2})
         code, out = self.check(current)
         self.assertEqual(code, 1, out)
-        self.assertIn("TRIGGER batch_totals_differ", out)
-        self.assertIn("run-gates/lint-x's total is 2 but the rows", out)
+        self.assertIn("TRIGGER batch_rows_differ", out)
+        self.assertIn("a new row is not governance staleness", out)
 
     def test_a_member_three_deep_compares_with_the_previous_members_receipt(self):
         """Member 3 is compared with member 2's receipt, the holder's last row; member 1's was enforced when it landed."""
@@ -2265,12 +2307,14 @@ class BatchCheckTests(BatchFixture):
         self.assertIn("not the JSON", out)
 
     def test_a_total_rise_with_no_row_to_show_is_a_difference(self):
-        """A total that moved while the rows did not is not the previous member's report, whatever moved it."""
+        """A complete row report that does not add up to its total is corrupt: the counts are unknown, never clear."""
         current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts=self.counts)
-        code, out = self.check(current)
+        rows = self.rows_file("m2-short.rows.json", {"run-gates/lint-x": {
+            "reported": 2, "complete": True, "rows": []}})
+        code, out = self.check(current, rows=rows)
         self.assertEqual(code, 1, out)
-        self.assertIn("TRIGGER batch_totals_differ", out)
-        self.assertIn("run-gates/lint-x's total is 2 but the rows", out)
+        self.assertIn("TRIGGER batch_counts_unknown", out)
+        self.assertIn("does not add up", out)
         self.assertIn("judged alone", out)
 
     def stale_member(self, name, key, path):
@@ -2442,7 +2486,7 @@ class BatchCheckTests(BatchFixture):
 
     def test_a_total_that_falls_with_the_same_rows_is_a_difference(self):
         """R5-B1's replay (2,861 -> 2,859) was a false pass at 3d7d55b5c8: the strict rule refuses any movement, and
-        a fall is as much a difference as a rise."""
+        a fall is as much a difference as a rise: two rows the previous member's report holds are gone here."""
         bucket = "run-gates|validate_evidence|missing_ref|Plans/.evidence/e.json"
         m1 = self.member("m1-fall", head=self.member1, totals={"run-gates/validate_evidence": 2861},
                          counts={bucket: 178})
@@ -2450,8 +2494,8 @@ class BatchCheckTests(BatchFixture):
         current = self.report("m2.json", totals={"run-gates/validate_evidence": 2859}, counts={bucket: 176})
         code, out = self.check(current)
         self.assertEqual(code, 1, out)
-        self.assertIn("TRIGGER batch_totals_differ", out)
-        self.assertIn("run-gates/validate_evidence's total is 2859", out)
+        self.assertIn("TRIGGER batch_rows_differ", out)
+        self.assertIn("is gone here", out)
 
     def test_a_current_members_failed_export_is_never_read_as_a_known_count(self):
         """R4-B1, the review's repro 1: member 1's export succeeded and lowered the bucket (the real
@@ -2615,6 +2659,16 @@ class BatchCheckTests(BatchFixture):
         current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts=self.counts)
         code, _out = self.check(current)
         self.assertEqual(code, 3)
+
+    def test_two_batch_first_push_lines_refuse_the_member(self):
+        """OPUS N3: the first line winning is a way past the two hours; two lines are refused, never read."""
+        self.holder(start=self.base, rows=[f"fix/a {self.member1} {self.m1}"], first_push=land.iso())
+        path = self.lock / "held" / "holder.txt"
+        path.write_text(path.read_text(encoding="utf-8") + "batch-first-push: 2020-01-01T00:00:00Z\n",
+                        encoding="utf-8")
+        code, _out = self.check(self.report("m2.json", totals=self.totals, counts=self.counts))
+        self.assertEqual(code, 3)
+        self.assertIn("two batch-first-push lines", self.stderr)
 
     def test_the_check_source_defaults_to_the_script_at_the_members_commit(self):
         current = self.report("m2.json", totals=self.totals, counts=self.counts)
@@ -2932,6 +2986,18 @@ class BatchVerifyTests(unittest.TestCase):
         self.holder(self.base, [self.row("fix/a", member1)])
         self.receipt(head, rows=False)
         with self.assertRaisesRegex(land.Refusal, "records no row report"):
+            self.verify()
+
+    def test_two_batch_first_push_lines_are_refused(self):
+        """OPUS N3: a rewritten holder can keep the old first push; which two hours apply must not be a guess."""
+        member1, head = self.history()
+        self.holder(self.base, [self.row("fix/a", member1)])
+        path = self.lock / "held" / "holder.txt"
+        path.write_text(path.read_text(encoding="utf-8")
+                        + f"batch-first-push: {land.iso()}\nbatch-first-push: 2020-01-01T00:00:00Z\n",
+                        encoding="utf-8")
+        self.receipt(head)
+        with self.assertRaisesRegex(land.Refusal, "two batch-first-push lines"):
             self.verify()
 
     def test_a_malformed_batch_landing_row_is_refused_not_dropped(self):
