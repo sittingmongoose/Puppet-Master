@@ -1,0 +1,73 @@
+/* Refine, fourth pass (Jared, 2026-11-23): "This approach looks MUCH better. Now you just need to take this new approach
+   and apply it to all the managers." What Providers and Servers got, for every other manager (not the Editor, Terminal,
+   Pip or NieR screens): rows on one grid, a status column that does not move, a named button where there was a bare
+   arrow, and one right edge for the controls of a card. Styles only; nothing is removed here. */
+
+/* ---- one right edge in a list's detail ----
+   A setting row keeps 50 px on the right for its "?" button. A manager's own rows did the same inside a section but
+   not when they sat straight in the detail, so a detail had two right edges (Source Control: "Signed in as" ended 50 px
+   to the right of "Disconnect" under it). */
+#panel-settings .pm51-mgr .pm51-detail-content > .pm51-rows > .pm51-row > .pm51-row-control { padding-right: 50px; }
+@media (max-width: 760px) { #panel-settings .pm51-mgr .pm51-detail-content > .pm51-rows > .pm51-row > .pm51-row-control { padding-right: 0; } }
+
+/* ---- a row that opens says so in a word ----
+   The bare ">" at the end of a row was the third arrow Jared named in Providers ("the 3rd that expands needs to be
+   rethought completely"). Every row that opens in place carries the same named button. */
+#panel-settings .pm51-acc .pm51-acc-end > .pm51-acc-toggle {
+  width: 86px; height: 32px; padding: 0 10px; border: 1px solid var(--k3-line); border-radius: 8px;
+  background: color-mix(in srgb, var(--k3-text-1) 4%, transparent); font-size: 12px; font-weight: 620; color: var(--k3-text-1);
+}
+#panel-settings .pm51-acc .pm51-acc-end > .pm51-acc-toggle > .icon { display: none; }
+#panel-settings .pm51-acc .pm51-acc-end > .pm51-acc-toggle::after { content: "Manage"; }
+#panel-settings .pm51-acc .pm51-acc-item.is-open > .pm51-acc-head .pm51-acc-toggle::after { content: "Done"; }
+#panel-settings .pm51-acc .pm51-acc-item.is-open > .pm51-acc-head .pm51-acc-toggle { border-color: color-mix(in srgb, var(--k3-accent) 55%, var(--k3-line)); }
+
+/* ---- Web and Research, Search services: one grid ----
+   name and what it is good at | its state, always starting at the same place | its switch | Manage */
+#panel-settings .o55-web-services .pm51-acc-head { display: grid; grid-template-columns: minmax(0, 1fr) 84px 44px 86px; align-items: center; column-gap: 14px; }
+#panel-settings .o55-web-services .pm51-acc-head > .pm51-acc-end { display: contents; }
+#panel-settings .o55-web-services .pm51-acc-end > .pm51-status { grid-column: 2; justify-self: start; white-space: nowrap; }
+#panel-settings .o55-web-services .pm51-acc-end > .o55-bound { grid-column: 3; justify-self: end; }
+#panel-settings .o55-web-services .pm51-acc-end > .pm51-acc-toggle { grid-column: 4; justify-self: end; }
+#panel-settings .o55-web-services .pm51-acc-copy > .pm51-acc-meta { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ---- Readiness and Doctor: every check on one grid ----
+   what was checked and how it stands | when | the one thing to do about it, if any | Details.
+   The times and the buttons were as wide as their words, so nothing lined up from one row to the next, and each row
+   ended in a bare ">". The rows have no "?" button, so they run to the card's edge, under "Check Again". */
+#panel-settings .pm51-mgr .pm51-rows > .pm51-row.pm51-doctor-row > .pm51-row-control {
+  display: grid; grid-template-columns: 156px 136px 78px; align-items: center; column-gap: 10px; padding-right: 0; flex-wrap: nowrap;
+}
+#panel-settings .pm51-doctor-row > .pm51-row-control > .pm51-doctor-checked { grid-column: 1; justify-self: start; white-space: nowrap; }
+#panel-settings .pm51-doctor-row > .pm51-row-control > .pm51-btn { grid-column: 2; justify-self: stretch; justify-content: center; white-space: nowrap; }
+#panel-settings .pm51-doctor-row > .pm51-row-control > .pm51-icon-btn {
+  grid-column: 3; justify-self: end; width: 78px; height: 30px; padding: 0 10px; border: 1px solid var(--k3-line); border-radius: 8px;
+  background: color-mix(in srgb, var(--k3-text-1) 4%, transparent); font-size: 12px; font-weight: 620; color: var(--k3-text-1);
+}
+#panel-settings .pm51-doctor-row > .pm51-row-control > .pm51-icon-btn > .icon { display: none; }
+#panel-settings .pm51-doctor-row > .pm51-row-control > .pm51-icon-btn::after { content: "Details"; }
+@container settings-host (max-width: 760px) {
+  #panel-settings .pm51-mgr .pm51-rows > .pm51-row.pm51-doctor-row > .pm51-row-control { grid-template-columns: minmax(0, 1fr) auto auto; }
+}
+
+/* ---- Notifications, Events: the row's last button says what it does ---- */
+#panel-settings .pm51-event-row > .pm51-item-end > .pm51-icon-btn[data-action="pm51-notifications-event"] {
+  width: 64px; height: 30px; padding: 0 10px; border: 1px solid var(--k3-line); border-radius: 8px;
+  background: color-mix(in srgb, var(--k3-text-1) 4%, transparent); font-size: 12px; font-weight: 620; color: var(--k3-text-1);
+}
+#panel-settings .pm51-event-row > .pm51-item-end > .pm51-icon-btn[data-action="pm51-notifications-event"] > .icon { display: none; }
+#panel-settings .pm51-event-row > .pm51-item-end > .pm51-icon-btn[data-action="pm51-notifications-event"]::after { content: "Edit"; }
+
+/* ---- Source Control, Actions and Pipelines: the pin is a word, like Run beside it ---- */
+#panel-settings .pm51-item-end > .pm51-icon-btn.pm51-source-pin { display: inline-flex; align-items: center; justify-content: center; width: 78px; height: 30px; padding: 0 10px; gap: 6px; font-size: 12px; font-weight: 620; white-space: nowrap; }
+#panel-settings .pm51-item-end > .pm51-icon-btn.pm51-source-pin::after { content: "Pin"; }
+#panel-settings .pm51-item-end > .pm51-icon-btn.pm51-source-pin.is-on::after { content: "Unpin"; }
+
+/* ---- the catalogue sheet's third column says what a kind will ask for ---- */
+.rf-add-panel .rf-add-needs { font-size: 12px; color: var(--k3-text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ---- a form's fields stand apart ----
+   In a plain form the name of a field sat right under the field before it, so a form read as one block of boxes. */
+#panel-settings .dialog-body > .form-field + .form-field,
+#panel-settings .dialog-body > .form-field + .check-row,
+#panel-settings .dialog-body > .check-row + .form-field { margin-top: 14px; }

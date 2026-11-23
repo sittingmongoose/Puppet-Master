@@ -89,6 +89,11 @@
   renderApp = function () { const r = rfRender.apply(this, arguments); paintExplain(); return r; };
 
   /* ---- 6. Facts: what is true right now, on one line (not rows that look like settings) ----------------------- */
+  /* A short value ("4 rules", "5 protected") is placed by its own width, as a one-word value already is. The kit gave
+     every other value 14 characters of room beside its button; a shorter value then pushed the button under itself
+     (Permissions: "4 rules" over "See rules"). */
+  const oneWord0 = PM51.oneWord;
+  PM51.oneWord = v => oneWord0(v) || (v != null && String(v).trim().length > 0 && String(v).trim().length <= 14);
   PM51.facts = (items, { action } = {}) => `<div class="rf-facts">${items.filter(Boolean).map(f => `<span class="rf-fact${f.tone ? ' tone-' + a(f.tone) : ''}">${f.pill || ''}${f.label ? `<span class="rf-fact-label">${h(f.label)}</span>` : ''}${f.value != null ? `<span class="rf-fact-value">${h(String(f.value))}</span>` : ''}${f.end || ''}</span>`).join('')}${action ? `<span class="rf-facts-end">${typeof action === 'string' ? action : PM51.btn(Object.assign({ small: true }, action))}</span>` : ''}</div>`;
 })();
 
@@ -162,4 +167,104 @@
   document.addEventListener('click', e => { onCz(e); onParts(e); }, true);
   document.addEventListener('input', onCz, true);
   document.addEventListener('change', onCz, true);
+
+  /* ---- "Add" shows what there is to add (Jared, 2026-11-23: Providers' "add a new service pop up menu is not at all
+     sufficient"; the new sheet "looks good"; "apply it to all the managers") --------------------------------------
+     Two more managers opened a bare form whose first field was a closed "Type" list: a newcomer had to open the list
+     to learn what could be added at all. Their Add now opens the same sheet as Providers: every kind, grouped, with
+     what it is and what it will ask for. Picking one goes on to the same form as before, with that kind chosen. */
+  const rfPicks = {};
+  function rfCatalogue({ id, title, search, groups, none }) {
+    const row = r => `<div class="rf-add-row" data-rf-add-text="${a(`${r.name} ${r.how || ''}`.toLowerCase())}">
+      <span class="resource-avatar rf-add-mark">${r.icon ? icon(r.icon) : h(PM51.initials(String(r.name).replace(/[^A-Za-z0-9 ]+/g, ' ')))}</span>
+      <span class="rf-add-copy"><b class="rf-add-name">${h(r.name)}</b><small class="rf-add-how">${h(r.how || '')}</small></span>
+      <span class="rf-add-state rf-add-needs">${h(r.needs || '')}</span>
+      ${PM51.btn({ label: 'Add', small: true, action: 'pm51-rf-cat-pick', data: { cat: id, pick: r.id, group: r.group || '' } })}
+    </div>`;
+    PM51.panel({
+      title, icon: 'plus', width: 720, cls: 'rf-add-panel', closeLabel: 'Close',
+      body: `<div class="rf-add">
+        ${search ? `<div class="rf-add-search"><input type="search" class="rf-add-input" placeholder="${a(search)}" aria-label="${a(search)}" data-action="pm51-rf-cat-filter" autocomplete="off"/></div>` : ''}
+        ${groups.filter(g => g.rows.length).map(g => `<section class="rf-add-group"><h4 class="rf-add-title">${h(g.label)}<i class="rf-add-n">${g.rows.length}</i></h4>${g.rows.map(row).join('')}</section>`).join('')}
+        <p class="rf-add-none" hidden>${h(none || 'Nothing by that name.')}</p>
+      </div>`
+    });
+    if (search) requestAnimationFrame(() => { const i = document.querySelector('.rf-add-panel .rf-add-input'); if (i) i.focus({ preventScroll: true }); });
+  }
+  PM51.on('rf-cat-pick', el => { const fn = rfPicks[el.dataset.cat]; if (fn) fn(el.dataset.pick, el.dataset.group); });
+  PM51.onInput('rf-cat-filter', el => {
+    const q = String(el.value || '').trim().toLowerCase(), box = el.closest('.rf-add'); if (!box) return;
+    let shown = 0;
+    box.querySelectorAll('.rf-add-group').forEach(g => {
+      let n = 0;
+      g.querySelectorAll('.rf-add-row').forEach(r => { const hit = !q || (r.getAttribute('data-rf-add-text') || '').includes(q); r.hidden = !hit; if (hit) n++; });
+      g.hidden = !n; shown += n;
+    });
+    const none = box.querySelector('.rf-add-none'); if (none) none.hidden = shown > 0;
+  });
+  /* the form that was there before, opened with one of its lists already set */
+  const rfSetSelect = (name, value) => {
+    const sel = document.querySelector(`.overlay select[name="${name}"]`); if (!sel) return null;
+    if (![...sel.options].some(o => o.value === value)) return sel;
+    sel.value = value; sel.dispatchEvent(new Event('change', { bubbles: true }));
+    return sel;
+  };
+  const rfRetitle = text => { const t = document.querySelector('.overlay .dialog-title'); if (t) t.textContent = text; };
+
+  /* Notifications › Destinations › Add */
+  (function rfNotifyAdd() {
+    const form = actions['notifications-add-dest']; if (!form) return;
+    const KINDS = {
+      'In-app': { g: 'here', icon: 'bell', how: 'The Activity center inside Puppet Master', needs: 'Nothing to set up' },
+      'System / tray': { g: 'here', icon: 'bell', how: 'Your computer\'s own notifications', needs: 'Nothing to set up' },
+      'Slack': { g: 'chat', how: 'A channel in your Slack', needs: 'A webhook address' },
+      'Discord': { g: 'chat', how: 'A channel on your Discord server', needs: 'A webhook address' },
+      'Telegram': { g: 'chat', how: 'A chat with your own bot', needs: 'A chat id' },
+      'ntfy': { g: 'phone', how: 'Free push alerts to your phone', needs: 'A topic name' },
+      'Pushover': { g: 'phone', how: 'Push alerts to your phone', needs: 'A user key' },
+      'Generic webhook': { g: 'other', icon: 'external', how: 'Any service that accepts a web address', needs: 'A web address' }
+    };
+    const GROUPS = [['here', 'On this computer'], ['chat', 'Chat apps'], ['phone', 'Your phone'], ['other', 'Anything else']];
+    const types = () => Object.assign({}, DATA.notifications || {}, PM51.s().notifications || {}).destinationTypes || Object.keys(KINDS);
+    PM51.on('notifications-add-dest', () => rfCatalogue({
+      id: 'notify', title: 'Add a destination', search: 'Search destinations', none: 'No destination by that name.',
+      groups: GROUPS.map(([gid, label]) => ({ label, rows: types().filter(t => ((KINDS[t] || {}).g || 'other') === gid).map(t => Object.assign({ id: t, name: t === 'In-app' ? 'In this app' : t === 'System / tray' ? 'System notifications' : t === 'Generic webhook' ? 'Another service (webhook)' : t }, KINDS[t] || { how: 'A service that accepts a web address', needs: 'A web address' })) }))
+    }));
+    rfPicks.notify = type => {
+      form();
+      rfSetSelect('type', type);
+      const k = KINDS[type] || {}, builtIn = k.g === 'here';
+      rfRetitle(type === 'In-app' ? 'Add in-app alerts' : type === 'System / tray' ? 'Add system notifications' : `Add ${type}`);
+      /* a destination on this computer has no address to give, so the form does not ask for one */
+      const addr = document.querySelector('.overlay [name="address"]'), field = addr && addr.closest('.form-field');
+      if (builtIn && field) field.style.display = 'none';
+      if (!builtIn && addr && k.needs) addr.setAttribute('placeholder', k.needs);
+    };
+  })();
+
+  /* Backup & Restore › Destinations › Add */
+  (function rfBackupAdd() {
+    const form = actions['backup-dest-add']; if (!form) return;
+    const HOW = {
+      'Google Drive': 'Your Google account\'s storage', 'Microsoft OneDrive': 'Your Microsoft account\'s storage',
+      'Amazon S3': 'A bucket in your AWS account', 'S3-compatible storage': 'MinIO, Wasabi, Cloudflare R2 and others', 'Backblaze B2': 'A B2 bucket',
+      'Azure Blob Storage': 'A container in your Azure account', 'Google Cloud Storage': 'A bucket in your Google Cloud project',
+      'Folder / NAS share': 'A shared folder on a NAS or another computer', 'SFTP server': 'Any computer you can reach over SSH',
+      'WebDAV / Nextcloud': 'Your own Nextcloud, or any WebDAV server', 'Self-hosted backup server': 'A backup server you run yourself'
+    };
+    const NEEDS = { 'Cloud account': 'Signing in on its page', 'Storage bucket': 'A key and a bucket name', 'Another computer or NAS': 'Its address and a folder', 'Self-hosted storage': 'Its address and a sign-in' };
+    const families = () => (PM51.s().backup || {}).destinationFamilies || [];
+    PM51.on('backup-dest-add', () => {
+      const fam = families(); if (!fam.length) return form();
+      rfCatalogue({
+        id: 'backup', title: 'Add a backup destination', search: 'Search places to keep backups', none: 'No place by that name.',
+        groups: fam.map(([family, services]) => ({ label: family, rows: services.map(sv => ({ id: sv, group: family, name: sv, how: HOW[sv] || family, needs: NEEDS[family] || '' })) }))
+      });
+    });
+    rfPicks.backup = (service, family) => {
+      form();
+      rfSetSelect('family', family); rfSetSelect('type', service);
+      rfRetitle(`Add ${service}`);
+    };
+  })();
 })();
