@@ -1822,10 +1822,14 @@ def key_from_exports(
             }
             rows.append(row)
             if isinstance(argv_map, str):
+                # Not `no_export`: that says the producer named a validator that writes no complete export. Here
+                # nothing could be read, so no batch may take the sample as permanent (review ASTRA A2-1).
+                row["case"] = "mapping_unreadable"
                 row["reason"] = f"what it runs could not be read from scripts/pm-plans-verify.py ({argv_map})"
                 continue
             argv = argv_map.get((check, name))
             if not argv:
+                row["case"] = "mapping_unreadable"
                 row["reason"] = "scripts/pm-plans-verify.py names no command for it"
                 continue
             row["command"] = argv[0]

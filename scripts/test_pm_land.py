@@ -1590,6 +1590,18 @@ class ReportFormatTests(unittest.TestCase):
         gap = land.strict_difference(current, changed, earlier, same, (), 2)
         self.assertEqual(gap[0], "batch_rows_differ", gap)
 
+    def test_a_permanent_sample_sampled_differently_is_not_the_same_comparison(self):
+        """The exception needs identical sampling: the same totals over a different sample are not a comparison."""
+        total = {"run-gates/lint-x": 4}
+        rows = self.rows_doc(**{"run-gates__lint-x": self.entry(4, complete=False)})
+        first = export_row("run-gates", "lint-x", "no_export")
+        second = dict(first, sampled=50)
+        earlier = self.digest(totals=total, counts={}, partial=["lint-x"], exports=[first])
+        current = self.digest(totals=total, counts={}, partial=["lint-x"], exports=[second])
+        gap = land.strict_difference(current, rows, earlier, rows, (), 2)
+        self.assertEqual(gap[0], "batch_status_differs", gap)
+        self.assertIn("sampled differently", gap[1])
+
     def test_an_ambiguous_no_export_is_unknown_never_permanent(self):
         """A2-1: `no_export` with no command is the producer failing to read the mapping; it proves nothing."""
         total = {"run-gates/validate_evidence": 2861}
@@ -2378,6 +2390,19 @@ class BatchCheckTests(BatchFixture):
         code, out = self.check(current)
         self.assertEqual(code, 1, out)
         self.assertIn("TRIGGER batch_mapping_unreadable", out)
+
+    def test_a_total_that_falls_with_the_same_rows_is_a_difference(self):
+        """R5-B1's replay (2,861 -> 2,859) was a false pass at 3d7d55b5c8: the strict rule refuses any movement, and
+        a fall is as much a difference as a rise."""
+        bucket = "run-gates|validate_evidence|missing_ref|Plans/.evidence/e.json"
+        m1 = self.member("m1-fall", head=self.member1, totals={"run-gates/validate_evidence": 2861},
+                         counts={bucket: 178})
+        self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
+        current = self.report("m2.json", totals={"run-gates/validate_evidence": 2859}, counts={bucket: 176})
+        code, out = self.check(current)
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_totals_differ", out)
+        self.assertIn("run-gates/validate_evidence's total is 2859", out)
 
     def test_a_current_members_failed_export_is_never_read_as_a_known_count(self):
         """R4-B1, the review's repro 1: member 1's export succeeded and lowered the bucket (the real

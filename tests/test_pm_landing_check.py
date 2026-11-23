@@ -3160,6 +3160,26 @@ class WhatEachRunAlsoReports(LandingRun):
         self.assertEqual(doc["subchecks"]["plan-migration-validate/-"], {"reported": 0, "complete": True, "rows": []})
         self.assertEqual(code, 1)
 
+    def test_a_mapping_that_cannot_be_read_is_not_a_permanent_sample(self):
+        """A2-1: a producer that could not read what a subcheck runs has not said it writes no export.
+
+        Only a `no_export` that names a command is permanence; the mapping failure gets its own case, so a batch
+        reading the export block cannot take the sample as one it may compare by its total alone.
+        """
+        counts = {"run-gates": {"validate_evidence": {"reported": 665, "sampled": 50}}}
+        decisions = M.key_from_exports(self.repo, counts, {}, set(), "unreadable", 600)[1]
+        self.assertEqual(decisions[0]["case"], "mapping_unreadable")
+        self.assertIn("could not be read", decisions[0]["reason"])
+        decisions = M.key_from_exports(self.repo, counts, {}, set(), {}, 600)[1]
+        self.assertEqual(decisions[0]["case"], "mapping_unreadable")
+        self.assertIn("names no command", decisions[0]["reason"])
+        # A named validator that writes no complete export is the permanent sample the reader may accept.
+        counts = {"run-gates": {"validate_audit_closure": {"reported": 54, "sampled": 50}}}
+        decisions = M.key_from_exports(self.repo, counts, {}, set(),
+                                       {("run-gates", "validate_audit_closure"): ["validate-audit-closure"]}, 600)[1]
+        self.assertEqual(decisions[0]["case"], "no_export")
+        self.assertEqual(decisions[0]["command"], "validate-audit-closure")
+
     def test_the_row_report_says_which_stale_rows_are_stale_by_error_kind(self):
         """A2-5: `kind_stale` is the check's own classification by error kind, which a sampled baseline cannot make
         false; `grown_stale` is the whole-bucket classification that needs a complete baseline."""

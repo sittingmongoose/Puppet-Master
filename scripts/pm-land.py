@@ -1437,10 +1437,13 @@ def read_json_report(doc: dict[str, Any]) -> dict[str, Any]:
     rows_read = rows_read if isinstance(rows_read, list) else None
     export_failed: set[tuple[str, str]] = set()
     permanent: set[tuple[str, str]] = set()
+    samples: dict[tuple[str, str], tuple[Any, Any]] = {}
     for row in rows_read or []:
         if not isinstance(row, dict):
             continue
         key = (str(row.get("check")), str(row.get("subcheck") or "-"))
+        if row.get("reported") is not None and row.get("sampled") is not None:
+            samples[key] = (row["reported"], row["sampled"])
         if key in pairs:
             continue
         if row.get("keyed"):
@@ -1475,6 +1478,9 @@ def read_json_report(doc: dict[str, Any]) -> dict[str, Any]:
         # an empty set, which makes no sample permanent: unknown, never known.
         "permanent": permanent,
         "export_failed": export_failed,
+        # How each subcheck was sampled, where the export block says: a permanent sample is the same comparison only
+        # when both reports sampled it the same way.
+        "samples": samples,
     }
 
 
@@ -1644,8 +1650,8 @@ def strict_difference(report: dict[str, Any], rows: Optional[dict[str, Any]], pr
         # An export that failed leaves what the check could key unknown, whatever the row report says (R4-B1).
         for side, doc in (("this landing's report", report), (where, previous)):
             if (check, subcheck) in (doc.get("export_failed") or set()):
-                return ("batch_counts_unknown", f"{name}'s export did not complete in {side}, so its counts are not "
-                                                "known")
+                return ("batch_counts_unknown", f"{name}'s export did not complete in {side}, or what it runs could "
+                                                "not be read, so its counts are not known")
         entry_now, entry_old = row_entry(rows, name), row_entry(previous_rows, name)
         if entry_now is None or entry_old is None:
             side = "this landing's report" if entry_now is None else where
@@ -1662,6 +1668,12 @@ def strict_difference(report: dict[str, Any], rows: Optional[dict[str, Any]], pr
                     return ("batch_counts_unknown",
                             f"{name} is compared by its total only in {side}, and no producer named a validator that "
                             "writes no complete export, so its counts are not known")
+            now_sample = (report.get("samples") or {}).get((check, subcheck))
+            old_sample = (previous.get("samples") or {}).get((check, subcheck))
+            if now_sample != old_sample:
+                return ("batch_status_differs", f"{name} was sampled differently in {where} ({old_sample}) and this "
+                                                f"landing's report ({now_sample}), so its total is not the same "
+                                                "comparison")
             if now_totals[name] != old_totals[name]:
                 return ("batch_totals_differ", f"{name}'s total changed from {old_totals[name]} to {now_totals[name]} "
                                                f"between {where} and this landing's report, and it is compared by its "
