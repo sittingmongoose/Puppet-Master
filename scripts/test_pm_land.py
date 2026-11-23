@@ -1166,7 +1166,8 @@ print(json.dumps({{"schema_id": "pm.landing_check.report.v1", "commit": {self.he
                        "Land in batches", "check <branch> --on nas1 --base <batch-start>",
                        "verify --receipt <path> --commit <full SHA> --batch-start <batch-start>",
                        "batch-start: <full SHA of origin/main before the batch's first landing>",
-                       "batch-landing: <branch> <main SHA it pushed>", "batch-check", "batch-status",
+                       "batch-landing: <branch> <main SHA it pushed> <the record.json its check printed>",
+                       "batch-check", "batch-status", "PUBLISH_LEASE",
                        "four landings and two hours", "never refresh the snapshot or baseline in the middle of a batch"):
             self.assertIn(phrase, sections[0])
         # The local-copy route and the scripted Plans follow-up move to the batching task (pm7-build, option B).
@@ -1448,24 +1449,12 @@ class ReportFormatTests(unittest.TestCase):
         return dict({"path": "src/x.txt", "check": "run-gates", "subcheck": "lint-x", "error": "missing_ref", "fields": {"n": 1},
                      "stale": False, "standing": "pre-existing", "baseline_count": 5, "count": 5}, **fields)
 
-    def test_the_real_describe_prints_rows_the_tool_reads(self):
-        for standing, count in (("pre-existing", 5), ("improved", 4)):
-            for where in ("  (names src/x.txt)", "  (content changed)"):
-                item = self.item(standing=standing, count=count)
-                line = self.real.describe(item, self.real.item_tag(item, True)) + where
-                text = f"Pre-existing, in a baseline bucket whose count has not risen (never blocks): 1\n{line}\nChecks whose failure count rose: 0"
-                entry = land.read_report(text)["pre"][BUCKET]
-                self.assertEqual((entry["baseline"], entry["count"], entry["improved"]), (5, count, standing == "improved"), line)
-                self.assertEqual(bool(entry["content_rows"]), where.endswith("(content changed)"), line)
-                self.assertFalse(land.read_report(text)["pre_unread"], line)
+    def test_a_text_report_is_not_a_batch_report(self):
+        """Batch comparisons are JSON only: text names a row by clipped display fields, JSON by its key."""
+        self.assertIsNone(land.batch_report(landing_report(totals={"run-gates/lint-x": 2})))
+        self.assertIsNone(land.batch_report("no such line"))
 
-    def test_a_row_with_no_path_is_read_too(self):
-        item = self.item(path=None)
-        line = self.real.describe(item, "pre-existing") + "  (content changed)"
-        text = f"Pre-existing, in a baseline bucket whose count has not risen (never blocks): 1\n{line}\nChecks whose failure count rose: 0"
-        self.assertIn("run-gates/lint-x  missing_ref  (no path)", land.read_report(text)["pre"])
-
-    def test_every_phrase_the_tool_looks_for_is_in_the_real_script(self):
+    def test_every_phrase_the_real_script_still_prints_for_people(self):
         for phrase in ("Infrastructure results, not failures of this tree (never new, growth or blocking): ",
                        "Pre-existing, in a baseline bucket whose count has not risen (never blocks): ",
                        "Checks whose failure count rose: ",
@@ -1482,36 +1471,14 @@ class ReportFormatTests(unittest.TestCase):
                        "more\")"):
             self.assertIn(phrase, self.source, phrase)
 
-    def test_the_report_helper_here_prints_what_the_tool_reads(self):
-        report = land.read_report(landing_report(pre=[pre_row(BUCKET, 5, 5), pre_row(BUCKET, 5, 5, '{"n":2}')],
-                                                 counter=[(READINESS, 124, 218)], compare=2, timeouts=3))
-        self.assertEqual(report["infrastructure"], 3)
-        self.assertEqual(report["compare"], 2)
-        self.assertEqual(report["pre"][BUCKET]["rows"], ['{"n":1}', '{"n":2}'])
-        self.assertEqual(land.read_report(landing_report(gone=4))["gone"], 4)
-        self.assertIsNone(land.read_report("no such line")["gone"])
-        self.assertFalse(report["pre_unread"])
-        self.assertFalse(report["crashed"])
-
-    def test_rows_past_the_print_cap_or_unreadable_are_said_to_be(self):
-        self.assertTrue(land.read_report(landing_report(pre=[pre_row(BUCKET, 5, 5)], more=3))["pre_unread"])
-        text = landing_report(pre=[pre_row(BUCKET, 5, 5)]).replace("  [pre-existing]", "  [some-new-tag]")
-        self.assertTrue(land.read_report(text)["pre_unread"])
-
-    def test_a_traceback_quoted_inside_a_failure_row_is_no_crash(self):
-        """README and pm-landing-check.py: failure details quote validators' tracebacks. Only one that ran here counts."""
-        quoted = pre_row(BUCKET, 5, 5, '{"detail":"Traceback (most recent call last):\\n  File \\"x.py\\""}')
-        self.assertFalse(land.read_report(landing_report(pre=[quoted]))["crashed"])
-        self.assertTrue(land.read_report(landing_report(tail=CRASH))["crashed"])
-        self.assertTrue(land.read_report(landing_report() + "\n  + Exception Group Traceback (most recent call last):\n")["crashed"])
-
     def test_the_json_report_is_read_as_the_lines_it_stands_for(self):
         """`check` writes `landing-check.json` (`--json`); a batch reads that, not its text rounding."""
         pre = [json_pre('k1'), json_pre('k2', standing="improved", baseline=5, count=4),
                json_pre('k3', paths=(), path=None)]
-        report = land.read_report(json_report(pre=pre, compare=2, timeouts=3, gone_ids=["run-gates|lint-x|gone|src/g.txt"],
-                                              totals={"run-gates/lint-x": 3, "run-gates/y-": None},
-                                              counts={"run-gates|lint-x|missing_ref|src/x.txt": 2}))
+        report = land.batch_report(json_report(pre=pre, compare=2, timeouts=3,
+                                               gone_ids=["run-gates|lint-x|gone|src/g.txt"],
+                                               totals={"run-gates/lint-x": 3, "run-gates/y-": None},
+                                               counts={"run-gates|lint-x|missing_ref|src/x.txt": 2}))
         self.assertEqual(report["infrastructure"], 3)
         self.assertEqual(report["compare"], 2)
         self.assertEqual(report["crashed"], False)
@@ -1519,7 +1486,7 @@ class ReportFormatTests(unittest.TestCase):
         self.assertEqual((entry["baseline"], entry["count"], entry["improved"]), (5, 5, False))
         self.assertEqual(entry["rows"], ["k1", "k2"])
         self.assertEqual(entry["content_rows"], [])
-        # The text report says "(content changed)" for a pre-existing row naming no path of this branch.
+        # A row naming no path of this branch is a `(content changed)` row.
         self.assertEqual(report["pre"]["run-gates/lint-x  missing_ref  (no path)"]["content_rows"], ["k3"])
         self.assertEqual(report["gone"], 1)
         self.assertEqual(report["gone_ids"], ["run-gates|lint-x|gone|src/g.txt"])
@@ -1527,6 +1494,16 @@ class ReportFormatTests(unittest.TestCase):
         self.assertEqual(report["bucket_counts"], {"run-gates|lint-x|missing_ref|src/x.txt": 2})
         self.assertFalse(report["ids_unread"])
         self.assertFalse(report["pre_unread"])
+
+    def test_a_paired_copy_and_a_sample_are_kept_apart_from_an_observed_zero(self):
+        """F7: the report says which subchecks it left out, so a bucket it never printed is not a 0."""
+        report = land.batch_report(json_report(
+            totals={"run-gates/validate_audit_closure": 53}, counts={},
+            pairs=[("validate_audit_closure", "validate_audit_closure")],
+            partial=["lint-x"]))
+        self.assertEqual(report["pairs"][("run-gates", "validate_audit_closure")],
+                         ("audit-governance", "validate_audit_closure"))
+        self.assertIn(("run-gates", "lint-x"), report["partial"])
 
     def test_the_real_remote_receipts_json_report_is_read_not_refused(self):
         """The report `check` wrote for fix-land-fast-r11 at 0a3c65cab2, copied into the fixtures verbatim.
@@ -1536,7 +1513,7 @@ class ReportFormatTests(unittest.TestCase):
         """
         path = Path(__file__).resolve().parents[1] / "tests/fixtures/landing_remote_receipt/landing-check.json"
         text = path.read_text(encoding="utf-8")
-        report = land.read_report(text)
+        report = land.batch_report(text)
         self.assertEqual(json.loads(text)["schema_id"], land.REPORT_SCHEMA)
         self.assertEqual((report["infrastructure"], report["compare"], report["crashed"]), (0, 0, False))
         self.assertEqual(report["pre"], {})
@@ -1551,32 +1528,9 @@ class ReportFormatTests(unittest.TestCase):
     def test_a_bucket_id_keeps_a_carriage_return_from_moving_the_cursor(self):
         self.assertEqual(self.real.escape_newlines("a\rb\nc\\d"), "a\\rb\\nc\\\\d")
 
-    def test_a_text_report_cut_before_its_bucket_counts_is_unreadable(self):
-        """A report that stops after its totals prints nothing about per-bucket rises, so a batch cannot read it."""
-        full = landing_report(totals={"run-gates/lint-x": 2})
-        cut = full[:full.index("Bucket counts this run:")]
-        report = land.read_report(cut)
-        self.assertIsNone(report["bucket_counts"])
-        self.assertTrue(report["ids_unread"])
-        self.assertFalse(land.shows_what_changed(report, []))
-        self.assertTrue(land.shows_what_changed(land.read_report(full), []))
-
-    def test_an_unknown_pre_existing_row_is_not_read_as_an_unreadable_row(self):
-        """Main prints those in their own section, tagged otherwise, and outside the declared count."""
-        text = landing_report(pre=[pre_row(BUCKET, 5, 5)])
-        text = text.replace("Checks whose failure count rose: 0",
-                            "In a subcheck the baseline only sampled, its reported total covering this run's rows, "
-                            "so neither provably old nor new (never blocks): 1\n"
-                            "  [unknown-pre-existing] run-gates|lint-x  missing_ref  src/y.txt  {\"ref\":\"#y\"}  "
-                            "(baseline reported 40, printed 12, 28 never keyed)\n"
-                            "Checks whose failure count rose: 0")
-        report = land.read_report(text)
-        self.assertFalse(report["pre_unread"])
-        self.assertEqual(list(report["pre"]), [BUCKET])
-
 
 def json_report(pre=(), compare: int = 0, timeouts: int = 0, gone_ids=(), totals=None, counts=None,
-                commit: str = "b" * 40, base: str = "a" * 40) -> str:
+                pairs=(), partial=(), commit: str = "b" * 40, base: str = "a" * 40) -> str:
     """A `pm-landing-check.py --json` report: the keys a batch reads, in the shape `main()` writes them."""
     return json.dumps({
         "schema_id": land.REPORT_SCHEMA,
@@ -1586,9 +1540,12 @@ def json_report(pre=(), compare: int = 0, timeouts: int = 0, gone_ids=(), totals
         "infrastructure": [{"check": "run-gates", "subcheck": f"x{index}", "error": "subprocess_timeout"}
                            for index in range(timeouts)],
         "pre_existing": list(pre),
-        "resolved_buckets": list(gone_ids),
+        "resolved_buckets": None if gone_ids is None else list(gone_ids),
         "subcheck_totals": totals,
         "bucket_counts": counts,
+        "validator_pairs": [{"run_gates": run, "audit_governance": audit, "paired": True}
+                            for run, audit in pairs],
+        "subchecks_compared_by_total_only": [f"run-gates/{name}" for name in partial],
     })
 
 
@@ -1678,6 +1635,44 @@ class BatchFixture(unittest.TestCase):
         path.write_text(marks + "\n", encoding="utf-8")
         return path
 
+    def receipt(self, name, report, rows, head, base, code=0):
+        """The record.json `check` prints: commit, base, report, row report, their digests and the checker exit."""
+        path = self.reports / name
+        record = {"schema": 2, "host": "nas1", "head": head, "base": base, "exit_code": code,
+                  "report": str(report), "report_sha256": land.file_hash(report),
+                  "row_report": str(rows), "row_report_sha256": land.file_hash(rows),
+                  "argv": ["python3", "-B", "scripts/pm-landing-check.py", "--base", base, "--json",
+                           "--row-report", str(rows)]}
+        land.write_json(path, record)
+        return path
+
+    def empty_rows(self, name="empty.rows.json"):
+        return self.rows_file(name, {"run-gates/other": {"reported": 0, "complete": True, "rows": []}})
+
+    def receipt_without_rows(self, name, report, head, base, code=0):
+        path = self.reports / name
+        land.write_json(path, {"schema": 2, "host": "nas1", "head": head, "base": base, "exit_code": code,
+                               "report": str(report), "report_sha256": land.file_hash(report),
+                               "row_report": None, "row_report_sha256": None})
+        return path
+
+    def member(self, name, *, head, base=None, code=0, totals=None, counts=None, subchecks=None, **report):
+        """One member's receipt, its bound JSON report and row report, as `check --base <batch-start>` writes them."""
+        base = base or self.base
+        report_path = self.report_file(f"{name}.json", json_report(
+            totals=totals, counts=counts, commit=head, base=base, **report))
+        rows_path = self.rows_file(f"{name}.rows.json",
+                                   subchecks if subchecks is not None else
+                                   {"run-gates/other": {"reported": 0, "complete": True, "rows": []}}, base=base)
+        return self.receipt(f"{name}.record.json", report_path, rows_path, head, base, code)
+
+    def row_line(self, branch, sha, name=None):
+        """A `batch-landing` row with a receipt path, for tests that only read the holder."""
+        path = self.reports / (name or f"{sha[:8]}.record.json")
+        if not path.exists():
+            path.write_text("{}\n", encoding="utf-8")
+        return f"{branch} {sha} {path}"
+
     @staticmethod
     def row(key, stale=False, grown_stale=False, names=()):
         return {"key": key, "stale": stale, "grown_stale": grown_stale, "names": list(names)}
@@ -1703,7 +1698,7 @@ class BatchStatusTests(BatchFixture):
         self.assertIn("no batch is open", out)
 
     def test_a_held_batch_shows_its_landings_the_limits_and_the_follow_up(self):
-        self.holder(start=self.base, rows=[f"fix/a {self.base}"], first_push=land.iso())
+        self.holder(start=self.base, rows=[self.row_line("fix/a", self.base)], first_push=land.iso())
         code, out = self.status()
         self.assertEqual(code, 0, out)
         self.assertIn(f"batch: open at batch-start {self.base}", out)
@@ -1712,7 +1707,7 @@ class BatchStatusTests(BatchFixture):
         self.assertIn("Plans/: no path changed since batch-start", out)
 
     def test_malformed_rows_are_named_not_dropped(self):
-        self.holder(start=self.base, rows=[f"fix/a {self.base}", "fix/b not-a-sha"])
+        self.holder(start=self.base, rows=[self.row_line("fix/a", self.base), "fix/b not-a-sha"])
         code, out = self.status()
         self.assertEqual(code, 0, out)
         self.assertIn("[unreadable]", out)
@@ -1729,7 +1724,7 @@ class BatchStatusTests(BatchFixture):
         self.assertIn(member[:12], out)
 
     def test_a_full_batch_and_a_past_two_hours_batch_say_the_next_is_judged_alone(self):
-        rows = [f"fix/{index} {self.base}" for index in range(4)]
+        rows = [self.row_line(f"fix/{index}", self.base) for index in range(4)]
         old = land.iso(datetime.now(timezone.utc) - timedelta(hours=3))
         self.holder(start=self.base, rows=rows, first_push=old)
         code, out = self.status()
@@ -1740,7 +1735,7 @@ class BatchStatusTests(BatchFixture):
     def test_the_first_pushes_time_stands_in_from_the_first_rows_commit_time(self):
         member = self.commit("member 1")
         self.set_main(member)
-        self.holder(start=self.base, rows=[f"fix/a {member}"])
+        self.holder(start=self.base, rows=[self.row_line("fix/a", member)])
         code, out = self.status()
         self.assertEqual(code, 0, out)
         self.assertIn("from the first row's commit time: no batch-first-push line", out)
@@ -1751,7 +1746,7 @@ class BatchStatusTests(BatchFixture):
             self.commit(f"member 1, commit {index}")
         member1 = self.rev("HEAD")
         self.set_main(member1)
-        self.holder(start=self.base, rows=[f"fix/a {member1}"])
+        self.holder(start=self.base, rows=[self.row_line("fix/a", member1)])
         code, out = self.status()
         self.assertEqual(code, 0, out)
         self.assertIn("landings: 1 of 4", out)
@@ -1803,10 +1798,12 @@ class BatchStatusTests(BatchFixture):
         code, out = self.status()
         self.assertEqual(code, 0, out)
         self.assertIn("[stop] baseline: 8.00 days old at batch-start of the 7 rule 2 allows", out)
+        self.assertIn("past its seven-day edge: this landing is judged alone", out)
+        self.assertNotIn("within 2 h", out)
 
 
 class BatchCheckTests(BatchFixture):
-    """One member's report against the previous member's: the triggers of README "Batch triggers", nothing else."""
+    """One member's receipt against the earlier members' receipts: the triggers of README "Batch triggers"."""
 
     def setUp(self):
         super().setUp()
@@ -1818,158 +1815,184 @@ class BatchCheckTests(BatchFixture):
         self.set_main(self.member1)
         self.put("src/own.txt", "own\n")
         self.head = self.commit("member 2")
-        self.holder(start=self.base, rows=[f"fix/a {self.member1}"])
+        self.totals = {"run-gates/lint-x": 1}
+        self.counts = {"run-gates|lint-x|missing_ref|src/x.txt": 1}
+        self.m1 = self.member("m1", head=self.member1, totals=self.totals, counts=self.counts)
+        self.holder(start=self.base, rows=[f"fix/a {self.member1} {self.m1}"])
 
-    def receipt(self, report, code=0, base=None, rows=None, head=None):
-        """The record.json `check` prints: this member's commit, base, report, row report and checker exit."""
-        path = self.reports / "record.json"
-        record = {"schema": 2, "host": "nas1", "head": head or self.head, "base": base or self.base,
-                  "exit_code": code, "report": str(report), "report_sha256": land.file_hash(report),
-                  "row_report": str(rows) if rows is not None else None,
-                  "row_report_sha256": land.file_hash(rows) if rows is not None else None,
-                  "argv": ["python3", "-B", "scripts/pm-landing-check.py", "--base", base or self.base, "--json"]}
-        land.write_json(path, record)
-        return path
+    def report(self, name, **kw):
+        return self.report_file(name, json_report(**kw))
 
-    def check(self, report, previous=None, rows=None, previous_rows=None, code=0, source=True, base=None, lock=None,
-              head=None, **extra):
-        argv = ["--receipt", self.receipt(report, code=code, base=base, rows=rows, head=head), "--repo", self.shared,
+    def current(self, report, rows=None, code=0, base=None, head=None):
+        return self.receipt("record.json", report,
+                            rows if rows is not None else self.empty_rows("record.rows.json"),
+                            head or self.head, base or self.base, code)
+
+    def check(self, report, rows=None, code=0, source=True, base=None, lock=None, head=None, receipt=None):
+        argv = ["--receipt", receipt or self.current(report, rows, code, base, head), "--repo", self.shared,
                 "--lock-dir", lock or self.lock]
         if source is not None:
-            argv += ["--check-source", self.source_file(marked=bool(source)) if source is not True else self.source_file()]
-        if previous is not None:
-            argv += ["--previous", previous]
-        if previous_rows is not None:
-            argv += ["--previous-rows", previous_rows]
-        for name, value in extra.items():
-            argv += [f"--{name.replace('_', '-')}", value]
+            argv += ["--check-source", self.source_file(marked=bool(source))]
         return self.batch_check(*argv)
 
     def test_the_first_member_may_stay_and_says_why(self):
+        self.set_main(self.base)
         self.holder(start=self.base)
-        code, out = self.check(self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1})))
+        code, out = self.check(self.report("m1.json", totals=self.totals, counts=self.counts))
         self.assertEqual(code, 0, out)
         self.assertIn("first member of the batch", out)
         self.assertIn("[total] run-gates/lint-x  1", out)
 
-    def test_a_json_report_from_the_receipt_that_shows_no_rise_keeps_the_landing(self):
-        """What `check` actually writes: a text-only reader finds no totals in it and false-stops every member."""
-        same = {"run-gates/lint-x": 1}
-        counts = {"run-gates|lint-x|missing_ref|src/x.txt": 1}
-        previous = self.report_file("m1.json", json_report(totals=same, counts=counts))
-        current = self.report_file("m2.json", json_report(totals=same, counts=counts))
-        code, out = self.check(current, previous)
+    def test_a_receipt_report_that_shows_no_rise_keeps_the_landing(self):
+        """What `check` actually writes: the receipt's JSON report, bound by SHA-256."""
+        code, out = self.check(self.report("m2.json", totals=self.totals, counts=self.counts))
         self.assertEqual(code, 0, out)
         self.assertIn("no trigger", out)
         self.assertIn("[total] run-gates/lint-x  1", out)
         self.assertIn("[count] run-gates|lint-x|missing_ref|src/x.txt  1", out)
 
     def test_a_rise_in_the_json_report_closes_the_batch(self):
-        previous = self.report_file("m1.json", json_report(totals={"run-gates/lint-x": 1},
-                                                           counts={"run-gates|lint-x|missing_ref|src/x.txt": 1}))
-        current = self.report_file("m2.json", json_report(totals={"run-gates/lint-x": 2},
-                                                          counts={"run-gates|lint-x|missing_ref|src/x.txt": 2}))
-        code, out = self.check(current, previous)
+        current = self.report("m2.json", totals={"run-gates/lint-x": 2},
+                              counts={"run-gates|lint-x|missing_ref|src/x.txt": 2})
+        code, out = self.check(current)
         self.assertEqual(code, 1, out)
         self.assertIn("TRIGGER batch_total_rise", out)
         self.assertIn("run-gates/lint-x's total rose from 1 to 2", out)
 
-    def test_a_member_three_deep_compares_with_every_earlier_report(self):
-        """Member 2's subcheck timed out; member 3's report must not read its 5 as a rise from zero."""
+    def test_a_member_three_deep_compares_with_every_earlier_receipt(self):
+        """Member 3 is compared with member 2's receipt and with member 1's, read from the holder in order."""
         member2 = self.head
         self.set_main(member2)
         self.put("src/third.txt", "third\n")
         head3 = self.commit("member 3")
-        self.holder(start=self.base, rows=[f"fix/a {self.member1}", f"fix/b {member2}"])
-        first = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 5}))
-        second = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": None}))
-        current = self.report_file("m3.txt", landing_report(totals={"run-gates/lint-x": 5}))
-        code, out = self.batch_check("--receipt", self.receipt(current, head=head3), "--repo", self.shared,
-                                     "--previous", first, "--previous", second, "--check-source", self.source_file(),
-                                     "--lock-dir", self.lock)
+        m2 = self.member("m2", head=member2, totals=self.totals, counts=self.counts)
+        self.holder(start=self.base, rows=[f"fix/a {self.member1} {self.m1}", f"fix/b {member2} {m2}"])
+        code, out = self.check(self.report("m3.json", totals=self.totals, counts=self.counts), head=head3)
         self.assertEqual(code, 0, out)
         self.assertIn("no trigger", out)
 
+    def test_a_timeout_in_an_earlier_members_report_judges_this_landing_alone(self):
+        """D5: a timed-out subcheck has no count there, so a number here is not a measured rise from zero."""
+        member2 = self.head
+        self.set_main(member2)
+        head3 = self.commit("member 3")
+        m2 = self.member("m2-timeout", head=member2, totals={"run-gates/lint-x": None}, counts={},
+                         subchecks={"run-gates/lint-x": {"reported": None, "complete": False, "rows": []}})
+        self.holder(start=self.base, rows=[f"fix/a {self.member1} {self.m1}", f"fix/b {member2} {m2}"])
+        code, out = self.check(self.report("m3.json", totals={"run-gates/lint-x": 5}, counts={}), head=head3)
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_counts_unknown", out)
+        self.assertIn("timed out in an earlier member's report", out)
+
     def test_a_receipt_whose_commit_is_the_previous_main_is_refused(self):
-        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 1}))
-        code, _out = self.check(current, head=self.member1)
+        code, _out = self.check(self.report("m2.json", totals=self.totals, counts=self.counts), head=self.member1)
         self.assertEqual(code, 3)
-        self.assertIn("previous member's main SHA", self.stderr)
+        self.assertIn("already on the fetched origin/main", self.stderr)
 
     def test_a_corrupt_row_report_this_member_needs_closes_the_batch(self):
-        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
-        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 1}))
-        bad = self.reports / "m2.rows.json"
+        bad = self.reports / "bad.rows.json"
         bad.write_text("{corrupt json", encoding="utf-8")
-        code, out = self.check(current, previous, rows=bad)
+        code, out = self.check(self.report("m2.json", totals=self.totals, counts=self.counts), rows=bad)
         self.assertEqual(code, 1, out)
         self.assertIn("TRIGGER batch_row_report_unreadable", out)
         self.assertIn("this member's", out)
 
+    def test_a_first_members_corrupt_row_report_is_not_a_success(self):
+        """F6: a required row report is judged before the first-member success, not after it."""
+        self.set_main(self.base)
+        self.holder(start=self.base)
+        bad = self.reports / "bad.rows.json"
+        bad.write_text("{corrupt json", encoding="utf-8")
+        code, out = self.check(self.report("m1.json", totals=self.totals, counts=self.counts), rows=bad)
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_row_report_unreadable", out)
+
     def test_a_row_report_missing_from_disk_closes_the_batch(self):
-        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
-        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 1}))
         rows = self.rows_file("m2.rows.json", {})
-        receipt = self.receipt(current, rows=rows)
+        receipt = self.current(self.report("m2.json", totals=self.totals, counts=self.counts), rows=rows)
         rows.unlink()
-        code, out = self.batch_check("--receipt", receipt, "--repo", self.shared, "--previous", previous,
+        code, out = self.batch_check("--receipt", receipt, "--repo", self.shared,
                                      "--check-source", self.source_file(), "--lock-dir", self.lock)
         self.assertEqual(code, 1, out)
         self.assertIn("TRIGGER batch_row_report_unreadable", out)
 
     def test_a_row_report_that_no_longer_matches_its_receipt_closes_the_batch(self):
-        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
-        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 1}))
         rows = self.rows_file("m2.rows.json", {})
-        receipt = self.receipt(current, rows=rows)
+        receipt = self.current(self.report("m2.json", totals=self.totals, counts=self.counts), rows=rows)
         rows.write_text(json.dumps({"schema_id": land.ROW_REPORT_SCHEMA, "base": self.base,
                                     "subchecks": {"run-gates/x": {"reported": 0, "complete": True, "rows": []}}}),
                         encoding="utf-8")
-        code, out = self.batch_check("--receipt", receipt, "--repo", self.shared, "--previous", previous,
+        code, out = self.batch_check("--receipt", receipt, "--repo", self.shared,
                                      "--check-source", self.source_file(), "--lock-dir", self.lock)
         self.assertEqual(code, 1, out)
         self.assertIn("TRIGGER batch_row_report_unreadable", out)
 
-    def test_a_previous_row_report_that_cannot_be_read_closes_the_batch(self):
-        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
-        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 1}))
-        bad = self.reports / "m1.rows.json"
-        bad.write_text("{corrupt json", encoding="utf-8")
-        code, out = self.check(current, previous, previous_rows=bad)
-        self.assertEqual(code, 1, out)
-        self.assertIn("TRIGGER batch_row_report_unreadable", out)
-        self.assertIn("the previous member's", out)
-
     def test_a_row_report_written_against_another_base_closes_the_batch(self):
-        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
-        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 1}))
         rows = self.rows_file("m2.rows.json", {}, base=self.member1)
-        code, out = self.check(current, previous, rows=rows)
+        code, out = self.check(self.report("m2.json", totals=self.totals, counts=self.counts), rows=rows)
         self.assertEqual(code, 1, out)
         self.assertIn("TRIGGER batch_row_report_unreadable", out)
         self.assertIn("written against", out)
 
-    def test_a_truncated_text_report_closes_the_batch(self):
-        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
-        full = landing_report(totals={"run-gates/lint-x": 1})
-        current = self.report_file("m2.txt", full[:full.index("Bucket counts this run:")])
-        code, out = self.check(current, previous)
+    def test_an_earlier_receipt_whose_report_is_for_another_commit_is_not_compared(self):
+        """D2/F4: a report is compared only for the member its row and receipt name."""
+        other = self.report("other.json", totals=self.totals, counts=self.counts, commit=self.base)
+        record = json.loads(Path(self.m1).read_text(encoding="utf-8"))
+        record["report"], record["report_sha256"] = str(other), land.file_hash(other)
+        land.write_json(Path(self.m1), record)
+        code, out = self.check(self.report("m2.json", totals=self.totals, counts=self.counts))
         self.assertEqual(code, 1, out)
-        self.assertIn("TRIGGER batch_check_too_old", out)
+        self.assertIn("TRIGGER batch_earlier_receipt_unreadable", out)
+        self.assertIn("was written for commit", out)
 
-    def test_a_first_member_whose_report_is_truncated_lands_alone(self):
+    def test_an_earlier_receipt_that_cannot_be_read_judges_this_landing_alone(self):
+        Path(self.m1).write_text("{not json", encoding="utf-8")
+        code, out = self.check(self.report("m2.json", totals=self.totals, counts=self.counts))
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_earlier_receipt_unreadable", out)
+
+    def test_a_pushed_member_missing_from_the_holder_refuses_and_asks_for_repair(self):
+        """F3: member 1 is on main but absent from holder.txt; the next landing is not the first member."""
         self.holder(start=self.base)
-        full = landing_report(totals={"run-gates/lint-x": 1})
-        current = self.report_file("m1.txt", full[:full.index("Bucket counts this run:")])
-        code, out = self.check(current)
+        code, _out = self.check(self.report("m2.json", totals=self.totals, counts=self.counts))
+        self.assertEqual(code, 3)
+        self.assertIn("have no `batch-landing` row", self.stderr)
+        self.assertIn("repair the holder, then rerun", self.stderr)
+        self.holder(start=self.base, rows=[f"fix/a {self.member1} {self.m1}"])
+        code, out = self.check(self.report("m2.json", totals=self.totals, counts=self.counts))
+        self.assertEqual(code, 0, out)
+
+    def test_a_row_without_a_receipt_path_is_refused_to_repair(self):
+        self.holder(start=self.base, rows=[f"fix/a {self.member1}"])
+        code, _out = self.check(self.report("m2.json", totals=self.totals, counts=self.counts))
+        self.assertEqual(code, 3)
+        self.assertIn("cannot read", self.stderr)
+        self.assertIn("repair", self.stderr.lower())
+
+    def test_the_previous_override_flags_are_gone(self):
+        """D3/F5: the member's own range is the holder's last landing, never a caller's substitute."""
+        receipt = self.current(self.report("m2.json", totals=self.totals, counts=self.counts))
+        with self.assertRaises(SystemExit), redirect_stderr(io.StringIO()):
+            land.main(["batch-check", "--receipt", str(receipt), "--own-base", self.base])
+
+    def test_a_first_member_whose_report_has_no_comparison_lines_lands_alone(self):
+        self.set_main(self.base)
+        self.holder(start=self.base)
+        code, out = self.check(self.report("m1.json"))
         self.assertEqual(code, 1, out)
         self.assertIn("no batch", out)
         self.assertIn("bucket counts", out)
 
-    def test_a_total_rise_closes_the_batch(self):
-        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
+    def test_a_member_whose_report_is_not_the_json_check_writes_lands_alone(self):
         current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
-        code, out = self.check(current, previous)
+        code, out = self.check(current)
+        self.assertEqual(code, 1, out)
+        self.assertIn("no batch", out)
+        self.assertIn("not the JSON", out)
+
+    def test_a_total_rise_closes_the_batch(self):
+        current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts=self.counts)
+        code, out = self.check(current)
         self.assertEqual(code, 1, out)
         self.assertIn("TRIGGER batch_total_rise", out)
         self.assertIn("run-gates/lint-x's total rose from 1 to 2", out)
@@ -1977,135 +2000,138 @@ class BatchCheckTests(BatchFixture):
 
     def test_a_rise_that_is_only_this_members_own_staleness_keeps_the_landing(self):
         key1, key2 = "run-gates|lint-x|stale_hash|src/a.md|1", "run-gates|lint-x|stale_hash|src/own.txt|2"
-        previous_rows = self.rows_file("m1.rows.json", {"run-gates/lint-x": {
-            "reported": 1, "complete": True, "rows": [self.row(key1, stale=True, grown_stale=True, names=["src/a.md"])]}})
+        bucket = "run-gates|lint-x|stale_hash|src/a.md"
+        m1 = self.member("m1-stale", head=self.member1, totals={"run-gates/lint-x": 1}, counts={bucket: 1},
+                         subchecks={"run-gates/lint-x": {
+                             "reported": 1, "complete": True,
+                             "rows": [self.row(key1, stale=True, grown_stale=True, names=["src/a.md"])]}})
+        self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
         rows = self.rows_file("m2.rows.json", {"run-gates/lint-x": {
             "reported": 2, "complete": True,
             "rows": [self.row(key1, stale=True, grown_stale=True, names=["src/a.md"]),
                      self.row(key2, stale=True, grown_stale=True, names=["src/own.txt"])]}})
-        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
-        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
-        code, out = self.check(current, previous, rows, previous_rows)
+        current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts={bucket: 2})
+        code, out = self.check(current, rows=rows)
         self.assertEqual(code, 0, out)
         self.assertIn("no trigger", out)
         self.assertIn("may stay", out)
 
     def test_an_added_row_on_another_members_file_closes_the_batch(self):
         key1, key2 = "run-gates|lint-x|stale_hash|src/a.md|1", "run-gates|lint-x|stale_hash|src/other.txt|2"
-        previous_rows = self.rows_file("m1.rows.json", {"run-gates/lint-x": {
-            "reported": 1, "complete": True, "rows": [self.row(key1, stale=True, grown_stale=True, names=["src/a.md"])]}})
+        bucket = "run-gates|lint-x|stale_hash|src/a.md"
+        m1 = self.member("m1-other", head=self.member1, totals={"run-gates/lint-x": 1}, counts={bucket: 1},
+                         subchecks={"run-gates/lint-x": {
+                             "reported": 1, "complete": True,
+                             "rows": [self.row(key1, stale=True, grown_stale=True, names=["src/a.md"])]}})
+        self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
         rows = self.rows_file("m2.rows.json", {"run-gates/lint-x": {
             "reported": 2, "complete": True,
             "rows": [self.row(key1, stale=True, grown_stale=True, names=["src/a.md"]),
                      self.row(key2, stale=True, grown_stale=True, names=["src/other.txt"])]}})
-        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
-        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
-        code, out = self.check(current, previous, rows, previous_rows)
+        current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts={bucket: 2})
+        code, out = self.check(current, rows=rows)
         self.assertEqual(code, 1, out)
         self.assertIn("names another member's file", out)
 
     def test_staleness_by_detail_text_alone_does_not_excuse_the_rise(self):
         key1, key2 = "run-gates|lint-x|stale_hash|src/a.md|1", "run-gates|lint-x|registry_entry_mismatch|src/own.txt|2"
-        previous_rows = self.rows_file("m1.rows.json", {"run-gates/lint-x": {
-            "reported": 1, "complete": True, "rows": [self.row(key1, stale=True, grown_stale=True, names=["src/a.md"])]}})
+        bucket = "run-gates|lint-x|stale_hash|src/a.md"
+        m1 = self.member("m1-detail", head=self.member1, totals={"run-gates/lint-x": 1}, counts={bucket: 1},
+                         subchecks={"run-gates/lint-x": {
+                             "reported": 1, "complete": True,
+                             "rows": [self.row(key1, stale=True, grown_stale=True, names=["src/a.md"])]}})
+        self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
         rows = self.rows_file("m2.rows.json", {"run-gates/lint-x": {
             "reported": 2, "complete": True,
             "rows": [self.row(key1, stale=True, grown_stale=True, names=["src/a.md"]),
                      self.row(key2, stale=True, grown_stale=False, names=["src/own.txt"])]}})
-        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
-        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
-        code, out = self.check(current, previous, rows, previous_rows)
+        current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts={bucket: 2})
+        code, out = self.check(current, rows=rows)
         self.assertEqual(code, 1, out)
         self.assertIn("staleness only by its detail text", out)
 
-    def test_a_rise_with_no_row_reports_cannot_be_excused(self):
-        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
-        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
-        code, out = self.check(current, previous)
+    def test_a_member_whose_receipt_records_no_row_report_cannot_batch(self):
+        current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts=self.counts)
+        receipt = self.receipt_without_rows("no-rows.record.json", current, self.head, self.base)
+        code, out = self.check(current, receipt=receipt)
         self.assertEqual(code, 1, out)
-        self.assertIn("wrote no row report", out)
-        self.assertIn("TRIGGER batch_total_rise", out)
+        self.assertIn("TRIGGER batch_row_report_unreadable", out)
+        self.assertIn("does not record", out)
 
     def test_a_report_without_the_comparison_lines_closes_the_batch(self):
-        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
-        current = self.report_file("m2.txt", landing_report(older=True))
-        code, out = self.check(current, previous)
+        current = self.report("m2.json")
+        code, out = self.check(current)
         self.assertEqual(code, 1, out)
         self.assertIn("TRIGGER batch_check_too_old", out)
 
     def test_a_bucket_that_was_gone_and_is_back_closes_the_batch(self):
-        previous = self.report_file("m1.txt", landing_report(gone=1, gone_ids=["run-gates|lint-x|missing_ref|src/x.txt"],
-                                                             totals={"run-gates/lint-x": 0}))
-        current = self.report_file("m2.txt", landing_report(gone=0, totals={"run-gates/lint-x": 1}))
-        code, out = self.check(current, previous)
+        bucket = "run-gates|lint-x|missing_ref|src/x.txt"
+        m1 = self.member("m1-gone", head=self.member1, totals={"run-gates/lint-x": 0}, counts={},
+                         gone_ids=[bucket])
+        self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
+        current = self.report("m2.json", totals={"run-gates/lint-x": 1}, counts={bucket: 1})
+        code, out = self.check(current)
         self.assertEqual(code, 1, out)
         self.assertIn("listed as gone is back", out)
 
     def test_gone_ids_that_do_not_add_up_close_the_batch(self):
-        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
-        text = landing_report(totals={"run-gates/lint-x": 2}).replace("Subcheck totals this run: 1",
-                                                                       "Subcheck totals this run: 2")
-        current = self.report_file("m2.txt", text)
-        code, out = self.check(current, previous)
+        current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts=self.counts, gone_ids=None)
+        code, out = self.check(current)
         self.assertEqual(code, 1, out)
         self.assertIn("do not add up", out)
 
-    def test_the_previous_members_report_not_on_record_is_a_trigger(self):
-        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
+    def test_a_paired_copy_printed_in_full_is_not_growth_from_zero(self):
+        """F7: the earlier report left the run-gates copy out because its audit twin judged it; that is not a 0."""
+        bucket = "run-gates|validate_audit_closure|audit_closure_validator_error|Plans/x.json"
+        twin = "audit-governance|validate_audit_closure|audit_closure_validator_error|Plans/x.json"
+        totals = {"run-gates/validate_audit_closure": 53, "audit-governance/validate_audit_closure": 53}
+        m1 = self.member("m1-paired", head=self.member1, totals=totals, counts={twin: 1},
+                         pairs=[("validate_audit_closure", "validate_audit_closure")])
+        self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
+        current = self.report("m2.json", totals=totals, counts={bucket: 1})
         code, out = self.check(current)
-        self.assertEqual(code, 1, out)
-        self.assertIn("not on record", out)
-
-    def test_an_unreadable_previous_report_is_refused(self):
-        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
-        code, _out = self.check(current, self.reports / "no-such-report.txt")
-        self.assertEqual(code, 3)
+        self.assertEqual(code, 0, out)
+        self.assertIn("no trigger", out)
 
     def test_a_landing_check_that_cannot_batch_lands_alone_or_closes(self):
-        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
+        current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts=self.counts)
         code, out = self.check(current, source=False)
         self.assertEqual(code, 1, out)
         self.assertIn("judged alone", out)
+        self.set_main(self.base)
         self.holder(start=self.base)
         code, out = self.check(current, source=False)
         self.assertEqual(code, 1, out)
         self.assertIn("land it alone", out)
 
     def test_the_landing_checks_own_exit_decides_when_it_is_not_zero_or_one(self):
-        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
+        current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts=self.counts)
         for exit_code in (2, 3):
             with self.subTest(exit_code=exit_code):
                 code, out = self.check(current, code=exit_code)
                 self.assertEqual(code, 1, out)
                 self.assertIn(f"the landing check exited {exit_code}", out)
 
-    def test_a_traceback_means_the_check_did_not_finish_judging(self):
-        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}, tail=CRASH))
-        code, out = self.check(current)
-        self.assertEqual(code, 1, out)
-        self.assertIn("did not finish judging", out)
-
     def test_the_base_must_be_a_full_sha(self):
-        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
+        current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts=self.counts)
         code, _out = self.check(current, base="origin/main")
         self.assertEqual(code, 3)
 
     def test_no_open_batch_is_refused(self):
-        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
+        current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts=self.counts)
         code, _out = self.check(current, lock=self.root / "free-lock")
         self.assertEqual(code, 3)
         self.assertIn("no batch is open", self.stderr)
 
     def test_the_base_must_be_the_open_batch(self):
         self.holder(start=self.member1, rows=[])
-        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 2}))
+        current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts=self.counts)
         code, _out = self.check(current)
         self.assertEqual(code, 3)
 
     def test_the_check_source_defaults_to_the_script_at_the_members_commit(self):
-        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
-        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 1}))
-        code, out = self.check(current, previous, source=None)
+        current = self.report("m2.json", totals=self.totals, counts=self.counts)
+        code, out = self.check(current, source=None)
         self.assertEqual(code, 0, out)
         self.assertIn("no trigger", out)
 
@@ -2122,17 +2148,14 @@ class PutBackTests(BatchFixture):
         self.set_main(self.member1)
         self.put("src/a.txt", "one\n")
         self.head = self.commit("member 2 puts it back")
-        self.holder(start=self.base, rows=[f"fix/a {self.member1}"])
-        previous = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 1}))
-        current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 1}))
-        receipt = self.reports / "record.json"
+        m1 = self.member("m1", head=self.member1, totals={"run-gates/lint-x": 1},
+                         counts={"run-gates|lint-x|missing_ref|src/x.txt": 1})
+        self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
+        current = self.report_file("m2.json", json_report(
+            totals={"run-gates/lint-x": 1}, counts={"run-gates|lint-x|missing_ref|src/x.txt": 1}))
         # The shared checkout is still at member 1: only the receipt names member 2's commit.
-        land.write_json(receipt, {"schema": 2, "host": "nas1", "head": self.head, "base": self.base,
-                                  "exit_code": 0, "report": str(current),
-                                  "report_sha256": land.file_hash(current), "row_report": None,
-                                  "row_report_sha256": None})
-        code, out = self.batch_check("--receipt", receipt, "--repo", self.shared, "--previous", previous,
-                                     "--lock-dir", self.lock)
+        receipt = self.receipt("record.json", current, self.empty_rows("m2.rows.json"), self.head, self.base)
+        code, out = self.batch_check("--receipt", receipt, "--repo", self.shared, "--lock-dir", self.lock)
         self.assertEqual(code, 1, out)
         self.assertIn("TRIGGER batch_reverted_path", out)
         self.assertIn("src/a.txt", out)
@@ -2146,17 +2169,15 @@ class BatchLimitTests(BatchFixture):
         self.put("src/own.txt", "own\n")
         self.head = self.commit("member 2")
         self.holder(start=self.base, rows=[])
-        self.report = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 1}))
+        self.report = self.report_file("m2.json", json_report(
+            totals={"run-gates/lint-x": 1}, counts={"run-gates|lint-x|missing_ref|src/x.txt": 1}))
+        self.rows = self.empty_rows("m2.rows.json")
 
-    def receipt(self, base=None):
-        path = self.reports / "record.json"
-        land.write_json(path, {"schema": 2, "head": self.head, "base": base or self.base, "exit_code": 0,
-                               "report": str(self.report), "report_sha256": land.file_hash(self.report),
-                               "row_report": None, "row_report_sha256": None})
-        return path
+    def current(self, base=None):
+        return self.receipt("record.json", self.report, self.rows, self.head, base or self.base)
 
     def judge(self, receipt=None):
-        return self.batch_check("--receipt", receipt or self.receipt(), "--repo", self.shared,
+        return self.batch_check("--receipt", receipt or self.current(), "--repo", self.shared,
                                 "--check-source", self.source_file(), "--lock-dir", self.lock)
 
     def assert_stopped(self, phrase):
@@ -2170,16 +2191,16 @@ class BatchLimitTests(BatchFixture):
         self.assertIn(phrase.split(":")[0], out)
 
     def test_a_full_batch_refuses_the_next_landing(self):
-        self.holder(start=self.base, rows=[f"fix/{index} {self.base}" for index in range(4)])
+        self.holder(start=self.base, rows=[self.row_line(f"fix/{index}", self.base) for index in range(4)])
         self.assert_stopped("full: the next landing is judged alone")
 
     def test_past_the_two_hours_the_next_landing_is_refused(self):
         old = land.iso(datetime.now(timezone.utc) - timedelta(hours=3))
-        self.holder(start=self.base, rows=[f"fix/a {self.base}"], first_push=old)
+        self.holder(start=self.base, rows=[self.row_line("fix/a", self.base)], first_push=old)
         self.assert_stopped("past the two hours")
 
     def test_a_dead_holder_refuses_the_next_landing(self):
-        self.holder(start=self.base, rows=[f"fix/a {self.base}"],
+        self.holder(start=self.base, rows=[self.row_line("fix/a", self.base)],
                     time=land.iso(datetime.now(timezone.utc) - timedelta(minutes=100)))
         self.age_holder(100)
         self.assert_stopped("the holder is dead")
@@ -2194,8 +2215,7 @@ class BatchLimitTests(BatchFixture):
         self.put("src/own.txt", "own\n")
         self.head = self.commit("member 2")
         self.holder(start=start, rows=[])
-        receipt = self.receipt(base=start)
-        code, _out = self.judge(receipt)
+        code, _out = self.judge(self.current(base=start))
         self.assertEqual(code, 3)
         self.assertIn("within 2 h of its seven-day edge", self.stderr)
         code, out = self.status()
@@ -2244,6 +2264,10 @@ class BatchVerifyTests(unittest.TestCase):
         lines += [f"batch-landing: {row}" for row in rows]
         (held / "holder.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
+    def row(self, branch, sha):
+        """A `batch-landing` row: verify reads the chain, not the earlier receipt's bytes."""
+        return f"{branch} {sha} {self.folder / 'earlier.record.json'}"
+
     def receipt(self, head, base=None, rows=True, code=0):
         base = base or self.base
         report = self.folder / "landing-check.json"
@@ -2274,7 +2298,7 @@ class BatchVerifyTests(unittest.TestCase):
 
     def test_a_member_whose_base_is_the_batch_start_and_whose_landings_are_listed_is_verified(self):
         member1, head = self.history()
-        self.holder(self.base, [f"fix/a {member1}"])
+        self.holder(self.base, [self.row("fix/a", member1)])
         self.receipt(head)
         output = io.StringIO()
         with redirect_stdout(output):
@@ -2284,14 +2308,14 @@ class BatchVerifyTests(unittest.TestCase):
     def test_a_member_after_a_three_commit_landing_is_accepted(self):
         """One `batch-landing` row names one landing, whatever the fast-forward carried: member 1 pushed 3 commits."""
         member1, head = self.history(commits=3)
-        self.holder(self.base, [f"fix/a {member1}"])
+        self.holder(self.base, [self.row("fix/a", member1)])
         self.receipt(head)
         with redirect_stdout(io.StringIO()):
             self.assertEqual(self.verify(), 0)
 
     def test_verify_refuses_a_landing_the_batch_limits_do_not_allow(self):
         member1, head = self.history()
-        self.holder(self.base, [f"fix/{index} {member1}" for index in range(4)])
+        self.holder(self.base, [self.row(f"fix/{index}", member1) for index in range(4)])
         self.receipt(head)
         with self.assertRaisesRegex(land.Refusal, "the batch cannot take this landing"):
             self.verify()
@@ -2303,7 +2327,7 @@ class BatchVerifyTests(unittest.TestCase):
         self.git(self.shared, "commit", "-am", "unlisted landing")
         unlisted = land.revision(self.shared, "HEAD")
         self.git(self.shared, "push", "origin", f"{unlisted}:{land.MAIN_REF}")
-        self.holder(self.base, [f"fix/a {member1}"])
+        self.holder(self.base, [self.row("fix/a", member1)])
         self.receipt(head)
         with self.assertRaisesRegex(land.Refusal, "not listed as a `batch-landing"):
             self.verify()
@@ -2316,7 +2340,7 @@ class BatchVerifyTests(unittest.TestCase):
         self.git(self.shared, "commit", "-qm", "side landing, never pushed to main")
         side = land.revision(self.shared, "HEAD")
         self.git(self.shared, "checkout", "-q", "main")
-        self.holder(self.base, [f"fix/side {side}"])
+        self.holder(self.base, [self.row("fix/side", side)])
         self.receipt(head)
         with self.assertRaisesRegex(land.Refusal, "is not on the fetched origin/main"):
             self.verify()
@@ -2330,7 +2354,7 @@ class BatchVerifyTests(unittest.TestCase):
 
     def test_a_receipt_whose_check_exited_two_is_not_a_batch_member(self):
         member1, head = self.history()
-        self.holder(self.base, [f"fix/a {member1}"])
+        self.holder(self.base, [self.row("fix/a", member1)])
         self.receipt(head, code=2)
         with self.assertRaisesRegex(land.Refusal, "may only stay on exit 0 or 1"):
             self.verify()
@@ -2345,14 +2369,14 @@ class BatchVerifyTests(unittest.TestCase):
         self.git(self.shared, "branch", "-f", self.branch, head)
         self.git(self.shared, "push", "-f", "origin", f"{head}:{self.ref}")
         self.git(self.shared, "reset", "--keep", first)
-        self.holder(self.base, [f"fix/a {member1}"])
+        self.holder(self.base, [self.row("fix/a", member1)])
         self.receipt(head)
         with self.assertRaisesRegex(land.Refusal, "is inconsistent with base"):
             self.verify()
 
     def test_a_batch_start_that_is_not_the_open_batch_is_refused(self):
         member1, head = self.history()
-        self.holder(member1, [f"fix/a {member1}"])
+        self.holder(member1, [self.row("fix/a", member1)])
         self.receipt(head)
         with self.assertRaisesRegex(land.Refusal, "is not the open batch's batch-start"):
             self.verify()
@@ -2365,38 +2389,140 @@ class BatchVerifyTests(unittest.TestCase):
 
     def test_a_moving_name_instead_of_a_full_sha_is_refused(self):
         member1, head = self.history()
-        self.holder(self.base, [f"fix/a {member1}"])
+        self.holder(self.base, [self.row("fix/a", member1)])
         self.receipt(head)
         with self.assertRaisesRegex(land.Refusal, "must be a full 40-character commit or tree SHA"):
             self.verify("origin/main")
 
     def test_a_receipt_whose_base_is_not_the_batch_start_is_refused(self):
         member1, head = self.history()
-        self.holder(self.base, [f"fix/a {member1}"])
+        self.holder(self.base, [self.row("fix/a", member1)])
         self.receipt(head, base=member1)
         with self.assertRaisesRegex(land.Refusal, "receipt base is .*--batch-start is"):
             self.verify()
 
     def test_a_candidate_that_does_not_contain_main_is_refused(self):
         member1, _head = self.history()
-        self.holder(self.base, [f"fix/a {member1}"])
+        self.holder(self.base, [self.row("fix/a", member1)])
         self.receipt(self.head)  # the fixture's original candidate, a child of base only
         with self.assertRaisesRegex(land.Refusal, "is not an ancestor of the checked commit"):
             self.verify()
 
     def test_a_receipt_with_no_row_report_cannot_be_a_batch_member(self):
         member1, head = self.history()
-        self.holder(self.base, [f"fix/a {member1}"])
+        self.holder(self.base, [self.row("fix/a", member1)])
         self.receipt(head, rows=False)
         with self.assertRaisesRegex(land.Refusal, "records no row report"):
             self.verify()
 
     def test_a_malformed_batch_landing_row_is_refused_not_dropped(self):
         member1, head = self.history()
-        self.holder(self.base, [f"fix/a {member1}", "fix/b nope"])
+        self.holder(self.base, [self.row("fix/a", member1), "fix/b nope"])
         self.receipt(head)
         with self.assertRaisesRegex(land.Refusal, "cannot read"):
             self.verify()
+
+    def test_verify_prints_the_pinned_publication_lease(self):
+        """The hand push leases on this exact value, never on a reread of origin/main (D1/F2)."""
+        member1, head = self.history()
+        self.holder(self.base, [self.row("fix/a", member1)])
+        self.receipt(head)
+        output = io.StringIO()
+        with redirect_stdout(output):
+            self.assertEqual(self.verify(), 0)
+        self.assertIn(f"PUBLISH_LEASE={member1}", output.getvalue())
+
+    def test_main_moving_during_the_witness_is_refused(self):
+        member1, head = self.history()
+        self.holder(self.base, [self.row("fix/a", member1)])
+        self.receipt(head)
+
+        def moved(*_args, **_kwargs):
+            self.git(self.shared, "push", "-f", "origin", f"{head}:{land.MAIN_REF}")
+            return subprocess.CompletedProcess([], 0, "", "")
+
+        try:
+            with (patch.object(land, "LOCK_DIR", self.lock), patch.object(land, "ssh", side_effect=moved)):
+                with self.assertRaisesRegex(land.Refusal, "origin/main moved from .* during verification"):
+                    land.verify_receipt(self.path, None, None, self.base)
+        finally:
+            self.git(self.shared, "push", "-f", "origin", f"{member1}:{land.MAIN_REF}")
+            self.git(self.shared, "fetch", "origin")
+
+    def test_main_moving_during_the_preflight_is_refused(self):
+        member1, head = self.history()
+        self.holder(self.base, [self.row("fix/a", member1)])
+        self.receipt(head)
+        real = land.publication_preflight
+
+        def move(*args, **kwargs):
+            self.git(self.shared, "push", "-f", "origin", f"{head}:{land.MAIN_REF}")
+            self.git(self.shared, "fetch", "origin")
+            return real(*args, **kwargs)
+
+        try:
+            with (patch.object(land, "LOCK_DIR", self.lock),
+                  patch.object(land, "ssh", return_value=subprocess.CompletedProcess([], 0, "", "")),
+                  patch.object(land, "publication_preflight", side_effect=move)):
+                with self.assertRaisesRegex(land.Refusal, "origin/main moved from .* during verification"):
+                    land.verify_receipt(self.path, None, None, self.base)
+        finally:
+            self.git(self.shared, "push", "-f", "origin", f"{member1}:{land.MAIN_REF}")
+            self.git(self.shared, "fetch", "origin")
+
+    def test_a_row_report_changed_during_the_preflight_is_refused(self):
+        """F6: the final pass re-hashes the report and row bytes, not only the receipt."""
+        member1, head = self.history()
+        self.holder(self.base, [self.row("fix/a", member1)])
+        self.receipt(head)
+        rows = self.folder / "rows.json"
+        real = land.publication_preflight
+
+        def damage(*args, **kwargs):
+            rows.write_text(rows.read_text(encoding="utf-8") + "\n", encoding="utf-8")
+            return real(*args, **kwargs)
+
+        with (patch.object(land, "LOCK_DIR", self.lock),
+              patch.object(land, "ssh", return_value=subprocess.CompletedProcess([], 0, "", "")),
+              patch.object(land, "publication_preflight", side_effect=damage)):
+            with self.assertRaisesRegex(land.Refusal, "row report .* no longer matches"):
+                land.verify_receipt(self.path, None, None, self.base)
+
+    def test_a_report_changed_during_the_preflight_is_refused(self):
+        member1, head = self.history()
+        self.holder(self.base, [self.row("fix/a", member1)])
+        self.receipt(head)
+        report = self.folder / "landing-check.json"
+        real = land.publication_preflight
+
+        def damage(*args, **kwargs):
+            report.write_text(report.read_text(encoding="utf-8") + "\n", encoding="utf-8")
+            return real(*args, **kwargs)
+
+        with (patch.object(land, "LOCK_DIR", self.lock),
+              patch.object(land, "ssh", return_value=subprocess.CompletedProcess([], 0, "", "")),
+              patch.object(land, "publication_preflight", side_effect=damage)):
+            with self.assertRaisesRegex(land.Refusal, "report .* no longer matches"):
+                land.verify_receipt(self.path, None, None, self.base)
+
+    def test_after_verify_a_moved_main_fails_the_printed_lease(self):
+        member1, head = self.history()
+        self.holder(self.base, [self.row("fix/a", member1)])
+        self.receipt(head)
+        output = io.StringIO()
+        with redirect_stdout(output):
+            self.assertEqual(self.verify(), 0)
+        lease = next(line.split("=", 1)[1] for line in output.getvalue().splitlines()
+                     if line.startswith("PUBLISH_LEASE="))
+        self.assertEqual(lease, member1)
+        self.git(self.shared, "reset", "--keep", member1)
+        self.put(self.shared, "tracked.txt", "someone else's landing\n")
+        self.git(self.shared, "commit", "-am", "someone else")
+        other = land.revision(self.shared, "HEAD")
+        self.git(self.shared, "push", "-f", "origin", f"{other}:{land.MAIN_REF}")
+        push = land.git(self.shared, "push", f"--force-with-lease=refs/heads/main:{lease}", "origin",
+                        f"{head}:refs/heads/main", check=False)
+        self.assertNotEqual(push.returncode, 0)
 
 
 class CheckBatchBaseTests(unittest.TestCase):

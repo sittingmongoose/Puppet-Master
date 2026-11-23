@@ -1382,23 +1382,6 @@ def check_topic(root, branch, host, base=None):
 # landing-check reports say what moved between two of its members. Nothing here takes the lock,
 # moves main, pushes or writes anything.
 
-REPORT_INFRASTRUCTURE = re.compile(r"^Infrastructure results, not failures of this tree [^:]*: (\d+)", re.M)
-# At the start of a line: a failure row quotes a validator's traceback inside its one-line fields, under "  [".
-REPORT_TRACEBACK = re.compile(r"^(?:  \+ Exception Group )?Traceback \(most recent call last\)", re.M)
-REPORT_COMPARE = re.compile(r"^Nothing reported stops the landing:.*?(\d+) of them with changed content on files this "
-                            r"branch touched, so compare those with the baseline's rows", re.M)
-REPORT_PRE_HEAD = re.compile(r"^Pre-existing, in a baseline bucket whose count has not risen \(never blocks\): (\d+)")
-REPORT_PRE_ROW = re.compile(r"^  \[(pre-existing|improved)\s*\] (.+?)  (\d+) -> (\d+)(?:  (.*))?$")
-REPORT_ROW_WHERE = re.compile(r"^(.*?)  ?\((names .*|content changed)\)$")
-REPORT_GONE = re.compile(r"^Gone since the baseline \(nothing to do\): (\d+)", re.M)
-# Printed by pm-landing-check.py with --row-report; an older one has none of these.
-REPORT_GONE_ROW = re.compile(r"^  \[gone\] (.+)$", re.M)
-REPORT_TOTALS = re.compile(r"^Subcheck totals this run: (\d+)$", re.M)
-REPORT_TOTAL_ROW = re.compile(r"^  \[total\] (\S+)  (\d+|timed out)$", re.M)
-REPORT_COUNTS = re.compile(r"^Bucket counts this run: (\d+)$", re.M)
-REPORT_COUNT_ROW = re.compile(r"^  \[count\] (.+)  (\d+)$", re.M)
-
-
 REPORT_SCHEMA = "pm.landing_check.report.v1"
 
 
@@ -1407,7 +1390,8 @@ def read_json_report(doc: dict[str, Any]) -> dict[str, Any]:
 
     It carries every row the text report prints or counts, with no print cap: `pre_unread` is False and the gone
     ids, totals and counts are complete. An older JSON report without `subcheck_totals` or `bucket_counts` reads
-    as one without those lines, exactly as an older text report does: no batch compares with it.
+    as one without those lines: no batch compares with it. `pairs` is its `validator_pairs` mapping: a bucket the
+    report left out because a run-gates copy was judged by its audit-governance twin is not an observed zero.
     """
     pre: dict[str, dict[str, Any]] = {}
     for item in doc.get("pre_existing") or []:
@@ -1430,6 +1414,16 @@ def read_json_report(doc: dict[str, Any]) -> dict[str, Any]:
         if isinstance(totals, dict) else None
     counts = {name: int(value) for name, value in counts.items()} if isinstance(counts, dict) else None
     gone_ids = [str(name) for name in resolved] if isinstance(resolved, list) else None
+    pairs: dict[tuple[str, str], tuple[str, str]] = {}
+    for row in doc.get("validator_pairs") or []:
+        if isinstance(row, dict) and row.get("paired") and row.get("run_gates") and row.get("audit_governance"):
+            pairs[("run-gates", str(row["run_gates"]))] = ("audit-governance", str(row["audit_governance"]))
+    # A subcheck compared by its total only is left out of `bucket_counts` too: its missing bucket is not a zero.
+    partial = set()
+    for name in doc.get("subchecks_compared_by_total_only") or []:
+        check, _, subcheck = str(name).partition("/")
+        if check and subcheck:
+            partial.add((check, subcheck))
     return {
         "infrastructure": len(doc.get("infrastructure") or []),
         "crashed": False,
@@ -1443,75 +1437,24 @@ def read_json_report(doc: dict[str, Any]) -> dict[str, Any]:
         # A JSON report has no print cap and no text to truncate; without totals there is nothing to compare,
         # which `shows_what_changed` says.
         "ids_unread": totals is not None and gone_ids is None,
+        "pairs": pairs,
+        "partial": partial,
     }
 
 
-def read_report(text: str) -> dict[str, Any]:
-    """The parts of a landing check's report the tool acts on, from either form it writes.
+def batch_report(text: str) -> Optional[dict[str, Any]]:
+    """The JSON report `check` wrote, or None when these bytes are not one.
 
-    `check` writes `landing-check.json` (`--json`), and that is what a receipt binds; a hand lander may paste
-    the text report instead. `pre_unread` on the text form: rows it could not read, or past the print cap.
+    A batch compares JSON only. The text report names a row by its clipped display fields and JSON by its key;
+    treating those as one identity turns an unchanged row into a changed one (review ASTRA F9).
     """
-    if text.lstrip().startswith("{"):
-        try:
-            doc = json.loads(text)
-        except ValueError:
-            doc = None
-        if isinstance(doc, dict) and doc.get("schema_id") == REPORT_SCHEMA:
-            return read_json_report(doc)
-    return read_text_report(text)
-
-
-def read_text_report(text: str) -> dict[str, Any]:
-    """The digest of the text report `pm-landing-check.py` prints."""
-    infrastructure = REPORT_INFRASTRUCTURE.search(text)
-    compare = REPORT_COMPARE.search(text)
-    gone = REPORT_GONE.search(text)
-    pre: dict[str, dict[str, Any]] = {}
-    declared = None
-    read = 0
-    unread = False
-    for line in text.splitlines():
-        if declared is None:
-            head = REPORT_PRE_HEAD.match(line)
-            if head:
-                declared = int(head.group(1))
-            continue
-        if line.startswith("Checks whose failure count rose:"):
-            break
-        row = REPORT_PRE_ROW.match(line)
-        if row:
-            tag, bucket, baseline, count, rest = row.groups()
-            where = REPORT_ROW_WHERE.match(rest or "")
-            entry = pre.setdefault(bucket, {"baseline": int(baseline), "count": int(count), "improved": tag == "improved",
-                                            "content_rows": [], "rows": []})
-            printed = where.group(1) if where else (rest or "")
-            entry["rows"].append(printed)
-            if where and where.group(2) == "content changed":
-                entry["content_rows"].append(printed)
-            read += 1
-    if declared is not None and read != declared:
-        unread = True
-    # None for an older pm-landing-check, which prints no such lines. A count that disagrees with its rows is unreadable.
-    totals_head, counts_head = REPORT_TOTALS.search(text), REPORT_COUNTS.search(text)
-    gone_ids = REPORT_GONE_ROW.findall(text) if totals_head else None
-    totals = {name: None if value == "timed out" else int(value) for name, value in REPORT_TOTAL_ROW.findall(text)} if totals_head else None
-    counts = {name: int(value) for name, value in REPORT_COUNT_ROW.findall(text)} if counts_head else None
-    ids_unread = bool(totals_head) and (
-        gone is None or len(gone_ids) != int(gone.group(1)) or len(totals) != int(totals_head.group(1))
-        or counts_head is None or len(counts) != int(counts_head.group(1)))
-    return {
-        "infrastructure": int(infrastructure.group(1)) if infrastructure else None,
-        "crashed": bool(REPORT_TRACEBACK.search(text)),
-        "compare": int(compare.group(1)) if compare else 0,
-        "pre": pre,
-        "pre_unread": unread,
-        "gone": int(gone.group(1)) if gone else None,
-        "gone_ids": gone_ids,
-        "totals": totals,
-        "bucket_counts": counts,
-        "ids_unread": ids_unread,
-    }
+    try:
+        doc = json.loads(text)
+    except ValueError:
+        return None
+    if not isinstance(doc, dict) or doc.get("schema_id") != REPORT_SCHEMA:
+        return None
+    return read_json_report(doc)
 
 
 ROW_REPORT_SCHEMA = "pm.landing_check.rows.v1"
@@ -1606,7 +1549,35 @@ def row_count_rises(now: Optional[dict[str, Any]], previous: Optional[dict[str, 
     return rises
 
 
-def batch_gap(report: dict[str, Any], earlier: Sequence[Optional[dict[str, Any]]],
+def prior_bucket_count(report: dict[str, Any], bucket: str) -> Optional[int]:
+    """A bucket's count in an earlier report, or None when that report did not print it.
+
+    A run-gates copy judged by its complete audit-governance twin is left out of `bucket_counts`; that is "not
+    printed", never an observed zero. The twin's bucket stands in when that report printed it, and a subcheck
+    compared by its total only is not printed at all (review ASTRA F7).
+    """
+    counts = report.get("bucket_counts") or {}
+    if bucket in counts:
+        return counts[bucket]
+    pieces = bucket.split("|", 3)
+    if len(pieces) < 3 or (pieces[0], pieces[1]) in (report.get("partial") or set()):
+        return None
+    twin = (report.get("pairs") or {}).get((pieces[0], pieces[1]))
+    if twin is None:
+        return None
+    return counts.get("|".join([twin[0], twin[1], *pieces[2:]]))
+
+
+def bucket_was_not_printed(report: dict[str, Any], bucket: str) -> bool:
+    """Whether this report left the bucket out because its subcheck was a sample or a paired copy: not a zero."""
+    pieces = bucket.split("|", 3)
+    if len(pieces) < 2:
+        return False
+    key = (pieces[0], pieces[1])
+    return key in (report.get("partial") or set()) or key in (report.get("pairs") or {})
+
+
+def batch_gap(report: dict[str, Any], earlier: Sequence[dict[str, Any]],
               exempt: Optional[Callable[[str], Optional[str]]] = None, row_rises: Sequence[tuple] = ()) -> Optional[tuple]:
     """Why this member's report, fine inside the batch, may not hold alone after the earlier members' follow-up.
 
@@ -1614,29 +1585,27 @@ def batch_gap(report: dict[str, Any], earlier: Sequence[Optional[dict[str, Any]]
     and this one raises again still reads as pre-existing, and a readiness rise is excused by the earlier member's
     stale row. An earlier member's fix may print no row at all: a bucket it emptied is only a number in `Gone since the
     baseline`, and one it lowered with no row naming a batch file prints nothing. `earlier` is each earlier member's
-    report digest in order, None where there is none (a hand lander). Returns (stop code, why). What a report did not
-    print cannot be seen: README, "Batch triggers". A pm-landing-check that prints gone ids, totals and bucket counts
-    prints it all: a bucket no longer gone, or a total or count above the previous report's, could not rise alone
-    unseen. A report without those lines closes the batch: nothing narrower stands in for them. `exempt` says why a
-    subcheck's rise is not only this member's own staleness, or None when it is.
+    report digest in order, all read from its receipt. Returns (stop code, why). What a report did not print cannot be
+    seen: README, "Batch triggers". A pm-landing-check that prints gone ids, totals and bucket counts prints it all: a
+    bucket no longer gone, or a total or count above the previous report's, could not rise alone unseen. A report
+    without those lines closes the batch: nothing narrower stands in for them. `exempt` says why a subcheck's rise is
+    not only this member's own staleness, or None when it is.
     """
     if not earlier:
         return None
-    absent = any(row is None for row in earlier)
-    known = [row for row in earlier if row is not None]
     mine = report["pre"]
     if not shows_what_changed(report, earlier):
         return ("batch_check_too_old", "a report here prints no gone ids, subcheck totals or bucket counts, so what moved "
                                        "between the reports cannot be seen")
-    if absent or report["pre_unread"] or any(row.get("pre_unread") for row in known):
+    if report["pre_unread"] or any(row.get("pre_unread") for row in earlier):
         if mine or report["pre_unread"] or report["compare"]:
-            return ("batch_rows_overlap", "this report lists pre-existing rows, and an earlier member's report is missing "
-                                          "or printed only part of its rows, so what they share cannot be told")
+            return ("batch_rows_overlap", "this report lists pre-existing rows, and an earlier member's report printed "
+                                          "only part of its rows, so what they share cannot be told")
     else:
         shared = []
         unlisted = []
         for bucket, entry in sorted(mine.items()):
-            views = [row for row in known if bucket in row["pre"]]
+            views = [row for row in earlier if bucket in row["pre"]]
             listed = {text for row in views for text in row["pre"][bucket]["rows"]}
             if any(text not in listed for text in entry["content_rows"]):
                 unlisted.append(bucket)
@@ -1658,35 +1627,49 @@ def batch_gap(report: dict[str, Any], earlier: Sequence[Optional[dict[str, Any]]
     return moved_since_earlier(report, earlier, exempt, row_rises)
 
 
-def moved_since_earlier(report: dict[str, Any], earlier: Sequence[Optional[dict[str, Any]]],
+def moved_since_earlier(report: dict[str, Any], earlier: Sequence[dict[str, Any]],
                         exempt: Optional[Callable[[str], Optional[str]]] = None,
                         row_rises: Sequence[tuple] = ()) -> Optional[tuple]:
     """What the printed ids, totals and counts say rose since the previous report, unless it is only this member's own
-    staleness. Each report is compared with the one before it, so one rise excused here is not held against the next."""
+    staleness. Each report is compared with the one before it, so one rise excused here is not held against the next.
+
+    A subcheck that timed out in an earlier member's report has no count there: the batch cannot tell whether this
+    report's number is a rise, so it closes and the landing is judged alone (review SOL D5). A bucket an earlier
+    report did not print (a sample or a paired copy) is likewise not an observed zero (review ASTRA F7).
+    """
     if report.get("totals") is None:
         return None
-    if report.get("ids_unread") or any(row is not None and row.get("ids_unread") for row in earlier):
+    if report.get("ids_unread") or any(row.get("ids_unread") for row in earlier):
         return ("batch_rows_overlap", "a report's gone ids, subcheck totals or bucket counts do not add up, so what moved "
                                       "between the reports cannot be told")
-    if any(row is None for row in earlier):
-        return ("batch_rows_overlap", "an earlier member's report is not on record, so what moved since it cannot be told")
-    comparable = [row for row in earlier if row.get("totals") is not None]
-    if not comparable:
+    if not earlier:
         return None
+    timed = sorted({name for row in earlier for name, total in (row.get("totals") or {}).items() if total is None})
+    if timed:
+        return ("batch_counts_unknown", f"{', '.join(timed[:10])} timed out in an earlier member's report, so its counts "
+                                        "are unknown and this landing cannot be compared with the batch")
+    latest = earlier[-1]
     rises = []
-    for bucket in sorted(set(comparable[-1].get("gone_ids") or []) - set(report.get("gone_ids") or [])):
+    for bucket in sorted(set(latest.get("gone_ids") or []) - set(report.get("gone_ids") or [])):
+        if bucket_was_not_printed(report, bucket):
+            continue
         rises.append((subcheck_of(bucket), "batch_rows_overlap",
                       f"a bucket the previous member's report listed as gone is back, whatever else went: {bucket}"))
     for name, total in sorted(report["totals"].items()):
-        was = next((row["totals"][name] for row in reversed(comparable) if row["totals"].get(name) is not None), 0)
-        if total is not None and total > was:
+        if total is None:
+            continue
+        was = (latest.get("totals") or {}).get(name)
+        if was is None:
+            return ("batch_counts_unknown", f"the previous member's report records no count for {name}, so this landing "
+                                            "cannot be compared with it")
+        if total > was:
             rises.append((name, "batch_total_rise", f"{name}'s total rose from {was} to {total} since the last report, which "
                                                     "the baseline from before the batch cannot show"))
-    latest = comparable[-1].get("bucket_counts")
     for name, count in sorted((report.get("bucket_counts") or {}).items()):
-        if latest is not None and count > latest.get(name, 0):
+        was = prior_bucket_count(latest, name)
+        if was is not None and count > was:
             rises.append((subcheck_of(name), "batch_total_rise",
-                          f"bucket {name} rose from {latest.get(name, 0)} to {count} since the last report, which no total shows"))
+                          f"bucket {name} rose from {was} to {count} since the last report, which no total shows"))
     said: dict[str, Optional[str]] = {}
     for subcheck, code, what in rises + list(row_rises):
         if subcheck not in said:
@@ -1802,13 +1785,17 @@ def holder_verdict(lock_dir: Path) -> dict[str, Any]:
 
 
 def batch_rows(fields: dict[str, Any]) -> tuple[list[dict[str, str]], list[str]]:
-    """`batch-landing: <branch> <sha>` rows, and the rows that are not that: refused, never dropped uncounted."""
+    """`batch-landing: <branch> <sha> <receipt>` rows, and the rows that are not that: refused, never dropped.
+
+    The receipt path is the record.json `check` printed for that landing. A row without it is not a batch row:
+    the next member's receipt can only be compared with one whose report and row report are bound.
+    """
     rows: list[dict[str, str]] = []
     malformed: list[str] = []
     for row in fields.get("batch-landing") or []:
-        parts = row.split()
-        if len(parts) == 2 and valid_full_sha(parts[1]):
-            rows.append({"branch": parts[0], "sha": parts[1]})
+        parts = row.split(None, 2)
+        if len(parts) == 3 and valid_full_sha(parts[1]) and parts[2].strip():
+            rows.append({"branch": parts[0], "sha": parts[1], "receipt": parts[2].strip()})
         else:
             malformed.append(row)
     return rows, malformed
@@ -1897,10 +1884,12 @@ def batch_limits(shared: Path, start: str, fields: dict[str, Any], rows: Sequenc
                     "text": "baseline: no recorded commit on the batch-start's history, so rule 2 is off and nothing "
                             "here depends on its age"})
     else:
-        near = age > BASELINE_LIMIT_SECONDS - BASELINE_MARGIN_SECONDS
-        out.append({"name": "baseline", "within": not near,
-                    "text": f"baseline: {age / 86400:.2f} days old at batch-start of the 7 rule 2 allows"
-                            + (", within 2 h of its seven-day edge: this landing is judged alone" if near else "")})
+        past = age > BASELINE_LIMIT_SECONDS
+        near = not past and age > BASELINE_LIMIT_SECONDS - BASELINE_MARGIN_SECONDS
+        edge = (", past its seven-day edge: this landing is judged alone" if past else
+                ", within 2 h of its seven-day edge: this landing is judged alone" if near else "")
+        out.append({"name": "baseline", "within": not (past or near),
+                    "text": f"baseline: {age / 86400:.2f} days old at batch-start of the 7 rule 2 allows" + edge})
     return out
 
 
@@ -1980,9 +1969,15 @@ def batch_status(shared: Path, lock_dir: Path) -> int:
         return 0
     say(f"  main: {state['main'][:12]}, with {len(batch['landed_commits'])} commit(s) since batch-start")
     for row in batch["rows"]:
-        say(f"  [landing] {row['branch']} {row['sha']}")
+        try:
+            Path(row["receipt"]).read_bytes()
+            note = ""
+        except OSError:
+            note = "  (receipt unreadable: the next member cannot compare with it)"
+        say(f"  [landing] {row['branch']} {row['sha']}  {row['receipt']}{note}")
     for row in batch["malformed"]:
-        say(f"  [unreadable] batch-landing row not `<branch> <sha>`: {row!r}; the counts below cannot be trusted")
+        say(f"  [unreadable] batch-landing row not `<branch> <sha> <receipt>`: {row!r}; the counts below cannot be "
+            "trusted")
     if batch["unlisted"]:
         say(f"  [missing] {len(batch['unlisted'])} commit(s) on main since batch-start have no `batch-landing` row: "
             + ", ".join(name[:12] for name in batch["unlisted"][:10]))
@@ -2015,12 +2010,12 @@ def batch_check_lines(report: dict[str, Any]) -> list[str]:
     return lines
 
 
-def judge_batch_member(shared: Path, start: str, code: int, report_text: str,
-                       previous_texts: Sequence[str], rows: Optional[dict[str, Any]],
-                       previous_rows: Optional[dict[str, Any]], rows_unread: Sequence[str],
+def judge_batch_member(shared: Path, start: str, code: int, report: Optional[dict[str, Any]],
+                       rows: Optional[dict[str, Any]], rows_unread: Sequence[str],
+                       earlier: Sequence[dict[str, Any]], earlier_unread: Sequence[str],
                        own_base: Optional[str], head: str,
-                       earlier_rows: Sequence[dict[str, str]], check_source: Optional[str]) -> tuple[int, list[str]]:
-    """One member's report against the previous member's: (exit code, lines). Read-only."""
+                       check_source: Optional[str]) -> tuple[int, list[str]]:
+    """One member's report against the earlier members' bound receipts: (exit code, lines). Read-only."""
     lines: list[str] = []
     if check_source is None:
         shown = git(shared, "show", f"{head}:scripts/pm-landing-check.py", check=False)
@@ -2028,7 +2023,7 @@ def judge_batch_member(shared: Path, start: str, code: int, report_text: str,
             raise Refusal(f"cannot read scripts/pm-landing-check.py at {head} in {shared}; pass --check-source")
         check_source = shown.stdout
     can_batch = check_can_batch(check_source)
-    later = bool(earlier_rows) or bool(previous_texts)
+    later = bool(earlier) or bool(earlier_unread)
     if not can_batch:
         lines.append("no batch: the landing check at this commit does not print the lines a batch compares "
                      "(--row-report, gone ids, subcheck totals, bucket counts).")
@@ -2038,7 +2033,10 @@ def judge_batch_member(shared: Path, start: str, code: int, report_text: str,
         else:
             lines.append("land it alone: no batch opens on a landing check that does not print those lines.")
         return 1, lines
-    report = read_report(report_text)
+    if report is None:
+        lines.append("no batch: the receipt's report is not the JSON `pm-landing-check.py --json` writes, so the "
+                     "comparison lines a batch reads are not there. Land it alone (the batch stays closed).")
+        return 1, lines
     lines.append("comparison lines this report printed:")
     lines.extend(batch_check_lines(report))
     if report["crashed"] or (code == 1 and report["infrastructure"] is None):
@@ -2057,6 +2055,21 @@ def judge_batch_member(shared: Path, start: str, code: int, report_text: str,
                     "with the baseline's rows")
     if report["pre_unread"]:
         owed.append("the report printed only part of its pre-existing rows, so a shared bucket cannot be told")
+    # A report or receipt the batch needs and cannot read is a trigger, never silence, and it is decided before any
+    # success: the first member's corrupt row report is as unreadable as the second member's (review SOL F6).
+    if rows_unread:
+        gap = ("batch_row_report_unreadable", "a row report this batch needs could not be read ("
+               + "; ".join(rows_unread) + "), so what rose since the previous report cannot be judged")
+    elif earlier_unread:
+        gap = ("batch_earlier_receipt_unreadable", "an earlier member's receipt cannot be read ("
+               + "; ".join(earlier_unread) + "), so the reports this landing is compared with are not bound to their commits")
+    else:
+        gap = None
+    if gap:
+        lines.append(f"TRIGGER {gap[0]}: {gap[1]}.")
+        lines.append("this landing is judged alone: close the batch with its follow-up at the current main, then rebase on "
+                     "the new origin/main, rerun the check alone and judge it as usual.")
+        return 1, lines
     if not later:
         if report["totals"] is None or report["bucket_counts"] is None or report["ids_unread"]:
             lines.append("no batch: this report does not print the gone ids, subcheck totals and bucket counts a "
@@ -2068,31 +2081,21 @@ def judge_batch_member(shared: Path, start: str, code: int, report_text: str,
         for what in owed:
             lines.append(f"judge first: {what}; then it may stay.")
         return 1 if owed else 0, lines
-    # Each earlier member's report, oldest first. An earlier landing with none is a hand landing, or one whose report
-    # was not passed: named and unreadable is a trigger, never silence.
-    reports = [read_report(text) for text in previous_texts]
-    earlier: list[Optional[dict[str, Any]]] = [None] * max(len(earlier_rows) - len(reports), 0) + reports
-    if any(row is None for row in earlier):
-        lines.append("an earlier member's report is not on record: a batch with a hand landing in it closes at the next "
-                     "landing, so what moved since it cannot be told.")
+    # Each earlier member's receipt, oldest first. Their reports and row reports are re-hashed when read, so a
+    # report for another commit or another batch is never compared as this member's predecessor (review SOL D2).
+    previous_rows = earlier[-1]["rows"]
     own: Optional[list[str]] = None
 
     def exempt(subcheck: str) -> Optional[str]:
         nonlocal own
         if own_base is None:
-            return ("the previous member's main SHA is not on record (no batch-landing row, no --own-base), so this "
-                    "landing's own range cannot be told")
+            return "the batch has no earlier landing, so this landing's own range cannot be told"
         if own is None:
             own = sorted(changed_paths(shared, own_base, head))
         return why_not_exempt(subcheck, rows, previous_rows, own)
 
-    if rows_unread:
-        # A row report the batch needs and cannot read is a trigger, not silence: a rise counted only from the row
-        # reports would otherwise go unseen and the landing would stay on a record nothing can vouch for.
-        gap = ("batch_row_report_unreadable", "a row report this batch needs could not be read ("
-               + "; ".join(rows_unread) + "), so what rose since the previous report cannot be judged")
-    else:
-        gap = batch_gap(report, earlier, exempt, row_count_rises(rows, previous_rows))
+    gap = batch_gap(report, [member["report"] for member in earlier], exempt,
+                    row_count_rises(rows, previous_rows))
     if not gap and own_base:
         reverted = sorted(changed_paths(shared, own_base, head) - changed_paths(shared, start, head))
         if reverted:
@@ -2178,40 +2181,64 @@ def receipt_rows(record: dict[str, Any]) -> tuple[Optional[dict[str, Any]], bool
     return (doc if isinstance(doc, dict) and doc.get("schema_id") == ROW_REPORT_SCHEMA else None), asked
 
 
-def batch_check(shared: Path, lock_dir: Path, receipt_path: Path,
-                previous_paths: Sequence[Path], previous_rows_path: Optional[Path],
-                own_base: Optional[str], check_source: Optional[Path]) -> int:
+def earlier_member(row: dict[str, str], start: str) -> tuple[Optional[dict[str, Any]], Optional[str]]:
+    """One earlier landing's receipt, report and row report, read from its `batch-landing` row.
+
+    Every binding is re-hashed here: the receipt names the row's commit and the batch-start, and the receipt's
+    SHA-256 binds the report and row report. A swapped, edited or wrong-member file is (None, why), which
+    `batch-check` turns into a trigger, never into silence (review SOL D2, ASTRA F4).
+    """
+    path = Path(row["receipt"])
+    who = f"{row['branch']} {row['sha'][:12]}"
+    try:
+        raw = path.read_bytes()
+    except OSError as exc:
+        return None, f"{who}: cannot read its receipt {path}: {exc}"
+    try:
+        record = json.loads(raw)
+    except ValueError as exc:
+        return None, f"{who}: its receipt {path} is not JSON: {exc}"
+    if not isinstance(record, dict):
+        return None, f"{who}: its receipt {path} is not a JSON object"
+    if record.get("head") != row["sha"]:
+        return None, f"{who}: its receipt names commit {record.get('head')!r}, not the row's {row['sha']}"
+    if record.get("base") != start:
+        return None, (f"{who}: its receipt was measured against {record.get('base')!r}, "
+                      f"not the batch-start {start}")
+    if record.get("exit_code") not in (0, 1):
+        return None, (f"{who}: its receipt records landing checker exit {record.get('exit_code')!r}, so it did not "
+                      "land as a batch member")
+    try:
+        report_text = receipt_report(record, f"{who}'s receipt")
+    except Refusal as exc:
+        return None, str(exc)
+    report = batch_report(report_text)
+    if report is None:
+        return None, f"{who}: its report is not the JSON the landing check writes"
+    written = json.loads(report_text)
+    if written.get("commit") != row["sha"] or written.get("base") != start:
+        return None, (f"{who}: its report was written for commit {written.get('commit')!r} against "
+                      f"{written.get('base')!r}, not for the row's {row['sha']} against {start}")
+    if not shows_what_changed(report, []):
+        return None, f"{who}: its report does not print the comparison lines a batch needs"
+    rows, asked = receipt_rows(record)
+    if rows is None:
+        return None, f"{who}: its receipt " + ("records a row report that cannot be read" if asked
+                                               else "records no row report")
+    if rows.get("base") != start:
+        return None, f"{who}: its row report was written against {rows.get('base')!r}, not the batch-start {start}"
+    return {"row": row, "report": report, "rows": rows}, None
+
+
+def batch_check(shared: Path, lock_dir: Path, receipt_path: Path, check_source: Optional[Path]) -> int:
     record = batch_receipt(receipt_path)
     start, head, code = record["base"], record["head"], record["exit_code"]
     shown = git(shared, "rev-parse", ORIGIN_MAIN + "^{commit}", check=False)
     if shown.returncode:
         raise Refusal(f"cannot read the fetched origin/main in {shared}; fetch it first")
-    if not is_ancestor(shared, start, shown.stdout.strip()):
-        raise Refusal(f"the receipt's batch-start {start} is not on the fetched origin/main")
-    resolved_head = commit_or_refuse(shared, head, "the receipt's commit")
-    if not is_ancestor(shared, start, resolved_head):
-        raise Refusal(f"the receipt's commit {resolved_head} is not a descendant of its batch-start {start}:"
-                      " a batch member is rebased on the batch-start")
-    report_text = receipt_report(record, "receipt")
-    rows, rows_asked = receipt_rows(record)
-    rows_unread: list[str] = []
-    if rows is None and rows_asked and code in (0, 1):
-        rows_unread.append("this member's, which its receipt records and cannot be read")
-    elif rows is not None and rows.get("base") != start:
-        rows_unread.append(f"this member's, which was written against {rows.get('base') or 'no base'}")
-        rows = None
-    previous_texts: list[str] = []
-    for previous_path in previous_paths:
-        try:
-            previous_texts.append(previous_path.read_text(encoding="utf-8", errors="replace"))
-        except OSError as exc:
-            raise Refusal(f"cannot read the previous member's report {previous_path}: {exc}") from exc
-    previous_rows = read_row_report(previous_rows_path) if previous_rows_path is not None else None
-    if previous_rows_path is not None and previous_rows is None:
-        rows_unread.append(f"the previous member's ({previous_rows_path})")
-    elif previous_rows is not None and previous_rows.get("base") != start:
-        rows_unread.append(f"the previous member's, which was written against {previous_rows.get('base') or 'no base'}")
-        previous_rows = None
+    main = sha(shown.stdout.strip(), "fetched origin/main")
+    if not is_ancestor(shared, start, main):
+        raise Refusal(f"the receipt's batch-start {start} is not on the fetched origin/main {main}")
     holder = holder_verdict(lock_dir)
     if not holder["held"]:
         raise Refusal(f"no batch is open: the landing lock is free, so there is nothing for this landing to stay in")
@@ -2224,25 +2251,61 @@ def batch_check(shared: Path, lock_dir: Path, receipt_path: Path,
                       f"({fields.get('batch-start') or 'none'} in holder.txt)")
     earlier_rows, malformed = batch_rows(fields)
     if malformed:
-        raise Refusal("holder.txt has batch-landing rows this check cannot read: " + "; ".join(repr(row) for row in malformed))
+        raise Refusal("holder.txt has batch-landing rows this check cannot read: "
+                      + "; ".join(repr(row) for row in malformed)
+                      + ". Repair the holder: write `batch-landing: <branch> <main SHA it pushed> <receipt path>` "
+                        "for each landing, then rerun")
+    # The chain from the batch-start to current main is the record of what has landed: check it before numbering
+    # this member, so a pushed landing missing from the holder is a refusal to repair, never a silent first member
+    # (review ASTRA F3).
+    unlisted, why = batch_chain(shared, start, earlier_rows, main)
+    if why:
+        raise Refusal(why + ". Repair the holder, then rerun")
+    if unlisted:
+        raise Refusal(f"{len(unlisted)} commit(s) on the fetched origin/main since batch-start {start} have no "
+                      "`batch-landing` row: " + ", ".join(name[:12] for name in unlisted[:10])
+                      + ". Write one `batch-landing: <branch> <main SHA it pushed> <receipt path>` line per landing; "
+                        "repair the holder, then rerun")
     require_batch_limits(shared, start, fields, earlier_rows, holder)
-    if own_base is None and earlier_rows:
-        own_base = earlier_rows[-1]["sha"]
-    if own_base is not None:
-        own_base = commit_or_refuse(shared, own_base, "the previous member's main commit (--own-base)")
-        if head == own_base:
-            raise Refusal(f"the receipt's commit {head} is the previous member's main SHA: --receipt must name this "
-                          "member's own commit, never one already on main")
-        if not is_ancestor(shared, own_base, head):
-            raise Refusal(f"the receipt's commit {head} is not a descendant of the previous member's main {own_base}")
+    own_base = earlier_rows[-1]["sha"] if earlier_rows else None
+    predecessor = own_base or start
+    resolved_head = commit_or_refuse(shared, head, "the receipt's commit")
+    if not is_ancestor(shared, start, resolved_head):
+        raise Refusal(f"the receipt's commit {resolved_head} is not a descendant of its batch-start {start}:"
+                      " a batch member is rebased on the batch-start")
+    if is_ancestor(shared, resolved_head, main):
+        raise Refusal(f"the receipt's commit {resolved_head} is already on the fetched origin/main {main}: a member's "
+                      "receipt names the commit it is about to push, so run check on the new commit")
+    if not is_ancestor(shared, predecessor, resolved_head):
+        raise Refusal(f"the receipt's commit {resolved_head} is not a descendant of the batch's current main "
+                      f"{predecessor}: the push would not be a fast-forward")
+    report_text = receipt_report(record, "receipt")
+    report = batch_report(report_text)
+    rows, rows_asked = receipt_rows(record)
+    rows_unread: list[str] = []
+    if rows is None:
+        rows_unread.append("this member's, which its receipt " + ("records and cannot be read" if rows_asked else
+                                                                 "does not record: check with --base <batch-start> so "
+                                                                 "it writes one"))
+    elif rows.get("base") != start:
+        rows_unread.append(f"this member's, which was written against {rows.get('base') or 'no base'}")
+        rows = None
+    earlier: list[dict[str, Any]] = []
+    earlier_unread: list[str] = []
+    for row in earlier_rows:
+        member, why = earlier_member(row, start)
+        if member is None:
+            earlier_unread.append(why)
+        else:
+            earlier.append(member)
     source_text = None
     if check_source is not None:
         try:
             source_text = check_source.read_text(encoding="utf-8", errors="replace")
         except OSError as exc:
             raise Refusal(f"cannot read --check-source {check_source}: {exc}") from exc
-    code_out, lines = judge_batch_member(shared, start, code, report_text, previous_texts, rows, previous_rows,
-                                         rows_unread, own_base, resolved_head, earlier_rows, source_text)
+    code_out, lines = judge_batch_member(shared, start, code, report, rows, rows_unread, earlier, earlier_unread,
+                                         own_base, resolved_head, source_text)
     for line in lines:
         say(line)
     return code_out
@@ -2288,12 +2351,33 @@ def require_open_batch(shared: Path, start: str, main: str) -> None:
         raise Refusal("holder.txt has batch-landing rows this check cannot read: " + "; ".join(repr(row) for row in malformed))
     unlisted, why = batch_chain(shared, start, rows, main)
     if why:
-        raise Refusal(why)
+        raise Refusal(why + ". Repair the holder, then rerun")
     if unlisted:
         raise Refusal(f"{len(unlisted)} commit(s) on origin/main since batch-start {start} are not listed as a "
-                      "`batch-landing: <branch> <sha>` row in holder.txt whose chain ends at the current main: "
-                      + ", ".join(unlisted[:10]))
+                      "`batch-landing: <branch> <sha> <receipt>` row in holder.txt whose chain ends at the current "
+                      "main: " + ", ".join(unlisted[:10]) + ". Repair the holder, then rerun")
     require_batch_limits(shared, start, fields, rows, holder)
+
+
+def require_record_bytes(path: Path, raw: bytes, record: dict[str, Any], batch: bool) -> None:
+    """The bytes verification read are still the bytes on disk: the receipt, and in batch mode its report and rows."""
+    if path.read_bytes() != raw:
+        raise Refusal(f"receipt changed during verification: {path}")
+    if not batch:
+        return
+    for key, digest, label in (("report", "report_sha256", "report"),
+                               ("row_report", "row_report_sha256", "row report")):
+        name = record.get(key)
+        if not isinstance(name, str) or not name:
+            continue
+        try:
+            current = Path(name).read_bytes()
+        except OSError as exc:
+            raise Refusal(f"the {label} {name} changed during verification: {exc}") from exc
+        recorded = record.get(digest)
+        if not isinstance(recorded, str) or hashlib.sha256(current).hexdigest() != recorded:
+            raise Refusal(f"the {label} {name} no longer matches the SHA-256 its receipt records: it changed during "
+                          "verification")
 
 
 def verify_receipt(path, commit=None, base=None, batch_start=None):
@@ -2452,11 +2536,8 @@ def main(argv=None):
         member = commands.add_parser("batch-check", help="judge one batch member's report against the previous one's")
         member.add_argument("--receipt", type=Path, required=True,
                             help="the record.json pm-land.py check printed for this member: its commit, batch-start, "
-                                 "report, row report and the landing check's exit")
-        member.add_argument("--previous", type=Path, action="append",
-                            help="an earlier member's landing-check report, as text or JSON; repeat it oldest first")
-        member.add_argument("--previous-rows", type=Path, help="the last earlier member's --row-report JSON")
-        member.add_argument("--own-base", help="the previous member's main SHA (default: holder.txt's last batch-landing row)")
+                                 "report, row report and the landing check's exit. The earlier members' receipts come "
+                                 "from their batch-landing rows in holder.txt, in order")
         member.add_argument("--repo", type=Path, default=None,
                             help="checkout the receipt's commit and the check's source are read from (default: this worktree)")
         member.add_argument("--lock-dir", type=Path, default=LOCK_DIR, help="the rule's lock directory (default: the landing lock)")
@@ -2472,8 +2553,7 @@ def main(argv=None):
             return batch_status(args.shared, args.lock_dir)
         if args.command == "batch-check":
             repo = args.repo or Path(git(Path.cwd(), "rev-parse", "--show-toplevel").stdout.strip())
-            return batch_check(repo, args.lock_dir, args.receipt, args.previous or [], args.previous_rows,
-                               args.own_base, args.check_source)
+            return batch_check(repo, args.lock_dir, args.receipt, args.check_source)
         if args.rollback_check:
             if args.batch_start is not None:
                 verify.error("--batch-start verifies a receipt and does not go with --rollback-check")
