@@ -1,0 +1,261 @@
+{
+ "base": "84e789b2f106635db44690523bf48433fbc25233",
+ "baseline_commit": "ca00293755a382e27cdd4c75072d5e9df1080f1f",
+ "baseline_currency": {
+  "age_days": 0.21,
+  "ancestor": true,
+  "base": "84e789b2f106635db44690523bf48433fbc25233",
+  "base_commit": "84e789b2f106635db44690523bf48433fbc25233",
+  "baseline_commit": "ca00293755a382e27cdd4c75072d5e9df1080f1f",
+  "max_age_days": 7,
+  "reason": "its commit ca00293755a3 is an ancestor of the base 84e789b2f106635db44690523bf48433fbc25233 and 0.21 days older than it, within 7",
+  "rule_two_applies": true
+ },
+ "blocking": 0,
+ "branch_paths": [
+  ".claude/CLAUDE.md",
+  "AGENTS.md",
+  "reports/landing-checks/README.md",
+  "scripts/pm-land.py",
+  "scripts/test_pm_land.py"
+ ],
+ "branch_units": 0,
+ "checks": {
+  "audit-governance": {
+   "baseline_failure_total": 5843,
+   "failure_total": 5843,
+   "status": "fail",
+   "subchecks": {
+    "audit_closure": {
+     "reported": 34,
+     "sampled": 34
+    },
+    "evidence": {
+     "exported": 2863,
+     "reported": 2863,
+     "sampled": 100
+    },
+    "implementation_readiness": {
+     "reported": 67,
+     "sampled": 67
+    },
+    "plan_graph": {
+     "exported": 2863,
+     "reported": 2863,
+     "sampled": 100
+    },
+    "spec_lock": {
+     "reported": 16,
+     "sampled": 16
+    }
+   }
+  },
+  "plan-migration-validate": {
+   "baseline_failure_total": 0,
+   "failure_total": 0,
+   "status": "pass",
+   "subchecks": {
+    "": {
+     "reported": 0,
+     "sampled": 0
+    }
+   }
+  },
+  "run-gates": {
+   "baseline_failure_total": 5843,
+   "failure_total": 5843,
+   "status": "fail",
+   "subchecks": {
+    "validate_audit_closure": {
+     "reported": 34,
+     "sampled": 34
+    },
+    "validate_evidence": {
+     "exported": 2863,
+     "reported": 2863,
+     "sampled": 50
+    },
+    "validate_implementation_readiness": {
+     "exported": 67,
+     "reported": 67,
+     "sampled": 50
+    },
+    "validate_plan_graph": {
+     "exported": 2863,
+     "reported": 2863,
+     "sampled": 50
+    },
+    "verify_spec_lock": {
+     "reported": 16,
+     "sampled": 16
+    }
+   }
+  }
+ },
+ "commit": "0a3c65cab292bfec375e58036a8f2783300a78d5",
+ "derived_paths_excluded": [],
+ "excused_by_kind": {},
+ "exports": {
+  "compared_with_baseline_exports": [],
+  "complete_export_commands": [
+   "check-project-artifacts",
+   "check-shards",
+   "json-syntax",
+   "lint-banned-phrases",
+   "lint-contractrefs",
+   "lint-path-refs",
+   "validate-audit-status-index",
+   "validate-auto-decisions",
+   "validate-browser-event-admission",
+   "validate-case-l-non-event-materialization",
+   "validate-evidence",
+   "validate-filesafe-security-policy",
+   "validate-forge-backup-acceptance",
+   "validate-github-project-integration",
+   "validate-goal-runtime-event-fixtures",
+   "validate-gui-asset-policy",
+   "validate-implementation-readiness",
+   "validate-new-contracts",
+   "validate-plan-graph",
+   "validate-plan-migration",
+   "validate-plans-to-code-handoff-schema",
+   "validate-pm7-gui-fixtures",
+   "validate-prd-planning-runtime-contracts",
+   "validate-project-output-fixtures",
+   "validate-projects-refresh-contracts",
+   "validate-runtime-artifact-schemas",
+   "validate-server-command-gap",
+   "validate-settings-layering",
+   "validate-testing-session-event-admission",
+   "validate-touch-closure",
+   "validate-ui-command-response",
+   "validate-usage-contract-drift",
+   "validate-usage-gui-fixtures",
+   "validate-web-capability-contracts",
+   "validate-wiring-matrix",
+   "validate-working-notebook-contracts",
+   "verify-spec-lock"
+  ],
+  "no_complete_export": {
+   "validate-audit-closure": "cmd_validate_audit_closure keeps only the first 200 of pm-audit-closure.py's errors, so its own report is a sample whenever there are more"
+  },
+  "subchecks": [
+   {
+    "case": "keyed",
+    "check": "run-gates",
+    "classes": {
+     "pre-existing": 180,
+     "staleness": 2683
+    },
+    "command": "validate-evidence",
+    "elapsed_seconds": 18.4,
+    "exported": 2863,
+    "keyed": true,
+    "reason": "its export (validate-evidence) holds all 2863 rows, the printed total",
+    "reported": 2863,
+    "sampled": 50,
+    "subcheck": "validate_evidence"
+   },
+   {
+    "case": "keyed",
+    "check": "run-gates",
+    "classes": {
+     "pre-existing": 5,
+     "staleness": 62
+    },
+    "command": "validate-implementation-readiness",
+    "elapsed_seconds": 65.0,
+    "exported": 67,
+    "keyed": true,
+    "reason": "its export (validate-implementation-readiness) holds all 67 rows, the printed total",
+    "reported": 67,
+    "sampled": 50,
+    "subcheck": "validate_implementation_readiness"
+   },
+   {
+    "case": "keyed",
+    "check": "run-gates",
+    "classes": {
+     "pre-existing": 180,
+     "staleness": 2683
+    },
+    "command": "validate-plan-graph",
+    "elapsed_seconds": 17.2,
+    "exported": 2863,
+    "keyed": true,
+    "reason": "its export (validate-plan-graph) holds all 2863 rows, the printed total",
+    "reported": 2863,
+    "sampled": 50,
+    "subcheck": "validate_plan_graph"
+   },
+   {
+    "case": "keyed",
+    "check": "audit-governance",
+    "classes": {
+     "pre-existing": 180,
+     "staleness": 2683
+    },
+    "command": "validate-evidence",
+    "elapsed_seconds": 18.4,
+    "exported": 2863,
+    "keyed": true,
+    "reason": "its export (validate-evidence) holds all 2863 rows, the printed total",
+    "reported": 2863,
+    "sampled": 100,
+    "subcheck": "evidence"
+   },
+   {
+    "case": "keyed",
+    "check": "audit-governance",
+    "classes": {
+     "pre-existing": 180,
+     "staleness": 2683
+    },
+    "command": "validate-plan-graph",
+    "elapsed_seconds": 17.2,
+    "exported": 2863,
+    "keyed": true,
+    "reason": "its export (validate-plan-graph) holds all 2863 rows, the printed total",
+    "reported": 2863,
+    "sampled": 100,
+    "subcheck": "plan_graph"
+   }
+  ]
+ },
+ "generated_at_utc": "2026-11-22T23:49:13Z",
+ "grown_buckets": [],
+ "grown_subchecks": [],
+ "infrastructure": [],
+ "kept_check_reports": "/mnt/Cursor/archive/PuppetMaster-Evidence/scratch/landing-remote/fix-land-fast-r11-3442c2ad-0a3c65cab292-d1a08f4bb30a/subchecks",
+ "new": [],
+ "on_branch": [],
+ "pre_existing": [],
+ "readiness_audit_inputs": {
+  "files": {
+   "Plans/.audits/event-authority-2026-08-13-currentness/CURRENT_EVENT_SOURCE_INVENTORY.json": "9d6172257aaff309e4b57994e0419708a19d96cf5566cc41cb63dac2026aad2a",
+   "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json": "eb5173bd47897b43c2aa04627a239e1f393ada650e94e3a860ad8f88f4bb1d34",
+   "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl": "4d5e56c9840dfdcb6b7cd9f72d8e674ab909f06973ca0d77132859925b5402f6",
+   "Plans/.audits/event-authority-2026-08-13-currentness/README.md": "7d9bf1b12c3f11384b43bf14acda0c86f387379579393527e4dfe3e49d0197de",
+   "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json": "5a1c070b9f0afc24848a6da357c73c6b5ede42b5e563044f0dd0181a62616b6f",
+   "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/EXPECTED_252_EVENT_TYPES.tsv": "d59142bc9ceef3f8c2d2257b7a6fbe9307ddae236720a0ac5a8c62afc7c5f541",
+   "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/GROUP_ARTIFACT_MANIFEST.json": "fc212fc26784ba0dec1094705b811663fb7a92f38289af0d20503a7f0247af5e",
+   "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl": "e77c83e1861c4b02739d7609c7c4fe066a6fe4f901a8e61511c698e0bb949294",
+   "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_a.jsonl": "d4305411923dee2edfc2c8b822a9fb42eda33b320c64c7f84aaf16ce4cd134a3",
+   "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_b.jsonl": "f1279ec339fc3b20676e19787ab423ffaeaba3b7a58181828af5e94242cf7160",
+   "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_c.jsonl": "9528f134447acb50c2c8053855db64bbcfeb9bdbbc56cb1d9e52ce11eb10cc79",
+   "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_d.jsonl": "5b3af4d546e0aecca799ac38e0ae65ed81e356db18531baa7e7027dfb9cd66b2",
+   "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_e.jsonl": "52ad46cafed54f333ab144b7297ca2e188353adf38a3ee4488099e76f8acba2a",
+   "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_f.jsonl": "24585545a7234db0972ca58da2b8557416bab7ef74b75afbf318f6bfdb1c93d1",
+   "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_g.jsonl": "5e1f709cbf5a4f1bd19cec24d12b033cac79d4e0ce0e194d8babb13bdc0499db"
+  },
+  "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
+ },
+ "readiness_audit_source": "/home/sittingmongoose/pm-worktrees/landing-remote-fix-land-fast-r11-3442c2ad-0a3c65cab292-d1a08f4bb30a/Plans/.audits/event-authority-2026-08-13-currentness",
+ "rename_excuse_lost": {},
+ "resolved_buckets": [],
+ "schema_id": "pm.landing_check.report.v1",
+ "subcheck_timeout_seconds": 1800,
+ "subchecks_compared_by_total_only": [],
+ "unknown_pre_existing": [],
+ "validator_pairs": []
+}

@@ -965,8 +965,60 @@ def exit_code(
     return 2 if blocking else 1
 
 
+def bucket_evidence(
+    items: list[dict[str, Any]],
+    excluded: set[tuple[str, str]] | frozenset[tuple[str, str]] = frozenset(),
+) -> tuple[dict[str, int], dict[str, int], dict[str, Counter[str]]]:
+    """This run's per-bucket rows, renamed-shard rows and closure fingerprints, skipping an excluded subcheck.
+
+    `excluded` is a subcheck the check does not judge by its rows: a sample, or a run-gates copy judged by its
+    complete audit-governance twin. The closure fingerprints are the run's non-stale `audit_closure_validator_error`
+    rows, per bucket, which is what the whole-bucket exemption proves against the baseline's recorded ones.
+    """
+    seen: dict[str, int] = {}
+    renamed: dict[str, int] = {}
+    closure: dict[str, Counter[str]] = {}
+    for item in items:
+        if (item["check"], item["subcheck"]) in excluded:
+            continue
+        bucket = bucket_of(item)
+        seen[bucket] = seen.get(bucket, 0) + 1
+        if item["error"] == "missing_ref" and item["stale"]:
+            renamed[bucket] = renamed.get(bucket, 0) + 1
+        if item["error"] == "audit_closure_validator_error" and not item["stale"]:
+            closure.setdefault(bucket, Counter())[item["key"].rsplit("|", 1)[1]] += 1
+    return seen, renamed, closure
+
+
+def grown_bucket_row(bucket: str, count: int, baseline_count: int,
+                     renamed: dict[str, int] | None, fingerprints: set[str] | None,
+                     closure: Counter[str] | None) -> dict[str, Any] | None:
+    """One bucket's grown row, or None when it did not grow: the check's whole-bucket classification in one place.
+
+    Staleness by error kind; a `missing_ref` bucket whose rows above the baseline's count are all renamed-shard
+    staleness; and a complete `audit_closure_validator_error` bucket whose every current non-stale row is one
+    recorded baseline fingerprint with count one (review L-07). `fingerprints` is None for a bucket the baseline
+    matches by count alone, so neither row-based excuse applies to it.
+    """
+    if count <= baseline_count:
+        return None
+    error = bucket.split("|")[2]
+    by_rename = (error == "missing_ref" and renamed is not None
+                 and count - renamed.get(bucket, 0) <= baseline_count)
+    stale = is_staleness_kind(error) or by_rename
+    if (not stale and error == "audit_closure_validator_error" and fingerprints is not None
+            and all(n == 1 and fingerprint in fingerprints for fingerprint, n in (closure or {}).items())):
+        stale = True
+    row = {"bucket": bucket, "baseline_count": baseline_count, "count": count, "stale": stale}
+    if by_rename:
+        row["renamed_shard_refs"] = renamed.get(bucket, 0)
+    return row
+
+
 def grown_buckets(seen: dict[str, int], baseline: dict[str, int],
-                  renamed: dict[str, int] | None = None) -> list[dict[str, Any]]:
+                  renamed: dict[str, int] | None = None,
+                  fingerprints: dict[str, set[str] | None] | None = None,
+                  closure: dict[str, Counter[str]] | None = None) -> list[dict[str, Any]]:
     """Buckets that hold more failures than the baseline recorded.
 
     A bucket the baseline has never seen is left out: its failures are already named one by one in
@@ -974,22 +1026,18 @@ def grown_buckets(seen: dict[str, int], baseline: dict[str, int],
     way growth inside a bucket the baseline matches by count alone can be seen.
 
     `renamed` counts, per bucket, the `missing_ref` rows that are renamed-shard staleness
-    (renamed_shard_ref). A `missing_ref` bucket grew by staleness alone when its other rows are no
-    more than the baseline held; any other growth keeps its class.
+    (renamed_shard_ref). `fingerprints` is the baseline's recorded fingerprints per bucket (None for a
+    count-only bucket) and `closure` this run's non-stale closure rows per bucket; `grown_bucket_row` is
+    the one classification both this and the --row-report writer use.
     """
     rows = []
     for name in sorted(seen):
-        if name not in baseline or seen[name] <= baseline[name]:
+        if name not in baseline:
             continue
-        error = name.split("|")[2]
-        by_rename = error == "missing_ref" and renamed is not None and seen[name] - renamed.get(name, 0) <= baseline[name]
-        rows.append({
-            "bucket": name,
-            "baseline_count": baseline[name],
-            "count": seen[name],
-            "stale": is_staleness_kind(error) or by_rename,
-            **({"renamed_shard_refs": renamed.get(name, 0)} if by_rename else {}),
-        })
+        row = grown_bucket_row(name, seen[name], baseline[name], renamed,
+                               (fingerprints or {}).get(name), (closure or {}).get(name))
+        if row is not None:
+            rows.append(row)
     return rows
 
 
@@ -1390,6 +1438,89 @@ def listed_totals(check: str, report: dict[str, Any]) -> dict[str, int]:
     }
 
 
+def escape_newlines(text: str) -> str:
+    return text.replace("\\", "\\\\").replace("\r", "\\r").replace("\n", "\\n")
+
+
+def subcheck_totals(
+    counts: dict[str, dict[str, dict[str, int]]],
+    listed: dict[str, dict[str, int]],
+    timed_out: set[tuple[str, str]],
+) -> dict[str, int | None]:
+    """Every subcheck's total in this run by `check/subcheck`, passing ones too; None for one that timed out.
+
+    Reported only, for comparing one run with the next (scripts/pm-land.py does, inside a batch). Nothing here
+    judges it, and the baseline does not record it.
+    """
+    totals: dict[str, int | None] = {}
+    for check in CHECKS:
+        here, others = counts.get(check) or {}, listed.get(check) or {}
+        for name in sorted(set(here) | set(others)):
+            total = None if (check, name) in timed_out else here[name]["reported"] if name in here else others[name]
+            totals[f"{check}/{name or '-'}"] = total
+    return totals
+
+
+def write_row_report(
+    path: Path,
+    root: Path,
+    base: str,
+    touched: list[str],
+    items: list[dict[str, Any]],
+    counts: dict[str, dict[str, dict[str, int]]],
+    listed: dict[str, dict[str, int]],
+    timed_out: set[tuple[str, str]],
+    partial: set[tuple[str, str]],
+    paired: set[tuple[str, str]],
+    fingerprints: dict[str, set[str] | None],
+) -> None:
+    """--row-report: every row each subcheck gave in this run, for telling what one run added since another.
+
+    A subcheck is `complete` when every row it counted is here: it printed them all, or is keyed from an export whose
+    total matches. Each staleness row carries `names`, the paths of `branch_paths` it names, the regenerated ones too, and
+    a deleted or renamed path, since evidence rows name shards. `touched` is that list, already read with the hardened
+    diff, so this never runs a second, unhardened one. `grown_stale` is `grown_bucket_row`, the check's own
+    whole-bucket classification, asked of it so that the two cannot differ: a row can be `stale` by its detail text
+    alone, a renamed shard counts only in a subcheck compared by its rows, and the audit-closure exemption needs the
+    bucket's whole set of non-stale fingerprints, which `bucket_evidence` supplies. Nothing here judges any of it,
+    and it is written only when asked for. scripts/pm-land.py reads it inside a batch.
+    """
+    direct, derived = split_touched(touched)
+    tokens = path_tokens(direct) + [(name, "") for name in derived]
+    units = units_of_touched_docs(root, direct)
+    named: dict[tuple[str, str], list[str]] = {}
+    rows: dict[str, list[dict[str, Any]]] = {}
+    excluded = set(partial) | set(paired)
+    _seen, renamed, closure = bucket_evidence(items, excluded)
+    for item in items:
+        names: list[str] = []
+        if item["stale"]:
+            seen = (canonical(item["_raw"]), item["path"])
+            if seen not in named:
+                named[seen] = names_branch_path(item, tokens, root, units)
+            names = named[seen]
+        bucket = bucket_of(item)
+        mine = (item["check"], item["subcheck"]) not in excluded
+        row_renamed = ({bucket: 1} if item["error"] == "missing_ref" and item["stale"] and mine else {})
+        grown = (grown_bucket_row(bucket, 1, 0, row_renamed, fingerprints.get(bucket), closure.get(bucket))
+                 if mine else None)
+        rows.setdefault(f"{item['check']}/{item['subcheck'] or '-'}", []).append(
+            {"key": item["key"], "stale": item["stale"],
+             # Staleness by error kind alone, which no sample or missing baseline can make uncertain: `grown_stale`
+             # is the whole-bucket classification and is false when the baseline only sampled the subcheck, so a
+             # batch needs both to excuse a stale row it can see in full (review ASTRA A2-5).
+             "kind_stale": is_staleness_kind(item["error"]),
+             "grown_stale": bool(grown and grown["stale"]), "names": names})
+    subchecks = {}
+    for name, total in subcheck_totals(counts, listed, timed_out).items():
+        mine = rows.get(name, [])
+        complete = total is not None and len(mine) == total
+        subchecks[name] = {"reported": total, "complete": complete, "rows": mine if complete else []}
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({"schema_id": "pm.landing_check.rows.v1", "base": base, "subchecks": subchecks}, sort_keys=True) + "\n",
+                    encoding="utf-8")
+
+
 def aggregate_subcheck_commands(
     root: Path,
     names: dict[str, set[str]],
@@ -1691,17 +1822,26 @@ def key_from_exports(
             }
             rows.append(row)
             if isinstance(argv_map, str):
+                # Not `no_export`: that says the producer named a validator that writes no complete export. Here
+                # nothing could be read, so no batch may take the sample as permanent (review ASTRA A2-1).
+                row["case"] = "mapping_unreadable"
                 row["reason"] = f"what it runs could not be read from scripts/pm-plans-verify.py ({argv_map})"
                 continue
             argv = argv_map.get((check, name))
             if not argv:
+                row["case"] = "mapping_unreadable"
                 row["reason"] = "scripts/pm-plans-verify.py names no command for it"
                 continue
             row["command"] = argv[0]
             if argv[0] not in EXPORT_COMMANDS:
-                row["reason"] = (f"{argv[0]} writes no complete export: {NO_EXPORT_COMMANDS[argv[0]]}"
-                                 if argv[0] in NO_EXPORT_COMMANDS else
-                                 f"{argv[0]} is not among the commands read to write a complete export")
+                if argv[0] in NO_EXPORT_COMMANDS:
+                    row["reason"] = f"{argv[0]} writes no complete export: {NO_EXPORT_COMMANDS[argv[0]]}"
+                else:
+                    # Not `no_export`: only a validator the producer positively names as writing no complete export
+                    # is a permanent sample. A command in neither list is unaudited, so its counts are unknown
+                    # (review R7-B2).
+                    row["case"] = "command_unread"
+                    row["reason"] = f"{argv[0]} is not among the commands read to write a complete export"
                 continue
             if baseline_checks is not None:
                 was = ((baseline_checks.get(check) or {}).get("subchecks") or {}).get(name) or {}
@@ -1834,7 +1974,11 @@ def describe(item: dict[str, Any], tag: str, width: int = 150) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--root", default=str(ROOT), help="repository root (default: this checkout)")
+    # --ro abbreviated --root before --row-report existed; named here so that it still does.
+    parser.add_argument("--ro", dest="root", help=argparse.SUPPRESS)
     parser.add_argument("--base", default="origin/main", help="revision this branch is measured against")
+    parser.add_argument("--row-report", metavar="FILE", help="also write every row of each subcheck to FILE, outside the "
+                                                             "repository, for comparing one run with another; judges nothing")
     parser.add_argument("--baseline", default=DEFAULT_BASELINE, help=f"baseline file (default: {DEFAULT_BASELINE})")
     parser.add_argument("--record-baseline", action="store_true", help="run the three checks and write the baseline")
     parser.add_argument("--run-dir", default=None, help="plan-migration run directory (default: the current run)")
@@ -1899,6 +2043,11 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         except OSError as exc:
             print(f"pm-landing-check: cannot create {keep_dir}: {exc}", file=sys.stderr)
             return 3
+
+    if args.row_report and (Path(args.row_report).resolve() == root or root in Path(args.row_report).resolve().parents):
+        print("pm-landing-check: --row-report must name a file outside the repository; nothing is written inside it.",
+              file=sys.stderr)
+        return 3
 
     try:
         run_dir = args.run_dir or current_run_dir(root)
@@ -2058,6 +2207,11 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     pairs = pair_validators(counts, listed, baseline.get("checks") or {}, timed_out, items, commands,
                             version_change(before, after), keyed_now | from_export)
     paired = {("run-gates", row["run_gates"]) for row in pairs if row["paired"]}
+    if args.row_report:
+        # Rows a sample or a paired copy holds are not counted as renamed by the loop below, so the row report
+        # asks grown_buckets with the same set and its `grown_stale` cannot disagree with the check.
+        write_row_report(Path(args.row_report).resolve(), root, args.base, touched, items, counts, listed, timed_out,
+                         partial_subchecks(compared, baseline.get("checks") or {}), paired, known)
     items = [item for item in items if (item["check"], item["subcheck"]) not in paired]
     compared = {
         check: {name: counted for name, counted in compared[check].items() if (check, name) not in paired}
@@ -2074,21 +2228,13 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     pre_existing: list[dict[str, Any]] = []
     unknown_pre_existing: list[dict[str, Any]] = []
     changed_on_branch = 0
-    seen_buckets: dict[str, int] = {}
-    renamed_buckets: dict[str, int] = {}
-    nonstale_closure_fingerprints: dict[str, Counter[str]] = {}
     for item in items:
         name = bucket_of(item)
         fresh = False
         if (item["check"], item["subcheck"]) not in partial:
-            seen_buckets[name] = seen_buckets.get(name, 0) + 1
-            if item["error"] == "missing_ref" and item["stale"]:
-                renamed_buckets[name] = renamed_buckets.get(name, 0) + 1
             fingerprints = known.get(name, set())
             fingerprint = item["key"].rsplit("|", 1)[1]
             fresh = fingerprints is not None and fingerprint not in fingerprints
-            if item["error"] == "audit_closure_validator_error" and not item["stale"]:
-                nonstale_closure_fingerprints.setdefault(name, Counter())[fingerprint] += 1
         # Rule 2: a failure that is not staleness, in a bucket the baseline holds whose count has not
         # risen, is pre-existing, content changed or not. It never blocks and is reported with both
         # counts whenever it would have been reported at all: on a branch file, or with new content.
@@ -2130,17 +2276,12 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                             if (item["check"], item["subcheck"]) == (row["check"], row["subcheck"]))
             row["classes"] = dict(sorted(tally.items(), key=lambda pair: (-pair[1], pair[0])))
 
-    grown = grown_buckets(seen_buckets, baseline_counts, renamed_buckets)
-    for row in grown:
-        name = row["bucket"]
-        fingerprints = known.get(name)
-        # Closure uses one error kind for stale hashes and other failures. A recorded fingerprint
-        # proves one baseline occurrence. Excuse growth only if that accounts for every current
-        # non-stale row. Sampled subchecks do not enter seen_buckets in the first place.
-        if (name.split("|", 3)[2] == "audit_closure_validator_error" and fingerprints is not None
-                and all(count == 1 and fingerprint in fingerprints
-                        for fingerprint, count in nonstale_closure_fingerprints.get(name, {}).items())):
-            row["stale"] = True
+    # The same whole-bucket classification the --row-report writer asks for each row, so `grown_stale` and the
+    # check cannot disagree: closure uses one error kind for stale hashes and other failures, a recorded
+    # fingerprint proves one baseline occurrence, and growth is excused only when that accounts for every current
+    # non-stale row. Sampled and paired subchecks do not enter the evidence in the first place.
+    seen_buckets, renamed_buckets, nonstale_closure_fingerprints = bucket_evidence(items, partial)
+    grown = grown_buckets(seen_buckets, baseline_counts, renamed_buckets, known, nonstale_closure_fingerprints)
     subcheck_growth = grown_subchecks(compared, baseline.get("checks") or {})
     for row in subcheck_growth:
         row["stale"] = readiness_counter_is_staleness(row, items, run_counts, baseline_counts,
@@ -2159,6 +2300,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     )
     reported = [item for item in items if item["key"] in reported_keys]
     blocking = blocking_items(on_branch, grown, subcheck_growth)
+    totals = subcheck_totals(counts, listed, timed_out)
 
     if args.json:
         if not rule_two:
@@ -2205,6 +2347,11 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                 "rename_excuse_lost": dict(sorted(rename_context.why.items())) if rename_context else {},
                 "excused_by_kind": excused_by_kind(on_branch),
                 "resolved_buckets": resolved,
+                "subcheck_totals": totals,
+                "bucket_counts": seen_buckets,
+                # The text report's "N of them with changed content on files this branch touched": a batch
+                # reads it as its own trigger input, and it is printed only when nothing blocks.
+                "changed_on_branch": changed_on_branch,
                 "infrastructure": infrastructure,
                 "subcheck_timeout_seconds": args.subcheck_timeout_seconds,
                 "kept_check_reports": str(keep_dir) if keep_dir else None,
@@ -2346,6 +2493,15 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         for row in infrastructure:
             print(describe_infrastructure(row))
         print(f"Gone since the baseline (nothing to do): {len(resolved)}")
+        # One line each: a validator's error text can hold a newline, and it is part of the bucket's id.
+        for name in resolved:
+            print(f"  [gone] {escape_newlines(name)}")
+        print(f"Subcheck totals this run: {len(totals)}")
+        for name, total in totals.items():
+            print(f"  [total] {name}  {'timed out' if total is None else total}")
+        print(f"Bucket counts this run: {len(seen_buckets)}")
+        for name, count in sorted(seen_buckets.items()):
+            print(f"  [count] {escape_newlines(name)}  {count}")
         print()
         if not reported and not grown and not subcheck_growth:
             if infrastructure:
