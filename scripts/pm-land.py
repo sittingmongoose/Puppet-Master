@@ -1550,31 +1550,40 @@ def row_count_rises(now: Optional[dict[str, Any]], previous: Optional[dict[str, 
 
 
 def prior_bucket_count(report: dict[str, Any], bucket: str) -> Optional[int]:
-    """A bucket's count in an earlier report, or None when that report did not print it.
+    """A bucket's count in an earlier report: an observed number or zero, or None when that report's count is unknown.
 
-    A run-gates copy judged by its complete audit-governance twin is left out of `bucket_counts`; that is "not
-    printed", never an observed zero. The twin's bucket stands in when that report printed it, and a subcheck
-    compared by its total only is not printed at all (review ASTRA F7).
+    `bucket_counts` holds only counts of 1 or more, so an absent bucket needs telling apart from a zero. Three states:
+    a complete subcheck that printed no such bucket is an observed zero; a run-gates copy judged by its complete
+    audit-governance twin stands in as that twin's bucket, an observed zero when the twin did not print it; and a
+    subcheck compared by its total only (`partial`: a sample, or an export that failed or timed out) printed no
+    buckets at all, so its counts are unknown, never zero (review ASTRA F7, R3-B1).
     """
     counts = report.get("bucket_counts") or {}
-    if bucket in counts:
-        return counts[bucket]
     pieces = bucket.split("|", 3)
-    if len(pieces) < 3 or (pieces[0], pieces[1]) in (report.get("partial") or set()):
+    if len(pieces) < 3:
+        return counts.get(bucket, 0)
+    key = (pieces[0], pieces[1])
+    if key in (report.get("partial") or set()):
         return None
-    twin = (report.get("pairs") or {}).get((pieces[0], pieces[1]))
+    twin = (report.get("pairs") or {}).get(key)
     if twin is None:
+        return counts.get(bucket, 0)
+    if twin in (report.get("partial") or set()):
         return None
-    return counts.get("|".join([twin[0], twin[1], *pieces[2:]]))
+    return counts.get("|".join([twin[0], twin[1], *pieces[2:]]), 0)
 
 
 def bucket_was_not_printed(report: dict[str, Any], bucket: str) -> bool:
-    """Whether this report left the bucket out because its subcheck was a sample or a paired copy: not a zero."""
+    """Whether this report left the bucket out because it is a run-gates copy judged by its complete audit-governance
+    twin: only the copy's absence is explained, and the twin's bucket is still checked on its own.
+
+    A subcheck compared by its total only is NOT this: it printed no buckets, so a bucket an earlier report held as
+    gone cannot be told apart from one that is still gone, and the batch stops (review R3-B1).
+    """
     pieces = bucket.split("|", 3)
     if len(pieces) < 2:
         return False
-    key = (pieces[0], pieces[1])
-    return key in (report.get("partial") or set()) or key in (report.get("pairs") or {})
+    return (pieces[0], pieces[1]) in (report.get("pairs") or {})
 
 
 def batch_gap(report: dict[str, Any], earlier: Sequence[dict[str, Any]],
@@ -1634,8 +1643,10 @@ def moved_since_earlier(report: dict[str, Any], earlier: Sequence[dict[str, Any]
     staleness. Each report is compared with the one before it, so one rise excused here is not held against the next.
 
     A subcheck that timed out in an earlier member's report has no count there: the batch cannot tell whether this
-    report's number is a rise, so it closes and the landing is judged alone (review SOL D5). A bucket an earlier
-    report did not print (a sample or a paired copy) is likewise not an observed zero (review ASTRA F7).
+    report's number is a rise, so it closes and the landing is judged alone (review SOL D5). A subcheck an earlier
+    report compared by its total only (a sample, or an export that failed or timed out) printed no buckets either,
+    so its counts are unknown, never zero; only a complete subcheck or a complete paired twin has an observed zero
+    (review ASTRA F7, R3-B1).
     """
     if report.get("totals") is None:
         return None
@@ -1667,7 +1678,12 @@ def moved_since_earlier(report: dict[str, Any], earlier: Sequence[dict[str, Any]
                                                     "the baseline from before the batch cannot show"))
     for name, count in sorted((report.get("bucket_counts") or {}).items()):
         was = prior_bucket_count(latest, name)
-        if was is not None and count > was:
+        if was is None:
+            return ("batch_counts_unknown",
+                    f"{subcheck_of(name)} was compared by its total only in the previous member's report (a sample, or "
+                    "an export that failed or timed out), so its bucket counts are unknown and this landing cannot be "
+                    "compared with the batch")
+        if count > was:
             rises.append((subcheck_of(name), "batch_total_rise",
                           f"bucket {name} rose from {was} to {count} since the last report, which no total shows"))
     said: dict[str, Optional[str]] = {}

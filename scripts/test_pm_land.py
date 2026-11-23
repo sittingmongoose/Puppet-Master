@@ -1505,6 +1505,42 @@ class ReportFormatTests(unittest.TestCase):
                          ("audit-governance", "validate_audit_closure"))
         self.assertIn(("run-gates", "lint-x"), report["partial"])
 
+    def test_the_three_states_of_an_unprinted_bucket_are_kept_apart(self):
+        """R3-B1: observed zero, not observed (a sample), and not printed (a paired copy) are three states, not one."""
+        bucket = "run-gates|validate_evidence|missing_ref|Plans/.evidence/x/evidence.json"
+        complete = land.batch_report(json_report(totals={"run-gates/validate_evidence": 0}, counts={}))
+        self.assertEqual(land.prior_bucket_count(complete, bucket), 0)
+        sample = land.batch_report(json_report(totals={"run-gates/validate_evidence": 2861}, counts={},
+                                               partial=["validate_evidence"]))
+        self.assertIsNone(land.prior_bucket_count(sample, bucket))
+        paired = land.batch_report(json_report(
+            totals={"run-gates/validate_evidence": 0}, counts={},
+            pairs=[("validate_evidence", "validate_evidence")]))
+        self.assertEqual(land.prior_bucket_count(paired, bucket), 0)
+        unpaired_twin = land.batch_report(json_report(
+            totals={"run-gates/validate_evidence": 0}, counts={},
+            pairs=[("validate_evidence", "validate_evidence")],
+            partial=["audit-governance/validate_evidence"]))
+        self.assertIsNone(land.prior_bucket_count(unpaired_twin, bucket))
+
+    def test_a_complete_subcheck_that_did_not_print_a_bucket_has_an_observed_zero(self):
+        """R3-B1: a rise from a complete subcheck's absent bucket is a real rise, not an unprinted one."""
+        bucket = "run-gates|lint-x|missing_ref|Plans/B.md"
+        earlier = land.batch_report(json_report(totals={"run-gates/lint-x": 1}, counts={}))
+        current = land.batch_report(json_report(totals={"run-gates/lint-x": 1}, counts={bucket: 1}))
+        gap = land.batch_gap(current, [earlier])
+        self.assertEqual(gap[0], "batch_total_rise", gap)
+        self.assertIn("rose from 0 to 1", gap[1])
+
+    def test_a_bucket_from_a_sampled_subcheck_is_unknown_not_a_zero(self):
+        """R3-B1: a sample printed no buckets, so a bucket counted here cannot be told from a rise there."""
+        bucket = "run-gates|lint-x|missing_ref|Plans/B.md"
+        earlier = land.batch_report(json_report(totals={"run-gates/lint-x": 1}, counts={}, partial=["lint-x"]))
+        current = land.batch_report(json_report(totals={"run-gates/lint-x": 1}, counts={bucket: 1}))
+        gap = land.batch_gap(current, [earlier])
+        self.assertEqual(gap[0], "batch_counts_unknown", gap)
+        self.assertIn("run-gates/lint-x", gap[1])
+
     def test_the_real_remote_receipts_json_report_is_read_not_refused(self):
         """The report `check` wrote for fix-land-fast-r11 at 0a3c65cab2, copied into the fixtures verbatim.
 
@@ -1545,7 +1581,7 @@ def json_report(pre=(), compare: int = 0, timeouts: int = 0, gone_ids=(), totals
         "bucket_counts": counts,
         "validator_pairs": [{"run_gates": run, "audit_governance": audit, "paired": True}
                             for run, audit in pairs],
-        "subchecks_compared_by_total_only": [f"run-gates/{name}" for name in partial],
+        "subchecks_compared_by_total_only": [name if "/" in name else f"run-gates/{name}" for name in partial],
     })
 
 
@@ -2092,6 +2128,34 @@ class BatchCheckTests(BatchFixture):
         code, out = self.check(current)
         self.assertEqual(code, 0, out)
         self.assertIn("no trigger", out)
+
+    def test_a_sample_in_the_previous_report_makes_this_reports_buckets_unknown(self):
+        """R3-B1: member 1's validate-evidence export timed out (compared by total only), so member 2's buckets are
+        unknown against it even though its total fell: the real 0a3c65cab2 -> 87cd6daac0 replay exits 2 alone."""
+        bucket = "run-gates|validate_evidence|missing_ref|Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        audit = "audit-governance|evidence|missing_ref|Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        later = {"run-gates/validate_evidence": 2859, "audit-governance/evidence": 2859}
+        m1 = self.member("m1-sample", head=self.member1, totals={"run-gates/validate_evidence": 2861,
+                                                                 "audit-governance/evidence": 2861},
+                         counts={}, partial=["validate_evidence", "audit-governance/evidence"])
+        self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
+        code, out = self.check(self.report("m2.json", totals=later, counts={bucket: 180, audit: 180}))
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_counts_unknown", out)
+        self.assertIn("compared by its total only in the previous member's report", out)
+
+    def test_a_gone_bucket_is_not_skipped_when_this_report_is_a_sample(self):
+        """R3-B1: member 1 said the bucket was gone; member 2's export fell back to a sample, so whether it returned
+        cannot be told, and the batch stops. `partial` is never the paired twin's "not printed"."""
+        bucket = "run-gates|validate_evidence|missing_ref|Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+        m1 = self.member("m1-gone", head=self.member1, totals={"run-gates/validate_evidence": 2683}, counts={},
+                         gone_ids=[bucket])
+        self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
+        code, out = self.check(self.report("m2.json", totals={"run-gates/validate_evidence": 2663}, counts={},
+                                           partial=["validate_evidence"]))
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_rows_overlap", out)
+        self.assertIn("listed as gone is back", out)
 
     def test_a_landing_check_that_cannot_batch_lands_alone_or_closes(self):
         current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts=self.counts)
