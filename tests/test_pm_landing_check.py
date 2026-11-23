@@ -1027,7 +1027,7 @@ class EndToEnd(unittest.TestCase):
             "plan-migration-validate": {
                 "status": "fail" if migration_failures else "pass", "failures": list(migration_failures)},
         }
-        def run_check(name, root, run_dir, timeout):
+        def run_check(name, root, run_dir, timeout, jobs=1, env=None):
             report = json.loads(json.dumps(reports[name]))
             if name == "run-gates" and report["failures"]:
                 report["failures"][0]["failures"] = build(root)
@@ -1038,6 +1038,10 @@ class EndToEnd(unittest.TestCase):
     def run_main(self, *argv):
         import io, contextlib
         out, err = io.StringIO(), io.StringIO()
+        argv = list(argv)
+        if "--jobs" not in argv:
+            # The stubbed checks cost milliseconds; the serial path is the one the fixtures describe.
+            argv = ["--jobs", "1", *argv]
         sys.argv = ["pm-landing-check.py", "--root", str(self.repo), *argv]
         with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
             code = self.module.main()
@@ -1496,7 +1500,7 @@ class LandingRun(unittest.TestCase):
             "audit-governance": aggregate("audit-governance", audit, 100),
             "plan-migration-validate": {"status": "fail" if migration else "pass", "failures": list(migration)},
         }
-        def run_check(name, root, run_dir, timeout):
+        def run_check(name, root, run_dir, timeout, jobs=1, env=None):
             self.timeouts.append(timeout)
             return json.loads(json.dumps(reports[name]))
         self.module.run_check = run_check
@@ -1505,6 +1509,10 @@ class LandingRun(unittest.TestCase):
     def run_main(self, *argv):
         import io, contextlib
         out, err = io.StringIO(), io.StringIO()
+        argv = list(argv)
+        if "--jobs" not in argv:
+            # The stubbed checks cost milliseconds; the serial path is the one the fixtures describe.
+            argv = ["--jobs", "1", *argv]
         sys.argv = ["pm-landing-check.py", "--root", str(self.repo), *argv]
         with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
             code = self.module.main()
@@ -2262,7 +2270,7 @@ class PairedValidatorCopies(LandingRun):
         self.storage_shape()
         inner = self.module.run_check
 
-        def run_check(name, root, run_dir, timeout):
+        def run_check(name, root, run_dir, timeout, jobs=1, env=None):
             if name == "audit-governance":
                 (self.repo / "scripts" / "pm-plans-verify-helper.py").write_text("edited mid-run\n", encoding="utf-8")
             return inner(name, root, run_dir, timeout)
@@ -2876,11 +2884,13 @@ class ExportKeyedSubchecks(LandingRun):
         import ast
         tree = ast.parse((ROOT / "scripts" / "pm-plans-verify.py").read_text(encoding="utf-8"))
         names = {}
+        spec_functions = {"run_gates_check_specs": "run-gates",
+                          "audit_governance_check_specs": "audit-governance"}
         for node in tree.body:
-            if isinstance(node, ast.FunctionDef) and node.name in ("cmd_run_gates", "cmd_audit_governance"):
+            if isinstance(node, ast.FunctionDef) and node.name in spec_functions:
                 for sub in ast.walk(node):
-                    if isinstance(sub, ast.Assign) and any(getattr(t, "id", None) == "check_specs" for t in sub.targets):
-                        names["run-gates" if node.name == "cmd_run_gates" else "audit-governance"] = {
+                    if isinstance(sub, ast.Return) and isinstance(sub.value, ast.List):
+                        names[spec_functions[node.name]] = {
                             element.elts[0].value for element in sub.value.elts}
         path_before = list(sys.path)
         argv = M.aggregate_subcheck_argv(ROOT, names, 600)
@@ -3394,3 +3404,48 @@ TAIL_BEFORE_THE_COMPARISON_LINES = (
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class AggregateReportsTests(unittest.TestCase):
+    """The three aggregate checks overlap, and their reports come back in CHECKS order."""
+
+    def runner(self, delays, state, lock, fail=None):
+        def run(check):
+            with lock:
+                state["now"] += 1
+                state["peak"] = max(state["peak"], state["now"])
+            try:
+                time.sleep(delays.get(check, 0))
+                if fail and check in fail:
+                    raise RuntimeError(fail[check])
+                return {"status": "pass", "check": check}
+            finally:
+                with lock:
+                    state["now"] -= 1
+        return run
+
+    def test_jobs_one_is_the_serial_loop(self):
+        import threading
+        state = {"now": 0, "peak": 0}
+        reports = M.aggregate_reports(
+            self.runner({name: 0.01 for name in M.CHECKS}, state, threading.Lock()), 1)
+        self.assertEqual(list(reports), list(M.CHECKS))
+        self.assertEqual(state["peak"], 1)
+
+    def test_parallel_reports_keep_the_check_order(self):
+        import threading
+        state = {"now": 0, "peak": 0}
+        delays = {M.CHECKS[0]: 0.06, M.CHECKS[1]: 0.01, M.CHECKS[2]: 0.02}
+        reports = M.aggregate_reports(self.runner(delays, state, threading.Lock()), 3)
+        self.assertEqual(list(reports), list(M.CHECKS))
+        self.assertGreater(state["peak"], 1)
+
+    def test_an_unreadable_check_is_raised_in_check_order(self):
+        import threading
+        state = {"now": 0, "peak": 0}
+        with self.assertRaises(RuntimeError) as raised:
+            M.aggregate_reports(
+                self.runner({}, state, threading.Lock(),
+                            fail={M.CHECKS[1]: "audit fell over", M.CHECKS[2]: "migration fell over"}),
+                3)
+        self.assertEqual(str(raised.exception), "audit fell over")

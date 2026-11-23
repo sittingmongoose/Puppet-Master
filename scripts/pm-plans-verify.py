@@ -16,6 +16,7 @@ import sys
 import tempfile
 import time
 from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
 from copy import deepcopy
 from datetime import datetime, timezone
@@ -172,6 +173,125 @@ class SubcheckTimeout(RuntimeError):
 
 
 _AGGREGATE_CHILD_ENV = "PM_PLANS_VERIFY_AGGREGATE_CHILD"
+
+# ---------------------------------------------------------------------------- one run per command
+# run-gates and audit-governance run 34 of the same validators with the same arguments, and a
+# landing check then runs a sampled subcheck's command again as its export. A landing check sets
+# these two variables in the environment of every child it starts: the directory its cache lives
+# in, outside the repository, and one stamp of everything a validator reads that is not the
+# command line (HEAD, the bytes under scripts/, the worktree status, the readiness audit inputs,
+# and the ignored inputs). A child whose command line and stamp match an entry that is already
+# running waits for it and uses its report instead of running the validator again.
+
+DEDUPE_DIR_ENV = "PM_PLANS_VERIFY_DEDUPE_DIR"
+DEDUPE_STAMP_ENV = "PM_PLANS_VERIFY_DEDUPE_STAMP"
+DEDUPE_SCHEMA_ID = "pm.plans_verify.dedupe.v1"
+DEDUPE_EVENTS_FILE = "events.jsonl"
+
+
+def dedupe_request(argv: list[str]) -> tuple[Path, dict[str, Any]] | None:
+    """The cache entry this command line asks for, or None when no landing check asked.
+
+    The key is the command and every argument except `--report` (a scratch path, not an input),
+    the caller's stamp of the checked tree and ignored inputs, and whether this ran as an
+    aggregate's child. Two aggregates that run the same validator with the same arguments get the
+    same key; a standalone run has no cache directory and never looks.
+    """
+    directory = os.environ.get(DEDUPE_DIR_ENV)
+    stamp = os.environ.get(DEDUPE_STAMP_ENV)
+    if not directory or not stamp:
+        return None
+    tokens: list[str] = []
+    skip_next = False
+    for token in argv:
+        if skip_next:
+            skip_next = False
+            continue
+        if token == "--report":
+            skip_next = True
+            continue
+        if token.startswith("--report="):
+            continue
+        tokens.append(token)
+    request = {
+        "schema_id": DEDUPE_SCHEMA_ID,
+        "stamp": stamp,
+        "argv": tokens,
+        "aggregate_child": os.environ.get(_AGGREGATE_CHILD_ENV) == "1",
+    }
+    key = hashlib.sha256(
+        json.dumps(request, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+    return Path(directory) / f"{key}.json", request
+
+
+@contextmanager
+def dedupe_lock(path: Path):
+    """Hold the key's exclusive lock while its one run is in flight, so a second caller waits."""
+    try:
+        import fcntl
+    except ImportError:  # pragma: no cover - Windows has no fcntl; the entry is simply not used.
+        yield False
+        return
+    lock_path = path.with_suffix(".lock")
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+    handle = lock_path.open("a+b")
+    try:
+        fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
+        yield True
+    finally:
+        try:
+            fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+        finally:
+            handle.close()
+
+
+def read_dedupe(path: Path, request: dict[str, Any]) -> dict[str, Any] | None:
+    try:
+        record = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    if not isinstance(record, dict) or record.get("schema_id") != DEDUPE_SCHEMA_ID \
+            or record.get("request") != request or not isinstance(record.get("report"), dict):
+        return None
+    return record["report"]
+
+
+def write_dedupe(path: Path, request: dict[str, Any], report: dict[str, Any]) -> None:
+    """Write the entry atomically, so a waiter never reads a partial report."""
+    payload = json.dumps({"schema_id": DEDUPE_SCHEMA_ID, "request": request, "report": report},
+                         indent=1, sort_keys=True) + "\n"
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        tmp = tempfile.NamedTemporaryFile("w", prefix=path.name + "-", suffix=".tmp",
+                                         dir=str(path.parent), delete=False, encoding="utf-8")
+        try:
+            tmp.write(payload)
+            tmp.close()
+            os.replace(tmp.name, path)
+        except BaseException:
+            tmp.close()
+            try:
+                os.unlink(tmp.name)
+            except OSError:
+                pass
+            raise
+    except OSError:
+        # A cache that cannot be written only costs a second run; it never changes a report.
+        return
+
+
+def record_dedupe_event(directory: Path, event: str, request: dict[str, Any]) -> None:
+    """One line per run and per reuse, under the cache directory, for the landing check's report."""
+    line = json.dumps({"event": event, "argv": request["argv"]}, sort_keys=True) + "\n"
+    try:
+        descriptor = os.open(directory / DEDUPE_EVENTS_FILE,
+                             os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o644)
+    except OSError:
+        return
+    try:
+        os.write(descriptor, line.encode("utf-8"))
+    finally:
+        os.close(descriptor)
 
 
 def _terminate_process_group(proc: subprocess.Popen) -> tuple[bool, str]:
@@ -479,6 +599,54 @@ def run_named_check(
     if progress:
         print(f"[pm-plans-verify] done {name} status={report.get('status')} elapsed_ms={elapsed_ms}", file=sys.stderr, flush=True)
     return name, report
+
+
+def default_jobs() -> int:
+    """The aggregate's default pool: four workers, or one per CPU on a smaller machine."""
+    return max(1, min(os.cpu_count() or 1, 4))
+
+
+def aggregate_jobs(args: argparse.Namespace) -> int:
+    requested = int(getattr(args, "jobs", 0) or 0)
+    return requested if requested > 0 else default_jobs()
+
+
+def run_aggregate_checks(
+    check_specs: list[tuple[str, Any, argparse.Namespace]],
+    *,
+    progress: bool,
+    timeout_seconds: int,
+    jobs: int,
+) -> list[tuple[str, dict[str, Any]]]:
+    """Run one aggregate's subchecks, in order of their results, `jobs` at a time.
+
+    `jobs == 1` is exactly the serial loop it was before: one subcheck, then the next, in
+    `check_specs` order. Above that, each subcheck still runs in its own process with its own temp
+    and report paths (`_run_subprocess_check`); only the waiting overlaps. Results are read back in
+    `check_specs` order, so stdout, each subcheck's report and the aggregate's exit code do not
+    depend on which validator finished first. The one in-process subcheck (`verify_spec_lock`)
+    stays on the main thread, because its SIGALRM backstop can only be armed there; it is cheap.
+    """
+    if jobs <= 1:
+        return [
+            run_named_check(name, func, namespace, progress=progress, timeout_seconds=timeout_seconds)
+            for name, func, namespace in check_specs
+        ]
+    results: list[tuple[str, dict[str, Any]] | None] = [None] * len(check_specs)
+    with ThreadPoolExecutor(max_workers=jobs, thread_name_prefix="pm-aggregate") as pool:
+        pending: dict[int, Any] = {}
+        for index, (name, func, namespace) in enumerate(check_specs):
+            if name in _INPROCESS_AGGREGATE_CHECKS:
+                results[index] = run_named_check(
+                    name, func, namespace, progress=progress, timeout_seconds=timeout_seconds)
+            else:
+                pending[index] = pool.submit(
+                    run_named_check, name, func, namespace,
+                    progress=progress, timeout_seconds=timeout_seconds)
+        for index, future in pending.items():
+            results[index] = future.result()
+    assert all(result is not None for result in results)
+    return [result for result in results if result is not None]
 
 
 def _run_inprocess_check(
@@ -7112,10 +7280,9 @@ def cmd_validate_audit_closure(args: argparse.Namespace) -> dict[str, Any]:
     return report
 
 
-def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
-    progress = progress_enabled(args)
-    timeout_seconds = subcheck_timeout_seconds(args)
-    check_specs = [
+def run_gates_check_specs(timeout_seconds: int) -> list[tuple[str, Any, argparse.Namespace]]:
+    """Every run-gates subcheck, in the order its report prints them."""
+    return [
         ("json_syntax", cmd_json_syntax, argparse.Namespace()),
         ("verify_spec_lock", cmd_verify_spec_lock, argparse.Namespace()),
         ("validate_plan_graph", cmd_validate_plan_graph, argparse.Namespace(paths=[])),
@@ -7155,10 +7322,17 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("validate_audit_status_index", cmd_validate_audit_status_index, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("check_shards", cmd_check_shards, argparse.Namespace(report=None)),
     ]
-    checks = [
-        run_named_check(name, func, namespace, progress=progress, timeout_seconds=timeout_seconds)
-        for name, func, namespace in check_specs
-    ]
+
+
+def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
+    progress = progress_enabled(args)
+    timeout_seconds = subcheck_timeout_seconds(args)
+    checks = run_aggregate_checks(
+        run_gates_check_specs(timeout_seconds),
+        progress=progress,
+        timeout_seconds=timeout_seconds,
+        jobs=aggregate_jobs(args),
+    )
 
     failures: list[dict[str, Any]] = []
     for name, report in checks:
@@ -7172,10 +7346,9 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
     )
 
 
-def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
-    progress = progress_enabled(args)
-    timeout_seconds = subcheck_timeout_seconds(args)
-    check_specs = [
+def audit_governance_check_specs(timeout_seconds: int) -> list[tuple[str, Any, argparse.Namespace]]:
+    """Every audit-governance subcheck, in the order its report prints them."""
+    return [
         ("spec_lock", cmd_verify_spec_lock, argparse.Namespace()),
         ("plan_graph", cmd_validate_plan_graph, argparse.Namespace(paths=[])),
         ("auto_decisions", cmd_validate_auto_decisions, argparse.Namespace()),
@@ -7212,10 +7385,17 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("audit_closure", cmd_validate_audit_closure, argparse.Namespace()),
         ("audit_status_index", cmd_validate_audit_status_index, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
     ]
-    checks = [
-        run_named_check(name, func, namespace, progress=progress, timeout_seconds=timeout_seconds)
-        for name, func, namespace in check_specs
-    ]
+
+
+def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
+    progress = progress_enabled(args)
+    timeout_seconds = subcheck_timeout_seconds(args)
+    checks = run_aggregate_checks(
+        audit_governance_check_specs(timeout_seconds),
+        progress=progress,
+        timeout_seconds=timeout_seconds,
+        jobs=aggregate_jobs(args),
+    )
     check_map = {name: report for name, report in checks}
     failures: list[dict[str, Any]] = []
     for name, report in checks:
@@ -7363,12 +7543,40 @@ def main() -> int:
                 help="Maximum seconds for each aggregate subcheck before reporting the stuck check.",
             )
             sub.add_argument("--quiet-progress", action="store_true", help="Suppress aggregate subcheck progress on stderr.")
+            sub.add_argument(
+                "--jobs",
+                type=int,
+                default=default_jobs(),
+                help="Run this many independent subchecks at once, each still in its own process with its own "
+                     f"temp and report paths; results are emitted in the original order (default: {default_jobs()}; "
+                     "1 is the serial run).",
+            )
     args = parser.parse_args()
     if not hasattr(args, "subcheck_timeout_seconds"):
         args.subcheck_timeout_seconds = DEFAULT_SUBCHECK_TIMEOUT_SECONDS
     if not hasattr(args, "paths"):
         args.paths = []
-    report = COMMANDS[args.command](args)
+    request = dedupe_request(sys.argv[1:])
+    if request is None:
+        report = COMMANDS[args.command](args)
+    else:
+        path, payload = request
+        directory = path.parent
+        report: dict[str, Any] | None = None
+        try:
+            with dedupe_lock(path):
+                report = read_dedupe(path, payload)
+                if report is not None:
+                    record_dedupe_event(directory, "hit", payload)
+                else:
+                    report = COMMANDS[args.command](args)
+                    write_dedupe(path, payload, report)
+                    record_dedupe_event(directory, "run", payload)
+        except OSError:
+            # An unusable cache directory only means this command runs as it does today.
+            if report is None:
+                report = COMMANDS[args.command](args)
+    assert report is not None
     write_report(report, args.report)
     output_fields = {"check", "status", "failures", "generated_at_utc"}
     if args.command == "validate-wiring-matrix":

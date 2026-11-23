@@ -129,6 +129,7 @@ Exit codes:
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
 import hashlib
 import importlib.util
@@ -136,6 +137,7 @@ import json
 import os
 import posixpath
 import re
+import shutil
 import signal
 import subprocess
 import sys
@@ -404,12 +406,15 @@ def current_run_dir(root: Path) -> str:
     return run_path
 
 
-def run_check(name: str, root: Path, run_dir: str, timeout_seconds: int) -> dict[str, Any]:
+def run_check(name: str, root: Path, run_dir: str, timeout_seconds: int,
+              jobs: int = 1, env: dict[str, str] | None = None) -> dict[str, Any]:
     """Invoke one check and return its JSON report. Raises RuntimeError when it cannot be read.
 
     `pm-plan-migration.py validate` prints its whole report. `run-gates` and `audit-governance`
     print a trimmed one that drops the per-subcheck failure totals, so they are asked for the full
     report in a scratch file that is deleted again; nothing is written inside the repository.
+    Each call has its own TemporaryDirectory and its own report path, which is what lets the three
+    checks run at once: two of them share no file, and the third writes none.
     """
     with tempfile.TemporaryDirectory(prefix="pm-landing-check-") as scratch:
         if name == "plan-migration-validate":
@@ -424,10 +429,12 @@ def run_check(name: str, root: Path, run_dir: str, timeout_seconds: int) -> dict
                 "--quiet-progress",
                 "--subcheck-timeout-seconds",
                 str(timeout_seconds),
+                "--jobs",
+                str(jobs),
                 "--report",
                 str(report_file),
             ]
-        proc = subprocess.run(argv, cwd=root, capture_output=True, text=True)
+        proc = subprocess.run(argv, cwd=root, capture_output=True, text=True, env=env)
         payload = report_file.read_text(encoding="utf-8") if report_file and report_file.exists() else proc.stdout
         try:
             report = json.loads(payload)
@@ -442,6 +449,157 @@ def run_check(name: str, root: Path, run_dir: str, timeout_seconds: int) -> dict
 
 
 # ------------------------------------------------------------------------------- normalizing keys
+
+
+def aggregate_reports(runner, jobs: int) -> dict[str, dict[str, Any]]:
+    """Run each of CHECKS through `runner`, concurrently when `jobs` allows, and keep their reports.
+
+    Every check gets its own temp directory and report path (`run_check`), so overlapping them
+    shares no file. The reports are returned under their names, and a check that could not be read
+    is raised in CHECKS order: the first unreadable check is still the one the serial loop named.
+    `jobs == 1` is the serial loop itself.
+    """
+    if jobs <= 1:
+        return {check: runner(check) for check in CHECKS}
+    with ThreadPoolExecutor(max_workers=len(CHECKS), thread_name_prefix="pm-landing-check") as pool:
+        futures = {check: pool.submit(runner, check) for check in CHECKS}
+        reports: dict[str, dict[str, Any]] = {}
+        first_error: BaseException | None = None
+        for check in CHECKS:
+            try:
+                reports[check] = futures[check].result()
+            except BaseException as exc:  # noqa: BLE001 - re-raised below in CHECKS order
+                if first_error is None:
+                    first_error = exc
+        if first_error is not None:
+            raise first_error
+        return reports
+
+
+def sha256_path(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def ignored_inputs_digest(root: Path) -> str:
+    """Digest of every gitignored path the validators can read, as the bytes on disk.
+
+    `git status --ignored=matching` names each ignored file and directory. A directory is walked,
+    a symlink is hashed as its target (never followed, so the 139k-file evidence share is not
+    traversed), and `__pycache__` is skipped. The 16 raw captures the json-syntax check reads
+    through `tests/agent_packet_restrictions` are listed by their tracked manifest and hashed too.
+    """
+    proc = subprocess.run(
+        ["git", "--no-optional-locks", "status", "--porcelain", "-z", "--ignored=matching"],
+        cwd=root, capture_output=True, text=True)
+    if proc.returncode != 0:
+        raise RuntimeError(f"git status failed: {proc.stderr.strip()[:200]}")
+    digest = hashlib.sha256()
+
+    def add(relative: str, what: str) -> None:
+        digest.update(relative.encode("utf-8") + b"\0" + what.encode("utf-8") + b"\0")
+
+    def add_file(path: Path, relative: str) -> None:
+        try:
+            add(relative, "file " + sha256_path(path))
+        except OSError:
+            add(relative, "unreadable")
+
+    def add_tree(path: Path, relative: str) -> None:
+        for dirpath, dirnames, filenames in os.walk(path, followlinks=False):
+            dirnames[:] = sorted(name for name in dirnames if name != "__pycache__")
+            base = Path(dirpath)
+            for name in list(dirnames):
+                if (base / name).is_symlink():
+                    add((base / name).relative_to(root).as_posix(), "link " + os.readlink(base / name))
+                    dirnames.remove(name)
+            for name in sorted(filenames):
+                child = base / name
+                child_relative = child.relative_to(root).as_posix()
+                if child.is_symlink():
+                    add(child_relative, "link " + os.readlink(child))
+                else:
+                    add_file(child, child_relative)
+
+    for entry in proc.stdout.split("\0"):
+        if not entry.startswith("!! "):
+            continue
+        relative = entry[3:]
+        path = root / relative
+        if path.is_symlink():
+            add(relative, "link " + os.readlink(path))
+        elif path.is_dir():
+            add_tree(path, relative)
+        elif path.is_file():
+            add_file(path, relative)
+        else:
+            add(relative, "missing")
+    manifest = root / "tests/fixtures/governance/raw_evidence_capture_modes.json"
+    try:
+        entries = json.loads(manifest.read_text(encoding="utf-8")).get("entries", [])
+    except (OSError, ValueError):
+        entries = []
+    for entry in entries if isinstance(entries, list) else []:
+        relative = entry.get("path") if isinstance(entry, dict) else None
+        if not isinstance(relative, str):
+            continue
+        path = root / relative
+        add(relative, "missing" if not path.is_file() else "file " + sha256_path(path))
+    return digest.hexdigest()
+
+
+def index_flags_digest(root: Path) -> str:
+    """The index's own flags: a skip-worktree or assume-unchanged file can hide an edit from status."""
+    proc = subprocess.run(["git", "--no-optional-locks", "ls-files", "-v"], cwd=root,
+                          capture_output=True, text=True)
+    if proc.returncode != 0:
+        raise RuntimeError(f"git ls-files failed: {proc.stderr.strip()[:200]}")
+    digest = hashlib.sha256()
+    for line in proc.stdout.splitlines():
+        if line[:1] not in {"H", ""}:
+            digest.update(line.encode("utf-8", "surrogateescape") + b"\0")
+    return digest.hexdigest()
+
+
+def dedupe_stamp(root: Path, run_dir: str, audit_inputs: dict[str, Any],
+                 state: dict[str, Any]) -> str | None:
+    """One digest of everything a validator reads that its command line does not name.
+
+    None means no safe stamp: the worktree has changes (so a validator would read files that HEAD
+    does not describe), or an input could not be read. A landing check then runs without the cache,
+    which is slower and changes nothing it reports.
+    """
+    proc = subprocess.run(
+        ["git", "--no-optional-locks", "status", "--porcelain", "-z", "--untracked-files=all"],
+        cwd=root, capture_output=True, text=True)
+    if proc.returncode != 0 or proc.stdout:
+        return None
+    try:
+        payload = {
+            "schema_id": "pm.landing_check.dedupe_stamp.v1",
+            "head": state.get("head"),
+            "scripts_sha256": state.get("scripts_sha256"),
+            "run_dir": run_dir,
+            "readiness_audit_inputs": audit_inputs,
+            "ignored_inputs_sha256": ignored_inputs_digest(root),
+            "index_flags_sha256": index_flags_digest(root),
+        }
+    except (OSError, RuntimeError):
+        return None
+    return hashlib.sha256(canonical(payload).encode("utf-8")).hexdigest()
+
+
+def keep_dedupe_events(events: Path | None, keep_dir: Path | None) -> None:
+    """Beside the kept check reports, keep what the cache ran and what it reused."""
+    if events is None or keep_dir is None or not events.is_file():
+        return
+    try:
+        shutil.copyfile(events, keep_dir / "dedupe-events.jsonl")
+    except OSError:
+        pass
 
 
 def strip_root(text: str, root: Path) -> str:
@@ -1726,7 +1884,8 @@ def describe_pair(row: dict[str, Any]) -> str:
 # ------------------------------------------------------------- subchecks keyed from their export
 
 
-def run_export(root: Path, argv: list[str], timeout_seconds: int) -> dict[str, Any]:
+def run_export(root: Path, argv: list[str], timeout_seconds: int,
+               base_env: dict[str, str] | None = None) -> dict[str, Any]:
     """Run one subcheck's command on its own and read the report it writes: its export (the exports brief).
 
     `argv` is the command and its arguments exactly as pm-plans-verify.py builds them for the aggregates
@@ -1742,7 +1901,7 @@ def run_export(root: Path, argv: list[str], timeout_seconds: int) -> dict[str, A
     with tempfile.TemporaryDirectory(prefix="pm-landing-check-export-") as scratch:
         report_file = Path(scratch) / "export.json"
         command = [sys.executable, "scripts/pm-plans-verify.py", argv[0], "--report", str(report_file), *argv[1:]]
-        env = dict(os.environ)
+        env = dict(base_env if base_env is not None else os.environ)
         env[AGGREGATE_CHILD_ENV] = "1"
         proc = subprocess.Popen(command, cwd=root, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
                                 start_new_session=True, env=env)
@@ -1796,6 +1955,7 @@ def key_from_exports(
     keep_dir: Path | None = None,
     items: list[dict[str, Any]] | tuple[dict[str, Any], ...] = (),
     context: RenameContext | None = None,
+    env: dict[str, str] | None = None,
 ) -> tuple[dict[tuple[str, str], list[dict[str, Any]]], list[dict[str, Any]]]:
     """The exports brief: key each subcheck that prints only a sample from its complete export.
 
@@ -1856,7 +2016,9 @@ def key_from_exports(
     exported: dict[tuple[str, str], list[dict[str, Any]]] = {}
     commands = Counter(argv[0] for argv in planned)
     for argv in sorted(planned):
-        result = run_export(root, list(argv), timeout_seconds)
+        # The four-argument call is kept for the callers and fixtures that predate the cache.
+        result = (run_export(root, list(argv), timeout_seconds, env) if env is not None
+                  else run_export(root, list(argv), timeout_seconds))
         if keep_dir is not None:
             unique = commands[argv[0]] == 1
             keep_export(keep_dir, argv[0] if unique else f"{argv[0]}-{hashlib.sha256(' '.join(argv).encode()).hexdigest()[:8]}",
@@ -1987,6 +2149,10 @@ def main() -> int:
                         help="passed to the aggregate checks; a subcheck still running at this bound is "
                              f"killed and reported as an infrastructure result (default: "
                              f"{DEFAULT_SUBCHECK_TIMEOUT_SECONDS})")
+    parser.add_argument("--jobs", type=int, default=min(os.cpu_count() or 1, 4),
+                        help="run this many independent checks at once and give each aggregate the same "
+                             "worker cap; results and reports are emitted in the original order, and 1 is "
+                             f"exactly the serial run (default: {min(os.cpu_count() or 1, 4)})")
     parser.add_argument("--json", action="store_true", help="print the machine-readable report instead of the summary")
     parser.add_argument("--allow-sparse", action="store_true",
                         help="run on a sparse worktree anyway; everything outside the cone reads as missing")
@@ -1997,6 +2163,8 @@ def main() -> int:
                         help="also keep each check's full report, every row it printed, as DIR/<check>.json, "
                              "so the run can be replayed exactly; DIR must be outside the repository")
     args = parser.parse_args()
+    if args.jobs < 1:
+        parser.error("--jobs must be at least 1")
 
     root = Path(args.root).resolve()
     if args.readiness_audit_root:
@@ -2008,12 +2176,21 @@ def main() -> int:
     else:
         source = (SHARED_READINESS_AUDIT_ROOT if SHARED_READINESS_AUDIT_ROOT.is_dir()
                   else root / READINESS_AUDIT_REL).resolve()
+    # One scratch directory for the run's deduplicated validator reports, outside the repository.
+    # It is removed when the run ends, however it ends; check_main only points the aggregates at it.
+    try:
+        args.dedupe_dir = Path(tempfile.mkdtemp(prefix="pm-landing-check-dedupe-"))
+    except OSError:
+        args.dedupe_dir = None
     try:
         with readiness_audit_source(root, source):
             return check_main(args, root, source)
     except (RuntimeError, OSError) as exc:
         print(f"pm-landing-check: {exc}", file=sys.stderr)
         return 3
+    finally:
+        if args.dedupe_dir is not None:
+            shutil.rmtree(args.dedupe_dir, ignore_errors=True)
 
 
 def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
@@ -2083,15 +2260,27 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     counts: dict[str, dict[str, dict[str, int]]] = {}
     listed: dict[str, dict[str, int]] = {}
     statuses: dict[str, str] = {}
-    # Review L-07: whether both aggregates ran the same validator code at the same commit.
-    before = None if args.record_baseline else tree_state(root)
+    # Review L-07: whether both aggregates ran the same validator code at the same commit. Read
+    # before any check, in both modes; the dedupe stamp describes the same tree.
+    before = tree_state(root)
     after = None
-    for check in CHECKS:
-        try:
-            report = run_check(check, root, run_dir, args.subcheck_timeout_seconds)
-        except RuntimeError as exc:
-            print(f"pm-landing-check: {exc}", file=sys.stderr)
-            return 3
+    jobs = max(1, args.jobs)
+
+    child_env: dict[str, str] | None = None
+    dedupe_events: Path | None = None
+    if jobs > 1 and args.dedupe_dir is not None:
+        # One landing check needs the 34 validator command lines both aggregates share once, and each
+        # sampled subcheck's export once more. The stamp names the tree and every ignored input those
+        # validators read; when it cannot be taken (a dirty worktree), the run simply does not dedupe.
+        stamp = dedupe_stamp(root, run_dir, audit_inputs, before)
+        if stamp is not None:
+            child_env = dict(os.environ)
+            child_env["PM_PLANS_VERIFY_DEDUPE_DIR"] = str(args.dedupe_dir)
+            child_env["PM_PLANS_VERIFY_DEDUPE_STAMP"] = stamp
+            dedupe_events = args.dedupe_dir / "events.jsonl"
+
+    def consume(check: str, report: dict[str, Any]) -> None:
+        nonlocal after
         if keep_dir is not None:
             (keep_dir / f"{check}.json").write_text(
                 json.dumps(report, indent=1, sort_keys=True) + "\n", encoding="utf-8")
@@ -2100,10 +2289,32 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         items.extend(check_items)
         counts[check] = check_counts
         listed[check] = listed_totals(check, report)
-        if check == "audit-governance" and before is not None:
+        if check == "audit-governance" and jobs <= 1:
             after = tree_state(root)
         require_same_readiness_audit_inputs(audit_inputs, readiness_audit_inputs(root),
                                           f"changed during {check}")
+
+    if jobs <= 1:
+        for check in CHECKS:
+            try:
+                report = run_check(check, root, run_dir, args.subcheck_timeout_seconds, jobs, child_env)
+            except RuntimeError as exc:
+                print(f"pm-landing-check: {exc}", file=sys.stderr)
+                return 3
+            consume(check, report)
+    else:
+        try:
+            reports = aggregate_reports(
+                lambda check: run_check(check, root, run_dir, args.subcheck_timeout_seconds, jobs, child_env),
+                jobs)
+        except RuntimeError as exc:
+            print(f"pm-landing-check: {exc}", file=sys.stderr)
+            return 3
+        for check in CHECKS:
+            consume(check, reports[check])
+        # The pairing below asks whether both aggregates ran the same validator code; with the three
+        # checks overlapping, that window ends when all of them have finished.
+        after = tree_state(root)
 
     commit = subprocess.run(
         ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True
@@ -2139,7 +2350,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
             argv_map = f"{type(exc).__name__}: {exc}"
     exported, export_rows = key_from_exports(
         root, counts, None if args.record_baseline else (baseline.get("checks") or {}), timed_out, argv_map,
-        args.subcheck_timeout_seconds, keep_dir, items, context=rename_context)
+        args.subcheck_timeout_seconds, keep_dir, items, context=rename_context, env=child_env)
     require_same_readiness_audit_inputs(audit_inputs, readiness_audit_inputs(root),
                                       "changed during the exports")
 
@@ -2166,6 +2377,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                                        "truncated rule for it"))
         if untracked:
             print("  recorded with these gitignored inputs present: " + ", ".join(sorted(untracked)))
+        keep_dedupe_events(dedupe_events, keep_dir)
         return 0
 
     keyed_now = set(exported)
@@ -2547,6 +2759,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                   "something above stops the landing. Rerun each on its own and judge what it reports by "
                   "the same rules before pushing main.")
 
+    keep_dedupe_events(dedupe_events, keep_dir)
     return apply_pm7_inventory(
         exit_code(reported, grown, subcheck_growth, blocking, infrastructure),
         touched, root, args.json)

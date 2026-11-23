@@ -543,3 +543,195 @@ class AggregateCommandMappingTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class AggregateParallelismTests(unittest.TestCase):
+    """--jobs: the same results in the same order, with the waiting overlapped."""
+
+    def specs(self):
+        import argparse
+
+        return [
+            ("first", None, argparse.Namespace()),
+            ("second", None, argparse.Namespace()),
+            ("third", None, argparse.Namespace()),
+        ]
+
+    def fake_runner(self, delays, active, peak):
+        import threading
+
+        lock = threading.Lock()
+
+        def run(name, func, namespace, *, progress, timeout_seconds):
+            with lock:
+                active["now"] += 1
+                peak["now"] = max(peak["now"], active["now"])
+            try:
+                time.sleep(delays[name])
+                return name, {"check": name, "status": "pass", "failures": []}
+            finally:
+                with lock:
+                    active["now"] -= 1
+
+        return run
+
+    def test_jobs_one_is_the_serial_loop(self):
+        active, peak = {"now": 0}, {"now": 0}
+        with mock.patch.object(
+            pm_plans_verify,
+            "run_named_check",
+            side_effect=self.fake_runner({"first": 0.03, "second": 0.02, "third": 0.01}, active, peak),
+        ):
+            results = pm_plans_verify.run_aggregate_checks(
+                self.specs(), progress=False, timeout_seconds=10, jobs=1)
+        self.assertEqual([name for name, _ in results], ["first", "second", "third"])
+        self.assertEqual(peak["now"], 1)
+
+    def test_parallel_results_keep_the_spec_order(self):
+        active, peak = {"now": 0}, {"now": 0}
+        with mock.patch.object(
+            pm_plans_verify,
+            "run_named_check",
+            side_effect=self.fake_runner({"first": 0.06, "second": 0.01, "third": 0.02}, active, peak),
+        ):
+            results = pm_plans_verify.run_aggregate_checks(
+                self.specs(), progress=False, timeout_seconds=10, jobs=3)
+        self.assertEqual([name for name, _ in results], ["first", "second", "third"])
+        self.assertGreater(peak["now"], 1)
+
+    def test_the_in_process_check_stays_on_the_main_thread(self):
+        import threading
+
+        seen = {}
+
+        def run(name, func, namespace, *, progress, timeout_seconds):
+            seen[name] = threading.current_thread().name
+            return name, {"check": name, "status": "pass", "failures": []}
+
+        specs = [("verify_spec_lock", None, None), ("other", None, None)]
+        with mock.patch.object(pm_plans_verify, "run_named_check", side_effect=run):
+            results = pm_plans_verify.run_aggregate_checks(
+                specs, progress=False, timeout_seconds=10, jobs=2)
+        self.assertEqual([name for name, _ in results], ["verify_spec_lock", "other"])
+        self.assertEqual(seen["verify_spec_lock"], "MainThread")
+
+    def test_a_timeout_report_passes_through_unchanged(self):
+        timeout_report = {
+            "check": "second",
+            "status": "fail",
+            "failures": [{"check": "second", "error": "subprocess_timeout", "timeout_seconds": 10}],
+        }
+
+        def run(name, func, namespace, *, progress, timeout_seconds):
+            if name == "second":
+                return name, timeout_report
+            return name, {"check": name, "status": "pass", "failures": []}
+
+        with mock.patch.object(pm_plans_verify, "run_named_check", side_effect=run):
+            results = pm_plans_verify.run_aggregate_checks(
+                self.specs(), progress=False, timeout_seconds=10, jobs=3)
+        self.assertIs(results[1][1], timeout_report)
+
+    def test_a_failure_is_not_hidden(self):
+        def run(name, func, namespace, *, progress, timeout_seconds):
+            if name == "second":
+                raise RuntimeError("second could not be read")
+            return name, {"check": name, "status": "pass", "failures": []}
+
+        with mock.patch.object(pm_plans_verify, "run_named_check", side_effect=run):
+            with self.assertRaises(RuntimeError) as raised:
+                pm_plans_verify.run_aggregate_checks(
+                    self.specs(), progress=False, timeout_seconds=10, jobs=3)
+        self.assertEqual(str(raised.exception), "second could not be read")
+
+
+class DedupeKeyTests(unittest.TestCase):
+    def test_the_report_path_is_not_part_of_the_key(self):
+        import argparse
+
+        with mock.patch.dict(os.environ, {
+            pm_plans_verify.DEDUPE_DIR_ENV: tempfile.mkdtemp(),
+            pm_plans_verify.DEDUPE_STAMP_ENV: "stamp",
+        }):
+            one = pm_plans_verify.dedupe_request(["cmd", "--report", "/tmp/a.json", "--flag", "1"])
+            two = pm_plans_verify.dedupe_request(["cmd", "--report", "/tmp/b.json", "--flag", "1"])
+            three = pm_plans_verify.dedupe_request(["cmd", "--report", "/tmp/a.json", "--flag", "2"])
+        self.assertIsNotNone(one)
+        self.assertIsNotNone(two)
+        self.assertEqual(one[0], two[0])
+        self.assertNotEqual(one[0], three[0])
+        self.assertNotIn("--report", one[1]["argv"])
+        self.assertNotIn("/tmp/a.json", one[1]["argv"])
+
+    def test_no_landing_check_means_no_entry(self):
+        with mock.patch.dict(os.environ, {}, clear=True):
+            self.assertIsNone(pm_plans_verify.dedupe_request(["cmd", "--report", "/tmp/a.json"]))
+
+
+class DedupeRunsOnceTests(unittest.TestCase):
+    """One landing check runs the same command line once and gives both aggregates that report."""
+
+    def test_the_second_caller_gets_the_first_report_byte_for_byte(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            cache = Path(scratch) / "cache"
+            env = dict(os.environ)
+            env[pm_plans_verify.DEDUPE_DIR_ENV] = str(cache)
+            env[pm_plans_verify.DEDUPE_STAMP_ENV] = "same-tree"
+            reports = [Path(scratch) / "one.json", Path(scratch) / "two.json"]
+            for report in reports:
+                proc = subprocess.run(
+                    [sys.executable, str(MODULE_PATH), "verify-spec-lock", "--report", str(report)],
+                    cwd=ROOT, env=env, capture_output=True, text=True,
+                )
+                self.assertIn(proc.returncode, (0, 1), proc.stderr)
+            first = json.loads(reports[0].read_text(encoding="utf-8"))
+            second = json.loads(reports[1].read_text(encoding="utf-8"))
+            self.assertEqual(first, second)
+            self.assertEqual(first["generated_at_utc"], second["generated_at_utc"])
+            events = [json.loads(line) for line in
+                      (cache / pm_plans_verify.DEDUPE_EVENTS_FILE).read_text(encoding="utf-8").splitlines()]
+            self.assertEqual([event["event"] for event in events], ["run", "hit"])
+            self.assertEqual(events[0]["argv"], events[1]["argv"])
+
+    def test_a_changed_stamp_runs_the_command_again(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            cache = Path(scratch) / "cache"
+            for stamp in ("one-tree", "another-tree"):
+                env = dict(os.environ)
+                env[pm_plans_verify.DEDUPE_DIR_ENV] = str(cache)
+                env[pm_plans_verify.DEDUPE_STAMP_ENV] = stamp
+                proc = subprocess.run(
+                    [sys.executable, str(MODULE_PATH), "verify-spec-lock",
+                     "--report", str(Path(scratch) / f"{stamp}.json")],
+                    cwd=ROOT, env=env, capture_output=True, text=True,
+                )
+                self.assertIn(proc.returncode, (0, 1), proc.stderr)
+            events = [json.loads(line) for line in
+                      (cache / pm_plans_verify.DEDUPE_EVENTS_FILE).read_text(encoding="utf-8").splitlines()]
+            self.assertEqual([event["event"] for event in events], ["run", "run"])
+
+
+class SharedValidatorCommandLinesTests(unittest.TestCase):
+    def test_the_shared_validators_map_to_one_command_line_each(self):
+        import argparse
+
+        timeout_seconds = 1800
+        namespace = argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)
+
+        def command_line(name):
+            return (
+                pm_plans_verify._aggregate_subcheck_command_id(name),
+                tuple(pm_plans_verify._aggregate_subcheck_cli_args(
+                    name, namespace, timeout_seconds=timeout_seconds)),
+            )
+
+        run_names = [name for name, _, _ in pm_plans_verify.run_gates_check_specs(timeout_seconds)]
+        audit_names = [name for name, _, _ in pm_plans_verify.audit_governance_check_specs(timeout_seconds)]
+        audit_lines = {command_line(name) for name in audit_names}
+        shared = [name for name in run_names if command_line(name) in audit_lines]
+        # verify_spec_lock is the one exception: run-gates runs it in-process, not as a command.
+        self.assertIn("verify_spec_lock", shared)
+        deduped = [name for name in shared if name != "verify_spec_lock"]
+        self.assertEqual(len(deduped), 34)
+        for name in deduped:
+            self.assertIn(command_line(name), audit_lines)
