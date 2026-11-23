@@ -1727,10 +1727,13 @@ def strict_difference(report: dict[str, Any], rows: Optional[dict[str, Any]], pr
     return None
 
 
+HOLDER_LINE = re.compile(r"^\s*([A-Za-z][A-Za-z0-9_-]*)\s*:\s*(.*?)\s*$")
+
+
 def parse_holder(text: str) -> dict[str, Any]:
     fields: dict[str, Any] = {"batch-landing": []}
     for line in text.splitlines():
-        match = re.match(r"^\s*([A-Za-z][A-Za-z0-9_-]*)\s*:\s*(.*?)\s*$", line)
+        match = HOLDER_LINE.match(line)
         if not match:
             continue
         key, val = match.group(1).lower(), match.group(2)
@@ -1752,6 +1755,27 @@ def read_holder_text(lock_dir: Path) -> Optional[str]:
         return (lock_dir / "held" / "holder.txt").read_text(encoding="utf-8", errors="replace")
     except OSError:
         return None
+
+
+def holder_broken(text: Optional[str]) -> Optional[str]:
+    """Why holder.txt cannot be read as one, or None when it can.
+
+    A renewal replaces the file: a truncate-then-write leaves it empty for an instant, and a half-written or broken
+    file must never read as a holder that names no batch (fix round 7). A holder is readable when it has at least
+    one `key: value` line; an empty `batch-start:` or `batch-landing:` line is broken too, because the reader would
+    otherwise take an empty value for "no batch" (R8-N1).
+    """
+    if text is None:
+        return "holder.txt cannot be read"
+    if not text.strip():
+        return "holder.txt is empty"
+    if not any(HOLDER_LINE.match(line) for line in text.splitlines()):
+        return "holder.txt has no `key: value` line"
+    for line in text.splitlines():
+        match = HOLDER_LINE.match(line)
+        if match and match.group(1).lower() in ("batch-start", "batch-landing") and not match.group(2).strip():
+            return f"holder.txt has an empty `{match.group(1).lower()}:` line"
+    return None
 
 
 def holder_rule_age(lock_dir: Path, text: Optional[str]) -> float:
@@ -1815,8 +1839,10 @@ def holder_verdict(lock_dir: Path) -> dict[str, Any]:
     if not (lock_dir / "held").is_dir():
         return {"held": False, "dead": False, "reason": "the landing lock is free"}
     text = read_holder_text(lock_dir)
-    if text is None:
-        raise Refusal(f"the landing lock is held at {lock_dir / 'held'} but holder.txt cannot be read")
+    broken = holder_broken(text)
+    if broken:
+        raise Refusal(f"the landing lock is held at {lock_dir / 'held'}, but {broken}: the holder is being written "
+                      "or is broken; wait and rerun")
     fields = parse_holder(text)
     age = holder_rule_age(lock_dir, text)
     expired = age > HAND_RULE_SECONDS

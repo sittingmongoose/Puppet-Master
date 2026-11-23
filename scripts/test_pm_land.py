@@ -2656,6 +2656,14 @@ class BatchCheckTests(BatchFixture):
         self.assertEqual(code, 3)
         self.assertIn("no batch is open", self.stderr)
 
+    def test_a_holder_being_rewritten_is_refused_not_read_as_no_batch(self):
+        """R7: a renewal truncates holder.txt for an instant; an empty file must refuse, never read as no batch."""
+        held = self.holder()
+        (held / "holder.txt").write_text("", encoding="utf-8")
+        code, _out = self.check(self.report("m2.json", totals=self.totals, counts=self.counts))
+        self.assertEqual(code, 3)
+        self.assertIn("being written or is broken", self.stderr)
+
     def test_the_base_must_be_the_open_batch(self):
         self.holder(start=self.member1, rows=[])
         current = self.report("m2.json", totals={"run-gates/lint-x": 2}, counts=self.counts)
@@ -3057,6 +3065,34 @@ class BatchVerifyTests(unittest.TestCase):
                 patch.object(land, "ssh", return_value=subprocess.CompletedProcess([], 0, "", "")):
             with redirect_stdout(io.StringIO()):
                 self.assertEqual(land.verify_receipt(self.path, None, None), 0)
+
+    def test_a_holder_being_rewritten_is_refused_by_plain_verify(self):
+        """R7: at ea25dfecbe an empty holder.txt read as a holder with no batch, so plain verify passed."""
+        self.holder(self.base, [])
+        _member1, head = self.history(commits=0)
+        self.receipt(head)
+        path = self.lock / "held" / "holder.txt"
+        for text in ("", "agent fixture\n"):
+            with self.subTest(text=text):
+                path.write_text(text, encoding="utf-8")
+                with patch.object(land, "LOCK_DIR", self.lock), \
+                        patch.object(land, "ssh", return_value=subprocess.CompletedProcess([], 0, "", "")):
+                    with self.assertRaisesRegex(land.Refusal, "being written or is broken"):
+                        land.verify_receipt(self.path, None, None)
+
+    def test_an_empty_batch_line_is_a_broken_holder(self):
+        """R8-N1: an empty `batch-start:` or `batch-landing:` line must refuse, never read as no batch."""
+        self.holder(self.base, [])
+        _member1, head = self.history(commits=0)
+        self.receipt(head)
+        path = self.lock / "held" / "holder.txt"
+        for line in ("batch-start: ", "batch-landing: "):
+            with self.subTest(line=line):
+                path.write_text(f"agent: fixture\ntime: {land.iso()}\n{line}\n", encoding="utf-8")
+                with patch.object(land, "LOCK_DIR", self.lock), \
+                        patch.object(land, "ssh", return_value=subprocess.CompletedProcess([], 0, "", "")):
+                    with self.assertRaisesRegex(land.Refusal, "empty `batch-"):
+                        land.verify_receipt(self.path, None, None)
 
     def follow_up(self, member1, paths=("Plans/.plan_migration/snapshot-1/current_run.json",
                                         "reports/landing-checks/baseline.json")):
