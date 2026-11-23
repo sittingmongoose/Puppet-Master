@@ -39,10 +39,11 @@ const host = { __pipStage: null };
 globalThis.document = { querySelector: (sel) => (sel === '#pm-o55-onboarding .o55-stage' ? host : null) };
 let rafQ = [];
 globalThis.requestAnimationFrame = (fn) => { rafQ.push(fn); return rafQ.length; };
-const watch = async (st, frames) => {
+const watch = async (st, arg) => {
 	host.__pipStage = st;
-	const p = DRAW_WATCH(frames);
-	for (let i = 0; i <= Math.max(...frames) + 1; i++) { const q = rafQ; rafQ = []; q.forEach((fn) => fn()); }
+	const fs = Array.isArray(arg) ? arg : arg.frames;
+	const p = DRAW_WATCH(arg);
+	for (let i = 0; i <= Math.max(...fs) + 1; i++) { const q = rafQ; rafQ = []; q.forEach((fn) => fn()); }
 	return p;
 };
 
@@ -83,4 +84,27 @@ const watch = async (st, frames) => {
 	const r = await watch(st, [0, 1, 2]);
 	assert.equal(r.nbad, 0, `a healthy NieR draws the same cached and fresh: ${JSON.stringify(r.bad)}`);
 }
-console.log('PASS the draw oracle: a healthy cache draws the same cached and fresh; a stale protractor or bracket cache is reported with both draws; NieR\'s kept box is judged against a fresh boxInScene with nierKey left alone');
+// live Reduced Motion mismatch (FO-S3): browser/app report reduced, stage and data-reduced still report false/0
+{
+	const st = stage('nier'); st.reduced = false; st.root = { dataset: { reduced: '0' } }; st.still = () => st.reduced; st.render();
+	let mq = true, dm = null;
+	globalThis.window = { O55: { motion: { reduced: () => mq || dm === 'reduced' } }, matchMedia: () => ({ matches: mq }) };
+	globalThis.document.documentElement = { getAttribute: (k) => (k === 'data-motion' ? dm : null) };
+	const rBad = await watch(st, { frames: [0, 1], reduced: true, media: true });
+	assert.ok(rBad.nbad > 0, 'stale stage.reduced/data-reduced under live Reduced Motion must fail');
+	assert.ok(rBad.bad.some((b) => /stage\.reduced false vs expected true/.test(b)), `reports stage.reduced mismatch: ${JSON.stringify(rBad.bad)}`);
+	assert.ok(rBad.bad.some((b) => /data-reduced 0 vs expected 1/.test(b)), `reports data-reduced mismatch: ${JSON.stringify(rBad.bad)}`);
+	// once stage follows Reduced Motion, the same watch passes
+	st.reduced = true; st.root.dataset.reduced = '1';
+	const rGood = await watch(st, { frames: [0, 1], reduced: true, media: true });
+	assert.equal(rGood.nbad, 0, `matching stage.reduced/data-reduced passes: ${JSON.stringify(rGood.bad)}`);
+	// app data-motion toggle mismatch also fails, and passes once stage follows
+	mq = false; dm = 'reduced'; st.reduced = false; st.root.dataset.reduced = '0';
+	const rAttrBad = await watch(st, { frames: [0], reduced: true, attr: true });
+	assert.ok(rAttrBad.nbad > 0, 'stale stage.reduced under data-motion="reduced" must fail');
+	st.reduced = true; st.root.dataset.reduced = '1';
+	const rAttrGood = await watch(st, { frames: [0], reduced: true, attr: true });
+	assert.equal(rAttrGood.nbad, 0, `matching data-motion="reduced" passes: ${JSON.stringify(rAttrGood.bad)}`);
+	delete globalThis.window; delete globalThis.document.documentElement;
+}
+console.log('PASS the draw oracle: a healthy cache draws the same cached and fresh; a stale protractor or bracket cache is reported with both draws; NieR\'s kept box is judged against a fresh boxInScene with nierKey left alone; live Reduced Motion stage/app/browser mismatches fail');

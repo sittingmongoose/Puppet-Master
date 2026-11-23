@@ -240,6 +240,32 @@ try {
 		ok('R132-2: THAW clears the idle pose', st.idleUntil === 0 && st.idleLook === null, JSON.stringify({ idleUntil: st.idleUntil, idleLook: st.idleLook }));
 	}
 
+	// -- H2: FREEZE() must clear any unconsumed post-build remeasureAt and pending winRT BEFORE calling st.kick(),
+	// so freezing a parked still() stage after a transition input (e.g. #sf-textsize) never triggers measure() and heals nierBox.
+	{
+		const src = fs.readFileSync(CHECK, 'utf8');
+		const s = src.indexOf('const FREEZE ='), e = src.indexOf('const THAW =', s);
+		ok('H2: FREEZE found in the diagnostic', s >= 0 && e > s, 'no FREEZE');
+		const vm = await import('node:vm');
+		const seenRemeasure = [], clearedTimers = [];
+		const st = {
+			t: 1, last: 0, remeasureAt: 99.5, winRT: 42, work: false,
+			ps: { C: { x: 0, y: 0, vx: 0, vy: 0 }, Ct: { x: 10, y: 20 }, th: 0, thv: 0, dy: 0, dyv: 0, tilt: 0, tiltT: 0, tiltv: 0, phi: 0, sx: 1, sy: 1, sv: 0, look: [0, 0], lookT: [0, 0], lift: 0, liftT: 0, nextBlink: 0, blinkAt: null, asleep: false },
+			props: new Map(), fx: [], ghosts: [], root: { style: {} },
+			kick() { seenRemeasure.push(this.remeasureAt); }
+		};
+		const ctx = vm.createContext({
+			window: {},
+			document: { querySelector: () => ({ __pipStage: st }), getAnimations: () => [] },
+			O55: { motion: { setTimeScale: () => {}, now: () => 1000 } },
+			clearTimeout: (id) => clearedTimers.push(id),
+			requestAnimationFrame: (fn) => { queueMicrotask(fn); return 1; }
+		});
+		await vm.runInContext(src.slice(s, e) + '\nFREEZE({ t: 40, blink: false, frames: 3, cssT: 1500, repaint: false, nudge: false });', ctx);
+		ok('H2: FREEZE clears remeasureAt before kick() runs', seenRemeasure.length === 3 && seenRemeasure.every((v) => v === 0), JSON.stringify({ seenRemeasure, remeasureAt: st.remeasureAt }));
+		ok('H2: FREEZE cancels pending winRT timer', clearedTimers.includes(42) && st.winRT === 0, JSON.stringify({ clearedTimers, winRT: st.winRT }));
+	}
+
 	// -- the DOM normalisation: ids renamed in order of appearance, colours left as they are
 	{
 		// a stub of the stage's root as DOM() walks it: nodeType, tagName, attributes, firstChild / nextSibling, data

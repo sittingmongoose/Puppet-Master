@@ -20,12 +20,16 @@
 //    (as the Text size and Line spacing settings' o55PaintScales does) changes the box's size with its words, class, map
 //    and fonts unchanged. Creating's settled blocks must stay clear of the resized box and its PIP tab, and the stage's
 //    kept box must be re-measured against a fresh boxInScene (TOOLS-STAGEREST-K4: the nierKey gap, opus-review-stagerest
-//    P1, passes the other groups).
+//    P1, passes the other groups). Plus the real-input reopen routes (astra-max-18, neon-max-18: close settled Creating
+//    with 3 or 4 landed blocks, change Text size / Line spacing in Settings, resume from the bell) across 1920x1080 and
+//    740x768, normal motion and all three still paths (OS prefers-reduced-motion, Settings > Reduce motion toggle
+//    data-motion=reduced, and lowResource): the kept box re-measures, all landed blocks sit at their new targets clear
+//    of the box/tab band, and resizing away and back causes no jump.
 // Geometry from the page, not pixels: films cover the motion claims (lane report). Every case also fails if it sampled
 // no frames, or never saw what it is about (a leaving prop, a block, a ring); a case whose sampler saw no leaving prop
 // reruns its whole sequence up to twice more before failing as 'could not judge' (a slow GPU can drop every leaving
 // frame; TOOL-ISSUES F13-NAS1-KEEPOFF-SAMPLES), and an overlap fails at once. Both surfaces unless --set sandbox picks one.
-// --set only=nier|leave|begin|ring|textsize runs one group. About 8 minutes per surface.
+// --set only=nier|leave|begin|ring|textsize|textsize-astra runs one group. About 8 minutes per surface.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/stage-keepoff.check.mjs --set page=<build>
 
 const LAYER = '#pm-o55-onboarding .o55-layer:not(.o55-out)';
@@ -238,12 +242,226 @@ async function textsize(t, mode) {
 		await t.check(`${tag}: Creating's blocks stay clear of the resized box and the PIP tab`, reached && S.blocks > 0 && S.hits.length === 0, `${reached ? 'creating' : 'did not reach Creating'}, ${S.frames} frames, ${S.blocks} block samples, ${S.hits.length} overlaps: ${S.hits.slice(0, 3).join(' ; ')}`);
 	}
 }
+// Read landed stack blocks, NieR's kept box vs fresh boxInScene, and any overlap against bubble/tab/kept-band (no render call).
+const STACKREAD = () => {
+	const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage;
+	if (!st) return null;
+	const r4 = (b) => (b ? b.map((v) => Math.round(v * 4) / 4).join(',') : 'null');
+	const rect = (e) => { const r = e.getBoundingClientRect(); return [r.left, r.top, r.right, r.bottom]; };
+	const meet = (a, b) => a[0] < b[2] - 0.5 && a[2] > b[0] + 0.5 && a[1] < b[3] - 0.5 && a[3] > b[1] + 0.5;
+	const b = st.bubble, tab = b && b.querySelector(':scope > .pst-bn');
+	const bRect = b ? rect(b) : null, tRect = tab && tab.getBoundingClientRect().width ? rect(tab) : null;
+	const uRect = bRect && tRect ? [Math.min(bRect[0], tRect[0]), Math.min(bRect[1], tRect[1]), Math.max(bRect[2], tRect[2]), Math.max(bRect[3], tRect[3])] : bRect;
+	const blocks = [];
+	for (const pr of st.props.values()) {
+		if (pr.spec.stack == null || pr.state === 'out') continue;
+		const tg = st.propTarget(pr), r = rect(pr.el);
+		blocks.push({
+			id: pr.spec.id, stack: pr.spec.stack, landed: !!pr.landed,
+			len: pr.len, target: tg.len, diff: Math.abs(pr.len - tg.len),
+			rect: r, hitBubble: !!(bRect && meet(r, bRect)), hitTab: !!(tRect && meet(r, tRect)), hitBand: !!(uRect && meet(r, uRect))
+		});
+	}
+	blocks.sort((a, c) => a.stack - c.stack);
+	return {
+		open: !!(window.O55 && O55.S && O55.S.open),
+		screen: window.O55 && O55.S && O55.S.sess && O55.S.sess.screen,
+		reduced: !!st.reduced,
+		still: !!st.still(),
+		dataMotion: document.documentElement.getAttribute('data-motion'),
+		lowResource: !!(window.O55 && O55.motion && O55.motion.lowResource),
+		raf: st.raf || 0,
+		kept: r4(st.nierBox),
+		fresh: r4(st.boxInScene(b, 6)),
+		scale: !!document.getElementById('o55-look-scale'),
+		bubble: bRect, tab: tRect, blocks
+	};
+};
+
+async function clickPrimary(f, target) {
+	for (let i = 0; i < 8 && (await f.evaluate(() => window.O55.S.sess.screen)) !== target; i++) {
+		const btn = f.locator(`${LAYER} .o55-foot .o55-primary`).first();
+		await btn.waitFor({ state: 'visible', timeout: 10000 });
+		await f.waitForFunction((L) => { const b = document.querySelector(`${L} .o55-foot .o55-primary`); return !!b && !b.disabled && b.getAttribute('aria-disabled') !== 'true'; }, LAYER, { timeout: 15000 });
+		await btn.click({ timeout: 10000 });
+		await f.waitForTimeout(900);
+	}
+	return (await f.evaluate(() => window.O55.S.sess.screen)) === target;
+}
+
+async function openSettingsTab(f) {
+	const tab = f.locator('#tab-settings');
+	if (await tab.isVisible().catch(() => false)) {
+		await tab.click({ timeout: 15000 });
+	} else {
+		await f.locator('#pageTabsMoreBtn').click({ timeout: 10000 });
+		await f.locator('#pageTabsMoreMenu .pm6-tb-pages-more-item[data-page="settings"]').click({ timeout: 10000 });
+	}
+	await f.locator('#pm-settings-root').first().waitFor({ timeout: 15000 });
+}
+
+async function ensureSettingsGeneral(f, sel) {
+	const target = f.locator(sel).first();
+	if (await target.isVisible().catch(() => false)) return target;
+	const mob = f.locator('#pm-settings-root button.mobile-menu[data-action="toggle-rail"]').first();
+	if (await mob.isVisible().catch(() => false)) {
+		const open = await f.evaluate(() => !!document.querySelector('#pm-settings-root .pm-shell.rail-open'));
+		if (!open) { await mob.click({ timeout: 10000 }); await f.waitForTimeout(350); }
+	}
+	await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click({ timeout: 10000 });
+	await target.waitFor({ state: 'visible', timeout: 15000 });
+	return target;
+}
+
+async function typeSettingNumber(t, f, id, val) {
+	const inp = await ensureSettingsGeneral(f, `#pm-settings-root input[data-setting="${id}"]`);
+	await inp.scrollIntoViewIfNeeded();
+	await inp.click({ timeout: 10000 });
+	await t.page.keyboard.press('Control+A');
+	await t.page.keyboard.type(String(val), { delay: 25 });
+	await t.page.keyboard.press('Enter');
+}
+
+// Real-input Text size / Line spacing reopen routes (astra-max-18 & neon-max-18): Creating settled and parked with 3 or 4
+// landed blocks -> real Close -> Settings > Text size (and optional Line spacing / Reduce animations toggle) -> open the
+// bell and choose Continue optional setup -> check kept box re-measures, all landed blocks sit at their new targets clear
+// of the bubble+tab band, and resizing away and back causes no jump. No CSS injection and no manual render.
+async function textsizeAstra(t, mode) {
+	const cases = [
+		// Astra's matrix: NieR Light & Dark x 1920x1080 & 740x768 x OS Reduced Motion on & off, Text size 22, 3 blocks
+		...['nier-light', 'nier-dark'].flatMap((look) => [[1920, 1080], [740, 768]].flatMap((size) => ['reduce', 'no-preference'].map((motion) => ({
+			label: `${look} ${size.join('x')} ${motion === 'reduce' ? 'os-reduced' : 'motion'} 3blk fs22`,
+			look, size, motion, blocks: 3, fontSize: 22, lineHeight: null, toggleReduce: false, lowResource: false
+		})))),
+		// neon-max-18 routes 1-3 + opus-max-18 L1 (fs24/lh2): Text size + Line spacing across all three still paths + 4-block 740x768 + 3-block 1920x1080/740x768
+		{ label: 'nier-dark 1920x1080 os-reduced 3blk fs20-lh1.8', look: 'nier-dark', size: [1920, 1080], motion: 'reduce', blocks: 3, fontSize: 20, lineHeight: 1.8, toggleReduce: false, lowResource: false, live: false },
+		{ label: 'nier-dark 740x768 os-reduced 4blk fs20-lh1.8', look: 'nier-dark', size: [740, 768], motion: 'reduce', blocks: 4, fontSize: 20, lineHeight: 1.8, toggleReduce: false, lowResource: false, live: false },
+		{ label: 'nier-dark 740x768 os-reduced 3blk fs24-lh2', look: 'nier-dark', size: [740, 768], motion: 'reduce', blocks: 3, fontSize: 24, lineHeight: 2, toggleReduce: false, lowResource: false, live: false, chipResume: true },
+		{ label: 'nier-dark 740x768 app-reduced-toggle 4blk fs20-lh1.8', look: 'nier-dark', size: [740, 768], motion: 'no-preference', blocks: 4, fontSize: 20, lineHeight: 1.8, toggleReduce: true, lowResource: false, live: false },
+		{ label: 'nier-dark 740x768 low-resource 4blk fs20-lh1.8', look: 'nier-dark', size: [740, 768], motion: 'no-preference', blocks: 4, fontSize: 20, lineHeight: 1.8, toggleReduce: false, lowResource: true, live: true },
+		{ label: 'nier-dark 1920x1080 low-resource 3blk fs20-lh1.8', look: 'nier-dark', size: [1920, 1080], motion: 'no-preference', blocks: 3, fontSize: 20, lineHeight: 1.8, toggleReduce: false, lowResource: true, live: true }
+	];
+	const filt = String(t.args.astraFilter || '');
+	try {
+		for (const c of filt ? cases.filter((x) => x.label.includes(filt)) : cases) {
+			const [w, h] = c.size;
+			const expectStill = c.motion === 'reduce' || c.toggleReduce || c.lowResource;
+			const tag = `${c.label} ${mode} Text size (${c.live ? 'live parked' : 'reopen'})`;
+			await t.emulate({ reducedMotion: c.motion });
+			await t.viewport(w, h);
+			const f = await t.app.open({ onboarding: true, query: 'o55=screen=name', sandbox: mode === 'sandbox' });
+			await f.waitForFunction(() => !!window.O55 && !!document.querySelector('#pm-o55-onboarding .o55-win'), null, { timeout: 60000 });
+			if (c.lowResource) await f.evaluate(() => window.O55.motion.setLowResource(true, 'probe'));
+			const [fam, scheme] = c.look.split('-');
+			await f.evaluate(([a, b]) => window.O55.ui.applyLook(a, b), [fam, scheme]);
+			await f.waitForFunction((m) => document.documentElement.getAttribute('data-o55-nier') === 'on' && (document.documentElement.getAttribute('data-theme') || '').endsWith('-' + m) && !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()), scheme, { timeout: 20000 }).catch(() => {});
+			await f.evaluate(() => document.fonts.ready.then(() => true));
+			await f.waitForTimeout(1200);
+			await nameIt(t, f);
+			let reached = true;
+			if (c.blocks === 4) {
+				reached = (await clickPrimary(f, 'safe')) && (await point(t, f, mode, 'online')) && (await point(t, f, mode, 'pick', 'github'));
+				reached = reached && (await clickPrimary(f, 'online-signin')) && (await point(t, f, mode, 'signIn'));
+				reached = reached && (await f.waitForFunction(() => (window.O55.S.sess.signin || {}).state === 'done', null, { timeout: 20000 }).then(() => true, () => false));
+				reached = reached && (await clickPrimary(f, 'review')) && (await clickPrimary(f, 'creating'));
+			} else {
+				reached = (await clickPrimary(f, 'review')) && (await clickPrimary(f, 'creating'));
+			}
+			// Wait until Creating's commit and reveal() finish (O55.S.settling cleared, made() done), all blocks have landed at
+			// their target, and created()'s mood hold has expired so a still stage has parked (raf === 0) before Close.
+			const landed = reached && (await f.waitForFunction((wantBlocks) => {
+				const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage;
+				const cm = window.O55?.S?.sess?.commit;
+				if (!st || window.O55?.S?.sess?.screen !== 'creating' || !cm || cm.state !== 'done' || window.O55?.S?.settling) return false;
+				const bs = [...st.props.values()].filter((p) => p.spec.stack != null && p.state !== 'out');
+				if (bs.length < wantBlocks || !bs.every((p) => p.landed && Math.abs(p.len - st.propTarget(p).len) < 0.5)) return false;
+				if (st.t <= (st.moodUntil || 0) + 0.3) return false;
+				return !st.still() || !st.raf;
+			}, c.blocks, { timeout: 30000 }).then(() => true, () => false));
+			await f.waitForTimeout(300);
+			let scaled = false;
+			if (c.live) {
+				// Parked low-resource stage stays open while Text size + Line spacing scale is applied live via the host Settings setter
+				await f.evaluate(([fs, lh]) => {
+					window.PM12_KIMI.setSettingFromHost('general.visual.font-size', fs);
+					if (lh != null) window.PM12_KIMI.setSettingFromHost('general.visual.line-height', lh);
+				}, [c.fontSize, c.lineHeight]);
+				scaled = await f.waitForFunction(() => !!document.getElementById('o55-look-scale'), null, { timeout: 10000 }).then(() => true, () => false);
+				await f.waitForTimeout(800);
+				await f.waitForFunction(() => { const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage; return !!st && !st.raf; }, null, { timeout: 5000 }).catch(() => {});
+			} else {
+				// Close onboarding through its real close button
+				await f.locator('#pm-o55-onboarding .o55-close').first().click({ timeout: 10000 });
+				await f.waitForFunction(() => !document.documentElement.hasAttribute('data-o55-open') && !!document.getElementById('pm-o55-onboarding')?.hidden, null, { timeout: 15000 });
+				await f.waitForTimeout(700);
+				// Open Settings and apply Text size (+ optional Line spacing and Reduce animations toggle) via real input
+				await openSettingsTab(f);
+				if (c.toggleReduce) {
+					const tog = await ensureSettingsGeneral(f, '#pm-settings-root button[data-action="toggle-setting"][data-setting="general.visual.reduce-animations"]');
+					await tog.scrollIntoViewIfNeeded();
+					if ((await tog.getAttribute('aria-checked')) !== 'true') await tog.click({ timeout: 10000 });
+					await f.waitForFunction(() => document.documentElement.getAttribute('data-motion') === 'reduced', null, { timeout: 10000 });
+				}
+				await typeSettingNumber(t, f, 'general.visual.font-size', c.fontSize);
+				if (c.lineHeight != null) await typeSettingNumber(t, f, 'general.visual.line-height', c.lineHeight);
+				scaled = await f.waitForFunction(() => !!document.getElementById('o55-look-scale'), null, { timeout: 10000 }).then(() => true, () => false);
+				// Reopen via the Finish setting up chip (opus-max-18 L1) or the notification bell's Continue optional setup
+				const chip = c.chipResume ? f.locator('#o55-resume [data-o55-chip="resume"]').first() : null;
+				if (chip && await chip.isVisible().catch(() => false)) {
+					await chip.click({ timeout: 10000 });
+				} else {
+					await f.waitForFunction(() => !!(window.O55 && O55.notify && O55.notify.list && O55.notify.list().some((x) => x.id === 'pin-o55-resume')), null, { timeout: 15000 });
+					if (!(await f.evaluate(() => { const p = document.getElementById('pmnPanel'); return !!p && !p.hidden; }))) await f.locator('#pmnStack').click({ timeout: 10000 });
+					const row = f.locator('#pmnPanel .pmn-item[data-id="pin-o55-resume"]').first();
+					await row.waitFor({ state: 'visible', timeout: 10000 });
+					if ((await row.getAttribute('data-under')) !== null) { await row.click({ timeout: 10000 }); await f.waitForTimeout(400); }
+					await row.locator('[data-aid="resume_pin"]').click({ timeout: 10000 });
+				}
+				await f.waitForFunction(() => !!(window.O55 && O55.S && O55.S.open && !document.getElementById('pm-o55-onboarding')?.hidden && document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out):not(.o55-hold)')), null, { timeout: 15000 });
+				if (expectStill) {
+					await f.waitForTimeout(800);
+					await f.waitForFunction(() => { const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage; return !!st && !st.raf; }, null, { timeout: 5000 }).catch(() => {});
+				} else await f.waitForTimeout(2200);
+			}
+			const resumed = await f.evaluate(STACKREAD);
+			const away = w === 1920 ? [1390, 900] : [860, 768];
+			await t.viewport(away[0], away[1]);
+			await f.waitForTimeout(800);
+			await t.viewport(w, h);
+			await f.waitForTimeout(1000);
+			if (expectStill) await f.waitForFunction(() => { const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage; return !!st && !st.raf; }, null, { timeout: 5000 }).catch(() => {});
+			const after = await f.evaluate(STACKREAD);
+			const maxDiff = resumed && resumed.blocks.length ? Math.max(...resumed.blocks.map((b) => b.diff)) : Infinity;
+			const overlaps = resumed ? resumed.blocks.filter((b) => b.hitBubble || b.hitTab || b.hitBand).length : -1;
+			const maxJump = resumed && after && resumed.blocks.length >= c.blocks && after.blocks.length === resumed.blocks.length
+				? Math.max(...resumed.blocks.map((b, i) => Math.max(...b.rect.map((v, k) => Math.abs(v - after.blocks[i].rect[k])))))
+				: Infinity;
+			const afterDiff = after && after.blocks.length ? Math.max(...after.blocks.map((b) => b.diff)) : Infinity;
+			const pathOk = c.toggleReduce ? resumed?.dataMotion === 'reduced' && resumed?.reduced === true : c.lowResource ? resumed?.lowResource === true && resumed?.still === true && resumed?.reduced === false : resumed?.reduced === (c.motion === 'reduce');
+			t.log(`${tag}: resumed kept=${resumed?.kept} fresh=${resumed?.fresh} still=${resumed?.still} reduced=${resumed?.reduced} motion=${resumed?.dataMotion} lowRes=${resumed?.lowResource} raf=${resumed?.raf} maxDiff=${maxDiff.toFixed(3)} overlaps=${overlaps} maxJump=${maxJump.toFixed(2)}px afterDiff=${afterDiff.toFixed(3)}`);
+			await t.check(
+				`${tag}: kept box re-measured and landed blocks sit at their new targets clear of the box`,
+				landed && scaled && !!resumed && resumed.open && resumed.screen === 'creating' && pathOk && (!expectStill || resumed.raf === 0) && resumed.kept === resumed.fresh && resumed.blocks.length >= c.blocks && resumed.blocks.every((b) => b.landed) && maxDiff <= 0.5 && overlaps === 0,
+				`landed=${landed}, scaled=${scaled}, pathOk=${pathOk}, still=${resumed?.still}, raf=${resumed?.raf}, kept=${resumed?.kept} vs fresh=${resumed?.fresh}, maxDiff=${maxDiff.toFixed(3)}, overlaps=${overlaps}`
+			);
+			await t.check(
+				`${tag}: landed blocks do not jump on a resize away and back`,
+				landed && scaled && !!resumed && !!after && resumed.blocks.length >= c.blocks && after.blocks.length === resumed.blocks.length && maxJump <= 1.0 && afterDiff <= 0.5,
+				`maxJump=${maxJump.toFixed(2)}px (resumed top ${resumed?.blocks?.[0]?.rect?.[1]?.toFixed(2)} vs after ${after?.blocks?.[0]?.rect?.[1]?.toFixed(2)}), afterDiff=${afterDiff.toFixed(3)}`
+			);
+			await t.app.resetLayout(t);
+		}
+	} finally {
+		await t.emulate({ reducedMotion: null });
+	}
+}
 const all = (mode) => async (t) => {
 	if (want(t, 'nier')) await nier(t, mode);
 	if (want(t, 'leave')) await leave(t, mode);
 	if (want(t, 'begin')) await begin(t, mode);
 	if (want(t, 'ring')) await ring(t, mode);
 	if (want(t, 'textsize')) await textsize(t, mode);
+	if (want(t, 'textsize') || want(t, 'textsize-astra')) await textsizeAstra(t, mode);
 };
 export const tests = {
 	'stage keep-off, normal page': on('normal', all('normal')),

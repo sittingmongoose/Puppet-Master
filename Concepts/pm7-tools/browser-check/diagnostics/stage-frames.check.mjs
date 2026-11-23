@@ -100,6 +100,10 @@ const FREEZE = (o) => {
 	/* (and the loop's last time set to the stopped clock: left at the frame before, its first frozen frame stepped Pip
 	   once by the time since, a few ms that differ run to run, and two runs of one build drew Pip 0.03 units apart) */
 	st.t = T0; st.last = O55.motion.now() / 1000;
+	/* H2: never let FREEZE()'s own st.kick() fire an unconsumed post-build remeasureAt -> measure() or late winRT
+	   resize timer after a transition input (under st.still() / lowResource, that healed a stale nierBox) */
+	st.remeasureAt = 0;
+	if (st.winRT) { clearTimeout(st.winRT); st.winRT = 0; }
 	ps.C.x = ps.Ct.x + 1.5; ps.C.y = ps.Ct.y - .8; ps.C.vx = 0; ps.C.vy = 0;
 	ps.th = .06; ps.thv = 0; ps.dy = 0; ps.dyv = 0; ps.tilt = ps.tiltT; ps.tiltv = 0;
 	ps.phi = st.work ? Math.sin(T0 * 4.2) * (st.rockMax == null ? .12 : st.rockMax) : ps.asleep ? .08 : 0;
@@ -190,7 +194,7 @@ export const DOM = () => {
 
 const INFO = () => {
 	const host = document.querySelector('#pm-o55-onboarding .o55-stage'), st = host && host.__pipStage, r = host.getBoundingClientRect();
-	return { box: { x: r.left, y: r.top, w: r.width, h: r.height }, fam: st.famName, props: [...st.props.values()].map((p) => p.spec.kind + (p.pos ? '' : '(unplaced)')), target: st.target || null, asleep: !!st.sleepZ, bubble: st.bubble.classList.contains('on'), tip: !!st.tipData, t: st.t };
+	return { box: { x: r.left, y: r.top, w: r.width, h: r.height }, fam: st.famName, props: [...st.props.values()].map((p) => p.spec.kind + (p.pos ? '' : '(unplaced)')), target: st.target || null, asleep: !!st.sleepZ, bubble: st.bubble.classList.contains('on'), tip: !!st.tipData, t: st.t, reduced: !!st.reduced, lowResource: !!(window.O55 && O55.motion && O55.motion.lowResource), kept: st.nierBox ? st.nierBox.map((v) => Math.round(v * 4) / 4) : null };
 };
 
 export default async function (t) {
@@ -248,16 +252,44 @@ export default async function (t) {
 				if (v === 'tip') await f.evaluate(() => { const host = document.querySelector('#pm-o55-onboarding .o55-stage'); host.__pipStage.tip({ id: 'stage-frames-tip', title: 'A note on this', text: 'What this choice means, written out in a few words.' }, true); });
 				// transition variants (TOOLS-STAGEREST-K1): an input the caches must survive, applied before the freeze.
 				// textsize and resized capture in the banner layout (740x900), where a stale NieR box changes the drawing.
-				if (v === 'textsize' || v === 'resized') { await t.viewport(740, 900); await t.page.waitForTimeout(1200); await f.waitForFunction(SETTLED, null, { timeout: 10000, polling: 250 }).catch(() => {}); }
+				if (v === 'textsize' || v === 'resized') {
+					await t.viewport(740, 900);
+					await t.page.waitForTimeout(1200);
+					await f.waitForFunction(SETTLED, null, { timeout: 10000, polling: 250 }).catch(() => {});
+					/* H2: consume any pending post-build remeasureAt (58-rig.js build() sets now()+0.9) BEFORE #sf-textsize
+					   is injected; under st.still() (Reduced Motion or lowResource), loop() parks before 0.9 s and FREEZE()'s
+					   kick() would otherwise run measure() after the stylesheet and heal a stale nierBox */
+					await f.waitForFunction(() => {
+						const host = document.querySelector('#pm-o55-onboarding .o55-stage'), st = host && host.__pipStage;
+						if (!st || !st.remeasureAt) return true;
+						if (typeof st.kick === 'function') st.kick();
+						return false;
+					}, null, { timeout: 5000, polling: 100 }).catch(() => {});
+					const lr = await f.evaluate(() => ({ lowResource: !!(window.O55 && O55.motion && O55.motion.lowResource), remeasureAt: document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage?.remeasureAt || 0 }));
+					if (lr.lowResource || lr.remeasureAt) t.log(`${look} ${name} ${v}: pre-input lowResource=${lr.lowResource} remeasureAt=${lr.remeasureAt}`);
+				}
 				// the stylesheet after the resize is settled: a later map change would re-measure the box and heal the
 				// font staleness this variant exists to catch (the resize itself is the resized variant's input)
 				if (v === 'textsize') { await f.evaluate(() => { const s = document.createElement('style'); s.id = 'sf-textsize'; s.textContent = '#pm-o55-onboarding .pst-bubble{font-size:17px !important;line-height:1.7 !important}'; document.head.appendChild(s); }); await t.page.waitForTimeout(400); }
 				if (v === 'motion') {
+					const readMotion = () => {
+						const host = document.querySelector('#pm-o55-onboarding .o55-stage'), st = host && host.__pipStage;
+						const app = !!(window.O55 && O55.motion && O55.motion.reduced && O55.motion.reduced());
+						const media = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+						const attr = document.documentElement.getAttribute('data-motion') === 'reduced';
+						return { app, media, attr, stage: !!(st && st.reduced), dom: st && st.root ? st.root.dataset.reduced : null, still: !!(st && st.still && st.still()), raf: st ? st.raf || 0 : null };
+					};
 					const on = await f.evaluate(() => document.documentElement.getAttribute('data-motion') === 'reduced');
 					await f.evaluate((on) => { const r = document.documentElement; if (on) r.removeAttribute('data-motion'); else r.setAttribute('data-motion', 'reduced'); }, on);
 					await t.page.waitForTimeout(600);
+					const mid = await f.evaluate(readMotion);
+					const wantMid = mid.media || !on;
+					await t.check(`${look} ${name} ${v}: stage reduced state matches app and browser after toggle`, mid.app === wantMid && mid.stage === mid.app && mid.dom === (mid.app ? '1' : '0') && (!mid.app || (mid.still && mid.raf === 0)), JSON.stringify(mid));
 					await f.evaluate((on) => { const r = document.documentElement; if (on) r.setAttribute('data-motion', 'reduced'); else r.removeAttribute('data-motion'); }, on);
 					await t.page.waitForTimeout(600);
+					const back = await f.evaluate(readMotion);
+					const wantBack = back.media || on;
+					await t.check(`${look} ${name} ${v}: stage reduced state matches app and browser after restore`, back.app === wantBack && back.stage === back.app && back.dom === (back.app ? '1' : '0') && (!back.app || (back.still && back.raf === 0)), JSON.stringify(back));
 				}
 				const undo = async () => {
 					if (v === 'textsize') await f.evaluate(() => { const s = document.getElementById('sf-textsize'); if (s) s.remove(); });
@@ -304,9 +336,9 @@ export default async function (t) {
 			index.push({ look, file: last.file, screen: last.screen, variant: 'unfrozen', unfrozen: true, ...info });
 			n++;
 		}
-		const red = await f.evaluate(() => { const host = document.querySelector('#pm-o55-onboarding .o55-stage'), st = host && host.__pipStage; return { app: O55.motion.reduced(), stage: !!(st && st.reduced) }; });
-		t.log(`${look}: ${n} captures; Reduced Motion: app ${red.app}, stage ${red.stage}`);
-		if (motion) await t.check(`${look}: the stage ran under Reduced Motion (${motion})`, red.app && red.stage, JSON.stringify(red));
+		const red = await f.evaluate(() => { const host = document.querySelector('#pm-o55-onboarding .o55-stage'), st = host && host.__pipStage; return { app: O55.motion.reduced(), media: !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches), attr: document.documentElement.getAttribute('data-motion') === 'reduced', stage: !!(st && st.reduced), dom: st && st.root ? st.root.dataset.reduced : null }; });
+		t.log(`${look}: ${n} captures; Reduced Motion: app ${red.app}, stage ${red.stage}, dom ${red.dom}`);
+		if (motion) await t.check(`${look}: the stage ran under Reduced Motion (${motion})`, red.app && red.stage && red.dom === '1', JSON.stringify(red));
 	}
 	fs.writeFileSync(path.join(out, 'index.json'), JSON.stringify(index, null, 1));
 	const written = new Set(index.map((e) => `${e.look}/${e.file}`)), lost = plan.filter((e) => !written.has(`${e.look}/${e.file}`));
