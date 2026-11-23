@@ -320,9 +320,25 @@ export default async function (t) {
 				await t.page.mouse.move(W - 6, Math.round(H / 2));
 			}
 			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 6000));
-			const watch = async (label) => {
-				const r = await f.evaluate(DRAW_WATCH, dframes);
+			const watch = async (label, expect) => {
+				const r = await f.evaluate(DRAW_WATCH, expect ? Object.assign({ frames: dframes }, expect) : dframes);
 				await t.check(`${look} ${label}: the cached draw equals a fresh draw (${r.fam}, ${r.layout}, ${r.checks} draws, ${r.boxes} NieR boxes)`, r.nbad === 0 && r.checks > 0, r.nbad ? `${r.nbad} differences: ${r.bad.join(' || ')}` : 'same');
+			};
+			const checkStill = async (label) => {
+				await f.waitForFunction(() => { const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage; return !!st && st.reduced && !st.raf; }, null, { timeout: 600 }).catch(() => {});
+				const read = () => {
+					const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage;
+					const head = st && st.gHead ? st.gHead.getAttribute('transform') : null;
+					const app = !!(window.O55 && O55.motion && O55.motion.reduced && O55.motion.reduced());
+					const media = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+					const attr = document.documentElement.getAttribute('data-motion') === 'reduced';
+					return { app, media, attr, reduced: !!(st && st.reduced), dom: st && st.root ? st.root.dataset.reduced : null, still: !!(st && st.still && st.still()), raf: st ? st.raf || 0 : null, head };
+				};
+				const s0 = await f.evaluate(read);
+				await t.page.waitForTimeout(350);
+				const s1 = await f.evaluate(read);
+				const ok = s0.app && s0.reduced && s0.dom === '1' && s0.still && s0.raf === 0 && s1.reduced && s1.dom === '1' && s1.still && s1.raf === 0 && s0.head === s1.head;
+				await t.check(`${look} ${label}: live Reduced Motion parks the mounted stage and holds Pip still`, ok, `t0=${JSON.stringify(s0)} t1=${JSON.stringify(s1)}`);
 			};
 			const dw = await restWait(f, dwant, 10000);
 			t.log(`${look} draw oracle: before the inputs: ${dw.v.why}`);
@@ -351,8 +367,21 @@ export default async function (t) {
 			await painted(fam0, mode0);
 			await t.page.waitForTimeout(1500);
 			await watch('live look switch back');
-			await t.emulate({ reducedMotion: 'reduce' }); await t.page.waitForTimeout(500); await watch('Reduced Motion on');
-			await t.emulate({ reducedMotion: 'no-preference' }); await t.page.waitForTimeout(500); await watch('Reduced Motion off');
+			try {
+				await t.emulate({ reducedMotion: 'reduce' }); await t.page.waitForTimeout(500);
+				await checkStill('Reduced Motion on');
+				await watch('Reduced Motion on', { reduced: true, media: true });
+				await t.emulate({ reducedMotion: 'no-preference' }); await t.page.waitForTimeout(500);
+				await watch('Reduced Motion off', { reduced: false, media: false });
+				await f.evaluate(() => document.documentElement.setAttribute('data-motion', 'reduced')); await t.page.waitForTimeout(500);
+				await checkStill('app Reduced Motion on');
+				await watch('app Reduced Motion on', { reduced: true, attr: true });
+				await f.evaluate(() => document.documentElement.removeAttribute('data-motion')); await t.page.waitForTimeout(500);
+				await watch('app Reduced Motion off', { reduced: false, attr: false });
+			} finally {
+				await t.emulate({ reducedMotion: null }).catch(() => {});
+				await f.evaluate(() => document.documentElement.removeAttribute('data-motion')).catch(() => {});
+			}
 		}
 	}
 	await cdp.detach().catch(() => {});

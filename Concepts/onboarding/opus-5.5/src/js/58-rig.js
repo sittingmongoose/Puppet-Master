@@ -99,18 +99,33 @@
       this.t = 0; this.last = now(); this.frameT = 0;
       this.feed = 0; this.loops = {};
       this.idleNext = 6 + Math.random() * 4; this.idleUntil = 0; this.idleLook = null;
+      /* ro before nierRO: on a window resize or reopen, measure() refreshes this.map and this.vis first, then nierRO
+         measures the box against them; both are created once here so nierRO keeps its order after ro across rebuilds */
+      this.ro = typeof ResizeObserver === 'function' ? new ResizeObserver(() => this.measure()) : null;
+      this.nierRO = typeof ResizeObserver === 'function' ? new ResizeObserver(() => this.onNierBoxResize()) : null;
       this.build();
       this.loop = this.loop.bind(this);
       this.raf = 0; this.active = true; this.dirty = true;
       this.parts();
       const reg = window.PM_PIP_PARTS; if (reg && typeof reg.on === 'function') try { this.offParts = reg.on('change', () => this.parts()); } catch (_) {}
       this.kick();
-      this.ro = new ResizeObserver(() => this.measure());
-      this.ro.observe(root);
+      if (this.ro) this.ro.observe(root);
       /* a window resize measures again on the next frame and once the window has settled: the pane's clip can change
          with nothing on the stage itself resizing, and a span measured mid-change let a sign keep 1024's room at 860 */
       this.onWinResize = () => { if (this.dead) return; requestAnimationFrame(() => { if (!this.dead) this.measure(); }); clearTimeout(this.winRT); this.winRT = setTimeout(() => { if (!this.dead) this.measure(); }, 450); };
       window.addEventListener('resize', this.onWinResize);
+      /* follow live changes of Reduced Motion (OS prefers-reduced-motion and Settings' data-motion) and low-resource
+         mode with no polling (FO-S3): a mounted stage enters or leaves Reduced Motion at once */
+      this.syncMotion = () => { if (!this.dead && O55.motion && typeof O55.motion.reduced === 'function') this.setReduced(O55.motion.reduced()); };
+      this.onLowRes = () => { if (!this.dead) { this.dirty = true; this.frameT = -1e9; this.kick(); } };
+      this.reduceMq = typeof window.matchMedia === 'function' ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+      if (this.reduceMq) {
+        if (typeof this.reduceMq.addEventListener === 'function') this.reduceMq.addEventListener('change', this.syncMotion);
+        else if (typeof this.reduceMq.addListener === 'function') this.reduceMq.addListener(this.syncMotion);
+      }
+      this.motionMO = typeof MutationObserver === 'function' ? new MutationObserver(this.syncMotion) : null;
+      if (this.motionMO) this.motionMO.observe(document.documentElement, { attributes: true, attributeFilter: ['data-motion'] });
+      window.addEventListener('o55:lowresource', this.onLowRes);
     }
     /* ------------------------------------------------------- building */
     build() {
@@ -197,15 +212,19 @@
       this.bubbleMO.observe(this.bubble, { childList: true, characterData: true, subtree: true, attributes: true, attributeFilter: ['class'] });
       /* NieR's kept box is measured again only when its key changes (map, classes, words, fonts; pm7-perf lane W). A
          Text size or Line spacing change restyles the box with none of those changing, so the band kept clear stayed the
-         old size under the new words (P1, TOOLS-STAGEREST-K4). A resize of the box or its tab drops the key: no layout is
-         read here, so the at-rest saving stays, and the next frame measures the box anew. */
-      if (this.bubbleRO) this.bubbleRO.disconnect();
-      if (window.ResizeObserver) {
-        this.bubbleRO = new ResizeObserver(() => { if (this.dead) return; this.nierKey = null; this.dirty = true; if (this.kick) this.kick(); });
-        this.bubbleRO.observe(this.bubble, { box: 'border-box' });
-        /* (and NieR's PIP tab, which boxInScene adds to the box and which stands outside the box's own rectangle: Text
-           size rescales the tab's own font-size too) */
-        const tab = this.bubble.querySelector(':scope > .pst-bn'); if (tab) this.bubbleRO.observe(tab, { box: 'border-box' });
+         old size under the new words (P1, TOOLS-STAGEREST-K4). Observing the box and its PIP tab (border-box) lets
+         onNierBoxResize() re-measure after layout and before paint (zero forced layout) and move settled props and landed
+         stack blocks clear in the same frame — including under Reduced Motion or while the loop is parked. */
+      this.nierBox = null; this.nierKey = null;
+      if (this.nierRO) {
+        this.nierRO.disconnect();
+        if (w.fam === 'nier') {
+          this.nierRO.observe(this.bubble, { box: 'border-box' });
+          /* (and NieR's PIP tab, which boxInScene adds to the box and which stands outside the box's own rectangle: Text
+             size rescales the tab's own font-size too) */
+          const tab = this.bubble.querySelector(':scope > .pst-bn');
+          if (tab) this.nierRO.observe(tab, { box: 'border-box' });
+        }
       }
       if (this.tube === 'phosphor') div('pst-crt', this.screen, '<i class="pst-roll"></i><i class="pst-scan"></i><i class="pst-mask"></i><i class="pst-noise"></i><i class="pst-vig"></i><i class="pst-glare"></i>');
       if (this.tube === 'teletype') { div('pst-grain', this.screen); this.head = div('pst-printer', this.screen, '<i class="pst-bail"></i><i class="pst-platen"></i><i class="pst-head"><b></b></i>').querySelector('.pst-head'); }
@@ -763,7 +782,7 @@
     }
     boxOf(g) { try { const b = g.getBBox(); return [b.x, b.y, b.width, b.height]; } catch (e) { return null; } }
     boxInScene(el, gap) {
-      if (!el || !el.classList.contains('on') || !(el.textContent || '').trim() || !this.map || !this.screen) return null;
+      if (!el || !el.classList.contains('on') || !(el.textContent || '').trim() || !this.map || !this.map.k || !this.screen) return null;
       const r0 = this.screen.getBoundingClientRect(), b = el.getBoundingClientRect(), sx = r0.width / (this.screen.offsetWidth || r0.width || 1), m = this.map;
       if (!b.width || !b.height) return null;
       /* (and its name tab: NieR's PIP tab stands 19 px above the box, outside the box's own rectangle, and the cloud on
@@ -1065,9 +1084,45 @@
         const o = this.pipOff || [0, 0], f = this.pipOff = this.pipFit(this.pipAt), ps = this.ps, dx = f[0] - o[0], dy = f[1] - o[1];
         if (dx || dy) { ps.Ct.x += dx; ps.Ct.y += dy; ps.C.x += dx; ps.C.y += dy; }
       }
-      this.nierBox = null;
+      this.nierBox = null; this.nierKey = null;
       this.dirty = true; this.frameT = -1e9; if (this.svg && this.kick) this.kick(); /* (a resize redraws the props in their new room, at once: past Retro's stepped gate too) */
       this.headTo();
+    }
+    /* NieR's fixed dialogue box (and its PIP tab) in scene units. Measured only when what it is measured from changes:
+       the stage's map (made anew by measure() on every resize), the box's classes and words, the fonts, or when nierRO
+       fires on a border-box resize (force=true). Keeps rest frames free of forced layouts (pm7-perf lane W). */
+    syncNierBox(force) {
+      if (this.famName !== 'nier') return false;
+      const b = this.bubble, k = this.nierKey, cls = b ? b.className : '', said = b ? b.textContent : '', fonts = document.fonts ? document.fonts.status : '';
+      if (!force && k && k[0] === this.map && k[1] === cls && k[2] === said && k[3] === fonts) return false;
+      const prev = this.nierBox, nb = this.boxInScene(b, 6);
+      if (nb) this.nierBox = nb;
+      if (nb || !b || !b.classList.contains('on') || !(said || '').trim()) this.nierKey = [this.map, cls, said, fonts];
+      else this.nierKey = null;
+      return !!(nb && (!prev || prev[0] !== nb[0] || prev[1] !== nb[1] || prev[2] !== nb[2] || prev[3] !== nb[3]));
+    }
+    syncNierStack() {
+      this.props.forEach((pr) => {
+        if (pr.spec.stack == null || !pr.landed || pr.state === 'out') return;
+        const tg = this.propTarget(pr);
+        pr.ax = tg.ax; pr.axv = 0; pr.len = tg.len; pr.lenv = 0;
+      });
+    }
+    /* runs in ResizeObserver after layout and before paint (zero forced layout), so a Text-size, Line-spacing or
+       stylesheet change re-measures the kept box and moves settled props and landed blocks clear in the same frame —
+       including while Reduced Motion or low-resource mode has parked the loop */
+    onNierBoxResize() {
+      if (this.dead || this.famName !== 'nier') return;
+      if (!this.syncNierBox(true)) return;
+      this.keepOff = this.nierBox || null;
+      this.syncNierStack();
+      if (this.ps && this.H && !this.held) {
+        this.renderN = (this.renderN || 0) + 1;
+        this.props.forEach((pr) => { if (pr.box || pr.pos) this.placeProp(pr); });
+        if (this.gHud) this.renderBrackets();
+      }
+      this.frameT = -1e9;
+      if (this.kick) this.kick();
     }
     toScreen(p) { const m = this.map || { k: 1, ox: 0, oy: 0 }; return [m.ox + p[0] * m.k, m.oy + p[1] * m.k]; }
     headCentre() { const ps = this.ps, H = this.H || this.headAt(ps.C.x, ps.C.y, ps.th, ps.dy); return this.headXf([32, 45], H, this.ang || 0, 1, 1); }
@@ -1095,6 +1150,7 @@
       if (this.still() && !this.dirty && this.t > this.moodUntil + .3 && !this.fx.length && !this.faceOut && this.faceT0 == null) return;
       this.raf = requestAnimationFrame(this.loop);
       this.t += dt;
+      if (this.famName === 'nier' && this.syncNierBox()) { this.keepOff = this.nierBox || null; this.syncNierStack(); }
       const sub = 3; for (let i = 0; i < sub; i++) this.step(dt / sub);
       this.life(dt);
       // Retro's tube refreshes in steps; the phosphor holds what was there a moment longer
@@ -1269,10 +1325,9 @@
          map, which measure() makes anew on every resize. Read in every frame after the frame's writes, it laid the page out
          a second time in each NieR frame: 238 layouts a second at rest on the owner's PC; pm7-perf lane W) */
       if (f === 'nier') {
-        const b = this.bubble, k = this.nierKey, cls = b ? b.className : '', said = b ? b.textContent : '', fonts = document.fonts ? document.fonts.status : '';
-        if (!k || k[0] !== this.map || k[1] !== cls || k[2] !== said || k[3] !== fonts) {
-          const nb = this.boxInScene(b, 6); if (nb) this.nierBox = nb;
-          this.nierKey = [this.map, cls, said, fonts];
+        if (this.syncNierBox()) {
+          this.keepOff = this.nierBox || null;
+          this.syncNierStack();
         }
       }
       this.keepOff = f === 'nier' ? this.nierBox || null : this.bubbleKeepOff || null;
@@ -1565,7 +1620,22 @@
       this.render(); /* (drawn in its pose before it can be painted, as setTheme: group 1, FO-40; without it the new head
          painted unposed at the stage's corner for a frame or two once no entrance covered the rebuild, SW-23) */
     }
-    setReduced(r) { if (this.reduced === !!r) return; this.reduced = !!r; this.root.dataset.reduced = r ? '1' : '0'; this.dirty = true; this.kick(); }
+    setReduced(r) {
+      r = !!r;
+      if (this.reduced === r) return;
+      this.reduced = r;
+      this.root.dataset.reduced = r ? '1' : '0';
+      if (r) {
+        /* live switch to Reduced Motion: settle transient motion and finish typing so the stage parks after one still draw */
+        this.moodOverride = null; this.moodUntil = -1;
+        this.idleLook = null; this.idleUntil = 0;
+        this.faceOut = null; this.faceT0 = null;
+        if (this.fx.length) { this.fx.forEach((p) => p.e && p.e.remove()); this.fx.length = 0; }
+        if (this.typeT) { this.typeT.cancel(); this.typeT = null; if (this.saying) this.sayKept(this.saying); }
+        if (this.tipW) { this.tipW.cancel(); this.tipW = null; if (this.tipData) this.showTip(true); }
+      }
+      this.dirty = true; this.frameT = -1e9; this.kick();
+    }
     // something on the screen is being pointed at: Pip turns to it rather than to the pointer
     busy() { this.busyT = this.t; }
     // Pip tries on another look (the Pick a look screen): only Pip changes, the world stays
@@ -1586,7 +1656,7 @@
       };
       flip();
     }
-    destroy() { if (this.off) this.off(); clearTimeout(this.questT); cancelAnimationFrame(this.raf); clearTimeout(this.parkT); clearTimeout(this.holdT); this.dead = true; this.ro.disconnect(); window.removeEventListener('resize', this.onWinResize); clearTimeout(this.winRT); if (this.bubbleMO) this.bubbleMO.disconnect(); if (this.bubbleRO) this.bubbleRO.disconnect(); clearTimeout(this.wakeT); [this.tipW, this.typeT, this.decT, this.cmdT, this.bootT].forEach((w) => w && w.cancel()); this.root.innerHTML = ''; }
+    destroy() { if (this.off) this.off(); clearTimeout(this.questT); cancelAnimationFrame(this.raf); clearTimeout(this.parkT); clearTimeout(this.holdT); this.dead = true; if (this.ro) this.ro.disconnect(); if (this.nierRO) this.nierRO.disconnect(); if (this.motionMO) this.motionMO.disconnect(); if (this.reduceMq) { if (typeof this.reduceMq.removeEventListener === 'function') this.reduceMq.removeEventListener('change', this.syncMotion); else if (typeof this.reduceMq.removeListener === 'function') this.reduceMq.removeListener(this.syncMotion); } window.removeEventListener('o55:lowresource', this.onLowRes); window.removeEventListener('resize', this.onWinResize); clearTimeout(this.winRT); if (this.bubbleMO) this.bubbleMO.disconnect(); clearTimeout(this.wakeT); [this.tipW, this.typeT, this.decT, this.cmdT, this.bootT].forEach((w) => w && w.cancel()); this.root.innerHTML = ''; }
 
     /* ------------------------------------------------------------- the product's own */
     /* Pip parts the stage's CSS reads: setup-world-life off holds the world's own loops (clouds, caustics, motes, the
