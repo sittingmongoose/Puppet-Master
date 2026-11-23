@@ -1438,8 +1438,61 @@
     POLICY_IDS.forEach(id => setPolicy(p, id, null)); save();
     PM51.toast('Saved', `${p.name} follows the shared auto-switch settings.`);
   });
-  PM51.on('providers-add', () => openDialog({
-    title: 'Add a service', subtitle: 'For a service that is not in the list, such as a server that speaks the OpenAI format.',
+  /* Refine 3 (Jared: "the add a new service pop up menu is not at all sufficient"). Add a service is the whole
+     catalogue, grouped by how you pay, with a search and one next step per service. The form for a service that is
+     not in the catalogue is its last row, so nothing that was offered before is gone. */
+  const ADD_GROUPS = [
+    { id: 'plan', label: 'Plans you already pay for' },
+    { id: 'use', label: 'Pay as you go' },
+    { id: 'own', label: 'Free, or on your own computer' }
+  ];
+  function addRow(p) {
+    const fresh = p.status === 'setup' || p.status === 'not-installed';
+    return `<div class="rf-add-row" data-rf-add-text="${a(`${p.name} ${p.connect || ''} ${p.vendor || ''} ${p.product || ''}`.toLowerCase())}">
+      <span class="resource-avatar rf-add-mark">${h(PM51.initials(p.name))}</span>
+      <span class="rf-add-copy"><b class="rf-add-name">${h(p.name)}</b><small class="rf-add-how">${h(p.connect || '')}</small></span>
+      <span class="rf-add-state">${PM51.status(plain(p))}</span>
+      ${PM51.btn({ label: fresh ? 'Set up' : 'Open', small: true, action: 'pm51-providers-add-pick', data: { provider: p.id, setup: fresh ? '1' : '' } })}
+    </div>`;
+  }
+  function addSheet() {
+    const groups = ADD_GROUPS.map(g => {
+      const list = all().filter(p => (p.bill || 'own') === g.id);
+      return list.length ? `<section class="rf-add-group"><h4 class="rf-add-title">${h(g.label)}<i class="rf-add-n">${list.length}</i></h4>${list.map(addRow).join('')}</section>` : '';
+    }).join('');
+    PM51.panel({
+      title: 'Add a service', icon: 'plus', width: 760, cls: 'rf-add-panel', closeLabel: 'Close',
+      body: `<div class="rf-add">
+        <div class="rf-add-search"><input type="search" class="rf-add-input" placeholder="Search services" aria-label="Search services" data-action="pm51-providers-add-filter" autocomplete="off"/></div>
+        ${groups}
+        <p class="rf-add-none" hidden>No service by that name.</p>
+        <section class="rf-add-group rf-add-other"><h4 class="rf-add-title">Not in the list</h4>
+          <div class="rf-add-row"><span class="resource-avatar rf-add-mark">${icon('plus')}</span><span class="rf-add-copy"><b class="rf-add-name">Another service</b><small class="rf-add-how">A server that speaks the OpenAI format, a sign-in, a key or a command-line tool</small></span><span class="rf-add-state"></span>${PM51.btn({ label: 'Add…', small: true, action: 'pm51-providers-add-custom' })}</div>
+        </section>
+      </div>`
+    });
+    requestAnimationFrame(() => { const i = document.querySelector('.rf-add-panel .rf-add-input'); if (i) i.focus({ preventScroll: true }); });
+  }
+  PM51.on('providers-add', addSheet);
+  PM51.onInput('providers-add-filter', el => {
+    const q = String(el.value || '').trim().toLowerCase(), box = el.closest('.rf-add'); if (!box) return;
+    let shown = 0;
+    box.querySelectorAll('.rf-add-group:not(.rf-add-other)').forEach(g => {
+      let n = 0;
+      g.querySelectorAll('.rf-add-row').forEach(r => { const hit = !q || (r.getAttribute('data-rf-add-text') || '').includes(q); r.hidden = !hit; if (hit) n++; });
+      g.hidden = !n; shown += n;
+    });
+    const none = box.querySelector('.rf-add-none'); if (none) none.hidden = shown > 0;
+  });
+  PM51.on('providers-add-pick', el => {
+    const p = find(el.dataset.provider); if (!p) return;
+    const setup = !!el.dataset.setup;
+    state.selectedProvider = p.id; closeOverlay(false); save();
+    /* "Set up" goes straight on to the service's own first step (install, sign in, key or address) */
+    if (setup) window.setTimeout(() => { const b = document.querySelector('#pm-settings-root #provider-roster ~ .pm51-detail .pm51-detail-actions .btn.primary'); if (b) b.click(); }, 80);
+  });
+  PM51.on('providers-add-custom', () => openDialog({
+    title: 'Add another service', subtitle: 'For a service that is not in the list, such as a server that speaks the OpenAI format.',
     body: PM51.form([
       { label: 'Service name', name: 'name', placeholder: 'e.g. My model server', autofocus: true, full: true },
       { label: 'How it connects', name: 'kind', type: 'select', choices: ['API key', 'Sign in', 'Address on your network', 'Command-line tool'] },

@@ -17,7 +17,7 @@
   const KEYS = 'code.execution.ssh-keys';
   const TAB_UI = 'ui.settings.server_tab.select';
   const TABS = [
-    { id: 'home', label: 'Home & Location', ui: TAB_UI },
+    { id: 'home', label: 'Overview', ui: TAB_UI },
     { id: 'servers', label: 'Servers', ui: TAB_UI },
     { id: 'devices', label: 'Devices', ui: TAB_UI },
     { id: 'away', label: 'Away From Home', ui: TAB_UI },
@@ -826,43 +826,90 @@
   PM51.sysSsh = { keys, keyById, keyUses, forgeKeyId, keyPick, keyCollect, keyCheck, pubOf, keyLabel, commitKey, placeStep, placeCollect, placeCheck, checkStep, keyWizard, copyBox, keyFp };
 
   /* ---------- Home & Location -------------------------------------------- */
+  /* Refine 3 (Jared, 2026-11-23: "It isnt clear where my files are stored, where work is being done. For example, in
+     my setup, the project is stored on my Truenas Nas, but I run work on 7 different computers."). The first screen is
+     a map that answers three things in order: where the files are kept, which computers do the work, and what you
+     steer from; how it is reached from away sits under them. Each setting lives in the card it is about (home
+     server and folder with the files, "new work starts on" with the computers), so nothing is shown twice. The
+     example has a few more computers than it had, so the map shows a setup of that size. */
+  const RF_DEMO_SERVERS = [
+    { id: 'studio', name: 'Studio PC', role: 'Computer on your network', address: 'studio-pc.home', state: 'Connected', version: '0.8.0', updateReady: false, runsWork: true, default: false, lastCheck: '2 min ago', deployment: 'Native app', environments: ['Native Windows'] },
+    { id: 'macmini', name: 'Mac mini', role: 'Computer on your network', address: 'mac-mini.home', state: 'Connected', version: '0.8.0', updateReady: false, runsWork: true, default: false, lastCheck: '2 min ago', deployment: 'Native app', environments: ['macOS'] },
+    { id: 'ubuntu', name: 'Ubuntu VM', role: 'Computer on your network', address: 'ubuntu-vm.home', state: 'Connected', version: '0.8.0', updateReady: false, runsWork: true, default: false, lastCheck: '4 min ago', deployment: 'Native app', environments: ['Linux'] },
+    { id: 'buildbox', name: 'Build box', role: 'Computer on your network', address: 'build-box.home', state: 'Offline', version: '0.8.0', updateReady: false, runsWork: true, default: false, lastCheck: '3 h ago', deployment: 'Native app', environments: ['Linux'] }
+  ];
+  function rfSeed() {
+    const S = sp(); if (!S || S.rfSeed3 || !Array.isArray(S.servers)) return;
+    S.rfSeed3 = true;
+    for (const d of RF_DEMO_SERVERS) if (!S.servers.some(x => x.id === d.id)) S.servers.push(clone(d));
+    saveState();
+  }
+  /* every computer that may do work, once: the servers that run work, then a device that also runs work */
+  const workComputers = () => {
+    const S = sp(), out = [];
+    for (const x of S.servers) if (isClaimed(x) && x.runsWork !== false) out.push({ tab: 'servers', id: x.id, name: x.name, tag: x.id === S.homeServer ? 'Home server' : x.role === 'This computer' ? 'This computer' : '', state: x.state });
+    for (const d of S.devices) if (/runs work/i.test(d.role) && !out.some(o => o.name === d.name)) out.push({ tab: 'devices', id: d.id, name: d.name, tag: 'Device', state: d.state });
+    return out;
+  };
+  const mapRow = o => `<button type="button" class="rf-map-row" data-action="pm51-servers-rf-open" data-tab="${a(o.tab)}" data-id="${a(o.id)}">${PM51.dot(PM51.tone(o.state))}<span class="rf-map-name">${h(o.name)}</span>${o.tag ? `<span class="rf-map-tag">${h(o.tag)}</span>` : ''}${o.state === 'Connected' ? '' : `<span class="rf-map-state">${h(o.state)}</span>`}</button>`;
+  const countWord = (n, one, many) => `${n} ${n === 1 ? one : many}`;
   function renderHome() {
     const S = sp(), home = homeServer();
     const thisDevice = S.devices.find(d => d.current || d.thisDevice) || S.devices.find(d => d.name === 'Windows Workstation') || S.devices[0];
-    /* Refine: what is true right now is one line of facts, not four rows that look like settings. "Away from home"
-       is answered on its own tab (it was shown here a second time, with a button that only went there). */
-    const facts = PM51.facts([
-      { pill: PM51.status('Connected'), label: 'over', value: actualRoute().name },
-      thisDevice ? { label: 'This device', value: thisDevice.name } : null,
-      S.status.work ? { label: 'Work in progress', value: 'saved from this device' } : null,
-      { label: 'Last change', value: S.status.lastChange }
-    ]);
-    const workspace = PM51.section({
-      title: 'Your workspace',
-      body: PM51.rows([
-        { label: 'Home server', help: 'Where your workspace lives.', control: PM51.select(S.homeServer, S.servers.filter(isClaimed).map(s => [s.id, s.name]), { action: 'pm51-servers-home', label: 'Home server' }) },
-        { label: 'Runs on', help: 'Where work runs.', control: PM51.select(S.executionHost, runOptions(), { action: 'pm51-servers-exec', label: 'Runs on' }) },
-        { label: 'Files', help: 'Where this project\u2019s files are kept.', value: `${S.sourceLocation.kind} · ${S.sourceLocation.path}`, action: { label: 'Change…', action: 'pm51-servers-files', data: { 'command-id': 'cmd.project.source_location.update' } } }
-      ])
-    });
+    const work = workComputers(), up = work.filter(o => o.state === 'Connected').length;
+    const preferred = preferredRoute(), actual = actualRoute();
+    const files = `<section class="panel-card rf-map-card rf-map-files" aria-label="Files are kept on">
+      <div class="rf-map-q">${icon('folder')}<span class="rf-map-qt">Files are kept on</span></div>
+      <div class="rf-map-pick">${PM51.select(S.homeServer, S.servers.filter(isClaimed).map(x => [x.id, x.name]), { action: 'pm51-servers-home', label: 'Home server' })}</div>
+      <div class="rf-map-kv">
+        <div class="rf-map-kvrow is-wide"><span class="rf-map-k">Folder</span><code class="rf-map-code">${h(S.sourceLocation.path)}</code></div>
+        <div class="rf-map-kvrow"><span class="rf-map-k">Kind</span><span class="rf-map-v">${h(S.sourceLocation.kind)}</span></div>
+        <div class="rf-map-kvrow"><span class="rf-map-k">Last change</span><span class="rf-map-v">${h(S.status.lastChange)}</span></div>
+      </div>
+      <div class="rf-map-actions">${PM51.btn({ label: 'Change folder…', small: true, action: 'pm51-servers-files', data: { 'command-id': 'cmd.project.source_location.update' } })}</div>
+    </section>`;
+    const computers = `<section class="panel-card rf-map-card rf-map-work" aria-label="Work runs on">
+      <div class="rf-map-q">${icon('server')}<span class="rf-map-qt">Work runs on</span><span class="rf-map-count">${up} of ${work.length} connected</span></div>
+      <div class="rf-map-a">${h(countWord(work.length, 'computer', 'computers'))}</div>
+      <div class="rf-map-list">${work.map(mapRow).join('')}</div>
+      <div class="rf-map-set"><span class="rf-map-setlabel">New work starts on</span>${PM51.select(S.executionHost, runOptions(), { action: 'pm51-servers-exec', label: 'Runs on' })}</div>
+      <div class="rf-map-actions">${PM51.btn({ label: 'Link a server', icon: 'plus', small: true, action: 'pm51-servers-add', data: { 'command-id': 'cmd.server.claim' } })}</div>
+    </section>`;
+    const devices = `<section class="panel-card rf-map-card rf-map-devices" aria-label="You steer from">
+      <div class="rf-map-q">${icon('system')}<span class="rf-map-qt">You steer from</span>${S.pending.length ? `<span class="rf-map-count is-ask">${h(countWord(S.pending.length, 'device is', 'devices are'))} asking to join</span>` : ''}</div>
+      <div class="rf-map-a">${h(countWord(S.devices.length, 'device', 'devices'))}</div>
+      <div class="rf-map-list">${S.devices.map(d => mapRow({ tab: 'devices', id: d.id, name: d.name, tag: thisDevice && d.id === thisDevice.id ? 'This device' : '', state: d.state })).join('')}</div>
+      <div class="rf-map-actions">${PM51.btn({ label: 'Connect a device', icon: 'plus', small: true, action: 'pm51-servers-pair', data: { 'command-id': 'cmd.client.pair.start' } })}</div>
+    </section>`;
+    const away = `<section class="panel-card rf-map-away" aria-label="Away from home">
+      <div class="rf-map-q">${icon('network')}<span class="rf-map-qt">Away from home</span></div>
+      <div class="rf-map-awayfacts"><span class="rf-map-fact"><i class="rf-map-fl">Right now</i><b class="rf-map-fv">${h(actual.name)}</b>${routeToken(actual)}</span><span class="rf-map-fact"><i class="rf-map-fl">When away</i><b class="rf-map-fv">${h(preferred ? preferred.name : 'Nothing set up yet')}</b>${preferred ? routeToken(preferred) : ''}</span></div>
+      ${preferred ? PM51.btn({ label: 'Ways in', small: true, action: 'pm51-servers-rf-open', data: { tab: 'away' } }) : PM51.btn({ label: 'Set up a way in', icon: 'plus', small: true, primary: true, action: 'pm51-servers-away-new' })}
+    </section>`;
+    const map = `<div class="rf-map">${files}${computers}${devices}</div>${away}`;
     const P = state.projectSync || {};
     const advanced = PM51.advanced([
       PM51.rows([
         { label: 'Execution environments', help: 'Runtimes available where work runs.', value: [...new Set(S.servers.flatMap(s => s.environments || []))].join(' · ') || P.executionEnvironment || 'WSL2 · Ubuntu' },
         { label: 'File authority', help: 'Which copy of the files wins when they differ.', value: P.fileAuthority || 'Server host' },
-        { label: 'Sync mode', value: P.syncMode || 'Continuous metadata + on-demand artifacts' }
+        { label: 'Sync mode', value: P.syncMode || 'Continuous metadata + on-demand artifacts' },
+        S.status.work ? { label: 'Work in progress', value: 'Saved from this device' } : null
       ]),
       PM51.section({ title: 'Technical details', body: PM51.kv([['Server identity', fingerprint(home)], ['Home server address', home.address], ['Project path', S.sourceLocation.path], ['Diagnostics', 'Reachability, identity, file authority, continuity']]) + `<div class="pm51-servers-actions" style="margin-top:10px">${pm7ConsumerButton('local', 'ui.project.open_details', 'Project details')}${pm7ConsumerButton('local', 'ui.project.source_location.open_details', 'Where the files are')}</div>` })
     ].join(''));
-    return facts + workspace + advanced;
+    return map + advanced;
   }
+  PM51.on('servers-rf-open', el => { const t = el.dataset.tab || 'servers'; if (el.dataset.id && t === 'servers') PM51.setSel(ID, el.dataset.id); PM51.setTab(ID, t); refresh(); });
 
   /* ---------- Servers ----------------------------------------------------- */
   function renderServers() {
     const S = sp();
     const selId = PM51.sel(ID, S.homeServer);
     const srv = serverById(selId) || S.servers[0];
-    const items = S.servers.map(s => ({ id: s.id, title: s.name, meta: `${roleLabel(s)} · ${s.state}`, tone: PM51.tone(s.state), selected: s.id === srv.id }));
+    /* Refine 3: the line under a server's name says what it does for you (keeps the files, runs work); its kind and
+       address are in the opened server's own line, and the light says whether it is connected. */
+    const does = x => [x.id === S.homeServer ? 'Keeps your files' : x.role === 'This computer' ? 'This computer' : null, !isClaimed(x) ? 'Not yours yet' : x.runsWork !== false ? 'Runs work' : 'Does not run work', x.state !== 'Connected' ? x.state : null].filter(Boolean).join(' · ');
+    const items = S.servers.map(s => ({ id: s.id, title: s.name, meta: does(s), tone: PM51.tone(s.state), selected: s.id === srv.id }));
     let body;
     if (!isClaimed(srv)) {
       const cs = srv.claimSteps || {};
@@ -899,7 +946,7 @@
     ].join(''));
     return PM51.listDetail({
       id: ID, rosterTitle: 'Servers', count: S.servers.length,
-      add: { action: 'pm51-servers-add', label: 'Add a server', data: { 'command-id': 'cmd.server.claim' } },
+      add: { action: 'pm51-servers-add', label: 'Link a server', data: { 'command-id': 'cmd.server.claim' } },
       items,
       detail: {
         title: srv.name, subtitle: `${roleLabel(srv)} · ${srv.address}`, pill: srv.state === 'Checking' ? PM51.waiting('Checking') : PM51.status(srv.state),
@@ -922,13 +969,13 @@
   function renderDevices() {
     const S = sp();
     const devices = PM51.section({
-      title: 'Paired devices', help: 'Devices that can open this workspace.',
-      action: { label: 'Pair another device', icon: 'plus', primary: true, action: 'pm51-servers-pair', data: { 'command-id': 'cmd.client.pair.start' } },
+      title: 'Your devices', help: 'Devices that can open this workspace.',
+      action: { label: 'Connect a device', icon: 'plus', primary: true, action: 'pm51-servers-pair', data: { 'command-id': 'cmd.client.pair.start' } },
       body: S.devices.length ? PM51.list(S.devices.map(d => ({
         title: d.name, meta: `${d.platform} · ${d.role}`, avatar: icon(d.platform === 'Web' ? 'browser' : 'system'),
         pill: PM51.status(d.state), end: `<span class="pm51-row-value is-muted">${h(d.lastSeen)}</span>${icon('chevron')}`,
         action: 'pm51-servers-device', data: { id: d.id }
-      }))) : PM51.empty('No devices paired yet', 'Pair a device to open this workspace from it.', { label: 'Pair another device', action: 'pm51-servers-pair' })
+      }))) : PM51.empty('No devices paired yet', 'Pair a device to open this workspace from it.', { label: 'Connect a device', action: 'pm51-servers-pair' })
     });
     const pending = PM51.section({
       title: 'Pending requests', help: 'Devices asking to join.',
@@ -1069,6 +1116,7 @@
   }
 
   function render() {
+    rfSeed();
     const tab = PM51.tab(ID, 'home');
     const body = tab === 'servers' ? renderServers() + sshSection() + keysSection() : tab === 'devices' ? renderDevices() : tab === 'away' ? renderAway() : tab === 'move' ? renderMove() : renderHome();
     return PM51.page({ id: ID, key: KEY, tabs: TABS, active: tab, body, quiet: [

@@ -1,0 +1,137 @@
+/* Refine, third pass (Jared, 2026-11-23): the things that looked wrong or untidy. Styles only; no option moves.
+   The shared switcher (liquid-glass) paints a chosen row as a solid slab in the Basic and Friendly looks. On a list of
+   things with icons and status lights that slab washed the icon out and put a ring round the light, so inside
+   Settings' lists the chosen row is a soft tint with an accent edge instead. Retro, NieR and Glass keep their own. */
+
+/* ---- the chosen row of a list (services, personas, servers ...) ---- */
+:is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-roster .resource-row[aria-current="true"] {
+  background: color-mix(in srgb, var(--k3-accent) 13%, transparent) !important;
+  box-shadow: inset 3px 0 0 var(--k3-accent) !important;
+  border-color: transparent !important;
+  color: var(--k3-text-1) !important;
+}
+:is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-roster .resource-row[aria-current="true"] .resource-row-name { color: var(--k3-text-1) !important; }
+:is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-roster .resource-row[aria-current="true"] .resource-row-meta { color: var(--k3-text-2) !important; }
+:is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-roster .resource-row[aria-current="true"] .resource-avatar { color: var(--k3-accent) !important; }
+/* the status light is a light, with no ring */
+:is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-roster .resource-row[aria-current="true"] .status-dot { box-shadow: none !important; }
+:is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-roster .resource-row:not([aria-current="true"]):hover { background: color-mix(in srgb, var(--k3-text-1) 5%, transparent) !important; }
+
+/* ---- the list's head: the name and its count never sit under the add button ---- */
+#panel-settings .pm51-mgr .pm51-roster .roster-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 8px; }
+#panel-settings .pm51-mgr .pm51-roster .roster-head > .roster-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-settings .pm51-mgr .pm51-roster .roster-head > .pm51-icon-btn[aria-label]::after { content: "Add"; }
+#panel-settings .pm51-mgr .pm51-roster .roster-head > .pm51-icon-btn[aria-label^="New"]::after { content: "New"; }
+
+/* ---- the side column: the place you are reading is a quiet mark that does not travel or change the text ---- */
+:is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root nav.page-index-card > .lg-lenses-under { display: none !important; }
+:is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .page-index-card .pm51-index-group > .index-link.is-active {
+  background: color-mix(in srgb, var(--k3-accent) 13%, transparent) !important;
+  box-shadow: inset 3px 0 0 var(--k3-accent) !important;
+  color: var(--k3-text-1) !important;
+}
+:is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .page-index-card .pm51-index-sub > .index-link.is-active {
+  color: var(--k3-text-1) !important; font-weight: inherit !important;
+}
+
+/* ---- a manager's tab strip that has stuck to the top floats; it no longer lays a band across the page ---- */
+#panel-settings .workspace-block .pm51-mgr.has-manager-tabs > .manager-tabs.pm51-tabs.is-stuck {
+  box-shadow: 0 12px 26px -14px rgba(0, 0, 0, .75), 0 0 0 1px color-mix(in srgb, var(--k3-text-1) 8%, transparent);
+  clip-path: none;
+}
+
+/* ---- Providers: the accounts of a service line up ----
+   One row is: its place in the order, its name, a status that never wraps, the two order arrows and a named button.
+   Under it the usage bars sit in two columns of one length, whether the account reports one window or two. */
+#panel-settings .pm51-providers-acc .pm51-acc-head {
+  display: grid; grid-template-columns: 26px minmax(0, 1fr) 128px 68px 86px; align-items: center;
+  column-gap: 12px; row-gap: 2px; padding: 13px 0 14px;
+}
+#panel-settings .pm51-providers-acc .pm51-acc-head > .pm51-acc-copy { display: contents; }
+#panel-settings .pm51-providers-acc .pm51-acc-head > .pm51-acc-end { display: contents; }
+#panel-settings .pm51-providers-acc .pm51-acc-head > .pm51-order { grid-column: 1; grid-row: 1 / span 2; align-self: start; margin-top: 2px; }
+#panel-settings .pm51-providers-acc .pm51-acc-copy > .pm51-acc-title { grid-column: 2; grid-row: 1; min-width: 0; flex-wrap: nowrap; white-space: nowrap; }
+#panel-settings .pm51-providers-acc .pm51-acc-copy > .pm51-acc-meta { grid-column: 2; grid-row: 2; margin-top: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-settings .pm51-providers-acc .pm51-acc-copy > .pm51-acc-note { grid-column: 2 / -1; grid-row: 3; }
+#panel-settings .pm51-providers-acc .pm51-acc-copy > .pm51-acc-meters {
+  grid-column: 2 / -1; grid-row: 4; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 32px; margin-top: 10px;
+}
+#panel-settings .pm51-providers-acc .pm51-acc-end > .pm51-status { grid-column: 3; grid-row: 1 / span 2; justify-self: start; white-space: nowrap; }
+#panel-settings .pm51-providers-acc .pm51-acc-end > .pm51-providers-order { grid-column: 4; grid-row: 1 / span 2; display: inline-flex; gap: 4px; }
+#panel-settings .pm51-providers-acc .pm51-acc-end > .pm51-acc-toggle {
+  grid-column: 5; grid-row: 1 / span 2; justify-self: end; width: 86px; height: 32px; padding: 0 10px;
+  border: 1px solid var(--k3-line); border-radius: 8px; background: color-mix(in srgb, var(--k3-text-1) 4%, transparent);
+  font-size: 12px; font-weight: 620; color: var(--k3-text-1);
+}
+#panel-settings .pm51-providers-acc .pm51-acc-end > .pm51-acc-toggle > .icon { display: none; }
+#panel-settings .pm51-providers-acc .pm51-acc-end > .pm51-acc-toggle::after { content: "Manage"; }
+#panel-settings .pm51-providers-acc .pm51-acc-item.is-open .pm51-acc-toggle::after { content: "Done"; }
+#panel-settings .pm51-providers-acc .pm51-acc-item.is-open .pm51-acc-toggle { border-color: color-mix(in srgb, var(--k3-accent) 55%, var(--k3-line)); }
+#panel-settings .pm51-providers-acc .pm51-acc-item.is-open .pm51-acc-inner { padding-left: 38px; }
+#panel-settings .pm51-providers-acc .pm51-meter-track { height: 5px; }
+
+/* ---- the side column's tab rows keep one inset whether chosen or not, so a mark beside them never touches the text ---- */
+#panel-settings .page-index-card .pm51-index-group > .pm51-index-tab { padding-left: 10px; }
+
+/* ---- Providers: Add a service is the catalogue, grouped by how you pay ---- */
+.rf-add-panel .rf-add { display: grid; gap: 4px; }
+.rf-add-panel .rf-add-search { position: sticky; top: 0; z-index: 2; padding: 0 0 10px; background: inherit; }
+.rf-add-panel .rf-add-input { width: 100%; height: 36px; padding: 0 12px; border: 1px solid var(--k3-line); border-radius: 9px; background: color-mix(in srgb, var(--k3-text-1) 4%, transparent); color: var(--k3-text-1); font: inherit; font-size: 13px; }
+.rf-add-panel .rf-add-group { margin-top: 10px; }
+.rf-add-panel .rf-add-group[hidden], .rf-add-panel .rf-add-row[hidden], .rf-add-panel .rf-add-none[hidden] { display: none; }
+.rf-add-panel .rf-add-title { display: flex; align-items: baseline; gap: 8px; margin: 0 0 4px; padding: 0 2px 6px; border-bottom: 1px solid var(--k3-line); font-size: 11px; font-weight: 720; letter-spacing: .06em; text-transform: uppercase; color: var(--k3-text-2); }
+.rf-add-panel .rf-add-n { font-style: normal; font-weight: 600; letter-spacing: 0; color: var(--k3-text-3); }
+.rf-add-panel .rf-add-row { display: grid; grid-template-columns: 34px minmax(0, 1fr) 150px 76px; align-items: center; column-gap: 12px; min-height: 52px; padding: 6px 2px; border-bottom: 1px solid color-mix(in srgb, var(--k3-line) 60%, transparent); }
+.rf-add-panel .rf-add-group > .rf-add-row:last-child { border-bottom: 0; }
+.rf-add-panel .rf-add-mark { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid color-mix(in srgb, var(--k3-accent) 32%, transparent); border-radius: 9px; background: color-mix(in srgb, var(--k3-accent) 10%, transparent); color: var(--k3-accent); font-size: 11px; font-weight: 720; }
+.rf-add-panel .rf-add-copy { display: grid; min-width: 0; }
+.rf-add-panel .rf-add-name { font-size: 13px; font-weight: 650; color: var(--k3-text-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rf-add-panel .rf-add-how { font-size: 12px; color: var(--k3-text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rf-add-panel .rf-add-state { white-space: nowrap; font-size: 12px; }
+.rf-add-panel .rf-add-row > .pm51-btn { justify-self: end; min-width: 72px; justify-content: center; }
+.rf-add-panel .rf-add-none { margin: 14px 2px; font-size: 13px; color: var(--k3-text-3); }
+
+/* ---- Servers and Remote Access, first screen: a map. Files are kept on / Work runs on / You steer from ---- */
+#panel-settings .rf-map { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr) minmax(0, 1fr); gap: 0 30px; align-items: stretch; }
+#panel-settings .rf-map-card { position: relative; display: flex; flex-direction: column; gap: 10px; min-width: 0; padding: 16px 16px 14px; overflow: visible; }
+/* the cards are joined, so the three read as one path: files, the computers that work on them, you */
+#panel-settings .workspace-block .pm51-mgr .rf-map > .rf-map-card.panel-card { margin: 0; }
+#panel-settings .rf-map-card + .rf-map-card::after { content: ""; position: absolute; left: -30px; top: 22px; width: 30px; height: 10px; background: radial-gradient(circle at 50% 50%, var(--k3-accent) 0 4px, transparent 4.6px), linear-gradient(color-mix(in srgb, var(--k3-accent) 50%, var(--k3-line)), color-mix(in srgb, var(--k3-accent) 50%, var(--k3-line))) center / 100% 2px no-repeat; }
+#panel-settings .rf-map-q { display: flex; align-items: center; gap: 8px; min-height: 22px; font-size: 11px; font-weight: 720; letter-spacing: .07em; text-transform: uppercase; color: var(--k3-text-2); }
+#panel-settings .rf-map-q > .icon { width: 16px; height: 16px; color: var(--k3-accent); flex: 0 0 auto; }
+#panel-settings .rf-map-qt { white-space: nowrap; }
+#panel-settings .rf-map-count { margin-left: auto; font-size: 11px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--k3-text-3); white-space: nowrap; }
+#panel-settings .rf-map-count.is-ask { color: var(--k3-amber); }
+#panel-settings .rf-map-a { font-size: 22px; font-weight: 700; line-height: 1.15; color: var(--k3-text-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-settings .rf-map-pick .pm51-dd-trigger { width: 100%; height: 42px; font-size: 17px; font-weight: 680; color: var(--k3-text-1); }
+#panel-settings .rf-map-pick .pm51-dd { width: 100%; }
+#panel-settings .rf-map-code { display: block; padding: 7px 9px; border: 1px solid var(--k3-line); border-radius: 8px; background: color-mix(in srgb, var(--k3-text-1) 4%, transparent); font-family: var(--mono-font, ui-monospace, monospace); font-size: 12px; color: var(--k3-text-1); overflow-wrap: anywhere; }
+#panel-settings .rf-map-meta { font-size: 12px; color: var(--k3-text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-settings .rf-map-list { display: grid; gap: 1px; margin: 0 -8px; }
+#panel-settings .rf-map-row { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto auto; align-items: center; column-gap: 8px; width: 100%; min-height: 30px; padding: 3px 8px; border: 0; border-radius: 7px; background: none; color: var(--k3-text-1); font: inherit; font-size: 13px; text-align: left; cursor: pointer; }
+#panel-settings .rf-map-row:hover { background: color-mix(in srgb, var(--k3-text-1) 6%, transparent); }
+#panel-settings .rf-map-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
+#panel-settings .rf-map-tag { padding: 1px 7px; border: 1px solid var(--k3-line); border-radius: 999px; font-size: 11px; color: var(--k3-text-2); white-space: nowrap; }
+#panel-settings .rf-map-state { grid-column: 4; font-size: 12px; color: var(--k3-text-3); white-space: nowrap; }
+#panel-settings .rf-map-set { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; margin-top: auto; padding-top: 10px; border-top: 1px solid var(--k3-line); }
+#panel-settings .rf-map-setlabel { font-size: 12.5px; color: var(--k3-text-2); white-space: nowrap; }
+#panel-settings .rf-map-set .pm51-dd, #panel-settings .rf-map-set .pm51-dd-trigger { width: 100%; }
+#panel-settings .rf-map-actions { display: flex; gap: 8px; }
+#panel-settings .rf-map-devices > .rf-map-actions, #panel-settings .rf-map-files > .rf-map-actions { margin-top: auto; }
+#panel-settings .rf-map-away { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 8px 22px; margin-top: 14px; padding: 12px 16px; }
+#panel-settings .rf-map-awayfacts { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 26px; min-width: 0; font-size: 13px; }
+#panel-settings .rf-map-fact { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+#panel-settings .rf-map-fl { font-style: normal; color: var(--k3-text-3); }
+#panel-settings .rf-map-fv { font-weight: 650; color: var(--k3-text-1); }
+@container settings-host (max-width: 980px) {
+  #panel-settings .rf-map { grid-template-columns: minmax(0, 1fr); gap: 14px 0; }
+  #panel-settings .rf-map-card + .rf-map-card::after { display: none; }
+  #panel-settings .rf-map-away { grid-template-columns: minmax(0, 1fr); }
+}
+/* the list's add button says what it does where a short word is clearer */
+#panel-settings .pm51-mgr .pm51-roster .roster-head > .pm51-icon-btn[aria-label^="Link"]::after { content: "Link"; }
+#panel-settings .rf-map-kv { display: grid; gap: 8px; }
+#panel-settings .rf-map-kvrow { display: grid; grid-template-columns: 92px minmax(0, 1fr); align-items: baseline; gap: 10px; font-size: 13px; }
+#panel-settings .rf-map-kvrow.is-wide { grid-template-columns: minmax(0, 1fr); gap: 5px; }
+#panel-settings .rf-map-k { color: var(--k3-text-3); white-space: nowrap; }
+#panel-settings .rf-map-v { color: var(--k3-text-1); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
