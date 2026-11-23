@@ -173,3 +173,13 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy):not(#lgx) #panel-set
    managers that looks unfinished"). The rows of a detail sit on the card, as the rows of every other card do; the
    list's column keeps its own tone, the whole height. */
 html:not(#lgz):not(#lgy):not(#lgx) #panel-settings .pm51-mgr .split-manager.pm51-split > .pm51-detail { background: none !important; }
+
+/* ---- Glass: a manager's two kinds of card start their text at one place (fifth pass) ----
+   Glass gives every settings section 20 px of padding of its own. Inside a manager such a card already has the
+   padding every card has, so its title, rows and lines sat 19 px further in than the card over it (Goals: "Keeping an
+   eye on progress" under "New Goals start with"), and its controls ended 19 px short. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-mgr .pm51-settings-inline .settings-section { padding: 0 !important; }
+/* Glass: a group inside More options is part of that box, not a lighter box inside it. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy):not(#lgx) #panel-settings .pm51-mgr .pm51-advanced-body .pm51-section.panel-card { background: none !important; }
+/* Glass clips a settings list to its own box, which cut the last 16 px off each end of such a row's line. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy):not(#lgx) #panel-settings .pm51-mgr .pm51-section-body .setting-list.o55-bound-rows { overflow: visible !important; clip-path: none !important; contain: none !important; }

@@ -92,3 +92,121 @@
    Change under them, because a wide row's control ran across the column the others keep for "?". */
 #panel-settings .pm51-mgr .pm51-detail .setting-row.o55-row.o55-scoped.is-wide > .setting-control { padding-right: 46px; }
 @container pm51-detail (max-width: 540px) { #panel-settings .pm51-mgr .pm51-detail .setting-row.o55-row.o55-scoped.is-wide > .setting-control { padding-right: 0; } }
+
+/* ==== fifth pass (Jared, 2026-11-23: "some spots where the text seems uneven ... the alignment, spacing") ====
+   Measured in every view: where each line of words starts, where each control ends, how tall each row is. */
+
+/* Skills: the list kept 18 px of its own against its card's 16, so its icons sat 2 px right of the card's title. */
+#panel-settings .pm51-mgr .pm51-skills-list .pm51-list { padding-left: 16px; padding-right: 16px; }
+
+/* Inside More options the groups are parts of that one box, not boxes inside the box: a group's title and its rows
+   start where the rows around them start (they sat 16 or 17 px further in, and their controls ended 21 px short). */
+#panel-settings .pm51-mgr .pm51-advanced-body .pm51-settings-inline .settings-section { border: 0; border-top: 1px solid var(--k3-line); border-radius: 0; background: none; box-shadow: none; }
+#panel-settings .pm51-mgr .pm51-advanced-body .pm51-settings-inline .section-heading-row { padding-left: 0; padding-right: 0; }
+#panel-settings .pm51-mgr .pm51-advanced-body .o55-group-head { padding-left: 0; padding-right: 0; }
+#panel-settings .pm51-mgr .pm51-advanced-body .pm51-settings-inline .setting-list { padding-left: 0; padding-right: 0; --o55-list-inset-l: 0px; --o55-list-inset-r: 0px; }
+#panel-settings .pm51-mgr .pm51-advanced-body .o55-group > .setting-list { padding-left: 0; padding-right: 0; --o55-list-inset-l: 0px; --o55-list-inset-r: 0px; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy):not(#lgx) #panel-settings .pm51-mgr .pm51-advanced-body .settings-section { background: none !important; }
+
+/* A row's own padding is 3 px, so the tallest one-line control (a 41 px choice strip) still makes a 48 px row. */
+#panel-settings > #pm-settings-root:not([data-rf-explain="on"]) .workspace-block .setting-row.o55-row:not(.rf-policy-headrow) { padding-top: 3px; padding-bottom: 3px; }
+
+/* Retro draws a bevel under every details box. More options is a quiet line here, so the bevel was a line that ran
+   to the right edge and turned a corner with nothing in it. */
+html[data-theme^="retro"]:not(#lgz):not(#lgy):not(#lgx) #panel-settings .pm51-mgr .pm51-advanced { box-shadow: none !important; }
+
+/* One right edge on a page. A card built from the settings list ended its controls 4 px before a manager's own card
+   and drew its "?" 6 px earlier (its own row grid: a 14 px gap and a 36 px "?"). Both kinds use one grid now. */
+@container settings-host (min-width: 760.02px) {
+  #panel-settings .pm51-mgr .pm51-settings-inline .setting-row.o55-row:not(.is-wide) { grid-template-columns: minmax(0, 1fr) auto 30px; column-gap: 16px; }
+}
+#panel-settings .pm51-mgr .pm51-settings-inline .setting-row.o55-row > .o55-about.details-btn { width: 28px; min-width: 28px; padding: 0; justify-self: start; }
+
+/* A settings list inside a manager's own card takes the card's padding, not a second one of its own (Back Seat
+   Driver's "Advisor": the rows started 16 px right of the card's title). */
+#panel-settings .pm51-mgr .pm51-section-body .pm51-settings-inline .setting-list { padding-left: 0; padding-right: 0; --o55-list-inset-l: 0px; --o55-list-inset-r: 0px; }
+
+/* A manager's own row straight inside More options keeps the same room at its end as the rows around it. */
+#panel-settings .pm51-mgr .pm51-advanced-body > .pm51-rows > .pm51-row > .pm51-row-control { padding-right: 50px; }
+
+/* Notifications: the master switch stood bare on the page, its name 17 px left of every card's text and its switch
+   17 px right of every other switch. It is a card like the ones under it. */
+#panel-settings .pm51-mgr .o55-notif-master { padding: 0 16px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-md, 10px); background: var(--k3-surface-1); }
+/* (a settings list with no group around it kept 4 px less at its end than one inside a group) */
+#panel-settings .pm51-mgr .pm51-settings-inline .setting-list > .setting-row.o55-row { padding-right: calc(var(--o55-list-inset-r, 0px) + 4px); }
+
+/* Every row after the first has a line over it, also where two lists of rows follow one another in one card (the
+   second list's first row had none: "Play sounds" / "Volume", "Search the web" / "Web services", and all three rows
+   of Media's "For the whole project"). */
+#panel-settings .pm51-mgr .pm51-section-body > :is(.pm51-rows, .o55-home, .setting-list, .pm51-settings-inline) + .pm51-rows > .pm51-row:first-child,
+#panel-settings .pm51-mgr .pm51-section-body > :is(.pm51-rows, .o55-home, .setting-list, .pm51-settings-inline) + .setting-list > .setting-row.o55-row:first-child,
+#panel-settings .pm51-mgr .pm51-section-body > :is(.pm51-rows, .o55-home, .setting-list, .pm51-settings-inline) + .o55-home .pm51-rows > .pm51-row:first-child,
+#panel-settings .pm51-mgr .pm51-section-body > :is(.pm51-rows, .o55-home, .setting-list, .pm51-settings-inline) + .o55-home .setting-list > .setting-row.o55-row:first-child,
+#panel-settings .pm51-mgr .pm51-section-body > :is(.pm51-rows, .o55-home, .setting-list, .pm51-settings-inline) + .pm51-settings-inline .setting-list > .setting-row.o55-row:first-child,
+#panel-settings .pm51-mgr .pm51-detail-content > :is(.pm51-rows, .o55-home, .setting-list, .pm51-settings-inline) + .pm51-rows > .pm51-row:first-child,
+#panel-settings .pm51-mgr .pm51-detail-content > :is(.pm51-rows, .o55-home, .setting-list, .pm51-settings-inline) + .setting-list > .setting-row.o55-row:first-child,
+#panel-settings .pm51-mgr .pm51-detail-content > :is(.pm51-rows, .o55-home, .setting-list, .pm51-settings-inline) + .o55-home .pm51-rows > .pm51-row:first-child,
+#panel-settings .pm51-mgr .pm51-detail-content > :is(.pm51-rows, .o55-home, .setting-list, .pm51-settings-inline) + .o55-home .setting-list > .setting-row.o55-row:first-child,
+#panel-settings .pm51-mgr .pm51-detail-content > :is(.pm51-rows, .o55-home, .setting-list, .pm51-settings-inline) + .pm51-settings-inline .setting-list > .setting-row.o55-row:first-child,
+#panel-settings .pm51-mgr .pm51-advanced-body > :is(.pm51-rows, .o55-home, .setting-list, .pm51-settings-inline) + .pm51-rows > .pm51-row:first-child,
+#panel-settings .pm51-mgr .pm51-advanced-body > :is(.pm51-rows, .o55-home, .setting-list, .pm51-settings-inline) + .setting-list > .setting-row.o55-row:first-child,
+#panel-settings .pm51-mgr .pm51-advanced-body > :is(.pm51-rows, .o55-home, .setting-list, .pm51-settings-inline) + .o55-home .pm51-rows > .pm51-row:first-child,
+#panel-settings .pm51-mgr .pm51-advanced-body > :is(.pm51-rows, .o55-home, .setting-list, .pm51-settings-inline) + .o55-home .setting-list > .setting-row.o55-row:first-child,
+#panel-settings .pm51-mgr .pm51-advanced-body > :is(.pm51-rows, .o55-home, .setting-list, .pm51-settings-inline) + .pm51-settings-inline .setting-list > .setting-row.o55-row:first-child,
+#panel-settings .pm51-mgr .pm51-acc-inner > :is(.pm51-rows, .o55-home, .setting-list, .pm51-settings-inline) + .pm51-rows > .pm51-row:first-child,
+#panel-settings .pm51-mgr .pm51-acc-inner > :is(.pm51-rows, .o55-home, .setting-list, .pm51-settings-inline) + .setting-list > .setting-row.o55-row:first-child,
+#panel-settings .pm51-mgr .pm51-acc-inner > :is(.pm51-rows, .o55-home, .setting-list, .pm51-settings-inline) + .o55-home .pm51-rows > .pm51-row:first-child,
+#panel-settings .pm51-mgr .pm51-acc-inner > :is(.pm51-rows, .o55-home, .setting-list, .pm51-settings-inline) + .o55-home .setting-list > .setting-row.o55-row:first-child,
+#panel-settings .pm51-mgr .pm51-acc-inner > :is(.pm51-rows, .o55-home, .setting-list, .pm51-settings-inline) + .pm51-settings-inline .setting-list > .setting-row.o55-row:first-child { border-top: 1px solid var(--k3-line); }
+
+/* A list item that opens drew its line on a box with round corners, so the line curled down at both ends. The line
+   is straight and as wide as the words; the round corners stay for the pointer's highlight. NieR keeps its own. */
+html:not([data-o55-nier="on"]) #panel-settings .pm51-mgr .pm51-list > .pm51-item.is-clickable { position: relative; border-top-color: transparent; }
+html:not([data-o55-nier="on"]) #panel-settings .pm51-mgr .pm51-list > .pm51-item.is-clickable:not(:first-child)::after { content: ""; position: absolute; left: 8px; right: 8px; top: -1px; height: 1px; background: var(--k3-line); pointer-events: none; }
+
+/* A note at the top of a detail has air above and under it (it touched the line over it and the one under it). */
+#panel-settings .pm51-mgr .pm51-detail-content > .pm51-note { margin-top: 12px; margin-bottom: 12px; }
+
+/* Away From Home: one grid for every way in. "In use" started 89 px right of "Not set up" (the first row has no
+   order arrows), and "Manage" was wider than "Set up". The places are set by the row builder (50-servers.js). */
+#panel-settings .pm51-mgr .pm51-servers-route > .pm51-item-end { display: grid; grid-template-columns: 124px 68px auto auto auto; align-items: center; column-gap: 0; }
+#panel-settings .pm51-mgr .pm51-servers-route > .pm51-item-end > .rf-way-state { grid-column: 1; grid-row: 1; justify-self: start; white-space: nowrap; }
+#panel-settings .pm51-mgr .pm51-servers-route > .pm51-item-end > .pm51-servers-move { grid-column: 2; grid-row: 1; display: inline-flex; gap: 4px; width: 68px; }
+#panel-settings .pm51-mgr .pm51-servers-route > .pm51-item-end > .pm51-toggle { grid-column: 3; grid-row: 1; margin-left: 8px; }
+#panel-settings .pm51-mgr .pm51-servers-route > .pm51-item-end > .rf-way-switch { grid-column: 3; grid-row: 1; margin-left: 8px; width: 40px; }
+#panel-settings .pm51-mgr .pm51-servers-route > .pm51-item-end > .pm51-btn { grid-column: 4; grid-row: 1; margin-left: 8px; min-width: 76px; justify-content: center; }
+#panel-settings .pm51-mgr .pm51-servers-route > .pm51-item-end > .pm51-icon-btn { grid-column: 5; grid-row: 1; margin-left: 8px; }
+#panel-settings .pm51-mgr .pm51-servers-route > .pm51-item-end > .rf-way-menu { grid-column: 5; grid-row: 1; margin-left: 8px; width: 32px; }
+
+/* A settings list that opens a manager's own card has no line over it (Back Seat Driver's "Advisor" had a line
+   between the card's title and its first row; no other card has one). */
+#panel-settings .pm51-mgr .pm51-section-body > .pm51-settings-inline:first-child > .setting-list:first-child { border-top: 0; }
+
+/* ---- one kind of line in a card ----
+   A card built from the settings list draws its lines, and a row's highlight, from edge to edge of the card (FO-124).
+   A manager's own card drew them only as wide as its words, so two cards on one page had lines of two lengths
+   (Goals: "New Goals start with" over "Keeping an eye on progress"; Plugins; Testing). A manager's own rows, list
+   items and opening rows reach the card's edges too. Inside a list's detail, More options and an opened row the
+   lines stay as wide as the words, as before. */
+#panel-settings > #pm-settings-root .pm51-mgr .panel-card.pm51-section > .pm51-section-body { --rf-bleed: 16px; --rf-item-out: 16px; --rf-item-r: 0px; --rf-item-line: 0px; }
+#panel-settings > #pm-settings-root .pm51-mgr :is(.pm51-detail-content, .pm51-advanced-body, .pm51-acc-inner) { --rf-bleed: 0px; --rf-item-out: 8px; --rf-item-r: 8px; --rf-item-line: 8px; }
+#panel-settings > #pm-settings-root .pm51-mgr :is(.pm51-detail-content, .pm51-advanced-body, .pm51-acc-inner) .pm51-section-body { --rf-bleed: 0px; --rf-item-out: 8px; --rf-item-r: 8px; --rf-item-line: 8px; }
+#panel-settings > #pm-settings-root .pm51-mgr .pm51-rows > .pm51-row { margin-left: calc(-1 * var(--rf-bleed, 0px)); margin-right: calc(-1 * var(--rf-bleed, 0px)); padding-left: var(--rf-bleed, 0px); padding-right: var(--rf-bleed, 0px); }
+#panel-settings > #pm-settings-root .pm51-mgr .setting-list.o55-bound-rows > .setting-row.o55-row { margin-left: calc(-1 * var(--rf-bleed, 0px)); margin-right: calc(-1 * var(--rf-bleed, 0px)); padding-left: var(--rf-bleed, 0px); padding-right: calc(var(--rf-bleed, 0px) + 4px); }
+#panel-settings > #pm-settings-root .pm51-mgr .pm51-list > .pm51-item { margin-left: calc(-1 * var(--rf-bleed, 0px)); margin-right: calc(-1 * var(--rf-bleed, 0px)); padding-left: var(--rf-bleed, 0px); padding-right: var(--rf-bleed, 0px); }
+#panel-settings > #pm-settings-root .pm51-mgr .pm51-list > .pm51-item.is-clickable { margin-left: calc(-1 * var(--rf-item-out, 8px)); margin-right: calc(-1 * var(--rf-item-out, 8px)); padding-left: var(--rf-item-out, 8px); padding-right: var(--rf-item-out, 8px); border-radius: var(--rf-item-r, 8px); }
+html:not([data-o55-nier="on"]) #panel-settings .pm51-mgr .pm51-list > .pm51-item.is-clickable:not(:first-child)::after { left: var(--rf-item-line, 8px); right: var(--rf-item-line, 8px); }
+#panel-settings > #pm-settings-root .pm51-mgr .pm51-acc > .pm51-acc-item { margin-left: calc(-1 * var(--rf-bleed, 0px)); margin-right: calc(-1 * var(--rf-bleed, 0px)); padding-left: var(--rf-bleed, 0px); padding-right: var(--rf-bleed, 0px); }
+/* (a settings list inside a manager's own card reaches the card's edges by the same amount) */
+#panel-settings > #pm-settings-root .pm51-mgr .pm51-section-body .pm51-settings-inline .setting-list { --o55-list-inset-l: var(--rf-bleed, 0px); --o55-list-inset-r: var(--rf-bleed, 0px); }
+
+/* Notes that sat against the thing over them: Media's at the top of a detail, Commands' under its search box. */
+#panel-settings .pm51-mgr .pm51-detail-content > .o55-media-block > .pm51-note { margin-top: 12px; margin-bottom: 12px; }
+#panel-settings .pm51-mgr .pm51-commands-search + .pm51-note { margin-top: 10px; }
+
+/* Containers: the line that points to the Docker Manager starts where the rows under it start and its buttons end
+   where their "?" ends (it sat 2 px in and ran 2 px past). */
+#panel-settings .owner-redirects.o55-owner-line { padding-left: 16px; padding-right: 16px; }
+/* (a settings list clips what it holds; in a manager's own card that cut 16 px off each end of its rows' lines) */
+#panel-settings > #pm-settings-root .pm51-mgr .pm51-section-body .setting-list.o55-bound-rows { overflow: visible; }
+#panel-settings > #pm-settings-root .pm51-mgr .pm51-section-body .pm51-settings-inline .setting-list { overflow: visible; }

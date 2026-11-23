@@ -1015,7 +1015,13 @@
     return PM51.btn({ label: 'Manage', small: true, action: 'pm51-servers-remote', data });
   }
   function routeRowEnd(r, i, sorted) {
-    const parts = [routeToken(r)];
+    /* Refine, fifth pass: every row's end has the same places (its state, the two order arrows, its switch, its
+       button, its menu), so the states start under one another and the buttons end under one another. A place a row
+       has nothing for stays empty; the switch's and the menu's places exist only once some way in is set up. */
+    const any = sorted.some(x => !x.locked && routeConfigured(x));
+    const parts = [`<span class="rf-way-state">${routeToken(r)}</span>`];
+    if (r.locked) parts.push('<span class="pm51-servers-move rf-way-none" aria-hidden="true"></span>');
+    if (any && (r.locked || !routeConfigured(r))) parts.push('<span class="rf-way-gap rf-way-switch" aria-hidden="true"></span>');
     if (!r.locked) {
       const prev = sorted[i - 1], next = sorted[i + 1];
       parts.push(`<span class="pm51-servers-move">${moveBtn(r, 'up', !prev || !!prev.locked, prev && prev.locked ? 'Local network is always first' : 'Already first')}${moveBtn(r, 'down', !next, 'Already last')}</span>`);
@@ -1028,6 +1034,7 @@
       { separator: true },
       { label: 'Remove this way in', icon: 'trash', danger: true, onClick: () => removeRoute(r) }
     ], r.name) }));
+    else if (any) parts.push('<span class="rf-way-gap rf-way-menu" aria-hidden="true"></span>');
     return parts.join('');
   }
   function routeItems(sorted) {
