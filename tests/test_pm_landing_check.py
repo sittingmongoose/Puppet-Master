@@ -3187,7 +3187,9 @@ class WhatEachRunAlsoReports(LandingRun):
                                           (set(), {("run-gates", "lint_path_refs")}, False)):
             with self.subTest(partial=bool(partial), paired=bool(paired)), tempfile.TemporaryDirectory() as folder:
                 path = Path(folder) / "rows.json"
-                self.module.write_row_report(path, self.repo, self.base, [dict(item)], counts, {}, set(), partial, paired)
+                touched = self.module.branch_paths(self.repo, self.base)
+                self.module.write_row_report(path, self.repo, self.base, touched, [dict(item)], counts, {}, set(),
+                                             partial, paired)
                 row = json.loads(path.read_text(encoding="utf-8"))["subchecks"]["run-gates/lint_path_refs"]["rows"][0]
                 self.assertEqual(row["grown_stale"], expected)
 

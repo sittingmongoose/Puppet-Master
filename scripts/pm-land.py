@@ -1696,16 +1696,6 @@ def moved_since_earlier(report: dict[str, Any], earlier: Sequence[Optional[dict[
     return None
 
 
-HOLDER_ORDER = ("agent", "branch", "time", "tool", "token", "landing", "state", "host", "pid", "pid-start", "started",
-                "heartbeat", "batch-start", "batch-first-push")
-
-
-def render_holder(holder: dict[str, Any]) -> str:
-    lines = [f"{key}: {holder[key]}" for key in HOLDER_ORDER if holder.get(key) not in (None, "")]
-    lines += [f"batch-landing: {row}" for row in holder.get("batch-landing") or []]
-    return "\n".join(lines) + "\n"
-
-
 def parse_holder(text: str) -> dict[str, Any]:
     fields: dict[str, Any] = {"batch-landing": []}
     for line in text.splitlines():
@@ -1715,6 +1705,10 @@ def parse_holder(text: str) -> dict[str, Any]:
         key, val = match.group(1).lower(), match.group(2)
         if key == "batch-landing":
             fields["batch-landing"].append(val)
+        elif key == "batch-start" and fields.get("batch-start") not in (None, val):
+            # A rewritten holder.txt can leave the old line behind: two different batch-starts are not a choice to
+            # make silently, so the readers refuse instead of taking the first.
+            fields["batch-start-conflict"] = f"{fields['batch-start']} and {val}"
         else:
             fields.setdefault(key, val)
     return fields
@@ -1775,8 +1769,8 @@ def valid_full_sha(value: Any) -> bool:
 
 def commit_or_refuse(root: Path, value: Any, label: str) -> str:
     """A full commit SHA for an argument that may be a name: a moving name is refused rather than pinned silently."""
-    if not isinstance(value, str) or not value or value.startswith("-"):
-        raise Refusal(f"{label} must name a commit: {value!r}")
+    if not valid_full_sha(value):
+        raise Refusal(f"{label} must be a full 40-character commit SHA, never a moving name or a short one: {value!r}")
     result = git(root, "rev-parse", "--verify", value + "^{commit}", check=False)
     if result.returncode:
         raise Refusal(f"{label} is not a commit in {root}: {value!r}")
@@ -1936,6 +1930,11 @@ def batch_state(shared: Path, lock_dir: Path) -> dict[str, Any]:
     rows, malformed = batch_rows(fields)
     batch: dict[str, Any] = {"start": start, "rows": rows, "malformed": malformed, "on_main": False,
                              "landed": batch_landed(shared, fields), "plans": None, "unlisted": []}
+    if fields.get("batch-start-conflict"):
+        batch["why"] = ("holder.txt names two batch-starts: " + fields["batch-start-conflict"]
+                        + "; rewrite it with the one open batch's")
+        state["batch"] = batch
+        return state
     if not valid_full_sha(start):
         batch["why"] = f"batch-start is not a full 40-character SHA: {start!r}"
         state["batch"] = batch
@@ -2017,7 +2016,7 @@ def batch_check_lines(report: dict[str, Any]) -> list[str]:
 
 
 def judge_batch_member(shared: Path, start: str, code: int, report_text: str,
-                       previous_text: Optional[str], rows: Optional[dict[str, Any]],
+                       previous_texts: Sequence[str], rows: Optional[dict[str, Any]],
                        previous_rows: Optional[dict[str, Any]], rows_unread: Sequence[str],
                        own_base: Optional[str], head: str,
                        earlier_rows: Sequence[dict[str, str]], check_source: Optional[str]) -> tuple[int, list[str]]:
@@ -2029,7 +2028,7 @@ def judge_batch_member(shared: Path, start: str, code: int, report_text: str,
             raise Refusal(f"cannot read scripts/pm-landing-check.py at {head} in {shared}; pass --check-source")
         check_source = shown.stdout
     can_batch = check_can_batch(check_source)
-    later = bool(earlier_rows) or previous_text is not None
+    later = bool(earlier_rows) or bool(previous_texts)
     if not can_batch:
         lines.append("no batch: the landing check at this commit does not print the lines a batch compares "
                      "(--row-report, gone ids, subcheck totals, bucket counts).")
@@ -2069,10 +2068,12 @@ def judge_batch_member(shared: Path, start: str, code: int, report_text: str,
         for what in owed:
             lines.append(f"judge first: {what}; then it may stay.")
         return 1 if owed else 0, lines
-    # The previous member's report: named and unreadable is a trigger, never silence.
-    earlier: list[Optional[dict[str, Any]]] = [None if previous_text is None else read_report(previous_text)]
-    if previous_text is None:
-        lines.append("the previous member's report is not on record: a batch with a hand landing in it closes at the next "
+    # Each earlier member's report, oldest first. An earlier landing with none is a hand landing, or one whose report
+    # was not passed: named and unreadable is a trigger, never silence.
+    reports = [read_report(text) for text in previous_texts]
+    earlier: list[Optional[dict[str, Any]]] = [None] * max(len(earlier_rows) - len(reports), 0) + reports
+    if any(row is None for row in earlier):
+        lines.append("an earlier member's report is not on record: a batch with a hand landing in it closes at the next "
                      "landing, so what moved since it cannot be told.")
     own: Optional[list[str]] = None
 
@@ -2178,7 +2179,7 @@ def receipt_rows(record: dict[str, Any]) -> tuple[Optional[dict[str, Any]], bool
 
 
 def batch_check(shared: Path, lock_dir: Path, receipt_path: Path,
-                previous_path: Optional[Path], previous_rows_path: Optional[Path],
+                previous_paths: Sequence[Path], previous_rows_path: Optional[Path],
                 own_base: Optional[str], check_source: Optional[Path]) -> int:
     record = batch_receipt(receipt_path)
     start, head, code = record["base"], record["head"], record["exit_code"]
@@ -2199,10 +2200,10 @@ def batch_check(shared: Path, lock_dir: Path, receipt_path: Path,
     elif rows is not None and rows.get("base") != start:
         rows_unread.append(f"this member's, which was written against {rows.get('base') or 'no base'}")
         rows = None
-    previous_text = None
-    if previous_path is not None:
+    previous_texts: list[str] = []
+    for previous_path in previous_paths:
         try:
-            previous_text = previous_path.read_text(encoding="utf-8", errors="replace")
+            previous_texts.append(previous_path.read_text(encoding="utf-8", errors="replace"))
         except OSError as exc:
             raise Refusal(f"cannot read the previous member's report {previous_path}: {exc}") from exc
     previous_rows = read_row_report(previous_rows_path) if previous_rows_path is not None else None
@@ -2215,6 +2216,9 @@ def batch_check(shared: Path, lock_dir: Path, receipt_path: Path,
     if not holder["held"]:
         raise Refusal(f"no batch is open: the landing lock is free, so there is nothing for this landing to stay in")
     fields = holder["fields"]
+    if fields.get("batch-start-conflict"):
+        raise Refusal("holder.txt names two batch-starts: " + fields["batch-start-conflict"]
+                      + "; rewrite it with the one open batch's")
     if fields.get("batch-start") != start:
         raise Refusal(f"the receipt's base {start} is not the open batch's batch-start "
                       f"({fields.get('batch-start') or 'none'} in holder.txt)")
@@ -2237,7 +2241,7 @@ def batch_check(shared: Path, lock_dir: Path, receipt_path: Path,
             source_text = check_source.read_text(encoding="utf-8", errors="replace")
         except OSError as exc:
             raise Refusal(f"cannot read --check-source {check_source}: {exc}") from exc
-    code_out, lines = judge_batch_member(shared, start, code, report_text, previous_text, rows, previous_rows,
+    code_out, lines = judge_batch_member(shared, start, code, report_text, previous_texts, rows, previous_rows,
                                          rows_unread, own_base, resolved_head, earlier_rows, source_text)
     for line in lines:
         say(line)
@@ -2273,6 +2277,9 @@ def require_open_batch(shared: Path, start: str, main: str) -> None:
         raise Refusal(f"no open batch: {LOCK_DIR / 'held/holder.txt'} cannot be read, and a member's receipt is verified "
                       "against its batch-start only inside the batch")
     fields = holder["fields"]
+    if fields.get("batch-start-conflict"):
+        raise Refusal("holder.txt names two batch-starts: " + fields["batch-start-conflict"]
+                      + "; rewrite it with the one open batch's")
     named = fields.get("batch-start")
     if named != start:
         raise Refusal(f"batch-start {start} is not the open batch's batch-start ({named or 'none'} in holder.txt)")
@@ -2319,6 +2326,9 @@ def verify_receipt(path, commit=None, base=None, batch_start=None):
             raise Refusal(f"a batch member's receipt base is {checked_base}, but --batch-start is {checked_batch}. Inside "
                           "a batch, check with --base <full batch-start> so the receipt is judged against the batch.")
         require_open_batch(SHARED, checked_batch, main)
+        if record["exit_code"] not in (0, 1):
+            raise Refusal(f"the receipt records landing checker exit {record['exit_code']}: a batch member may only "
+                          "stay on exit 0 or 1, so this landing is judged by its report, not as a batch member")
         if not record.get("row_report"):
             raise Refusal("the receipt records no row report: inside a batch, check with --base <full batch-start> on "
                           "a landing check that prints --row-report, so the next member has what it compares with")
@@ -2330,7 +2340,7 @@ def verify_receipt(path, commit=None, base=None, batch_start=None):
     shared_head = revision(SHARED, "HEAD^{commit}")
     behind = (lambda base: shared_head != head and not is_ancestor(SHARED, shared_head, base))
     if batch_start is not None:
-        consistent = not behind(head) and is_ancestor(SHARED, checked_base, head)
+        consistent = not behind(main) and is_ancestor(SHARED, checked_base, head)
     else:
         consistent = not behind(checked_base) and is_ancestor(SHARED, checked_base, head)
     if not consistent:
@@ -2359,6 +2369,8 @@ def verify_receipt(path, commit=None, base=None, batch_start=None):
     if path.read_bytes() != raw:
         raise Refusal(f"receipt changed during verification: {path}")
     if batch_start is not None:
+        # The preflight scans the whole tree; the rule's record can move while it runs.
+        require_open_batch(SHARED, checked_base, full_main(SHARED))
         say(f"Verified {head} against batch-start {checked_base} on {host}. Landing checker exit {record['exit_code']}.")
     else:
         say(f"Verified {head} against {checked_base} on {host}. Landing checker exit {record['exit_code']}.")
@@ -2441,8 +2453,9 @@ def main(argv=None):
         member.add_argument("--receipt", type=Path, required=True,
                             help="the record.json pm-land.py check printed for this member: its commit, batch-start, "
                                  "report, row report and the landing check's exit")
-        member.add_argument("--previous", type=Path, help="the previous member's landing-check report, as text or JSON")
-        member.add_argument("--previous-rows", type=Path, help="the previous member's --row-report JSON")
+        member.add_argument("--previous", type=Path, action="append",
+                            help="an earlier member's landing-check report, as text or JSON; repeat it oldest first")
+        member.add_argument("--previous-rows", type=Path, help="the last earlier member's --row-report JSON")
         member.add_argument("--own-base", help="the previous member's main SHA (default: holder.txt's last batch-landing row)")
         member.add_argument("--repo", type=Path, default=None,
                             help="checkout the receipt's commit and the check's source are read from (default: this worktree)")
@@ -2459,7 +2472,7 @@ def main(argv=None):
             return batch_status(args.shared, args.lock_dir)
         if args.command == "batch-check":
             repo = args.repo or Path(git(Path.cwd(), "rev-parse", "--show-toplevel").stdout.strip())
-            return batch_check(repo, args.lock_dir, args.receipt, args.previous, args.previous_rows,
+            return batch_check(repo, args.lock_dir, args.receipt, args.previous or [], args.previous_rows,
                                args.own_base, args.check_source)
         if args.rollback_check:
             if args.batch_start is not None:

@@ -1548,6 +1548,9 @@ class ReportFormatTests(unittest.TestCase):
         self.assertIsNone(report["totals"])
         self.assertFalse(land.shows_what_changed(report, []))
 
+    def test_a_bucket_id_keeps_a_carriage_return_from_moving_the_cursor(self):
+        self.assertEqual(self.real.escape_newlines("a\rb\nc\\d"), "a\\rb\\nc\\\\d")
+
     def test_a_text_report_cut_before_its_bucket_counts_is_unreadable(self):
         """A report that stops after its totals prints nothing about per-bucket rises, so a batch cannot read it."""
         full = landing_report(totals={"run-gates/lint-x": 2})
@@ -1754,6 +1757,16 @@ class BatchStatusTests(BatchFixture):
         self.assertIn("landings: 1 of 4", out)
         self.assertNotIn("[missing]", out)
 
+    def test_two_batch_start_lines_are_named_not_taken(self):
+        other = self.commit("another main")
+        held = self.lock / "held"
+        held.mkdir(parents=True, exist_ok=True)
+        (held / "holder.txt").write_text(
+            f"agent: fixture\ntime: {land.iso()}\nbatch-start: {self.base}\nbatch-start: {other}\n", encoding="utf-8")
+        code, out = self.status()
+        self.assertEqual(code, 0, out)
+        self.assertIn("holder.txt names two batch-starts", out)
+
     def test_a_dead_holder_whose_batch_landed_is_closed_not_cleared(self):
         member = self.commit("member 1")
         self.set_main(member)
@@ -1860,6 +1873,22 @@ class BatchCheckTests(BatchFixture):
         self.assertEqual(code, 1, out)
         self.assertIn("TRIGGER batch_total_rise", out)
         self.assertIn("run-gates/lint-x's total rose from 1 to 2", out)
+
+    def test_a_member_three_deep_compares_with_every_earlier_report(self):
+        """Member 2's subcheck timed out; member 3's report must not read its 5 as a rise from zero."""
+        member2 = self.head
+        self.set_main(member2)
+        self.put("src/third.txt", "third\n")
+        head3 = self.commit("member 3")
+        self.holder(start=self.base, rows=[f"fix/a {self.member1}", f"fix/b {member2}"])
+        first = self.report_file("m1.txt", landing_report(totals={"run-gates/lint-x": 5}))
+        second = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": None}))
+        current = self.report_file("m3.txt", landing_report(totals={"run-gates/lint-x": 5}))
+        code, out = self.batch_check("--receipt", self.receipt(current, head=head3), "--repo", self.shared,
+                                     "--previous", first, "--previous", second, "--check-source", self.source_file(),
+                                     "--lock-dir", self.lock)
+        self.assertEqual(code, 0, out)
+        self.assertIn("no trigger", out)
 
     def test_a_receipt_whose_commit_is_the_previous_main_is_refused(self):
         current = self.report_file("m2.txt", landing_report(totals={"run-gates/lint-x": 1}))
@@ -2215,7 +2244,7 @@ class BatchVerifyTests(unittest.TestCase):
         lines += [f"batch-landing: {row}" for row in rows]
         (held / "holder.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
-    def receipt(self, head, base=None, rows=True):
+    def receipt(self, head, base=None, rows=True, code=0):
         base = base or self.base
         report = self.folder / "landing-check.json"
         land.write_json(report, {"schema_id": "pm.landing_check.report.v1", "commit": head, "base": base,
@@ -2226,7 +2255,7 @@ class BatchVerifyTests(unittest.TestCase):
         tree = land.revision(self.shared, head + "^{tree}")
         record = {"schema": 2, "host": "nas1", "machine": socket.gethostname(), "topic": self.ref,
                   "worktree": str(self.remote), "full": True, "clean": True, "job": land.job_name(self.folder),
-                  "head": head, "tree": tree, "base": base, "exit_code": 0,
+                  "head": head, "tree": tree, "base": base, "exit_code": code,
                   "report": str(report), "report_sha256": land.file_hash(report),
                   "row_report": str(row_report) if rows else None,
                   "row_report_sha256": land.file_hash(row_report) if rows else None,
@@ -2297,6 +2326,28 @@ class BatchVerifyTests(unittest.TestCase):
         self.holder(self.base, [])
         self.receipt(head)
         with self.assertRaisesRegex(land.Refusal, "not listed as a `batch-landing"):
+            self.verify()
+
+    def test_a_receipt_whose_check_exited_two_is_not_a_batch_member(self):
+        member1, head = self.history()
+        self.holder(self.base, [f"fix/a {member1}"])
+        self.receipt(head, code=2)
+        with self.assertRaisesRegex(land.Refusal, "may only stay on exit 0 or 1"):
+            self.verify()
+
+    def test_a_shared_head_on_an_unpublished_intermediate_commit_is_refused(self):
+        """Batch mode compares the shared HEAD with main, not with the candidate: an intermediate commit is not main."""
+        member1, first = self.history()
+        self.git(self.shared, "reset", "--keep", first)
+        self.put(self.shared, "tracked.txt", "member 2, commit 2\n")
+        self.git(self.shared, "commit", "-am", "member 2, commit 2")
+        head = land.revision(self.shared, "HEAD")
+        self.git(self.shared, "branch", "-f", self.branch, head)
+        self.git(self.shared, "push", "-f", "origin", f"{head}:{self.ref}")
+        self.git(self.shared, "reset", "--keep", first)
+        self.holder(self.base, [f"fix/a {member1}"])
+        self.receipt(head)
+        with self.assertRaisesRegex(land.Refusal, "is inconsistent with base"):
             self.verify()
 
     def test_a_batch_start_that_is_not_the_open_batch_is_refused(self):
@@ -2384,6 +2435,10 @@ class CheckBatchBaseTests(unittest.TestCase):
               patch.object(land, "cleanup_after_check")):
             self.assertEqual(land.check_topic(self.shared, self.branch, "nas1", self.base), 0)
         start.assert_called_once_with(self.folder, "nas1", self.ref, head, tree, self.base, member1, True)
+
+    def test_a_moving_base_name_is_refused_not_pinned(self):
+        with self.assertRaisesRegex(land.Refusal, "never a moving name"):
+            land.commit_or_refuse(self.shared, "origin/main", "checked base")
 
     def test_a_base_that_is_not_on_main_is_refused(self):
         with self.assertRaisesRegex(land.Refusal, "is not on the fetched origin/main"):

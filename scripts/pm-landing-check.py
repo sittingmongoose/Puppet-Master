@@ -1391,7 +1391,7 @@ def listed_totals(check: str, report: dict[str, Any]) -> dict[str, int]:
 
 
 def escape_newlines(text: str) -> str:
-    return text.replace("\\", "\\\\").replace("\n", "\\n")
+    return text.replace("\\", "\\\\").replace("\r", "\\r").replace("\n", "\\n")
 
 
 def subcheck_totals(
@@ -1417,6 +1417,7 @@ def write_row_report(
     path: Path,
     root: Path,
     base: str,
+    touched: list[str],
     items: list[dict[str, Any]],
     counts: dict[str, dict[str, dict[str, int]]],
     listed: dict[str, dict[str, int]],
@@ -1427,15 +1428,15 @@ def write_row_report(
     """--row-report: every row each subcheck gave in this run, for telling what one run added since another.
 
     A subcheck is `complete` when every row it counted is here: it printed them all, or is keyed from an export whose
-    total matches. Each staleness row carries `names`, the paths of `git diff --name-only --no-renames <base>..HEAD` it
-    names, the regenerated ones too, and a deleted or renamed path, since evidence rows name shards. `grown_stale` is what
+    total matches. Each staleness row carries `names`, the paths of `branch_paths` it names, the regenerated ones too, and
+    a deleted or renamed path, since evidence rows name shards. `touched` is that list, already read with the hardened
+    diff, so this never runs a second, unhardened one. `grown_stale` is what
     grown_buckets calls a rise in the row's bucket, asked of it so that the two cannot differ: a row can be `stale` by its
     detail text alone, and that does not excuse its bucket growing. A renamed shard is counted as renamed only where the
     check's own loop counts it, in a subcheck compared by its rows rather than a sample or a paired copy. Nothing here
     judges any of it, and it is written only when asked for. scripts/pm-land.py reads it inside a batch.
     """
-    proc = subprocess.run(["git", "diff", "--name-only", "--no-renames", f"{base}..HEAD"], cwd=root, capture_output=True, text=True)
-    direct, derived = split_touched(proc.stdout.splitlines() if proc.returncode == 0 else [])
+    direct, derived = split_touched(touched)
     tokens = path_tokens(direct) + [(name, "") for name in derived]
     units = units_of_touched_docs(root, direct)
     named: dict[tuple[str, str], list[str]] = {}
@@ -2144,7 +2145,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     if args.row_report:
         # Rows a sample or a paired copy holds are not counted as renamed by the loop below, so the row report
         # asks grown_buckets with the same set and its `grown_stale` cannot disagree with the check.
-        write_row_report(Path(args.row_report).resolve(), root, args.base, items, counts, listed, timed_out,
+        write_row_report(Path(args.row_report).resolve(), root, args.base, touched, items, counts, listed, timed_out,
                          partial_subchecks(compared, baseline.get("checks") or {}), paired)
     items = [item for item in items if (item["check"], item["subcheck"]) not in paired]
     compared = {

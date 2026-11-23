@@ -722,8 +722,13 @@ the report and shard judgments in the numbered steps.
 ```sh
 verify_checked() {
     git fetch origin || return
-    python3 -B "$PM_LAND_SCRIPT" verify --receipt "$PM_LAND_RECEIPT" \
-        --commit "$PM_LAND_COMMIT" --base "$PM_LAND_BASE"
+    if test -n "${PM_LAND_BATCH_START:-}"; then
+        python3 -B "$PM_LAND_SCRIPT" verify --receipt "$PM_LAND_RECEIPT" \
+            --commit "$PM_LAND_COMMIT" --batch-start "$PM_LAND_BATCH_START"
+    else
+        python3 -B "$PM_LAND_SCRIPT" verify --receipt "$PM_LAND_RECEIPT" \
+            --commit "$PM_LAND_COMMIT" --base "$PM_LAND_BASE"
+    fi
 }
 
 fast_forward_checked() {
@@ -735,7 +740,8 @@ push_checked() {
     primary=$(git remote get-url --push origin) || return
     test "$(git rev-parse HEAD)" = "$PM_LAND_COMMIT" || return
     verify_checked || return
-    git push --force-with-lease="refs/heads/main:$PM_LAND_BASE" \
+    lease=$(git rev-parse --verify 'origin/main^{commit}') || return
+    git push --force-with-lease="refs/heads/main:$lease" \
         "$primary" "$PM_LAND_COMMIT:refs/heads/main"
 }
 
@@ -748,6 +754,10 @@ rollback_unpublished() {
     git reset --keep "$PM_LAND_ROLLBACK_BASE"
 }
 ```
+
+Inside a batch, set `PM_LAND_BATCH_START` to the batch-start and leave `PM_LAND_BASE` unset: `verify_checked` then
+passes `--batch-start`, and `push_checked` leases against the `origin/main` the fetch in `verify_checked` just
+brought, which is where the batch's previous landings have left main, not the batch-start.
 
 Run `fast_forward_checked` after judging the remote result. After the shared shard
 check, run `push_checked`. If it fails, follow step 8 immediately. If the checkout
@@ -847,12 +857,14 @@ batch: `pm-land.py batch-check` says to land alone, or to close an open batch, o
 does not print them, and a hand lander on such a check lands alone too. `pm-land.py check --base
 <batch-start>` asks the remote check for the row report, and the receipt records its path and SHA-256.
 
-`python3 -B "$PM_LAND_SCRIPT" batch-check --receipt <the record.json the check printed> [--previous <the
-previous member's report>] [--previous-rows <the previous member's row report>]` prints the comparison lines it
-read and each trigger with its reason, then a verdict. The receipt names this member's commit, the batch-start it
-was measured against, its report, its row report and the landing check's own exit, so none of them is read from
-another checkout's `HEAD`; run it in this member's worktree, or pass `--repo <checkout>`. Its exit codes are its
-own, not the landing check's: 0 means judged, no trigger, the landing may stay; 1 means a trigger fires or a
+`python3 -B "$PM_LAND_SCRIPT" batch-check --receipt <the record.json the check printed> [--previous <an
+earlier member's report, text or JSON, repeated oldest first>] [--previous-rows <the last earlier member's row
+report>]` prints the comparison lines it read and each trigger with its reason, then a verdict. The receipt names
+this member's commit, the batch-start it was measured against, its report, its row report and the landing check's
+own exit, so none of them is read from another checkout's `HEAD`; run it in this member's worktree, or pass `--repo
+<checkout>`. Pass one `--previous` per earlier landing: a member three deep then compares with member 2's report and
+with member 1's, so a subcheck that timed out in the middle one does not read as a rise from zero. Its exit codes are
+its own, not the landing check's: 0 means judged, no trigger, the landing may stay; 1 means a trigger fires or a
 judgement is owed first (it says which); 3 means it was refused (an unreadable receipt or report, a receipt base
 that is not the open batch's full `batch-start`, or no open batch at all). `--own-base` defaults to the last
 `batch-landing` row's SHA, this member's own range. `--check-source` overrides the landing check read at the
