@@ -237,6 +237,30 @@ class Edition(Base):
         self.assertEqual(row['documented_gap']['by_kind'], {gap.EXHAUSTED: 1, gap.REMAINDER: 1})
         self.assertEqual(row['documented_gap']['by_section'], {'A': 1, 'B': 1})
 
+    def test_2d_the_admission_tools_open_list_of_row_names_is_read(self):
+        """admit-goal-cancelled.py rewrites family['open'] as bare row names; the edition runs after it."""
+        g = self.gaplist([entry(C1, [ROOT_A]), entry(C2, [ROOT_A])])
+        m = matrix()
+        fam = m['families'][FAMILY]
+        fam['open'] = sorted(r['row'] for r in fam['matrix'] if r['status'] == 'OPEN')
+        self.assertIn(ROW, fam['open'])
+        before = copy.deepcopy(m)
+        report = gap.apply_edition(m, g)
+        self.assertTrue(report['applied'])
+        self.assertEqual(target_of(m)['status'], 'DOCUMENTED_GAP')
+        after_open = m['families'][FAMILY]['open']
+        self.assertEqual(after_open, [n for n in before['families'][FAMILY]['open'] if n != ROW])
+        self.assertTrue(after_open and all(isinstance(n, str) for n in after_open))
+        self.assertOthersUnchanged(before, m)
+
+    def test_2e_an_open_entry_of_any_other_shape_refuses(self):
+        g = self.gaplist([entry(C1, [ROOT_A]), entry(C2, [ROOT_A])])
+        for bad in (7, None, {'reason': 'x'}, {'row': 7}, [ROW]):
+            m = matrix()
+            m['families'][FAMILY]['open'].append(bad)
+            with self.assertRaises(gap.Refusal, msg=repr(bad)):
+                gap.apply_edition(m, g)
+
     def test_3_same_clause_on_another_row_or_family_stays_uncovered(self):
         g = self.gaplist([entry(C1, [ROOT_A]), entry(C2, [ROOT_A])])
         m = matrix()
