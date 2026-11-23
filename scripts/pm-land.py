@@ -2418,6 +2418,48 @@ def require_record_bytes(path: Path, raw: bytes, record: dict[str, Any], batch: 
                           "verification")
 
 
+def require_batch_judgment(shared: Path, start: str, head: str, predecessor: str,
+                           record: dict[str, Any]) -> None:
+    """The strict rule, judged here and now under the lock: an earlier `batch-check` result is never enough.
+
+    Review ASTRA A2-4: `batch-check` runs before the lock, and a landing can hand over between it and the push, so a
+    candidate admitted as the first member can become a second member whose report is not the new one's. `verify`
+    therefore judges the receipt it is about to verify against the pinned `predecessor` it publishes on, reading the
+    previous member's receipt fresh from holder.txt and re-hashing it.
+    """
+    holder = holder_verdict(LOCK_DIR)
+    fields = holder["fields"] if holder["held"] else {}
+    rows, _malformed = batch_rows(fields)
+    earlier: list[dict[str, Any]] = []
+    earlier_unread: list[str] = []
+    if rows:
+        if rows[-1]["sha"] != predecessor:
+            raise Refusal(f"the batch's last landing is {rows[-1]['sha']}, but this verification pins origin/main at "
+                          f"{predecessor}: the judgment and the publication would not be about the same predecessor")
+        member, why = earlier_member(rows[-1], start)
+        if member is None:
+            earlier_unread.append(why)
+        else:
+            earlier.append(member)
+    report = batch_report(receipt_report(record, "receipt"))
+    rows_doc, rows_asked = receipt_rows(record)
+    rows_unread: list[str] = []
+    if rows_doc is None:
+        rows_unread.append("this member's, which its receipt "
+                           + ("records and cannot be read" if rows_asked else "does not record"))
+    elif rows_doc.get("base") != start:
+        rows_unread.append(f"this member's, which was written against {rows_doc.get('base') or 'no base'}")
+        rows_doc = None
+    _code, lines, difference = judge_batch_member(shared, start, record["exit_code"], report, rows_doc, rows_unread,
+                                                 earlier, earlier_unread, predecessor if rows else None, head, None)
+    if difference:
+        raise Refusal(f"this landing cannot stay in the batch: {difference[1]}. Close the batch with its follow-up at "
+                      "the current main, then rebase on the new origin/main, rerun the check alone and judge it as "
+                      "usual")
+    if lines:
+        say(lines[-1])
+
+
 def verify_receipt(path, commit=None, base=None, batch_start=None):
     path = path.absolute()
     folder = require_run_folder(path.parent)
@@ -2459,6 +2501,9 @@ def verify_receipt(path, commit=None, base=None, batch_start=None):
         if not is_ancestor(SHARED, pinned, head):
             raise Refusal(f"origin/main {pinned} is not an ancestor of the checked commit {head}: rebase on the current "
                           "origin/main and check again, so the push is a fast-forward")
+        # The strict rule, judged under the lock against the pinned predecessor: an earlier batch-check is never
+        # enough, because the handoff can change which member this receipt is (review ASTRA A2-4).
+        require_batch_judgment(SHARED, checked_batch, head, pinned, record)
     if git(SHARED, "symbolic-ref", "--quiet", "HEAD", check=False).stdout.strip() != MAIN_REF:
         raise Refusal("shared checkout must be on main")
     shared_head = revision(SHARED, "HEAD^{commit}")
@@ -2497,6 +2542,7 @@ def verify_receipt(path, commit=None, base=None, batch_start=None):
         require_open_batch(SHARED, checked_base, pinned)
         if not is_ancestor(SHARED, pinned, head):
             raise Refusal(f"origin/main {pinned} is no longer an ancestor of the checked commit {head}")
+        require_batch_judgment(SHARED, checked_batch, head, pinned, record)
         say(f"Verified {head} against batch-start {checked_base} on {host}. Landing checker exit {record['exit_code']}.")
     else:
         moved = full_main(SHARED)

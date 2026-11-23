@@ -2623,6 +2623,14 @@ class BatchVerifyTests(unittest.TestCase):
     def setUp(self):
         LandingFixture.setUp(self)
         self.lock = self.root / "lock"
+        # The landing check that writes the reports a batch compares, at the batch-start commit: `verify` reads
+        # `scripts/pm-landing-check.py` at the candidate to learn what its report carries.
+        self.put(self.shared, "scripts/pm-landing-check.py", " ".join(land.BATCH_CHECK_MARKS) + "\n")
+        self.git(self.shared, "add", "--", "scripts/pm-landing-check.py")
+        self.git(self.shared, "commit", "-qm", "landing check with the comparison lines")
+        self.base = land.revision(self.shared, "HEAD")
+        self.git(self.shared, "push", "-f", "origin", f"{self.base}:{land.MAIN_REF}")
+        self.git(self.shared, "fetch", "origin")
 
     def history(self, commits: int = 1):
         """Member 1 lands `commits` commits on main as one landing; the candidate is a commit on top of it; the
@@ -2652,18 +2660,39 @@ class BatchVerifyTests(unittest.TestCase):
         lines += [f"batch-landing: {row}" for row in rows]
         (held / "holder.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
+    def earlier_receipt(self, sha):
+        """The predecessor's receipt, readable by the under-lock judgment: an empty report and row report.
+
+        `verify --batch-start` judges the candidate itself against this receipt, so the row it is named in must bind
+        a report and a row report the way `check` writes them (review ASTRA A2-4).
+        """
+        report = self.folder / "earlier.landing-check.json"
+        land.write_json(report, {"schema_id": "pm.landing_check.report.v1", "commit": sha, "base": self.base,
+                                 "subcheck_totals": {}, "bucket_counts": {}, "resolved_buckets": []})
+        rows = self.folder / "earlier.rows.json"
+        land.write_json(rows, {"schema_id": land.ROW_REPORT_SCHEMA, "base": self.base, "subchecks": {}})
+        record = self.folder / "earlier.record.json"
+        land.write_json(record, {"schema": 2, "host": "nas1", "head": sha, "base": self.base, "exit_code": 0,
+                                 "report": str(report), "report_sha256": land.file_hash(report),
+                                 "row_report": str(rows), "row_report_sha256": land.file_hash(rows)})
+        return record
+
     def row(self, branch, sha):
-        """A `batch-landing` row: verify reads the chain, not the earlier receipt's bytes."""
+        """A `batch-landing` row: verify reads the chain and, under the lock, the receipt it names."""
+        self.earlier_receipt(sha)
         return f"{branch} {sha} {self.folder / 'earlier.record.json'}"
 
-    def receipt(self, head, base=None, rows=True, code=0):
+    def receipt(self, head, base=None, rows=True, code=0, totals=None, counts=None, subchecks=None):
         base = base or self.base
         report = self.folder / "landing-check.json"
         land.write_json(report, {"schema_id": "pm.landing_check.report.v1", "commit": head, "base": base,
-                                 "blocking": 0, "subcheck_timeout_seconds": land.TIMEOUT})
+                                 "blocking": 0, "subcheck_timeout_seconds": land.TIMEOUT,
+                                 "subcheck_totals": totals or {}, "bucket_counts": counts or {},
+                                 "resolved_buckets": []})
         row_report = self.folder / "rows.json"
         if rows:
-            land.write_json(row_report, {"schema_id": land.ROW_REPORT_SCHEMA, "base": base, "subchecks": {}})
+            land.write_json(row_report, {"schema_id": land.ROW_REPORT_SCHEMA, "base": base,
+                                         "subchecks": subchecks or {}})
         tree = land.revision(self.shared, head + "^{tree}")
         record = {"schema": 2, "host": "nas1", "machine": socket.gethostname(), "topic": self.ref,
                   "worktree": str(self.remote), "full": True, "clean": True, "job": land.job_name(self.folder),
@@ -2808,6 +2837,30 @@ class BatchVerifyTests(unittest.TestCase):
         self.holder(self.base, [self.row("fix/a", member1), "fix/b nope"])
         self.receipt(head)
         with self.assertRaisesRegex(land.Refusal, "cannot read"):
+            self.verify()
+
+    def test_a_before_the_lock_admission_is_judged_again_under_the_lock(self):
+        """A2-4: the same receipt that cleared as the first member is refused once the predecessor's report is the
+        one it must match. `verify` never reuses an earlier `batch-check` result."""
+        member1, head = self.history()
+        self.receipt(head, totals={"run-gates/lint-x": 1})
+        source = self.folder / "check-source.py"
+        source.write_text(" ".join(land.BATCH_CHECK_MARKS) + "\n", encoding="utf-8")
+        # Before the lock: main is still the batch-start and the holder has no row, so the receipt is a first member.
+        self.git(self.shared, "push", "-f", "origin", f"{self.base}:{land.MAIN_REF}")
+        self.git(self.shared, "fetch", "origin")
+        self.holder(self.base, [])
+        output = io.StringIO()
+        with redirect_stdout(output):
+            self.assertEqual(land.batch_check(self.shared, self.lock, self.path, source), 0)
+        self.assertIn("first member of the batch", output.getvalue())
+        # The handoff: the predecessor lands and the holder names it. The same receipt is now member 2, and its
+        # report is not the predecessor's.
+        self.git(self.shared, "push", "-f", "origin", f"{member1}:{land.MAIN_REF}")
+        self.git(self.shared, "fetch", "origin")
+        self.holder(self.base, [self.row("fix/a", member1)])
+        with self.assertRaisesRegex(land.Refusal, "cannot stay in the batch: run-gates/lint-x is in this landing's "
+                                                  "report and not in the previous member's report"):
             self.verify()
 
     def test_verify_prints_the_pinned_publication_lease(self):
