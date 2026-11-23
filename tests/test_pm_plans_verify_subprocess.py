@@ -334,11 +334,42 @@ class AggregateSubcheckSubprocessTests(unittest.TestCase):
     def test_run_named_check_slow_subprocess_returns_structured_timeout(self) -> None:
         """A slow aggregate subcheck returns subprocess_timeout, not a hang.
 
-        A real repo scan's runtime depends on the page cache (json_syntax finished in
-        under a second on a warm tree and this test then read it as a pass), so the
-        child that must be killed is a stub that sleeps. The command line and the
-        process-group timeout are the ones run_named_check builds for a subcheck.
+        json_syntax scans every JSON/JSONL file in the repo (~2s). With a 1s bound it
+        must be killed via the process group and surface a structured subprocess_timeout
+        with process_group_killed=True and the kill mechanism recorded.
+
+        This is also the regression test for review B1: with a cache inherited from the
+        environment the child answered from it in 0.26 s instead of scanning, and the
+        test failed. The child must run, so it must take longer than the bound.
         """
+        import argparse
+
+        ns = argparse.Namespace()
+        started = time.monotonic()
+        name, report = pm_plans_verify.run_named_check(
+            "json_syntax",
+            pm_plans_verify.cmd_json_syntax,
+            ns,
+            progress=False,
+            timeout_seconds=1,
+        )
+        elapsed = time.monotonic() - started
+        self.assertEqual(report["check"], "json-syntax")
+        self.assertEqual(report["status"], "fail")
+        self.assertEqual(len(report["failures"]), 1)
+        failure = report["failures"][0]
+        self.assertEqual(failure["error"], "subprocess_timeout")
+        self.assertEqual(failure["timeout_seconds"], 1)
+        self.assertTrue(failure["process_group_killed"])
+        self.assertIn("SIGKILL", failure["kill_mechanism"])
+        # Bounded excerpts are present and are strings.
+        self.assertIsInstance(failure["stdout_excerpt"], str)
+        self.assertIsInstance(failure["stderr_excerpt"], str)
+        # Must return promptly, proving the stuck child was reaped instead of hanging.
+        self.assertLess(elapsed, 8.0)
+
+    def test_a_sleeping_stub_subprocess_is_killed_at_its_bound(self) -> None:
+        """The same process-group kill, with a child whose runtime cannot depend on the repo."""
         import argparse
 
         ns = argparse.Namespace()
@@ -357,16 +388,8 @@ class AggregateSubcheckSubprocessTests(unittest.TestCase):
         elapsed = time.monotonic() - started
         self.assertEqual(report["check"], "json-syntax")
         self.assertEqual(report["status"], "fail")
-        self.assertEqual(len(report["failures"]), 1)
-        failure = report["failures"][0]
-        self.assertEqual(failure["error"], "subprocess_timeout")
-        self.assertEqual(failure["timeout_seconds"], 1)
-        self.assertTrue(failure["process_group_killed"])
-        self.assertIn("SIGKILL", failure["kill_mechanism"])
-        # Bounded excerpts are present and are strings.
-        self.assertIsInstance(failure["stdout_excerpt"], str)
-        self.assertIsInstance(failure["stderr_excerpt"], str)
-        # Must return promptly, proving the stuck child was reaped instead of hanging.
+        self.assertEqual(report["failures"][0]["error"], "subprocess_timeout")
+        self.assertTrue(report["failures"][0]["process_group_killed"])
         self.assertLess(elapsed, 8.0)
 
     def test_run_named_check_inprocess_allowlist_uses_alarm_backstop(self) -> None:
