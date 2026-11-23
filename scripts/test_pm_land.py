@@ -1987,6 +1987,37 @@ class BatchCheckTests(BatchFixture):
         self.assertEqual(code, 1, out)
         self.assertIn("TRIGGER batch_earlier_receipt_unreadable", out)
 
+    def test_a_receipt_without_a_report_digest_binds_nothing(self):
+        """R3-N1: stripping report_sha256 to null used to skip the check and clear the batch."""
+        record = json.loads(Path(self.m1).read_text(encoding="utf-8"))
+        record["report_sha256"] = None
+        land.write_json(Path(self.m1), record)
+        code, out = self.check(self.report("m2.json", totals=self.totals, counts=self.counts))
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_earlier_receipt_unreadable", out)
+        self.assertIn("records no SHA-256", out)
+
+    def test_a_receipt_without_a_row_report_digest_cannot_be_compared(self):
+        """R3-N1: a null row_report_sha256 bound nothing, so the row report was read unverified."""
+        record = json.loads(Path(self.m1).read_text(encoding="utf-8"))
+        record["row_report_sha256"] = None
+        land.write_json(Path(self.m1), record)
+        code, out = self.check(self.report("m2.json", totals=self.totals, counts=self.counts))
+        self.assertEqual(code, 1, out)
+        self.assertIn("TRIGGER batch_earlier_receipt_unreadable", out)
+        self.assertIn("row report that cannot be read", out)
+
+    def test_this_members_own_receipt_without_a_digest_is_refused(self):
+        """R3-N1: the candidate's receipt is held to the same binding as an earlier member's."""
+        receipt = self.current(self.report("m2.json", totals=self.totals, counts=self.counts))
+        record = json.loads(Path(receipt).read_text(encoding="utf-8"))
+        record["report_sha256"] = None
+        land.write_json(Path(receipt), record)
+        code, _out = self.batch_check("--receipt", receipt, "--repo", self.shared,
+                                      "--check-source", self.source_file(), "--lock-dir", self.lock)
+        self.assertEqual(code, 3)
+        self.assertIn("records no SHA-256", self.stderr)
+
     def test_a_pushed_member_missing_from_the_holder_refuses_and_asks_for_repair(self):
         """F3: member 1 is on main but absent from holder.txt; the next landing is not the first member."""
         self.holder(start=self.base)

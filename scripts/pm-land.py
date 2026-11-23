@@ -2157,7 +2157,11 @@ def batch_receipt(path: Path) -> dict[str, Any]:
 
 
 def receipt_report(record: dict[str, Any], label: str) -> str:
-    """The report a receipt binds, refused when it is missing or no longer the bytes the receipt recorded."""
+    """The report a receipt binds, refused when it is missing, has no recorded digest, or is no longer those bytes.
+
+    A receipt without a `report_sha256` binds nothing: skipping the check would let a report for another run be read
+    as this member's (review R3-N1).
+    """
     path = record.get("report")
     if not isinstance(path, str) or not path:
         raise Refusal(f"the {label} records no landing check report")
@@ -2166,7 +2170,9 @@ def receipt_report(record: dict[str, Any], label: str) -> str:
     except OSError as exc:
         raise Refusal(f"cannot read the {label}'s report {path}: {exc}") from exc
     recorded = record.get("report_sha256")
-    if isinstance(recorded, str) and hashlib.sha256(raw).hexdigest() != recorded:
+    if not isinstance(recorded, str):
+        raise Refusal(f"the {label} records no SHA-256 for its report {path}, so the report is not bound to this receipt")
+    if hashlib.sha256(raw).hexdigest() != recorded:
         raise Refusal(f"the {label}'s report {path} no longer matches the SHA-256 its receipt records")
     return raw.decode("utf-8", errors="replace")
 
@@ -2188,7 +2194,8 @@ def receipt_rows(record: dict[str, Any]) -> tuple[Optional[dict[str, Any]], bool
     except OSError:
         return None, asked
     recorded = record.get("row_report_sha256")
-    if isinstance(recorded, str) and hashlib.sha256(raw).hexdigest() != recorded:
+    if not isinstance(recorded, str) or hashlib.sha256(raw).hexdigest() != recorded:
+        # No digest binds nothing, exactly as a wrong one binds the wrong bytes: unreadable, never a clear (R3-N1).
         return None, asked
     try:
         doc = json.loads(raw)
