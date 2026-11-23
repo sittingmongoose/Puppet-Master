@@ -126224,9 +126224,14 @@ function o55Morph(oldEl, newEl, { host, dir = 0, dur = 300 } = {}) {
   host = host || oldEl.parentNode;
   if (!oldEl || !oldEl.isConnected) { return; }
   if (o55Still()) { oldEl.replaceWith(newEl); return; }
+  /* A morph that interrupts another inherits the host's position from before the chain: the interrupted morph's
+     inline position:relative is still on the host, and reading it back would make this morph's cleanup leave it
+     there for good (FO-S1b: the split kept position:relative after a rapid second item swap). */
+  const chained = host.dataset.o55Morph != null;
+  const hostPos = chained ? (host.dataset.o55MorphPos || getComputedStyle(host).position) : getComputedStyle(host).position;
   const seq = ++o55MorphSeq; host.dataset.o55Morph = String(seq);
+  if (!chained) host.dataset.o55MorphPos = hostPos;
   host.querySelectorAll(':scope > .o55-leaving').forEach(n => n.remove()); /* a morph interrupted by another */
-  const hostPos = getComputedStyle(host).position;
   if (hostPos === 'static') host.style.position = 'relative'; /* before measuring: offsets are relative to it */
   const h0 = host.getBoundingClientRect().height;
   const top = oldEl.offsetTop, left = oldEl.offsetLeft, width = oldEl.offsetWidth;
@@ -126244,7 +126249,7 @@ function o55Morph(oldEl, newEl, { host, dir = 0, dur = 300 } = {}) {
   if (Math.abs(h1 - h0) > 2) { host.style.overflow = 'clip'; grow = host.animate([{ height: h0 + 'px' }, { height: h1 + 'px' }], { duration: dur, easing: ease }); }
   const done = () => {
     if (host.dataset.o55Morph !== String(seq)) return;
-    oldEl.remove(); if (hostPos === 'static') host.style.position = ''; host.style.overflow = ''; delete host.dataset.o55Morph;
+    oldEl.remove(); if (hostPos === 'static') host.style.position = ''; host.style.overflow = ''; delete host.dataset.o55Morph; delete host.dataset.o55MorphPos;
   };
   (grow || out).finished.then(done, done);
   window.setTimeout(done, dur + 200);
@@ -126281,7 +126286,10 @@ const o55AfterPaint = fn => requestAnimationFrame(() => setTimeout(fn, 0));
 PM51.switchTab = function (wsId, tab) {
   const body = root.querySelector(`[data-continuous-workspace-body="${cssEscape(wsId)}"]`);
   const page = body && body.querySelector('.pm51-mgr');
-  const oldBody = page && page.querySelector(':scope > .manager-body');
+  /* The in-flow body, never the .o55-leaving copy of an interrupted morph: that copy precedes the arriving body in
+     document order, and morphing it again would remove it (the interrupted morph's own oldEl) before the fresh body
+     is placed, dropping the arriving tab's body. */
+  const oldBody = page && page.querySelector(':scope > .manager-body:not(.o55-leaving)');
   const tabs = page ? [...page.querySelectorAll(':scope > .pm51-tabs .manager-tab')] : [];
   const from = tabs.findIndex(t => t.classList.contains('active')), to = tabs.findIndex(t => t.dataset.tab === tab);
   PM51.setTab(wsId, tab);
@@ -126414,7 +126422,13 @@ document.addEventListener('scroll', e => {
 PM51.swapDetail = function (wsId, sel) {
   const body = root.querySelector(`[data-continuous-workspace-body="${cssEscape(wsId)}"]`);
   const page = body && body.querySelector('.pm51-mgr');
-  const oldDetail = page && page.querySelector('.resource-detail');
+  /* The detail in the LIVE manager-body, never a leaving copy. Two interruptions leave a stale match behind: a
+     detail morph marks the outgoing .resource-detail itself .o55-leaving, and a tab morph marks the whole outgoing
+     .manager-body .o55-leaving while the detail inside it is not — so '.resource-detail:not(.o55-leaving)' alone
+     still matched a detail in the leaving tab body. Scope to the in-flow body first, then the in-flow detail within
+     it (FO-S1b: both the detail-morph path and Astra's tab-then-item path). */
+  const liveBody = page && page.querySelector(':scope > .manager-body:not(.o55-leaving)');
+  const oldDetail = liveBody && liveBody.querySelector('.resource-detail:not(.o55-leaving)');
   if (!oldDetail) { PM51.refresh(wsId, { swap: false }); return; }
   const fresh = o55Fresh(wsId); const nextDetail = fresh && fresh.querySelector('.resource-detail');
   if (!nextDetail) { PM51.refresh(wsId, { swap: false }); return; }
@@ -126422,12 +126436,15 @@ PM51.swapDetail = function (wsId, sel) {
   o55PostMount(nextDetail);
   o55Morph(oldDetail, nextDetail, { host: oldDetail.parentNode, dir: 0, dur: 260 });
   /* the item's own More options lives in the view's More options (kit.js pm51OneMore): it changes with the detail */
-  const oldMore = page.querySelector('[data-o55-item-more]'), nextMore = fresh.querySelector('[data-o55-item-more]');
-  const moreBody = page.querySelector(':scope > .manager-body > .pm51-scroll > details.pm51-advanced > .pm51-advanced-body');
+  const oldMore = liveBody && liveBody.querySelector('[data-o55-item-more]'), nextMore = fresh.querySelector('[data-o55-item-more]');
+  const moreBody = liveBody && liveBody.querySelector(':scope > .pm51-scroll > details.pm51-advanced > .pm51-advanced-body');
   if (nextMore) o55PostMount(nextMore);
   if (oldMore && nextMore) oldMore.replaceWith(nextMore);
   else if (oldMore) oldMore.remove();
   else if (nextMore && moreBody) moreBody.insertBefore(nextMore, moreBody.firstChild);
+  /* the detail's cards carry the index's adopted anchors: the leaving copy takes its anchors with it, so the
+     arriving detail's groups are re-adopted and relisted, and the highlight put back, as after a tab morph */
+  if (PM51.syncIndex) PM51.syncIndex(wsId);
   try { syncDetailButtonStates(); } catch (e) { /* cosmetic */ }
   saveState();
 };
@@ -130332,7 +130349,11 @@ populateDetailInspector = function () {
   if (!found) return false;
   const tpl = document.createElement('template'); tpl.innerHTML = `<div class="o55-insp-page">${renderDetailInspectorBody(found.setting, found.section, found.workspace)}</div>`;
   const next = tpl.content.firstElementChild;
-  let current = inspector.querySelector(':scope > .o55-insp-page');
+  /* The in-flow page, never the .o55-leaving copy of an interrupted morph: that copy precedes the arriving page in
+     document order, and morphing it again would remove it (the interrupted morph's own oldEl) before the fresh page
+     is placed, dropping the arriving setting's Details (FO-S1b's inspector twin; syncInspector below already reads
+     the in-flow page the same way). */
+  let current = inspector.querySelector(':scope > .o55-insp-page:not(.o55-leaving)');
   if (!current) { current = document.createElement('div'); current.className = 'o55-insp-page'; while (inspector.firstChild) current.appendChild(inspector.firstChild); inspector.appendChild(current); }
   o55Morph(current, next, { host: inspector, dir: 0, dur: 240 });
   return true;
@@ -177759,7 +177780,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     open = true;
     panelEl.hidden = false;
     panelEl.setAttribute('data-open', '');
-    panelEl.querySelector('.pmn-chrome').setAttribute('data-lg-surface', 'menu');
+    /* data-lg-dense: the inbox is the app's largest dense text menu, so it takes Liquid Glass's dense menu tint (glass.css,
+       the rail's narrow overlay's opt-in): at the light menu tint the live blur behind its 580 px of list mottled the page
+       through it past glass-backing's bar (PM7-GLASSDARK-NOTIF-BACKING-OVER-BAR) */
+    const chromeEl = panelEl.querySelector('.pmn-chrome');
+    chromeEl.setAttribute('data-lg-surface', 'menu');
+    chromeEl.setAttribute('data-lg-dense', '');
     stackEl.setAttribute('aria-expanded', 'true');
     renderPanel(false);
     placePanel();
@@ -177791,7 +177817,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     panelEl.removeAttribute('data-open');
     pushStage();
     const chrome = panelEl.querySelector('.pmn-chrome');
-    const finish = () => { if (open) return; panelEl.hidden = true; chrome.removeAttribute('data-lg-surface'); if (listStale) resetList(); };
+    const finish = () => { if (open) return; panelEl.hidden = true; chrome.removeAttribute('data-lg-surface'); chrome.removeAttribute('data-lg-dense'); if (listStale) resetList(); };
     if (panelEl.contains(doc.activeElement) && !keepFocus) stackEl.focus({ preventScroll: true });
     if (!still() && quick !== 'instant') sound('close', 0.3);
     /* it folds back into the stack through the menu sprout */
