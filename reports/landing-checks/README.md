@@ -870,91 +870,78 @@ current `main` before they number or judge a member: a landing on `main` that th
 list refuses with "repair the holder, then rerun". It takes no lock, fetches nothing and writes
 nothing.
 
-### Batch triggers
+### The strict batch rule
 
-A batch member after the first is rechecked alone (the batch closes with its follow-up at the current
-`main`) when any of these holds, on exit 0 or 1. They need the landing check's comparison lines: gone
-bucket ids, every subcheck's total, per-bucket counts, and `--row-report`. Without them there is no
-batch: `pm-land.py batch-check` says to land alone, or to close an open batch, on a landing check that
-does not print them, and a hand lander on such a check lands alone too. `pm-land.py check --base
-<batch-start>` asks the remote check for the row report, and the receipt records its path and SHA-256.
-A batch compares the JSON report `check` writes, never the text report: text names a row by its
-clipped display fields and JSON by its key, and the two are not one identity.
+A batch compares reports only when a later landing's check can be read the same way as the one before
+it. That needs the landing check's comparison lines: gone bucket ids, every subcheck's total,
+per-bucket counts, and `--row-report`. Without them there is no batch: `pm-land.py batch-check` says to
+land alone, or to close an open batch, on a landing check that does not print them, and a hand lander
+on such a check lands alone too. `pm-land.py check --base <batch-start>` asks the remote check for the
+row report, and the receipt records its path and SHA-256. A batch compares the JSON report `check`
+writes, never the text report: text names a row by its clipped display fields and JSON by its key, and
+the two are not one identity.
 
 `python3 -B "$PM_LAND_SCRIPT" batch-check --receipt <the record.json the check printed>` prints the
-comparison lines it read and each trigger with its reason, then a verdict. The receipt names this
-member's commit, the batch-start it was measured against, its report, its row report and the landing
-check's own exit, so none of them is read from another checkout's `HEAD`; run it in this member's
-worktree, or pass `--repo <checkout>`. The earlier members come from their `batch-landing` rows in
-`holder.txt`, in order: each row names that landing's receipt, and the report and row report it binds
-are re-hashed against the digests the receipt records. A swapped, edited or wrong-member file is a
-trigger, never a comparison. A member three deep therefore compares with member 2's report and with
-member 1's. Its exit codes are its own, not the landing check's: 0 means judged, no trigger, the
-landing may stay; 1 means a trigger fires or a judgement is owed first (it says which); 3 means it was
-refused (an unreadable receipt or report, a receipt base that is not the open batch's full
-`batch-start`, a row the holder cannot read, a landing missing from the holder, or no open batch at
-all). The member's own range is the last `batch-landing` row's SHA to this member's commit; there is
-no override. `--check-source` overrides the landing check read at the receipt's commit in `--repo`.
+comparison lines it read and then the verdict. The receipt names this member's commit, the batch-start
+it was measured against, its report, its row report and the landing check's own exit, so none of them
+is read from another checkout's `HEAD`; run it in this member's worktree, or pass `--repo <checkout>`.
+The previous member comes from the holder's last `batch-landing` row: its receipt, and the report and
+row report it binds, are re-hashed against the digests the receipt records, so a swapped, edited or
+wrong-member file is a difference, never a comparison. Its exit codes are its own, not the landing
+check's: 0 means judged, no difference, the landing may stay; 1 means a difference or a judgement owed
+first (it says which); 3 means it was refused (an unreadable receipt or report, a receipt base that is
+not the open batch's full `batch-start`, a row the holder cannot read, a landing missing from the
+holder, or no open batch at all). `--check-source` overrides the landing check read at the receipt's
+commit in `--repo`.
 
-A batch compares counts, so a count a member does not have is a trigger before any comparison: one
-subcheck whose counts are not fully known in any member stops the batch (10), and the one exception is a
-subcheck that is a permanent sample in every member, which is compared by its printed total alone.
+**The first landing of a batch is judged exactly as a single landing is today.** There is no earlier
+report to compare with, and its own report and row report must still print what the next member reads.
 
-From what moved since the previous member's report, unless exempt:
+**Every later landing may stay only when its report is the previous member's.** The two JSON reports
+must agree in all of these:
 
-1. A bucket the previous report listed as gone is not gone in this one.
-2. A subcheck's total is above the previous report's.
-3. A bucket's count is above the previous report's, printed or counted from both row reports (a subcheck
-   the baseline holds as a sample prints no count line). A bucket the previous report did not print because
-   its run-gates copy was judged by its audit-governance twin is read from that twin, never as an observed 0.
+1. every subcheck total;
+2. every bucket count (a bucket a report holds gone counts as zero);
+3. every row key, wherever both row reports print every row of their subcheck, with multiplicity;
+4. every subcheck's known or sampled status: a subcheck printed in full in one report and only
+   sampled in the other is a difference, and so is a subcheck one report does not have at all.
 
-The exemption: a rising subcheck does not close the batch only if every row it added since the previous
-report, compared by row key, is (a) seen: the subcheck is complete in both reports, its rows adding up
-to its total, because it printed them all or is keyed from a complete export whose total matches; (b)
-governance staleness of a kind the landing check also excuses when its bucket grows, which is the
-`grown_stale` the check's own whole-bucket classification writes (a row stale by its detail text
-alone, or a renamed-shard `missing_ref` row in a subcheck compared by its total, is not enough; the
-audit-closure exemption counts only when every current non-stale row is one recorded baseline
-fingerprint); and (c) this member's: it names a path in this member's own range (the previous member's
-`main` SHA to its own, regenerated and deleted paths included) and no other path of the batch.
+The ONE allowed difference is governance staleness in buckets that name a file this member's own
+branch touched, printed in full in this member's report: the rows added, changed or gone between the
+two reports must all be stale rows (`stale` with `kind_stale`, the landing check's classification by
+error kind, or `grown_stale`, its whole-bucket classification) whose `names` are all paths in this
+member's own range. A row stale only by its detail text is not enough, and a row naming another
+member's file is not this member's to excuse.
 
-From the printed rows, with no exemption:
+The one exception is a subcheck that is a permanent sample, and only when all of these hold: the
+producer positively identifies it (`no_export` with the validator's command named, so no complete
+export exists for it anywhere); it is sampled the same way in both reports; and its total is unchanged.
+An ambiguous `no_export` (no command named) or a missing export row is unknown, never a permanent
+sample (review ASTRA A2-1), and a `baseline_sample` is not one either: the follow-up baseline can key
+it, so its counts are unknown.
 
-4. Pre-existing or improved rows differ, by key, from the latest earlier report's, in a bucket
-   an earlier report marked changed.
-5. A `(content changed)` row no earlier report listed.
-6. A report that lists pre-existing rows only in part (a print cap), when every report from this check
-   is complete: a JSON report is, so this never fires on one.
+**Anything else means this landing is judged alone:** a rise, a fall, a gone or new row, a changed
+key, a count not fully known (a timeout, an export that failed or could not be read, or a sample that
+is not the permanent one above), a status change, or a mapping the tool cannot read (two reports that
+pair different validators). `batch-check` names the first difference and exits 1; under the batch rule
+you close the batch with its follow-up at the current `main`, rebase the landing on the new
+`origin/main`, rerun its check alone and judge it as usual. A false pass is the danger here: a false
+stop only means one landing goes alone.
 
-When the batch cannot tell:
+One further check is not a comparison of reports: a path in this member's own range that the batch's
+diff lacks is a put-back of what an earlier member changed, so the check, measuring from `batch-start`,
+does not read it as touched, and the landing is judged alone.
 
-7. An earlier member's receipt or report is not on record or cannot be read: a hand landing leaves no
-   row, and a row whose receipt, report or row report is missing, corrupt, bound to another commit or
-   base, or no longer the bytes its SHA-256 records closes the batch.
-8. A report's gone ids, totals or counts don't add up.
-9. A row report the batch needs that cannot be read: this landing's, which its receipt records, or an
-   earlier member's, which its own receipt records. Missing, corrupt, not the schema, written against
-   another base, or no longer the bytes its receipt records all read the same way, because a rise only
-   the row reports can show would otherwise go unseen.
-10. A subcheck whose counts are not fully known in any member of the batch: it timed out, it is compared by
-    its total only for a reason other than a permanent sample, its export failed or could not be read
-    (`export_timeout`, `export_unreadable`, `total_mismatch`, `rows_mismatch`), or one member printed it in
-    full while another has only its total. Its counts have no number to compare, so this landing is judged
-    alone and the reason names the subcheck and the member; growth is never reported from 0. The one
-    exception is a subcheck that is a permanent sample (`no_export`) in every member: no complete row set
-    exists anywhere to compare it by, so its printed total is the whole comparison, as in the landing check
-    itself. A `baseline_sample` is not that exception: it means the batch-start baseline missed the export,
-    and a member's follow-up baseline can key it, so its counts are unknown and the landing is judged alone.
+**`verify --batch-start` runs the judgment itself, under the lock.** It judges this member's existing
+receipt against the same pinned predecessor it publishes on, reading the previous member's receipt from
+`holder.txt` afresh, immediately before the fast-forward and again immediately before the push. An
+earlier `batch-check` result is never enough: the handoff between two landers can change which member a
+receipt is, and a candidate admitted as the first member may be the second member's report by the time
+it is verified (review ASTRA A2-4). A difference here refuses the landing exactly as `batch-check`
+would, with the same sentence.
 
-From the diff, with no exemption:
-
-11. A path in this member's own range is not in the batch's diff: it put back what an earlier member
-    changed, so the check, measuring from `batch-start`, does not read it as touched.
-
-Unchanged: exit 2 or the two hours running out during its checks closes the batch; a baseline within two hours
-of seven days at the batch-start, or past it, stops the member; changed pre-existing rows or timeouts with no
-other trigger stop it for judgement. A member whose check stood on a landing check without the comparison lines
-cannot batch at all, and neither can a batch whose first member left no report: land alone.
+The member's own range is the last `batch-landing` row's SHA to this member's commit; there is no
+override.
 
 ## Related branch
 

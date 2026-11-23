@@ -1168,10 +1168,20 @@ print(json.dumps({{"schema_id": "pm.landing_check.report.v1", "commit": {self.he
                        "batch-start: <full SHA of origin/main before the batch's first landing>",
                        "batch-landing: <branch> <main SHA it pushed> <the record.json its check printed>",
                        "batch-check", "batch-status", "PUBLISH_LEASE",
-                       "four landings and two hours", "never refresh the snapshot or baseline in the middle of a batch"):
+                       "four landings and two hours", "never refresh the snapshot or baseline in the middle of a batch",
+                       # Round 5's strict rule, in both files' one section: identical, but for this landing's own
+                       # fully printed staleness; an earlier batch-check is never enough.
+                       "The strict rule, for the second and later landing",
+                       "identical in every subcheck total, every bucket count, every row key",
+                       "governance staleness in buckets that name a file this member's own branch touched",
+                       "permanent sample", "judged alone",
+                       "runs that same judgment itself under the lock", "an earlier `batch-check` result is never enough"):
             self.assertIn(phrase, sections[0])
         # The local-copy route and the scripted Plans follow-up move to the batching task (pm7-build, option B).
         self.assertNotIn("Checks on a local copy", sections[0])
+        # The trigger list the strict rule replaces is gone from the rule text.
+        for gone in ("(the previous rule)", "No trigger applies", "batch trigger"):
+            self.assertNotIn(gone, sections[0])
 
     def test_ignored_input_membership_and_bytes_must_match_on_either_side(self):
         path = "Plans/.audits/usage-successor/governance/auto-decision-receipt.json"
