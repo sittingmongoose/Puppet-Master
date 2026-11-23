@@ -25,6 +25,9 @@
   ];
   const FILE_KINDS = ['Server folder', 'Another computer or NAS', 'Existing checkout', 'Clone from a code service', 'Folder on an SSH computer', 'Restored backup'];
   const CONFLICT_POLICIES = ['Preserve both, pause affected work, and show a three-way comparison', 'Keep the server copy and save this device’s copy beside it', 'Keep this device’s copy and save the server copy beside it'];
+  /* Refine 3: the closed field showed "Preserve both, pause affected work, a..." cut off. The choices have short names;
+     what is stored is unchanged, and the choice's full sentence is still the dialog's. */
+  const CONFLICT_SHORT = { [CONFLICT_POLICIES[0]]: 'Keep both and compare', [CONFLICT_POLICIES[1]]: 'Use the server’s copy', [CONFLICT_POLICIES[2]]: 'Use this device’s copy' };
   const h = PM51.h, a = PM51.a;
 
   PM51.style(`
@@ -835,11 +838,14 @@
   const RF_DEMO_SERVERS = [
     { id: 'studio', name: 'Studio PC', role: 'Computer on your network', address: 'studio-pc.home', state: 'Connected', version: '0.8.0', updateReady: false, runsWork: true, default: false, lastCheck: '2 min ago', deployment: 'Native app', environments: ['Native Windows'] },
     { id: 'macmini', name: 'Mac mini', role: 'Computer on your network', address: 'mac-mini.home', state: 'Connected', version: '0.8.0', updateReady: false, runsWork: true, default: false, lastCheck: '2 min ago', deployment: 'Native app', environments: ['macOS'] },
-    { id: 'ubuntu', name: 'Ubuntu VM', role: 'Computer on your network', address: 'ubuntu-vm.home', state: 'Connected', version: '0.8.0', updateReady: false, runsWork: true, default: false, lastCheck: '4 min ago', deployment: 'Native app', environments: ['Linux'] },
+    { id: 'linuxpc', name: 'Linux PC', role: 'Computer on your network', address: 'linux-pc.home', state: 'Connected', version: '0.8.0', updateReady: false, runsWork: true, default: false, lastCheck: '4 min ago', deployment: 'Native app', environments: ['Linux'] },
     { id: 'buildbox', name: 'Build box', role: 'Computer on your network', address: 'build-box.home', state: 'Offline', version: '0.8.0', updateReady: false, runsWork: true, default: false, lastCheck: '3 h ago', deployment: 'Native app', environments: ['Linux'] }
   ];
   function rfSeed() {
-    const S = sp(); if (!S || S.rfSeed3 || !Array.isArray(S.servers)) return;
+    const S = sp(); if (!S || !Array.isArray(S.servers)) return;
+    /* (the first build of this pass named one example like an SSH computer that was already there) */
+    const was = S.servers.find(x => x.id === 'ubuntu' && x.address === 'ubuntu-vm.home'); if (was) { was.id = 'linuxpc'; was.name = 'Linux PC'; was.address = 'linux-pc.home'; }
+    if (S.rfSeed3) return;
     S.rfSeed3 = true;
     for (const d of RF_DEMO_SERVERS) if (!S.servers.some(x => x.id === d.id)) S.servers.push(clone(d));
     saveState();
@@ -886,7 +892,7 @@
       <div class="rf-map-awayfacts"><span class="rf-map-fact"><i class="rf-map-fl">Right now</i><b class="rf-map-fv">${h(actual.name)}</b>${routeToken(actual)}</span><span class="rf-map-fact"><i class="rf-map-fl">When away</i><b class="rf-map-fv">${h(preferred ? preferred.name : 'Nothing set up yet')}</b>${preferred ? routeToken(preferred) : ''}</span></div>
       ${preferred ? PM51.btn({ label: 'Ways in', small: true, action: 'pm51-servers-rf-open', data: { tab: 'away' } }) : PM51.btn({ label: 'Set up a way in', icon: 'plus', small: true, primary: true, action: 'pm51-servers-away-new' })}
     </section>`;
-    const map = `<div class="rf-map">${files}${computers}${devices}</div>${away}`;
+    const map = `<div class="rf-map-wrap"><div class="rf-map">${files}${computers}${devices}</div>${away}</div>`;
     const P = state.projectSync || {};
     const advanced = PM51.advanced([
       PM51.rows([
@@ -997,7 +1003,7 @@
   }
 
   /* ---------- Away From Home ---------------------------------------------- */
-  const moveBtn = (r, dir, off, reason) => `<button type="button" class="icon-btn pm51-icon-btn pm51-servers-move-btn" data-action="${off ? 'pm51-disabled' : 'pm51-servers-route-move'}" data-id="${a(r.id)}" data-dir="${dir}" aria-label="${a(`Move ${r.name} ${dir}`)}" data-pm-hover-label="${a(dir === 'up' ? 'Try earlier' : 'Try later')}"${off ? ` aria-disabled="true" data-pm51-disabled="1" data-disabled-reason="${a(reason)}" data-pm-hover-detail="${a(reason)}"` : ''}>${icon(dir)}</button>`;
+  const moveBtn = (r, dir, off, reason) => `<button type="button" class="icon-btn pm51-icon-btn pm51-servers-move-btn" data-action="${off ? 'pm51-disabled' : 'pm51-servers-route-move'}" data-id="${a(r.id)}" data-dir="${dir}" aria-label="${a(`Move ${r.name} ${dir}`)}" data-pm-hover-label="${a(dir === 'up' ? 'Try earlier' : 'Try later')}"${off ? ` aria-disabled="true" data-pm51-disabled="1" data-disabled-reason="${a(reason)}" data-pm-hover-detail="${a(reason)}"` : ''}>${icon(dir === 'up' ? 'arrowUp' : 'arrowDown')}</button>`;
   /* Exactly one primary per state; the row owns the check for ready / needs-attention routes and the
      sheet owns it for active / off routes, so each route has one Check control across row + sheet. */
   function routePrimary(r) {
@@ -1054,7 +1060,7 @@
       action: { label: 'Set up a way in', icon: 'plus', small: true, primary: true, action: 'pm51-servers-away-new' },
       body: PM51.facts([
         { label: 'Right now', value: actual.name, end: routeToken(actual) },
-        { label: 'When away', value: preferred ? preferred.name : 'nothing set up yet', end: preferred ? routeToken(preferred) : '' }
+        { label: 'When away', value: preferred ? preferred.name : 'Nothing set up yet', end: preferred ? routeToken(preferred) : '' }
       ], { action: R.order === 'custom' ? PM51.link({ label: 'Use recommended order', action: 'pm51-servers-order-reset', cls: 'pm51-servers-order-reset' }) : `<span class="pm51-servers-order-mode">Recommended order</span>` })
         + PM51.list(routeItems(sorted), { cls: 'pm51-servers-routes' })
     });
@@ -1105,7 +1111,7 @@
     const conflicts = PM51.section({
       title: 'Conflicts',
       body: PM51.rows([
-        { label: 'When both sides changed', help: 'The same file changed on two devices.', control: PM51.dropdown(S.conflicts.policy, (CONFLICT_POLICIES.includes(S.conflicts.policy) ? CONFLICT_POLICIES : [S.conflicts.policy, ...CONFLICT_POLICIES]).map(x => ({ value: x, label: x })), { action: 'pm51-servers-conflict-set', label: 'When both sides changed' }) },
+        { label: 'When both sides changed', help: 'The same file changed on two devices.', control: PM51.dropdown(S.conflicts.policy, (CONFLICT_POLICIES.includes(S.conflicts.policy) ? CONFLICT_POLICIES : [S.conflicts.policy, ...CONFLICT_POLICIES]).map(x => ({ value: x, label: CONFLICT_SHORT[x] || x })), { action: 'pm51-servers-conflict-set', label: 'When both sides changed' }) },
         { label: 'Open conflicts', value: String(S.conflicts.open || 0), action: { label: 'View', action: 'pm51-servers-conflicts-view' } }
       ])
     });

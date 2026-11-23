@@ -58,7 +58,7 @@ export const tests = {
 		await f.locator('#pm-settings-root .domain-link', { hasText: 'Servers & Remote Access' }).first().click();
 		await sleep(f, 1300);
 		const tabs = await f.evaluate((sel) => [...document.querySelectorAll(`${sel} [role="tab"][data-action="pm51-tab"]`)].map((n) => n.textContent.trim()), block('servers'));
-		await t.check('it is the same manager with its five tabs', tabs.join('|') === 'Home & Location|Servers|Devices|Away From Home|Move & Copy', tabs.join('|'));
+		await t.check('it is the same manager with its five tabs', tabs.join('|') === 'Overview|Servers|Devices|Away From Home|Move & Copy', tabs.join('|'));
 		await t.check('a chapter with one manager has no chapter tab strip', (await shown(f, '#pm-settings-root .workspace-tabs .workspace-tab')) === 0);
 		await f.locator('#pm-settings-root .domain-link', { hasText: 'System' }).first().click(); await sleep(f, 1300);
 		const sys = await f.evaluate(() => [...document.querySelectorAll('#pm-settings-root .workspace-tabs .workspace-tab')].map((n) => n.textContent.trim()));
@@ -101,31 +101,114 @@ export const tests = {
 		await t.check('the side column is there on a manager with tabs, with every manager of the chapter (FO-185)', got.index && got.groups === 4, JSON.stringify(got));
 	},
 
-	async 'Servers › Home & Location: facts on one line, then the three choices'(t) {
+	async 'Servers › Overview: where the files are kept, which computers do the work, what you steer from'(t) {
+		for (const size of [[1600, 1000], [1280, 800]]) {
+			const f = await openSettings(t, size), at = `${size[0]}x${size[1]}`;
+			await go(f, 'servers-access', 'servers'); await tab(f, 'servers', 'home');
+			const got = await f.evaluate((sel) => {
+				const b = document.querySelector(sel), T = (n) => (n ? n.textContent : '').replace(/\s+/g, ' ').trim();
+				const cards = [...b.querySelectorAll('.rf-map > .rf-map-card')];
+				const clipped = [...b.querySelectorAll('.rf-map-name, .rf-map-code, .rf-map-qt, .rf-map-a')].filter((n) => n.scrollWidth > n.clientWidth + 1).map(T);
+				const S = window.PM51.s().serverProject;
+				return {
+					asks: cards.map((c) => T(c.querySelector('.rf-map-qt'))), tops: cards.map((c) => Math.round(c.getBoundingClientRect().top)),
+					path: T(b.querySelector('.rf-map-files .rf-map-code')), want: S.sourceLocation.path,
+					home: !!b.querySelector('.rf-map-files [data-action="pm51-servers-home"]'), files: !!b.querySelector('.rf-map-files [data-action="pm51-servers-files"]'),
+					work: [...b.querySelectorAll('.rf-map-work .rf-map-name')].map(T), exec: !!b.querySelector('.rf-map-work [data-action="pm51-servers-exec"]'), link: T(b.querySelector('.rf-map-work [data-action="pm51-servers-add"]')),
+					devices: [...b.querySelectorAll('.rf-map-devices .rf-map-name')].map(T), connect: T(b.querySelector('.rf-map-devices [data-action="pm51-servers-pair"]')),
+					away: [...b.querySelectorAll('.rf-map-away .rf-map-fl')].map(T), clipped, servers: S.servers.filter((x) => x.runsWork !== false).length
+				};
+			}, block('servers'));
+			await t.check(`${at}: three cards ask the three things in order`, got.asks.join('|') === 'Files are kept on|Work runs on|You steer from', got.asks.join('|'));
+			await t.check(`${at}: the cards start on one line, or stack where there is no room for three`, new Set(got.tops).size === 1 || new Set(got.tops).size === 3, got.tops.join(','));
+			await t.check(`${at}: the files card shows the whole folder, with the home server and Change folder`, got.path === got.want && got.home && got.files, JSON.stringify([got.path, got.want, got.home, got.files]));
+			await t.check(`${at}: every computer that runs work is listed, with where new work starts and Link a server`, got.work.length >= got.servers && got.exec && /Link a server/.test(got.link), JSON.stringify([got.work, got.servers, got.exec, got.link]));
+			await t.check(`${at}: the devices are listed with Connect a device`, got.devices.length >= 1 && /Connect a device/.test(got.connect), JSON.stringify([got.devices, got.connect]));
+			await t.check(`${at}: away from home says what is used now and when away`, got.away.join('|') === 'Right now|When away', got.away.join('|'));
+			await t.check(`${at}: no name or path is cut off`, got.clipped.length === 0, got.clipped.join(' | '));
+			if (size[0] === 1600) {
+				const name = got.work[got.work.length > 2 ? 2 : 0];
+				await f.locator(`${block('servers')} .rf-map-work .rf-map-row`).filter({ hasText: name }).first().click(); await sleep(f, 900);
+				const open = await f.evaluate((sel) => { const b = document.querySelector(sel), T = (n) => (n ? n.textContent : '').replace(/\s+/g, ' ').trim(); return { tab: T(b.querySelector('[role="tab"][aria-selected="true"]')), title: T(b.querySelector('.pm51-detail-title')) }; }, block('servers'));
+				await t.check('a computer on the map opens on the Servers tab', open.tab === 'Servers' && open.title.indexOf(name) === 0, JSON.stringify(open));
+			}
+		}
+	},
+
+	async 'what looked wrong: the band, the covered title, the chosen row, the light, the side column'(t) {
 		const f = await openSettings(t);
-		await go(f, 'servers-access', 'servers'); await tab(f, 'servers', 'home');
-		const got = await f.evaluate((sel) => {
-			const b = document.querySelector(sel), T = (n) => (n ? n.textContent : '').replace(/\s+/g, ' ').trim();
-			return { facts: [...b.querySelectorAll('.rf-facts .rf-fact')].map(T), rows: [...b.querySelectorAll('.pm51-section .pm51-row-label')].filter((n) => !n.closest('details')).map(T) };
-		}, block('servers'));
-		await t.check('the facts line says how it is connected and which device this is', got.facts.length >= 3 && /Connected/.test(got.facts[0]) && got.facts.some((x) => /This device/.test(x)), got.facts.join(' | '));
-		await t.check('the rows are Home server, Runs on and Files', got.rows.join('|') === 'Home server|Runs on|Files', got.rows.join('|'));
+		await go(f, 'memory', 'personas');
+		const head = await f.evaluate((sel) => { const h = document.querySelector(`${sel} .pm51-roster .roster-head`); const a = h.querySelector('.roster-title').getBoundingClientRect(), b = h.querySelector('button').getBoundingClientRect(); return { titleRight: Math.round(a.right), buttonLeft: Math.round(b.left), title: h.querySelector('.roster-title').scrollWidth <= h.querySelector('.roster-title').clientWidth + 1 }; }, block('personas'));
+		await t.check('the list\'s title is whole and clear of its add button', head.title && head.titleRight <= head.buttonLeft, JSON.stringify(head));
+		const row = await f.evaluate((sel) => {
+			const r = document.querySelector(`${sel} .pm51-roster .resource-row[aria-current="true"]`), o = document.querySelector(`${sel} .pm51-roster .resource-row[aria-current="false"]`);
+			const lum = (c) => { const m = c.match(/[\d.]+/g).map(Number); return (0.2126 * m[0] + 0.7152 * m[1] + 0.0722 * m[2]) / 255; };
+			return { name: lum(getComputedStyle(r.querySelector('.resource-row-name')).color), other: lum(getComputedStyle(o.querySelector('.resource-row-name')).color), icon: getComputedStyle(r.querySelector('.resource-avatar')).color, iconOther: getComputedStyle(o.querySelector('.resource-avatar')).color, image: getComputedStyle(r).backgroundImage };
+		}, block('personas'));
+		await t.check('the chosen row keeps light words and its icon\'s own colour, with no slab over it', row.name > 0.6 && row.icon === row.iconOther && row.image === 'none', JSON.stringify(row));
+		await t.page.mouse.move(1100, 600); for (let i = 0; i < 4; i++) { await t.page.mouse.wheel(0, 240); await sleep(f, 120); }
+		await sleep(f, 500);
+		const strip = await f.evaluate((sel) => { const n = document.querySelector(`${sel} .manager-tabs.pm51-tabs`); const cs = getComputedStyle(n); return { stuck: n.classList.contains('is-stuck'), clip: cs.clipPath, wide: /\b(\d{4,})px/.test(cs.boxShadow) }; }, block('personas'));
+		await t.check('scrolled, the tab strip is stuck and lays no band across the page', strip.stuck && strip.clip === 'none' && !strip.wide, JSON.stringify(strip));
+		await go(f, 'ai', 'providers');
+		const light = await f.evaluate((sel) => { const d = document.querySelector(`${sel} .pm51-roster .resource-row[aria-current="true"] .status-dot`); return d ? getComputedStyle(d).boxShadow : 'no light'; }, block('providers'));
+		await t.check('the chosen service\'s light has no ring', light === 'none', light);
+		await go(f, 'general', 'app-input');
+		const before = await f.evaluate(() => [...document.querySelectorAll('#pm-settings-root .page-index-card .index-link')].filter((n) => n.getClientRects().length).map((n) => { const r = document.createRange(); r.selectNodeContents(n); const b = r.getBoundingClientRect(); return [(n.classList.contains('pm51-index-tab') ? 'tab:' : 'link:') + n.textContent.trim().slice(0, 24), Math.round(b.left), Math.round(b.width), getComputedStyle(n).fontWeight]; }));
+		const wasAt = await f.evaluate(() => ((document.querySelector('#pm-settings-root .page-index-card .index-link.is-active') || {}).textContent || '').trim());
+		await t.page.mouse.move(1100, 600); for (let i = 0; i < 8; i++) { await t.page.mouse.wheel(0, 300); await sleep(f, 140); }
+		await sleep(f, 500);
+		const after = await f.evaluate(() => ({ rows: [...document.querySelectorAll('#pm-settings-root .page-index-card .index-link')].filter((n) => n.getClientRects().length).map((n) => { const r = document.createRange(); r.selectNodeContents(n); const b = r.getBoundingClientRect(); return [(n.classList.contains('pm51-index-tab') ? 'tab:' : 'link:') + n.textContent.trim().slice(0, 24), Math.round(b.left), Math.round(b.width), getComputedStyle(n).fontWeight]; }), active: (document.querySelector('#pm-settings-root .page-index-card .index-link.is-active') || {}).textContent, lens: [...document.querySelectorAll('#pm-settings-root nav.page-index-card > .lg-lenses-under')].filter((n) => getComputedStyle(n).display !== 'none').length }));
+		const moved = before.filter((b) => { const a = after.rows.find((x) => x[0] === b[0]); return a && (a[1] !== b[1] || a[2] !== b[2] || a[3] !== b[3]); });
+		await t.check('scrolling moved the side column\'s mark to another entry', !!after.active && after.active.trim() !== wasAt, `${wasAt} -> ${String(after.active).trim()}`);
+		await t.check('no entry\'s words moved or changed weight while it did', moved.length === 0 && after.lens === 0, JSON.stringify({ moved, lens: after.lens }));
+	},
+
+	async 'Providers: the accounts line up, and Add a service is the catalogue'(t) {
+		const f = await openSettings(t);
+		await go(f, 'ai', 'providers'); await tab(f, 'providers', 'services');
+		const rows = await f.evaluate((sel) => [...document.querySelectorAll(`${sel} .pm51-providers-acc .pm51-acc-item`)].map((it) => { const q = (s) => [...it.querySelectorAll(s)].map((n) => { const r = n.getBoundingClientRect(); return [Math.round(r.left), Math.round(r.right), Math.round(r.height)]; }); return { tracks: q('.pm51-meter-track'), status: q('.pm51-status'), order: it.querySelectorAll('.pm51-providers-order button').length, manage: getComputedStyle(it.querySelector('.pm51-acc-toggle'), '::after').content }; }), block('providers'));
+		const firsts = rows.filter((r) => r.tracks.length).map((r) => r.tracks[0].slice(0, 2).join('-')), seconds = rows.filter((r) => r.tracks.length > 1).map((r) => r.tracks[1].slice(0, 2).join('-'));
+		await t.check('the service has several accounts to compare', rows.length >= 3, String(rows.length));
+		await t.check('every usage bar starts and ends where the others do', new Set(firsts).size === 1 && new Set(seconds).size <= 1, JSON.stringify([firsts, seconds]));
+		await t.check('every status starts at one place and is one line high', new Set(rows.map((r) => r.status[0][0])).size === 1 && rows.every((r) => r.status[0][2] < 26), JSON.stringify(rows.map((r) => r.status[0])));
+		await t.check('two arrows change the order and a named button opens the account', rows.every((r) => r.order === 2 && /Manage/.test(r.manage)), JSON.stringify(rows.map((r) => [r.order, r.manage])));
+		await f.locator(`${block('providers')} .pm51-providers-acc .pm51-acc-toggle`).first().click(); await sleep(f, 500);
+		const open = await f.evaluate((sel) => { const it = document.querySelector(`${sel} .pm51-providers-acc .pm51-acc-item`); return { open: it.classList.contains('is-open'), label: getComputedStyle(it.querySelector('.pm51-acc-toggle'), '::after').content }; }, block('providers'));
+		await t.check('Manage opens the account and reads Done', open.open && /Done/.test(open.label), JSON.stringify(open));
+		await f.locator(`${block('providers')} .pm51-providers-acc .pm51-acc-toggle`).first().click(); await sleep(f, 300);
+		const count = await f.evaluate(() => window.PM12_KIMI.getState().providers.length);
+		await f.locator(`${block('providers')} #provider-roster .roster-head button`).first().click(); await sleep(f, 900);
+		const sheet = await f.evaluate(() => { const p = document.querySelector('.rf-add-panel'), T = (n) => (n ? n.textContent : '').replace(/\s+/g, ' ').trim(); return p ? { groups: [...p.querySelectorAll('.rf-add-title')].map((n) => T(n).replace(/\d+$/, '').trim()), rows: p.querySelectorAll('.rf-add-group:not(.rf-add-other) .rf-add-row').length, other: T(p.querySelector('.rf-add-other .rf-add-name')), states: p.querySelectorAll('.rf-add-group:not(.rf-add-other) .rf-add-state .pm51-status').length } : null; });
+		await t.check('Add a service opens the catalogue of every service, each with its state', !!sheet && sheet.rows === count && sheet.states === count, JSON.stringify([sheet, count]));
+		await t.check('it is grouped by how you pay, and a service not in the list is its last row', !!sheet && sheet.groups.slice(0, 3).join('|') === 'Plans you already pay for|Pay as you go|Free, or on your own computer' && sheet.other === 'Another service', JSON.stringify(sheet));
+		await f.locator('.rf-add-panel .rf-add-input').fill('local'); await sleep(f, 400);
+		const found = await f.evaluate(() => [...document.querySelectorAll('.rf-add-panel .rf-add-group:not(.rf-add-other) .rf-add-row')].filter((n) => !n.hidden && n.getClientRects().length).map((n) => n.querySelector('.rf-add-name').textContent));
+		await t.check('the search narrows the list', found.length >= 1 && found.length < count, found.join(' | '));
+		const pick = found[0];
+		await f.locator('.rf-add-panel .rf-add-row').filter({ hasText: pick }).first().locator('button').click(); await sleep(f, 900);
+		const chosen = await f.evaluate((sel) => (document.querySelector(`${sel} .pm51-detail-title`) || {}).textContent || '', block('providers'));
+		await t.check('choosing a service opens it', chosen.indexOf(pick) === 0, `${pick} -> ${chosen}`);
+		await closeAll(f);
+		await f.evaluate(() => window.PM51.s() && 0);
 	},
 
 	async 'Limits & switching is the one home of a service\'s switching rules'(t) {
 		const f = await openSettings(t);
 		await go(f, 'ai', 'providers'); await tab(f, 'providers', 'limits');
-		const rows = await f.evaluate((sel) => [...document.querySelectorAll(`${sel} .rf-policy-row`)].map((r) => ({ name: r.querySelector('.setting-label').textContent.trim(), toggles: r.querySelectorAll('.toggle').length, fields: r.querySelectorAll('.pm51-dd').length })), block('providers'));
+		const rows = await f.evaluate((sel) => [...document.querySelectorAll(`${sel} .rf-policy-row:not(.rf-policy-headrow)`)].map((r) => ({ name: r.querySelector('.setting-label').textContent.trim(), toggles: r.querySelectorAll('.toggle').length, fields: r.querySelectorAll('.pm51-dd').length })), block('providers'));
 		await t.check('each service with two accounts has a line', rows.length >= 2, JSON.stringify(rows));
+		const cols = await f.evaluate((sel) => { const x = (n) => Math.round(n.getBoundingClientRect().left); const hd = [...document.querySelectorAll(`${sel} .rf-policy-headrow .rf-policy-h`)].map(x), r = document.querySelector(`${sel} .rf-policy-row:not(.rf-policy-headrow) .o55-policy-ctl`); return { hd, ctl: [...r.children].map(x) }; }, block('providers'));
+		await t.check('each heading sits over its own control', cols.hd.length === 4 && cols.hd.every((v, i) => Math.abs(v - cols.ctl[i]) <= 2), JSON.stringify(cols));
 		await t.check('each line has its switch and its three rules', rows.every((r) => r.toggles === 1 && r.fields === 3), JSON.stringify(rows));
-		const first = f.locator(`${block('providers')} .rf-policy-row`).first();
+		const first = f.locator(`${block('providers')} .rf-policy-row:not(.rf-policy-headrow)`).first();
 		const was = await first.locator('.toggle').getAttribute('aria-checked');
 		await first.locator('.toggle').click(); await sleep(f, 700);
-		const now = await f.locator(`${block('providers')} .rf-policy-row`).first().locator('.toggle').getAttribute('aria-checked');
+		const now = await f.locator(`${block('providers')} .rf-policy-row:not(.rf-policy-headrow)`).first().locator('.toggle').getAttribute('aria-checked');
 		await t.check('its switch works here', was !== now, `${was} -> ${now}`);
-		await t.check('a service with its own rule offers the shared one back', (await f.locator(`${block('providers')} .rf-policy-row`).first().locator('.rf-policy-reset').count()) === 1);
-		await f.locator(`${block('providers')} .rf-policy-row`).first().locator('.rf-policy-reset').click(); await sleep(f, 700);
-		const back = await f.locator(`${block('providers')} .rf-policy-row`).first().locator('.toggle').getAttribute('aria-checked');
+		await t.check('a service with its own rule offers the shared one back', (await f.locator(`${block('providers')} .rf-policy-row:not(.rf-policy-headrow)`).first().locator('.rf-policy-reset').count()) === 1);
+		await f.locator(`${block('providers')} .rf-policy-row:not(.rf-policy-headrow)`).first().locator('.rf-policy-reset').click(); await sleep(f, 700);
+		const back = await f.locator(`${block('providers')} .rf-policy-row:not(.rf-policy-headrow)`).first().locator('.toggle').getAttribute('aria-checked');
 		await t.check('and taking it puts the switch back', back === was, `${now} -> ${back}`);
 		await tab(f, 'providers', 'services');
 		await t.check('the service\'s own page does not repeat them', (await f.locator(`${block('providers')} .o55-policy-fields`).count()) === 0);

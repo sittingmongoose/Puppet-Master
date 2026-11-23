@@ -23,11 +23,48 @@ byte-identical to `Concepts/PMConcept7.html` at that commit.
 browser-check run Concepts/settings-managers/fable-5.2-refine/tools --set page=<refined.html> --set before=<PMConcept7.html of the same base>
 ```
 
-Nine tests by real clicks (`tools/refine.check.mjs`): the chapter move and old links; Explain; the centred tab
-strips and the side column, left as they are; Servers' Home tab; the one home of a service's switching rules; the example staying in view in Editor and
+Eleven tests by real clicks (`tools/refine.check.mjs`): the chapter move and old links; Explain; the centred tab
+strips and the side column, left as they are; Servers' Overview map at two sizes; the five things that looked wrong
+(the band, the covered title, the chosen row, the light, the side column); Providers' account rows and Add a
+service; the one home of a service's switching rules; the example staying in view in Editor and
 Terminal Customize, Customize Pip and Adjust NieR; the examples being as wide as they were and the editor's
 following what is typed; and **nothing was dropped**: every setting id and every action of
 the unchanged page is still on some page of the refined one (920 settings, 73 views, on 2026-11-20).
+
+## Third pass (2026-11-23), after Jared's second review
+
+Jared: "This is better but it doesnt go far enough to make it nice to look at. There are also some visual bugs."
+He does not want options removed; the words, chrome and layout were to improve; Providers was "close"; Servers and
+Remote Access needed "the most work" ("It isnt clear where my files are stored, where work is being done"). The
+Editor, Terminal, Pip and NieR screens are good and were not touched. Gemini 4 Neon and Astra 6.2 gave layout ideas
+at his request (`consult/`); they agree on the main points, and those are what was built.
+
+| What he named | Cause | Now |
+|---|---|---|
+| "Black bars when you scroll" | A manager's stuck tab strip laid a band of the page's colour across the grey card | The strip floats with a shadow; no band |
+| "the persona word is covered by adding a new persona button" | The list's add button carried its whole label | A short "New", "Add" or "Link"; the title has its own column |
+| "the left side icons are washed out by the highlight" | The shared switcher paints a chosen row as a solid slab | A soft tint with an accent edge; the icon keeps its colours |
+| "a box around the indicator light" | The same rule ringed the status light | A plain light |
+| "the label highlight on the left ... moves the text over as you scroll" | The slab travelled between the side column's rows, and a chosen row's text turned bold | A mark that changes in place; one text weight |
+| Providers: "The bars are all uneven, the text isnt even, and there are 3 different arrows" | The account row was a wrapping line | One grid: bars of one length in two columns, a status column that never wraps, the two order arrows, and a named "Manage" button in place of the third arrow |
+| "The add a new service pop up menu is not at all sufficient" | It was a three-field form for a service not in the list | A sheet with every service grouped by how you pay, a search, each one's state and its next step; the old form is its last row |
+| Servers: "It isnt clear where my files are stored, where work is being done" | The first tab was three rows | "Overview": a map. Files are kept on / Work runs on / You steer from, with Away from home under them. Each setting sits in the card it is about |
+
+The first four causes are PMConcept7's own (the same on the unchanged page); they are corrected here inside
+Settings only, for the Basic and Friendly looks (`styles.d/96-refine-look.css`). Retro, NieR and Glass keep theirs.
+
+Also in this pass: the Servers tab's list says what each computer does ("Keeps your files · Runs work"); "Link a
+server" for a computer that does work and "Connect a device" for one you steer from (the two verbs of T3 Code
+nightly's Link and Connect); the headings of Limits & switching's table sit over their own controls; the closed
+"When both sides changed" field shows a short name instead of a cut-off sentence; the order buttons of Away From
+Home are arrows, as in Providers. The example has four more computers, so the map shows a setup of several.
+
+**Not yet done for this pass:** stream F's kit has not been run on this build, and the list of its checks below
+still describes the second pass. Jared asked to see looks first; the kit is to be run, against the unchanged page
+too, before any landing. It will need at least these: the first Servers tab is "Overview" (was "Home & Location")
+and its three rows are in the map's cards; "Connect a device" (was "Pair another device"), "Your devices" (was
+"Paired devices"), "Link a server" (was "Add a server"); four more example servers; Add a service opens a sheet;
+the stuck tab strip has no band; a list's add button reads "Add", "New" or "Link".
 
 ## What changed, everywhere
 

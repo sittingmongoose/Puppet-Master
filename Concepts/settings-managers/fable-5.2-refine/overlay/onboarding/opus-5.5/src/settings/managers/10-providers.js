@@ -748,9 +748,10 @@
         <span></span>
       </div>`;
     });
-    const head = '<div class="rf-policy-head" aria-hidden="true"><span>On</span><span>Switch at</span><span>Warn at</span><span>Rest after a limit</span></div>';
+    /* Refine 3: the headings are a row of the same list, so each one sits over its own control whatever the width */
+    const head = '<div class="setting-row o55-row rf-policy-row rf-policy-headrow" aria-hidden="true"><div class="setting-copy"></div><div class="setting-control o55-policy-ctl"><span class="rf-policy-h">On</span><span class="rf-policy-h">Switch at</span><span class="rf-policy-h">Warn at</span><span class="rf-policy-h">Rest after a limit</span></div><span></span></div>';
     const quiet = single.length ? `<p class="o55-quiet-line o55-policy-quiet">${h(single.map(p => p.name).join(', '))}: one account each. Auto-switch is off until a second account is signed in.</p>` : '';
-    const body = (rows.length ? head + `<div class="setting-list o55-bound-rows o55-policies">${rows.join('')}</div>` : PM51.note('No service has two accounts yet. Auto-switch starts once a second account is signed in.')) + quiet;
+    const body = (rows.length ? `<div class="setting-list o55-bound-rows o55-policies">${head}${rows.join('')}</div>` : PM51.note('No service has two accounts yet. Auto-switch starts once a second account is signed in.')) + quiet;
     return PM51.section({ title: 'Each service', help: 'Each service with two or more accounts switches on its own terms. One without its own choice follows the shared setting below.', body, id: 'o55-auto-switch-policies' });
   }
   /* The switch level always stays below the warn level (MA-073, Settings_System section 8), held here at the owner's

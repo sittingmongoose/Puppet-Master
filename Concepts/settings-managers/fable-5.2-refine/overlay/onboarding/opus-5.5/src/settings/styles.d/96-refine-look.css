@@ -111,7 +111,7 @@
 #panel-settings .rf-map-row { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto auto; align-items: center; column-gap: 8px; width: 100%; min-height: 30px; padding: 3px 8px; border: 0; border-radius: 7px; background: none; color: var(--k3-text-1); font: inherit; font-size: 13px; text-align: left; cursor: pointer; }
 #panel-settings .rf-map-row:hover { background: color-mix(in srgb, var(--k3-text-1) 6%, transparent); }
 #panel-settings .rf-map-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
-#panel-settings .rf-map-tag { padding: 1px 7px; border: 1px solid var(--k3-line); border-radius: 999px; font-size: 11px; color: var(--k3-text-2); white-space: nowrap; }
+#panel-settings .rf-map-tag { font-size: 11.5px; color: var(--k3-text-3); white-space: nowrap; }
 #panel-settings .rf-map-state { grid-column: 4; font-size: 12px; color: var(--k3-text-3); white-space: nowrap; }
 #panel-settings .rf-map-set { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; margin-top: auto; padding-top: 10px; border-top: 1px solid var(--k3-line); }
 #panel-settings .rf-map-setlabel { font-size: 12.5px; color: var(--k3-text-2); white-space: nowrap; }
@@ -123,7 +123,9 @@
 #panel-settings .rf-map-fact { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
 #panel-settings .rf-map-fl { font-style: normal; color: var(--k3-text-3); }
 #panel-settings .rf-map-fv { font-weight: 650; color: var(--k3-text-1); }
-@container settings-host (max-width: 980px) {
+/* the map measures itself: under about 900 px the three cards would squeeze their names, so they stack */
+#panel-settings .rf-map-wrap { container-type: inline-size; container-name: rf-map; }
+@container rf-map (max-width: 900px) {
   #panel-settings .rf-map { grid-template-columns: minmax(0, 1fr); gap: 14px 0; }
   #panel-settings .rf-map-card + .rf-map-card::after { display: none; }
   #panel-settings .rf-map-away { grid-template-columns: minmax(0, 1fr); }
@@ -135,3 +137,11 @@
 #panel-settings .rf-map-kvrow.is-wide { grid-template-columns: minmax(0, 1fr); gap: 5px; }
 #panel-settings .rf-map-k { color: var(--k3-text-3); white-space: nowrap; }
 #panel-settings .rf-map-v { color: var(--k3-text-1); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ---- Providers, Limits and switching: each heading sits over its own control ---- */
+#panel-settings .setting-row.o55-row.rf-policy-row .setting-control.o55-policy-ctl { display: grid; grid-template-columns: 44px repeat(3, 196px); gap: 10px; align-items: center; flex-wrap: nowrap; }
+#panel-settings .rf-policy-row .o55-policy-ctl .pm51-dd, #panel-settings .rf-policy-row .o55-policy-ctl .pm51-dd-trigger { width: 100%; min-width: 0; }
+#panel-settings .setting-row.o55-row.rf-policy-headrow { min-height: 26px; padding-top: 0; padding-bottom: 2px; border-top: 0; }
+#panel-settings .rf-policy-h { font-size: 11px; font-weight: 600; color: var(--k3-text-3); white-space: nowrap; }
+#panel-settings .rf-policy-row .setting-label { display: flex; align-items: baseline; gap: 12px; white-space: nowrap; }
+#panel-settings .rf-policy-headrow + .rf-policy-row { border-top: 0; }
