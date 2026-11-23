@@ -1,8 +1,12 @@
-// Contract tests for helpers/activity-frame-marker.mjs (PM7PERF-SHIFTTAB-PREKEY-SCREENCAST, TB9 round 2): no browser,
-// no film. The in-page counter and its capture-phase keydown are exercised by the check's own runs on the Mac.
-// Run: node tools/activity-frame-marker.selftest.mjs
+// Contract tests for helpers/activity-frame-marker.mjs and the check's ringSides (PM7PERF-SHIFTTAB-PREKEY-SCREENCAST,
+// TB9 round 2): no browser, no film. The in-page counter and its capture-phase keydown are exercised by the check's own
+// runs on the Mac.
+// Run: node tools/activity-frame-marker.selftest.mjs [helper.mjs] [check.mjs]
 import assert from 'node:assert/strict';
-import { MARKER_BOX, COUNTER_BITS, markerReading, keyFrames, handoverFault, whole } from '../helpers/activity-frame-marker.mjs';
+import { pathToFileURL } from 'node:url';
+import { resolve } from 'node:path';
+const { MARKER_BOX, COUNTER_BITS, markerReading, keyFrames, handoverFault, whole, ringSpan } = await import(process.argv[2] ? pathToFileURL(resolve(process.argv[2])).href : '../helpers/activity-frame-marker.mjs');
+const { ringSides } = await import(process.argv[3] ? pathToFileURL(resolve(process.argv[3])).href : '../checks/activity-bar-focus-film.check.mjs');
 
 const box = { x: 10, y: 10, width: 108, height: 14 };
 const WHITE = [255, 255, 255], BLACK = [0, 0, 0], GREY = [128, 128, 128];
@@ -50,6 +54,7 @@ eq(markerReading(edges, box), { count: 0b01010101, key: 0 }, 'painted corners do
 const rd = (count, key) => ({ count, key });
 eq(keyFrames([rd(10, 0), rd(11, 1), rd(12, 1)], 10), { at: 1, pre: 0, count: 11, preCount: 10 }, 'K, K+1 is judged');
 eq(keyFrames([rd(10, 0), rd(11, 1), rd(12, 1)], 11), { at: 1, pre: 0, count: 11, preCount: 10 }, 'a key that landed after the frame rAF (recorded C) is judged');
+eq(keyFrames([rd(0, 0), rd(0, 0), rd(1, 1), rd(2, 1)], 0), { at: 2, pre: 1, count: 1, preCount: 0 }, 'a duplicated pre-key frame (the static page captured twice) is judged on the copy beside the key frame');
 eq(keyFrames([rd(10, 0), null, rd(11, 1)], 10).pre, -1, 'an unreadable frame before the key frame is unjudged');
 ax(/unreadable, so counter 10 cannot be checked/.test(keyFrames([rd(10, 0), null, rd(11, 1)], 10).why), 'an unreadable pre-key frame says so');
 eq(keyFrames([rd(10, 0), rd(12, 1), rd(13, 1)], 10).pre, -1, 'a dropped key frame is unjudged');
@@ -82,4 +87,21 @@ ax(/still shows the old control's ring/.test(handoverFault({ preFiles: lost, pre
 // the default box is over the header, clear of the Activity bar's tiles (x 13..45, y 113..189 at 1920x1080)
 ax(MARKER_BOX.y + MARKER_BOX.height <= 113 || MARKER_BOX.x + MARKER_BOX.width <= 13 || MARKER_BOX.x >= 45, 'the marker does not overlap the rail');
 ax(MARKER_BOX.x + MARKER_BOX.width <= 1920, 'the marker fits the widest tested viewport');
-console.log(`PASS ${checks}: counter round-trips, key band, unreadable bands, judged K/K+1 pair, dropped key frame, missing K, unreadable K, foreign key, wrap, same-frame handover, 1-frame and 2-frame late handovers, early paint, old ring kept, 0.89 side not whole, marker clear of the rail`);
+
+// the ring judge's scanline span scales with the capture (R128 NOTES 4): 6 CSS px either side of the edge, in the
+// capture's own image pixels, never under 1 image px each side. The marker route captures at 960x540, half of 1920x1080.
+ax(typeof ringSpan === 'function', 'the helper exports ringSpan (the scaled scanline span)');
+ax(typeof ringSides === 'function', 'the check exports ringSides for this self-test');
+eq(ringSpan(50, 1), [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55], 'native scale keeps the ±6 px span');
+eq(ringSpan(50, 0.5), [47, 48, 49, 50, 51, 52], 'the 960x540 marker capture reads ±3 image px (±6 CSS px), not ±6 image px (±12 CSS px)');
+eq(ringSpan(50, 0.25), [48, 49, 50, 51], 'a quarter-scale capture reads ±2 image px');
+eq(ringSpan(50, 0.1), [49, 50], 'the span never shrinks under 1 image px each side');
+// constructed at half scale: a ring 7 CSS px off the tile's edge is not the tile's ring (the unscaled ±6 image-px span
+// credited it: image rows 45-46 are native 90-93, 7-10 CSS px above the native edge at 100)
+const tileS = { x: 50, y: 50, width: 20, height: 20 }, inkB = [20, 40, 160];
+const ringIm = (rows) => { const width = 140, height = 60, data = Buffer.alloc(width * height * 4, 255);
+  for (const y of rows) for (let x = 48; x <= 72; x++) { const i = 4 * (y * width + x); data[i] = inkB[0]; data[i + 1] = inkB[1]; data[i + 2] = inkB[2]; }
+  return { width, height, data }; };
+eq(ringSides(ringIm([45, 46]), tileS, inkB, 0.5).top.share, 0, 'a ring 7 CSS px above the edge is not credited at half scale');
+eq(ringSides(ringIm([49, 50]), tileS, inkB, 0.5).top.share, 1, 'a ring on the edge is still credited at half scale');
+console.log(`PASS ${checks}: counter round-trips, key band, unreadable bands, judged K/K+1 pair, duplicated pre-key frame, dropped key frame, missing K, unreadable K, foreign key, wrap, same-frame handover, 1-frame and 2-frame late handovers, early paint, old ring kept, 0.89 side not whole, marker clear of the rail, scaled ring span, off-edge ring not credited at half scale`);
