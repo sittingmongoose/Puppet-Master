@@ -2304,6 +2304,12 @@ def batch_check(shared: Path, lock_dir: Path, receipt_path: Path, check_source: 
                       f"{predecessor}: the push would not be a fast-forward")
     report_text = receipt_report(record, "receipt")
     report = batch_report(report_text)
+    if report is not None:
+        written = json.loads(report_text)
+        if written.get("commit") != head or written.get("base") != start:
+            raise Refusal(f"the receipt names commit {head} against batch-start {start}, but its report was written "
+                          f"for commit {written.get('commit')!r} against {written.get('base')!r}: the receipt does not "
+                          "bind this report, so rerun check on this commit")
     rows, rows_asked = receipt_rows(record)
     rows_unread: list[str] = []
     if rows is None:

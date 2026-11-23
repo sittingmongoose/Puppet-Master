@@ -1857,6 +1857,10 @@ class BatchCheckTests(BatchFixture):
         self.holder(start=self.base, rows=[f"fix/a {self.member1} {self.m1}"])
 
     def report(self, name, **kw):
+        # The report a real `check` writes names the commit and base its receipt does; a report for another
+        # commit is a refusal, not a comparison (review R3-N2).
+        kw.setdefault("commit", self.head)
+        kw.setdefault("base", self.base)
         return self.report_file(name, json_report(**kw))
 
     def current(self, report, rows=None, code=0, base=None, head=None):
@@ -1903,7 +1907,8 @@ class BatchCheckTests(BatchFixture):
         head3 = self.commit("member 3")
         m2 = self.member("m2", head=member2, totals=self.totals, counts=self.counts)
         self.holder(start=self.base, rows=[f"fix/a {self.member1} {self.m1}", f"fix/b {member2} {m2}"])
-        code, out = self.check(self.report("m3.json", totals=self.totals, counts=self.counts), head=head3)
+        code, out = self.check(self.report("m3.json", totals=self.totals, counts=self.counts, commit=head3),
+                               head=head3)
         self.assertEqual(code, 0, out)
         self.assertIn("no trigger", out)
 
@@ -1915,7 +1920,8 @@ class BatchCheckTests(BatchFixture):
         m2 = self.member("m2-timeout", head=member2, totals={"run-gates/lint-x": None}, counts={},
                          subchecks={"run-gates/lint-x": {"reported": None, "complete": False, "rows": []}})
         self.holder(start=self.base, rows=[f"fix/a {self.member1} {self.m1}", f"fix/b {member2} {m2}"])
-        code, out = self.check(self.report("m3.json", totals={"run-gates/lint-x": 5}, counts={}), head=head3)
+        code, out = self.check(self.report("m3.json", totals={"run-gates/lint-x": 5}, counts={}, commit=head3),
+                               head=head3)
         self.assertEqual(code, 1, out)
         self.assertIn("TRIGGER batch_counts_unknown", out)
         self.assertIn("timed out in an earlier member's report", out)
@@ -2125,6 +2131,16 @@ class BatchCheckTests(BatchFixture):
         self.assertIn("TRIGGER batch_row_report_unreadable", out)
         self.assertIn("does not record", out)
 
+    def test_a_candidate_report_written_for_another_commit_is_refused(self):
+        """R3-N2: the candidate's report is held to the receipt's commit and base, as an earlier member's is."""
+        report = self.report("m2-other.json", totals=self.totals, counts=self.counts, commit=self.member1)
+        rows = self.empty_rows("m2-other.rows.json")
+        receipt = self.receipt("m2-other.record.json", report, rows, self.head, self.base)
+        code, _out = self.batch_check("--receipt", receipt, "--repo", self.shared,
+                                      "--check-source", self.source_file(), "--lock-dir", self.lock)
+        self.assertEqual(code, 3)
+        self.assertIn("does not bind this report", self.stderr)
+
     def test_a_report_without_the_comparison_lines_closes_the_batch(self):
         current = self.report("m2.json")
         code, out = self.check(current)
@@ -2247,7 +2263,8 @@ class PutBackTests(BatchFixture):
                          counts={"run-gates|lint-x|missing_ref|src/x.txt": 1})
         self.holder(start=self.base, rows=[f"fix/a {self.member1} {m1}"])
         current = self.report_file("m2.json", json_report(
-            totals={"run-gates/lint-x": 1}, counts={"run-gates|lint-x|missing_ref|src/x.txt": 1}))
+            totals={"run-gates/lint-x": 1}, counts={"run-gates|lint-x|missing_ref|src/x.txt": 1},
+            commit=self.head, base=self.base))
         # The shared checkout is still at member 1: only the receipt names member 2's commit.
         receipt = self.receipt("record.json", current, self.empty_rows("m2.rows.json"), self.head, self.base)
         code, out = self.batch_check("--receipt", receipt, "--repo", self.shared, "--lock-dir", self.lock)
@@ -2265,7 +2282,8 @@ class BatchLimitTests(BatchFixture):
         self.head = self.commit("member 2")
         self.holder(start=self.base, rows=[])
         self.report = self.report_file("m2.json", json_report(
-            totals={"run-gates/lint-x": 1}, counts={"run-gates|lint-x|missing_ref|src/x.txt": 1}))
+            totals={"run-gates/lint-x": 1}, counts={"run-gates|lint-x|missing_ref|src/x.txt": 1},
+            commit=self.head, base=self.base))
         self.rows = self.empty_rows("m2.rows.json")
 
     def current(self, base=None):
