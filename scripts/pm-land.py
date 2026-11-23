@@ -2466,9 +2466,9 @@ def require_open_batch(shared: Path, start: str, main: str) -> list[dict[str, st
 CLOSE_PATHS = ("Plans/.plan_migration/",)
 
 
-def batch_close_outside(shared: Path, base: str, head: str) -> list[str]:
+def batch_close_outside(changed: Sequence[str]) -> list[str]:
     """Paths a batch's closing follow-up may not change: the snapshot and the baseline are its own."""
-    return sorted(name for name in changed_paths(shared, base, head)
+    return sorted(name for name in changed
                   if name != BASELINE_FILE and not name.startswith(CLOSE_PATHS))
 
 
@@ -2505,12 +2505,23 @@ def require_batch_close(shared: Path, pinned: str, head: str) -> str:
     if rows[-1]["sha"] != pinned:
         raise Refusal(f"origin/main is {pinned}, but the batch's last landing is {rows[-1]['sha']}: a closing follow-up "
                       "is verified against the main its last landing pushed, so fetch and verify again")
-    outside = batch_close_outside(shared, pinned, head)
+    changed = changed_paths(shared, pinned, head)
+    if not changed:
+        # A close with nothing to record is not the batch's one follow-up: it leaves the snapshot and the baseline
+        # exactly as the last landing left them (R8-N2).
+        raise Refusal("a batch's closing follow-up changes the plan-migration snapshot and "
+                      f"{BASELINE_FILE}; this commit changes nothing, so there is no follow-up to verify")
+    outside = batch_close_outside(changed)
     if outside:
         raise Refusal("a batch's closing follow-up changes only the plan-migration snapshot and "
                       f"{BASELINE_FILE}; this commit also changes " + ", ".join(outside[:10])
                       + ". Land that as its own landing outside the batch, or reduce this one to the snapshot and the "
                         "baseline")
+    if BASELINE_FILE not in changed:
+        # The baseline is the batch's own record: a snapshot alone would leave the next lander judging this batch's
+        # landings by a baseline the close never wrote (R8-N2).
+        raise Refusal(f"a batch's closing follow-up must include {BASELINE_FILE}, the baseline its landings are judged "
+                      "against; this commit changes only the snapshot")
     return start
 
 
@@ -2678,6 +2689,10 @@ def verify_receipt(path, commit=None, base=None, batch_start=None, batch_close=F
     if batch_start is not None:
         # Re-read the rule's record after the witness: an open batch, every landing named, no unlisted commit.
         require_open_batch(SHARED, checked_base, pinned)
+    if closing is not None:
+        # R8-N3: the witness runs for a while and the holder can be rewritten under it; the close is bound to the
+        # batch it read, so a holder that no longer opens it refuses here rather than after publication.
+        require_batch_close(SHARED, pinned, head)
     if tips[ref] != head:
         raise Refusal(f"published topic {ref} changed from checked commit {head} to {tips[ref]}")
     publication_preflight(SHARED, checked_base, head, record["ignored_inputs"])
@@ -2697,6 +2712,8 @@ def verify_receipt(path, commit=None, base=None, batch_start=None, batch_close=F
         if moved != pinned:
             raise Refusal(f"origin/main moved from {pinned} to {moved} during verification")
         if closing is not None:
+            # The preflight scans the whole tree, so the holder is read once more after it, as a batch member's is.
+            require_batch_close(SHARED, pinned, head)
             say(f"Verified {head} against {checked_base} on {host} as the closing follow-up of the batch at {closing}. "
                 f"Landing checker exit {record['exit_code']}.")
         else:
@@ -2810,6 +2827,9 @@ def main(argv=None):
             return verify_rollback(args.rollback_from, args.rollback_to)
         if args.rollback_from is not None or args.rollback_to is not None:
             verify.error("--from and --to require --rollback-check")
+        if args.batch_close and args.batch_start is not None:
+            verify.error("--batch-close and --batch-start do not go together: a closing follow-up is one landing at "
+                         "the batch's current main, not a batch member")
         if args.batch_close and args.base is not None:
             verify.error("--batch-close takes no --base: its base is the origin/main the batch's last landing pushed")
         return verify_receipt(args.receipt, args.commit, args.base, args.batch_start, args.batch_close)

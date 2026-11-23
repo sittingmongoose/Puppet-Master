@@ -714,8 +714,9 @@ Anyone who writes a checker input in the shared checkout, including readiness re
    at the final `main`, by whoever holds the lock then. That closing follow-up is verified with
    `verify --batch-close` (its receipt is checked against the current `origin/main`, which must be
    the batch's last `batch-landing` row), because a plain `verify` is refused while the batch is
-   open. The commit may change only `Plans/.plan_migration/**` and
-   `reports/landing-checks/baseline.json`; anything else is its own landing outside the batch.
+   open. The commit must include the refreshed `reports/landing-checks/baseline.json` and may
+   change only `Plans/.plan_migration/**` and that baseline; anything else is its own landing
+   outside the batch.
 10. Confirm primary main contains the exact topic tip, then check the original worktree and
     branch before removal. Inspect porcelain, `git ls-files -v` and
     `git ls-files --others --ignored --exclude-standard`. Hand off a switched, changed or
@@ -893,9 +894,10 @@ nothing.
 Nothing else lands while a batch is open: once its `batch-start` is behind `origin/main`, a plain
 `verify --base <the current main>` is refused, so a member is verified with `--batch-start` and the
 batch's closing follow-up with `--batch-close`. `--batch-close` requires `holder.txt` to still open
-the batch, `origin/main` to be its last `batch-landing` row, and the follow-up commit to change only
-`Plans/.plan_migration/**` and `reports/landing-checks/baseline.json`. It prints `PUBLISH_LEASE`
-like any other verification, so the follow-up is pushed on the same leased value.
+the batch, `origin/main` to be its last `batch-landing` row, and the follow-up commit to include the
+refreshed `reports/landing-checks/baseline.json` and change nothing else but
+`Plans/.plan_migration/**` and that baseline. It prints `PUBLISH_LEASE` like any other verification,
+so the follow-up is pushed on the same leased value.
 
 ### The strict batch rule
 

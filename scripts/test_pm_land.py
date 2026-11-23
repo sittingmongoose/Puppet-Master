@@ -3148,6 +3148,43 @@ class BatchVerifyTests(unittest.TestCase):
             with self.assertRaisesRegex(land.Refusal, "there is no batch to close"):
                 land.verify_receipt(self.path, None, None, None, True)
 
+    def test_a_closing_follow_up_must_change_something(self):
+        """R8-N2: an empty diff is not the batch's one follow-up."""
+        member1, _head = self.history()
+        self.holder(self.base, [self.row("fix/a", member1)])
+        with patch.object(land, "LOCK_DIR", self.lock):
+            with self.assertRaisesRegex(land.Refusal, "changes nothing"):
+                land.require_batch_close(self.shared, member1, member1)
+
+    def test_a_closing_follow_up_must_include_the_baseline(self):
+        """R8-N2: a snapshot alone leaves the batch's landings judged against a baseline the close never wrote."""
+        member1, _head = self.history()
+        self.holder(self.base, [self.row("fix/a", member1)])
+        head = self.follow_up(member1, ("Plans/.plan_migration/snapshot-1/current_run.json",))
+        with patch.object(land, "LOCK_DIR", self.lock):
+            with self.assertRaisesRegex(land.Refusal, "must include reports/landing-checks/baseline.json"):
+                land.require_batch_close(self.shared, member1, head)
+
+    def test_a_holder_cleared_during_the_witness_refuses_the_close(self):
+        """R8-N3: the witness runs for a while; the close must be bound to the holder it read."""
+        member1, _head = self.history()
+        self.holder(self.base, [self.row("fix/a", member1)])
+        self.follow_up(member1)
+
+        def cleared(*_args, **_kwargs):
+            (self.lock / "held" / "holder.txt").write_text("agent: someone else\n", encoding="utf-8")
+            return subprocess.CompletedProcess([], 0, "", "")
+
+        with patch.object(land, "LOCK_DIR", self.lock), patch.object(land, "ssh", side_effect=cleared):
+            with self.assertRaisesRegex(land.Refusal, "names no batch-start"):
+                land.verify_receipt(self.path, None, None, None, True)
+
+    def test_batch_close_with_batch_start_is_an_argparse_error(self):
+        """R8-N4: a closing follow-up is one landing, never a batch member; argparse refuses the pair."""
+        with self.assertRaises(SystemExit) as caught, redirect_stderr(io.StringIO()):
+            land.main(["verify", "--receipt", str(self.path), "--batch-close", "--batch-start", self.base])
+        self.assertEqual(caught.exception.code, 2)
+
     def test_an_empty_row_list_refuses_a_member_past_the_batch_start(self):
         """R7-B1: the judgment reads the rows `require_open_batch` validated, and an empty list is a first member
         only when the pinned predecessor is the batch-start. Anything else refuses instead of demoting it."""
