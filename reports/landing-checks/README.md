@@ -651,12 +651,17 @@ Anyone who writes a checker input in the shared checkout, including readiness re
    read `holder.txt` and clear the directory only if its latest time is more than 90 minutes
    old, otherwise wait five minutes and retry. While you hold it, rewrite the time in
    `holder.txt` at least every 25 minutes, including before each long-job wait; the 90 minutes
-   count from the latest time written. On the remote-host route the check itself runs BEFORE
-   you take the lock; take it for `verify`, the fast-forward, the push, the Plans follow-up and the worktree
-   removal. This is the one lock procedure for every lander, whichever route its checks take;
-   there is no other guard, flock or token. Inspect the shared HEAD, fetched primary and any
-   interrupted landing before proceeding. Before each publication step, confirm `holder.txt`
-   still names your agent and branch; if it does not, stop and hand off to the current holder.
+   count from the latest time written. Rewrite it atomically: write a temp file in `held/` and
+   rename it over `holder.txt` (`python3 -c` with `os.replace`), never with `>` or
+   `open(..., 'w')` on `holder.txt` itself, because a truncate-then-write leaves it empty for an
+   instant and `verify` and `batch-check` refuse a holder that is missing, empty or unreadable
+   ("the holder is being written or is broken; wait and rerun"). On the remote-host route the
+   check itself runs BEFORE you take the lock; take it for `verify`, the fast-forward, the push,
+   the Plans follow-up and the worktree removal. This is the one lock procedure for every
+   lander, whichever route its checks take; there is no other guard, flock or token. Inspect the
+   shared HEAD, fetched primary and any interrupted landing before proceeding. Before each
+   publication step, confirm `holder.txt` still names your agent and branch; if it does not,
+   stop and hand off to the current holder.
    Release the lock with `rm -r` of the `held` directory only after finishing, and only your
    own holder.
 2. In the topic worktree, fetch and rebase on `origin/main`, then push the rebased topic. For
@@ -730,9 +735,9 @@ Anyone who writes a checker input in the shared checkout, including readiness re
 Set `PM_LAND_SCRIPT` to the absolute trusted script path and `PM_LAND_VERIFY_LOG` to a scratch
 path: `verify_checked` writes the `verify` output there on both routes, and `push_checked` reads
 the `PUBLISH_LEASE` back from it. Hold the landing lock (step 1) and run these functions from the
-shared checkout. Renew `holder.txt` before each long wait, and confirm it still names you before
-each publication; if it does not, stop and hand off. Apply the report and shard judgments in the
-numbered steps.
+shared checkout. Renew `holder.txt` atomically (a temp file renamed over it) before each long
+wait, and confirm it still names you before each publication; if it does not, stop and hand off.
+Apply the report and shard judgments in the numbered steps.
 
 ```sh
 verify_checked() {
