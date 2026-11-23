@@ -720,10 +720,12 @@ Anyone who writes a checker input in the shared checkout, including readiness re
 
 ### Locked fast-forward, push and rollback commands
 
-Set `PM_LAND_SCRIPT` to the absolute trusted script path. Hold the landing lock (step 1) and
-run these functions from the shared checkout. Renew `holder.txt` before each long wait, and
-confirm it still names you before each publication; if it does not, stop and hand off. Apply
-the report and shard judgments in the numbered steps.
+Set `PM_LAND_SCRIPT` to the absolute trusted script path and `PM_LAND_VERIFY_LOG` to a scratch
+path: `verify_checked` writes the `verify` output there on both routes, and `push_checked` reads
+the `PUBLISH_LEASE` back from it. Hold the landing lock (step 1) and run these functions from the
+shared checkout. Renew `holder.txt` before each long wait, and confirm it still names you before
+each publication; if it does not, stop and hand off. Apply the report and shard judgments in the
+numbered steps.
 
 ```sh
 verify_checked() {
@@ -772,7 +774,7 @@ rollback_unpublished() {
 Inside a batch, set `PM_LAND_BATCH_START` to the batch-start and leave `PM_LAND_BASE` unset: `verify_checked` then
 passes `--batch-start`. In both routes, `verify` reads `origin/main` once and prints `PUBLISH_LEASE=<that tip>`;
 `push_checked` leases on exactly that value, never on a reread of `origin/main`, and refuses when the ref or the
-candidate moved after verification. Set `PM_LAND_VERIFY_LOG` to a scratch path first.
+candidate moved after verification.
 
 Run `fast_forward_checked` after judging the remote result. After the shared shard
 check, run `push_checked`. If it fails, follow step 8 immediately. If the checkout
