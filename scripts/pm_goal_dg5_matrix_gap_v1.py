@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """goal.cancelled documented-gap edition v1 of the C12-DG5 coverage matrix (Plans/Decision_Log.md#DL-2600).
 
-Jared answered card E-GC-GAP with option B on 2026-11-22. This edition runs AFTER the current builder
-(scripts/pm_goal_dg5_matrix.py) and any correction chain, on the matrix they wrote, and changes exactly
-one row: family goal.cancelled, row dg5/roots/schema. It never edits the builder, never changes any other
-row or family, and relaxes nothing else. A DOCUMENTED_GAP row is a named, reopenable gap, not coverage.
+Jared answered card E-GC-GAP with option B on 2026-11-22. This edition runs LAST: after the current
+builder (scripts/pm_goal_dg5_matrix.py), any correction chain and every admission or intake tool, on the
+final family matrix they wrote. The goal.cancelled admission tool must never run on its output (it skips
+rows that are not OPEN in the prior matrix, so it would freeze this row), and the edition refuses a matrix
+it has already been applied to. It changes exactly one row: family goal.cancelled, row dg5/roots/schema.
+It never edits the builder, never changes any other row or family, and relaxes nothing else. A
+DOCUMENTED_GAP row is a named, reopenable gap, not coverage.
 
 The gap (the signed list's definition, word for word, GAP_DEFINITION): clauses left UNCOVERED by a
 completed, search-exhausted walk on this row (section A), and the named slow-root remainder, root 109
@@ -17,11 +20,19 @@ The row becomes DOCUMENTED_GAP only when all four conditions hold:
      (canonical key, section A, B or T371, an allowed mark, raw ids that are absolute URIs carrying the
      entry's canonical fragment, and sources that each name one of the entry's raw ids and roots); an A
      or B entry's roots are exactly its roots_uncovered plus roots_unsearched; only root 109 is ever
-     unsearched; a B entry names root 109 alone; and no (raw id, root) occurrence is in two entries.
+     unsearched; a B entry names root 109 alone; no (raw id, root) occurrence is in two entries; and its
+     root census names every root bound to the row once, with a known status, root 109 included, and
+     every root an A entry lists as uncovered is EXHAUSTED there. The JSON is parsed from the very bytes
+     that were hashed.
   2. The builder's verdict for the row is OPEN with reason exactly 'clause closure leaves N uncovered'
      (written only after the row's checker verdict closed, its roots exist and no root has an error),
      and its schema_closure agrees (N = the roots' uncovered counts = their clause lists' lengths, no
-     root error, every root bound to goal.cancelled).
+     root error, every root bound to goal.cancelled and carried by a clause-closure report). The row
+     carries EVERY root of the signed list's census except root 109, each with a completed walk (a
+     clause-closure report and no root error), and no root outside the census. A matrix that leaves a
+     census root out (the builder omits a root nobody supplied) or adds a root the census does not
+     know stays OPEN, and the note names those roots. Root 109 may be absent: its unsearched remainder
+     is then reported as section B, part of the gap and never covered.
   3. The checker verdict closed under every builder edition: effective gated PASS, no site conflict, and
      a KILLED or DUPLICATE_SET_KILLED kill of this family (or of a valid shared citation). A verdict that
      could only have closed by proof is not inferred.
@@ -76,6 +87,7 @@ REOPEN_RULE = ('Any new search tool, search-tool edition or authored-case batch 
                'removes its entry in the next edition. An entry leaves the list only by such a published, verified '
                'result. The list never grows except by a reviewed correction.')
 SECTIONS = ('A', 'B', 'T371')
+CENSUS_STATUSES = ('CLOSED', 'EXHAUSTED', 'NOT COMPLETE')
 MARKS = ('none', 'T360 re-run pending', 'M proof pending review', 'carry pending review', 'T371 audit pending')
 KILLS = ('KILLED', 'DUPLICATE_SET_KILLED')  # the closing kill classes every builder edition shares
 SCHEMA_ID = 'pm.pnc019.c12_dg5.coverage_matrix.v1'
@@ -119,7 +131,7 @@ def load_gap_list(directory, edition=DEFAULT_EDITION, pin=None):
     sums_sha = _sha256(sums)
     if sums_sha != expected:
         raise Refusal('SHA256SUMS sha256 %s differs from the pinned %s' % (sums_sha, expected))
-    listed = {}
+    listed, contents = {}, {}
     for number, line in enumerate(sums.decode('utf-8').splitlines(), 1):
         match = SUMS_LINE.fullmatch(line)
         if not match:
@@ -128,28 +140,31 @@ def load_gap_list(directory, edition=DEFAULT_EDITION, pin=None):
         if name in listed:
             raise Refusal('SHA256SUMS names %s twice' % name)
         try:
-            actual = _sha256((directory / name).read_bytes())
+            data = (directory / name).read_bytes()
         except OSError as error:
             raise Refusal('SHA256SUMS names %s, which cannot be read: %s' % (name, error))
-        if actual != digest:
-            raise Refusal('%s sha256 %s differs from SHA256SUMS %s' % (name, actual, digest))
-        listed[name] = digest
+        if _sha256(data) != digest:
+            raise Refusal('%s sha256 %s differs from SHA256SUMS %s' % (name, _sha256(data), digest))
+        listed[name], contents[name] = digest, data
     if spec['json'] not in listed:
         raise Refusal('SHA256SUMS does not list %s' % spec['json'])
     try:
-        doc = json.loads((directory / spec['json']).read_bytes())
+        doc = json.loads(contents[spec['json']])  # the bytes that were hashed, never a second read
     except ValueError as error:
         raise Refusal('%s is not JSON: %s' % (spec['json'], error))
     for key, want in (('schema', spec['schema']), ('family', FAMILY), ('row', ROW),
                       ('definition', GAP_DEFINITION), ('reopen_rule', REOPEN_RULE)):
         if doc.get(key) != want:
             raise Refusal('gap list %s is %r, not %r' % (key, doc.get(key), want))
+    census = _load_census(doc.get('root_census'))
     entries = doc.get('entries')
     if not isinstance(entries, list) or not entries:
         raise Refusal('gap list has no entries')
     keys, index = set(), {}
     for number, item in enumerate(entries):
         _check_entry(number, item)
+        if any(census.get(root) != 'EXHAUSTED' for root in item['roots_uncovered']):
+            raise Refusal('entry %d lists an uncovered root the census does not show EXHAUSTED' % number)
         key = (item['canonical_id'], item['bound_sha256'], item['fragment'])
         if key in keys:
             raise Refusal('entry %d repeats canonical key %r' % (number, key))
@@ -158,8 +173,30 @@ def load_gap_list(directory, edition=DEFAULT_EDITION, pin=None):
             if pair in index and index[pair][0] != number:
                 raise Refusal('raw id %s on root %s is in entries %d and %d' % (pair[0], pair[1], index[pair][0], number))
             index[pair] = (number, kind)
+    section_b = dict(entries=sum(1 for item in entries if item['section'] == 'B'),
+                     occurrences=sum(1 for kind in index.values() if kind[1] == REMAINDER))
     return dict(edition=edition, directory=str(directory), sums_sha256=sums_sha, json_sha256=listed[spec['json']],
-                files=listed, generated_utc=doc.get('generated_utc'), entries=entries, index=index)
+                files=listed, generated_utc=doc.get('generated_utc'), entries=entries, index=index, census=census,
+                section_b=section_b)
+
+
+def _load_census(census):
+    """root -> status for every root the signed list binds to the row; root 109 must be among them."""
+    if not isinstance(census, list) or not census:
+        raise Refusal('gap list has no root_census')
+    statuses = {}
+    for number, item in enumerate(census):
+        root, status = (item.get('root'), item.get('status')) if isinstance(item, dict) else (None, None)
+        if not isinstance(root, str) or not ROOT_ID.fullmatch(root):
+            raise Refusal('root_census row %d has no dg5 root id' % number)
+        if status not in CENSUS_STATUSES:
+            raise Refusal('root_census row %d status %r is not one of %s' % (number, status, CENSUS_STATUSES))
+        if root in statuses:
+            raise Refusal('root_census names %s twice' % root)
+        statuses[root] = status
+    if ROOT_109 not in statuses:
+        raise Refusal('root_census does not name root 109')
+    return statuses
 
 
 def _check_entry(number, item):
@@ -253,6 +290,8 @@ def _schema_problem(closure, count):
             return 'root id %r is not a dg5 root id' % root.get('root')
         if FAMILY not in (root.get('families') or []):
             return 'root %s is not bound to %s' % (root.get('root'), FAMILY)
+        if not root.get('report'):
+            return 'root %s has no clause-closure report' % root.get('root')
         clauses = root.get('uncovered_clauses')
         if not isinstance(clauses, list) or len(clauses) != root.get('uncovered') or len(set(clauses)) != len(clauses):
             return 'root %s uncovered count and clause list disagree' % root.get('root')
@@ -285,7 +324,8 @@ def apply_edition(matrix, gap_list):
         gap_list=dict(edition=gap_list['edition'], directory=gap_list['directory'],
                       sums_sha256=gap_list['sums_sha256'], json_sha256=gap_list['json_sha256'],
                       generated_utc=gap_list['generated_utc']),
-        applied=report['applied'], why=report.get('why'), definition=GAP_DEFINITION, reopen_rule=REOPEN_RULE)
+        applied=report['applied'], why=report.get('why'), definition=GAP_DEFINITION, reopen_rule=REOPEN_RULE,
+        final_stage='this matrix is final: never feed it to the goal.cancelled admission tool or any intake tool')
     _assert_only_target_changed(before, matrix)
     return report
 
@@ -302,6 +342,21 @@ def _apply_row(family, row, gap_list):
     if not _checker_closed(row):
         return _not_applicable(row, 'the checker verdict is not provably CLOSED (gated PASS with a KILLED or '
                                     'DUPLICATE_SET_KILLED kill)', base)
+    census = gap_list['census']
+    present = {root['root'] for root in row['schema_closure']['roots']}
+    missing = sorted(set(census) - {ROOT_109} - present)
+    extra = sorted(present - set(census))
+    if missing or extra:
+        why = []
+        if missing:
+            why.append('%d root(s) the signed list binds to this row have no clause-closure root in the matrix '
+                       '(never walked or not supplied): %s' % (len(missing), ', '.join(missing)))
+        if extra:
+            why.append('%d root(s) are not in the signed list\'s census: %s' % (len(extra), ', '.join(extra)))
+        result = _not_applicable(row, '; '.join(why), base)
+        row['documented_gap'].update(missing_roots=missing, missing_by_status=dict(sorted(collections.Counter(
+            census[r] for r in missing).items())), extra_roots=extra)
+        return result
     entries, index = gap_list['entries'], gap_list['index']
     matches, unlisted = [], []
     for root in row['schema_closure']['roots']:
@@ -324,6 +379,13 @@ def _apply_row(family, row, gap_list):
                 uncovered=count, listed=len(matches), unlisted=len(unlisted), unlisted_clauses=sorted(unlisted),
                 by_kind=dict(sorted(by_kind.items())), by_section=dict(sorted(by_section.items())),
                 by_mark=dict(sorted(by_mark.items())), pending=[d for d in detail if d['mark'] != 'none'],
+                census=dict(roots=len(census), carried=len(present)),
+                section_b=dict(root=ROOT_109, in_matrix=ROOT_109 in present, entries=gap_list['section_b']['entries'],
+                               occurrences=gap_list['section_b']['occurrences'],
+                               note=('root 109 is in the matrix; its UNCOVERED clauses match section B per root'
+                                     if ROOT_109 in present else
+                                     'root 109 is not in the matrix; its unsearched remainder (section B) is part of '
+                                     'the documented gap, never covered')),
                 matches=detail)
     if not applied:
         note['why'] = '%d uncovered clause(s) are not on gap list %s under their own root' % (
@@ -335,8 +397,9 @@ def _apply_row(family, row, gap_list):
     if not isinstance(status, dict) or status.get('OPEN', 0) < 1 or len(opened) != 1:
         raise Refusal('family %s tallies do not show %s as one OPEN row' % (FAMILY, ROW))
     row['status'] = STATUS
-    row['reason'] = ('clause closure leaves %d uncovered, every one on gap list %s under its own root '
-                     '(documented gap, not coverage; %s)' % (count, gap_list['edition'], DECISION_REF))
+    row['reason'] = ('clause closure leaves %d uncovered, every one on gap list %s under its own root, on every '
+                     'census root but root 109, whose unsearched remainder is section B (documented gap, not '
+                     'coverage; %s)' % (count, gap_list['edition'], DECISION_REF))
     row['documented_gap'] = note
     status['OPEN'] -= 1
     if not status['OPEN']:
@@ -347,7 +410,9 @@ def _apply_row(family, row, gap_list):
 
 
 def _assert_only_target_changed(before, after):
-    """Self-check: every other row, family field and top-level key is unchanged."""
+    """Self-check: every other row, family field and top-level key is unchanged, and no family is added."""
+    if set(before.get('families', {})) != set(after.get('families', {})):
+        raise Refusal('the set of families changed')
     for name, data in before.get('families', {}).items():
         new = after['families'][name]
         if set(data) != set(new):
