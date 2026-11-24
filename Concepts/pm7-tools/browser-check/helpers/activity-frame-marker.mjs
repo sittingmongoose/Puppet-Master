@@ -129,21 +129,42 @@ export function markerReading(im, box = MARKER_BOX) {
   return key === null ? null : { count: n, key };
 }
 
-// The key frame (the first captured frame carrying the key band, the frame the key arrived in) and the frame the
+// The key frame (the first captured frame carrying the key band that belongs to this press) and the frame the
 // check must judge before it (counter C-1). Because the counter advances by one per painted frame, the captured frame
 // immediately before the key frame must carry C-1; a dropped key frame or a dropped pre-key frame leaves a gap and the
 // press is unjudged, with the reason the row logs. The recorded S.painted must be C or C-1 (the key can land on either
 // side of the frame's rAF callback); anything else means the film is not this key's.
+// A previous press can leave keyed frames at the capture's start (the stale surface before the arm's clear was
+// captured, e.g. 166K, then a cleared 0, then this press's 1K). The current press is the first keyed frame that follows
+// a cleared frame (no key band) carrying C-1 and whose counter the keydown recorded; the stale lead is skipped, not
+// judged (FO18-SHIFTTAB-PRIOR-PRESS). A genuinely missing or unreadable pre-key frame is still could-not-judge.
 export function keyFrames(readings, recorded) {
-  const at = readings.findIndex(r => r && r.key === 1);
-  if (at < 0) return { at: -1, pre: -1, why: `no frame of ${readings.length} carries the key band: the frame the key arrived in was dropped` };
+  const firstKey = readings.findIndex(r => r && r.key === 1);
+  if (firstKey < 0) return { at: -1, pre: -1, why: `no frame of ${readings.length} carries the key band: the frame the key arrived in was dropped` };
+  if (Number.isInteger(recorded)) {
+    for (let i = 1; i < readings.length; i++) {
+      const r = readings[i];
+      if (!r || r.key !== 1) continue;
+      if (r.count !== recorded && r.count !== ((recorded + 1) & 255)) continue;
+      const p = readings[i - 1], want = (r.count - 1) & 255;
+      if (p && p.key === 0 && p.count === want) return { at: i, pre: i - 1, count: r.count, preCount: want };
+    }
+  }
+  // No valid cleared-to-keyed handover: name the reason on the current press's key frame (the first keyed frame
+  // whose counter the keydown recorded), or the first keyed frame when the recording is absent or foreign, so a
+  // dropped or unreadable pre-key frame, a missing K, or a foreign key is still could-not-judge.
+  let at = firstKey;
+  if (Number.isInteger(recorded)) {
+    const mine = readings.findIndex(r => r && r.key === 1 && (r.count === recorded || r.count === ((recorded + 1) & 255)));
+    if (mine >= 0) at = mine;
+  }
   const count = readings[at].count, want = (count - 1) & 255;
   if (at === 0) return { at, pre: -1, why: `the capture starts at the key frame (counter ${count}), with no frame of counter ${want} before it` };
   if (!readings[at - 1]) return { at, pre: -1, why: `the frame before the key frame (counter ${count}) is unreadable, so counter ${want} cannot be checked` };
   if (readings[at - 1].count !== want) return { at, pre: -1, why: `the frame before the key frame (counter ${count}) carries counter ${readings[at - 1].count}, not ${want}: the pre-key frame was dropped` };
+  if (readings[at - 1].key === 1) return { at, pre: -1, why: `the frame before the key frame (counter ${count}) still carries the key band: the cleared pre-key frame was dropped` };
   if (!Number.isInteger(recorded)) return { at, pre: -1, why: `the trusted keydown recorded no painted counter (${JSON.stringify(recorded)})` };
-  if (recorded !== count && recorded !== want) return { at, pre: -1, why: `the keydown recorded counter ${recorded}, but the key frame carries ${count}: the film is not this key's` };
-  return { at, pre: at - 1, count, preCount: want };
+  return { at, pre: -1, why: `the keydown recorded counter ${recorded}, but the key frame carries ${count}: the film is not this key's` };
 }
 
 // The check's ring-side rule: a side holds when 90% of its scanlines hold the mark's ink at 3:1 (see ringSides).
