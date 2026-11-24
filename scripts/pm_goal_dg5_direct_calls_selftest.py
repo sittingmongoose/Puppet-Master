@@ -49,6 +49,21 @@ error makes each trial FAIL separately (per-trial red on a base without the coll
   child_parent_differ      a no-store call whose child and parent runs give different results: NOT recorded,
                            counted, and the case gets the parent's result
   path_argument            a no-store call given a filesystem path: not probed, NOT recorded, counted
+ collector round 2 (lead ruling 1124101552-8f55, items C1-C7; each trial mirrors the named real case, and
+ pm_goal_dg5_direct_calls_r2_selftest.py drives the real cases themselves):
+  dg5_module_factory       C1: case body and its make() factory inside a pm_goal_dg5_* module (the adapter
+                           supplement step_case.<locals>.make -> LifecycleReducer.initial shape): NOT recorded
+  runner_direct_verdict    C2: the case runner itself calls the listed method (Suite._run/run_case verdict
+                           read shape): NOT recorded, counted under harness_calls
+  runner_code_of_verdict   C2: runner -> code_of helper -> listed method (Suite.negative shape): NOT recorded
+  sealed_dest_outside      C3: a sealed call given a destination Path in a disjoint tree (BackupOwner.take
+                           shape): NOT recorded, counted under unsealable_calls
+  sealed_dest_inside       C3: the same call with its destination under the sealed root: recorded
+  returned_lambda_action   C4: an action lambda returned by make() and run by the case (cb_case/U5 shape):
+                           recorded (make has returned; only the lambda frame is on the stack)
+  inside_make_call         C4: a listed call made by make() itself while it runs: NOT recorded (control)
+  collector_frame_checker  C6: in refusal_origin the collector pass-through frame is a bridge/checker frame
+                           (the S2 StartOwner.commit_start own-guard chain shape)
 
 Usage: python3 -B scripts/pm_goal_dg5_direct_calls_selftest.py --out RESULT.json
 """
@@ -114,13 +129,26 @@ OWNER = textwrap.dedent('''
 
     def at_path(path):
         return ('path', str(path))
+
+    def with_dest(store, dest, x):
+        return ('dest', x)
+
+    def boom(x):
+        raise Refusal('dcself/boom')
     ''')
 ORACLES = textwrap.dedent('''
     import pm_goal_dg_dcself_owner as owner
 
+    def code_of(thing):
+        return thing.listed(12)            # a verdict-read helper (the runners' code_of shape)
+
     class Suite:
         def negative(self, fn):
             return fn()                    # the case runner: it calls the case body
+        def verdict(self, thing):
+            return code_of(thing)          # the runner's own verdict read, after the case body
+        def verdict_direct(self, thing):
+            return thing.listed(13)        # the runner itself calls the listed method
 
     class Run:
         def __init__(self, thing):
@@ -150,6 +178,29 @@ ORACLES = textwrap.dedent('''
 
     def body_direct(thing):
         return thing.listed(9)
+
+    def make_action(thing):
+        def make():
+            return lambda: thing.listed(14)
+        return make()
+
+    def body_returned_lambda(thing):
+        return make_action(thing)()
+
+    def make_calls(thing):
+        def make():
+            return thing.listed(15)
+        return make()
+
+    def body_inside_make(thing):
+        return make_calls(thing)
+    ''')
+DG5BODY = textwrap.dedent('''
+    def make(thing):
+        return thing.listed(11)            # a factory inside a pm_goal_dg5_* module (adapter step_case shape)
+
+    def body_via_make(thing):
+        return make(thing)
     ''')
 WRAPPER = textwrap.dedent('''
     import pm_goal_dg5_boundaries as bridge
@@ -162,16 +213,27 @@ WRAPPER = textwrap.dedent('''
             return oracles.Suite().negative(lambda: body(thing))
         finally:
             bridge.CASE[0] = saved
+
+    def case_verdict(case_id, thing, direct=False):
+        saved = bridge.CASE[0]
+        bridge.CASE[0] = dict(id=case_id, expected=None)
+        try:
+            suite = oracles.Suite()
+            return suite.verdict_direct(thing) if direct else suite.verdict(thing)
+        finally:
+            bridge.CASE[0] = saved
     ''')
 METHODS = ['Thing.listed', 'Thing.calls_listed', 'pm_goal_dg_dcself_owner:pure', 'pm_goal_dg_dcself_owner:with_store',
            'pm_goal_dg_dcself_owner:with_world'] + ['pm_goal_dg_dcself_owner:' + f for f in
-                                                    ('encode', 'refuse', 'bump', 'forked', 'at_path')]
+                                                    ('encode', 'refuse', 'bump', 'forked', 'at_path', 'with_dest', 'boom')]
 TRIALS = ['listed_direct', 'listed_no_case', 'listed_nested_owner', 'listed_inside_entry', 'not_listed',
           'constructor_not_listed', 'module_function_unsealed', 'store_argument', 'install_report', 'constructor_listed',
           'fixture_class_by_rule', 'pin', 'runner_not_construction', 'oracle_constructor', 'oracle_world_method',
           'oracle_factory_name', 'oracle_plain_helper', 'sibling_store_unsealable', 'stores_under_root',
           'closure_sibling', 'large_world_recorded', 'truncated_walk_refused',
-          'pure_read_recorded', 'pure_refusal_recorded', 'owner_state_change', 'child_parent_differ', 'path_argument']
+          'pure_read_recorded', 'pure_refusal_recorded', 'owner_state_change', 'child_parent_differ', 'path_argument',
+          'dg5_module_factory', 'runner_direct_verdict', 'runner_code_of_verdict', 'sealed_dest_outside',
+          'sealed_dest_inside', 'returned_lambda_action', 'inside_make_call', 'collector_frame_checker']
 
 
 def load_module(folder, name, text):
@@ -237,6 +299,11 @@ class Env:
             self.owner = load_module(self.folder, 'pm_goal_dg_dcself_owner', OWNER)
             self.oracles = load_module(self.folder, 'pm_goal_dg_dcself_oracles', ORACLES)
             self.wrapper = load_module(self.folder, 'pm_goal_dg5_dcself_wrapper', WRAPPER)
+            self.dg5body = load_module(self.folder, 'pm_goal_dg5_dcself_body', DG5BODY)
+            wrappers = getattr(dc, 'CASE_WRAPPERS', None)   # round 2 C1: explicit wrappers (absent at the base)
+            if wrappers is not None:
+                wrappers.update({('pm_goal_dg5_dcself_wrapper', 'case'),
+                                 ('pm_goal_dg5_dcself_wrapper', 'case_verdict')})
             fresh(self.folder, METHODS)
             self.report = dc.install('selftest.family')
             self.store = storage.TestOwnerStorage.create(self.folder / 'store')
@@ -286,7 +353,8 @@ class Env:
             self.owner_state.HOOKS.pop('selftest.family', None)
         if getattr(self, 'saved', None):
             dc.METHODS, dc.METHODS_SHA256, dc._LIST[:], dc.REPORTS, bridge.entry_call = self.saved
-        for name in ('pm_goal_dg_dcself_owner', 'pm_goal_dg_dcself_oracles', 'pm_goal_dg5_dcself_wrapper'):
+        for name in ('pm_goal_dg_dcself_owner', 'pm_goal_dg_dcself_oracles', 'pm_goal_dg5_dcself_wrapper',
+                     'pm_goal_dg5_dcself_body'):
             sys.modules.pop(name, None)
 
 
@@ -405,6 +473,50 @@ def checks(env):
         after = report().get('unsealable_calls', {}).get('pm_goal_dg_dcself_owner:with_world', 0)
         return not rec and after == before + 1, rec
 
+    def dg5_module_factory():
+        # C1 (adapter/dg5-shared/source_step_* -> LifecycleReducer.initial in step_case.<locals>.make)
+        before = dict(report().get('construction_calls', {}))
+        e.calls.clear()
+        e.wrapper.case('selftest/dg5body', e.dg5body.body_via_make, e.thing)
+        rec = [c['label'] for c in e.calls]
+        counted = report().get('construction_calls', {}).get('Thing.listed', 0) - before.get('Thing.listed', 0)
+        return not rec and counted == 1, dict(recorded=rec, construction_counted=counted)
+
+    def runner_verdict(direct):
+        # C2 (Suite._run -> dg_s_world:code_of; Suite.negative -> code_of -> refusal_code; run_case -> code_of)
+        def check():
+            before = dict(report().get('harness_calls', {}))
+            e.calls.clear()
+            e.wrapper.case_verdict('selftest/verdict', e.thing, direct=direct)
+            rec = [c['label'] for c in e.calls]
+            counted = report().get('harness_calls', {}).get('Thing.listed', 0) - before.get('Thing.listed', 0)
+            return not rec and counted == 1, dict(recorded=rec, harness_counted=counted)
+        return check
+
+    def sealed_dest_outside():
+        # C3 (CF3 cf12 BackupOwner.take(st, d/'unit') outside the sealed <case>/storage root)
+        before = report().get('unsealable_calls', {}).get('pm_goal_dg_dcself_owner:with_dest', 0)
+        rec = e.run(lambda: e.owner.with_dest(e.store, e.folder / 'unit', 4))
+        after = report().get('unsealable_calls', {}).get('pm_goal_dg_dcself_owner:with_dest', 0)
+        return not rec and after == before + 1, rec
+
+    def sealed_dest_inside():
+        rec = e.run(lambda: e.owner.with_dest(e.store, Path(e.store.root) / 'unit', 4))
+        return bool(rec) and e.calls[-1]['work'] == str(e.store.root), rec
+
+    def collector_frame_checker():
+        # C6 (S2/v7_producer_wrong_payload_header StartOwner.commit_start own-guard chain)
+        caught = []
+        def call():
+            try:
+                e.owner.boom(1)
+            except Exception as error:  # noqa: BLE001
+                caught.append(error)
+        e.run(call, parent=True)   # pass-through: the collector's own call frame is on the stack
+        origin = bridge.refusal_origin(caught[0], 'dcself/boom') if caught else {}
+        frames = [f for f in origin.get('frames', []) if f[0].endswith('pm_goal_dg5_direct_calls.py')]
+        return bool(frames) and all(f[3] and f[4] for f in frames), dict(frames=frames, origin_site=origin.get('site'))
+
     return {
         'closure_sibling': closure_sibling,
         'large_world_recorded': large,
@@ -435,6 +547,14 @@ def checks(env):
         'child_parent_differ': no_store('forked', False, 'different outcomes',
                                         check=lambda got: got == [('result', ('forked', True))]),
         'path_argument': no_store('at_path', False, 'filesystem path'),
+        'dg5_module_factory': dg5_module_factory,
+        'runner_direct_verdict': runner_verdict(True),
+        'runner_code_of_verdict': runner_verdict(False),
+        'sealed_dest_outside': sealed_dest_outside,
+        'sealed_dest_inside': sealed_dest_inside,
+        'returned_lambda_action': through('body_returned_lambda', True),
+        'inside_make_call': through('body_inside_make', False),
+        'collector_frame_checker': collector_frame_checker,
     }
 
 
