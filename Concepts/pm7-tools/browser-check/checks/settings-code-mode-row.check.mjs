@@ -21,8 +21,9 @@ const ROW = ([id, label, desc]) => {
 	const row = sw.closest(`[data-setting-id="${id}"]`) || sw.closest('.setting-row, .pm51-row, .o55-scoped, li, tr') || sw.parentElement;
 	const r = sw.getBoundingClientRect();
 	const lines = (row.innerText || '').split('\n').map((s) => s.replace(/\s+/g, ' ').trim()).filter(Boolean);
-	/* painted, not only present: the innermost element that holds exactly these words is visible, has a box, and lies
-	   inside the window and inside every ancestor that clips or scrolls (review 3: innerText also returns clipped text) */
+	/* shown, not only present: the innermost element that holds exactly these words passes the computed visibility
+	   checks, has a box, and lies inside the window and inside every ancestor that clips or scrolls (review 3: innerText
+	   also returns clipped text). This is geometry and computed style, not a pixel reading of the words' ink. */
 	const holder = (words) => [...row.querySelectorAll('*')].filter((el) => (el.innerText || '').replace(/\s+/g, ' ').trim().toLowerCase() === words.toLowerCase()).pop();
 	const shown = (el) => {
 		if (!el || !el.checkVisibility({ opacityProperty: true, visibilityProperty: true, contentVisibilityAuto: true })) return false;
@@ -74,7 +75,7 @@ export default async function (t) {
 	if (!row.drawn) return;
 	await t.check('the row\'s first line is the inventory label', sameLabel(row.lines[0]), JSON.stringify(row.lines));
 	await t.check('the row holds the inventory\'s complete sentence, as one of its lines', row.lines.includes(norm(INV.desc)), JSON.stringify(row.lines));
-	await t.check('the label and the sentence are painted: visible, inside the window and inside every clipping ancestor', row.labelShown === true && row.descShown === true, `label ${row.labelShown}, sentence ${row.descShown}`);
+	await t.check('the label and the complete sentence pass the computed visibility checks, and their boxes fit inside the window and every scrolling or clipping ancestor', row.labelShown === true && row.descShown === true, `label ${row.labelShown}, sentence ${row.descShown}`);
 	await t.check('the row has exactly one switch', row.switches === 1, String(row.switches));
 	await t.check('the switch starts On, the inventory default', row.checked === 'true', String(row.checked));
 
