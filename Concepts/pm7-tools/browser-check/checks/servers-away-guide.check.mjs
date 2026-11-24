@@ -17,8 +17,7 @@
 // On the unchanged page the guide has one "Sign in to Tailscale" button that jumps to Signed in, a "Puppet Master sets it
 // up (Caddy)" choice that "gets a free certificate by itself", Nginx Proxy Manager as a file to make, four check rows and
 // a pm-link://<server id>-<code> link. Runs on the surface the switch picks (--set sandbox=1 for T3's preview).
-import fs from 'node:fs';
-import { pagePath } from '../helpers/onboarding-fields.mjs';
+import { sourcePage } from '../helpers/onboarding-fields.mjs';
 import { ink } from '../helpers/text-ink.mjs';
 import { LOOKS } from '../browser-check.config.mjs';
 
@@ -332,7 +331,9 @@ export const tests = {
 		await t.check('pairing stays its own step', /still asks you to approve it/.test(body), body.slice(0, 400));
 	},
 	async 'the built page: none of the retired promises remain in the Server manager'(t) {
-		const html = fs.readFileSync(pagePath(t), 'utf8');
+		const { text: html, sha256, url } = await sourcePage(t);
+		t.log(`built source ${url} sha256 ${sha256}`);
+		if (t.args.sourceSha) await t.check('the built source is the requested build (sha256)', sha256 === String(t.args.sourceSha).toLowerCase(), `read ${sha256}, requested ${t.args.sourceSha}`);
 		const PATS = { 'pm-link://': /pm-link:\/\//, 'Puppet Master sets it up (Caddy)': /Puppet Master sets it up \(Caddy\)/, 'gets a free certificate by itself': /gets a free certificate by itself/, 'Caddy (free certificate, simplest)': /Caddy \(free certificate, simplest\)/, 'Nginx Proxy Manager file (SSL: Request a new certificate)': /SSL: Request a new certificate/ };
 		const found = Object.entries(PATS).filter(([, rx]) => rx.test(html)).map(([k]) => k);
 		await t.check('the built page carries none of them', !found.length, found.join(', '));
