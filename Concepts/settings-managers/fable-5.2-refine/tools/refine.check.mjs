@@ -86,20 +86,31 @@ export const tests = {
 	},
 
 	async 'left as Jared asked: the tab strips are centred and the side column lists the chapter'(t) {
-		const f = await openSettings(t, [1920, 1080]);
-		await go(f, 'ai', 'providers');
+		/* FO-184. Since the sixth pass the chapter's strip shares its row with Explain, the project and the page options, and
+		   stands over the middle of the page under it (the axis of the manager's own title and strip) whenever the row has
+		   room on both sides; when it has not, the strip sits beside the buttons instead of somewhere in between. */
+		const f = await openSettings(t);
+		await go(f, 'general', 'notifications');
+		const room = await f.evaluate((sel) => {
+			const mid = (r) => r.left + r.width / 2, R = (n) => n.getBoundingClientRect();
+			const track = document.querySelector('#pm-settings-root nav.workspace-tabs .rf-bar-track'), main = document.querySelector('#pm-settings-root .document-main');
+			const page = document.querySelector(`${sel} .pm51-mgr > .pm51-tabs`), body = document.querySelector(`${sel} .pm51-mgr`);
+			return { top: Math.round(mid(R(track)) - mid(R(main))), axis: Math.round(mid(R(track)) - mid(R(page))), page: Math.round(mid(R(page)) - mid(R(body))) };
+		}, block('notifications'));
+		await t.check('with room, the chapter\'s tab strip is centred over the page (FO-184)', Math.abs(room.top) <= 3 && Math.abs(room.axis) <= 3, JSON.stringify(room));
+		await t.check('the manager\'s tab strip is centred (FO-184)', Math.abs(room.page) <= 3, `${room.page} px off`);
+		/* a wide window opens the assistant beside Settings, which leaves the bar less room than four tabs and three buttons want */
+		await t.viewport(1920, 1080); await go(f, 'ai', 'providers'); await sleep(f, 500);
 		const got = await f.evaluate((sel) => {
-			const mid = (r) => r.left + r.width / 2;
-			const strip = document.querySelector('#pm-settings-root .workspace-tabs'), tabs = [...strip.querySelectorAll('.workspace-tab')];
-			const first = tabs[0].getBoundingClientRect(), last = tabs[tabs.length - 1].getBoundingClientRect(), sr = strip.getBoundingClientRect();
+			const mid = (r) => r.left + r.width / 2, R = (n) => n.getBoundingClientRect();
+			const nav = document.querySelector('#pm-settings-root nav.workspace-tabs'), track = nav.querySelector('.rf-bar-track'), tools = nav.querySelector('.rf-bar-tools .page-actions'), main = document.querySelector('#pm-settings-root .document-main');
 			const page = document.querySelector(`${sel} .pm51-mgr > .pm51-tabs`), body = document.querySelector(`${sel} .pm51-mgr`);
 			const index = document.querySelector('#pm-settings-root .page-index');
-			const main = document.querySelector('#pm-settings-root .document-main').getBoundingClientRect();
-			return { top: Math.round((first.left + last.right) / 2 - mid(main)), bar: Math.round((first.left + last.right) / 2 - mid(sr)), page: Math.round(mid(page.getBoundingClientRect()) - mid(body.getBoundingClientRect())),
+			return { off: Math.round(mid(R(track)) - mid(R(main))), gap: Math.round(R(tools).left - R(track).right), inside: R(track).left >= R(nav).left - 0.5, rows: Math.round(R(nav).height), page: Math.round(mid(R(page)) - mid(R(body))),
 				index: !!index && index.getClientRects().length > 0, groups: [...document.querySelectorAll('#pm-settings-root .page-index .pm51-index-group')].filter((n) => n.getClientRects().length).length };
 		}, block('providers'));
-		await t.check('the chapter\'s tab strip is centred over the page, on the axis of the manager\'s own strip (FO-184)', Math.abs(got.top) <= 3, `${got.top} px off the page's middle (${got.bar} px off the bar's)`);
-		await t.check('the manager\'s tab strip is centred (FO-184)', Math.abs(got.page) <= 3, `${got.page} px off`);
+		await t.check('without room to centre, the strip sits beside the buttons, whole, in the one row', Math.abs(got.off) <= 3 || (got.gap >= 12 && got.gap <= 20 && got.inside && got.rows <= 50), JSON.stringify(got));
+		await t.check('the manager\'s tab strip is centred there too', Math.abs(got.page) <= 3, `${got.page} px off`);
 		await t.check('the side column is there on a manager with tabs, with every manager of the chapter (FO-185)', got.index && got.groups === 4, JSON.stringify(got));
 	},
 

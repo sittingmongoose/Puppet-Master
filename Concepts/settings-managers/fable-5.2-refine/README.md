@@ -68,7 +68,7 @@ by side, and a square chip gets a square box (`styles.d/98-refine-bar.css`, `--r
 | Friendly | 9 px chip whose hard shadow sat on the box's line | 2 px more room inside; 14 px box |
 | Retro | Square keys in a round box with a soft shadow | Keys with no box round them, as Retro's other selectors are |
 | NieR | Square in square | Unchanged |
-| Glass | 9 px thumb, 5 px in, in a 14 px box | Unchanged; the chapter's track and the small selectors get 10 px |
+| Glass | The glass chip (6 px corner) in a 14 px box | 10 px box, for a manager's strip, the chapter's track and the small selectors |
 
 The small "pick one of these words" selectors (`.segmented`) had the same fault in Friendly and Glass (a box as round
 as its chip, 4 px outside it) and follow the same rule. `tabs.check.mjs` (with the evidence) finds every strip in every

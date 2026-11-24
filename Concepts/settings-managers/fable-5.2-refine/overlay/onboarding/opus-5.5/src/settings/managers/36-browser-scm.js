@@ -36,8 +36,9 @@
   /* the card the example computer has (a concept's prefilled fact) */
   const CARD = 'Quadro P1000';
 
-  /* the manager's name, wherever Settings reads it from the chapter list */
+  /* the manager's name, wherever Settings reads it from the chapter list, and the line under it when Explain is on */
   D.domains.forEach(d => d.workspaces.forEach(w => { if (w.id === ID) w.label = NAME; }));
+  if (typeof INTROS === 'object' && INTROS) INTROS[ID] = 'The built-in browser, what the assistant does in it, and the pictures and video it keeps.';
 
   const b = () => { const x = PM51.s().browser; delete x.keepDays; delete x.capture; if (!x.share) x.share = 'Ask'; return x; };
   /* the screenshot choice is kept where Testing reads it */
