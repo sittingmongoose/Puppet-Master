@@ -126,6 +126,18 @@ save, sound off unless asked). Two of canon's rows moved within the page: the as
 work, "Screenshot button captures" to the screenshot's Picture group. Nothing was removed. The name is changed in the
 two other managers that point at the page (`11-web.js`, taken for one label; `25-testing.js`).
 
+**Also in this pass.** The project button's menu named a page that no longer exists ("Project Location & Sync"); the
+item reads "Servers & Remote Access" and goes there. The chip engine takes every border off the chapter's strip with
+`!important`, so the bar's line is set over it by name. After the bar settles (a class or a width set after the draw)
+the chip is measured again (`window.PM_LG.syncScope`), or it stays where the tabs were.
+
+**Checked on the final build (2026-11-24):** the fourteen tests, 166 checks, pass in one run, "nothing was dropped"
+among them. `tabs.check.mjs` in all ten looks: no strip whose box does not follow its chip (38 kinds of strip in
+Basic, Friendly and NieR, 35 in Retro; in Glass the chip is drawn on the glass layer where the script cannot see it,
+so Glass was judged on 4x close-ups). `align.check.mjs` in Basic dark: the same 21 explained lines as after the fifth
+pass, none new on the browser's tabs, the crew's rows or under the bar. The tour: 77 views, nothing spills sideways.
+**Not run:** stream F's Settings checks (see the end of this file).
+
 **To merge this into PMConcept7,** the fifty rows need a home the build accepts: admission to the Plans inventory (a
 Plans task, with the six capture defaults the Plans already name), or a pending-rows list in PMConcept7's build.
 
