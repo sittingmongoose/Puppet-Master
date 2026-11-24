@@ -33,10 +33,11 @@ Any other call runs the original method unchanged and unrecorded (a nested call 
 
 Round 2 (lead ruling 1124101552-8f55, items C1-C7; regression pm_goal_dg5_direct_calls_r2_selftest.py): case
 wrappers come from the explicit CASE_WRAPPERS list (C1); a runner's own verdict reads are harness and never
-record (C2, ``harness_calls``); construction matches a frame's own function, so an action returned by a
-factory-named generator records (C4); and a recorded direct call's parent run is the corpus execution, so
-registered entries nested in it still record as entries (C5, bridge DIRECT_PARENT) — wrapping a composite
-listed method must not swallow the entries (and corpus slots) inside it.
+record (C2, ``harness_calls``), including a registered runner frame with no case wrapper on the stack
+(RUNNER_FRAMES: CF1 run()'s post-case refusal read); construction matches a frame's own function, so an action
+returned by a factory-named generator records (C4); and a recorded direct call's parent run is the corpus
+execution, so registered entries nested in it still record as entries (C5, bridge DIRECT_PARENT) — wrapping a
+composite listed method must not swallow the entries (and corpus slots) inside it.
 
 The complete call needs a store to seal: the receiver's world or Storage, found as a census entry finds it, or
 (for a module function or a receiver without one) the first argument that is a TestOwnerStorage or holds one. The
@@ -197,6 +198,15 @@ HARNESS_MODULES = frozenset({'pm_goal_dg5_boundaries', __name__})
 # CF1's original run_path IS the authored case body (the census counts its own calls as direct; recheck
 # NOTE 2), so for that one wrapper the "runner" frame belongs to the checked segment like any body frame.
 BODY_RUNNERS = frozenset({('pm_goal_dg_cf1_oracles', 'run_path')})
+# Round 2 C2 follow-up (DG5 decision on the CF1 stopper, 2026-11-24): a case runner can still be on the stack
+# after its case wrapper returned. pm_goal_dg_cf1_oracles.run()'s exception handler reads A.refusal_code(error)
+# once install_cf1.run_path is done — CASE still current, no case wrapper on the stack — so the collector filed
+# the runner's own verdict read (42 records on the fixed CF-03 run; the census's own call site for the method is
+# pm_goal_dg_cf1_oracles.py:811(run)). A listed call whose immediate caller is one of these runner frames and
+# that has no case wrapper on the stack is harness, never a record. A missing entry records a runner read, so the
+# real-case trial c2_cf1_runner_refusal_code pins it; case semantics are untouched (no CASE save/restore), so
+# every legitimate post-run_path body call still records.
+RUNNER_FRAMES = {('pm_goal_dg_cf1_oracles', 'run')}
 
 
 def direct(frame):
@@ -216,7 +226,9 @@ def direct(frame):
         is never recorded; counted under harness_calls. Only when a real body frame sits below the runner is
         the runner itself exempt from the construction check, exactly as before (fixture-class runners such as
         Suite.negative still pass their cases' own calls). Bridge/collector frames in the segment are harness
-        for the same reason. CF1's run_path is the one body-runner (BODY_RUNNERS)."""
+        for the same reason. CF1's run_path is the one body-runner (BODY_RUNNERS). A registered runner frame
+        with no case wrapper on the stack (CF1's run() reading its refusal code once the case is over) is
+        harness too (RUNNER_FRAMES)."""
     frames = []
     while frame is not None:
         frames.append(frame)
@@ -225,6 +237,8 @@ def direct(frame):
         if owner_module(f.f_globals.get('__name__')):
             return False, 'owner frame'
     boundary = next((i for i, f in enumerate(frames) if case_wrapper(f)), None)
+    if boundary is None and (frames[0].f_globals.get('__name__'), frames[0].f_code.co_qualname) in RUNNER_FRAMES:
+        return False, 'harness runner frame ' + frames[0].f_code.co_qualname
     if boundary is None:
         segment = frames
     elif boundary == 0:
