@@ -177,14 +177,31 @@ _AGGREGATE_CHILD_ENV = "PM_PLANS_VERIFY_AGGREGATE_CHILD"
 # One shared worker budget for a whole landing check: --jobs counts every validator running at once
 # across the three checks, not N per aggregate (review N-F). The landing check creates this many slot
 # files in one directory; each validator holds one slot file for as long as its process runs, so the
-# aggregates (and an export) never exceed N between them. The same directory names the memory floor a
-# validator must find available before it starts. Without fcntl or /proc none of it is enforced: the
-# per-aggregate ThreadPool still bounds one aggregate, and a result is never changed either way.
+# aggregates and every export never exceed N between them. Without fcntl or /proc the budget is not
+# enforced: the per-aggregate ThreadPool still bounds one aggregate, and a result is never changed
+# either way.
+#
+# The memory floor limits concurrency, never progress (deep review 2, D2-1/D2-2). A start is decided
+# under ONE cross-process start lock in the same directory, which the three aggregates and the exports
+# all share. With no validator of this run running, a validator always starts, whatever MemAvailable
+# reads: base ran one validator at a time, so a low-memory host gets exactly that instead of waiting.
+# A second or later validator starts only while MemAvailable is at least the floor plus
+# MEMORY_HEADROOM_MB for each validator already running, and only after START_SETTLE_SECONDS since the
+# last start, so the reading includes the process just started. A held-back start logs once a minute
+# and retries; it can never wait without end, because the running validator's exit makes the next
+# start the first one again.
 SLOTS_DIR_ENV = "PM_LANDING_CHECK_SLOTS_DIR"
 SLOTS_COUNT_ENV = "PM_LANDING_CHECK_SLOTS"
 MEMORY_FLOOR_MB_ENV = "PM_LANDING_CHECK_MEMORY_FLOOR_MB"
+MEMORY_HEADROOM_MB_ENV = "PM_LANDING_CHECK_MEMORY_HEADROOM_MB"
+START_SETTLE_SECONDS_ENV = "PM_LANDING_CHECK_START_SETTLE_SECONDS"
 MAX_JOBS = 8
-MEMORY_POLL_SECONDS = 5.0
+DEFAULT_MEMORY_HEADROOM_MB = 2048
+DEFAULT_START_SETTLE_SECONDS = 10.0
+START_LOCK_NAME = "start.lock"
+LAST_START_NAME = "last-start"
+HOLD_LOG_SECONDS = 60.0
+START_RETRY_SECONDS = 0.25
 
 
 def memory_available_mb(meminfo: str = "/proc/meminfo") -> int | None:
@@ -207,24 +224,39 @@ def memory_available_mb(meminfo: str = "/proc/meminfo") -> int | None:
 
 
 class ValidatorSlots:
-    """At most `count` validators at once, and none started below the memory floor.
+    """At most `count` validators at once, under a memory floor that limits concurrency, never progress.
 
-    Each slot is a file held with an exclusive flock while its validator runs, so the budget is
-    shared by every process in the landing check rather than one pool per aggregate. Before a
-    validator starts, available memory is read; while it is below the floor the pool waits and says
-    so on stderr. A slot is not permission to start below the floor: memory is read again after the
-    slot is taken, and the waiter releases it and keeps waiting when it has fallen.
+    Each slot is a file held with an exclusive flock while its validator runs, so the budget is shared
+    by every process in the landing check rather than one pool per aggregate. Every start is decided
+    under one cross-process start lock (`start.lock` in the same directory):
+
+    - with no validator of this run running, a validator always starts, whatever MemAvailable reads:
+      that is base's serial behaviour, so a low-memory host runs one at a time instead of waiting;
+    - a second or later validator starts only when MemAvailable is at least the floor plus one
+      headroom for each validator already running, after a settle time since the last start so the
+      reading includes the process just started.
+
+    A held-back start releases the lock, says so once a minute and retries; the validator that is
+    running can finish, which makes the next start the first one again, so the run always advances.
+    Without the slot directory, fcntl, or a MemAvailable reading none of it is enforced and the
+    validator runs exactly as it ran before this budget existed.
     """
 
     def __init__(self, directory, count: int, floor_mb: int = 0, *, fcntl_module,
-                 available=memory_available_mb, sleep=time.sleep, poll_seconds: float = MEMORY_POLL_SECONDS):
+                 available=memory_available_mb, sleep=time.sleep,
+                 headroom_mb: int = DEFAULT_MEMORY_HEADROOM_MB,
+                 settle_seconds: float = DEFAULT_START_SETTLE_SECONDS,
+                 clock=time.monotonic):
         self.directory = Path(directory)
         self.count = count
         self.floor_mb = max(0, floor_mb)
+        self.headroom_mb = max(0, headroom_mb)
+        self.settle_seconds = max(0.0, settle_seconds)
         self.fcntl = fcntl_module
         self._available = available
         self._sleep = sleep
-        self._poll_seconds = poll_seconds
+        self._clock = clock
+        self._last_hold_log = float("-inf")
 
     @classmethod
     def from_environment(cls) -> "ValidatorSlots | None":
@@ -247,24 +279,90 @@ class ValidatorSlots:
             floor_value = max(0, int(floor)) if floor else 0
         except ValueError:
             floor_value = 0
-        return cls(directory, count_value, floor_value, fcntl_module=fcntl)
+        headroom = os.environ.get(MEMORY_HEADROOM_MB_ENV)
+        try:
+            headroom_value = max(0, int(headroom)) if headroom else DEFAULT_MEMORY_HEADROOM_MB
+        except ValueError:
+            headroom_value = DEFAULT_MEMORY_HEADROOM_MB
+        settle = os.environ.get(START_SETTLE_SECONDS_ENV)
+        try:
+            settle_value = max(0.0, float(settle)) if settle else DEFAULT_START_SETTLE_SECONDS
+        except ValueError:
+            settle_value = DEFAULT_START_SETTLE_SECONDS
+        return cls(directory, count_value, floor_value, fcntl_module=fcntl,
+                   headroom_mb=headroom_value, settle_seconds=settle_value)
 
-    def _wait_for_memory(self, label: str) -> None:
-        if self.floor_mb <= 0:
+    def _running_count(self) -> int:
+        """How many slots of this run are held right now; read under the start lock."""
+        running = 0
+        for index in range(self.count):
+            try:
+                handle = (self.directory / f"slot-{index}.lock").open("a+b")
+            except OSError:
+                continue
+            try:
+                self.fcntl.flock(handle.fileno(), self.fcntl.LOCK_EX | self.fcntl.LOCK_NB)
+            except OSError:
+                running += 1
+            else:
+                try:
+                    self.fcntl.flock(handle.fileno(), self.fcntl.LOCK_UN)
+                except OSError:
+                    pass
+            finally:
+                handle.close()
+        return running
+
+    @contextmanager
+    def _start_lock(self):
+        """The one cross-process start lock, or False where this host cannot take it."""
+        try:
+            handle = (self.directory / START_LOCK_NAME).open("a+b")
+        except OSError:
+            yield False
             return
-        available = self._available()
-        if available is None or available >= self.floor_mb:
+        try:
+            self.fcntl.flock(handle.fileno(), self.fcntl.LOCK_EX)
+        except OSError:
+            handle.close()
+            yield False
             return
-        print(f"[pm-plans-verify] waiting for memory: {available / 1024:.1f} GiB available, floor "
-              f"{self.floor_mb / 1024:.1f} GiB, before {label}", file=sys.stderr, flush=True)
-        while True:
-            self._sleep(self._poll_seconds)
-            available = self._available()
-            if available is None or available >= self.floor_mb:
-                found = "unknown" if available is None else f"{available / 1024:.1f} GiB"
-                print(f"[pm-plans-verify] memory is back: {found}, before {label}",
-                      file=sys.stderr, flush=True)
-                return
+        try:
+            yield True
+        finally:
+            try:
+                self.fcntl.flock(handle.fileno(), self.fcntl.LOCK_UN)
+            except OSError:
+                pass
+            handle.close()
+
+    def _settle_if_needed(self) -> None:
+        """Wait out the settle time since the last start, so memory includes that process."""
+        if self.settle_seconds <= 0:
+            return
+        try:
+            last = float((self.directory / LAST_START_NAME).read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            return
+        remaining = self.settle_seconds - (self._clock() - last)
+        if remaining > 0:
+            self._sleep(remaining)
+
+    def _note_start(self) -> None:
+        try:
+            (self.directory / LAST_START_NAME).write_text(f"{self._clock():.6f}\n", encoding="utf-8")
+        except OSError:
+            pass
+
+    def _log_held_back(self, label: str, available: int, threshold: int, running: int) -> None:
+        now = self._clock()
+        if now - self._last_hold_log < HOLD_LOG_SECONDS:
+            return
+        self._last_hold_log = now
+        print(f"[pm-plans-verify] holding back {label}: {available / 1024:.1f} GiB available, "
+              f"floor {self.floor_mb / 1024:.1f} GiB + {self.headroom_mb / 1024:.1f} GiB headroom for "
+              f"{running} running validator(s), need {threshold / 1024:.1f} GiB",
+              file=sys.stderr, flush=True)
 
     def _take(self):
         """A held slot handle, None when all are busy, or False when no slot file can be opened."""
@@ -291,26 +389,50 @@ class ValidatorSlots:
         finally:
             handle.close()
 
+    def _try_start(self, label: str):
+        """A held slot, None when held back, or False when this host cannot enforce the budget."""
+        with self._start_lock() as locked:
+            if not locked:
+                return False
+            running = self._running_count()
+            if running:
+                self._settle_if_needed()
+                running = self._running_count()
+            if running == 0:
+                # Base's serial behaviour: one validator always runs, whatever the memory reading.
+                slot = self._take()
+                if slot is False:
+                    return False
+                if slot is not None:
+                    self._note_start()
+                return slot
+            threshold = self.floor_mb + self.headroom_mb * running
+            available = self._available()
+            if available is not None and available < threshold:
+                self._log_held_back(label, available, threshold, running)
+                return None
+            slot = self._take()
+            if slot is False:
+                return False
+            if slot is not None:
+                self._note_start()
+            return slot
+
     @contextmanager
     def hold(self, label: str):
         while True:
-            self._wait_for_memory(label)
-            slot = self._take()
+            slot = self._try_start(label)
             if slot is False:
                 # The budget cannot be enforced here (no slot files); run rather than hang.
                 yield
                 return
-            if slot is None:
-                self._sleep(0.25)
-                continue
-            try:
-                available = self._available()
-                if self.floor_mb > 0 and available is not None and available < self.floor_mb:
-                    continue
-                yield
+            if slot is not None:
+                try:
+                    yield
+                finally:
+                    self._release(slot)
                 return
-            finally:
-                self._release(slot)
+            self._sleep(START_RETRY_SECONDS)
 
 
 @contextmanager

@@ -721,8 +721,16 @@ class MemoryReadingTests(unittest.TestCase):
             self.assertEqual(pm_plans_verify.memory_available_mb(str(meminfo)), 6144)
 
 
+GIB = 1024
+
+
 class ValidatorSlotsTests(unittest.TestCase):
-    """Review N-F: --jobs is one budget for the whole check, and no validator starts below the floor."""
+    """Deep review 2, D2-1/D2-2: the floor limits concurrency, never progress.
+
+    The arithmetic is `floor + headroom * running`. With the floor at 6 GiB and the headroom at 2 GiB,
+    a start with no validator running always happens (5 GiB runs one at a time and finishes), a second
+    validator needs 6 + 2 = 8 GiB, a third 6 + 2 * 2 = 10 GiB, and a fourth 6 + 2 * 3 = 12 GiB.
+    """
 
     def setUp(self):
         self._tmp = tempfile.TemporaryDirectory()
@@ -730,12 +738,137 @@ class ValidatorSlotsTests(unittest.TestCase):
         self.directory = Path(self._tmp.name) / "slots"
         self.directory.mkdir()
 
-    def pool(self, count, floor_mb=0, available=None, sleep=None):
+    def pool(self, count, floor_mb=0, available=None, sleep=None, headroom_mb=0,
+             settle_seconds=0.0, clock=None):
         import fcntl
 
         return pm_plans_verify.ValidatorSlots(
             self.directory, count, floor_mb, fcntl_module=fcntl,
-            available=available or (lambda: 8192), sleep=sleep or (lambda seconds: None))
+            available=available or (lambda: 32 * GIB), sleep=sleep or time.sleep,
+            headroom_mb=headroom_mb, settle_seconds=settle_seconds,
+            clock=clock or time.monotonic)
+
+    def measure(self, pools, workers_per_pool, delay):
+        """Run `workers_per_pool` holders on each pool and return the peak active in their bodies."""
+        import threading
+
+        locked = threading.Lock()
+        state = {"now": 0, "peak": 0}
+        start = threading.Barrier(len(pools) * workers_per_pool)
+
+        def work(pool):
+            start.wait(timeout=30)
+            with pool.hold("probe"):
+                with locked:
+                    state["now"] += 1
+                    state["peak"] = max(state["peak"], state["now"])
+                try:
+                    time.sleep(delay)
+                finally:
+                    with locked:
+                        state["now"] -= 1
+
+        threads = [threading.Thread(target=work, args=(pool,))
+                   for pool in pools for _ in range(workers_per_pool)]
+        for thread in threads:
+            thread.start()
+        for thread in threads:
+            thread.join(timeout=60)
+            self.assertFalse(thread.is_alive(), "a validator never started: the run made no progress")
+        return state["peak"]
+
+    def test_at_five_gib_validators_run_one_at_a_time_and_the_run_finishes(self):
+        # 5 GiB is under the 6 GiB floor: the first validator still starts, so the run is serial
+        # rather than waiting, and every validator finishes.
+        pool = self.pool(4, floor_mb=6 * GIB, headroom_mb=2 * GIB, available=lambda: 5 * GIB)
+        self.assertEqual(self.measure([pool], 4, 0.05), 1)
+
+    def test_at_nine_gib_at_most_two_run_at_once(self):
+        # 9 GiB: a second start needs 6 + 2 = 8 GiB and fits; a third needs 6 + 2 * 2 = 10 GiB and
+        # does not, so at most two run at once.
+        pool = self.pool(4, floor_mb=6 * GIB, headroom_mb=2 * GIB, available=lambda: 9 * GIB)
+        self.assertEqual(9 * GIB >= 6 * GIB + 2 * GIB, True)
+        self.assertEqual(9 * GIB < 6 * GIB + 2 * GIB * 2, True)
+        self.assertEqual(self.measure([pool], 6, 0.1), 2)
+
+    def test_at_twenty_gib_four_run_at_once(self):
+        # 20 GiB covers the fourth start (6 + 2 * 3 = 12 GiB); the slot count is what stops the fifth.
+        pool = self.pool(4, floor_mb=6 * GIB, headroom_mb=2 * GIB, available=lambda: 20 * GIB)
+        self.assertEqual(self.measure([pool], 8, 0.1), 4)
+
+    def test_two_aggregates_share_one_start_lock(self):
+        # Two pools are two aggregate processes: one slot directory, one start lock. At 7 GiB a second
+        # start needs 8 GiB, so the shared lock lets exactly one validator start at a time.
+        pools = [self.pool(4, floor_mb=6 * GIB, headroom_mb=2 * GIB, available=lambda: 7 * GIB)
+                 for _ in range(2)]
+        self.assertEqual(self.measure(pools, 4, 0.05), 1)
+        self.assertTrue((self.directory / pm_plans_verify.START_LOCK_NAME).is_file())
+        self.assertTrue((self.directory / pm_plans_verify.LAST_START_NAME).is_file())
+
+    def test_the_settle_time_is_honoured(self):
+        import threading
+
+        clock = {"now": 100.0}
+        slept = []
+
+        def sleep(seconds):
+            slept.append(seconds)
+            clock["now"] += seconds
+
+        pool = self.pool(2, floor_mb=0, headroom_mb=0, available=lambda: 32 * GIB,
+                         sleep=sleep, settle_seconds=10.0, clock=lambda: clock["now"])
+        first_holds = threading.Event()
+        release_first = threading.Event()
+        second_holds = threading.Event()
+
+        def first():
+            with pool.hold("first"):
+                first_holds.set()
+                release_first.wait(10)
+
+        def second():
+            with pool.hold("second"):
+                second_holds.set()
+                release_first.wait(10)
+
+        holder = threading.Thread(target=first)
+        waiter = threading.Thread(target=second)
+        holder.start()
+        self.assertTrue(first_holds.wait(5))
+        waiter.start()
+        self.assertTrue(second_holds.wait(5), "the second start never happened")
+        self.assertEqual(slept, [10.0])
+        release_first.set()
+        holder.join(timeout=10)
+        waiter.join(timeout=10)
+        self.assertEqual(float((self.directory / pm_plans_verify.LAST_START_NAME).read_text()), 110.0)
+
+    def test_a_held_back_start_says_so_once_a_minute(self):
+        import contextlib
+        import io
+
+        clock = {"now": 0.0}
+
+        def sleep(seconds):
+            clock["now"] += seconds
+
+        def pool():
+            return self.pool(2, floor_mb=6 * GIB, headroom_mb=2 * GIB, available=lambda: 5 * GIB,
+                             sleep=sleep, clock=lambda: clock["now"])
+
+        outer, inner = pool(), pool()
+        lines = []
+        with outer.hold("outer"):
+            errors = io.StringIO()
+            with contextlib.redirect_stderr(errors):
+                # hold() calls _try_start, then sleeps 0.25 s, until it can start.
+                for _ in range(241):
+                    self.assertIsNone(inner._try_start("inner"))
+                    sleep(pm_plans_verify.START_RETRY_SECONDS)
+        lines = [line for line in errors.getvalue().splitlines() if "holding back" in line]
+        self.assertEqual(len(lines), 2, errors.getvalue())
+        self.assertIn("need 8.0 GiB", lines[0])
+        self.assertIn("1 running validator(s)", lines[0])
 
     def test_the_budget_is_shared_by_every_holder_in_one_process(self):
         import threading
@@ -756,7 +889,7 @@ class ValidatorSlotsTests(unittest.TestCase):
         for thread in threads:
             thread.start()
         for thread in threads:
-            thread.join()
+            thread.join(timeout=60)
         self.assertGreater(active["peak"], 1)
         self.assertLessEqual(active["peak"], 2)
 
@@ -766,7 +899,8 @@ class ValidatorSlotsTests(unittest.TestCase):
         events = self.directory.parent / "events.log"
         env = dict(os.environ, **{pm_plans_verify.SLOTS_DIR_ENV: str(self.directory),
                                   pm_plans_verify.SLOTS_COUNT_ENV: "2",
-                                  pm_plans_verify.MEMORY_FLOOR_MB_ENV: "0"})
+                                  pm_plans_verify.MEMORY_FLOOR_MB_ENV: "0",
+                                  pm_plans_verify.START_SETTLE_SECONDS_ENV: "0"})
         processes = [subprocess.Popen([sys.executable, str(script), str(events), "0.4"],
                                       cwd=ROOT, env=env) for _ in range(4)]
         self.assertEqual([process.wait(timeout=60) for process in processes], [0, 0, 0, 0])
@@ -780,36 +914,18 @@ class ValidatorSlotsTests(unittest.TestCase):
             peak = max(peak, active)
         self.assertEqual(peak, 2)
 
-    def test_memory_below_the_floor_is_waited_out_and_said_so(self):
+    def test_memory_below_the_floor_holds_the_second_start_and_says_so(self):
         import contextlib
         import io
 
-        readings = iter([512, 512, 8192, 8192])
-        slept = []
-        pool = self.pool(1, 6144, available=lambda: next(readings), sleep=slept.append)
+        outer = self.pool(4, floor_mb=6 * GIB, headroom_mb=2 * GIB, available=lambda: 5 * GIB)
+        inner = self.pool(4, floor_mb=6 * GIB, headroom_mb=2 * GIB, available=lambda: 5 * GIB)
         errors = io.StringIO()
-        with contextlib.redirect_stderr(errors):
-            with pool.hold("validate-evidence"):
-                self.assertEqual(slept, [pm_plans_verify.MEMORY_POLL_SECONDS] * 2)
-        self.assertIn("waiting for memory", errors.getvalue())
-        self.assertIn("memory is back", errors.getvalue())
-
-    def test_a_slot_is_not_permission_to_start_below_the_floor(self):
-        # Pre-wait high, post-slot low, then high: the first slot is released and the start waits.
-        readings = [8192, 512, 8192, 8192]
-        taken = []
-
-        def available():
-            taken.append(readings[len(taken)])
-            return taken[-1]
-
-        pool = self.pool(1, 6144, available=available, sleep=lambda seconds: None)
-        starts = 0
-        with pool.hold("validate-plan-graph"):
-            starts += 1
-        self.assertEqual(starts, 1)
-        # Two pre-wait reads and two post-slot reads: the low post-slot read released the slot.
-        self.assertEqual(taken, readings)
+        with outer.hold("validate-evidence"):
+            with contextlib.redirect_stderr(errors):
+                self.assertIsNone(inner._try_start("validate-plan-graph"))
+        self.assertIn("holding back validate-plan-graph", errors.getvalue())
+        self.assertIn("need 8.0 GiB", errors.getvalue())
 
     def test_a_missing_slot_directory_never_hangs_the_validator(self):
         pool = pm_plans_verify.ValidatorSlots(
@@ -821,6 +937,22 @@ class ValidatorSlotsTests(unittest.TestCase):
         with mock.patch.dict(os.environ, {}, clear=True):
             self.assertIsNone(pm_plans_verify.ValidatorSlots.from_environment())
 
+    def test_the_environment_carries_the_headroom_and_the_settle(self):
+        with mock.patch.dict(os.environ, {
+                pm_plans_verify.SLOTS_DIR_ENV: str(self.directory),
+                pm_plans_verify.SLOTS_COUNT_ENV: "4",
+                pm_plans_verify.MEMORY_FLOOR_MB_ENV: "6144",
+                pm_plans_verify.MEMORY_HEADROOM_MB_ENV: "1024",
+                pm_plans_verify.START_SETTLE_SECONDS_ENV: "2.5"}, clear=True):
+            pool = pm_plans_verify.ValidatorSlots.from_environment()
+        self.assertEqual((pool.count, pool.floor_mb, pool.headroom_mb, pool.settle_seconds),
+                         (4, 6144, 1024, 2.5))
+        with mock.patch.dict(os.environ, {pm_plans_verify.SLOTS_DIR_ENV: str(self.directory),
+                                          pm_plans_verify.SLOTS_COUNT_ENV: "4"}, clear=True):
+            pool = pm_plans_verify.ValidatorSlots.from_environment()
+        self.assertEqual(pool.headroom_mb, pm_plans_verify.DEFAULT_MEMORY_HEADROOM_MB)
+        self.assertEqual(pool.settle_seconds, pm_plans_verify.DEFAULT_START_SETTLE_SECONDS)
+
     def test_the_standalone_aggregate_runs_one_subcheck_at_a_time(self):
         import argparse
 
@@ -828,3 +960,40 @@ class ValidatorSlotsTests(unittest.TestCase):
         self.assertEqual(pm_plans_verify.aggregate_jobs(argparse.Namespace()), 1)
         self.assertEqual(pm_plans_verify.aggregate_jobs(argparse.Namespace(jobs=4)), 4)
         self.assertEqual(pm_plans_verify.aggregate_jobs(argparse.Namespace(jobs=99)), pm_plans_verify.MAX_JOBS)
+
+
+class SlotWaitAndTimeoutTests(unittest.TestCase):
+    """Deep review 2, D2-2: waiting for a start is outside the subcheck's own bound.
+
+    The slot is taken inside `_run_subprocess_check` before `run_validator_subprocess` opens the
+    process, so a validator held back for longer than its bound still gets the whole bound once it
+    runs; the timeout clock starts at Popen.
+    """
+
+    def test_a_slot_wait_does_not_count_against_the_subcheck_timeout(self):
+        import argparse
+        import contextlib
+
+        @contextlib.contextmanager
+        def held(seconds):
+            time.sleep(seconds)
+            yield
+
+        with tempfile.TemporaryDirectory() as scratch:
+            stub = Path(scratch) / "quick_subcheck.py"
+            write_stub_validator(
+                stub,
+                "import json, sys\n"
+                "path = sys.argv[sys.argv.index('--report') + 1]\n"
+                "json.dump({'status': 'pass', 'failures': []}, open(path, 'w'))\n",
+            )
+            started = time.monotonic()
+            with mock.patch.object(pm_plans_verify.sys, "executable", str(stub)), \
+                    mock.patch.object(pm_plans_verify, "validator_slot", lambda name: held(1.5)):
+                _name, report = pm_plans_verify.run_named_check(
+                    "json_syntax", pm_plans_verify.cmd_json_syntax, argparse.Namespace(),
+                    progress=False, timeout_seconds=1)
+        elapsed = time.monotonic() - started
+        self.assertEqual((report["status"], report["failures"]), ("pass", []))
+        self.assertGreaterEqual(elapsed, 1.5, "the wait did not happen, so this proves nothing")
+        self.assertLess(elapsed, 8.0)

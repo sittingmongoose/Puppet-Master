@@ -2623,7 +2623,7 @@ class ExportKeyedSubchecks(LandingRun):
         self.exports = {}
         self.export_calls = []
 
-        def run_export(root, argv, timeout_seconds, env=None, memory_floor_mb=0):
+        def run_export(root, argv, timeout_seconds, env=None, slot_pool=None):
             self.export_calls.append(list(argv))
             rows = self.exports.get(argv[0], "unreadable")
             if rows == "timeout":
@@ -3049,6 +3049,30 @@ class RunExport(unittest.TestCase):
             time.sleep(0.1)
         else:
             self.fail(f"the command's own child {pid} outlived the bound")
+
+    def test_the_export_holds_a_shared_slot_while_it_runs(self):
+        import contextlib
+
+        self.fake("""
+            import json, sys
+            args = sys.argv[1:]
+            open(args[args.index("--report") + 1], "w").write(
+                json.dumps({"check": args[0], "status": "pass", "failures": []}))
+        """)
+        events = []
+
+        class Pool:
+            @contextlib.contextmanager
+            def hold(self, label):
+                events.append(("start", label))
+                try:
+                    yield
+                finally:
+                    events.append(("end", label))
+
+        result = M.run_export(self.root, ["validate-evidence"], 30, slot_pool=Pool())
+        self.assertEqual((result["timed_out"], result["error"]), (False, None))
+        self.assertEqual(events, [("start", "validate-evidence"), ("end", "validate-evidence")])
 
 
 class Pm7InventoryStale(unittest.TestCase):
@@ -3534,6 +3558,8 @@ class SharedWorkerBudget(LandingRun):
                 seen.append((name, jobs, {
                     "count": env.get(M.SLOTS_COUNT_ENV),
                     "floor": env.get(M.MEMORY_FLOOR_MB_ENV),
+                    "headroom": env.get(M.MEMORY_HEADROOM_MB_ENV),
+                    "settle": env.get(M.START_SETTLE_SECONDS_ENV),
                     "files": sorted(path.name for path in slot_dir.glob("slot-*.lock")) if slot_dir else [],
                 }))
             return {"check": name, "status": "pass", "failures": []}
@@ -3549,7 +3575,7 @@ class SharedWorkerBudget(LandingRun):
         self.assertEqual(sorted(name for name, _jobs, _env in seen), sorted(M.CHECKS))
         for _name, jobs, environment in seen:
             self.assertEqual(jobs, 4)
-            self.assertEqual(environment, {"count": "4", "floor": "6144",
+            self.assertEqual(environment, {"count": "4", "floor": "6144", "headroom": "2048", "settle": "10",
                                            "files": [f"slot-{index}.lock" for index in range(4)]})
 
     def test_jobs_one_has_no_budget_and_no_floor(self):
@@ -3559,7 +3585,8 @@ class SharedWorkerBudget(LandingRun):
         for _name, jobs, environment in seen:
             self.assertEqual(jobs, 1)
             # Review A3: the environment is explicit even here, and carries no budget.
-            self.assertEqual(environment, {"count": None, "floor": None, "files": []})
+            self.assertEqual(environment, {"count": None, "floor": None, "headroom": None, "settle": None,
+                                           "files": []})
 
     def refused(self, *argv):
         import contextlib
@@ -3581,29 +3608,13 @@ class SharedWorkerBudget(LandingRun):
         self.assertIn("--memory-floor-gb must not be negative",
                       self.refused("--memory-floor-gb", "-1"))
 
-    def test_the_floor_holds_the_start_and_says_so(self):
-        import contextlib
-        import io
+    def test_a_negative_headroom_is_refused(self):
+        self.assertIn("--memory-headroom-gb must not be negative",
+                      self.refused("--memory-headroom-gb", "-1"))
 
-        readings = iter([1024, 1024, 8192])
-        slept = []
-        errors = io.StringIO()
-        with contextlib.redirect_stderr(errors):
-            M.wait_for_memory_floor(6144, "the three checks",
-                                    available=lambda: next(readings), sleep=slept.append)
-        self.assertEqual(len(slept), 2)
-        self.assertIn("pm-landing-check: waiting for memory: 1.0 GiB available, floor 6.0 GiB, "
-                      "before the three checks", errors.getvalue())
-        self.assertIn("memory is back: 8.0 GiB, before the three checks", errors.getvalue())
-
-    def test_meminfo_kib_is_read_as_mib(self):
-        import tempfile
-        with tempfile.TemporaryDirectory() as folder:
-            meminfo = Path(folder) / "meminfo"
-            meminfo.write_text("MemTotal:       44040192 kB\nMemAvailable:   17825792 kB\n", encoding="utf-8")
-            self.assertEqual(M.memory_available_mb(str(meminfo)), 17408)
-            meminfo.write_text("MemAvailable:   17825792\n", encoding="utf-8")
-            self.assertIsNone(M.memory_available_mb(str(meminfo)))
+    def test_a_negative_settle_is_refused(self):
+        self.assertIn("--start-settle-seconds must not be negative",
+                      self.refused("--start-settle-seconds", "-1"))
 
     def test_inherited_budget_and_child_flag_never_reach_children(self):
         source = (ROOT / "scripts" / "pm-landing-check.py").read_text(encoding="utf-8")
@@ -3613,9 +3624,6 @@ class SharedWorkerBudget(LandingRun):
             self.assertIn(name, window)
         self.assertIn("child_env.pop(name, None)", window)
 
-    def test_a_zero_floor_and_an_unknown_reading_never_wait(self):
-        M.wait_for_memory_floor(0, "x", available=lambda: 1, sleep=lambda seconds: self.fail("waited"))
-        M.wait_for_memory_floor(6144, "x", available=lambda: None, sleep=lambda seconds: self.fail("waited"))
 
 
 OLD_TARGET_VERIFIER = '''import json, sys

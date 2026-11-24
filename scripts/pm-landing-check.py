@@ -130,7 +130,7 @@ from __future__ import annotations
 
 import argparse
 from concurrent.futures import ThreadPoolExecutor
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 import hashlib
 import importlib.util
 import json
@@ -266,15 +266,20 @@ AGGREGATE_CHILD_ENV = "PM_PLANS_VERIFY_AGGREGATE_CHILD"
 # One worker budget for the whole check (review N-F). --jobs counts every validator running at once
 # across the three checks, not N per aggregate: this script creates that many slot files and passes
 # them to the aggregates and exports, which take one for each validator's lifetime (the same names
-# are read by scripts/pm-plans-verify.py). Before any validator starts, the run waits while
-# MemAvailable is below --memory-floor-gb, and says so. --jobs 1 is today's serial run: no budget,
-# no floor, nothing to wait for.
+# are read by scripts/pm-plans-verify.py). The memory floor limits concurrency, never progress (deep
+# review 2, D2-1/D2-2): with no validator of the run running, one always starts whatever MemAvailable
+# reads, and a second or later one starts only above the floor plus a headroom per validator already
+# running, after a settle time. --jobs 1 is today's serial run: no budget, no floor, nothing to wait
+# for.
 SLOTS_DIR_ENV = "PM_LANDING_CHECK_SLOTS_DIR"
 SLOTS_COUNT_ENV = "PM_LANDING_CHECK_SLOTS"
 MEMORY_FLOOR_MB_ENV = "PM_LANDING_CHECK_MEMORY_FLOOR_MB"
+MEMORY_HEADROOM_MB_ENV = "PM_LANDING_CHECK_MEMORY_HEADROOM_MB"
+START_SETTLE_SECONDS_ENV = "PM_LANDING_CHECK_START_SETTLE_SECONDS"
 MAX_JOBS = 8
 DEFAULT_MEMORY_FLOOR_GB = 6.0
-MEMORY_POLL_SECONDS = 5.0
+DEFAULT_MEMORY_HEADROOM_GB = 2.0
+DEFAULT_START_SETTLE_SECONDS = 10.0
 
 # Failure kinds that say a subcheck did not finish, not that the tree is wrong. pm-plans-verify.py
 # kills a subcheck at --subcheck-timeout-seconds and reports that as the subcheck's only failure:
@@ -522,46 +527,41 @@ def aggregate_reports(runner, jobs: int) -> dict[str, dict[str, Any]]:
         return reports
 
 
-def memory_available_mb(meminfo: str = "/proc/meminfo") -> int | None:
-    """MemAvailable in MiB, or None where the kernel does not say (no floor is enforced then).
+_SLOT_POOL_CLASS: Any = None
 
-    The kernel writes the value in kB (KiB), so it is divided by 1024; read raw it made the 6 GiB floor 6 MiB
-    (cheap review r2 N1).
+
+def landing_slot_pool(directory, count: int, floor_mb: int, headroom_mb: int, settle_seconds: float):
+    """The verifier's ValidatorSlots, from this checkout's scripts/pm-plans-verify.py.
+
+    The aggregates hold their slots from their own processes; the exports run from this one, so they
+    must share the class, the directory, the start lock and the memory arithmetic with them. Loaded
+    by path and once per process: this script and the verifier ship together, while a target checkout
+    under --root is a different tree whose verifier may predate the budget entirely.
     """
+    global _SLOT_POOL_CLASS
     try:
-        with open(meminfo, encoding="utf-8") as handle:
-            for line in handle:
-                if line.startswith("MemAvailable:"):
-                    fields = line.split()
-                    if len(fields) < 3 or fields[2] != "kB":
-                        return None
-                    return int(fields[1]) // 1024
-    except (OSError, ValueError, IndexError):
+        import fcntl  # noqa: PLC0415 - POSIX only; elsewhere the exports run unbudgeted, as before.
+    except ImportError:  # pragma: no cover - Windows
         return None
-    return None
-
-
-def wait_for_memory_floor(floor_mb: int, label: str, *,
-                          available=memory_available_mb, sleep=time.sleep) -> None:
-    """Wait while available memory is below the floor, saying so; never return while it is below.
-
-    A floor of 0 disables it. An unreadable MemAvailable disables it too: a host that cannot say
-    how much memory is free gets today's behaviour rather than an unbounded wait.
-    """
-    if floor_mb <= 0:
-        return
-    available_mb = available()
-    if available_mb is None or available_mb >= floor_mb:
-        return
-    print(f"pm-landing-check: waiting for memory: {available_mb / 1024:.1f} GiB available, floor "
-          f"{floor_mb / 1024:.1f} GiB, before {label}", file=sys.stderr, flush=True)
-    while True:
-        sleep(MEMORY_POLL_SECONDS)
-        available_mb = available()
-        if available_mb is None or available_mb >= floor_mb:
-            found = "unknown" if available_mb is None else f"{available_mb / 1024:.1f} GiB"
-            print(f"pm-landing-check: memory is back: {found}, before {label}", file=sys.stderr, flush=True)
-            return
+    if _SLOT_POOL_CLASS is None:
+        path = Path(__file__).resolve().with_name("pm-plans-verify.py")
+        spec = importlib.util.spec_from_file_location("pm_plans_verify_landing_slots", path)
+        if spec is None or spec.loader is None:
+            raise RuntimeError("scripts/pm-plans-verify.py cannot be loaded")
+        module = importlib.util.module_from_spec(spec)
+        saved_path, saved_bytecode = list(sys.path), sys.dont_write_bytecode
+        sys.dont_write_bytecode = True
+        try:
+            spec.loader.exec_module(module)
+        finally:
+            sys.path[:] = saved_path
+            sys.dont_write_bytecode = saved_bytecode
+        pool_class = getattr(module, "ValidatorSlots", None)
+        if pool_class is None:
+            raise RuntimeError("scripts/pm-plans-verify.py has no ValidatorSlots")
+        _SLOT_POOL_CLASS = pool_class
+    return _SLOT_POOL_CLASS(directory, count, floor_mb, fcntl_module=fcntl, headroom_mb=headroom_mb,
+                            settle_seconds=settle_seconds)
 
 
 def strip_root(text: str, root: Path) -> str:
@@ -1861,7 +1861,7 @@ def describe_pair(row: dict[str, Any]) -> str:
 
 def run_export(root: Path, argv: list[str], timeout_seconds: int,
                base_env: dict[str, str] | None = None,
-               memory_floor_mb: int = 0) -> dict[str, Any]:
+               slot_pool=None) -> dict[str, Any]:
     """Run one subcheck's command on its own and read the report it writes: its export (the exports brief).
 
     `argv` is the command and its arguments exactly as pm-plans-verify.py builds them for the aggregates
@@ -1871,37 +1871,40 @@ def run_export(root: Path, argv: list[str], timeout_seconds: int,
     when `timeout_seconds` runs out. The file is in a scratch directory outside the repository and is
     deleted again; like the aggregates, it reads the command's stdout when the file is empty. Returns
     {"report": the report or None, "timed_out": bool, "error": why it could not be read or None,
-    "elapsed_seconds": how long it ran}. `memory_floor_mb` holds the export until the machine has
-    that much available, exactly as the aggregates' own validators are held.
+    "elapsed_seconds": how long it ran}. `slot_pool` is the run's shared ValidatorSlots: the export
+    holds one slot while it runs, exactly as an aggregate validator does, and the start gate lets it
+    start at once because it runs after the checks, with nothing else of the run alive.
     """
-    wait_for_memory_floor(memory_floor_mb, argv[0] if argv else "an export")
-    started = time.monotonic()
-    with tempfile.TemporaryDirectory(prefix="pm-landing-check-export-") as scratch:
-        report_file = Path(scratch) / "export.json"
-        command = [sys.executable, "scripts/pm-plans-verify.py", argv[0], "--report", str(report_file), *argv[1:]]
-        env = dict(base_env if base_env is not None else os.environ)
-        env[AGGREGATE_CHILD_ENV] = "1"
-        proc = subprocess.Popen(command, cwd=root, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
-                                start_new_session=True, env=env)
-        try:
-            out, err = proc.communicate(timeout=timeout_seconds if timeout_seconds > 0 else None)
-        except subprocess.TimeoutExpired:
+    held = slot_pool.hold(argv[0] if argv else "an export") if slot_pool is not None else nullcontext()
+    with held:
+        started = time.monotonic()
+        with tempfile.TemporaryDirectory(prefix="pm-landing-check-export-") as scratch:
+            report_file = Path(scratch) / "export.json"
+            command = [sys.executable, "scripts/pm-plans-verify.py", argv[0], "--report", str(report_file),
+                       *argv[1:]]
+            env = dict(base_env if base_env is not None else os.environ)
+            env[AGGREGATE_CHILD_ENV] = "1"
+            proc = subprocess.Popen(command, cwd=root, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                    text=True, start_new_session=True, env=env)
             try:
-                os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
-            except OSError:
+                out, err = proc.communicate(timeout=timeout_seconds if timeout_seconds > 0 else None)
+            except subprocess.TimeoutExpired:
                 try:
-                    proc.kill()
+                    os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
                 except OSError:
+                    try:
+                        proc.kill()
+                    except OSError:
+                        pass
+                try:
+                    proc.communicate(timeout=5)
+                except Exception:  # noqa: BLE001 - the group is killed; nothing more to read.
                     pass
-            try:
-                proc.communicate(timeout=5)
-            except Exception:  # noqa: BLE001 - the group is killed; nothing more to read.
-                pass
-            return {"report": None, "timed_out": True, "error": None,
-                    "elapsed_seconds": round(time.monotonic() - started, 1)}
-        elapsed = round(time.monotonic() - started, 1)
-        written = report_file.is_file() and report_file.stat().st_size > 0
-        payload = report_file.read_text(encoding="utf-8") if written else out
+                return {"report": None, "timed_out": True, "error": None,
+                        "elapsed_seconds": round(time.monotonic() - started, 1)}
+            elapsed = round(time.monotonic() - started, 1)
+            written = report_file.is_file() and report_file.stat().st_size > 0
+            payload = report_file.read_text(encoding="utf-8") if written else out
     try:
         report = json.loads(payload)
     except Exception as exc:  # noqa: BLE001 - an unreadable export only means the truncated rule applies.
@@ -1934,7 +1937,7 @@ def key_from_exports(
     items: list[dict[str, Any]] | tuple[dict[str, Any], ...] = (),
     context: RenameContext | None = None,
     env: dict[str, str] | None = None,
-    memory_floor_mb: int = 0,
+    slot_pool=None,
 ) -> tuple[dict[tuple[str, str], list[dict[str, Any]]], list[dict[str, Any]]]:
     """The exports brief: key each subcheck that prints only a sample from its complete export.
 
@@ -1995,7 +1998,7 @@ def key_from_exports(
     exported: dict[tuple[str, str], list[dict[str, Any]]] = {}
     commands = Counter(argv[0] for argv in planned)
     for argv in sorted(planned):
-        result = run_export(root, list(argv), timeout_seconds, env, memory_floor_mb)
+        result = run_export(root, list(argv), timeout_seconds, env, slot_pool)
         if keep_dir is not None:
             unique = commands[argv[0]] == 1
             keep_export(keep_dir, argv[0] if unique else f"{argv[0]}-{hashlib.sha256(' '.join(argv).encode()).hexdigest()[:8]}",
@@ -2132,8 +2135,18 @@ def main() -> int:
                              "emitted in the original order, and 1 is exactly the serial run (default: "
                              f"{min(os.cpu_count() or 1, 4)}; at most {MAX_JOBS})")
     parser.add_argument("--memory-floor-gb", type=float, default=DEFAULT_MEMORY_FLOOR_GB,
-                        help="with --jobs above 1, no validator starts while MemAvailable is below this many "
-                             f"GiB; the run waits and says so (default: {DEFAULT_MEMORY_FLOOR_GB:g})")
+                        help="with --jobs above 1, the first validator of the run always starts, and a "
+                             "second or later one only while MemAvailable is at least this many GiB plus "
+                             "the headroom for each validator already running (default: "
+                             f"{DEFAULT_MEMORY_FLOOR_GB:g})")
+    parser.add_argument("--memory-headroom-gb", type=float, default=DEFAULT_MEMORY_HEADROOM_GB,
+                        help="with --jobs above 1, memory reserved for each validator already running when "
+                             "another start is considered; the heaviest validators measure about 1.9 GiB "
+                             f"(default: {DEFAULT_MEMORY_HEADROOM_GB:g})")
+    parser.add_argument("--start-settle-seconds", type=float, default=DEFAULT_START_SETTLE_SECONDS,
+                        help="with --jobs above 1, a start waits this long after the previous start before "
+                             "it reads memory, so the reading includes the process just started (default: "
+                             f"{DEFAULT_START_SETTLE_SECONDS:g})")
     parser.add_argument("--json", action="store_true", help="print the machine-readable report instead of the summary")
     parser.add_argument("--allow-sparse", action="store_true",
                         help="run on a sparse worktree anyway; everything outside the cone reads as missing")
@@ -2148,6 +2161,10 @@ def main() -> int:
         parser.error(f"--jobs must be between 1 and {MAX_JOBS}")
     if args.memory_floor_gb < 0:
         parser.error("--memory-floor-gb must not be negative")
+    if args.memory_headroom_gb < 0:
+        parser.error("--memory-headroom-gb must not be negative")
+    if args.start_settle_seconds < 0:
+        parser.error("--start-settle-seconds must not be negative")
 
     root = Path(args.root).resolve()
     if args.readiness_audit_root:
@@ -2249,17 +2266,20 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     after = None
     jobs = max(1, args.jobs)
     floor_mb = int(args.memory_floor_gb * 1024) if jobs > 1 else 0
+    headroom_mb = int(args.memory_headroom_gb * 1024) if jobs > 1 else 0
+    settle_seconds = args.start_settle_seconds if jobs > 1 else 0.0
 
     # Every child gets an explicit environment built here (review A3).
     child_env: dict[str, str] = dict(os.environ)
     # Only this run sets the worker budget and the aggregate-child flag; inherited copies would let a --jobs 1 run
     # honour another run's slots or switch off subcheck timeouts (cheap review r2 N2).
-    for name in (SLOTS_DIR_ENV, SLOTS_COUNT_ENV, MEMORY_FLOOR_MB_ENV, AGGREGATE_CHILD_ENV):
+    for name in (SLOTS_DIR_ENV, SLOTS_COUNT_ENV, MEMORY_FLOOR_MB_ENV, MEMORY_HEADROOM_MB_ENV,
+                 START_SETTLE_SECONDS_ENV, AGGREGATE_CHILD_ENV):
         child_env.pop(name, None)
+    slot_dir = None
     if jobs > 1:
         # The slot files are the whole run's worker budget: both aggregates and every export take one
         # for each validator they run, so --jobs is a total rather than one pool per check.
-        slot_dir = None
         if args.slots_root is not None:
             try:
                 args.slots_root.mkdir(parents=True, exist_ok=True)
@@ -2272,6 +2292,16 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
             child_env[SLOTS_DIR_ENV] = str(slot_dir)
             child_env[SLOTS_COUNT_ENV] = str(jobs)
             child_env[MEMORY_FLOOR_MB_ENV] = str(floor_mb)
+            child_env[MEMORY_HEADROOM_MB_ENV] = str(headroom_mb)
+            child_env[START_SETTLE_SECONDS_ENV] = f"{settle_seconds:g}"
+    # The exports run in this process, and share the run's start lock and memory arithmetic with the
+    # aggregates through the same slot directory; without a directory they run unbudgeted, as base did.
+    export_pool = None
+    if slot_dir is not None:
+        try:
+            export_pool = landing_slot_pool(slot_dir, jobs, floor_mb, headroom_mb, settle_seconds)
+        except (RuntimeError, OSError):
+            export_pool = None
 
     def consume(check: str, report: dict[str, Any]) -> None:
         nonlocal after
@@ -2304,7 +2334,6 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                 return 3
             consume(check, report)
     else:
-        wait_for_memory_floor(floor_mb, "the three checks")
         try:
             reports = aggregate_reports(
                 lambda check: run_check(check, root, run_dir, args.subcheck_timeout_seconds, jobs, child_env,
@@ -2359,7 +2388,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     exported, export_rows = key_from_exports(
         root, counts, None if args.record_baseline else (baseline.get("checks") or {}), did_not_finish, argv_map,
         args.subcheck_timeout_seconds, keep_dir, items, context=rename_context, env=child_env,
-        memory_floor_mb=floor_mb)
+        slot_pool=export_pool)
     require_same_readiness_audit_inputs(audit_inputs, readiness_audit_inputs(root),
                                       "changed during the exports")
 
