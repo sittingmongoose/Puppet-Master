@@ -16413,6 +16413,48 @@
     },
     {
       "id":
+        "code.execution.code-mode",
+      "label":
+        "Code Mode",
+      "desc":
+        "On by default. The agent writes a short script that uses several tools in one step, which is faster; every tool use is still checked. Off makes it use tools one at a time.",
+      "type": "toggle",
+      "default": true,
+      "scope": [
+        "global",
+        "project"
+      ],
+      "tier": "advanced",
+      "recommended": true,
+      "search": [
+        "Code Mode",
+        "tool calls",
+        "tool calling",
+        "script",
+        "one tool at a time",
+        "several tools in one step"
+      ],
+      "related_features": [
+        "editor",
+        "terminal"
+      ],
+      "layering": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere",
+          "project"
+        ],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "computer": "same_for_you",
+          "device": "not_about_the_screen"
+        }
+      }
+    },
+    {
+      "id":
         "code.execution.container-runtime",
       "label":
         "Container engine",

@@ -2,15 +2,17 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L13358-L13583
+Source lines: L13358-L13657
 
-Source SHA256: `c53e1f511323d2b029b93798ac3080a116f00947920912fe9c933393c4d2d22e`
+Source SHA256: `0df9eb713735b59d9c8834da776cffdca4fc029336c6fbd892face75c576eba0`
 
 ---
 
 ## Code Mode Tool Calling Addendum - 2026-11-15
 
 This addendum records Jared's 2026-11-15 direction that production Puppet Master uses Code Mode for tool calls on every provider. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, generated governance artifacts, or governance seal.
+
+**Amended 2026-11-24.** Jared asked whether Code Mode can be turned off in Settings and directed that it must be. T-191 adds the Settings row and its meaning; T-188 and T-189 are amended so the requested mode follows that row. Code Mode stays On by default.
 
 **What Code Mode is.** The model does its work by writing JavaScript that calls Puppet Master tools, and sends that script as one tool call, instead of calling tools one provider tool call at a time. One script can read several files, filter the results and act on them without a provider round trip between each step.
 
@@ -24,31 +26,34 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  In production Puppet Master the requested tool-calling mode of every provider route is Code Mode: the model writes
+  In production Puppet Master the requested tool-calling mode of every provider route is Code Mode, unless the Settings
+  row of T-191 is Off for the run, in which case the run requests ordinary tool calls. In Code Mode the model writes
   JavaScript that calls Puppet Master tools and sends it as one script tool call, instead of calling tools one provider
   tool call at a time. The script runs in a JavaScript EvalSession owned by Shared Integration Runtime, with variable scope session,
   so a script's variables live only as long as the EvalSession that run uses, and every tool
   the script calls is a nested Puppet Master tool call on the T-178 path, permitted by the
   request's permission policy snapshot; Code Mode adds no opt-in step of its own. Tools marks the JavaScript EvalSession adapter
-  supported for Code Mode, subject to the security owner. The script tool is offered on a run only when Shared
+  supported for Code Mode, subject to the security owner. The script tool is offered on a run only when the run requests Code Mode, Shared
   Integration Runtime reports a product-approved JavaScript EvalSession for the exact Host/Environment, the request's
   policy admits the script tool, and the route can carry Puppet Master tools. Every run records its requested and effective
   tool-calling mode. Puppet Master owns the tools and the script runtime, so Code Mode does not depend on the provider
   having a code mode of its own. The effective mode is Code Mode, mixed or ordinary tool calls,
   where ordinary tool calls means the run was not offered the Puppet Master script tool; a run offered it that made
   no tool calls, or only the directly callable calls named in T-190, keeps Code Mode unless T-189 records the route as
-  mixed. When it is not Code Mode the run records one typed reason, the first that applies
+  mixed. When it is not Code Mode the run records one typed reason: setting when the run did not
+  request Code Mode, and otherwise the first that applies
   of the execution shape named in T-189, no approved JavaScript EvalSession, policy, and provider-kept native tools;
   it is never a silent fallback, and Code Mode is never reported as effective
   for a run in which any tool other than the directly callable tools named in T-190 was dispatched another way. A resumed
-  session requests Code Mode again like any other run, and an effective mode that differs from the session's earlier
+  session takes its requested mode from T-191's row again like any other run, and an effective mode that differs from the session's earlier
   runs is recorded, with its typed reason when it is not Code Mode.
 gui_related: false
 gui_classification_reason: Runtime tool-dispatch mode and its recorded truth; presentation of the mode is owned elsewhere.
 depends_on: [T-169, T-176, T-177, T-178]
-unblocks: [T-189, T-190]
+unblocks: [T-189, T-190, T-191]
 acceptance_criteria:
   - With no user action, a run on any provider route requests Code Mode, and its record shows requested and effective tool-calling mode.
+  - A run for which T-191's row is Off requests ordinary tool calls, is not offered the script tool, and records the typed reason setting.
   - A run whose effective mode is mixed or ordinary tool calls carries exactly one typed reason, and no surface describes that run as Code Mode.
   - Code Mode is unavailable, with a typed reason, whenever Shared Integration Runtime reports no product-approved JavaScript EvalSession for the exact Host/Environment.
   - Tools creates no second evaluator, kernel manager or script runtime for Code Mode.
@@ -69,6 +74,7 @@ node_compile_hint:
 source_lineage:
   - 'Jared, 2026-11-15: "I want to add to our plans to use that for puppet master for all providers. Like the production puppet master, once it is built, will use this for tool calls on all providers."'
   - 'Jared, 2026-11-15: "I believe the plan with puppet master is to own the tool calls, unlike T3. So Puppet master is more of a harness than T3 is. In that case, using the code mode method like claude code does, we should be able to do all tool calls that way for all providers right?"'
+  - 'Jared, 2026-11-24: "I want to check, is code mode an option in settings that can be turned off?  If not, it needs to be."'
   - /mnt/Cursor/PuppetMaster-Evidence/tests/code-mode-20261115/OBSERVATIONS.md sha256:337e09ac2929163d17b05a0150cff4a6aa1963421802220929f7d85f376386ee
 source_atom_ids: []
 preserved_exact_tokens:
@@ -95,7 +101,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  When T-188's availability and policy gates admit the script tool, Puppet Master offers it through whichever channel
+  When the run requests Code Mode and T-188's availability and policy gates admit the script tool, Puppet Master offers it through whichever channel
   carries Puppet Master tools on that route, and the directly callable tools named in T-190 travel on every route by
   the same channel as the script tool. If the script tool is not offered, the existing ordinary tool-call path is
   preserved, with T-188's effective-mode and typed-reason rules. Under
@@ -114,7 +120,7 @@ canonical_text: >-
   Mode, and the run's effective mode is mixed. Where a provider accepts no Puppet Master tools at all, the effective
   mode is ordinary tool calls with a typed reason naming the execution shape, delegated or reasoning-only, and no
   Puppet Master tool call is counted for the run; that execution-shape reason is the one recorded when another
-  reason would also apply. A provider's own code mode, where it has one, is a provider-native feature handled
+  reason would also apply, except on a run that did not request Code Mode, whose reason is setting under T-191. A provider's own code mode, where it has one, is a provider-native feature handled
   under the provider-native feature policy and is never what makes Code Mode effective.
 gui_related: false
 gui_classification_reason: Provider request shaping and execution-shape behaviour; not GUI implementation work.
@@ -234,3 +240,71 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Tools.md#T-188, ContractName:Plans/Tools.md#T-176, ContractName:Plans/Tools.md#T-177, ContractName:Plans/Tools.md#T-178, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/Permissions_System.md#PS-145, ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md
+
+### T-191 - Code Mode Can Be Turned Off In Settings
+
+```yaml
+plan_unit_id: T-191
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: >-
+  Code Mode can be turned off in Settings. The ordinary setting row code.execution.code-mode in
+  Plans/settings_inventory.json is a toggle labelled Code Mode, On by default, that can be set Everywhere and
+  differ by Project, and Settings layering under Settings_System resolves it like any other inventory row. Its
+  value is read once, when a run starts, and that run keeps it until it ends: changing the row applies from the next
+  run and never changes a run in progress. On, the run requests Code Mode under T-188. Off, the run requests
+  ordinary tool calls: Puppet Master does not offer the script tool or the script's callable catalog on any route or
+  by any channel, including the in-band carriage and the DAE projection of T-189; the existing ordinary tool-call
+  path is preserved, as T-189 says for any run on which the script tool is not offered; and the run records
+  requested mode ordinary tool calls, effective mode ordinary tool calls and the typed reason setting. That reason is
+  recorded for every run that did not request Code Mode, whatever other reason would also apply. The row changes only
+  whether the script tool is offered and how the request-selected tools are described to the model. The tools selected for
+  the request, permissions, approvals, FileSafe, network and schema checks, deadlines, events, receipts and usage rollups
+  are the same either way, so Off never widens or narrows what a run may do. The row governs Puppet Master's Code
+  Mode only; a provider's own code mode stays a provider-native feature under the provider-native feature policy.
+  Off is a choice, not a fault: no surface presents a run with the row Off as a fallback, a warning or a degraded run.
+gui_related: false
+gui_classification_reason: Runtime meaning of one inventory row; Settings renders the row from the inventory under Settings_System.
+depends_on: [T-188, T-189]
+unblocks: []
+acceptance_criteria:
+  - Plans/settings_inventory.json holds exactly one row code.execution.code-mode, a toggle whose default is On, and Settings renders and searches it from the inventory with no second copy of the switch anywhere else.
+  - With the row Off for a run, no request of that run carries the script tool or the script's callable catalog on any route, and the run's record shows requested and effective ordinary tool calls with the typed reason setting.
+  - Changing the row while a run is in progress does not change that run; the next run follows the new value.
+  - A run with the row Off can make every tool call, with the same permission and approval results, that the same run could make with it On.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-plans-verify.py validate-settings-layering
+  - python3 scripts/pm-plan-index.py validate
+risk_class: code_mode_setting_truth_drift
+reasoning_tier: high
+context_scope: code_mode_tool_calling
+implementation_surfaces:
+  - Plans/Tools.md
+  - Plans/settings_inventory.json
+  - Plans/Settings_System.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - 'Jared, 2026-11-24: "I want to check, is code mode an option in settings that can be turned off?  If not, it needs to be."'
+  - Plans/Tools.md#T-188 and Plans/Tools.md#T-189 (requested and effective tool-calling mode, typed reasons, the preserved ordinary tool-call path)
+source_atom_ids: []
+preserved_exact_tokens:
+  - code.execution.code-mode
+  - On by default
+  - ordinary tool calls
+negative_constraints:
+  - Do not make the switch a hidden, debug-only, environment-variable or per-provider control; it is one ordinary Settings row.
+  - Do not present Off as an error, a fallback or a degraded state.
+  - Do not let the row change which tools a run may call or any permission, approval or FileSafe result.
+  - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, generated governance artifacts, or governance seal outputs.
+owner_hints:
+  - Plans/Tools.md
+  - Plans/Settings_System.md
+  - Plans/settings_inventory.json
+```
+
+ContractRef: ContractName:Plans/Tools.md#T-188, ContractName:Plans/Tools.md#T-189, ContractName:Plans/Settings_System.md, ContractName:Plans/settings_inventory.json
