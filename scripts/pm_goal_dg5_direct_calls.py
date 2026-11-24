@@ -147,11 +147,31 @@ def construction_frame(code):
     return False
 
 
-def case_wrapper(name):
-    """A DG5 family-source or plumbing frame (the wrappers that set bridge.CASE around a case runner); not a case
-    body: the supplement modules hold case bodies and this module holds the wrapper itself."""
-    return isinstance(name, str) and name.startswith('pm_goal_dg5_') and not name.startswith('pm_goal_dg5_supplement') \
-        and name != __name__
+# Round 2 C1 (lead ruling 1124101552-8f55; both deep readers): the case wrappers that set bridge.CASE around a
+# case runner, as an explicit (module, qualified name) list — never a module prefix. At the base any
+# pm_goal_dg5_* frame became the boundary, so step_case.<locals>.make inside pm_goal_dg5_adapter (which holds
+# supplement case BODIES as well as the wrapper install) was itself the boundary and its LifecycleReducer.initial
+# calls recorded unchecked. The list is every bridge.CASE setter in the six family bridges and the entries
+# plumbing (grep CASE[0] = over scripts/pm_goal_dg5_*.py; each pair verified live by __globals__/co_qualname):
+CASE_WRAPPERS = {
+    ('pm_goal_dg5_adapter', 'install.<locals>.bind.<locals>.call'),   # adapter Suite positive/negative
+    ('pm_goal_dg5_ca', 'cases.<locals>.bind.<locals>.call'),          # CA Suite positive/negative
+    ('pm_goal_dg5_cf', 'install_cf1.<locals>.run_path'),              # CF1 run_path (case = run_path + aftercalls)
+    ('pm_goal_dg5_cf', 'install_cf2.<locals>.run_case'),              # CF2 run_case
+    ('pm_goal_dg5_cf', 'install_cf3.<locals>.bind.<locals>.call'),    # CF3 Corpus positive/negative
+    ('pm_goal_dg5_entries', 'suite_cases.<locals>.run'),              # shared plumbing Suite._run wrapper
+    ('pm_goal_dg5_r', 'install.<locals>.run_case'),                   # DG-R run_case
+    ('pm_goal_dg5_s', 'suite_cases.<locals>.run'),                    # DG-S Suite._run wrapper
+    ('pm_goal_dg5_u', 'main'),                                        # DG-U main loop sets CASE per case
+}
+# A wrapper missing from this list fails closed: with no boundary on the stack every frame is checked, so its
+# cases' direct calls are missed and counted, never falsely recorded. New family sources add their wrapper here
+# (the selftest registers its generated wrappers the same way).
+
+
+def case_wrapper(frame):
+    """This frame is a DG5 case wrapper from the explicit list above (it set bridge.CASE and calls the runner)."""
+    return (frame.f_globals.get('__name__'), frame.f_code.co_qualname) in CASE_WRAPPERS
 
 
 def direct(frame):
@@ -171,7 +191,7 @@ def direct(frame):
     for f in frames:
         if owner_module(f.f_globals.get('__name__')):
             return False, 'owner frame'
-    boundary = next((i for i, f in enumerate(frames) if case_wrapper(f.f_globals.get('__name__'))), None)
+    boundary = next((i for i, f in enumerate(frames) if case_wrapper(f)), None)
     segment = frames if boundary is None else frames[:max(boundary - 1, 0)]
     for f in segment:
         if construction_frame(f.f_code):
