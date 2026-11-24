@@ -178,8 +178,17 @@ html:not(#lgz):not(#lgy):not(#lgx) #panel-settings .pm51-mgr .split-manager.pm51
    Glass gives every settings section 20 px of padding of its own. Inside a manager such a card already has the
    padding every card has, so its title, rows and lines sat 19 px further in than the card over it (Goals: "Keeping an
    eye on progress" under "New Goals start with"), and its controls ended 19 px short. */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-mgr .pm51-settings-inline .settings-section { padding: 0 !important; }
+/* (1 px each side stands in for the border a manager's own card has and this card, in Glass, has not) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-mgr .pm51-settings-inline .settings-section { padding: 0 1px !important; }
 /* Glass: a group inside More options is part of that box, not a lighter box inside it. */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy):not(#lgx) #panel-settings .pm51-mgr .pm51-advanced-body .pm51-section.panel-card { background: none !important; }
 /* Glass clips a settings list to its own box, which cut the last 16 px off each end of such a row's line. */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy):not(#lgx) #panel-settings .pm51-mgr .pm51-section-body .setting-list.o55-bound-rows { overflow: visible !important; clip-path: none !important; contain: none !important; }
+
+/* Retro: a setting row straight inside a manager's own card kept Retro's bevel (PMConcept7 already takes it off the
+   rows of a settings-list card). The list's clipping used to hide most of it; with the rows' lines now running to
+   the card's edges it showed as one thick line under one row of a card (Goals: "What new Goals may change"). */
+html[data-theme^="retro"]:not(#lgz):not(#lgy):not(#lgx) #panel-settings .pm51-mgr .setting-list.o55-bound-rows > .setting-row.o55-row { box-shadow: none !important; }
+html[data-theme^="retro"]:not(#lgz):not(#lgy):not(#lgx) #panel-settings .pm51-mgr .setting-list.o55-bound-rows > .setting-row.o55-row > .o55-about.details-btn { box-shadow: none !important; }
+/* (inside More options such a group has no border to stand in for) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-mgr .pm51-advanced-body .pm51-settings-inline .settings-section { padding: 0 !important; }

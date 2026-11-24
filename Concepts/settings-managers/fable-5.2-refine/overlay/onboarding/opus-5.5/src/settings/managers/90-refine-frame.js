@@ -91,9 +91,9 @@
   /* ---- 6. Facts: what is true right now, on one line (not rows that look like settings) ----------------------- */
   /* A short value ("4 rules", "5 protected") is placed by its own width, as a one-word value already is. The kit gave
      every other value 14 characters of room beside its button; a shorter value then pushed the button under itself
-     (Permissions: "4 rules" over "See rules"). */
+     (Permissions: "4 rules" over "See rules"; Formatters: "Ready to format" over "Check formatter"). */
   const oneWord0 = PM51.oneWord;
-  PM51.oneWord = v => oneWord0(v) || (v != null && String(v).trim().length > 0 && String(v).trim().length <= 14);
+  PM51.oneWord = v => oneWord0(v) || (v != null && String(v).trim().length > 0 && String(v).trim().length <= 18);
   PM51.facts = (items, { action } = {}) => `<div class="rf-facts">${items.filter(Boolean).map(f => `<span class="rf-fact${f.tone ? ' tone-' + a(f.tone) : ''}">${f.pill || ''}${f.label ? `<span class="rf-fact-label">${h(f.label)}</span>` : ''}${f.value != null ? `<span class="rf-fact-value">${h(String(f.value))}</span>` : ''}${f.end || ''}</span>`).join('')}${action ? `<span class="rf-facts-end">${typeof action === 'string' ? action : PM51.btn(Object.assign({ small: true }, action))}</span>` : ''}</div>`;
 })();
 

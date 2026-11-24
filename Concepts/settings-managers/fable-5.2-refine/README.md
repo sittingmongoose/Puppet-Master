@@ -23,19 +23,59 @@ byte-identical to `Concepts/PMConcept7.html` at that commit.
 browser-check run Concepts/settings-managers/fable-5.2-refine/tools --set page=<refined.html> --set before=<PMConcept7.html of the same base>
 ```
 
-Twelve tests by real clicks (`tools/refine.check.mjs`): the chapter move and old links; Explain; the centred tab
+Thirteen tests by real clicks (`tools/refine.check.mjs`): the chapter move and old links; Explain; the centred tab
 strips and the side column, left as they are; Servers' Overview map at two sizes; the things that looked wrong
 (the band, the covered title, the chosen row, the light, no stripe down one side, the side column's chip and the
 words it carries); Providers' account rows and Add a service; the fourth pass (the list column, the row grids of
-Search services and Doctor, the two Add a destination sheets and their forms, one right edge in a detail); the one
-home of a service's switching rules; the example staying in view in Editor and Terminal Customize, Customize Pip
-and Adjust NieR; the examples being as wide as they were and the editor's following what is typed; and **nothing
-was dropped**: every setting id and every action of the unchanged page is still on some page of the refined one
-(920 settings, 73 views, on 2026-11-20).
+Search services and Doctor, the two Add a destination sheets and their forms, one right edge in a detail); the fifth
+pass (a detail with no ground of its own; one start for titles and row names, one end for controls, one row height
+and edge-to-edge lines on a page with both kinds of card; Away From Home's columns; More options); the one home of
+a service's switching rules; the example staying in view in Editor and Terminal Customize, Customize Pip and Adjust
+NieR; the examples being as wide as they were and the editor's following what is typed; and **nothing was
+dropped**: every setting id and every action of the unchanged page is still on some page of the refined one (920
+settings, 73 views, on 2026-11-20). Pass `--set before=` as a `file://` address.
 
-Three more tools, for looking rather than asserting, live with the evidence (not in this repository):
+Four more tools, for looking and measuring rather than asserting, live with the evidence (not in this repository):
 `shots.check.mjs` (a list of steps and pictures, any of the ten looks), `adds.check.mjs` (opens every Add, New, Link
-or Connect button and pictures what appears) and `icons.check.mjs` (lists every button that shows no word).
+or Connect button and pictures what appears), `icons.check.mjs` (lists every button that shows no word) and
+`align.check.mjs` (in every view, in any look: where each line of words starts, where each control ends, each row's
+height, rows with no line or a line that stops short of its card, and any painted pane that sits inside a card of
+another tone).
+
+## Fifth pass (2026-11-23), after Jared's fourth review
+
+Jared: "Getting much closer! Did you go through all the managers? If not, do that. I found a couple of small issues.
+There is still a black box or color box behind the managers that looks unfinished, it needs to be adjusted so it
+looks more cohesive... There are some spots where the text seems uneven, that need to be cleaned up. Like the
+alignment, spacing." On the box: "This box, and its in most managers and I think all themes."
+
+**The box.** A list's detail pane was painted one tone off its card (PMConcept7's `.resource-detail`) and was only as
+tall as its rows, so under a short detail the card showed again: a box that stops short, in all ten looks. The
+detail has no ground of its own now; its rows sit on the card as the rows of every other card do. The list keeps its
+own column, the whole height.
+
+**Uneven text.** Every view was measured (`align.check.mjs`), corrected, and measured again:
+
+| What was uneven | Cause | Now |
+|---|---|---|
+| A section title inside a detail, More options or an opened row started 16 px right of its rows | This concept's own compact-heading rule (second pass) gave every section head 16 px of side padding | Titles start where their rows start |
+| A card's title started 2 px left of its rows; a list's icons 2 px right of the title | The head had 16 px of padding, the body 18 | 16 and 16 |
+| One-line rows were 40, 42, 46 or 48 px tall | Each control set its row's height | 48 px for every one-line row of a page |
+| Two cards on one page had lines of two lengths | A card built from the settings list draws lines edge to edge (FO-124); a manager's own card drew them as wide as its words | Edge to edge in both, the row highlight too. Inside a detail, More options and an opened row they stay as wide as the words |
+| Some rows had no line over them | Two lists of rows in one card; the second list's first row had none | A line over every row after the first |
+| The line of a list item that opens curled down at both ends | A border on a box with round corners | A straight line |
+| Controls ended 4 px apart and "?" sat 6 px apart between the two kinds of card | Two row grids | One |
+| Groups inside More options were boxes inside the box, 17 px further in | The settings-section card style | Parts of the one box |
+| Away From Home: "In use" started 89 px right of "Not set up"; "Manage" wider than "Set up" | The first row has no order arrows | One grid; an empty place where a row has nothing |
+| Notifications: the master switch stood bare on the page, 17 px off the cards at both ends | No card | A card |
+| Back Seat Driver: a line between the card's title and its first row | An inline list's own top border | None |
+| A note touching the line over it (Media, Personas) or the search box over it (Commands) | No margin | 12 px |
+| A value stacked over its button ("Ready to format" over "Check formatter") | Values of 15 to 18 characters still took the long-value width | Beside it, up to 18 characters |
+| Glass: a settings-list card's text 19 px further in than the card over it; lighter boxes inside More options | Glass pads and fills every settings section | No second padding or fill inside a manager |
+| Retro: a line under "More options" that ran to the right edge and turned a corner | Retro's bevel on every details box | None on this quiet line |
+| Containers: "Server & Project Location" in its first line | PMConcept7's placement text | "Servers & Remote Access" (`o55/placement.d/20-toolchain.json` is taken into the overlay for that one phrase) |
+
+Every one of the 74 views was then opened at full size in Basic dark, and the measuring was run in all ten looks.
 
 ## Fourth pass (2026-11-23), after Jared's third review
 
@@ -64,7 +104,7 @@ The approach of Providers and Servers, on the other managers:
 | Notifications › Events; App Updates › History | Bare ">" | "Edit"; "Details" |
 | Source Control › Actions & Pipelines | An icon-only pin | "Pin" / "Unpin" |
 | A list's detail (Source Control, Toolchain, Web & Research and others) | Two right edges: a manager's own rows ran 50 px further than the setting rows under them, and a wide row's button 46 px further | One right edge |
-| Permissions › a profile | "4 rules" sat over its "See rules" button | Beside it: a value of up to 14 characters is placed by its own width |
+| Permissions › a profile | "4 rules" sat over its "See rules" button | Beside it: a short value is placed by its own width (up to 14 characters in this pass, 18 from the fifth) |
 | Every plain form | A field's name sat right under the field before it | 14 px between fields |
 | Testing & Debug › History › Captured evidence | Each fact's value was pushed right and dropped under its name when it did not fit | Name and value side by side, one column. The words are another stream's and are unchanged |
 | Containers, Doctor, Source Control | Sentences that still sent people to "Server & Project Location" | They name the chapter as it is: "Servers & Remote Access" |
@@ -105,14 +145,14 @@ nightly's Link and Connect); the headings of Limits & switching's table sit over
 "When both sides changed" field shows a short name instead of a cut-off sentence; the order buttons of Away From
 Home are arrows, as in Providers. The example has four more computers, so the map shows a setup of several.
 
-**Not yet done for the third and fourth passes:** stream F's kit has not been run on this build, and the list of
+**Not yet done for the third, fourth and fifth passes:** stream F's kit has not been run on this build, and the list of
 its checks below still describes the second pass. Jared asked to see looks first; the kit is to be run, against the
 unchanged page too, before any landing. It will need at least these: the first Servers tab is "Overview" (was "Home
 & Location") and its three rows are in the map's cards; "Connect a device" (was "Pair another device"), "Your
 devices" (was "Paired devices"), "Link a server" (was "Add a server"); four more example servers; Add a service and
 the two Add a destination buttons open a sheet first; the stuck tab strip has no band; a list's add button reads
 "Add", "New" or "Link"; Doctor's, Events' and Updates' last button and the pin carry a word; a chosen list row is not
-the solid chip.
+the solid chip; one-line rows are 48 px tall and a detail pane has no background of its own.
 
 ## What changed, everywhere
 
