@@ -1186,7 +1186,12 @@ def refusal_origin(error, code):
             where = str(path.resolve().relative_to(ROOT))
         except ValueError:
             where = str(path)
-        bridge_or_guard = str(path.resolve()) == here or frame.name in GUARD_HELPERS
+        # Round 2 C6 (lead ruling 1124101552-8f55): the direct-call collector's pass-through frame is plumbing
+        # like this bridge's own frames. Left as a plain frame it breaks the own-guard checker chain of
+        # non-site rows (S2/v7_producer_wrong_payload_header StartOwner.commit_start lost KILLED_CODE to
+        # CANNOT_DECIDE with the collector on, solely from that frame sitting inside Bank.validate's path).
+        bridge_or_guard = str(path.resolve()) == here or path.name == 'pm_goal_dg5_direct_calls.py' \
+            or frame.name in GUARD_HELPERS
         checker = bridge_or_guard or path.name in CHECKER_FILES or frame.name in CHECKER_FUNCTIONS
         frames.append([where, frame.lineno, frame.name, bridge_or_guard, checker])
     site = next(([f[0], f[1]] for f in reversed(frames) if not f[3]), None)
