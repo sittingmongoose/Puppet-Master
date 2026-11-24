@@ -147,11 +147,12 @@ def checks():
         counted = (run['report'].get('harness_calls') or {}).get('dg_r_world:code_of', 0)
         # This case's only base ledger record was the bogus verdict read itself (its refusal precedes every
         # complete call), so "the case ran" is proven by the harness count (the real runner reached its
-        # verdict read) plus a clean suite exit, not by a surviving record label.
-        ran = run['exit'] == 0 and not (run['collection'].get('failures') or [])
+        # verdict read) and by the slice's only failure being the sweep's zero-complete-calls note for this
+        # one-case filter — at the base the bogus record itself masked that note by counting as a call.
+        kinds = sorted(f.get('kind') for f in run['collection'].get('failures') or [])
+        ran = kinds == ['source_registered_no_complete_calls']
         return not bogus and counted >= 1 and ran, dict(bogus=bogus, harness_counted=counted,
-                                                         sweep_exit=run['exit'],
-                                                         failures=len(run['collection'].get('failures') or []))
+                                                         sweep_exit=run['exit'], failure_kinds=kinds)
 
     def c2_cf1():
         got = run_inner('cf1')
