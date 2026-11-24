@@ -16417,7 +16417,7 @@
       "label":
         "Code Mode",
       "desc":
-        "Lets the agent use several tools in one step by writing a short script, with every tool use still checked; off makes it use tools one at a time.",
+        "Lets the agent use several tools in one step by writing a short script, with every tool use still checked; off, the agent calls each tool directly instead.",
       "type": "toggle",
       "default": true,
       "scope": [
@@ -16431,7 +16431,7 @@
         "tool calls",
         "tool calling",
         "script",
-        "one tool at a time",
+        "direct tool calls",
         "several tools in one step"
       ],
       "related_features": [
