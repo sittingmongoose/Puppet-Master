@@ -2,6 +2,8 @@
 // Native setup/CDP reads never grant activation. No app.open/look/evaluate
 // helper runs between the final navigation and that gesture.
 import {writeFileSync} from 'node:fs';
+import {pageHref} from '../helpers/page-path.mjs';
+const DEFAULT_PAGE=new URL('../../../PMConcept7.html',import.meta.url).href;
 
 function boot(look,key){
  const R=window.__coldBell={key,events:0,framed:window!==window.top,gaps:[]};
@@ -36,11 +38,13 @@ function boot(look,key){
 
 export default async function(t){
  const sandbox=String(t.args.sandbox)==='1',out=[];
- const builds=t.args.base&&t.args.fixed?[['control',t.args.base],['fixed',t.args.fixed]]:[['fixed',t.args.page||new URL('../../../PMConcept7.html',import.meta.url).href]];
+ // FO236/COLD-BELL-WIN-DRIVE-PATH: a plain Windows page path is a path, not a URL scheme ("C:"); the same page as
+ // the browser loads it comes from helpers/page-path.mjs for every spelling of --set page= base= fixed=.
+ const builds=t.args.base&&t.args.fixed?[['control',t.args.base],['fixed',t.args.fixed]]:[['fixed',t.args.page||DEFAULT_PAGE]];
  const top=await t.page.context().newCDPSession(t.page);
  await top.send('Emulation.setFocusEmulationEnabled',{enabled:true});
  for(const [label,page]of builds)for(const look of String(t.args.looks||'basic-dark,glass-dark').split(',')){
-  const key='cold-'+label+'-'+look,target=new URL(page,'file://');
+  const key='cold-'+label+'-'+look,target=new URL(pageHref(page,DEFAULT_PAGE));
   target.searchParams.set('o55','off');target.searchParams.set('cb',Date.now()+'-'+key);
   if(sandbox)await t.openInSandbox(target.href);
   const app=sandbox?await t.page.context().newCDPSession(t.root).catch(e=>{
