@@ -16417,7 +16417,7 @@
       "label":
         "Code Mode",
       "desc":
-        "On by default. The agent writes a short script that uses several tools in one step, which is faster; every tool use is still checked. Off makes it use tools one at a time.",
+        "Lets the agent use several tools in one step by writing a short script, with every tool use still checked; off makes it use tools one at a time.",
       "type": "toggle",
       "default": true,
       "scope": [

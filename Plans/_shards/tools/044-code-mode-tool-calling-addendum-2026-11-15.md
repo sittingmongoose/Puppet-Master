@@ -4,7 +4,7 @@ Source: `Plans/Tools.md`
 
 Source lines: L13358-L13657
 
-Source SHA256: `0df9eb713735b59d9c8834da776cffdca4fc029336c6fbd892face75c576eba0`
+Source SHA256: `966ecf8358383adf92107a79e02d64ac4e70495f472cbbc0e4ec2986ca6f09bd`
 
 ---
 
@@ -272,7 +272,7 @@ acceptance_criteria:
   - Plans/settings_inventory.json holds exactly one row code.execution.code-mode, a toggle whose default is On, and Settings renders and searches it from the inventory with no second copy of the switch anywhere else.
   - With the row Off for a run, no request of that run carries the script tool or the script's callable catalog on any route, and the run's record shows requested and effective ordinary tool calls with the typed reason setting.
   - Changing the row while a run is in progress does not change that run; the next run follows the new value.
-  - A run with the row Off can make every tool call, with the same permission and approval results, that the same run could make with it On.
+  - Every tool call a script could make in a run with the row On, the same run can make as an ordinary tool call with the row Off, with the same arguments and the same permission and approval result; only the script tool itself and its callable catalog are absent with the row Off.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py lint-contractrefs
   - python3 scripts/pm-plans-verify.py validate-settings-layering
