@@ -154,10 +154,10 @@ async function rig(t) {
   let frames = null;
   if (cdp) cdp.on('Page.screencastFrame', e => { cdp.send('Page.screencastFrameAck', { sessionId: e.sessionId }).catch(() => {}); if (frames) frames.push({ wall: e.metadata.timestamp * 1000, data: e.data }); });
   const film = async (act, capture = null) => {
-    if (!cdp) { await act(); await f.waitForTimeout(1200); return null; }
+    if (!cdp) { await act(null); await f.waitForTimeout(1200); return null; }
     frames = []; await cdp.send('Page.startScreencast', { format: 'png', everyNthFrame: 1, ...(capture || { maxWidth: 1920, maxHeight: 1080 }) });
     for (let i = 0; i < 60 && !frames.length; i++) await f.waitForTimeout(25);
-    const at = Date.now(); await act(); await f.waitForTimeout(1200);
+    const at = Date.now(); await act(frames); await f.waitForTimeout(1200);
     /* in frame order: screencast frames can arrive out of it, and a late frame from before the press, read after one from
        after it, would judge the earlier state where the later one stands (a film showed the ring move in one frame) */
     await cdp.send('Page.stopScreencast').catch(() => {}); const got = frames.sort((p, q) => p.wall - q.wall); frames = null; return { at, got };
@@ -425,11 +425,28 @@ async function pointerRoutes(t) {
         if (r.pre) await r.pre();
         if (r.load) { await f.evaluate(ms => { window.__fo96Stall.arm = ms; }, r.load); armed++; }
         if (r.marker) { await f.evaluate(disarmKeyMarker); await f.waitForTimeout(80); }   /* a blank marker before the capture */
-        const cap = await film(async () => {
+        const cap = await film(async (frs) => {
           await t.mark(`${look}: ${r.name} ${attempts}`);
           if (r.marker) {   /* armed after the capture's first frame: an idle encoder keeps K and K+1 */
             await f.waitForTimeout(150);   /* the start frame's encode+ack finishes, so the key's frame finds the encoder idle */
             await f.evaluate(armKeyMarker);
+            /* OM17-ABFF-MARKER-RETRY-CAP: the cleared pre-key frame must be in the capture before the key, so a busy
+               encoder cannot coalesce it into the key frame (a dropped pre-key frame is could-not-judge, retried).
+               Wait for a captured frame that reads the armed strip (counter 0, no key band); the page is static until
+               the key, so that frame is the pre-key frame. Bounded: if it never reads cleared, press anyway and the
+               judge reports could-not-judge. */
+            const deadline = Date.now() + 600;
+            let cleared = false;
+            while (frs && !cleared && Date.now() < deadline) {
+              for (let i = frs.length - 1; i >= 0 && !cleared; i--) {
+                try {
+                  const im = decodeTop(Buffer.from(frs[i].data, 'base64'), 32), s = im.width / 1920;
+                  const rd = markerReading(im, { x: markerBox.x * s, y: markerBox.y * s, width: markerBox.width * s, height: markerBox.height * s });
+                  if (rd && rd.count === 0 && rd.key === 0) cleared = true;
+                } catch (e) { /* an unreadable frame is unknown: keep waiting */ }
+              }
+              if (!cleared) await f.waitForTimeout(15);
+            }
           }
           await r.act();
         }, r.marker ? { maxWidth: 960, maxHeight: 540 } : null);
