@@ -356,14 +356,26 @@
     clearTimeout(diffTimer);
     requestAnimationFrame(() => { diffTimer = setTimeout(diff, 60); });
   }
+  function hookPopouts() {
+    if (D.__psxPopRouted) return; D.__psxPopRouted = true;
+    const on = (e) => { if (e.target && e.target.closest && e.target.closest('.o55-pick-pop')) schedule(srcOf(e.target), e.target); };
+    D.addEventListener('click', on, true);
+    D.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') on(e); }, true);
+  }
   function hook(el) {
+    hookPopouts();
     if (!el || el.__psxRouted) return; el.__psxRouted = true;
     el.addEventListener('change', (e) => schedule(srcOf(e.target), e.target), true);
     el.addEventListener('input', (e) => { clearTimeout(inputTimer); const src = srcOf(e.target), tg = e.target; inputTimer = setTimeout(() => schedule(src, tg), 250); }, true);
     el.addEventListener('click', (e) => schedule(srcOf(e.target), e.target), true);
     el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') schedule(srcOf(e.target), e.target); }, true);
   }
-  const srcOf = (t) => (t && t.closest && t.closest('.detail-inspector') && t.closest('.o55-insp-choice') ? 'panel' : t && t.closest && t.closest('#themeMenu') ? 'theme' : 'row');
+  function fromInspectorPop(t) {
+    const pop = t && t.closest && t.closest('.o55-pick-pop');
+    if (!pop || !pop.id) return false;
+    return !!D.querySelector(`.detail-inspector [aria-controls="${CSS.escape(pop.id)}-list"]`);
+  }
+  const srcOf = (t) => (t && t.closest && ((t.closest('.detail-inspector') && t.closest('.o55-insp-choice, .o55-pick-trigger, .o55-pick-inline')) || fromInspectorPop(t)) ? 'panel' : t && t.closest && t.closest('#themeMenu') ? 'theme' : 'row');
   /* Found while testing Jared's 2026-11-13 fixes (not on his list): a page the engine draws for the first time can fill a
      row it held no value for (Safety › Rules fills Rules, in order), and the press that opened the page made the router
      read that fill as a person's change: "Saved for everywhere", with a History entry. A move from "no value" that no
