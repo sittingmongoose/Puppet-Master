@@ -1,0 +1,145 @@
+{
+ "_about": "Built-in browser, in four tabs (sixth refine pass, 2026-11-24; Jared: \"There also needs to be a lot more settings for browser, browser work, recordings, etc. Like gpu acceleration, formats, and all that stuff.\"). Browser: the engine (graphics, window and page, signing in, downloads). Browser work: what the assistant may do in it, its pace, what counts as a problem. Recordings: when, picture, format, storage. Screenshots: the one capture switch (shared with Testing), retention and redaction read from their owners, the picture, comparing, pointing at things. The rows that are new are proposed (../../../../../proposed/browser-rows.json in the refine concept); their ids are placed by 24a-browser-rows.json, which sorts before Testing's rules.",
+ "managers": {
+  "browser-scm": {
+   "tabs": {
+    "browser": "Browser",
+    "work": "Browser work",
+    "recordings": "Recordings",
+    "screenshots": "Screenshots"
+   },
+   "defaultTab": "browser"
+  }
+ },
+ "sections": {
+  "browser-graphics": {
+   "to": "browser-scm",
+   "title": "Graphics",
+   "help": "The graphics card draws pages and makes video.",
+   "order": 6,
+   "tab": "browser"
+  },
+  "browser-page": {
+   "to": "browser-scm",
+   "title": "Window and page",
+   "help": "How big the browser is, and what pages are told about you.",
+   "order": 7,
+   "tab": "browser"
+  },
+  "browser-sessions": {
+   "to": "browser-scm",
+   "title": "Signing in to websites",
+   "help": "Whether the browser keeps a profile and remembers logins.",
+   "order": 10,
+   "tab": "browser"
+  },
+  "browser-site": {
+   "to": "browser-scm",
+   "title": "Downloads and pop-ups",
+   "help": "What pages may do on their own.",
+   "order": 12,
+   "tab": "browser"
+  },
+  "browser-limits": {
+   "to": "browser-scm",
+   "title": "Limits",
+   "help": "How much of the computer the browser may take.",
+   "order": 30,
+   "tab": "browser",
+   "advanced": true
+  },
+  "browser-work-may": {
+   "to": "browser-scm",
+   "title": "What the assistant may do",
+   "help": "In the browser, beyond opening and reading pages.",
+   "order": 40,
+   "tab": "work"
+  },
+  "browser-work-pace": {
+   "to": "browser-scm",
+   "title": "Pace and waiting",
+   "help": "How long it waits, and how fast it goes.",
+   "order": 41,
+   "tab": "work"
+  },
+  "browser-work-problems": {
+   "to": "browser-scm",
+   "title": "What counts as a problem",
+   "help": "What a check of a page looks for.",
+   "order": 42,
+   "tab": "work"
+  },
+  "browser-rec-when": {
+   "to": "browser-scm",
+   "title": "When to record",
+   "help": "Whether a video is kept, and of what.",
+   "order": 50,
+   "tab": "recordings"
+  },
+  "browser-rec-picture": {
+   "to": "browser-scm",
+   "title": "Picture and motion",
+   "help": "How sharp and how smooth.",
+   "order": 51,
+   "tab": "recordings"
+  },
+  "browser-rec-format": {
+   "to": "browser-scm",
+   "title": "Format",
+   "help": "How the video is packed, and the file you get.",
+   "order": 52,
+   "tab": "recordings"
+  },
+  "browser-rec-storage": {
+   "to": "browser-scm",
+   "title": "Storage",
+   "help": "How much room recordings may take.",
+   "order": 53,
+   "tab": "recordings"
+  },
+  "browser-share": {
+   "to": "browser-scm",
+   "title": "Screenshots",
+   "help": "When they are taken, how long they are kept, and who may see them.",
+   "order": 60,
+   "tab": "screenshots",
+   "composed": true
+  },
+  "browser-shot-picture": {
+   "to": "browser-scm",
+   "title": "Picture",
+   "help": "What a screenshot holds and the file it makes.",
+   "order": 61,
+   "tab": "screenshots"
+  },
+  "browser-shot-compare": {
+   "to": "browser-scm",
+   "title": "Comparing pictures",
+   "help": "When two pictures of a page count as different.",
+   "order": 62,
+   "tab": "screenshots"
+  },
+  "browser-capture-tools": {
+   "to": "browser-scm",
+   "title": "Pointing at things",
+   "help": "Picking something on a page to send to chat.",
+   "order": 63,
+   "tab": "screenshots"
+  }
+ },
+ "overrides": [
+  {
+   "section": "browser-share",
+   "ids": [
+    "general.interaction.browser-capture"
+   ]
+  },
+  {
+   "section": "browser-sessions",
+   "ids": [
+    "web.fetch.browser-session-profile",
+    "web.fetch.browser-save-session"
+   ]
+  }
+ ]
+}

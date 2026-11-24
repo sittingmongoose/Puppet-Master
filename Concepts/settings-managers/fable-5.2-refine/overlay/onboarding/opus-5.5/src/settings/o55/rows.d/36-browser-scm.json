@@ -1,0 +1,447 @@
+{
+ "_about": "Built-in browser rows (settings audit, 2026-09-27); the rows of the four tabs (sixth refine pass, 2026-11-24): their names, the line shown with Explain, their choices in words, units and what each depends on.",
+ "rows": {
+  "general.interaction.browser-capture": {
+   "label": "Let me point at things to share with chat",
+   "help": "Nothing is sent until you confirm."
+  },
+  "web.fetch.browser-session-profile": {
+   "label": "Browser profile",
+   "help": "Protected sign-in windows never keep anything.",
+   "options": {
+    "persistent": "Keep one for this project",
+    "isolated": "Start clean every time"
+   }
+  },
+  "web.fetch.browser-save-session": {
+   "label": "Remember website logins",
+   "help": "Keeps approved cookies for later runs.",
+   "when": {
+    "id": "web.fetch.browser-session-profile",
+    "in": [
+     "persistent"
+    ]
+   }
+  },
+  "planning.testing.browser-gpu": {
+   "label": "Graphics acceleration",
+   "help": "Draws pages and encodes video on the graphics card.",
+   "options": {
+    "Auto": "Automatic",
+    "On": "Always",
+    "Off": "Never"
+   }
+  },
+  "planning.testing.browser-gpu-device": {
+   "label": "Graphics card",
+   "help": "For a computer with more than one.",
+   "options": {
+    "auto": "Automatic",
+    "fastest": "The fastest one",
+    "saving": "The power-saving one"
+   },
+   "when": {
+    "id": "planning.testing.browser-gpu",
+    "in": [
+     "Auto",
+     "On"
+    ]
+   }
+  },
+  "planning.testing.browser-gpu-fallback": {
+   "label": "If the graphics card fails",
+   "help": "Carrying on is slower; the run says so.",
+   "options": {
+    "continue": "Carry on without it",
+    "stop": "Stop and tell me"
+   },
+   "when": {
+    "id": "planning.testing.browser-gpu",
+    "in": [
+     "Auto",
+     "On"
+    ]
+   }
+  },
+  "planning.testing.browser-webgl": {
+   "label": "3D on pages (WebGL)",
+   "help": "Maps, charts and games that draw in 3D."
+  },
+  "planning.testing.browser-window-size": {
+   "label": "Window size",
+   "options": {
+    "1280x800": "1280 × 800 · laptop",
+    "1440x900": "1440 × 900",
+    "1920x1080": "1920 × 1080 · desktop",
+    "390x844": "390 × 844 · phone",
+    "app": "Same as this window"
+   }
+  },
+  "planning.testing.browser-pixel-ratio": {
+   "label": "Sharpness",
+   "help": "Sharp doubles the dots: crisper pictures, bigger files.",
+   "options": {
+    "1": "Standard",
+    "2": "Sharp (2×)",
+    "screen": "Same as this screen"
+   }
+  },
+  "planning.testing.browser-color-scheme": {
+   "label": "Light or dark pages",
+   "options": {
+    "app": "Same as the app",
+    "light": "Light",
+    "dark": "Dark"
+   }
+  },
+  "planning.testing.browser-reduced-motion": {
+   "label": "Less motion on pages",
+   "options": {
+    "app": "Same as the app",
+    "on": "On",
+    "off": "Off"
+   }
+  },
+  "planning.testing.browser-locale": {
+   "label": "Language pages see",
+   "options": {
+    "system": "Same as this computer",
+    "en-US": "English (US)",
+    "en-GB": "English (UK)",
+    "de-DE": "German",
+    "fr-FR": "French",
+    "es-ES": "Spanish",
+    "ja-JP": "Japanese"
+   }
+  },
+  "planning.testing.browser-timezone": {
+   "label": "Time zone pages see",
+   "options": {
+    "system": "Same as this computer",
+    "UTC": "UTC"
+   }
+  },
+  "planning.testing.browser-zoom": {
+   "label": "Page zoom",
+   "unit": "%",
+   "min": 50,
+   "max": 200,
+   "step": 10
+  },
+  "planning.testing.browser-downloads": {
+   "label": "Files a page offers",
+   "options": {
+    "ask": "Ask me",
+    "save": "Save to the project",
+    "block": "Block"
+   }
+  },
+  "planning.testing.browser-popups": {
+   "label": "Pop-up windows",
+   "options": {
+    "tab": "Open as a tab",
+    "block": "Block"
+   }
+  },
+  "planning.testing.browser-block-ads": {
+   "label": "Block ads and trackers",
+   "help": "Off shows pages as visitors get them."
+  },
+  "planning.testing.browser-bad-certificates": {
+   "label": "Pages with a bad certificate",
+   "help": "A site you are building often has one.",
+   "options": {
+    "never": "Never open",
+    "local": "Open on this computer and network",
+    "always": "Always open"
+   }
+  },
+  "planning.testing.browser-memory-limit": {
+   "label": "Memory it may use",
+   "options": {
+    "auto": "Automatic",
+    "1": "1 GB",
+    "2": "2 GB",
+    "4": "4 GB",
+    "8": "8 GB"
+   }
+  },
+  "planning.testing.browser-idle-close": {
+   "label": "Close when idle for",
+   "unit": "minutes",
+   "min": 1,
+   "max": 120,
+   "step": 1
+  },
+  "planning.testing.browser-proxy": {
+   "label": "Proxy",
+   "options": {
+    "system": "This computer's",
+    "none": "None"
+   }
+  },
+  "planning.testing.browser-needs-me": {
+   "label": "When a page needs you",
+   "help": "A sign-in, a puzzle, a payment. It never signs in for you.",
+   "options": {
+    "ask": "Stop and ask me",
+    "skip": "Skip that step"
+   }
+  },
+  "planning.testing.browser-load-timeout": {
+   "label": "Wait for a page to load",
+   "unit": "seconds",
+   "min": 5,
+   "max": 300,
+   "step": 5
+  },
+  "planning.testing.browser-settle": {
+   "label": "Before each step, wait until",
+   "options": {
+    "quiet": "The page stops changing",
+    "loaded": "The page has loaded"
+   }
+  },
+  "planning.testing.browser-step-timeout": {
+   "label": "Give up on a step after",
+   "unit": "seconds",
+   "min": 1,
+   "max": 120,
+   "step": 1
+  },
+  "planning.testing.browser-retries": {
+   "label": "Try a failed step again",
+   "options": {
+    "0": "Never",
+    "1": "Once",
+    "2": "Twice",
+    "3": "Three times"
+   }
+  },
+  "planning.testing.browser-slow-motion": {
+   "label": "Slow down so I can follow",
+   "options": {
+    "off": "Off",
+    "little": "A little",
+    "lot": "A lot"
+   }
+  },
+  "planning.testing.browser-console-errors": {
+   "label": "Errors in the page's console",
+   "options": {
+    "fail": "Fail the check",
+    "note": "Note them",
+    "ignore": "Ignore"
+   }
+  },
+  "planning.testing.browser-failed-requests": {
+   "label": "Requests that fail",
+   "options": {
+    "fail": "Fail the check",
+    "note": "Note them",
+    "ignore": "Ignore"
+   }
+  },
+  "planning.testing.browser-layout-checks": {
+   "label": "Covered buttons and cut-off text",
+   "help": "Controls hidden under something, words that do not fit."
+  },
+  "planning.testing.browser-phone-size": {
+   "label": "Also check at phone size"
+  },
+  "planning.testing.recording-mode": {
+   "label": "Record video",
+   "options": {
+    "off": "Never",
+    "on_failure": "Keep it when something fails",
+    "always": "Always",
+    "manual": "Only when I ask"
+   }
+  },
+  "planning.testing.recording-target": {
+   "label": "What is recorded",
+   "options": {
+    "page": "The page being worked on",
+    "all_pages": "Every open page",
+    "window": "The whole browser window"
+   },
+   "when": {
+    "id": "planning.testing.recording-mode",
+    "in": [
+     "on_failure",
+     "always",
+     "manual"
+    ]
+   }
+  },
+  "planning.testing.recording-before-failure": {
+   "label": "Keep the moments before a failure",
+   "when": {
+    "id": "planning.testing.recording-mode",
+    "in": [
+     "on_failure"
+    ]
+   },
+   "unit": "seconds",
+   "min": 5,
+   "max": 300,
+   "step": 5
+  },
+  "planning.testing.recording-max-minutes": {
+   "label": "Longest recording",
+   "when": {
+    "id": "planning.testing.recording-mode",
+    "in": [
+     "on_failure",
+     "always",
+     "manual"
+    ]
+   },
+   "unit": "minutes",
+   "min": 1,
+   "max": 120,
+   "step": 1
+  },
+  "planning.testing.recording-quality": {
+   "label": "Quality",
+   "options": {
+    "small": "Small file",
+    "balanced": "Balanced",
+    "sharp": "Sharp"
+   }
+  },
+  "planning.testing.recording-fps": {
+   "label": "Frames per second",
+   "help": "Automatic records motion checks at 60 and the rest at 30.",
+   "options": {
+    "auto": "Automatic",
+    "30": "30",
+    "60": "60"
+   }
+  },
+  "planning.testing.recording-size": {
+   "label": "Picture size",
+   "options": {
+    "window": "Same as the window",
+    "720p": "720p",
+    "1080p": "1080p",
+    "1440p": "1440p"
+   }
+  },
+  "planning.testing.recording-pointer": {
+   "label": "Show the pointer and clicks"
+  },
+  "planning.testing.recording-keys": {
+   "label": "Show keys pressed",
+   "help": "Never shown in password fields."
+  },
+  "planning.testing.recording-codec": {
+   "label": "Video format",
+   "help": "Automatic picks the best one this computer can make.",
+   "options": {
+    "auto": "Automatic",
+    "av1": "AV1",
+    "hevc": "HEVC (H.265)",
+    "h264": "H.264",
+    "vp9": "VP9"
+   }
+  },
+  "planning.testing.recording-encoder": {
+   "label": "Made on",
+   "help": "The processor works everywhere and is slower.",
+   "options": {
+    "gpu": "The graphics card",
+    "cpu": "The processor"
+   }
+  },
+  "planning.testing.recording-export": {
+   "label": "File type when you save one",
+   "options": {
+    "mp4": "MP4",
+    "webm": "WebM",
+    "gif": "GIF"
+   }
+  },
+  "planning.testing.recording-audio": {
+   "label": "Sound",
+   "help": "Your microphone is never recorded.",
+   "options": {
+    "off": "Off",
+    "page": "The page's sound"
+   }
+  },
+  "planning.testing.recording-storage-limit": {
+   "label": "Space recordings may use",
+   "options": {
+    "1": "1 GB",
+    "5": "5 GB",
+    "20": "20 GB",
+    "none": "No limit"
+   }
+  },
+  "planning.testing.recording-when-full": {
+   "label": "When that is full",
+   "options": {
+    "oldest": "Delete the oldest",
+    "stop": "Stop recording"
+   },
+   "when": {
+    "id": "planning.testing.recording-storage-limit",
+    "in": [
+     "1",
+     "5",
+     "20"
+    ]
+   }
+  },
+  "planning.testing.screenshot-format": {
+   "label": "Picture format",
+   "help": "PNG is exact. JPEG and WebP are smaller.",
+   "options": {
+    "png": "PNG",
+    "jpeg": "JPEG",
+    "webp": "WebP"
+   }
+  },
+  "planning.testing.screenshot-quality": {
+   "label": "Picture quality",
+   "when": {
+    "id": "planning.testing.screenshot-format",
+    "in": [
+     "jpeg",
+     "webp"
+    ]
+   },
+   "unit": "%",
+   "min": 10,
+   "max": 100,
+   "step": 5
+  },
+  "planning.testing.screenshot-wait-loaded": {
+   "label": "Wait for fonts and pictures"
+  },
+  "planning.testing.screenshot-freeze-motion": {
+   "label": "Pause animations for the picture",
+   "help": "So two pictures of the same page match."
+  },
+  "planning.testing.screenshot-diff-threshold": {
+   "label": "Counts as changed above",
+   "help": "Of the picture's dots.",
+   "unit": "%",
+   "min": 0,
+   "max": 10,
+   "step": 0.1
+  },
+  "planning.testing.screenshot-ignore-soft-edges": {
+   "label": "Ignore soft edges",
+   "help": "Tiny differences in how text edges are drawn."
+  },
+  "planning.testing.screenshot-first-picture": {
+   "label": "The first picture of a page",
+   "options": {
+    "baseline": "Later ones are compared with it",
+    "ask": "Ask me"
+   }
+  }
+ }
+}

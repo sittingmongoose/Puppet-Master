@@ -49,8 +49,10 @@
   };
   PM51.on('rf-explain', () => { PM51.s().rfExplain = !explainOn(); saveState(); paintExplain(); });
   const rfChrome = renderChromeActions;
+  let rfChromeOff = false;   /* true while the page under the bar is drawn: its own row of buttons is gone (see 4) */
   renderChromeActions = function (extra) {
-    const btn = `<button type="button" class="btn rf-explain${explainOn() ? ' is-on' : ''}" data-action="pm51-rf-explain" aria-pressed="${explainOn() ? 'true' : 'false'}" data-pm-hover-label="Explain" data-pm-hover-detail="Show a sentence under every setting and section.">${icon('info')}<span>Explain</span></button>`;
+    if (rfChromeOff) return '';
+    const btn = `<button type="button" class="btn rf-explain${explainOn() ? ' is-on' : ''}" data-action="pm51-rf-explain" aria-pressed="${explainOn() ? 'true' : 'false'}" data-pm-hover-label="Explain" data-pm-hover-detail="Show a sentence under every setting and section.">${icon('info')}<span class="rf-explain-word">Explain</span></button>`;
     return rfChrome.call(this, btn + (extra || ''));
   };
   paintExplain();
@@ -66,19 +68,74 @@
     if (m) html = html.replace('<span class="side-link-label">Settings Home</span>', `<span class="side-link-label">Settings Home</span><span class="rf-rail-count" data-pm-hover-label="${a(m[1])} need attention" data-pm-hover-detail="Open Settings Home to see them.">${h(m[1])}</span>`);
     return html;
   };
-  /* ---- 4. One tab strip per level, and no strip for a chapter with one manager -------------------------------- */
+  /* ---- 4. One bar on top of a chapter ------------------------------------------------------------------------- */
+  /* Jared, 2026-11-24, on the top of a chapter (the managers' tabs loose on a band, under them a row holding only
+     Explain, the project and the page options at its right end, and the lines where that row met the side column):
+     "This area looks unfinished and unpolished. See what you can do to improve it, that applies to all the settings
+     sections that are like this."
+     It is one bar now, the same on every chapter: the chapter's managers in a track in the middle (the tab selector
+     every strip in Settings uses, a chip in a box of its own shape), the three buttons at its right end, one line
+     under it the whole width, the side column and the page starting under that line. A chapter with one manager shows
+     that manager's name where the track would be, so its page no longer opens with a second copy of the name.
+     The row the buttons sat in is empty and takes no room (styles.d/98-refine-bar.css).
+     The managers' tab buttons are the engine's own, inside a wrapper: the chip, stream F's checks and the scroll spy
+     find them as before. When the track and the buttons cannot share a row (a long chapter in a narrow window) the
+     buttons go under the track, as they were; before that, Explain drops its word and keeps its sign. rfBarFit measures
+     both after each draw and when the bar changes size. */
   const rfTabs = renderWorkspaceTabs;
+  const rfBar = { state: {}, side: 0, label: 0 };   /* per chapter: '' | 'tight' | 'stack'; the side column's width; Explain's word */
   renderWorkspaceTabs = function (domain, activeWorkspace) {
-    /* the strip stays in the page, unseen: the engine and stream F's checks look for the lit tab of the chapter */
     const html = String(rfTabs.call(this, domain, activeWorkspace));
-    return domain && domain.workspaces.length < 2 ? html.replace('class="workspace-tabs"', 'class="workspace-tabs rf-one"') : html;
+    const open = html.indexOf('>') + 1, close = html.lastIndexOf('</nav>');
+    if (open <= 0 || close < open || !domain) return html;
+    const one = domain.workspaces.length < 2, st = rfBar.state[domain.id] || '';
+    const cls = `workspace-tabs rf-bar${one ? ' rf-one' : ''}${st ? ' rf-bar-' + st : ''}`;
+    return html.slice(0, open).replace('class="workspace-tabs"', `class="${cls}" data-rf-chapter="${a(domain.id)}" style="--rf-side:${rfBar.side}px"`)
+      + `<div class="rf-bar-track">${html.slice(open, close)}</div>`
+      + (one ? `<span class="rf-bar-title">${h((activeWorkspace || domain.workspaces[0] || {}).label || domain.label)}</span>` : '')
+      + `<div class="rf-bar-tools">${renderChromeActions()}</div></nav>`;
+  };
+  let rfBarWatch = null;
+  const rfBarFit = () => {
+    const nav = root.querySelector('nav.workspace-tabs.rf-bar'); if (!nav) return;
+    const mid = nav.querySelector(nav.classList.contains('rf-one') ? ':scope > .rf-bar-title' : ':scope > .rf-bar-track'), tools = nav.querySelector(':scope > .rf-bar-tools');
+    if (!mid || !tools || !nav.clientWidth) return;
+    if (!rfBarWatch && typeof ResizeObserver === 'function') rfBarWatch = new ResizeObserver(() => rfBarFit());
+    const layout = root.querySelector('.document-layout'), index = layout && layout.querySelector(':scope > .page-index');
+    if (rfBarWatch) { rfBarWatch.observe(nav); rfBarWatch.observe(mid); rfBarWatch.observe(tools); if (index) rfBarWatch.observe(index); }
+    /* the track stands in the middle of the page under it, not of the bar: the side column's width is kept clear on its left
+       while there is room (a column beside the page, not the row it becomes in a narrow window) */
+    const cols = layout ? getComputedStyle(layout).gridTemplateColumns.split(' ').filter(Boolean) : [];
+    const side = index && cols.length > 1 && index.offsetWidth < nav.clientWidth / 2 ? Math.round(index.offsetWidth) : 0;
+    let moved = false;
+    if (side !== rfBar.side || nav.style.getPropertyValue('--rf-side') !== side + 'px') { rfBar.side = side; nav.style.setProperty('--rf-side', side + 'px'); moved = true; }
+    const word = tools.querySelector('.rf-explain-word');
+    if (word && word.offsetWidth) rfBar.label = word.offsetWidth + 6;
+    const cs = getComputedStyle(nav), was = nav.classList.contains('rf-bar-tight') ? 'tight' : nav.classList.contains('rf-bar-stack') ? 'stack' : '';
+    const full = mid.scrollWidth + tools.offsetWidth + (was === 'tight' ? rfBar.label : 0) + (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+    const st = full <= nav.clientWidth + 0.5 ? '' : full - rfBar.label <= nav.clientWidth + 0.5 ? 'tight' : 'stack';
+    if (st !== was) { nav.classList.toggle('rf-bar-tight', st === 'tight'); nav.classList.toggle('rf-bar-stack', st === 'stack'); moved = true; }
+    rfBar.state[nav.dataset.rfChapter || ''] = st;
+    /* the tabs moved after the chip was placed: the chip's engine measures this strip again */
+    if (moved && window.PM_LG && typeof window.PM_LG.syncScope === 'function') { try { window.PM_LG.syncScope(nav); } catch (e) { /* the chip follows at its next sync */ } }
   };
 
-  /* the first manager's name is already lit in the strip above it; later managers keep theirs as the page scrolls on */
+  /* The project button's menu named a page that no longer exists ("Project Location & Sync", PMConcept7's old id
+     projects/project-sync, which now opens Projects' first page). Where a project's files are kept and which computers
+     work on it is Servers & Remote Access, so the item says that and goes there. */
+  const rfMenu = openMenu;
+  openMenu = function (anchor, items, title) {
+    if (title === 'Puppet Master' && Array.isArray(items)) items = items.map(it => it && it.label === 'Project Location & Sync' ? Object.assign({}, it, { label: 'Servers & Remote Access', onClick: () => navigate(CHAPTER, 'servers') }) : it);
+    return rfMenu.call(this, anchor, items, title);
+  };
+
+  /* the first manager's name is already in the bar above it; later managers keep theirs as the page scrolls on */
   const rfContinuous = renderDomainContinuous;
   renderDomainContinuous = function (domain) {
-    const html = String(rfContinuous.apply(this, arguments));
-    if (!domain || domain.workspaces.length < 2) return html;
+    rfChromeOff = true;
+    let html;
+    try { html = String(rfContinuous.apply(this, arguments)); } finally { rfChromeOff = false; }
+    if (!domain) return html;
     return html.replace('<header class="workspace-separator"><h2>', '<header class="workspace-separator rf-first"><h2 class="rf-first-title">');
   };
 
@@ -86,7 +143,7 @@
      Jared had asked for its highlight to follow the scroll (FO-185, 2026-11-13), so it is his, not a repeat to cut.
      The same goes for the centred tab strips (FO-184). ---- */
   const rfRender = renderApp;
-  renderApp = function () { const r = rfRender.apply(this, arguments); paintExplain(); return r; };
+  renderApp = function () { const r = rfRender.apply(this, arguments); paintExplain(); rfBarFit(); requestAnimationFrame(rfBarFit); return r; };
 
   /* ---- 6. Facts: what is true right now, on one line (not rows that look like settings) ----------------------- */
   /* A short value ("4 rules", "5 protected") is placed by its own width, as a one-word value already is. The kit gave

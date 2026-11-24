@@ -94,10 +94,11 @@ export const tests = {
 			const first = tabs[0].getBoundingClientRect(), last = tabs[tabs.length - 1].getBoundingClientRect(), sr = strip.getBoundingClientRect();
 			const page = document.querySelector(`${sel} .pm51-mgr > .pm51-tabs`), body = document.querySelector(`${sel} .pm51-mgr`);
 			const index = document.querySelector('#pm-settings-root .page-index');
-			return { top: Math.round((first.left + last.right) / 2 - mid(sr)), page: Math.round(mid(page.getBoundingClientRect()) - mid(body.getBoundingClientRect())),
+			const main = document.querySelector('#pm-settings-root .document-main').getBoundingClientRect();
+			return { top: Math.round((first.left + last.right) / 2 - mid(main)), bar: Math.round((first.left + last.right) / 2 - mid(sr)), page: Math.round(mid(page.getBoundingClientRect()) - mid(body.getBoundingClientRect())),
 				index: !!index && index.getClientRects().length > 0, groups: [...document.querySelectorAll('#pm-settings-root .page-index .pm51-index-group')].filter((n) => n.getClientRects().length).length };
 		}, block('providers'));
-		await t.check('the chapter\'s tab strip is centred (FO-184)', Math.abs(got.top) <= 3, `${got.top} px off`);
+		await t.check('the chapter\'s tab strip is centred over the page, on the axis of the manager\'s own strip (FO-184)', Math.abs(got.top) <= 3, `${got.top} px off the page's middle (${got.bar} px off the bar's)`);
 		await t.check('the manager\'s tab strip is centred (FO-184)', Math.abs(got.page) <= 3, `${got.page} px off`);
 		await t.check('the side column is there on a manager with tabs, with every manager of the chapter (FO-185)', got.index && got.groups === 4, JSON.stringify(got));
 	},
@@ -290,6 +291,90 @@ export const tests = {
 		const more = await f.evaluate(async (sel) => { const b = document.querySelector(sel); const closed = [...b.querySelectorAll('details.pm51-advanced:not([open])')]; closed.forEach((x) => { x.open = true; }); await new Promise((r) => setTimeout(r, 300)); const X = (n) => { const r = document.createRange(); r.selectNodeContents(n); return Math.round(r.getBoundingClientRect().left); }; const res = [...b.querySelectorAll('.pm51-advanced-body')].filter((n) => n.getClientRects().length).map((body) => [...new Set([...body.querySelectorAll('.pm51-section-title, .o55-group-title, .section-title, .setting-label, .pm51-row-label, .pm51-kv-row > span:first-child')].filter((n) => n.getClientRects().length).map(X))]); closed.forEach((x) => { x.open = false; }); return res; }, block('toolchain'));
 		await t.check('inside More options every title and every row name starts at one place', more.length >= 1 && more.every((x) => x.length === 1), JSON.stringify(more));
 	},
+	async 'sixth pass: the tab selector fits its box, one bar tops a chapter, crews pick models, the browser has its settings'(t) {
+		const f = await openSettings(t);
+		/* Jared, 2026-11-24: "This tab selector doesnt fit in the box, the shapes arent right." */
+		await go(f, 'general', 'notifications');
+		const fit = await f.evaluate((sel) => {
+			const R = (n) => n.getBoundingClientRect(), px = (v) => parseFloat(v) || 0;
+			const one = (box, host) => { const lens = [...host.querySelectorAll(':scope > lg-under > .lg-lens')].find((n) => n.getClientRects().length); if (!lens) return null; const b = R(box), l = R(lens); return { box: px(getComputedStyle(box).borderTopLeftRadius), chip: px(getComputedStyle(lens).borderTopLeftRadius), top: +(l.top - b.top).toFixed(1), bottom: +(b.bottom - l.bottom).toFixed(1) }; };
+			const nav = document.querySelector('#pm-settings-root nav.workspace-tabs.rf-bar');
+			return { bar: nav ? one(nav.querySelector('.rf-bar-track'), nav) : null, mgr: one(document.querySelector(`${sel} .pm51-mgr > .pm51-tabs`), document.querySelector(`${sel} .pm51-mgr > .pm51-tabs`)) };
+		}, block('notifications'));
+		const concentric = (x) => !!x && Math.abs(x.box - (x.chip + x.top)) <= 1.6 && Math.abs(x.top - x.bottom) <= 1.1;
+		await t.check('a manager\'s tab strip: the box\'s corner is the chip\'s corner plus the gap between them', concentric(fit.mgr), JSON.stringify(fit.mgr));
+		await t.check('the chapter\'s tab strip is the same selector: a chip in a box of its own shape', concentric(fit.bar), JSON.stringify(fit.bar));
+		/* "This area looks unfinished and unpolished." One bar: the chapter's managers, the three buttons, one line under it. */
+		const bar = await f.evaluate((sel) => {
+			const R = (n) => n.getBoundingClientRect(), mid = (r) => r.left + r.width / 2, vis = (n) => !!n && n.getClientRects().length > 0;
+			const nav = document.querySelector('#pm-settings-root nav.workspace-tabs.rf-bar'), track = nav.querySelector('.rf-bar-track'), tools = nav.querySelector('.rf-bar-tools');
+			const old = document.querySelector('#pm-settings-root .document-toolbar'), index = document.querySelector('#pm-settings-root .page-index-card'), mgr = document.querySelector(`${sel} .pm51-mgr > .pm51-tabs`);
+			const first = [...document.querySelectorAll('#pm-settings-root .workspace-block')][0];
+			return { tabs: track.querySelectorAll('.workspace-tab').length, explain: vis(tools.querySelector('[data-action="pm51-rf-explain"]')), project: vis(tools.querySelector('[data-action="project-menu"]')), options: vis(tools.querySelector('[data-action="page-options"]')),
+				oldRow: old ? Math.round(R(old).height) : -1, oldButtons: old ? old.querySelectorAll('button').length : -1, line: parseFloat(getComputedStyle(nav).borderBottomWidth), height: Math.round(R(nav).height),
+				axis: Math.round(mid(R(track)) - mid(R(mgr))), under: Math.round(R(index).top - R(nav).bottom), inside: R(tools).right <= R(nav).right + 0.5 && R(track).right <= R(tools).left + 0.5,
+				firstTitle: [...first.querySelectorAll('.workspace-separator h2')].filter((n) => n.getClientRects().length).length };
+		}, block('notifications'));
+		await t.check('the bar holds the chapter\'s managers and the three buttons, in one row', bar.tabs === 2 && bar.explain && bar.project && bar.options && bar.inside && bar.height <= 50, JSON.stringify(bar));
+		await t.check('the row the buttons sat in is gone, and one line runs under the bar', bar.oldRow === 0 && bar.oldButtons === 0 && bar.line >= 1, JSON.stringify(bar));
+		await t.check('the chapter\'s tabs stand over the manager\'s tabs, and the side column starts under the bar', Math.abs(bar.axis) <= 3 && bar.under >= 8 && bar.under <= 20, JSON.stringify(bar));
+		await f.locator('#pm-settings-root nav.rf-bar [data-action="project-menu"]').click(); await sleep(f, 500);
+		await t.check('the project button still opens its menu from the bar', await f.getByText('All Project Settings', { exact: true }).first().isVisible().catch(() => false));
+		await t.page.keyboard.press('Escape'); await sleep(f, 300);
+		await go(f, 'safety', 'permissions');
+		const one = await f.evaluate(() => { const nav = document.querySelector('#pm-settings-root nav.workspace-tabs.rf-bar'), T = (n) => (n ? n.textContent : '').replace(/\s+/g, ' ').trim(); const title = nav.querySelector('.rf-bar-title'); return { name: title && title.getClientRects().length ? T(title) : '', track: nav.querySelector('.rf-bar-track').getClientRects().length, tools: nav.querySelectorAll('.rf-bar-tools button').length, again: [...document.querySelectorAll('#pm-settings-root .workspace-separator h2')].filter((n) => n.getClientRects().length).length }; });
+		await t.check('a chapter with one manager: its name stands in the bar, once, with the same three buttons', one.name === 'Permissions & Safety' && one.track === 0 && one.tools === 3 && one.again === 0, JSON.stringify(one));
+		/* a long chapter in a narrow window: nothing is cut off; the buttons go under the tabs when one row cannot hold both */
+		await t.viewport(1180, 900); await go(f, 'code', 'testing'); await sleep(f, 500);
+		const narrow = await f.evaluate(() => { const nav = document.querySelector('#pm-settings-root nav.workspace-tabs.rf-bar'), R = (n) => n.getBoundingClientRect(); const n = R(nav), tabs = [...nav.querySelectorAll('.workspace-tab')].map(R), tools = R(nav.querySelector('.rf-bar-tools')); return { cls: nav.className, cut: tabs.filter((r) => r.left < n.left - 0.5 || r.right > n.right + 0.5).length, tools: tools.right <= n.right + 0.5 && tools.left >= n.left - 0.5, over: tabs.some((r) => r.right > tools.left + 0.5 && r.bottom > tools.top + 0.5 && r.top < tools.bottom - 0.5) }; });
+		await t.check('narrow window, eight managers: every tab and every button is whole and none covers another', narrow.cut === 0 && narrow.tools && !narrow.over, JSON.stringify(narrow));
+		await t.viewport(1600, 1000); await sleep(f, 400);
+		/* "In the crew manager there is no way to set the models when you make a crew template." */
+		await go(f, 'memory', 'personas'); await tab(f, 'personas', 'crews');
+		const crew = await f.evaluate((sel) => { const b = document.querySelector(sel), T = (n) => (n ? n.textContent : '').replace(/\s+/g, ' ').trim(); const rows = [...b.querySelectorAll('.rf-crew-models > .pm51-row')].filter((n) => n.getClientRects().length); return { members: rows.filter((r) => r.querySelector('.o55-msel-trigger')).length, sub: T(b.querySelector('.pm51-detail-sub')), lead: rows.filter((r) => r.querySelector('.rf-crew-lead')).length, route: rows.some((r) => /Model route/.test(T(r.querySelector('.pm51-row-label')))), h: document.querySelector('#settings-document').scrollHeight }; }, block('personas'));
+		await t.check('a crew lists its members, each with a model picker; the lead is marked; the model route is still there', crew.members >= 2 && crew.lead <= 1 && crew.route && new RegExp(`^${crew.members} members`).test(crew.sub), JSON.stringify(crew));
+		const second = f.locator(`${block('personas')} .rf-crew-models .o55-msel-trigger`).nth(1);
+		const was = (await second.textContent()).replace(/\s+/g, ' ').trim();
+		await second.click(); await sleep(f, 700);
+		const pop = await f.evaluate(() => { const p = document.querySelector('.o55-pick-pop'); const T = (n) => (n ? n.textContent : '').replace(/\s+/g, ' ').trim(); return { open: !!p && p.getClientRects().length > 0, first: p ? T(p.querySelector('[role="option"]')) : '', models: p ? p.querySelectorAll('[role="option"]').length : 0, h: document.querySelector('#settings-document').scrollHeight }; });
+		await t.check('it is the shared model picker, over the page: first "Follow the model route", then the models', pop.open && /^Follow the model route/.test(pop.first) && pop.models >= 4 && pop.h === crew.h, JSON.stringify(pop));
+		await f.locator('.o55-pick-pop [role="option"]').filter({ hasText: 'Codex coding model' }).first().click(); await sleep(f, 700);
+		const lvl = f.locator('.o55-pick-levels:visible [role="option"], .o55-depth-list:visible [role="option"], .o55-depth-item:visible').first();
+		if (await lvl.count()) { await lvl.click(); await sleep(f, 600); }
+		await t.page.keyboard.press('Escape'); await sleep(f, 300);
+		const now = (await f.locator(`${block('personas')} .rf-crew-models .o55-msel-trigger`).nth(1).textContent()).replace(/\s+/g, ' ').trim();
+		await t.check('picking a model changes that member\'s row', /Codex coding model/.test(now) && now !== was, `${was} -> ${now}`);
+		await f.locator(`${block('personas')} [data-action="pm51-personas-crew-new"]`).first().click(); await sleep(f, 1200);
+		const steps = await f.evaluate(() => [...document.querySelectorAll('.o55g-railitem')].map((n) => n.textContent.replace(/\s+/g, ' ').trim()));
+		await t.check('New crew has a Models step, before Teamwork', steps.indexOf('Models') >= 0 && steps.indexOf('Models') === steps.indexOf('Teamwork') - 1, JSON.stringify(steps));
+		await closeAll(f);
+		const wz = f.locator('.drawer-wrap:not([data-closing="1"]) .o55g-close:visible, .drawer-wrap:not([data-closing="1"]) button:visible').filter({ hasText: 'Close' }).first();
+		if (await wz.count()) { await wz.click(); await sleep(f, 600); }
+		/* "There also needs to be a lot more settings for browser, browser work, recordings, etc. Like gpu acceleration, formats" */
+		await go(f, 'source', 'browser-scm');
+		const names = async () => f.evaluate((sel) => [...document.querySelectorAll(`${sel} .setting-label, ${sel} .pm51-row-label`)].filter((n) => n.getClientRects().length).map((n) => n.textContent.replace(/\s+/g, ' ').replace(/(Modified|Changed)$/, '').trim()), block('browser-scm'));
+		const tabsOf = await f.evaluate((sel) => [...document.querySelectorAll(`${sel} .pm51-mgr > .pm51-tabs [role="tab"]`)].map((n) => n.textContent.trim()), block('browser-scm'));
+		await t.check('Browser & Recordings has four tabs', JSON.stringify(tabsOf) === JSON.stringify(['Browser', 'Browser work', 'Recordings', 'Screenshots']) && (await f.locator('#pm-settings-root nav.rf-bar .workspace-tab.active').textContent()).trim() === 'Browser & Recordings', JSON.stringify(tabsOf));
+		const need = { browser: ['Graphics acceleration', 'Graphics card', 'Window size', 'Sharpness', 'Browser profile', 'Files a page offers'], work: ['Let the assistant open DevTools', 'When a page needs you', 'Wait for a page to load', 'Errors in the page\'s console'], recordings: ['Record video', 'Frames per second', 'Video format', 'File type when you save one', 'Sound', 'Space recordings may use'], screenshots: ['Screenshots for evidence', 'Kept for', 'Hidden before saving', 'Helpers may see screenshots', 'Let me point at things to share with chat', 'Screenshot button captures', 'Picture format', 'Counts as changed above'] };
+		let total = 0;
+		for (const [id, list] of Object.entries(need)) {
+			await tab(f, 'browser-scm', id);
+			const got = await names(); total += got.length;
+			await t.check(`${id}: ${list.length} of its rows are there (${got.length} rows on the tab)`, list.every((n) => got.includes(n)), JSON.stringify(list.filter((n) => !got.includes(n))));
+		}
+		await t.check('the four tabs hold at least 55 rows', total >= 55, String(total));
+		await tab(f, 'browser-scm', 'recordings');
+		const formats = await f.evaluate((sel) => { const row = [...document.querySelectorAll(`${sel} .setting-row`)].find((r) => /^Video format/.test(r.querySelector('.setting-label').textContent.trim())); return row ? [...row.querySelectorAll('select option')].map((o) => o.textContent.trim()) : []; }, block('browser-scm'));
+		await t.check('Video format offers Automatic, AV1, HEVC, H.264 and VP9', ['Automatic', 'AV1', 'HEVC (H.265)', 'H.264', 'VP9'].every((x) => formats.includes(x)), JSON.stringify(formats));
+		await tab(f, 'browser-scm', 'browser');
+		const fact = () => f.evaluate((sel) => [...document.querySelectorAll(`${sel} .rf-facts .rf-fact`)].map((n) => n.textContent.replace(/\s+/g, ' ').trim()).join(' | '), block('browser-scm'));
+		const before = await fact();
+		await f.evaluate((sel) => { const row = [...document.querySelectorAll(`${sel} .setting-row`)].find((r) => /^Graphics acceleration/.test(r.querySelector('.setting-label').textContent.trim())); const s = row.querySelector('select'); s.value = 'Off'; s.dispatchEvent(new Event('change', { bubbles: true })); }, block('browser-scm')); await sleep(f, 900);
+		const after = await fact();
+		await t.check('turning Graphics acceleration off shows at once in the line of facts over it', /in use/.test(before) && /not used/.test(after), `${before} -> ${after}`);
+		await f.evaluate((sel) => { const row = [...document.querySelectorAll(`${sel} .setting-row`)].find((r) => /^Graphics acceleration/.test(r.querySelector('.setting-label').textContent.trim())); const s = row.querySelector('select'); s.value = 'Auto'; s.dispatchEvent(new Event('change', { bubbles: true })); }, block('browser-scm')); await sleep(f, 600);
+	},
+
 	async 'Limits & switching is the one home of a service\'s switching rules'(t) {
 		const f = await openSettings(t);
 		await go(f, 'ai', 'providers'); await tab(f, 'providers', 'limits');
@@ -444,7 +529,9 @@ export const tests = {
 		const allowed = new Set(['pm51-providers-policy-open']);
 		const lostActions = theirs.actions.filter((x) => !mine.actions.includes(x) && !allowed.has(x));
 		t.log(`views ${theirs.views.length} -> ${mine.views.length}; setting ids ${theirs.ids.length} -> ${mine.ids.length}; actions ${theirs.actions.length} -> ${mine.actions.length}`);
-		await t.check('the same number of views', theirs.views.length === mine.views.length, `${theirs.views.length} / ${mine.views.length}`);
+		/* the sixth pass gave the browser's page four tabs where it had none: three views more, none fewer */
+		await t.check('no view is gone; the only new ones are the browser\'s three more tabs', mine.views.length === theirs.views.length + 3, `${theirs.views.length} / ${mine.views.length}`);
+		await t.check('the fifty proposed browser rows are drawn as settings', mine.ids.filter((x) => !theirs.ids.includes(x)).filter((x) => /^planning\.testing\.(browser|recording|screenshot)-/.test(x)).length === 50, String(mine.ids.filter((x) => !theirs.ids.includes(x)).length));
 		await t.check('every setting is still drawn somewhere', lostIds.length === 0, lostIds.join(', '));
 		await t.check('every action is still offered somewhere', lostActions.length === 0, lostActions.join(', '));
 	}

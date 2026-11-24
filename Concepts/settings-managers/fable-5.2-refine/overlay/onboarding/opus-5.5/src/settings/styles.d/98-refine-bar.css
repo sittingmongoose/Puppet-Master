@@ -1,0 +1,91 @@
+/* Refine · sixth pass (2026-11-24), after Jared's fifth review of the refined Settings.
+
+   1. The tab selector and its box are one shape.
+      "This tab selector doesnt fit in the box, the shapes arent right. This needs to be addressed all over the settings
+      page and in all themes."
+      A manager's tab strip is a chip in a box. The chip is the look's own (a 3 px corner in Basic, 9 in Friendly, square
+      in Retro and NieR, Glass's lens); the box kept one 12 px corner in every look. The box's corner is now the chip's
+      corner plus the gap between them, so the two curves run side by side, and a square chip gets a square box.
+      --rf-chip-r is the look's chip corner (--pm-switch-r, src/css/60-switcher-looks.css); Glass keeps its own pair, which
+      already fits (a 9 px chip, 5 px in, in a 14 px box).
+
+   2. One bar on top of a chapter.
+      "This area looks unfinished and unpolished. See what you can do to improve it, that applies to all the settings
+      sections that are like this."
+      The markup is drawn by managers/90-refine-frame.js (4): nav.workspace-tabs.rf-bar holds .rf-bar-track (the
+      chapter's managers), .rf-bar-title (a chapter with one manager) and .rf-bar-tools (Explain, the project, the page
+      options). The row those buttons left (.document-toolbar) stays in the page, empty and without height. */
+
+/* ---- 1. the chip's corner, and a box that follows it ---- */
+#panel-settings > #pm-settings-root { --rf-chip-r: var(--pm-switch-r, 3px); }
+html:not([data-theme^="glass"]) #panel-settings .workspace-block .pm51-mgr.has-manager-tabs > .manager-tabs.pm51-tabs {
+  border-radius: calc(var(--rf-chip-r) + min(var(--rf-chip-r) * 999, 3px));
+}
+/* the strip's own thumb, seen for a moment before the chip arrives, is the chip's shape too */
+html:not([data-theme^="glass"]) #panel-settings .pm51-mgr > .pm51-tabs > .tab-ink { border-radius: var(--rf-chip-r); }
+html:not([data-theme^="glass"]) #panel-settings .pm51-mgr > .pm51-tabs > .manager-tab { border-radius: var(--rf-chip-r); }
+/* Friendly's chip carries a hard shadow down and to the right; it needs room inside the box or it sits on the box's line */
+html[data-theme^="friendly"]:not([data-o55-nier="on"]) #panel-settings .workspace-block .pm51-mgr.has-manager-tabs > .manager-tabs.pm51-tabs { padding: 6px; border-radius: calc(var(--rf-chip-r) + 5px); }
+html[data-theme^="friendly"]:not([data-o55-nier="on"]) #panel-settings .rf-bar > .rf-bar-track { padding: 5px; border-radius: calc(var(--rf-chip-r) + 6px); }
+/* A choice between a few words in a row (.segmented) is the same selector, smaller. In Friendly and Glass its chip is
+   round (9 and 6 px) and sits 4 px inside a box that kept the chip's own corner, so the box read as squarer than the chip. */
+html[data-theme^="friendly"]:not([data-o55-nier="on"]):not(#lgz):not(#lgy) #panel-settings > #pm-settings-root .segmented { border-radius: calc(var(--rf-chip-r) + 4px) !important; }
+html[data-theme^="glass"]:not(#lgz):not(#lgy) #panel-settings > #pm-settings-root .segmented { border-radius: 10px !important; }
+html[data-theme^="glass"]:not(#lgz):not(#lgy) #panel-settings .rf-bar > .rf-bar-track { border-radius: 10px; }
+/* Retro's selector is a row of keys with the chosen one filled, as its segmented choices are: no box round the keys.
+   A strip that has stuck to the top keeps a ground, or the page would show through between its keys. */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-settings .workspace-block .pm51-mgr.has-manager-tabs > .manager-tabs.pm51-tabs { box-shadow: none; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-settings .workspace-block .pm51-mgr.has-manager-tabs > .manager-tabs.pm51-tabs:not(.is-stuck) { border-color: transparent; background: none; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-settings .rf-bar > .rf-bar-track { border-color: transparent; background: none; }
+
+/* ---- 2. the bar ---- */
+/* columns: the side column's width kept clear (while there is room; with equal padding left and right that puts the middle
+   of the two springs on the middle of the page), a spring, the track, the buttons on a spring of the same strength. With room the track stands in the middle of the page under it; with less it moves left to the page's
+   edge, then over the side column; with none the buttons go under it (.rf-bar-stack, set by rfBarFit). */
+#panel-settings nav.workspace-tabs.rf-bar {
+  display: grid; align-items: center; column-gap: 0;
+  grid-template-columns: minmax(0, var(--rf-side, 0px)) minmax(0, 1fr) auto minmax(max-content, 1fr);
+  min-height: 48px; padding: 0 12px; border-bottom: 1px solid var(--k3-line);
+}
+#panel-settings nav.workspace-tabs.rf-bar.rf-one { display: grid; }
+/* the chip engine's own rule takes every border off this strip (it was a bare row of tabs); the bar keeps its bottom line */
+html:not(#lgz):not(#lgy):not(#lgx) #panel-settings nav.workspace-tabs.rf-bar { border-bottom: 1px solid var(--k3-line) !important; border-radius: 0 !important; }
+#panel-settings .rf-bar > .rf-bar-track {
+  grid-column: 3; grid-row: 1; display: inline-flex; align-items: center; gap: 2px; padding: 3px;
+  border: 1px solid var(--k3-line); border-radius: calc(var(--rf-chip-r) + min(var(--rf-chip-r) * 999, 4px));
+  background: var(--k3-bg-0);
+}
+#panel-settings .rf-bar.rf-one > .rf-bar-track { display: none; }
+#panel-settings .rf-bar > .rf-bar-title {
+  grid-column: 3; grid-row: 1; font-size: 13.5px; font-weight: 700; letter-spacing: -.01em; color: var(--k3-text-1); white-space: nowrap;
+}
+#panel-settings .rf-bar > .rf-bar-tools { grid-column: 4; grid-row: 1; justify-self: end; padding-left: 16px; }
+#panel-settings .rf-bar > .rf-bar-tools > .page-actions { position: static; transform: none; display: flex; align-items: center; gap: 8px; }
+#panel-settings .rf-bar > .rf-bar-track > .workspace-tab { height: 28px; margin: 0; padding: 0 11px; border-radius: var(--rf-chip-r); }
+/* the chip marks the manager you are on; the 2 px line under it said it twice */
+#panel-settings .rf-bar > .tab-ink { display: none; }
+/* nearly too narrow: Explain keeps its sign and drops its word */
+#panel-settings .rf-bar.rf-bar-tight .rf-explain-word { display: none; }
+#panel-settings .rf-bar.rf-bar-tight .rf-explain { padding: 0 9px; }
+/* too narrow for one row: the buttons go under the track */
+/* the same columns without the buttons' one: the track keeps its width, the springs give way first, then the side column's room */
+#panel-settings nav.workspace-tabs.rf-bar.rf-bar-stack { grid-template-columns: minmax(0, var(--rf-side, 0px)) minmax(0, 1fr) auto minmax(0, 1fr); row-gap: 6px; padding-top: 6px; padding-bottom: 6px; }
+#panel-settings .rf-bar.rf-bar-stack > .rf-bar-track, #panel-settings .rf-bar.rf-bar-stack > .rf-bar-title { grid-column: 3; }
+#panel-settings .rf-bar.rf-bar-stack > .rf-bar-tools { grid-column: 1 / -1; grid-row: 2; justify-self: end; }
+/* the row the buttons left */
+#panel-settings .document-main > .document-toolbar { min-height: 0; height: 0; padding: 0; border: 0; overflow: hidden; }
+/* the side column's card and the page's first card start on one line under the bar */
+#panel-settings .document-layout > .page-index { padding-top: 14px; }
+
+/* ---- 3. A crew's members and their models (managers/32-personas.js) ----
+   One row per member: the name, "Lead" beside the lead's, and the shared model picker. The rows are the kit's own; the
+   picker keeps one width so the names and the pickers make two columns. */
+#panel-settings .rf-crew-models > .pm51-row > .pm51-row-control > .o55-msel > .o55-pick-trigger { width: 280px; min-height: 40px; }
+#panel-settings .rf-crew-models .rf-crew-lead {
+  display: inline-block; margin-left: 8px; padding: 1px 7px; border: 1px solid var(--k3-line); border-radius: 999px;
+  font-size: 11px; font-weight: 650; letter-spacing: .02em; color: var(--k3-text-3); vertical-align: 1px;
+}
+#panel-settings .o55g-content .rf-crew-models { margin-bottom: 14px; }
+#panel-settings .o55g-content .rf-crew-models > .pm51-row { min-height: 52px; }
+#panel-settings .rf-crew-models > .rf-crew-route > .pm51-row-control > .pm51-dd { width: 280px; }
+#panel-settings .rf-crew-models > .rf-crew-route > .pm51-row-control > .pm51-dd > .pm51-dd-trigger { width: 100%; }

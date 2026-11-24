@@ -1,0 +1,2103 @@
+{
+ "_about": "Proposed Settings rows for the built-in browser, the assistant's work in it, recordings and screenshots (Jared, 2026-11-24: \"There also needs to be a lot more settings for browser, browser work, recordings, etc. Like gpu acceleration, formats, and all that stuff.\"). Inventory shape (Plans/settings_inventory.json `settings`). They are NOT in the Plans inventory: tools/build.sh lays them over the scratch copy of the inventory so the concept can draw them as ordinary rows. What the Plans already fix and these rows follow: Plans/Test_Capture_and_Motion_Evidence.md section 2 (hardware AV1 or HEVC first, H.264/VP9 fall-backs, 30 fps ordinary and 60 fps for motion, MP4 as the export, sound off unless asked) and its capture modes and targets.",
+ "rows": [
+  {
+   "id": "planning.testing.browser-gpu",
+   "label": "Graphics acceleration",
+   "desc": "Draws pages and encodes recordings on the graphics card, which is faster and keeps the processor free. Automatic uses the card when it works and carries on without it when it does not.",
+   "type": "select",
+   "options": [
+    "Auto",
+    "On",
+    "Off"
+   ],
+   "option_labels": {
+    "Auto": "Automatic",
+    "On": "Always",
+    "Off": "Never"
+   },
+   "default": "Auto",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "gpu",
+    "hardware acceleration",
+    "graphics card",
+    "video card"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-gpu-device",
+   "label": "Graphics card",
+   "desc": "Which card the browser uses on a computer with more than one.",
+   "type": "select",
+   "options": [
+    "auto",
+    "fastest",
+    "saving"
+   ],
+   "option_labels": {
+    "auto": "Automatic",
+    "fastest": "The fastest one",
+    "saving": "The power-saving one"
+   },
+   "default": "auto",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "gpu",
+    "discrete",
+    "integrated",
+    "graphics card"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-gpu-fallback",
+   "label": "If the graphics card fails",
+   "desc": "What happens when the card cannot be used in the middle of a run. Carrying on draws on the processor, slower, and the run says so.",
+   "type": "select",
+   "options": [
+    "continue",
+    "stop"
+   ],
+   "option_labels": {
+    "continue": "Carry on without it",
+    "stop": "Stop and tell me"
+   },
+   "default": "continue",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "gpu",
+    "fallback",
+    "software rendering"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-webgl",
+   "label": "3D on pages (WebGL)",
+   "desc": "Lets pages draw in 3D: maps, charts, games. Off shows what a visitor without it would see.",
+   "type": "toggle",
+   "default": true,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "webgl",
+    "3d",
+    "canvas",
+    "webgpu"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-window-size",
+   "label": "Window size",
+   "desc": "How big the browser window is when the assistant opens a page.",
+   "type": "select",
+   "options": [
+    "1280x800",
+    "1440x900",
+    "1920x1080",
+    "390x844",
+    "app"
+   ],
+   "option_labels": {
+    "1280x800": "1280 × 800 · laptop",
+    "1440x900": "1440 × 900",
+    "1920x1080": "1920 × 1080 · desktop",
+    "390x844": "390 × 844 · phone",
+    "app": "Same as this window"
+   },
+   "default": "1280x800",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "viewport",
+    "resolution",
+    "window size",
+    "screen size"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-pixel-ratio",
+   "label": "Sharpness",
+   "desc": "How many dots the browser draws for each point on the page. Sharp doubles them: crisper pictures and recordings, bigger files.",
+   "type": "select",
+   "options": [
+    "1",
+    "2",
+    "screen"
+   ],
+   "option_labels": {
+    "1": "Standard",
+    "2": "Sharp (2×)",
+    "screen": "Same as this screen"
+   },
+   "default": "1",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "device pixel ratio",
+    "retina",
+    "hidpi",
+    "dpr",
+    "scale"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-color-scheme",
+   "label": "Light or dark pages",
+   "desc": "What a page that follows your theme is shown.",
+   "type": "select",
+   "options": [
+    "app",
+    "light",
+    "dark"
+   ],
+   "option_labels": {
+    "app": "Same as the app",
+    "light": "Light",
+    "dark": "Dark"
+   },
+   "default": "app",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "color scheme",
+    "dark mode",
+    "light mode",
+    "prefers-color-scheme"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-reduced-motion",
+   "label": "Less motion on pages",
+   "desc": "Asks pages to cut their animations, as a visitor who turned motion down would see them.",
+   "type": "select",
+   "options": [
+    "app",
+    "on",
+    "off"
+   ],
+   "option_labels": {
+    "app": "Same as the app",
+    "on": "On",
+    "off": "Off"
+   },
+   "default": "app",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "reduced motion",
+    "animations",
+    "prefers-reduced-motion"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-locale",
+   "label": "Language pages see",
+   "desc": "The language and region a page is told you use.",
+   "type": "select",
+   "options": [
+    "system",
+    "en-US",
+    "en-GB",
+    "de-DE",
+    "fr-FR",
+    "es-ES",
+    "ja-JP"
+   ],
+   "option_labels": {
+    "system": "Same as this computer",
+    "en-US": "English (US)",
+    "en-GB": "English (UK)",
+    "de-DE": "German",
+    "fr-FR": "French",
+    "es-ES": "Spanish",
+    "ja-JP": "Japanese"
+   },
+   "default": "system",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "locale",
+    "language",
+    "region"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-timezone",
+   "label": "Time zone pages see",
+   "desc": "The time zone a page is told you are in.",
+   "type": "select",
+   "options": [
+    "system",
+    "UTC"
+   ],
+   "option_labels": {
+    "system": "Same as this computer",
+    "UTC": "UTC"
+   },
+   "default": "system",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "timezone",
+    "time zone",
+    "utc"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-zoom",
+   "label": "Page zoom",
+   "desc": "How large pages are drawn.",
+   "type": "number",
+   "options": [
+    "50-200"
+   ],
+   "default": 100,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "zoom",
+    "scale",
+    "magnify"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-downloads",
+   "label": "Files a page offers",
+   "desc": "What happens when a page offers a file to download.",
+   "type": "select",
+   "options": [
+    "ask",
+    "save",
+    "block"
+   ],
+   "option_labels": {
+    "ask": "Ask me",
+    "save": "Save to the project",
+    "block": "Block"
+   },
+   "default": "ask",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "downloads",
+    "download folder",
+    "files"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-popups",
+   "label": "Pop-up windows",
+   "desc": "What happens when a page opens another window.",
+   "type": "select",
+   "options": [
+    "tab",
+    "block"
+   ],
+   "option_labels": {
+    "tab": "Open as a tab",
+    "block": "Block"
+   },
+   "default": "tab",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "popups",
+    "pop-up",
+    "new window"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-block-ads",
+   "label": "Block ads and trackers",
+   "desc": "Off shows pages as visitors get them. On is quieter and faster on other people's sites.",
+   "type": "toggle",
+   "default": false,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "ad block",
+    "trackers",
+    "content blocking"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-bad-certificates",
+   "label": "Pages with a bad certificate",
+   "desc": "A site you are building often has a certificate browsers do not trust. This says where the browser may open one anyway.",
+   "type": "select",
+   "options": [
+    "never",
+    "local",
+    "always"
+   ],
+   "option_labels": {
+    "never": "Never open",
+    "local": "Open on this computer and network",
+    "always": "Always open"
+   },
+   "default": "local",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "certificate",
+    "https",
+    "self-signed",
+    "tls",
+    "ssl"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-memory-limit",
+   "label": "Memory it may use",
+   "desc": "The most memory the browser takes before it closes pages it is not using.",
+   "type": "select",
+   "options": [
+    "auto",
+    "1",
+    "2",
+    "4",
+    "8"
+   ],
+   "option_labels": {
+    "auto": "Automatic",
+    "1": "1 GB",
+    "2": "2 GB",
+    "4": "4 GB",
+    "8": "8 GB"
+   },
+   "default": "auto",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "memory",
+    "ram",
+    "limit"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-idle-close",
+   "label": "Close when idle for",
+   "desc": "The browser shuts down after this long with nothing to do, and opens again when it is needed.",
+   "type": "number",
+   "options": [
+    "1-120"
+   ],
+   "default": 5,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "idle",
+    "close",
+    "shutdown"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-proxy",
+   "label": "Proxy",
+   "desc": "Which proxy the browser goes through to reach the internet.",
+   "type": "select",
+   "options": [
+    "system",
+    "none"
+   ],
+   "option_labels": {
+    "system": "This computer's",
+    "none": "None"
+   },
+   "default": "system",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "proxy",
+    "network"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-needs-me",
+   "label": "When a page needs you",
+   "desc": "A sign-in, a puzzle to prove you are human, a payment. The assistant never signs in or pays for you.",
+   "type": "select",
+   "options": [
+    "ask",
+    "skip"
+   ],
+   "option_labels": {
+    "ask": "Stop and ask me",
+    "skip": "Skip that step"
+   },
+   "default": "ask",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "captcha",
+    "login",
+    "sign in",
+    "payment",
+    "human"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-load-timeout",
+   "label": "Wait for a page to load",
+   "desc": "How long the assistant waits for a page before calling it stuck.",
+   "type": "number",
+   "options": [
+    "5-300"
+   ],
+   "default": 30,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "timeout",
+    "page load",
+    "navigation"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-settle",
+   "label": "Before each step, wait until",
+   "desc": "When the assistant takes a page as ready to click, type or picture.",
+   "type": "select",
+   "options": [
+    "quiet",
+    "loaded"
+   ],
+   "option_labels": {
+    "quiet": "The page stops changing",
+    "loaded": "The page has loaded"
+   },
+   "default": "quiet",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "network idle",
+    "settle",
+    "wait",
+    "stable"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-step-timeout",
+   "label": "Give up on a step after",
+   "desc": "How long the assistant keeps trying one click or one check.",
+   "type": "number",
+   "options": [
+    "1-120"
+   ],
+   "default": 10,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "timeout",
+    "step",
+    "action"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-retries",
+   "label": "Try a failed step again",
+   "desc": "How many more times a step that failed is tried before it counts as failed.",
+   "type": "select",
+   "options": [
+    "0",
+    "1",
+    "2",
+    "3"
+   ],
+   "option_labels": {
+    "0": "Never",
+    "1": "Once",
+    "2": "Twice",
+    "3": "Three times"
+   },
+   "default": "1",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "retry",
+    "flaky",
+    "again"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-slow-motion",
+   "label": "Slow down so I can follow",
+   "desc": "Adds a pause between steps, for watching the assistant work.",
+   "type": "select",
+   "options": [
+    "off",
+    "little",
+    "lot"
+   ],
+   "option_labels": {
+    "off": "Off",
+    "little": "A little",
+    "lot": "A lot"
+   },
+   "default": "off",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "slow motion",
+    "slowmo",
+    "pause",
+    "watch"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-console-errors",
+   "label": "Errors in the page's console",
+   "desc": "What the assistant does with errors the page itself reports while it works.",
+   "type": "select",
+   "options": [
+    "fail",
+    "note",
+    "ignore"
+   ],
+   "option_labels": {
+    "fail": "Fail the check",
+    "note": "Note them",
+    "ignore": "Ignore"
+   },
+   "default": "note",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "console",
+    "javascript errors",
+    "uncaught"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-failed-requests",
+   "label": "Requests that fail",
+   "desc": "What the assistant does when a picture, a script or a call to a server does not arrive.",
+   "type": "select",
+   "options": [
+    "fail",
+    "note",
+    "ignore"
+   ],
+   "option_labels": {
+    "fail": "Fail the check",
+    "note": "Note them",
+    "ignore": "Ignore"
+   },
+   "default": "note",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "network",
+    "404",
+    "500",
+    "failed requests",
+    "broken images"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-layout-checks",
+   "label": "Covered buttons and cut-off text",
+   "desc": "Looks for controls hidden under something else and words that do not fit their box.",
+   "type": "toggle",
+   "default": true,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "overflow",
+    "clipped",
+    "covered",
+    "layout"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.browser-phone-size",
+   "label": "Also check at phone size",
+   "desc": "Runs the same checks again in a window the size of a phone.",
+   "type": "toggle",
+   "default": false,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "mobile",
+    "phone",
+    "responsive",
+    "viewport"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.recording-mode",
+   "label": "Record video",
+   "desc": "When the browser keeps a video of what the assistant did.",
+   "type": "select",
+   "options": [
+    "off",
+    "on_failure",
+    "always",
+    "manual"
+   ],
+   "option_labels": {
+    "off": "Never",
+    "on_failure": "Keep it when something fails",
+    "always": "Always",
+    "manual": "Only when I ask"
+   },
+   "default": "on_failure",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "record",
+    "video",
+    "screen recording",
+    "capture mode"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.recording-target",
+   "label": "What is recorded",
+   "desc": "The page being worked on, every open page, or the whole browser window.",
+   "type": "select",
+   "options": [
+    "page",
+    "all_pages",
+    "window"
+   ],
+   "option_labels": {
+    "page": "The page being worked on",
+    "all_pages": "Every open page",
+    "window": "The whole browser window"
+   },
+   "default": "page",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "record",
+    "target",
+    "tab",
+    "window"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.recording-before-failure",
+   "label": "Keep the moments before a failure",
+   "desc": "How much of what led up to a failure is kept with it.",
+   "type": "number",
+   "options": [
+    "5-300"
+   ],
+   "default": 30,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "rolling buffer",
+    "before failure",
+    "seconds"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.recording-max-minutes",
+   "label": "Longest recording",
+   "desc": "A recording stops at this length and a new one starts.",
+   "type": "number",
+   "options": [
+    "1-120"
+   ],
+   "default": 10,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "max length",
+    "duration",
+    "minutes"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.recording-quality",
+   "label": "Quality",
+   "desc": "Small files are quick to share. Sharp keeps small text readable.",
+   "type": "select",
+   "options": [
+    "small",
+    "balanced",
+    "sharp"
+   ],
+   "option_labels": {
+    "small": "Small file",
+    "balanced": "Balanced",
+    "sharp": "Sharp"
+   },
+   "default": "balanced",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "bitrate",
+    "quality",
+    "file size"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.recording-fps",
+   "label": "Frames per second",
+   "desc": "How smooth the video is. Automatic records checks of motion at 60 and everything else at 30.",
+   "type": "select",
+   "options": [
+    "auto",
+    "30",
+    "60"
+   ],
+   "option_labels": {
+    "auto": "Automatic",
+    "30": "30",
+    "60": "60"
+   },
+   "default": "auto",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "fps",
+    "frame rate",
+    "smooth",
+    "cadence"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.recording-size",
+   "label": "Picture size",
+   "desc": "How large the video is. Same as the window records every dot the browser drew.",
+   "type": "select",
+   "options": [
+    "window",
+    "720p",
+    "1080p",
+    "1440p"
+   ],
+   "option_labels": {
+    "window": "Same as the window",
+    "720p": "720p",
+    "1080p": "1080p",
+    "1440p": "1440p"
+   },
+   "default": "window",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "resolution",
+    "720p",
+    "1080p",
+    "size"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.recording-pointer",
+   "label": "Show the pointer and clicks",
+   "desc": "Draws where the assistant pointed and clicked.",
+   "type": "toggle",
+   "default": true,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "cursor",
+    "pointer",
+    "clicks",
+    "highlight"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.recording-keys",
+   "label": "Show keys pressed",
+   "desc": "Draws the keys the assistant typed. Never shown in password fields.",
+   "type": "toggle",
+   "default": false,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "keys",
+    "keystrokes",
+    "typing"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.recording-codec",
+   "label": "Video format",
+   "desc": "How the video is packed. Automatic picks the best one this computer's graphics card can make (AV1 or HEVC), and H.264 without one.",
+   "type": "select",
+   "options": [
+    "auto",
+    "av1",
+    "hevc",
+    "h264",
+    "vp9"
+   ],
+   "option_labels": {
+    "auto": "Automatic",
+    "av1": "AV1",
+    "hevc": "HEVC (H.265)",
+    "h264": "H.264",
+    "vp9": "VP9"
+   },
+   "default": "auto",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "codec",
+    "av1",
+    "hevc",
+    "h264",
+    "h.265",
+    "vp9",
+    "format"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.recording-encoder",
+   "label": "Made on",
+   "desc": "The graphics card makes video fast and leaves the processor free. The processor works on every computer and is slower.",
+   "type": "select",
+   "options": [
+    "gpu",
+    "cpu"
+   ],
+   "option_labels": {
+    "gpu": "The graphics card",
+    "cpu": "The processor"
+   },
+   "default": "gpu",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "encoder",
+    "hardware encoding",
+    "nvenc",
+    "gpu",
+    "cpu"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.recording-export",
+   "label": "File type when you save one",
+   "desc": "The kind of file you get when you save or share a recording.",
+   "type": "select",
+   "options": [
+    "mp4",
+    "webm",
+    "gif"
+   ],
+   "option_labels": {
+    "mp4": "MP4",
+    "webm": "WebM",
+    "gif": "GIF"
+   },
+   "default": "mp4",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "mp4",
+    "webm",
+    "gif",
+    "export",
+    "container",
+    "file type"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.recording-audio",
+   "label": "Sound",
+   "desc": "Whether the page's own sound is recorded. Your microphone never is.",
+   "type": "select",
+   "options": [
+    "off",
+    "page"
+   ],
+   "option_labels": {
+    "off": "Off",
+    "page": "The page's sound"
+   },
+   "default": "off",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "audio",
+    "sound",
+    "microphone"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.recording-storage-limit",
+   "label": "Space recordings may use",
+   "desc": "The most disk space recordings take on the computer that does the work.",
+   "type": "select",
+   "options": [
+    "1",
+    "5",
+    "20",
+    "none"
+   ],
+   "option_labels": {
+    "1": "1 GB",
+    "5": "5 GB",
+    "20": "20 GB",
+    "none": "No limit"
+   },
+   "default": "5",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "disk",
+    "storage",
+    "space",
+    "limit"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.recording-when-full",
+   "label": "When that is full",
+   "desc": "What happens when recordings reach that much space.",
+   "type": "select",
+   "options": [
+    "oldest",
+    "stop"
+   ],
+   "option_labels": {
+    "oldest": "Delete the oldest",
+    "stop": "Stop recording"
+   },
+   "default": "oldest",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "full",
+    "disk",
+    "cleanup"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.screenshot-format",
+   "label": "Picture format",
+   "desc": "PNG keeps every dot exact. JPEG and WebP make smaller files.",
+   "type": "select",
+   "options": [
+    "png",
+    "jpeg",
+    "webp"
+   ],
+   "option_labels": {
+    "png": "PNG",
+    "jpeg": "JPEG",
+    "webp": "WebP"
+   },
+   "default": "png",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "png",
+    "jpeg",
+    "jpg",
+    "webp",
+    "image format"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.screenshot-quality",
+   "label": "Picture quality",
+   "desc": "Lower makes a smaller file and a rougher picture.",
+   "type": "number",
+   "options": [
+    "10-100"
+   ],
+   "default": 90,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "quality",
+    "compression",
+    "jpeg quality"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.screenshot-wait-loaded",
+   "label": "Wait for fonts and pictures",
+   "desc": "Takes the picture once the page's fonts and pictures have arrived.",
+   "type": "toggle",
+   "default": true,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "fonts",
+    "images",
+    "loaded",
+    "wait"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.screenshot-freeze-motion",
+   "label": "Pause animations for the picture",
+   "desc": "Stops moving parts for the moment of the picture, so two pictures of the same page match.",
+   "type": "toggle",
+   "default": true,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "animations",
+    "freeze",
+    "stable",
+    "flaky"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.screenshot-diff-threshold",
+   "label": "Counts as changed above",
+   "desc": "How much of a picture may differ from the one before it and still count as the same.",
+   "type": "number",
+   "options": [
+    "0-10"
+   ],
+   "default": 0.1,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "threshold",
+    "diff",
+    "pixel difference",
+    "visual regression"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.screenshot-ignore-soft-edges",
+   "label": "Ignore soft edges",
+   "desc": "Leaves out the tiny differences in how the edges of letters and lines are drawn.",
+   "type": "toggle",
+   "default": true,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "anti-aliasing",
+    "antialiasing",
+    "edges"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  },
+  {
+   "id": "planning.testing.screenshot-first-picture",
+   "label": "The first picture of a page",
+   "desc": "What the first picture of a page is used for.",
+   "type": "select",
+   "options": [
+    "baseline",
+    "ask"
+   ],
+   "option_labels": {
+    "baseline": "Later ones are compared with it",
+    "ask": "Ask me"
+   },
+   "default": "baseline",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "baseline",
+    "reference",
+    "golden"
+   ],
+   "related_features": [
+    "browser"
+   ],
+   "layering": {
+    "home": "everywhere",
+    "may_differ_by": [
+     "everywhere",
+     "computer",
+     "project"
+    ],
+    "computer_key": "server",
+    "combine": "most_specific",
+    "atomic_group": null,
+    "not_offered": {
+     "device": "not_about_the_screen"
+    }
+   }
+  }
+ ]
+}

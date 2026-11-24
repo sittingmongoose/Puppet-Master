@@ -1,0 +1,122 @@
+{
+ "_about": "Where the built-in browser's rows go (36-browser-scm.json holds the sections). A file of its own because rules are matched in file order, first match wins: these have to come before 25-testing.json, which sends planning.testing.browser-* to one group. Two of canon's rows move with them: the assistant's DevTools rule to Browser work, and what the screenshot button captures to the screenshot's Picture group.",
+ "overrides": [
+  {
+   "section": "browser-graphics",
+   "ids": [
+    "planning.testing.browser-gpu",
+    "planning.testing.browser-gpu-device",
+    "planning.testing.browser-gpu-fallback",
+    "planning.testing.browser-webgl"
+   ]
+  },
+  {
+   "section": "browser-page",
+   "ids": [
+    "planning.testing.browser-window-size",
+    "planning.testing.browser-pixel-ratio",
+    "planning.testing.browser-color-scheme",
+    "planning.testing.browser-reduced-motion",
+    "planning.testing.browser-locale",
+    "planning.testing.browser-timezone",
+    "planning.testing.browser-zoom"
+   ]
+  },
+  {
+   "section": "browser-site",
+   "ids": [
+    "planning.testing.browser-downloads",
+    "planning.testing.browser-popups",
+    "planning.testing.browser-block-ads",
+    "planning.testing.browser-bad-certificates"
+   ]
+  },
+  {
+   "section": "browser-limits",
+   "ids": [
+    "planning.testing.browser-memory-limit",
+    "planning.testing.browser-idle-close",
+    "planning.testing.browser-proxy"
+   ]
+  },
+  {
+   "section": "browser-work-may",
+   "ids": [
+    "planning.testing.browser-devtools-policy",
+    "planning.testing.browser-needs-me"
+   ]
+  },
+  {
+   "section": "browser-work-pace",
+   "ids": [
+    "planning.testing.browser-load-timeout",
+    "planning.testing.browser-settle",
+    "planning.testing.browser-step-timeout",
+    "planning.testing.browser-retries",
+    "planning.testing.browser-slow-motion"
+   ]
+  },
+  {
+   "section": "browser-work-problems",
+   "ids": [
+    "planning.testing.browser-console-errors",
+    "planning.testing.browser-failed-requests",
+    "planning.testing.browser-layout-checks",
+    "planning.testing.browser-phone-size"
+   ]
+  },
+  {
+   "section": "browser-rec-when",
+   "ids": [
+    "planning.testing.recording-mode",
+    "planning.testing.recording-target",
+    "planning.testing.recording-before-failure",
+    "planning.testing.recording-max-minutes"
+   ]
+  },
+  {
+   "section": "browser-rec-picture",
+   "ids": [
+    "planning.testing.recording-quality",
+    "planning.testing.recording-fps",
+    "planning.testing.recording-size",
+    "planning.testing.recording-pointer",
+    "planning.testing.recording-keys"
+   ]
+  },
+  {
+   "section": "browser-rec-format",
+   "ids": [
+    "planning.testing.recording-codec",
+    "planning.testing.recording-encoder",
+    "planning.testing.recording-export",
+    "planning.testing.recording-audio"
+   ]
+  },
+  {
+   "section": "browser-rec-storage",
+   "ids": [
+    "planning.testing.recording-storage-limit",
+    "planning.testing.recording-when-full"
+   ]
+  },
+  {
+   "section": "browser-shot-picture",
+   "ids": [
+    "planning.testing.browser-capture-full-default",
+    "planning.testing.screenshot-format",
+    "planning.testing.screenshot-quality",
+    "planning.testing.screenshot-wait-loaded",
+    "planning.testing.screenshot-freeze-motion"
+   ]
+  },
+  {
+   "section": "browser-shot-compare",
+   "ids": [
+    "planning.testing.screenshot-diff-threshold",
+    "planning.testing.screenshot-ignore-soft-edges",
+    "planning.testing.screenshot-first-picture"
+   ]
+  }
+ ]
+}

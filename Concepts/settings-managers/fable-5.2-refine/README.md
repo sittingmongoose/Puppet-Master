@@ -14,6 +14,10 @@ tools/build.sh [out.html]     # default out: ~/.cache/smx-refine/serve/refined.h
 tools/take.sh <path under Concepts/>   # copy one of PMConcept7's files into overlay/ before changing it
 ```
 
+`proposed/*.json` holds Settings rows this concept proposes, in the shape of `Plans/settings_inventory.json`'s
+`settings`. The build adds them to its scratch copy of the inventory, so PMConcept7's own build draws them as ordinary
+rows; the repository's inventory is never touched (see the sixth pass, the browser).
+
 `BASE` names the commit of PMConcept7's sources the overlay sits on. A build of `BASE` with an empty overlay is
 byte-identical to `Concepts/PMConcept7.html` at that commit.
 
@@ -23,24 +27,107 @@ byte-identical to `Concepts/PMConcept7.html` at that commit.
 browser-check run Concepts/settings-managers/fable-5.2-refine/tools --set page=<refined.html> --set before=<PMConcept7.html of the same base>
 ```
 
-Thirteen tests by real clicks (`tools/refine.check.mjs`): the chapter move and old links; Explain; the centred tab
-strips and the side column, left as they are; Servers' Overview map at two sizes; the things that looked wrong
+Fourteen tests by real clicks (`tools/refine.check.mjs`): the chapter move and old links; Explain; the centred tab
+strips (the chapter's now over the middle of the page, on the manager's axis) and the side column; Servers' Overview
+map at two sizes; the things that looked wrong
 (the band, the covered title, the chosen row, the light, no stripe down one side, the side column's chip and the
 words it carries); Providers' account rows and Add a service; the fourth pass (the list column, the row grids of
 Search services and Doctor, the two Add a destination sheets and their forms, one right edge in a detail); the fifth
 pass (a detail with no ground of its own; one start for titles and row names, one end for controls, one row height
-and edge-to-edge lines on a page with both kinds of card; Away From Home's columns; More options); the one home of
+and edge-to-edge lines on a page with both kinds of card; Away From Home's columns; More options); the sixth pass
+(a tab strip's box follows its chip; the one bar on top of a chapter with its three buttons, its line and its axis; a
+chapter with one manager; a long chapter in a narrow window; a crew's model pickers and the Models step; the
+browser's four tabs, their rows, the video formats, and the line of facts following a change); the one home of
 a service's switching rules; the example staying in view in Editor and Terminal Customize, Customize Pip and Adjust
 NieR; the examples being as wide as they were and the editor's following what is typed; and **nothing was
 dropped**: every setting id and every action of the unchanged page is still on some page of the refined one (920
-settings, 73 views, on 2026-11-20). Pass `--set before=` as a `file://` address.
+settings, 73 views, on 2026-11-20; the refined page has three views more, the browser's new tabs, and the fifty
+proposed rows). Pass `--set before=` as a `file://` address.
 
-Four more tools, for looking and measuring rather than asserting, live with the evidence (not in this repository):
-`shots.check.mjs` (a list of steps and pictures, any of the ten looks), `adds.check.mjs` (opens every Add, New, Link
+Five more tools, for looking and measuring rather than asserting, live with the evidence (not in this repository):
+`tabs.check.mjs` (every "pick one" strip in every view of a look: the box's corner against the chip's corner plus the
+gap between them, and the gap on each side), `shots.check.mjs` (a list of steps and pictures, any of the ten looks), `adds.check.mjs` (opens every Add, New, Link
 or Connect button and pictures what appears), `icons.check.mjs` (lists every button that shows no word) and
 `align.check.mjs` (in every view, in any look: where each line of words starts, where each control ends, each row's
 height, rows with no line or a line that stops short of its card, and any painted pane that sits inside a card of
 another tone).
+
+## Sixth pass (2026-11-24), after Jared's fifth review
+
+Jared: "Outside of that, the new designs look awesome." Five things:
+
+**1. The tab selector and its box.** "This tab selector doesnt fit in the box, the shapes arent right. This needs to
+be addressed all over the settings page and in all themes." A tab strip is a chip in a box. The chip is the look's
+own (3 px corners in Basic, 9 in Friendly, square in Retro and NieR, Glass's lens); PMConcept7 gave the box one 12 px
+corner in every look. Now the box's corner is the chip's corner plus the gap between them, so the two curves run side
+by side, and a square chip gets a square box (`styles.d/98-refine-bar.css`, `--rf-chip-r`). By look:
+
+| Look | Was | Now |
+|---|---|---|
+| Basic | 3 px chip in a 12 px box | 6 px box (3 + the 3 px gap) |
+| Friendly | 9 px chip whose hard shadow sat on the box's line | 2 px more room inside; 14 px box |
+| Retro | Square keys in a round box with a soft shadow | Keys with no box round them, as Retro's other selectors are |
+| NieR | Square in square | Unchanged |
+| Glass | 9 px thumb, 5 px in, in a 14 px box | Unchanged; the chapter's track and the small selectors get 10 px |
+
+The small "pick one of these words" selectors (`.segmented`) had the same fault in Friendly and Glass (a box as round
+as its chip, 4 px outside it) and follow the same rule. `tabs.check.mjs` (with the evidence) finds every strip in every
+view of a look and compares the box's corner with the chip's corner plus the gap.
+
+**2. The top of a chapter.** "This area looks unfinished and unpolished. See what you can do to improve it, that
+applies to all the settings sections that are like this." It was three things on top of each other: the chapter's
+managers as loose tabs on a band, a row holding only Explain, the project and the page options at its right end, and
+the lines where that row met the side column. It is **one bar** now, the same on every chapter
+(`managers/90-refine-frame.js` section 4):
+
+- the chapter's managers in a track in the middle: the same selector as a manager's own tabs
+- the three buttons at the bar's right end; the row they sat in is empty and has no height
+- one line under the bar, the whole width; the side column and the page start under it, on one line
+- the track stands over the middle of the page under it, so it shares an axis with the manager's title and tabs (it
+  stood over the middle of the bar, 74 px off them). With less room it moves left; with none (a long chapter in a
+  narrow window) Explain first drops its word, then the buttons go under the track
+- a chapter with one manager shows the manager's name where the track would be, so the page no longer opens with the
+  name a second time
+- the 2 px line under the chosen tab is gone: the chip already marks it
+
+**3. Models for a crew.** "In the crew manager there is no way to set the models when you make a crew template."
+`managers/32-personas.js` is taken into the overlay. A crew's members are a list now, each with the shared model picker
+(depth inside it) on its row; "New crew" and "Edit" have a Models step before Teamwork. The picker's first choice is
+"Follow the model route", so a crew made before this behaves as it did. "Model route" (Per persona, or a route by name)
+is kept, beside the pickers, as what members without a model of their own use. Stored as `crew.models[member]`, with
+the depth under the picker's own depth store (`crew:<id>:<member>`).
+
+**4. Automations.** "In goals and automation, how do automations run? Are those goals?" Nothing in Settings makes or
+lists an automation: the word is in two titles ("Memory & Automation", "Goals & Automation"). The page holds Goal
+defaults, templates, recovery, checks and five rules for scheduled runs. In the Plans the word covers anything that
+runs without the person pressing Send (`Plans/Scheduling_and_Quota_Resume.md`): a scheduled message, a scheduled build
+of a plan, working hours, carrying on after a usage reset, and a Goal, plan or crew continuing. Nothing was changed
+for this; whether to rename the two titles is asked of Jared (card SM-AUTOMATION-NAME).
+
+**5. The browser.** "There also needs to be a lot more settings for browser, browser work, recordings, etc. Like gpu
+acceleration, formats, and all that stuff." The page "Browser & SCM" (one card and two small groups) is **Browser &
+Recordings**, in four tabs (`managers/36-browser-scm.js`, rewritten):
+
+| Tab | Groups |
+|---|---|
+| Browser | what is true now (ready, where it runs, the graphics card) with Check browser; Graphics; Window and page; Signing in to websites; Downloads and pop-ups; Depends on; Limits under More options |
+| Browser work | What the assistant may do; Pace and waiting; What counts as a problem |
+| Recordings | what recording comes to right now; When to record; Picture and motion; Format; Storage |
+| Screenshots | the card the page always had; Picture; Comparing pictures; Pointing at things |
+
+Fifty rows are new. They are ordinary Settings rows (search, About, restore and transfer know them), and they are
+**proposed, not in the Plans inventory**: `proposed/browser-rows.json` holds them in the inventory's own shape, and
+`tools/build.sh` adds them to the scratch copy of `Plans/settings_inventory.json` it builds from (the repository's
+file is never touched). `o55/placement.d/36-browser-scm.json` (sections and tabs) and `24a-browser-rows.json` (the ids;
+a file of its own because it has to sort before Testing's rules) place them, `o55/rows.d/36-browser-scm.json` words
+them. Where the Plans already decide, the defaults follow (`Plans/Test_Capture_and_Motion_Evidence.md` section 2:
+hardware AV1 or HEVC first with H.264 and VP9 as fall-backs, 30 frames a second and 60 for motion, MP4 as the file you
+save, sound off unless asked). Two of canon's rows moved within the page: the assistant's DevTools rule to Browser
+work, "Screenshot button captures" to the screenshot's Picture group. Nothing was removed. The name is changed in the
+two other managers that point at the page (`11-web.js`, taken for one label; `25-testing.js`).
+
+**To merge this into PMConcept7,** the fifty rows need a home the build accepts: admission to the Plans inventory (a
+Plans task, with the six capture defaults the Plans already name), or a pending-rows list in PMConcept7's build.
 
 ## Fifth pass (2026-11-23), after Jared's fourth review
 
@@ -217,6 +304,15 @@ Nothing a person can do was removed. Each line says where the same thing still i
 - Browser & SCM › "Depends on": a check of stream F's kit names it.
 
 ## Stream F's checks that need a small change when this is merged
+
+**Not yet run on the sixth pass.** It changes things stream F's checks are likely to read, to be run and listed here
+before any merge: the chapter's tabs are inside `.rf-bar-track` (no longer children of `nav.workspace-tabs`) and stand
+over the middle of the page, not of the strip (FO-184's own measure); Explain, the project button and the page options
+are in that bar, and `.document-toolbar` is empty with no height; a chapter with one manager shows its bar, with the
+name; every chapter's first page has no title of its own; a tab strip's box has another corner; the browser's page
+has another name, four tabs and fifty more rows; New crew has a fifth step.
+
+The table below is the second pass's, still true; what the third, fourth and fifth passes add is under it.
 
 All 40 of stream F's Settings checks were run on 2026-11-21 against this build (on main `56f82e6dae`), and every one
 that failed was run against the unchanged page the same way on the same computer. **27 pass.** Four fail on the

@@ -33,4 +33,27 @@ else
 fi
 ( cd "$HERE/overlay" && find . -type f -printf '%P\n' ) > "$TREE/.overlaid"
 cp -a "$HERE/overlay/." "$TREE/Concepts/"
+# Proposed Settings rows (../proposed/*.json, the inventory's own shape) join the scratch copy of the Plans inventory, so
+# the concept can draw them as ordinary rows. The repository's Plans/settings_inventory.json is never touched: the scratch
+# copy is taken from BASE again on every build, then the proposed rows are added to it.
+git -C "$REPO" show "$BASE:Plans/settings_inventory.json" > "$TREE/Plans/settings_inventory.json"
+shopt -s nullglob
+PROPOSED=("$HERE"/proposed/*.json)
+shopt -u nullglob
+if [ ${#PROPOSED[@]} -gt 0 ]; then
+	python3 - "$TREE/Plans/settings_inventory.json" "${PROPOSED[@]}" <<'PY'
+import json, sys
+path, files = sys.argv[1], sys.argv[2:]
+doc = json.load(open(path, encoding='utf-8'))
+have = {r['id'] for r in doc['settings']}
+added = 0
+for f in files:
+    for row in json.load(open(f, encoding='utf-8'))['rows']:
+        if row['id'] in have:
+            sys.exit(f'proposed row {row["id"]} ({f}) is already in the Plans inventory: drop it from the proposal')
+        doc['settings'].append(row); have.add(row['id']); added += 1
+json.dump(doc, open(path, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+print(f'proposed rows added to the scratch inventory: {added}')
+PY
+fi
 ( cd "$TREE" && python3 "$PKG/tools/build.py" --out "$OUT" ) 2>&1 | tail -${SMX_TAIL:-6}

@@ -512,7 +512,7 @@
   PM51.on('testing-check-tools', () => PM51.check({ title: 'Check test tools', steps: [
     { title: 'Test runner found', desc: 'The runner for each language in this project' },
     { title: 'Build tools found', desc: 'Compilers and package managers on this computer', status: 'Example', tone: 'info' },
-    { title: 'Built-in browser ready', desc: 'Managed in Browser & SCM', status: 'Example', tone: 'info' }
+    { title: 'Built-in browser ready', desc: 'Managed in Browser & Recordings', status: 'Example', tone: 'info' }
   ] }));
 
   /* ---------- debug behaviour --------------------------------------------------- */
