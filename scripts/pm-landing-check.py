@@ -137,7 +137,6 @@ import json
 import os
 import posixpath
 import re
-import secrets
 import shutil
 import signal
 import subprocess
@@ -263,19 +262,6 @@ NO_EXPORT_COMMANDS = {
 # stays in the child's process group and dies with it when the aggregate's bound runs out. An export is
 # run the same way.
 AGGREGATE_CHILD_ENV = "PM_PLANS_VERIFY_AGGREGATE_CHILD"
-
-# The one-run cache this check gives its children. A pair of variables already in the environment is
-# never a cache for this tree: review B1 found `--jobs 1` and dirty-tree runs honouring one left by an
-# earlier commit, which hid 210 failures on real Plans and turned exit 2 into exit 0 on a stub tree.
-# This script removes any inherited pair before it runs anything, and when it takes a stamp of its own
-# it also writes an owner record and passes that record's nonce. scripts/pm-plans-verify.py serves an
-# entry only to a process whose live ancestor is this landing check and whose owner record matches, so
-# a variable pair from another run is refused even by a standalone `run-gates`.
-DEDUPE_DIR_ENV = "PM_PLANS_VERIFY_DEDUPE_DIR"
-DEDUPE_STAMP_ENV = "PM_PLANS_VERIFY_DEDUPE_STAMP"
-DEDUPE_TOKEN_ENV = "PM_PLANS_VERIFY_DEDUPE_TOKEN"
-DEDUPE_OWNER_FILE = "owner.json"
-DEDUPE_OWNER_SCHEMA_ID = "pm.landing_check.dedupe_owner.v1"
 
 # One worker budget for the whole check (review N-F). --jobs counts every validator running at once
 # across the three checks, not N per aggregate: this script creates that many slot files and passes
@@ -436,34 +422,6 @@ def current_run_dir(root: Path) -> str:
     return run_path
 
 
-def snapshot_route_problems(root: Path) -> list[str]:
-    """Why this checkout is not the private, immutable snapshot a run may cache inside.
-
-    The cache is only sound when nothing writes the checkout for the run's whole length, which is
-    what scripts/pm-land.py's check route creates: its own linked worktree, detached at the checked
-    commit, filled with the ignored inputs and clean. Any other checkout - the shared one, a
-    lander's own worktree, a branch checkout - can be written while validators run, so it is refused
-    rather than cached with a weaker promise (review A1).
-    """
-    def git(*args: str) -> subprocess.CompletedProcess:
-        return subprocess.run(["git", "--no-optional-locks", *args], cwd=root,
-                              capture_output=True, text=True)
-
-    problems: list[str] = []
-    if git("symbolic-ref", "-q", "HEAD").returncode == 0:
-        problems.append("HEAD is on a branch; the snapshot is detached at the checked commit")
-    git_dir = git("rev-parse", "--git-dir").stdout.strip()
-    common = git("rev-parse", "--git-common-dir").stdout.strip()
-    if not git_dir or not common or (root / git_dir).resolve() == (root / common).resolve():
-        problems.append("this is the repository's main worktree, not a worktree created for one run")
-    status = git("status", "--porcelain", "-z", "--untracked-files=all")
-    if status.returncode != 0:
-        problems.append(f"git status failed: {status.stderr.strip()[:200]}")
-    elif status.stdout:
-        problems.append("the worktree has uncommitted changes")
-    return problems
-
-
 _TARGET_JOBS_SUPPORT: dict[str, bool] = {}
 
 
@@ -564,98 +522,6 @@ def aggregate_reports(runner, jobs: int) -> dict[str, dict[str, Any]]:
         return reports
 
 
-def sha256_path(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
-
-
-def ignored_inputs_digest(root: Path) -> str:
-    """Digest of every gitignored path the validators can read, as the bytes on disk.
-
-    `git status --ignored=matching` names each ignored file and directory. A directory is walked,
-    a symlink is hashed as its target (never followed, so the 139k-file evidence share is not
-    traversed), and `__pycache__` is skipped. The 16 raw captures the json-syntax check reads
-    through `tests/agent_packet_restrictions` are listed by their tracked manifest and hashed too.
-    """
-    proc = subprocess.run(
-        ["git", "--no-optional-locks", "status", "--porcelain", "-z", "--ignored=matching"],
-        cwd=root, capture_output=True, text=True)
-    if proc.returncode != 0:
-        raise RuntimeError(f"git status failed: {proc.stderr.strip()[:200]}")
-    digest = hashlib.sha256()
-
-    def add(relative: str, what: str) -> None:
-        digest.update(relative.encode("utf-8") + b"\0" + what.encode("utf-8") + b"\0")
-
-    def add_file(path: Path, relative: str) -> None:
-        try:
-            add(relative, "file " + sha256_path(path))
-        except OSError:
-            add(relative, "unreadable")
-
-    def add_tree(path: Path, relative: str) -> None:
-        for dirpath, dirnames, filenames in os.walk(path, followlinks=False):
-            dirnames[:] = sorted(name for name in dirnames if name != "__pycache__")
-            base = Path(dirpath)
-            for name in list(dirnames):
-                if (base / name).is_symlink():
-                    add((base / name).relative_to(root).as_posix(), "link " + os.readlink(base / name))
-                    dirnames.remove(name)
-            for name in sorted(filenames):
-                child = base / name
-                child_relative = child.relative_to(root).as_posix()
-                if child.is_symlink():
-                    add(child_relative, "link " + os.readlink(child))
-                else:
-                    add_file(child, child_relative)
-
-    for entry in proc.stdout.split("\0"):
-        if not entry.startswith("!! "):
-            continue
-        relative = entry[3:]
-        if "__pycache__" in Path(relative).parts:
-            # Bytecode caches are not inputs, and the run itself writes them: the identity must not move
-            # because a child imported a module (the snapshot route re-reads this digest at the end).
-            continue
-        path = root / relative
-        if path.is_symlink():
-            add(relative, "link " + os.readlink(path))
-        elif path.is_dir():
-            add_tree(path, relative)
-        elif path.is_file():
-            add_file(path, relative)
-        else:
-            add(relative, "missing")
-    manifest = root / "tests/fixtures/governance/raw_evidence_capture_modes.json"
-    try:
-        entries = json.loads(manifest.read_text(encoding="utf-8")).get("entries", [])
-    except (OSError, ValueError):
-        entries = []
-    for entry in entries if isinstance(entries, list) else []:
-        relative = entry.get("path") if isinstance(entry, dict) else None
-        if not isinstance(relative, str):
-            continue
-        path = root / relative
-        add(relative, "missing" if not path.is_file() else "file " + sha256_path(path))
-    return digest.hexdigest()
-
-
-def index_flags_digest(root: Path) -> str:
-    """The index's own flags: a skip-worktree or assume-unchanged file can hide an edit from status."""
-    proc = subprocess.run(["git", "--no-optional-locks", "ls-files", "-v"], cwd=root,
-                          capture_output=True, text=True)
-    if proc.returncode != 0:
-        raise RuntimeError(f"git ls-files failed: {proc.stderr.strip()[:200]}")
-    digest = hashlib.sha256()
-    for line in proc.stdout.splitlines():
-        if line[:1] not in {"H", ""}:
-            digest.update(line.encode("utf-8", "surrogateescape") + b"\0")
-    return digest.hexdigest()
-
-
 def memory_available_mb() -> int | None:
     """MemAvailable in MiB, or None where the kernel does not say (no floor is enforced then)."""
     try:
@@ -689,90 +555,6 @@ def wait_for_memory_floor(floor_mb: int, label: str, *,
             found = "unknown" if available_mb is None else f"{available_mb / 1024:.1f} GiB"
             print(f"pm-landing-check: memory is back: {found}, before {label}", file=sys.stderr, flush=True)
             return
-
-
-def process_start_token(pid: int) -> str | None:
-    """Field 22 of /proc/<pid>/stat: when the process started, so a reused pid cannot pass for its owner."""
-    try:
-        stat = Path(f"/proc/{pid}/stat").read_text(encoding="utf-8", errors="replace")
-    except OSError:
-        return None
-    fields = stat.rsplit(")", 1)[-1].split()
-    return fields[19] if len(fields) > 19 else None
-
-
-def clear_inherited_dedupe_environment() -> None:
-    """Remove a cache this run did not take. A pair from another run must never be this run's cache."""
-    for name in (DEDUPE_DIR_ENV, DEDUPE_STAMP_ENV, DEDUPE_TOKEN_ENV):
-        os.environ.pop(name, None)
-
-
-def write_dedupe_owner(directory: Path, stamp: str) -> str:
-    """Write the owner record for this landing check's cache and return the nonce its children carry.
-
-    scripts/pm-plans-verify.py accepts an entry only when this process is a live ancestor of the child,
-    its recorded start time matches, and its command line names pm-landing-check.py.
-    """
-    nonce = secrets.token_hex(16)
-    owner = {
-        "schema_id": DEDUPE_OWNER_SCHEMA_ID,
-        "pid": os.getpid(),
-        "process_start": process_start_token(os.getpid()),
-        "nonce": nonce,
-        "stamp": stamp,
-    }
-    directory.mkdir(parents=True, exist_ok=True)
-    (directory / DEDUPE_OWNER_FILE).write_text(json.dumps(owner, indent=1, sort_keys=True) + "\n",
-                                               encoding="utf-8")
-    return nonce
-
-
-def dedupe_stamp(root: Path, run_dir: str, audit_inputs: dict[str, Any],
-                 state: dict[str, Any], ignored_digest: str | None = None) -> str | None:
-    """One digest of everything a validator reads that its command line does not name.
-
-    None means no safe stamp: the worktree has changes (so a validator would read files that HEAD
-    does not describe), or an input could not be read. A landing check then runs without the cache,
-    which is slower and changes nothing it reports.
-    """
-    proc = subprocess.run(
-        ["git", "--no-optional-locks", "status", "--porcelain", "-z", "--untracked-files=all"],
-        cwd=root, capture_output=True, text=True)
-    if proc.returncode != 0 or proc.stdout:
-        return None
-    try:
-        payload = {
-            "schema_id": "pm.landing_check.dedupe_stamp.v1",
-            "head": state.get("head"),
-            "scripts_sha256": state.get("scripts_sha256"),
-            "run_dir": run_dir,
-            "readiness_audit_inputs": audit_inputs,
-            "ignored_inputs_sha256": (ignored_digest if ignored_digest is not None
-                                       else ignored_inputs_digest(root)),
-            "index_flags_sha256": index_flags_digest(root),
-        }
-    except (OSError, RuntimeError):
-        return None
-    return hashlib.sha256(canonical(payload).encode("utf-8")).hexdigest()
-
-
-def dedupe_journal(events: Path | None, keep_dir: Path | None) -> None:
-    """Beside the kept check reports, keep what the cache ran and what it reused.
-
-    The current run's journal is always written, an empty one included: a keep directory reused
-    from an earlier run must not keep that run's 40 runs and 37 hits as if they were this run's
-    (review's retained-report defect).
-    """
-    if keep_dir is None:
-        return
-    target = keep_dir / "dedupe-events.jsonl"
-    try:
-        if events is not None and events.is_file():
-            shutil.copyfile(events, target)
-        else:
-            target.write_text("", encoding="utf-8")
-    except OSError:
-        pass
 
 
 def strip_root(text: str, root: Path) -> str:
@@ -2322,9 +2104,6 @@ def describe(item: dict[str, Any], tag: str, width: int = 150) -> str:
 
 
 def main() -> int:
-    # Review B1: a cache this run did not take is never this run's cache, for any --jobs value and on
-    # any tree. The pair this script sets is written below, only for a run that took a stamp itself.
-    clear_inherited_dedupe_environment()
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--root", default=str(ROOT), help="repository root (default: this checkout)")
     # --ro abbreviated --root before --row-report existed; named here so that it still does.
@@ -2340,11 +2119,6 @@ def main() -> int:
                         help="passed to the aggregate checks; a subcheck still running at this bound is "
                              f"killed and reported as an infrastructure result (default: "
                              f"{DEFAULT_SUBCHECK_TIMEOUT_SECONDS})")
-    parser.add_argument("--dedupe-snapshot", action="store_true",
-                        help="this checkout is the private snapshot worktree this one run created (the "
-                             "scripts/pm-land.py check --on route); reuse each shared validator's report "
-                             "once per run. Never pass it in the shared checkout, a lander's own worktree "
-                             "or with --record-baseline")
     parser.add_argument("--jobs", type=int, default=min(os.cpu_count() or 1, 4),
                         help="run this many validators at once across the three checks (one shared budget, "
                              "not one per check) and overlap the checks themselves; results and reports are "
@@ -2367,9 +2141,6 @@ def main() -> int:
         parser.error(f"--jobs must be between 1 and {MAX_JOBS}")
     if args.memory_floor_gb < 0:
         parser.error("--memory-floor-gb must not be negative")
-    if args.dedupe_snapshot and args.record_baseline:
-        parser.error("--dedupe-snapshot is not used when recording a baseline: the run that records one "
-                     "reads every validator on its own")
 
     root = Path(args.root).resolve()
     if args.readiness_audit_root:
@@ -2381,12 +2152,12 @@ def main() -> int:
     else:
         source = (SHARED_READINESS_AUDIT_ROOT if SHARED_READINESS_AUDIT_ROOT.is_dir()
                   else root / READINESS_AUDIT_REL).resolve()
-    # One scratch directory for the run's deduplicated validator reports, outside the repository.
-    # It is removed when the run ends, however it ends; check_main only points the aggregates at it.
+    # One scratch directory for the run's worker slots, outside the repository. It is removed when
+    # the run ends, however it ends; check_main only points the aggregates at it.
     try:
-        args.dedupe_dir = Path(tempfile.mkdtemp(prefix="pm-landing-check-dedupe-"))
+        args.slots_root = Path(tempfile.mkdtemp(prefix="pm-landing-check-slots-"))
     except OSError:
-        args.dedupe_dir = None
+        args.slots_root = None
     try:
         with readiness_audit_source(root, source):
             return check_main(args, root, source)
@@ -2394,8 +2165,8 @@ def main() -> int:
         print(f"pm-landing-check: {exc}", file=sys.stderr)
         return 3
     finally:
-        if args.dedupe_dir is not None:
-            shutil.rmtree(args.dedupe_dir, ignore_errors=True)
+        if args.slots_root is not None:
+            shutil.rmtree(args.slots_root, ignore_errors=True)
 
 
 def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
@@ -2412,20 +2183,6 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
               "at landing, or here after `git sparse-checkout disable`. Pass --allow-sparse to run it "
               "on this tree anyway.", file=sys.stderr)
         return 3
-
-    if args.dedupe_snapshot:
-        # The flag promises the cache's soundness on a checkout nothing writes. Check the promise
-        # rather than trust the caller: fail closed, because a run that silently cached a mutable
-        # checkout is the false pass review A1 found.
-        problems = snapshot_route_problems(root)
-        if problems:
-            print("pm-landing-check: --dedupe-snapshot was passed, but this checkout is not the private "
-                  "snapshot it promises:", file=sys.stderr)
-            for problem in problems:
-                print(f"  - {problem}", file=sys.stderr)
-            print("pm-landing-check: pass it only from scripts/pm-land.py's check route; every other "
-                  "invocation runs each validator on its own.", file=sys.stderr)
-            return 3
 
     keep_dir: Path | None = None
     if args.keep_check_reports:
@@ -2480,64 +2237,30 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     listed: dict[str, dict[str, int]] = {}
     statuses: dict[str, str] = {}
     # Review L-07: whether both aggregates ran the same validator code at the same commit. Read
-    # before any check, in both modes; the dedupe stamp describes the same tree.
+    # before any check, in both modes.
     before = tree_state(root)
     after = None
     jobs = max(1, args.jobs)
     floor_mb = int(args.memory_floor_gb * 1024) if jobs > 1 else 0
 
-    # Every child gets an explicit environment built here, so a cache pair this invocation did not
-    # set can never reach one (review A3). main() has already removed an inherited trio.
+    # Every child gets an explicit environment built here (review A3).
     child_env: dict[str, str] = dict(os.environ)
-    dedupe_events: Path | None = None
-    ignored_digest: str | None = None
     if jobs > 1:
         # The slot files are the whole run's worker budget: both aggregates and every export take one
         # for each validator they run, so --jobs is a total rather than one pool per check.
         slot_dir = None
-        if args.dedupe_dir is not None:
-            candidate = args.dedupe_dir / "slots"
+        if args.slots_root is not None:
             try:
-                candidate.mkdir(parents=True, exist_ok=True)
+                args.slots_root.mkdir(parents=True, exist_ok=True)
                 for index in range(jobs):
-                    (candidate / f"slot-{index}.lock").touch(exist_ok=True)
-                slot_dir = candidate
+                    (args.slots_root / f"slot-{index}.lock").touch(exist_ok=True)
+                slot_dir = args.slots_root
             except OSError:
                 slot_dir = None
         if slot_dir is not None:
             child_env[SLOTS_DIR_ENV] = str(slot_dir)
             child_env[SLOTS_COUNT_ENV] = str(jobs)
             child_env[MEMORY_FLOOR_MB_ENV] = str(floor_mb)
-
-    if args.dedupe_snapshot and jobs > 1:
-        # The cache is opt-in and exists for one invocation only: its directory was created fresh in
-        # main() and is removed when this returns, so nothing is reused across runs. Inside the run,
-        # one shared validator's report serves both aggregates and any export of it (review A1).
-        if args.dedupe_dir is None:
-            print("pm-landing-check: --dedupe-snapshot: no private cache directory could be created",
-                  file=sys.stderr)
-            return 3
-        try:
-            ignored_digest = ignored_inputs_digest(root)
-        except (OSError, RuntimeError) as exc:
-            print(f"pm-landing-check: --dedupe-snapshot: cannot take the snapshot's input identity: {exc}",
-                  file=sys.stderr)
-            return 3
-        stamp = dedupe_stamp(root, run_dir, audit_inputs, before, ignored_digest)
-        if stamp is None:
-            print("pm-landing-check: --dedupe-snapshot: no stamp could be taken for this snapshot",
-                  file=sys.stderr)
-            return 3
-        try:
-            nonce = write_dedupe_owner(args.dedupe_dir, stamp)
-        except OSError as exc:
-            print(f"pm-landing-check: --dedupe-snapshot: cannot write the cache owner: {exc}",
-                  file=sys.stderr)
-            return 3
-        child_env[DEDUPE_DIR_ENV] = str(args.dedupe_dir)
-        child_env[DEDUPE_STAMP_ENV] = stamp
-        child_env[DEDUPE_TOKEN_ENV] = nonce
-        dedupe_events = args.dedupe_dir / "events.jsonl"
 
     def consume(check: str, report: dict[str, Any]) -> None:
         nonlocal after
@@ -2559,10 +2282,6 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     if jobs > 1 and not supports_jobs:
         print("pm-landing-check: this checkout's scripts/pm-plans-verify.py does not take --jobs; its "
               "aggregates run one validator at a time.", file=sys.stderr)
-    if args.dedupe_snapshot and not supports_jobs:
-        print("pm-landing-check: --dedupe-snapshot: this checkout's verifier cannot use the run's cache",
-              file=sys.stderr)
-        return 3
 
     if jobs <= 1:
         for check in CHECKS:
@@ -2633,24 +2352,6 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     require_same_readiness_audit_inputs(audit_inputs, readiness_audit_inputs(root),
                                       "changed during the exports")
 
-    if ignored_digest is not None:
-        # The cache was sound only while the snapshot stayed frozen. Read the same identity again after
-        # the last validator and export ran: if the tree state or the ignored input bytes moved, a
-        # cached report may answer for inputs that no longer exist, so nothing is published.
-        try:
-            final_digest = ignored_inputs_digest(root)
-        except (OSError, RuntimeError) as exc:
-            print(f"pm-landing-check: --dedupe-snapshot: cannot re-read the snapshot's input identity: {exc}",
-                  file=sys.stderr)
-            return 3
-        final_state = after if after is not None else tree_state(root)
-        if final_state != before or final_digest != ignored_digest:
-            print("pm-landing-check: --dedupe-snapshot: the snapshot changed while the checks ran, so a "
-                  "report reused from this run's cache may answer for inputs that no longer exist; "
-                  "nothing is reported or recorded. A snapshot used for caching must be written by "
-                  "nothing but this run.", file=sys.stderr)
-            return 3
-
     if args.record_baseline:
         untracked = untracked_check_inputs(root)
         doc = build_baseline(commit, run_dir, items, counts, statuses, args.max_fingerprints, untracked,
@@ -2674,7 +2375,6 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                                        "truncated rule for it"))
         if untracked:
             print("  recorded with these gitignored inputs present: " + ", ".join(sorted(untracked)))
-        dedupe_journal(dedupe_events, keep_dir)
         return 0
 
     keyed_now = set(exported)
@@ -3056,7 +2756,6 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                   "unless something above stops the landing. Rerun each on its own and judge what it "
                   "reports by the same rules before pushing main.")
 
-    dedupe_journal(dedupe_events, keep_dir)
     return apply_pm7_inventory(
         exit_code(reported, grown, subcheck_growth, blocking, infrastructure),
         touched, root, args.json)

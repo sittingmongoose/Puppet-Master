@@ -80,8 +80,7 @@ not fully verified; 2 something it reports does stop the landing, meaning a fail
 files that is neither staleness nor pre-existing, non-stale bucket growth, or a rise in a subcheck
 whose failures are truncated, other than the readiness growth
 counter; 3 the check could not run, readiness audit input identity could not be established or matched,
-`--dedupe-snapshot` was passed on a checkout that is not the run's private snapshot, a snapshot
-changed while the checks ran, or a subcheck timed out or a validator was killed while recording a
+or a subcheck timed out or a validator was killed while recording a
 baseline. A subcheck
 that did not finish in a landing run lifts an exit 0 to 1 and changes no other exit code. A subcheck
 keyed from its export is not truncated; one whose export falls back is, and the summary says why.
@@ -102,7 +101,7 @@ that recorded it; the rebase at landing left that commit off `main` (it landed a
 against that baseline rule 2 would be off. The baseline recorded at `main` `75bcda93bc` on
 2026-09-23 replaced it.
 
-## Parallel checks, one worker budget, and the snapshot cache
+## Parallel checks and one worker budget
 
 The three checks run at once, and each runs its own validators at once. `--jobs N` is one budget for
 the whole run, not one per check: the run makes N slot files in its scratch directory and every
@@ -116,17 +115,9 @@ The checker runs the target checkout's own `scripts/pm-plans-verify.py`. A targe
 option does not take `--jobs`, so the checker asks that verifier's `--help` once and omits the option
 when it is absent: an older `--root` keeps its legacy invocation.
 
-**The validator cache is opt-in.** `--dedupe-snapshot` says this checkout is the private, immutable
-snapshot this one run created, which is what `pm-land.py check --on <host>` makes: a linked worktree
-of its own, detached at the checked commit, filled with the ignored inputs and verified clean before
-and after. Inside that run one shared validator's report serves both aggregates and any export of it,
-so those command lines run once. The flag is refused with exit 3 on anything else: HEAD on a branch,
-the repository's main worktree, or a worktree with changes. The cache directory is created fresh for
-the invocation and removed when it ends, so nothing is reused across runs; at the end the run
-re-reads the commit, the `scripts/` digest and every ignored input's bytes and exits 3 if any of them
-moved, because a report reused from the cache would then answer for inputs that no longer exist.
-Every other invocation - the shared checkout, a lander's own worktree, `--record-baseline` - runs
-every validator on its own, still in parallel. `--record-baseline` refuses the flag.
+Both copies of a validator that `run-gates` and `audit-governance` share run on their own, once in
+each aggregate, as they always have: the pairing rule below judges them by what they report, not by
+sharing a run.
 
 ## Readiness audit input identity
 

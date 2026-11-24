@@ -2441,11 +2441,7 @@ class KeptCheckReports(LandingRun):
             self.assertEqual(code, 0, out)
             self.assertIn(f"full check reports kept in {Path(keep).resolve()}", out)
             self.assertEqual(sorted(path.name for path in Path(keep).iterdir()),
-                             ["audit-governance.json", "dedupe-events.jsonl",
-                              "plan-migration-validate.json", "run-gates.json"])
-            # This run cached nothing; the journal is this run's, and it is empty (review's
-            # retained-report defect: a reused keep directory kept the previous run's 40 runs).
-            self.assertEqual((Path(keep) / "dedupe-events.jsonl").read_text(encoding="utf-8"), "")
+                             ["audit-governance.json", "plan-migration-validate.json", "run-gates.json"])
             kept = json.loads((Path(keep) / "run-gates.json").read_text(encoding="utf-8"))
             self.assertEqual(kept["failures"][0]["failures"], [STALE_HASH])
             migration = json.loads((Path(keep) / "plan-migration-validate.json").read_text(encoding="utf-8"))
@@ -3524,330 +3520,6 @@ class AggregateReportsTests(unittest.TestCase):
         self.assertEqual(str(raised.exception), "audit fell over")
 
 
-STUB_VERIFIER = r"""
-import importlib.util, json, os, subprocess, sys, tempfile
-from pathlib import Path
-spec = importlib.util.spec_from_file_location("real_verifier", "__REAL_VERIFIER__")
-real = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(real)
-
-SHARED = "shared-validator"
-
-
-def failure_rows():
-    try:
-        return [line.strip() for line in open("Plans/failures.txt", encoding="utf-8") if line.strip()]
-    except OSError:
-        return []
-
-
-def shared_report():
-    rows = [{"path": path, "error": "brand_new_kind"} for path in failure_rows()]
-    return {"schema_id": "pm.plans_verify.report.v1", "check": SHARED,
-            "status": "fail" if rows else "pass", "failures": rows}
-
-
-def aggregate_report(command):
-    # Both aggregates run the same validator command line, as the real ones do: under the snapshot
-    # route the second call must reuse the first report.
-    with tempfile.TemporaryDirectory() as scratch:
-        child = Path(scratch) / "shared.json"
-        subprocess.run([sys.executable, __file__, SHARED, "--report", str(child)], check=True)
-        rows = json.loads(child.read_text(encoding="utf-8"))["failures"]
-    if command == "run-gates":
-        return {"schema_id": "pm.plans_verify.report.v1", "check": "run-gates",
-                "status": "fail" if rows else "pass",
-                "failures": [{"check": SHARED, "failures": rows}] if rows else [],
-                "checks": {SHARED: {"status": "fail" if rows else "pass", "failures": len(rows)}}}
-    return {"schema_id": "pm.plans_verify.report.v1", "check": "audit-governance",
-            "status": "fail" if rows else "pass",
-            "failures": [{"check": SHARED, "failures": rows}] if rows else [],
-            SHARED: {"status": "fail" if rows else "pass", "failures": len(rows)}}
-
-
-def main():
-    if "--help" in sys.argv:
-        print("usage: pm-plans-verify.py run-gates [--jobs N] [--report FILE]")
-        raise SystemExit(0)
-    command = sys.argv[1]
-    report_path = sys.argv[sys.argv.index("--report") + 1]
-    request = real.dedupe_request(sys.argv[1:])
-    event = "run"
-    if request is None:
-        report = shared_report() if command == SHARED else aggregate_report(command)
-    else:
-        path, payload = request
-        with real.dedupe_lock(path):
-            report = real.read_dedupe(path, payload)
-            if report is None:
-                report = shared_report() if command == SHARED else aggregate_report(command)
-                real.write_dedupe(path, payload, report)
-            else:
-                event = "hit"
-    with open(report_path, "w", encoding="utf-8") as handle:
-        json.dump(report, handle)
-    log = os.environ.get("STUB_RUN_LOG")
-    if log:
-        with open(log, "a", encoding="utf-8") as handle:
-            handle.write(event + ":" + command + "\n")
-    touched = os.environ.get("STUB_TOUCH_INPUT")
-    if touched and command == "run-gates":
-        Path(touched).write_text("written while the check ran\n", encoding="utf-8")
-    print(json.dumps({"status": report["status"]}))
-
-
-if __name__ == "__main__":
-    main()
-"""
-
-STUB_MIGRATION = 'import json\nprint(json.dumps({"status": "pass", "failures": []}))\n'
-
-# A live process named pm-landing-check.py, standing where that script stands: it writes the owner
-# record with the script's own function, primes the cache under a stamp, and stays alive while the
-# tests run. argv: cache stamp repo jobs hold-file
-OWNER_HELPER = r"""
-import importlib.util, os, subprocess, sys, time
-from pathlib import Path
-spec = importlib.util.spec_from_file_location("real_landing_check", "__REAL_LANDING__")
-landing = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(landing)
-cache, stamp, repo, jobs, hold = Path(sys.argv[1]), sys.argv[2], Path(sys.argv[3]), sys.argv[4], Path(sys.argv[5])
-nonce = landing.write_dedupe_owner(cache, stamp)
-env = dict(os.environ)
-env[landing.DEDUPE_DIR_ENV] = str(cache)
-env[landing.DEDUPE_STAMP_ENV] = stamp
-env[landing.DEDUPE_TOKEN_ENV] = nonce
-for name in ("run-gates", "audit-governance"):
-    subprocess.run([sys.executable, str(repo / "scripts/pm-plans-verify.py"), name, "--quiet-progress",
-                    "--subcheck-timeout-seconds", "1800", "--jobs", jobs,
-                    "--report", str(cache.parent / ("prime-" + jobs + "-" + name + ".json"))],
-                   cwd=str(repo), env=env, check=True, stdout=subprocess.DEVNULL)
-(cache.parent / "owner-ready").write_text("ready", encoding="utf-8")
-while hold.exists():
-    time.sleep(0.05)
-"""
-
-
-class InheritedCacheTests(unittest.TestCase):
-    """Reviews B1, A1 and A3: nothing is cached outside the snapshot route, and that route is checked.
-
-    The real main() runs over a stub repository whose two aggregates spawn one shared validator
-    command line, with real subprocesses and this branch's own cache functions. At the second commit
-    the stub reports a new failure on a file the branch touches, so the correct result is exit 2.
-    """
-
-    def setUp(self):
-        self.scratch = tempfile.TemporaryDirectory()
-        self.addCleanup(self.scratch.cleanup)
-        self.work = Path(self.scratch.name)
-        self.repo = self.work / "repo"
-        self.repo.mkdir()
-        self.cache = self.work / "ambient-cache"
-        self.log = self.work / "runs.log"
-        self.hold = self.work / "hold"
-        (self.repo / "scripts").mkdir()
-        (self.repo / "Plans/.plan_migration/run").mkdir(parents=True)
-        (self.repo / "Plans/.audits/event-authority-2026-08-13-currentness").mkdir(parents=True)
-        (self.repo / ".gitignore").write_text("Plans/.audits/\nign/\n", encoding="utf-8")
-        (self.repo / "Plans/.plan_migration/run/key").write_text("k\n", encoding="utf-8")
-        (self.repo / "Plans/Base.md").write_text("base\n", encoding="utf-8")
-        (self.repo / "Plans/failures.txt").write_text("", encoding="utf-8")
-        (self.repo / "scripts/pm-plans-verify.py").write_text(
-            STUB_VERIFIER.replace("__REAL_VERIFIER__", str(ROOT / "scripts" / "pm-plans-verify.py")),
-            encoding="utf-8")
-        (self.repo / "scripts/pm-plan-migration.py").write_text(STUB_MIGRATION, encoding="utf-8")
-        self.git("init", "-q", "-b", "main")
-        self.git("config", "user.email", "t@example.invalid")
-        self.git("config", "user.name", "t")
-        self.git("add", ".")
-        self.git("commit", "-qm", "A")
-        self.base = self.git("rev-parse", "HEAD").strip()
-
-    def git(self, *args, cwd=None):
-        return subprocess.run(["git", *args], cwd=cwd or self.repo, capture_output=True, text=True, check=True).stdout
-
-    def command(self, root, jobs, *extra):
-        return [sys.executable, "-B", str(ROOT / "scripts" / "pm-landing-check.py"), "--root", str(root),
-                "--base", self.base, "--baseline", "Plans/.audits/baseline.json",
-                "--run-dir", "Plans/.plan_migration/run",
-                "--readiness-audit-root", str(root / M.READINESS_AUDIT_REL),
-                "--jobs", str(jobs), *extra]
-
-    def run_check(self, jobs, environment, *extra, root=None):
-        env = {key: value for key, value in environment.items()}
-        env["STUB_RUN_LOG"] = str(self.log)
-        return subprocess.run(self.command(root or self.repo, jobs, *extra), cwd=str(root or self.repo),
-                              env=env, capture_output=True, text=True, timeout=180)
-
-    def clean_environment(self):
-        return {key: value for key, value in os.environ.items()
-                if not key.startswith("PM_PLANS_VERIFY_DEDUPE")}
-
-    def start_owner(self, jobs):
-        """Prime the cache at this commit, under a stamp, and keep its named owner alive."""
-        self.cache.mkdir(exist_ok=True)
-        self.hold.write_text("hold\n", encoding="utf-8")
-        helper = self.work / "pm-landing-check.py"
-        helper.write_text(OWNER_HELPER.replace("__REAL_LANDING__", str(ROOT / "scripts" / "pm-landing-check.py")),
-                          encoding="utf-8")
-        process = subprocess.Popen([sys.executable, str(helper), str(self.cache), "smoke", str(self.repo),
-                                    str(jobs), str(self.hold)], cwd=self.work,
-                                   env={**os.environ, "STUB_RUN_LOG": str(self.log)})
-        deadline = time.monotonic() + 30
-        ready = self.cache.parent / "owner-ready"
-        while not ready.exists():
-            if process.poll() is not None or time.monotonic() > deadline:
-                process.kill()
-                self.fail("the owner helper did not prime the cache")
-            time.sleep(0.02)
-        owner = json.loads((self.cache / M.DEDUPE_OWNER_FILE).read_text(encoding="utf-8"))
-        return process, {M.DEDUPE_DIR_ENV: str(self.cache), M.DEDUPE_STAMP_ENV: "smoke",
-                         M.DEDUPE_TOKEN_ENV: owner["nonce"]}
-
-    def stop_owner(self, process):
-        self.hold.unlink()
-        process.wait(timeout=30)
-        (self.cache.parent / "owner-ready").unlink()
-
-    def commit_the_failure(self):
-        (self.repo / "Plans/Touched.md").write_text("edited\n", encoding="utf-8")
-        (self.repo / "Plans/failures.txt").write_text("Plans/Touched.md\n", encoding="utf-8")
-        self.git("add", ".")
-        self.git("commit", "-qm", "B: a new failure on a file this branch touches")
-
-    def blocked(self, process=None, environment=None, jobs=1, root=None, extra=(), expect=None):
-        """The primed cache says pass; this commit must still exit 2 and run every validator."""
-        self.log.write_text("", encoding="utf-8")
-        result = self.run_check(jobs, {**os.environ, **(environment or {})}, *extra, root=root)
-        self.assertEqual(result.returncode, expect if expect is not None else 2,
-                         result.stdout + result.stderr)
-        events = self.log.read_text(encoding="utf-8").splitlines()
-        return result, events
-
-    def snapshot_worktree(self, name="snapshot", branch=None):
-        """The route's checkout: a linked worktree of this run, detached and filled with the inputs."""
-        path = self.work / name
-        head = self.git("rev-parse", "HEAD").strip()
-        args = (["worktree", "add", "-b", branch, str(path), head] if branch
-                else ["worktree", "add", "--detach", str(path), head])
-        self.git(*args)
-        shutil.copytree(self.repo / "Plans/.audits", path / "Plans/.audits")
-        return path
-
-    def test_jobs_one_never_reads_an_inherited_cache(self):
-        self.assertEqual(self.run_check(1, self.clean_environment(), "--record-baseline").returncode, 0)
-        self.commit_the_failure()
-        process, environment = self.start_owner(1)
-        try:
-            _result, events = self.blocked(environment=environment, jobs=1)
-        finally:
-            self.stop_owner(process)
-        self.assertEqual(sorted(events), ["run:audit-governance", "run:run-gates",
-                                          "run:shared-validator", "run:shared-validator"])
-
-    def test_jobs_four_on_a_dirty_tree_never_reads_an_inherited_cache(self):
-        self.assertEqual(self.run_check(1, self.clean_environment(), "--record-baseline").returncode, 0)
-        self.commit_the_failure()
-        (self.repo / "dirty.txt").write_text("x\n", encoding="utf-8")
-        process, environment = self.start_owner(4)
-        try:
-            _result, events = self.blocked(environment=environment, jobs=4)
-        finally:
-            self.stop_owner(process)
-
-    def test_jobs_four_outside_the_snapshot_route_caches_nothing(self):
-        self.assertEqual(self.run_check(1, self.clean_environment(), "--record-baseline").returncode, 0)
-        self.commit_the_failure()
-        process, environment = self.start_owner(4)
-        primed = sorted(path.name for path in self.cache.glob("*.json") if path.name != M.DEDUPE_OWNER_FILE)
-        try:
-            _result, events = self.blocked(environment=environment, jobs=4)
-        finally:
-            self.stop_owner(process)
-        # Every validator ran on its own; the primed aggregate entries were not read or written.
-        self.assertEqual(sorted(events), ["run:audit-governance", "run:run-gates",
-                                          "run:shared-validator", "run:shared-validator"])
-        self.assertEqual(sorted(path.name for path in self.cache.glob("*.json")
-                                if path.name != M.DEDUPE_OWNER_FILE), primed)
-
-    def test_the_snapshot_route_reuses_one_shared_validator(self):
-        self.assertEqual(self.run_check(1, self.clean_environment(), "--record-baseline").returncode, 0)
-        self.commit_the_failure()
-        snapshot = self.snapshot_worktree()
-        _result, events = self.blocked(jobs=4, root=snapshot, extra=("--dedupe-snapshot",))
-        self.assertEqual(sorted(events), ["hit:shared-validator", "run:audit-governance",
-                                          "run:run-gates", "run:shared-validator"])
-
-    def test_two_snapshot_runs_never_share_a_cache(self):
-        self.assertEqual(self.run_check(1, self.clean_environment(), "--record-baseline").returncode, 0)
-        self.commit_the_failure()
-        snapshot = self.snapshot_worktree()
-        first = self.blocked(jobs=4, root=snapshot, extra=("--dedupe-snapshot",))[1]
-        second = self.blocked(jobs=4, root=snapshot, extra=("--dedupe-snapshot",))[1]
-        self.assertEqual(sorted(first), sorted(second))
-        self.assertEqual(second.count("run:shared-validator"), 1)
-
-    def test_the_snapshot_flag_is_refused_in_the_main_worktree(self):
-        self.commit_the_failure()
-        result = self.run_check(4, self.clean_environment(), "--dedupe-snapshot")
-        self.assertEqual(result.returncode, 3, result.stdout + result.stderr)
-        self.assertIn("not the private snapshot", result.stderr)
-        self.assertIn("HEAD is on a branch", result.stderr)
-        self.assertIn("main worktree", result.stderr)
-        self.assertEqual(result.stdout, "")
-
-    def test_the_snapshot_flag_is_refused_on_a_branch_worktree(self):
-        self.commit_the_failure()
-        checkout = self.snapshot_worktree("branch-checkout", branch="snapshot-branch")
-        result = self.run_check(4, self.clean_environment(), "--dedupe-snapshot", root=checkout)
-        self.assertEqual(result.returncode, 3, result.stdout + result.stderr)
-        self.assertIn("HEAD is on a branch", result.stderr)
-
-    def test_the_snapshot_flag_is_refused_when_the_worktree_is_dirty(self):
-        self.commit_the_failure()
-        checkout = self.snapshot_worktree()
-        (checkout / "Plans/Touched.md").write_text("edited after the snapshot\n", encoding="utf-8")
-        result = self.run_check(4, self.clean_environment(), "--dedupe-snapshot", root=checkout)
-        self.assertEqual(result.returncode, 3, result.stdout + result.stderr)
-        self.assertIn("uncommitted changes", result.stderr)
-
-    def test_a_change_during_the_check_stops_the_snapshot_route(self):
-        self.assertEqual(self.run_check(1, self.clean_environment(), "--record-baseline").returncode, 0)
-        self.commit_the_failure()
-        snapshot = self.snapshot_worktree()
-        changed = snapshot / "Plans/.audits/written-while-running.json"
-        result, events = self.blocked(jobs=4, root=snapshot, extra=("--dedupe-snapshot",), expect=3,
-                                      environment={"STUB_TOUCH_INPUT": str(changed)})
-        self.assertIn("the snapshot changed while the checks ran", result.stderr)
-        self.assertIn("hit:shared-validator", events)
-
-    def test_recording_a_baseline_never_dedupes(self):
-        import contextlib
-        import io
-
-        sys.argv = ["pm-landing-check.py", "--root", str(self.repo), "--dedupe-snapshot", "--record-baseline"]
-        errors = io.StringIO()
-        with contextlib.redirect_stderr(errors), self.assertRaises(SystemExit) as raised:
-            M.main()
-        self.assertEqual(raised.exception.code, 2)
-        self.assertIn("--dedupe-snapshot is not used when recording a baseline", errors.getvalue())
-
-    def test_main_clears_every_inherited_cache_variable_before_it_runs_anything(self):
-        seen = {}
-        with patch.dict(os.environ, {
-            M.DEDUPE_DIR_ENV: str(self.cache), M.DEDUPE_STAMP_ENV: "smoke", M.DEDUPE_TOKEN_ENV: "nonce",
-        }):
-            def fake_check_main(args, root, source):
-                seen.update({name: os.environ.get(name) for name in
-                             (M.DEDUPE_DIR_ENV, M.DEDUPE_STAMP_ENV, M.DEDUPE_TOKEN_ENV)})
-                return 0
-            with patch.object(M, "check_main", side_effect=fake_check_main):
-                sys.argv = ["pm-landing-check.py", "--root", str(self.repo), "--readiness-audit-root",
-                            str(self.repo / M.READINESS_AUDIT_REL)]
-                self.assertEqual(M.main(), 0)
-        self.assertEqual(seen, {M.DEDUPE_DIR_ENV: None, M.DEDUPE_STAMP_ENV: None, M.DEDUPE_TOKEN_ENV: None})
-
-
 class SharedWorkerBudget(LandingRun):
     """Review N-F: --jobs is one budget for the whole check, capped, and gated on free memory."""
 
@@ -3863,7 +3535,6 @@ class SharedWorkerBudget(LandingRun):
                     "count": env.get(M.SLOTS_COUNT_ENV),
                     "floor": env.get(M.MEMORY_FLOOR_MB_ENV),
                     "files": sorted(path.name for path in slot_dir.glob("slot-*.lock")) if slot_dir else [],
-                    "dedupe": sorted(key for key in env if key.startswith("PM_PLANS_VERIFY_DEDUPE")),
                 }))
             return {"check": name, "status": "pass", "failures": []}
 
@@ -3879,8 +3550,7 @@ class SharedWorkerBudget(LandingRun):
         for _name, jobs, environment in seen:
             self.assertEqual(jobs, 4)
             self.assertEqual(environment, {"count": "4", "floor": "6144",
-                                           "files": [f"slot-{index}.lock" for index in range(4)],
-                                           "dedupe": []})
+                                           "files": [f"slot-{index}.lock" for index in range(4)]})
 
     def test_jobs_one_has_no_budget_and_no_floor(self):
         seen = self.capture()
@@ -3888,8 +3558,8 @@ class SharedWorkerBudget(LandingRun):
         self.assertEqual(code, 0, out + self.stderr)
         for _name, jobs, environment in seen:
             self.assertEqual(jobs, 1)
-            # Review A3: the environment is explicit even here, and carries no cache pair.
-            self.assertEqual(environment, {"count": None, "floor": None, "files": [], "dedupe": []})
+            # Review A3: the environment is explicit even here, and carries no budget.
+            self.assertEqual(environment, {"count": None, "floor": None, "files": []})
 
     def refused(self, *argv):
         import contextlib

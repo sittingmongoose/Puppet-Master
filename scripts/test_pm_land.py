@@ -287,38 +287,6 @@ class LandingFixture(unittest.TestCase):
         self.assertEqual(record["cleanup_receipt"], str(fresh_run / "cleanup-receipt.json"))
         self.assertEqual(land.receipt_witness(fresh_run).read_text().strip(), land.file_hash(path))
 
-    def test_the_remote_check_asks_for_the_snapshot_cache_only_when_the_checker_takes_it(self):
-        """Review A1: the cache is opt-in through a flag only this route passes, and only a checker
-        that takes it is asked for one; an older checker keeps the invocation it knows."""
-        for source, expected in (("--dedupe-snapshot in the checker\n", True), ("an older checker\n", False)):
-            with self.subTest(expected=expected):
-                folder = self.runs / ("fresh-flag" + ("-on" if expected else "-off"))
-                folder.mkdir()
-                calls = []
-                real_git = land.git
-
-                def fake_git(root, *args, **kwargs):
-                    if args[:2] == ("show", f"{self.head}:scripts/pm-landing-check.py"):
-                        return subprocess.CompletedProcess(["git", *args], 0, source, "")
-                    return real_git(root, *args, **kwargs)
-
-                def fake_capture(args, cwd, stdout, stderr):
-                    calls.append(args)
-                    if args == land.SHARD:
-                        stdout.write_text("{}")
-                        return 0, 1
-                    land.write_json(stdout, {"schema_id": "pm.landing_check.report.v1", "commit": self.head,
-                                             "base": self.base, "blocking": 0,
-                                             "subcheck_timeout_seconds": land.TIMEOUT})
-                    return 0, 2
-
-                with (patch.object(land, "git", side_effect=fake_git),
-                      patch.object(land, "prepare_remote", return_value=(self.remote, self.manifest)),
-                      patch.object(land, "capture", side_effect=fake_capture),
-                      patch.object(land, "enable_child_subreaper", return_value=False)):
-                    land.remote_check(folder, "nas1", self.ref, self.head, self.tree, self.base)
-                self.assertEqual("--dedupe-snapshot" in calls[1], expected, calls[1])
-
     def test_a_batch_members_remote_check_asks_for_the_row_report_and_binds_it(self):
         self.cleanup()
         fresh_run = self.runs / "fresh-batch"

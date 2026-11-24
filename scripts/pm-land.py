@@ -974,10 +974,6 @@ def remote_check(folder, host, ref, head, tree, base, main=None, rows=False):
         args = [*CHECK, "--base", base, "--subcheck-timeout-seconds", str(TIMEOUT), "--json",
                 "--readiness-audit-root", str(root / READINESS),
                 "--keep-check-reports", str(folder / "subchecks")]
-        # The cache is opt-in and only this route may ask for it: root is the worktree this run just
-        # created, detached, filled with the ignored inputs and verified clean before and after.
-        if check_can_dedupe(git(CLONE, "show", f"{head}:scripts/pm-landing-check.py", check=False).stdout):
-            args += ["--dedupe-snapshot"]
         if rows:
             args += ["--row-report", str(row_report)]
         code, seconds = capture(args, root, report, folder / "landing-check.stderr")
@@ -1651,15 +1647,6 @@ BATCH_CHECK_MARKS = ("--row-report", "grown_stale", "Subcheck totals this run", 
 def check_can_batch(source: str) -> bool:
     """Whether this landing check prints what a batch compares. An older one does not, and no batch runs on it."""
     return all(mark in source for mark in BATCH_CHECK_MARKS)
-
-
-def check_can_dedupe(source: str) -> bool:
-    """Whether this landing check takes --dedupe-snapshot, which only this route passes.
-
-    The flag is the cache's whole licence: it says the checkout is this run's private, immutable
-    snapshot. An older checker refuses an unknown option, so the route asks the checked tree first.
-    """
-    return "--dedupe-snapshot" in source
 
 
 def shows_what_changed(report: dict[str, Any], earlier: Sequence[Optional[dict[str, Any]]]) -> bool:
