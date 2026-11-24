@@ -9,11 +9,12 @@
 // each, on the strip that holds both tabs. Each press is watched by a CDP screencast (compositor PNG frames) from just before
 // the press until it has settled (900 ms); in every frame the two tabs' labels and kind glyphs are read against the same
 // parts in the settled frame and the frame before the press (helpers/tab-face-pixels.mjs: a part's glyph pixels are those
-// that are glyph in both, FO-236): a part is painted when each group of its glyph pixels (a colon's dot, a letter's
-// stroke) has at least one pixel 1.8:1 or more from the frame's ground colour (FO236-WIN158-FIVE-PIXEL-REFERENCE: the
-// median over a 1x-rendered colon's few dot cores and their antialiasing read a real press at 1.67-1.79 while every dot
-// was painted; the per-group core reads it 1.94-3.07 and a blank part still reads about 1.0). Every frame of every press
-// must paint every part. A screencast keeps only some of the 60 frames a second: the run says how
+// that are glyph in both, FO-236): a part is painted when strictly more than half (> 50%) of each group's settled core
+// (a colon's dot, a letter's stroke; core = positions at or above (peak + STRONG) / 2 in the settled frame) reads 1.8:1 or
+// more from the frame's ground colour (keeps Windows Chrome 158's five-pixel real press passing while rejecting partial
+// paints, dimmed shifts and half-erased glyphs). Expected parts — Home's glyph and Agents' label and glyph — must be
+// present before and after every press (Home's icon-only label exception is preserved; FO229-MISSING-PARTS). Every frame
+// of every press must paint every part. A screencast keeps only some of the 60 frames a second: the run says how
 // many it judged per press, and fails a press with fewer than 8. For every frame, record with
 // `--record <file.mp4> --no-pointer-marker` (the pointer ring and press pulse sit on the label) and read the film with
 // `node tools/home-retro-tab-face-film-reader.mjs <video> <run folder> <out.json>`, which applies the same rule to every
@@ -28,7 +29,7 @@
 // Must fail f0f66f2e28 (batch 12e before the fix): blank frames in both looks on both surfaces.
 import { setLookBySetting } from '../helpers/settings-look.mjs';
 import { decodePng } from '../helpers/activity-cover-pixels.mjs';
-import { partMask, partContrast, PAINTED } from '../helpers/tab-face-pixels.mjs';
+import { partMask, partContrast, missingTabParts, PAINTED } from '../helpers/tab-face-pixels.mjs';
 
 const list = (v, all) => (v ? String(v).split(',').map((s) => s.trim()).filter(Boolean) : all);
 const HOLD = 90, SETTLE = 900, MIN_FRAMES = 8;
@@ -74,12 +75,13 @@ export const tests = {
 			await f.locator(PAGE_TAB).nth(0).click(); await t.page.waitForTimeout(1600);
 			const off = await offset(t, f);
 			const g0 = await f.evaluate(GEOM);
-			if (!(await t.check(`${look}: Home shows a panel strip with the Home and Agents tabs, taken over by the switcher`, !!g0 && !!g0.tabs.Home && !!g0.tabs.Agents && g0.lensed && g0.theme === look, JSON.stringify(g0)))) continue;
+			if (!(await t.check(`${look}: Home shows a panel strip with the Home and Agents tabs, taken over by the switcher`, !!g0 && !!g0.tabs.Home && !!g0.tabs.Home.tab && !!g0.tabs.Agents && !!g0.tabs.Agents.tab && g0.lensed && g0.theme === look, JSON.stringify(g0)))) continue;
 			const blanks = [], thin = [], unread = [], shifted = [], wrong = [], counts = [], perPress = [], kept = {};
 			let lowest = null;
 			for (let i = 0; i < presses; i++) {
 				const name = i % 2 ? 'Home' : 'Agents', tag = `${look} ${i + 1} ${name}`;
 				const before = await f.evaluate(GEOM);
+				if (!before || !before.tabs[name] || !before.tabs[name].tab) { unread.push(`${tag}: ${name} tab missing (before press)`); continue; }
 				const tb = shift(before.tabs[name].tab, off), cx = tb[0] + Math.min(tb[2] - 6, Math.max(6, tb[2] / 2)), cy = tb[1] + tb[3] / 2;
 				await t.page.mouse.move(cx, cy);
 				frames = [];
@@ -99,16 +101,19 @@ export const tests = {
 				});
 				const got = frames; frames = null;
 				const after = await f.evaluate(GEOM);
-				if (!after.tabs[name].active) wrong.push(tag);
-				if (t.args.film) t.log('FO229-FILM ' + JSON.stringify({ look, i: i + 1, name, off, before: before.tabs, after: after.tabs }));
-				for (const n of ['Home', 'Agents']) for (const part of ['label', 'glyph']) if (moved(before.tabs[n][part], after.tabs[n][part])) shifted.push(`${tag}: ${n} ${part} ${JSON.stringify(before.tabs[n][part])} -> ${JSON.stringify(after.tabs[n][part])}`);
+				if (!after || !after.tabs[name] || !after.tabs[name].active) wrong.push(tag);
+				if (t.args.film) t.log('FO229-FILM ' + JSON.stringify({ look, i: i + 1, name, off, before: before.tabs, after: after ? after.tabs : null }));
+				for (const [when, tabs] of [['before', before.tabs], ['after', after && after.tabs]]) {
+					for (const miss of missingTabParts(tabs)) unread.push(`${tag}: ${miss} missing (${when} press)`);
+				}
+				for (const n of ['Home', 'Agents']) for (const part of ['label', 'glyph']) if (moved(before.tabs[n]?.[part], after?.tabs?.[n]?.[part])) shifted.push(`${tag}: ${n} ${part} ${JSON.stringify(before.tabs[n]?.[part])} -> ${JSON.stringify(after?.tabs?.[n]?.[part])}`);
 				counts.push(got.length);
 				if (got.length < MIN_FRAMES) { thin.push(`${tag}: ${got.length}`); continue; }
 				const imgs = got.map((x) => ({ wall: x.wall, img: decodePng(Buffer.from(x.data, 'base64')) }));
 				const ref = imgs[imgs.length - 1].img, pre = decodePng(Buffer.from(rest, 'base64'));
 				const masks = [];
 				for (const n of ['Home', 'Agents']) for (const part of ['label', 'glyph']) {
-					const b = shift(after.tabs[n][part], off); if (!b) continue;
+					const b = shift(after?.tabs?.[n]?.[part], off); if (!b) continue;
 					const m = partMask(ref, b, pre); m.name = `${n} ${part}`;
 					if (!m.ok) { unread.push(`${tag}: ${m.name} (${m.g.length} glyph px in both the settled frame and the one before the press, ${m.groupsKept}/${m.groupsSettled} of its dot and stroke groups kept)`); continue; }
 					masks.push(m);
