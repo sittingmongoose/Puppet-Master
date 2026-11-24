@@ -989,8 +989,8 @@ Message-level availability and code-block actions:
 | `cmd.chat.resend_last_user_message` | Resend Last Message | Resends the last user message (triggers new response) | `chat_active && has_user_messages` |
 | `cmd.chat.copy_message` | Copy Message | Copies selected message content to clipboard | `chat_active && message_selected` |
 | `cmd.chat.copy_code_block` | Copy Code Block | Copies a specific code block from a message | `chat_active && code_block_selected` |
-| `cmd.chat.insert_code_block` | Insert at Cursor | Inserts code block content at editor cursor position | `chat_active && code_block_selected && editor_active` |
-| `cmd.chat.apply_code_block` | Apply to File | Applies code block as an edit to the relevant file | `chat_active && code_block_selected` |
+| `cmd.chat.insert_code_block` | Insert at Cursor | Inserts code block content at editor cursor position | `chat_active && code_block_selected && editor_active && code_block_fence_closed` |
+| `cmd.chat.apply_code_block` | Apply to File | Applies code block as an edit to the relevant file | `chat_active && code_block_selected && code_block_fence_closed` |
 | `cmd.chat.toggle_message_details` | Toggle Details | Shows/hides message metadata (model, tokens, timing) | `chat_active && message_selected` |
 
 Revert rules:
@@ -1001,7 +1001,7 @@ Revert rules:
 - after a successful revert, affected editors refresh from the canonical mutation pipeline
 - `cmd.chat.rewind` MUST NOT be used as a file-restore alias
 - `cmd.chat.resend_last_user_message` is distinct from `cmd.chat.retry_message`; resend replays the latest user-authored input, while retry re-runs a failed or cancelled assistant turn
-- `cmd.chat.copy_code_block`, `cmd.chat.insert_code_block`, and `cmd.chat.apply_code_block` operate on a resolved code-block sub-selection rather than the entire message body
+- `cmd.chat.copy_code_block`, `cmd.chat.insert_code_block`, and `cmd.chat.apply_code_block` operate on a resolved code-block sub-selection rather than the entire message body; amended 2026-11-23 (`DL-2601`, `ACD-642`): `cmd.chat.copy_code_block` stays available on open streaming fences (copying raw source received so far), while `cmd.chat.insert_code_block` and `cmd.chat.apply_code_block` require a parser-confirmed closed fence (`code_block_fence_closed`), and fence closure alone grants no execution authority
 - Stop/edit/delete message availability is exposed through existing stop, edit/resend, rewind/revert, and retention-policy surfaces; `/edit/delete` is an availability shorthand and not a new delete-message command ID.
 - GUI question surfaces support multiple-choice and multi-choice interactions with a freeform `Other` path, while logging and activity metadata remain sliceable across `/agent/tool/model/persona/subagent/token` dimensions.
 
@@ -5607,7 +5607,8 @@ plan_unit_id: UCC-074
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Message-level availability and code-block rows preserve edit/resend/copy, code-block copy/insert/apply, details toggling, selected message/code-block/editor preconditions, and distinct resend versus retry behavior.
+canonical_text: >-
+  Message-level availability and code-block rows preserve edit/resend/copy, code-block copy/insert/apply, details toggling, selected message/code-block/editor preconditions, and distinct resend versus retry behavior. Amended 2026-11-23 (DL-2601, ACD-642): within code-block sub-selection preconditions, cmd.chat.copy_code_block stays available on open streaming fences (copying raw source received so far), while cmd.chat.insert_code_block and cmd.chat.apply_code_block require code_block_fence_closed (a parser-confirmed closed fence; fence closure grants no execution authority).
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -5621,6 +5622,7 @@ acceptance_criteria:
 - UCC-074 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- cmd.chat.insert_code_block and cmd.chat.apply_code_block enforce code_block_fence_closed while cmd.chat.copy_code_block remains available on open streaming fences (ACD-642, DL-2601).
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -5634,6 +5636,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0042
+- Plans/Decision_Log.md#DL-2601
 preserved_exact_tokens:
 - cmd.chat.edit_last_user_message
 - cmd.chat.resend_last_user_message
@@ -5646,6 +5649,7 @@ preserved_exact_tokens:
 - message_selected
 - code_block_selected
 - editor_active
+- code_block_fence_closed
 negative_constraints:
 - cmd.chat.resend_last_user_message is distinct from cmd.chat.retry_message.
 - Code-block commands operate on a resolved code-block sub-selection rather than the entire message body.

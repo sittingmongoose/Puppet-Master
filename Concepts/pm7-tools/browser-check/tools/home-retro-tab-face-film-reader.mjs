@@ -6,7 +6,8 @@
 // logs an FO229-FILM row (both tabs' label and glyph boxes, window pixels) and marks "press <tag>" and "settled <tag>". Every
 // frame from the press mark to the settled mark is decoded at its own size (ffmpeg crop, rgb24, passthrough timing); the
 // frames at the settled mark and at the press mark (before the press reached the page) are the references, a part's glyph
-// pixels those that are glyph in both (FO-236); a part is painted when its glyph and ground medians differ by 1.8:1 or more.
+// pixels those that are glyph in both (FO-236); a part is painted when each group of them (a colon's dot, a letter's
+// stroke) has a pixel 1.8:1 or more from the frame's ground (the same rule as the check, helpers/tab-face-pixels.mjs).
 // The verdict is FAIL when any frame of any press leaves a part blank, and lists them by film frame number (pts x 60).
 //   node tools/home-retro-tab-face-film-reader.mjs <video.mp4> <run folder> <out.json>
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -44,7 +45,7 @@ for (const r of rows) {
 	const list = frames(tp, ts + 0.02, crop);
 	if (list.length < 2) { report.unread.push(`${tag}: ${list.length} frames`); continue; }
 	const ref = list[list.length - 1].img, pre = list[0].img, masks = [];
-	for (const p of parts) { const m = partMask(ref, [p.b[0] - x0, p.b[1] - y0, p.b[2], p.b[3]], pre); m.name = p.name; if (m.ok) masks.push(m); else report.unread.push(`${tag}: ${p.name} (${m.g.length} glyph px in both the settled frame and the press-mark frame)`); }
+	for (const p of parts) { const m = partMask(ref, [p.b[0] - x0, p.b[1] - y0, p.b[2], p.b[3]], pre); m.name = p.name; if (m.ok) masks.push(m); else report.unread.push(`${tag}: ${p.name} (${m.g.length} glyph px in both the settled frame and the press-mark frame, ${m.groupsKept}/${m.groupsSettled} of its dot and stroke groups kept)`); }
 	const bad = [];
 	for (const { t, img } of list) {
 		const worst = masks.map((m) => ({ part: m.name, ...partContrast(img, m) })).filter((x) => x.c < PAINTED);

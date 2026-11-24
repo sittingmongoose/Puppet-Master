@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26824-L27469
+Source lines: L26872-L27520
 
-Source SHA256: `3c0db6e2125bee8ee6fb342b1c9a41446481fdebd0ac64b82e43b07a34df5948`
+Source SHA256: `a4006bbd758701e8fe0da40c6c84e155f53a5dc392956036ae9ab885c97e7fe9`
 
 ---
 
@@ -137,6 +137,7 @@ canonical_text: >-
   callbacks, not the run or the reply, which is complete when the user returns. A fallback batch
   reply (ACD-229) appears whole with the settle beat only; it is never pseudo-streamed.
   Amended 2026-10-29 (L1, PC4; PM7): Thinking placeholder consumes the shared Think loader, handing over to Orbit’s Pip without duplication; one Pip per reply and no extra status key.
+  Amended 2026-11-23 (DL-2601, ACD-642): exact prefix rendering over parser-confirmed sealed closed blocks plus an uncached pending tail is the sole canonical streaming behavior so the settled message is strictly identical to the final streamed frame across all four terminal states (complete, stopped, steered, error); speculative closer injection and mid-stream incomplete-inline repair are not permitted (any future change requires a separate owner decision preserving identical-frame settlement). Within UCC-074 preconditions, code-block mutation actions (cmd.chat.insert_code_block, cmd.chat.apply_code_block) require code_block_fence_closed while cmd.chat.copy_code_block stays available on open fences copying raw source received so far (fence closure alone grants no execution authority). Closed-fence raw-source streaming is the sole streaming Mermaid behavior: an unclosed Mermaid fence still open when a turn terminates in complete, stopped, steered, or error keeps its raw fenced source rather than swapping in a diagram or error card at settle (only closed invalid Mermaid fences render the F3-304 malformed-Mermaid error state), preserving active text selection across settlement.
 gui_related: true
 gui_classification_reason: "Defines the visible life cycle of a streaming assistant reply."
 split_recommended: false
@@ -148,6 +149,7 @@ acceptance_criteria:
   - "The settled message renders identically to the final streamed frame."
   - "Switching threads during a reply does not cancel it."
   - "A fallback batch reply is shown whole, never pseudo-streamed."
+  - "Exact prefix rendering over parser-confirmed sealed blocks is the sole streaming behavior (no incomplete-inline repair; open Mermaid fences stay raw source across complete, stopped, steered, and error; cmd.chat.insert_code_block/apply_code_block gate on closed fences while cmd.chat.copy_code_block stays visible) so the settled frame is strictly identical to the final streamed frame (ACD-642, DL-2601)."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -165,6 +167,7 @@ node_compile_hint:
 source_lineage:
   - "Plans/Decision_Log.md#DL-106"
   - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+  - "Plans/Decision_Log.md#DL-2601"
 preserved_exact_tokens:
   - "thinking placeholder"
   - "complete"

@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3751-L23100
+Source lines: L3752-L23148
 
-Source SHA256: `3c0db6e2125bee8ee6fb342b1c9a41446481fdebd0ac64b82e43b07a34df5948`
+Source SHA256: `a4006bbd758701e8fe0da40c6c84e155f53a5dc392956036ae9ab885c97e7fe9`
 
 ---
 
@@ -11447,7 +11447,14 @@ plan_unit_id: ACD-238
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Streaming appends or updates the active message in place and never replaces or rebuilds the entire visible message list on chunks.
+canonical_text: >-
+  Streaming appends or updates the active message in place and never replaces or rebuilds the entire visible
+  message list on chunks. Amended 2026-11-23 (DL-2601, ACD-642): inside the active message, streaming seals
+  only parser-confirmed closed top-level blocks so only the trailing open block reparses, unsealing and falling
+  back to whole-message parsing (with span/reference/capability rebinding) whenever cross-block syntax (a
+  non-exhaustive set including reference definitions, footnotes, raw HTML, HTML comments, :::, $$, table
+  delimiter rows, ---/setext underlines, lazy continuations, loose-list transitions, or duplicate heading slugs)
+  can retroactively affect earlier blocks.
 gui_related: true
 gui_classification_reason: Streaming updates and flicker avoidance are visible chat UI behavior.
 depends_on: [ACD-237]
@@ -11456,6 +11463,7 @@ acceptance_criteria:
   - Streaming updates the current message node in place.
   - Stream chunks do not rebuild the full visible list.
   - Other visible items do not re-render or jump because of active streaming content.
+  - Completed blocks inside the active message reuse parser-confirmed sealed parses while only the trailing open block reparses, with non-exhaustive whole-message fallback and rebinding for cross-block syntax (ACD-642, DL-2601).
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -11470,6 +11478,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0109
+  - Plans/Decision_Log.md#DL-2601
 preserved_exact_tokens:
   - "not replace the entire message list"
   - "do not trigger a full re-layout or re-build"
@@ -11486,7 +11495,12 @@ plan_unit_id: ACD-239
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Expand/collapse preserves scroll position, caches or estimates heights, and avoids read-write-read layout thrash.
+canonical_text: >-
+  Expand/collapse preserves scroll position, caches or estimates heights, and avoids read-write-read layout
+  thrash. Amended 2026-11-23 (DL-2601, ACD-642): multi-row user text selection is preserved by
+  (message_id, source_offsets) with at most the 2 selection-endpoint rows (start and end) pinned within
+  ACD-236 during scroll/recycling while multi-row copies read from the thread model, and oversized messages
+  use distinct height-estimation buckets.
 gui_related: true
 gui_classification_reason: Expand/collapse and scroll stability are visible chat UI behavior.
 depends_on: [ACD-237]
@@ -11495,6 +11509,7 @@ acceptance_criteria:
   - Expand/collapse preserves or minimally adjusts scroll position.
   - Height estimates or caches prevent recalculating every item on every action.
   - Layout avoids read-write-read patterns.
+  - Multi-row user text selection is preserved by (message_id, source_offsets) with at most 2 pinned endpoint rows within ACD-236 and model-backed multi-row copy (ACD-642, DL-2601).
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -11509,6 +11524,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0109
+  - Plans/Decision_Log.md#DL-2601
 preserved_exact_tokens:
   - "scroll position"
   - "read-write-read"
@@ -11526,7 +11542,14 @@ plan_unit_id: ACD-240
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Active streaming uses one buffer/model update path with coalescing or throttling rather than node replacement.
+canonical_text: >-
+  Active streaming uses one buffer/model update path with coalescing or throttling rather than node replacement.
+  Amended 2026-11-23 (DL-2601, ACD-642): validated plain single-line paragraphs and top-level open code fences
+  may take a literal-append fast path only when evaluating the pending line plus incoming chunk proves literal
+  continuation with none of the explicit ACD-642 triggers (necessary but not sufficient; ATS-086 decides);
+  promoting a newly completed block into the parse cache rebinds subject metadata without triggering a
+  redundant second render pass; derived link/chip keys stay decoupled from raw streaming text; and open code
+  fences preserve line-based node identity across settlement.
 gui_related: true
 gui_classification_reason: Streaming update path affects visible chat streaming performance.
 depends_on: [ACD-238]
@@ -11535,6 +11558,7 @@ acceptance_criteria:
   - Active streaming appends to a buffer or model.
   - Renderer draws current streamed state on a coalesced cadence.
   - Streaming does not replace the whole active node.
+  - Promoting a completed block into the parse cache triggers zero redundant re-renders, and code-block line identity survives settlement (ACD-642, DL-2601).
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -11549,6 +11573,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0109
+  - Plans/Decision_Log.md#DL-2601
 preserved_exact_tokens:
   - "1-2 frames per second"
   - "single update path"
@@ -11649,7 +11674,15 @@ plan_unit_id: ACD-243
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Current-thread hot memory is capped at the last 200 messages or 8 MB, paging older message content from storage on demand.
+canonical_text: >-
+  Current-thread hot memory is capped at the last 200 messages or 8 MB, paging older message content from
+  storage on demand. Amended 2026-11-23 (DL-2601, ACD-642): derived parse and highlight caches live under
+  separate app-global budgets outside this per-thread loaded-page cap—on native desktop, one aggregate parsed
+  completed-block LRU across all option-sets is capped at 10 MiB retained bytes (~500,000-524,288 source chars at
+  ~20 B/char, refusing single blocks over 25% of budget = 2.5 MiB / ~131,072 chars and never caching open streaming
+  tails), one app-global 500-entry / 50 MiB finished highlight LRU, and one app-global 2 MiB live open-fence
+  highlight-checkpoint budget; on Leptos WebAssembly (F3-583), parsing and highlighting either run on the trusted
+  local daemon or stay within a strict 4 MiB aggregate client Wasm derived-cache cap.
 gui_related: false
 gui_classification_reason: Hot memory cap and paging are storage/runtime performance behavior.
 depends_on: [ACD-236]
@@ -11658,6 +11691,7 @@ acceptance_criteria:
   - Hot memory caps to last 200 messages or 8 MB.
   - Older message content is paged from storage on demand.
   - Full thread persistence is not reduced by hot memory caps.
+  - Separate app-global derived render caches enforce one aggregate desktop parse LRU (10 MiB retained / ~500,000-524,288 chars, <=25% = 2.5 MiB per entry, finished blocks only), a 500-entry / 50 MiB highlight LRU, and a 2 MiB live-checkpoint budget, and Leptos WebAssembly either offloads to the daemon or caps aggregate client Wasm caches at 4 MiB (ACD-642, DL-2601).
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -11672,6 +11706,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0110
+  - Plans/Decision_Log.md#DL-2601
 preserved_exact_tokens:
   - "ui.chat.in_memory_cap_messages"
   - "200"
@@ -14101,7 +14136,16 @@ canonical_text: >-
   Non-iframe Markdown, Mermaid, HTML, and SVG rendering uses the current
   rendering contract until a dedicated `Plans/security-sanitization.md` owner
   exists, with DOMPurify `DEFAULT_ALLOWED_TAGS` safe subset and approved URL
-  attributes only.
+  attributes only. Amended 2026-11-23 (DL-2601, DR-093, ACD-641, ACD-643, RTIM-029):
+  superseding the prior external-URL-only `<style>` wording, DOMPurify
+  `DEFAULT_ALLOWED_TAGS` is the conceptual HTML5 safe-tag baseline implemented
+  canonically in Rust by `ammonia` in the standalone shared crate across Slint
+  desktop and Leptos web (never JS DOMPurify as a product owner or Slint path),
+  with the explicit positive element/attribute/anchor/parser-only-class/scheme/
+  image/SVG allowlists (denying all `<style>` elements and inline `style`
+  attributes in message-flow Markdown while leaving host-injected `--pm-viz-*`
+  inline `style` strictly on sandboxed inline visualizer containers) and
+  anti-spoof parser provenance owned by ACD-641 and ACD-643.
 gui_related: false
 gui_classification_reason: Sanitizer ownership and allowlist behavior are security/runtime constraints.
 depends_on: [ACD-291]
@@ -14109,6 +14153,7 @@ unblocks: []
 acceptance_criteria:
   - Non-iframe rendering uses the current rendering contract until a dedicated sanitizer owner exists.
   - Message-flow rendering uses DOMPurify `DEFAULT_ALLOWED_TAGS` plus approved URL-bearing attributes only.
+  - Superseding the prior external-URL-only `<style>` clause, Rust ammonia enforces the explicit positive ACD-643 element/attribute/anchor/parser-only-class/scheme/image/SVG allowlist (denying all `<style>` elements and inline `style` attributes in message-flow Markdown) and ACD-641 anti-spoof provenance across Slint and Leptos without JS DOMPurify (DL-2601).
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -14123,12 +14168,14 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0136
+  - Plans/Decision_Log.md#DL-2601
 preserved_exact_tokens:
   - "Plans/security-sanitization.md"
   - "DOMPurify"
   - "DEFAULT_ALLOWED_TAGS"
 negative_constraints:
   - "Raw `<script>`, `<iframe>`, `<object>`, `<embed>`, and `<style>` with external URL references are denied in message-flow rendering."
+  - "Superseding the prior external-URL-only `<style>` clause (DL-2601), do not ship JS DOMPurify as a product sanitizer owner, fork sanitizer/URL rules between Slint and Leptos, or allow any `<style>` element or inline `style` attribute in message-flow Markdown."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md

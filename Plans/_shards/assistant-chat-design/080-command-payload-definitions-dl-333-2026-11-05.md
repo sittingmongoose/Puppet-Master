@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L29513-L33421
+Source lines: L29564-L33473
 
-Source SHA256: `3c0db6e2125bee8ee6fb342b1c9a41446481fdebd0ac64b82e43b07a34df5948`
+Source SHA256: `a4006bbd758701e8fe0da40c6c84e155f53a5dc392956036ae9ab885c97e7fe9`
 
 ---
 
@@ -1110,6 +1110,7 @@ node_compile_hint: {mode: command_payload_definitions, create_worknodes: false, 
 source_lineage:
   - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to Q5"
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/inventory.jsonl"
+  - "Plans/Decision_Log.md#DL-2601"
 preserved_exact_tokens: [cmd.chat.copy_message, cmd.chat.retry_message, cmd.chat.rewind, cmd.chat.revert, cmd.chat.edit_last_user_message, cmd.chat.resend_last_user_message, cmd.chat.copy_code_block, cmd.chat.insert_code_block, cmd.chat.apply_code_block, cmd.chat.toggle_message_details]
 negative_constraints:
   - Do not add payload fields to UI_Command_Catalog command rows.
@@ -1376,7 +1377,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "overlay UCC-073..UCC-076 required identity thread_id (always); row preconditions chat_active && code_block_selected && editor_active (UI_Command_Catalog.md:992); the row's target is the active editor cursor"
+          source: "overlay UCC-073..UCC-076 required identity thread_id (always); row preconditions chat_active && code_block_selected && editor_active && code_block_fence_closed (UI_Command_Catalog.md:992); the row's target is the active editor cursor"
         code_block_id:
           type: id
           required: true
@@ -1399,7 +1400,7 @@ command_payload_definitions:
           gap_note: "An editor insertion needs no owner result, but the production wiring row catalog.chat_insert_code_block names request ChatOwnerCommandRequestV2 and result ChatOwnerCommandResultV2, so the definition follows the wired owner contracts."
         - key: disabled_reason_codes
           choice: [blocked_state_required]
-          gap_note: "The preconditions chat_active && code_block_selected && editor_active (UI_Command_Catalog.md:992) name no disabled code; they are read as blocked states."
+          gap_note: "The preconditions chat_active && code_block_selected && editor_active && code_block_fence_closed (UI_Command_Catalog.md:992) name no disabled code; they are read as blocked states."
     - command_id: cmd.chat.apply_code_block
       ucc_units: [UCC-074]
       command_kind: domain_action
@@ -1410,7 +1411,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "overlay UCC-073..UCC-076 required identity thread_id (always); row preconditions chat_active && code_block_selected (UI_Command_Catalog.md:993)"
+          source: "overlay UCC-073..UCC-076 required identity thread_id (always); row preconditions chat_active && code_block_selected && code_block_fence_closed (UI_Command_Catalog.md:993)"
         code_block_id:
           type: id
           required: true
@@ -1441,7 +1442,7 @@ command_payload_definitions:
           gap_note: "The row (UI_Command_Catalog.md:993) states no command_kind. Apply edits the relevant file with the code-block content, an owner write through the file pipeline."
         - key: disabled_reason_codes
           choice: [blocked_state_required]
-          gap_note: "The preconditions chat_active && code_block_selected (UI_Command_Catalog.md:993) name no disabled code; they are read as blocked states."
+          gap_note: "The preconditions chat_active && code_block_selected && code_block_fence_closed (UI_Command_Catalog.md:993) name no disabled code; they are read as blocked states."
     - command_id: cmd.chat.toggle_message_details
       ucc_units: [UCC-074]
       command_kind: shell_view

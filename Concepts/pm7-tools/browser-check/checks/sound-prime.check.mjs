@@ -1,5 +1,10 @@
 // SW-26: native page code rehearses before activation. Playwright evaluate()
 // grants activation, so neither setup nor polling may use it for this check.
+// FO-SOUNDPRIME-WINDOWS-PATH: `--set page=` may be a plain Windows path, a plain POSIX path or a file: URL; the page
+// URL comes from helpers/page-path.mjs (a drive letter read as a scheme by `new URL(page, 'file://')` broke every
+// Windows run) and the app frame is found from the top of the frame tree (normal pages have no child frame to find).
+import { pageHref } from '../helpers/page-path.mjs';
+const DEFAULT_PAGE = new URL('../../../PMConcept7.html', import.meta.url).href;
 const probe=()=>{
  const R=window.__soundNativeProbe={events:0,starts:[],done:false,framed:window!==window.top};
  try{localStorage.getItem('native-sound-surface');R.storageBlocked=false;}catch(e){R.storageBlocked=e.name==='SecurityError';}
@@ -24,7 +29,7 @@ const probe=()=>{
  },{once:true});
 };
 export default async function(t){
- const target=new URL(t.args.page,'file://');target.searchParams.set('o55','off');target.searchParams.set('cb',String(Date.now()));
+ const target=new URL(pageHref(t.args.page,DEFAULT_PAGE));target.searchParams.set('o55','off');target.searchParams.set('cb',String(Date.now()));
  const sandbox=String(t.args.sandbox)==='1';
  if(sandbox)await t.openInSandbox(target.href);
  // Opaque app frames can be separate Chrome targets (OOPIFs). Observe the
@@ -46,7 +51,10 @@ export default async function(t){
  const {frameTree}=await cdp.send('Page.getFrameTree');
  // In-process iframes share their parent's CDP target; choose the actual app
  // frame in that tree too, never navigate the wrapper in its place.
- const findApp=tree=>(tree.childFrames||[]).map(findApp).find(Boolean)||(new URL(tree.frame.url,'file://').pathname===target.pathname?tree.frame:null);
+ // the frame whose document is the requested page, from the top of the tree down (a normal run's page is the top
+ // frame itself; the sandbox's is a child). Compared by pathname so a query the wrapper added does not hide it.
+ const samePage=u=>{try{return new URL(u).pathname===target.pathname}catch(_){return false}};
+ const findApp=tree=>{if(samePage(tree.frame.url))return tree.frame;for(const child of tree.childFrames||[]){const f=findApp(child);if(f)return f;}return null;};
  const app=findApp(frameTree);
  if(!app)throw new Error('native sound probe cannot find the requested app frame');
  await cdp.send('Page.navigate',{url:target.href,frameId:app.id});

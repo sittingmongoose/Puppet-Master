@@ -4453,10 +4453,10 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, Contrac
 
 Chat messages that contain renderable Markdown/Mermaid content must support:
 
-- readable Markdown formatting
-- native Mermaid diagram cards where Mermaid syntax is detected
+- readable Markdown formatting (through the one standalone shared Rust Markdown pipeline of `DR-093`, `ACD-641`–`ACD-643`, including first-class Rust TeX-to-SVG math with `data-pm-math-tex` copy-back)
+- native Mermaid diagram cards where Mermaid syntax is detected, emitting SVG `<text>` labels (`<foreignObject>` stripped) with diagram links, external images, and desktop `usvg` filesystem/external `ImageHrefResolver` disabled (`ACD-643`)
 - actions for copy source, open in editor, open detached preview, and export diagram where relevant
-- visible error states for malformed Mermaid instead of silent raw-block disappearance
+- visible error states for malformed Mermaid instead of silent raw-block disappearance; closed-fence raw-source streaming is the sole streaming Mermaid behavior—while a Mermaid fence is open (including when a turn terminates in `complete`, `stopped`, `steered`, or `error`), keep raw fenced source so no error card flashes or swaps at settle (`ACD-470`), render either the native card or the visible malformed-Mermaid error state only for closed Mermaid fences, and expose searchable source via `cmd.chat.search` (`DL-2601`, `ACD-642`, `F3-304`)
 
 Chat must not execute arbitrary HTML from message content.
 
@@ -5223,7 +5223,7 @@ Core rules:
 - Mermaid and inline visualizer behavior is locked to native card rendering, explicit error and fallback disclosure, sandboxing without arbitrary HTML execution, bounded persistence, injected theme tokens, and the exact inline visualizer bridge cross-reference target.
 - Native Mermaid remains source-text-first, while richer `HTML/JS` or `/JS` visuals render as sandboxed `visual-module` cards with `/design` tokens, sizing `/auto-height`, an `open-link` bridge, and local `in-module` state only.
 - Inline visualizer iframe embeds MUST set `sandbox="allow-scripts"`; the exact minimum attribute is `sandbox='allow-scripts'`. They MUST NOT include `allow-same-origin`, `allow-forms`, `allow-popups`, or `allow-top-navigation`; those tokens are explicitly DENIED, and the widget communicates with PM only through the `postMessage` bridge for all cross-boundary communication.
-- Non-iframe Markdown, Mermaid, HTML, and SVG rendering follows the sanitizer baseline in `Plans/assistant-chat-design.md`: standard HTML5 safe subset per DOMPurify `DEFAULT_ALLOWED_TAGS`, approved URL-bearing attributes only, and no raw `<script>`, `<iframe>`, `<object>`, `<embed>`, or `<style>` with external URL references.
+- Non-iframe Markdown, Mermaid, HTML, and SVG rendering follows the sanitizer baseline in `Plans/assistant-chat-design.md`: standard HTML5 safe subset per DOMPurify `DEFAULT_ALLOWED_TAGS`, approved URL-bearing attributes only, and no raw `<script>`, `<iframe>`, `<object>`, `<embed>`, or `<style>` with external URL references. Amended 2026-11-23 (`DL-2601`, `DR-093`, `ACD-641`, `ACD-643`, `RTIM-029`): superseding the prior external-URL-only `<style>` wording, DOMPurify `DEFAULT_ALLOWED_TAGS` is the conceptual HTML5 safe-tag baseline implemented canonically in Rust by `ammonia` in the standalone shared crate across Slint and Leptos (no JS sanitizer dependency), enforcing the explicit positive element/attribute/anchor/parser-only-class/scheme/image/SVG allowlist of `ACD-643` (denying **all** `<style>` elements and inline `style` attributes in message-flow Markdown while keeping Decision #10 host-injected `--pm-viz-*` inline `style` strictly on the sandboxed inline visualizer container), `F-035` artifact authorization, disabled Mermaid links/external images and desktop `usvg` external `ImageHrefResolver`, and anti-spoof parser provenance.
 - The visualizer host bridge is limited to async-safe `sendPrompt(text: string): void`, `openLink(url: string, target?: "_blank" | "_self"): void`, `copyToClipboard(text: string): Promise<boolean>`, and `requestResize(width?: number, height?: number): void`. `_blank` opens a new tab, `_self` navigation is blocked in sandboxed cards, and resize requests remain host-constrained. For question-flow embedded visual modules, the host omits `sendPrompt` from the bridge and exposes only the narrowed PM-managed question-draft bridge, so visuals cannot bypass PM draft state by queueing chat messages.
 - Decision #10 is resolved for the Final GUI consumer: visualizer theme-token injection is locked for MVP as CSS custom properties on the inline `style` attribute of the visualizer container. MVP tokens are `--pm-viz-bg`, `--pm-viz-fg`, `--pm-viz-accent`, `--pm-viz-border`, `--pm-viz-font-family`, and `--pm-viz-font-size`; visualizer fragments MUST use those tokens and hardcoded replacement colors are prohibited.
 - Bridge calls preserve exact GUI host semantics: `sendPrompt(text)` queues into the active thread composer outside question-flow contexts; question-flow embedded visuals do not receive `sendPrompt` and write draft answers only through the narrowed question bridge; `openLink(url)` routes through `cmd.browser.open_detached_preview` or the system browser when external; theme injection pushes the CSS custom property bundle on mount and theme change; resize reporting sends `{ height: px }` to the host, which adjusts the visual card height within host constraints.
@@ -22374,7 +22374,16 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Chat messages containing renderable Markdown or Mermaid support readable Markdown
   formatting, native Mermaid diagram cards, copy source/open editor/open detached
-  preview/export actions, and visible malformed-Mermaid error states.
+  preview/export actions, and visible malformed-Mermaid error states. Amended 2026-11-23
+  (DL-2601, ACD-470, ACD-642, ACD-643): closed-fence raw-source streaming is the sole
+  streaming Mermaid behavior—while a Mermaid fence is open (including if a turn terminates
+  in complete, stopped, steered, or error while the fence remains unclosed), keep raw
+  fenced source so half-streamed diagrams never flash malformed-Mermaid error states and
+  settled frames remain strictly identical to the final streamed frame; validate and display
+  either the native card or the explicit malformed-Mermaid error state once the Mermaid
+  fence closes; emit SVG text labels (foreignObject stripped), disable diagram links,
+  external images, and desktop usvg filesystem/external ImageHrefResolver; and expose
+  searchable diagram source through cmd.chat.search.
 gui_related: true
 gui_classification_reason: >-
   This unit defines Chat renderable Markdown and Mermaid behavior.
@@ -22386,6 +22395,7 @@ acceptance_criteria:
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "Closed-fence raw-source streaming is the sole streaming Mermaid behavior (open fences stay raw source even across stopped/steered/error termination); closed invalid diagrams show visible error states with source access, Mermaid emits SVG text labels with links/external images and desktop usvg external resolver disabled, and cmd.chat.search searches diagram source (DL-2601)."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -22399,6 +22409,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0182"
+- "Plans/Decision_Log.md#DL-2601"
 preserved_exact_tokens:
 - "readable Markdown formatting"
 - "native Mermaid diagram cards"
@@ -22410,11 +22421,14 @@ preserved_exact_tokens:
 - "silent raw-block disappearance"
 negative_constraints:
 - "Malformed Mermaid must not silently disappear."
+- "Open streaming Mermaid fences must stay raw fenced source and must not flash or swap in malformed-Mermaid error cards mid-fence or upon unclosed turn termination."
+- "Mermaid diagrams must not activate clickable diagram links or fetch arbitrary external images."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
+- "Plans/assistant-chat-design.md#ACD-642"
 ```
 
 ### F3-305 - Chat HTML Execution Prohibition
@@ -26543,7 +26557,14 @@ canonical_text: >-
   HTML/JS visuals, auto-height design-token sizing, sandbox="allow-scripts" only, denied
   allow-same-origin, allow-forms, allow-popups, and allow-top-navigation tokens,
   postMessage-only communication, sanitizer baseline for non-iframe rendering, and no
-  arbitrary HTML execution.
+  arbitrary HTML execution. Amended 2026-11-23 (DL-2601, DR-093, ACD-641, ACD-643, RTIM-029):
+  DOMPurify DEFAULT_ALLOWED_TAGS is the conceptual HTML5 safe-tag baseline enforced canonically
+  in Rust by ammonia in the standalone shared crate across Slint and Leptos (no JS sanitizer
+  dependency), with the explicit positive ACD-643 element/attribute/scheme/image allowlist
+  (denying all style elements and inline style attributes in message-flow Markdown while
+  keeping host-injected --pm-viz-* inline style strictly on sandboxed inline visualizer
+  containers), disabled Mermaid links/external images and desktop usvg filesystem/external
+  ImageHrefResolver, and anti-spoof parser provenance.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible FinalGUISpec widget or card behavior.
@@ -26555,6 +26576,7 @@ acceptance_criteria:
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "Non-iframe sanitization runs through the one explicit positive Rust ammonia and closed URL/image/SVG allowlist across Slint and Leptos (no JS DOMPurify, desktop usvg external resolver disabled, all style elements and inline style attributes stripped in message-flow Markdown), and raw HTML cannot forge parser provenance (DL-2601, ACD-641, ACD-643)."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -26568,6 +26590,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0236"
+- "Plans/Decision_Log.md#DL-2601"
 preserved_exact_tokens:
 - "Mermaid"
 - "inline visualizer"
@@ -26585,12 +26608,14 @@ preserved_exact_tokens:
 negative_constraints:
 - "Inline visualizer iframe embeds must not include allow-same-origin, allow-forms, allow-popups, or allow-top-navigation."
 - "Visualizer widgets must not execute arbitrary HTML."
+- "Do not ship JS DOMPurify as a product sanitizer owner or fork sanitizer policies between Slint and Leptos."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
 - "FinalGUISpec owns visible card/widget behavior; owner docs retain runtime, tool, permission, schema, and storage authority."
 owner_hints:
 - "Plans/FinalGUISpec.md"
+- "Plans/assistant-chat-design.md#ACD-643"
 ```
 
 ### F3-381 - Visualizer Host Bridge And Question Flow Narrowing
@@ -29372,7 +29397,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  P2-RICH-TEXT-RENDERING-FIDELITY (P2) is compiled as canonical Puppet Master intent for Rendered GUI text fidelity separate from terminal fidelity: Imported external-repo finding extrepo-20260703-0035 / P2-RICH-TEXT-RENDERING-FIDELITY (P2). The preserved PM gap/delta is: Add rich-text fixtures for ASCII ligatures, bullets, arrows, emoji, combining marks, CJK width, raw vs rendered view, and copy/source-byte fidelity. The observed external-repo signal remains source-lineage evidence: Warp rendered Markdown/rich UI misrendered glyphs while source bytes remained correct.
+  P2-RICH-TEXT-RENDERING-FIDELITY (P2) is compiled as canonical Puppet Master intent for Rendered GUI text fidelity separate from terminal fidelity: Imported external-repo finding extrepo-20260703-0035 / P2-RICH-TEXT-RENDERING-FIDELITY (P2). The preserved PM gap/delta is: Add rich-text fixtures for ASCII ligatures, bullets, arrows, emoji, combining marks, CJK width, raw vs rendered view, and copy/source-byte fidelity. The observed external-repo signal remains source-lineage evidence: Warp rendered Markdown/rich UI misrendered glyphs while source bytes remained correct. Amended 2026-11-23 (DL-2601, ACD-641, ACD-642, ACD-643, ATS-086): rich-text fidelity fixtures also cover CJK-flanked emphasis (**重要。**请阅读。), CJK/Arabic bare-URL autolink boundaries, GFM bare URLs, BiDi per-block RTL paragraphs opening with Latin/technical tokens, inline chip punctuation binding, Windows path preservation, user-message single-tilde preservation, agent-authored Markdown syntax (★ Insight callouts, Codex directives/file citations, GitHub alerts), Mermaid and TeX-math copy-to-source fidelity (exact raw code/diagram source bytes via data-pm-code-source and raw TeX source via data-pm-math-tex on copy), and text selection surviving streaming settlement and virtualized scrolling (with 2-endpoint pinning and model-backed multi-row copy) across Slint and Leptos.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -29383,6 +29408,7 @@ acceptance_criteria:
 - Rendered Markdown preserves displayed glyphs for fi/bullet fixtures
 - Copy from rendered view preserves source bytes where expected
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+- Rich-text fixtures cover CJK-flanked emphasis, CJK/Arabic bare-URL boundaries, BiDi RTL-with-Latin-lead, chip punctuation binding, Windows paths, agent syntax (★ Insight, Codex citations, GitHub alerts), Mermaid/TeX/code copy fidelity (data-pm-math-tex, data-pm-code-source), and selection persistence across streaming settlement and virtualized scrolling (DL-2601, ATS-086).
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
@@ -29407,6 +29433,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:15
+- Plans/Decision_Log.md#DL-2601
 source_atom_ids:
 - atom-0039
 external_atom_id: extrepo-20260703-0035
@@ -42032,7 +42059,20 @@ canonical_text: >-
   page reading at most 2 MiB (SP-338, ACD-242, amended 2026-10-31, DL-270); transcripts are not held in WebAssembly
   memory. The web terminal draws the same Rust terminal grid as a
   fixed, reused set of visible page-text rows updated by diff (the SMPFS-072 web exception) and ships only after the
-  heavy-output speed tests. The Slint/WASM canvas web GUI is retired.
+  heavy-output speed tests. The Slint/WASM canvas web GUI is retired. Amended 2026-11-23 (DL-2601, DR-093, ATS-023):
+  because the Leptos web client itself runs in WebAssembly, the static HTML shell MUST include a <noscript> fallback
+  and keep an accessible static notice visible until Wasm mount succeeds; the minimal bootstrap loader MUST guard
+  both WebAssembly availability and WebAssembly.instantiate compilation/rejection (verified under a harness-asserted
+  typeof WebAssembly === "undefined" profile, strict CSP lacking 'wasm-unsafe-eval', <noscript>, and
+  --js-flags=--jitless slow-path profiles) and display a clear static notice explaining that WebAssembly is
+  unavailable and directing the user to the native Puppet Master desktop app, rather than failing with a blank page
+  or uncaught error. Syntax highlighting, Mermaid validation, and math SVG layout on web are lazily loaded chunks of
+  the same standalone shared Rust Markdown crate (DR-093, never separate web-only implementations), respecting
+  WebAssembly linear-memory limits (either executed on the trusted local daemon or bounded to a strict 4 MiB
+  aggregate client Wasm derived-cache cap per ACD-642). Error presentation is distinct by failure kind: a closed
+  invalid Mermaid fence ALWAYS renders the visible F3-304 malformed-diagram error card with raw source access, while
+  a lazy-chunk renderer initialization or load failure isolates locally to a visible renderer-unavailable notice
+  with raw source fallback without crashing the page.
 gui_related: true
 gui_classification_reason: Defines the technology, rendering, and parity rules of the web GUI.
 split_recommended: false
@@ -42047,6 +42087,7 @@ acceptance_criteria:
   - "The web terminal renders only its visible rows as reused page-text rows from the Rust terminal grid and passes the heavy-output speed tests before it ships."
   - "Web animations keep to transform and opacity where the design allows, long lists render only their visible rows, and long transcripts render from the derived render-page store as 50-item pages with mandatory load-older paging (SP-338)."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "When WebAssembly is unavailable (harness-verified typeof WebAssembly === 'undefined'), rejected by CSP lacking 'wasm-unsafe-eval', or script is disabled (<noscript>), the static notice remains visible pointing to the native desktop app with zero uncaught startup errors; closed Mermaid syntax errors show the F3-304 error card while lazy-chunk init failures degrade locally to a renderer-unavailable notice with raw source and honor the 4 MiB Wasm cache or daemon-offload bound (ATS-023, DL-2601)."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -42065,6 +42106,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/ANSWERS-20261001.md, SHA-256 9ca1e2ab54c77a744d629eb4c6dcc1aa8c9d206c6256efbce8b66230a0961ad6"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/CRITIQUE-RESPONSE-20261001.md, SHA-256 76047abe87b2488f52b3e6df94160aa9da09ec1883d3a91876b20d3e1741a1da"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/ANSWERS-20261002.md, SHA-256 6a4c9f58ef4439d0a1882b7306c0b8d446a94e5f45f2346ab4430b66f13f2e84"
+  - "Plans/Decision_Log.md#DL-2601"
 preserved_exact_tokens:
   - "Leptos"
   - "Leptos 0.8"

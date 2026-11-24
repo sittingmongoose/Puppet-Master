@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L4413-L4541
 
-Source SHA256: `b8f3716574ec58d25116d0f986d378f01086f979e61556cc9661c483ff61e899`
+Source SHA256: `7ba17c5aa7fb716a162c335b6ec6e71fc68d986a5c12f560da9fc6c85b205c7a`
 
 ---
 
@@ -51,10 +51,10 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, Contrac
 
 Chat messages that contain renderable Markdown/Mermaid content must support:
 
-- readable Markdown formatting
-- native Mermaid diagram cards where Mermaid syntax is detected
+- readable Markdown formatting (through the one standalone shared Rust Markdown pipeline of `DR-093`, `ACD-641`–`ACD-643`, including first-class Rust TeX-to-SVG math with `data-pm-math-tex` copy-back)
+- native Mermaid diagram cards where Mermaid syntax is detected, emitting SVG `<text>` labels (`<foreignObject>` stripped) with diagram links, external images, and desktop `usvg` filesystem/external `ImageHrefResolver` disabled (`ACD-643`)
 - actions for copy source, open in editor, open detached preview, and export diagram where relevant
-- visible error states for malformed Mermaid instead of silent raw-block disappearance
+- visible error states for malformed Mermaid instead of silent raw-block disappearance; closed-fence raw-source streaming is the sole streaming Mermaid behavior—while a Mermaid fence is open (including when a turn terminates in `complete`, `stopped`, `steered`, or `error`), keep raw fenced source so no error card flashes or swaps at settle (`ACD-470`), render either the native card or the visible malformed-Mermaid error state only for closed Mermaid fences, and expose searchable source via `cmd.chat.search` (`DL-2601`, `ACD-642`, `F3-304`)
 
 Chat must not execute arbitrary HTML from message content.
 
