@@ -65,7 +65,17 @@ METHODS = HERE / 'dg5_direct_calls' / 'methods.json'
 # the a18 census edition and a19 fixes the probe's stale-case attribution, which packet 3 caught: CF1's demo wrapper
 # clears CASE[0] under a functools.wraps hook, so test_demo_cf01:run was credited to CF1/altered_retry). The recheck
 # CENSUS-PACKET-4-neon passes A and C with 0 REAL findings.
-METHODS_SHA256 = 'd4e521aeae0cbcd592bee83e6acd35133a1ff367d66af0cc5f34b23f98df69c6'
+# C4I census correction, 2026-11-23 (METHOD-RULING addendum 12 point 3; dg5 C4I-census, widened by lead
+# 1123220854): final-a19 omitted WorkflowCancel.issue_assignment_audit from goal.cancelled.owner_methods. The owner
+# corpus calls it directly — C4I (pm_goal_dg_ca3_inspection_cases.py:158/194/204/213/222/231) and C3
+# (pm_goal_dg_ca3_cases.py:44/92/244/522/528) — but the probe classified the call as an override of the registered
+# entry AssignedCancel.issue_assignment_audit (outside-probe-v7.py:419-421) and a18.py:234-236 reads only per-case
+# direct maps, so the row and its sites never reached owner_methods. The row is added by hand in the file's own
+# format (both groups' sites, counts from the ca-C3-* and ca-C4I probe runs; decided_rows is the census field, the
+# 125 guard rows the probe decided inside those calls, derived with a18.py's own load() — see
+# dg5_direct_calls/README.md and c4i-census/DERIVATION-decided_rows.txt); nothing else changes. The regression is
+# pm_goal_dg5_direct_calls_c4i_selftest.py.
+METHODS_SHA256 = 'f184ebb2f8aa2df8c118246f2a2d66485bebc83299900786ffb78da4aadf1806'
 PENDING = frozenset()
 EXCLUDE_SUFFIX = ('_oracles', '_cases', '_selftest', '_selftest_b2', '_crash', '_inspection_cases')
 EXCLUDE_MODULES = ('pm_goal_test_numrule', 'pm_goal_test_adapters_selftest', 'pm_goal_test_selftest_b2')

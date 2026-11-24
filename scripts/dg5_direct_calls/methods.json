@@ -2490,6 +2490,35 @@
     "module": "pm_goal_dg_ca3_route",
     "refusing_cases": 0
    },
+   "WorkflowCancel.issue_assignment_audit": {
+    "adopted_calls": 0,
+    "call_sites": {
+     "pm_goal_dg_ca3_cases.py:244(fn)": 8,
+     "pm_goal_dg_ca3_cases.py:44(until)": 39,
+     "pm_goal_dg_ca3_cases.py:522(audit_fence_lost)": 1,
+     "pm_goal_dg_ca3_cases.py:528(audit_template_drift)": 1,
+     "pm_goal_dg_ca3_cases.py:92(positive)": 6,
+     "pm_goal_dg_ca3_inspection_cases.py:158(positive_late_only_sequence)": 1,
+     "pm_goal_dg_ca3_inspection_cases.py:194(<lambda>)": 1,
+     "pm_goal_dg_ca3_inspection_cases.py:204(<lambda>)": 1,
+     "pm_goal_dg_ca3_inspection_cases.py:213(<lambda>)": 1,
+     "pm_goal_dg_ca3_inspection_cases.py:222(<lambda>)": 1,
+     "pm_goal_dg_ca3_inspection_cases.py:231(<lambda>)": 1
+    },
+    "call_sites_in_construction": {},
+    "cases": 61,
+    "decided_rows": 125,
+    "example_cases": [
+     "C3/append_altered_producer",
+     "C3/append_audit_substituted",
+     "C3/audit_fence_lost",
+     "C3/audit_template_differs_from_readiness",
+     "C3/boundary_append_original_final_accepted"
+    ],
+    "kind": "owner",
+    "module": "pm_goal_dg_ca3_route",
+    "refusing_cases": 15
+   },
    "WorkflowCancel.late_evaluate": {
     "adopted_calls": 0,
     "call_sites": {
