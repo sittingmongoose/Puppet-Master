@@ -129,13 +129,22 @@ def _resolve(key, entry):
 
 
 def construction_frame(code):
-    """A frame of construction, whatever its module (addendum 10, review REAL 1): a constructor or factory by name
-    (C1/C2) anywhere in its qualified name, or any function of a fixture class (C3: World, *World, Suite, Corpus,
-    FaultPlan), including functions nested in one."""
-    parts = [part for part in code.co_qualname.split('.') if part != '<locals>']
-    if any(part in CONSTRUCTORS or part in FACTORIES for part in parts):
+    """A frame of construction, whatever its module (addendum 10, review REAL 1): the frame's OWN function is a
+    constructor or factory by name (C1/C2), or a direct method of a fixture class (C3: World, *World, Suite,
+    Corpus, FaultPlan).
+
+    Round 2 C4 (lead ruling 1124101552-8f55; deep review NEW-1): match the frame's own function, not every name
+    in its qualified name. An action lambda DEFINED inside a factory-named generator (cb_case's make, DG-U's
+    _req_neg.make) and run by the case after the generator returned has only the lambda frame on the stack, so
+    it is the case's action, not construction; a call made while the generator itself runs still has the
+    generator's own frame on the stack and is refused by that frame."""
+    if code.co_name in CONSTRUCTORS or code.co_name in FACTORIES:
         return True
-    return any(part in FIXTURE_CLASSES or (part.endswith('World') and part[:1].isupper()) for part in parts[:-1])
+    parts = code.co_qualname.split('.')
+    if len(parts) >= 2 and parts[-1] == code.co_name:
+        owner = parts[-2]
+        return owner in FIXTURE_CLASSES or (owner.endswith('World') and owner[:1].isupper())
+    return False
 
 
 def case_wrapper(name):
