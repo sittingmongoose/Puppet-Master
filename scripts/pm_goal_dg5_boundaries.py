@@ -35,6 +35,13 @@ ACTIVE = [False]
 PATCHED = {}
 CASE = [None]
 PARENT_CALL = [False]
+# Round 2 C5 (lead ruling 1124101552-8f55): True only during the parent run of a direct-call recording
+# (entry_call(direct=True) from pm_goal_dg5_direct_calls). A registered entry nested in that run records as
+# an entry exactly as it does with the collector off; nested in a registered entry's own parent run it stays
+# nested, as before. Without this, wrapping composite listed methods (GoalUpdateCommand.run,
+# NoAssociationCancel.dispatch) swallows their nested entries (SirOwner.admit, UpdateSourceOwner.capture,
+# SIROwner.accept) and the number/date-time corpus slots they carry silently vanish.
+DIRECT_PARENT = [False]
 REFUSAL_CLASSES = ('Refusal', 'DGRefusal', 'LaneRefusal', 'AdapterRefusal', 'StorageRefusal', 'NumruleRefusal',
                    'SourceRefusal', 'Unavailable', 'Refused', 'FrameError', 'Halt')
 # Load-once singletons (a class whose `_instance` is the object) are bound by
@@ -1324,7 +1331,7 @@ def refusal_code(error):
     return getattr(error, 'code', None) or getattr(error, 'reason', None) or str(error)
 
 
-def entry_call(case, label, family, action, work, *, world, arguments, original, target):
+def entry_call(case, label, family, action, work, *, world, arguments, original, target, direct=False):
     """One captured entry of an authored case, then the parent's own call.
 
     Every entry is registered undeclared first. The sealed child run then
@@ -1334,6 +1341,14 @@ def entry_call(case, label, family, action, work, *, world, arguments, original,
     execution), and the kill judge replays it now, against the same store.
     Entries that do neither stay undeclared (no credit either way). The
     parent's own run must agree with the sealed child run.
+
+    With `direct` (round 2 C5; only the direct-call collector passes it), this
+    capture observes a corpus call that is not itself a registered entry, so
+    its parent run IS the corpus execution: registered entries nested in it
+    record as entries (DIRECT_PARENT), exactly as with the collector off.
+    Their own parent runs clear DIRECT_PARENT again, so entries nested inside
+    those entries stay nested. The sealed child is unchanged either way
+    (ACTIVE keeps everything nested inside the one trial).
     """
     expected = case.get('expected')
     collector = tables.COLLECTOR
@@ -1349,7 +1364,9 @@ def entry_call(case, label, family, action, work, *, world, arguments, original,
             raised = (result.get('errors') or [None])[0] if isinstance(result, dict) else None
             target = raised if raised in target and child == expected else tuple(target)
         collector.declare(result, None, target)
+    saved_parent, saved_direct = PARENT_CALL[0], DIRECT_PARENT[0]
     PARENT_CALL[0] = True
+    DIRECT_PARENT[0] = bool(direct)
     try:
         try:
             returned, passive_code = passive_call(original, arguments.get('receiver'), action)
@@ -1367,7 +1384,10 @@ def entry_call(case, label, family, action, work, *, world, arguments, original,
             FAILURES.append(dict(kind='child_parent_disagree', label=label, child=child, parent=passive_code))
         return returned
     finally:
-        PARENT_CALL[0] = False
+        # Restore, not clear: a nested entry's parent run inside a direct parent run (C5) must hand the
+        # outer run its flags back, or the rest of that outer run would execute unflagged.
+        PARENT_CALL[0] = saved_parent
+        DIRECT_PARENT[0] = saved_direct
 
 
 def helper(original, suffix):
@@ -1458,7 +1478,8 @@ def install_u_entries(module):
             def bind(original=original, entry=class_name + '.' + method):
                 @functools.wraps(original)
                 def call(self, *args, **kwargs):
-                    if ACTIVE[0] or PARENT_CALL[0] or CASE[0] is None:
+                    # Round 2 C5: inside a direct call's parent run this entry records as an entry.
+                    if ACTIVE[0] or CASE[0] is None or (PARENT_CALL[0] and not DIRECT_PARENT[0]):
                         return original(self, *args, **kwargs)
                     case = CASE[0]
                     world = getattr(self, 'world', None) or self.w  # GoalUpdateCommand holds .w

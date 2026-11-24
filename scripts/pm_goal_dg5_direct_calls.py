@@ -31,6 +31,13 @@ entry is) only when it is a direct call in the census probe's sense (outside-pro
     under ``construction_calls``.
 Any other call runs the original method unchanged and unrecorded (a nested call stays nested).
 
+Round 2 (lead ruling 1124101552-8f55, items C1-C7; regression pm_goal_dg5_direct_calls_r2_selftest.py): case
+wrappers come from the explicit CASE_WRAPPERS list (C1); a runner's own verdict reads are harness and never
+record (C2, ``harness_calls``); construction matches a frame's own function, so an action returned by a
+factory-named generator records (C4); and a recorded direct call's parent run is the corpus execution, so
+registered entries nested in it still record as entries (C5, bridge DIRECT_PARENT) — wrapping a composite
+listed method must not swallow the entries (and corpus slots) inside it.
+
 The complete call needs a store to seal: the receiver's world or Storage, found as a census entry finds it, or
 (for a module function or a receiver without one) the first argument that is a TestOwnerStorage or holds one. The
 bridge runs every recorded call twice (a sealed child, then the parent) and restores only that root between them, so:
@@ -538,7 +545,8 @@ def _record_pure(family, key, original, hook, arguments, stores, action, outcome
     _count(family, 'no_store_recorded', key)
     try:
         return bridge.entry_call(case, label, family, checked, _empty_work(), world=None, arguments=arguments,
-                                 original=original, target=target(case, bridge.target_rows(case.get('expected')), label))
+                                 original=original, target=target(case, bridge.target_rows(case.get('expected')), label),
+                                 direct=True)   # C5: nested registered entries still record in the parent run
     finally:
         files = sorted(side.iterdir(), key=lambda f: int(f.name.split('-')[0]))
         child = pickle.loads(files[0].read_bytes()) if files else None
@@ -611,7 +619,8 @@ def _wrap(family, key, owner, name, raw):
         REPORTS[family]['recorded_calls'] = REPORTS[family].get('recorded_calls', 0) + 1
         return bridge.entry_call(case, label, family, lambda: original(*args, **kwargs), root, world=world,
                                  arguments=dict(receiver=receiver, args=rest, kwargs=kwargs), original=original,
-                                 target=target(case, bridge.target_rows(case.get('expected')), label))
+                                 target=target(case, bridge.target_rows(case.get('expected')), label),
+                                 direct=True)   # C5: nested registered entries still record in the parent run
     call._dg5_direct = True
     call._dg5_direct_key = key
     call._dg5_direct_family = family

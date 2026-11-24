@@ -46,7 +46,10 @@ def entries(cls, methods, family):
         def bind(original=original, entry=cls.__name__ + '.' + name):
             @functools.wraps(original)
             def call(self, *args, **kwargs):
-                if bridge.ACTIVE[0] or bridge.PARENT_CALL[0] or bridge.CASE[0] is None:
+                # Round 2 C5: inside a direct call's parent run this entry records as an entry (the
+                # collector-off behavior); inside a registered entry's parent run it stays nested.
+                if bridge.ACTIVE[0] or bridge.CASE[0] is None or \
+                        (bridge.PARENT_CALL[0] and not bridge.DIRECT_PARENT[0]):
                     return original(self, *args, **kwargs)
                 world = getattr(self, 'world', None) or getattr(self, 'w', None)
                 if world is None and hasattr(self, 'storage') and hasattr(self, 'recorder'):
