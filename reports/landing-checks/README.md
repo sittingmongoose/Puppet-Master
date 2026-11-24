@@ -105,11 +105,15 @@ against that baseline rule 2 would be off. The baseline recorded at `main` `75bc
 
 The three checks run at once, and each runs its own validators at once. `--jobs N` is one budget for
 the whole run, not one per check: the run makes N slot files in its scratch directory and every
-validator holds one for as long as its process runs, so at most N validators are alive at once.
-`--jobs` is capped at 8, and `--jobs 1` is the serial run, byte for byte. Before a validator starts,
-the run reads `MemAvailable`; while it is under `--memory-floor-gb` (6 GiB by default) the run waits
-and prints why, and a slot is not permission to start under the floor. A host without `/proc`
-enforces neither, which changes speed, never a result.
+validator (and every export) holds one for as long as its process runs, so at most N are alive at
+once. `--jobs` is capped at 8, and `--jobs 1` is the serial run, byte for byte. The memory floor
+limits concurrency, never progress: a validator always starts when none of the run is running, and a
+second or later one starts only while `MemAvailable` is at least `--memory-floor-gb` (6 GiB by
+default) plus `--memory-headroom-gb` (2 GiB) for each validator already running, after a
+`--start-settle-seconds` (10 s) settle since the last start so the reading includes the process just
+started. Starts are decided under one cross-process start lock; a held-back start says so once a
+minute and retries, and the subcheck's own timeout starts when it runs, after any wait. A host
+without `/proc` enforces none of it, which changes speed, never a result.
 
 The checker runs the target checkout's own `scripts/pm-plans-verify.py`. A target older than this
 option does not take `--jobs`, so the checker asks that verifier's `--help` once and omits the option
