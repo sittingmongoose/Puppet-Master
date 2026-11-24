@@ -94,4 +94,4 @@ html:not(#lgz):not(#lgy):not(#lgx) #panel-settings nav.workspace-tabs.rf-bar { b
 #panel-settings .o55g-content .rf-crew-models > .pm51-row > .pm51-row-control > .o55-msel { display: flex; width: 100%; }
 #panel-settings .o55g-content .rf-crew-models > .pm51-row > .pm51-row-control > .o55-msel > .o55-pick-trigger { width: 100%; }
 #panel-settings .o55g-content .rf-crew-models > .rf-crew-route > .pm51-row-control > .pm51-dd { display: flex; width: 100%; }
-#panel-settings .o55g-content .rf-crew-models > .rf-crew-route > .pm51-row-control > .pm51-dd > .pm51-dd-trigger { width: 100%; }
+#panel-settings .o55g-content .rf-crew-models > .rf-crew-route > .pm51-row-control > .pm51-dd > .pm51-dd-trigger { width: 100%; max-width: none; }
