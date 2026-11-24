@@ -17,6 +17,8 @@ Unit-shape mirrors of the same stacks live in pm_goal_dg5_direct_calls_selftest.
   c2_r_runner_code_of             C2: R1 run_case -> dg_r_world:code_of: no direct record
   c2_cf1_stale_negatives          C2: CF1 stale CASE through cf1 negatives() -> dg_cf1_world:default_values:
                                   no direct record under the stale case
+  c2_cf1_runner_refusal_code      C2: the real CF1 run() loop's own A.refusal_code(error) read after run_path
+                                  returned (no case wrapper, CASE still current): no direct record; case passes
   c3_cf12_backup_take             C3: CF3 cf12 BackupOwner.take(st, d/'unit'): not recorded (unsealable),
                                   no backup/dest_empty source failure, CF3 source exits 0
   c4_cb_inventory_unavailable     C4: DG5/DG5/cb/inventory_unavailable -> SourceOwnerMixin.inventory
@@ -52,7 +54,7 @@ import traceback
 
 ROOT = Path(__file__).resolve().parents[1]
 TRIALS = ['c1_adapter_source_step_factory', 'c2_s_runner_code_of', 'c2_ca_runner_refusal_code',
-          'c2_r_runner_code_of', 'c2_cf1_stale_negatives', 'c3_cf12_backup_take',
+          'c2_r_runner_code_of', 'c2_cf1_stale_negatives', 'c2_cf1_runner_refusal_code', 'c3_cf12_backup_take',
           'c4_cb_inventory_unavailable', 'c4_cb_image_unavailable', 'c4_cb_image_origin_unavailable',
           'c4_u5_expected_revision_float', 'c5_u_direct_inline_route', 'c5_ca_pre_latch_no_effect',
           'c6_s2_commit_start_killed_code', 'c7_s2_cast_bank_validate']
@@ -160,6 +162,15 @@ def checks():
         return (not bogus and got['corpus'] > 0 and got['case_restored'],
                 dict(bogus=bogus, corpus_rows=got['corpus'], case_restored=got['case_restored']))
 
+    def c2_cf1_runner():
+        got = run_inner('cf1runner')
+        refusal = [ln for ln in got['labels'] if ln.endswith('/direct/test_owner_adapters:refusal_code')]
+        case = [c for c in got['cases'] if c.get('id') == 'required_worknode_never_completed']
+        body = [ln for ln in got['labels'] if ln.endswith('/direct/dg_cf1_world:default_values')]
+        ok = not refusal and len(case) == 1 and case[0].get('status') == 'pass' and len(body) == 1
+        return ok, dict(refusal_code=refusal, case_status=[c.get('status') for c in case],
+                        default_values=body, records=len(got['labels']))
+
     def c3():
         run = run_sweep('cf12', 'pm_goal_dg5_cf', dict(PM_DG5_CF_SUITES='CF3', PM_DG5_GROUPS='cf12'))
         direct = labels(run, '/direct/BackupOwner.take')
@@ -247,6 +258,7 @@ def checks():
         'c2_ca_runner_refusal_code': c2_ca,
         'c2_r_runner_code_of': c2_r,
         'c2_cf1_stale_negatives': c2_cf1,
+        'c2_cf1_runner_refusal_code': c2_cf1_runner,
         'c3_cf12_backup_take': c3,
         'c4_cb_inventory_unavailable': cb('cb-inv', 'cb/inventory_unavailable', 'SourceOwnerMixin.inventory',
                                           'inventory/unavailable/goal_body'),
@@ -323,14 +335,50 @@ def inner_cf1():
     return 0
 
 
+def inner_cf1runner():
+    """C2 follow-up real case: the real CF1 run() loop with one real negative case. run()'s exception handler
+    reads A.refusal_code(error) after install_cf1.run_path returned; CASE is still the case that raised and no
+    case wrapper is on the stack, so the read must be harness, not a record. The corpus is narrowed to the real
+    entry and the loop's positive cases are short-circuited (they are not the target and each takes ~15 minutes
+    under the fork recorder); the loop itself, the negative case and the handler are unchanged."""
+    sys.path.insert(0, str(ROOT / 'scripts'))
+    import pm_goal_dg5_boundaries as bridge
+    import pm_goal_dg5_direct_calls as dc
+    import pm_goal_dg5_cf as cf_bridge
+    import pm_goal_dg_cf1_oracles as cf1
+    calls = []
+    bridge.entry_call = _recorder(bridge, calls)
+    cf_bridge.install_cf1()
+    dc.install(cf_bridge.FAMILY, {})
+    corpus = cf1.negatives()
+    entry = [c for c in corpus if c[1] == 'required_worknode_never_completed']
+    if len(entry) != 1:
+        raise RuntimeError('the real CF1 corpus no longer carries required_worknode_never_completed: %r' % (entry,))
+    cf1.negatives = lambda: list(entry)
+    real_run_path = cf1.run_path          # install_cf1's case wrapper
+    positives = {'positive_provisional_success', 'positive_verifying_source',
+                 'positive_document_set_present', 'positive_three_required_worknodes'}
+
+    def dispatch(work, **kw):
+        if Path(work).name in positives:
+            raise RuntimeError('trial: positive case skipped (the trial pins the runner verdict read)')
+        return real_run_path(work, **kw)
+
+    cf1.run_path = dispatch
+    calls[:] = []                       # only the case loop's records matter
+    result = cf1.run(only=['CF-03'])
+    print('INNER ' + json.dumps(dict(labels=calls, cases=result['cases'], positives_skipped=True), default=str))
+    return 0
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
     parser.add_argument('--out', type=Path)
     parser.add_argument('--only')
-    parser.add_argument('--inner', choices=('adapter', 'cf1'))
+    parser.add_argument('--inner', choices=('adapter', 'cf1', 'cf1runner'))
     args = parser.parse_args()
     if args.inner:
-        return inner_adapter() if args.inner == 'adapter' else inner_cf1()
+        return {'adapter': inner_adapter, 'cf1': inner_cf1, 'cf1runner': inner_cf1runner}[args.inner]()
     if args.out is None:
         parser.error('--out is required (except with --inner)')
     selected = [t for t in TRIALS if not args.only or t in args.only.split(',')]

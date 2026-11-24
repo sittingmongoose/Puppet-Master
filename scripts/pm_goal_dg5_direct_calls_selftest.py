@@ -142,6 +142,9 @@ ORACLES = textwrap.dedent('''
     def code_of(thing):
         return thing.listed(12)            # a verdict-read helper (the runners' code_of shape)
 
+    def run(thing):
+        return thing.listed(16)            # the suite runner's own listed read after the case (CF1 run():811)
+
     class Suite:
         def negative(self, fn):
             return fn()                    # the case runner: it calls the case body
@@ -232,7 +235,7 @@ TRIALS = ['listed_direct', 'listed_no_case', 'listed_nested_owner', 'listed_insi
           'oracle_factory_name', 'oracle_plain_helper', 'sibling_store_unsealable', 'stores_under_root',
           'closure_sibling', 'large_world_recorded', 'truncated_walk_refused',
           'pure_read_recorded', 'pure_refusal_recorded', 'owner_state_change', 'child_parent_differ', 'path_argument',
-          'dg5_module_factory', 'runner_direct_verdict', 'runner_code_of_verdict', 'sealed_dest_outside',
+          'dg5_module_factory', 'runner_direct_verdict', 'runner_code_of_verdict', 'runner_frame_read', 'sealed_dest_outside',
           'sealed_dest_inside', 'returned_lambda_action', 'inside_make_call', 'collector_frame_checker']
 
 
@@ -304,6 +307,9 @@ class Env:
             if wrappers is not None:
                 wrappers.update({('pm_goal_dg5_dcself_wrapper', 'case'),
                                  ('pm_goal_dg5_dcself_wrapper', 'case_verdict')})
+            runners = getattr(dc, 'RUNNER_FRAMES', None)    # C2 follow-up: a runner frame outside any wrapper
+            if runners is not None:
+                runners.add(('pm_goal_dg_dcself_oracles', 'run'))
             fresh(self.folder, METHODS)
             self.report = dc.install('selftest.family')
             self.store = storage.TestOwnerStorage.create(self.folder / 'store')
@@ -493,6 +499,15 @@ def checks(env):
             return not rec and counted == 1, dict(recorded=rec, harness_counted=counted)
         return check
 
+    def runner_frame_read():
+        # C2 follow-up (CF1 pm_goal_dg_cf1_oracles.run -> test_owner_adapters:refusal_code at :811, after
+        # install_cf1.run_path returned): the runner's own listed read, with CASE current and no case wrapper
+        # on the stack, is harness and is never recorded.
+        before = dict(report().get('harness_calls', {}))
+        rec = e.run(lambda: e.oracles.run(e.thing))
+        counted = report().get('harness_calls', {}).get('Thing.listed', 0) - before.get('Thing.listed', 0)
+        return not rec and counted == 1, dict(recorded=rec, harness_counted=counted)
+
     def sealed_dest_outside():
         # C3 (CF3 cf12 BackupOwner.take(st, d/'unit') outside the sealed <case>/storage root)
         before = report().get('unsealable_calls', {}).get('pm_goal_dg_dcself_owner:with_dest', 0)
@@ -550,6 +565,7 @@ def checks(env):
         'dg5_module_factory': dg5_module_factory,
         'runner_direct_verdict': runner_verdict(True),
         'runner_code_of_verdict': runner_verdict(False),
+        'runner_frame_read': runner_frame_read,
         'sealed_dest_outside': sealed_dest_outside,
         'sealed_dest_inside': sealed_dest_inside,
         'returned_lambda_action': through('body_returned_lambda', True),
