@@ -316991,6 +316991,20 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return w;
   }
   let composerMeasureCache=null;
+  // FO-156: a look can measure its fallback font before the final face loads.
+  // Neither a look/motion change nor font completion must resize the fixed-width
+  // tools row, so both invalidate the intrinsic width and use the resize sync.
+  function invalidateComposerMeasure(){
+    composerMeasureCache=null;
+    if(window.PM_LOOK_HOLD&&window.PM_LOOK_HOLD.after&&window.PM_LOOK_HOLD.after(invalidateComposerMeasure)) return;
+    if(chromeSyncFrame===null) chromeSyncFrame=requestAnimationFrame(runChromeSync);
+  }
+  new MutationObserver(invalidateComposerMeasure).observe(document.documentElement,
+    {attributes:true,attributeFilter:['data-theme','data-motion','data-o55-nier']});
+  if(document.fonts){
+    document.fonts.addEventListener('loadingdone',invalidateComposerMeasure);
+    document.fonts.addEventListener('loadingerror',invalidateComposerMeasure);
+  }
   function syncComposerCompact(){
     if(measuringCompact) return;
     // FO-143: only this chat's own composer (#pmRoot), never another surface's .composer-box on the same page
