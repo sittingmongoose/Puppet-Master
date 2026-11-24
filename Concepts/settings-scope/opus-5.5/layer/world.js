@@ -519,6 +519,11 @@
   function holds(id, v) {
     if (v === null || typeof v !== 'object') return true;
     if (!Array.isArray(v) && OWN_MAPS[id] && OWN_MAPS[id]()) return true;
+    /* FO-158 r5 (SSYS-059): a model saved with its own thinking depth is one { model, effort } value, and the shared
+       model picker holds it (feed.js splits it into the engine's model id + pm51.o55Depth). Without this, holds()
+       said false after any depth save, rows.js drew .psx-devview words + Change in the picker's place, and the
+       combobox was display:none — focus dropped and the row could not be opened again (FO-182, FO-224). */
+    if (!Array.isArray(v) && isModel(id) && typeof modelOf(v) === 'string') return true;
     const s = setting(id), c = s && s.control;
     if (!c) return true;
     return Array.isArray(v) ? HOLDS_LIST.includes(c) : HOLDS_MAP.includes(c);

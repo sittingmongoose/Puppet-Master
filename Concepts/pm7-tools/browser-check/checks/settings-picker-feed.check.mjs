@@ -111,7 +111,11 @@ export default async function (t) {
 			const h0 = P.W.history[0] || null;
 			const tb = document.querySelector('.detail-inspector [data-psx-line="project:tastebook"] .psx-wval');
 			const ev = document.querySelector('.detail-inspector [data-psx-line="everywhere:"] .psx-wval');
-			const rowSmall = document.querySelector(`#pm-settings-root .o55-msel[data-o55-msel="${CSS.escape(sid)}"] [role="combobox"] small`);
+			const rowEl = document.querySelector(`#pm-settings-root .o55-msel[data-o55-msel="${CSS.escape(sid)}"]`);
+			const rowCombo = rowEl ? rowEl.querySelector('[role="combobox"]') : null;
+			const rowSmall = rowCombo ? rowCombo.querySelector('small') : null;
+			const rowRect = rowCombo ? rowCombo.getBoundingClientRect() : null;
+			const rowSetting = rowEl ? rowEl.closest('.setting-row') : null;
 			return {
 				resolved: r,
 				model: P.modelOf(r.value),
@@ -128,10 +132,31 @@ export default async function (t) {
 				headAfterEffort: h0 && h0.after !== undefined ? P.effortOf(h0.after) : '',
 				tastebookLine: tb ? tb.innerText.trim() : null,
 				everywhereLine: ev ? ev.innerText.trim() : null,
-				rowSmall: rowSmall ? rowSmall.textContent.trim() : null,
+				rowSmall: rowSmall ? rowSmall.innerText.trim() : null,
+				rowPickerVisible: !!rowCombo && !!rowRect && rowRect.width > 0 && rowRect.height > 0 && getComputedStyle(rowCombo).display !== 'none',
+				rowDevView: rowSetting ? rowSetting.classList.contains('psx-devview') : null,
+				rowFocus: !!rowCombo && (document.activeElement === rowCombo || rowCombo.contains(document.activeElement)),
 				lastNote: P.lastNote || null
 			};
 		}, id);
+	}
+	// FO-158 r5: after a depth commit the row's shared picker must still be the control (no .psx-devview words in its
+	// place), its visible text must name the depth, and after a row-picker commit focus must be back on it. innerText
+	// reads the same on a display:none combobox, so visibility is asserted from the box and the row's class too.
+	async function checkRowPicker(st, effort, who, focusBack) {
+		await t.check(
+			`${who}: row picker stays visible after the depth save`,
+			st.rowPickerVisible === true && st.rowDevView === false,
+			JSON.stringify({ visible: st.rowPickerVisible, devview: st.rowDevView, rowSmall: st.rowSmall })
+		);
+		await t.check(
+			`${who}: row face shows ${effort} depth`,
+			new RegExp(`\\b${effort} depth\\b`, 'i').test(st.rowSmall || ''),
+			String(st.rowSmall)
+		);
+		if (focusBack) {
+			await t.check(`${who}: focus is back on the row picker`, st.rowFocus === true, JSON.stringify({ rowFocus: st.rowFocus }));
+		}
 	}
 
 	// (1) Same model, depth-only change for This project (Details picker)
@@ -178,6 +203,7 @@ export default async function (t) {
 		} else {
 			await t.check('depth-only (Details): Where it applies shows tastebook with Claude Opus 4 and High', false, 'no project:tastebook line in Details');
 		}
+		await checkRowPicker(a1, 'High', 'depth-only (Details)', false);
 		await t.shot('fo158-r4-depth-only', 'Same model depth-only change for tastebook in Details');
 	});
 
@@ -214,6 +240,7 @@ export default async function (t) {
 			/GPT-5/i.test(a2.tastebookLine || '') && /\bHigh\b/i.test(a2.tastebookLine || '') && JSON.stringify(a2.resolved.everywhere) === JSON.stringify(b2.resolved.everywhere) && a2.evEffort === '' && a2.everywhereLine === b2.everywhereLine,
 			JSON.stringify({ tastebookLine: a2.tastebookLine, everywhereLine: a2.everywhereLine, beforeLine: b2.everywhereLine, afterEv: a2.resolved.everywhere })
 		);
+		await checkRowPicker(a2, 'High', 'model+depth (Details)', false);
 		// Follow-up: change GPT-5 from High to Low on the same model
 		await f2.locator('.detail-inspector [data-action="o55-insp-pick"]').click();
 		await t.page.waitForTimeout(350);
@@ -237,6 +264,7 @@ export default async function (t) {
 			/GPT-5/i.test(a2b.tastebookLine || '') && /\bLow\b/i.test(a2b.tastebookLine || '') && a2b.everywhereLine === b2.everywhereLine && JSON.stringify(a2b.resolved.everywhere) === JSON.stringify(b2.resolved.everywhere),
 			JSON.stringify({ tastebookLine: a2b.tastebookLine, everywhereLine: a2b.everywhereLine, beforeLine: b2.everywhereLine })
 		);
+		await checkRowPicker(a2b, 'Low', 'model+depth follow-up (Details)', false);
 		await t.shot('fo158-r4-model-plus-depth', 'Model plus depth (GPT-5 High then Low) for tastebook in Details');
 	});
 
@@ -275,11 +303,7 @@ export default async function (t) {
 			JSON.stringify(a3.resolved.everywhere) === JSON.stringify(b3.resolved.everywhere) && a3.evEffort === '',
 			JSON.stringify({ beforeEv: b3.resolved.everywhere, afterEv: a3.resolved.everywhere, evEffort: a3.evEffort })
 		);
-		await t.check(
-			'depth-only (row picker): row face shows High depth',
-			/\bHigh depth\b/i.test(a3.rowSmall || ''),
-			String(a3.rowSmall)
-		);
+		await checkRowPicker(a3, 'High', 'depth-only (row picker)', true);
 		// Open Details via the row's own end button to verify Where it applies
 		const aboutBtn = f3.locator(`#pm-settings-root [id="setting-${ROW_ID}"] > .o55-about`).first();
 		await aboutBtn.scrollIntoViewIfNeeded();
