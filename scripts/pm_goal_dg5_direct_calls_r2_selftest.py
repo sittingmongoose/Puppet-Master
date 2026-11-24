@@ -79,8 +79,10 @@ def run_sweep(tag, source, extra_env):
                            '--source', source, '--out', str(base / 'out')],
                           cwd=ROOT, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
     out = base / 'out'
-    if proc.returncode != 0 or not (out / 'ledger.json.gz').is_file():
+    if not (out / 'ledger.json.gz').is_file():
         raise RuntimeError('sweep %s exit %s\n%s' % (tag, proc.returncode, proc.stdout[-2000:]))
+    # A failing family source (C3 at the base: CF3 exits 1 on backup/dest_empty) still writes its ledger;
+    # the trial asserts the exact records and failures, so the exit is data, not a harness crash.
     evidence = json.loads((out / 'source-evidence.json').read_text())
     run = dict(base=str(base), exit=proc.returncode,
                ledger=json.loads(gzip.open(out / 'ledger.json.gz', 'rt').read()),
