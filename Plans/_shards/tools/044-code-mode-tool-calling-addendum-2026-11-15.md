@@ -4,7 +4,7 @@ Source: `Plans/Tools.md`
 
 Source lines: L13358-L13657
 
-Source SHA256: `966ecf8358383adf92107a79e02d64ac4e70495f472cbbc0e4ec2986ca6f09bd`
+Source SHA256: `869f187c5eb124a966190638f150dcd6ffddca32a6729aa992fb21bccceccbce`
 
 ---
 
@@ -264,8 +264,8 @@ canonical_text: >-
   are the same either way, so Off never widens or narrows what a run may do. The row governs Puppet Master's Code
   Mode only; a provider's own code mode stays a provider-native feature under the provider-native feature policy.
   Off is a choice, not a fault: no surface presents a run with the row Off as a fallback, a warning or a degraded run.
-gui_related: false
-gui_classification_reason: Runtime meaning of one inventory row; Settings renders the row from the inventory under Settings_System.
+gui_related: true
+gui_classification_reason: Adds a visible, searchable Settings toggle and governs how its Off state is presented, as well as its runtime meaning.
 depends_on: [T-188, T-189]
 unblocks: []
 acceptance_criteria:

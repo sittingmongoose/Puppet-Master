@@ -6,14 +6,22 @@
 // a position on the page.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-code-mode-row.check.mjs --set page=<build>
 // --set size=1440x900 changes the window.
+import { readFileSync } from 'node:fs';
+
 const ID = 'code.execution.code-mode';
+/* the inventory row itself: the label and the complete sentence the page has to draw */
+const INV = JSON.parse(readFileSync(new URL('../../../../Plans/settings_inventory.json', import.meta.url), 'utf8')).settings.find((s) => s.id === ID);
+const norm = (s) => String(s || '').replace(/\s+/g, ' ').trim();
+/* the page draws inventory labels in sentence case (Settings_System §4), so "Code Mode" reads "Code mode" */
+const sameLabel = (drawn) => norm(drawn).toLowerCase() === norm(INV.label).toLowerCase();
 const ROW = (id) => {
 	const sw = [...document.querySelectorAll(`.toggle[role="switch"][data-setting="${id}"], [data-setting-id="${id}"] .toggle[role="switch"]`)]
 		.find((el) => el.getClientRects().length && el.checkVisibility());
 	if (!sw) return { drawn: false, known: [...document.querySelectorAll(`[data-setting-id="${id}"], [data-setting="${id}"]`)].length };
 	const row = sw.closest(`[data-setting-id="${id}"]`) || sw.closest('.setting-row, .pm51-row, .o55-scoped, li, tr') || sw.parentElement;
 	const r = sw.getBoundingClientRect();
-	return { drawn: true, checked: sw.getAttribute('aria-checked'), text: (row.innerText || '').replace(/\s+/g, ' ').trim().slice(0, 400),
+	const lines = (row.innerText || '').split('\n').map((s) => s.replace(/\s+/g, ' ').trim()).filter(Boolean);
+	return { drawn: true, checked: sw.getAttribute('aria-checked'), lines: lines.slice(0, 12), text: lines.join(' ').slice(0, 600),
 		switches: row.querySelectorAll('.toggle[role="switch"]').length, inView: r.top >= 0 && r.bottom <= innerHeight, at: [Math.round(r.left), Math.round(r.top)] };
 };
 
@@ -31,10 +39,11 @@ export default async function (t) {
 	await input.type('Code Mode', { delay: 15 });
 	const results = f.locator('.search-results[data-mode="rail"] .search-result');
 	await results.first().waitFor({ state: 'visible', timeout: 5000 });
-	const titles = await results.evaluateAll((els) => els.map((el) => (el.innerText || '').replace(/\s+/g, ' ').trim()));
-	t.log(`Settings Search "Code Mode" lists: ${titles.slice(0, 8).join(' | ')}`);
-	const at = titles.findIndex((s) => /\bCode mode\b/i.test(s));
-	await t.check('Settings Search for "Code Mode" lists a result named Code Mode', at >= 0, titles.slice(0, 8).join(' | '));
+	/* a result's name is its first drawn line; the lines under it are where it lives and its help */
+	const titles = await results.evaluateAll((els) => els.map((el) => ((el.innerText || '').split('\n').map((s) => s.replace(/\s+/g, ' ').trim()).filter(Boolean)[0] || '')));
+	t.log(`Settings Search "Code Mode" lists results named: ${titles.slice(0, 8).join(' | ')}`);
+	const at = titles.findIndex(sameLabel);
+	await t.check('Settings Search for "Code Mode" lists a result whose name is the inventory label', at >= 0, titles.slice(0, 8).join(' | '));
 	if (at < 0) return;
 	await results.nth(at).click();
 	await t.settle();
@@ -44,8 +53,8 @@ export default async function (t) {
 	t.log(`after the search: ${JSON.stringify(row)}`);
 	await t.check('the result opens a page that draws the Code Mode row with a switch', row.drawn === true, JSON.stringify(row));
 	if (!row.drawn) return;
-	/* the page draws inventory labels in sentence case (Settings_System §4), so the label reads "Code mode" */
-	await t.check('the row shows its label, Code Mode, and the inventory sentence', /\bCode mode\b/i.test(row.text) && /several tools in one step/.test(row.text), row.text);
+	await t.check('the row\'s first line is the inventory label', sameLabel(row.lines[0]), JSON.stringify(row.lines));
+	await t.check('the row draws the inventory\'s complete sentence, as one of its lines', row.lines.includes(norm(INV.desc)), JSON.stringify(row.lines));
 	await t.check('the row has exactly one switch', row.switches === 1, String(row.switches));
 	await t.check('the switch starts On, the inventory default', row.checked === 'true', String(row.checked));
 
