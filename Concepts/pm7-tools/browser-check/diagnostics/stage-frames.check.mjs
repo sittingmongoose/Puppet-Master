@@ -27,8 +27,10 @@
 // Welcome (welcome-awake), is woken first by a real pointer journey. Screens are walked in an order that adds and removes props (0, 6, 1, 4, 1,
 // 1-2 then 0).
 // Transition variants (TOOLS-STAGEREST-K1: frozen end states alone pass a cache that misses an input it never applies):
-// textsize (a font-size and line-height stylesheet on the box, as the Text size setting restates it) and resized (the
-// layout change) both capture in the banner layout at 740x900, where a stale NieR box changes the drawing, and restore
+// textsize (the Text size setting restated on the real route — OM18-3: Escape closes the window, the host setter changes
+// general.visual.font-size / line-height, the resume chip reopens it; a font change is unreachable while the window is
+// open) and resized (the layout change) both capture in the banner layout at 740x900, where a stale NieR box changes the
+// drawing, and restore
 // 1920x1080 after; motion (the app's Reduced Motion toggled live and back before the freeze). Ask for them in
 // --set variants=; the default walk is unchanged, so a default run still compares with an archived matrix. A live look
 // switch is covered by perf-onb-rest's draw oracle (TOOLS-STAGEREST-K2), which judges it at one stage time within a run.
@@ -169,6 +171,26 @@ const THAW = (closeTip) => {
 	}
 };
 
+// OM18-3: the real Text-size route. The Text size setting lives outside the onboarding window, and everything outside
+// the window is inert while it is open, so a font change is reachable only with the window closed: Escape closes it,
+// the host setter the Settings rows call (PM12_KIMI.setSettingFromHost) restates general.visual.font-size / line-height
+// (the #o55-look-scale sheet), and the resume chip reopens the window with a real press. fs/lh 14/1.4 are the defaults
+// (the sheet is removed). The caller settles and consumes the post-reopen remeasure before the freeze.
+const textSizeRoute = async (t, f, fs, lh) => {
+	await t.page.keyboard.press('Escape');
+	await f.waitForFunction(() => !window.O55.S.open, null, { timeout: 5000 }).catch(() => {});
+	await f.evaluate(([a, b]) => { window.PM12_KIMI.setSettingFromHost('general.visual.font-size', a); window.PM12_KIMI.setSettingFromHost('general.visual.line-height', b); }, [fs, lh]);
+	const wantSheet = !(fs === 14 && lh === 1.4);
+	await f.waitForFunction((w) => !!document.getElementById('o55-look-scale') === w, wantSheet, { timeout: 5000 }).catch(() => {});
+	// reopen by the resume chip with a real press; the reopen is async, and if the chip is gone or the press did not
+	// take (focus left the window by a freeze/thaw), fall back to the host open so the route always ends open
+	await f.waitForFunction(() => !!document.querySelector('#o55-resume [data-o55-chip="resume"]'), null, { timeout: 3000 }).catch(() => {});
+	const chip = await f.evaluate(() => { const b = document.querySelector('#o55-resume [data-o55-chip="resume"]'); if (!b) return null; const q = b.getBoundingClientRect(); return { x: q.left + q.width / 2, y: q.top + q.height / 2 }; });
+	if (chip) { await t.page.mouse.move(chip.x, chip.y, { steps: 4 }); await t.page.mouse.click(chip.x, chip.y); }
+	const opened = await f.waitForFunction(() => !!window.O55.S.open && !!document.querySelector('#pm-o55-onboarding .o55-win'), null, { timeout: 3000 }).then(() => true, () => false);
+	if (!opened) { await f.evaluate(() => window.O55.ui.open({})); await f.waitForFunction(() => !!window.O55.S.open && !!document.querySelector('#pm-o55-onboarding .o55-win'), null, { timeout: 5000 }).catch(() => {}); }
+};
+
 // The stage's DOM: elements with sorted attributes, text, ids renamed in order of first appearance
 // (exported for tools/stage-frames-compare.selftest.mjs, which runs it on a stub stage)
 export const DOM = () => {
@@ -256,9 +278,9 @@ export default async function (t) {
 					await t.viewport(740, 900);
 					await t.page.waitForTimeout(1200);
 					await f.waitForFunction(SETTLED, null, { timeout: 10000, polling: 250 }).catch(() => {});
-					/* H2: consume any pending post-build remeasureAt (58-rig.js build() sets now()+0.9) BEFORE #sf-textsize
-					   is injected; under st.still() (Reduced Motion or lowResource), loop() parks before 0.9 s and FREEZE()'s
-					   kick() would otherwise run measure() after the stylesheet and heal a stale nierBox */
+				/* H2: consume any pending post-build remeasureAt (58-rig.js build() sets now()+0.9); under st.still()
+				   (Reduced Motion or lowResource), loop() parks before 0.9 s and FREEZE()'s kick() would otherwise run
+				   measure() after the transition input and heal a stale nierBox */
 					await f.waitForFunction(() => {
 						const host = document.querySelector('#pm-o55-onboarding .o55-stage'), st = host && host.__pipStage;
 						if (!st || !st.remeasureAt) return true;
@@ -268,9 +290,16 @@ export default async function (t) {
 					const lr = await f.evaluate(() => ({ lowResource: !!(window.O55 && O55.motion && O55.motion.lowResource), remeasureAt: document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage?.remeasureAt || 0 }));
 					if (lr.lowResource || lr.remeasureAt) t.log(`${look} ${name} ${v}: pre-input lowResource=${lr.lowResource} remeasureAt=${lr.remeasureAt}`);
 				}
-				// the stylesheet after the resize is settled: a later map change would re-measure the box and heal the
-				// font staleness this variant exists to catch (the resize itself is the resized variant's input)
-				if (v === 'textsize') { await f.evaluate(() => { const s = document.createElement('style'); s.id = 'sf-textsize'; s.textContent = '#pm-o55-onboarding .pst-bubble{font-size:17px !important;line-height:1.7 !important}'; document.head.appendChild(s); }); await t.page.waitForTimeout(400); }
+				// OM18-3: the font change reaches the stage only on the real route — the window closed (Escape), the Text
+				// size setting restated by the host setter, the window reopened by the resume chip. Injecting a stylesheet
+				// while the window is open (the old #sf-textsize) is a state no real input reaches. The reopen rebuilds the
+				// stage, so settle and consume its post-build remeasure before the freeze (H2).
+				if (v === 'textsize') {
+					await textSizeRoute(t, f, 17, 1.7);
+					await t.page.waitForTimeout(800);
+					await f.waitForFunction(SETTLED, null, { timeout: 10000, polling: 250 }).catch(() => {});
+					await f.waitForFunction(() => { const host = document.querySelector('#pm-o55-onboarding .o55-stage'), st = host && host.__pipStage; if (!st || !st.remeasureAt) return true; if (typeof st.kick === 'function') st.kick(); return false; }, null, { timeout: 5000, polling: 100 }).catch(() => {});
+				}
 				if (v === 'motion') {
 					const readMotion = () => {
 						const host = document.querySelector('#pm-o55-onboarding .o55-stage'), st = host && host.__pipStage;
@@ -292,7 +321,7 @@ export default async function (t) {
 					await t.check(`${look} ${name} ${v}: stage reduced state matches app and browser after restore`, back.app === wantBack && back.stage === back.app && back.dom === (back.app ? '1' : '0') && (!back.app || (back.still && back.raf === 0)), JSON.stringify(back));
 				}
 				const undo = async () => {
-					if (v === 'textsize') await f.evaluate(() => { const s = document.getElementById('sf-textsize'); if (s) s.remove(); });
+					if (v === 'textsize') await textSizeRoute(t, f, 14, 1.4); // restore the default on the same reachable route
 					if (v === 'textsize' || v === 'resized') { await t.viewport(W, H); await t.page.waitForTimeout(1200); await f.waitForFunction(SETTLED, null, { timeout: 10000, polling: 250 }).catch(() => {}); }
 				};
 				/* (live=1: no freeze at all, the stage as it is at rest, swaying; for how a part is drawn at rest, not for a
@@ -317,8 +346,12 @@ export default async function (t) {
 				index.push({ look, file, screen: name, variant: v, ...info });
 				if (!live) await f.evaluate(THAW, v === 'tip'); else if (v === 'tip') await f.evaluate(() => { document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage.tip(null); });
 				await undo();
+				// NM18-L2: the quiet variant put the screen's line away (say('') clears st.saying); restore it whole and
+				// at once (the product's sayKept) so the next variant and screen see the line, not a muted stage. Before,
+				// only a following textsize/resized (setLayout -> direct) or the unfrozen capture restored it by accident.
+				if (v === 'quiet' && lastLine) await f.evaluate((line) => { const st = document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage; if (st) { st.saying = line; if (typeof st.sayKept === 'function') st.sayKept(line); else st.say(line, null, true); } }, lastLine);
 			}
-			// the screen's own line back for the next screen (the quiet variant put it away)
+			// (the quiet variant's line is restored above, right after its capture; the next screen's go() says its own)
 		}
 		/* one unfrozen capture of the last screen: the clock running and the animations allowed, as a person sees it */
 		const last = plan.find((e) => e.look === look && e.unfrozen);
