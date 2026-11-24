@@ -211,15 +211,16 @@
      comes from" differs from the inventory's, and a value pushed from the world is not a change made here) */
   /* a change on its way: the base page holds a value the layer hasn't routed yet (the world takes it when its save
      reports back). Until then Changed stays as the base page drew it from the control's value */
-  let engSt = null;   // the base page's settings, read once per task (getState copies the whole state)
-  function engineSettings() {
-    if (!engSt) { try { const K = W.PM12_KIMI; engSt = (K && K.getState().settings) || {}; } catch (e) { engSt = {}; } Promise.resolve().then(() => { engSt = null; }); }
-    return engSt;
+  let engFull = null;   // the base page's state, read once per task (getState copies the whole state)
+  function engineState() {
+    if (!engFull) { try { const K = W.PM12_KIMI; engFull = (K && K.getState()) || {}; } catch (e) { engFull = {}; } Promise.resolve().then(() => { engFull = null; }); }
+    return engFull;
   }
   function inFlight(id) {
     if (!PSX.last || !Object.prototype.hasOwnProperty.call(PSX.last, id)) return false;
-    const st = engineSettings();
-    return JSON.stringify(st[id]) !== JSON.stringify(PSX.last[id]);
+    const full = engineState(), st = full.settings || {}, depths = (full.pm51 && full.pm51.o55Depth) || {};
+    const cur = PSX.feed && PSX.feed.engineRead ? PSX.feed.engineRead(id, st, depths) : st[id];
+    return JSON.stringify(cur) !== JSON.stringify(PSX.last[id]);
   }
   function syncChanged(row, id, changed, demo) {
     if (!demo || row.classList.contains('o55-field')) return;

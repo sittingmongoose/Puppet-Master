@@ -193,26 +193,45 @@
     IDS.push(id); ENGINE_IDS.push(id);
     return true;
   }
+  /* FO-158 r4 (SSYS-059): a model and its thinking depth share one scope. The base page stores the model id in
+     state.settings[id] and its depth beside it in state.pm51.o55Depth[id] ({ model, effort }); the layer reads and
+     writes both together as one atomic value (plain string when effort is empty, { model, effort } when set). */
+  const engineDepths = (fullState) => (fullState && fullState.pm51 && fullState.pm51.o55Depth) || {};
+  function engineRead(id, st, depths) {
+    const raw = st[id];
+    if (PSX.isModel && PSX.isModel(id) && typeof raw === 'string' && raw) {
+      const d = depths && depths[id];
+      if (d && String(d.model) === raw && d.effort) return { model: raw, effort: String(d.effort) };
+    }
+    return clone(raw);
+  }
+  function writeEngineDepth(id, model, effort) {
+    if (!W.PM51 || typeof W.PM51.s !== 'function') return;
+    const s = W.PM51.s(); if (!s) return;
+    const map = s.o55Depth || (s.o55Depth = {});
+    if (effort && model) map[id] = { model: String(model), effort: String(effort) };
+    else delete map[id];
+  }
   function adoptAll() {
     const K = kimi(); if (!K) return 0;
     PSX.REF = {};
     Object.values((W.PM12_REFERENCE && W.PM12_REFERENCE.byCat) || {}).forEach((c) => (c.settings || []).forEach((r) => { PSX.REF[r.id] = r; }));
-    const st = K.getState().settings || {};
+    const fullState = K.getState(), st = fullState.settings || {}, depths = engineDepths(fullState);
     let n = 0;
-    Object.keys(PSX.REF).forEach((id) => { if (!DEF[id] && adopt(id, st[id])) n++; });
+    Object.keys(PSX.REF).forEach((id) => { if (!DEF[id] && adopt(id, engineRead(id, st, depths))) n++; });
     // rows Settings draws that the reference doesn't list (Animation speed, Accent color, Autosave and the rest): the same
     // rule, decided from the id and the control (Jared #8: none of them may keep a different Where it applies)
     const placed = (W.PM51 && W.PM51.placement && W.PM51.placement.byId) || {};
-    Object.keys(placed).forEach((id) => { if (DEF[id] || PSX.REF[id]) return; const s0 = W.PM51.setting ? W.PM51.setting(id) : null; if (!s0 || /^(resource|action)$/.test(String(s0.control || ''))) return; if (adopt(id, st[id])) n++; });
+    Object.keys(placed).forEach((id) => { if (DEF[id] || PSX.REF[id]) return; const s0 = W.PM51.setting ? W.PM51.setting(id) : null; if (!s0 || /^(resource|action)$/.test(String(s0.control || ''))) return; if (adopt(id, engineRead(id, st, depths))) n++; });
     PSX.adopted = n;
     return n;
   }
-  PSX.adopt = (id) => { if (DEF[id]) return true; const K = kimi(); const st = K ? K.getState().settings || {} : {}; return adopt(id, st[id]); };
+  PSX.adopt = (id) => { if (DEF[id]) return true; const K = kimi(), fullState = K ? K.getState() : null; return adopt(id, fullState ? engineRead(id, fullState.settings || {}, engineDepths(fullState)) : undefined); };
   const NONE = 'psx-none';      // Concept mechanic: the engine needs a project to accept writes; the product never uses one
 
   /* ------------------------------------------------------------------ the values one context feeds */
   function engineValues(ctx) {
-    const out = {}, changed = {};
+    const out = {}, changed = {}, depths = {};
     /* looking at another device's screen (Jared #11): your own screen keeps painting with your own screen values, so
        nothing on it moves; the rows show that device's values themselves (rows.js, psx-devval) */
     const actorCtx = ctx && ctx.device && ctx.device !== S.actor ? Object.assign({}, ctx, { device: S.actor }) : null;
@@ -221,13 +240,18 @@
       const r = PSX.resolve(id, actorCtx && DEF[id].screen ? actorCtx : ctx);
       let v = r.notOffered ? DEFAULTS[id] : (r.asked !== undefined ? r.asked : r.value);
       if (id === 'general.visual.theme') { const pair = PSX.themePair(v); Object.assign(out, pair); changed['general.visual.theme'] = r.changed; changed['general.visual.theme-mode'] = r.changed; return; }
-      // a model chosen with its own thinking depth is one atomic value in the world; the engine's row keeps the model
-      if (PSX.isModel && PSX.isModel(id) && v && typeof v === 'object' && !Array.isArray(v)) v = v.model;
+      // a model chosen with its own thinking depth is one atomic value in the world; the engine keeps the model id in
+      // settings[id] and its depth beside it in pm51.o55Depth[id]
+      if (PSX.isModel && PSX.isModel(id) && v && typeof v === 'object' && !Array.isArray(v)) {
+        const effort = PSX.effortOf ? PSX.effortOf(v) : (v.effort || '');
+        v = PSX.modelOf ? PSX.modelOf(v) : v.model;
+        if (effort && typeof v === 'string' && v) depths[id] = { model: v, effort: String(effort) };
+      }
       // a value the page's own control can't hold (a map for a text box) is never put into it: the row says it in words
       else if (!PSX.holds(id, v)) return;
       out[id] = clone(v); changed[id] = !!r.changed && !r.notOffered;
     });
-    return { settings: out, changed };
+    return { settings: out, changed, depths };
   }
 
   /* each project's own engine state that the layer doesn't model (every other setting, which page is open, the
@@ -250,12 +274,23 @@
   function snapshotFor(pid, ctx) {
     const vals = engineValues(Object.assign({}, ctx, { project: pid === NONE ? 'none' : pid }));
     const rest = REST[pid] || { settings: {}, changed: {} };
-    return Object.assign(clone(uiBase || {}), {
+    const snap = Object.assign(clone(uiBase || {}), {
       label: projectName(pid),
       settings: Object.assign({}, rest.settings, vals.settings),
       changed: Object.assign({}, rest.changed, vals.changed),
       detailSetting: null
     });
+    if (Object.keys(vals.depths).length || (snap.pm51 && snap.pm51.o55Depth)) {
+      snap.pm51 = Object.assign({}, snap.pm51 || {});
+      const dmap = Object.assign({}, snap.pm51.o55Depth || {});
+      ENGINE_IDS.forEach((id) => {
+        if (!(PSX.isModel && PSX.isModel(id))) return;
+        if (vals.depths[id]) dmap[id] = clone(vals.depths[id]);
+        else delete dmap[id];
+      });
+      snap.pm51.o55Depth = dmap;
+    }
+    return snap;
   }
   function writeSnapshots() {
     const snaps = W.PM_SETTINGS_PROJECT_SNAPSHOTS = W.PM_SETTINGS_PROJECT_SNAPSHOTS || {};
@@ -268,8 +303,8 @@
   PSX.last = {};
   function remember() {
     const K = kimi(); if (!K) return;
-    const st = K.getState().settings || {};
-    PSX.last = {}; ENGINE_IDS.forEach((id) => { PSX.last[id] = clone(st[id]); });
+    const fullState = K.getState(), st = fullState.settings || {}, depths = engineDepths(fullState);
+    PSX.last = {}; ENGINE_IDS.forEach((id) => { PSX.last[id] = engineRead(id, st, depths); });
   }
   function setTitle(pid) {
     const lab = D.getElementById('projectMenuLabel');
@@ -282,12 +317,18 @@
      which the layer writes at each feed. A reload the layer didn't start (the page's own, a check's) read the copy from
      the last feed, so whatever had changed since without a routed value was lost: a model's thinking depth (the page
      keeps it beside the value, in its own state: state.pm51.o55Depth), and the rows and page state the layer doesn't
-     model. Any reload of the project on show now first refreshes the copy from the engine's live state. */
+     model. Any reload of the project on show now first flushes any pending routed diff and refreshes the copy from the
+     engine's live state. */
   function guardReload(K) {
     if (!K || K.__psxReload || typeof K.reloadProject !== 'function') return;
     const reload = K.reloadProject;
     K.reloadProject = function () {
-      if (!feeding && engineProject() && engineProject() === W.PM_ACTIVE_PROJECT_ID) { try { captureCurrent(); writeSnapshots(); } catch (e) { /* the copy as it was */ } }
+      if (!feeding && engineProject() && engineProject() === W.PM_ACTIVE_PROJECT_ID) {
+        try {
+          if (diffQueued || diffTimer) { clearTimeout(diffTimer); diffTimer = 0; diff(); }
+          captureCurrent(); writeSnapshots();
+        } catch (e) { /* the copy as it was */ }
+      }
       return reload.apply(this, arguments);
     };
     K.__psxReload = true;
@@ -312,12 +353,21 @@
     } finally { feeding--; }
     return true;
   }
-  /* after a reload, every demo id must hold its resolved value; push any the engine ignored (6.2 step 3) */
+  /* after a reload, every demo id must hold its resolved value (and depth); push any the engine ignored (6.2 step 3) */
   function verify() {
     const K = kimi(); if (!K) return 0;
-    const want = engineValues(S.ctx).settings, st = K.getState().settings || {};
+    const want = engineValues(S.ctx), fullState = K.getState(), st = fullState.settings || {}, depths = engineDepths(fullState);
     let n = 0;
-    Object.keys(want).forEach((id) => { if (!same(st[id], want[id])) { K.setSettingFromHost(id, want[id], false, false); n++; } });
+    Object.keys(want.settings).forEach((id) => {
+      const isM = PSX.isModel && PSX.isModel(id);
+      const wantDepth = isM ? (want.depths[id] || null) : null;
+      const curDepth = isM && depths[id] && depths[id].effort ? { model: String(depths[id].model || ''), effort: String(depths[id].effort) } : null;
+      if (!same(st[id], want.settings[id]) || !same(curDepth, wantDepth)) {
+        if (isM) writeEngineDepth(id, want.settings[id], wantDepth ? wantDepth.effort : '');
+        K.setSettingFromHost(id, want.settings[id], false, false);
+        n++;
+      }
+    });
     if (n) K.renderApp({ soft: true });
     PSX.feedPushed = n;
     return n;
@@ -330,9 +380,19 @@
     let n = 0;
     try {
       writeSnapshots();
-      const want = engineValues(S.ctx).settings, st = K.getState().settings || {};
-      const ids = Object.keys(want).filter((id) => !same(st[id], want[id]));
-      ids.forEach((id) => { K.setSettingFromHost(id, want[id], false, false); n++; });
+      const want = engineValues(S.ctx), fullState = K.getState(), st = fullState.settings || {}, depths = engineDepths(fullState);
+      const ids = Object.keys(want.settings).filter((id) => {
+        if (!same(st[id], want.settings[id])) return true;
+        if (!(PSX.isModel && PSX.isModel(id))) return false;
+        const wantDepth = want.depths[id] || null;
+        const curDepth = depths[id] && depths[id].effort ? { model: String(depths[id].model || ''), effort: String(depths[id].effort) } : null;
+        return !same(curDepth, wantDepth);
+      });
+      ids.forEach((id) => {
+        if (PSX.isModel && PSX.isModel(id)) writeEngineDepth(id, want.settings[id], want.depths[id] ? want.depths[id].effort : '');
+        K.setSettingFromHost(id, want.settings[id], false, false);
+        n++;
+      });
       if (ids.includes('general.visual.theme') || ids.includes('general.visual.theme-mode')) { try { W.PM7_SETTINGS_TOME.applyPaint(K.getState()); } catch (e) { /* paint later */ } }
       ids.forEach((id) => { try { if (W.PM51 && W.PM51.refreshSavedRow) W.PM51.refreshSavedRow(id); } catch (e) { /* the row is on another page */ } });
       remember();
@@ -347,14 +407,15 @@
   }).observe(H, { attributes: true, attributeFilter: ['data-motion'] });
 
   /* ------------------------------------------------------------------ the router (6.3) */
-  let diffTimer = 0, inputTimer = 0;
+  let diffTimer = 0, inputTimer = 0, diffQueued = false;
   const router = { source: null, pendingToasts: [] };
   function schedule(src, target) {
     if (feeding) return;
     if (src) router.source = src;
     if (target) router.target = target;
+    diffQueued = true;
     clearTimeout(diffTimer);
-    requestAnimationFrame(() => { diffTimer = setTimeout(diff, 60); });
+    requestAnimationFrame(() => { if (!diffQueued) return; diffTimer = setTimeout(diff, 60); });
   }
   function hookPopouts() {
     if (D.__psxPopRouted) return; D.__psxPopRouted = true;
@@ -392,19 +453,22 @@
     return !!t.closest(`[id="setting-${q}"], [data-setting="${q}"], [data-setting-id="${q}"], ${FILL_SAFE}`);
   }
   function diff() {
+    diffQueued = false; clearTimeout(diffTimer); diffTimer = 0;
     const K = kimi(); if (!K || feeding) return;
-    const st = K.getState().settings || {};
-    let moved = ENGINE_IDS.filter((id) => !same(st[id], PSX.last[id]));
+    const fullState = K.getState(), st = fullState.settings || {}, depths = engineDepths(fullState);
+    const cur = {};
+    ENGINE_IDS.forEach((id) => { cur[id] = engineRead(id, st, depths); });
+    let moved = ENGINE_IDS.filter((id) => !same(cur[id], PSX.last[id]));
     const tg = router.target; router.target = null;
-    const fills = moved.filter((id) => st[id] !== undefined && !touched(id, tg) && (PSX.last[id] === undefined || isNav(tg)));
+    const fills = moved.filter((id) => cur[id] !== undefined && !touched(id, tg) && (PSX.last[id] === undefined || isNav(tg)));
     if (fills.length) {
       /* the fill is the page's own starting value: a row with no own value anywhere starts there (its default); a row
          with one keeps it, and the next feed puts it back on the page */
       fills.forEach((id) => {
-        PSX.last[id] = clone(st[id]);
+        PSX.last[id] = clone(cur[id]);
         if (DEF[id] && DEF[id].demoRow) return;
         const r = PSX.resolve(id, S.ctx);
-        if (DEFAULTS[id] === undefined || (r && r.from && r.from.level === 'default' && !(r.varies || []).length)) DEFAULTS[id] = clone(st[id]);
+        if (DEFAULTS[id] === undefined || (r && r.from && r.from.level === 'default' && !(r.varies || []).length)) DEFAULTS[id] = clone(cur[id]);
       });
       PSX.fills = (PSX.fills || []).concat(fills);
       moved = moved.filter((id) => !fills.includes(id));
@@ -415,7 +479,7 @@
     const ids = moved.filter((id) => id !== 'general.visual.theme-mode');
     if (moved.includes('general.visual.theme-mode') && !ids.includes('general.visual.theme')) ids.push('general.visual.theme');
     ids.forEach((id) => {
-      let nv = id === 'general.visual.theme' ? themeOf(st) : clone(st[id]);
+      let nv = id === 'general.visual.theme' ? themeOf(st) : clone(cur[id]);
       /* the page went back to its own default for a row whose default the layer takes from Plans' inventory (Model
          nicknames: removing the last line restores the page's old "", the inventory's default is {}): that is the
          row's default, so the place's own value is taken away rather than kept as "" */
@@ -622,5 +686,5 @@
   };
 
   PSX.on('world', () => { if (!feeding) PSX.emit('redraw'); });
-  Object.assign(PSX, { offLadder: { look: SKIP, credential: CRED, thing: OWNER_IDS, owned: REVIEWED.ownerView, library: REVIEWED.libraryAction }, ownerHeld, feed: { classify, heuristic, placesOf, full, push, verify, writeSnapshots, engineValues, wrapNotify, watchTitleMenu, hook, captureCurrent, adoptAll, diff, ENGINE_IDS, NONE }, router, route, commit, sayWhere, onlyFor, undoTx, targetFor });
+  Object.assign(PSX, { offLadder: { look: SKIP, credential: CRED, thing: OWNER_IDS, owned: REVIEWED.ownerView, library: REVIEWED.libraryAction }, ownerHeld, feed: { classify, heuristic, placesOf, full, push, verify, writeSnapshots, engineValues, engineRead, wrapNotify, watchTitleMenu, hook, captureCurrent, adoptAll, diff, ENGINE_IDS, NONE }, router, route, commit, sayWhere, onlyFor, undoTx, targetFor });
 })(window);

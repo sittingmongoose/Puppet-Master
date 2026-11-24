@@ -88,4 +88,210 @@ export default async function (t) {
 	await t.check('a place\'s Change opens its model picker in Where it applies', placed.editorOpen, JSON.stringify(placed));
 	await t.check('Choosing here changes stays out of Where it applies after a place\'s Change', placed.target && !placed.inWhere, JSON.stringify(placed));
 	if (!placed.target || placed.inWhere) await t.shot('fo158-target-in-where', 'Choosing here changes moved into Where it applies');
+
+	// FO-158 r4 (astra-max-19): model and thinking depth share one scope (SSYS-059).
+	// Helper: qualify and press a named depth option in the open shared picker popup.
+	async function pressDepth(frame, effort, who) {
+		const opt = frame.locator(`.o55-pick-pop.is-open [role="listbox"][aria-label^="Thinking depth"] [role="option"][data-effort="${effort}"]`);
+		const n = await opt.count();
+		const vis = n === 1 && await opt.first().isVisible().catch(() => false);
+		await t.check(`${who}: depth option "${effort}" is shown and clickable`, n === 1 && vis, `count=${n}, visible=${vis}`);
+		if (n !== 1 || !vis) return false;
+		await opt.first().click();
+		await t.page.waitForTimeout(250);
+		const closed = await frame.evaluate(() => !document.querySelector('.o55-pick-pop.is-open'));
+		await t.check(`${who}: pressing "${effort}" depth closes the picker`, closed);
+		return closed;
+	}
+	async function readModelState(frame, id) {
+		return frame.evaluate((sid) => {
+			const P = window.PSX;
+			const r = P.resolve(sid, P.S.ctx);
+			const own = P.getAt(P.W, 'project', 'tastebook', sid);
+			const h0 = P.W.history[0] || null;
+			const tb = document.querySelector('.detail-inspector [data-psx-line="project:tastebook"] .psx-wval');
+			const ev = document.querySelector('.detail-inspector [data-psx-line="everywhere:"] .psx-wval');
+			const rowSmall = document.querySelector(`#pm-settings-root .o55-msel[data-o55-msel="${CSS.escape(sid)}"] [role="combobox"] small`);
+			return {
+				resolved: r,
+				model: P.modelOf(r.value),
+				effort: P.effortOf(r.value),
+				ownModel: own === undefined ? null : P.modelOf(own),
+				ownEffort: own === undefined ? '' : P.effortOf(own),
+				evModel: r.everywhere === undefined ? undefined : P.modelOf(r.everywhere),
+				evEffort: r.everywhere === undefined ? '' : P.effortOf(r.everywhere),
+				historyLen: P.W.history.length,
+				headHist: h0,
+				headBeforeModel: h0 && h0.before !== undefined ? P.modelOf(h0.before) : undefined,
+				headBeforeEffort: h0 && h0.before !== undefined ? P.effortOf(h0.before) : '',
+				headAfterModel: h0 && h0.after !== undefined ? P.modelOf(h0.after) : undefined,
+				headAfterEffort: h0 && h0.after !== undefined ? P.effortOf(h0.after) : '',
+				tastebookLine: tb ? tb.innerText.trim() : null,
+				everywhereLine: ev ? ev.innerText.trim() : null,
+				rowSmall: rowSmall ? rowSmall.textContent.trim() : null,
+				lastNote: P.lastNote || null
+			};
+		}, id);
+	}
+
+	// (1) Same model, depth-only change for This project (Details picker)
+	await t.step('FO-158 r4 (1): same model, depth-only change for This project (Details)', async () => {
+		const f1 = await t.app.open();
+		await f1.waitForFunction(() => !!(window.PSX && window.PSX.booted && window.PSX.lastReport), null, { timeout: 60000 });
+		await f1.evaluate(() => PM51.revealSetting('ai.models.default-model', { detail: true }));
+		await t.page.waitForTimeout(1600);
+		const b1 = await readModelState(f1, 'ai.models.default-model');
+		await f1.locator('.psx-target-btn').click();
+		await f1.getByText('This project (tastebook)', { exact: true }).click();
+		await f1.locator('.detail-inspector [data-action="o55-insp-pick"]').click();
+		await t.page.waitForTimeout(350);
+		const depthOpen = await f1.locator('.o55-pick-pop.is-open [role="listbox"][aria-label^="Thinking depth"]').count();
+		if (!depthOpen) {
+			await f1.locator('.o55-pick-pop.is-open [role="option"]').filter({ hasText: 'Claude Opus 4' }).first().click();
+			await t.page.waitForTimeout(350);
+		}
+		const pressed = await pressDepth(f1, 'High', 'depth-only (Details)');
+		if (!pressed) return;
+		await t.page.waitForTimeout(1500);
+		const a1 = await readModelState(f1, 'ai.models.default-model');
+		t.log('r4-depth-only ' + JSON.stringify(a1));
+		await t.check(
+			'depth-only (Details): tastebook gets an override with Claude Opus 4 and High depth',
+			a1.resolved.from.level === 'project' && a1.resolved.from.key === 'tastebook' && a1.model === 'anthropic/claude-opus-4' && a1.effort === 'High' && a1.ownModel === 'anthropic/claude-opus-4' && a1.ownEffort === 'High',
+			JSON.stringify({ from: a1.resolved.from, model: a1.model, effort: a1.effort, ownModel: a1.ownModel, ownEffort: a1.ownEffort })
+		);
+		await t.check(
+			'depth-only (Details): History records the project depth change',
+			a1.historyLen === b1.historyLen + 1 && !!a1.headHist && a1.headHist.sid === 'ai.models.default-model' && a1.headHist.level === 'project' && a1.headHist.key === 'tastebook' && a1.headAfterModel === 'anthropic/claude-opus-4' && a1.headAfterEffort === 'High',
+			JSON.stringify({ beforeLen: b1.historyLen, afterLen: a1.historyLen, headHist: a1.headHist })
+		);
+		await t.check(
+			'depth-only (Details): Everywhere keeps its original model and depth',
+			JSON.stringify(a1.resolved.everywhere) === JSON.stringify(b1.resolved.everywhere) && a1.evEffort === '' && a1.everywhereLine === b1.everywhereLine && !/\bHigh\b/i.test(a1.everywhereLine || ''),
+			JSON.stringify({ beforeEv: b1.resolved.everywhere, afterEv: a1.resolved.everywhere, beforeLine: b1.everywhereLine, afterLine: a1.everywhereLine })
+		);
+		const tbLoc1 = f1.locator('.detail-inspector [data-psx-line="project:tastebook"] .psx-wval');
+		if (await tbLoc1.count()) {
+			await tbLoc1.scrollIntoViewIfNeeded();
+			await t.check('depth-only (Details): Where it applies shows tastebook with Claude Opus 4 and High', /Claude Opus 4/i.test(a1.tastebookLine || '') && /\bHigh\b/i.test(a1.tastebookLine || ''), String(a1.tastebookLine));
+			await t.visible(tbLoc1, 'depth-only (Details): tastebook line is visible');
+		} else {
+			await t.check('depth-only (Details): Where it applies shows tastebook with Claude Opus 4 and High', false, 'no project:tastebook line in Details');
+		}
+		await t.shot('fo158-r4-depth-only', 'Same model depth-only change for tastebook in Details');
+	});
+
+	// (2) Model plus depth change for This project (GPT-5 High, then GPT-5 Low, Details picker)
+	await t.step('FO-158 r4 (2): model plus depth change for This project (Details)', async () => {
+		const f2 = await t.app.open();
+		await f2.waitForFunction(() => !!(window.PSX && window.PSX.booted && window.PSX.lastReport), null, { timeout: 60000 });
+		await f2.evaluate(() => PM51.revealSetting('ai.models.default-model', { detail: true }));
+		await t.page.waitForTimeout(1600);
+		const b2 = await readModelState(f2, 'ai.models.default-model');
+		await f2.locator('.psx-target-btn').click();
+		await f2.getByText('This project (tastebook)', { exact: true }).click();
+		await f2.locator('.detail-inspector [data-action="o55-insp-pick"]').click();
+		await t.page.waitForTimeout(350);
+		await f2.locator('.o55-pick-pop.is-open [role="option"]').filter({ hasText: 'GPT-5' }).first().click();
+		await t.page.waitForTimeout(350);
+		const pressedHigh = await pressDepth(f2, 'High', 'model+depth (Details)');
+		if (!pressedHigh) return;
+		await t.page.waitForTimeout(1500);
+		const a2 = await readModelState(f2, 'ai.models.default-model');
+		t.log('r4-model-plus-depth-high ' + JSON.stringify(a2));
+		await t.check(
+			'model+depth (Details): tastebook saves both GPT-5 and High depth',
+			a2.resolved.from.level === 'project' && a2.resolved.from.key === 'tastebook' && a2.model === 'openai/gpt-5' && a2.effort === 'High' && a2.ownModel === 'openai/gpt-5' && a2.ownEffort === 'High',
+			JSON.stringify({ from: a2.resolved.from, model: a2.model, effort: a2.effort, ownModel: a2.ownModel, ownEffort: a2.ownEffort })
+		);
+		await t.check(
+			'model+depth (Details): History records GPT-5 with High depth',
+			a2.historyLen === b2.historyLen + 1 && !!a2.headHist && a2.headHist.sid === 'ai.models.default-model' && a2.headHist.level === 'project' && a2.headHist.key === 'tastebook' && a2.headAfterModel === 'openai/gpt-5' && a2.headAfterEffort === 'High',
+			JSON.stringify({ beforeLen: b2.historyLen, afterLen: a2.historyLen, headHist: a2.headHist })
+		);
+		await t.check(
+			'model+depth (Details): Where it applies shows tastebook with GPT-5 and High, Everywhere unchanged',
+			/GPT-5/i.test(a2.tastebookLine || '') && /\bHigh\b/i.test(a2.tastebookLine || '') && JSON.stringify(a2.resolved.everywhere) === JSON.stringify(b2.resolved.everywhere) && a2.evEffort === '' && a2.everywhereLine === b2.everywhereLine,
+			JSON.stringify({ tastebookLine: a2.tastebookLine, everywhereLine: a2.everywhereLine, beforeLine: b2.everywhereLine, afterEv: a2.resolved.everywhere })
+		);
+		// Follow-up: change GPT-5 from High to Low on the same model
+		await f2.locator('.detail-inspector [data-action="o55-insp-pick"]').click();
+		await t.page.waitForTimeout(350);
+		const pressedLow = await pressDepth(f2, 'Low', 'model+depth follow-up (Details)');
+		if (!pressedLow) return;
+		await t.page.waitForTimeout(1500);
+		const a2b = await readModelState(f2, 'ai.models.default-model');
+		t.log('r4-model-plus-depth-low ' + JSON.stringify(a2b));
+		await t.check(
+			'model+depth follow-up (Details): changing GPT-5 to Low saves Low depth for tastebook',
+			a2b.resolved.from.level === 'project' && a2b.resolved.from.key === 'tastebook' && a2b.model === 'openai/gpt-5' && a2b.effort === 'Low' && a2b.ownModel === 'openai/gpt-5' && a2b.ownEffort === 'Low',
+			JSON.stringify({ from: a2b.resolved.from, model: a2b.model, effort: a2b.effort, ownModel: a2b.ownModel, ownEffort: a2b.ownEffort })
+		);
+		await t.check(
+			'model+depth follow-up (Details): changing GPT-5 High to Low adds a History entry',
+			a2b.historyLen === a2.historyLen + 1 && !!a2b.headHist && a2b.headHist.sid === 'ai.models.default-model' && a2b.headHist.level === 'project' && a2b.headHist.key === 'tastebook' && a2b.headBeforeEffort === 'High' && a2b.headAfterModel === 'openai/gpt-5' && a2b.headAfterEffort === 'Low',
+			JSON.stringify({ beforeLen: a2.historyLen, afterLen: a2b.historyLen, headHist: a2b.headHist })
+		);
+		await t.check(
+			'model+depth follow-up (Details): Where it applies shows tastebook with GPT-5 and Low, Everywhere unchanged',
+			/GPT-5/i.test(a2b.tastebookLine || '') && /\bLow\b/i.test(a2b.tastebookLine || '') && a2b.everywhereLine === b2.everywhereLine && JSON.stringify(a2b.resolved.everywhere) === JSON.stringify(b2.resolved.everywhere),
+			JSON.stringify({ tastebookLine: a2b.tastebookLine, everywhereLine: a2b.everywhereLine, beforeLine: b2.everywhereLine })
+		);
+		await t.shot('fo158-r4-model-plus-depth', 'Model plus depth (GPT-5 High then Low) for tastebook in Details');
+	});
+
+	// (3) Depth-only change from a row's picker (not Details): Everyday building (project:tastebook)
+	await t.step('FO-158 r4 (3): depth-only change from a row picker (not Details)', async () => {
+		const f3 = await t.app.open();
+		await f3.waitForFunction(() => !!(window.PSX && window.PSX.booted && window.PSX.lastReport), null, { timeout: 60000 });
+		await t.page.waitForTimeout(800);
+		const ROW_ID = 'ai.models.worker-model';
+		const b3 = await readModelState(f3, ROW_ID);
+		const detailsOpen = await f3.evaluate(() => !!document.querySelector('#pm-settings-root .detail-inspector[aria-hidden="false"]'));
+		await t.check('depth-only (row picker): Details is closed before using the row picker', !detailsOpen);
+		const rowTrig = f3.locator(`#pm-settings-root .o55-msel[data-o55-msel="${ROW_ID}"] [role="combobox"]`).first();
+		await t.check('depth-only (row picker): Everyday building row picker is drawn', (await rowTrig.count()) === 1);
+		if (!(await rowTrig.count())) return;
+		await rowTrig.scrollIntoViewIfNeeded();
+		await rowTrig.click();
+		await t.page.waitForTimeout(400);
+		const pressed = await pressDepth(f3, 'High', 'depth-only (row picker)');
+		if (!pressed) return;
+		await t.page.waitForTimeout(1500);
+		const a3 = await readModelState(f3, ROW_ID);
+		t.log('r4-row-depth ' + JSON.stringify(a3));
+		await t.check(
+			'depth-only (row picker): tastebook override carries the model with High depth',
+			a3.resolved.from.level === 'project' && a3.resolved.from.key === 'tastebook' && a3.model === b3.model && a3.effort === 'High' && a3.ownModel === b3.model && a3.ownEffort === 'High',
+			JSON.stringify({ beforeModel: b3.model, from: a3.resolved.from, model: a3.model, effort: a3.effort, ownModel: a3.ownModel, ownEffort: a3.ownEffort })
+		);
+		await t.check(
+			'depth-only (row picker): History records the row depth change',
+			a3.historyLen === b3.historyLen + 1 && !!a3.headHist && a3.headHist.sid === ROW_ID && a3.headHist.level === 'project' && a3.headHist.key === 'tastebook' && a3.headAfterModel === b3.model && a3.headAfterEffort === 'High',
+			JSON.stringify({ beforeLen: b3.historyLen, afterLen: a3.historyLen, headHist: a3.headHist })
+		);
+		await t.check(
+			'depth-only (row picker): Everywhere stays unchanged in model and depth',
+			JSON.stringify(a3.resolved.everywhere) === JSON.stringify(b3.resolved.everywhere) && a3.evEffort === '',
+			JSON.stringify({ beforeEv: b3.resolved.everywhere, afterEv: a3.resolved.everywhere, evEffort: a3.evEffort })
+		);
+		await t.check(
+			'depth-only (row picker): row face shows High depth',
+			/\bHigh depth\b/i.test(a3.rowSmall || ''),
+			String(a3.rowSmall)
+		);
+		// Open Details via the row's own end button to verify Where it applies
+		const aboutBtn = f3.locator(`#pm-settings-root [id="setting-${ROW_ID}"] > .o55-about`).first();
+		await aboutBtn.scrollIntoViewIfNeeded();
+		await aboutBtn.click();
+		await f3.waitForSelector('#pm-settings-root .detail-inspector[aria-hidden="false"] [data-psx-block="where"]', { timeout: 8000 });
+		await t.page.waitForTimeout(500);
+		const a3d = await readModelState(f3, ROW_ID);
+		await t.check(
+			'depth-only (row picker): Details Where it applies shows tastebook with High and Everywhere without High',
+			!!a3d.tastebookLine && /\bHigh\b/i.test(a3d.tastebookLine) && !!a3d.everywhereLine && !/\bHigh\b/i.test(a3d.everywhereLine),
+			JSON.stringify({ tastebookLine: a3d.tastebookLine, everywhereLine: a3d.everywhereLine })
+		);
+		await t.shot('fo158-r4-row-depth', 'Depth-only change from Everyday building row picker and its Details panel');
+	});
 }

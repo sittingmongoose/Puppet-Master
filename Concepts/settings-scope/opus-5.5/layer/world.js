@@ -531,6 +531,17 @@
     const one = /ies$/.test(plural) ? plural.replace(/ies$/, 'y') : /s$/.test(plural) ? plural.slice(0, -1) : plural;
     return n === 0 ? `No ${plural} yet` : n === 1 ? `1 ${one}` : `${n} ${plural}`;
   }
+  /* a concrete model id's display name without reading the engine's live per-project o55Depth store (FO-158 r4:
+     PM51.valueText calls o55ModelResolve, which appends the active project's o55Depth onto every place's model line,
+     leaking a project's depth into Everywhere and duplicating depth on { model, effort } values) */
+  function modelName(id, raw) {
+    let ready = [];
+    try { ready = W.PM51 && W.PM51.readyModels ? W.PM51.readyModels() : []; } catch (e) { ready = []; }
+    const hit = ready.find((m) => m && m.value === raw);
+    const full = hit && hit.label ? String(hit.label) : (W.PM51 && W.PM51.valueLabel ? String(W.PM51.valueLabel(id, raw)) : String(raw));
+    const parts = full.split(' · ');
+    return parts.length > 1 ? parts.slice(0, -1).join(' · ') : full;
+  }
   /* the value as the row says it ("Claude Opus 4", "On", "60 seconds", "3 rules") */
   function vt(id, v) {
     if (v === undefined) return 'Not set';
@@ -543,6 +554,7 @@
          model · Claude Opus 4" */
       if (v === 'inherit' && f.labels && f.labels.inherit) { const iw = PSX.places && PSX.places.inheritWords ? PSX.places.inheritWords(id) : null; return iw && iw.model ? `${f.labels.inherit} · ${iw.model}` : f.labels.inherit; }
       if (v && typeof v === 'object' && !Array.isArray(v)) { const m = vt(id, modelOf(v)); return effortOf(v) ? `${m} · ${effortOf(v)} thinking` : m; }
+      if (typeof v === 'string' && !(f.options || []).includes(v) && v.includes('/')) return modelName(id, v);
     }
     if (id === 'system.mcp.timeout') { const n = Number(v); return n >= 1000 ? `${+(n / 1000).toFixed(1)} seconds` : `${n} ms`; }
     if (id === 'memory.assembly.project-rules') { const n = String(v || '').split('\n').filter((x) => x.trim()).length; return n ? `${n} rule${n === 1 ? '' : 's'}` : 'No rules'; }

@@ -210,7 +210,7 @@
      the three media rows whose service picks its own model offer its words only. */
   const MAKERS = { anthropic: 'Anthropic', 'anthropic-api': 'Anthropic', 'claude-code': 'Anthropic', openai: 'OpenAI', 'openai-codex': 'OpenAI', gemini: 'Google', google: 'Google', 'gemini-direct': 'Google', antigravity: 'Google', 'qwen-coding': 'Alibaba', 'qwen-token': 'Alibaba', alibaba: 'Alibaba', 'kimi-coding': 'Moonshot', moonshot: 'Moonshot', 'zai-coding': 'z.ai', zai: 'z.ai', 'cursor-cli': 'Cursor', cursor: 'Cursor', 'free-models': 'Free routes', opencode: 'OpenCode', 'minimax-coding': 'MiniMax', 'xai-api': 'xAI' };
   const PLACEHOLDER = /^<|choose a specific/i;
-  const DEPTHS = ['Low', 'Medium', 'High'];
+  const DEPTHS = ['Low', 'Medium', 'High', 'Max'];
   const MEDIA_CAP = { 'media.image.model': 'image-generation', 'media.io.vision-fallback-model': 'vision' };
   const OWN_ONLY = ['media.capabilities.video-model', 'media.capabilities.tts-model', 'media.capabilities.music-model'];
   let providersAt = 0, providersMemo = null;
@@ -230,7 +230,43 @@
     // the inventory's examples (anthropic/claude-opus-4, openai/gpt-5): models that think
     return /claude|gpt-5|gemini-2\.5|o3|o4/i.test(mid) ? ['reasoning'] : [];
   }
-  const depthsFor = (value) => ((capsOf(value) || []).includes('reasoning') ? DEPTHS : []);
+  /* read each model's supported depths from the base page's own model catalog (o55/depth.json, which includes Max on
+     Opus/Sonnet/GPT-5/Codex and Low/Medium on Haiku), falling back to capsOf when PM51.modelSelect is absent */
+  let depthMemo = null;
+  function engineDepthMap() {
+    if (depthMemo) return depthMemo;
+    const m = {};
+    try {
+      if (W.PM51 && typeof W.PM51.modelSelect === 'function') {
+        const tpl = D.createElement('template');
+        tpl.innerHTML = W.PM51.modelSelect('ai.models.default-model', '');
+        tpl.content.querySelectorAll('option[value]').forEach((o) => {
+          m[o.value] = o.dataset.levels ? o.dataset.levels.split('|').filter(Boolean) : [];
+        });
+      }
+    } catch (e) { /* fall back to capsOf */ }
+    if (Object.keys(m).length) depthMemo = m;
+    return m;
+  }
+  function depthsFor(value) {
+    const raw = String(PSX.modelOf(value) || '');
+    if (!raw || !raw.includes('/')) return [];
+    const map = engineDepthMap();
+    if (Object.prototype.hasOwnProperty.call(map, raw)) return map[raw];
+    try {
+      if (W.PM51 && typeof W.PM51.modelSelect === 'function') {
+        const tpl = D.createElement('template');
+        tpl.innerHTML = W.PM51.modelSelect('ai.models.default-model', raw);
+        const opt = tpl.content.querySelector(`option[value="${CSS.escape(raw)}"]`);
+        if (opt) {
+          const lv = opt.dataset.levels ? opt.dataset.levels.split('|').filter(Boolean) : [];
+          if (depthMemo) depthMemo[raw] = lv;
+          return lv;
+        }
+      }
+    } catch (e) { /* fall back to capsOf */ }
+    return (capsOf(value) || []).includes('reasoning') ? DEPTHS : [];
+  }
   const makerOf = (raw) => { const i = String(raw).indexOf('/'); const pid = i > 0 ? String(raw).slice(0, i) : ''; return MAKERS[pid] || (pid ? pid.replace(/[-_]+/g, ' ').replace(/^./, (c) => c.toUpperCase()) : ''); };
   function modelChoices(id) {
     const f = PSX.factsOf(id) || {};
