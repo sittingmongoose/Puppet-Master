@@ -2,9 +2,9 @@
 
 Source: `Plans/rewrite-tie-in-memo.md`
 
-Source lines: L152-L484
+Source lines: L152-L487
 
-Source SHA256: `353387d68dafd801aa1b4fe4383487037da33cf2fb710d4b583b0e62be46dd7f`
+Source SHA256: `1f2ebc5079f97dd502164bc7b94b55f2b9981ef96ee7de879be93b219cb7ba18`
 
 ---
 
@@ -184,14 +184,16 @@ Generated Markdown/Mermaid/read-only previews share one internal runtime contrac
 - Generated preview pages MUST NOT reuse workspace-browser cookies/storage by default.
 
 **Sanitization**
-- Markdown-derived HTML MUST be sanitized before it reaches the preview runtime.
-- Sanitization MUST preserve only the metadata attributes required for source mapping and preview actions:
+- Markdown-derived HTML MUST be sanitized before it reaches the preview runtime through the shared Rust `ammonia` positive allowlist (`Plans/assistant-chat-design.md#ACD-643`, `Plans/DRY_Rules.md#DR-093`, `DL-2601`).
+- Sanitization MUST preserve only parser-emitted metadata attributes required for source mapping, copy fidelity, and preview actions (raw HTML authored in Markdown MUST NEVER forge or claim these attributes; forged attributes are stripped and lose all trust, `ACD-641`):
   - `data-pm-node-id`
   - `data-pm-block-kind`
   - `data-pm-source-start`
   - `data-pm-source-end`
   - `data-pm-parse-revision`
   - `data-pm-capabilities`
+  - `data-pm-math-tex` (raw TeX source copy wrapper, `ACD-643`)
+  - `data-pm-code-source` (raw code-block source copy wrapper, `ACD-641`)
 
 **Preview bridge allowlist**
 The generated-preview bridge is narrow by design. Allowed bridge actions in v1:
@@ -206,12 +208,13 @@ The generated-preview bridge is narrow by design. Allowed bridge actions in v1:
 No other host command family is implicitly available to generated previews.
 
 #### Canonical rendering stack
-To keep implementations aligned, the rewrite uses these canonical libraries unless a later lock section supersedes them:
-- Markdown parse/mapping: `pulldown-cmark`
-- Rendered code highlighting: `syntect`
-- Generated HTML sanitization: `ammonia`
-- Mermaid validation: Mermaid parse/detect-type validation before render
-- SVG/PNG export pipeline: `resvg` + `usvg` + `tiny-skia`
+To keep implementations aligned, the rewrite uses these canonical libraries unless a later lock section supersedes them (amended 2026-11-23, `DL-2601`, `DR-093`, `ACD-641`–`ACD-643`):
+- Markdown parse/mapping: `pulldown-cmark` strictly as the sole canonical parser inside a standalone shared Rust Markdown crate linked by both the `interface-model` crate and the daemon (building a typed Rust IR tree with bounded deterministic extensions—GFM bare-URL autolinking, CJK-flanked emphasis, Pandoc `$` and `\(...\)`/`\[...\]` math—plus parser DoS caps and provenance tracking in `ACD-641`; any future parser replacement such as `comrak` requires its own owner decision switching every consumer at once and passing `ATS-086`)
+- Rendered code highlighting: `syntect` (keyed to active `F3-425` theme family/variant tokens, stateful per-line incremental tokenization with convergent-state early exit, 64-line layout buckets, bounded finished LRU + `2 MiB` live-checkpoint budget, and deterministic `1,000`-byte line / `64`-depth / `250,000`-byte fence plain-suffix degradation until a known lexer checkpoint in `ACD-642`)
+- Generated HTML sanitization: `ammonia` (one explicit positive Rust element/attribute/scheme/image allowlist in `ACD-643`, enforcing the conceptual HTML5 safe-tag baseline across Slint and Leptos without JS `DOMPurify` and stripping all `<style>` elements and inline `style` attributes in message-flow Markdown)
+- TeX math layout: a pre-build selected Rust TeX-to-SVG layout crate shipping one bundled math font across desktop and web, emitting strict-allowlisted SVG with `data-pm-math-tex` copy-back (`ACD-643`), rasterized via `resvg` + `usvg` (with default filesystem/external `ImageHrefResolver` disabled) + `tiny-skia` on desktop and inline SVG on web
+- Mermaid validation: Mermaid parse/detect-type validation before render, emitting SVG `<text>` labels (`<foreignObject>` stripped), closed-fence raw-source streaming as the sole streaming behavior (open fences stay raw source across terminal states), and diagram links/external images disabled (`ACD-642`, `ACD-643`, `F3-304`)
+- SVG/PNG export pipeline: `resvg` + `usvg` (with default filesystem/external `ImageHrefResolver` disabled) + `tiny-skia`
 
 - **Full HTML/browser mode** uses a loopback localhost preview server rooted to the workspace/project context.
 - **Generated Markdown/Mermaid/read-only previews** use an internal preview origin/route controlled by the app.
@@ -297,7 +300,7 @@ ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.
 - The runtime MUST validate `source_revision` before patch application.
 - The resulting patch MUST stay constrained to the mapped source span for that node or block.
 - Requests MUST fail with `ambiguous_mapping` when the requested operation would require modifying text outside the mapped node span.
-- Requests MUST fail with `unsupported_region` for raw HTML regions, malformed Markdown regions, unknown extensions, and opaque fenced content.
+- Requests MUST fail with `unsupported_region` for raw HTML regions (including any raw HTML attempting to forge `data-pm-*` source-mapping attributes, `DL-2601`, `ACD-641`), malformed Markdown regions, unknown extensions, and opaque fenced content.
 
 ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/Permissions_System.md
 
@@ -329,9 +332,9 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/sto
 
 ### Markdown/Mermaid contract
 
-- Use a Rust Markdown parser/mapping pipeline as the canonical Markdown source analysis layer.
-- Generated Markdown preview HTML is sanitized before display.
-- Mermaid is detected from fenced `mermaid` blocks and `.mmd` files, validated before render, and rendered natively in preview surfaces.
+- Use one standalone shared Rust Markdown parser/mapping pipeline (`DR-093`, `ACD-641`, `DL-2601`) linked by both the `interface-model` crate and the daemon as the canonical Markdown source analysis layer across desktop, web, daemon search text, copy, and previews.
+- Generated Markdown preview HTML is sanitized before display through the explicit positive shared Rust `ammonia` allowlist and closed URL/image/SVG trust policy (`ACD-643`).
+- Mermaid is detected from fenced `mermaid` blocks and `.mmd` files, validated before render, and rendered natively in preview surfaces emitting SVG `<text>` labels (`<foreignObject>` stripped) with diagram links and external images disabled (`ACD-643`), desktop `usvg` filesystem/external `ImageHrefResolver` disabled, and closed-fence raw-source streaming behavior preserved across terminal states (`ACD-642`, `F3-304`).
 - Mermaid uses text as the canonical artifact; do not introduce a hidden second diagram object model.
 - SVG is the canonical Mermaid render/export artifact; PNG is derived from SVG rasterization.
 

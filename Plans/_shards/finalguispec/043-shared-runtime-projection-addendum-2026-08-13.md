@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5448-L27037
+Source lines: L5448-L27062
 
-Source SHA256: `b8f3716574ec58d25116d0f986d378f01086f979e61556cc9661c483ff61e899`
+Source SHA256: `7ba17c5aa7fb716a162c335b6ec6e71fc68d986a5c12f560da9fc6c85b205c7a`
 
 ---
 
@@ -16937,7 +16937,16 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Chat messages containing renderable Markdown or Mermaid support readable Markdown
   formatting, native Mermaid diagram cards, copy source/open editor/open detached
-  preview/export actions, and visible malformed-Mermaid error states.
+  preview/export actions, and visible malformed-Mermaid error states. Amended 2026-11-23
+  (DL-2601, ACD-470, ACD-642, ACD-643): closed-fence raw-source streaming is the sole
+  streaming Mermaid behavior—while a Mermaid fence is open (including if a turn terminates
+  in complete, stopped, steered, or error while the fence remains unclosed), keep raw
+  fenced source so half-streamed diagrams never flash malformed-Mermaid error states and
+  settled frames remain strictly identical to the final streamed frame; validate and display
+  either the native card or the explicit malformed-Mermaid error state once the Mermaid
+  fence closes; emit SVG text labels (foreignObject stripped), disable diagram links,
+  external images, and desktop usvg filesystem/external ImageHrefResolver; and expose
+  searchable diagram source through cmd.chat.search.
 gui_related: true
 gui_classification_reason: >-
   This unit defines Chat renderable Markdown and Mermaid behavior.
@@ -16949,6 +16958,7 @@ acceptance_criteria:
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "Closed-fence raw-source streaming is the sole streaming Mermaid behavior (open fences stay raw source even across stopped/steered/error termination); closed invalid diagrams show visible error states with source access, Mermaid emits SVG text labels with links/external images and desktop usvg external resolver disabled, and cmd.chat.search searches diagram source (DL-2601)."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -16962,6 +16972,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0182"
+- "Plans/Decision_Log.md#DL-2601"
 preserved_exact_tokens:
 - "readable Markdown formatting"
 - "native Mermaid diagram cards"
@@ -16973,11 +16984,14 @@ preserved_exact_tokens:
 - "silent raw-block disappearance"
 negative_constraints:
 - "Malformed Mermaid must not silently disappear."
+- "Open streaming Mermaid fences must stay raw fenced source and must not flash or swap in malformed-Mermaid error cards mid-fence or upon unclosed turn termination."
+- "Mermaid diagrams must not activate clickable diagram links or fetch arbitrary external images."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
+- "Plans/assistant-chat-design.md#ACD-642"
 ```
 
 ### F3-305 - Chat HTML Execution Prohibition
@@ -21106,7 +21120,14 @@ canonical_text: >-
   HTML/JS visuals, auto-height design-token sizing, sandbox="allow-scripts" only, denied
   allow-same-origin, allow-forms, allow-popups, and allow-top-navigation tokens,
   postMessage-only communication, sanitizer baseline for non-iframe rendering, and no
-  arbitrary HTML execution.
+  arbitrary HTML execution. Amended 2026-11-23 (DL-2601, DR-093, ACD-641, ACD-643, RTIM-029):
+  DOMPurify DEFAULT_ALLOWED_TAGS is the conceptual HTML5 safe-tag baseline enforced canonically
+  in Rust by ammonia in the standalone shared crate across Slint and Leptos (no JS sanitizer
+  dependency), with the explicit positive ACD-643 element/attribute/scheme/image allowlist
+  (denying all style elements and inline style attributes in message-flow Markdown while
+  keeping host-injected --pm-viz-* inline style strictly on sandboxed inline visualizer
+  containers), disabled Mermaid links/external images and desktop usvg filesystem/external
+  ImageHrefResolver, and anti-spoof parser provenance.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible FinalGUISpec widget or card behavior.
@@ -21118,6 +21139,7 @@ acceptance_criteria:
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "Non-iframe sanitization runs through the one explicit positive Rust ammonia and closed URL/image/SVG allowlist across Slint and Leptos (no JS DOMPurify, desktop usvg external resolver disabled, all style elements and inline style attributes stripped in message-flow Markdown), and raw HTML cannot forge parser provenance (DL-2601, ACD-641, ACD-643)."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -21131,6 +21153,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0236"
+- "Plans/Decision_Log.md#DL-2601"
 preserved_exact_tokens:
 - "Mermaid"
 - "inline visualizer"
@@ -21148,12 +21171,14 @@ preserved_exact_tokens:
 negative_constraints:
 - "Inline visualizer iframe embeds must not include allow-same-origin, allow-forms, allow-popups, or allow-top-navigation."
 - "Visualizer widgets must not execute arbitrary HTML."
+- "Do not ship JS DOMPurify as a product sanitizer owner or fork sanitizer policies between Slint and Leptos."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
 - "FinalGUISpec owns visible card/widget behavior; owner docs retain runtime, tool, permission, schema, and storage authority."
 owner_hints:
 - "Plans/FinalGUISpec.md"
+- "Plans/assistant-chat-design.md#ACD-643"
 ```
 
 ### F3-381 - Visualizer Host Bridge And Question Flow Narrowing

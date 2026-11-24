@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29207-L29662
+Source lines: L29232-L29689
 
-Source SHA256: `b8f3716574ec58d25116d0f986d378f01086f979e61556cc9661c483ff61e899`
+Source SHA256: `7ba17c5aa7fb716a162c335b6ec6e71fc68d986a5c12f560da9fc6c85b205c7a`
 
 ---
 
@@ -176,7 +176,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  P2-RICH-TEXT-RENDERING-FIDELITY (P2) is compiled as canonical Puppet Master intent for Rendered GUI text fidelity separate from terminal fidelity: Imported external-repo finding extrepo-20260703-0035 / P2-RICH-TEXT-RENDERING-FIDELITY (P2). The preserved PM gap/delta is: Add rich-text fixtures for ASCII ligatures, bullets, arrows, emoji, combining marks, CJK width, raw vs rendered view, and copy/source-byte fidelity. The observed external-repo signal remains source-lineage evidence: Warp rendered Markdown/rich UI misrendered glyphs while source bytes remained correct.
+  P2-RICH-TEXT-RENDERING-FIDELITY (P2) is compiled as canonical Puppet Master intent for Rendered GUI text fidelity separate from terminal fidelity: Imported external-repo finding extrepo-20260703-0035 / P2-RICH-TEXT-RENDERING-FIDELITY (P2). The preserved PM gap/delta is: Add rich-text fixtures for ASCII ligatures, bullets, arrows, emoji, combining marks, CJK width, raw vs rendered view, and copy/source-byte fidelity. The observed external-repo signal remains source-lineage evidence: Warp rendered Markdown/rich UI misrendered glyphs while source bytes remained correct. Amended 2026-11-23 (DL-2601, ACD-641, ACD-642, ACD-643, ATS-086): rich-text fidelity fixtures also cover CJK-flanked emphasis (**重要。**请阅读。), CJK/Arabic bare-URL autolink boundaries, GFM bare URLs, BiDi per-block RTL paragraphs opening with Latin/technical tokens, inline chip punctuation binding, Windows path preservation, user-message single-tilde preservation, agent-authored Markdown syntax (★ Insight callouts, Codex directives/file citations, GitHub alerts), Mermaid and TeX-math copy-to-source fidelity (exact raw code/diagram source bytes via data-pm-code-source and raw TeX source via data-pm-math-tex on copy), and text selection surviving streaming settlement and virtualized scrolling (with 2-endpoint pinning and model-backed multi-row copy) across Slint and Leptos.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -187,6 +187,7 @@ acceptance_criteria:
 - Rendered Markdown preserves displayed glyphs for fi/bullet fixtures
 - Copy from rendered view preserves source bytes where expected
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+- Rich-text fixtures cover CJK-flanked emphasis, CJK/Arabic bare-URL boundaries, BiDi RTL-with-Latin-lead, chip punctuation binding, Windows paths, agent syntax (★ Insight, Codex citations, GitHub alerts), Mermaid/TeX/code copy fidelity (data-pm-math-tex, data-pm-code-source), and selection persistence across streaming settlement and virtualized scrolling (DL-2601, ATS-086).
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
@@ -211,6 +212,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:15
+- Plans/Decision_Log.md#DL-2601
 source_atom_ids:
 - atom-0039
 external_atom_id: extrepo-20260703-0035

@@ -192,7 +192,7 @@ ContractRef: SchemaID:pm.shared_runtime.contracts.v1, ContractName:Plans/assista
 
 `ProjectionReplayCoordinator` establishes a live subscription and buffers new-epoch events before requesting replay or snapshot. It then chooses replay versus snapshot using estimated bytes, decode and projection cost, link quality, device memory, payload shape, cursor validity, and retention coverage. It applies the replay or snapshot, drains buffered live events in sequence, and publishes current state only after the cursor and generation fence converge.
 
-There is no fixed event-count threshold. Missing coverage, epoch conflict, snapshot validation failure, or buffer overflow forces a typed resnapshot or degraded state.
+There is no fixed event-count threshold. Missing coverage, epoch conflict, snapshot validation failure, or buffer overflow forces a typed `resnapshot_required` or `degraded` state (amended 2026-11-23, `DL-2601`): recovery resumes strictly from the last durable contiguous `applied` cursor or a verified replacement snapshot—never from a higher unapplied received sequence—while the checkpoint's `buffered cursor range` (whose upper bound is the received high-water mark) remains diagnostic for recovery only. During catch-up replay (bulk projector rebuilds remain owned by `Plans/storage-plan.md`), `ProjectionReplayCoordinator` decodes each stored event once, validates record headers before full payload decode, omits per-row debug tracing during catch-up batches, reads one storage segment/chunk ahead, and deduplicates rollback-rewritten run outcomes in runtime replay metrics. Ordinary thread open remains governed by `Plans/storage-plan.md#SP-338` and never replays thread events.
 
 The durable replay checkpoint lifecycle is `initializing`, `buffering_live`, `replaying`, `applying_snapshot`, `draining_buffer`, `current`, `resnapshot_required`, `degraded`, or `failed`. A checkpoint records connection epoch, domain generation, requested/base/applied/published cursors, buffered cursor range, overflow state, snapshot digest/ref, and currentness evidence. `current` requires a valid contiguous applied range, an empty or fully drained live buffer, matching epoch/generation, and a published cursor equal to the applied high-water mark.
 
@@ -538,15 +538,26 @@ plan_unit_id: SIR-005
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Shared_Integration_Runtime.md
-canonical_text: ThreadCommandOutbox, ProjectionReplayCoordinator, and StreamCoalescer provide cross-platform durable commands, buffered live-before-replay convergence, adaptive replay/snapshot choice, and lossless canonical ordering.
+canonical_text: >-
+  ThreadCommandOutbox, ProjectionReplayCoordinator, and StreamCoalescer provide cross-platform durable commands,
+  buffered live-before-replay convergence, adaptive replay/snapshot choice, and lossless canonical ordering.
+  Amended 2026-11-23 (DL-2601): bounded live-buffer overflow always forces typed resnapshot_required or degraded
+  recovery resuming strictly from the last durable contiguous applied cursor or a verified replacement snapshot
+  (never from a higher unapplied received sequence; the checkpoint buffered cursor range remains diagnostic only).
+  During catch-up replay (bulk projector rebuilds stay under storage-plan), ProjectionReplayCoordinator decodes each
+  stored event once, validates record headers before full payload decode, omits per-row debug tracing during catch-up
+  batches, reads one storage segment/chunk ahead, and deduplicates rollback-rewritten run outcomes in runtime replay
+  metrics. There remains no fixed event-count threshold, and ordinary thread open stays zero-replay over SP-338
+  render pages.
 gui_related: true
 gui_classification_reason: Thread shell/detail state, queued commands, reconnect, and streamed progress are user-visible projections.
-depends_on: [SIR-004]
+depends_on: [SIR-004, SP-338]
 unblocks: []
 acceptance_criteria:
   - Logical commands have at most one server-side effect and preserve in-thread order.
   - Live buffering begins before replay or snapshot and converges under an epoch fence.
   - Critical state bypasses presentation coalescing and canonical events are never dropped.
+  - Live-buffer overflow forces resnapshot_required/degraded resuming from the last durable contiguous applied cursor or verified snapshot (buffered cursor range diagnostic only), and catch-up replay uses single-decode header-first parsing, one-segment/chunk read-ahead, and rollback-deduped replay metrics while keeping ordinary thread open zero-replay (SP-338, DL-2601).
 validation_surfaces: [outbox restart tests, replay/live races, coalescing order tests]
 risk_class: durable_command_or_projection_loss
 reasoning_tier: high
@@ -556,6 +567,7 @@ node_compile_hint: {mode: durable_outbox_replay_coalescing, create_worknodes: fa
 source_lineage:
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/02_T3_DURABLE_THREADS_NETWORK_AND_OUTBOX.md
   - 'Plans/runtime_integration_disposition.json#items[PRM-017,PRM-018,PRM-019]'
+  - Plans/Decision_Log.md#DL-2601
 ```
 
 ```yaml
