@@ -46,7 +46,15 @@ def install_cf1():
 
     @functools.wraps(original_negatives)
     def negatives():
-        corpus = original_negatives()
+        # Round 2 C2 (lead ruling 1124101552-8f55): building the corpus is not running a case. run_path
+        # leaves bridge.CASE current until the next case (below), so without this clear the builder's own
+        # dg_cf1_world:default_values calls record under the stale previous case (deep review F7).
+        saved = bridge.CASE[0]
+        bridge.CASE[0] = None
+        try:
+            corpus = original_negatives()
+        finally:
+            bridge.CASE[0] = saved
         for group, name, kw, expected in corpus:
             expectations[name] = (group, expected)
         return corpus

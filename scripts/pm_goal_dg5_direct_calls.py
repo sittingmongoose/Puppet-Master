@@ -174,6 +174,18 @@ def case_wrapper(frame):
     return (frame.f_globals.get('__name__'), frame.f_code.co_qualname) in CASE_WRAPPERS
 
 
+# Round 2 C2: a runner's verdict-read helpers (the exception classifiers every oracle Suite/run_case calls
+# after the case body, e.g. code_of -> a listed refusal_code/code_of). A segment made only of these, between
+# the listed call and the runner, is the runner reading its verdict, never a case body calling an owner.
+VERDICT_HELPERS = frozenset({'code_of'})
+# The bridge's and this collector's own frames are harness, never corpus case code (e.g. boundaries.invoke
+# calling recorder.snapshot() while a case is current).
+HARNESS_MODULES = frozenset({'pm_goal_dg5_boundaries', __name__})
+# CF1's original run_path IS the authored case body (the census counts its own calls as direct; recheck
+# NOTE 2), so for that one wrapper the "runner" frame belongs to the checked segment like any body frame.
+BODY_RUNNERS = frozenset({('pm_goal_dg_cf1_oracles', 'run_path')})
+
+
 def direct(frame):
     """The call is direct (frame: the wrapper's caller). Returns (direct, reason).
 
@@ -183,7 +195,15 @@ def direct(frame):
         listed helper that a fixture or an oracle constructor calls is never recorded, whatever methods.json lists.
         "Between" is every frame from the caller up to, not including, the case runner: the frame the DG5 case
         wrapper called (the first case_wrapper frame up the stack sets bridge.CASE and calls the runner, e.g.
-        Suite.negative, run_case, Suite._run). With no case wrapper on the stack every frame is checked."""
+        Suite.negative, run_case, Suite._run). With no case wrapper on the stack every frame is checked.
+    (c) Round 2 C2 (lead ruling 1124101552-8f55; recheck NOTE 2 is REAL): the runner position is checked as
+        harness. The runner's job is to call the case body (or its returned action), so a call with no frame
+        below the runner — or only verdict-read helpers below it — originates in the runner itself (Suite._run
+        -> dg_s_world:code_of, Suite.negative -> code_of -> refusal_code, run_case -> dg_r_world:code_of) and
+        is never recorded; counted under harness_calls. Only when a real body frame sits below the runner is
+        the runner itself exempt from the construction check, exactly as before (fixture-class runners such as
+        Suite.negative still pass their cases' own calls). Bridge/collector frames in the segment are harness
+        for the same reason. CF1's run_path is the one body-runner (BODY_RUNNERS)."""
     frames = []
     while frame is not None:
         frames.append(frame)
@@ -192,8 +212,22 @@ def direct(frame):
         if owner_module(f.f_globals.get('__name__')):
             return False, 'owner frame'
     boundary = next((i for i, f in enumerate(frames) if case_wrapper(f)), None)
-    segment = frames if boundary is None else frames[:max(boundary - 1, 0)]
+    if boundary is None:
+        segment = frames
+    elif boundary == 0:
+        return False, 'harness frame ' + frames[0].f_code.co_qualname   # the case wrapper itself is the caller
+    else:
+        runner = frames[boundary - 1]
+        if (runner.f_globals.get('__name__'), runner.f_code.co_qualname) in BODY_RUNNERS:
+            segment = frames[:boundary]
+        else:
+            below = frames[:boundary - 1]
+            if not below or all(f.f_code.co_name in VERDICT_HELPERS for f in below):
+                return False, 'harness runner verdict read via ' + frames[0].f_code.co_qualname
+            segment = below
     for f in segment:
+        if f.f_globals.get('__name__') in HARNESS_MODULES:
+            return False, 'harness frame ' + f.f_code.co_qualname
         if construction_frame(f.f_code):
             return False, 'construction frame ' + f.f_code.co_qualname
     return True, None
@@ -537,6 +571,9 @@ def _wrap(family, key, owner, name, raw):
             if why.startswith('construction'):
                 built = REPORTS[family].setdefault('construction_calls', {})
                 built[key] = built.get(key, 0) + 1
+            elif why.startswith('harness'):
+                harness = REPORTS[family].setdefault('harness_calls', {})
+                harness[key] = harness.get(key, 0) + 1
             return original(*args, **kwargs)
         receiver = args[0] if bound_kind in ('method', 'class') and args else None
         rest = args[1:] if receiver is not None else args
