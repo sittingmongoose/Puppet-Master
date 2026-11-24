@@ -2325,7 +2325,8 @@ class PairedValidatorCopies(LandingRun):
         self.storage_shape(audit=[timeout_row("validate-implementation-readiness", 600)])
         code, out = self.compare()
         self.assertEqual(code, 1, out)
-        self.assertIn("(33 of 33 printed, 50 of 79 in the baseline): the audit-governance copy timed out;", out)
+        self.assertIn("(33 of 33 printed, 50 of 79 in the baseline): the audit-governance copy did not "
+                      "finish (timed out or killed);", out)
         self.assertIn("[unknown-pre-existing] run-gates/validate_implementation_readiness", out)
 
     def test_a_run_gates_row_the_audit_governance_copy_lacks_falls_back(self):

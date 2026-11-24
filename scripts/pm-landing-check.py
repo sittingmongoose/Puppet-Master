@@ -72,11 +72,11 @@ rule and stops the landing, because a real new failure whose total has not also 
 branch raises it; one that has been cut is indistinguishable, and reported as unknown rather than
 excused silently.
 
-A subcheck that pm-plans-verify.py killed at --subcheck-timeout-seconds (1800 by default here) has no
-result. Its timeout row is an infrastructure result, printed on its own line with the subcheck, how
-long it ran and the limit; it is never a new failure, growth or a blocker. The run it happened in was
-not fully verified, so it lifts exit 0 to 1 and changes no other exit code. A baseline is never
-recorded from a run that has one.
+A subcheck that pm-plans-verify.py killed at --subcheck-timeout-seconds (1800 by default here), or that
+something outside stopped with a signal, has no result. Its row (a timeout or a kill) is an
+infrastructure result, printed on its own line with the subcheck, how long it ran and the limit; it is
+never a new failure, growth or a blocker. The run it happened in was not fully verified, so it lifts
+exit 0 to 1 and changes no other exit code. A baseline is never recorded from a run that has one.
 
 The readiness audit inputs are gitignored. Both modes select --readiness-audit-root (the shared
 currentness directory when present, otherwise this tree's), and expose it through a temporary
@@ -115,8 +115,8 @@ Exit codes:
   0  nothing to report, and every subcheck finished
   1  nothing it reports stops the landing: governance staleness on files the branch edited,
      pre-existing failures whose count has not risen against a current baseline, or failures that
-     are new but name none of the branch's files (push, and report them); or a subcheck timed out,
-     so the run was not fully verified (rerun it on its own before pushing)
+     are new but name none of the branch's files (push, and report them); or a subcheck timed out or
+     was killed, so the run was not fully verified (rerun it on its own before pushing)
   2  it reports something that does stop the landing: a failure on the branch's files that is
      neither staleness nor pre-existing (nor `unknown-pre-existing`, a row in a subcheck the
      baseline only sampled whose total covers this run), a bucket that grew whose error kind is not
@@ -124,7 +124,8 @@ Exit codes:
      cannot see what was added, other than the readiness growth counter; a subcheck keyed from its
      export is not truncated
   3  the script could not run a check or could not read the baseline or the branch paths, or a
-     subcheck timed out while recording a baseline, or readiness audit inputs could not be compared
+     subcheck timed out or was killed while recording a baseline, or readiness audit inputs could
+     not be compared
 """
 from __future__ import annotations
 
@@ -1580,7 +1581,8 @@ def subcheck_totals(
     listed: dict[str, dict[str, int]],
     did_not_finish: set[tuple[str, str]],
 ) -> dict[str, int | None]:
-    """Every subcheck's total in this run by `check/subcheck`, passing ones too; None for one that timed out.
+    """Every subcheck's total in this run by `check/subcheck`, passing ones too; None for one that did not finish
+    (timed out or killed).
 
     Reported only, for comparing one run with the next (scripts/pm-land.py does, inside a batch). Nothing here
     judges it, and the baseline does not record it.
@@ -1812,9 +1814,9 @@ def pair_validators(
         row["audit_governance"], row["audit_governance_counts"] = twin, other
         unmatched = 0
         if ("run-gates", name) in did_not_finish:
-            row["reason"] = "the run-gates copy timed out"
+            row["reason"] = "the run-gates copy did not finish (timed out or killed)"
         elif ("audit-governance", twin) in did_not_finish:
-            row["reason"] = "the audit-governance copy timed out"
+            row["reason"] = "the audit-governance copy did not finish (timed out or killed)"
         elif changed:
             row["reason"] = changed
         elif own["reported"] != other["reported"]:
