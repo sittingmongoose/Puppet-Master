@@ -214,6 +214,9 @@ export default async function (t) {
 				t.log('hScroll ' + (hScroll.join(' | ') || 'none'));
 				if (t.args.dump) fs.writeFileSync(t.args.dump, JSON.stringify(pages.map((p) => ({ name: p.name, glow: p.data.glow.slice(0, 4), columns: p.data.columns.filter((c) => c.rightSpread > 1 || c.leftSpread > 1 || c.gapSpread > 1) })), null, 1));
 				await t.check(`${look} ${w}x${h}: measured under ${look}`, pages.length > 0 && wrongLook.length === 0, wrongLook.slice(0, 3).join(' | ') || 'no page measured');
+				/* The look this cell picked is saved; clear it (and block the going-away page's pagehide write) so the
+				   next fresh page and the next check start in Basic Dark, not this cell's look (FO154R2-SETLEAK). */
+				await t.app.resetLayout();
 				if (probe) {
 					await t.check(`${look} ${w}x${h}: probe`, true);
 					return;

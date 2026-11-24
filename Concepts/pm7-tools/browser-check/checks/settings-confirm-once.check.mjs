@@ -12,9 +12,9 @@
 // own example, "Delete all memories?", and must leave no confirm it set out to visit (skipped === 0). A press that
 // opens an inline editor instead of a confirm closes it by the product's own controls (its footer close/cancel,
 // then its Close X, then the Escape the panel owns) and asserts it is gone before the walk moves on — an editor
-// left open covers the rail and ends the walk at the next chapter click (F12A-NORMAL-CONFIRM-CLOSE-20261112). Nothing here
-// reads aria or a screen-reader tree: PMConcept7 has no such assertions, so the check judges what is visible —
-// text shown once, the danger tone's red alert, and the box geometry. Fails on main, where both places carry the
+// left open covers the rail and ends the walk at the next chapter click (F12A-NORMAL-CONFIRM-CLOSE-20261112). The walk
+// selects controls by their aria-label and skips aria-disabled ones, but makes no ARIA assertions and no screen-reader
+// audit: it judges what is visible — text shown once, the danger tone's red alert, and the box geometry. Fails on main, where both places carry the
 // message, and on round 1 (ad79d847d6), where every plain confirm keeps the blank body band. Both surfaces
 // (--set sandbox=0 and --set sandbox=1).
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-confirm-once.check.mjs --set page=<build>
@@ -255,9 +255,18 @@ const EMPTY_MANAGER_TABS = {
 /* A press that still opens the dialog when Playwright's own click cannot land (a covered or just re-rendered
    control): the page's own click reaches the button's listener, which is what opens the confirm. */
 async function press(f, attr) {
+	const t0 = Date.now();
 	await f.locator(`[${attr}]`).first().scrollIntoViewIfNeeded({ timeout: 2500 }).catch(() => {});
-	try { await f.locator(`[${attr}]`).first().click({ timeout: 4000 }); return true; } catch (e) { /* fall back below */ }
-	return f.evaluate((a) => { const el = document.querySelector(`[${a}]`); if (!el) return false; el.click(); return true; }, attr).catch(() => false);
+	let clickErr = null;
+	try { await f.locator(`[${attr}]`).first().click({ timeout: 4000 }); return { ok: true, ms: Date.now() - t0 }; } catch (e) { clickErr = String(e.message).split('\n')[0].slice(0, 80); }
+	const why = await f.evaluate((a) => {
+		const el = document.querySelector(`[${a}]`);
+		if (!el) return 'the selected control is gone from the page (re-rendered away) before the press landed';
+		const r = el.getBoundingClientRect();
+		return `the press could not land on the control at ${Math.round(r.left)},${Math.round(r.top)} ${Math.round(r.width)}x${Math.round(r.height)}`;
+	}, attr).catch(() => 'the selected control could not be read');
+	const fell = await f.evaluate((a) => { const el = document.querySelector(`[${a}]`); if (!el) return false; el.click(); return true; }, attr).catch(() => false);
+	return { ok: fell, ms: Date.now() - t0, why: fell ? null : `${why}; ${clickErr}` };
 }
 
 const MENU = '.pm51-popout[role="menu"]';
@@ -267,10 +276,12 @@ const MENU = '.pm51-popout[role="menu"]';
    (FO-147) — the memory row menu shuts between a second item's press and its pointer press for exactly that
    reason. The page's click opens the same confirm the pointer would, and that dialog is what this check judges. */
 async function rowPress(f, moreAttr, label) {
+	const t0 = Date.now();
 	let why = 'menu never opened';
 	for (let attempt = 0; attempt < 2; attempt++) {
 		if (!(await f.locator(`${MENU}:visible`).count())) {
-			if (!(await press(f, moreAttr))) return { ok: false, why: 'the More button could not be pressed' };
+			const pr = await press(f, moreAttr);
+			if (!pr.ok) return { ok: false, why: `the More button could not be pressed (${pr.why || 'press failed'})`, ms: Date.now() - t0 };
 			await menuOpen(f, 1500);
 		}
 		why = await f.evaluate(({ sel, lbl }) => {
@@ -282,9 +293,9 @@ async function rowPress(f, moreAttr, label) {
 			el.click();
 			return 'pressed';
 		}, { sel: MENU, lbl: label }).catch((e) => `evaluate threw ${String(e).slice(0, 80)}`);
-		if (why === 'pressed') return { ok: true };
+		if (why === 'pressed') return { ok: true, ms: Date.now() - t0 };
 	}
-	return { ok: false, why };
+	return { ok: false, why, ms: Date.now() - t0 };
 }
 
 async function menuOpen(f, ms = 2000) {
@@ -325,6 +336,17 @@ async function pick(f, ws, tab, kind, seen, attr) {
 	}, { ws, tab, kind, seen, attr, pattern: CONFIRM_IN_PAGE.source });
 }
 
+/* A selected control the press could not land is a real skip: record its stable identity (the pick key), the wall
+   time, how long the press took and why it failed, so the strict skipped===0 guard names it (FO154-R2-WALK-COVERAGE,
+   FO171-CONTROL-CONFIRM-COVERAGE). The guard is unchanged: a real skip still fails. */
+function noteSkip(t, bag, kind, place, key, name, label, res) {
+	const ms = res && res.ms != null ? res.ms : null;
+	const why = (res && res.why) || 'the press did not land';
+	bag.skips.push({ kind, place, key, name, label: label || null, ms, why, at: new Date().toISOString() });
+	bag.skipped += 1;
+	t.log(`unvisited ${kind}: ${place} [${key}] ${name}${label ? ' / ' + label : ''} (press ${ms == null ? '?' : ms + 'ms'}: ${why})`);
+}
+
 async function scan(t, f, ws, tab, place, bag, seen, limits) {
 	let candidates = 0;
 	for (let i = 0; i < limits.buttons; i++) {
@@ -332,7 +354,8 @@ async function scan(t, f, ws, tab, place, bag, seen, limits) {
 		if (!picked) break;
 		candidates += 1;
 		seen.add(picked.key);
-		if (!(await press(f, 'data-fo154btn'))) { bag.skipped += 1; t.log(`unvisited confirm: ${place} / ${picked.name.slice(0, 60)}`); break; }
+		const pr = await press(f, 'data-fo154btn');
+		if (!pr.ok) { noteSkip(t, bag, 'confirm', place, picked.key, picked.name, null, pr); break; }
 		if (await dialogShown(f)) await judge(t, f, bag, `${place} / ${picked.name.slice(0, 50)}`);
 		else { await dismiss(f); await closeOpened(t, f, `${place} / ${picked.name.slice(0, 50)}`); }
 	}
@@ -340,7 +363,8 @@ async function scan(t, f, ws, tab, place, bag, seen, limits) {
 		const more = await pick(f, ws, tab, 'more', [...seen], 'data-fo154more');
 		if (!more) break;
 		seen.add(more.key);
-		if (!(await press(f, 'data-fo154more'))) { bag.skipped += 1; t.log(`unvisited menu: ${place} / ${more.name.slice(0, 60)}`); break; }
+		const pr = await press(f, 'data-fo154more');
+		if (!pr.ok) { noteSkip(t, bag, 'menu', place, more.key, more.name, null, pr); break; }
 		const menu = await menuOpen(f);
 		if (!menu) { await dismiss(f); await closeOpened(t, f, `${place} / ${more.name.slice(0, 50)}`); continue; }
 		const items = await f.evaluate(({ pattern, sel }) => {
@@ -354,7 +378,7 @@ async function scan(t, f, ws, tab, place, bag, seen, limits) {
 		for (const item of items.slice(0, limits.items)) {
 			candidates += 1;
 			const row = await rowPress(f, 'data-fo154more', item.label);
-			if (!row.ok) { bag.skipped += 1; t.log(`unvisited menu row: ${place} / ${more.name.slice(0, 40)} / ${item.label.slice(0, 40)} (${row.why})`); continue; }
+			if (!row.ok) { noteSkip(t, bag, 'menu row', place, more.key, more.name, item.label, row); continue; }
 			if (await dialogShown(f)) await judge(t, f, bag, `${place} / ${more.name.slice(0, 40)} / ${item.label.slice(0, 40)}`);
 			else { await dismiss(f); await closeOpened(t, f, `${place} / ${more.name.slice(0, 40)} / ${item.label.slice(0, 40)}`); }
 		}
@@ -433,7 +457,7 @@ export default async function (t) {
 	await f.locator('#pm-settings-root .domain-link').first().waitFor({ state: 'visible', timeout: 20000 });
 	const entries = dialogEntries(t);
 	t.log(`dialog entries: ${entries.path} (${entries.retired.length} retired, ${entries.custom.length} custom)`);
-	const bag = { warning: 0, plain: 0, dialogs: 0, skipped: 0, example: 0, entries, retiredSeen: [], customSeen: {} };
+	const bag = { warning: 0, plain: 0, dialogs: 0, skipped: 0, skips: [], example: 0, entries, retiredSeen: [], customSeen: {} };
 	const seen = new Set();
 	const domains = await f.locator('#pm-settings-root .domain-link').evaluateAll((els) => els.map((e) => e.getAttribute('data-domain')).filter(Boolean));
 	for (const domain of domains) {
@@ -481,5 +505,6 @@ export default async function (t) {
 	else await t.check("the item's own confirm is visited", bag.example > 0, `"Delete all memories?" seen ${bag.example} time(s), dialogs ${bag.dialogs}`);
 	await t.check('no retired dialog is reachable', bag.retiredSeen.length === 0, bag.retiredSeen.slice(0, 4).join(' | ') || `${entries.retired.length} retired`);
 	for (const c of entries.custom) await t.check(`the design-pinned confirm "${c.title}" was visited and judged by its own line`, (bag.customSeen[c.title] || 0) > 0, `seen ${bag.customSeen[c.title] || 0} time(s)`);
-	await t.check('no confirm was left unvisited', bag.dialogs > 0 && bag.skipped === 0, `skipped ${bag.skipped}, dialogs ${bag.dialogs}`);
+	const skipDetail = bag.skips.map((s) => `${s.place} [${s.key}] ${s.name}${s.label ? ' / ' + s.label : ''} (press ${s.ms == null ? '?' : s.ms + 'ms'}: ${s.why})`).join(' | ');
+	await t.check('no confirm was left unvisited', bag.dialogs > 0 && bag.skipped === 0, `skipped ${bag.skipped}, dialogs ${bag.dialogs}${skipDetail ? ' — ' + skipDetail : ''}`);
 }
