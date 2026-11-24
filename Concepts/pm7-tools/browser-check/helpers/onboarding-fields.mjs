@@ -1,11 +1,14 @@
 // Layout adapter for the original fields-lane R6 checks. The helper API and assertions stay the same; page/sandbox
 // opening uses the shared kit, including T3's actual flags. No app source or product fixture is introduced.
-import { pageFile, pageHref } from './page-path.mjs';
+import { pageFile, pageHref, sourcePage as readSourcePage } from './page-path.mjs';
 const DEFAULT_PAGE = new URL('../../../PMConcept7.html', import.meta.url).href;
 /* the page the run reads from disk (the built-file rows) and the same page as the browser loads it: `--set page=` may
    be a plain Windows path, a plain POSIX path or a file: URL (helpers/page-path.mjs: FO17-PAGEPATH-FILE-URL) */
 export const pagePath = (t) => pageFile(t.args.page, DEFAULT_PAGE);
 export const pageUrl = (t) => pageHref(t.args.page, DEFAULT_PAGE);
+/* the built page's own bytes for the rows that read the source: an http(s) page is read over HTTP (FO216-SOL-HTTP-
+   STATIC-PATH), a file page through pageFile; returns { bytes, text, sha256, url } */
+export const sourcePage = (t) => readSourcePage(t.args.page, DEFAULT_PAGE);
 export function onboardingApp(t, { sandboxDefault = true } = {}) {
   const sandbox = t.app.sandboxed(sandboxDefault);
   let f = null;

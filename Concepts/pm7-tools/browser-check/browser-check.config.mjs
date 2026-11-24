@@ -6,7 +6,7 @@
 //   browser-check run Concepts/pm7-tools/browser-check/checks --set page=/tmp/private-build.html
 import fs from 'node:fs';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { pageHref } from './helpers/page-path.mjs';
 
 export const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-dark`, `${f}-light`]);
 export const WIDTHS = [860, 1024, 1280, 1390, 1920];
@@ -28,11 +28,15 @@ export function paintedLookHeld(name, got) {
 
 export default (ctx) => {
 	const page = ctx.args.page || path.resolve(ctx.configDir, '..', '..', 'PMConcept7.html');
-	// A URL scheme has 2+ letters; "C:\..." is a Windows path
-	const url = /^[a-z][a-z0-9+.-]+:/i.test(page) ? page : pathToFileURL(path.resolve(page)).href;
-	if (!/^file:/.test(url) || fs.existsSync(new URL(url))) ctx.log(`page ${url}`);
-	else throw new Error(`no built page at ${page}; build it (python3 Concepts/onboarding/opus-5.5/tools/build.py --out <path>) and pass --set page=<path>`);
-	if (ctx.fleet && /^file:/.test(url)) throw new Error('--host: a browser on another machine can\'t open this machine\'s file:// page. Use ssh and a checkout of the branch on that machine.');
+	// One parse (helpers/page-path.mjs): a URL scheme has 2+ letters; "C:\..." is a Windows path and becomes its
+	// file: URL on any platform, so a --host-files run can load the copy on the browser's machine.
+	const url = pageHref(page);
+	if (/^file:/.test(url)) {
+		if (ctx.fleet && !ctx.hostFiles) throw new Error('--host: a browser on another machine can\'t open this machine\'s file:// page. Use ssh and a checkout of the branch on that machine.');
+		if (ctx.hostFiles) ctx.log(`page ${url} (--host-files: the file is on the browser's machine)`);
+		else if (fs.existsSync(new URL(url))) ctx.log(`page ${url}`);
+		else throw new Error(`no built page at ${page}; build it (python3 Concepts/onboarding/opus-5.5/tools/build.py --out <path>) and pass --set page=<path>`);
+	} else ctx.log(`page ${url}`);
 	let cb = 0;
 	// One viewport for the run's config and for every check that does not ask for a size itself.
 	const defaultViewport = { width: 1920, height: 1080 };

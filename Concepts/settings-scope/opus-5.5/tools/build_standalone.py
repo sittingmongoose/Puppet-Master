@@ -47,9 +47,9 @@ def layering(path):
         sys.exit(f"build_standalone: {path} has no rows with layering")
     groups = {f"{c['id']}.{g['id']}": g.get("title") for c in d.get("categories", []) for g in c.get("subgroups", [])}
     try:
-        shown = str(path.resolve().relative_to(HERE.parent.parent.parent))
+        shown = path.resolve().relative_to(HERE.parent.parent.parent).as_posix()
     except ValueError:
-        shown = str(path)
+        shown = path.as_posix()
     data = {"source": {"path": shown, "sha256": hashlib.sha256(raw).hexdigest(), "schema_version": d.get("schema_version"), "rows": len(rows)}, "groups": groups, "settings": rows}
     return "<script>window.PSX_LAYERING=" + json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/") + ";</script>\n"
 FIRST = ("<script>(function(){var ok=true;try{localStorage.getItem('x');}catch(e){ok=false;}"
@@ -128,13 +128,15 @@ def main():
     shared = host.replace(frame, 'srcdoc="' + html.escape(app, quote=True) + '"')
     bridge = (HERE / "concept-hub-bridge.js").read_text(encoding="utf-8")
     shared = shared.replace('<script src="concept-hub-bridge.js"></script>', "<script>\n" + bridge + "\n</script>")
+    # newline="": the build's LF bytes are written verbatim on every platform (text mode's default newline=None
+    # would write CRLF on Windows and break the published sha256); the reads above already normalise CRLF input.
     target = out / "settings-scope.html"
-    target.write_text(shared, encoding="utf-8")
+    target.write_text(shared, encoding="utf-8", newline="")
     print(f"{target} ({target.stat().st_size / 1e6:.1f} MB)")
     # the app file: PMConcept7 with the layer, no host
     app2 = layered(raw, host, FIRST_APP + RESTORE, inv)
     target2 = out / "settings-scope-app.html"
-    target2.write_text(app2, encoding="utf-8")
+    target2.write_text(app2, encoding="utf-8", newline="")
     print(f"{target2} ({target2.stat().st_size / 1e6:.1f} MB)")
 
 
