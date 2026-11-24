@@ -3,8 +3,8 @@
 
 `TestOwnerStorage.append` and `TestOwnerStorage.reserve` are recorded by the collector as **entries**, not as
 direct calls. `pm_goal_dg5_adapter.py:31-36` lists both in `STORAGE_ENTRIES` and `:65-66` registers them with
-`pm_goal_dg5_entries.entries`, so every corpus call — `pm_goal_test_adapters_selftest.py:92-93` inside
-`append_one` — runs through the entry wrapper and is recorded as `<case>/TestOwnerStorage.append` /
+`pm_goal_dg5_entries.entries`, so the corpus call at `pm_goal_test_adapters_selftest.py:93` (and the reserve call at
+`:92`) inside `append_one` runs through the entry wrapper and is recorded as `<case>/TestOwnerStorage.append` /
 `<case>/TestOwnerStorage.reserve`. The direct-call census (`dg5_direct_calls/methods.json`) therefore lists
 neither for `shared-adapter`: its `owner_methods` is the direct-call list, built by a18 from each case's
 `direct` map only, and the probe files these calls under `direct_sites[...]['entry']` on every archived
