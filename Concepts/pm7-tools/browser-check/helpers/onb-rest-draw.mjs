@@ -6,15 +6,22 @@
 // the two always match.
 // nierKey is NOT dropped: the kept box is judged against a fresh boxInScene, and dropping the key would heal it and
 // hide how long a stale box lasts.
+// NM18-L1: hudEl's coordinate label (.pst-ncoord) is serialised too, and st.coT (its 4 Hz write throttle) is opened
+// on both draws so a stale .pst-ncoord element reference (hudEl.__co) is observed, not hidden by the throttle.
 // Kept apart from the browser so tools/onb-rest-draw.selftest.mjs can run it on a stub stage.
 // frames: the frame numbers after the input to sample (0 is the input's own first draw), or { frames, reduced, media,
 // attr } to also assert an expected Reduced Motion state. At every scored sample, the stage's own reduced state
 // (st.reduced and st.root.dataset.reduced) must match the app's (O55.motion.reduced()) and the browser's
 // (prefers-reduced-motion media query / data-motion="reduced"), failing when they disagree. Returns the differences
 // (first 8), their count, the draws and NieR boxes judged, the last reduced-motion state, and the family and layout.
+// { anchor: true } counts frames from the input's mark (window.__k2Mark) instead of from this call, so a settlement
+// wait between the input and the call cannot move frame 0 past the input (FO18-K2-INPUT-FRAME-ORIGIN).
 export const DRAW_WATCH = async (arg) => {
 	const frames = Array.isArray(arg) ? arg : arg.frames;
 	const expect = Array.isArray(arg) ? null : arg;
+	// FO18-K2: anchor=true waits for the input's mark (window.__k2Mark, set by the check at the input event) before
+	// counting frame 0, so "frame 0" is the input's own first draw, not the first frame after a settlement wait.
+	const anchor = !Array.isArray(arg) && !!arg.anchor;
 	const st = document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage;
 	const ser = (n) => { if (!n) return ''; const out = []; const walk = (e, d) => { if (e.nodeType === 3) { out.push(d + JSON.stringify(e.data)); return; } if (e.nodeType !== 1) return; out.push(d + '<' + e.tagName + [...e.attributes].map((a) => a.name + '=' + a.value).sort().join(' ') + '>'); for (let c = e.firstChild; c; c = c.nextSibling) walk(c, d + ' '); }; for (let c = n.firstChild; c; c = c.nextSibling) walk(c, ''); return out.join('\n'); };
 	const r2 = (b) => (b ? b.map((v) => Math.round(v * 4) / 4).join(',') : 'null');
@@ -22,19 +29,26 @@ export const DRAW_WATCH = async (arg) => {
 	const one = () => {
 		const s = document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage;
 		if (!s || !s.ps || !s.gShadow) return;
+		// NM18-L1: the coordinate label (.pst-ncoord) lives in hudEl, not gHud, and its write is throttled to
+		// 4 Hz by st.coT. Open the throttle on both draws so each recomputes the label at this same stage time
+		// (the throttle is not a cache); the cache under test is the .pst-ncoord element reference hudEl.__co.
+		const ncOf = () => (s.hudEl && typeof s.hudEl.querySelector === 'function' ? s.hudEl.querySelector('.pst-ncoord') : null);
+		s.coT = 0;
 		s.render();
-		const a = { sh: ser(s.gShadow), hud: ser(s.gHud), box: r2(s.nierBox) };
+		const a = { sh: ser(s.gShadow), hud: ser(s.gHud), box: r2(s.nierBox), nc: ser(ncOf()) };
 		let fresh = null;
 		if (s.famName === 'nier') { const fb = s.boxInScene(s.bubble, 6); if (fb) { fresh = r2(fb); boxes++; } }
 		const g = s.gShadow; delete g.__pt; g.textContent = '';
 		const h = s.gHud; delete h.__b; h.textContent = '';
 		if (s.hudEl) { s.hudEl.__tg = undefined; s.hudEl.__co = undefined; }
+		s.coT = 0;
 		s.render();
-		const b = { sh: ser(s.gShadow), hud: ser(s.gHud), box: r2(s.nierBox) };
+		const b = { sh: ser(s.gShadow), hud: ser(s.gHud), box: r2(s.nierBox), nc: ser(ncOf()) };
 		checks++;
 		const diff = (x, y) => { const X = x.split('\n'), Y = y.split('\n'); for (let i = 0; i < Math.max(X.length, Y.length); i++) if (X[i] !== Y[i]) return `line ${i + 1}: cached ${X[i] || '(end)'} | fresh ${Y[i] || '(end)'} (${X.length} vs ${Y.length} lines)`; return ''; };
 		if (a.sh !== b.sh) bad.push(`frame ${n} shadows: ${diff(a.sh, b.sh)}`);
 		if (a.hud !== b.hud) bad.push(`frame ${n} hud: ${diff(a.hud, b.hud)}`);
+		if (a.nc !== b.nc) bad.push(`frame ${n} ncoord: ${diff(a.nc, b.nc)}`);
 		if (fresh && a.box !== fresh) bad.push(`frame ${n} nierBox kept ${a.box} vs fresh ${fresh}`);
 		const hasWin = typeof window !== 'undefined';
 		const appRed = hasWin && window.O55 && window.O55.motion && typeof window.O55.motion.reduced === 'function' ? !!window.O55.motion.reduced() : null;
@@ -58,7 +72,15 @@ export const DRAW_WATCH = async (arg) => {
 	};
 	await new Promise((res) => {
 		const max = Math.max(...frames);
-		const tick = () => { if (frames.includes(n)) { try { one(); } catch (e) { bad.push('oracle threw ' + e); } } if (++n > max) res(); else requestAnimationFrame(tick); };
+		let waiting = anchor, waited = 0;
+		const tick = () => {
+			if (waiting) {
+				if (typeof window !== 'undefined' && window.__k2Mark) { window.__k2Mark = null; waiting = false; }
+				else { if (++waited > 1200) { bad.push('oracle armed but no input mark within 1200 frames: could not judge'); res(); return; } requestAnimationFrame(tick); return; }
+			}
+			if (frames.includes(n)) { try { one(); } catch (e) { bad.push('oracle threw ' + e); } }
+			if (++n > max) res(); else requestAnimationFrame(tick);
+		};
 		requestAnimationFrame(tick);
 	});
 	return { bad: bad.slice(0, 8), nbad: bad.length, checks, boxes, motion: lastMotion, fam: st && st.famName, layout: st && st.layoutName };

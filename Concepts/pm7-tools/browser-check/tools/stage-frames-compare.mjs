@@ -32,6 +32,12 @@
 // head that breaks freezing on a frozen base, and a paint regression on a base that moves, are differences the
 // capture's own pictures cannot excuse. Its DOM is still judged. The compositor's own variation is a level or a few:
 // over 8 levels in at least 16 pixels is motion, not raster noise.
+// NM18-M3 / OM18-2: two back-to-back runs of the SAME build can still fail this way — the harness does not freeze every
+// capture identically run to run, so a same-build pair reports PIXELS differences and NOT FROZEN cells (it is not a
+// pass). Every NOT FROZEN cell is named in its own row (more than one look can be affected, e.g. basic-dark and
+// nier-dark). A not-frozen capture is counted once, in NOT FROZEN, never also in the equal / pixelwise / differ
+// buckets; and a capture both unfrozen and pixel-different across builds still prints its PIXELS line (the class
+// override does not suppress it). The cross-build pixel class is kept on the row as pixelClass.
 import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
@@ -137,17 +143,21 @@ for (const e of index) {
 	if (!p.same) {
 		const mine = [b + '.png', b + '.b.png'].filter((f) => fs.existsSync(f)).map((f) => fs.readFileSync(f)), base = [fs.readFileSync(a + '.png')].concat(refs);
 		p.matched = mine.some((m) => base.some((r) => pixels(r, m).same));
-		if (p.matched) matched++; else if (p.within) within++;
 	}
 	const d = dom(fs.readFileSync(a + '.dom.txt', 'utf8'), fs.readFileSync(b + '.dom.txt', 'utf8'));
-	if (p.same) px++; if (d.same) dm++;
 	/* did the harness freeze this capture at all? its own two pictures, 20 frames apart in the same run, in either run */
 	const selfDiff = (x, y) => { if (!fs.existsSync(y)) return null; const q = pixels(fs.readFileSync(x), fs.readFileSync(y)); return q.size ? { size: q.size } : { n: q.n, max: q.max || 0 }; };
 	const sb = selfDiff(a + '.png', a + '.b.png'), sc = selfDiff(b + '.png', b + '.b.png');
 	const moving = (s) => !!s && (s.size ? true : s.n >= SELF_MIN && s.max > SELF_LEVEL);
-	let cls = p.same ? 'same' : p.matched ? 'equal' : p.within ? 'pixelwise' : 'differ';
-	if (moving(sb) || moving(sc)) cls = 'not-frozen';
-	rows.push({ look: e.look, file: e.file, props: e.props, target: e.target, class: cls, pixels: p, dom: d, notFrozen: cls === 'not-frozen' ? { base: sb, changed: sc } : null });
+	const isNotFrozen = moving(sb) || moving(sc);
+	// NM18-M3: the cross-build pixel class is kept apart from the not-frozen override, so a capture that is both
+	// unfrozen and pixel-different still prints its PIXELS line (no suppression), and a not-frozen capture is counted
+	// once (in NOT FROZEN), never also in the equal / pixelwise / differ buckets (no double count).
+	const pixelClass = p.same ? 'same' : p.matched ? 'equal' : p.within ? 'pixelwise' : 'differ';
+	const cls = isNotFrozen ? 'not-frozen' : pixelClass;
+	if (!isNotFrozen) { if (p.same) px++; else if (p.matched) matched++; else if (p.within) within++; }
+	if (d.same) dm++;
+	rows.push({ look: e.look, file: e.file, props: e.props, target: e.target, class: cls, pixelClass, pixels: p, dom: d, notFrozen: isNotFrozen ? { base: sb, changed: sc } : null });
 }
 for (const e of extra) rows.push({ ...e, class: 'extra', extra: true });
 const judged = rows.filter((r) => r.pixels), weak = judged.filter((r) => r.class === 'pixelwise'), notFrozen = judged.filter((r) => r.class === 'not-frozen');
@@ -164,7 +174,7 @@ for (const r of notFrozen) {
 for (const r of bad) {
 	if (r.missing) { console.log(`MISSING ${r.look}/${r.file} (${r.missing})`); continue; }
 	if (r.extra) { console.log(`EXTRA  ${r.look}/${r.file}: in the base's index but not in its capture matrix`); continue; }
-	if (r.class === 'differ') console.log(`PIXELS ${r.look}/${r.file}: ${r.pixels.size || `${r.pixels.n} px differ, up to ${r.pixels.max} a channel, box ${r.pixels.box.join(',')}; outside the base's variation (${r.pixels.refs} more pictures of it) ${r.pixels.outside} px, up to ${r.pixels.outsideMax}`}`);
+	if (r.pixelClass === 'differ') console.log(`PIXELS ${r.look}/${r.file}: ${r.pixels.size || `${r.pixels.n} px differ, up to ${r.pixels.max} a channel, box ${r.pixels.box.join(',')}; outside the base's variation (${r.pixels.refs} more pictures of it) ${r.pixels.outside} px, up to ${r.pixels.outsideMax}`}`);
 	if (!r.dom.same) console.log(`DOM    ${r.look}/${r.file}: line ${r.dom.line} (${r.dom.lines})\n  base:    ${r.dom.base}\n  changed: ${r.dom.changed}`);
 }
 if (jsonOut) fs.writeFileSync(jsonOut, JSON.stringify(rows, null, 1));

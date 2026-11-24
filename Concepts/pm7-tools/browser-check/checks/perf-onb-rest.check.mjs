@@ -51,7 +51,8 @@
 // --set looks= (default all ten; `dark` the five Dark looks) --set screens= (default welcome,where,ready)
 // --set settle= (default 20000) --set viewSettle= (default 6000) --set ms= --set same= --set writes= --set forced= --set draw=0 --set drawFrames=
 // --set journey=0
-// Both surfaces. About 11 minutes with the defaults (the draw rows add about 4).
+// One surface per run: the one --set sandbox picks (normal by default; --set sandbox=1 for the sandbox); there is no
+// surfaces() loop, so run it once per surface for both (OM18-1). About 11 minutes with the defaults (the draw rows add about 4).
 import { traceEvents, summarise } from '../helpers/frame-trace.mjs';
 import { muteSound } from '../helpers/quiet-page.mjs';
 import { forcedLayoutRow } from '../helpers/onb-rest-rows.mjs';
@@ -320,10 +321,20 @@ export default async function (t) {
 				await t.page.mouse.move(W - 6, Math.round(H / 2));
 			}
 			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 6000));
-			const watch = async (label, expect) => {
-				const r = await f.evaluate(DRAW_WATCH, expect ? Object.assign({ frames: dframes }, expect) : dframes);
-				await t.check(`${look} ${label}: the cached draw equals a fresh draw (${r.fam}, ${r.layout}, ${r.checks} draws, ${r.boxes} NieR boxes)`, r.nbad === 0 && r.checks > 0, r.nbad ? `${r.nbad} differences: ${r.bad.join(' || ')}` : 'same');
+			const verdict = async (label, r) => t.check(`${look} ${label}: the cached draw equals a fresh draw (${r.fam}, ${r.layout}, ${r.checks} draws, ${r.boxes} NieR boxes)`, r.nbad === 0 && r.checks > 0, r.nbad ? `${r.nbad} differences: ${r.bad.join(' || ')}` : 'same');
+			const watch = async (label, expect) => verdict(label, await f.evaluate(DRAW_WATCH, expect ? Object.assign({ frames: dframes }, expect) : dframes));
+			// FO18-K2: an input-driven watch is armed BEFORE its input and counts frames from the input's mark
+			// (window.__k2Mark), so frame 0 is the input's own first draw — a settlement wait after the input cannot
+			// move it past the event. deliver() performs the input and sets the mark at the event; for Reduced Motion
+			// the mark is set when the mounted stage actually enters/leaves it, so the expected reduced state holds
+			// from frame 0. 'at rest' and 'long line typed' are settled-state samples (no transition input): watch().
+			const watchAt = async (label, deliver, expect) => {
+				await f.evaluate(() => { window.__k2Mark = null; });
+				const p = f.evaluate(DRAW_WATCH, Object.assign({ frames: dframes, anchor: true }, expect || {}));
+				await deliver();
+				await verdict(label, await p);
 			};
+			const markWhen = (want) => f.waitForFunction((w) => { const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage; if (st && (w === 'reduced' ? st.reduced : !st.reduced)) { window.__k2Mark = 1; return true; } return false; }, want, { timeout: 2000 }).catch(() => {});
 			const checkStill = async (label) => {
 				await f.waitForFunction(() => { const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage; return !!st && st.reduced && !st.raf; }, null, { timeout: 600 }).catch(() => {});
 				const read = () => {
@@ -344,40 +355,27 @@ export default async function (t) {
 			t.log(`${look} draw oracle: before the inputs: ${dw.v.why}`);
 			if (!dw.v.ok) { await t.check(`${look}: the draw oracle's cell is at rest`, false, `${dw.v.why}: could not judge`); continue; }
 			await watch('at rest');
-			await f.evaluate(() => { document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage.tip({ id: 'onbr-draw-tip', title: 'A note', text: 'What this choice means, in a few words.' }); });
-			await watch('note open');
-			await f.evaluate(() => { document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage.tip(null); });
-			await watch('note closed');
-			await f.evaluate(() => { document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage.say('A longer line now, one that takes two or three lines in the box so the box grows taller than it was before.', null, false); });
-			await watch('new long line');
+			await watchAt('note open', () => f.evaluate(() => { const st = document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage; st.tip({ id: 'onbr-draw-tip', title: 'A note', text: 'What this choice means, in a few words.' }); window.__k2Mark = 1; }));
+			await watchAt('note closed', () => f.evaluate(() => { const st = document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage; st.tip(null); window.__k2Mark = 1; }));
+			await watchAt('new long line', () => f.evaluate(() => { const st = document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage; st.say('A longer line now, one that takes two or three lines in the box so the box grows taller than it was before.', null, false); window.__k2Mark = 1; }));
 			await t.page.waitForTimeout(3000);
 			await watch('long line typed');
-			await t.viewport(740, 900); await watch('resized to 740 (the layout change)');
+			await watchAt('resized to 740 (the layout change)', async () => { await t.viewport(740, 900); await f.evaluate(() => { window.__k2Mark = 1; }); });
 			await t.page.waitForTimeout(800);
-			await t.viewport(W, H); await watch('back to 1920');
+			await watchAt('back to 1920', async () => { await t.viewport(W, H); await f.evaluate(() => { window.__k2Mark = 1; }); });
 			await t.page.waitForTimeout(800);
-			await t.viewport(1280, H - 120); await watch('resized within the layout');
-			await t.viewport(W, H); await watch('back again');
+			await watchAt('resized within the layout', async () => { await t.viewport(1280, H - 120); await f.evaluate(() => { window.__k2Mark = 1; }); });
+			await watchAt('back again', async () => { await t.viewport(W, H); await f.evaluate(() => { window.__k2Mark = 1; }); });
 			await t.page.waitForTimeout(800);
 			const painted = (fm, m) => f.waitForFunction(([fm, m]) => { const th = document.documentElement.getAttribute('data-theme') || '', nier = document.documentElement.getAttribute('data-o55-nier') === 'on'; return (fm === 'nier' ? nier : !nier && th.startsWith(fm + '-')) && th.endsWith('-' + m); }, [fm, m], { timeout: 20000 }).then(() => true, () => false);
-			await f.evaluate(([fm, m]) => window.O55.ui.applyLook(fm, m), [fam0, mode0 === 'light' ? 'dark' : 'light']);
-			await painted(fam0, mode0 === 'light' ? 'dark' : 'light');
-			await watch('live look switch away');
-			await f.evaluate(([fm, m]) => window.O55.ui.applyLook(fm, m), [fam0, mode0]);
-			await painted(fam0, mode0);
+			await watchAt('live look switch away', async () => { await f.evaluate(([fm, m]) => { window.O55.ui.applyLook(fm, m); window.__k2Mark = 1; }, [fam0, mode0 === 'light' ? 'dark' : 'light']); await painted(fam0, mode0 === 'light' ? 'dark' : 'light'); });
+			await watchAt('live look switch back', async () => { await f.evaluate(([fm, m]) => { window.O55.ui.applyLook(fm, m); window.__k2Mark = 1; }, [fam0, mode0]); await painted(fam0, mode0); });
 			await t.page.waitForTimeout(1500);
-			await watch('live look switch back');
 			try {
-				await t.emulate({ reducedMotion: 'reduce' }); await t.page.waitForTimeout(500);
-				await checkStill('Reduced Motion on');
-				await watch('Reduced Motion on', { reduced: true, media: true });
-				await t.emulate({ reducedMotion: 'no-preference' }); await t.page.waitForTimeout(500);
-				await watch('Reduced Motion off', { reduced: false, media: false });
-				await f.evaluate(() => document.documentElement.setAttribute('data-motion', 'reduced')); await t.page.waitForTimeout(500);
-				await checkStill('app Reduced Motion on');
-				await watch('app Reduced Motion on', { reduced: true, attr: true });
-				await f.evaluate(() => document.documentElement.removeAttribute('data-motion')); await t.page.waitForTimeout(500);
-				await watch('app Reduced Motion off', { reduced: false, attr: false });
+				await watchAt('Reduced Motion on', async () => { await t.emulate({ reducedMotion: 'reduce' }); await markWhen('reduced'); await checkStill('Reduced Motion on'); }, { reduced: true, media: true });
+				await watchAt('Reduced Motion off', async () => { await t.emulate({ reducedMotion: 'no-preference' }); await markWhen('normal'); }, { reduced: false, media: false });
+				await watchAt('app Reduced Motion on', async () => { await f.evaluate(() => document.documentElement.setAttribute('data-motion', 'reduced')); await markWhen('reduced'); await checkStill('app Reduced Motion on'); }, { reduced: true, attr: true });
+				await watchAt('app Reduced Motion off', async () => { await f.evaluate(() => document.documentElement.removeAttribute('data-motion')); await markWhen('normal'); }, { reduced: false, attr: false });
 			} finally {
 				await t.emulate({ reducedMotion: null }).catch(() => {});
 				await f.evaluate(() => document.documentElement.removeAttribute('data-motion')).catch(() => {});

@@ -107,4 +107,54 @@ const watch = async (st, arg) => {
 	assert.equal(rAttrGood.nbad, 0, `matching data-motion="reduced" passes: ${JSON.stringify(rAttrGood.bad)}`);
 	delete globalThis.window; delete globalThis.document.documentElement;
 }
+// NM18-L1: a stale .pst-ncoord element reference (hudEl.__co kept a detached node after a HUD rebuild) is observed:
+// the cached draw writes the coordinate to the detached node, the live label keeps its old text, and the fresh draw
+// (cache dropped, coT opened) re-queries the live node and writes the current coordinate. The throttle is opened on
+// both draws, so this is the element-reference cache failing, not the 4 Hz throttle.
+{
+	const gShadow = el('g'), gHud = el('g'), bubble = el('div'), hudEl = el('div');
+	const live = el('span'); attr(live, 'class', 'pst-ncoord'); append(live, txt('X 000 Y 000')); append(hudEl, live);
+	hudEl.querySelector = (sel) => (sel === '.pst-ncoord' ? live : null);
+	const st = {
+		famName: 'nier', layoutName: 'wide', ps: {}, gShadow, gHud, hudEl, bubble, t: 40, coT: 0, coord: 'X 000 Y 000',
+		live: 'M0 0L1 1', nierBox: [0, 0, 10, 10], nierKey: ['k'], boxInScene: () => [0, 0, 10, 10],
+		render() {
+			if (!gShadow.__pt) { gShadow.textContent = ''; const a = el('path'); append(gShadow, a); gShadow.__pt = { arc: a, d: this.live }; }
+			attr(gShadow.__pt.arc, 'd', gShadow.__pt.d);
+			if (!gHud.__b) { gHud.textContent = ''; const p = el('path'); append(gHud, p); gHud.__b = [p]; gHud.__bd = this.live; }
+			attr(gHud.__b[0], 'd', gHud.__bd);
+			const co = hudEl.__co !== undefined ? hudEl.__co : (hudEl.__co = hudEl.querySelector('.pst-ncoord'));
+			if (co && this.t - (this.coT || 0) > .25) { this.coT = this.t; co.textContent = this.coord; }
+		}
+	};
+	st.render(); // healthy: __co caches the live label
+	// a HUD rebuild swaps the live label, but __co still points at the old, detached node (stale text)
+	const detached = live, fresh = el('span'); attr(fresh, 'class', 'pst-ncoord'); append(fresh, txt('X 000 Y 000'));
+	hudEl.querySelector = (sel) => (sel === '.pst-ncoord' ? fresh : null);
+	detached.textContent = 'X 999 Y 999'; st.coord = 'X 001 Y 002';
+	const r = await watch(st, [0]);
+	assert.ok(r.bad.some((b) => /ncoord/.test(b) && /X 000 Y 000/.test(b) && /X 001 Y 002/.test(b)), `a stale .pst-ncoord reference is reported with both draws: ${JSON.stringify(r.bad)}`);
+	// once __co is re-queried to the live label, the same watch passes
+	hudEl.__co = fresh; st.coord = 'X 001 Y 002'; fresh.textContent = 'X 001 Y 002';
+	const rGood = await watch(st, [0]);
+	assert.equal(rGood.nbad, 0, `a healthy .pst-ncoord draws the same cached and fresh: ${JSON.stringify(rGood.bad)}`);
+}
+// FO18-K2: anchor counts frames from the input mark (window.__k2Mark), not from the call. Before the mark the
+// oracle draws nothing (frame 0 cannot precede the input); after the mark the next frame is frame 0.
+{
+	const st = stage('basic'); st.render();
+	let renders = 0; const orig = st.render.bind(st); st.render = () => { renders++; orig(); };
+	globalThis.window = { __k2Mark: null };
+	host.__pipStage = st;
+	const p = DRAW_WATCH({ frames: [0, 1], anchor: true });
+	for (let i = 0; i < 5; i++) { const q = rafQ; rafQ = []; q.forEach((fn) => fn()); }
+	assert.equal(renders, 0, 'anchored: no draw before the input mark (a settlement wait cannot move frame 0 past the input)');
+	window.__k2Mark = 1; // the input event
+	for (let i = 0; i <= 3; i++) { const q = rafQ; rafQ = []; q.forEach((fn) => fn()); }
+	const r = await p;
+	assert.equal(r.checks, 2, `both asked frames sampled after the mark: ${JSON.stringify(r)}`);
+	assert.equal(r.nbad, 0, `a healthy cache anchored draws the same: ${JSON.stringify(r.bad)}`);
+	assert.equal(window.__k2Mark, null, 'the input mark consumed');
+	delete globalThis.window;
+}
 console.log('PASS the draw oracle: a healthy cache draws the same cached and fresh; a stale protractor or bracket cache is reported with both draws; NieR\'s kept box is judged against a fresh boxInScene with nierKey left alone; live Reduced Motion stage/app/browser mismatches fail');
