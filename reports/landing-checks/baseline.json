@@ -12,18 +12,21 @@
   },
   {
    "check": "audit-governance",
-   "count": 33,
+   "count": 39,
    "error": "audit_closure_validator_error",
    "fingerprints": [
+    "07b7709f5968",
     "09b580e0b418",
     "247c5f7c2e20",
     "2c5f33669aee",
     "2e533fa483ef",
     "30c340e1cdc2",
     "45b066cf1641",
+    "52c786198a2e",
     "5c137ac47696",
     "63d4614e04cb",
     "76c4a6b65a66",
+    "7f5559c53a8b",
     "84d7b59b8a63",
     "8796f670028c",
     "962c8150aeb3",
@@ -34,17 +37,20 @@
     "aac113588a00",
     "ae996c3ba33a",
     "b0177ecbc599",
+    "b0353998965a",
     "b874c9dc8f40",
     "bc9737ea5585",
     "c0d488bd89eb",
     "c2d352388369",
     "c3aa89b7219d",
+    "c43e515a6f00",
     "cadec0b0b291",
     "cd40f6a20e94",
     "cd9d5ba74892",
     "d035c44e6079",
     "d70733c932f9",
     "de84fc67d0e6",
+    "e027ac232e4e",
     "e1824239ee90",
     "e220de5c10c5",
     "fb61317b43b8"
@@ -183,7 +189,7 @@
   },
   {
    "check": "audit-governance",
-   "count": 36,
+   "count": 39,
    "error": "event_authority_currentness_source_drift",
    "fingerprints": [
     "006050d34ec8",
@@ -195,6 +201,7 @@
     "237c1953c9a7",
     "27428420911e",
     "2a9afa12ee0a",
+    "2dde2bc7700b",
     "30211e1a7e33",
     "3144f19a6964",
     "3a148e9930cd",
@@ -213,6 +220,7 @@
     "89ddd8ccd5b2",
     "966713e6ac2f",
     "97e212c23116",
+    "9ab756ff1c91",
     "a30d32e5cc7b",
     "a40aa02ebc9f",
     "d1cb22ec6bb2",
@@ -220,6 +228,7 @@
     "d94a146403ea",
     "d9e287f261e5",
     "dd3707254603",
+    "e62a59ff2641",
     "ebc2af553cac",
     "fe9b3049d0f1"
    ],
@@ -432,6 +441,16 @@
    "fingerprints": [
     "271f85538f3e"
    ],
+   "path": "Plans/00-plans-index.md",
+   "subcheck": "spec_lock"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
    "path": "Plans/Automated_Testing_System.md",
    "subcheck": "spec_lock"
   },
@@ -443,6 +462,16 @@
     "271f85538f3e"
    ],
    "path": "Plans/Contracts_V0.md",
+   "subcheck": "spec_lock"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "Plans/DRY_Rules.md",
    "subcheck": "spec_lock"
   },
   {
@@ -597,18 +626,21 @@
   },
   {
    "check": "run-gates",
-   "count": 33,
+   "count": 39,
    "error": "audit_closure_validator_error",
    "fingerprints": [
+    "07b7709f5968",
     "09b580e0b418",
     "247c5f7c2e20",
     "2c5f33669aee",
     "2e533fa483ef",
     "30c340e1cdc2",
     "45b066cf1641",
+    "52c786198a2e",
     "5c137ac47696",
     "63d4614e04cb",
     "76c4a6b65a66",
+    "7f5559c53a8b",
     "84d7b59b8a63",
     "8796f670028c",
     "962c8150aeb3",
@@ -619,17 +651,20 @@
     "aac113588a00",
     "ae996c3ba33a",
     "b0177ecbc599",
+    "b0353998965a",
     "b874c9dc8f40",
     "bc9737ea5585",
     "c0d488bd89eb",
     "c2d352388369",
     "c3aa89b7219d",
+    "c43e515a6f00",
     "cadec0b0b291",
     "cd40f6a20e94",
     "cd9d5ba74892",
     "d035c44e6079",
     "d70733c932f9",
     "de84fc67d0e6",
+    "e027ac232e4e",
     "e1824239ee90",
     "e220de5c10c5",
     "fb61317b43b8"
@@ -728,17 +763,17 @@
     "64392ff7cf25",
     "6afb48172bc6",
     "6c2e3b7acc2a",
-    "6dae418831da",
     "6e7f4d13a6a9",
-    "7ba7abc0e17f",
     "89ddd8ccd5b2",
     "966713e6ac2f",
     "97e212c23116",
+    "9ab756ff1c91",
     "a30d32e5cc7b",
     "a40aa02ebc9f",
     "d1cb22ec6bb2",
     "d5be4dc5e9b9",
     "d9e287f261e5",
+    "e62a59ff2641",
     "ebc2af553cac",
     "fe9b3049d0f1"
    ],
@@ -839,6 +874,16 @@
    "fingerprints": [
     "271f85538f3e"
    ],
+   "path": "Plans/00-plans-index.md",
+   "subcheck": "verify_spec_lock"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
    "path": "Plans/Automated_Testing_System.md",
    "subcheck": "verify_spec_lock"
   },
@@ -850,6 +895,16 @@
     "271f85538f3e"
    ],
    "path": "Plans/Contracts_V0.md",
+   "subcheck": "verify_spec_lock"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "Plans/DRY_Rules.md",
    "subcheck": "verify_spec_lock"
   },
   {
@@ -995,30 +1050,30 @@
  ],
  "checks": {
   "audit-governance": {
-   "failure_total": 5843,
+   "failure_total": 6034,
    "status": "fail",
    "subchecks": {
     "audit_closure": {
-     "reported": 34,
-     "sampled": 34
+     "reported": 40,
+     "sampled": 40
     },
     "evidence": {
-     "exported": 2863,
-     "reported": 2863,
+     "exported": 2953,
+     "reported": 2953,
      "sampled": 100
     },
     "implementation_readiness": {
-     "reported": 67,
-     "sampled": 67
+     "reported": 70,
+     "sampled": 70
     },
     "plan_graph": {
-     "exported": 2863,
-     "reported": 2863,
+     "exported": 2953,
+     "reported": 2953,
      "sampled": 100
     },
     "spec_lock": {
-     "reported": 16,
-     "sampled": 16
+     "reported": 18,
+     "sampled": 18
     }
    }
   },
@@ -1033,40 +1088,40 @@
    }
   },
   "run-gates": {
-   "failure_total": 5843,
+   "failure_total": 6034,
    "status": "fail",
    "subchecks": {
     "validate_audit_closure": {
-     "reported": 34,
-     "sampled": 34
+     "reported": 40,
+     "sampled": 40
     },
     "validate_evidence": {
-     "exported": 2863,
-     "reported": 2863,
+     "exported": 2953,
+     "reported": 2953,
      "sampled": 50
     },
     "validate_implementation_readiness": {
-     "exported": 67,
-     "reported": 67,
+     "exported": 70,
+     "reported": 70,
      "sampled": 50
     },
     "validate_plan_graph": {
-     "exported": 2863,
-     "reported": 2863,
+     "exported": 2953,
+     "reported": 2953,
      "sampled": 50
     },
     "verify_spec_lock": {
-     "reported": 16,
-     "sampled": 16
+     "reported": 18,
+     "sampled": 18
     }
    }
   }
  },
- "commit": "ca00293755a382e27cdd4c75072d5e9df1080f1f",
+ "commit": "ff1ae1a2cbe6e2fbdfd20688e65591ba1e07881f",
  "export_buckets": [
   {
    "check": "audit-governance",
-   "count": 2683,
+   "count": 2773,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1263,7 +1318,7 @@
   },
   {
    "check": "audit-governance",
-   "count": 2683,
+   "count": 2773,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1460,7 +1515,7 @@
   },
   {
    "check": "run-gates",
-   "count": 2683,
+   "count": 2773,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1677,7 +1732,7 @@
   },
   {
    "check": "run-gates",
-   "count": 36,
+   "count": 39,
    "error": "event_authority_currentness_source_drift",
    "fingerprints": [
     "006050d34ec8",
@@ -1689,6 +1744,7 @@
     "237c1953c9a7",
     "27428420911e",
     "2a9afa12ee0a",
+    "2dde2bc7700b",
     "30211e1a7e33",
     "3144f19a6964",
     "3a148e9930cd",
@@ -1707,6 +1763,7 @@
     "89ddd8ccd5b2",
     "966713e6ac2f",
     "97e212c23116",
+    "9ab756ff1c91",
     "a30d32e5cc7b",
     "a40aa02ebc9f",
     "d1cb22ec6bb2",
@@ -1714,6 +1771,7 @@
     "d94a146403ea",
     "d9e287f261e5",
     "dd3707254603",
+    "e62a59ff2641",
     "ebc2af553cac",
     "fe9b3049d0f1"
    ],
@@ -1812,7 +1870,7 @@
   },
   {
    "check": "run-gates",
-   "count": 2683,
+   "count": 2773,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -2029,8 +2087,8 @@
   },
   "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
  },
- "recorded_at_utc": "2026-11-22T22:35:36Z",
- "run_dir": "Plans/.plan_migration/pds-20261122-002-current-planunit-snapshot",
+ "recorded_at_utc": "2026-11-24T06:13:53Z",
+ "run_dir": "Plans/.plan_migration/pds-20261124-001-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
  "untracked_inputs": [
   "tests/agent_packet_restrictions"

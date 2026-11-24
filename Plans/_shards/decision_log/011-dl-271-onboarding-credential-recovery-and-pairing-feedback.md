@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L63172
+Source lines: L28747-L63292
 
-Source SHA256: `f3d5dadc3d0167515e273c4168fd817c62c31565daa1f5044e6fdcb450029fea`
+Source SHA256: `78412a22c2f315f2ee351efd952ae98a9ceb766da9184c3abfa1084dbf6b4171`
 
 ---
 
@@ -34434,3 +34434,123 @@ preserved_exact_tokens:
 negative_constraints:
 - No new admission, policy decision, verdict change, producer adoption or governance seal.
 ```
+
+### DL-2601 - Rust Markdown Pipeline, Streaming Correctness, Sanitization, Math, Previews, And Testing Gates
+
+```yaml
+plan_unit_id: DL-2601
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  On 2026-11-23, under DL-2601, following independent five-reviewer audits of @pierre/words (v0.3.0) and T3 Code nightly
+  v0.1.12-nightly.20261123.5151 (commit 856b105fa23f), Jared directed Puppet Master to fold all P1 and P2
+  architectural, streaming, security, math, preview, and testing gaps into canonical Plans while keeping
+  Puppet Master's native Rust stack. Puppet Master does not adopt @pierre/words or its sibling JavaScript/WebAssembly
+  (JS/Wasm) packages (@pierre/highlights, @pierre/diffs, @pierre/trees) as shipped product dependencies; @pierre/words
+  may be used strictly as an unshipped dev-only CI differential comparator (without copying CC BY-SA 4.0 spec
+  corpora into Puppet Master fixtures).
+
+  Canonical product truth stays on one standalone shared Rust Markdown crate linked by both the interface-model
+  crate and the local daemon (DR-093, ACD-641, F3-583), built strictly on pulldown-cmark (any future parser
+  replacement requires its own owner decision switching every consumer at once and passing the ATS-086 corpus gate),
+  syntect, ammonia, Mermaid validation, resvg/usvg/tiny-skia, and a pre-build selected Rust TeX-to-SVG layout crate
+  with one bundled math font (RTIM-029), feeding Slint desktop (F3-582), Leptos web (F3-583), daemon Tantivy search
+  text indexing (ACD-061), clipboard copy, file previews, and composer detection. The nine P1-P2 lesson areas lock:
+  (1) anti-spoof parser provenance over a typed Rust IR tree so raw HTML can never forge data-pm-node-id,
+  data-pm-source-start, data-pm-source-end, data-pm-parse-revision, data-pm-capabilities, parser-only id/class
+  tokens, directive payloads, data-pm-math-tex, or data-pm-code-source wrappers (ACD-641, RTIM-027, RTIM-033);
+  (2) one explicit positive Rust ammonia element/attribute/anchor allowlist, unified non-mutating URL dispatch,
+  closed image trust classes (workspace_local, F-035 authorized pm_artifact, inline_data_image, blocked) with
+  decode-bomb caps, explicit SVG geometry+presentation allowlist blocking external url(...) values, all style
+  elements and inline style attributes denied in message-flow Markdown, and disabled desktop usvg
+  filesystem/external ImageHrefResolver reads (ACD-294, ACD-643, F3-380); (3) intra-message parser-confirmed
+  closed-block sealing with pending+chunk fast-path guard, non-exhaustive whole-document fallback and cache
+  rebinding, cache promotion without double-render, strict ACD-470 identical settled-frame identity with no
+  incomplete-inline repair and closed-fence raw-source Mermaid streaming preserved across terminal states,
+  closed-fence UI_Command_Catalog/UCC-074/ACD-638 gating (code_block_fence_closed for cmd.chat.insert_code_block
+  and cmd.chat.apply_code_block with cmd.chat.copy_code_block open-fence available), active F3-425 theme-token
+  incremental per-line syntect highlighting with 64-line buckets, 2 MiB live-checkpoint cap, and byte/depth
+  plain-suffix degradation, bounded app-global desktop/web derived caches separate from ACD-243, and 2-endpoint
+  selection pinning within ACD-236 (ACD-238, ACD-239, ACD-240, ACD-243, ACD-470, ACD-638, ACD-642, UCC-074,
+  F3-304); (4) first-class Rust TeX-to-SVG math rendering with strict SVG allowlist, 16,000-byte / 48-depth /
+  4,096-node / 2048x2048-px DoS caps, and data-pm-math-tex copy-back (ACD-643); (5) parser DoS caps, desktop arena
+  shrinking, bounded GFM bare-URL autolinking, and agent-authored Markdown fidelity fixtures (ACD-641, F3-414);
+  (6) a Leptos pre-Wasm boot failure notice verified under unavailable WebAssembly, strict CSP lacking
+  'wasm-unsafe-eval', <noscript>, and --jitless slow-path profiles plus lazily loaded shared-crate error isolation
+  distinct from closed Mermaid syntax errors (F3-583, ATS-023); (7) chunked large-Markdown previews within F-028
+  caps (admitted-buffer reference extraction), automatic inert preview option for F-070 preview_untrusted and
+  FileManager §11.5 snapshots, and literal-first path-vs-line:column disambiguation including timestamped folders
+  (F-162); (8) single-decode read-ahead catch-up replay resuming from the last durable contiguous applied cursor or
+  verified snapshot on live-buffer overflow (buffered cursor range diagnostic for recovery) and rollback-deduped
+  replay metrics for ProjectionReplayCoordinator while keeping SP-338's zero-replay thread open (SIR-005); and
+  (9) UTF-8 scalar-boundary prefix-equivalence, render-count, forged-provenance, scaling/numeric-RSS, pinned
+  CI-fetched corpus-equivalence, and same-build A/A noise calibration separating ATS-024 run-validity from ATS-086
+  regression checks against unchanged 150 ms p95 / 50 ms p99 gates (ATS-024, ATS-086). No new command, event family,
+  Settings row, native execution claim, or governance reseal is introduced.
+gui_related: true
+gui_classification_reason: Governs shared chat, preview, Mermaid, math, rich-text, and Leptos boot presentation contracts alongside shared Rust parsing and testing gates.
+split_recommended: false
+depends_on:
+- DL-139
+- DL-270
+- RTIM-029
+- ACD-470
+- F3-583
+unblocks: []
+acceptance_criteria:
+- "@pierre/words and sibling JavaScript/WebAssembly (JS/Wasm) packages are excluded from shipped product dependencies; dev-only CI differential comparison ships zero bytes and copies no CC BY-SA 4.0 corpora."
+- "All nine P1-P2 lesson areas (DR-093, ACD-641..643, F-162, ATS-086, and targeted updates to UCC-074, ACD-238/239/240/243/294/470/638, F3-304/380/414/583, RTIM-027/029/033/036, SIR-005, ATS-023/024) are consistent and reference DL-2601."
+- "No governance lock, Spec_Lock.json, auto_decisions.jsonl, WorkNodes, NodeSeeds, or native proof claims are created."
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-command-payload-defs-check.py
+risk_class: rendering_pipeline_and_sanitization_drift
+reasoning_tier: high
+context_scope: markdown_streaming_and_preview_hardening_20261123
+implementation_surfaces:
+- Plans/Decision_Log.md
+- Plans/DRY_Rules.md
+- Plans/UI_Command_Catalog.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+- Plans/FileManager.md
+- Plans/rewrite-tie-in-memo.md
+- Plans/Shared_Integration_Runtime.md
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: owner_decision_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- "2026-11-23 user directive after five-reviewer audits of @pierre/words (v0.3.0) and pingdotgg/t3code v0.1.12-nightly.20261123.5151 (856b105fa23f)"
+- "/mnt/Cursor/PuppetMaster-Evidence/tests/words-t3code-audit-20261123/AUDIT_SUMMARY_20261123.md, SHA-256 bd501ad9e0c2a903f4f0b2fb192f5c5dc29ef22f84f0d93ee5a7837b905b952f"
+- Plans/Decision_Log.md#DL-139
+- Plans/Decision_Log.md#DL-270
+preserved_exact_tokens:
+- DL-2601
+- pulldown-cmark
+- syntect
+- ammonia
+- resvg
+- usvg
+- tiny-skia
+- data-pm-source-start
+- inert
+- A/A noise calibration
+negative_constraints:
+- Do not adopt @pierre/words, @pierre/highlights, @pierre/diffs, or @pierre/trees as shipped Puppet Master product dependencies.
+- Do not fork Markdown parsing between Slint desktop, Leptos web, and server/Tantivy search.
+- Do not copy CC BY-SA 4.0 third-party CommonMark/GFM spec corpora into Puppet Master fixtures.
+- Do not reseal governance artifacts or claim native execution proof from Plan edits.
+owner_hints:
+- Plans/Decision_Log.md
+- Plans/DRY_Rules.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+- Plans/FileManager.md
+- Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/DRY_Rules.md#DR-093, ContractName:Plans/UI_Command_Catalog.md#UCC-074, ContractName:Plans/assistant-chat-design.md#ACD-641, ContractName:Plans/assistant-chat-design.md#ACD-642, ContractName:Plans/assistant-chat-design.md#ACD-643, ContractName:Plans/FileManager.md#F-162, ContractName:Plans/Automated_Testing_System.md#ATS-086

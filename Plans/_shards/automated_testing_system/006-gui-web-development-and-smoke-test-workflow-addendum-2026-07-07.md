@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L111-L334
+Source lines: L111-L336
 
-Source SHA256: `eb4a9e10a80cc73e94ade88cd2fa4494dc396127505d2ea0529a526542ed37c8`
+Source SHA256: `dc14397b4cb04c537a1aba47c1c89071cb7fea7ef8272c08b1028fb548444f32`
 
 ---
 
@@ -24,7 +24,7 @@ canonical_text: >-
   automation smoke test that drives and reads the page's own elements, screenshots/state-capture, deterministic state
   hooks, and fast rebuild/reload; the same fixtures and behavioral scenarios also run through the Slint desktop, and
   each interface's screenshots are checked against its own visual baselines. Production builds must not
-  enable dev/test, MCP, live-preview or browser automation features unless explicit configuration enables the capability and records permission/audit receipts. Fixture mode is excluded from this exception. Fixture mode is a developer and test tool for building Puppet Master, not a prototype scenario picker or a product run-mode switch. Deterministic fixture data stays isolated and labelled; it cannot enter production owner state, satisfy production admission, or earn readiness, production receipt or real-work credit. No production configuration enables fixture mode.
+  enable dev/test, MCP, live-preview or browser automation features unless explicit configuration enables the capability and records permission/audit receipts. Fixture mode is excluded from this exception. Fixture mode is a developer and test tool for building Puppet Master, not a prototype scenario picker or a product run-mode switch. Deterministic fixture data stays isolated and labelled; it cannot enter production owner state, satisfy production admission, or earn readiness, production receipt or real-work credit. No production configuration enables fixture mode. Amended 2026-11-23 (DL-2601): web smoke tests also run four boot-degradation profiles—(a) a harness-verified unavailable-WebAssembly profile asserting typeof WebAssembly === "undefined" before entry (since modern Chromium builds can ignore --no-expose-wasm), (b) a strict CSP header lacking 'wasm-unsafe-eval' triggering WebAssembly.instantiate rejection, (c) JavaScript disabled (<noscript>), and (d) --js-flags=--jitless slow-path execution—to verify the static pre-Wasm notice stays visible until mount succeeds and points to the native desktop app with zero uncaught startup errors (F3-583).
 gui_related: true
 gui_classification_reason: This unit defines user-visible web GUI development preview controls, screenshots, and smoke-test evidence.
 depends_on:
@@ -40,6 +40,7 @@ acceptance_criteria:
 - "Production builds keep dev/test, MCP, live-preview and browser automation controls disabled unless explicit configuration enables the capability; fixture mode is never available in production."
 - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this spec."
 - "Fixture-mode tests use isolated labelled deterministic state in both GUI targets, with no prototype scenario picker, product run-mode switch, production admission, readiness, production receipt or real-work credit."
+- "Web smoke tests under a harness-asserted typeof WebAssembly === 'undefined' profile, strict CSP lacking 'wasm-unsafe-eval' (WebAssembly.instantiate rejection), <noscript>, and --js-flags=--jitless prove the F3-583 static pre-Wasm notice remains visible until mount succeeds and points to the native desktop app with zero uncaught startup errors (DL-2601)."
 validation_surfaces:
 - "scripts/pm-gui-asset-policy.py"
 - "scripts/pm-plans-verify.py"
@@ -58,6 +59,7 @@ source_lineage:
 - Plans/.audits/fable-20260706/currentness_check_report.json
 - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:8
 - "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01)"
+- "Plans/Decision_Log.md#DL-2601"
 preserved_exact_tokens:
 - "Leptos web GUI"
 - "trusted local daemon"

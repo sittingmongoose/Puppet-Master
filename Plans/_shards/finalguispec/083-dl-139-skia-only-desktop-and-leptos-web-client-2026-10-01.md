@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L41922-L42091
+Source lines: L41949-L42133
 
-Source SHA256: `b8f3716574ec58d25116d0f986d378f01086f979e61556cc9661c483ff61e899`
+Source SHA256: `7ba17c5aa7fb716a162c335b6ec6e71fc68d986a5c12f560da9fc6c85b205c7a`
 
 ---
 
@@ -121,7 +121,20 @@ canonical_text: >-
   page reading at most 2 MiB (SP-338, ACD-242, amended 2026-10-31, DL-270); transcripts are not held in WebAssembly
   memory. The web terminal draws the same Rust terminal grid as a
   fixed, reused set of visible page-text rows updated by diff (the SMPFS-072 web exception) and ships only after the
-  heavy-output speed tests. The Slint/WASM canvas web GUI is retired.
+  heavy-output speed tests. The Slint/WASM canvas web GUI is retired. Amended 2026-11-23 (DL-2601, DR-093, ATS-023):
+  because the Leptos web client itself runs in WebAssembly, the static HTML shell MUST include a <noscript> fallback
+  and keep an accessible static notice visible until Wasm mount succeeds; the minimal bootstrap loader MUST guard
+  both WebAssembly availability and WebAssembly.instantiate compilation/rejection (verified under a harness-asserted
+  typeof WebAssembly === "undefined" profile, strict CSP lacking 'wasm-unsafe-eval', <noscript>, and
+  --js-flags=--jitless slow-path profiles) and display a clear static notice explaining that WebAssembly is
+  unavailable and directing the user to the native Puppet Master desktop app, rather than failing with a blank page
+  or uncaught error. Syntax highlighting, Mermaid validation, and math SVG layout on web are lazily loaded chunks of
+  the same standalone shared Rust Markdown crate (DR-093, never separate web-only implementations), respecting
+  WebAssembly linear-memory limits (either executed on the trusted local daemon or bounded to a strict 4 MiB
+  aggregate client Wasm derived-cache cap per ACD-642). Error presentation is distinct by failure kind: a closed
+  invalid Mermaid fence ALWAYS renders the visible F3-304 malformed-diagram error card with raw source access, while
+  a lazy-chunk renderer initialization or load failure isolates locally to a visible renderer-unavailable notice
+  with raw source fallback without crashing the page.
 gui_related: true
 gui_classification_reason: Defines the technology, rendering, and parity rules of the web GUI.
 split_recommended: false
@@ -136,6 +149,7 @@ acceptance_criteria:
   - "The web terminal renders only its visible rows as reused page-text rows from the Rust terminal grid and passes the heavy-output speed tests before it ships."
   - "Web animations keep to transform and opacity where the design allows, long lists render only their visible rows, and long transcripts render from the derived render-page store as 50-item pages with mandatory load-older paging (SP-338)."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "When WebAssembly is unavailable (harness-verified typeof WebAssembly === 'undefined'), rejected by CSP lacking 'wasm-unsafe-eval', or script is disabled (<noscript>), the static notice remains visible pointing to the native desktop app with zero uncaught startup errors; closed Mermaid syntax errors show the F3-304 error card while lazy-chunk init failures degrade locally to a renderer-unavailable notice with raw source and honor the 4 MiB Wasm cache or daemon-offload bound (ATS-023, DL-2601)."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -154,6 +168,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/ANSWERS-20261001.md, SHA-256 9ca1e2ab54c77a744d629eb4c6dcc1aa8c9d206c6256efbce8b66230a0961ad6"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/CRITIQUE-RESPONSE-20261001.md, SHA-256 76047abe87b2488f52b3e6df94160aa9da09ec1883d3a91876b20d3e1741a1da"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/ANSWERS-20261002.md, SHA-256 6a4c9f58ef4439d0a1882b7306c0b8d446a94e5f45f2346ab4430b66f13f2e84"
+  - "Plans/Decision_Log.md#DL-2601"
 preserved_exact_tokens:
   - "Leptos"
   - "Leptos 0.8"

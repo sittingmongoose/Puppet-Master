@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L133-L1187
 
-Source SHA256: `bc0b5a57e9ac720343912a6df888a28d74bcf8bf04f1c0dd0686f219f4856ba7`
+Source SHA256: `4b75bcf142492b6a0b1747d1f49f90916f4dcf12f4ffd82b422401a9d7b5d180`
 
 ---
 
@@ -867,8 +867,8 @@ Message-level availability and code-block actions:
 | `cmd.chat.resend_last_user_message` | Resend Last Message | Resends the last user message (triggers new response) | `chat_active && has_user_messages` |
 | `cmd.chat.copy_message` | Copy Message | Copies selected message content to clipboard | `chat_active && message_selected` |
 | `cmd.chat.copy_code_block` | Copy Code Block | Copies a specific code block from a message | `chat_active && code_block_selected` |
-| `cmd.chat.insert_code_block` | Insert at Cursor | Inserts code block content at editor cursor position | `chat_active && code_block_selected && editor_active` |
-| `cmd.chat.apply_code_block` | Apply to File | Applies code block as an edit to the relevant file | `chat_active && code_block_selected` |
+| `cmd.chat.insert_code_block` | Insert at Cursor | Inserts code block content at editor cursor position | `chat_active && code_block_selected && editor_active && code_block_fence_closed` |
+| `cmd.chat.apply_code_block` | Apply to File | Applies code block as an edit to the relevant file | `chat_active && code_block_selected && code_block_fence_closed` |
 | `cmd.chat.toggle_message_details` | Toggle Details | Shows/hides message metadata (model, tokens, timing) | `chat_active && message_selected` |
 
 Revert rules:
@@ -879,7 +879,7 @@ Revert rules:
 - after a successful revert, affected editors refresh from the canonical mutation pipeline
 - `cmd.chat.rewind` MUST NOT be used as a file-restore alias
 - `cmd.chat.resend_last_user_message` is distinct from `cmd.chat.retry_message`; resend replays the latest user-authored input, while retry re-runs a failed or cancelled assistant turn
-- `cmd.chat.copy_code_block`, `cmd.chat.insert_code_block`, and `cmd.chat.apply_code_block` operate on a resolved code-block sub-selection rather than the entire message body
+- `cmd.chat.copy_code_block`, `cmd.chat.insert_code_block`, and `cmd.chat.apply_code_block` operate on a resolved code-block sub-selection rather than the entire message body; amended 2026-11-23 (`DL-2601`, `ACD-642`): `cmd.chat.copy_code_block` stays available on open streaming fences (copying raw source received so far), while `cmd.chat.insert_code_block` and `cmd.chat.apply_code_block` require a parser-confirmed closed fence (`code_block_fence_closed`), and fence closure alone grants no execution authority
 - Stop/edit/delete message availability is exposed through existing stop, edit/resend, rewind/revert, and retention-policy surfaces; `/edit/delete` is an availability shorthand and not a new delete-message command ID.
 - GUI question surfaces support multiple-choice and multi-choice interactions with a freeform `Other` path, while logging and activity metadata remain sliceable across `/agent/tool/model/persona/subagent/token` dimensions.
 

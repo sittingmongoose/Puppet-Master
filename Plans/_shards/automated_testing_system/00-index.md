@@ -1,88 +1,89 @@
 # Shard Index: Plans/Automated_Testing_System.md
 
-Generated: 2026-11-20T07:44:05Z
+Generated: 2026-11-23T20:54:26Z
 
-Source SHA256: `eb4a9e10a80cc73e94ade88cd2fa4494dc396127505d2ea0529a526542ed37c8`
+Source SHA256: `dc14397b4cb04c537a1aba47c1c89071cb7fea7ef8272c08b1028fb548444f32`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L5 `6b5ebbe3437485c3d4ab989614a8bab04b0cf09dc6180c4c10686338ebcd8fb5`
-- [002 - 0. Scope](002-0.-scope.md) L7-L11 `60792885367056064ba7a42cacdfbb048ea926a46908d100a2c287327be1cf1c`
-- [003 - 1. Ownership And Consumers](003-1.-ownership-and-consumers.md) L13-L26 `dbaf8a53e8ba170e3ea97bdf368373cfc9f7c2e29dfdc8a5edf3d6557b8d9df1`
-- [004 - 2. Canonical PlanUnits](004-2.-canonical-planunits.md) L28-L92 `f8eb6f9dba6e9f3638931a24124bafb9764586612ae2218dab6026aad3bf3e7d`
-- [005 - GUI visible testing repair addendum (2026-07-02)](005-gui-visible-testing-repair-addendum-2026-07-02.md) L94-L109 `06965b0af2e0b8027627b791b0189550a0ee4510fe5d93eb40312da0392c1f44`
-- [006 - GUI web development and smoke-test workflow addendum (2026-07-07)](006-gui-web-development-and-smoke-test-workflow-addendum-2026-07-07.md) L111-L334 `2fc817f9ef24ee8176d06f370b0090b05c37c79da33f266edc7ef31dc80be632`
-- [007 - 3. Contracts, Schemas, Events, Or Data Shapes](007-3.-contracts-schemas-events-or-data-shapes.md) L336-L342 `d64e4569c7b4fdedeedfa2e3c1d21b045f7ef82d29c875b33225e7ae0af1fc00`
-- [008 - 4. Integration Surfaces](008-4.-integration-surfaces.md) L344-L351 `019ab138c4548cabe38d3fe242db22828c7bf991bdc214db65cb14a06adca91c`
-- [009 - 5. Validation And Acceptance](009-5.-validation-and-acceptance.md) L353-L364 `f80b14f00f584e8f5f2eed2322bf5ed481ac652ad5837a645f2988936e9a0d09`
-- [010 - 6. Plan-To-Node Readiness](010-6.-plan-to-node-readiness.md) L366-L368 `f8cf5769153a3151e456c46b97cb72ee13cf49b1173a1d4d1ec50fe86ee796be`
-- [011 - 7. Deferred, Retired, Compatibility, And Non-Goals](011-7.-deferred-retired-compatibility-and-non-goals.md) L370-L379 `3535778ec7309229f0409695830091f728d6062967f43dd25e5c52da6dfd3e45`
-- [012 - 8. Source Lineage And Governance](012-8.-source-lineage-and-governance.md) L381-L398 `edf5a14b6ca94a426756ffb15d56e3fd2c4102672235f3e64594a750cc21bf3e`
-- [013 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](013-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L401-L816 `34c57fd19ff63631ab588e1e245fc85f47d03617830fca315d14791739048268`
-- [014 - Ledger Compile Addendum - pldg-20260622-001-fff](014-ledger-compile-addendum-pldg-20260622-001-fff.md) L818-L890 `e0cea110531dba420b3d0ff1b95655ff7a2a4697b40ad83abb477068ea53c45b`
-- [015 - Ledger Compile Addendum - pldg-20260626-001-feature-name](015-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L893-L1246 `82e99a6b86bfca51a7c07868aab5908dfbe6a228929945eef73e3e575b08d151`
-- [016 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](016-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L1248-L1555 `80cce21ae758ab4a92f443259b902c77dacc6de17ddb3e28bb8edbf065c914a3`
-- [017 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](017-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L1557-L1644 `81672a169babaa169593b7e6e8e056a3d2fc3bf05c3a7f1a9730e187f1af9e1a`
-- [018 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](018-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L1646-L2043 `0e6992dc4c50dd63e84dcc5319dd037d100589d8e916aa1d307482158eb571c7`
-- [019 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L2045-L2192 `44e2b541b81c0368f4e294bbe2bb7592f2714079d148f6a05222c16e6a0ca7d0`
-- [020 - Case L Durable-State Acceptance Fixture Contract - 2026-07-17](020-case-l-durable-state-acceptance-fixture-contract-2026-07-17.md) L2194-L2567 `4b99e2cfbbdcd5d30689ec7cb7682a7b9c0a17a3d4c50b1f282c986fb46dfc43`
-- [021 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](021-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L2569-L2597 `94541321b915ae9b707d71929e55eeb0451d7d1355d298fb34ad7370449ec624`
-- [022 - FABLE Remaining Action Plan Repair Notes (2026-07-08)](022-fable-remaining-action-plan-repair-notes-2026-07-08.md) L2598-L2606 `189bf4c42c62b2e915c6328081fd166c9c0a0f9ecb1836eb3aa0e97828b74a83`
-- [023 - Known-37 owner-oracle materialization and execution-status ledger - 2026-07-18](023-known-37-owner-oracle-materialization-and-execution-status-ledge.md) L2608-L2880 `dde4d95f274c9736678d0ae020ba5d10e76dfcb746660f03455b18d7e519def0`
-- [024 - Cozy Shelves Panel Reconciliation Addendum - 2026-07-27](024-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md) L2882-L3197 `6aa5e9b9bea338cac68128748b18b55a0277a0bf40be5b321eaa4da97db533c7`
-- [025 - PMConcept7 Home Workspace test contract — 2026-08-04](025-pmconcept7-home-workspace-test-contract-2026-08-04.md) L3199-L3311 `d8747f748c7baff90f446e9e89d5ba89ba829737616142b28a80625a9e27061b`
-- [026 - Runtime Integration Acceptance Matrices - 2026-08-13](026-runtime-integration-acceptance-matrices-2026-08-13.md) L3313-L3598 `fd46827d12a8e2ea3080f964f72c81a95af06f006cde8aaaf4ac96d329843ae2`
-- [027 - PMConcept7 User-Polished Acceptance Addendum - 2026-08-27](027-pmconcept7-user-polished-acceptance-addendum-2026-08-27.md) L3600-L4279 `14d6b0d2c841680d3ca5a064d881bee0097d677d32da01bb95621582f01ebd6d`
-- [028 - Additive Correction v4 — Correction Test Obligations (2026-09-03)](028-additive-correction-v4-correction-test-obligations-2026-09-03.md) L4281-L4325 `5ed163b11295d99ebed2e0ddf6bb6f862d0e9d9f974704debe28b5cc41b3d698`
-- [029 - Working Notebook Contract Validation Registration (2026-09-05)](029-working-notebook-contract-validation-registration-2026-09-05.md) L4327-L4387 `f72557b49f54354085cf6062d8b18d08caf4a6b39f93d4b0764c2cfa4a9a3357`
-- [030 - DL-035 terminal research acceptance obligations - 2026-09-09](030-dl-035-terminal-research-acceptance-obligations-2026-09-09.md) L4390-L4519 `9fd9f94a81657d1368da519a176cfa4a52b340bfe97f51f9344e39de6504dbaf`
-- [031 - ATS-048 — Existing Session and Bundle Command Bindings](031-ats-048-existing-session-and-bundle-command-bindings.md) L4521-L4606 `ed0797fb214d722e508910b7cc90acc15ea5c4cc3e4d72e92b48abdb414c536b`
-- [032 - External Packet Custody and Completion Integrity — 2026-09-10](032-external-packet-custody-and-completion-integrity-2026-09-10.md) L4608-L4638 `9a574dcc4f3b652fe6134324607852736797523f547c7543023afd9e34c808e5`
-- [033 - ATS-049 — Existing Session Event Obligations and Non-Admission](033-ats-049-existing-session-event-obligations-and-non-admission.md) L4640-L5061 `6538dafd3265a90428614533725ae50aa098b0275572c8697b85a1dd9e2f2da2`
-- [034 - External Research Contract Validation Registration (2026-09-17)](034-external-research-contract-validation-registration-2026-09-17.md) L5063-L5132 `63d2d26f852d514aeb73d3189719bd5cd67dc523db51c31b819d380d603c318f`
-- [035 - ATS-055 — Successful native source contract preservation and acceptance obligations (2026-09-20)](035-ats-055-successful-native-source-contract-preservation-and-accep.md) L5135-L5226 `98f8625d4d93dbe3f97e9fd3e37c7f18ef84411be1888f9b7b80e4ae9af51cd9`
-- [036 - ATS-056 — Certified producer source validation and native proof separation (2026-09-21)](036-ats-056-certified-producer-source-validation-and-native-proof-se.md) L5229-L5286 `8a6a115ec9c58b1a0bb0a5fd4b654168136bcd2edc4c2a59fffa693324c2c0df`
-- [037 - ATS-057 — Twelve complete source-to-native acceptance facets with truthful NOT_RUN boundaries (2026-09-21)](037-ats-057-twelve-complete-source-to-native-acceptance-facets-with-.md) L5289-L5421 `e6d5be57ea5b92a2bd4f39f19823f4a23875e7fd7281804331c12584b98b6ace`
-- [038 - ATS-058 — Coordination event oracles for the seven agent families (DL-045, 2026-09-25)](038-ats-058-coordination-event-oracles-for-the-seven-agent-families-.md) L5424-L5552 `8b9f47f55a9f7b6a3a388ed1e3396bc498ba6070ef746929a3361a214101a943`
-- [039 - Platform assurance and Apple-native proof — 2026-09-27](039-platform-assurance-and-apple-native-proof-2026-09-27.md) L5554-L5594 `48b695f3e9e0a8adede7012725d03c23cd43c6ca816a25e7ab8ad300739ccb09`
-- [040 - Chat presentation acceptance checks — 2026-09-27](040-chat-presentation-acceptance-checks-2026-09-27.md) L5596-L5656 `ed9569c0bd894e4c748ece888661e9facd7d527878f479a0bede1b3819d6bac2`
-- [041 - Collaborative Workflows static contract family — 2026-09-27](041-collaborative-workflows-static-contract-family-2026-09-27.md) L5658-L5759 `7ddac25df0363967212117a28b1e3af0d21158a01a983992c153e62340f15417`
-- [042 - Live helper text acceptance checks — 2026-09-27](042-live-helper-text-acceptance-checks-2026-09-27.md) L5761-L5827 `024e6003911cf4f52ef2ac9d59852dbbabff268656b1fd00f6bf3005d89dc2f8`
-- [043 - Project-wide automation pause acceptance checks — 2026-09-27](043-project-wide-automation-pause-acceptance-checks-2026-09-27.md) L5829-L5911 `a76a288e2f14aa746b70996c18b95533a38de0390b12ab8bfdc6174b80e8e031`
-- [044 - ELI5 in chat acceptance checks — 2026-09-27](044-eli5-in-chat-acceptance-checks-2026-09-27.md) L5913-L5976 `e1741c8d5f00537954a518dfa997e6796c763e22c8bfd07e79ec21a9fd31b2e1`
-- [045 - Wand module closure command checks — 2026-09-27](045-wand-module-closure-command-checks-2026-09-27.md) L5978-L6047 `153ff25ad5d080d6d6c602359dcb1a8ae8ba34fa2277979d1d2e7cdebcab2b24`
-- [046 - GUI test-build observability — 2026-10-02 (DL-139)](046-gui-test-build-observability-2026-10-02-dl-139.md) L6049-L6104 `5900030ebbd2dca63008ccf1c5eb592681c7e4346c29d1d782f7d84c47b7c749`
-- [047 - DL-180 to DL-185 — Home Panels And Terminal Tab Certification (2026-10-09)](047-dl-180-to-dl-185-home-panels-and-terminal-tab-certification-2026.md) L6106-L6601 `d0d7f00541045c8a895ef4fa4a333ae1a22d7745109d9b022bc17387243fe5f4`
-- [048 - DL-218 Wonderer and grilling test obligations](048-dl-218-wonderer-and-grilling-test-obligations.md) L6603-L6720 `6c9d5af5253bc0c1f5093f4143ae6ff8c31d875abfb5d3185fbd9b181d87f241`
-- [049 - DL-231 Chat Room automatic round test obligations](049-dl-231-chat-room-automatic-round-test-obligations.md) L6722-L7543 `2f9f1b09873901599ff90934010fa2e2d4005ebf23f52ce7ba0756443e786243`
-- [050 - Collaborative workflow event oracles (DL-090, DL-091, 2026-11-04)](050-collaborative-workflow-event-oracles-dl-090-dl-091-2026-11-04.md) L7544-L9702 `37ba5e401d983c1d51a4091b6fc15237abb969d18d6c1def9fe44424fdf419f3`
-- [051 - ATS-250 — Executor family oracles: attempt.completed, attempt.started](051-ats-250-executor-family-oracles-attempt.completed-attempt.starte.md) L9705-L9749 `83b4fddcca8606325f0e2c8286a7c45ad4d135c822a03d7ee0c2c5741b56a43f`
-- [052 - ATS-251 — Executor family oracles: node.blocked, node.completed](052-ats-251-executor-family-oracles-node.blocked-node.completed.md) L9752-L9796 `7f0cb014bc235c5ea08261e63787f4da819476079bd445efc0e52c66dda9fa6c`
-- [053 - ATS-252 — Executor family oracles: node.started, node.unblocked](053-ats-252-executor-family-oracles-node.started-node.unblocked.md) L9799-L9843 `5272c84e6e2241afd659696e982b6c6897e554bd44e8924c3bcb71db3938e7b2`
-- [054 - ATS-253 — Executor family oracles: plan.decomposition_degraded, remediation.resolved](054-ats-253-executor-family-oracles-plan.decomposition_degraded-reme.md) L9846-L9891 `b900c36621ff961da107b17595e94d2706d10d54fdb35c14fa09916262f863c9`
-- [055 - ATS-254 — Executor family oracles: remediation.spawned, run.completed](055-ats-254-executor-family-oracles-remediation.spawned-run.complete.md) L9894-L9938 `42edb7bd7ff424e60db97abe47720528d72dd95b8f7a5d68330a13f4ecbd800a`
-- [056 - ATS-255 — Executor family oracles: run.graph_integrity_failed, run.node_backoff_expired](056-ats-255-executor-family-oracles-run.graph_integrity_failed-run.n.md) L9941-L9986 `fbdfdff0db7656e4f0e852825ce7ebe1329e7d3588560d841b903fd44311998f`
-- [057 - ATS-256 — Executor family oracles: run.node_backoff_started, run.node_ready](057-ats-256-executor-family-oracles-run.node_backoff_started-run.nod.md) L9989-L10033 `f4384925adc10488e4d4d983eaeca00042a8c0e018b2482d14297c5da4a3a735`
-- [058 - ATS-257 — Executor family oracles: run.node_retry_scheduled, scheduler.pass](058-ats-257-executor-family-oracles-run.node_retry_scheduled-schedul.md) L10036-L12027 `40ccd5a97b7f4c78e34fab2c4ca8dfd703807df1c5c189cf912d67ffbe8113a6`
-- [059 - Runtime artifact event contracts prepared without admission — 2026-11-04](059-runtime-artifact-event-contracts-prepared-without-admission-2026.md) L12030-L13099 `4b43028a2b791ce5e5567eb8f39faf8279099932ac58b9d1695049cb8b7f991d`
-- [060 - DG-OWN-D historical oracle completion (2026-11-05)](060-dg-own-d-historical-oracle-completion-2026-11-05.md) L13101-L13168 `68ffdbe1ce7dbcd05605a5f5a4adf82424693c3466ed3c5d045bdf392270ee83`
-- [061 - DG-OWN-C original source and boundary contracts (2026-11-05)](061-dg-own-c-original-source-and-boundary-contracts-2026-11-05.md) L13170-L13482 `617e3ce92b944c078599ff49de62543f1dfebd601e03546f8c776b707a18a216`
-- [062 - W3A Forge event oracle planning, phase 1](062-w3a-forge-event-oracle-planning-phase-1.md) L13485-L13552 `58df78d207e8d7829914a5a2e24cfdb91f5194cdcf72c7eca417a8da108c69b8`
-- [063 - W3B phase-1 Source Control oracle plans — 2026-11-05](063-w3b-phase-1-source-control-oracle-plans-2026-11-05.md) L13554-L14163 `6a5f29fa0266958a83bcff6d5380e34bce2c6be29d4aa22e565f00cafdcbafc4`
-- [064 - W3C Event Authority phase-1 prepared contracts - 2026-11-05](064-w3c-event-authority-phase-1-prepared-contracts-2026-11-05.md) L14166-L14528 `3663e6c099f4ee299d10a6b2f7d61b2761af655403ce1557a4511894d332ca61`
-- [065 - W3E event authority drafts - phase 1 (2026-11-05)](065-w3e-event-authority-drafts-phase-1-2026-11-05.md) L14530-L14651 `e0e41f69fd913bc1bcb3f744a886b084a91fd7457068e794559778e2b51bb360`
-- [066 - Event Authority W3F Phase 1 — Prepared Without Admission (2026-11-05)](066-event-authority-w3f-phase-1-prepared-without-admission-2026-11-0.md) L14654-L14708 `73e02f176fc4360a18cca1fa6d1f495b73009eefc73e1264151dcf6991a5b097`
-- [067 - W3G phase 1 per-family oracle plans (2026-11-05)](067-w3g-phase-1-per-family-oracle-plans-2026-11-05.md) L14711-L14960 `23e366a570ff2fd2fda821dddea548ef9df604f764ce09b245eb284fa0ad6d1d`
-- [068 - ATS-1270 — W3H per-family phase-1 oracle plans (newly authored, no execution)](068-ats-1270-w3h-per-family-phase-1-oracle-plans-newly-authored-no-e.md) L14962-L15081 `ee9f734e8963d953e17b05026caafe0d84f287c9512aed435bf2856a7dcb964a`
-- [069 - W3I continuity oracle plans — phase 1 (2026-11-05)](069-w3i-continuity-oracle-plans-phase-1-2026-11-05.md) L15083-L15361 `acf62a14a86c96b4e42411bb7e7ecba1c15500ca7bdef08aa8c8fbc11c2f03f8`
-- [070 - PNC-019 S2 post-August repair oracles (2026-11-14)](070-pnc-019-s2-post-august-repair-oracles-2026-11-14.md) L15363-L15472 `aed404f2c9da1c01bd3d2b5280c92a355105769fa9cdc718e71407f8c2ba27b1`
-- [071 - Registered Storage, restore, platform and seglog family oracle plans (PNC-019 S3, 2026-11-14)](071-registered-storage-restore-platform-and-seglog-family-oracle-pla.md) L15475-L15704 `8b13b3d64995f2bd70b49b2b096a78f0cd6536ed6ee0e790c3dbe958dc20897e`
-- [072 - Browser Program prepared event oracles — 2026-11-14](072-browser-program-prepared-event-oracles-2026-11-14.md) L15706-L15764 `23f786b80c983f0aec242fc94e7fe1bbda5302b8042ec2169f7f6bf14044f7ec`
-- [073 - Prepared tier-start setup-check outcome histories (E8-6 B)](073-prepared-tier-start-setup-check-outcome-histories-e8-6-b.md) L15766-L15860 `d3ea8c5e9484eda1548eb075ba3da3b5e517f00288c8a515ddd381a7749627cd`
-- [074 - goal_run.replanned v3 executable oracles (PNC-019 lane rv8b, 2026-11-14)](074-goal_run.replanned-v3-executable-oracles-pnc-019-lane-rv8b-2026-.md) L15862-L15933 `e0f348a6c72be57c056762a5acea0bc0f58dd2a1b43bcbc0f84c7d3fbab84199`
-- [075 - ATS-2206 - Executable s3bo contract checks and remaining criterion-12 boundaries](075-ats-2206-executable-s3bo-contract-checks-and-remaining-criterion.md) L15935-L16009 `f6f3e3a0013dd6bc50365cc7cc8f7d02623a322df870c4e847ceeb4843465a66`
-- [076 - ATS-3880 - Executable s3bo family boundaries for the restore-point and recovery-unavailable families (C12-SR)](076-ats-3880-executable-s3bo-family-boundaries-for-the-restore-point.md) L16011-L16099 `88ad187242d7fd822d965a5b6f2a3bc5a86a7300c144a78de8171927f64d06d0`
-- [077 - ATS-3920 - Executable s3bo family boundaries for the Storage compaction, deletion, hold and quarantine families (C12-SL)](077-ats-3920-executable-s3bo-family-boundaries-for-the-storage-compa.md) L16101-L16238 `ab1e8e6a5271ca8a1e9e9228842ce5f186edd37457df383b8909555538e97f94`
-- [078 - ATS-3900 - Executable s3bo family boundaries for the platform, seglog and Storage recovery families (C12-SS)](078-ats-3900-executable-s3bo-family-boundaries-for-the-platform-segl.md) L16240-L16330 `dd80a8c1c6354681aea14e7f49470d89cbeeecf7c0337db161fe831f5501a7c8`
+- [001 - Preamble](001-preamble.md) L1-L5 `e09a8916361caf15a5aaf868d1430cd681d39185297042fe45c9133ddcf23153`
+- [002 - 0. Scope](002-0.-scope.md) L7-L11 `6a596664d1f9597b31c8b824e0bfcb20dd05538b3934902552efe34f2ccb2420`
+- [003 - 1. Ownership And Consumers](003-1.-ownership-and-consumers.md) L13-L26 `608d4dfcbb6c920cf6935c6ff46147b3e2abc7187c768b2aecd2406c0204d0ef`
+- [004 - 2. Canonical PlanUnits](004-2.-canonical-planunits.md) L28-L92 `67fcb8e7fe8976a890219cf543a8fb92661056169dcb9b10c1236d72fa4909b5`
+- [005 - GUI visible testing repair addendum (2026-07-02)](005-gui-visible-testing-repair-addendum-2026-07-02.md) L94-L109 `ecf479f84d8d80a2fdc330aa9a4f2b7b712058078269679842ee48543612ea4d`
+- [006 - GUI web development and smoke-test workflow addendum (2026-07-07)](006-gui-web-development-and-smoke-test-workflow-addendum-2026-07-07.md) L111-L336 `0caea715d70c8eb22c0173eda1252c27e35079a16fbfe51ba6d36a2fc5202abe`
+- [007 - 3. Contracts, Schemas, Events, Or Data Shapes](007-3.-contracts-schemas-events-or-data-shapes.md) L338-L344 `b6ec974b90a0352ca47d2ef167a4f63a171c42ffd45e48dad175d9d1df098d35`
+- [008 - 4. Integration Surfaces](008-4.-integration-surfaces.md) L346-L353 `7ca409c3d88d32cde34ca68e380db715c48a6a5c06bf9f87059c089a328ddc2a`
+- [009 - 5. Validation And Acceptance](009-5.-validation-and-acceptance.md) L355-L366 `645a6b8f2adc024bcbfa22ccc06371309e690f8d61760c244af9f0c084586f78`
+- [010 - 6. Plan-To-Node Readiness](010-6.-plan-to-node-readiness.md) L368-L370 `77e1d4c3d9ee97c21a171627b899e55d41b7a37d376f8bf875c922356b88674d`
+- [011 - 7. Deferred, Retired, Compatibility, And Non-Goals](011-7.-deferred-retired-compatibility-and-non-goals.md) L372-L381 `68c3545dfb62a030989bb2a4d9f1c416569614a500b5a0eb8e35f260ada58d96`
+- [012 - 8. Source Lineage And Governance](012-8.-source-lineage-and-governance.md) L383-L400 `353599bcbd6d5b019d00a919a4eeab61ee07580c5c5d8a59aeb678cd0987611d`
+- [013 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](013-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L403-L818 `50dd6a8b0c47f1ddbcc911d3183d8f3390284c68954e1d57fa7c5a8b750b6454`
+- [014 - Ledger Compile Addendum - pldg-20260622-001-fff](014-ledger-compile-addendum-pldg-20260622-001-fff.md) L820-L892 `b61576db88ef2a70332205211170cbe5be48486167e420e5306ffe9a04827b61`
+- [015 - Ledger Compile Addendum - pldg-20260626-001-feature-name](015-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L895-L1248 `03f056a5b1b485f3919814e44bfacc95a21c63b4ffd842150675f2d41fd3a57d`
+- [016 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](016-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L1250-L1557 `f9bf035433623661c39f490f4179e22adafd6c7e269a53ebca15c7de643ff7b9`
+- [017 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](017-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L1559-L1646 `0ee8924aee1a7aabcd7bc073970de0f633aa0222c993f81880423ebec13ba534`
+- [018 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](018-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L1648-L2045 `5314fc2c5d821ee017d9ea63f9c4db432bda1066e82bf6ff2f4a99495f9c4e2f`
+- [019 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L2047-L2194 `baf8811930d23a70f366e5fbe4fc7740411eb269e7414060a48dd30ba54c7480`
+- [020 - Case L Durable-State Acceptance Fixture Contract - 2026-07-17](020-case-l-durable-state-acceptance-fixture-contract-2026-07-17.md) L2196-L2571 `a30677ac489d4c72a0fc440a6f4e2017c6743de5c73c2e0851cb1f48fb4d285e`
+- [021 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](021-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L2573-L2601 `baf49f9f12ddb64cf4e99e1526ede4664a7b8f1df25c0967814ab72e6705df9f`
+- [022 - FABLE Remaining Action Plan Repair Notes (2026-07-08)](022-fable-remaining-action-plan-repair-notes-2026-07-08.md) L2602-L2610 `c4b950398639c27c490598476c25971ebdc75916b4ff91ae7d2d4e26a41ef9a7`
+- [023 - Known-37 owner-oracle materialization and execution-status ledger - 2026-07-18](023-known-37-owner-oracle-materialization-and-execution-status-ledge.md) L2612-L2884 `30eb8c439d0af68580640fd9fed8aeb7a5286b018e3e533aaa20e56dfd113ede`
+- [024 - Cozy Shelves Panel Reconciliation Addendum - 2026-07-27](024-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md) L2886-L3201 `cbda0f34d3e3620fd35de96dccc06a2534906112d2afff12e69b878b94325a69`
+- [025 - PMConcept7 Home Workspace test contract — 2026-08-04](025-pmconcept7-home-workspace-test-contract-2026-08-04.md) L3203-L3315 `a3be89c4742adaf8eef2a37b6961ec7472c61bd5a054a75fc6a7145cca9a6d16`
+- [026 - Runtime Integration Acceptance Matrices - 2026-08-13](026-runtime-integration-acceptance-matrices-2026-08-13.md) L3317-L3602 `035c5d399c05d6289765cbfa350ab8d41bd8b0db534679c4e22ea469349c32e0`
+- [027 - PMConcept7 User-Polished Acceptance Addendum - 2026-08-27](027-pmconcept7-user-polished-acceptance-addendum-2026-08-27.md) L3604-L4283 `8126072cade32276bcc4a15a42f94d7746a384c72c049ae5641b320d556aeb17`
+- [028 - Additive Correction v4 — Correction Test Obligations (2026-09-03)](028-additive-correction-v4-correction-test-obligations-2026-09-03.md) L4285-L4329 `412380aed9fa018180343405518ad60e0a7cc84892aabd66f4382390f50aab08`
+- [029 - Working Notebook Contract Validation Registration (2026-09-05)](029-working-notebook-contract-validation-registration-2026-09-05.md) L4331-L4391 `ecd6afab9dc09c291203cfa14658942fe6209c60ebec5e8e6df1e13e8afefc8f`
+- [030 - DL-035 terminal research acceptance obligations - 2026-09-09](030-dl-035-terminal-research-acceptance-obligations-2026-09-09.md) L4394-L4523 `17c01ca4199666ee8affb6a225cda7652aa07e47dac3cc621099816e4c71593a`
+- [031 - ATS-048 — Existing Session and Bundle Command Bindings](031-ats-048-existing-session-and-bundle-command-bindings.md) L4525-L4610 `c9f069dcff27b8346aff659129c4bb44f7ef630c294eaf6bf41224946b9e2b1c`
+- [032 - External Packet Custody and Completion Integrity — 2026-09-10](032-external-packet-custody-and-completion-integrity-2026-09-10.md) L4612-L4642 `0ca01d80f8603cd6ce33a508345fdbe582f5d09ed9bcf83f672bba755cba5a69`
+- [033 - ATS-049 — Existing Session Event Obligations and Non-Admission](033-ats-049-existing-session-event-obligations-and-non-admission.md) L4644-L5065 `65bad4c90c260992f784dd9f855943487d11454c1ecdfcf4bdde76dce32a17fb`
+- [034 - External Research Contract Validation Registration (2026-09-17)](034-external-research-contract-validation-registration-2026-09-17.md) L5067-L5136 `00cc70f7b0a4062cc3990657a2c05eda5c0b15408497d5c3333ace601d11c4a2`
+- [035 - ATS-055 — Successful native source contract preservation and acceptance obligations (2026-09-20)](035-ats-055-successful-native-source-contract-preservation-and-accep.md) L5139-L5230 `3bcfad4b56da5b7d903dc646f2c896251f1b359551dc16a684ca9fcdca63356b`
+- [036 - ATS-056 — Certified producer source validation and native proof separation (2026-09-21)](036-ats-056-certified-producer-source-validation-and-native-proof-se.md) L5233-L5290 `500a005de813cf71b79522f3714fae912302465667a310e4a9b9a81556523597`
+- [037 - ATS-057 — Twelve complete source-to-native acceptance facets with truthful NOT_RUN boundaries (2026-09-21)](037-ats-057-twelve-complete-source-to-native-acceptance-facets-with-.md) L5293-L5425 `f2b26ddcef765d05ccb97ab7630f53b9e9b4de6f411c2d16989c9b6365323c80`
+- [038 - ATS-058 — Coordination event oracles for the seven agent families (DL-045, 2026-09-25)](038-ats-058-coordination-event-oracles-for-the-seven-agent-families-.md) L5428-L5556 `f863eaab7e434bd1acb12fc8df6a1588b0280e5336ecb970bb736a46bece4c05`
+- [039 - Platform assurance and Apple-native proof — 2026-09-27](039-platform-assurance-and-apple-native-proof-2026-09-27.md) L5558-L5598 `452efe0c7888f07f9c8af6e3885768454dd554de79e62e6efbcf8f133e8424a8`
+- [040 - Chat presentation acceptance checks — 2026-09-27](040-chat-presentation-acceptance-checks-2026-09-27.md) L5600-L5660 `fff4009a8f4bfe89e662fb2a29edfa49521a118930376df30de1b7a82c1b55e6`
+- [041 - Collaborative Workflows static contract family — 2026-09-27](041-collaborative-workflows-static-contract-family-2026-09-27.md) L5662-L5763 `91da34c773f4e2447bb2cde23686f742c89ac14bfe678116dd50092cbbfb4aa9`
+- [042 - Live helper text acceptance checks — 2026-09-27](042-live-helper-text-acceptance-checks-2026-09-27.md) L5765-L5831 `31cc8a4c28d13ee8fc1f166b4eae7f348c8ef7824783c82e18f018dc35d47cba`
+- [043 - Project-wide automation pause acceptance checks — 2026-09-27](043-project-wide-automation-pause-acceptance-checks-2026-09-27.md) L5833-L5915 `4e7e638a72188c176d355416f477a689dd585620489cce5d96991a90436e7af9`
+- [044 - ELI5 in chat acceptance checks — 2026-09-27](044-eli5-in-chat-acceptance-checks-2026-09-27.md) L5917-L5980 `eba6dadd89a3cef9bc1906c1fd3e6821b40a2225618e05c3777ef6a1373947ed`
+- [045 - Wand module closure command checks — 2026-09-27](045-wand-module-closure-command-checks-2026-09-27.md) L5982-L6051 `8deaa9fb49baccf58e3407996fcf5486d2df73207bb6501f95dc78802504b366`
+- [046 - GUI test-build observability — 2026-10-02 (DL-139)](046-gui-test-build-observability-2026-10-02-dl-139.md) L6053-L6108 `37475945b6b8d43db47812a61c83fb1e5b300c174abea5321f4a804be897a22f`
+- [047 - DL-180 to DL-185 — Home Panels And Terminal Tab Certification (2026-10-09)](047-dl-180-to-dl-185-home-panels-and-terminal-tab-certification-2026.md) L6110-L6605 `ec2d905a94a2c3c9f08890be7259dd6b989389d751342e21c68ee2476d19d999`
+- [048 - DL-218 Wonderer and grilling test obligations](048-dl-218-wonderer-and-grilling-test-obligations.md) L6607-L6724 `06bf467178253b14b98c831aba32beef574b71a6e98d56eac1e6a81725be1f6b`
+- [049 - DL-231 Chat Room automatic round test obligations](049-dl-231-chat-room-automatic-round-test-obligations.md) L6726-L7547 `4b0bfd99618855f5e0ed91b2dfccfe0ba45564e4bc388887fcef7a8c4fd1a4dc`
+- [050 - Collaborative workflow event oracles (DL-090, DL-091, 2026-11-04)](050-collaborative-workflow-event-oracles-dl-090-dl-091-2026-11-04.md) L7548-L9706 `ab003b692c078cb81525922fbf885f7724cdba5f15d1df2dc0563915788d63b6`
+- [051 - ATS-250 — Executor family oracles: attempt.completed, attempt.started](051-ats-250-executor-family-oracles-attempt.completed-attempt.starte.md) L9709-L9753 `ace051a56c0e02c8d740c74511fc080ef4c3552ffe1008160b03e459cf2f0dea`
+- [052 - ATS-251 — Executor family oracles: node.blocked, node.completed](052-ats-251-executor-family-oracles-node.blocked-node.completed.md) L9756-L9800 `ed7816f586be59ad963fcbf3367f3bbd60aef7ae01462697a42e116a404527ef`
+- [053 - ATS-252 — Executor family oracles: node.started, node.unblocked](053-ats-252-executor-family-oracles-node.started-node.unblocked.md) L9803-L9847 `ab3c2da1c7d020862042030652626abc8c7c71d72746a7c8a0e820f586e87f2f`
+- [054 - ATS-253 — Executor family oracles: plan.decomposition_degraded, remediation.resolved](054-ats-253-executor-family-oracles-plan.decomposition_degraded-reme.md) L9850-L9895 `c12e06a8dd069faaf653c36caa512699b0c3d89aec01d3adb3e3f5b65b6874e2`
+- [055 - ATS-254 — Executor family oracles: remediation.spawned, run.completed](055-ats-254-executor-family-oracles-remediation.spawned-run.complete.md) L9898-L9942 `37ccd9e0c5bcc11c056ea69839b5a2bd853c505c5b965f19ac5bcf72d8cfea2f`
+- [056 - ATS-255 — Executor family oracles: run.graph_integrity_failed, run.node_backoff_expired](056-ats-255-executor-family-oracles-run.graph_integrity_failed-run.n.md) L9945-L9990 `070ef3a30032082f62166a1b182b9dbaa57e2c53636d734dab45abfc9cd309c0`
+- [057 - ATS-256 — Executor family oracles: run.node_backoff_started, run.node_ready](057-ats-256-executor-family-oracles-run.node_backoff_started-run.nod.md) L9993-L10037 `7fc7d8781152cceaa3c2d5b0fca5d920b5f29f439a19f6c97a708c484bdbb8fa`
+- [058 - ATS-257 — Executor family oracles: run.node_retry_scheduled, scheduler.pass](058-ats-257-executor-family-oracles-run.node_retry_scheduled-schedul.md) L10040-L12031 `81d3692032bbceee2a6fc29f61b35a43af97d6f892f4a8d1464f1d8b71ecc0b0`
+- [059 - Runtime artifact event contracts prepared without admission — 2026-11-04](059-runtime-artifact-event-contracts-prepared-without-admission-2026.md) L12034-L13103 `1519af21cdaf258fd64424126f52ba05532b52c4c73c9fe2dc90988667fb5879`
+- [060 - DG-OWN-D historical oracle completion (2026-11-05)](060-dg-own-d-historical-oracle-completion-2026-11-05.md) L13105-L13172 `7314e1fff033e76f0fa24576c9e623158e371a0b60d8047f01344a02abfac0ae`
+- [061 - DG-OWN-C original source and boundary contracts (2026-11-05)](061-dg-own-c-original-source-and-boundary-contracts-2026-11-05.md) L13174-L13486 `664b034b2f943fd955f6a315580c7a1b197200dbdf763e2f9ca0add437fe6536`
+- [062 - W3A Forge event oracle planning, phase 1](062-w3a-forge-event-oracle-planning-phase-1.md) L13489-L13556 `19d0b86df55cff599caf7c5451bb22315a11be53bd2c0164a1ee1ad19e8c95e3`
+- [063 - W3B phase-1 Source Control oracle plans — 2026-11-05](063-w3b-phase-1-source-control-oracle-plans-2026-11-05.md) L13558-L14167 `4bc56d700d7c4f9e85343a3e7e7842e3b72fd71ba67c7fb7ecdb34bc290a2994`
+- [064 - W3C Event Authority phase-1 prepared contracts - 2026-11-05](064-w3c-event-authority-phase-1-prepared-contracts-2026-11-05.md) L14170-L14532 `e0d16b4ae6aed6ff9833a2eee0073eed087e4b04180201ed1952fb5ba8bee250`
+- [065 - W3E event authority drafts - phase 1 (2026-11-05)](065-w3e-event-authority-drafts-phase-1-2026-11-05.md) L14534-L14655 `1863bb25f9c03f02a8b59ad3a10749bb3c592ce7d0e1b5ced369d0075137671c`
+- [066 - Event Authority W3F Phase 1 — Prepared Without Admission (2026-11-05)](066-event-authority-w3f-phase-1-prepared-without-admission-2026-11-0.md) L14658-L14712 `6c16efb3e81edd847e43340663b0f2d97f4215b507ba87e0554a769bffe0400c`
+- [067 - W3G phase 1 per-family oracle plans (2026-11-05)](067-w3g-phase-1-per-family-oracle-plans-2026-11-05.md) L14715-L14964 `4b88731fdf6150153c2b85f496e7024bd88afae1781741c79ecd52c325d2cdb9`
+- [068 - ATS-1270 — W3H per-family phase-1 oracle plans (newly authored, no execution)](068-ats-1270-w3h-per-family-phase-1-oracle-plans-newly-authored-no-e.md) L14966-L15085 `6ecfc7fcfffcba281e5d4c6e38110a8cd25ce5eabd9e87ff3887ce088ffdd4dd`
+- [069 - W3I continuity oracle plans — phase 1 (2026-11-05)](069-w3i-continuity-oracle-plans-phase-1-2026-11-05.md) L15087-L15365 `781f3ecd3772f1874921a6fddfdff740c6568cece8b1102196e341ed4133e5f6`
+- [070 - PNC-019 S2 post-August repair oracles (2026-11-14)](070-pnc-019-s2-post-august-repair-oracles-2026-11-14.md) L15367-L15476 `a5bc430fb3c7bd3d570d35b411d06abe011088434376791a614d6d60921f7397`
+- [071 - Registered Storage, restore, platform and seglog family oracle plans (PNC-019 S3, 2026-11-14)](071-registered-storage-restore-platform-and-seglog-family-oracle-pla.md) L15479-L15708 `8d0d72f4425a571ceaebd237dfe2f5ac483b7efa25ff035010b26b433198ad5e`
+- [072 - Browser Program prepared event oracles — 2026-11-14](072-browser-program-prepared-event-oracles-2026-11-14.md) L15710-L15768 `ca15b7e63f95ff8160f5ad3cdb70df649e726bd19326899dbd3315e0c5b4278f`
+- [073 - Prepared tier-start setup-check outcome histories (E8-6 B)](073-prepared-tier-start-setup-check-outcome-histories-e8-6-b.md) L15770-L15864 `d1b5b8e2f53b1e5d2307184b014291b111a8687119eecbd946b9d3ea7d1a4b52`
+- [074 - goal_run.replanned v3 executable oracles (PNC-019 lane rv8b, 2026-11-14)](074-goal_run.replanned-v3-executable-oracles-pnc-019-lane-rv8b-2026-.md) L15866-L15937 `41023069634355f4968f8434fbda69c94e6dbde0370521be7f5611793f92c934`
+- [075 - ATS-2206 - Executable s3bo contract checks and remaining criterion-12 boundaries](075-ats-2206-executable-s3bo-contract-checks-and-remaining-criterion.md) L15939-L16013 `8015358494ef7dcbf96cc88f072fedf8a84e140e40a9177bb97af38c70f7c6f7`
+- [076 - ATS-3880 - Executable s3bo family boundaries for the restore-point and recovery-unavailable families (C12-SR)](076-ats-3880-executable-s3bo-family-boundaries-for-the-restore-point.md) L16015-L16103 `aa6abacc16c9a9d260507276b479e1615be20764707d88f2c48e8ca88e8e0ce4`
+- [077 - ATS-3920 - Executable s3bo family boundaries for the Storage compaction, deletion, hold and quarantine families (C12-SL)](077-ats-3920-executable-s3bo-family-boundaries-for-the-storage-compa.md) L16105-L16242 `cb5cb9e34b1341f5b696fc326d8a9f1f7773b4baadd79d1583e9e78b0e988d70`
+- [078 - ATS-3900 - Executable s3bo family boundaries for the platform, seglog and Storage recovery families (C12-SS)](078-ats-3900-executable-s3bo-family-boundaries-for-the-platform-segl.md) L16244-L16334 `df4571cf362ea87599d499c35877a6ca06ceaa921b4d58e543a07aeac165c50d`
+- [079 - Markdown Pipeline, Preview, And Benchmark Calibration Oracles Addendum (2026-11-23, DL-2601)](079-markdown-pipeline-preview-and-benchmark-calibration-oracles-adde.md) L16336-L16492 `5d498f2c143e609697db6617a66b60933d15ba64ec90555540378aa108cd9d91`

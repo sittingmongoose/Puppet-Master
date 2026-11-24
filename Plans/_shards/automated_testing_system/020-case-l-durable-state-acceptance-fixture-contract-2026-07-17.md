@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L2194-L2567
+Source lines: L2196-L2571
 
-Source SHA256: `eb4a9e10a80cc73e94ade88cd2fa4494dc396127505d2ea0529a526542ed37c8`
+Source SHA256: `dc14397b4cb04c537a1aba47c1c89071cb7fea7ef8272c08b1028fb548444f32`
 
 ---
 
@@ -335,6 +335,7 @@ acceptance_criteria:
   - "Amended 2026-10-31 (DL-270). RET-007 to RET-009 prove that detailed usage records follow the Keep usage history for setting, that daily usage totals persist whatever it says, and that usage reads are served from redb rollups with no raw-event scan (UF-108, SP-341)."
   - REGISTRY-MVP fixtures prove complete machine routing for every required family and reject missing, deferred, bundled, or false recovery/retention authority.
   - Missing, blocked, skipped, inconclusive, stale, or merely schema-valid evidence cannot satisfy a required oracle or release gate.
+  - "Amended 2026-11-23 (DL-2601). Host load recording (loadavg <= core_count * 0.75) and same-build A/A noise calibration (A/A p95/p99 spread <= 5% or <= 2 ms, ATS-086) decide run validity only: noisy or overloaded runs are marked inconclusive and rerun, and valid runs are judged solely against the unchanged 150 ms p95 / 50 ms p99 release gates (which are never widened)."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Case L durable-state fixture adapter and TestRunReceipt suite
@@ -364,6 +365,7 @@ source_lineage:
   - Case-L:SEG-D-001..SEG-D-029
   - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/CASE_L_APPROVAL_2026-07-17.md
   - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/CONSUMER_PROPAGATION_MAP.md
+  - Plans/Decision_Log.md#DL-2601
 preserved_exact_tokens:
   - "blocked_newer_store"
   - "projector_replay_only"
