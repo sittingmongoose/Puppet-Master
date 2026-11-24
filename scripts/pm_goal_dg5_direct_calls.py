@@ -15,7 +15,10 @@ those; every method under ``excluded_construction`` (constructors, factories, fi
 name the written construction rules C1-C3 exclude (construction-and-owner-methods.md) is not wrapped either: it is
 reported under ``construction_by_rule``, a guard kept after the census fix (final/methods.json listed three
 S1CancelWorld methods because its FIXTURE_CLASS regex missed a digit; final-a16b drops them and final-a19 keeps them
-out, so the guard skips nothing on the pinned list). A name in both lists is refused at install.
+out, so the guard skips nothing on the pinned list). A name in both lists is refused at install. Round 2 C7: a
+whole-root schema bank's ``validate`` (bridge.SCHEMA_BANKS) is likewise never wrapped (``schema_by_rule``): its
+decision is the bridge's schema-row decide outside any recorded direct trial, so recording it would credit a
+decision the recorded run does not contain.
 
 A call through the wrapper is recorded (run as a DG5 complete call through bridge.entry_call, exactly as a census
 entry is) only when it is a direct call in the census probe's sense (outside-probe-v5.py):
@@ -616,6 +619,13 @@ def _wrap(family, key, owner, name, raw):
     setattr(owner, name, wrapped)
 
 
+def schema_validator(key, entry):
+    """A listed whole-root schema bank validate (bridge.SCHEMA_BANKS): its guard decision is the bridge's
+    schema-row decide, made in install_schema_rows' wrapper only while a complete call is under way."""
+    return any(entry.get('module') == module and key == cls + '.validate'
+               for module, cls, *_ in bridge.SCHEMA_BANKS)
+
+
 def install(family, evidence=None):
     """Wrap the family's listed direct-call owner methods whose modules are loaded; return the install report."""
     listing = load()
@@ -633,10 +643,18 @@ def install(family, evidence=None):
     if overlap:
         raise ValueError('%s: listed owner methods that are construction: %s' % (family, overlap))
     report['construction_by_rule'] = sorted(key for key in section['owner_methods'] if construction(key))
+    # Round 2 C7 (lead ruling 1124101552-8f55): a schema bank's validate is never wrapped. Examined on
+    # S2/cast_* (Bank.validate, pm_goal_dg_s_oracles.py:584): the recorded trial runs the collector's captured
+    # original, bypassing the bridge schema wrapper, so the schema row is never decided inside the recorded
+    # run (empty refusing_sites, CANNOT_DECIDE; the row is only named, via SCHEMA_ROW in the parent). A
+    # recorded call must contain the decision it is credited with, so these stay unwrapped and run exactly as
+    # with the collector off, where a direct validate likewise makes no row decision. Reported, never wrapped.
+    report['schema_by_rule'] = sorted(key for key, entry in section['owner_methods'].items()
+                                      if schema_validator(key, entry))
     done = set(report['wrapped']) | set(report['entries'])
     report['not_loaded'] = []
     for key, entry in sorted(section['owner_methods'].items()):
-        if key in done or key in report['construction_by_rule']:
+        if key in done or key in report['construction_by_rule'] or key in report['schema_by_rule']:
             continue
         resolved = _resolve(key, entry)
         if resolved is None:
