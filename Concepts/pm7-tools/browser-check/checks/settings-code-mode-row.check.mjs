@@ -14,14 +14,30 @@ const INV = JSON.parse(readFileSync(new URL('../../../../Plans/settings_inventor
 const norm = (s) => String(s || '').replace(/\s+/g, ' ').trim();
 /* the page draws inventory labels in sentence case (Settings_System §4), so "Code Mode" reads "Code mode" */
 const sameLabel = (drawn) => norm(drawn).toLowerCase() === norm(INV.label).toLowerCase();
-const ROW = (id) => {
+const ROW = ([id, label, desc]) => {
 	const sw = [...document.querySelectorAll(`.toggle[role="switch"][data-setting="${id}"], [data-setting-id="${id}"] .toggle[role="switch"]`)]
 		.find((el) => el.getClientRects().length && el.checkVisibility());
 	if (!sw) return { drawn: false, known: [...document.querySelectorAll(`[data-setting-id="${id}"], [data-setting="${id}"]`)].length };
 	const row = sw.closest(`[data-setting-id="${id}"]`) || sw.closest('.setting-row, .pm51-row, .o55-scoped, li, tr') || sw.parentElement;
 	const r = sw.getBoundingClientRect();
 	const lines = (row.innerText || '').split('\n').map((s) => s.replace(/\s+/g, ' ').trim()).filter(Boolean);
+	/* painted, not only present: the innermost element that holds exactly these words is visible, has a box, and lies
+	   inside the window and inside every ancestor that clips or scrolls (review 3: innerText also returns clipped text) */
+	const holder = (words) => [...row.querySelectorAll('*')].filter((el) => (el.innerText || '').replace(/\s+/g, ' ').trim().toLowerCase() === words.toLowerCase()).pop();
+	const shown = (el) => {
+		if (!el || !el.checkVisibility({ opacityProperty: true, visibilityProperty: true, contentVisibilityAuto: true })) return false;
+		const b = el.getBoundingClientRect();
+		if (b.width < 1 || b.height < 1 || b.top < 0 || b.left < 0 || b.bottom > innerHeight || b.right > innerWidth) return false;
+		for (let a = el.parentElement; a; a = a.parentElement) {
+			const cs = getComputedStyle(a);
+			if (!/hidden|clip|auto|scroll/.test(cs.overflowX + ' ' + cs.overflowY)) continue;
+			const c = a.getBoundingClientRect();
+			if (b.top < c.top - 1 || b.bottom > c.bottom + 1 || b.left < c.left - 1 || b.right > c.right + 1) return false;
+		}
+		return true;
+	};
 	return { drawn: true, checked: sw.getAttribute('aria-checked'), lines: lines.slice(0, 12), text: lines.join(' ').slice(0, 600),
+		labelShown: shown(holder(label)), descShown: shown(holder(desc)),
 		switches: row.querySelectorAll('.toggle[role="switch"]').length, inView: r.top >= 0 && r.bottom <= innerHeight, at: [Math.round(r.left), Math.round(r.top)] };
 };
 
@@ -49,12 +65,16 @@ export default async function (t) {
 	await t.settle();
 	await t.page.waitForTimeout(900);
 
-	let row = await f.evaluate(ROW, ID);
+	await f.locator(`.toggle[role="switch"][data-setting="${ID}"]:visible, [data-setting-id="${ID}"] .toggle[role="switch"]:visible`).first()
+		.evaluate((el) => el.scrollIntoView({ block: 'center', behavior: 'instant' })).catch(() => {});
+	await t.page.waitForTimeout(400);
+	let row = await f.evaluate(ROW, [ID, norm(INV.label), norm(INV.desc)]);
 	t.log(`after the search: ${JSON.stringify(row)}`);
 	await t.check('the result opens a page that draws the Code Mode row with a switch', row.drawn === true, JSON.stringify(row));
 	if (!row.drawn) return;
 	await t.check('the row\'s first line is the inventory label', sameLabel(row.lines[0]), JSON.stringify(row.lines));
-	await t.check('the row draws the inventory\'s complete sentence, as one of its lines', row.lines.includes(norm(INV.desc)), JSON.stringify(row.lines));
+	await t.check('the row holds the inventory\'s complete sentence, as one of its lines', row.lines.includes(norm(INV.desc)), JSON.stringify(row.lines));
+	await t.check('the label and the sentence are painted: visible, inside the window and inside every clipping ancestor', row.labelShown === true && row.descShown === true, `label ${row.labelShown}, sentence ${row.descShown}`);
 	await t.check('the row has exactly one switch', row.switches === 1, String(row.switches));
 	await t.check('the switch starts On, the inventory default', row.checked === 'true', String(row.checked));
 
@@ -64,11 +84,11 @@ export default async function (t) {
 	await sw.click();
 	await t.settle();
 	await t.page.waitForTimeout(900);
-	row = await f.evaluate(ROW, ID);
+	row = await f.evaluate(ROW, [ID, norm(INV.label), norm(INV.desc)]);
 	await t.check('a click turns Code Mode Off', row.drawn === true && row.checked === 'false', JSON.stringify(row));
 	await f.locator(`.toggle[role="switch"][data-setting="${ID}"]:visible, [data-setting-id="${ID}"] .toggle[role="switch"]:visible`).first().click();
 	await t.settle();
 	await t.page.waitForTimeout(900);
-	row = await f.evaluate(ROW, ID);
+	row = await f.evaluate(ROW, [ID, norm(INV.label), norm(INV.desc)]);
 	await t.check('a second click turns it On again', row.drawn === true && row.checked === 'true', JSON.stringify(row));
 }
