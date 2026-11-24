@@ -34,6 +34,9 @@ bridge runs every recorded call twice (a sealed child, then the parent) and rest
   - addendum 10 fix 2 (review REAL 2): a call that can reach a store outside that root (as CF06-P03's
     build_context reaches the case's goal-db beside its storage), or whose reach walk is too large to finish, is not
     recorded; it is counted under ``unsealable_calls``;
+  - round 2 C3 (lead ruling 1124101552-8f55): the same holds for a reachable filesystem path into a tree disjoint
+    from that root (as BackupOwner.take's destination beside the sealed storage); such a call is refused, never
+    sealed-and-restored (the bridge restores exactly one root). Paths inside the root or containing it are fine;
   - a call with no store to seal (the lead's addendum 19 point 4: no declared purity list) is recorded only when it
     is mechanically shown to leave nothing behind: the owner-state digest (pm_goal_dg5_owner_state, the family's
     hook) and the visible store digests are equal before and after, in both the child and the parent run, and both
@@ -234,10 +237,9 @@ def direct(frame):
 
 
 def _stores(roots, limit=None):
-    """(stores, truncated): every TestOwnerStorage reachable from `roots` (``_reach``): the stores a call through
-    these objects can reach."""
-    found, _, truncated = _reach(roots, limit)
-    return found, truncated
+    """(stores, paths, truncated): every TestOwnerStorage and every filesystem path reachable from `roots`
+    (``_reach``): the durable places a call through these objects can reach."""
+    return _reach(roots, limit)
 
 
 def _store(value):
@@ -277,7 +279,7 @@ def _world(receiver, args, kwargs):
 
 
 def _reach(roots, limit=None):
-    """(stores, reaches_path, truncated): every TestOwnerStorage and whether any filesystem path is reachable from
+    """(stores, paths, truncated): every TestOwnerStorage and every filesystem path reachable from
     `roots`, through instance attributes (``__dict__`` and ``__slots__``), dict keys and values, lists, tuples, sets,
     function closures and defaults, bound methods (their ``__self__``) and functools.partial objects. Classes and
     modules are not followed (module state is the owner-state digest's part). Bounded: at `limit` objects the walk
@@ -288,13 +290,13 @@ def _reach(roots, limit=None):
     import pm_goal_test_storage as storage
     from pathlib import PurePath
     limit = REACH_LIMIT if limit is None else limit
-    seen, found, paths, todo = set(), [], False, list(roots)
+    seen, found, paths, todo = set(), [], [], list(roots)
     atoms = (str, bytes, bytearray, int, float, complex, bool, type, types.ModuleType, types.BuiltinFunctionType,
              types.CodeType)
     while todo:
         value = todo.pop()
         if isinstance(value, PurePath):
-            paths = True
+            paths.append(value)
             continue
         if value is None or isinstance(value, atoms) or id(value) in seen:
             continue
@@ -583,10 +585,20 @@ def _wrap(family, key, owner, name, raw):
         # Addendum 10 fix 2 (review REAL 2): only the found root is restored between the sealed child and the parent,
         # so the call is recorded only when every store it can reach lies under that root; otherwise (a sibling store,
         # as CF06-P03's goal-db, or a walk too large to finish) it runs unrecorded and is counted.
-        stores, truncated = _stores([world, *args, *kwargs.values()])
+        # Round 2 C3 (lead ruling 1124101552-8f55; recheck NOTE 1 is REAL): the same holds for reachable filesystem
+        # paths, which _stores used to drop. BackupOwner.take(st, d/'unit') writes <case>/unit/ beside the sealed
+        # <case>/storage root; the sealed child's writes there are never restored and break the parent
+        # (backup/dest_empty, child_parent_disagree in 9/20 CF3 cf12 cases). The collector REFUSES such a call
+        # instead of sealing arbitrary paths: the bridge restores exactly one root, and snapshotting/restoring
+        # paths anywhere a walk can reach (including repository files) would let the observer rewrite them.
+        # A path inside the root, or an ancestor container of it (the world's work directory), stays admissible;
+        # a path into a disjoint tree is unsealable. String paths remain invisible to _reach (deep note F5).
+        stores, paths, truncated = _stores([world, *args, *kwargs.values()])
         base = Path(root).resolve()
         outside = sorted({str(Path(st.root).resolve()) for st in stores if not Path(st.root).resolve().is_relative_to(base)})
-        if outside or truncated:
+        disjoint = sorted({str(p) for p in {Path(p).resolve() for p in paths}
+                           if not p.is_relative_to(base) and not base.is_relative_to(p)})
+        if outside or disjoint or truncated:
             unsealable = REPORTS[family].setdefault('unsealable_calls', {})
             unsealable[key] = unsealable.get(key, 0) + 1
             return original(*args, **kwargs)
