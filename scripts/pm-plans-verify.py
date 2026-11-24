@@ -187,13 +187,20 @@ MAX_JOBS = 8
 MEMORY_POLL_SECONDS = 5.0
 
 
-def memory_available_mb() -> int | None:
-    """MemAvailable in MiB, or None where the kernel does not say (no floor is enforced then)."""
+def memory_available_mb(meminfo: str = "/proc/meminfo") -> int | None:
+    """MemAvailable in MiB, or None where the kernel does not say (no floor is enforced then).
+
+    The kernel writes the value in kB (KiB), so it is divided by 1024; read raw it made the 6 GiB floor 6 MiB
+    (cheap review r2 N1).
+    """
     try:
-        with open("/proc/meminfo", encoding="utf-8") as handle:
+        with open(meminfo, encoding="utf-8") as handle:
             for line in handle:
                 if line.startswith("MemAvailable:"):
-                    return int(line.split()[1])
+                    fields = line.split()
+                    if len(fields) < 3 or fields[2] != "kB":
+                        return None
+                    return int(fields[1]) // 1024
     except (OSError, ValueError, IndexError):
         return None
     return None

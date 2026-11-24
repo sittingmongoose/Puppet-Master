@@ -3596,6 +3596,23 @@ class SharedWorkerBudget(LandingRun):
                       "before the three checks", errors.getvalue())
         self.assertIn("memory is back: 8.0 GiB, before the three checks", errors.getvalue())
 
+    def test_meminfo_kib_is_read_as_mib(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as folder:
+            meminfo = Path(folder) / "meminfo"
+            meminfo.write_text("MemTotal:       44040192 kB\nMemAvailable:   17825792 kB\n", encoding="utf-8")
+            self.assertEqual(M.memory_available_mb(str(meminfo)), 17408)
+            meminfo.write_text("MemAvailable:   17825792\n", encoding="utf-8")
+            self.assertIsNone(M.memory_available_mb(str(meminfo)))
+
+    def test_inherited_budget_and_child_flag_never_reach_children(self):
+        source = (ROOT / "scripts" / "pm-landing-check.py").read_text(encoding="utf-8")
+        start = source.index("child_env: dict[str, str] = dict(os.environ)")
+        window = source[start:start + 600]
+        for name in ("SLOTS_DIR_ENV", "SLOTS_COUNT_ENV", "MEMORY_FLOOR_MB_ENV", "AGGREGATE_CHILD_ENV"):
+            self.assertIn(name, window)
+        self.assertIn("child_env.pop(name, None)", window)
+
     def test_a_zero_floor_and_an_unknown_reading_never_wait(self):
         M.wait_for_memory_floor(0, "x", available=lambda: 1, sleep=lambda seconds: self.fail("waited"))
         M.wait_for_memory_floor(6144, "x", available=lambda: None, sleep=lambda seconds: self.fail("waited"))

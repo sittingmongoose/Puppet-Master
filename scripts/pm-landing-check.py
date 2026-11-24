@@ -522,13 +522,20 @@ def aggregate_reports(runner, jobs: int) -> dict[str, dict[str, Any]]:
         return reports
 
 
-def memory_available_mb() -> int | None:
-    """MemAvailable in MiB, or None where the kernel does not say (no floor is enforced then)."""
+def memory_available_mb(meminfo: str = "/proc/meminfo") -> int | None:
+    """MemAvailable in MiB, or None where the kernel does not say (no floor is enforced then).
+
+    The kernel writes the value in kB (KiB), so it is divided by 1024; read raw it made the 6 GiB floor 6 MiB
+    (cheap review r2 N1).
+    """
     try:
-        with open("/proc/meminfo", encoding="utf-8") as handle:
+        with open(meminfo, encoding="utf-8") as handle:
             for line in handle:
                 if line.startswith("MemAvailable:"):
-                    return int(line.split()[1])
+                    fields = line.split()
+                    if len(fields) < 3 or fields[2] != "kB":
+                        return None
+                    return int(fields[1]) // 1024
     except (OSError, ValueError, IndexError):
         return None
     return None
@@ -2245,6 +2252,10 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
 
     # Every child gets an explicit environment built here (review A3).
     child_env: dict[str, str] = dict(os.environ)
+    # Only this run sets the worker budget and the aggregate-child flag; inherited copies would let a --jobs 1 run
+    # honour another run's slots or switch off subcheck timeouts (cheap review r2 N2).
+    for name in (SLOTS_DIR_ENV, SLOTS_COUNT_ENV, MEMORY_FLOOR_MB_ENV, AGGREGATE_CHILD_ENV):
+        child_env.pop(name, None)
     if jobs > 1:
         # The slot files are the whole run's worker budget: both aggregates and every export take one
         # for each validator they run, so --jobs is a total rather than one pool per check.

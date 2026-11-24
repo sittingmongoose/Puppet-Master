@@ -713,6 +713,14 @@ with v.validator_slot("probe"):
 """
 
 
+class MemoryReadingTests(unittest.TestCase):
+    def test_meminfo_kib_is_read_as_mib(self):
+        with tempfile.TemporaryDirectory() as folder:
+            meminfo = Path(folder) / "meminfo"
+            meminfo.write_text("MemAvailable:    6291456 kB\n", encoding="utf-8")
+            self.assertEqual(pm_plans_verify.memory_available_mb(str(meminfo)), 6144)
+
+
 class ValidatorSlotsTests(unittest.TestCase):
     """Review N-F: --jobs is one budget for the whole check, and no validator starts below the floor."""
 
