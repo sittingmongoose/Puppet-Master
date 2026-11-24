@@ -59,4 +59,33 @@ export default async function (t) {
 	await t.text(everywhere, beforeText);
 	await t.visible(everywhere, 'Everywhere still shows its original model');
 	await t.shot('fo158-feed', 'Details picker and selected project result');
+
+	// FO-158 r3 (neon-max-19): Change on a place in "Where it applies" opens that place's own model picker inside the
+	// Where block; "Choosing here changes" must stay with Your choices and never move into the Where block.
+	const g = await t.app.open();
+	await g.waitForFunction(() => !!(window.PSX && window.PSX.booted && window.PSX.lastReport), null, { timeout: 60000 });
+	await g.evaluate(() => PM51.revealSetting('ai.models.default-model', { detail: true }));
+	await t.page.waitForTimeout(1600);
+	const where = g.locator('.detail-inspector [data-psx-block="where"]');
+	const change = where.getByRole('button', { name: /^Change\b/ }).first();
+	const canChange = (await where.count()) > 0 && (await change.count()) > 0;
+	await t.check('Where it applies offers Change on a place', canChange, JSON.stringify(await g.evaluate(() => [...document.querySelectorAll('.detail-inspector [data-psx-block="where"] button')].map((b) => b.textContent.trim()).slice(0, 12))));
+	if (!canChange) return;
+	await change.scrollIntoViewIfNeeded();
+	await change.click();
+	await t.page.waitForTimeout(900);
+	const placed = await g.evaluate(() => {
+		const tgt = document.querySelector('.detail-inspector .psx-target');
+		const sec = tgt && tgt.closest('section');
+		return {
+			editorOpen: !!document.querySelector('.detail-inspector [data-psx-block="where"] .o55-pick-trigger'),
+			target: !!tgt,
+			inWhere: !!(tgt && tgt.closest('[data-psx-block="where"]')),
+			section: sec ? ((sec.querySelector('h4') || {}).textContent || '') : null
+		};
+	});
+	t.log(JSON.stringify(placed));
+	await t.check('a place\'s Change opens its model picker in Where it applies', placed.editorOpen, JSON.stringify(placed));
+	await t.check('Choosing here changes stays out of Where it applies after a place\'s Change', placed.target && !placed.inWhere, JSON.stringify(placed));
+	if (!placed.target || placed.inWhere) await t.shot('fo158-target-in-where', 'Choosing here changes moved into Where it applies');
 }
