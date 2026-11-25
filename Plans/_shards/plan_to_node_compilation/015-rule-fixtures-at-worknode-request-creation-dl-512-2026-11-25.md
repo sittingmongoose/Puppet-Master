@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_To_Node_Compilation.md`
 
-Source lines: L2169-L2337
+Source lines: L2169-L2340
 
-Source SHA256: `b34dcbab26b862ba3dfc3ac3f9e143727bd006f14c52546d216b5a3e3c5c184d`
+Source SHA256: `d0508e4ce4cb9cddecf4586c700b9923742486e0bd7c4d4c9406e6471d2dfdf6`
 
 ---
 
@@ -74,7 +74,10 @@ canonical_text: >-
   (a latency gate, a visual or browser check, an artifact that must not exist) binds its ATS-003 oracle as its test.
   No contract is exempt from schema fixtures because its acceptance criteria use other oracles. The compile model writes
   behaviour fixtures; each cites the exact span it comes from and keeps an immutable reference to that span in the
-  approved plan version, and code checks it against the schema and the declared failure codes before it binds. Risky
+  approved plan version, and before it binds, code validates the fixture record, confirms that its input has the schema result the approved
+  contract specifies for the case (valid where the case expects the operation to reach the owner's own checks, and
+  refused with that refusal's identity where the case expects an earlier schema refusal, as a shadowed refusal does),
+  and checks its expected code against the declared failure codes. Risky
   contracts add the cases of the planning referee check (Plans/Planning_Wizard.md#PWIZ-111). A fixture's expected
   outcome comes only from the approved contract: accepted with any stated result, or refused with the declared failure code and, when several rules share that
   code, the validator's error path (with the member for a per-member rule) that names the rule; every expected state comes from the owner-stated state and
@@ -123,7 +126,7 @@ canonical_text: >-
   node's code must not satisfy, and a run against a different owner build that produces the expected refusal but
   must not count, a split rule for which an implementing node and a later integration node both
   qualify, a candidate whose added edges would create a cycle, a rule
-  with no lawful target, a declared failure that an earlier schema refusal shadows and that must earn no independent
+  with no lawful target, a declared failure that an earlier schema refusal shadows, whose case must bind, reach the built owner's validation and earn no independent
   coverage credit, and an absent owner build tested beside an existing owner build that lacks an automatic test route.
   This unit specifies the binding
   only; it emits no NodeSeeds, WorkNodes, executable queues or build tasks.
@@ -138,7 +141,7 @@ acceptance_criteria:
   - "A schema rule's required tests are a refusing and a passing payload fixture, and for an assertion an if selects also a passing payload on each route the contract distinguishes and, wherever the contract admits one, a contrasting accepted control that still breaks the assertion on a route that does not select it; a declared failure result's are a refusing input and its passing neighbour; a behavioural criterion's is one fixture per input condition it lists, each asserting its stated outcome so that a wrong result fails; any other criterion's is its ATS-003 oracle; no contract is exempt from schema fixtures; each member of a required list or other per-member constraint is its own rule with its own refusing fixture."
   - "Every behaviour fixture carries the owner-stated state and effect assertions for its polarity, each read through a declared observation surface; where a surface is missing, the carried PWIZ-110 completeness gap stands, or an assertion test gap if the gap was first found at compile time."
   - "Every expected outcome comes from the approved contract; a referee case that disagrees with the contract or lacks a contract outcome never binds, and observed planning outcomes are kept only as evidence."
-  - "Every behaviour fixture cites its source span, passes the schema and declared-failure-code check before it binds, and keeps an immutable reference to that span in the approved plan version."
+  - "Every behaviour fixture cites its source span and keeps an immutable reference to that span in the approved plan version; before it binds, code validates the fixture record, confirms that its input has the schema result the approved contract specifies for the case, an expected earlier schema refusal included, and checks its expected code against the declared failure codes."
   - "A named-gap regression input binds only where the approved contract determines its refusal, and never with single-rule coverage credit."
   - "A test gap's test_gap_policy is set by PlanCompile from what is actually missing: block_completion when an automatic route exists for the missing test or assertion, defer_non_executable_harness_candidate only when the route itself is missing, a missing owner build always block_completion naming that build and never a harness candidate, and a deferred candidate keeps the rule's verification open under EP-101; allow_with_disposition and not_applicable are never used for a rule's required test."
   - "A contract change after approval reruns its checks in the successor plan and regenerates its tests, and the PlanDiffImpactReport classifies every consuming node."
