@@ -355,6 +355,8 @@ The controlling AI role within the Orchestrator is the **Overseer**. Canonical d
 
 ### Orchestrator Modifications
 
+Code example note (2026-11-25): in the code below, `self.get_tier_overrides(tier_node.tier_type)` stands for the SubagentPolicy override for the unit's scope (the policy's `scope_overrides` entry, OSI-425, OSI-214). At runtime the orchestrator never reads the legacy `tier_overrides` or `enable_tier_subagents` keys; those are normalized into SubagentPolicy at import (see 10. Meaning of empty override list). `select_for_tier` is the selector API OSI-213 keeps.
+
 ```rust
 // src/core/orchestrator.rs (additions)
 
@@ -401,6 +403,7 @@ impl Orchestrator {
         );
 
         // Apply tier overrides (replace if non-empty, else use selected list)
+        // Runtime source: the normalized SubagentPolicy scope override (OSI-425), never the legacy tier_overrides key
         // DRY REQUIREMENT: Validate override names using subagent_registry::is_valid_subagent_name()
         if let Some(overrides) = self.get_tier_overrides(tier_node.tier_type) {
             if !overrides.is_empty() {
@@ -1208,16 +1211,16 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 
 ### 10. Platform-specific subagent output parsers
 
-- **Gap:** Structured handoff validation (`validate_subagent_output`) needs platform-specific parsers: JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot. The plan does not yet specify parser implementation details or fallback behavior when parsing fails.
-- **Clarify:** (1) **JSON parsers:** For Cursor/Claude/Gemini, use `serde_json` to parse `--output-format json` output into `SubagentOutput`. Handle missing fields gracefully (e.g., `downstream_context: None` if field absent). (2) **JSONL parser:** For Codex, parse `--json` or `--experimental-json` JSONL stream; aggregate events into single `SubagentOutput` (last event wins for fields, accumulate findings). (3) **Text parser:** For Copilot, use regex or pattern matching to extract "Task Report:", "Downstream Context:", "Findings:" sections from text output. If sections missing, treat as malformed and retry. (4) **Fallback:** If parsing fails after retry, create partial `SubagentOutput { task_report: raw_output, downstream_context: None, findings: vec![] }` and mark tier as "complete with warnings" rather than failing the run.
+- **Gap:** Structured handoff validation (`validate_subagent_output`) needs transport-scoped parsers (OSI-004, OSI-093): JSON over CLI output for the CliBridge providers (Cursor, Claude Code) and JSON over the direct-provider response's final assistant content for the DirectApi providers (Codex, Copilot, Gemini). The original split "JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot" describes CLI-era output and is historical context only. The plan did not specify parser implementation details or fallback behavior when parsing fails; the Clarify item and the resolved fallback below do.
+- **Clarify:** (1) **JSON parsers:** For Cursor and Claude Code (CliBridge), use `serde_json` to parse the CLI's structured output (`--output-format json` or stream-json, format from platform_specs) into `SubagentOutput`; for Codex, Copilot and Gemini (DirectApi), use `serde_json` on the final assistant content of the direct-provider response. Handle missing fields gracefully (e.g., `downstream_context: None` if field absent). (2) **JSONL parser (historical):** the CLI-era instruction "For Codex, parse `--json` or `--experimental-json` JSONL stream; aggregate events into single `SubagentOutput` (last event wins for fields, accumulate findings)" is not an implementation target: Codex is DirectApi and has no CLI stream. (3) **Text parser (historical):** the CLI-era instruction "For Copilot, use regex or pattern matching to extract \"Task Report:\", \"Downstream Context:\", \"Findings:\" sections from text output" is not an implementation target: Copilot is DirectApi and returns final assistant content parsed as JSON. Pattern extraction of those sections survives only as the generic fallback extraction every transport keeps (OSI-093); if required sections are still missing after it, treat the output as malformed and retry. (4) **Fallback (superseded):** the earlier rule "If parsing fails after retry, create partial `SubagentOutput { task_report: raw_output, downstream_context: None, findings: vec![] }` and mark tier as "complete with warnings" rather than failing the run" is superseded by the resolved fallback below and OSI-093: when the generic fallback and the one retry both fail, the error is surfaced with [Retry] [Skip] [View raw output] and settles as Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25) says.
 
 **Subagent Output Parser Fallback (Resolved):**
 
 Platform-specific parsers handle output from each Provider:
-- **Cursor/Claude/Gemini:** JSON parser (stream-json NDJSON events)
-- **Codex:** JSONL parser (newline-delimited JSON events)
-- **Copilot:** Text parser (plain text output, regex-based signal extraction)
-- **Transport scope (2026-11-25, OSI-004 and OSI-093):** the three bullets above describe CLI-era output. Only the CliBridge providers (Cursor, Claude Code) parse CLI output (JSON / stream-json NDJSON). Codex, Copilot and Gemini are DirectApi: their SubagentOutput is parsed from the direct-provider response's final assistant content, so the Codex JSONL parser, the Copilot text parser, the `--json` / `--experimental-json` flags in the Clarify item above and the CodexOutputParser snippet (OSI-158) are historical context only, not implementation targets. Steps 1-5 below apply to every transport.
+- **Cursor/Claude Code (CliBridge):** JSON parser over CLI output (stream-json NDJSON events)
+- **Codex, Copilot, Gemini (DirectApi):** JSON parser over the direct-provider response's final assistant content
+- **OpenCode (ServerBridge):** parser over its server event stream
+- **Transport scope (2026-11-25, OSI-004 and OSI-093):** earlier versions of this list read "Cursor/Claude/Gemini: JSON parser (stream-json NDJSON events)", "Codex: JSONL parser (newline-delimited JSON events)" and "Copilot: Text parser (plain text output, regex-based signal extraction)". Those describe CLI-era output: the Codex JSONL parser, the Copilot text parser, a Gemini stream-json parser, the `--json` / `--experimental-json` flags in the Clarify item above and the CodexOutputParser and CopilotOutputParser snippets (OSI-158, OSI-161) are historical context only, not implementation targets. The GeminiOutputParser snippet (OSI-160) is the live DirectApi parser: it reads `candidates[0].content.parts[0].text` from the direct-provider response body, and only its `--output-format json` comment and `stdout` parameter name are CLI-era wording. Steps 1-5 below apply to every transport.
 
 When a platform-specific parser fails:
 1. **Log:** Record parse error in seglog (`parser.error` event) with the first 500 characters of raw output for diagnostics.
@@ -1376,7 +1379,7 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 ### 10. Meaning of empty override list
 
 - **Issue:** If `tier_overrides.phase = []`, does that mean "no subagents for phase" or "no override; use auto-selected list"?
-- **Mitigation:** **Rule: missing or empty override = use auto-selection.** This rule governs how imported `tier_overrides` normalize into SubagentPolicy (OSI-425, OSI-081); runtime selection reads the normalized SubagentPolicy, never `tier_overrides`. Only a non-empty override list for a tier replaces the selector output. To force no subagents for a tier, the user sets `enable_tier_subagents` false (global) or we add a per-tier "use no subagents" option in a later version. **Implement:** In the orchestrator, if `tier_overrides.get(tier)` is `None` or `Some([])`, use the list from `SubagentSelector::select_for_tier`; otherwise use the override list. Document in code and in the Config tooltip for tier overrides.
+- **Mitigation:** **Rule: missing or empty override = use auto-selection.** This rule governs how imported `tier_overrides` normalize into SubagentPolicy (OSI-425, OSI-081); runtime selection reads the normalized SubagentPolicy, never `tier_overrides`. Only a non-empty imported override list becomes a SubagentPolicy override that replaces the selector output. To force no subagents, the user turns subagents off in SubagentPolicy (`enabled: false`; an imported `enable_tier_subagents: false` normalizes to it), or a later version adds a per-scope "use no subagents" option. **Implement:** In the import that normalizes legacy config into SubagentPolicy, a `tier_overrides` entry that is missing or `[]` writes no override for that scope, and a non-empty list is written as that scope's `scope_overrides` entry (the compatibility alias map under SubagentPolicy runtime defaults and compatibility aliases). At runtime the orchestrator uses the SubagentPolicy override for the unit's scope when one exists and otherwise the list from `SubagentSelector::select_for_tier` (OSI-213); it never reads `tier_overrides.get(tier)`. Document in code and in the Config tooltip for tier overrides.
 
 ### 11. Persistence and dirty state
 
@@ -2533,6 +2536,8 @@ pub enum ValidationError {
 
 Extend `src/platforms/output_parser.rs` with new parser methods:
 
+Transport scope of the parser code below (2026-11-25, OSI-004, OSI-093): `CursorOutputParser` and `ClaudeOutputParser` are live CliBridge parsers over CLI output, and `GeminiOutputParser` is the live DirectApi parser over the response body (`candidates[0].content.parts[0].text`; its `--output-format json` comment and `stdout` parameter name are CLI-era wording). The `CodexOutputParser` (JSONL) and `CopilotOutputParser` (text and regex over `stdout`/`stderr`) blocks are CLI-era code examples kept as historical context only (OSI-158, OSI-161): Codex and Copilot are DirectApi, have no CLI output, and are parsed as JSON from the final assistant content like Gemini.
+
 ```rust
 // Add to ParsedOutput struct:
 pub struct ParsedOutput {
@@ -2785,6 +2790,7 @@ impl Orchestrator {
 }
 
 impl OutputParser for CodexOutputParser {
+    // HISTORICAL (CLI-era): Codex is DirectApi (OSI-004); not an implementation target. See transport scope above.
     // DRY:FN:parse_subagent_output_codex -- Parse Codex subagent output
     // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "JSONL" or output format
     ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md
@@ -2892,6 +2898,7 @@ impl OutputParser for GeminiOutputParser {
     fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
         // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Gemini outputs JSON"
         // Gemini outputs JSON with --output-format json -- format from platform_specs
+        // Transport note: Gemini is DirectApi (OSI-004); `stdout` here is the direct-provider response body, not CLI output.
         let json: serde_json::Value = serde_json::from_str(stdout)?;
 
         // Gemini wraps in "candidates" -> [0] -> "content" -> "parts" -> [0] -> "text"
@@ -2917,6 +2924,7 @@ impl OutputParser for GeminiOutputParser {
 }
 
 impl OutputParser for CopilotOutputParser {
+    // HISTORICAL (CLI-era): Copilot is DirectApi (OSI-004); not an implementation target. See transport scope above.
     // DRY:FN:parse_subagent_output_copilot -- Parse Copilot subagent output
     // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "Copilot outputs text"
     ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md
@@ -3387,13 +3395,13 @@ These lifecycle and quality features **complement** the existing start/end verif
 
 **Gap #16: Structured output parsing reliability**
 
-**Issue:** Platform output formats may vary (JSON vs JSONL vs text). Parsers may fail on edge cases (malformed JSON, partial output, streaming output). How do we handle parsing failures gracefully?
+**Issue:** Platform output formats may vary (JSON vs JSONL vs text), scoped by transport (OSI-004, OSI-093): CliBridge providers (Cursor, Claude Code) emit JSON or stream-json NDJSON on the CLI, DirectApi providers (Codex, Copilot, Gemini) return final assistant content parsed as JSON, and the Codex JSONL stream and Copilot text output are CLI-era history. Parsers may fail on edge cases (malformed JSON, partial output, streaming output). How do we handle parsing failures gracefully?
 
 **Mitigation:**
-- **Multi-pass parsing:** Try JSON parse first, then JSONL, then text extraction. Use best-effort parsing with fallbacks.
+- **Multi-pass parsing:** Try JSON parse first, then JSONL (CliBridge stream-json NDJSON events only), then text extraction (the generic fallback every transport keeps, OSI-093). Use best-effort parsing with fallbacks.
 - **Partial output handling:** If parsing fails, extract what we can (e.g., `task_report` from text even if `findings` missing). Mark tier as "complete with warnings."
 - **Parser testing:** Comprehensive test suite for each platform parser with edge cases (malformed JSON, unicode, large outputs, streaming).
-- **Parser versioning:** Track parser version and platform CLI version. Update parsers when platform CLI changes.
+- **Parser versioning:** Track parser version and platform CLI version for the CliBridge providers (Cursor, Claude Code), and the provider API and model version for the DirectApi providers (Codex, Copilot, Gemini). Update parsers when either changes.
 
 **Gap #17: Remediation loop infinite retry risk**
 
@@ -3456,13 +3464,13 @@ These lifecycle and quality features **complement** the existing start/end verif
     "findings": [{"severity": "critical", "category": "security", ...}]
   }
   ```
-- **Platform-specific instructions:** For Copilot (text-only), provide markdown format example instead of JSON.
+- **Platform-specific instructions:** none by transport: every provider, Copilot included, gets the JSON schema example above, because Copilot is DirectApi and its final assistant content is parsed as JSON (OSI-004, OSI-093, OSI-194). The earlier instruction "For Copilot (text-only), provide markdown format example instead of JSON" is CLI-era history, not an implementation target.
 - **Validation feedback:** If retry fails, include validation error in retry prompt: "Your output was missing 'task_report' field. Please include it."
 - **Fail-safe:** After retry fails, extract partial output (best-effort) and proceed with warnings.
 
 **Gap #23: Cross-platform hook adapter complexity**
 
-**Issue:** Platform-native hook adapters (CursorNativeHookAdapter, ClaudeNativeHookAdapter, GeminiNativeHookAdapter) must handle different hook formats, communication protocols (JSON stdin/stdout, exit codes), and error handling. This adds complexity.
+**Issue:** Platform-native hook adapters (CursorNativeHookAdapter, ClaudeNativeHookAdapter) must handle different hook formats, communication protocols (JSON stdin/stdout, exit codes), and error handling. This adds complexity. Native hook adapters exist only for the CliBridge providers (Cursor, Claude Code; OSI-004, OSI-195). GeminiNativeHookAdapter, listed here in earlier versions, is retired CLI-era wording: Gemini is DirectApi and, like Codex and Copilot, runs only orchestrator-level middleware (Gap #14).
 
 **Mitigation:**
 - **Unified adapter trait:** Define `PlatformHookAdapter` trait with common interface:
@@ -3473,7 +3481,7 @@ These lifecycle and quality features **complement** the existing start/end verif
       fn platform(&self) -> Platform;
   }
   ```
-- **Platform-specific implementations:** Each platform adapter handles its own format/protocol internally.
+- **Platform-specific implementations:** Each platform adapter (Cursor, Claude Code) handles its own format/protocol internally. The `BeforeTierResult` / `AfterTierResult` names in the trait above are legacy aliases of `BeforeUnitResult` / `AfterUnitResult` (Execution-Unit Hook Naming).
 - **Testing:** Test each adapter with mock hook scripts. Verify JSON parsing, exit code handling, error cases.
 - **Documentation:** Document hook format for each platform in `docs/platform-hooks.md`.
 
@@ -4317,8 +4325,8 @@ coordinator.unregister_agent(&format!("{}-{}", subagent_name, node_id)).await?;
 **Extracting file operations from agent output:**
 
 - **Parse agent output:** Use output parser to detect file paths mentioned in agent responses (e.g., "I'm editing src/api.rs" or file paths in diffs).
-- **Platform hooks:** For platforms with native hooks (Cursor, Claude, Gemini), use `PreToolUse`/`PostToolUse` hooks to detect file operations in real-time.
-- **Provider event adapters:** For Codex/Copilot, use normalized CLI stream/tool events to detect file operations in real time.
+- **Platform hooks:** For the platforms with native hooks, which are only the CliBridge providers (Cursor, Claude Code; OSI-004), use `PreToolUse`/`PostToolUse` hooks to detect file operations in real-time.
+- **Provider event adapters:** For the DirectApi providers (Codex, Copilot, Gemini), use the tool-call events in the direct-provider response to detect file operations in real time. Earlier wording listed Gemini under native hooks and told Codex/Copilot to use "normalized CLI stream/tool events"; that is CLI-era history (OSI-274).
 
 **Example coordination flow (cross-platform):**
 
@@ -5193,7 +5201,7 @@ async fn load_state(&self) -> Result<AgentCoordinationState> {
 **Issue:** Extracting file operations from agent output is unreliable. Agents may mention files they don't edit, or edit files they don't mention. Platform hooks may not fire for all file operations.
 
 **Mitigation:**
-- **Multi-source extraction:** Combine multiple sources: (1) agent output parsing (regex for file paths), (2) platform hooks (`PreToolUse`/`PostToolUse`), (3) provider stream/tool events from CLI output adapters, (4) git diff detection (compare worktree before/after).
+- **Multi-source extraction:** Combine multiple sources: (1) agent output parsing (regex for file paths), (2) platform hooks (`PreToolUse`/`PostToolUse`), (3) provider tool-call events (CliBridge CLI output adapters for Cursor and Claude Code; the direct-provider response for Codex, Copilot and Gemini), (4) git diff detection (compare worktree before/after).
 - **Confidence scoring:** Assign confidence scores to file operations (high: platform hook detected, medium: agent mentioned, low: inferred from context). Only include high/medium confidence files in coordination state.
 - **Validation:** After agent completes, validate claimed files against actual git diff. If mismatch, log warning and update coordination state.
 - **Best-effort updates:** If file extraction fails, still register agent with empty `files_being_edited` list. Coordination context will still show agent is active, just without file details.
@@ -14528,11 +14536,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Platform hook registration uses orchestrator-level hooks as primary middleware while optionally integrating native platform
-  hooks: Cursor hook files and events, Codex and Copilot CLI lifecycle outputs, Claude settings hooks with blocking/context
-  behavior, and Gemini orchestrator-level Direct API hooks without native config files. Codex and Copilot are DirectApi
-  under OSI-004, so like Gemini they use orchestrator-level hooks only; "Codex and Copilot CLI lifecycle outputs" is
-  CLI-era wording kept as historical context only, not an implementation target.
+  Platform hook registration uses orchestrator-level hooks as primary middleware while optionally integrating native
+  platform hooks for the CliBridge providers only: Cursor hook files and events, and Claude settings hooks with
+  blocking/context behavior. Codex, Copilot and Gemini are DirectApi under OSI-004 and use orchestrator-level Direct API
+  hooks without native config files; the source wording "Codex and Copilot CLI lifecycle outputs" is CLI-era history,
+  not an implementation target.
 gui_related: false
 gui_classification_reason: This unit covers provider/runtime hook registration policy, not GUI presentation.
 split_recommended: false
@@ -17316,10 +17324,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Runtime contract enforcement uses platform-specific parser validation across Cursor, Codex, Claude, Gemini, and Copilot
-  while treating provider-doc schema findings as capability evidence rather than a bypass for local validation; provider-native
-  schema enforcement is preferred where available, and weak or unsupported transports fall back to locally validated structured
-  output or partial-output warnings.
+  Runtime contract enforcement uses transport-scoped parser validation (OSI-004, OSI-093) across Cursor, Codex, Claude,
+  Gemini, and Copilot: JSON over CLI output for the CliBridge providers (Cursor, Claude Code) and JSON over the
+  direct-provider response's final assistant content for the DirectApi providers (Codex, Copilot, Gemini), with the same
+  required fields for every provider. Provider-doc schema findings are treated as capability evidence rather than a
+  bypass for local validation; provider-native schema enforcement is preferred where available, and weak or unsupported
+  transports fall back to locally validated structured output or partial-output warnings.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
@@ -17378,8 +17388,9 @@ preserved_exact_tokens:
 negative_constraints: []
 compatibility_only_notes:
 - >-
-  Codex JSON wording is preserved as source shorthand only; Codex JSONL parser behavior remains represented by OSI-158 and
-  the platform summary.
+  The source line "Cursor/Codex/Claude/Gemini: Parse JSON output" fits the transport-scoped contract above. The Codex
+  JSONL parser and Copilot text output parsing are CLI-era history: OSI-158, OSI-161 and the Platform-Specific
+  Implementation Summary mark them historical context only, not implementation targets.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -17396,7 +17407,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   The platform implementation matrix preserves which lifecycle and quality features are orchestrator-level and which require
-  platform-specific parsers or validators across Cursor, Codex, Claude, Gemini, and Copilot.
+  platform-specific parsers or validators across Cursor, Codex, Claude, Gemini, and Copilot, scoped by transport as OSI-093
+  states (JSON over CliBridge CLI output for Cursor and Claude, JSON over the DirectApi final assistant content for Codex,
+  Gemini and Copilot) with native hooks only for the CliBridge providers.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
@@ -17464,11 +17477,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Most lifecycle features are orchestrator-level and platform-agnostic, while handoff validation and contract enforcement
-  require parser-specific JSON, JSONL, or text handling; platform-native hooks may be used where available while orchestrator
-  middleware remains the fallback for all platforms. The parser handling is transport-scoped by OSI-093 (JSON over CliBridge
-  CLI output, JSON over the DirectApi final assistant content, the ServerBridge event stream); JSONL and text handling are
-  CLI-era Codex and Copilot history, and platform-native hooks exist only for the CliBridge providers (Cursor, Claude Code).
+  Most lifecycle features are orchestrator-level and platform-agnostic, while handoff validation and contract
+  enforcement require transport-scoped parser handling (OSI-093): JSON over CliBridge CLI output, JSON over the
+  DirectApi final assistant content, and the ServerBridge event stream. The source's parser-specific JSON, JSONL, or
+  text handling split is CLI-era Codex and Copilot history. The platform-native hooks are used where available, which is
+  only for the CliBridge providers (Cursor, Claude Code), while orchestrator middleware remains the fallback for
+  all platforms.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
@@ -17734,8 +17748,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Structured output parsing handles JSON, JSONL, and text variation through multi-pass parsing, best-effort partial output,
-  parser edge-case tests, parser version tracking, and platform CLI version tracking.
+  Structured output parsing handles JSON, JSONL, and text variation through multi-pass parsing scoped by transport
+  (OSI-004, OSI-093): the JSONL pass reads the CliBridge stream-json NDJSON events (Cursor, Claude Code); DirectApi
+  final assistant content (Codex, Copilot, Gemini) is parsed as JSON with generic text extraction as the fallback; a
+  Codex JSONL stream or Copilot text output is CLI-era history, not an implementation target. It keeps best-effort
+  partial output, parser edge-case tests, parser version tracking, and platform CLI version tracking for the CliBridge
+  providers, with the provider API and model version tracked in its place for the DirectApi providers.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
@@ -18198,9 +18216,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Structured handoff prompt enforcement includes explicit JSON schema examples for structured-capable providers, markdown
-  examples for Copilot text-only output, validation-error feedback in retry prompts, and best-effort partial output with warnings
-  after retry failure.
+  Structured handoff prompt enforcement includes an explicit JSON schema example for every provider, validation-error
+  feedback in retry prompts, and best-effort partial output with warnings after retry failure. Copilot is DirectApi
+  (OSI-004, OSI-093) and gets the same JSON schema example; the Gap #22 instruction to give Copilot (text-only) a
+  markdown example instead of JSON is CLI-era history, not an implementation target.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, hook, lifecycle, validation, parser, remediation, continuity, or storage-boundary
@@ -18271,8 +18290,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Platform-native hook adapters for Cursor, Claude, and Gemini normalize platform-specific hook formats, communication protocols,
-  JSON stdin/stdout, exit codes, and error handling behind a PlatformHookAdapter trait and documented platform hook formats.
+  Platform-native hook adapters exist only for the CliBridge providers (OSI-004): CursorNativeHookAdapter and
+  ClaudeNativeHookAdapter normalize platform-specific hook formats, communication protocols, JSON stdin/stdout,
+  exit codes, and error handling behind a PlatformHookAdapter trait and documented platform hook formats. Gemini is
+  DirectApi and has no native hooks, so GeminiNativeHookAdapter is retired CLI-era wording, not an implementation
+  target; Gemini, Codex and Copilot use orchestrator-level middleware.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, hook, lifecycle, validation, parser, remediation, continuity, or storage-boundary
@@ -20349,8 +20371,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  BeforeUnit/AfterUnit hooks delegate to native hooks where possible for Cursor, Claude, and Gemini, while Codex and Copilot
-  use orchestrator-level middleware and canonical coordination projection.
+  BeforeUnit/AfterUnit hooks delegate to native hooks where possible for the CliBridge providers Cursor and Claude
+  (Claude Code), while the DirectApi providers Codex, Copilot and Gemini use orchestrator-level middleware and
+  canonical coordination projection (OSI-004, OSI-139). Gemini is not a native-hook provider; earlier wording that
+  listed it beside Cursor and Claude is CLI-era history.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend platform hook adapter boundaries rather than GUI presentation.
@@ -20405,12 +20429,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Structured handoff validation extends validate_subagent_output() with platform-specific parsers, including JSON for
-  Cursor, Claude, and Gemini, JSONL for Codex, and text parsing for Copilot, and contract enforcement retries malformed
-  output before failing safe. Under the OSI-004 ProviderTransport taxonomy those parsers are transport-scoped as OSI-093
-  states: JSON over CLI output for the CliBridge providers (Cursor, Claude Code) and JSON over the direct-provider
-  response's final assistant content for the DirectApi providers (Codex, Copilot, Gemini); JSONL for Codex and text
-  parsing for Copilot describe CLI-era output and are historical context only, not implementation targets.
+  Structured handoff validation extends validate_subagent_output() with transport-scoped parsers (OSI-004, OSI-093):
+  JSON over CLI output for the CliBridge providers (Cursor, Claude Code) and JSON over the direct-provider response's
+  final assistant content for the DirectApi providers (Codex, Copilot, Gemini); contract enforcement retries malformed
+  output before failing safe. The source's parser list (JSON for Cursor/Claude/Gemini, JSONL for Codex, and
+  text parsing for Copilot) describes CLI-era output and is historical context only, not an implementation target.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend structured handoff parsing and contract enforcement rather than GUI presentation.
@@ -22849,10 +22872,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  File operations can be detected by parsing agent output, native PreToolUse/PostToolUse hooks where available, or
-  Codex/Copilot normalized CLI stream or tool events. Codex and Copilot are DirectApi under OSI-004, so for them this means
-  the tool-call events in the direct-provider response; "normalized CLI stream" is CLI-era wording kept as historical
-  context only.
+  File operations can be detected by parsing agent output, by native PreToolUse/PostToolUse hooks where available (only
+  the CliBridge providers Cursor and Claude Code have them), or by provider tool-call events. For the DirectApi
+  providers (Codex, Copilot, Gemini, OSI-004) that means the tool-call events in the direct-provider response; the
+  source wording "Codex/Copilot normalized CLI stream or tool events" is CLI-era history, not an implementation target.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend event extraction and provider adapter evidence rather than GUI presentation.
@@ -31828,7 +31851,7 @@ Repairs row `sfk-1a88c3d82dd8176a236abe6a`.
 - Legacy `BeforeTier`, `AfterTier`, and `verify_tier_start` strings are source-lineage aliases only. They may appear in imported records, but normalized orchestration records must store `hook_name_normalized` using the canonical execution-unit names.
 - Import normalization table: `BeforeTier -> BeforeUnit`, `AfterTier -> AfterUnit`, `verify_tier_start -> VerifyUnitStart`, `verify_tier_end -> VerifyUnitEnd`.
 - New owner prose and generated receipts must not introduce tier-era hook names as active hook identifiers.
-- Naming fence (2026-11-25): every remaining tier-era spelling in this document is a legacy alias of the canonical names above, not an active identifier. That covers `verify_tier_start` / `verify_tier_end` as function and module names (`src/verification/tier_start.rs`, `tier_end.rs`, `tier_verification.rs`) in the start/end verification sections and their code examples, the `BeforeTierStart` / `DuringTierStart` / `AfterTierStart` and `BeforeTierEnd` / `AfterTierEnd` verification responsibilities (the before, during and after phases of `VerifyUnitStart` and `VerifyUnitEnd`), the `BeforeTierResult` / `AfterTierResult` type names in the hook trait example, and the PlanUnits OSI-109, OSI-110, OSI-112, OSI-122, OSI-164, OSI-221 and OSI-224.
+- Naming fence (2026-11-25): every remaining tier-era spelling in this document is a legacy alias of the canonical names above, not an active identifier. That covers `verify_tier_start` / `verify_tier_end` as function and module names (`src/verification/tier_start.rs`, `tier_end.rs`, `tier_verification.rs`) in the start/end verification sections and their code examples, the `BeforeTierStart` / `DuringTierStart` / `AfterTierStart` and `BeforeTierEnd` / `AfterTierEnd` verification responsibilities (the before, during and after phases of `VerifyUnitStart` and `VerifyUnitEnd`), the `BeforeTierResult` / `AfterTierResult` type names in the hook trait example, and the PlanUnits OSI-109, OSI-110, OSI-112, OSI-119 (BeforeTierEnd), OSI-121 (AfterTierEnd), OSI-122, OSI-164, OSI-221 and OSI-224.
 
 ### Cross-Platform Process Existence Check
 
@@ -35153,4 +35176,4 @@ Repairs `sfk-15a9ffa7a7561411bb7625a4` (registry line 1518); binds OSI-094, Hand
 | [View raw output] / chat review | `open_details` | `cmd.runtime.open_attempt_details` | `run_id`, `node_id`, `attempt_id` | No state change. For the parser prompt, attempt details open on the raw output kept in `parser.error`; for the Unrelated-failure CTA they open on the failed retry's classifier, error detail and logs. The recovery point stays open. |
 | chat abort (Unrelated-failure CTA only) | `abort_run` | `cmd.runtime.abort_run` | `run_id`, `reason_code` = the failed retry's own classifier value (its `failure_class` or `blocked_reason_code`), `requested_by`, `created_at_utc` | The run ends through the existing abort semantics. |
 
-- Stale checks use the identity each payload carries. `cmd.runtime.retry_now` is refused as stale, changing nothing, when its `blocked_sequence` or `attempt_id` no longer matches the open recovery point. `cmd.runtime.skip_node` carries no `blocked_sequence`: it is refused as stale when the node has no open recovery point or its `attempt_id` is not the attempt that recovery point was raised for. `cmd.runtime.abort_run` carries only `run_id`: it is never stale against a recovery point, and is refused only when the run is already terminal. `cmd.runtime.open_attempt_details` changes no state and is never refused as stale; it opens the named attempt even after the recovery point closed. Only one of `retry_now`, `skip_node` and `abort_run` settles a recovery point; the first admitted one wins and later ones are refused as stale.
+- Stale checks use the identity each payload carries. `cmd.runtime.retry_now` is refused as stale, changing nothing, when its `blocked_sequence` or `attempt_id` no longer matches the open recovery point. `cmd.runtime.skip_node` carries no `blocked_sequence`: it is refused as stale when the node has no open recovery point or its `attempt_id` is not the attempt that recovery point was raised for. `cmd.runtime.abort_run` carries only `run_id`: it is never stale against a recovery point, and is refused only when the run is already terminal. `cmd.runtime.open_attempt_details` changes no state and is never refused as stale; it opens the named attempt even after the recovery point closed. Only one of `retry_now` and `skip_node` settles a recovery point; the first admitted one wins and the later one is refused as stale. An admitted `abort_run` ends the run, which closes any open recovery point, so every later `retry_now` or `skip_node` for it is refused because the run is terminal. An `abort_run` that arrives after `retry_now` or `skip_node` already settled the point is not stale: while the run is still active it is admitted and aborts the run like any other abort.
