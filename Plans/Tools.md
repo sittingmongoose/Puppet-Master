@@ -13359,7 +13359,7 @@ ContractRef: ContractName:Plans/Tools.md#T-187, ContractName:Plans/Settings_Syst
 
 This addendum records Jared's 2026-11-15 direction that production Puppet Master uses Code Mode for tool calls on every provider. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, generated governance artifacts, or governance seal.
 
-**Amended 2026-11-24.** Jared asked whether Code Mode can be turned off in Settings and directed that it must be. T-191 adds the Settings row and its meaning; T-188 and T-189 are amended so the requested mode follows that row. Code Mode stays On by default.
+**Amended 2026-11-24.** Jared asked whether Code Mode can be turned off in Settings and directed that it must be. T-191 adds the Settings row and its meaning; T-188 and T-189 are amended so the requested mode follows that row. T-189 also defines, for the first time, the ordinary tool-call path on in-band and DAE routes for any run that is not offered the script tool, whatever the reason. Code Mode stays On by default.
 
 **What Code Mode is.** The model does its work by writing JavaScript that calls Puppet Master tools, and sends that script as one tool call, instead of calling tools one provider tool call at a time. One script can read several files, filter the results and act on them without a provider round trip between each step.
 
@@ -13450,8 +13450,9 @@ owner_doc: Plans/Tools.md
 canonical_text: >-
   When the run requests Code Mode and T-188's availability and policy gates admit the script tool, Puppet Master offers it through whichever channel
   carries Puppet Master tools on that route, and the directly callable tools named in T-190 travel on every route by
-  the same channel as the script tool. If the script tool is not offered, the existing ordinary tool-call path is
-  preserved, with T-188's effective-mode and typed-reason rules. Under
+  the same channel as the script tool. If the script tool is not offered, the run uses the route's ordinary
+  tool-call path, with T-188's effective-mode and typed-reason rules: where the route already has one it is
+  preserved unchanged, and the in-band and DAE sentences below define it for the routes that had none. Under
   Host Tool Execution on a direct API route whose Models_System tool_use capability is true it is a tool in
   the provider's tool-call API, and where it is false the owned in-band path below is used; on a bridged CLI under the HTE strategy it, and the directly callable tools named in T-190, travel through the
   Run_Modes hosted action loop as structured tool intents where its capability entry reports structured_tool_intents
@@ -13470,7 +13471,7 @@ canonical_text: >-
   absent. On a run under the DAE strategy that is not offered the script tool, where the CLI accepts Puppet Master
   tools through provider-native feature projection, the request-selected Puppet Master tools are projected one by one
   beside the CLI's own tools through that same projection, and Puppet Master dispatches each call with the same
-  permission, approval and FileSafe checks a script's call to that tool gets; that is the ordinary tool-call path of
+  permission, approval, FileSafe, network and schema checks a script's call to that tool gets; that is the ordinary tool-call path of
   such a route, and the CLI's own jailed tools stay under the DAE restriction and reconciliation rules either way.
   Where the script tool is offered and the provider keeps native tools that
   Puppet Master cannot disable, the script tool is not withdrawn, the provider's own tool calls stay outside Code
@@ -13482,7 +13483,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: Provider request shaping and execution-shape behaviour; not GUI implementation work.
 depends_on: [T-169, T-176, T-188]
-unblocks: []
+unblocks: [T-191]
 acceptance_criteria:
   - Under Host Tool Execution a request on which the script tool is offered carries it and does not also carry one provider tool schema per registry tool the script can call; a request on which it is not offered keeps the ordinary tool-call path.
   - A model whose Models_System tool_use is false can use Code Mode through an owned in-band dialect, and a tool result the model wrote itself never reaches replayable history.
@@ -13614,8 +13615,8 @@ canonical_text: >-
   value is read once, when a run starts, and that run keeps it until it ends: changing the row applies from the next
   run and never changes a run in progress. On, the run requests Code Mode under T-188. Off, the run requests
   ordinary tool calls: Puppet Master does not offer the script tool or the script's callable catalog on any route or
-  by any channel, including the in-band carriage and the DAE projection of T-189; the existing ordinary tool-call
-  path is preserved, as T-189 says for any run on which the script tool is not offered: on a route whose tool
+  by any channel, including the in-band carriage and the DAE projection of T-189; the run uses the route's ordinary
+  tool-call path as T-189 defines it for any run on which the script tool is not offered: on a route whose tool
   calls are carried in-band that path is T-189's in-band carriage of the request-selected tools themselves, and on a
   DAE route whose CLI accepts projected Puppet Master tools it is T-189's one-by-one projection of them; and the run records
   requested mode ordinary tool calls, effective mode ordinary tool calls and the typed reason setting. That reason is
