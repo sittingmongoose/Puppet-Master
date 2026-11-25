@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L1312-L1401
+Source lines: L1315-L1404
 
-Source SHA256: `f3b67f84c4309b6ce4c0909cd27335581eff5ae15fdc15772f0c865a9871e812`
+Source SHA256: `7307d448314036b35907dbf3376709b36f026d1a43432f1c9db52e9c0f0a019d`
 
 ---
 
@@ -75,7 +75,7 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 ### 10. Meaning of empty override list
 
 - **Issue:** If `tier_overrides.phase = []`, does that mean "no subagents for phase" or "no override; use auto-selected list"?
-- **Mitigation:** **Rule: missing or empty override = use auto-selection.** This rule governs how imported `tier_overrides` normalize into SubagentPolicy (OSI-425, OSI-081); runtime selection reads the normalized SubagentPolicy, never `tier_overrides`. Only a non-empty override list for a tier replaces the selector output. To force no subagents for a tier, the user sets `enable_tier_subagents` false (global) or we add a per-tier "use no subagents" option in a later version. **Implement:** In the orchestrator, if `tier_overrides.get(tier)` is `None` or `Some([])`, use the list from `SubagentSelector::select_for_tier`; otherwise use the override list. Document in code and in the Config tooltip for tier overrides.
+- **Mitigation:** **Rule: missing or empty override = use auto-selection.** This rule governs how imported `tier_overrides` normalize into SubagentPolicy (OSI-425, OSI-081); runtime selection reads the normalized SubagentPolicy, never `tier_overrides`. Only a non-empty imported override list becomes a SubagentPolicy override that replaces the selector output. To force no subagents, the user turns subagents off in SubagentPolicy (`enabled: false`; an imported `enable_tier_subagents: false` normalizes to it), or a later version adds a per-scope "use no subagents" option. **Implement:** In the import that normalizes legacy config into SubagentPolicy, a `tier_overrides` entry that is missing or `[]` writes no override for that scope, and a non-empty list is written as that scope's `scope_overrides` entry (the compatibility alias map under SubagentPolicy runtime defaults and compatibility aliases). At runtime the orchestrator uses the SubagentPolicy override for the unit's scope when one exists and otherwise the list from `SubagentSelector::select_for_tier` (OSI-213); it never reads `tier_overrides.get(tier)`. Document in code and in the Config tooltip for tier overrides.
 
 ### 11. Persistence and dirty state
 

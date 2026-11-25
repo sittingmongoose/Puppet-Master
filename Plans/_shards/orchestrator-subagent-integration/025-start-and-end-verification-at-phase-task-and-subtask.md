@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L1544-L3525
+Source lines: L1547-L3533
 
-Source SHA256: `f3b67f84c4309b6ce4c0909cd27335581eff5ae15fdc15772f0c865a9871e812`
+Source SHA256: `7307d448314036b35907dbf3376709b36f026d1a43432f1c9db52e9c0f0a019d`
 
 ---
 
@@ -1000,6 +1000,8 @@ pub enum ValidationError {
 
 Extend `src/platforms/output_parser.rs` with new parser methods:
 
+Transport scope of the parser code below (2026-11-25, OSI-004, OSI-093): `CursorOutputParser` and `ClaudeOutputParser` are live CliBridge parsers over CLI output, and `GeminiOutputParser` is the live DirectApi parser over the response body (`candidates[0].content.parts[0].text`; its `--output-format json` comment and `stdout` parameter name are CLI-era wording). The `CodexOutputParser` (JSONL) and `CopilotOutputParser` (text and regex over `stdout`/`stderr`) blocks are CLI-era code examples kept as historical context only (OSI-158, OSI-161): Codex and Copilot are DirectApi, have no CLI output, and are parsed as JSON from the final assistant content like Gemini.
+
 ```rust
 // Add to ParsedOutput struct:
 pub struct ParsedOutput {
@@ -1252,6 +1254,7 @@ impl Orchestrator {
 }
 
 impl OutputParser for CodexOutputParser {
+    // HISTORICAL (CLI-era): Codex is DirectApi (OSI-004); not an implementation target. See transport scope above.
     // DRY:FN:parse_subagent_output_codex -- Parse Codex subagent output
     // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "JSONL" or output format
     ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md
@@ -1359,6 +1362,7 @@ impl OutputParser for GeminiOutputParser {
     fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
         // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Gemini outputs JSON"
         // Gemini outputs JSON with --output-format json -- format from platform_specs
+        // Transport note: Gemini is DirectApi (OSI-004); `stdout` here is the direct-provider response body, not CLI output.
         let json: serde_json::Value = serde_json::from_str(stdout)?;
 
         // Gemini wraps in "candidates" -> [0] -> "content" -> "parts" -> [0] -> "text"
@@ -1384,6 +1388,7 @@ impl OutputParser for GeminiOutputParser {
 }
 
 impl OutputParser for CopilotOutputParser {
+    // HISTORICAL (CLI-era): Copilot is DirectApi (OSI-004); not an implementation target. See transport scope above.
     // DRY:FN:parse_subagent_output_copilot -- Parse Copilot subagent output
     // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "Copilot outputs text"
     ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md
@@ -1854,13 +1859,13 @@ These lifecycle and quality features **complement** the existing start/end verif
 
 **Gap #16: Structured output parsing reliability**
 
-**Issue:** Platform output formats may vary (JSON vs JSONL vs text). Parsers may fail on edge cases (malformed JSON, partial output, streaming output). How do we handle parsing failures gracefully?
+**Issue:** Platform output formats may vary (JSON vs JSONL vs text), scoped by transport (OSI-004, OSI-093): CliBridge providers (Cursor, Claude Code) emit JSON or stream-json NDJSON on the CLI, DirectApi providers (Codex, Copilot, Gemini) return final assistant content parsed as JSON, and the Codex JSONL stream and Copilot text output are CLI-era history. Parsers may fail on edge cases (malformed JSON, partial output, streaming output). How do we handle parsing failures gracefully?
 
 **Mitigation:**
-- **Multi-pass parsing:** Try JSON parse first, then JSONL, then text extraction. Use best-effort parsing with fallbacks.
+- **Multi-pass parsing:** Try JSON parse first, then JSONL (CliBridge stream-json NDJSON events only), then text extraction (the generic fallback every transport keeps, OSI-093). Use best-effort parsing with fallbacks.
 - **Partial output handling:** If parsing fails, extract what we can (e.g., `task_report` from text even if `findings` missing). Mark tier as "complete with warnings."
 - **Parser testing:** Comprehensive test suite for each platform parser with edge cases (malformed JSON, unicode, large outputs, streaming).
-- **Parser versioning:** Track parser version and platform CLI version. Update parsers when platform CLI changes.
+- **Parser versioning:** Track parser version and platform CLI version for the CliBridge providers (Cursor, Claude Code), and the provider API and model version for the DirectApi providers (Codex, Copilot, Gemini). Update parsers when either changes.
 
 **Gap #17: Remediation loop infinite retry risk**
 
@@ -1923,13 +1928,13 @@ These lifecycle and quality features **complement** the existing start/end verif
     "findings": [{"severity": "critical", "category": "security", ...}]
   }
   ```
-- **Platform-specific instructions:** For Copilot (text-only), provide markdown format example instead of JSON.
+- **Platform-specific instructions:** none by transport: every provider, Copilot included, gets the JSON schema example above, because Copilot is DirectApi and its final assistant content is parsed as JSON (OSI-004, OSI-093, OSI-194). The earlier instruction "For Copilot (text-only), provide markdown format example instead of JSON" is CLI-era history, not an implementation target.
 - **Validation feedback:** If retry fails, include validation error in retry prompt: "Your output was missing 'task_report' field. Please include it."
 - **Fail-safe:** After retry fails, extract partial output (best-effort) and proceed with warnings.
 
 **Gap #23: Cross-platform hook adapter complexity**
 
-**Issue:** Platform-native hook adapters (CursorNativeHookAdapter, ClaudeNativeHookAdapter, GeminiNativeHookAdapter) must handle different hook formats, communication protocols (JSON stdin/stdout, exit codes), and error handling. This adds complexity.
+**Issue:** Platform-native hook adapters (CursorNativeHookAdapter, ClaudeNativeHookAdapter) must handle different hook formats, communication protocols (JSON stdin/stdout, exit codes), and error handling. This adds complexity. Native hook adapters exist only for the CliBridge providers (Cursor, Claude Code; OSI-004, OSI-195). GeminiNativeHookAdapter, listed here in earlier versions, is retired CLI-era wording: Gemini is DirectApi and, like Codex and Copilot, runs only orchestrator-level middleware (Gap #14).
 
 **Mitigation:**
 - **Unified adapter trait:** Define `PlatformHookAdapter` trait with common interface:
@@ -1940,7 +1945,7 @@ These lifecycle and quality features **complement** the existing start/end verif
       fn platform(&self) -> Platform;
   }
   ```
-- **Platform-specific implementations:** Each platform adapter handles its own format/protocol internally.
+- **Platform-specific implementations:** Each platform adapter (Cursor, Claude Code) handles its own format/protocol internally. The `BeforeTierResult` / `AfterTierResult` names in the trait above are legacy aliases of `BeforeUnitResult` / `AfterUnitResult` (Execution-Unit Hook Naming).
 - **Testing:** Test each adapter with mock hook scripts. Verify JSON parsing, exit code handling, error cases.
 - **Documentation:** Document hook format for each platform in `docs/platform-hooks.md`.
 

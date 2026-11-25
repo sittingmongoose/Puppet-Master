@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L6620-L31298
+Source lines: L6628-L31321
 
-Source SHA256: `f3b67f84c4309b6ce4c0909cd27335581eff5ae15fdc15772f0c865a9871e812`
+Source SHA256: `7307d448314036b35907dbf3376709b36f026d1a43432f1c9db52e9c0f0a019d`
 
 ---
 
@@ -7919,11 +7919,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Platform hook registration uses orchestrator-level hooks as primary middleware while optionally integrating native platform
-  hooks: Cursor hook files and events, Codex and Copilot CLI lifecycle outputs, Claude settings hooks with blocking/context
-  behavior, and Gemini orchestrator-level Direct API hooks without native config files. Codex and Copilot are DirectApi
-  under OSI-004, so like Gemini they use orchestrator-level hooks only; "Codex and Copilot CLI lifecycle outputs" is
-  CLI-era wording kept as historical context only, not an implementation target.
+  Platform hook registration uses orchestrator-level hooks as primary middleware while optionally integrating native
+  platform hooks for the CliBridge providers only: Cursor hook files and events, and Claude settings hooks with
+  blocking/context behavior. Codex, Copilot and Gemini are DirectApi under OSI-004 and use orchestrator-level Direct API
+  hooks without native config files; the source wording "Codex and Copilot CLI lifecycle outputs" is CLI-era history,
+  not an implementation target.
 gui_related: false
 gui_classification_reason: This unit covers provider/runtime hook registration policy, not GUI presentation.
 split_recommended: false
@@ -10707,10 +10707,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Runtime contract enforcement uses platform-specific parser validation across Cursor, Codex, Claude, Gemini, and Copilot
-  while treating provider-doc schema findings as capability evidence rather than a bypass for local validation; provider-native
-  schema enforcement is preferred where available, and weak or unsupported transports fall back to locally validated structured
-  output or partial-output warnings.
+  Runtime contract enforcement uses transport-scoped parser validation (OSI-004, OSI-093) across Cursor, Codex, Claude,
+  Gemini, and Copilot: JSON over CLI output for the CliBridge providers (Cursor, Claude Code) and JSON over the
+  direct-provider response's final assistant content for the DirectApi providers (Codex, Copilot, Gemini), with the same
+  required fields for every provider. Provider-doc schema findings are treated as capability evidence rather than a
+  bypass for local validation; provider-native schema enforcement is preferred where available, and weak or unsupported
+  transports fall back to locally validated structured output or partial-output warnings.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
@@ -10769,8 +10771,9 @@ preserved_exact_tokens:
 negative_constraints: []
 compatibility_only_notes:
 - >-
-  Codex JSON wording is preserved as source shorthand only; Codex JSONL parser behavior remains represented by OSI-158 and
-  the platform summary.
+  The source line "Cursor/Codex/Claude/Gemini: Parse JSON output" fits the transport-scoped contract above. The Codex
+  JSONL parser and Copilot text output parsing are CLI-era history: OSI-158, OSI-161 and the Platform-Specific
+  Implementation Summary mark them historical context only, not implementation targets.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -10787,7 +10790,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   The platform implementation matrix preserves which lifecycle and quality features are orchestrator-level and which require
-  platform-specific parsers or validators across Cursor, Codex, Claude, Gemini, and Copilot.
+  platform-specific parsers or validators across Cursor, Codex, Claude, Gemini, and Copilot, scoped by transport as OSI-093
+  states (JSON over CliBridge CLI output for Cursor and Claude, JSON over the DirectApi final assistant content for Codex,
+  Gemini and Copilot) with native hooks only for the CliBridge providers.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
@@ -10855,11 +10860,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Most lifecycle features are orchestrator-level and platform-agnostic, while handoff validation and contract enforcement
-  require parser-specific JSON, JSONL, or text handling; platform-native hooks may be used where available while orchestrator
-  middleware remains the fallback for all platforms. The parser handling is transport-scoped by OSI-093 (JSON over CliBridge
-  CLI output, JSON over the DirectApi final assistant content, the ServerBridge event stream); JSONL and text handling are
-  CLI-era Codex and Copilot history, and platform-native hooks exist only for the CliBridge providers (Cursor, Claude Code).
+  Most lifecycle features are orchestrator-level and platform-agnostic, while handoff validation and contract
+  enforcement require transport-scoped parser handling (OSI-093): JSON over CliBridge CLI output, JSON over the
+  DirectApi final assistant content, and the ServerBridge event stream. The source's parser-specific JSON, JSONL, or
+  text handling split is CLI-era Codex and Copilot history. The platform-native hooks are used where available, which is
+  only for the CliBridge providers (Cursor, Claude Code), while orchestrator middleware remains the fallback for
+  all platforms.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
@@ -11125,8 +11131,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Structured output parsing handles JSON, JSONL, and text variation through multi-pass parsing, best-effort partial output,
-  parser edge-case tests, parser version tracking, and platform CLI version tracking.
+  Structured output parsing handles JSON, JSONL, and text variation through multi-pass parsing scoped by transport
+  (OSI-004, OSI-093): the JSONL pass reads the CliBridge stream-json NDJSON events (Cursor, Claude Code); DirectApi
+  final assistant content (Codex, Copilot, Gemini) is parsed as JSON with generic text extraction as the fallback; a
+  Codex JSONL stream or Copilot text output is CLI-era history, not an implementation target. It keeps best-effort
+  partial output, parser edge-case tests, parser version tracking, and platform CLI version tracking for the CliBridge
+  providers, with the provider API and model version tracked in its place for the DirectApi providers.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
@@ -11589,9 +11599,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Structured handoff prompt enforcement includes explicit JSON schema examples for structured-capable providers, markdown
-  examples for Copilot text-only output, validation-error feedback in retry prompts, and best-effort partial output with warnings
-  after retry failure.
+  Structured handoff prompt enforcement includes an explicit JSON schema example for every provider, validation-error
+  feedback in retry prompts, and best-effort partial output with warnings after retry failure. Copilot is DirectApi
+  (OSI-004, OSI-093) and gets the same JSON schema example; the Gap #22 instruction to give Copilot (text-only) a
+  markdown example instead of JSON is CLI-era history, not an implementation target.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, hook, lifecycle, validation, parser, remediation, continuity, or storage-boundary
@@ -11662,8 +11673,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Platform-native hook adapters for Cursor, Claude, and Gemini normalize platform-specific hook formats, communication protocols,
-  JSON stdin/stdout, exit codes, and error handling behind a PlatformHookAdapter trait and documented platform hook formats.
+  Platform-native hook adapters exist only for the CliBridge providers (OSI-004): CursorNativeHookAdapter and
+  ClaudeNativeHookAdapter normalize platform-specific hook formats, communication protocols, JSON stdin/stdout,
+  exit codes, and error handling behind a PlatformHookAdapter trait and documented platform hook formats. Gemini is
+  DirectApi and has no native hooks, so GeminiNativeHookAdapter is retired CLI-era wording, not an implementation
+  target; Gemini, Codex and Copilot use orchestrator-level middleware.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, hook, lifecycle, validation, parser, remediation, continuity, or storage-boundary
@@ -13740,8 +13754,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  BeforeUnit/AfterUnit hooks delegate to native hooks where possible for Cursor, Claude, and Gemini, while Codex and Copilot
-  use orchestrator-level middleware and canonical coordination projection.
+  BeforeUnit/AfterUnit hooks delegate to native hooks where possible for the CliBridge providers Cursor and Claude
+  (Claude Code), while the DirectApi providers Codex, Copilot and Gemini use orchestrator-level middleware and
+  canonical coordination projection (OSI-004, OSI-139). Gemini is not a native-hook provider; earlier wording that
+  listed it beside Cursor and Claude is CLI-era history.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend platform hook adapter boundaries rather than GUI presentation.
@@ -13796,12 +13812,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Structured handoff validation extends validate_subagent_output() with platform-specific parsers, including JSON for
-  Cursor, Claude, and Gemini, JSONL for Codex, and text parsing for Copilot, and contract enforcement retries malformed
-  output before failing safe. Under the OSI-004 ProviderTransport taxonomy those parsers are transport-scoped as OSI-093
-  states: JSON over CLI output for the CliBridge providers (Cursor, Claude Code) and JSON over the direct-provider
-  response's final assistant content for the DirectApi providers (Codex, Copilot, Gemini); JSONL for Codex and text
-  parsing for Copilot describe CLI-era output and are historical context only, not implementation targets.
+  Structured handoff validation extends validate_subagent_output() with transport-scoped parsers (OSI-004, OSI-093):
+  JSON over CLI output for the CliBridge providers (Cursor, Claude Code) and JSON over the direct-provider response's
+  final assistant content for the DirectApi providers (Codex, Copilot, Gemini); contract enforcement retries malformed
+  output before failing safe. The source's parser list (JSON for Cursor/Claude/Gemini, JSONL for Codex, and
+  text parsing for Copilot) describes CLI-era output and is historical context only, not an implementation target.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend structured handoff parsing and contract enforcement rather than GUI presentation.
@@ -16240,10 +16255,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  File operations can be detected by parsing agent output, native PreToolUse/PostToolUse hooks where available, or
-  Codex/Copilot normalized CLI stream or tool events. Codex and Copilot are DirectApi under OSI-004, so for them this means
-  the tool-call events in the direct-provider response; "normalized CLI stream" is CLI-era wording kept as historical
-  context only.
+  File operations can be detected by parsing agent output, by native PreToolUse/PostToolUse hooks where available (only
+  the CliBridge providers Cursor and Claude Code have them), or by provider tool-call events. For the DirectApi
+  providers (Codex, Copilot, Gemini, OSI-004) that means the tool-call events in the direct-provider response; the
+  source wording "Codex/Copilot normalized CLI stream or tool events" is CLI-era history, not an implementation target.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend event extraction and provider adapter evidence rather than GUI presentation.

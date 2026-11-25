@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L31755-L32068
+Source lines: L31778-L32091
 
-Source SHA256: `f3b67f84c4309b6ce4c0909cd27335581eff5ae15fdc15772f0c865a9871e812`
+Source SHA256: `7307d448314036b35907dbf3376709b36f026d1a43432f1c9db52e9c0f0a019d`
 
 ---
 
@@ -84,7 +84,7 @@ Repairs row `sfk-1a88c3d82dd8176a236abe6a`.
 - Legacy `BeforeTier`, `AfterTier`, and `verify_tier_start` strings are source-lineage aliases only. They may appear in imported records, but normalized orchestration records must store `hook_name_normalized` using the canonical execution-unit names.
 - Import normalization table: `BeforeTier -> BeforeUnit`, `AfterTier -> AfterUnit`, `verify_tier_start -> VerifyUnitStart`, `verify_tier_end -> VerifyUnitEnd`.
 - New owner prose and generated receipts must not introduce tier-era hook names as active hook identifiers.
-- Naming fence (2026-11-25): every remaining tier-era spelling in this document is a legacy alias of the canonical names above, not an active identifier. That covers `verify_tier_start` / `verify_tier_end` as function and module names (`src/verification/tier_start.rs`, `tier_end.rs`, `tier_verification.rs`) in the start/end verification sections and their code examples, the `BeforeTierStart` / `DuringTierStart` / `AfterTierStart` and `BeforeTierEnd` / `AfterTierEnd` verification responsibilities (the before, during and after phases of `VerifyUnitStart` and `VerifyUnitEnd`), the `BeforeTierResult` / `AfterTierResult` type names in the hook trait example, and the PlanUnits OSI-109, OSI-110, OSI-112, OSI-122, OSI-164, OSI-221 and OSI-224.
+- Naming fence (2026-11-25): every remaining tier-era spelling in this document is a legacy alias of the canonical names above, not an active identifier. That covers `verify_tier_start` / `verify_tier_end` as function and module names (`src/verification/tier_start.rs`, `tier_end.rs`, `tier_verification.rs`) in the start/end verification sections and their code examples, the `BeforeTierStart` / `DuringTierStart` / `AfterTierStart` and `BeforeTierEnd` / `AfterTierEnd` verification responsibilities (the before, during and after phases of `VerifyUnitStart` and `VerifyUnitEnd`), the `BeforeTierResult` / `AfterTierResult` type names in the hook trait example, and the PlanUnits OSI-109, OSI-110, OSI-112, OSI-119 (BeforeTierEnd), OSI-121 (AfterTierEnd), OSI-122, OSI-164, OSI-221 and OSI-224.
 
 ### Cross-Platform Process Existence Check
 

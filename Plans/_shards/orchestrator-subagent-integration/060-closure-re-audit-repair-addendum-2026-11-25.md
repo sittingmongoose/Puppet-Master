@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L35126-L35156
+Source lines: L35149-L35179
 
-Source SHA256: `f3b67f84c4309b6ce4c0909cd27335581eff5ae15fdc15772f0c865a9871e812`
+Source SHA256: `7307d448314036b35907dbf3376709b36f026d1a43432f1c9db52e9c0f0a019d`
 
 ---
 
@@ -38,4 +38,4 @@ Repairs `sfk-15a9ffa7a7561411bb7625a4` (registry line 1518); binds OSI-094, Hand
 | [View raw output] / chat review | `open_details` | `cmd.runtime.open_attempt_details` | `run_id`, `node_id`, `attempt_id` | No state change. For the parser prompt, attempt details open on the raw output kept in `parser.error`; for the Unrelated-failure CTA they open on the failed retry's classifier, error detail and logs. The recovery point stays open. |
 | chat abort (Unrelated-failure CTA only) | `abort_run` | `cmd.runtime.abort_run` | `run_id`, `reason_code` = the failed retry's own classifier value (its `failure_class` or `blocked_reason_code`), `requested_by`, `created_at_utc` | The run ends through the existing abort semantics. |
 
-- Stale checks use the identity each payload carries. `cmd.runtime.retry_now` is refused as stale, changing nothing, when its `blocked_sequence` or `attempt_id` no longer matches the open recovery point. `cmd.runtime.skip_node` carries no `blocked_sequence`: it is refused as stale when the node has no open recovery point or its `attempt_id` is not the attempt that recovery point was raised for. `cmd.runtime.abort_run` carries only `run_id`: it is never stale against a recovery point, and is refused only when the run is already terminal. `cmd.runtime.open_attempt_details` changes no state and is never refused as stale; it opens the named attempt even after the recovery point closed. Only one of `retry_now`, `skip_node` and `abort_run` settles a recovery point; the first admitted one wins and later ones are refused as stale.
+- Stale checks use the identity each payload carries. `cmd.runtime.retry_now` is refused as stale, changing nothing, when its `blocked_sequence` or `attempt_id` no longer matches the open recovery point. `cmd.runtime.skip_node` carries no `blocked_sequence`: it is refused as stale when the node has no open recovery point or its `attempt_id` is not the attempt that recovery point was raised for. `cmd.runtime.abort_run` carries only `run_id`: it is never stale against a recovery point, and is refused only when the run is already terminal. `cmd.runtime.open_attempt_details` changes no state and is never refused as stale; it opens the named attempt even after the recovery point closed. Only one of `retry_now` and `skip_node` settles a recovery point; the first admitted one wins and the later one is refused as stale. An admitted `abort_run` ends the run, which closes any open recovery point, so every later `retry_now` or `skip_node` for it is refused because the run is terminal. An `abort_run` that arrives after `retry_now` or `skip_node` already settled the point is not stale: while the run is still active it is admitted and aborts the run like any other abort.

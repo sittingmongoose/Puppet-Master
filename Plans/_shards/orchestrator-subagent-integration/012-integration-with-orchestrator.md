@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L350-L649
+Source lines: L350-L652
 
-Source SHA256: `f3b67f84c4309b6ce4c0909cd27335581eff5ae15fdc15772f0c865a9871e812`
+Source SHA256: `7307d448314036b35907dbf3376709b36f026d1a43432f1c9db52e9c0f0a019d`
 
 ---
 
@@ -15,6 +15,8 @@ Source SHA256: `f3b67f84c4309b6ce4c0909cd27335581eff5ae15fdc15772f0c865a9871e812
 The controlling AI role within the Orchestrator is the **Overseer**. Canonical definition and responsibilities are in **Plans/Glossary.md**.
 
 ### Orchestrator Modifications
+
+Code example note (2026-11-25): in the code below, `self.get_tier_overrides(tier_node.tier_type)` stands for the SubagentPolicy override for the unit's scope (the policy's `scope_overrides` entry, OSI-425, OSI-214). At runtime the orchestrator never reads the legacy `tier_overrides` or `enable_tier_subagents` keys; those are normalized into SubagentPolicy at import (see 10. Meaning of empty override list). `select_for_tier` is the selector API OSI-213 keeps.
 
 ```rust
 // src/core/orchestrator.rs (additions)
@@ -62,6 +64,7 @@ impl Orchestrator {
         );
 
         // Apply tier overrides (replace if non-empty, else use selected list)
+        // Runtime source: the normalized SubagentPolicy scope override (OSI-425), never the legacy tier_overrides key
         // DRY REQUIREMENT: Validate override names using subagent_registry::is_valid_subagent_name()
         if let Some(overrides) = self.get_tier_overrides(tier_node.tier_type) {
             if !overrides.is_empty() {

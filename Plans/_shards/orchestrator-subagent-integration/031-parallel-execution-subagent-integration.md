@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L3632-L5710
+Source lines: L3640-L5718
 
-Source SHA256: `f3b67f84c4309b6ce4c0909cd27335581eff5ae15fdc15772f0c865a9871e812`
+Source SHA256: `7307d448314036b35907dbf3376709b36f026d1a43432f1c9db52e9c0f0a019d`
 
 ---
 
@@ -696,8 +696,8 @@ coordinator.unregister_agent(&format!("{}-{}", subagent_name, node_id)).await?;
 **Extracting file operations from agent output:**
 
 - **Parse agent output:** Use output parser to detect file paths mentioned in agent responses (e.g., "I'm editing src/api.rs" or file paths in diffs).
-- **Platform hooks:** For platforms with native hooks (Cursor, Claude, Gemini), use `PreToolUse`/`PostToolUse` hooks to detect file operations in real-time.
-- **Provider event adapters:** For Codex/Copilot, use normalized CLI stream/tool events to detect file operations in real time.
+- **Platform hooks:** For the platforms with native hooks, which are only the CliBridge providers (Cursor, Claude Code; OSI-004), use `PreToolUse`/`PostToolUse` hooks to detect file operations in real-time.
+- **Provider event adapters:** For the DirectApi providers (Codex, Copilot, Gemini), use the tool-call events in the direct-provider response to detect file operations in real time. Earlier wording listed Gemini under native hooks and told Codex/Copilot to use "normalized CLI stream/tool events"; that is CLI-era history (OSI-274).
 
 **Example coordination flow (cross-platform):**
 
@@ -1572,7 +1572,7 @@ async fn load_state(&self) -> Result<AgentCoordinationState> {
 **Issue:** Extracting file operations from agent output is unreliable. Agents may mention files they don't edit, or edit files they don't mention. Platform hooks may not fire for all file operations.
 
 **Mitigation:**
-- **Multi-source extraction:** Combine multiple sources: (1) agent output parsing (regex for file paths), (2) platform hooks (`PreToolUse`/`PostToolUse`), (3) provider stream/tool events from CLI output adapters, (4) git diff detection (compare worktree before/after).
+- **Multi-source extraction:** Combine multiple sources: (1) agent output parsing (regex for file paths), (2) platform hooks (`PreToolUse`/`PostToolUse`), (3) provider tool-call events (CliBridge CLI output adapters for Cursor and Claude Code; the direct-provider response for Codex, Copilot and Gemini), (4) git diff detection (compare worktree before/after).
 - **Confidence scoring:** Assign confidence scores to file operations (high: platform hook detected, medium: agent mentioned, low: inferred from context). Only include high/medium confidence files in coordination state.
 - **Validation:** After agent completes, validate claimed files against actual git diff. If mismatch, log warning and update coordination state.
 - **Best-effort updates:** If file extraction fails, still register agent with empty `files_being_edited` list. Coordination context will still show agent is active, just without file details.

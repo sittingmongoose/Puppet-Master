@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L1128-L1237
+Source lines: L1131-L1240
 
-Source SHA256: `f3b67f84c4309b6ce4c0909cd27335581eff5ae15fdc15772f0c865a9871e812`
+Source SHA256: `7307d448314036b35907dbf3376709b36f026d1a43432f1c9db52e9c0f0a019d`
 
 ---
 
@@ -91,16 +91,16 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 
 ### 10. Platform-specific subagent output parsers
 
-- **Gap:** Structured handoff validation (`validate_subagent_output`) needs platform-specific parsers: JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot. The plan does not yet specify parser implementation details or fallback behavior when parsing fails.
-- **Clarify:** (1) **JSON parsers:** For Cursor/Claude/Gemini, use `serde_json` to parse `--output-format json` output into `SubagentOutput`. Handle missing fields gracefully (e.g., `downstream_context: None` if field absent). (2) **JSONL parser:** For Codex, parse `--json` or `--experimental-json` JSONL stream; aggregate events into single `SubagentOutput` (last event wins for fields, accumulate findings). (3) **Text parser:** For Copilot, use regex or pattern matching to extract "Task Report:", "Downstream Context:", "Findings:" sections from text output. If sections missing, treat as malformed and retry. (4) **Fallback:** If parsing fails after retry, create partial `SubagentOutput { task_report: raw_output, downstream_context: None, findings: vec![] }` and mark tier as "complete with warnings" rather than failing the run.
+- **Gap:** Structured handoff validation (`validate_subagent_output`) needs transport-scoped parsers (OSI-004, OSI-093): JSON over CLI output for the CliBridge providers (Cursor, Claude Code) and JSON over the direct-provider response's final assistant content for the DirectApi providers (Codex, Copilot, Gemini). The original split "JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot" describes CLI-era output and is historical context only. The plan did not specify parser implementation details or fallback behavior when parsing fails; the Clarify item and the resolved fallback below do.
+- **Clarify:** (1) **JSON parsers:** For Cursor and Claude Code (CliBridge), use `serde_json` to parse the CLI's structured output (`--output-format json` or stream-json, format from platform_specs) into `SubagentOutput`; for Codex, Copilot and Gemini (DirectApi), use `serde_json` on the final assistant content of the direct-provider response. Handle missing fields gracefully (e.g., `downstream_context: None` if field absent). (2) **JSONL parser (historical):** the CLI-era instruction "For Codex, parse `--json` or `--experimental-json` JSONL stream; aggregate events into single `SubagentOutput` (last event wins for fields, accumulate findings)" is not an implementation target: Codex is DirectApi and has no CLI stream. (3) **Text parser (historical):** the CLI-era instruction "For Copilot, use regex or pattern matching to extract \"Task Report:\", \"Downstream Context:\", \"Findings:\" sections from text output" is not an implementation target: Copilot is DirectApi and returns final assistant content parsed as JSON. Pattern extraction of those sections survives only as the generic fallback extraction every transport keeps (OSI-093); if required sections are still missing after it, treat the output as malformed and retry. (4) **Fallback (superseded):** the earlier rule "If parsing fails after retry, create partial `SubagentOutput { task_report: raw_output, downstream_context: None, findings: vec![] }` and mark tier as "complete with warnings" rather than failing the run" is superseded by the resolved fallback below and OSI-093: when the generic fallback and the one retry both fail, the error is surfaced with [Retry] [Skip] [View raw output] and settles as Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25) says.
 
 **Subagent Output Parser Fallback (Resolved):**
 
 Platform-specific parsers handle output from each Provider:
-- **Cursor/Claude/Gemini:** JSON parser (stream-json NDJSON events)
-- **Codex:** JSONL parser (newline-delimited JSON events)
-- **Copilot:** Text parser (plain text output, regex-based signal extraction)
-- **Transport scope (2026-11-25, OSI-004 and OSI-093):** the three bullets above describe CLI-era output. Only the CliBridge providers (Cursor, Claude Code) parse CLI output (JSON / stream-json NDJSON). Codex, Copilot and Gemini are DirectApi: their SubagentOutput is parsed from the direct-provider response's final assistant content, so the Codex JSONL parser, the Copilot text parser, the `--json` / `--experimental-json` flags in the Clarify item above and the CodexOutputParser snippet (OSI-158) are historical context only, not implementation targets. Steps 1-5 below apply to every transport.
+- **Cursor/Claude Code (CliBridge):** JSON parser over CLI output (stream-json NDJSON events)
+- **Codex, Copilot, Gemini (DirectApi):** JSON parser over the direct-provider response's final assistant content
+- **OpenCode (ServerBridge):** parser over its server event stream
+- **Transport scope (2026-11-25, OSI-004 and OSI-093):** earlier versions of this list read "Cursor/Claude/Gemini: JSON parser (stream-json NDJSON events)", "Codex: JSONL parser (newline-delimited JSON events)" and "Copilot: Text parser (plain text output, regex-based signal extraction)". Those describe CLI-era output: the Codex JSONL parser, the Copilot text parser, a Gemini stream-json parser, the `--json` / `--experimental-json` flags in the Clarify item above and the CodexOutputParser and CopilotOutputParser snippets (OSI-158, OSI-161) are historical context only, not implementation targets. The GeminiOutputParser snippet (OSI-160) is the live DirectApi parser: it reads `candidates[0].content.parts[0].text` from the direct-provider response body, and only its `--output-format json` comment and `stdout` parameter name are CLI-era wording. Steps 1-5 below apply to every transport.
 
 When a platform-specific parser fails:
 1. **Log:** Record parse error in seglog (`parser.error` event) with the first 500 characters of raw output for diagnostics.
