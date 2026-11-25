@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_To_Node_Compilation.md`
 
-Source lines: L2169-L2395
+Source lines: L2169-L2393
 
-Source SHA256: `03a87f2abf2eff7ac1964e5c3ea39923541b4e5f3ed571d385269ef6f52cf854`
+Source SHA256: `c62f7f287a496052fbf7f83f5061b0bbf26c63d012c31ab5d468c9b31c099d52`
 
 ---
 
@@ -159,9 +159,7 @@ canonical_text: >-
   coverage with no passing payload, an assertion its selector guarantees on every input of its branch, with an
   accepted route control and no refusal, a false subschema whose only possible polarity is refusal, a oneOf arm whose constant's deletion only an accepted
   input from another arm can detect, a deletion-inert oneOf-arm rule that keeps its same-branch passing fixture with no refusing fixture, witness or
-  gap, a oneOf arm where one payload's second match leaves the whole outcome unchanged, so that payload never earns
-  witness credit while the assertion as a whole follows the ordinary polarity and deletion rules (another payload the
-  whole contract would refuse with the assertion deleted still binds as its witness), a rule where a deletion
+  gap, a oneOf arm where one payload's second match leaves the whole outcome unchanged, in which the same-branch passing control binds, the unchanged payload earns no witness credit, and, where no refused input detects the deletion, an approved payload the whole contract would refuse with the assertion deleted binds as the witness, with no refusing fixture or test gap, a rule where a deletion
   witness and an attributable refusal coexist and the refusal must bind, a human-only action bound by the automated boundary and lifecycle checks its owner
   permits, a human-only action whose only required outcome is a refusal inside it, a named shape that admits no valid input at all whose
   refusal is found from a directly constructed negative candidate, a branch switch the contract
@@ -201,7 +199,7 @@ acceptance_criteria:
   - "A test gap's test_gap_policy is set by PlanCompile from what is actually missing: block_completion when an automatic route exists for the missing test or assertion, defer_non_executable_harness_candidate only when the route itself is missing, a missing owner build always block_completion naming that build and never a harness candidate, and a deferred candidate keeps the rule's verification open under EP-101; allow_with_disposition and not_applicable are never used for a rule's required test."
   - "A change after approval to a contract or to a resolved dependency its checks or tests use reruns its checks in the successor plan and regenerates its tests, and the PlanDiffImpactReport classifies every consuming node."
   - "The handoff schema change for payload fixture, behaviour fixture and recorded-gap records, and for per-test outcomes in test_run_receipt, is a recorded companion change, required before any compile uses this unit; it also fixes the per-keyword candidate generators, the named-gap coverage conditions, the effective-assertion definitions and refusal attribution for applicators, the per-member identity, the fixture-owner designation rule and the TestRunReceipt fields that name a split rule's build inputs and an out-of-scope run's owner build, with the
-  pattern, length-bound, required-member, discriminated-oneOf same-branch control, out-of-scope alternate arm, selector-guaranteed assertion, false subschema, a named shape with no valid input whose refusal binds from a directly constructed negative candidate, a oneOf arm deletion caught by another arm's accepted input, a deletion-inert oneOf-arm rule keeping its passing fixture with no refusing fixture, deletion witness or test gap, a payload whose second match leaves the whole outcome unchanged earning no witness credit while another payload that detects the deletion still binds as the witness, a witness beside an attributable refusal where the refusal binds, a human-only action bound by its permitted checks, a human-only action whose only required outcome is a refusal inside it, branch-switch, independent-assertion, negation,
+  pattern, length-bound, required-member, discriminated-oneOf same-branch control, out-of-scope alternate arm, selector-guaranteed assertion, false subschema, a named shape with no valid input whose refusal binds from a directly constructed negative candidate, a oneOf arm deletion caught by another arm's accepted input, a deletion-inert oneOf-arm rule keeping its passing fixture with no refusing fixture, deletion witness or test gap, a second match leaving one payload's whole outcome unchanged, in which the same-branch passing control binds, the unchanged payload earns no witness credit, and, where no refused input detects the deletion, an approved payload the whole contract would refuse with the assertion deleted binds as the witness, with no refusing fixture or test gap, a witness beside an attributable refusal where the refusal binds, a human-only action bound by its permitted checks, a human-only action whose only required outcome is a refusal inside it, branch-switch, independent-assertion, negation,
   conditional-selector contrasting-control, optional-field passing-control, shared-code semantic-guard, state-preserving refusal and replay scenarios, and one scenario for each graph shape (a single owner, split parallel owners with an early or stale-build pass that must not count, enforcement outside the write scope whose existing owner tests must not stand in for its required cases and whose refusal the receiving node's own check or a different owner build must not satisfy, an integration node that also qualifies as fixture owner, a candidate whose edges would create a cycle, no lawful target, a shadowed declared failure, an absent owner build, a refusal-only surface, a shadowed pair beside a gap on a second surface, a shadowed failure on a refusal-only surface, a shape consumed by a refusal-only operation, a latency oracle with no accepted call and no gap, and a silent surface carried and first found at compile time)."
   - "A carried completeness or design gap keeps its PWIZ-012 class and is resolved under that class, not under the test-gap policies."
   - "No NodeSeeds, WorkNodes, executable queues, final node manifests, production build tasks, implementation files or source code are created by this PlanUnit."
