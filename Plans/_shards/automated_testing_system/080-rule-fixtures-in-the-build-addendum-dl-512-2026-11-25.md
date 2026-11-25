@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L16494-L16581
+Source lines: L16494-L16583
 
-Source SHA256: `df0812ca3bb3dc291d70db532f89cdbf157c8bdc7e01d1996960f51d00a9343e`
+Source SHA256: `1c63cf0fb8234e6585a5606d01646e0f419af8fb195b615380a4d845214d9a5d`
 
 ---
 
@@ -31,7 +31,9 @@ canonical_text: >-
   ATS-004 requires and keeps the rule's verification open, so the node is not marked complete until the harness work
   lets the test run and pass, as Plans/Executor_Protocol.md#EP-101 requires). The TestRunReceipt records each of these through the companion schema change that
   Plans/Plan_To_Node_Compilation.md#PNC-038 names (ATS-004). A payload fixture runs against the built validator of its data shape, or through a declared consuming operation
-  that exercises that validation, except that a fixture for a rule enforced outside the compile's write scope
+  that exercises that validation where that validator is the only surface the rule applies to; a fixture bound to a
+  separately declared owner surface runs on that surface, its TestRunReceipt names the surface actually invoked, and it
+  counts only when that matches its bound surface; except that a fixture for a rule enforced outside the compile's write scope
   (Plans/Plan_To_Node_Compilation.md#PNC-038) runs only directly against the enforcing owner's built surfaces, in the
   exact owner build the node resolves, whose immutable identity its TestRunReceipt binds; it counts only when that
   identity matches the node's final owner dependency, a changed dependency needing a fresh run, and its refusal only

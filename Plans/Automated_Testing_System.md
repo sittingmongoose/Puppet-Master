@@ -16514,7 +16514,9 @@ canonical_text: >-
   ATS-004 requires and keeps the rule's verification open, so the node is not marked complete until the harness work
   lets the test run and pass, as Plans/Executor_Protocol.md#EP-101 requires). The TestRunReceipt records each of these through the companion schema change that
   Plans/Plan_To_Node_Compilation.md#PNC-038 names (ATS-004). A payload fixture runs against the built validator of its data shape, or through a declared consuming operation
-  that exercises that validation, except that a fixture for a rule enforced outside the compile's write scope
+  that exercises that validation where that validator is the only surface the rule applies to; a fixture bound to a
+  separately declared owner surface runs on that surface, its TestRunReceipt names the surface actually invoked, and it
+  counts only when that matches its bound surface; except that a fixture for a rule enforced outside the compile's write scope
   (Plans/Plan_To_Node_Compilation.md#PNC-038) runs only directly against the enforcing owner's built surfaces, in the
   exact owner build the node resolves, whose immutable identity its TestRunReceipt binds; it counts only when that
   identity matches the node's final owner dependency, a changed dependency needing a fresh run, and its refusal only
