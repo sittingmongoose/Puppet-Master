@@ -21043,17 +21043,27 @@
     {
       "edge_type": "depends_on",
       "from": "ATS-401",
+      "to": "EP-102"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-401",
+      "to": "PNC-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-401",
       "to": "PNC-038"
     },
     {
       "edge_type": "depends_on",
       "from": "ATS-401",
-      "to": "PWIZ-005"
+      "to": "PWIZ-012"
     },
     {
       "edge_type": "depends_on",
       "from": "ATS-401",
-      "to": "PWIZ-012"
+      "to": "PWIZ-110"
     },
     {
       "edge_type": "depends_on",
@@ -89178,6 +89188,11 @@
     {
       "edge_type": "depends_on",
       "from": "PNC-038",
+      "to": "PNC-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-038",
       "to": "PWIZ-110"
     },
     {
@@ -95943,17 +95958,17 @@
     {
       "edge_type": "depends_on",
       "from": "PWIZ-110",
-      "to": "PWIZ-005"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "PWIZ-110",
       "to": "PWIZ-006"
     },
     {
       "edge_type": "depends_on",
       "from": "PWIZ-110",
       "to": "PWIZ-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-110",
+      "to": "PWIZ-011"
     },
     {
       "edge_type": "depends_on",
@@ -95974,6 +95989,16 @@
       "edge_type": "depends_on",
       "from": "PWIZ-111",
       "to": "PWIZ-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-111",
+      "to": "PWIZ-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-111",
+      "to": "PWIZ-011"
     },
     {
       "edge_type": "depends_on",
@@ -165151,7 +165176,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-25T02:13:16Z",
+  "generated_at_utc": "2026-11-25T02:29:25Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -289654,8 +289679,8 @@
       "source_location": {
         "heading": "PWIZ-111 - Referee Check For Risky Contracts While Planning",
         "heading_level": 3,
-        "heading_line": 5025,
-        "line": 5027,
+        "heading_line": 5030,
+        "line": 5032,
         "path": "Plans/Planning_Wizard.md"
       },
       "status": "accepted",
@@ -328853,9 +328878,9 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27870,
+    "depends_on_edge_count": 27875,
     "downstream_blocked_node_count": 0,
-    "edge_count": 31103,
+    "edge_count": 31108,
     "node_count": 9629,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3233,

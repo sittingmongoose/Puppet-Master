@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L28747-L63360
 
-Source SHA256: `e41964440a5be300dc0e5258ec8fa535814c9b8343174f78202925a36041629a`
+Source SHA256: `9ba10ed02acb08912503bcd14d5b89fcff27a899b4986d0d9a5f5c6101fc2280`
 
 ---
 
@@ -3909,8 +3909,8 @@ canonical_text: >-
   or field lists without types, failure results, retry rules, state machines, schemas or acceptance criteria. Option A
   promised that missing detail and design bugs are caught while a plan is still being written and that every rule
   reaches the builder as a test, with no extra questions to the user and no two-reviewer proofs. It places the checks
-  in three owners. Plans/Planning_Wizard.md#PWIZ-110 runs a completeness check over every contract before a topic is
-  Ready and at final integration, inside PWIZ-028's bounded acceptance. It adds a sixth kind of finding to the five
+  in three owners. Plans/Planning_Wizard.md#PWIZ-110 runs a completeness check over a topic's contracts before it is
+  Ready and over every contract at final integration, inside PWIZ-028's bounded acceptance. It adds a sixth kind of finding to the five
   the card named (the same identifier declared differently, or two statements that contradict), because stream C's
   open findings include such contradictions. Plans/Planning_Wizard.md#PWIZ-111 gives every risky contract a referee,
   a small owner model built from the owner's behaviour text that takes a prior state and an operation or a short
