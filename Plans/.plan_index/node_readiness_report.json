@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27865,
+    "depends_on_edge_count": 27870,
     "downstream_blocked_node_count": 0,
-    "edge_count": 31098,
+    "edge_count": 31103,
     "node_count": 9629,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3233,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-25T01:53:02Z",
+  "generated_at_utc": "2026-11-25T02:13:17Z",
   "gui_related_units": {
     "count": 3942,
     "units": [
@@ -12606,8 +12606,8 @@
         "source_location": {
           "heading": "DL-2601 - Rust Markdown Pipeline, Streaming Correctness, Sanitization, Math, Previews, And Testing Gates",
           "heading_level": 3,
-          "heading_line": 63238,
-          "line": 63240,
+          "heading_line": 63242,
+          "line": 63244,
           "path": "Plans/Decision_Log.md"
         }
       },
@@ -47835,13 +47835,13 @@
       {
         "actual": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
         "error": "pnc019_source_hash_stale",
-        "expected": "cd9cfec30b941429c84691940aa93a41000285916341a99354ab1180166af740",
+        "expected": "05e1968184b8c77b22c51fe65e3c124e1a75eee3caab2b3ea2719ff00b4edc05",
         "source_path": "Plans/Plan_To_Node_Compilation.md"
       },
       {
         "actual": "fee6e23abff2aafb251f978165fdf014bcfe9a9beba3d805857ddf4212000ec0",
         "error": "pnc019_source_hash_stale",
-        "expected": "f34fac3bd5211bed5c9ef98ca9aada3a6ba250b880a03a37a894107b489d8199",
+        "expected": "0d913b07eb9880f4abc434bd04e0e2f03a5c9b035fc22dce79d71f9395b264b3",
         "source_path": "Plans/Planning_Wizard.md"
       },
       {
@@ -47865,7 +47865,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "98ce020e6b2fdccfdf9dde2e5c1711957158dcc0135f0729966044b09bcea017",
+        "expected": "93e2ddd58f63bd78fa1e3d4de13244c355243eabb4647364fdc9187f7fab2f50",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
