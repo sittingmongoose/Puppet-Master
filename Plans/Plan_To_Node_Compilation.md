@@ -2337,7 +2337,9 @@ canonical_text: >-
   coverage credit, and an absent owner build tested beside an existing owner build that lacks an automatic test route, a refusal-only
   surface certified by an executed denial with zero-effect evidence that still blocks when the refusal is missing or
   fails, a shadowed pair bound on one surface beside an ordinary test gap on a second surface, a shadowed failure on a
-  refusal-only surface, and a data shape consumed by two operations, one of them refusal-only, that gets one schema
+  refusal-only surface, a rule bound to both the standalone validator and a separately declared operation, where the operation still
+  gives the approved result while the standalone validator is broken and the node must fail completion, and a data
+  shape consumed by two operations, one of them refusal-only, that gets one schema
   disposition and no blocking gap, a latency oracle that binds and runs with no operation-level accepted call and
   no completeness gap, and a surface silent on acceptance both carried from planning and first found at compile
   time.
@@ -2355,6 +2357,7 @@ acceptance_criteria:
   - "Every behaviour fixture carries the owner-stated state and effect assertions for its polarity, each read through a declared observation surface; where a surface is missing, the carried PWIZ-110 completeness gap stands, or an assertion test gap if the gap was first found at compile time."
   - "Every expected outcome comes from the approved contract; a referee case that disagrees with the contract or lacks a contract outcome never binds, and observed planning outcomes are kept only as evidence."
   - "Every behaviour fixture cites its source span and keeps an immutable reference to that span in the approved plan version; before it binds, code validates the fixture record, confirms that its input has the schema result the approved contract specifies for the case, an expected earlier schema refusal included, and checks its expected code against the declared failure codes."
+  - "Every generated payload and behaviour fixture names the surface it binds to, and the fixtures for two separately declared surfaces of one rule stay distinguishable in the emitted bindings."
   - "A named-gap regression input binds only where the approved contract determines its refusal, and never with single-rule coverage credit."
   - "A test gap's test_gap_policy is set by PlanCompile from what is actually missing: block_completion when an automatic route exists for the missing test or assertion, defer_non_executable_harness_candidate only when the route itself is missing, a missing owner build always block_completion naming that build and never a harness candidate, and a deferred candidate keeps the rule's verification open under EP-101; allow_with_disposition and not_applicable are never used for a rule's required test."
   - "A change after approval to a contract or to a resolved dependency its checks or tests use reruns its checks in the successor plan and regenerates its tests, and the PlanDiffImpactReport classifies every consuming node."
