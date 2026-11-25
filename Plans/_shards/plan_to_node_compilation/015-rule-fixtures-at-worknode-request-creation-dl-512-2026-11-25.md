@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_To_Node_Compilation.md`
 
-Source lines: L2169-L2306
+Source lines: L2169-L2311
 
-Source SHA256: `7110e9a386cdbabd40e4ca20f7a99aea3502d918fcc5ab009c181bbe11e90129`
+Source SHA256: `f16e399a1ca5963755feeb094846c534517369525a1b3ac9127da5c6afc3a77f`
 
 ---
 
@@ -26,14 +26,17 @@ canonical_text: >-
   single node owns, binds to one fixture owner designated among the nodes whose source units hold the contract's
   owner_reference, and that node's completion must follow every node that implements a part the rule's fixtures
   exercise (every owner_reference node when no node's source units own the rule): the designated node is the one the
-  graph already orders after all of them, or, when none is, the one the companion's deterministic tie-break names, to
-  whose required_before_completion WorkGraph construction then adds each of the others. A rule whose enforcement lies
+  graph already orders after all of them, or, when none is, the one the companion's deterministic tie-break names, to whose required_before_completion WorkGraph construction then adds each of the others. Those fixtures count
+  toward the designated node's completion only when they ran against a build that includes the completed outputs of
+  every node they exercise and their TestRunReceipt names those outputs; a pass on an earlier or partial build never
+  counts (Plans/Automated_Testing_System.md#ATS-401). A rule whose enforcement lies
   outside the compile's write scope, as when the compile reaches its contract only through consumer_reference edges, is
-  verified rather than rebuilt: each node in the compile that reaches the contract lists the enforcing owner's
-  current tests of that rule for the plan version the compile consumes in reused_test_ids, or, where that owner has
-  none, binds the rule's fixtures generated as this unit describes to run against that owner's built surfaces, and a
-  failure of either is routed to that owner through a successor plan (PNC-015), never repaired inside the receiving
-  node's write scope. A
+  verified rather than rebuilt: each node in the compile that reaches the contract carries the rule's full required
+  coverage as this unit defines it, listing in reused_test_ids each required case and assertion that the enforcing
+  owner's current tests already cover for the plan version the compile consumes, binding generated fixtures that run
+  against that owner's built surfaces for every required case or assertion those tests miss, and recording a test gap
+  with its normal disposition for any it cannot produce or run; a failure of any of these is routed to that owner
+  through a successor plan (PNC-015), never repaired inside the receiving node's write scope. A
   rule left without a lawful target, because the edges it needs would create a cycle or break the graph's phase order
   or no node in the compile can receive it, goes through the WorkGraph construction stage's repair route (PNC-016),
   and if repair gives it no target, compile certification fails closed with a finding naming the rule. A contract's rules are its schema rules (the contract's effective validation assertions as Plans/Planning_Wizard.md#PWIZ-111 defines them, with each member of
@@ -90,19 +93,21 @@ canonical_text: >-
   node, with changed tests counting as an impact. The test_binding, test_case and test_run_receipt definitions in Plans/plans_to_code_handoff.schema.json do not yet
   carry payload fixture, behaviour fixture or recorded-gap records, or per-test outcomes with references to each
   recorded gap and its policy; that schema change is a required companion change before any compile uses this unit,
-  it also fixes the per-keyword candidate generators and named-gap coverage conditions PWIZ-111 relies on and the fixture-owner tie-break, and its
+  it also fixes the per-keyword candidate generators and named-gap coverage conditions PWIZ-111 relies on, the fixture-owner tie-break and how a split rule's run receives
+  the completed outputs it exercises, and its
   validation scenarios include a pattern rule and a length bound whose isolating witness must bind, a required list whose members each need their own refusal, a discriminated oneOf whose per-branch required member must bind an isolated refusal, a branch switch the contract
   accepts and a branch switch refused only by an independent assertion (neither credited to the branch's rule), a negation, a conditional selector whose contrasting accepted control must be accepted (an assertion applied on
   every route fails it), a refusal that must preserve state, and a replay that must return the right value without repeating its effect, and one case for each graph shape: a rule
-  one node owns, a rule split across two parallel owner candidates, a rule enforced outside the compile's write scope
-  with and without current owner tests, and a rule with no lawful target. This unit specifies the binding
+  one node owns, a rule split across two parallel owner candidates with a fixture pass on an early or stale build that must not
+  count, a rule enforced outside the compile's write scope with full, partial and no current owner coverage, and a rule
+  with no lawful target. This unit specifies the binding
   only; it emits no NodeSeeds, WorkNodes, executable queues or build tasks.
 gui_related: false
 gui_classification_reason: Defines how compile artifacts carry test fixtures; no visual presentation.
 depends_on: [DL-512, PNC-013, PNC-015, PNC-016, EP-101, EP-102, PWIZ-110, PWIZ-111, ATS-003, ATS-004]
 unblocks: [ATS-401]
 acceptance_criteria:
-  - "Every rule of every contract gets a test target fixed at WorkGraph construction: the one node that owns its enforcement; a designated fixture owner whose completion follows every node its fixtures exercise; or, for a rule enforced outside the compile's write scope, each node in the compile that reaches its contract, through the enforcing owner's current tests in reused_test_ids or generated fixtures run against that owner's built surfaces; a rule with no lawful target goes through the stage's repair route and otherwise fails certification closed."
+  - "Every rule of every contract gets a test target fixed at WorkGraph construction: the one node that owns its enforcement; a designated fixture owner whose completion follows every node its fixtures exercise; or, for a rule enforced outside the compile's write scope, each node in the compile that reaches its contract, with the rule's full required coverage: the enforcing owner's current tests for the cases and assertions they cover in reused_test_ids, generated fixtures run against that owner's built surfaces for the rest, and a test gap for any it cannot produce or run; a split rule's fixtures count only when run on a build with the completed outputs of every node they exercise, named in their receipt; a rule with no lawful target goes through the stage's repair route and otherwise fails certification closed."
   - "Every rule ends in exactly one disposition: its required tests bound; a passing payload with a named gap evidenced to PWIZ-111's standard, by the planning check or by PlanCompile, for an unisolatable schema refusal; or a test gap for each required test that could not be produced, failed its pre-bind check, or has no automatic route."
   - "A schema rule's required tests are a refusing and a passing payload fixture, and for an assertion an if selects also a passing payload on each route the contract distinguishes and, wherever the contract admits one, a contrasting accepted control that still breaks the assertion on a route that does not select it; a declared failure result's are a refusing input and its passing neighbour; a behavioural criterion's is one fixture per input condition it lists, each asserting its stated outcome so that a wrong result fails; any other criterion's is its ATS-003 oracle; no contract is exempt from schema fixtures; each member of a required list or other per-member constraint is its own rule with its own refusing fixture."
   - "Every behaviour fixture carries the owner-stated state and effect assertions for its polarity, each read through a declared observation surface; where a surface is missing, the carried PWIZ-110 completeness gap stands, or an assertion test gap if the gap was first found at compile time."
@@ -111,9 +116,9 @@ acceptance_criteria:
   - "A named-gap regression input binds only where the approved contract determines its refusal, and never with single-rule coverage credit."
   - "A test gap's test_gap_policy is set by PlanCompile from what is actually missing: block_completion when an automatic route exists for the missing test or assertion, defer_non_executable_harness_candidate only when the route itself is missing, and a deferred candidate keeps the rule's verification open under EP-101; allow_with_disposition and not_applicable are never used for a rule's required test."
   - "A contract change after approval reruns its checks in the successor plan and regenerates its tests, and the PlanDiffImpactReport classifies every consuming node."
-  - "The handoff schema change for payload fixture, behaviour fixture and recorded-gap records, and for per-test outcomes in test_run_receipt, is a recorded companion change, required before any compile uses this unit; it also fixes the per-keyword candidate generators, the named-gap coverage conditions, the effective-assertion definitions and refusal attribution for applicators, the per-member identity and the fixture-owner tie-break, with the
+  - "The handoff schema change for payload fixture, behaviour fixture and recorded-gap records, and for per-test outcomes in test_run_receipt, is a recorded companion change, required before any compile uses this unit; it also fixes the per-keyword candidate generators, the named-gap coverage conditions, the effective-assertion definitions and refusal attribution for applicators, the per-member identity, the fixture-owner tie-break and how a split rule's run receives the completed outputs it exercises, with the
   pattern, length-bound, required-member, discriminated-oneOf, branch-switch, independent-assertion, negation,
-  conditional-selector contrasting-control, state-preserving refusal and replay scenarios, and one scenario for each graph shape (a single owner, split parallel owners, enforcement outside the write scope with and without current owner tests, and no lawful target)."
+  conditional-selector contrasting-control, state-preserving refusal and replay scenarios, and one scenario for each graph shape (a single owner, split parallel owners with an early or stale-build pass that must not count, enforcement outside the write scope with full, partial and no current owner coverage, and no lawful target)."
   - "A carried completeness or design gap keeps its PWIZ-012 class and is resolved under that class, not under the test-gap policies."
   - "No NodeSeeds, WorkNodes, executable queues, final node manifests, production build tasks, implementation files or source code are created by this PlanUnit."
 validation_surfaces:
