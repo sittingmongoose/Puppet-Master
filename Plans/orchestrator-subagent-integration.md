@@ -1183,13 +1183,13 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 ### 5. Tier overrides: one list per tier vs contextual keys
 
 - **Gap:** YAML shows `tierOverrides.phase.default`, `.phase.architecture`, `.phase.product`, `.task.rust`, `.task.python`, etc. The GUI section says "for each tier (phase/task/subtask/iteration), a text field or list editor for override subagent names."
-- **Clarify:** Resolved to **Simple v1** for the primary user flow: one list per tier (`phase`, `task`, `subtask`, `iteration`) so `tier_overrides` is a tier-keyed map such as `phase: [collaborator]` or `task: [rust-engineer]`. Full contextual keys remain an advanced raw-registry surface only and must not replace the Simple v1 UI unless a later PlanUnit promotes them.
+- **Clarify:** Resolved to **Simple v1** for the primary user flow: one list per tier (`phase`, `task`, `subtask`, `iteration`) so `tier_overrides` is a tier-keyed map such as `phase: [collaborator]` or `task: [rust-engineer]`. This is the compatibility import/export shape; it normalizes into SubagentPolicy (OSI-425) and is not read as a runtime merge path. Full contextual keys remain an advanced raw-registry surface only and must not replace the Simple v1 UI unless a later PlanUnit promotes them.
 
 ### 6. Orchestrator and subagent code not yet present
 
 
 - **Gap:** The plan references `execute_tier_with_subagents`, `build_subagent_invocation`, `execute_with_subagent`, and `SubagentSelector`. These do not exist in the codebase yet; they are specified in the plan's "Integration with Orchestrator" and Phase 3.
-- **Clarify:** Phase 3 (and any subagent execution path) must: (1) Read `enable_tier_subagents` from config; if false, skip subagent invocation (or use a single non-subagent path). (2) When building the list of subagents for a tier, apply `tier_overrides` (replace or merge with selected list), then filter by `disabled_subagents` and ensure `required_subagents` are included. (3) When building `ExecutionRequest` for each subagent run, set `request.plan_mode = tier_config.plan_mode`. Ensure the checklist item "Ensure subagent/invocation path receives tier plan_mode" is done in that code path.
+- **Clarify:** Phase 3 (and any subagent execution path) must: (1) Read `enable_tier_subagents` from config; if false, skip subagent invocation (or use a single non-subagent path). (2) When building the list of subagents for a tier, apply `tier_overrides` (replace or merge with selected list), then filter by `disabled_subagents` and ensure `required_subagents` are included. Steps (1) and (2) are now the import normalization of OSI-425, not the runtime path: `enable_tier_subagents` and `tier_overrides` are compatibility import/export keys normalized into SubagentPolicy (`schema_id: pm.subagent_policy.v1`), and runtime admission and selection read only that SubagentPolicy (OSI-078, OSI-081, OSI-214). (3) When building `ExecutionRequest` for each subagent run, set `request.plan_mode = tier_config.plan_mode`. Ensure the checklist item "Ensure subagent/invocation path receives tier plan_mode" is done in that code path.
 
 ### 7. Message enum and app.rs handlers
 
@@ -1376,7 +1376,7 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 ### 10. Meaning of empty override list
 
 - **Issue:** If `tier_overrides.phase = []`, does that mean "no subagents for phase" or "no override; use auto-selected list"?
-- **Mitigation:** **Rule: missing or empty override = use auto-selection.** Only a non-empty override list for a tier replaces the selector output. To force no subagents for a tier, the user sets `enable_tier_subagents` false (global) or we add a per-tier "use no subagents" option in a later version. **Implement:** In the orchestrator, if `tier_overrides.get(tier)` is `None` or `Some([])`, use the list from `SubagentSelector::select_for_tier`; otherwise use the override list. Document in code and in the Config tooltip for tier overrides.
+- **Mitigation:** **Rule: missing or empty override = use auto-selection.** This rule governs how imported `tier_overrides` normalize into SubagentPolicy (OSI-425, OSI-081); runtime selection reads the normalized SubagentPolicy, never `tier_overrides`. Only a non-empty override list for a tier replaces the selector output. To force no subagents for a tier, the user sets `enable_tier_subagents` false (global) or we add a per-tier "use no subagents" option in a later version. **Implement:** In the orchestrator, if `tier_overrides.get(tier)` is `None` or `Some([])`, use the list from `SubagentSelector::select_for_tier`; otherwise use the override list. Document in code and in the Config tooltip for tier overrides.
 
 ### 11. Persistence and dirty state
 
@@ -1391,7 +1391,7 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 ### 13. Platform-specific hook integration and parser reliability
 
 - **Issue:** Lifecycle hooks and structured handoff validation require platform-specific implementations (native hooks vs orchestrator middleware, JSON vs JSONL vs text parsing). Parsers may fail on edge cases (malformed JSON, missing sections in text, JSONL aggregation errors).
-- **Mitigation:** (1) **Hooks:** For platforms with native hooks (Cursor, Claude, Gemini), register Puppet Master hooks that delegate to platform hooks where possible; for others (Codex, Copilot), use orchestrator-level middleware. Document which platforms use which approach. (2) **Parsers:** Implement robust parsers with fallback behavior: JSON parsers handle missing fields gracefully; JSONL parser aggregates events safely (last event wins, accumulate findings); text parser uses multiple patterns and validates extracted sections. (3) **Fail-safe:** If parsing fails after retry, create partial `SubagentOutput` and mark tier as "complete with warnings" rather than crashing. (4) **Testing:** Add integration tests for each platform's parser with malformed input, missing fields, and edge cases to ensure reliability.
+- **Mitigation:** (1) **Hooks:** For the CliBridge providers with native hooks (Cursor, Claude Code), register Puppet Master hooks that delegate to platform hooks where possible; for the DirectApi providers (Codex, Copilot, Gemini) and the ServerBridge provider (OpenCode), use orchestrator-level middleware (OSI-004, OSI-139). Document which platforms use which approach. (2) **Parsers:** Implement robust parsers with fallback behavior, scoped by transport as OSI-093 says: JSON parsers handle missing fields gracefully for CliBridge CLI output and for the DirectApi final assistant content; the JSONL parser (last event wins, accumulate findings) and the multi-pattern text parser describe CLI-era Codex and Copilot output and are historical context only, not implementation targets. (3) **Fail-safe:** If parsing fails after retry, create partial `SubagentOutput` and mark tier as "complete with warnings" rather than crashing. (4) **Testing:** Add integration tests for each platform's parser with malformed input, missing fields, and edge cases to ensure reliability.
 
 ### 14. Subagent persona overrides (token budget and scope)
 
@@ -2308,10 +2308,10 @@ ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:
 **Platform-specific hook registration:**
 
 - **Cursor:** Register hooks in `.cursor/hooks.json` or `~/.cursor/hooks.json` for native hooks (`SubagentStart`, `SubagentStop`, `beforeSubmitPrompt`, `afterAgentResponse`). Also implement orchestrator-level hooks in Rust that wrap platform calls. **Note:** CLI subagents have reported issues (Feb 2026); use orchestrator-level hooks as primary, native hooks as enhancement when CLI subagents are fixed.
-- **Codex:** Use CLI lifecycle outputs and orchestrator-managed hooks/middleware. Implement orchestrator-level hooks as primary middleware.
+- **Codex:** Codex is a Direct API provider (OSI-004); hooks are implemented at the orchestrator level as primary middleware over its direct-provider responses. "CLI lifecycle outputs" is CLI-era wording kept as historical context only; there is no Codex CLI to read.
 - **Claude Code:** Register hooks in `.claude/settings.json` for native hooks (`SubagentStart`, `SubagentStop`, `PreToolUse`, `PostToolUse`, `SessionStart`, `SessionEnd`). Also implement orchestrator-level hooks. Native hooks can block operations (exit code 2) or inject context.
 - **Gemini:** Gemini is a Direct API provider; hooks are implemented at the orchestrator level. No platform-native hook config file is needed for Gemini.
-- **Copilot:** Use CLI lifecycle outputs and orchestrator-managed hooks/middleware. Implement orchestrator-level hooks as primary.
+- **Copilot:** Copilot is a Direct API provider (OSI-004); hooks are implemented at the orchestrator level as primary middleware over its direct-provider responses. "CLI lifecycle outputs" is CLI-era wording kept as historical context only; there is no Copilot CLI to read.
 
 **Hook trait definition:**
 
@@ -2995,7 +2995,7 @@ pub fn validate_subagent_output(
 }
 ```
 
-**Validation logic in AfterTier hook:** AfterTier hook calls `validate_subagent_output(output: &str, stderr: &str, platform: Platform) -> Result<SubagentOutput, ValidationError>`. If validation fails:
+**Validation logic in AfterUnit hook** (legacy alias AfterTier, Execution-Unit Hook Naming)**:** AfterUnit hook calls `validate_subagent_output(output: &str, stderr: &str, platform: Platform) -> Result<SubagentOutput, ValidationError>`. If validation fails:
 1. Log error with details (platform, error type, partial output snippet).
 2. Request one retry (re-run subagent with "format your output as structured JSON" instruction appended to prompt).
 3. If retry also fails, proceed with partial output (fail-safe) but mark tier as "complete with warnings" in `ExecutionUnitContext`.
@@ -3279,7 +3279,7 @@ where
 
 **Application:**
 
-- **BeforeTier/AfterTier hooks:** Wrap hook execution in `safe_hook_main` so hooks never crash.
+- **BeforeUnit/AfterUnit hooks** (legacy alias BeforeTier/AfterTier)**:** Wrap hook execution in `safe_hook_main` so hooks never crash.
 - **Verification functions:** Return `Result<(), VerificationError>` with structured error types.
 - **Subagent output parsing:** On parse failure, return `SubagentOutput { task_report: raw_output, downstream_context: None, findings: vec![] }` (partial output) rather than crashing.
 
@@ -3292,13 +3292,13 @@ where
 
 **Lazy creation:**
 
-- **BeforeTier hook:** On first tier start, create `.puppet-master/verification/<session-id>/` if it doesn't exist.
+- **BeforeUnit hook** (legacy alias BeforeTier)**:** On first unit start, create `.puppet-master/verification/<session-id>/` if it doesn't exist.
 - **State files:** Create on first write (e.g., `active-subagents.json`, `handoff-reports.json`).
 - **No setup command:** Users don't need to run "puppet-master setup" -- state is created automatically.
 
 **Stale pruning:**
 
-- **BeforeTier hook:** Prune verification state older than threshold (e.g., 2 hours of inactivity).
+- **BeforeUnit hook** (legacy alias BeforeTier)**:** Prune verification state older than threshold (e.g., 2 hours of inactivity).
 - **Pruning logic:** Check modification time of state files; delete if older than threshold.
 - **No teardown command:** Cleanup happens automatically during normal operation.
 
@@ -3306,11 +3306,11 @@ where
 
 ### 8. Structured Handoff Contract Enforcement at Runtime
 
-**Concept:** Enforce the structured handoff format (Task Report + Downstream Context + Findings) at runtime via AfterTier hook validation, not just in prompts. This ensures reliability even if prompts are modified.
+**Concept:** Enforce the structured handoff format (Task Report + Downstream Context + Findings) at runtime via AfterUnit hook validation (legacy alias AfterTier), not just in prompts. This ensures reliability even if prompts are modified.
 
 **Enforcement:**
 
-- **AfterTier hook:** Calls `validate_subagent_output()` (see #2 above).
+- **AfterUnit hook** (legacy alias AfterTier)**:** Calls `validate_subagent_output()` (see #2 above).
 - **On validation failure:** Block response, request one retry with format instruction.
 - **After retry:** If still malformed, proceed with partial output (fail-safe) but mark tier as "complete with warnings."
 
@@ -3319,7 +3319,7 @@ where
 **Platform-specific implementation:**
 
 - **Cursor/Codex/Claude/Gemini:** Parse JSON output; validate required fields (`task_report`, `downstream_context`, `findings`).
-- **Copilot:** Parse text output; extract structured sections via regex or pattern matching; validate presence.
+- **Copilot:** Copilot is DirectApi (OSI-004, OSI-093): parse its final assistant content as JSON like the providers above and validate the same required fields. The CLI-era Copilot instruction "Parse text output; extract structured sections via regex or pattern matching; validate presence." is historical context only; pattern extraction survives only as the generic fallback extraction OSI-093 keeps for every transport.
 
 Provider capability rule: provider-doc findings are capability evidence, not a blanket bypass for local validation. For schema-critical handoffs, provider-native schema enforcement is preferred where available: Anthropic provider-doc guidance directs schema-critical workflows to **Structured Outputs** for guaranteed JSON schema conformance, and Gemini provider-doc guidance supports schema-bound structured output and SDK schema helpers. Across providers and `/transports`, PM still runs local validation and records downgrade behavior because transport support and adherence vary; unsupported or weak transports fall back to locally validated structured output or partial-output warnings.
 
@@ -3329,23 +3329,26 @@ Provider capability rule: provider-doc findings are capability evidence, not a b
 
 | Feature | Cursor | Codex | Claude | Gemini | Copilot | Implementation Level |
 |---------|--------|-------|--------|--------|---------|---------------------|
-| **BeforeTier/AfterTier hooks** | Native hooks + orchestrator | CLI/provider bridge hooks + orchestrator | Native hooks + orchestrator | Native hooks + orchestrator | Orchestrator only | Orchestrator + platform hooks |
-| **Handoff validation** | JSON parse | JSONL parse | JSON parse | JSON parse | Text parse | Platform-specific parser |
+| **BeforeUnit/AfterUnit hooks** (legacy alias BeforeTier/AfterTier, Execution-Unit Hook Naming) | Native hooks + orchestrator | Orchestrator only (DirectApi) | Native hooks + orchestrator | Orchestrator only (DirectApi) | Orchestrator only (DirectApi) | Orchestrator + CliBridge platform hooks |
+| **Handoff validation** | JSON parse (CLI output) | JSON parse (final assistant content) | JSON parse (CLI output) | JSON parse (final assistant content) | JSON parse (final assistant content) | Transport-scoped parser (OSI-093) |
 | **Remediation loop** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
 | **Cross-session memory** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
 | **Active agent tracking** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
 | **Safe error handling** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
 | **Lazy lifecycle** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
-| **Contract enforcement** | JSON validation | JSONL validation | JSON validation | JSON validation | Text validation | Platform-specific validator |
+| **Contract enforcement** | JSON validation | JSON validation | JSON validation | JSON validation | JSON validation | Transport-scoped validator (OSI-093) |
 
-**Key insight:** Most features are **orchestrator-level** (platform-agnostic). Only handoff validation and contract enforcement need platform-specific parsers (JSON vs JSONL vs text). Hooks can leverage platform-native hooks where available (Cursor, Claude, Gemini) but also work via orchestrator-level middleware for all platforms.
+Transport scope (2026-11-25, OSI-004 and OSI-093): earlier versions of this table listed CLI/provider bridge hooks, JSONL parse and JSONL validation for Codex, Native hooks for Gemini, and Text parse and Text validation for Copilot. Those describe CLI-era output and are historical context only, not implementation targets.
+
+**Key insight:** Most features are **orchestrator-level** (platform-agnostic). Only handoff validation and contract enforcement need transport-scoped parsers (CliBridge CLI JSON / stream-json NDJSON, DirectApi final assistant content, ServerBridge event stream; the old JSON vs JSONL vs text split is CLI-era history). Hooks can leverage platform-native hooks where available (the CliBridge providers Cursor and Claude Code) but also work via orchestrator-level middleware for all platforms.
 
 ### Integration with Start/End Verification
 
 These lifecycle and quality features **complement** the existing start/end verification:
 
-- **BeforeTier hook** runs **before** `verify_tier_start` (tracks active subagent, injects context, prunes state).
-- **AfterTier hook** runs **after** `verify_tier_end` (validates handoff format, tracks completion, safe error handling).
+- **BeforeUnit hook** runs **before** `VerifyUnitStart` (tracks active subagent, injects context, prunes state).
+- **AfterUnit hook** runs **after** `VerifyUnitEnd` (validates handoff format, tracks completion, safe error handling).
+- BeforeTier hook, AfterTier hook, `verify_tier_start` and `verify_tier_end` are the legacy aliases of these four names (Execution-Unit Hook Naming).
 - **Remediation loop** extends the existing "required reviewer subagent" -- reviewer outputs structured findings; orchestrator enforces remediation.
 - **Cross-session memory** enhances Phase 1 context (loads prior decisions before planning).
 - **Active agent tracking** enhances logging and debugging (shows which subagent ran at each tier).
@@ -3584,7 +3587,7 @@ Short notes so implementers know where to put code and what the orchestrator alr
 ### Phase 3: Orchestrator Integration
 
 - **Where:** `src/core/orchestrator.rs`. The orchestrator already has `tier_config_for(tier_type) -> &TierConfig` (platform, model, plan_mode, etc.); use it for subagent runs.
-- **What to add:** (1) Read `enable_tier_subagents` and subagent config from the same config source as tier config (e.g. from run config or GuiConfig). (2) When executing a tier, if subagents enabled: call `SubagentSelector::select_for_tier`, apply `tier_overrides` (replace if non-empty, else use selected list), filter `disabled_subagents`, add `required_subagents`. (3) **Append agent registration** before execution (see "Agent Coordination and Communication"). (4) **Read coordination context from the projection** and inject it into the prompt (warns agent about active files/operations). (5) For each subagent name, build an `ExecutionRequest` (prompt with coordination context, model, **plan_mode from tier_config**, etc.) and run via the existing platform runner (same path as non-subagent iterations). (6) **Append status/operation/file-activity updates** during execution. (7) **Append unregister/crash/abort resolution** after execution completes. (8) `build_subagent_invocation` and `execute_with_subagent` can be methods that take `tier_config` (for plan_mode and platform/model) and call the runner. Platform/model: use `tier_config_for(tier_node.tier_type).platform` and `.model` (no separate get_platform_for_tier needed if you use tier_config_for).
+- **What to add:** (1) Read the normalized SubagentPolicy (`schema_id: pm.subagent_policy.v1`, OSI-425) from the same config source as tier config (e.g. from run config or GuiConfig); `enable_tier_subagents` and `tier_overrides` are read only by the import that normalizes them into that policy, never at runtime. (2) When executing a unit, if SubagentPolicy admits subagents: call `SubagentSelector::select_for_tier`, apply the policy's normalized overrides (the imported `tier_overrides`: replace if non-empty, else use selected list), filter `disabled_subagents`, add `required_subagents`. (3) **Append agent registration** before execution (see "Agent Coordination and Communication"). (4) **Read coordination context from the projection** and inject it into the prompt (warns agent about active files/operations). (5) For each subagent name, build an `ExecutionRequest` (prompt with coordination context, model, **plan_mode from tier_config**, etc.) and run via the existing platform runner (same path as non-subagent iterations). (6) **Append status/operation/file-activity updates** during execution. (7) **Append unregister/crash/abort resolution** after execution completes. (8) `build_subagent_invocation` and `execute_with_subagent` can be methods that take `tier_config` (for plan_mode and platform/model) and call the runner. Platform/model: use `tier_config_for(tier_node.tier_type).platform` and `.model` (no separate get_platform_for_tier needed if you use tier_config_for).
 
 ### Phase 4: Error Pattern Detection
 
@@ -3603,10 +3606,10 @@ Short notes so implementers know where to put code and what the orchestrator alr
 
 ### Start and end verification (wiring + readiness + quality)
 
-- **Where:** Same verification module as config-wiring (e.g. `src/verification/` or `src/core/`) or a dedicated `tier_verification.rs`. The main orchestrator calls `verify_tier_start` when entering a Phase/Task/Subtask (after or as part of config-wiring) and `verify_tier_end` when completing a Phase/Task/Subtask (after acceptance gate; quality step can be part of gate or separate).
+- **Where:** Same verification module as config-wiring (e.g. `src/verification/` or `src/core/`) or a dedicated `tier_verification.rs`. The main orchestrator calls `VerifyUnitStart` (legacy function name `verify_tier_start`, Execution-Unit Hook Naming) when entering a Phase/Task/Subtask (after or as part of config-wiring) and `VerifyUnitEnd` (legacy `verify_tier_end`) when completing a Phase/Task/Subtask (after acceptance gate; quality step can be part of gate or separate).
 - **What:** Start: config-wiring (existing) + wiring/readiness checklist (GUI updated? backend updated? steps make sense? known gaps?). End: wiring re-check + existing acceptance gate + quality verification. Quality verification is **both** (1) required reviewer subagent (code-reviewer) at end-of-tier, on retry, and when gate fails; (2) gate criteria (clippy, tests, etc.). Parent-tier orchestrator addresses unrelated failures. See **"Start and End Verification at Phase, Task, and Subtask"** for the table and gaps. Define per-tier quality checklist (e.g. Phase: docs; Task: design; Subtask: code + tests + clippy) in code or config.
 - **When called:** Start at Phase/Task/Subtask entry; end at Phase/Task/Subtask completion (before marking tier complete). Iteration can use tier-level checks only (no separate iteration start/end verification unless needed).
-- **Integration with hooks:** BeforeUnit hook runs **before** `verify_tier_start` (tracks active subagent, injects context, prunes stale state). AfterUnit hook runs **after** `verify_tier_end` (validates handoff format, tracks completion). See **"Lifecycle and Quality Features"** for hook implementation.
+- **Integration with hooks:** BeforeUnit hook runs **before** `VerifyUnitStart` (legacy `verify_tier_start`; tracks active subagent, injects context, prunes stale state). AfterUnit hook runs **after** `VerifyUnitEnd` (legacy `verify_tier_end`) (validates handoff format, tracks completion). See **"Lifecycle and Quality Features"** for hook implementation.
 
 ### Agent coordination
 
@@ -3617,8 +3620,8 @@ Short notes so implementers know where to put code and what the orchestrator alr
 ### Lifecycle hooks and quality features
 
 - **Where:** New module `src/core/hooks.rs` or `src/verification/hooks.rs` for hook system; canonical persistence and recovery projections in seglog/redb for continuity; extend `SubagentOutput` in `src/types/` for structured handoff format; remediation loop in orchestrator completion logic (`src/core/orchestrator.rs`).
-- **What:** (1) **BeforeUnit/AfterUnit hooks:** Implement hook traits, register hooks per unit type, call automatically at unit boundaries. For platforms with native hooks (Cursor, Claude, Gemini), register Puppet Master hooks that delegate where possible; for Codex/Copilot, use orchestrator-level middleware and canonical coordination projection. (2) **Structured handoff validation:** `validate_subagent_output()` with platform-specific parsers (JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot). (3) **Remediation loop:** Parse findings from reviewer subagent output; filter Critical/Major; block completion and re-run until resolved or max retries; escalate to parent-tier on max retries. (4) **Cross-run continuity:** Persist architectural decisions, patterns, and tech choices as canonical outputs and projections at Phase completion; reload them at run start through handoff/context assembly rather than child-memory files. (5) **Active agent tracking:** `active_subagent: Option<String>` in `ExecutionUnitContext`; update in BeforeUnit/AfterUnit hooks; persist through canonical runtime storage and projections. (6) **Safe error handling:** Wrap hooks and verification in `safe_hook_main()` that guarantees structured output even on failure. (7) **Lazy lifecycle:** Create verification state on first write; prune stale state (>2 hours) in BeforeUnit hook. (8) **Contract enforcement:** AfterUnit hook validates handoff format; retry on malformed output; fail-safe after retry.
-- **When called:** Hooks run automatically at unit boundaries (before `verify_tier_start`, after `verify_tier_end`). Cross-run continuity persists at Phase completion and loads through run-start context assembly. Remediation loop runs when Critical/Major findings detected. See **"Lifecycle and Quality Features"** for full details and platform-specific implementation notes.
+- **What:** (1) **BeforeUnit/AfterUnit hooks:** Implement hook traits, register hooks per unit type, call automatically at unit boundaries. For the CliBridge providers with native hooks (Cursor, Claude Code), register Puppet Master hooks that delegate where possible; for the DirectApi providers (Codex, Copilot, Gemini), use orchestrator-level middleware and canonical coordination projection (OSI-004, OSI-139). (2) **Structured handoff validation:** `validate_subagent_output()` with transport-scoped parsers per OSI-093 (JSON over CliBridge CLI output for Cursor/Claude Code; JSON over the final assistant content for Codex, Copilot and Gemini; the CLI-era JSONL for Codex and text parsing for Copilot are historical context only). (3) **Remediation loop:** Parse findings from reviewer subagent output; filter Critical/Major; block completion and re-run until resolved or max retries; escalate to parent-tier on max retries. (4) **Cross-run continuity:** Persist architectural decisions, patterns, and tech choices as canonical outputs and projections at Phase completion; reload them at run start through handoff/context assembly rather than child-memory files. (5) **Active agent tracking:** `active_subagent: Option<String>` in `ExecutionUnitContext`; update in BeforeUnit/AfterUnit hooks; persist through canonical runtime storage and projections. (6) **Safe error handling:** Wrap hooks and verification in `safe_hook_main()` that guarantees structured output even on failure. (7) **Lazy lifecycle:** Create verification state on first write; prune stale state (>2 hours) in BeforeUnit hook. (8) **Contract enforcement:** AfterUnit hook validates handoff format; retry on malformed output; fail-safe after retry.
+- **When called:** Hooks run automatically at unit boundaries (before `VerifyUnitStart`, after `VerifyUnitEnd`; legacy `verify_tier_start` / `verify_tier_end`). Cross-run continuity persists at Phase completion and loads through run-start context assembly. Remediation loop runs when Critical/Major findings detected. See **"Lifecycle and Quality Features"** for full details and platform-specific implementation notes.
 
 ### Considerations #6 (Subagent availability / files)
 
@@ -12715,7 +12718,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Tier-start verification separates BeforeTierStart, DuringTierStart, and AfterTierStart responsibilities, builds StartVerificationResult, logs/handles failures, emits canonical config.validation.passed|warning|failed events, updates redb projections and verification history, and defines src/verification/tier_start.rs with verify_tier_start.
+  Tier-start verification separates BeforeTierStart, DuringTierStart, and AfterTierStart responsibilities, builds StartVerificationResult, logs/handles failures, emits canonical config.validation.passed|warning|failed events, updates redb projections and verification history, and defines src/verification/tier_start.rs with verify_tier_start. verify_tier_start and the BeforeTierStart/DuringTierStart/AfterTierStart labels are legacy names of VerifyUnitStart and its before/during/after phases (Execution-Unit Hook Naming); normalized records use VerifyUnitStart.
 gui_related: true
 gui_classification_reason: This unit covers verification result visibility, events, and persisted projections.
 split_recommended: false
@@ -12772,7 +12775,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  The orchestrator tier-entry example runs verify_tier_start before building execution context, handles VerificationStatus Pass/Fail/Warning through FailFast or WarnAndContinue policy, logs and persists results, and builds execution context only after pass or warn-and-continue.
+  The orchestrator tier-entry example runs verify_tier_start before building execution context, handles VerificationStatus Pass/Fail/Warning through FailFast or WarnAndContinue policy, logs and persists results, and builds execution context only after pass or warn-and-continue. verify_tier_start is the legacy name of VerifyUnitStart (Execution-Unit Hook Naming).
 gui_related: false
 gui_classification_reason: This unit covers backend orchestrator flow, not GUI behavior.
 split_recommended: false
@@ -12891,7 +12894,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  verify_tier_start collects config wiring, GUI-backend mapping, backend-GUI mapping, operation sequence, and known-gap findings; maps severities to fail/warning/pass; and returns a StartVerificationResult with tier_type, node_id, findings, and Utc timestamp.
+  verify_tier_start collects config wiring, GUI-backend mapping, backend-GUI mapping, operation sequence, and known-gap findings; maps severities to fail/warning/pass; and returns a StartVerificationResult with tier_type, node_id, findings, and Utc timestamp. verify_tier_start is the legacy name of VerifyUnitStart (Execution-Unit Hook Naming).
 gui_related: true
 gui_classification_reason: This unit includes GUI/backend mapping algorithm checks and surfaced verification status.
 split_recommended: false
@@ -13478,7 +13481,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  The tier-end orchestrator example introduces tier_end verification integration, collecting artifacts and diff, calling verify_tier_end, mapping VerificationStatus to TierStatus, persisting results, updating tier status, and generating feedback when incomplete.
+  The tier-end orchestrator example introduces tier_end verification integration, collecting artifacts and diff, calling verify_tier_end, mapping VerificationStatus to TierStatus, persisting results, updating tier status, and generating feedback when incomplete. verify_tier_end is the legacy name of VerifyUnitEnd (Execution-Unit Hook Naming).
 gui_related: false
 gui_classification_reason: This unit covers backend orchestrator example flow, not GUI behavior.
 split_recommended: false
@@ -14527,7 +14530,9 @@ owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Platform hook registration uses orchestrator-level hooks as primary middleware while optionally integrating native platform
   hooks: Cursor hook files and events, Codex and Copilot CLI lifecycle outputs, Claude settings hooks with blocking/context
-  behavior, and Gemini orchestrator-level Direct API hooks without native config files.
+  behavior, and Gemini orchestrator-level Direct API hooks without native config files. Codex and Copilot are DirectApi
+  under OSI-004, so like Gemini they use orchestrator-level hooks only; "Codex and Copilot CLI lifecycle outputs" is
+  CLI-era wording kept as historical context only, not an implementation target.
 gui_related: false
 gui_classification_reason: This unit covers provider/runtime hook registration policy, not GUI presentation.
 split_recommended: false
@@ -15768,7 +15773,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   CodexOutputParser parses JSONL according to platform_specs, detects Turn/turn events and structured content, aggregates
-  findings, and reports TextExtraction when no structured output is found.
+  findings, and reports TextExtraction when no structured output is found. This describes CLI-era Codex output and is
+  historical context only, not an implementation target: Codex is DirectApi under OSI-004, and OSI-093 builds its
+  SubagentOutput from the direct-provider response's final assistant content.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -15977,7 +15984,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   CopilotOutputParser parses text according to platform_specs by combining stdout and stderr, extracting the Task Report section
-  as required and Downstream Context as optional through regex section extraction.
+  as required and Downstream Context as optional through regex section extraction. This describes CLI-era Copilot output
+  and is historical context only, not an implementation target: Copilot is DirectApi under OSI-004 and has no stdout or
+  stderr to combine, and OSI-093 builds its SubagentOutput from the direct-provider response's final assistant content.
 gui_related: false
 gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
 split_recommended: false
@@ -16044,7 +16053,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Copilot findings parsing extracts Findings sections with severity, category, description, file, line, and suggestion fields,
-  mapping Critical, Major, Minor, and Info strings to Severity values before returning SubagentOutput.
+  mapping Critical, Major, Minor, and Info strings to Severity values before returning SubagentOutput. The text-section
+  extraction is the CLI-era Copilot parser and historical context only (OSI-004, OSI-093); the field set and the
+  Critical/Major/Minor/Info to Severity mapping still apply to findings read from Copilot's final assistant content.
 gui_related: false
 gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
 split_recommended: false
@@ -16183,7 +16194,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  AfterTier handoff validation logs platform, error type, and partial output snippet details, requests one retry with structured
+  AfterUnit handoff validation (the AfterTier hook name is an import-only alias stored as hook_name_normalized = AfterUnit
+  per Execution-Unit Hook Naming) logs platform, error type, and partial output snippet details, requests one retry with structured
   JSON output instruction, and after retry failure proceeds with partial output fail-safe while preserving complete-with-warnings
   source wording.
 gui_related: false
@@ -17454,7 +17466,9 @@ owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Most lifecycle features are orchestrator-level and platform-agnostic, while handoff validation and contract enforcement
   require parser-specific JSON, JSONL, or text handling; platform-native hooks may be used where available while orchestrator
-  middleware remains the fallback for all platforms.
+  middleware remains the fallback for all platforms. The parser handling is transport-scoped by OSI-093 (JSON over CliBridge
+  CLI output, JSON over the DirectApi final assistant content, the ServerBridge event stream); JSONL and text handling are
+  CLI-era Codex and Copilot history, and platform-native hooks exist only for the CliBridge providers (Cursor, Claude Code).
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
@@ -19482,7 +19496,10 @@ owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Orchestrator integration uses src/core/orchestrator.rs and tier_config_for(tier_type) -> &TierConfig as the source for
   platform, model, and plan_mode, then reads enable_tier_subagents and subagent config, applies tier_overrides, filters
-  disabled_subagents, and adds required_subagents.
+  disabled_subagents, and adds required_subagents. Under OSI-425 those steps run once, when the legacy keys are imported
+  and normalized into SubagentPolicy (`schema_id: pm.subagent_policy.v1`); at runtime the orchestrator reads only the
+  normalized SubagentPolicy for admission, selection, disabled and required subagents, and never reads enable_tier_subagents
+  or tier_overrides as the runtime gate or merge path.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration configuration merge behavior rather than GUI presentation.
@@ -19878,7 +19895,8 @@ owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Tier start/end verification lives with config-wiring verification under src/verification/, src/core/, or tier_verification.rs,
   and the main orchestrator calls verify_tier_start on Phase/Task/Subtask entry and verify_tier_end after the acceptance gate
-  before marking the tier complete.
+  before marking the tier complete. verify_tier_start and verify_tier_end are legacy names of VerifyUnitStart and VerifyUnitEnd
+  (Execution-Unit Hook Naming); normalized records use the canonical names.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend verification placement and lifecycle timing rather than GUI presentation.
@@ -20046,8 +20064,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Hook integration preserves the ordering that BeforeUnit runs before verify_tier_start and AfterUnit runs after
-  verify_tier_end, with active-subagent tracking, context injection, stale-state pruning, handoff-format validation, and
+  Hook integration preserves the ordering that BeforeUnit runs before VerifyUnitStart and AfterUnit runs after
+  VerifyUnitEnd (verify_tier_start and verify_tier_end are import-only aliases per Execution-Unit Hook Naming), with active-subagent tracking, context injection, stale-state pruning, handoff-format validation, and
   completion tracking treated as compatibility/source summary for the hook owner path.
 gui_related: false
 gui_classification_reason: >-
@@ -20389,7 +20407,10 @@ owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Structured handoff validation extends validate_subagent_output() with platform-specific parsers, including JSON for
   Cursor, Claude, and Gemini, JSONL for Codex, and text parsing for Copilot, and contract enforcement retries malformed
-  output before failing safe.
+  output before failing safe. Under the OSI-004 ProviderTransport taxonomy those parsers are transport-scoped as OSI-093
+  states: JSON over CLI output for the CliBridge providers (Cursor, Claude Code) and JSON over the direct-provider
+  response's final assistant content for the DirectApi providers (Codex, Copilot, Gemini); JSONL for Codex and text
+  parsing for Copilot describe CLI-era output and are historical context only, not implementation targets.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend structured handoff parsing and contract enforcement rather than GUI presentation.
@@ -22829,7 +22850,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   File operations can be detected by parsing agent output, native PreToolUse/PostToolUse hooks where available, or
-  Codex/Copilot normalized CLI stream or tool events.
+  Codex/Copilot normalized CLI stream or tool events. Codex and Copilot are DirectApi under OSI-004, so for them this means
+  the tool-call events in the direct-provider response; "normalized CLI stream" is CLI-era wording kept as historical
+  context only.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend event extraction and provider adapter evidence rather than GUI presentation.
@@ -31805,6 +31828,7 @@ Repairs row `sfk-1a88c3d82dd8176a236abe6a`.
 - Legacy `BeforeTier`, `AfterTier`, and `verify_tier_start` strings are source-lineage aliases only. They may appear in imported records, but normalized orchestration records must store `hook_name_normalized` using the canonical execution-unit names.
 - Import normalization table: `BeforeTier -> BeforeUnit`, `AfterTier -> AfterUnit`, `verify_tier_start -> VerifyUnitStart`, `verify_tier_end -> VerifyUnitEnd`.
 - New owner prose and generated receipts must not introduce tier-era hook names as active hook identifiers.
+- Naming fence (2026-11-25): every remaining tier-era spelling in this document is a legacy alias of the canonical names above, not an active identifier. That covers `verify_tier_start` / `verify_tier_end` as function and module names (`src/verification/tier_start.rs`, `tier_end.rs`, `tier_verification.rs`) in the start/end verification sections and their code examples, the `BeforeTierStart` / `DuringTierStart` / `AfterTierStart` and `BeforeTierEnd` / `AfterTierEnd` verification responsibilities (the before, during and after phases of `VerifyUnitStart` and `VerifyUnitEnd`), the `BeforeTierResult` / `AfterTierResult` type names in the hook trait example, and the PlanUnits OSI-109, OSI-110, OSI-112, OSI-122, OSI-164, OSI-221 and OSI-224.
 
 ### Cross-Platform Process Existence Check
 
@@ -35118,14 +35142,15 @@ Repairs `sfk-52b55259003ddf5c68bd4d44` (registry lines 1501 and 1588).
 
 Repairs `sfk-15a9ffa7a7561411bb7625a4` (registry line 1518); binds OSI-094, Handoff Retry Ceiling and Unrelated-failure escalation to the existing `cmd.runtime.*` recovery commands in `Plans/UI_Command_Catalog.md`. No new command id is added.
 
-- Raise: when the platform parser, the generic fallback and the one automatic retry all fail (OSI-094), or `subagent.handoff.max_retries` is exhausted (Handoff Retry Ceiling), the attempt settles with `failure_class = structured_output_invalid`, the raw output stays in the `parser.error` seglog event, a `handoff_retry_exhausted` record is written, and the node takes the `needs_review` overlay (§7 Retry/backoff matrix) at a recovery point with a minted `blocked_sequence`. The Unrelated-failure escalation CTA is raised the same way after its one automatic retry.
+- Raise: when the platform parser, the generic fallback and the one automatic retry all fail (OSI-094), or `subagent.handoff.max_retries` is exhausted (Handoff Retry Ceiling), the attempt settles with `failure_class = structured_output_invalid`, the raw output stays in the `parser.error` seglog event, a `handoff_retry_exhausted` record is written, and the node takes the `needs_review` overlay (§7 Retry/backoff matrix) at a recovery point with a minted `blocked_sequence`.
+- Raise for the Unrelated-failure escalation CTA (OSI-136): when an attempt fails because of issues outside its intended scope and its one automatic retry with the same config also fails, the retried attempt keeps the classifier family and classifier the executor emitted for it (`failure_class` or `blocked_reason_code`, §7 Retry/backoff matrix: never coerced into `structured_output_invalid` or another `failure_class`). No `parser.error` event and no `handoff_retry_exhausted` record is written for it unless that attempt really was a structured-output parse failure. The node waits at a recovery point with a minted `blocked_sequence` and the chat CTA; a modal replaces the chat CTA only for P0 risk (OSI-136). The attempt's own classifier row still governs anything the matrix makes automatic (for example `provider_transient` retries run before this escalation is reached).
 - Local spellings map to canonical `allowed_action_id` values: `retry` -> `retry_now`; `skip_with_operator_acceptance` -> `skip_node`; `view_raw_output` -> `open_details`. The recovery point's `allowed_action_ids[]` is `[retry_now, skip_node, open_details]` for the parser prompt and `[open_details, skip_node, retry_now, abort_run]` for the Assistant chat CTA (review, skip, retry, abort).
 
 | Control | `allowed_action_id` | Command | Payload | State after success |
 |---|---|---|---|---|
 | [Retry] / chat retry | `retry_now` | `cmd.runtime.retry_now` | the catalog's `retry_now` arguments for this node: `project_id`, `run_id`, `node_id`, `blocked_sequence`, `attempt_id`, `idempotency_key` | The recovery point closes; a new attempt with a new `attempt_id` is dispatched for the same node and handoff. This operator retry is outside the automatic `subagent.handoff.max_retries` count. If it fails the same way, a new recovery point with a new `blocked_sequence` is raised. |
-| [Skip] / chat skip | `skip_node` | `cmd.runtime.skip_node` | `run_id`, `node_id`, `attempt_id`, `reason_code = handoff_retry_exhausted`, `operator_note?` (human-in-the-loop.md Skip And Cancel Commands) | The node settles as skipped by the operator; no Downstream Context or partial SubagentOutput is forwarded from it; the run continues with the remaining nodes. |
-| [View raw output] / chat review | `open_details` | `cmd.runtime.open_attempt_details` | `run_id`, `node_id`, `attempt_id` | No state change. Attempt details open on the raw output kept in `parser.error`; the recovery point stays open. |
-| chat abort | `abort_run` | `cmd.runtime.abort_run` | `run_id`, `reason_code = handoff_retry_exhausted`, `requested_by`, `created_at_utc` | The run ends through the existing abort semantics. |
+| [Skip] / chat skip | `skip_node` | `cmd.runtime.skip_node` | `run_id`, `node_id`, `attempt_id`, `reason_code`, `operator_note?` (human-in-the-loop.md Skip And Cancel Commands); `reason_code = handoff_retry_exhausted` for the parser prompt, and for the Unrelated-failure CTA the failed retry's own classifier value (its `failure_class` or `blocked_reason_code`) | The node settles as skipped by the operator; no Downstream Context or partial SubagentOutput is forwarded from it; the run continues with the remaining nodes. |
+| [View raw output] / chat review | `open_details` | `cmd.runtime.open_attempt_details` | `run_id`, `node_id`, `attempt_id` | No state change. For the parser prompt, attempt details open on the raw output kept in `parser.error`; for the Unrelated-failure CTA they open on the failed retry's classifier, error detail and logs. The recovery point stays open. |
+| chat abort (Unrelated-failure CTA only) | `abort_run` | `cmd.runtime.abort_run` | `run_id`, `reason_code` = the failed retry's own classifier value (its `failure_class` or `blocked_reason_code`), `requested_by`, `created_at_utc` | The run ends through the existing abort semantics. |
 
-- A command whose `blocked_sequence` or `attempt_id` no longer matches the open recovery point is refused as stale and changes nothing. Only one action settles a recovery point.
+- Stale checks use the identity each payload carries. `cmd.runtime.retry_now` is refused as stale, changing nothing, when its `blocked_sequence` or `attempt_id` no longer matches the open recovery point. `cmd.runtime.skip_node` carries no `blocked_sequence`: it is refused as stale when the node has no open recovery point or its `attempt_id` is not the attempt that recovery point was raised for. `cmd.runtime.abort_run` carries only `run_id`: it is never stale against a recovery point, and is refused only when the run is already terminal. `cmd.runtime.open_attempt_details` changes no state and is never refused as stale; it opens the named attempt even after the recovery point closed. Only one of `retry_now`, `skip_node` and `abort_run` settles a recovery point; the first admitted one wins and later ones are refused as stale.
