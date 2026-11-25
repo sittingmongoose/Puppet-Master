@@ -2479,7 +2479,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "954399743cc7ad455249e10a9a8a0c78f84e6d001a84c26c39757c87191e2a51",
+      "sha256": "32affd90736860141521634c337ab4f2963329f5e70162625496590d58594fe4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 207,
@@ -17020,7 +17020,7 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 2377,
+      "line_count": 2379,
       "path": "Plans/Plan_To_Node_Compilation.md",
       "plan_unit_count": 28,
       "plan_unit_ids": [
@@ -17081,7 +17081,7 @@
         "weak_test_oracle",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "be770fdbc15cc26141bba7c74980d136d1225a5a04c30e548d641d9ef87fecf9",
+      "sha256": "ee54572780809ff6d411ac9e42111c88a22895bee4619e36a6cfdb6f9031507b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 28
@@ -17354,7 +17354,7 @@
         "future Product Onboarding native controller",
         "future existing owner handlers; handler_unavailable until native evidence"
       ],
-      "line_count": 5147,
+      "line_count": 5148,
       "path": "Plans/Planning_Wizard.md",
       "plan_unit_count": 38,
       "plan_unit_ids": [
@@ -17427,7 +17427,7 @@
         "unbounded_review_loop_or_suppressed_finding",
         "wizard_lifecycle_owner_drift"
       ],
-      "sha256": "199775a76cc8d43b432aed78d1f7c33c692e38edff9fabe04abab167aa757ea4",
+      "sha256": "b890b385d298a3ababa092b2b9f6f4d4e461aa67c2894449fa99d6540ca56a56",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 37,
@@ -25268,7 +25268,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-25T08:19:16Z",
+  "generated_at_utc": "2026-11-25T08:31:06Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
