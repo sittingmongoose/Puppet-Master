@@ -2216,7 +2216,7 @@ canonical_text: >-
   assertion, so that together they fail a validator that drops the rule, wherever dropping it can change the approved outcome, or rejects every valid value of the active field, and, with the contrasting control below, one that applies an if-selected assertion on a route its selector does not select (the companion's validation scenarios fix that fault set): a refusing payload the whole contract refuses because of that rule alone, by the companion's
   attribution, expected to be refused, and a passing payload that reaches and satisfies that same assertion in the
   same applicable branch or route, keeping the intended field or branch active (an optional field present), expected
-  to be accepted; a polarity counts as impossible only on code-established evidence recorded with the rule: other rules always refuse every violation first (a named gap on their coverage), no accepted input reaches the assertion (as when its selector conflicts with an enclosing const or enum, or its subschema is false), or its selector guarantees the assertion on every input of its branch so that no violation applies; an impossible polarity needs no fixture and earns no credit, a polarity missing without that evidence is a test gap, and the companion fixes the proof method; for an assertion an if selects, the passing payloads include one on each
+  to be accepted; a polarity counts as impossible only on code-established evidence recorded with the rule: other rules always refuse every violation first (a named gap on their coverage), no accepted input reaches the assertion (as when its selector conflicts with an enclosing const or enum, or its subschema is false), or its selector guarantees the assertion on every input of its branch so that no violation applies; where deleting an assertion only turns an accepted input into a refusal by making a second arm of a oneOf match, that accepted input, expected to be accepted by the approved contract, binds as the rule's regression case, while refusal credit stays with an actually attributable refusal; an impossible polarity needs no fixture and earns no credit, a polarity missing without that evidence is a test gap, and the companion fixes the proof method; for an assertion an if selects, the passing payloads include one on each
   route that can accept a payload under the whole approved contract (a route the contract requires to accept but for
   which no valid case exists keeps its finding or test gap) and, as an additional case, wherever the contract admits one, a contrasting accepted control: an input that breaks the assertion on a route that does not select it, with any routing fields that route requires, expected to be accepted, built where a refusing payload exists from it with the selector switched. A declared failure result gets two behaviour fixtures: an input that
   meets its failing condition, expected to be refused with that failure's code, and, on the same surface wherever the
@@ -2229,7 +2229,12 @@ canonical_text: >-
   (otherwise the shadowed refusal binds alone with its effect assertions), and the shadowed result is recorded
   with that coverage evidence and earns no independent coverage credit. Shadowing is judged per declared surface: a
   separately declared owner surface that can reach the original result binds that result's own required tests under
-  the ordinary disposition and gap policy. A search that ends without that coverage evidence leaves a test gap. A behavioural acceptance criterion (one with an input and an observable outcome)
+  the ordinary disposition and gap policy. A search that ends without that coverage evidence leaves a test gap. Where the owner contract forbids automated
+  access to an action (a human-only action), the missing automatic route is an owner prohibition, not a missing
+  harness: the criterion binds the automated boundary and lifecycle checks the owner permits (such as a refusal of
+  automated access and redacted lifecycle observations), records exactly what they prove, and leaves the human
+  interaction outside automated coverage; a plan that requires stronger proof than the owner permits is recorded as an
+  authority conflict under PWIZ-012, never as a test gap waiting for a harness. A behavioural acceptance criterion (one with an input and an observable outcome)
   gets one behaviour fixture for each input condition it lists, each carrying the criterion's state and effect
   assertions and asserting the outcome the criterion states on its input or sequence: a refusal where the
   criterion prescribes one, otherwise the stated result, compared so that a wrong result fails (a duplicate delivery
@@ -2287,7 +2292,7 @@ canonical_text: >-
   check's search result alone: block_completion when the test or assertion itself is missing and an automatic route
   could run it (as when an isolation search ended on collisions against a runnable validator), and
   defer_non_executable_harness_candidate, recorded with its test-harness WorkNode request candidate, only when that
-  automatic route is what is missing; allow_with_disposition and not_applicable are never used for a rule's required
+  automatic route is what is missing and the owner permits one; allow_with_disposition and not_applicable are never used for a rule's required
   test. A deferred harness candidate keeps the rule's required verification open: the node is not marked complete on
   it until the harness work lets the test run and pass (Plans/Executor_Protocol.md#EP-101). A completeness or design finding carried as a recorded gap (Plans/Planning_Wizard.md#PWIZ-110 and #PWIZ-111) keeps
   its PWIZ-012 gap class and is resolved under that class, outside the test-gap policies above; when the build resolves
@@ -2304,7 +2309,9 @@ canonical_text: >-
   otherwise valid matching branch fails that control, an active assertion whose declared alternate arm lies outside
   the enclosing shape's scope, that arm's own rules ending as named gaps on the enclosing const's code-established
   coverage with no passing payload, an assertion its selector guarantees on every input of its branch, with an
-  accepted route control and no refusal, a false subschema whose only possible polarity is refusal, a named shape that admits no valid input at all whose
+  accepted route control and no refusal, a false subschema whose only possible polarity is refusal, a oneOf arm whose constant's deletion only an accepted
+  input from another arm can detect, a human-only action bound by the automated boundary and lifecycle checks its owner
+  permits, a named shape that admits no valid input at all whose
   refusal is found from a directly constructed negative candidate, a branch switch the contract
   accepts and a branch switch refused only by an independent assertion (neither credited to the branch's rule), a negation, an optional field whose passing control must carry a valid value so that a validator rejecting every
   present value fails it, two independent semantic guards that share one declared code on a schema-valid input, a
@@ -2342,7 +2349,7 @@ acceptance_criteria:
   - "A test gap's test_gap_policy is set by PlanCompile from what is actually missing: block_completion when an automatic route exists for the missing test or assertion, defer_non_executable_harness_candidate only when the route itself is missing, a missing owner build always block_completion naming that build and never a harness candidate, and a deferred candidate keeps the rule's verification open under EP-101; allow_with_disposition and not_applicable are never used for a rule's required test."
   - "A change after approval to a contract or to a resolved dependency its checks or tests use reruns its checks in the successor plan and regenerates its tests, and the PlanDiffImpactReport classifies every consuming node."
   - "The handoff schema change for payload fixture, behaviour fixture and recorded-gap records, and for per-test outcomes in test_run_receipt, is a recorded companion change, required before any compile uses this unit; it also fixes the per-keyword candidate generators, the named-gap coverage conditions, the effective-assertion definitions and refusal attribution for applicators, the per-member identity, the fixture-owner designation rule and the TestRunReceipt fields that name a split rule's build inputs and an out-of-scope run's owner build, with the
-  pattern, length-bound, required-member, discriminated-oneOf same-branch control, out-of-scope alternate arm, selector-guaranteed assertion, false subschema, branch-switch, independent-assertion, negation,
+  pattern, length-bound, required-member, discriminated-oneOf same-branch control, out-of-scope alternate arm, selector-guaranteed assertion, false subschema, a named shape with no valid input whose refusal binds from a directly constructed negative candidate, a oneOf arm deletion caught by another arm's accepted input, a human-only action, branch-switch, independent-assertion, negation,
   conditional-selector contrasting-control, optional-field passing-control, shared-code semantic-guard, state-preserving refusal and replay scenarios, and one scenario for each graph shape (a single owner, split parallel owners with an early or stale-build pass that must not count, enforcement outside the write scope whose existing owner tests must not stand in for its required cases and whose refusal the receiving node's own check or a different owner build must not satisfy, an integration node that also qualifies as fixture owner, a candidate whose edges would create a cycle, no lawful target, a shadowed declared failure, an absent owner build, a refusal-only surface, a shadowed pair beside a gap on a second surface, a shadowed failure on a refusal-only surface, a shape consumed by a refusal-only operation, a latency oracle with no accepted call and no gap, and a silent surface carried and first found at compile time)."
   - "A carried completeness or design gap keeps its PWIZ-012 class and is resolved under that class, not under the test-gap policies."
   - "No NodeSeeds, WorkNodes, executable queues, final node manifests, production build tasks, implementation files or source code are created by this PlanUnit."

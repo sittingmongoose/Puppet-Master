@@ -16521,7 +16521,8 @@ canonical_text: >-
   when that build produced it. A behaviour fixture reaches the built code through an adapter generated from the
   contract's interface binding (the callable surface each operation or event maps to,
   Plans/Planning_Wizard.md#PWIZ-110). A fixture with no automatic route is a recorded test gap under ATS-004, never a
-  silent pass. The adapter reaches a fixture's prior state by replaying the
+  silent pass, except a human-only action whose owner forbids automated access, which binds the permitted boundary and
+  lifecycle checks as Plans/Plan_To_Node_Compilation.md#PNC-038 provides. The adapter reaches a fixture's prior state by replaying the
   owner's own operations or through a seeding port the contract declares, never by writing storage directly. An
   adapter the builder writes by hand is checked by an automated verification agent that is not the builder; no human
   review is required (ATS-004). A builder who finds that a fixture contradicts the source span it cites files a report
