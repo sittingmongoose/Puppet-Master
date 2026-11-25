@@ -2213,15 +2213,12 @@ canonical_text: >-
   and if repair gives it no target, compile certification fails closed with a finding naming the rule. A contract's rules are its schema rules (the contract's effective validation assertions as Plans/Planning_Wizard.md#PWIZ-111 defines them, with each member of
   a required list or other per-member constraint as its own rule and that member part of the refusal's identity), its
   declared failure results and its acceptance criteria, and each kind of rule gets its own tests. A schema rule gets one payload fixture for each polarity the approved contract makes possible for its effective
-  assertion, so that together they fail a validator that drops the rule, applies it beyond its scope or rejects valid
-  values for it: a refusing payload the whole contract refuses because of that rule alone, by the companion's
+  assertion, so that together they fail a validator that drops the rule or rejects every valid value of the active field, and, with the contrasting control below, one that applies an if-selected assertion on a route its selector does not select (the companion's validation scenarios fix that fault set): a refusing payload the whole contract refuses because of that rule alone, by the companion's
   attribution, expected to be refused, and a passing payload that reaches and satisfies that same assertion in the
   same applicable branch or route, keeping the intended field or branch active (an optional field present), expected
   to be accepted; a polarity counts as impossible only on code-established evidence recorded with the rule: other rules always refuse every violation first (a named gap on their coverage), no accepted input reaches the assertion (as when its selector conflicts with an enclosing const or enum, or its subschema is false), or its selector guarantees the assertion on every input of its branch so that no violation applies; an impossible polarity needs no fixture and earns no credit, a polarity missing without that evidence is a test gap, and the companion fixes the proof method; for an assertion an if selects, the passing payloads include one on each
   route that can accept a payload under the whole approved contract (a route the contract requires to accept but for
-  which no valid case exists keeps its finding or test gap) and, as an additional case, wherever the contract admits one, a contrasting accepted control: the
-  refusing payload with the selector switched to a route that does not select the assertion, and with any routing
-  fields that route requires, still breaking the assertion and expected to be accepted. A declared failure result gets two behaviour fixtures: an input that
+  which no valid case exists keeps its finding or test gap) and, as an additional case, wherever the contract admits one, a contrasting accepted control: an input that breaks the assertion on a route that does not select it, with any routing fields that route requires, expected to be accepted, built where a refusing payload exists from it with the selector switched. A declared failure result gets two behaviour fixtures: an input that
   meets its failing condition, expected to be refused with that failure's code, and, on the same surface wherever the
   approved contract admits an accepted call there, the same input without the failing condition, expected to be
   accepted; on a surface the contract declares refusal-only, the refusing fixture binds with its stated effect

@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L4959-L5148
+Source lines: L4959-L5145
 
-Source SHA256: `b890b385d298a3ababa092b2b9f6f4d4e461aa67c2894449fa99d6540ca56a56`
+Source SHA256: `3f1fba01298b612bf0cf438df8c1c54f8d9b9cad9afb34c60ac7dbaa0deffa33`
 
 ---
 
@@ -111,13 +111,10 @@ canonical_text: >-
   member for a per-member rule, names the rule, and each case records that expected identity. The rules under test are the contract's schema rules and its behavioural acceptance criteria (those with an input
   and an observable outcome), sourced separately from the referee; shape checks get an acceptance-only passing case,
   and criteria without an input and an outcome (latency gates, visual checks) keep their ATS-003 oracles. Each schema rule gets a case for each polarity the approved contract makes possible for its effective assertion,
-  so that together they fail a validator that drops the rule, applies it beyond its scope or rejects valid values for
-  it: a refusing case and a passing case that reaches and satisfies the same assertion in the same applicable branch
+  so that together they fail a validator that drops the rule or rejects every valid value of the active field, and, with the contrasting control below, one that applies an if-selected assertion on a route its selector does not select (the companion's validation scenarios fix that fault set): a refusing case and a passing case that reaches and satisfies the same assertion in the same applicable branch
   or route; a polarity counts as impossible only on code-established evidence recorded with the rule: other rules always refuse every violation first (a named gap on their coverage), no accepted input reaches the assertion (as when its selector conflicts with an enclosing const or enum, or its subschema is false), or its selector guarantees the assertion on every input of its branch so that no violation applies; an impossible polarity needs no fixture and earns no credit, a polarity missing without that evidence is a test gap, and the companion fixes the proof method; for an assertion an if selects
   the passing cases include one on each route that can accept a payload under the whole approved contract (a route the
-  contract requires to accept but for which no valid case exists keeps its finding or test gap) and, wherever the contract admits one, a contrasting
-  accepted control: the refusing input with the selector switched to a route that does not select the assertion, and
-  with any routing fields that route requires, still breaking the assertion and expected to be accepted; each behavioural acceptance criterion gets a case for each input condition it lists, asserting the outcome it
+  contract requires to accept but for which no valid case exists keeps its finding or test gap) and, wherever the contract admits one, a contrasting accepted control: an input that breaks the assertion on a route that does not select it, with any routing fields that route requires, expected to be accepted, built where a refusing input exists from it with the selector switched; each behavioural acceptance criterion gets a case for each input condition it lists, asserting the outcome it
   states and carrying its state and effect assertions (a refusal only where it prescribes one, otherwise its stated resulting state or
   returned result); and each
   risk property gets its matching cases: every state-machine transition and at
@@ -166,7 +163,7 @@ acceptance_criteria:
   - "Refusal codes are the contract's declared failure codes; a generated input is credited to a rule only when the whole contract refuses it because of that rule, by the companion's attribution, while multi-rule inputs remain admissible as named-gap evidence."
   - "A named gap rests on code-established coverage of the rule by its catching rules, with the recorded inputs and codes; a search that ends on collisions without that coverage is a test gap; each member of a required list or other per-member constraint is its own rule with its own refusal; a refusal is credited to a rule only when the whole contract refuses the input because of that rule, by the companion's attribution."
   - "Every case checks its outcome and every owner-stated state and effect assertion through a declared observation surface, for either polarity."
-  - "A schema rule has a case for each polarity the approved contract makes possible, its passing case reaching and satisfying the same effective assertion in the same applicable branch as its refusal, and a polarity counts as impossible only on code-established evidence recorded with the rule (a named gap, an assertion no accepted input reaches, or one its selector guarantees); an assertion an if selects has a passing case on each route that can accept a payload under the whole approved contract and, wherever the contract admits one, a contrasting accepted control that still breaks it on a route that does not select it."
+  - "A schema rule has a case for each polarity the approved contract makes possible, its passing case reaching and satisfying the same effective assertion in the same applicable branch of the assertion, and a polarity counts as impossible only on code-established evidence recorded with the rule (a named gap, an assertion no accepted input reaches, or one its selector guarantees); an assertion an if selects has a passing case on each route that can accept a payload under the whole approved contract and, wherever the contract admits one, a contrasting accepted control that still breaks it on a route that does not select it."
   - "The budget ends at whichever limit comes first, required cases run first, and every required case left unrun at the limit, including the rest of a rule whose cases were partly run (as when the budget ends between two required cases of one rule), is listed under its rule as a test gap, never as a named gap."
   - "Design findings follow PWIZ-028's bounded round; non-blocking leftovers are open questions and recorded gaps that do not hold the topic out of Ready, and a blocking leftover is a PWIZ-006 typed blocker."
   - "Referee cases cover schema rules and behavioural acceptance criteria only; other criteria keep their ATS-003 oracles."
