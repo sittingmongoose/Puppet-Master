@@ -4976,8 +4976,9 @@ canonical_text: >-
   finding: a named field without a type; an operation or command without its failure results, each with a declared
   failure code, or a declared failure of an operation, command or event whose contract leaves undecidable, on any of
   its callable surfaces, whether its passing neighbour, as Plans/Plan_To_Node_Compilation.md#PNC-038 defines it, is
-  accepted, a failure for which the approved outcomes establish the evidenced limit that definition names not being
-  flagged (PNC-038 carries it as a recorded gap in place of the missing passing neighbour); an entity whose state changes without a state machine that names its states, transitions, triggers
+  accepted, a failure for which that definition finds no neighbour and the approved outcomes establish its
+  evidenced limit not being flagged (Plans/Plan_To_Node_Compilation.md#PNC-038 carries this finding as a recorded gap in
+  place of the missing passing neighbour); an entity whose state changes without a state machine that names its states, transitions, triggers
   and terminal states, or whose state machine leaves the outcome of a named state and operation pair unstated; a requirement without acceptance criteria or a validation surface; a pointer to a section, unit
   or artifact that does not resolve, including an operation or event without an interface binding (the callable
   surface it maps to: a route, command, function or storage port, and the observation surfaces through which its
