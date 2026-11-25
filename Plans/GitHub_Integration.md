@@ -2122,11 +2122,11 @@ Typed field tables (amended 2026-11-25; they replace the untyped field lists fir
 | Field | Type | Rule |
 | --- | --- | --- |
 | `request_id`, `graph_patch_id` | `identity_id` | required; match the request |
-| `state` | enum `validated` \| `applied` \| `rejected` \| `rolled_back` \| `superseded` (the Contracts_V0 `graph_patch` states after `requested`) | required |
+| `state` | enum `validated` \| `applied` \| `rejected` \| `rolled_back` \| `superseded` (the Contracts_V0 `graph_patch` states after `requested`) | required; `rolled_back` and `superseded` are reached only from `applied` |
 | `applied` | boolean | required; true only when `state` is `applied` |
 | `resulting_generation_id` | `identity_id` | required when `state` is `applied` |
-| `decision_ref` | string | required for `applied`, `rejected`, `rolled_back` |
-| `state_transition_report_ref` | string | required for `applied` and `rolled_back` |
+| `decision_ref` | string | required for `applied`, `rejected`, `rolled_back` and `superseded` (Contracts_V0 CV-315: `applied -> rolled_back\|superseded` only with a decision and transition report) |
+| `state_transition_report_ref` | string | required for `applied`, `rolled_back` and `superseded` |
 | `error_code` | enum `generation_stale` \| `patch_point_not_found` \| `validation_failed` \| `decision_rejected` \| `permission_denied` | required when `state` is `rejected`, absent otherwise |
 | `result_ref` | string | optional |
 | `created_at_utc` | `timestamp` | required |
@@ -2150,7 +2150,7 @@ GitHub Integration exposes the review action only while a `graph_patch_request` 
 | `verification_state` | enum `verified` \| `stale` \| `renamed` \| `missing` \| `unverifiable` | required |
 | `last_verified_at_utc` | `timestamp` or null | required; null until first verification |
 | `reason_code` | a canonical Actions blocked reason (GI-037 enum and the table below) | required when `verification_state` is `unverifiable`, absent otherwise |
-| `provenance` | object `{ command_id: "cmd.github.actions.pin", event_ref: string, created_at_utc: timestamp }` | required |
+| `provenance` | object `{ command_id: "cmd.github.actions.pin", receipt_ref: string, created_at_utc: timestamp }` | required; `receipt_ref` names the no-persist command receipt `cmd.github.actions.pin.dispatch_receipt` (`Plans/Wiring_Matrix.production.json` row `catalog.github_actions_pin`, `expected_event_types: []`). There is no persisted pin event, so the record carries no `event_ref`. |
 
 `verification_state` moves on each Actions observation ("Actions Observation Transport" above): `verified` when `workflow_id` resolves at `workflow_file_path`; `stale` when the staleness rule there fires; `renamed` when `workflow_id` resolves at a different path (the badge shows the rename and `workflow_file_path` updates only after the user confirms); `missing` when `workflow_id` no longer exists; `unverifiable` when an Actions blocked reason prevents the read. Every non-`verified` state shows on the badge and keeps unpin available.
 
