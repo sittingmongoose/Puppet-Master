@@ -218,6 +218,8 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind] { border: 0 !im
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"]) {
   -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
 }
+/* Five-layer sheet stacks (spec, head-shade, tint, ring, frost). Keep both [data-lg-fixed] pin rules below
+   (sheets and [data-lg-xf]::after) matched to this exact layer count so frost stays the final `fixed` entry. */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="panel"] {
   background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
     var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-heavy, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat !important;
@@ -237,7 +239,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="bar"] {
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 16px 34px -18px var(--lg-shadow), 0 1px 4px var(--lg-shadow-near) !important;
 }
 /* Resize-drag paint diet (2026-10-28 pass 2, pass 4): while a column divider drags, the sheets being resized
-   repaint their six-layer background stack every frame; the baked specular/rim/glow images are size-locked
+   repaint their five-layer background stack every frame; the baked specular/rim images are size-locked
    to the previous geometry anyway (glass.js holds bakes during .pm-resizing), so flatten them and the deep
    shadow. Tint, head shade and frost stay, so the sheet still reads as glass. glass.js puts lg-drag-flat on
    <html> at the first held resize of a baked sheet and lifts it only once no bake work is left anywhere
@@ -251,7 +253,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz).lg-drag-flat :is([data-lg-kind
 /* Jared #13 (2026-10-14): while its scroller moves, a sheet's frost is pinned to the viewport by the browser itself, so
    it never trails the content (glass.js sets data-lg-fixed at the first scroll event and lifts it when the scroll settles) */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-fixed] {
-  background-attachment: scroll, scroll, scroll, scroll, scroll, fixed !important; background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0 !important;
+  background-attachment: scroll, scroll, scroll, scroll, fixed !important; background-position: 0 0, 0 0, 0 0, 0 0, 0 0 !important;
 }
 /* The frost crossfade (pm7-frost-crossfade, Jared 2026-10-16, F3-653). While a wallpaper change fades the body's print,
    each shown sheet carries data-lg-xf (glass.js startFrostFade), and its ::after paints the sheet's outgoing background
@@ -296,7 +298,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) [data-lg-kind="bar"]
     var(--lg-xf-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-xf-light, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-fixed][data-lg-xf]::after {
-  background-attachment: scroll, scroll, scroll, scroll, scroll, fixed; background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
+  background-attachment: scroll, scroll, scroll, scroll, fixed; background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
 }
 /* the page-in class stays on a page after its entrance ends, and its will-change: transform would make every pinned
    frost element-relative; a running entrance still gets its own layer without it */
