@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L16494-L16595
+Source lines: L16494-L16597
 
-Source SHA256: `9dddc645797aedee3cbd1443f87bc5ffd81418297323b065b974d69d86a7697f`
+Source SHA256: `5b10d60f41410d2eb4836f0b6c91a03fd2198dd598e836cbcd6c64517192bb86`
 
 ---
 
@@ -29,7 +29,9 @@ canonical_text: >-
   through another node's operation, counts only when it ran against its node's final build together with the
   completed outputs of every other node it exercises, which the Executor brings into that build
   (Plans/Executor_Protocol.md#EP-100), and its TestRunReceipt names all of them; a pass on an earlier or partial build
-  never counts, and the fixture runs again once they are in. Every bound ATS-003 oracle must pass, and every recorded test gap
+  never counts, and the fixture runs again once they are in. Any step of any fixture that reaches a surface enforced
+  outside the compile's write scope runs on the exact owner build the node resolves, whose identity its TestRunReceipt
+  binds and which must match the node's final owner dependency. Every bound ATS-003 oracle must pass, and every recorded test gap
   is honoured under its test_gap_policy (a block_completion gap blocks completion; a defer_non_executable_harness_candidate gap is recorded with its test-harness WorkNode request candidate as
   ATS-004 requires and keeps the rule's verification open, so the node is not marked complete until the harness work
   lets the test run and pass, as Plans/Executor_Protocol.md#EP-101 requires). The TestRunReceipt records each of these through the companion schema change that
@@ -38,14 +40,14 @@ canonical_text: >-
   fixture counts only on its bound surface: one bound to the built validator counts when run on the validator itself, or
   through a declared consuming operation only where the validator is the rule's sole surface and the run observes and
   compares the bound validator's own verdict for that exact payload (otherwise it runs on the validator directly or
-  records the applicable test gap), and one bound to a separately declared owner surface counts only when run on that surface. A fixture bound
-  through PNC-038's run-time value route counts only when its receipt shows that the exact substituted payload passed
-  the approved reference check for its case and that the verdict came from its bound surface; a missing output or a
-  failed check leaves it unsatisfied. That one surface rule
+  records the applicable test gap), and one bound to a separately declared owner surface counts only when run on that surface. A fixture whose
+  step uses a value an earlier step issued at run time, PNC-038's run-time value route included, counts only when its
+  receipt shows that the exact substituted input passed PNC-038's approved reference check for its case and that the
+  verdict came from its bound surface; a missing output or a failed check leaves it unsatisfied. That one surface rule
   holds for every run; for every fixture, payload or behaviour, of a rule surface enforced outside the compile's write
   scope
   (Plans/Plan_To_Node_Compilation.md#PNC-038) three requirements add to it: the run (for a run-time value route, its
-  certified invocation, each prerequisite step keeping its own surface's rules) targets the exact owner build the
+  certified step, each prerequisite step keeping its own surface's rules) targets the exact owner build the
   node resolves, whose immutable identity its TestRunReceipt binds and which must match the node's final owner
   dependency (a changed dependency needing a fresh run); it never passes through the receiving node's own code, though
   a validator that is the rule's sole surface may be reached through that owner's own declared consuming operation; and
@@ -79,7 +81,7 @@ unblocks: []
 acceptance_criteria:
   - "A WorkNode with bound rule tests completes only when every bound fixture meets its expected outcome (accepted with any stated result, or refused with its declared code and, each only where expected, its error path, its member or the exposed diagnostic of a semantic refusal) and every state and effect assertion it carries holds through its observation surface, every bound ATS-003 oracle passes, and every recorded test gap is honoured under its test_gap_policy, a deferred harness candidate leaving the node incomplete until the harness work lets its test run and pass, as its TestRunReceipt records."
   - "A fixture that exercises another node's surface, a split rule's included, counts at completion only when it ran on its node's final build with the completed outputs of every other node it exercises, all named in its TestRunReceipt; a pass on an earlier or partial build never counts."
-  - "Payload fixtures run against the built validator or a declared consuming operation, every receipt naming the surface actually invoked and a fixture counting only on its bound surface (a validator-bound one also through a declared consuming operation, but only where the validator is the rule's sole surface and the run observes the validator's own verdict for that payload), a fixture bound through PNC-038's run-time value route counting only when its receipt shows its substituted payload passed the reference check and its verdict came from its bound surface, and every fixture of a rule surface enforced outside the write scope also runs (for a run-time value route, its certified invocation), never through the receiving node's own code (a validator that is the rule's sole surface may be reached through that owner's declared consuming operation), only on its bound surface of the exact owner build the node resolves, named in its receipt, counts only when that build's identity matches the node's final owner dependency, a changed dependency needing a fresh run, and counts a refusal only when that build produced it; behaviour fixture adapters are generated from the contract's interface binding and reach prior states by replaying owner operations or a declared seeding port, never by direct storage writes; a hand-written adapter is checked by an automated verification agent that is not the builder; a fixture with no automatic route is a recorded test gap, except on a surface whose owner forbids automated access, where the permitted boundary and lifecycle checks are the required tests."
+  - "Payload fixtures run against the built validator or a declared consuming operation, every receipt naming the surface actually invoked and a fixture counting only on its bound surface (a validator-bound one also through a declared consuming operation, but only where the validator is the rule's sole surface and the run observes the validator's own verdict for that payload), a fixture whose step uses a run-time issued value counting only when its receipt shows the substituted input passed PNC-038's approved reference check and its verdict came from its bound surface, every step that reaches a surface outside the write scope running on the exact owner build the node resolves, and every fixture of a rule surface enforced outside the write scope also runs (for a run-time value route, its certified step), never through the receiving node's own code (a validator that is the rule's sole surface may be reached through that owner's declared consuming operation), only on its bound surface of the exact owner build the node resolves, named in its receipt, counts only when that build's identity matches the node's final owner dependency, a changed dependency needing a fresh run, and counts a refusal only when that build produced it; behaviour fixture adapters are generated from the contract's interface binding and reach prior states by replaying owner operations or a declared seeding port, never by direct storage writes; a hand-written adapter is checked by an automated verification agent that is not the builder; a fixture with no automatic route is a recorded test gap, except on a surface whose owner forbids automated access, where the permitted boundary and lifecycle checks are the required tests."
   - "A fixture that contradicts its cited span stays required until a successor plan corrects it; the builder never waives or edits a fixture."
   - "Each builder report entry cites its source span and the different build it would have caused, carries a PWIZ-012 gap class, goes to the planning repair route or the plan's approver, and is kept as a plan conversion regression case in the project's planning evidence."
   - "The user sees a builder report entry only as a plain policy or risk-acceptance decision, and no entry changes a plan without its owner's decision."
