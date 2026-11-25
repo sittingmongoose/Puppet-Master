@@ -4,7 +4,7 @@ Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
 Source lines: L9940-L10990
 
-Source SHA256: `b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3`
+Source SHA256: `6cf5a3711a292db7f8d769ca209574c1788cc5bc32298a22a5955e267fe841da`
 
 ---
 
@@ -16,13 +16,13 @@ This addendum is canonical promoted-feature/browser-terminal spec text for defer
 
 Repairs rows `sfk-756cb4154b9e486d8a6d74db`, `sfk-0a996093252d3d35aa59e6f2`, `sfk-ed92df2325332306b2463b50`, and `sfk-47f354a1222d2abb62b4a9a9`.
 
-| action_id | bucket | default_timeout_ms | output fields |
-| --- | --- | ---: | --- |
-| `cmd.browser.share_with_agent` | user-mediated-share | 30000 | `share_receipt_id`, `target_agent_id`, `artifact_refs[]` |
-| `cmd.browser.run_code` | page-evaluation | 5000 | `evaluation_id`, `stdout?`, `result_ref?`, `error_code?` |
-| `cmd.browser.evaluate` | page-evaluation | 5000 | `evaluation_id`, `json_result_ref?`, `dom_scope_ref?`, `error_code?` |
-| `cmd.browser.open_devtools` | diagnostic | 30000 | `devtools_session_id`, `boundary_ref`, `opened_at_utc` |
-| `cmd.browser.capture_artifact` | artifact | 30000 | `artifact_manifest_id`, `artifact_refs[]`, `retention_until_utc` |
+| action_id | bucket | default_timeout_ms | output fields | tier | permission_layer | allowed_session_classes | requested_capabilities | artifacts_emitted | degradation_or_blocking_behavior | user_visible_entry_points |
+| --- | --- | ---: | --- | --- | --- | --- | --- | --- | --- | --- |
+| `cmd.browser.share_with_agent` | user-mediated-share | 30000 | `share_receipt_id`, `target_agent_id`, `artifact_refs[]` | `guaranteed_everyday` | `always_allowed` (explicit share action) | `workspace_preview`, `automation_session`; never `AuthBrowserSession` | none | none: share state only, so `artifact_refs[]` stays empty unless a separate explicit capture command ran | `runtime_unavailable`; `session_class_restricted` for a protected session; until the browser owner settles its request the handler refuses with `handler_unavailable` (`#SMPFS-328`, DL-341) | browser chrome, assistant chat |
+| `cmd.browser.run_code` | page-evaluation | 5000 | `evaluation_id`, `stdout?`, `result_ref?`, `error_code?` | `advanced_debug_testing` | that of `cmd.browser.program.run`, which it normalizes to | `workspace_preview`, `automation_session`; never `AuthBrowserSession` | `capability_profile: advanced` | the Browser Program receipt and capture refs of the normalized run | input that does not compile losslessly to admitted named actions fails typed with no effect | none: compatibility input only, excluded from production wiring |
+| `cmd.browser.evaluate` | page-evaluation | 5000 | `evaluation_id`, `json_result_ref?`, `dom_scope_ref?`, `error_code?` | `advanced_debug_testing` | that of `cmd.browser.page.evaluate`, which it normalizes to | `workspace_preview`, `automation_session`; never `AuthBrowserSession` | none beyond `cmd.browser.page.evaluate` | none | as `cmd.browser.run_code` | none: compatibility input only, excluded from production wiring |
+| `cmd.browser.open_devtools` | diagnostic | 30000 | `devtools_session_id`, `boundary_ref`, `opened_at_utc` | `advanced_debug_testing` | `always_allowed` under `devtools_policy_allows` | ordinary sessions; never `AuthBrowserSession` | DevTools | none (layout/UI state only) | `runtime_unavailable`; `session_class_restricted` for a protected session; policy denial returns a typed permission result; until the browser owner settles its request the handler refuses with `handler_unavailable` (`#SMPFS-328`, DL-341) | browser chrome, command palette |
+| `cmd.browser.capture_artifact` | artifact | 30000 | `artifact_manifest_id`, `artifact_refs[]`, `retention_until_utc` | `guaranteed_everyday` (screenshot capture; trace and video are the separate advanced actions) | `always_allowed` | `workspace_preview`, `automation_session`; a protected session returns an explicit exclusion, never an empty capture | screenshot capture | `BrowserArtifactManifest` and its `artifact_refs[]` | `runtime_unavailable`; `session_class_restricted` | none: no catalog or wiring row reaches it; visible capture uses `cmd.browser.capture.full_to_chat` and `cmd.browser.capture.region_to_chat` |
 
 The former `browser_run_code` and `browser_evaluate` tokens are compatibility aliases for `cmd.browser.run_code` and `cmd.browser.evaluate`. Timeout constants are disambiguated as follows: `5000ms` applies to page-evaluation commands; `30000ms` applies to user-mediated share, diagnostic, artifact, and open/wait actions; `30s` is display copy for `30000ms`.
 
@@ -70,7 +70,7 @@ Legacy `usage_source` values `provider_reported`, `estimated`, `corrected`, and 
 
 Repairs rows `sfk-c5ad7b33fa51846ef1c86c49` and `sfk-e9cc3bc253470d324d189932`.
 
-Terminal VT/xterm/OSC fixtures are grouped by `fixture_id`, `protocol_family`, `input_bytes_ref`, `expected_screen_hash`, `expected_event_refs[]`, and `negative_case`.
+Terminal VT/xterm/OSC fixtures are grouped by `fixture_id`, `protocol_family`, `input_bytes_ref`, `expected_screen_hash`, `expected_event_refs[]`, and `negative_case`. The fixture rows themselves, with their replay byte streams and expected results, are `### Terminal protocol fixture rows` in the 2026-11-25 addendum at the end of this document.
 
 Required record minima:
 
@@ -86,7 +86,7 @@ Required record minima:
 - `TerminalAccessibilitySnapshot`: `snapshot_id`, `terminal_session_id`, `screen_reader_text_ref`, `focus_cell`, `created_at_utc`.
 - `TerminalDiagnosticsEnvelope`: `diagnostic_id`, `terminal_session_id`, `category`, `severity`, `message_ref`, `created_at_utc`.
 
-`TerminalScrollbackAnchor` is a record minimum, not proof of retained content or complete output. Its resolution must satisfy the Terminal output read semantics above, including source identity, whole-range backing validity, mutation handling, and logical-text preservation across ordinary reflow.
+`TerminalScrollbackAnchor` is a record minimum, not proof of retained content or complete output. Its resolution must satisfy the Terminal output read semantics above, including source identity, whole-range backing validity, mutation handling, and logical-text preservation across ordinary reflow. Each of these eleven records has the closed wire shape, field types and owner given in `### Terminal record wire contract` in the 2026-11-25 addendum at the end of this document.
 
 ### Browser Runtime Packaging Boundary
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5448-L27062
+Source lines: L5448-L27066
 
-Source SHA256: `7ba17c5aa7fb716a162c335b6ec6e71fc68d986a5c12f560da9fc6c85b205c7a`
+Source SHA256: `d85ca566a9a1c9a0c4bd744fab3ac1b0faffa83477bcb1561a3a0d7d41eedd89`
 
 ---
 
@@ -194,6 +194,10 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
+- "Typing in `Search in this tab` only filters rows of the active tab or view: the tab, the focused run, the selection and the route stay unchanged, and no result from another tab appears."
+- "Choosing a `Search Orchestrator` result opens that object's canonical route with the object selected: a concern opens its concern record by concern_id; an evidence or artifact result opens `Evidence` with its pane focused; a history result opens `History` with that entry selected and the page's focused run switched to its run_id; a ledger record opens `Ledger` with that exact record selected; a graph node opens `Node Graph` with the node selected and its inspector open (routing examples in `Plans/Run_Graph_View.md`)."
+- "A `Search Orchestrator` result never lands on a page-local text match: opening it from any tab produces the same route and selection as the same object's `Show in ...` deep link, and the tab-local filter of the tab the user left is kept."
+- "When a result's object no longer resolves, opening it shows that object as unavailable on its route instead of falling back to a text match in the current tab."
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."

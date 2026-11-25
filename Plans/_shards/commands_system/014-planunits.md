@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L788-L3547
+Source lines: L791-L3551
 
-Source SHA256: `967f23cf3fa0b7747ebae49b3c8636472572e8f842698d6f75c0de31f0348f7b`
+Source SHA256: `915cb5543b56dad9e91ab4d5259b695a6116a4ad46095bcd164a096f43140d9d`
 
 ---
 
@@ -1590,7 +1590,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
-  New Command opens an editor form for name, description, Persona, mode, subtask, permissions profile
+  New Command opens an editor form for name, description, Arguments hint, Persona, mode, subtask, permissions profile
   override, override built-in, template body and project-local/global save scope, with existing
   validation and syntax highlighting. There is no saved model or depth field under MD2 NEITHER; old
   model_override data remains inspection-only through compatibility reads.
@@ -1604,6 +1604,7 @@ acceptance_criteria:
   - New Command opens an editor form.
   - Name is validated per section 2.5 and collision-checked per section 2.4.
   - Description is required and has max 200 chars.
+  - Arguments hint is optional, has max 200 chars, and writes `arguments[0].hint` through the section 3.2 mapping; other `arguments` items and keys are file-authored and preserved.
   - Persona, Mode, Subtask, Permissions profile override and Override built-in controls are present; no command model field is offered.
   - Override built-in is visible only in Expert mode.
   - Reserved Assistant Chat slash commands fail validation even if Override built-in is enabled.

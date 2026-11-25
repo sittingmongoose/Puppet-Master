@@ -2,9 +2,9 @@
 
 Source: `Plans/Media_Generation_and_Capabilities.md`
 
-Source lines: L83-L374
+Source lines: L83-L376
 
-Source SHA256: `847fc414c8756dcf511b1cdd79bca4551a6915978b6dccf524d46258f128e492`
+Source SHA256: `063ec637176d260cce2b1edeadea299a5863f03572815c7ce67ee054364bec8c`
 
 ---
 
@@ -246,6 +246,8 @@ ContractRef: ToolID:capabilities.get, ContractName:Plans/Contracts_V0.md
 | `QUOTA_EXCEEDED` | The API quota for this capability has been exhausted. |
 
 These values are the canonical enum; implementations MUST use exactly these strings.
+
+These six strings are the only `disabled_reason` values a `capabilities.get` response carries. The ten lowercase values in "Disabled Reason Enum" (FABLE Deferred Action Concrete Repair Addendum, end of this document) are `generated_media_route` row values, not `capabilities.get` values; the adapter table there maps each of them to exactly one value above before a response is built (2026-11-25).
 
 ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2
 

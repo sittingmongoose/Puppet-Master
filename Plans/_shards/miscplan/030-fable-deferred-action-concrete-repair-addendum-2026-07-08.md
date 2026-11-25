@@ -2,9 +2,9 @@
 
 Source: `Plans/MiscPlan.md`
 
-Source lines: L6458-L6470
+Source lines: L6481-L6494
 
-Source SHA256: `075650d61f254d219224a6955894056175249145fa195c870d67edcca7226d33`
+Source SHA256: `8a15468dff609e8f2bd9811a901a8349ceb8fa5e53c98edc07a6030b51a5d4b8`
 
 ---
 
@@ -19,5 +19,6 @@ This addendum repairs non-runtime MiscPlan rows without creating WorkNodes, impl
 - Repairs `sfk-cd3164782a4ef1c0059005e0`: debug instrumentation lifecycle fields are `instrumentation_id`, `scope_kind`, `collector_state`, `mutation_policy`, `evidence_sink_ref`, `cleanup_policy`, `cleanup_result`, and `created_at_utc`.
 - Repairs `sfk-3a059c95c88e113587672e6b`: duplicate References and Implementation Status sections are source-lineage residues; canonical MiscPlan implementation status is the latest named PlanUnit status plus this addendum. Missing `§9.1.20` is retired and must not be cited as live.
 - Repairs `sfk-f2adc94f674eb81b2fc0686f`: `platform_specs` injection is retired compatibility lineage. Active skill listing uses `skill_catalog_entry` fields `skill_id`, `display_name`, `source`, `permission_class`, `enabled`, `owner_doc_ref`, and `schema_version`; `list_skills_for_agent` is a future command alias until `Plans/Skills_System.md` owns its schema.
+  Clarified 2026-11-25: "retired" means `platform_specs` is no longer a per-platform data source. M-083's injection contract is the provider-agnostic `SkillRunnerBinding` typed under M-083, whose entries are these `skill_catalog_entry` records, and `list_skills_for_agent` is the typed DRY helper defined there, not a command alias; the "future command alias" wording is retired.
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

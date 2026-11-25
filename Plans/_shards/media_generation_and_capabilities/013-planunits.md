@@ -2,9 +2,9 @@
 
 Source: `Plans/Media_Generation_and_Capabilities.md`
 
-Source lines: L1145-L6230
+Source lines: L1164-L6250
 
-Source SHA256: `847fc414c8756dcf511b1cdd79bca4551a6915978b6dccf524d46258f128e492`
+Source SHA256: `063ec637176d260cce2b1edeadea299a5863f03572815c7ce67ee054364bec8c`
 
 ---
 
@@ -2315,7 +2315,7 @@ plan_unit_id: MGAC-043
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: Model override candidate extraction preserves the keyword-form matcher and @ shorthand matcher for media.generate model tokens before normalization and resolution.
+canonical_text: Model override candidate extraction preserves the keyword-form matcher and @ shorthand matcher for media.generate model tokens before normalization and resolution. The preserved lookaround patterns are source lineage and behaviour reference; implementations use the equivalent lookaround-free canonical matchers in §3.4, which Rust regex accepts.
 gui_related: false
 gui_classification_reason: The unit defines deterministic media slot-extraction parsing behavior rather than GUI presentation.
 split_recommended: true
@@ -3542,7 +3542,7 @@ plan_unit_id: MGAC-066
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: The six disabled-reason messages are canonical verbatim UI copy for NOT_CONFIGURED, MODEL_UNAVAILABLE, ADMIN_DISABLED, BACKEND_UNSUPPORTED, RATE_LIMITED, and QUOTA_EXCEEDED.
+canonical_text: The six disabled-reason messages are canonical verbatim UI copy for NOT_CONFIGURED, MODEL_UNAVAILABLE, ADMIN_DISABLED, BACKEND_UNSUPPORTED, RATE_LIMITED, and QUOTA_EXCEEDED. BACKEND_UNSUPPORTED has two verbatim variants; the Image-Generation-only message appears only when the active backend has a verified image generated_media_route and the disabled capability is video, TTS or music, and the no-verified-route message appears in every other BACKEND_UNSUPPORTED case.
 gui_related: true
 gui_classification_reason: The unit defines user-visible capability picker, disabled-state presentation, UI copy, or interactive media behavior.
 split_recommended: true
@@ -3573,6 +3573,7 @@ preserved_exact_tokens:
 - That model isn't available with the current provider account, profile, auth mode, API key, or media route (or it isn't enabled). Pick a different model in Settings, or ask 'What models are available?'
 - This feature is disabled in Settings. Enable it under Media settings, then try again.
 - The current backend supports Image Generation only. To use Video/TTS/Music, use a provider route with verified generated-media support for that kind.
+- The current backend has no verified generated-media route for this kind. Use a provider route with verified generated-media support, or verify this backend's route in Settings -> Providers.
 - This feature is temporarily rate-limited. Wait a moment and try again.
 - API quota for this feature has been exhausted. Check your provider usage dashboard or wait for quota to reset.
 - NOT_CONFIGURED

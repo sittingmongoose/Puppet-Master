@@ -1,38 +1,38 @@
 # Shard Index: Plans/Run_Modes.md
 
-Generated: 2026-11-13T15:35:54Z
+Generated: 2026-11-25T02:55:27Z
 
-Source SHA256: `dfa7c351d242a3d230013fbd3a26a1ced44c10a25e5cf4e387dd7aa530b388af`
+Source SHA256: `c7bb568c275c82c46830549eb214bb7b7508d2e2ac1492bd9befd02e49310738`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `71530ad5f76b55978331eb66b878245645e00ead256f8b1592c53bca6c57d4c3`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L9 `3a3ce613daacbac52b79feb967bd24c4b19ff19d80d13999919fea077f758aa1`
-- [003 - 0. Scope and SSOT status](003-0.-scope-and-ssot-status.md) L11-L35 `81d937384bc48b1b80ebe2c1783b5dc366d9f9254d5249feff36c900928eb2e1`
-- [004 - 1. Canonical mode definitions](004-1.-canonical-mode-definitions.md) L37-L78 `213b06712a210a5aa7e9d56b0eb7564f092442b24ef4c04bcbf2d46713fd0c31`
-- [005 - 2. CLI-bridged execution strategies](005-2.-cli-bridged-execution-strategies.md) L79-L119 `aa63baeedb89ce474e87e99519609aa1130c33e5a42269a18ead511ce1962d15`
-- [006 - 3. Deterministic strategy selection](006-3.-deterministic-strategy-selection.md) L121-L183 `7dc56ad5d069edeb33d0edb9a0169500a37dab53b9797cae9ac73779f3feded9`
-- [007 - 4. Budget defaults](007-4.-budget-defaults.md) L185-L232 `2f85f6a088c23030ea7b5879253d21d65cc65c75caff973fe32a604315af6e6f`
-- [008 - 5. Kill conditions and enforcement](008-5.-kill-conditions-and-enforcement.md) L234-L371 `72a52c8005f1e9bd693ef898226111729ead86f892ade6021487e6b4139057f5`
-- [009 - 6. Run outcome taxonomy](009-6.-run-outcome-taxonomy.md) L373-L415 `db2212a3f223c3863991bb164b5cb165463ffd1bd3b07c3031574d7e753b6890`
-- [010 - 7. Mode effects on context management](010-7.-mode-effects-on-context-management.md) L416-L445 `dbd9912e49dd6facb9c538c9a0d4c2ab20cd32c37a6a35d01d79255940b8a3c9`
-- [011 - 8. OpenCode baseline](011-8.-opencode-baseline.md) L447-L458 `105eb94b3b98044627fca2cf656d75e159dad17f5b25a685b6383e2c3ba713cd`
-- [012 - 9. Puppet Master deltas](012-9.-puppet-master-deltas.md) L460-L500 `44fff9bfcb46483d436edbc49a49fe7b8299dfc6e35ce3624fb88e642d90a9ad`
-- [013 - 10. Acceptance criteria](013-10.-acceptance-criteria.md) L501-L581 `ddbf2f531ae4fc467c4b7d51b7ee43aa340b7958344581861b5fa25de5896894`
-- [014 - Retry, Blocking, and Safe-Point Clarification Addendum (2026-03-08)](014-retry-blocking-and-safe-point-clarification-addendum-2026-03-08.md) L582-L634 `ecd78863b65ef7fd1ff28be71afd276e01b9561d5c630095b992c81d162ce3e1`
-- [015 - Runtime Mode / Blocked Recovery Addendum (2026-03-09)](015-runtime-mode-blocked-recovery-addendum-2026-03-09.md) L635-L660 `916c0783eb82f834bbb2f59a8c6fda8884457ff1951770bf24ab9078a3e2bac1`
-- [016 - Runtime Mode / Recovery Canonical Alignment (2026-03-09)](016-runtime-mode-recovery-canonical-alignment-2026-03-09.md) L661-L669 `8af08e51fa8343c12e8368bc3c6e5f1dcec5e919a0ff9880ba772336e4bdcfa9`
-- [017 - Runtime Mode Interaction with Blocked Recovery Consolidation Addendum (2026-03-09)](017-runtime-mode-interaction-with-blocked-recovery-consolidation-add.md) L670-L689 `c5df38198ec0dbecb2c5162973145da451d80e98b55816c14744d71e6a1e26e6`
-- [018 - Headless Blocked Discovery and Mutation Classifier Alignment Addendum](018-headless-blocked-discovery-and-mutation-classifier-alignment-add.md) L690-L710 `778667afef5d9bec559d6def8b62778ebf182c568f92fd34f92b154289aaad1e`
-- [019 - Runtime identity and blocked-policy continuity](019-runtime-identity-and-blocked-policy-continuity.md) L711-L720 `9ab68dd3df0082b50212651e8d0406b3110a9b32329a983c5014306178b72c48`
-- [020 - Owner / Consumer Map](020-owner-consumer-map.md) L722-L726 `ba6e36cf6756144be49e3127e13d972716a033962b1d0c09c7eb914368e9d45e`
-- [021 - PlanUnits](021-planunits.md) L728-L1546 `41944f55fcbf22c657f851738cf658957ed1d98751086c6c76e04d18367d73ae`
-- [022 - Migration Coverage](022-migration-coverage.md) L1548-L1558 `06af96532cfe3b8e3876fbae892c18b57d22399c7cc57b3e998f895f804b419b`
-- [023 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](023-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L1560-L1640 `d3cb66d9d8d1088b4b8950066f1b22044fc3e4e7f3955d86ef5afa51b4b52a0f`
-- [024 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](024-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L1642-L1647 `d61aa93bbe9f5d22bdd3c12577cfc012ba0218053b8df5cc7d947b8fabf429d6`
-- [025 - Usage GUI Propagation Addendum - 2026-07-09](025-usage-gui-propagation-addendum-2026-07-09.md) L1649-L1709 `710d97d735613a882b086aa0a4257aa29f92b3477e81d473b3a9b26d11eea0d0`
-- [026 - `run.started` requested/effective owner projection](026-run.started-requested-effective-owner-projection.md) L1712-L1720 `40411d5b147dd79cdd24ca68b97879a543d1533bd04ddb8ad3dde8072e21a106`
-- [027 - BSD and sustainable-capacity policy addendum (2026-08-13)](027-bsd-and-sustainable-capacity-policy-addendum-2026-08-13.md) L1722-L1832 `ff494cb480a1ad053584c0d720846749b6c4147b9e1e0b6d74263503d56f9d05`
-- [028 - Fresh Context Versus Rotation Addendum (2026-09-05)](028-fresh-context-versus-rotation-addendum-2026-09-05.md) L1834-L1985 `51354bd460f471b963cbcb3aaff96eafd90e022f205105ab5fe9db4101c8fb49`
+- [001 - Preamble](001-preamble.md) L1-L1 `b7e9e8c6734589cfe1803be2dc2e12c9c70e7be00138a5a34b340f12577c08dd`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L9 `605c7671baf7b0a96ed1278e080acf8deb59e02d3ebb3fb6fcd7ade212523468`
+- [003 - 0. Scope and SSOT status](003-0.-scope-and-ssot-status.md) L11-L35 `3f702fd655305529639d6081f205d970af8d026dfe41d2f5f1a59ea2c3d651a6`
+- [004 - 1. Canonical mode definitions](004-1.-canonical-mode-definitions.md) L37-L78 `256c97355f94ec85fa6cfa407f135d505906f17ccd4ad1caddfe0bdde04469f2`
+- [005 - 2. CLI-bridged execution strategies](005-2.-cli-bridged-execution-strategies.md) L79-L119 `4f3cc37f28bbd1ab19d6b361601def0a2347d9bd9fe316587ebdd58647a79615`
+- [006 - 3. Deterministic strategy selection](006-3.-deterministic-strategy-selection.md) L121-L184 `f28a8f2386f2086631db0f8378e1cc256417e18b53039b2382c9a17e9583ab07`
+- [007 - 4. Budget defaults](007-4.-budget-defaults.md) L186-L233 `b5525102f696990330fffdb489192eba04f9184f981b1ad2c35f1ea7c56821d8`
+- [008 - 5. Kill conditions and enforcement](008-5.-kill-conditions-and-enforcement.md) L235-L372 `76c7d584ec9c9db57d9420ceffcc08962560780b4b8c7ae5e89a7725dc332e4e`
+- [009 - 6. Run outcome taxonomy](009-6.-run-outcome-taxonomy.md) L374-L416 `f91e4c3eb0a049d2d0f685d70635f7e5d54e28b453a3c2f5f6006dfd9301f4cf`
+- [010 - 7. Mode effects on context management](010-7.-mode-effects-on-context-management.md) L417-L446 `6740565ac59bec564951dd270bffecd0ee6d9e79af69577ed3247ec9cbb169e0`
+- [011 - 8. OpenCode baseline](011-8.-opencode-baseline.md) L448-L459 `990f9ca43b81f04ea4557e72bd22e774ec2dbeff014e61d2888bc752662c8358`
+- [012 - 9. Puppet Master deltas](012-9.-puppet-master-deltas.md) L461-L501 `a85b1db7fa3d3ca78577c78fcac66657ea0f24e96c51e092d0cffc93cabb5833`
+- [013 - 10. Acceptance criteria](013-10.-acceptance-criteria.md) L502-L582 `1d349eb570171babdd4f9aad1b263491461ca63ee263b27cf7630407fe5f1e5d`
+- [014 - Retry, Blocking, and Safe-Point Clarification Addendum (2026-03-08)](014-retry-blocking-and-safe-point-clarification-addendum-2026-03-08.md) L583-L635 `a85d29a82e6f2e88ed26280be9e26ee49ed0ad64004555fd8a158400252ef56e`
+- [015 - Runtime Mode / Blocked Recovery Addendum (2026-03-09)](015-runtime-mode-blocked-recovery-addendum-2026-03-09.md) L636-L661 `0e8722e9f3efe644c779786e54ae26ffe008303dda1fd19b2a317141c59d063b`
+- [016 - Runtime Mode / Recovery Canonical Alignment (2026-03-09)](016-runtime-mode-recovery-canonical-alignment-2026-03-09.md) L662-L670 `5ef8fc6aac8e52bb1a527c8664caada13b2a25d1387c89561dd33d723afd535f`
+- [017 - Runtime Mode Interaction with Blocked Recovery Consolidation Addendum (2026-03-09)](017-runtime-mode-interaction-with-blocked-recovery-consolidation-add.md) L671-L690 `41e26154a0ddabf0da55f6dc1bb787b60a359a042bd74a71e8113efa52394601`
+- [018 - Headless Blocked Discovery and Mutation Classifier Alignment Addendum](018-headless-blocked-discovery-and-mutation-classifier-alignment-add.md) L691-L711 `cf3b98bed7a0e968d0b9c53c8be22e60017e4ac7a1691076d8d51c7896ff5640`
+- [019 - Runtime identity and blocked-policy continuity](019-runtime-identity-and-blocked-policy-continuity.md) L712-L721 `c7d0d74c983bdeb8a7208081392974705b8b9f365b80514b7bb03ed98f665ee4`
+- [020 - Owner / Consumer Map](020-owner-consumer-map.md) L723-L727 `6e46e6559570f35447a82e3c24a6aa9bc611a71b3c238a25251c25a189c2ab29`
+- [021 - PlanUnits](021-planunits.md) L729-L1547 `fba3bae21a736a27a1e25fcf531720689406bea4ea69dddff66d96e4cfcdd775`
+- [022 - Migration Coverage](022-migration-coverage.md) L1549-L1559 `e3ac1fa8177bbf6a7bb9b849c1e08e487a6e06f15cb24a1328f0b6beba45ecbf`
+- [023 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](023-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L1561-L1641 `a3a2e719b24b1e4ef85c8d536103f13c83ba192bd7ad05279b9019aae4a3cdb0`
+- [024 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](024-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L1643-L1660 `c43042065b5af83a1730bae1ab8ecded25c535f72d541b2bd21d07f8f6c6e5a2`
+- [025 - Usage GUI Propagation Addendum - 2026-07-09](025-usage-gui-propagation-addendum-2026-07-09.md) L1662-L1722 `36fdef525173215e903cd0a37c2b31e0899e6ad78431cf1b54e6cc306b92d53d`
+- [026 - `run.started` requested/effective owner projection](026-run.started-requested-effective-owner-projection.md) L1725-L1733 `20467e1dd1fd296f668fe1cce8c650831a89258b38a9d4461307bd1a13ba0f24`
+- [027 - BSD and sustainable-capacity policy addendum (2026-08-13)](027-bsd-and-sustainable-capacity-policy-addendum-2026-08-13.md) L1735-L1845 `da3602074eb1e7abe3c51658dd86bac57eaf4c569b2f00738f59ce1300b667e1`
+- [028 - Fresh Context Versus Rotation Addendum (2026-09-05)](028-fresh-context-versus-rotation-addendum-2026-09-05.md) L1847-L1998 `aeab3fac39c46bf52e61838cc393164c7f08381f7099f1e6c283f0ed036bdf6c`

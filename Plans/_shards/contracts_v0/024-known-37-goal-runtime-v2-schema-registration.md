@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L8751-L22720
 
-Source SHA256: `287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05`
+Source SHA256: `fc15dbedd0882efa16a787c331c10e9c53f9d502efda410c69be3753fd101a4f`
 
 ---
 
@@ -1422,9 +1422,9 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   tool.invoked, tool.denied, runtime artifacts, receipts, usage, and evidence
-  share runtime attribution with node_id, attempt_id, lane_id, work_package_id,
-  feature_seam_id, execution_role, /runtime, /effective, effective_account_id,
-  operational_identity, artifact_id, and secondary usage_event_ref.
+  share runtime attribution with node_id, attempt_id, lane_id, package_id (the persisted key; a work_package_id input is import/export compatibility only and normalizes to package_id before persistence, as the Runtime attribution ownership split and CV-097/CV-098 state),
+  execution_role, /runtime, /effective, effective_account_id, operational_identity, artifact_id, and secondary usage_event_ref. tool.invoked and tool.denied persisted payloads carry no feature_seam_id;
+  seam context, where a record has one, is reached through attempt_id and the attempt record, never as a second tool-payload key.
 gui_related: false
 gui_classification_reason: This unit defines runtime attribution payloads and joins rather than UI presentation.
 split_recommended: true
@@ -1432,7 +1432,7 @@ depends_on: [CV-016, CV-029]
 unblocks: [CV-039, CV-060]
 acceptance_criteria:
   - tool.invoked and tool.denied are first-class runtime trace records when they affect execution or artifacts.
-  - Runtime artifacts, receipts, usage, and evidence share runtime attribution keys.
+  - Runtime artifacts, receipts, usage, and evidence share runtime attribution keys, and persisted tool.invoked and tool.denied payloads carry package_id, never work_package_id (normalized at import) or feature_seam_id.
   - usage_event_ref remains secondary drill-through evidence, not the sole evidence trail.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits

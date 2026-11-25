@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L12421-L12466
+Source lines: L12421-L12534
 
-Source SHA256: `c53e1f511323d2b029b93798ac3080a116f00947920912fe9c933393c4d2d22e`
+Source SHA256: `43bcb86aa71f75edd1ea840651067f66e0ce304e250fab5f5d8c2fe3003e86e6`
 
 ---
 
@@ -34,6 +34,74 @@ Repairs rows `sfk-0649b6a2c860f179ee699f58`, `sfk-e257db159bd84ee85f74371d`, and
 `invocation_kind` values are `shell_string`, `argv`, `powershell_script`, `pty_input`, and `tui_automation`.
 
 `ProviderToolTurnAdmissionGate` fields are `gate_id`, `tool_call_id`, `provider_id`, `model_id`, `allowed`, `denial_reason_code?`, `permission_snapshot_id?`, `capability_snapshot_id?`, and `created_at_utc`.
+
+#### `interpreter` type and the `bash` adapter binding (added 2026-11-25)
+
+`CommandInvocationContract.interpreter` is an object `{ interpreter_kind, executable_path, version? }`. `interpreter_kind` is the closed enum `bash`, `zsh`, `sh`, `fish`, `pwsh`, `powershell`, `cmd`, and `none`; `executable_path` is the absolute path the runtime resolved, never a bare name; `version` is an optional string. `none` is legal only with `invocation_kind = argv` (direct exec with no shell). A call whose interpreter cannot be resolved is refused with `spawn_failed` before dispatch.
+
+Every `bash` tool call (§3.5.1) produces exactly one `CommandInvocationContract` before dispatch, mapped field by field:
+
+| Contract field | Value for a `bash` call |
+|---|---|
+| `invocation_id` | New for every call, also when `shellId` reuses a session. |
+| `tool_call_id` | The `bash` tool call's id. |
+| `invocation_kind` | Always `shell_string`. `bash` never produces `argv`, `powershell_script`, `pty_input`, or `tui_automation`. |
+| `interpreter` | With `shellId`: the shell of the bound `terminal_session_id` (DL-181). Without it: the shell the runtime resolves for the frozen Project/worktree or Computer/working-root context (T-187) when it creates the binding. |
+| `shell_string` | `command`, byte for byte: no trimming, re-quoting or splitting. |
+| `argv`, `powershell_script`, `pty_input_ref` | Absent. |
+| `cwd` | The frozen working root (T-187) for a new binding; for a reused `shellId`, the session's working directory observed at dispatch. |
+| `env_policy_ref` | The environment policy of the shell binding. |
+| `permission_snapshot_id` | The snapshot the pre-dispatch Permissions and FileSafe evaluation used. |
+| `configured`, `allowed`, `injected`, `visible_to_model` | Copied from the `bash` entry of the `ActiveToolNamespaceReceipt` current at dispatch (below). |
+
+`mode`, `initial_wait`, `detach`, and `shellId` are execution controls of §3.5.1 and are not contract fields. A new binding runs `shell_string` as one argument to the interpreter (`-c` for `bash`, `zsh`, `sh`, and `fish`; `-NoProfile -Command` for `pwsh` and `powershell`; `/d /s /c` for `cmd`); a reused binding receives it as one complete command line under the DL-181 and SMPFS-182 write rules. `command` is never executed as `argv[0]`, and a non-string `command` is `validation_error`. `powershell_script` stays reserved for inspected PowerShell wrapper scripts (T-171) and `pty_input` for raw input to an interactive program; neither is produced by `bash`. Approval UI shows `shell_string` verbatim beside `interpreter_kind` and `executable_path`.
+
+#### `ActiveToolNamespaceReceipt` typed contract (added 2026-11-25)
+
+T-172's receipt is one immutable record per session namespace generation:
+
+| Field | Type | Rule |
+|---|---|---|
+| `receipt_id` | string | Opaque and unique. |
+| `session_id` | string | The session the namespace belongs to. |
+| `thread_id` | string | |
+| `run_id` | string, optional | Present for run-scoped sessions. |
+| `provider_id`, `model_id` | string | The route that receives the tool schemas. |
+| `namespace_generation` | integer ≥ 1 | Rises by one on every change to any entry; a change always writes a new receipt. |
+| `catalog_generation` | integer | The `CapabilityMaterializationReceipt.catalog_generation` it was built from (§1.0A). |
+| `policy_snapshot_id` | string | |
+| `entries[]` | array of `ToolNamespaceEntry` | One per tool namespace, ordered by the §1.0A schema order. |
+| `created_at_utc` | RFC 3339 UTC string | |
+| `schema_version` | string | `1.0.0`. |
+
+`ToolNamespaceEntry` fields: `namespace_id` (string; the canonical tool or family name, such as `bash`, `computer.screen`, or `mcp.<server>`), `capability_ref` (string; the `CapabilityStageRecord` capability), `configured`, `allowed`, `injected`, `visible_to_model`, `visible_to_ui` (all boolean), `startup_status` (closed enum `not_required`, `pending`, `ready`, `failed`, `timed_out`), `denial_reason_code?`, `schema_ref?` (`{ schema_id, schema_version, schema_sha256 }`, required when `visible_to_model` is true), and `evidence_ref?` (string).
+
+`configured` is true when the capability's `installed` and `project_enabled` stages are true; `allowed` when `policy_available` is also true; `injected` when its L2 schema was materialized into this provider request. `injected` requires `allowed`, `allowed` requires `configured`, `visible_to_model` requires `injected`, and `visible_to_ui` requires `configured`. `denial_reason_code` is required whenever any of the five booleans is false or `startup_status` is `failed` or `timed_out`; its values are the §1.0A omission codes (`not_installed`, `project_disabled`, `policy_denied`, `incompatible_runtime`, `unavailable`, `not_selected`, `budget_deferred`, `schema_unavailable`, `collision_suppressed`) plus `provider_not_receiving` and `startup_failed`.
+
+A tool may be dispatched only when its entry has all five booleans true and `startup_status` is `ready` or `not_required`. Any other entry denies the call with that entry's `denial_reason_code` before dispatch (T-172 criterion 2). Tool mentions, UI chips, and model-visible schemas read one receipt at one `namespace_generation` (T-172 criterion 3).
+
+Example:
+
+```json
+{
+  "receipt_id": "atnr_01",
+  "session_id": "sess_7",
+  "thread_id": "thr_3",
+  "provider_id": "provider_a",
+  "model_id": "model_a",
+  "namespace_generation": 4,
+  "catalog_generation": 12,
+  "policy_snapshot_id": "pol_88",
+  "entries": [
+    { "namespace_id": "bash", "capability_ref": "builtin:bash", "configured": true, "allowed": true, "injected": true, "visible_to_model": true, "visible_to_ui": true, "startup_status": "not_required", "schema_ref": { "schema_id": "pm.tool.bash", "schema_version": "1.0.0", "schema_sha256": "<64 hex>" } },
+    { "namespace_id": "computer.screen", "capability_ref": "builtin:computer.screen", "configured": true, "allowed": false, "injected": false, "visible_to_model": false, "visible_to_ui": true, "startup_status": "not_required", "denial_reason_code": "policy_denied" }
+  ],
+  "created_at_utc": "2026-11-25T15:00:00Z",
+  "schema_version": "1.0.0"
+}
+```
+
+Persistence of this receipt is not settled here: it needs a storage registration in `Plans/storage-plan.md` (a redb family or an admitted seglog event family), which this section does not create.
 
 ### Webcrawl Host Pattern Matcher Owner
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L1128-L1236
+Source lines: L1128-L1237
 
-Source SHA256: `aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26`
+Source SHA256: `4e290afe161c830a1ba77a293806ab97f24e67d6668528a1fa94c5530a1f6e87`
 
 ---
 
@@ -100,6 +100,7 @@ Platform-specific parsers handle output from each Provider:
 - **Cursor/Claude/Gemini:** JSON parser (stream-json NDJSON events)
 - **Codex:** JSONL parser (newline-delimited JSON events)
 - **Copilot:** Text parser (plain text output, regex-based signal extraction)
+- **Transport scope (2026-11-25, OSI-004 and OSI-093):** the three bullets above describe CLI-era output. Only the CliBridge providers (Cursor, Claude Code) parse CLI output (JSON / stream-json NDJSON). Codex, Copilot and Gemini are DirectApi: their SubagentOutput is parsed from the direct-provider response's final assistant content, so the Codex JSONL parser, the Copilot text parser, the `--json` / `--experimental-json` flags in the Clarify item above and the CodexOutputParser snippet (OSI-158) are historical context only, not implementation targets. Steps 1-5 below apply to every transport.
 
 When a platform-specific parser fails:
 1. **Log:** Record parse error in seglog (`parser.error` event) with the first 500 characters of raw output for diagnostics.

@@ -2,9 +2,9 @@
 
 Source: `Plans/WorktreeGitImprovement.md`
 
-Source lines: L924-L4912
+Source lines: L938-L4928
 
-Source SHA256: `ab3eeeeef09ddea12414c865b3d3b853617aa80fcac2a918c67408603f34a6e4`
+Source SHA256: `427537685ea94d57fca424de8a12cce845132918575bb37aee9cf833a3f49730`
 
 ---
 
@@ -2720,7 +2720,7 @@ plan_unit_id: W-050
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: "Conflict worktree persistence may be in-memory for the initial release, while longer-lived conflict state records use typed rows in the canonical redb family (SP-340) with no JSON state file (SP-339), without conflating conflict cleanup with normal worktree cleanup."
+canonical_text: "Conflict worktree persistence is durable from the initial release: each unresolved merge conflict is a typed worktree_conflict_state.v1:{project_id}:{worktree_id} row in the canonical redb family (SP-340) with no JSON state file (SP-339), cleared only on resolve or explicit discard; any in-memory HashSet<node_id> is a per-session projection of those rows and never the authority (the former in-memory-only initial release option is retired), and conflict cleanup is never conflated with normal worktree cleanup."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
 split_recommended: false
@@ -2735,6 +2735,8 @@ depends_on:
 - W-033
 unblocks: []
 acceptance_criteria:
+- "After a merge conflict on node N, restarting the app and re-running N does not remove or recreate N's worktree: the worktree_conflict_state.v1 row is read at startup or project open and reuse stays blocked until resolve or explicit discard deletes the row."
+- "Clearing the in-memory projection (new session) without deleting the worktree_conflict_state.v1 row leaves the conflict visible and reuse blocked; ordinary worktree cleanup never deletes a worktree whose row exists."
 - "W-050 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
 - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."

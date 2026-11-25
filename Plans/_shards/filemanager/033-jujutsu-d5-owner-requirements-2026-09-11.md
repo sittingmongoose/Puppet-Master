@@ -2,9 +2,9 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L5247-L5366
+Source lines: L5257-L5376
 
-Source SHA256: `d83938234095f4918c4c9bbd4a92ddf489b7c6f6c97cdddbc4756b16ea5ff0ae`
+Source SHA256: `5a619c6ddfd93b9399867c5a55288f98904bf219054aa01cd3f9514d2ceafa19`
 
 ---
 

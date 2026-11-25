@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L6616-L31269
+Source lines: L6617-L31275
 
-Source SHA256: `aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26`
+Source SHA256: `4e290afe161c830a1ba77a293806ab97f24e67d6668528a1fa94c5530a1f6e87`
 
 ---
 
@@ -4298,7 +4298,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Subagent invocation paths that build ExecutionRequest must propagate request.plan_mode from tier_config.plan_mode through TierConfig or IterationContext when enable_tier_subagents is active and subagent execution is not skipped.
+  Subagent invocation paths that build ExecutionRequest must propagate request.plan_mode from the execution unit's plan_mode (carried as tier_config.plan_mode through TierConfig or IterationContext in source lineage) when runtime admission under SubagentPolicy (`schema_id: pm.subagent_policy.v1`, OSI-425) admits subagent execution for that unit and subagent execution is not skipped. enable_tier_subagents is a compatibility import/export key that OSI-425 normalizes into SubagentPolicy; it is never read as the runtime gate.
 gui_related: false
 gui_classification_reason: This unit covers backend request propagation, not GUI behavior.
 split_recommended: false
@@ -4476,7 +4476,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  GuiConfig owns subagent configuration through a top-level subagent SubagentGuiConfig serialized as subagentConfig or equivalent, including enable_tier_subagents, tier_overrides, disabled_subagents, and required_subagents; v1 overrides are per tier type, required wins over disabled, and missing or empty override lists use auto-selection.
+  GuiConfig owns subagent configuration through a top-level subagent SubagentGuiConfig serialized as subagentConfig or equivalent, including enable_tier_subagents, tier_overrides, disabled_subagents, and required_subagents as compatibility import/export fields (OSI-425); runtime admission reads only the normalized SubagentPolicy. When those legacy fields are imported, v1 overrides are per tier type, required wins over disabled, and missing or empty override lists use auto-selection; these rules govern how the import normalizes into SubagentPolicy and are not a live per-tier runtime behavior.
 gui_related: false
 gui_classification_reason: This unit covers backend/config schema and override semantics, not GUI presentation.
 split_recommended: false
@@ -5190,7 +5190,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Structured subagent handoff validation needs platform-specific parser and hook reliability: JSON parsers for Cursor/Claude/Gemini, JSONL/NDJSON aggregation for Codex, regex/text extraction for Copilot, parser.error seglog records with raw-output excerpts, generic fallback extraction, parser_fallback_used metadata, retry behavior, raw output preservation, and malformed/missing-field/edge-case integration tests.
+  Structured subagent handoff validation needs transport-scoped parser and hook reliability under the OSI-004 ProviderTransport taxonomy: CliBridge providers (Cursor, Claude Code) use JSON parsers over their CLI structured output (stream-json NDJSON events); DirectApi providers (Codex, Copilot, Gemini) build SubagentOutput with serde_json from the direct-provider response's final assistant content and have no CLI output to parse; the ServerBridge provider (OpenCode) parses its server event stream. JSONL/NDJSON aggregation for Codex and regex/text extraction for Copilot (the text parser) describe CLI-era output and are historical context only, not implementation targets. Every transport keeps parser.error seglog records with raw-output excerpts, generic fallback extraction, parser_fallback_used metadata, retry behavior, raw output preservation, and malformed/missing-field/edge-case integration tests.
 gui_related: false
 gui_classification_reason: This unit covers parser and hook backend reliability, not GUI behavior.
 split_recommended: false
@@ -5538,7 +5538,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Interview execution must wire require_architecture_confirmation into InterviewOrchestratorConfig from gui_config.interview in app.rs and require explicit architecture/tech-stack confirmation through a phase gate, dedicated phase, or prompt line before phase completion when enabled.
+  Interview execution must wire require_architecture_confirmation into InterviewOrchestratorConfig from gui_config.interview in app.rs and, when enabled, require explicit architecture/tech-stack confirmation through a phase gate before phase completion. The phase gate is the one mechanism; a dedicated phase and a prompt line are rejected alternatives. Trigger: the phase-complete transition of the `architecture_technology` phase (chain-wizard-flexibility canonical phase registry) when its phase-plan depth is Full or Short. The gate asks one required shared question card (`QuestionItem`, options Confirm and Change, `allow_freeform` true) that summarizes the phase's architecture and tech-stack decisions. Completion: the phase completes only after the user answers Confirm, recorded as explicit confirmation in the phase's validation artifacts; Change keeps the phase open with the user's note as new phase input and asks again at the next phase-complete attempt. There is no timeout and no agent self-confirmation. When the setting is false, or the phase plan sets `architecture_technology` to Skip, the gate does not run.
 gui_related: true
 gui_classification_reason: This unit covers interview flow UX and confirmation behavior.
 split_recommended: false
@@ -10437,7 +10437,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  BeforeTier/AfterTier hooks, verification functions, and subagent output parsing must use safe handling so hooks never crash,
+  BeforeUnit/AfterUnit hooks (import-only legacy alias: BeforeTier/AfterTier hooks, normalized per Execution-Unit Hook
+  Naming), verification functions, and subagent output parsing must use safe handling so hooks never crash,
   verification returns structured errors, and parse failures produce partial SubagentOutput rather than crashing.
 gui_related: false
 gui_classification_reason: >-
@@ -10628,7 +10629,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Runtime handoff contract enforcement validates Task Report, Downstream Context, and Findings through AfterTier validation,
+  Runtime handoff contract enforcement validates Task Report, Downstream Context, and Findings through AfterUnit validation
+  (the AfterTier hook name is an import-only alias stored as hook_name_normalized = AfterUnit per Execution-Unit Hook Naming),
   blocks malformed responses, requests one retry with format instruction, and then proceeds with partial output complete-with-warnings
   source disposition if still malformed.
 gui_related: false
@@ -10909,8 +10911,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Lifecycle and quality features complement start/end verification: BeforeTier runs before verify_tier_start, AfterTier runs
-  after verify_tier_end, remediation extends the required reviewer subagent, cross-session continuity enhances Phase 1 context,
+  Lifecycle and quality features complement start/end verification: BeforeUnit runs before VerifyUnitStart, AfterUnit runs
+  after VerifyUnitEnd (BeforeTier hook, verify_tier_start, AfterTier hook and verify_tier_end are import-only aliases,
+  normalized per Execution-Unit Hook Naming), remediation extends the required reviewer subagent, cross-session continuity enhances Phase 1 context,
   and active tracking enhances logging/debugging.
 gui_related: false
 gui_classification_reason: >-
@@ -22464,7 +22467,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Pause gate evidence preserves checking .puppet-master/PAUSE.md before each loop iteration, logging the active pause gate,
-  returning a halted result, and waiting for resume.
+  returning a halted result, and waiting for resume. This per-dispatch check is the live pause-gate watcher; its path,
+  scope values, fail-closed parsing and resume rule are the Pause Gate Live Contract in the Closure Re-audit Repair
+  Addendum - 2026-11-25, and human-in-the-loop.md PAUSE.md Gate And Precedence owns the frontmatter fields and HITL order.
 gui_related: false
 gui_classification_reason: This unit covers backend pause detection, not GUI presentation.
 split_recommended: false

@@ -4,7 +4,7 @@ Source: `Plans/newtools.md`
 
 Source lines: L1308-L8598
 
-Source SHA256: `80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8`
+Source SHA256: `c6c1769ab799a3aa121280b5544f668ba7b65fc92936caaa06504b41e6ac9ee3`
 
 ---
 
@@ -6129,7 +6129,7 @@ plan_unit_id: N2-132
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: Debug, MCP, custom-plugin, networked-tool, /shell/debugger, and /tunnel/browser actions run through shared /trust/proxy/governance preflight. Every /custom/plugin/networked tool profile declares contacted hosts and /domains before dispatch; undeclared hosts, domains, proxy targets, or remote authorities return blocked_preflight. Governance denials preserve deny-code families, and restart-persistent host/trust decisions must be explicit /durable permission or trust records rather than inferred from transient debug runs.
+canonical_text: Debug, MCP, custom-plugin, networked-tool, /shell/debugger, and /tunnel/browser actions run through shared /trust/proxy/governance preflight. Every /custom/plugin/networked tool profile declares contacted hosts and /domains before dispatch; undeclared hosts, domains, proxy targets, or remote authorities return blocked_preflight. Governance denials preserve deny-code families, and restart-persistent host/trust decisions must be explicit /durable permission or trust records rather than inferred from transient debug runs. The eight deny codes and their fixed blocked_family, blocked_reason_code and retry mapping onto the Permissions_System.md blocked-state payload are stated in this document's Shared Trust Proxy Deny Codes section.
 gui_related: false
 gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
 split_recommended: false

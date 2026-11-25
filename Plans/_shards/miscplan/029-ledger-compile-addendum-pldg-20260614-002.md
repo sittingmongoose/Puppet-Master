@@ -2,9 +2,9 @@
 
 Source: `Plans/MiscPlan.md`
 
-Source lines: L6416-L6456
+Source lines: L6416-L6479
 
-Source SHA256: `075650d61f254d219224a6955894056175249145fa195c870d67edcca7226d33`
+Source SHA256: `8a15468dff609e8f2bd9811a901a8349ceb8fa5e53c98edc07a6030b51a5d4b8`
 
 ---
 
@@ -23,7 +23,9 @@ canonical_text: >-
   skill/package identity, injection timing, capability/permission boundary, environment/secret boundary,
   compatibility matrix, failure/fallback behavior, audit/evidence refs, override policy, and owner
   approval path. `list_skills_for_agent` may inject skills only after those fields validate for the
-  target runner.
+  target runner. Amended 2026-11-25: following Skills_System §4.5 and MS-134, that contract is the single
+  provider-agnostic SkillRunnerBinding typed under M-083, not a per-platform platform_specs file, and
+  list_skills_for_agent is its typed DRY helper.
 gui_related: false
 gui_classification_reason: Runner skill injection, capability, environment, and audit boundaries are backend/runtime contracts, not visual presentation.
 depends_on: [M-082, MGAC-092, PS-113]
@@ -49,3 +51,24 @@ negative_constraints:
   - Do not let skill injection bypass capability/permission, environment/secret, compatibility, fallback, audit/evidence, override, or owner approval boundaries.
 owner_hints: [Plans/MiscPlan.md, Plans/orchestrator-subagent-integration.md, Plans/Skills_System.md]
 ```
+
+**M-083 runner skill binding (2026-11-25).** `Plans/Skills_System.md` §4.5 is the authority for runtime skill delivery: every runner receives skills through the PM registry, bundling and the `skill` tool, and there is no per-provider native loading matrix. MS-134 retires `platform_specs` and `platform_specs.rs` as a data source. The "versioned `platform_specs` injection contract" above is therefore one provider-agnostic, versioned `SkillRunnerBinding`, built the same way for Cursor, Claude Code, OpenCode, Codex, GitHub Copilot and Gemini runners; `platform_specs` survives only as that contract's lineage name. Each M-083 field maps to one typed binding field:
+
+| M-083 field | `SkillRunnerBinding` field | Type |
+| --- | --- | --- |
+| platform_id | `runtime_platform_id` | string; the same id as Skills_System `skill_runtime_readiness.runtime_platform_id` |
+| runner_id/runtime_identity | `runner_id` | string |
+| skill/package identity | `entries[].skill_id`, `entries[].content_hash` | string; string (SHA-256 of the resolved `SKILL.md`) |
+| injection timing | `delivery_stage` | closed: `l0_catalog_slice`, `l2_selected_instructions`, `l3_resources_on_demand` (Skills_System §4.2A) |
+| capability/permission boundary | `permission_snapshot_id`, `entries[].permission_class` | string; closed `allow` or `ask` (`deny` entries are never listed) |
+| environment/secret boundary | `secret_policy` | constant `no_raw_secrets`: entries never carry resolved credentials (Skills_System §4.2A) |
+| compatibility matrix | `entries[].readiness_state` | closed: `ready`, `needs_setup`, `needs_permission`, `has_problems`, `warning` (Skills_System `skill_runtime_readiness`) |
+| failure/fallback behavior | `on_registry_unavailable` | constant `empty_slice_with_omission`: the runner starts with no Skill slice and the CapabilityMaterializationReceipt records the omission |
+| audit/evidence refs | `materialization_receipt_ref` | string; the request's CapabilityMaterializationReceipt |
+| override policy | `override_source` | closed: `none`, `run_override`, `persona_default_skill_refs` |
+| owner approval path | `approval_route` | constant `permissions_review`: an `ask` Skill pauses on the Permissions approval surface (Skills_System §4.3) |
+| (version) | `schema_version` | integer, `1` |
+
+Each `entries[]` item is the addendum's `skill_catalog_entry` with types: `skill_id` string, `display_name` string (Skills_System `skill_record.label`), `source` string (`skill_record.source_kind`: `pm_bundled`, `imported_disk`, `catalog` or `github`), `permission_class` (`allow` or `ask`), `enabled` boolean (always `true` in a binding), `owner_doc_ref` string (`Plans/Skills_System.md`), `schema_version` integer, plus `readiness_state` and `content_hash` above.
+
+`list_skills_for_agent(project_root: Option<path>, runtime_platform_id: string, permission_snapshot_id: string) -> Result<SkillRunnerBinding, SkillListError>` is the DRY helper of task 8.9.6. It is not a GUI command and not a command alias. `project_root = None` means No project: only app and global roots are read. It lists the Skills at capability stage `policy_available` or later for that runtime, with `validation_state = valid` and `permission_class` other than `deny`, ordered by `skill_id`, then content hash, in ascending UTF-8 byte order. Only entries whose `readiness_state` is `ready`, or `warning` when the Skill is explicitly selected, may advance to `l2_selected_instructions`. `SkillListError` is closed: `registry_unavailable` and `permission_snapshot_stale`. On `permission_snapshot_stale` the caller re-reads the permission snapshot and calls once more; a second stale result is handled as `registry_unavailable`, which applies `on_registry_unavailable`. A binding validates only when every field above is present with its type; skills are delivered to a runner only from a validated binding.
