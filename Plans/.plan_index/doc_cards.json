@@ -2160,7 +2160,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 16588,
+      "line_count": 16589,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 209,
       "plan_unit_ids": [
@@ -2479,7 +2479,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "cd38e3bf3c95153060244b47001d7d8c3c6a4abb5a3bf350d596c040c8d7e009",
+      "sha256": "c1cd3b7f5161b4eac984dd76a02ed51feeff70c589a8b7dc1b6776e03d24fe76",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 207,
@@ -17020,7 +17020,7 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 2422,
+      "line_count": 2442,
       "path": "Plans/Plan_To_Node_Compilation.md",
       "plan_unit_count": 28,
       "plan_unit_ids": [
@@ -17081,7 +17081,7 @@
         "weak_test_oracle",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "4b9ae79a7f64c9521efcae4554f6f97e9609527f12fd4d3112b056915b53d84b",
+      "sha256": "2450842ad501672ad23993192769412a62b52d867eef83bfb387dd0519377495",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 28
@@ -17354,7 +17354,7 @@
         "future Product Onboarding native controller",
         "future existing owner handlers; handler_unavailable until native evidence"
       ],
-      "line_count": 5163,
+      "line_count": 5168,
       "path": "Plans/Planning_Wizard.md",
       "plan_unit_count": 38,
       "plan_unit_ids": [
@@ -17427,7 +17427,7 @@
         "unbounded_review_loop_or_suppressed_finding",
         "wizard_lifecycle_owner_drift"
       ],
-      "sha256": "28200a205377d6a365b6e281cddf78f201994b443e38668a6aa7e0ba821e754c",
+      "sha256": "b6cb25c756abcb5d60c05c90e022f492b560a4a4581899b2a738c50b220d2db3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 37,
@@ -25268,7 +25268,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-25T13:29:15Z",
+  "generated_at_utc": "2026-11-25T13:51:34Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
