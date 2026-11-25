@@ -17020,7 +17020,7 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 2329,
+      "line_count": 2337,
       "path": "Plans/Plan_To_Node_Compilation.md",
       "plan_unit_count": 28,
       "plan_unit_ids": [
@@ -17081,7 +17081,7 @@
         "weak_test_oracle",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "1e9bc6391faac6bf5e6e32fe8cb7f30369dd714a8cd90632334d27c84ba2f94e",
+      "sha256": "b34dcbab26b862ba3dfc3ac3f9e143727bd006f14c52546d216b5a3e3c5c184d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 28
@@ -17354,7 +17354,7 @@
         "future Product Onboarding native controller",
         "future existing owner handlers; handler_unavailable until native evidence"
       ],
-      "line_count": 5134,
+      "line_count": 5135,
       "path": "Plans/Planning_Wizard.md",
       "plan_unit_count": 38,
       "plan_unit_ids": [
@@ -17427,7 +17427,7 @@
         "unbounded_review_loop_or_suppressed_finding",
         "wizard_lifecycle_owner_drift"
       ],
-      "sha256": "d8c7b3510ae4eaeccd8b1bcfa490de1273c32041c08ce8bf32e1994170ce522a",
+      "sha256": "546579246b2ce5eab74642dfe970b8764166154a6dbb85a4edbed61299841a12",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 37,
@@ -25268,7 +25268,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-25T06:08:20Z",
+  "generated_at_utc": "2026-11-25T06:29:13Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

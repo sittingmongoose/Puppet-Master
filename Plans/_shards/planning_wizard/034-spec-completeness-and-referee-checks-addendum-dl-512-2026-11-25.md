@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L4959-L5134
+Source lines: L4959-L5135
 
-Source SHA256: `d8c7b3510ae4eaeccd8b1bcfa490de1273c32041c08ce8bf32e1994170ce522a`
+Source SHA256: `546579246b2ce5eab74642dfe970b8764166154a6dbb85a4edbed61299841a12`
 
 ---
 
@@ -135,7 +135,8 @@ canonical_text: >-
   and how a per-member rule's member is read,
   and the planning check and PlanCompile use the same generators and stopping condition. Each risky contract has a budget the planning run sets,
   200 generated inputs or 10 minutes of machine time by default, whichever comes first; the required cases run first
-  and count against it, and rules not reached within it are listed as test gaps for PNC-038, never as named gaps. The referee, its cases, the generated inputs, the observed outcomes, the named gaps and the test gaps are planning
+  and count against it, and every required case left unrun at the limit, including the remaining cases of a rule the run had started, is
+  listed under its rule as a test gap for PNC-038, never as a named gap. The referee, its cases, the generated inputs, the observed outcomes, the named gaps and the test gaps are planning
   evidence. Plans/Plan_To_Node_Compilation.md#PNC-038 binds as WorkNode fixtures only the cases whose expected outcome
   the approved contract states; an observed outcome is never a fixture's expectation. The
   check runs with the models the planning run already uses plus code: it never requires an additional independent
@@ -153,7 +154,7 @@ acceptance_criteria:
   - "A named gap rests on code-established coverage of the rule by its catching rules, with the recorded inputs and codes; a search that ends on collisions without that coverage is a test gap; each member of a required list or other per-member constraint is its own rule with its own refusal; a refusal is credited to a rule only when the whole contract refuses the input because of that rule, by the companion's attribution."
   - "Every case checks its outcome and every owner-stated state and effect assertion through a declared observation surface, for either polarity."
   - "An assertion an if selects has a passing case on each route the contract distinguishes and, wherever the contract admits one, a contrasting accepted control that still breaks it on a route that does not select it."
-  - "The budget ends at whichever limit comes first, required cases run first, and rules not reached within it are listed as test gaps, never as named gaps."
+  - "The budget ends at whichever limit comes first, required cases run first, and every required case left unrun at the limit, including the rest of a rule whose cases were partly run (as when the budget ends between two required cases of one rule), is listed under its rule as a test gap, never as a named gap."
   - "Design findings follow PWIZ-028's bounded round; non-blocking leftovers are open questions and recorded gaps that do not hold the topic out of Ready, and a blocking leftover is a PWIZ-006 typed blocker."
   - "Referee cases cover schema rules and behavioural acceptance criteria only; other criteria keep their ATS-003 oracles."
   - "The check needs no additional independent model, no two-reviewer proof and no technical user question."
