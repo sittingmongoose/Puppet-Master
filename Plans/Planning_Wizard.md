@@ -5054,8 +5054,8 @@ canonical_text: >-
   least one illegal transition from each state; a write, a cut and a reopen; a stale writer after a fencing change;
   and a caller denied without permission. Where the contract has a schema, code also generates inputs that each break one rule, and the schema validator, not the referee, confirms which
   rules each breaks; only an input that breaks exactly one rule is credited as that rule's refusing case, and inputs
-  that break several rules stay admissible as named-gap evidence. Each refusing
-  case must be refused with its rule's code, and each passing case accepted with the expected resulting state. When the
+  that break several rules stay admissible as named-gap evidence. Each refusing case must be refused with its rule's code, and each passing case accepted, with its resulting state
+  where the contract states one or the referee computes one. When the
   referee and a rule disagree, the owner text decides: a referee that departs from the owner text is repaired, and owner
   text that lacks the check is a design finding. Design findings carry finding_level and repair_required and go through PWIZ-028's bounded round; a non-blocking one
   that remains afterwards is recorded as an open question and reaches PNC-038 as a recorded gap, a blocking one that
@@ -5065,8 +5065,9 @@ canonical_text: >-
   every mutation of its schema keyword if there are fewer, every one also broke another rule, and the listed catching rules refused each such input with their own codes; those inputs are recorded. Without
   that evidence the rule is a design finding or a test gap. Each risky contract has a budget the planning run sets,
   200 generated inputs or 10 minutes of machine time by default, whichever comes first; the required cases run first
-  and count against it, and rules not reached within it are listed as test gaps for PNC-038, never as named gaps. The referee, its cases, the generated inputs, the outcomes, the named gaps and the
-  test gaps are planning evidence that Plans/Plan_To_Node_Compilation.md#PNC-038 turns into WorkNode fixtures. The
+  and count against it, and rules not reached within it are listed as test gaps for PNC-038, never as named gaps. The referee, its cases, the generated inputs, the observed outcomes, the named gaps and the test gaps are planning
+  evidence. Plans/Plan_To_Node_Compilation.md#PNC-038 binds as WorkNode fixtures only the cases whose expected outcome
+  the approved contract states; an observed outcome is never a fixture's expectation. The
   check runs with the models the planning run already uses plus code: it never requires an additional independent
   model, a two-reviewer proof or a technical question to the user. A contract that is not risky gets PWIZ-110's
   completeness check and PNC-038's generated fixtures.
@@ -5078,7 +5079,7 @@ acceptance_criteria:
   - "Each risky contract is recorded with the property that made it risky; plain create, read, update and delete persistence, or plain authentication, alone does not make a contract risky."
   - "The check runs before a topic becomes Ready and reruns for contracts that final integration changes."
   - "Referee inputs are a prior state plus an operation or event, or a short sequence, and the cases cover every state-machine transition with an illegal transition from each state, a write-cut-reopen case, a stale-writer case and a denied-caller case wherever the matching property applies."
-  - "Refusal codes are the contract's declared failure codes, and the schema validator confirms that each generated input breaks exactly one rule."
+  - "Refusal codes are the contract's declared failure codes; the schema validator confirms which rules each generated input breaks, and only an input that breaks exactly one rule is credited as that rule's refusing case, while multi-rule inputs remain admissible as named-gap evidence."
   - "Each named gap carries at least five recorded single-rule break attempts (or every mutation of its schema keyword) showing that each also broke another rule, which refused it with its own code."
   - "The budget ends at whichever limit comes first, required cases run first, and rules not reached within it are listed as test gaps, never as named gaps."
   - "Design findings follow PWIZ-028's bounded round; non-blocking leftovers are open questions and recorded gaps that do not hold the topic out of Ready, and a blocking leftover is a PWIZ-006 typed blocker."

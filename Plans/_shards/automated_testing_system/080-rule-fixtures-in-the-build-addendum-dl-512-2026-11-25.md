@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L16494-L16564
+Source lines: L16494-L16566
 
-Source SHA256: `d211cd7e9cf2b8d42e17623317dabb2c8c4564548b6950882ce6dde57b2fe785`
+Source SHA256: `b20c041db9de96366722cd32c0a33f3c00b92dc7f393311ad29b8c837ec9d60a`
 
 ---
 
@@ -21,9 +21,11 @@ canonical_text: >-
   During a WorkNode build, the rule fixtures bound by Plans/Plan_To_Node_Compilation.md#PNC-038 run as required tests
   of the node's test strategy (ATS-003). The node completes only when every positive fixture is accepted (with its
   expected state where the fixture states one) and every negative fixture is refused with its declared failure code
-  (and its error path where the fixture records one), as its TestRunReceipt records (ATS-004). A fixture reaches the
-  built code through an adapter generated from the contract's interface binding (the callable surface each operation
-  or event maps to, Plans/Planning_Wizard.md#PWIZ-110). The adapter reaches a fixture's prior state by replaying the
+  (and its error path where the fixture records one), as its TestRunReceipt records (ATS-004). A payload fixture runs against the built validator of its data shape, or through a declared consuming operation
+  that exercises that validation. A behaviour fixture reaches the built code through an adapter generated from the
+  contract's interface binding (the callable surface each operation or event maps to,
+  Plans/Planning_Wizard.md#PWIZ-110). A fixture with no automatic route is a recorded test gap under ATS-004, never a
+  silent pass. The adapter reaches a fixture's prior state by replaying the
   owner's own operations or through a seeding port the contract declares, never by writing storage directly. An
   adapter the builder writes by hand is checked by an automated verification agent that is not the builder; no human
   review is required (ATS-004). A builder who finds that a fixture contradicts the source span it cites files a report
@@ -48,7 +50,7 @@ depends_on: [DL-512, PNC-038, PNC-015, EP-102, PWIZ-012, PWIZ-110, ATS-003, ATS-
 unblocks: []
 acceptance_criteria:
   - "A WorkNode with bound rule fixtures completes only when every positive fixture is accepted (with its expected state where stated) and every negative fixture is refused with its declared failure code (and error path where recorded), as its TestRunReceipt records."
-  - "Fixture adapters are generated from the contract's interface binding and reach prior states by replaying owner operations or a declared seeding port, never by direct storage writes; a hand-written adapter is checked by an automated verification agent that is not the builder."
+  - "Payload fixtures run against the built validator or a declared consuming operation; behaviour fixture adapters are generated from the contract's interface binding and reach prior states by replaying owner operations or a declared seeding port, never by direct storage writes; a hand-written adapter is checked by an automated verification agent that is not the builder; a fixture with no automatic route is a recorded test gap."
   - "A fixture that contradicts its cited span stays required until a successor plan corrects it; the builder never waives or edits a fixture."
   - "Each builder report entry cites its source span and the different build it would have caused, carries a PWIZ-012 gap class, goes to the planning repair route or the plan's approver, and is kept as a plan conversion regression case in the project's planning evidence."
   - "The user sees a builder report entry only as a plain policy or risk-acceptance decision, and no entry changes a plan without its owner's decision."

@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-11-25T02:48:30Z",
+  "generated_at_utc": "2026-11-25T02:59:38Z",
   "index_path": "Plans/_shards/plan_to_node_compilation/00-index.md",
-  "index_sha256": "c2ba3c76c505d7f0dc9d2eece543964bdd68a115de3d904e7434be57aff204b7",
+  "index_sha256": "ae65c9c5fc5a2b0756b376133070b32e65932be2e95d2c9e55c0906d6abc6933",
   "manifest_path": "Plans/_shards/plan_to_node_compilation/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/plan_to_node_compilation/001-preamble.md",
-      "sha256": "abb0ed7727c62fc1331a9c33187fff01a3ce106d14a091cb3ac13ddbaf8698b2",
+      "sha256": "4f05aa2a6a38d749c62a51b394f78a500c0ebae6dc126f43824b76c79d978fa2",
       "shard_id": "001",
       "source_line_end": 3,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/plan_to_node_compilation/002-0.-scope.md",
-      "sha256": "2abadb209f6d46b7d8fdb9d209f9d6ee37687d919bc1973575c93618ae5d4ddc",
+      "sha256": "7dd98d839ddd0b0bd083a948acef73d7057f192372f38ff695fb54d7d1f01596",
       "shard_id": "002",
       "source_line_end": 9,
       "source_line_start": 5,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Boundary",
       "path": "Plans/_shards/plan_to_node_compilation/003-1.-boundary.md",
-      "sha256": "95e15b4a88c2b077fdc66c816d044e51e028b10a827972f1f7beeb5238ff2b65",
+      "sha256": "3cf8ca161d6b190f2ba79ae2a8cedf4c960e6e1858d5e28680be97c284aa12cf",
       "shard_id": "003",
       "source_line_end": 21,
       "source_line_start": 11,
@@ -35,7 +35,7 @@
     {
       "heading": "2. PlanUnits",
       "path": "Plans/_shards/plan_to_node_compilation/004-2.-planunits.md",
-      "sha256": "025bc045ccb6165f938263827ee17e1367557846aa328335e903aec796380941",
+      "sha256": "7178f93b2c3afb6bccce0b761c2276f223f69efb7fdc0ac249185a6847c8b526",
       "shard_id": "004",
       "source_line_end": 142,
       "source_line_start": 23,
@@ -44,7 +44,7 @@
     {
       "heading": "FABLE Residual Plan-To-Node Contract Cleanup Addendum - 2026-07-07",
       "path": "Plans/_shards/plan_to_node_compilation/005-fable-residual-plan-to-node-contract-cleanup-addendum-2026-07-07.md",
-      "sha256": "21bd4f9417789c02285c6886375543627aa2553de71528501a02efc8b4587fc8",
+      "sha256": "8055e0ed80d38b19afa3b2a86104b7fff79a23f45f1fe11635dfc40495ec350a",
       "shard_id": "005",
       "source_line_end": 204,
       "source_line_start": 144,
@@ -53,7 +53,7 @@
     {
       "heading": "Implementation Readiness Gate Addendum - 2026-07-05",
       "path": "Plans/_shards/plan_to_node_compilation/006-implementation-readiness-gate-addendum-2026-07-05.md",
-      "sha256": "5254dd12b9c5f039acba0d4e7de6715a801f4a78ac883a28a0edaf54d8e440f5",
+      "sha256": "9a35656ed118589ab60c5f85aeeacd64c75ee3f42f0cf7bf600aaa83eb81ffa8",
       "shard_id": "006",
       "source_line_end": 510,
       "source_line_start": 206,
@@ -62,7 +62,7 @@
     {
       "heading": "4. Runtime Compiler Algorithm And Enablement",
       "path": "Plans/_shards/plan_to_node_compilation/007-4.-runtime-compiler-algorithm-and-enablement.md",
-      "sha256": "bbff46b1eff5fa85d4ea576c14981e267c631459b71dc81717cbae6d4bc2dd88",
+      "sha256": "6790f05bc9b7032ea5d780fb40ff348782ef5883dca49143f7274284712d0302",
       "shard_id": "007",
       "source_line_end": 611,
       "source_line_start": 512,
@@ -71,7 +71,7 @@
     {
       "heading": "5. Compilation Coverage",
       "path": "Plans/_shards/plan_to_node_compilation/008-5.-compilation-coverage.md",
-      "sha256": "d80ed01b74f63eff0813201d86a2c444962aac7e40077d37e971eeb3a6851844",
+      "sha256": "62d566866e3536280bae5c3908424a3690158544fddeb3764e7da25e9c7816c0",
       "shard_id": "008",
       "source_line_end": 632,
       "source_line_start": 613,
@@ -80,7 +80,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff",
       "path": "Plans/_shards/plan_to_node_compilation/009-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
-      "sha256": "fbdb87ba47a65bdc8b5158dd5a6def230b2948a50d3b564563dd6cbac015fa37",
+      "sha256": "9e9f33bad7aec590257bdbb47b62de5f03ba9473b86b7a524d6da8f7a4851773",
       "shard_id": "009",
       "source_line_end": 1053,
       "source_line_start": 634,
@@ -89,7 +89,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/plan_to_node_compilation/010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "3fc5dc56572485407135c00c1adfed836b53a6fd719d84b11130d196bf354259",
+      "sha256": "c550867a8a814d3cde49fd4e1b970bcd2e44d961bc36972247ac46fbcc27d0c7",
       "shard_id": "010",
       "source_line_end": 1451,
       "source_line_start": 1056,
@@ -98,7 +98,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260622-001-fff",
       "path": "Plans/_shards/plan_to_node_compilation/011-ledger-compile-addendum-pldg-20260622-001-fff.md",
-      "sha256": "681cd7e1f01da6114d91c0b8568353764f1d6d72f9e2844921e100c8dc8ed607",
+      "sha256": "ebdd199dee77c74d335d10d82c039805ae4686bb88037dce35cc95be557cba75",
       "shard_id": "011",
       "source_line_end": 1496,
       "source_line_start": 1453,
@@ -107,7 +107,7 @@
     {
       "heading": "Compile receipt timing and original dispatch evidence - 2026-09-13",
       "path": "Plans/_shards/plan_to_node_compilation/012-compile-receipt-timing-and-original-dispatch-evidence-2026-09-13.md",
-      "sha256": "405476485bee8a5b0678952c5acd2dcaf511fe77dded6730700d755c481be558",
+      "sha256": "1b804743c6de853d49fbc1bdbd8c0a422ce1f46ef99b8c90a755dad582b86e8b",
       "shard_id": "012",
       "source_line_end": 1682,
       "source_line_start": 1499,
@@ -116,7 +116,7 @@
     {
       "heading": "PERF-001 Named Plan join consumer (2026-09-27)",
       "path": "Plans/_shards/plan_to_node_compilation/013-perf-001-named-plan-join-consumer-2026-09-27.md",
-      "sha256": "d28dd7262604ce355c56cc2fd79f1ef13b556ecc7794a466d3c24b8a61461fd8",
+      "sha256": "27fea5525c21d0e4d22140e6b0e79afd56368598f2e1a8234aca3895490f859e",
       "shard_id": "013",
       "source_line_end": 1758,
       "source_line_start": 1684,
@@ -125,7 +125,7 @@
     {
       "heading": "Command payload definitions (DL-333, 2026-11-05)",
       "path": "Plans/_shards/plan_to_node_compilation/014-command-payload-definitions-dl-333-2026-11-05.md",
-      "sha256": "d812a9618e5d46fdbe26bf0a39ee61cebd519037437e74c3311df3d9e55be6fc",
+      "sha256": "89d94dbb5f18601a318987dd12467f64e3928daade1a51d4f007fc7e6727730d",
       "shard_id": "014",
       "source_line_end": 2167,
       "source_line_start": 1760,
@@ -134,16 +134,16 @@
     {
       "heading": "Rule fixtures at WorkNode request creation (DL-512, 2026-11-25)",
       "path": "Plans/_shards/plan_to_node_compilation/015-rule-fixtures-at-worknode-request-creation-dl-512-2026-11-25.md",
-      "sha256": "5184e99930e099d076182322b5845243fada5bc835e6ca12c6c69244cb004a45",
+      "sha256": "ab3ad4c9c30c86a78070556814717648f9ca8c80ebd5d9bbcf975457309bca0f",
       "shard_id": "015",
-      "source_line_end": 2249,
+      "source_line_end": 2257,
       "source_line_start": 2169,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 2249,
+    "line_count": 2257,
     "path": "Plans/Plan_To_Node_Compilation.md",
-    "sha256": "dd175f3ee47ef5f41366f39c68c6cb57efc9c0cdaeb327700fea6bd127b620b3"
+    "sha256": "076ed500d71b88e7b01f7af37323b692b5901faa29c0a5346d26da56b4fe077b"
   }
 }
