@@ -9484,6 +9484,7 @@
     "F3-595",
     "DR-056",
     "GRS-3100",
+    "DL-2603",
     "ACD-126",
     "WM-090",
     "ATS-054",
@@ -54175,6 +54176,26 @@
       "edge_type": "depends_on",
       "from": "DL-2602",
       "to": "SMPFS-328"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2603",
+      "to": "DL-2602"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2603",
+      "to": "F3-408"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2603",
+      "to": "F3-409"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2603",
+      "to": "MS-120"
     },
     {
       "edge_type": "depends_on",
@@ -164997,7 +165018,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-25T14:30:41Z",
+  "generated_at_utc": "2026-11-25T14:50:31Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -218578,6 +218599,23 @@
         "heading_level": 3,
         "heading_line": 63294,
         "line": 63296,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "closure_reaudit_fix79_owner_answers",
+      "gui_related": true,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2603",
+      "reasoning_tier": "medium",
+      "risk_class": "owner_choice_drift",
+      "source_location": {
+        "heading": "DL-2603 - C-FIX79: how DL-2602 answer 9 (Free Models top-10) is applied",
+        "heading_level": 3,
+        "heading_line": 63389,
+        "line": 63391,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -328631,10 +328669,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27848,
+    "depends_on_edge_count": 27852,
     "downstream_blocked_node_count": 0,
-    "edge_count": 31073,
-    "node_count": 9625,
+    "edge_count": 31077,
+    "node_count": 9626,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0

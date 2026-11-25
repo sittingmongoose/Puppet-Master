@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27848,
+    "depends_on_edge_count": 27852,
     "downstream_blocked_node_count": 0,
-    "edge_count": 31073,
-    "node_count": 9625,
+    "edge_count": 31077,
+    "node_count": 9626,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-25T14:30:42Z",
+  "generated_at_utc": "2026-11-25T14:50:32Z",
   "gui_related_units": {
-    "count": 3943,
+    "count": 3944,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -12619,6 +12619,17 @@
           "heading_level": 3,
           "heading_line": 63294,
           "line": 63296,
+          "path": "Plans/Decision_Log.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Decision_Log.md",
+        "plan_unit_id": "DL-2603",
+        "source_location": {
+          "heading": "DL-2603 - C-FIX79: how DL-2602 answer 9 (Free Models top-10) is applied",
+          "heading_level": 3,
+          "heading_line": 63389,
+          "line": 63391,
           "path": "Plans/Decision_Log.md"
         }
       },
@@ -43397,12 +43408,12 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 9625,
+  "plan_unit_count": 9626,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
       "high": 4939,
       "low": 10,
-      "medium": 36,
+      "medium": 37,
       "standard": 4640
     },
     "risk_class_counts": {
@@ -45732,7 +45743,7 @@
       "owner_authority_drift": 1,
       "owner_boundary": 12,
       "owner_boundary_drift": 7,
-      "owner_choice_drift": 1,
+      "owner_choice_drift": 2,
       "owner_consumer_boundary": 1,
       "owner_consumer_map_loss": 1,
       "owner_contract_bridge": 1,
@@ -47667,7 +47678,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 9345,
+      "accepted": 9346,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -47701,7 +47712,7 @@
       "contract": 203,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 910,
+      "decision": 911,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
