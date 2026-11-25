@@ -7195,7 +7195,7 @@
         "scripts/pm_wiring_inventory.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 63360,
+      "line_count": 63361,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 1003,
       "plan_unit_ids": [
@@ -8406,7 +8406,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "4dc499a22d147cb16fa1eb4f92f62e8336e6aec5e8faf4c1d655b2df2d3a38bf",
+      "sha256": "2b807e3e2155fb06583ebb4cd5d49acb5606d793604dca2fd1ecc51d5d2725af",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 1003
@@ -17020,7 +17020,7 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 2356,
+      "line_count": 2361,
       "path": "Plans/Plan_To_Node_Compilation.md",
       "plan_unit_count": 28,
       "plan_unit_ids": [
@@ -17081,7 +17081,7 @@
         "weak_test_oracle",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "829d541777267c3293bf41d7147007b7b82d848ed06d8c0aa747844b6b736240",
+      "sha256": "d54ed19c64bb40109aaff4d9e439f02524234114baef3472318cee7d35667513",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 28
@@ -17354,7 +17354,7 @@
         "future Product Onboarding native controller",
         "future existing owner handlers; handler_unavailable until native evidence"
       ],
-      "line_count": 5140,
+      "line_count": 5142,
       "path": "Plans/Planning_Wizard.md",
       "plan_unit_count": 38,
       "plan_unit_ids": [
@@ -17427,7 +17427,7 @@
         "unbounded_review_loop_or_suppressed_finding",
         "wizard_lifecycle_owner_drift"
       ],
-      "sha256": "9d1414b3d5df3e6c76bd5458b7e6014ec5b071db3bcd4bd800b18f7264042401",
+      "sha256": "0c747f2b205a6090fd8b1a0cf42440cf1f4a91041828c96139e9f2f15292a4f2",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 37,
@@ -25268,7 +25268,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-25T07:18:59Z",
+  "generated_at_utc": "2026-11-25T07:27:53Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

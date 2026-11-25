@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L63360
+Source lines: L28747-L63361
 
-Source SHA256: `4dc499a22d147cb16fa1eb4f92f62e8336e6aec5e8faf4c1d655b2df2d3a38bf`
+Source SHA256: `2b807e3e2155fb06583ebb4cd5d49acb5606d793604dca2fd1ecc51d5d2725af`
 
 ---
 
@@ -3911,7 +3911,8 @@ canonical_text: >-
   reaches the builder as a test, with no extra questions to the user and no two-reviewer proofs. It places the checks
   in three owners. Plans/Planning_Wizard.md#PWIZ-110 runs a completeness check over a topic's contracts before it is
   Ready and over every contract at final integration, inside PWIZ-028's bounded acceptance. It adds a sixth kind of finding to the five
-  the card named (the same identifier declared differently, or two statements that contradict), because stream C's
+  the card named (the same identifier declared with incompatible types or enumeration members for overlapping cases, or two
+  statements that contradict), because stream C's
   open findings include such contradictions. Plans/Planning_Wizard.md#PWIZ-111 gives every risky contract a referee,
   a small owner model built from the owner's behaviour text that takes a prior state and an operation or a short
   sequence, and has code try to break each rule within a budget; rules no single input can isolate are named gaps backed by recorded inputs and a coverage condition that code
