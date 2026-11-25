@@ -4,7 +4,7 @@ Source: `Plans/Planning_Wizard.md`
 
 Source lines: L4959-L5140
 
-Source SHA256: `4286e98fec63679f12d1e93420da3ecd91a4ea76b2ac212c1af267482d2b3cdb`
+Source SHA256: `9d1414b3d5df3e6c76bd5458b7e6014ec5b071db3bcd4bd800b18f7264042401`
 
 ---
 
@@ -31,7 +31,7 @@ canonical_text: >-
   or artifact that does not resolve, including an operation or event without an interface binding (the callable
   surface it maps to: a route, command, function or storage port, and the observation surfaces through which its
   state and effects are read, written by the planning agent), or without an observation surface for a state or
-  effect assertion its owner text states; and the same identifier declared with different types or enumeration members, or
+  effect assertion its owner text states; and the same identifier declared with incompatible types or enumeration members for overlapping cases, or
   two statements that contradict each other. Code finds, without a model call, what structured declarations show:
   fields without types in tables and schemas, unresolved pointers, and one identifier declared with incompatible types
   or enumeration members for overlapping cases, where one identifier is one named contract, type, enumeration, event, command or state, or one
@@ -39,7 +39,7 @@ canonical_text: >-
   pointer; same-named fields of distinct contracts are not a code-found finding, and the Auditor judges them as possible
   drift. Declared unions, mutually exclusive routes or conditional branches, and versioned definitions are judged within
   their own scope, a selector predicate is read as a selector, and where code cannot establish that two declarations
-  apply to overlapping cases the pair goes to the Auditor instead of failing the check. These code-found findings are part of PWIZ-028's deterministic checks and must pass; a code-found finding passes as deferred only when its declaration carries an explicit gap marker (provenance gap with a
+  apply to overlapping cases, or that they are incompatible, the pair goes to the Auditor instead of failing the check. These code-found findings are part of PWIZ-028's deterministic checks and must pass; a code-found finding passes as deferred only when its declaration carries an explicit gap marker (provenance gap with a
   gap_note), and it then reaches PNC-038 as a recorded gap. A gap marker documents the deferral for the completeness
   check only and carries no approval authority: PWIZ-012's zero-incomplete gate still governs approval of any required
   detail left unresolved. The

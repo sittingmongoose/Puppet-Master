@@ -17020,7 +17020,7 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 2346,
+      "line_count": 2356,
       "path": "Plans/Plan_To_Node_Compilation.md",
       "plan_unit_count": 28,
       "plan_unit_ids": [
@@ -17081,7 +17081,7 @@
         "weak_test_oracle",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "9c6d64de52ba02b9c8e1f68555a1a66011ffbcd0a0e1c4c3e7a5cb974c4e96ef",
+      "sha256": "829d541777267c3293bf41d7147007b7b82d848ed06d8c0aa747844b6b736240",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 28
@@ -17427,7 +17427,7 @@
         "unbounded_review_loop_or_suppressed_finding",
         "wizard_lifecycle_owner_drift"
       ],
-      "sha256": "4286e98fec63679f12d1e93420da3ecd91a4ea76b2ac212c1af267482d2b3cdb",
+      "sha256": "9d1414b3d5df3e6c76bd5458b7e6014ec5b071db3bcd4bd800b18f7264042401",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 37,
@@ -25268,7 +25268,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-25T07:08:08Z",
+  "generated_at_utc": "2026-11-25T07:18:59Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
