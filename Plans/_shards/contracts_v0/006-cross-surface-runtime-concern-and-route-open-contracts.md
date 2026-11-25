@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L370-L895
 
-Source SHA256: `fc15dbedd0882efa16a787c331c10e9c53f9d502efda410c69be3753fd101a4f`
+Source SHA256: `681bb48a3cf380028f0ac5cbea76a97375e55be3084d6f94b2d6b5e0b77a205d`
 
 ---
 
@@ -501,11 +501,11 @@ Runtime identity, handoff, and stewardship records preserve their concrete keys.
 | `owner_kind` / `owner_ref` | Current owner surface; distinct from creator and resolver. |
 | `created_by_kind` / `created_by_ref` | Actor or system that created the concern. |
 | `status` | Closed enum `active | acknowledged | resolved | dismissed`. |
-| `severity` | Impact severity, independent from `blocking_effect`. |
-| `category` | Stable concern category for dedupe and routing. |
+| `severity` | Impact severity, independent from `blocking_effect`. Closed enum `info | warning | error | critical`. |
+| `category` | Stable concern category for dedupe and routing. Closed enum `coverage_blocker | projection_trust | risk | weak_integration`, stored as `ConcernRecord.concern_category` (C-FIX79 decision, 2026-11-24, recorded in Decision_Log; Orchestrator_Page OP-004 stays the semantic owner of the concern family). |
 | `evidence_refs[]` / `source_refs[]` | Evidence and source-lineage refs supporting the concern. |
 | `lineage_refs[]` | Reopen, split, merge, supersession, or graph-patch lineage refs. |
-| `visibility_level` / `attention_level` / `chatworthy` | Projection controls for user attention without changing lifecycle state. |
+| `visibility_level` / `attention_level` / `chatworthy` | Projection controls for user attention without changing lifecycle state. `visibility_level` is the closed enum `user_visible | project | restricted`; `attention_level` is the closed enum `info | warning | needs_action`; `chatworthy` is a boolean (C-FIX79 decision, 2026-11-24). |
 | `blocking_effect?` | Runtime/blocking impact, explicitly separate from severity. |
 | `resolution_kind?` | Closed enum `fixed | accepted_risk | superseded | merged | split | invalidated | obsoleted_by_patch | obsoleted_by_recovery`. |
 | `resolved_by_kind?` / `resolved_by_ref?` | Resolver identity when status is `resolved` or `dismissed`. |

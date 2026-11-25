@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L224-L303
 
-Source SHA256: `fc15dbedd0882efa16a787c331c10e9c53f9d502efda410c69be3753fd101a4f`
+Source SHA256: `681bb48a3cf380028f0ac5cbea76a97375e55be3084d6f94b2d6b5e0b77a205d`
 
 ---
 
@@ -28,7 +28,7 @@ Shared governance/runtime records carry `record_id`, `record_kind`, `schema_vers
 
 ### Concern record family definition
 
-`ConcernRecord` is the cross-surface record for user-visible or governance-visible concerns. Required fields are `concern_id`, `schema_version`, `concern_category`, `severity`, `visibility_level`, `attention_level`, `status`, `owner_ref`, `creator_ref`, `subject_ref`, `source_event_refs[]`, `summary`, `created_at`, and `updated_at`. Optional fields are `blocking_effect`, `resolution_kind`, `accepted_risk`, `resolver_ref`, `resolved_at`, `linked_record_refs[]`, `suggested_action_ids[]`, and `evidence_refs[]`.
+`ConcernRecord` is the cross-surface record for user-visible or governance-visible concerns. Required fields are `concern_id`, `schema_version`, `concern_category`, `severity`, `visibility_level`, `attention_level`, `status`, `owner_ref`, `creator_ref`, `subject_ref`, `source_event_refs[]`, `summary`, `created_at`, and `updated_at`. Optional fields are `blocking_effect`, `resolution_kind`, `accepted_risk`, `resolver_ref`, `resolved_at`, `linked_record_refs[]`, `suggested_action_ids[]`, and `evidence_refs[]`. Closed value sets (C-FIX79 decision, 2026-11-24): `concern_category` is `coverage_blocker | projection_trust | risk | weak_integration`; `severity` is `info | warning | error | critical`; `visibility_level` is `user_visible | project | restricted`; `attention_level` is `info | warning | needs_action`. `Plans/concern_created_contracts/concern_record.schema.json` and `concern_created_operation.schema.json` carry these enums.
 
 ### Concern lifecycle and resolution kinds
 
@@ -86,5 +86,5 @@ Updates with the same `subject_ref`, `concern_category`, and `owner_ref` amend t
 The minimum serialized shape is:
 
 ```json
-{"concern_id":"concern_01","schema_version":"1.0.0","concern_category":"coverage_blocker","severity":"high","visibility_level":"user_visible","attention_level":"needs_action","status":"active","owner_ref":"Plans/Contracts_V0.md","creator_ref":"validator:pm-audit-closure","subject_ref":"Plans/Contracts_V0.md::owner-section","source_event_refs":[],"summary":"Owner section lacks typed fields.","created_at":"2026-07-07T00:00:00Z","updated_at":"2026-07-07T00:00:00Z","evidence_refs":[]}
+{"concern_id":"concern_01","schema_version":"1.0.0","concern_category":"coverage_blocker","severity":"error","visibility_level":"user_visible","attention_level":"needs_action","status":"active","owner_ref":"Plans/Contracts_V0.md","creator_ref":"validator:pm-audit-closure","subject_ref":"Plans/Contracts_V0.md::owner-section","source_event_refs":[],"summary":"Owner section lacks typed fields.","created_at":"2026-07-07T00:00:00Z","updated_at":"2026-07-07T00:00:00Z","evidence_refs":[]}
 ```

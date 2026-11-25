@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L28901-L29091
+Source lines: L28923-L29113
 
-Source SHA256: `d85ca566a9a1c9a0c4bd744fab3ac1b0faffa83477bcb1561a3a0d7d41eedd89`
+Source SHA256: `8bf4b6345c10e4c1da9d13a53b473feeac58abcfb85cd80f35db86a176ebd116`
 
 ---
 
@@ -79,7 +79,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The model settings GUI exposes a manual all-provider model refresh button near model settings and passive Free Models update timestamps. Successful validated Auto Apply updates create no notification/inbox item and normal settings show only `Last checked` and `Last updated`, with recent-change details behind details or Advanced/Support. Failed or quarantined Free Models updates keep current known-good active and show `Free Models update needs attention` with `Retry check` and `View details`. Routine automatic offline/launch failures remain passive as `Could not check` unless routing availability is affected.
+  The model settings GUI exposes a manual all-provider model refresh button near model settings and passive Free Models update timestamps. Successful validated Auto Apply updates create no notification/inbox item and normal settings show only `Last checked` and `Last updated`, with recent-change details behind details or Advanced/Support. Failed or quarantined Free Models updates keep current known-good active and show `Free Models update needs attention` with `Retry check` and `View details`. Routine automatic offline/launch failures remain passive as `Could not check` unless routing availability is affected. Bound 2026-11-24 (DL-2602): `Refresh Models` and `Retry check` both dispatch `cmd.model.refresh`; `Retry check` sends `refresh_reason = free_models_update_retry` and no `provider_id` (the Free Models grouping is not a provider id, MS-118), and its result and `model.catalog_refreshed` update `Last checked` and `Last updated`. `View details` is a no-persist disclosure that opens the failed or quarantined update's existing activation, quarantine and rollback records (Models_System MS-119); it dispatches no command and writes nothing.
 gui_related: true
 gui_classification_reason: Owns visible model refresh button, update status, timestamps, and attention-state wording.
 depends_on: []
@@ -143,7 +143,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Free Models setup and top-10 screens default to global configuration to keep the GUI cleaner, while making clear that section/surface/role settings override the global top-10. Onboarding/doctor sequencing should set up paid providers first, then show Free Models and let the user configure the top-10. Free Models rows use plain setup actions and friendly unavailable labels, with expanded details for underlying provider/account, current skip reason, cooldown/Retry now state, source/ref, and return context.
+  Free Models setup and top-10 screens default to global configuration to keep the GUI cleaner, while making clear that section/surface/role settings override the global top-10. Onboarding/doctor sequencing should set up paid providers first, then show Free Models and let the user configure the top-10. Free Models rows use plain setup actions and friendly unavailable labels, with expanded details for underlying provider/account, current skip reason, cooldown/Retry now state, source/ref, and return context. Bound 2026-11-24 (DL-2602): the top-10 is not a second list. It is the model defaults list (`ai.models.default-model` with its project and Everywhere layers, `model_defaults.source_order` `project_list` then `everywhere_factory_list` in `Plans/settings_inventory.json`), shown capped and labelled top 10 on the Free Models screens, and the top-10 editor saves through the ordinary Settings transaction (`cmd.settings.transaction.preview` / `cmd.settings.transaction.apply`) on that setting. The section, surface and role settings that override it are the other `model_defaults.list_setting_ids` lists.
 gui_related: true
 gui_classification_reason: Owns top-10 setup, onboarding placement, override disclosure, setup labels, and visible availability states.
 depends_on: []

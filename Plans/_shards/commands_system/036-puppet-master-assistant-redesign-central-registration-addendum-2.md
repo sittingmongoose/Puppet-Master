@@ -4,7 +4,7 @@ Source: `Plans/Commands_System.md`
 
 Source lines: L6397-L6641
 
-Source SHA256: `915cb5543b56dad9e91ab4d5259b695a6116a4ad46095bcd164a096f43140d9d`
+Source SHA256: `36a25e001dd97fff1560bf041b2c8b5ca5255daae18d45736ae1967dab3bf3c9`
 
 ---
 
@@ -102,7 +102,7 @@ This addendum records the central command-contract registration for the approved
 | `cmd.browser.component.add_to_composer` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::component_add_to_composer` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserComponentComposerRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/ComposerBufferResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
 | `cmd.browser.component.insert_at_cursor` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::component_insert_at_cursor` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserComponentComposerRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/ComposerBufferResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
 | `cmd.browser.component.mode.set_default` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::component_mode_set_default` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserComponentModeRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/SettingsTransactionResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
-| `cmd.browser.devtools.open` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::devtools_open` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserDevToolsOpenRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.browser.devtools.open` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::devtools_open` | `Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenRequest` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenResultV1` (navigation wrapper; the typed route result; C-FIX79 decision 2026-11-24) | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
 
 The eleven contract schema documents named above are owner-authored artifacts that must exist and validate before any row leaves `handler_unavailable`. Naming them here does not create them and does not admit a storage key or an EventRecord.
 

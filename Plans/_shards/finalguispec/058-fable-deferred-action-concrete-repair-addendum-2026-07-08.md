@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29695-L29770
+Source lines: L29717-L29793
 
-Source SHA256: `d85ca566a9a1c9a0c4bd744fab3ac1b0faffa83477bcb1561a3a0d7d41eedd89`
+Source SHA256: `8bf4b6345c10e4c1da9d13a53b473feeac58abcfb85cd80f35db86a176ebd116`
 
 ---
 
@@ -51,6 +51,7 @@ Repairs rows `sfk-66fc2872ed5f759cc6aaa0f5`, `sfk-832d3cce203e9e0009e0b90b`, and
 - `Settings > Terminal` is owned by the terminal settings subsection; `Agent Config Skills` is owned by Agent Config and Skills owner docs.
 - The duplicate promoted-widget `## 15` heading is superseded by the named promoted-widget addendum anchor. Any "Section 15 terminal-core architecture" reference resolves to the terminal-core screen/buffer section, not the promoted-widget catalog.
 - New citations must use explicit heading names instead of bare `§7.4` or `§15` when more than one migration-era alias exists.
+- Declared aliases (2026-11-24, DL-2602): `## 15. Persistence` and `## 15. Promoted widget catalog (web tools, planning, question, operation cards)` share the number 15, and `#### 7.4.2 Indexing settings subsection` and `#### 7.4.2 Agent Config Skills tab` share 7.4.2. All four headings stay as they are; citations use the full heading name, and renumbering waits for a scheduled structural cleanup (F3-389).
 
 ### Slint Host File Inventory
 

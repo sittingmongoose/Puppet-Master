@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L27079-L27203
+Source lines: L27094-L27225
 
-Source SHA256: `d85ca566a9a1c9a0c4bd744fab3ac1b0faffa83477bcb1561a3a0d7d41eedd89`
+Source SHA256: `8bf4b6345c10e4c1da9d13a53b473feeac58abcfb85cd80f35db86a176ebd116`
 
 ---
 
@@ -108,6 +108,12 @@ canonical_text: >-
   Section 15.3 Tantivy Indices reference; promoted-widget catalog material must use a non-conflicting addendum anchor or an
   explicitly named promoted-widget section. Terminal Settings Ownership and Agent Config Skills are nested under Settings and
   inspectors rather than remaining competing Section 7.4 headings.
+  Amended 2026-11-24 (DL-2602, C-FIX79): the accepted end state is the named-heading rule of "Settings Registry And
+  Numbering Supersession", not a rename. The two `## 15.` chapters (`## 15. Persistence` and `## 15. Promoted widget
+  catalog (web tools, planning, question, operation cards)`) and the two `#### 7.4.2` headings (`#### 7.4.2 Indexing
+  settings subsection` and `#### 7.4.2 Agent Config Skills tab`) stay as declared aliases, and no heading is renamed.
+  Citations into any of them use the full heading name; a bare §15 or §15.n means the Persistence chapter, and a bare
+  §7.4.2 is not cited. Renumbering is left to a scheduled structural cleanup.
 gui_related: true
 gui_classification_reason: Numbering deconfliction affects user-visible GUI spec sections, settings sections, and cross-reference anchors.
 depends_on: [F3-387]
@@ -116,6 +122,7 @@ acceptance_criteria:
   - Section 15.3 resolves to Persistence/Tantivy rather than an ambiguous promoted-widget chapter.
   - Terminal Settings Ownership and Agent Config Skills tab are subordinate Settings anchors.
   - Structural renumbering does not change GUI behavior or widget ownership.
+  - Until a scheduled structural cleanup, the duplicate `## 15.` and `#### 7.4.2` headings are declared aliases and every citation into them names the full heading (DL-2602).
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - manual FinalGUISpec heading review

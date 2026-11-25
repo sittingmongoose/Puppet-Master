@@ -2,9 +2,9 @@
 
 Source: `Plans/LSPSupport.md`
 
-Source lines: L7053-L7302
+Source lines: L7054-L7303
 
-Source SHA256: `c9f0bc28d48c0023d82e28bb3a0ba612bd681ff58210ab9c528d67a72a206344`
+Source SHA256: `9ee1af4caafe478d9b04c50772acb552eba5701399dea4b8ca14e6700a350cad`
 
 ---
 

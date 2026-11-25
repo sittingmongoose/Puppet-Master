@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8573-L8640
+Source lines: L8573-L8643
 
-Source SHA256: `b091a6c29f95cf7b9c8c7b2c420541df557c4a6edb0d74d6d293dbbc55010505`
+Source SHA256: `aeea3a3702cb96c5f69319fb3fb294abae284a2dd739a3d51c717a1d13107a4f`
 
 ---
 
@@ -25,6 +25,7 @@ The command family required by UCC-098 is concrete. Production GUI controls may 
 | `cmd.prd_builder.conflict.resolve` | Resolve PRD conflict | conflict id, chosen resolution, rationale, source refs; disabled when selected sources are stale or unavailable | Conflict-resolution receipt |
 | `cmd.prd_builder.approve_for_planning_wizard` | Approve PRD for Planning Wizard | PRD Pack id/version/hash, source manifest hash, unresolved-warning acknowledgement, idempotency key; disabled when blocking conflicts or ledger sync failure exist | Approved PRD Pack snapshot and handoff receipt |
 | `cmd.prd_builder.pack.reopen` | Reopen PRD Pack | approved pack id/version, reason, currentness proof; disabled when reopening would bypass immutable history | Reopen receipt and new draft identity |
+| `cmd.prd_builder.revision.resubmit` | Resubmit with Annotations | bundle id, open annotation ids (default: every open durable annotation in deterministic order), expected bundle revision, idempotency key; disabled when no open annotation exists, the bundle revision is stale, or a revision pass is already running | Targeted revision receipt and one outcome record per annotation (`addressed`, `still_open` or `cannot_apply`); owner `Plans/PRD_Builder.md` PRDB-014, added 2026-11-24 (DL-2602) |
 | `cmd.planning_wizard.start` | Start Planning Wizard | approved PRD Pack ref or normalized requirements input, project context snapshot, testing policy snapshot | PlanningRun created/opened |
 | `cmd.planning_wizard.topic.open` | Open topic | PlanningRun id, topic id, expected topic map version | Topic projection selected |
 | `cmd.planning_wizard.topic.add` | Add topic | PlanningRun id, parent/dependency refs, label, source reason, topic map version | Topic added and topic map version advanced |
@@ -50,6 +51,8 @@ The command family required by UCC-098 is concrete. Production GUI controls may 
 Lineage pointer (DL-333): for each command here that UCC-230 routes, the Required payload and guard summary column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
 
 Amended 2026-11-05 (DL-333): these 28 catalog ids are canonical. `Plans/prd_planning_runtime_contracts.json` `ui_command_contracts` is keyed by them, records each id it used before in `alias_command_ids` (UCC-230 lists those as compatibility aliases, excluded from production wiring), and adds `cmd.planning_wizard.topic.open` and `cmd.prd_builder.annotation.resolve` from the rows above; `cmd.plan_compile.open_build` takes the PlanCompileRun id these rows name, not a goal run id.
+
+Amended 2026-11-24 (DL-2602, C-FIX79): `cmd.prd_builder.revision.resubmit`, the PRDB-014 targeted revision pass (`Resubmit with Annotations`), joins this set, so the canonical PRD Builder, Planning Wizard and Plan Compile ids are now 29. FinalGUISpec §7.19.2 bundle `Resubmit`, F3-150 and F3-322 dispatch it; `Plans/prd_planning_runtime_contracts.json` `ui_command_contracts` carries its contract and `Plans/Wiring_Matrix.production.json` row `catalog.prd_builder_revision_resubmit` wires it.
 
 ### Testing capability and visible-session command rows
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5448-L27066
+Source lines: L5455-L27081
 
-Source SHA256: `d85ca566a9a1c9a0c4bd744fab3ac1b0faffa83477bcb1561a3a0d7d41eedd89`
+Source SHA256: `8bf4b6345c10e4c1da9d13a53b473feeac58abcfb85cd80f35db86a176ebd116`
 
 ---
 
@@ -8383,7 +8383,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  Bundle controls govern revision loops and approval readiness with Resubmit sending unresolved notes as revision context, final approval blocked until notes are handled, status progression, bundle registry persistence, and linked note records. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
+  Bundle controls govern revision loops and approval readiness with Resubmit sending unresolved notes as revision context (Resubmit dispatches cmd.prd_builder.revision.resubmit, the PRDB-014 targeted revision pass, from 2026-11-24 under DL-2602), final approval blocked until notes are handled, status progression, bundle registry persistence, and linked note records. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: Bundle controls and review gates are visible controls despite the source span inference being false.
 split_recommended: false
@@ -16476,6 +16476,11 @@ canonical_text: >-
   stages/phases, Requirements Builder steps/passes, Orchestrator node/package/lane/seam
   mappings, and Multi-Pass review passes, with per-mapping platform/model selection and
   compatibility warnings.
+  Narrowed 2026-11-24 (DL-2602): only the Requirements Builder mapping (the four
+  planning.interview.builder-* settings, saved through the Settings transaction) and the existing
+  crew and overseer Persona selections remain; the Interview-stage, Orchestrator
+  node/package/lane/seam and Multi-Pass mapping editors and every per-mapping platform/model choice
+  are retired (MD2 NEITHER; models come from the one model defaults list).
 gui_related: true
 gui_classification_reason: >-
   This unit defines surface-specific Persona mapping editors despite the source inference
@@ -16510,7 +16515,9 @@ preserved_exact_tokens:
 - "compatibility warnings"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Retired 2026-11-24 (DL-2602): Interview stages/phases, Orchestrator node/package/lane/seam mappings and Multi-Pass review passes mapping editors."
+- "Retired 2026-11-24 (DL-2602): per-mapping platform/model selection (MD2 NEITHER)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -17906,7 +17913,8 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Deep Plan documents reuse the Embedded Document Pane annotation and revision contract:
   highlighted text opens an annotation action palette, margin markers and an annotation
-  drawer/list show annotations, Resubmit with Annotations launches targeted revision,
+  drawer/list show annotations, Resubmit with Annotations launches targeted revision
+  (it dispatches cmd.prd_builder.revision.resubmit, DL-2602),
   annotation anchors re-anchor deterministically after edits, annotation loss is never silent,
   and Multi-Pass Review is not automatically required before approval or execution.
 gui_related: true

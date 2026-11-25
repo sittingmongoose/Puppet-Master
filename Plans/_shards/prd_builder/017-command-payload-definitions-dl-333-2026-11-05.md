@@ -2,9 +2,9 @@
 
 Source: `Plans/PRD_Builder.md`
 
-Source lines: L1614-L2040
+Source lines: L1615-L2093
 
-Source SHA256: `529f59398b3a14ed65ec6f43c68c7c71383a93e9efff9ef01573cb37ccaea246`
+Source SHA256: `d5b9e3cdca976bdc536cde3af5bbbea32968405a1ee344cd79a212801cdb50b1`
 
 ---
 
@@ -49,7 +49,7 @@ source_lineage:
   - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to Q5"
   - "Plans/prd_planning_runtime_contracts.json ui_command_contracts (field lists under the catalog ids; DL-333 resolution 1)"
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/inventory.jsonl"
-preserved_exact_tokens: [cmd.prd_builder.source.import, cmd.prd_builder.answer.upsert, cmd.prd_builder.annotation.upsert, cmd.prd_builder.annotation.resolve, cmd.prd_builder.conflict.resolve, cmd.prd_builder.approve_for_planning_wizard, cmd.prd_builder.pack.reopen]
+preserved_exact_tokens: [cmd.prd_builder.source.import, cmd.prd_builder.answer.upsert, cmd.prd_builder.annotation.upsert, cmd.prd_builder.annotation.resolve, cmd.prd_builder.conflict.resolve, cmd.prd_builder.approve_for_planning_wizard, cmd.prd_builder.pack.reopen, cmd.prd_builder.revision.resubmit]
 negative_constraints:
   - Do not add payload fields to UI_Command_Catalog command rows.
   - Do not define a payload for an alias, retired, non-alias or source-lineage token; the runtime contract file's former ids are compatibility aliases and never dispatch.
@@ -405,6 +405,41 @@ command_payload_definitions:
       aliases:
         - {command_id: cmd.prd_builder.reopen_pack, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
+    - command_id: cmd.prd_builder.revision.resubmit
+      ucc_units: [UCC-098, UCC-097]
+      command_kind: domain_action
+      response_kind: owner_operation
+      args:
+        bundle_id:
+          type: id
+          required: true
+          default: none
+          provenance: canon
+          source: "Decision_Log DL-2602 (C-FIX79, 2026-11-24); runtime contract payload_contract cmd.prd_builder.revision.resubmit; FinalGUISpec 7.19.2 bundle_registry.v1:{project_id}:{bundle_id}"
+        annotation_ids:
+          type: list
+          required: false
+          default: none
+          item: {type: id}
+          provenance: canon
+          source: "runtime contract payload_contract cmd.prd_builder.revision.resubmit; PRDB-014 Input: all open durable annotations in deterministic order by doc_id, source start offset and annotation_id, or a user-selected subset; absent means every open annotation"
+        expected_bundle_revision:
+          type: integer
+          required: true
+          default: none
+          provenance: canon
+          source: "runtime contract payload_contract cmd.prd_builder.revision.resubmit and guard bundle_revision_current (DL-2602)"
+      owner_request: none
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:PrdRevisionResubmitResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
+      disabled_reason_codes: [blocked_state_required, stale_projection]
+      owner_state_codes:
+        - {owner_state: no_open_annotations, code: blocked_state_required}
+        - {owner_state: stale_bundle_revision, code: stale_projection}
+        - {owner_state: revision_running, code: blocked_state_required}
+      aliases: []
   results:
     PrdSourceImportResultV1:
       fields:
@@ -434,4 +469,21 @@ command_payload_definitions:
     PrdPackReopenResultV1:
       fields:
         draft_version_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "result_contract token of the runtime row; the new draft identity the history column names; no typed result contract"}
+    PrdRevisionResubmitResultV1:
+      fields:
+        targeted_revision_receipt_ref: {type: ref, required: true, default: none, provenance: canon, source: "runtime contract result_contract cmd.prd_builder.revision.resubmit (DL-2602)"}
+        annotation_result_refs:
+          type: list
+          required: true
+          default: none
+          item: {type: ref}
+          provenance: canon
+          source: "PRDB-014 Output: one result record per input annotation in input order, outcome = addressed | still_open | cannot_apply; each ref names one annotation_result record (section 3, TargetedRevisionPass annotation schemas)"
+        effective_revision_capability:
+          type: enum
+          values: [schema_enforced_structured_revision, validated_structured_revision, chat_handoff_only]
+          required: true
+          default: none
+          provenance: canon
+          source: "PRDB-014 Hard rules: the effective capability is schema_enforced_structured_revision, validated_structured_revision, or chat_handoff_only"
 ```

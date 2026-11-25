@@ -4,7 +4,7 @@ Source: `Plans/Tools.md`
 
 Source lines: L12421-L12534
 
-Source SHA256: `43bcb86aa71f75edd1ea840651067f66e0ce304e250fab5f5d8c2fe3003e86e6`
+Source SHA256: `6bf31b611dd8e97cde68ed44dacddde22cce456ef5b95348899865d6fc5974fc`
 
 ---
 
@@ -17,8 +17,8 @@ This addendum is canonical tool contract text for deferred non-runtime FABLE row
 Repairs row `sfk-88d65b2be00892daadd2f0d8`.
 
 - The first `## 10. Implementation plan: permissions (spec for implementers)` remains a permissions implementation-plan compatibility section.
-- The second `## 10. Firecrawl provider integration` is canonically superseded as `## 11. Firecrawl provider integration`.
-- Citations to Firecrawl subsections must use `Firecrawl provider integration` plus the subsection title rather than bare `§10.x` until the heading numbers are mechanically renumbered in a dedicated structural cleanup.
+- The second block of numbered chapters, from the second `## 10. Firecrawl provider integration` through `## 15. Assistant collaboration, To-Do proposal, and read-only advisor tool boundaries` (with its `## 11.` to `## 14.`), is cited by heading name: the chapter and subsection numbers in that block are not authoritative, because `## 10.` to `## 13.` also number the first block (`Implementation plan: permissions`, `Relationship to other plans`, `Implementation checklist`, `References`). Corrected 2026-11-24 (Decision_Log DL-2602, C-FIX79): the earlier line here that superseded the second `## 10.` as `## 11. Firecrawl provider integration` is withdrawn, since `## 11. Relationship to other plans` already holds that number; no heading is renamed.
+- Citations to Firecrawl subsections must use `Firecrawl provider integration` plus the subsection title rather than bare `§10.x`. Renumbering the second block is left to a scheduled structural cleanup.
 - Citations to permissions implementation subsections must include `Implementation plan: permissions` plus the subsection title.
 
 ### Tool Turn Contract Minima
