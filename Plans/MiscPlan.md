@@ -6428,7 +6428,9 @@ canonical_text: >-
   skill/package identity, injection timing, capability/permission boundary, environment/secret boundary,
   compatibility matrix, failure/fallback behavior, audit/evidence refs, override policy, and owner
   approval path. `list_skills_for_agent` may inject skills only after those fields validate for the
-  target runner.
+  target runner. Amended 2026-11-25: following Skills_System §4.5 and MS-134, that contract is the single
+  provider-agnostic SkillRunnerBinding typed under M-083, not a per-platform platform_specs file, and
+  list_skills_for_agent is its typed DRY helper.
 gui_related: false
 gui_classification_reason: Runner skill injection, capability, environment, and audit boundaries are backend/runtime contracts, not visual presentation.
 depends_on: [M-082, MGAC-092, PS-113]
@@ -6455,6 +6457,27 @@ negative_constraints:
 owner_hints: [Plans/MiscPlan.md, Plans/orchestrator-subagent-integration.md, Plans/Skills_System.md]
 ```
 
+**M-083 runner skill binding (2026-11-25).** `Plans/Skills_System.md` §4.5 is the authority for runtime skill delivery: every runner receives skills through the PM registry, bundling and the `skill` tool, and there is no per-provider native loading matrix. MS-134 retires `platform_specs` and `platform_specs.rs` as a data source. The "versioned `platform_specs` injection contract" above is therefore one provider-agnostic, versioned `SkillRunnerBinding`, built the same way for Cursor, Claude Code, OpenCode, Codex, GitHub Copilot and Gemini runners; `platform_specs` survives only as that contract's lineage name. Each M-083 field maps to one typed binding field:
+
+| M-083 field | `SkillRunnerBinding` field | Type |
+| --- | --- | --- |
+| platform_id | `runtime_platform_id` | string; the same id as Skills_System `skill_runtime_readiness.runtime_platform_id` |
+| runner_id/runtime_identity | `runner_id` | string |
+| skill/package identity | `entries[].skill_id`, `entries[].content_hash` | string; string (SHA-256 of the resolved `SKILL.md`) |
+| injection timing | `delivery_stage` | closed: `l0_catalog_slice`, `l2_selected_instructions`, `l3_resources_on_demand` (Skills_System §4.2A) |
+| capability/permission boundary | `permission_snapshot_id`, `entries[].permission_class` | string; closed `allow` or `ask` (`deny` entries are never listed) |
+| environment/secret boundary | `secret_policy` | constant `no_raw_secrets`: entries never carry resolved credentials (Skills_System §4.2A) |
+| compatibility matrix | `entries[].readiness_state` | closed: `ready`, `needs_setup`, `needs_permission`, `has_problems`, `warning` (Skills_System `skill_runtime_readiness`) |
+| failure/fallback behavior | `on_registry_unavailable` | constant `empty_slice_with_omission`: the runner starts with no Skill slice and the CapabilityMaterializationReceipt records the omission |
+| audit/evidence refs | `materialization_receipt_ref` | string; the request's CapabilityMaterializationReceipt |
+| override policy | `override_source` | closed: `none`, `run_override`, `persona_default_skill_refs` |
+| owner approval path | `approval_route` | constant `permissions_review`: an `ask` Skill pauses on the Permissions approval surface (Skills_System §4.3) |
+| (version) | `schema_version` | integer, `1` |
+
+Each `entries[]` item is the addendum's `skill_catalog_entry` with types: `skill_id` string, `display_name` string (Skills_System `skill_record.label`), `source` string (`skill_record.source_kind`: `pm_bundled`, `imported_disk`, `catalog` or `github`), `permission_class` (`allow` or `ask`), `enabled` boolean (always `true` in a binding), `owner_doc_ref` string (`Plans/Skills_System.md`), `schema_version` integer, plus `readiness_state` and `content_hash` above.
+
+`list_skills_for_agent(project_root: Option<path>, runtime_platform_id: string, permission_snapshot_id: string) -> Result<SkillRunnerBinding, SkillListError>` is the DRY helper of task 8.9.6. It is not a GUI command and not a command alias. `project_root = None` means No project: only app and global roots are read. It lists the Skills at capability stage `policy_available` or later for that runtime, with `validation_state = valid` and `permission_class` other than `deny`, ordered by `skill_id`, then content hash, in ascending UTF-8 byte order. Only entries whose `readiness_state` is `ready`, or `warning` when the Skill is explicitly selected, may advance to `l2_selected_instructions`. `SkillListError` is closed: `registry_unavailable` and `permission_snapshot_stale`. On `permission_snapshot_stale` the caller re-reads the permission snapshot and calls once more; a second stale result is handled as `registry_unavailable`, which applies `on_registry_unavailable`. A binding validates only when every field above is present with its type; skills are delivered to a runner only from a validated binding.
+
 ## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
 
 This addendum repairs non-runtime MiscPlan rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
@@ -6466,6 +6489,7 @@ This addendum repairs non-runtime MiscPlan rows without creating WorkNodes, impl
 - Repairs `sfk-cd3164782a4ef1c0059005e0`: debug instrumentation lifecycle fields are `instrumentation_id`, `scope_kind`, `collector_state`, `mutation_policy`, `evidence_sink_ref`, `cleanup_policy`, `cleanup_result`, and `created_at_utc`.
 - Repairs `sfk-3a059c95c88e113587672e6b`: duplicate References and Implementation Status sections are source-lineage residues; canonical MiscPlan implementation status is the latest named PlanUnit status plus this addendum. Missing `§9.1.20` is retired and must not be cited as live.
 - Repairs `sfk-f2adc94f674eb81b2fc0686f`: `platform_specs` injection is retired compatibility lineage. Active skill listing uses `skill_catalog_entry` fields `skill_id`, `display_name`, `source`, `permission_class`, `enabled`, `owner_doc_ref`, and `schema_version`; `list_skills_for_agent` is a future command alias until `Plans/Skills_System.md` owns its schema.
+  Clarified 2026-11-25: "retired" means `platform_specs` is no longer a per-platform data source. M-083's injection contract is the provider-agnostic `SkillRunnerBinding` typed under M-083, whose entries are these `skill_catalog_entry` records, and `list_skills_for_agent` is the typed DRY helper defined there, not a command alias; the "future command alias" wording is retired.
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
 ## FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)
