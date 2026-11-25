@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L4959-L5115
+Source lines: L4959-L5116
 
-Source SHA256: `8c6180cd59d0836fd4a9784b6e572b32a9a032a0e44ede4c25a30128c3f6a639`
+Source SHA256: `c492683feee66cb460b5cdb0788cbe19131a0e9238d585c44000f9f5e518f45b`
 
 ---
 
@@ -96,13 +96,14 @@ canonical_text: >-
   contract the topic's planning agent
   writes a referee from the owner's behaviour text, meaning its operations, states, transitions and declared failure
   results. The referee is a small executable owner model whose input is a prior owner state plus one operation or
-  event, or a short sequence of them, and whose output is the resulting state or a refusal with one of the contract's
+  event, or a short sequence of them, and whose output is the resulting state and any returned result, or a refusal with one of the contract's
   declared failure codes. The referee's state marks which parts survive a cut or restart. A rule whose refusal has no
   declared failure code is a PWIZ-110 finding; a declared validation code shared by several rules is enough when the
   validator's error path names the rule, and each case records the expected path. The rules under test are the contract's schema rules and its behavioural acceptance criteria (those with an input
   and an observable outcome), sourced separately from the referee; shape checks get an acceptance-only passing case,
-  and criteria without an input and an outcome (latency gates, visual checks) keep their ATS-003 oracles. Each schema rule and declared failure result gets one passing and one refusing case; each behavioural
-  acceptance criterion gets a case asserting the outcome it states, a refusal only where it prescribes one; and each
+  and criteria without an input and an outcome (latency gates, visual checks) keep their ATS-003 oracles. Each schema rule gets one passing and one refusing case; each behavioural acceptance criterion gets a case
+  asserting the outcome it states (a refusal only where it prescribes one, otherwise its stated resulting state or
+  returned result); and each
   risk property gets its matching cases: every state-machine transition and at
   least one illegal transition from each state; a write, a cut and a reopen; a stale writer after a fencing change;
   and a caller denied without permission. Where the contract has a schema, code also generates inputs that each break one rule, and the schema validator, not the referee, confirms which

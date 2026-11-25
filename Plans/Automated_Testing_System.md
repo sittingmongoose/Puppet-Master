@@ -16506,8 +16506,8 @@ canonical_text: >-
   (with its expected state where the fixture states one), the stated result, or refused with its declared failure code
   (and its error path where the fixture records one). Every bound ATS-003 oracle must pass, and every recorded test gap
   is honoured under its test_gap_policy (a block_completion gap blocks completion; a
-  defer_non_executable_harness_candidate gap is recorded as ATS-004 requires). The TestRunReceipt records each of these
-  (ATS-004). A payload fixture runs against the built validator of its data shape, or through a declared consuming operation
+  defer_non_executable_harness_candidate gap is recorded as ATS-004 requires). The TestRunReceipt records each of these through the companion schema change that
+  Plans/Plan_To_Node_Compilation.md#PNC-038 names (ATS-004). A payload fixture runs against the built validator of its data shape, or through a declared consuming operation
   that exercises that validation. A behaviour fixture reaches the built code through an adapter generated from the
   contract's interface binding (the callable surface each operation or event maps to,
   Plans/Planning_Wizard.md#PWIZ-110). A fixture with no automatic route is a recorded test gap under ATS-004, never a

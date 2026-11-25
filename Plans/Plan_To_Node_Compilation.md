@@ -2203,35 +2203,41 @@ canonical_text: >-
   referee observed is recorded beside the case but never used as an expectation. A payload fixture record holds a
   fixture id, the contract ref, the rule id, the payload and its expected outcome; a behaviour fixture record holds the
   same fields with an input (a prior owner state plus an operation or event, or a short sequence) in place of the
-  payload, plus its span reference. Fixtures and bound oracles are listed in generated_test_ids
-  (Plans/Automated_Testing_System.md#ATS-003). Each rule ends in exactly one disposition: its required tests bound;
-  for a schema rule whose refusing payload cannot be isolated, the passing payload bound together with an evidenced
-  named gap (Plans/Planning_Wizard.md#PWIZ-111) as the disposition of the refusal, binding a recorded multi-rule input
+  payload, plus its span reference. Fixtures are listed in generated_test_ids (Plans/Automated_Testing_System.md#ATS-003); a bound oracle is listed in
+  generated_test_ids, or in reused_test_ids when it is an existing test. Each rule ends in exactly one disposition: its required tests bound;
+  for a schema rule whose refusing payload cannot be isolated, the passing payload bound together with a named gap
+  evidenced to the standard of Plans/Planning_Wizard.md#PWIZ-111 (at least five recorded single-rule break attempts,
+  or every mutation of the rule's keyword, each also breaking another rule that refused it with its own code), whether
+  the planning check or PlanCompile's own code produced that evidence, as the disposition of the refusal, binding a recorded multi-rule input
   as a regression fixture only where the approved contract determines the refusal for that exact input, and never with
-  single-rule coverage credit; or a test gap for each required test that has no automatic route. A test gap is a
+  single-rule coverage credit; or a test gap for each required test that is missing because it could not be
+  produced, failed its pre-bind check, or has no automatic route. A PWIZ-111 budget test gap whose rule PlanCompile then
+  covers with bound required tests stays as planning evidence only. A test gap is a
   recorded-gap record holding the rule id, the missing test, the reason, evidence refs, catching rules and its
   test_gap_policy, which is block_completion or defer_non_executable_harness_candidate as ATS-004 requires for
   verification that cannot run automatically; allow_with_disposition and not_applicable are never used for a rule's
-  required test. A completeness finding carried as a recorded gap (Plans/Planning_Wizard.md#PWIZ-110) reaches the
-  node the same way. When a contract changes after approval, the successor plan reruns its PWIZ-110 and PWIZ-111 checks
+  required test. A completeness or design finding carried as a recorded gap (Plans/Planning_Wizard.md#PWIZ-110 and #PWIZ-111) keeps
+  its PWIZ-012 gap class and is resolved under that class, outside the test-gap policies above; when the build resolves
+  the missing detail, the resulting rule's tests bind through the successor plan (PNC-015). When a contract changes after approval, the successor plan reruns its PWIZ-110 and PWIZ-111 checks
   and regenerates its tests, and the PlanDiffImpactReport (Plans/Executor_Protocol.md#EP-102) classifies each consuming
-  node, with changed tests counting as an impact. The test_binding and test_case definitions in
-  Plans/plans_to_code_handoff.schema.json do not yet carry payload fixture, behaviour fixture or recorded-gap records;
-  that schema change is a required companion change before any compile uses this unit. This unit specifies the binding
+  node, with changed tests counting as an impact. The test_binding, test_case and test_run_receipt definitions in Plans/plans_to_code_handoff.schema.json do not yet
+  carry payload fixture, behaviour fixture or recorded-gap records, or per-test outcomes with references to each
+  recorded gap and its policy; that schema change is a required companion change before any compile uses this unit. This unit specifies the binding
   only; it emits no NodeSeeds, WorkNodes, executable queues or build tasks.
 gui_related: false
 gui_classification_reason: Defines how compile artifacts carry test fixtures; no visual presentation.
 depends_on: [DL-512, PNC-013, PNC-015, PNC-016, EP-102, PWIZ-110, PWIZ-111, ATS-003, ATS-004]
 unblocks: [ATS-401]
 acceptance_criteria:
-  - "Every rule of every contract binds to the node that owns its enforcement, or to the node that completes the contract, and ends in exactly one disposition: its required tests bound; a passing payload with an evidenced named gap for an unisolatable schema refusal; or a test gap for each required test that has no automatic route."
+  - "Every rule of every contract binds to the node that owns its enforcement, or to the node that completes the contract, and ends in exactly one disposition: its required tests bound; a passing payload with a named gap evidenced to PWIZ-111's standard, by the planning check or by PlanCompile, for an unisolatable schema refusal; or a test gap for each required test that could not be produced, failed its pre-bind check, or has no automatic route."
   - "A schema rule's required tests are a refusing and a passing payload fixture; a declared failure result's are a refusing input and its passing neighbour; a behavioural criterion's is one fixture asserting its stated outcome so that a wrong result fails; any other criterion's is its ATS-003 oracle; no contract is exempt from schema fixtures."
   - "Every expected outcome comes from the approved contract; a referee case that disagrees with the contract or lacks a contract outcome never binds, and observed planning outcomes are kept only as evidence."
   - "Every behaviour fixture cites its source span, passes the schema and declared-failure-code check before it binds, and keeps an immutable reference to that span in the approved plan version."
   - "A named-gap regression input binds only where the approved contract determines its refusal, and never with single-rule coverage credit."
   - "A test gap's test_gap_policy is block_completion or defer_non_executable_harness_candidate; allow_with_disposition and not_applicable are never used for a rule's required test."
   - "A contract change after approval reruns its checks in the successor plan and regenerates its tests, and the PlanDiffImpactReport classifies every consuming node."
-  - "The handoff schema change for payload fixture, behaviour fixture and recorded-gap records is a recorded companion change, required before any compile uses this unit."
+  - "The handoff schema change for payload fixture, behaviour fixture and recorded-gap records, and for per-test outcomes in test_run_receipt, is a recorded companion change, required before any compile uses this unit."
+  - "A carried completeness or design gap keeps its PWIZ-012 class and is resolved under that class, not under the test-gap policies."
   - "No NodeSeeds, WorkNodes, executable queues, final node manifests, production build tasks, implementation files or source code are created by this PlanUnit."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
