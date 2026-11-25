@@ -27,7 +27,7 @@ byte-identical to `Concepts/PMConcept7.html` at that commit.
 browser-check run Concepts/settings-managers/fable-5.2-refine/tools --set page=<refined.html> --set before=<PMConcept7.html of the same base>
 ```
 
-Fourteen tests by real clicks (`tools/refine.check.mjs`): the chapter move and old links; Explain; the centred tab
+Fifteen tests by real clicks (`tools/refine.check.mjs`): the chapter move and old links; Explain; the centred tab
 strips (the chapter's now over the middle of the page, on the manager's axis) and the side column; Servers' Overview
 map at two sizes; the things that looked wrong
 (the band, the covered title, the chosen row, the light, no stripe down one side, the side column's chip and the
@@ -37,20 +37,117 @@ pass (a detail with no ground of its own; one start for titles and row names, on
 and edge-to-edge lines on a page with both kinds of card; Away From Home's columns; More options); the sixth pass
 (a tab strip's box follows its chip; the one bar on top of a chapter with its three buttons, its line and its axis; a
 chapter with one manager; a long chapter in a narrow window; a crew's model pickers and the Models step; the
-browser's four tabs, their rows, the video formats, and the line of facts following a change); the one home of
+browser's four tabs, their rows, the video formats, and the line of facts following a change); the seventh pass
+(the two new names; the Goals page's three tabs, each drawing exactly its own settings and no word of the old Goal;
+the example receipt; the fourteen checks on planned work on the Planning page with their options; in Glass, no line
+under the bar and a pinned sheet pinning its frost and nothing else); the one home of
 a service's switching rules; the example staying in view in Editor and Terminal Customize, Customize Pip and Adjust
 NieR; the examples being as wide as they were and the editor's following what is typed; and **nothing was
 dropped**: every setting id and every action of the unchanged page is still on some page of the refined one (920
-settings, 73 views, on 2026-11-20; the refined page has three views more, the browser's new tabs, and the fifty
-proposed rows). Pass `--set before=` as a `file://` address.
+settings, 73 views, on 2026-11-20; the refined page has the browser's three more tabs and the fifty proposed rows,
+and is without the old Goal's Templates tab, the five settings DL-478 retired and the eight actions that only served
+the old Goal, each named in the test). Pass `--set before=` as a `file://` address.
 
-Five more tools, for looking and measuring rather than asserting, live with the evidence (not in this repository):
+Six more tools, for looking and measuring rather than asserting, live with the evidence (not in this repository):
+`jumpframe.check.mjs` (Glass: pictures of the panels at rest, as the wheel turns and settled, on the page itself or
+inside a frame set down from the window's top, as a preview shows a file),
 `tabs.check.mjs` (every "pick one" strip in every view of a look: the box's corner against the chip's corner plus the
 gap between them, and the gap on each side), `shots.check.mjs` (a list of steps and pictures, any of the ten looks), `adds.check.mjs` (opens every Add, New, Link
 or Connect button and pictures what appears), `icons.check.mjs` (lists every button that shows no word) and
 `align.check.mjs` (in every view, in any look: where each line of words starts, where each control ends, each row's
 height, rows with no line or a line that stops short of its card, and any painted pane that sits inside a card of
 another tone).
+
+## Seventh pass (2026-11-24), after Jared's sixth review
+
+Jared: "This looks a lot better all around! There is a couple of small bugs I found though." Four things:
+
+**1. The names.** On "Rename the two Automation titles?": "A, rename them." The chapter is **Memory & Goals** and the
+page is **Goals & Schedules** (set where the page is drawn, `managers/31-goals.js`; the 20 "where to change it" lines
+of `o55/rows.d/32-personas.json` follow). PMConcept7's first-run tour and Pip's lines are not Settings sources and
+still say the old names: to rename at the merge, with "Server & Project Location".
+
+**2. The Goals page still showed the old Goal.** "There are still some artifacts from the old version of goals, that
+makes things in the settings for goals not make a lot of sense anymore. So that needs to be cleaned up." The page was
+the Goal of September: templates with phases, a persona, a crew, a model and helpers per Goal, plan re-thinking, a
+Verify phase with its checks, receipts that came in strengths. The Plans dropped all of that on his ruling of
+2026-11-12 ("The goal runs on the model the user had chosen, there shouldn't be checks or anything",
+`Plans/Decision_Log.md` DL-477, DL-478; `Plans/Goal_Runtime_System.md` GRS-048 to GRS-054): a Goal is one sentence and
+a state, it runs on the persona and model of the chat that started it, the host keeps it going until the proof is in,
+and a stop from the person always wins. `Plans/Settings_System.md` gives the page exactly "defaults for host
+continuation, interruption handling, progress and what new Goals may change; Goal evidence ... with a read-only
+evidence receipt". The concept's page had not followed. It is rebuilt on that (`managers/31-goals.js`,
+`o55/placement.d/31-goals.json`, `o55/rows.d/31-goals.json`, all three taken into the overlay):
+
+| Tab | Groups |
+|---|---|
+| **Goals** | What a new Goal may do (what it may change; the way to Permissions' rule for risky steps). If something interrupts. Keeping an eye on progress. Progress view. More options: Background Goals, What saved progress holds |
+| **Schedules** | If a run misses its time. Around a time window. (The five rows the old name called "Automation".) |
+| **Proof** | The receipt (the switch; the way to how long proof is kept). What a receipt holds, an example, read only. What proof is kept |
+
+What left the page, and why:
+
+| Left | Why |
+|---|---|
+| The Templates tab and its guided set-up (kind of job, phases, phase library, export) | A Goal has no template, kind or phases (GRS-048; `goal-template` retired by DL-478) |
+| New Goals start with: Persona, Crew, Model for Goal work, Helpers | A Goal uses its chat's persona and model and never a crew (GRS-049, GRS-052; the Plans call these rows concept-only, removed by DL-475) |
+| Changing the plan (Rethink the plan; If I change my mind mid-Goal) | `goal-replan-behavior` and `goal-replan-events`, retired by DL-478 |
+| Run test profile, Ask me to confirm | Concept-only rows, removed by DL-475 |
+| Receipt strength, Proof needed | `receipt-type` and `certification-level`, retired by DL-478: a receipt says what happened, nothing grades it |
+| Routing details, Phase library | They described the old Goal's model route and phases |
+| Reset Goal defaults | It reset only the hand-kept rows above |
+| Fourteen settings about checking planned work | Not gone: see below |
+
+The five retired ids are named in `retire_with_canon`, PMConcept7's own list for rows a Plans change retires, so they
+are drawn nowhere and found by no search. **Fourteen settings stayed live in the Plans' inventory** (DL-478 retired
+five ids, not these), and they are about checking planned work, not about a Goal: Speed or thoroughness, Double-check
+finished work, Never let the builder grade its own work, Show check reports; the five rows of When a check fails; and
+the five of Stricter proof. They are on **Planning › Planning & Interviews** now, in the same three groups with the
+same options ("Checking finished work", "When a check fails", and "Stricter proof" under More options). Whether they
+stay there, go to Testing & Debug, or are retired by a Plans change is asked of Jared (card SM-PLAN-CHECKS).
+
+Words left over from the old Goal on other pages: Personas (a crew works "on one job"; the Goals row of Defaults reads
+"Same as its chat" and has nothing to change), Providers (the model group is "Helpers and small jobs"; "Used unless a
+chat or a job picks another"), Testing ("Full runs and releases", not "release Goals"), Permissions (the help of the
+two Goal limits) and two Proof rows ("How much detail a Goal saves", not "Goal mode"; a piece of proof's span no
+longer offers "Custom (set per Goal)" by that name). `o55/rows.d/25-testing.json` is taken for those two rows.
+
+**3. Glass: the line under the bar.** "This line looks weird on the glass theme, not sure how you want to fix that.
+It is touching that glass bar." In Glass the side column is itself a sheet of glass, and it began on the pixel under
+the bar's line. Glass draws its edges with sheets, not rules, so in Glass the bar has no line, and the side column's
+sheet starts where the page starts, 14 px under the bar (`styles.d/99-refine-pass7.css`). The other four looks keep
+the line.
+
+**4. Glass: the wallpaper behind the panels jumped.** "You can see when I am scrolling, the background lines jump
+back and forth on the left side behind the panels." This is PMConcept7's own bug, on every page, since 2026-11-09:
+
+- **Where:** `liquid-glass/opus-5.5/src/glass.css`, the two `[data-lg-fixed]` rules (lines 254 and 299).
+- **Why:** while something scrolls, the glass engine pins each sheet's frost (the blurred wallpaper inside it) to the
+  window and anchors it again when the scroll settles; the two must be the same pixels. A sheet's background was six
+  layers with the frost last, and the pin names them by position (`scroll` five times, then `fixed`). Commit
+  `f58faa070f` took the pointer sheen out of the stack: five layers. The frost, now the fifth, got `scroll` at `0 0`,
+  so it was drawn from the sheet's own corner instead of the window's, lower and to the right by the sheet's place on
+  the screen (54 px for the Files panel), from the wheel turn until the settle. The engine pins every sheet under
+  every ancestor of the pointer, so the title bar, the left panel, Settings' rail and the status bar all jumped on any
+  wheel turn.
+- **Fix:** five entries, the frost `fixed`. The overlay carries it as two rules of higher weight in
+  `styles.d/99-refine-pass7.css`; the same two lines are owed to `glass.css` itself (mailed to the stream F lead and
+  the program coordinator), after which the overlay's copy repeats it and can go.
+
+Jared's recording (120 frames a second, 13 s) shows the frost in two states 54 px apart, the second one held from each
+wheel turn until 160 ms after the scroll ends. Measured here on the left panels at 1880 x 1050: 92,547 pixels change
+on a wheel turn before the fix, 162 after. `jumpframe.check.mjs` (with the evidence) takes the three pictures.
+
+**Checked on the final build (2026-11-25):** the fifteen tests, 186 checks, pass in one run, "nothing was dropped"
+among them with the old Goal's parts named one by one; the seventh-pass test fails on the build before it.
+`tabs.check.mjs` in all ten looks: no strip whose box does not follow its chip (Glass judged as before).
+`align.check.mjs` in Basic dark: the same 21 explained lines, none new on the Goals tabs or the Planning page's new
+groups. The tour: 76 views (one fewer: the Templates tab), nothing spills sideways. The Goals tabs, the Planning page
+and the top of a chapter were looked at in Basic dark, Glass dark and light, Friendly light, Retro dark and NieR light.
+**Not run:** stream F's Settings checks (see the end of this file).
+
+**To merge this into PMConcept7:** the glass.css fix belongs in `liquid-glass/opus-5.5/src/glass.css`; the two names
+also live in the first-run tour and Pip's lines; and the answer to card SM-PLAN-CHECKS decides the fourteen rows' page.
 
 ## Sixth pass (2026-11-24), after Jared's fifth review
 
@@ -323,6 +420,12 @@ over the middle of the page, not of the strip (FO-184's own measure); Explain, t
 are in that bar, and `.document-toolbar` is empty with no height; a chapter with one manager shows its bar, with the
 name; every chapter's first page has no title of its own; a tab strip's box has another corner; the browser's page
 has another name, four tabs and fifty more rows; New crew has a fifth step.
+
+**Nor on the seventh pass.** More for that list: the Goals page is `Goals & Schedules` with the tabs `defaults`
+(shown as Goals), `schedules` and `proof` (no `templates`, `checkpoints` or `verification`); the chapter is
+`Memory & Goals`; fourteen `planning.verification.*` rows are on `planning-reference` in the groups `plan-checks`,
+`plan-repair` and `plan-checks-more`; five ids are retired; in Glass the chapter bar has no bottom border and the
+side column has a 14 px top margin.
 
 The table below is the second pass's, still true; what the third, fourth and fifth passes add is under it.
 

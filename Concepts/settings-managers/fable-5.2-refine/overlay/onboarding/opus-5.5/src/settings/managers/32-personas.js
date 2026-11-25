@@ -322,7 +322,7 @@
   /* ---------- Crews ---------------------------------------------------- */
   function crewsTab() {
     const enabled = on(PM51.value(S.crews));
-    const head = PM51.section({ title: 'Crews', help: 'Teams of personas that work on one Goal together.', body: PM51.bound.rows([S.crews]) + (enabled ? '' : PM51.note('Crews are off. You can still set them up; nothing uses them until you turn this on.', 'info')) });
+    const head = PM51.section({ title: 'Crews', help: 'Teams of personas that work on one job together.', body: PM51.bound.rows([S.crews]) + (enabled ? '' : PM51.note('Crews are off. You can still set them up; nothing uses them until you turn this on.', 'info')) });
     const c = selectedCrew();
     if (!c) return head + PM51.empty('No crews yet', 'A crew is a team of personas that work together.', { label: 'New crew', icon: 'plus', action: 'pm51-personas-crew-new' }) + PM51.slot();
     seedCrewModels();
@@ -364,7 +364,7 @@
     draft.key = newId('draft');
     if (c) moveDepths(c.id, draft.key, names(), true);
     PM51.wizard({
-      title: isNew ? 'New crew' : `Edit ${c.name}`, subtitle: 'A crew is a team of personas that work on one Goal together, with a lead.', eyebrow: 'Crew', icon: 'users',
+      title: isNew ? 'New crew' : `Edit ${c.name}`, subtitle: 'A crew is a team of personas that work on one job together, with a lead.', eyebrow: 'Crew', icon: 'users',
       draft, finishLabel: isNew ? 'Create crew' : 'Save',
       steps: [
         { label: 'Name', icon: 'edit', title: 'What is the crew called?', lead: isNew ? 'Members and the lead start from "New crews start with".' : '', recap: d => d.name,
@@ -421,7 +421,7 @@
         body: PM51.rows([
           { label: 'Planning helpers', help: 'Who asks the questions and drafts the plan, in the Planning chapter.', value: PM51.valueLabel(S.planner, PM51.value(S.planner)), action: { label: 'Change', icon: 'arrowRight', action: 'pm51-personas-reveal', data: { setting: S.planner } } },
           { label: 'Reviewers', help: 'Who checks finished work, under Group work.', value: Array.isArray(roster) && roster.length ? roster.join(', ') : 'Puppet Master picks', action: { label: 'Change', icon: 'arrowRight', action: 'pm51-personas-reveal', data: { setting: S.reviewRoster } } },
-          { label: 'Goals', help: 'New Goals start with the persona set in Goals & Automation.', value: ((PM51.s().goals || {}).defaults || {}).persona || 'Assistant', action: { label: 'Change', icon: 'arrowRight', action: 'pm51-personas-goal-default' } }
+          { label: 'Goals', help: 'A Goal uses the persona of the chat that started it.', value: 'Same as its chat' }
         ])
       })
       + PM51.section({
@@ -482,7 +482,7 @@
     const p = personas().find(x => x.id === ds(el, 'id')); if (!p || p.locked) return;
     PM51.panel({
       title: 'Name and purpose', subtitle: p.name, icon: 'user',
-      body: `<div class="o55-setup-fields">${PM51.field('Name', `<input class="text-control o55-pa-name" value="${a(p.name)}" autocomplete="off" data-autofocus/>`, 'Crews, templates and Goals that use it follow the new name.')}${PM51.field('What it is for', `<input class="text-control o55-pa-desc" value="${a(p.description || '')}" autocomplete="off"/>`)}</div>`,
+      body: `<div class="o55-setup-fields">${PM51.field('Name', `<input class="text-control o55-pa-name" value="${a(p.name)}" autocomplete="off" data-autofocus/>`, 'Crews that use it follow the new name.')}${PM51.field('What it is for', `<input class="text-control o55-pa-desc" value="${a(p.description || '')}" autocomplete="off"/>`)}</div>`,
       primaryLabel: 'Save', onPrimary: w => {
         const name = String(w.querySelector('.o55-pa-name').value || '').trim(), desc = String(w.querySelector('.o55-pa-desc').value || '').trim();
         if (!name) { PM51.toast('Give it a name', 'A persona needs a name.', 'info'); return false; }
@@ -556,7 +556,6 @@
     });
   });
   PM51.on('personas-reveal', el => { if (PM51.revealSetting) PM51.revealSetting(ds(el, 'setting')); });
-  PM51.on('personas-goal-default', () => { PM51.setTab('goals', 'defaults'); PM51.go('memory', 'goals'); });
   /* a persona's own number: set one, slide it, or hand it back to the project */
   const ownPersona = el => { const p = personas().find(x => x.id === ds(el, 'id')); if (!p || p.locked) return null; p.props = p.props || {}; return p; };
   const focusOwn = id => window.setTimeout(() => { const row = root.querySelector(`[data-pm51-manager="personas"] .o55-scoped[data-setting-id="${cssEscape(id)}"]`); const f = row && row.querySelector('input, .o55-textbtn'); if (f) f.focus({ preventScroll: true }); }, 30);
@@ -636,6 +635,6 @@
     title: 'How personas work',
     body: PM51.panelSection('In short', '<p class="pm51-ps-text">A persona is a role the assistant plays: a purpose, a way of answering, a preferred model, and the tools it reaches for. Crews are teams of personas with a lead.</p>')
       + PM51.panelSection('Core, bundled, yours', PM51.kv([['Core', 'Nine built-in personas, always there and locked. Duplicate one to make your own version.'], ['Bundled', 'Specialists that ship with Puppet Master. Change them, or hide them from pickers.'], ['Yours', 'Made by you. Change, export or delete them freely.']]))
-      + PM51.panelSection('Working together', PM51.kv([['Crews', 'A team with a lead, for one Goal.'], ['Group work', 'BrainStorm, Review and Chat Room.'], ['Helpers', 'Short-lived agents for one bounded task.']]))
+      + PM51.panelSection('Working together', PM51.kv([['Crews', 'A team with a lead, for one job.'], ['Group work', 'BrainStorm, Review and Chat Room.'], ['Helpers', 'Short-lived agents for one bounded task.']]))
   }));
 })();

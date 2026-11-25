@@ -1,0 +1,203 @@
+{
+ "_about": "Goals & Schedules (refine, seventh pass, 2026-11-24): the page holds only what the simple Goal has (DL-477, DL-478, GRS-048 to GRS-054, Settings_System's Goals row): what a new Goal may change, interruptions, watching progress and the progress view (Goals); the rows for timed runs (Schedules); the receipt and what it keeps (Proof). The five ids DL-478 retired are drawn nowhere. The rows about checking planned work, which the Plans keep live, move to Planning › Planning & Interviews in their own three groups. Settings still only sets defaults: Goals are started, watched and stopped in the assistant chat.",
+ "sections": {
+  "goals-legacy": null,
+  "goals-template-fields": null,
+  "goals-receipt": null,
+  "goals-replan": null,
+  "goals-repair": null,
+  "goals-verification-more": null,
+  "goals-defaults": {
+   "to": "goals",
+   "title": "What a new Goal may do",
+   "help": "Every new Goal starts with these.",
+   "order": 204,
+   "tab": "defaults",
+   "composed": true
+  },
+  "goals-recovery": {
+   "to": "goals",
+   "title": "If something interrupts",
+   "help": "Saving progress and picking up after a stop.",
+   "order": 205,
+   "tab": "defaults"
+  },
+  "goals-watch": {
+   "to": "goals",
+   "title": "Keeping an eye on progress",
+   "help": "How stuck or blocked work is spotted and explained.",
+   "order": 206,
+   "tab": "defaults"
+  },
+  "goals-progress": {
+   "to": "goals",
+   "title": "Progress view",
+   "help": "How the assistant chat draws a running Goal's progress.",
+   "order": 207,
+   "tab": "defaults"
+  },
+  "goals-background": {
+   "to": "goals",
+   "title": "Background Goals",
+   "help": "Goals Puppet Master runs for its own work. You do not see them in the chat.",
+   "order": 290,
+   "tab": "defaults",
+   "advanced": true
+  },
+  "goals-missed": {
+   "to": "goals",
+   "title": "If a run misses its time",
+   "help": "The computer was off, or something else was running.",
+   "order": 300,
+   "tab": "schedules"
+  },
+  "goals-scheduling": {
+   "to": "goals",
+   "title": "Around a time window",
+   "help": "When work may only run between two times.",
+   "order": 305,
+   "tab": "schedules"
+  },
+  "goals-verification": {
+   "to": "goals",
+   "title": "The receipt",
+   "help": "Shown on the finished Goal in the assistant chat.",
+   "order": 410,
+   "tab": "proof",
+   "composed": true
+  },
+  "goals-evidence": {
+   "order": 412,
+   "tab": "proof",
+   "title": "What proof is kept",
+   "help": "How much a Goal saves to back up its receipt."
+  },
+  "plan-checks": {
+   "to": "planning-reference",
+   "title": "Checking finished work",
+   "help": "How carefully planned work is checked before it is called done.",
+   "order": 40
+  },
+  "plan-repair": {
+   "to": "planning-reference",
+   "title": "When a check fails",
+   "help": "How many times to try a fix, and what then.",
+   "order": 45
+  },
+  "plan-checks-more": {
+   "to": "planning-reference",
+   "title": "Stricter proof",
+   "help": "Fine-tune how much proof counts as done.",
+   "order": 130,
+   "advanced": true
+  }
+ },
+ "overrides": [
+  {
+   "section": "goals-defaults",
+   "ids": [
+    "planning.verification.goal-write-mode"
+   ]
+  },
+  {
+   "section": "goals-recovery",
+   "ids": [
+    "planning.verification.goal-auto-resume",
+    "planning.verification.goal-checkpoint-cadence",
+    "planning.verification.goal-interruption",
+    "planning.verification.interrupt-settlement"
+   ]
+  },
+  {
+   "section": "goals-watch",
+   "ids": [
+    "planning.verification.heartbeat-interval",
+    "planning.verification.stall-detection",
+    "planning.verification.true-blocker-escalation",
+    "planning.verification.blocker-detail",
+    "planning.verification.cloud-local-display"
+   ]
+  },
+  {
+   "section": "goals-progress",
+   "ids": [
+    "general.interaction.run-graph-mode",
+    "general.interaction.graph-density",
+    "general.interaction.progress-widget-layout"
+   ]
+  },
+  {
+   "section": "goals-background",
+   "ids": [
+    "planning.verification.invisible-goal-authority"
+   ]
+  },
+  {
+   "section": "goals-missed",
+   "ids": [
+    "safety.approvals.schedule-missed-policy",
+    "safety.approvals.schedule-grace-minutes"
+   ]
+  },
+  {
+   "section": "goals-scheduling",
+   "ids": [
+    "safety.approvals.schedule-wind-down-minutes",
+    "safety.approvals.schedule-resume-next-window",
+    "safety.approvals.schedule-dst-policy"
+   ]
+  },
+  {
+   "section": "goals-verification",
+   "ids": [
+    "planning.verification.completion-receipts"
+   ]
+  },
+  {
+   "section": "plan-checks",
+   "ids": [
+    "planning.verification.quality-preference",
+    "planning.verification.validation-pass",
+    "planning.verification.independent-review",
+    "planning.verification.report-visibility"
+   ]
+  },
+  {
+   "section": "plan-repair",
+   "ids": [
+    "planning.verification.auditor-loop",
+    "planning.verification.repair-loop",
+    "planning.verification.repair-strategies",
+    "planning.verification.repair-budget-exhaustion",
+    "planning.verification.degraded-mode"
+   ]
+  },
+  {
+   "section": "plan-checks-more",
+   "ids": [
+    "planning.verification.strictness",
+    "planning.verification.gate-enforcement",
+    "planning.verification.parallel-stage-enforcement",
+    "planning.verification.validators-by-node",
+    "planning.verification.worknode-activation"
+   ]
+  }
+ ],
+ "managers": {
+  "goals": {
+   "tabs": {
+    "defaults": "Goals",
+    "schedules": "Schedules",
+    "proof": "Proof"
+   },
+   "defaultTab": "defaults"
+  }
+ },
+ "retire_with_canon": [
+  "planning.verification.goal-template",
+  "planning.verification.receipt-type",
+  "planning.verification.goal-replan-behavior",
+  "planning.verification.goal-replan-events",
+  "planning.verification.certification-level"
+ ]
+}

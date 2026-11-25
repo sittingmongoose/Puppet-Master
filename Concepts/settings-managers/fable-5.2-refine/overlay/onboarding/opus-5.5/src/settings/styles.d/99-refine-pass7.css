@@ -1,0 +1,31 @@
+/* Refine · seventh pass (2026-11-24), after Jared's sixth review of the refined Settings.
+
+   1. Glass: the wallpaper behind the panels jumps when the wheel turns.
+      "You can see when I am scrolling, the background lines jump back and forth on the left side behind the panels."
+      Where: liquid-glass/opus-5.5/src/glass.css, the two [data-lg-fixed] rules (the pinned frost and its crossfade twin).
+      Why: while something scrolls, the glass engine pins each sheet's frost (the blurred wallpaper inside it) to the
+      window, and anchors it again when the scroll settles; both must be the same pixels. A sheet's background was six
+      layers with the frost last, and the pin names them by position: scroll x5, fixed. On 2026-11-09 the pointer sheen
+      (--lg-glow) left the stack, which made it five layers. The sixth entry now names nothing, the frost is the fifth
+      and gets "scroll" at 0 0: drawn from the sheet's own corner instead of the window's, so it sits lower and to the
+      right by the sheet's place on the screen (54 px for the Files panel) until the settle. A wheel turn anywhere pins
+      every sheet on the page, so the title bar, the left panel, Settings' rail and the status bar all jump.
+      Fix: five entries, the frost fixed. This is the base's bug (every page in Glass); the same two lines are owed to
+      glass.css itself, after which these rules repeat it and can go. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-fixed] {
+  background-attachment: scroll, scroll, scroll, scroll, fixed !important; background-position: 0 0, 0 0, 0 0, 0 0, 0 0 !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy):not(#lgx) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-fixed][data-lg-xf]::after {
+  background-attachment: scroll, scroll, scroll, scroll, fixed; background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
+}
+
+/* 2. Glass: the line under the chapter bar.
+      "This line looks weird on the glass theme, not sure how you want to fix that. It is touching that glass bar."
+      In Glass the side column is itself a sheet of glass, and it began on the pixel under the bar's line. Glass draws
+      its edges with sheets, not with rules, so there the bar has no line; the side column's sheet starts where the
+      page's first card starts (14 px under the bar), and its card sits as far from the sheet's top as from its sides. */
+html[data-theme^="glass"]:not(#lgz):not(#lgy):not(#lgx) #panel-settings nav.workspace-tabs.rf-bar { border-bottom: 0 !important; }
+html[data-theme^="glass"] #panel-settings .document-layout > .page-index { margin-top: 14px; padding-top: 5px; }
+
+/* 3. Goals & Schedules › Proof: the example receipt is read only, and dimmed while no receipt is written */
+#panel-settings .rf-goal-receipt.is-off > .pm51-section-body { opacity: .55; }

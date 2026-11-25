@@ -294,7 +294,7 @@
   },
   "ai.usage.max-goal-turns": {
    "label": "Rounds before a Goal checks in",
-   "help": "Automatic uses the Goal's own limit.",
+   "help": "How many turns a Goal may take before it stops to ask you. Automatic lets Puppet Master decide.",
    "control": "number-inherited"
   },
   "ai.usage.subagent-wave-cost": {
@@ -354,7 +354,7 @@
   },
   "memory.limits.goal-token-budget": {
    "label": "Tokens one Goal may use",
-   "help": "Across every run of the Goal. Empty means no cap of its own.",
+   "help": "From start to finish. Empty means no cap of its own.",
    "unit": "tokens",
    "min": 1000,
    "step": 1000,

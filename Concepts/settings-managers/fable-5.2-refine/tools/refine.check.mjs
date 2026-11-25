@@ -386,6 +386,63 @@ export const tests = {
 		await f.evaluate((sel) => { const row = [...document.querySelectorAll(`${sel} .setting-row`)].find((r) => /^Graphics acceleration/.test(r.querySelector('.setting-label').textContent.trim())); const s = row.querySelector('select'); s.value = 'Auto'; s.dispatchEvent(new Event('change', { bubbles: true })); }, block('browser-scm')); await sleep(f, 600);
 	},
 
+	async 'seventh pass: the simple Goal\'s page, the new names, the checks on the Planning page, Glass\'s line and pinned frost'(t) {
+		const f = await openSettings(t);
+		/* Jared, 2026-11-24, on "Rename the two Automation titles?": "A, rename them." */
+		await go(f, 'memory', 'goals');
+		const names = await f.evaluate(() => ({ rail: [...document.querySelectorAll('#pm-settings-root .domain-link')].map((n) => n.textContent.replace(/\s+/g, ' ').trim()), track: [...document.querySelectorAll('#pm-settings-root nav.workspace-tabs.rf-bar .workspace-tab')].map((n) => n.textContent.replace(/\s+/g, ' ').trim()), any: /Automation/.test(document.querySelector('#pm-settings-root').textContent) }));
+		await t.check('the chapter is Memory & Goals and the page is Goals & Schedules', names.rail.some((x) => x.indexOf('Memory & Goals') === 0) && names.track.includes('Goals & Schedules'), JSON.stringify(names).slice(0, 400));
+		await t.check('nothing drawn in the chapter says Automation', !names.any);
+		/* "There are still some artifacts from the old version of goals, that makes things in the settings for goals not
+		   make a lot of sense anymore. So that needs to be cleaned up." The simple Goal: DL-477, DL-478, GRS-048 to GRS-054. */
+		const tabs = await f.evaluate((sel) => [...document.querySelectorAll(`${sel} .pm51-mgr > .pm51-tabs > .manager-tab`)].map((n) => n.textContent.trim()), block('goals'));
+		await t.check('the Goals page has three tabs: Goals, Schedules, Proof', tabs.join('|') === 'Goals|Schedules|Proof', tabs.join('|'));
+		const words = {}; const ids = {};
+		for (const id of ['defaults', 'schedules', 'proof']) {
+			await tab(f, 'goals', id);
+			await f.evaluate((sel) => { document.querySelectorAll(`${sel} details`).forEach((d) => { d.open = true; }); }, block('goals')); await sleep(f, 300);
+			const got = await f.evaluate((sel) => { const b = document.querySelector(sel); return { text: b.textContent.replace(/\s+/g, ' '), ids: [...b.querySelectorAll('[id^="setting-"], [data-setting-id]')].map((r) => (r.id && r.id.indexOf('setting-') === 0 ? r.id.slice(8) : '') || r.getAttribute('data-setting-id')) }; }, block('goals'));
+			words[id] = got.text; ids[id] = [...new Set(got.ids)];
+		}
+		const all = Object.values(words).join(' ');
+		const old = ['template', 'phase', 'crew', 'Model for Goal work', 'Run test profile', 'Ask me to confirm', 'Receipt strength', 'Rethink the plan', 'Verify', 'Goal mode', 'New Goals start with'].filter((w) => new RegExp(w, 'i').test(all));
+		await t.check('no tab of it speaks of the old Goal (templates, phases, a crew or model of its own, checks, receipt strengths)', old.length === 0, old.join(', '));
+		const want = {
+			defaults: ['planning.verification.goal-write-mode', 'planning.verification.goal-auto-resume', 'planning.verification.goal-checkpoint-cadence', 'planning.verification.goal-interruption', 'planning.verification.interrupt-settlement', 'planning.verification.heartbeat-interval', 'planning.verification.stall-detection', 'planning.verification.true-blocker-escalation', 'planning.verification.blocker-detail', 'planning.verification.cloud-local-display', 'general.interaction.run-graph-mode', 'general.interaction.graph-density', 'general.interaction.progress-widget-layout', 'planning.verification.invisible-goal-authority'],
+			schedules: ['safety.approvals.schedule-missed-policy', 'safety.approvals.schedule-grace-minutes', 'safety.approvals.schedule-wind-down-minutes', 'safety.approvals.schedule-resume-next-window', 'safety.approvals.schedule-dst-policy'],
+			proof: ['planning.verification.completion-receipts', 'planning.verification.evidence-span', 'planning.verification.source-evidence-layers', 'planning.verification.receipt-evidence-policy', 'planning.verification.evidence-detail']
+		};
+		for (const id of Object.keys(want)) await t.check(`the ${id} tab draws exactly its own settings`, JSON.stringify([...ids[id]].sort()) === JSON.stringify([...want[id]].sort()), JSON.stringify({ missing: want[id].filter((x) => !ids[id].includes(x)), extra: ids[id].filter((x) => !want[id].includes(x)) }));
+		await tab(f, 'goals', 'proof');
+		const receipt = await f.evaluate((sel) => { const c = document.querySelector(`${sel} .rf-goal-receipt`); return c ? { rows: [...c.querySelectorAll('.pm51-kv-row > span:first-child')].map((n) => n.textContent.trim()), controls: c.querySelectorAll('input, button, select, [role="switch"]').length } : null; }, block('goals'));
+		await t.check('Proof shows an example receipt, read only: the Goal, the outcome, what backs it, what is left', !!receipt && receipt.rows.join('|') === 'Goal|Outcome|Backed by|Left over' && receipt.controls === 0, JSON.stringify(receipt));
+		/* the fourteen settings about checking planned work are live in the Plans: they moved, with their options, to Planning */
+		const checks = ['planning.verification.quality-preference', 'planning.verification.validation-pass', 'planning.verification.independent-review', 'planning.verification.report-visibility', 'planning.verification.auditor-loop', 'planning.verification.repair-loop', 'planning.verification.repair-strategies', 'planning.verification.repair-budget-exhaustion', 'planning.verification.degraded-mode', 'planning.verification.strictness', 'planning.verification.gate-enforcement', 'planning.verification.parallel-stage-enforcement', 'planning.verification.validators-by-node', 'planning.verification.worknode-activation'];
+		await t.check('none of the fourteen checks on planned work is left on the Goals page', checks.every((x) => !Object.values(ids).flat().includes(x)), checks.filter((x) => Object.values(ids).flat().includes(x)).join(', '));
+		await go(f, 'planning', 'planning-reference');
+		await f.evaluate((sel) => { document.querySelectorAll(`${sel} details`).forEach((d) => { d.open = true; }); }, block('planning-reference')); await sleep(f, 400);
+		const plan = await f.evaluate((sel) => { const b = document.querySelector(sel); const sec = (id) => { const s = b.querySelector(`[data-section-id="${id}"]`); return s ? [...new Set([...s.querySelectorAll('[id^="setting-"], [data-setting-id]')].map((r) => (r.id && r.id.indexOf('setting-') === 0 ? r.id.slice(8) : '') || r.getAttribute('data-setting-id')))] : null; }; return { checks: sec('plan-checks'), repair: sec('plan-repair'), more: sec('plan-checks-more'), fixes: (() => { const r = b.querySelector('[id="setting-planning.verification.repair-strategies"]'); return r ? r.querySelectorAll('input[type="checkbox"], [role="checkbox"], .chip-select > button, label').length : -1; })() }; }, block('planning-reference'));
+		const onPlan = [...(plan.checks || []), ...(plan.repair || []), ...(plan.more || [])];
+		await t.check('all fourteen are on the Planning page, in three groups', !!plan.checks && !!plan.repair && !!plan.more && JSON.stringify([...onPlan].sort()) === JSON.stringify([...checks].sort()), JSON.stringify({ checks: (plan.checks || []).length, repair: (plan.repair || []).length, more: (plan.more || []).length }));
+		await t.check('"Ways to fix, in order" kept its ten choices', plan.fixes === 10, String(plan.fixes));
+		/* words left over on other pages: a Goal runs on its chat's persona and model and never uses a crew */
+		await go(f, 'memory', 'personas'); await tab(f, 'personas', 'defaults');
+		const pd = await f.evaluate((sel) => { const r = [...document.querySelectorAll(`${sel} .pm51-row`)].find((x) => (x.querySelector('.pm51-row-label') || {}).textContent.trim() === 'Goals'); return r ? { value: (r.querySelector('.pm51-row-value') || {}).textContent, buttons: r.querySelectorAll('button').length } : null; }, block('personas'));
+		await t.check('Personas › Defaults: a Goal\'s persona is its chat\'s, with nothing to change', !!pd && pd.value === 'Same as its chat' && pd.buttons === 0, JSON.stringify(pd));
+		/* Jared, on Glass: "This line looks weird on the glass theme ... It is touching that glass bar." */
+		await t.app.look(t, 'glass-dark', { save: true }); await sleep(f, 1500);
+		await go(f, 'memory', 'context-memory');
+		const gl = await f.evaluate(() => { const nav = document.querySelector('#pm-settings-root nav.workspace-tabs.rf-bar'), idx = document.querySelector('#pm-settings-root .document-layout > .page-index'); return { line: parseFloat(getComputedStyle(nav).borderBottomWidth), gap: Math.round(idx.getBoundingClientRect().top - nav.getBoundingClientRect().bottom), sheet: idx.dataset.lgKind || '' }; });
+		await t.check('Glass: the bar has no line, and the side column\'s sheet starts clear of it', gl.line === 0 && gl.gap >= 10, JSON.stringify(gl));
+		/* "when I am scrolling, the background lines jump back and forth on the left side behind the panels": a pinned
+		   sheet's frost must be the layer that is fixed to the window (the stack is five layers, the frost last) */
+		const pin = await f.evaluate(() => { const layers = (s) => { let d = 0, n = 1; for (const c of s) { if (c === '(') d++; else if (c === ')') d--; else if (c === ',' && d === 0) n++; } return n; }; return ['div.left-panel', 'aside.domain-rail', 'header.title-bar', 'footer.pm7-statusbar'].map((sel) => { const e = document.querySelector(sel); if (!e || !e.dataset.lgKind) return { sel, sheet: false }; e.setAttribute('data-lg-fixed', ''); const cs = getComputedStyle(e); const att = cs.backgroundAttachment.split(',').map((x) => x.trim()), n = layers(cs.backgroundImage), last = /frost|blob:|url\(/.test(cs.backgroundImage.slice(cs.backgroundImage.lastIndexOf(', ') + 1)); e.removeAttribute('data-lg-fixed'); return { sel, sheet: true, n, att: att.join(' '), ok: att.length === n && att[n - 1] === 'fixed' && att.slice(0, n - 1).every((x) => x === 'scroll') }; }); });
+		await t.check('Glass: a pinned sheet pins its frost, the last layer, and nothing else', pin.filter((x) => x.sheet).length >= 3 && pin.filter((x) => x.sheet).every((x) => x.ok), JSON.stringify(pin));
+		await t.app.look(t, 'basic-dark', { save: true }); await sleep(f, 1200);
+		const basic = await f.evaluate(() => parseFloat(getComputedStyle(document.querySelector('#pm-settings-root nav.workspace-tabs.rf-bar')).borderBottomWidth));
+		await t.check('the other looks keep the line under the bar', basic >= 1, String(basic));
+	},
+
 	async 'Limits & switching is the one home of a service\'s switching rules'(t) {
 		const f = await openSettings(t);
 		await go(f, 'ai', 'providers'); await tab(f, 'providers', 'limits');
@@ -534,14 +591,22 @@ export const tests = {
 		const f2 = t.root === t.page ? t.page.mainFrame() : t.root;
 		await f2.locator('#tab-settings').click(); await f2.waitForSelector('#pm-settings-root .domain-link', { timeout: 20000 }); await sleep(f2, 800);
 		const theirs = await inventory(f2);
-		const lostIds = theirs.ids.filter((x) => !mine.ids.includes(x));
+		/* the seventh pass (Jared, 2026-11-24: "There are still some artifacts from the old version of goals ... that needs
+		   to be cleaned up"): the five settings DL-478 retired from the Plans on his ruling of 2026-11-12 are drawn nowhere,
+		   and the actions that only served the old Goal's templates, its own persona/crew/test profile/confirm step and its
+		   receipt strengths are gone with them. Nothing else may be missing. */
+		const retired = ['planning.verification.certification-level', 'planning.verification.goal-replan-behavior', 'planning.verification.goal-replan-events', 'planning.verification.goal-template', 'planning.verification.receipt-type'];
+		const oldGoal = ['pm51-goals-default', 'pm51-goals-receipts-help', 'pm51-goals-reset', 'pm51-goals-template-edit', 'pm51-goals-template-new', 'pm51-goals-verification', 'pm51-goals-verification-toggle', 'pm51-personas-goal-default'];
+		const lostIds = theirs.ids.filter((x) => !mine.ids.includes(x) && !retired.includes(x));
 		/* actions that left with a repeat (README, "Removed because it was there twice"): the arrow that only opened a
 		   service from Limits & switching; nothing else */
-		const allowed = new Set(['pm51-providers-policy-open']);
+		const allowed = new Set(['pm51-providers-policy-open', ...oldGoal]);
 		const lostActions = theirs.actions.filter((x) => !mine.actions.includes(x) && !allowed.has(x));
 		t.log(`views ${theirs.views.length} -> ${mine.views.length}; setting ids ${theirs.ids.length} -> ${mine.ids.length}; actions ${theirs.actions.length} -> ${mine.actions.length}`);
-		/* the sixth pass gave the browser's page four tabs where it had none: three views more, none fewer */
-		await t.check('no view is gone; the only new ones are the browser\'s three more tabs', mine.views.length === theirs.views.length + 3, `${theirs.views.length} / ${mine.views.length}`);
+		/* the sixth pass gave the browser's page four tabs where it had none (three views more); the seventh made the
+		   Goals page's four tabs three (Templates left with the old Goal, Recovery's rows are on Goals): one view fewer */
+		await t.check('the views are the unchanged page\'s, plus the browser\'s three more tabs, less the old Goal\'s Templates tab', mine.views.length === theirs.views.length + 2, `${theirs.views.length} / ${mine.views.length}`);
+		await t.check('the five retired Goal settings are drawn nowhere, and the old Goal\'s actions are gone', retired.every((x) => !mine.ids.includes(x)) && oldGoal.every((x) => !mine.actions.includes(x)), JSON.stringify({ ids: retired.filter((x) => mine.ids.includes(x)), actions: oldGoal.filter((x) => mine.actions.includes(x)) }));
 		await t.check('the fifty proposed browser rows are drawn as settings', mine.ids.filter((x) => !theirs.ids.includes(x)).filter((x) => /^planning\.testing\.(browser|recording|screenshot)-/.test(x)).length === 50, String(mine.ids.filter((x) => !theirs.ids.includes(x)).length));
 		await t.check('every setting is still drawn somewhere', lostIds.length === 0, lostIds.join(', '));
 		await t.check('every action is still offered somewhere', lostActions.length === 0, lostActions.join(', '));

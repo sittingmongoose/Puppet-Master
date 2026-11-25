@@ -499,7 +499,7 @@
     if (!catalog.length) return PM51.note((p.readiness || {}).installed ? 'Models appear here after sign-in.' : 'Models appear here after you install and sign in.');
     if (!accountReady(p, acc)) return `<div class="pm51-row-value is-muted o55-acc-wait">${h(modelWaitFor(p, acc))}</div>`;
     const on = accEnabled(p, acc);
-    const rows = [{ label: 'Default model', help: 'Used unless a job or a Goal picks another.', control: on.length ? PM51.dropdown(acc.defaultModel, on.map(m => [m.id, m.name]), { action: 'pm51-providers-account-model-default', data, label: 'Default model' }) : muted('Turn on a model first') }];
+    const rows = [{ label: 'Default model', help: 'Used unless a chat or a job picks another.', control: on.length ? PM51.dropdown(acc.defaultModel, on.map(m => [m.id, m.name]), { action: 'pm51-providers-account-model-default', data, label: 'Default model' }) : muted('Turn on a model first') }];
     catalog.forEach(m => {
       const am = accModel(acc, m.id);
       rows.push({

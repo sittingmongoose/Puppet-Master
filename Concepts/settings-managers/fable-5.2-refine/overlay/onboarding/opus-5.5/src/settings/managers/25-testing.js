@@ -65,7 +65,7 @@
   const SIZES = [['desktop', 'Desktop 1440 × 1000'], ['narrow', 'Narrow 900 × 900'], ['phone', 'Phone 390 × 844']];
   const DEVICES = [['this', 'This computer', 'Opens the app here, in its own window.'], ['simulator', 'A phone simulator', 'iOS Simulator or Android Emulator, when installed.'], ['device', 'A real phone or tablet', 'Plugged in with a cable.']];
   const WHERE = [['local', 'On this computer', 'Quickest. Uses what is installed here.'], ['container', 'In a clean container', 'Starts fresh each time, from your Dockerfile.'], ['server', 'On your server', 'The computer chosen under Containers & Execution.']];
-  const MOMENTS = [{ value: 'none', label: 'Only when I ask', meta: 'Start it with Run now' }, { value: 'afterEdits', label: 'After meaningful edits', meta: 'Quick checks while you work' }, { value: 'beforeCompletion', label: 'Before a job counts as done', meta: 'The assistant must pass it first' }, { value: 'manual', label: 'Full runs and release Goals', meta: 'When you ask for a full run' }];
+  const MOMENTS = [{ value: 'none', label: 'Only when I ask', meta: 'Start it with Run now' }, { value: 'afterEdits', label: 'After meaningful edits', meta: 'Quick checks while you work' }, { value: 'beforeCompletion', label: 'Before a job counts as done', meta: 'The assistant must pass it first' }, { value: 'manual', label: 'Full runs and releases', meta: 'When you ask for a full run' }];
   const MOMENT_TRIGGER = { none: 'Only when I ask', afterEdits: 'After meaningful edits', beforeCompletion: 'Before completion', manual: 'Manual or release Goal' };
   /* When a profile runs has one answer: the moments "When tests run" gives it. A profile's own "When it runs", its list
      line, its Edit panel's Moment and the gate details all read that answer, and Edit's Moment writes it; p.trigger only
@@ -168,7 +168,7 @@
         body: PM51.rows([
           { label: 'After meaningful edits', help: 'Quick checks while you work.', control: sel(tr.afterEdits, 'afterEdits', 'After meaningful edits') },
           { label: 'Before completion', help: 'The assistant must pass this before it says a job is done.', control: sel(tr.beforeCompletion, 'beforeCompletion', 'Before completion') },
-          { label: 'Manual or release', help: 'When you ask for a full run, or a release Goal starts.', control: sel(tr.manual, 'manual', 'Manual or release') }
+          { label: 'Manual or release', help: 'When you ask for a full run, or a release is being made.', control: sel(tr.manual, 'manual', 'Manual or release') }
         ])
       }),
       PM51.section({
@@ -334,7 +334,7 @@
     PM51.panel({
       title: `Edit ${p.name}`, subtitle: 'Changes apply to the next run.', icon: 'test',
       body: PM51.panelSection('Name and purpose', PM51.field('Name', PM51.input(p.name, { data: { field: 'name' } })) + PM51.field('What it checks', PM51.input(p.description || '', { data: { field: 'description' } })))
-        + PM51.panelSection('When it runs', PM51.field('Moment', PM51.select(nowMoment, TRIGGERS, { data: { field: 'trigger' }, label: 'Moment' }), momentsOf(p).length > 1 ? `It runs at ${momentsOf(p).length} moments now. Picking one here keeps it at that moment only.` : 'The same choice as under When to test.'))
+        + PM51.panelSection('When it runs', PM51.field('Moment', PM51.select(nowMoment, TRIGGERS.map(t => [t, t === 'Manual or release Goal' ? 'Manual or release' : t]), { data: { field: 'trigger' }, label: 'Moment' }), momentsOf(p).length > 1 ? `It runs at ${momentsOf(p).length} moments now. Picking one here keeps it at that moment only.` : 'The same choice as under When to test.'))
         + guided
         + PM51.panelSection('Stages', PM51.field('Stages, one per line', `<textarea class="text-control" data-field="stages" rows="5">${h((p.stages || []).join('\n'))}</textarea>`, k ? 'They run in this order. Left as they are, they follow your answers above.' : 'They run in this order.'))
         + (k ? '' : PM51.panelSection('Checks', PM51.field('Browser checks', PM51.input(p.browser || '', { data: { field: 'browser' }, placeholder: 'e.g. Smoke only when GUI-related' })) + PM51.field('Native checks', PM51.input(p.native || '', { data: { field: 'native' }, placeholder: 'e.g. Build check' })))),
