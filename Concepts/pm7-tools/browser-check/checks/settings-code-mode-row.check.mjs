@@ -15,8 +15,9 @@ const ID = 'code.execution.code-mode';
 /* the inventory row itself: the label and the complete sentence the page has to draw */
 const INV = JSON.parse(readFileSync(new URL('../../../../Plans/settings_inventory.json', import.meta.url), 'utf8')).settings.find((s) => s.id === ID);
 const norm = (s) => String(s || '').replace(/\s+/g, ' ').trim();
-/* the page draws inventory labels in sentence case (Settings_System §4), so "Code Mode" reads "Code mode" */
-const sameLabel = (drawn) => norm(drawn).toLowerCase() === norm(INV.label).toLowerCase();
+/* Code Mode is a fixed phrase (Settings_System §4 keeps those through sentence case), so the page draws the
+   inventory label letter for letter; "Code mode" fails (review 5) */
+const sameLabel = (drawn) => norm(drawn) === norm(INV.label);
 const ROW = ([id, label, desc]) => {
 	const sw = [...document.querySelectorAll(`.toggle[role="switch"][data-setting="${id}"], [data-setting-id="${id}"] .toggle[role="switch"]`)]
 		.find((el) => el.getClientRects().length && el.checkVisibility());
@@ -27,7 +28,7 @@ const ROW = ([id, label, desc]) => {
 	/* shown, not only present: the innermost element that holds exactly these words passes the computed visibility
 	   checks, has a box, and lies inside the window and inside every ancestor that clips or scrolls (review 3: innerText
 	   also returns clipped text). This is geometry and computed style, not a pixel reading of the words' ink. */
-	const holder = (words) => [...row.querySelectorAll('*')].filter((el) => (el.innerText || '').replace(/\s+/g, ' ').trim().toLowerCase() === words.toLowerCase()).pop();
+	const holder = (words) => [...row.querySelectorAll('*')].filter((el) => (el.innerText || '').replace(/\s+/g, ' ').trim() === words).pop();
 	const shown = (el) => {
 		if (!el || !el.checkVisibility({ opacityProperty: true, visibilityProperty: true, contentVisibilityAuto: true })) return false;
 		const b = el.getBoundingClientRect();

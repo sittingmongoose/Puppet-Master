@@ -3776,6 +3776,7 @@ These ids change the view that draws them. Nothing else about them changes.
 | `planning.testing.browser-capture-full-default`, `browser-component-action`, `browser-component-crop`, `browser-devtools-policy` | Testing & Debug | Built-in browser › Screenshots and developer tools |
 | `code.execution.execution-strategy`, `strategy-override` | Server & Project Location | Permissions › Profiles › Who runs the tools |
 | `code.execution.mode-overlay` | Containers | Permissions › Profiles › New runs and chats, next to the run mode it narrows |
+| `code.execution.code-mode` | Containers | Providers & Accounts › Models › More options › How models answer, after Think between tool steps (Tools T-191) |
 | `memory.limits.run-token-budget`, `goal-token-budget` | Context & Memory | Permissions › Limits › Limits for one run |
 | `general.startup.onboarding`; `planning.interview.wizard-first-run`, `provider-setup-skip` | App & Input; Planning & Interviews | Readiness & Doctor › Setup and tour |
 | `system.advanced.config-format`, `legacy-config-names` | Advanced Settings | Settings Transfer › File format and older versions |
