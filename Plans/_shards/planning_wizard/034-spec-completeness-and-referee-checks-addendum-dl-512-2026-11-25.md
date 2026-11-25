@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L4959-L5159
+Source lines: L4959-L5161
 
-Source SHA256: `88ed7bad4d86e4231fb4d9c9db2c7801fd5ad26a282a0df6aba00fa815bde350`
+Source SHA256: `93596407d254cad6eb5de26eb07763c4c054b3783195a77631c1e91eac636bee`
 
 ---
 
@@ -123,7 +123,8 @@ canonical_text: >-
   the passing cases include one on each route that can accept a payload under the whole approved contract (a route the
   contract requires to accept but for which no valid case exists keeps its finding or test gap) and, wherever the contract admits one, a contrasting accepted control: an input that breaks the assertion on a route that does not select it, with any routing fields that route requires, expected to be accepted; it reuses a selector-switched refusing input where that payload is valid on the other route, and is otherwise generated separately; each behavioural acceptance criterion gets a case for each input condition it lists, asserting the outcome it
   states and carrying its state and effect assertions (a refusal only where it prescribes one, otherwise its stated resulting state or
-  returned result); and each
+  returned result), a mixed criterion's specified outcomes getting cases while its measured obligations keep its
+  ATS-003 oracle; and each
   risk property gets its matching cases: every state-machine transition and at
   least one illegal transition from each state wherever a declared operation or sequence can produce one (a state whose
   closed transition table is total records its covered state and operation pairs instead, and an unspecified
@@ -160,7 +161,8 @@ canonical_text: >-
   and the planning check and PlanCompile use the same generators and stopping condition. Each risky contract has a budget the planning run sets,
   200 generated inputs or 10 minutes of machine time by default, whichever comes first; the required cases run first
   and count against it, and every required case left unrun at the limit, including the remaining cases of a rule the run had started, is
-  listed under its rule as a test gap for PNC-038, never as a named gap. The referee, its cases, the generated inputs, the observed outcomes, the named gaps and the test gaps are planning
+  listed under its rule as a test gap for PNC-038 (a writer-order family over the budget listed by its one bounded gap
+  record), never as a named gap. The referee, its cases, the generated inputs, the observed outcomes, the named gaps and the test gaps are planning
   evidence. Plans/Plan_To_Node_Compilation.md#PNC-038 binds as WorkNode fixtures only the cases whose expected outcome
   the approved contract states; an observed outcome is never a fixture's expectation. The
   check runs with the models the planning run already uses plus code: it never requires an additional independent
@@ -178,7 +180,7 @@ acceptance_criteria:
   - "A named gap rests on code-established coverage of the rule by its catching rules, with the recorded inputs and codes; a search that ends with neither an attributable refusal, recorded impossibility evidence nor a recorded deletion witness is a test gap, and a witness earns deletion-detection credit, never refusal credit; each member of a required list or other per-member constraint that stays per-member after the companion's attribution (not one inside a not, which is one assertion) is its own rule under the same polarity rule: its own refusal wherever that polarity is possible, otherwise its recorded evidence (recorded code evidence of a kind the companion defines (such as a named gap, a selector that guarantees the assertion, or a deletion that changes no approved outcome), or, where the bounded search records code evidence that no attributable refusal demonstrates the deletion, a recorded deletion witness whose whole-contract outcome changes when just that assertion is deleted, bound with its original approved outcome, which is then its required test); a refusal is credited to a rule only when the whole contract refuses the input because of that rule, by the companion's attribution."
   - "Every case checks its outcome and every owner-stated state and effect assertion through a declared observation surface, for either polarity."
   - "A schema rule has a case for each polarity the approved contract makes possible, its passing case reaching and satisfying the same effective assertion in the same applicable branch of the assertion, a passing case being excused only on recorded code evidence that no accepted input reaches and satisfies the assertion, and a refusing case only on code-established evidence recorded with the rule (recorded code evidence of a kind the companion defines (such as a named gap, a selector that guarantees the assertion, or a deletion that changes no approved outcome), or, where the bounded search records code evidence that no attributable refusal demonstrates the deletion, a recorded deletion witness whose whole-contract outcome changes when just that assertion is deleted, bound with its original approved outcome, which is then its required test); an assertion an if selects has a passing case on each route that can accept a payload under the whole approved contract and, wherever the contract admits one, a contrasting accepted control that still breaks it on a route that does not select it."
-  - "The budget ends at whichever limit comes first, required cases run first, and every required case left unrun at the limit, including the rest of a rule whose cases were partly run (as when the budget ends between two required cases of one rule), is listed under its rule as a test gap, never as a named gap."
+  - "The budget ends at whichever limit comes first, required cases run first, and every required case left unrun at the limit, including the rest of a rule whose cases were partly run (as when the budget ends between two required cases of one rule), is listed under its rule as a test gap, a writer-order family over the budget by its one bounded gap record, never as a named gap."
   - "Design findings follow PWIZ-028's bounded round; non-blocking leftovers are open questions and recorded gaps that do not hold the topic out of Ready, and a blocking leftover is a PWIZ-006 typed blocker."
   - "Referee cases cover schema rules and behavioural acceptance criteria only; other criteria keep their ATS-003 oracles, and a mixed criterion's measured obligations keep its oracle while its specified outcomes get referee cases."
   - "The check needs no additional independent model, no two-reviewer proof and no technical user question."
