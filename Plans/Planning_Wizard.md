@@ -4977,7 +4977,7 @@ canonical_text: >-
   failure code, or a declared failure of an operation, command or event whose contract leaves undecidable, on any of
   its callable surfaces, whether the same input without the failing condition is accepted there (Plans/Plan_To_Node_Compilation.md#PNC-038 carries it as a recorded
   gap in place of the missing passing neighbour); an entity whose state changes without a state machine that names its states, transitions, triggers
-  and terminal states; a requirement without acceptance criteria or a validation surface; a pointer to a section, unit
+  and terminal states, or whose state machine leaves the outcome of a named state and operation pair unstated; a requirement without acceptance criteria or a validation surface; a pointer to a section, unit
   or artifact that does not resolve, including an operation or event without an interface binding (the callable
   surface it maps to: a route, command, function or storage port, and the observation surfaces through which its
   state and effects are read, written by the planning agent), or without an observation surface for a state or
@@ -5058,8 +5058,9 @@ canonical_text: >-
   declared failure code is a PWIZ-110 finding; a declared validation code shared by several rules is enough when the validator's error path, together with the
   member for a per-member rule, names the rule, and each case records that expected identity. The rules under test are the contract's schema rules and its behavioural acceptance criteria (those with an input
   and an observable outcome), sourced separately from the referee; shape checks get an acceptance-only passing case,
-  and criteria without an input and an outcome (latency gates, visual checks) keep their ATS-003 oracles. Each schema rule gets at least one passing and one refusing case, the passing case reaching and satisfying the
-  same effective assertion in the same applicable branch or route as the refusing one; for an assertion an if selects
+  and criteria without an input and an outcome (latency gates, visual checks) keep their ATS-003 oracles. Each schema rule gets at least one refusing case and, wherever an accepted input can exercise the rule, a passing
+  case that reaches and satisfies the same effective assertion in the same applicable branch or route as the refusing
+  one; a rule or route counts as one no accepted input can reach only when code establishes it (as when its selector conflicts with an enclosing const or enum) and records that evidence with the rule, and otherwise a missing passing case is a test gap; for an assertion an if selects
   the passing cases include one on each route that can accept a payload under the whole approved contract (a route the
   contract requires to accept but for which no valid case exists keeps its finding or test gap) and, wherever the contract admits one, a contrasting
   accepted control: the refusing input with the selector switched to a route that does not select the assertion, and
@@ -5069,7 +5070,7 @@ canonical_text: >-
   risk property gets its matching cases: every state-machine transition and at
   least one illegal transition from each state wherever a declared operation or sequence can produce one (a state whose
   closed transition table is total records its covered state and operation pairs instead, and an unspecified
-  transition stays a PWIZ-110 finding); a write, a cut and a reopen; a stale writer after a fencing change;
+  transition is that PWIZ-110 state-machine finding, or a design finding when the referee first meets it); a write, a cut and a reopen; a stale writer after a fencing change;
   and a caller denied without permission. Where the contract has a schema, code also generates refusing inputs for its schema rules and credits them only as the
   search below describes; inputs that break several rules stay admissible as named-gap evidence. Each case carries its outcome (accepted with any stated result, or refused with its rule's code) and, for either
   polarity, every state and effect assertion the owner text states, such as a refusal that must leave the record,
@@ -5112,7 +5113,7 @@ acceptance_criteria:
   - "Refusal codes are the contract's declared failure codes; a generated input is credited to a rule only when the whole contract refuses it because of that rule, by the companion's attribution, while multi-rule inputs remain admissible as named-gap evidence."
   - "A named gap rests on code-established coverage of the rule by its catching rules, with the recorded inputs and codes; a search that ends on collisions without that coverage is a test gap; each member of a required list or other per-member constraint is its own rule with its own refusal; a refusal is credited to a rule only when the whole contract refuses the input because of that rule, by the companion's attribution."
   - "Every case checks its outcome and every owner-stated state and effect assertion through a declared observation surface, for either polarity."
-  - "Every schema rule's passing case reaches and satisfies the same effective assertion in the same applicable branch as its refusal; an assertion an if selects has a passing case on each route that can accept a payload under the whole approved contract and, wherever the contract admits one, a contrasting accepted control that still breaks it on a route that does not select it."
+  - "Wherever an accepted input can exercise a schema rule, its passing case reaches and satisfies the same effective assertion in the same applicable branch as its refusal, and a rule or route counts as unreachable by accepted input only on code-established evidence recorded with the rule; an assertion an if selects has a passing case on each route that can accept a payload under the whole approved contract and, wherever the contract admits one, a contrasting accepted control that still breaks it on a route that does not select it."
   - "The budget ends at whichever limit comes first, required cases run first, and every required case left unrun at the limit, including the rest of a rule whose cases were partly run (as when the budget ends between two required cases of one rule), is listed under its rule as a test gap, never as a named gap."
   - "Design findings follow PWIZ-028's bounded round; non-blocking leftovers are open questions and recorded gaps that do not hold the topic out of Ready, and a blocking leftover is a PWIZ-006 typed blocker."
   - "Referee cases cover schema rules and behavioural acceptance criteria only; other criteria keep their ATS-003 oracles."

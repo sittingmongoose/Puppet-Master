@@ -16504,7 +16504,7 @@ canonical_text: >-
   During a WorkNode build, the rule fixtures bound by Plans/Plan_To_Node_Compilation.md#PNC-038 run as required tests
   of the node's test strategy (ATS-003). The node completes only when every bound fixture meets its expected outcome (accepted with any stated result, or
   refused with its declared failure code and, where the fixture records one, its error path with the member for a
-  per-member rule) and every state and effect
+  per-member rule, or the diagnostic the owner's approved interface exposes for a semantic refusal) and every state and effect
   assertion the fixture carries holds when read through its declared observation surface. A fixture bound to a designated fixture owner for a rule split across nodes
   (Plans/Plan_To_Node_Compilation.md#PNC-038) counts only when it ran against the designated node's final build
   together with the completed outputs of every other node it exercises, which the Executor brings into that build
@@ -16545,7 +16545,7 @@ gui_classification_reason: Defines automated build verification and a builder re
 depends_on: [DL-512, PNC-038, PNC-015, EP-100, EP-101, EP-102, PWIZ-012, PWIZ-110, ATS-003, ATS-004]
 unblocks: []
 acceptance_criteria:
-  - "A WorkNode with bound rule tests completes only when every bound fixture meets its expected outcome and every state and effect assertion it carries holds through its observation surface, every bound ATS-003 oracle passes, and every recorded test gap is honoured under its test_gap_policy, a deferred harness candidate leaving the node incomplete until the harness work lets its test run and pass, as its TestRunReceipt records."
+  - "A WorkNode with bound rule tests completes only when every bound fixture meets its expected outcome (its declared code and, where recorded, its error path and member or the exposed diagnostic of a semantic refusal) and every state and effect assertion it carries holds through its observation surface, every bound ATS-003 oracle passes, and every recorded test gap is honoured under its test_gap_policy, a deferred harness candidate leaving the node incomplete until the harness work lets its test run and pass, as its TestRunReceipt records."
   - "A fixture for a rule split across nodes counts at completion only when it ran on the designated node's final build with the completed outputs of every other node it exercises, all named in its TestRunReceipt; a pass on an earlier or partial build never counts."
   - "Payload fixtures run against the built validator or a declared consuming operation, except that a fixture for a rule enforced outside the compile's write scope runs only against the exact owner build the node resolves, named in its receipt, counts only when that build's identity matches the node's final owner dependency, a changed dependency needing a fresh run, and counts a refusal only when that build produced it; behaviour fixture adapters are generated from the contract's interface binding and reach prior states by replaying owner operations or a declared seeding port, never by direct storage writes; a hand-written adapter is checked by an automated verification agent that is not the builder; a fixture with no automatic route is a recorded test gap."
   - "A fixture that contradicts its cited span stays required until a successor plan corrects it; the builder never waives or edits a fixture."
