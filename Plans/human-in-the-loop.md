@@ -2650,7 +2650,9 @@ This addendum is canonical HITL spec text for deferred non-runtime FABLE rows. I
 
 Repairs row `sfk-52b55259003ddf5c68bd4d44`.
 
-`PAUSE.md` is a project-root operator gate file with frontmatter fields `pause_id`, `scope`, `reason`, `created_by`, `created_at_utc`, `expires_at_utc?`, and `allowed_action_ids[]`. A valid PAUSE gate blocks new mutating execution in scope until removed or expired. HITL approvals cannot override an active PAUSE gate unless `allowed_action_ids[]` includes the exact requested action. If both PAUSE and HITL are active, PAUSE precedence is evaluated first, then HITL approval.
+`PAUSE.md` is a project-root operator gate file, located at `<project root>/.puppet-master/PAUSE.md` (the Orchestrator's Pause File Location; one file per project), with frontmatter fields `pause_id`, `scope`, `reason`, `created_by`, `created_at_utc`, `expires_at_utc?`, and `allowed_action_ids[]`. A valid PAUSE gate blocks new mutating execution in scope until removed or expired. HITL approvals cannot override an active PAUSE gate unless `allowed_action_ids[]` includes the exact requested action. If both PAUSE and HITL are active, PAUSE precedence is evaluated first, then HITL approval.
+
+The watcher, the closed `scope` values and the handling of a file with missing or invalid frontmatter are owned by `Plans/orchestrator-subagent-integration.md#section=Closure Re-audit Repair Addendum - 2026-11-25` (### Pause Gate Live Contract); OSI-387 is that live per-dispatch check.
 
 ### Canonical HITL Request Contract
 
