@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L6617-L31275
+Source lines: L6620-L31298
 
-Source SHA256: `4e290afe161c830a1ba77a293806ab97f24e67d6668528a1fa94c5530a1f6e87`
+Source SHA256: `f3b67f84c4309b6ce4c0909cd27335581eff5ae15fdc15772f0c865a9871e812`
 
 ---
 
@@ -6109,7 +6109,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Tier-start verification separates BeforeTierStart, DuringTierStart, and AfterTierStart responsibilities, builds StartVerificationResult, logs/handles failures, emits canonical config.validation.passed|warning|failed events, updates redb projections and verification history, and defines src/verification/tier_start.rs with verify_tier_start.
+  Tier-start verification separates BeforeTierStart, DuringTierStart, and AfterTierStart responsibilities, builds StartVerificationResult, logs/handles failures, emits canonical config.validation.passed|warning|failed events, updates redb projections and verification history, and defines src/verification/tier_start.rs with verify_tier_start. verify_tier_start and the BeforeTierStart/DuringTierStart/AfterTierStart labels are legacy names of VerifyUnitStart and its before/during/after phases (Execution-Unit Hook Naming); normalized records use VerifyUnitStart.
 gui_related: true
 gui_classification_reason: This unit covers verification result visibility, events, and persisted projections.
 split_recommended: false
@@ -6166,7 +6166,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  The orchestrator tier-entry example runs verify_tier_start before building execution context, handles VerificationStatus Pass/Fail/Warning through FailFast or WarnAndContinue policy, logs and persists results, and builds execution context only after pass or warn-and-continue.
+  The orchestrator tier-entry example runs verify_tier_start before building execution context, handles VerificationStatus Pass/Fail/Warning through FailFast or WarnAndContinue policy, logs and persists results, and builds execution context only after pass or warn-and-continue. verify_tier_start is the legacy name of VerifyUnitStart (Execution-Unit Hook Naming).
 gui_related: false
 gui_classification_reason: This unit covers backend orchestrator flow, not GUI behavior.
 split_recommended: false
@@ -6285,7 +6285,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  verify_tier_start collects config wiring, GUI-backend mapping, backend-GUI mapping, operation sequence, and known-gap findings; maps severities to fail/warning/pass; and returns a StartVerificationResult with tier_type, node_id, findings, and Utc timestamp.
+  verify_tier_start collects config wiring, GUI-backend mapping, backend-GUI mapping, operation sequence, and known-gap findings; maps severities to fail/warning/pass; and returns a StartVerificationResult with tier_type, node_id, findings, and Utc timestamp. verify_tier_start is the legacy name of VerifyUnitStart (Execution-Unit Hook Naming).
 gui_related: true
 gui_classification_reason: This unit includes GUI/backend mapping algorithm checks and surfaced verification status.
 split_recommended: false
@@ -6872,7 +6872,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  The tier-end orchestrator example introduces tier_end verification integration, collecting artifacts and diff, calling verify_tier_end, mapping VerificationStatus to TierStatus, persisting results, updating tier status, and generating feedback when incomplete.
+  The tier-end orchestrator example introduces tier_end verification integration, collecting artifacts and diff, calling verify_tier_end, mapping VerificationStatus to TierStatus, persisting results, updating tier status, and generating feedback when incomplete. verify_tier_end is the legacy name of VerifyUnitEnd (Execution-Unit Hook Naming).
 gui_related: false
 gui_classification_reason: This unit covers backend orchestrator example flow, not GUI behavior.
 split_recommended: false
@@ -7921,7 +7921,9 @@ owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Platform hook registration uses orchestrator-level hooks as primary middleware while optionally integrating native platform
   hooks: Cursor hook files and events, Codex and Copilot CLI lifecycle outputs, Claude settings hooks with blocking/context
-  behavior, and Gemini orchestrator-level Direct API hooks without native config files.
+  behavior, and Gemini orchestrator-level Direct API hooks without native config files. Codex and Copilot are DirectApi
+  under OSI-004, so like Gemini they use orchestrator-level hooks only; "Codex and Copilot CLI lifecycle outputs" is
+  CLI-era wording kept as historical context only, not an implementation target.
 gui_related: false
 gui_classification_reason: This unit covers provider/runtime hook registration policy, not GUI presentation.
 split_recommended: false
@@ -9162,7 +9164,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   CodexOutputParser parses JSONL according to platform_specs, detects Turn/turn events and structured content, aggregates
-  findings, and reports TextExtraction when no structured output is found.
+  findings, and reports TextExtraction when no structured output is found. This describes CLI-era Codex output and is
+  historical context only, not an implementation target: Codex is DirectApi under OSI-004, and OSI-093 builds its
+  SubagentOutput from the direct-provider response's final assistant content.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -9371,7 +9375,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   CopilotOutputParser parses text according to platform_specs by combining stdout and stderr, extracting the Task Report section
-  as required and Downstream Context as optional through regex section extraction.
+  as required and Downstream Context as optional through regex section extraction. This describes CLI-era Copilot output
+  and is historical context only, not an implementation target: Copilot is DirectApi under OSI-004 and has no stdout or
+  stderr to combine, and OSI-093 builds its SubagentOutput from the direct-provider response's final assistant content.
 gui_related: false
 gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
 split_recommended: false
@@ -9438,7 +9444,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Copilot findings parsing extracts Findings sections with severity, category, description, file, line, and suggestion fields,
-  mapping Critical, Major, Minor, and Info strings to Severity values before returning SubagentOutput.
+  mapping Critical, Major, Minor, and Info strings to Severity values before returning SubagentOutput. The text-section
+  extraction is the CLI-era Copilot parser and historical context only (OSI-004, OSI-093); the field set and the
+  Critical/Major/Minor/Info to Severity mapping still apply to findings read from Copilot's final assistant content.
 gui_related: false
 gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
 split_recommended: false
@@ -9577,7 +9585,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  AfterTier handoff validation logs platform, error type, and partial output snippet details, requests one retry with structured
+  AfterUnit handoff validation (the AfterTier hook name is an import-only alias stored as hook_name_normalized = AfterUnit
+  per Execution-Unit Hook Naming) logs platform, error type, and partial output snippet details, requests one retry with structured
   JSON output instruction, and after retry failure proceeds with partial output fail-safe while preserving complete-with-warnings
   source wording.
 gui_related: false
@@ -10848,7 +10857,9 @@ owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Most lifecycle features are orchestrator-level and platform-agnostic, while handoff validation and contract enforcement
   require parser-specific JSON, JSONL, or text handling; platform-native hooks may be used where available while orchestrator
-  middleware remains the fallback for all platforms.
+  middleware remains the fallback for all platforms. The parser handling is transport-scoped by OSI-093 (JSON over CliBridge
+  CLI output, JSON over the DirectApi final assistant content, the ServerBridge event stream); JSONL and text handling are
+  CLI-era Codex and Copilot history, and platform-native hooks exist only for the CliBridge providers (Cursor, Claude Code).
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
@@ -12876,7 +12887,10 @@ owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Orchestrator integration uses src/core/orchestrator.rs and tier_config_for(tier_type) -> &TierConfig as the source for
   platform, model, and plan_mode, then reads enable_tier_subagents and subagent config, applies tier_overrides, filters
-  disabled_subagents, and adds required_subagents.
+  disabled_subagents, and adds required_subagents. Under OSI-425 those steps run once, when the legacy keys are imported
+  and normalized into SubagentPolicy (`schema_id: pm.subagent_policy.v1`); at runtime the orchestrator reads only the
+  normalized SubagentPolicy for admission, selection, disabled and required subagents, and never reads enable_tier_subagents
+  or tier_overrides as the runtime gate or merge path.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration configuration merge behavior rather than GUI presentation.
@@ -13272,7 +13286,8 @@ owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Tier start/end verification lives with config-wiring verification under src/verification/, src/core/, or tier_verification.rs,
   and the main orchestrator calls verify_tier_start on Phase/Task/Subtask entry and verify_tier_end after the acceptance gate
-  before marking the tier complete.
+  before marking the tier complete. verify_tier_start and verify_tier_end are legacy names of VerifyUnitStart and VerifyUnitEnd
+  (Execution-Unit Hook Naming); normalized records use the canonical names.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend verification placement and lifecycle timing rather than GUI presentation.
@@ -13440,8 +13455,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Hook integration preserves the ordering that BeforeUnit runs before verify_tier_start and AfterUnit runs after
-  verify_tier_end, with active-subagent tracking, context injection, stale-state pruning, handoff-format validation, and
+  Hook integration preserves the ordering that BeforeUnit runs before VerifyUnitStart and AfterUnit runs after
+  VerifyUnitEnd (verify_tier_start and verify_tier_end are import-only aliases per Execution-Unit Hook Naming), with active-subagent tracking, context injection, stale-state pruning, handoff-format validation, and
   completion tracking treated as compatibility/source summary for the hook owner path.
 gui_related: false
 gui_classification_reason: >-
@@ -13783,7 +13798,10 @@ owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Structured handoff validation extends validate_subagent_output() with platform-specific parsers, including JSON for
   Cursor, Claude, and Gemini, JSONL for Codex, and text parsing for Copilot, and contract enforcement retries malformed
-  output before failing safe.
+  output before failing safe. Under the OSI-004 ProviderTransport taxonomy those parsers are transport-scoped as OSI-093
+  states: JSON over CLI output for the CliBridge providers (Cursor, Claude Code) and JSON over the direct-provider
+  response's final assistant content for the DirectApi providers (Codex, Copilot, Gemini); JSONL for Codex and text
+  parsing for Copilot describe CLI-era output and are historical context only, not implementation targets.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend structured handoff parsing and contract enforcement rather than GUI presentation.
@@ -16223,7 +16241,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   File operations can be detected by parsing agent output, native PreToolUse/PostToolUse hooks where available, or
-  Codex/Copilot normalized CLI stream or tool events.
+  Codex/Copilot normalized CLI stream or tool events. Codex and Copilot are DirectApi under OSI-004, so for them this means
+  the tool-call events in the direct-provider response; "normalized CLI stream" is CLI-era wording kept as historical
+  context only.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend event extraction and provider adapter evidence rather than GUI presentation.

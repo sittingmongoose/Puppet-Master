@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L1128-L1237
 
-Source SHA256: `4e290afe161c830a1ba77a293806ab97f24e67d6668528a1fa94c5530a1f6e87`
+Source SHA256: `f3b67f84c4309b6ce4c0909cd27335581eff5ae15fdc15772f0c865a9871e812`
 
 ---
 
@@ -66,13 +66,13 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 ### 5. Tier overrides: one list per tier vs contextual keys
 
 - **Gap:** YAML shows `tierOverrides.phase.default`, `.phase.architecture`, `.phase.product`, `.task.rust`, `.task.python`, etc. The GUI section says "for each tier (phase/task/subtask/iteration), a text field or list editor for override subagent names."
-- **Clarify:** Resolved to **Simple v1** for the primary user flow: one list per tier (`phase`, `task`, `subtask`, `iteration`) so `tier_overrides` is a tier-keyed map such as `phase: [collaborator]` or `task: [rust-engineer]`. Full contextual keys remain an advanced raw-registry surface only and must not replace the Simple v1 UI unless a later PlanUnit promotes them.
+- **Clarify:** Resolved to **Simple v1** for the primary user flow: one list per tier (`phase`, `task`, `subtask`, `iteration`) so `tier_overrides` is a tier-keyed map such as `phase: [collaborator]` or `task: [rust-engineer]`. This is the compatibility import/export shape; it normalizes into SubagentPolicy (OSI-425) and is not read as a runtime merge path. Full contextual keys remain an advanced raw-registry surface only and must not replace the Simple v1 UI unless a later PlanUnit promotes them.
 
 ### 6. Orchestrator and subagent code not yet present
 
 
 - **Gap:** The plan references `execute_tier_with_subagents`, `build_subagent_invocation`, `execute_with_subagent`, and `SubagentSelector`. These do not exist in the codebase yet; they are specified in the plan's "Integration with Orchestrator" and Phase 3.
-- **Clarify:** Phase 3 (and any subagent execution path) must: (1) Read `enable_tier_subagents` from config; if false, skip subagent invocation (or use a single non-subagent path). (2) When building the list of subagents for a tier, apply `tier_overrides` (replace or merge with selected list), then filter by `disabled_subagents` and ensure `required_subagents` are included. (3) When building `ExecutionRequest` for each subagent run, set `request.plan_mode = tier_config.plan_mode`. Ensure the checklist item "Ensure subagent/invocation path receives tier plan_mode" is done in that code path.
+- **Clarify:** Phase 3 (and any subagent execution path) must: (1) Read `enable_tier_subagents` from config; if false, skip subagent invocation (or use a single non-subagent path). (2) When building the list of subagents for a tier, apply `tier_overrides` (replace or merge with selected list), then filter by `disabled_subagents` and ensure `required_subagents` are included. Steps (1) and (2) are now the import normalization of OSI-425, not the runtime path: `enable_tier_subagents` and `tier_overrides` are compatibility import/export keys normalized into SubagentPolicy (`schema_id: pm.subagent_policy.v1`), and runtime admission and selection read only that SubagentPolicy (OSI-078, OSI-081, OSI-214). (3) When building `ExecutionRequest` for each subagent run, set `request.plan_mode = tier_config.plan_mode`. Ensure the checklist item "Ensure subagent/invocation path receives tier plan_mode" is done in that code path.
 
 ### 7. Message enum and app.rs handlers
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L35102-L35131
+Source lines: L35126-L35156
 
-Source SHA256: `4e290afe161c830a1ba77a293806ab97f24e67d6668528a1fa94c5530a1f6e87`
+Source SHA256: `f3b67f84c4309b6ce4c0909cd27335581eff5ae15fdc15772f0c865a9871e812`
 
 ---
 
@@ -27,14 +27,15 @@ Repairs `sfk-52b55259003ddf5c68bd4d44` (registry lines 1501 and 1588).
 
 Repairs `sfk-15a9ffa7a7561411bb7625a4` (registry line 1518); binds OSI-094, Handoff Retry Ceiling and Unrelated-failure escalation to the existing `cmd.runtime.*` recovery commands in `Plans/UI_Command_Catalog.md`. No new command id is added.
 
-- Raise: when the platform parser, the generic fallback and the one automatic retry all fail (OSI-094), or `subagent.handoff.max_retries` is exhausted (Handoff Retry Ceiling), the attempt settles with `failure_class = structured_output_invalid`, the raw output stays in the `parser.error` seglog event, a `handoff_retry_exhausted` record is written, and the node takes the `needs_review` overlay (§7 Retry/backoff matrix) at a recovery point with a minted `blocked_sequence`. The Unrelated-failure escalation CTA is raised the same way after its one automatic retry.
+- Raise: when the platform parser, the generic fallback and the one automatic retry all fail (OSI-094), or `subagent.handoff.max_retries` is exhausted (Handoff Retry Ceiling), the attempt settles with `failure_class = structured_output_invalid`, the raw output stays in the `parser.error` seglog event, a `handoff_retry_exhausted` record is written, and the node takes the `needs_review` overlay (§7 Retry/backoff matrix) at a recovery point with a minted `blocked_sequence`.
+- Raise for the Unrelated-failure escalation CTA (OSI-136): when an attempt fails because of issues outside its intended scope and its one automatic retry with the same config also fails, the retried attempt keeps the classifier family and classifier the executor emitted for it (`failure_class` or `blocked_reason_code`, §7 Retry/backoff matrix: never coerced into `structured_output_invalid` or another `failure_class`). No `parser.error` event and no `handoff_retry_exhausted` record is written for it unless that attempt really was a structured-output parse failure. The node waits at a recovery point with a minted `blocked_sequence` and the chat CTA; a modal replaces the chat CTA only for P0 risk (OSI-136). The attempt's own classifier row still governs anything the matrix makes automatic (for example `provider_transient` retries run before this escalation is reached).
 - Local spellings map to canonical `allowed_action_id` values: `retry` -> `retry_now`; `skip_with_operator_acceptance` -> `skip_node`; `view_raw_output` -> `open_details`. The recovery point's `allowed_action_ids[]` is `[retry_now, skip_node, open_details]` for the parser prompt and `[open_details, skip_node, retry_now, abort_run]` for the Assistant chat CTA (review, skip, retry, abort).
 
 | Control | `allowed_action_id` | Command | Payload | State after success |
 |---|---|---|---|---|
 | [Retry] / chat retry | `retry_now` | `cmd.runtime.retry_now` | the catalog's `retry_now` arguments for this node: `project_id`, `run_id`, `node_id`, `blocked_sequence`, `attempt_id`, `idempotency_key` | The recovery point closes; a new attempt with a new `attempt_id` is dispatched for the same node and handoff. This operator retry is outside the automatic `subagent.handoff.max_retries` count. If it fails the same way, a new recovery point with a new `blocked_sequence` is raised. |
-| [Skip] / chat skip | `skip_node` | `cmd.runtime.skip_node` | `run_id`, `node_id`, `attempt_id`, `reason_code = handoff_retry_exhausted`, `operator_note?` (human-in-the-loop.md Skip And Cancel Commands) | The node settles as skipped by the operator; no Downstream Context or partial SubagentOutput is forwarded from it; the run continues with the remaining nodes. |
-| [View raw output] / chat review | `open_details` | `cmd.runtime.open_attempt_details` | `run_id`, `node_id`, `attempt_id` | No state change. Attempt details open on the raw output kept in `parser.error`; the recovery point stays open. |
-| chat abort | `abort_run` | `cmd.runtime.abort_run` | `run_id`, `reason_code = handoff_retry_exhausted`, `requested_by`, `created_at_utc` | The run ends through the existing abort semantics. |
+| [Skip] / chat skip | `skip_node` | `cmd.runtime.skip_node` | `run_id`, `node_id`, `attempt_id`, `reason_code`, `operator_note?` (human-in-the-loop.md Skip And Cancel Commands); `reason_code = handoff_retry_exhausted` for the parser prompt, and for the Unrelated-failure CTA the failed retry's own classifier value (its `failure_class` or `blocked_reason_code`) | The node settles as skipped by the operator; no Downstream Context or partial SubagentOutput is forwarded from it; the run continues with the remaining nodes. |
+| [View raw output] / chat review | `open_details` | `cmd.runtime.open_attempt_details` | `run_id`, `node_id`, `attempt_id` | No state change. For the parser prompt, attempt details open on the raw output kept in `parser.error`; for the Unrelated-failure CTA they open on the failed retry's classifier, error detail and logs. The recovery point stays open. |
+| chat abort (Unrelated-failure CTA only) | `abort_run` | `cmd.runtime.abort_run` | `run_id`, `reason_code` = the failed retry's own classifier value (its `failure_class` or `blocked_reason_code`), `requested_by`, `created_at_utc` | The run ends through the existing abort semantics. |
 
-- A command whose `blocked_sequence` or `attempt_id` no longer matches the open recovery point is refused as stale and changes nothing. Only one action settles a recovery point.
+- Stale checks use the identity each payload carries. `cmd.runtime.retry_now` is refused as stale, changing nothing, when its `blocked_sequence` or `attempt_id` no longer matches the open recovery point. `cmd.runtime.skip_node` carries no `blocked_sequence`: it is refused as stale when the node has no open recovery point or its `attempt_id` is not the attempt that recovery point was raised for. `cmd.runtime.abort_run` carries only `run_id`: it is never stale against a recovery point, and is refused only when the run is already terminal. `cmd.runtime.open_attempt_details` changes no state and is never refused as stale; it opens the named attempt even after the recovery point closed. Only one of `retry_now`, `skip_node` and `abort_run` settles a recovery point; the first admitted one wins and later ones are refused as stale.

@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L1312-L1401
 
-Source SHA256: `4e290afe161c830a1ba77a293806ab97f24e67d6668528a1fa94c5530a1f6e87`
+Source SHA256: `f3b67f84c4309b6ce4c0909cd27335581eff5ae15fdc15772f0c865a9871e812`
 
 ---
 
@@ -75,7 +75,7 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 ### 10. Meaning of empty override list
 
 - **Issue:** If `tier_overrides.phase = []`, does that mean "no subagents for phase" or "no override; use auto-selected list"?
-- **Mitigation:** **Rule: missing or empty override = use auto-selection.** Only a non-empty override list for a tier replaces the selector output. To force no subagents for a tier, the user sets `enable_tier_subagents` false (global) or we add a per-tier "use no subagents" option in a later version. **Implement:** In the orchestrator, if `tier_overrides.get(tier)` is `None` or `Some([])`, use the list from `SubagentSelector::select_for_tier`; otherwise use the override list. Document in code and in the Config tooltip for tier overrides.
+- **Mitigation:** **Rule: missing or empty override = use auto-selection.** This rule governs how imported `tier_overrides` normalize into SubagentPolicy (OSI-425, OSI-081); runtime selection reads the normalized SubagentPolicy, never `tier_overrides`. Only a non-empty override list for a tier replaces the selector output. To force no subagents for a tier, the user sets `enable_tier_subagents` false (global) or we add a per-tier "use no subagents" option in a later version. **Implement:** In the orchestrator, if `tier_overrides.get(tier)` is `None` or `Some([])`, use the list from `SubagentSelector::select_for_tier`; otherwise use the override list. Document in code and in the Config tooltip for tier overrides.
 
 ### 11. Persistence and dirty state
 
@@ -90,7 +90,7 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 ### 13. Platform-specific hook integration and parser reliability
 
 - **Issue:** Lifecycle hooks and structured handoff validation require platform-specific implementations (native hooks vs orchestrator middleware, JSON vs JSONL vs text parsing). Parsers may fail on edge cases (malformed JSON, missing sections in text, JSONL aggregation errors).
-- **Mitigation:** (1) **Hooks:** For platforms with native hooks (Cursor, Claude, Gemini), register Puppet Master hooks that delegate to platform hooks where possible; for others (Codex, Copilot), use orchestrator-level middleware. Document which platforms use which approach. (2) **Parsers:** Implement robust parsers with fallback behavior: JSON parsers handle missing fields gracefully; JSONL parser aggregates events safely (last event wins, accumulate findings); text parser uses multiple patterns and validates extracted sections. (3) **Fail-safe:** If parsing fails after retry, create partial `SubagentOutput` and mark tier as "complete with warnings" rather than crashing. (4) **Testing:** Add integration tests for each platform's parser with malformed input, missing fields, and edge cases to ensure reliability.
+- **Mitigation:** (1) **Hooks:** For the CliBridge providers with native hooks (Cursor, Claude Code), register Puppet Master hooks that delegate to platform hooks where possible; for the DirectApi providers (Codex, Copilot, Gemini) and the ServerBridge provider (OpenCode), use orchestrator-level middleware (OSI-004, OSI-139). Document which platforms use which approach. (2) **Parsers:** Implement robust parsers with fallback behavior, scoped by transport as OSI-093 says: JSON parsers handle missing fields gracefully for CliBridge CLI output and for the DirectApi final assistant content; the JSONL parser (last event wins, accumulate findings) and the multi-pattern text parser describe CLI-era Codex and Copilot output and are historical context only, not implementation targets. (3) **Fail-safe:** If parsing fails after retry, create partial `SubagentOutput` and mark tier as "complete with warnings" rather than crashing. (4) **Testing:** Add integration tests for each platform's parser with malformed input, missing fields, and edge cases to ensure reliability.
 
 ### 14. Subagent persona overrides (token budget and scope)
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L1544-L3522
+Source lines: L1544-L3525
 
-Source SHA256: `4e290afe161c830a1ba77a293806ab97f24e67d6668528a1fa94c5530a1f6e87`
+Source SHA256: `f3b67f84c4309b6ce4c0909cd27335581eff5ae15fdc15772f0c865a9871e812`
 
 ---
 
@@ -775,10 +775,10 @@ ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:
 **Platform-specific hook registration:**
 
 - **Cursor:** Register hooks in `.cursor/hooks.json` or `~/.cursor/hooks.json` for native hooks (`SubagentStart`, `SubagentStop`, `beforeSubmitPrompt`, `afterAgentResponse`). Also implement orchestrator-level hooks in Rust that wrap platform calls. **Note:** CLI subagents have reported issues (Feb 2026); use orchestrator-level hooks as primary, native hooks as enhancement when CLI subagents are fixed.
-- **Codex:** Use CLI lifecycle outputs and orchestrator-managed hooks/middleware. Implement orchestrator-level hooks as primary middleware.
+- **Codex:** Codex is a Direct API provider (OSI-004); hooks are implemented at the orchestrator level as primary middleware over its direct-provider responses. "CLI lifecycle outputs" is CLI-era wording kept as historical context only; there is no Codex CLI to read.
 - **Claude Code:** Register hooks in `.claude/settings.json` for native hooks (`SubagentStart`, `SubagentStop`, `PreToolUse`, `PostToolUse`, `SessionStart`, `SessionEnd`). Also implement orchestrator-level hooks. Native hooks can block operations (exit code 2) or inject context.
 - **Gemini:** Gemini is a Direct API provider; hooks are implemented at the orchestrator level. No platform-native hook config file is needed for Gemini.
-- **Copilot:** Use CLI lifecycle outputs and orchestrator-managed hooks/middleware. Implement orchestrator-level hooks as primary.
+- **Copilot:** Copilot is a Direct API provider (OSI-004); hooks are implemented at the orchestrator level as primary middleware over its direct-provider responses. "CLI lifecycle outputs" is CLI-era wording kept as historical context only; there is no Copilot CLI to read.
 
 **Hook trait definition:**
 
@@ -1462,7 +1462,7 @@ pub fn validate_subagent_output(
 }
 ```
 
-**Validation logic in AfterTier hook:** AfterTier hook calls `validate_subagent_output(output: &str, stderr: &str, platform: Platform) -> Result<SubagentOutput, ValidationError>`. If validation fails:
+**Validation logic in AfterUnit hook** (legacy alias AfterTier, Execution-Unit Hook Naming)**:** AfterUnit hook calls `validate_subagent_output(output: &str, stderr: &str, platform: Platform) -> Result<SubagentOutput, ValidationError>`. If validation fails:
 1. Log error with details (platform, error type, partial output snippet).
 2. Request one retry (re-run subagent with "format your output as structured JSON" instruction appended to prompt).
 3. If retry also fails, proceed with partial output (fail-safe) but mark tier as "complete with warnings" in `ExecutionUnitContext`.
@@ -1746,7 +1746,7 @@ where
 
 **Application:**
 
-- **BeforeTier/AfterTier hooks:** Wrap hook execution in `safe_hook_main` so hooks never crash.
+- **BeforeUnit/AfterUnit hooks** (legacy alias BeforeTier/AfterTier)**:** Wrap hook execution in `safe_hook_main` so hooks never crash.
 - **Verification functions:** Return `Result<(), VerificationError>` with structured error types.
 - **Subagent output parsing:** On parse failure, return `SubagentOutput { task_report: raw_output, downstream_context: None, findings: vec![] }` (partial output) rather than crashing.
 
@@ -1759,13 +1759,13 @@ where
 
 **Lazy creation:**
 
-- **BeforeTier hook:** On first tier start, create `.puppet-master/verification/<session-id>/` if it doesn't exist.
+- **BeforeUnit hook** (legacy alias BeforeTier)**:** On first unit start, create `.puppet-master/verification/<session-id>/` if it doesn't exist.
 - **State files:** Create on first write (e.g., `active-subagents.json`, `handoff-reports.json`).
 - **No setup command:** Users don't need to run "puppet-master setup" -- state is created automatically.
 
 **Stale pruning:**
 
-- **BeforeTier hook:** Prune verification state older than threshold (e.g., 2 hours of inactivity).
+- **BeforeUnit hook** (legacy alias BeforeTier)**:** Prune verification state older than threshold (e.g., 2 hours of inactivity).
 - **Pruning logic:** Check modification time of state files; delete if older than threshold.
 - **No teardown command:** Cleanup happens automatically during normal operation.
 
@@ -1773,11 +1773,11 @@ where
 
 ### 8. Structured Handoff Contract Enforcement at Runtime
 
-**Concept:** Enforce the structured handoff format (Task Report + Downstream Context + Findings) at runtime via AfterTier hook validation, not just in prompts. This ensures reliability even if prompts are modified.
+**Concept:** Enforce the structured handoff format (Task Report + Downstream Context + Findings) at runtime via AfterUnit hook validation (legacy alias AfterTier), not just in prompts. This ensures reliability even if prompts are modified.
 
 **Enforcement:**
 
-- **AfterTier hook:** Calls `validate_subagent_output()` (see #2 above).
+- **AfterUnit hook** (legacy alias AfterTier)**:** Calls `validate_subagent_output()` (see #2 above).
 - **On validation failure:** Block response, request one retry with format instruction.
 - **After retry:** If still malformed, proceed with partial output (fail-safe) but mark tier as "complete with warnings."
 
@@ -1786,7 +1786,7 @@ where
 **Platform-specific implementation:**
 
 - **Cursor/Codex/Claude/Gemini:** Parse JSON output; validate required fields (`task_report`, `downstream_context`, `findings`).
-- **Copilot:** Parse text output; extract structured sections via regex or pattern matching; validate presence.
+- **Copilot:** Copilot is DirectApi (OSI-004, OSI-093): parse its final assistant content as JSON like the providers above and validate the same required fields. The CLI-era Copilot instruction "Parse text output; extract structured sections via regex or pattern matching; validate presence." is historical context only; pattern extraction survives only as the generic fallback extraction OSI-093 keeps for every transport.
 
 Provider capability rule: provider-doc findings are capability evidence, not a blanket bypass for local validation. For schema-critical handoffs, provider-native schema enforcement is preferred where available: Anthropic provider-doc guidance directs schema-critical workflows to **Structured Outputs** for guaranteed JSON schema conformance, and Gemini provider-doc guidance supports schema-bound structured output and SDK schema helpers. Across providers and `/transports`, PM still runs local validation and records downgrade behavior because transport support and adherence vary; unsupported or weak transports fall back to locally validated structured output or partial-output warnings.
 
@@ -1796,23 +1796,26 @@ Provider capability rule: provider-doc findings are capability evidence, not a b
 
 | Feature | Cursor | Codex | Claude | Gemini | Copilot | Implementation Level |
 |---------|--------|-------|--------|--------|---------|---------------------|
-| **BeforeTier/AfterTier hooks** | Native hooks + orchestrator | CLI/provider bridge hooks + orchestrator | Native hooks + orchestrator | Native hooks + orchestrator | Orchestrator only | Orchestrator + platform hooks |
-| **Handoff validation** | JSON parse | JSONL parse | JSON parse | JSON parse | Text parse | Platform-specific parser |
+| **BeforeUnit/AfterUnit hooks** (legacy alias BeforeTier/AfterTier, Execution-Unit Hook Naming) | Native hooks + orchestrator | Orchestrator only (DirectApi) | Native hooks + orchestrator | Orchestrator only (DirectApi) | Orchestrator only (DirectApi) | Orchestrator + CliBridge platform hooks |
+| **Handoff validation** | JSON parse (CLI output) | JSON parse (final assistant content) | JSON parse (CLI output) | JSON parse (final assistant content) | JSON parse (final assistant content) | Transport-scoped parser (OSI-093) |
 | **Remediation loop** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
 | **Cross-session memory** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
 | **Active agent tracking** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
 | **Safe error handling** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
 | **Lazy lifecycle** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
-| **Contract enforcement** | JSON validation | JSONL validation | JSON validation | JSON validation | Text validation | Platform-specific validator |
+| **Contract enforcement** | JSON validation | JSON validation | JSON validation | JSON validation | JSON validation | Transport-scoped validator (OSI-093) |
 
-**Key insight:** Most features are **orchestrator-level** (platform-agnostic). Only handoff validation and contract enforcement need platform-specific parsers (JSON vs JSONL vs text). Hooks can leverage platform-native hooks where available (Cursor, Claude, Gemini) but also work via orchestrator-level middleware for all platforms.
+Transport scope (2026-11-25, OSI-004 and OSI-093): earlier versions of this table listed CLI/provider bridge hooks, JSONL parse and JSONL validation for Codex, Native hooks for Gemini, and Text parse and Text validation for Copilot. Those describe CLI-era output and are historical context only, not implementation targets.
+
+**Key insight:** Most features are **orchestrator-level** (platform-agnostic). Only handoff validation and contract enforcement need transport-scoped parsers (CliBridge CLI JSON / stream-json NDJSON, DirectApi final assistant content, ServerBridge event stream; the old JSON vs JSONL vs text split is CLI-era history). Hooks can leverage platform-native hooks where available (the CliBridge providers Cursor and Claude Code) but also work via orchestrator-level middleware for all platforms.
 
 ### Integration with Start/End Verification
 
 These lifecycle and quality features **complement** the existing start/end verification:
 
-- **BeforeTier hook** runs **before** `verify_tier_start` (tracks active subagent, injects context, prunes state).
-- **AfterTier hook** runs **after** `verify_tier_end` (validates handoff format, tracks completion, safe error handling).
+- **BeforeUnit hook** runs **before** `VerifyUnitStart` (tracks active subagent, injects context, prunes state).
+- **AfterUnit hook** runs **after** `VerifyUnitEnd` (validates handoff format, tracks completion, safe error handling).
+- BeforeTier hook, AfterTier hook, `verify_tier_start` and `verify_tier_end` are the legacy aliases of these four names (Execution-Unit Hook Naming).
 - **Remediation loop** extends the existing "required reviewer subagent" -- reviewer outputs structured findings; orchestrator enforces remediation.
 - **Cross-session memory** enhances Phase 1 context (loads prior decisions before planning).
 - **Active agent tracking** enhances logging and debugging (shows which subagent ran at each tier).

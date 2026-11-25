@@ -2,9 +2,9 @@
 
 Source: `Plans/Run_Modes.md`
 
-Source lines: L729-L1547
+Source lines: L729-L1553
 
-Source SHA256: `c7bb568c275c82c46830549eb214bb7b7508d2e2ac1492bd9befd02e49310738`
+Source SHA256: `0a002ce44e1a7403bff106071cf6dc5a621eebcd8a229fff70c2ad4a52e49bfb`
 
 ---
 
@@ -350,9 +350,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Run_Modes.md
 canonical_text: P5 recovery remains lineage for the independently unresolved startup/backoff, Contribute(PR)-isolation,
-  jail durability, Event recovery, attention, account-switch and gate-placement obligations. The former universal
-  publication-approval/YOLO ambiguity is superseded by PS-146/147/148 and RM-053. That policy resolution is
-  not evidence that providers, jails or remote interception already implement it.
+  jail durability, Event recovery, attention, account-switch, blocked-semantics, gate-family and worktree-mode
+  obligations. Each obligation is tracked as one dated, owner-routed blocker in the blocker register (`RMB-001`
+  to `RMB-015`) of this document's FABLE Deferred Action Concrete Repair Addendum - 2026-07-08, whose `status`
+  values are authoritative; no obligation is live mode behavior while its blocker is `open` or `owner_decision_required`,
+  and a run that would depend on one is refused at admission with the blocker id as the reason. GATE-007 / GATE-008
+  placement is resolved (`RMB-010`: reserved/tombstoned in Progression_Gates) and the unstable recovery UI labels
+  are resolved (`RMB-013`). The former universal publication-approval/YOLO ambiguity is superseded by PS-146/147/148
+  and RM-053 (`RMB-011`). That policy resolution is not evidence that providers, jails or remote interception
+  already implement it.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements
   rather than visual presentation.

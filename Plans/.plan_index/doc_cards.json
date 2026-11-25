@@ -12659,7 +12659,7 @@
         "implementation_readiness",
         "migration_lineage"
       ],
-      "sha256": "8a409cc71d67fc1c46c6d7996dab7f53fa335deaea250b4dfaa65f54668896df",
+      "sha256": "ebad61b091e3f96ad69afbf8ee6fa6793f1603cfd0bb3e8bc2b6479f7900441f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 40
@@ -15169,7 +15169,7 @@
         "future Orchestrator prompt routes",
         "future subagent handoff and child-run receipt records"
       ],
-      "line_count": 35131,
+      "line_count": 35156,
       "path": "Plans/orchestrator-subagent-integration.md",
       "plan_unit_count": 472,
       "plan_unit_ids": [
@@ -16094,7 +16094,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "4e290afe161c830a1ba77a293806ab97f24e67d6668528a1fa94c5530a1f6e87",
+      "sha256": "f3b67f84c4309b6ce4c0909cd27335581eff5ae15fdc15772f0c865a9871e812",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 470,
@@ -19217,7 +19217,7 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 43,
+        "False": 42,
         "True": 10
       },
       "heading_count": 120,
@@ -19230,9 +19230,9 @@
         "Plans/usage-feature.md",
         "future run-mode resolver"
       ],
-      "line_count": 1998,
+      "line_count": 2008,
       "path": "Plans/Run_Modes.md",
-      "plan_unit_count": 53,
+      "plan_unit_count": 52,
       "plan_unit_ids": [
         "RM-002",
         "RM-003",
@@ -19245,7 +19245,6 @@
         "RM-010",
         "RM-011",
         "RM-012",
-        "RM-013",
         "RM-014",
         "RM-015",
         "RM-016",
@@ -19312,7 +19311,6 @@
         "external_baseline_owner_drift",
         "external_reference_drift",
         "failure_taxonomy_drift",
-        "governance_gap_loss",
         "headless_blocked_signal_drift",
         "headless_gui_affordance_drift",
         "helper_lifecycle_drift",
@@ -19344,16 +19342,16 @@
         "worktree_binding_drift",
         "worktree_gui_affordance_drift"
       ],
-      "sha256": "c7bb568c275c82c46830549eb214bb7b7508d2e2ac1492bd9befd02e49310738",
+      "sha256": "0a002ce44e1a7403bff106071cf6dc5a621eebcd8a229fff70c2ad4a52e49bfb",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 52,
+        "accepted": 51,
         "retired": 1
       },
       "title": "Run Modes (Canonical SSOT)",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "requirement": 52
+        "requirement": 51
       },
       "validation_surfaces": [
         "future BSD mode-resolution and authority fixtures",
@@ -25267,7 +25265,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-25T04:22:57Z",
+  "generated_at_utc": "2026-11-25T12:27:37Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -25275,13 +25273,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 5682,
+      "False": 5681,
       "True": 3943
     },
-    "plan_unit_count": 9625,
+    "plan_unit_count": 9624,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 9345,
+      "accepted": 9344,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -25354,7 +25352,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 6123,
+      "requirement": 6122,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
