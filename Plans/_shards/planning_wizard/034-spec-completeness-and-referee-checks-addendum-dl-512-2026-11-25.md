@@ -4,7 +4,7 @@ Source: `Plans/Planning_Wizard.md`
 
 Source lines: L4959-L5142
 
-Source SHA256: `0c747f2b205a6090fd8b1a0cf42440cf1f4a91041828c96139e9f2f15292a4f2`
+Source SHA256: `2d8a15fe1ad903e6f9592735ae03ea57d80d38c59f562e574f48177a101b1df0`
 
 ---
 
@@ -26,8 +26,8 @@ canonical_text: >-
   at final integration (PWIZ-007) it runs over every contract in the plan as part of PWIZ-011's Final Plan Pack audit. Contracts are the data shapes, events,
   commands, operations, stateful entities and requirements the plan defines. The check looks for six kinds of
   finding: a named field without a type; an operation or command without its failure results, each with a declared
-  failure code, or with a declared failure whose contract leaves undecidable whether the same input without the failing
-  condition is accepted on that operation's surface (Plans/Plan_To_Node_Compilation.md#PNC-038 carries it as a recorded
+  failure code, or a declared failure of an operation, command or event whose contract leaves undecidable, on any of
+  its callable surfaces, whether the same input without the failing condition is accepted there (Plans/Plan_To_Node_Compilation.md#PNC-038 carries it as a recorded
   gap in place of the missing passing neighbour); an entity whose state changes without a state machine that names its states, transitions, triggers
   and terminal states; a requirement without acceptance criteria or a validation surface; a pointer to a section, unit
   or artifact that does not resolve, including an operation or event without an interface binding (the callable
@@ -61,7 +61,7 @@ depends_on: [DL-512, PWIZ-006, PWIZ-007, PWIZ-011, PWIZ-012, PWIZ-028]
 unblocks: [PWIZ-111, PNC-038]
 acceptance_criteria:
   - "The check runs over the topic's contracts before the topic becomes Ready and over every contract at final integration, and records each finding with its contract, kind, PWIZ-012 gap class, finding_level and outcome."
-  - "Fields without types in structured declarations, unresolved pointers, and one identifier (one named contract, type, enumeration, event, command or state, or one field path of one contract, including a field declared the same as another by reference or pointer) declared with incompatible types or enumeration members for overlapping cases are found by code without a model call, and must pass as PWIZ-028 deterministic checks; same-named fields of distinct contracts are left to the Auditor as possible drift; a lawful conditional pair, such as a terminal route's null target beside a continuing route's stage name, passes, a genuine same-scope conflict fails, and uncertain overlap, or established overlap with unresolved type compatibility, goes to the Auditor."
+  - "Fields without types in structured declarations, unresolved pointers, and one identifier (one named contract, type, enumeration, event, command or state, or one field path of one contract, including a field declared the same as another by reference or pointer) declared with incompatible types or enumeration members for overlapping cases are found by code without a model call, and must pass as PWIZ-028 deterministic checks; same-named fields of distinct contracts are left to the Auditor as possible drift; a lawful conditional pair, such as a terminal route's null target beside a continuing route's stage name, passes, a genuine same-scope conflict fails, and uncertain overlap, or established overlap with unresolved type or enumeration-member compatibility, goes to the Auditor."
   - "Auditor-found findings go through PWIZ-028's bounded round; non-blocking ones left are recorded as open questions and as recorded gaps for PNC-038 and do not hold the topic out of Ready, and a blocking one left is a PWIZ-006 typed blocker."
   - "Every operation or event has an interface binding that resolves, including an observation surface for every owner-stated state or effect assertion, or a completeness finding of the pointer kind."
   - "No completeness finding becomes a technical question to the user; only a product-policy gap reaches the user, as a plain decision."
