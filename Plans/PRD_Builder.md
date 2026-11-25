@@ -638,6 +638,7 @@ canonical_text: |-
   - Minimal context: document registry, per-doc approval state, requested/effective revision capability, and bounded provenance
   - Each annotation input record includes `annotation_id`, `operation = comment | replace | insert_after | remove`, `intent_kind = question | change_request | both`, selected anchor context, and `operation_payload`.
   - `operation_payload` uses the canonical shapes `{ body }`, `{ replacement_text, rationale? }`, `{ insert_text, rationale? }`, or `{ rationale? }`.
+  - The per-operation JSON Schemas for these shapes, the input record and the result record are in section 3, "TargetedRevisionPass annotation schemas (PRDB-014, 2026-11-25)".
   - Structured revision input is source-of-truth anchored to source text, not the rendered visual tree: preview-mode selections must map back to source offsets when deterministic, and when deterministic mapping is unavailable, `Send selection to chat` may use quote/provenance while durable structured change-request annotations are disabled or downgraded to comment-only.
   - Revision input records also preserve `anchor.text_position`, `anchor.text_quote`, bounded `selected_text`, `provenance` (`path`, `source_surface`, bounded excerpt), `conflict_state`, and `staleness_state`.
 
@@ -835,6 +836,381 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/B
 
 The core data shapes are PRD ledger records, source manifests, deterministic source projections, source security preflight records, source resource limit profiles, source intake terminal receipts, conflict records, annotation records, primary PRD projection sections, stable requirement/acceptance identifiers such as `FR-001` and `AC-001`, and immutable Approved PRD Pack snapshots.
 
+
+### TargetedRevisionPass annotation schemas (PRDB-014, 2026-11-25)
+
+Per-operation JSON Schemas for the PRDB-014 revision input and result records (the targeted-revision contract DL-472 moved here from the retired Chain Wizard document). `annotation_input` is one record of the ordered input list and `annotation_result` one record of the ordered output list; `operation` selects exactly one payload schema. A `comment` may carry any `intent_kind`; `replace`, `insert_after` and `remove` change the document, so they require `intent_kind` `change_request` or `both`. A `remove` payload may be `{}`. `anchor.text_position` is present when deterministic source offsets exist and must satisfy `start <= end`; `anchor.text_quote` is always present. Storage keeps `operation_payload` optional on `note_record.v1` (`Plans/storage-plan.md`), but an annotation enters a revision pass only with a payload that validates here; one that does not gets `outcome = cannot_apply` with `failure_code = payload_invalid` and is not sent to the model.
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.prd_builder.targeted_revision_annotation.v1",
+  "$defs": {
+    "comment_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "body"
+      ],
+      "properties": {
+        "body": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8000
+        }
+      }
+    },
+    "replace_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "replacement_text"
+      ],
+      "properties": {
+        "replacement_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      }
+    },
+    "insert_after_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "insert_text"
+      ],
+      "properties": {
+        "insert_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      }
+    },
+    "remove_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      }
+    },
+    "text_position": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start",
+        "end"
+      ],
+      "properties": {
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "text_quote": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exact",
+        "prefix",
+        "suffix"
+      ],
+      "properties": {
+        "exact": {
+          "type": "string",
+          "minLength": 1
+        },
+        "prefix": {
+          "type": "string"
+        },
+        "suffix": {
+          "type": "string"
+        }
+      }
+    },
+    "anchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text_quote"
+      ],
+      "properties": {
+        "text_position": {
+          "$ref": "#/$defs/text_position"
+        },
+        "text_quote": {
+          "$ref": "#/$defs/text_quote"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "source_surface",
+        "excerpt"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_surface": {
+          "type": "string",
+          "minLength": 1
+        },
+        "excerpt": {
+          "type": "string",
+          "maxLength": 2000
+        }
+      }
+    },
+    "annotation_input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "annotation_id",
+        "doc_id",
+        "operation",
+        "intent_kind",
+        "anchor",
+        "selected_text",
+        "provenance",
+        "conflict_state",
+        "staleness_state",
+        "operation_payload"
+      ],
+      "properties": {
+        "annotation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "doc_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation": {
+          "enum": [
+            "comment",
+            "replace",
+            "insert_after",
+            "remove"
+          ]
+        },
+        "intent_kind": {
+          "enum": [
+            "question",
+            "change_request",
+            "both"
+          ]
+        },
+        "anchor": {
+          "$ref": "#/$defs/anchor"
+        },
+        "selected_text": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        },
+        "conflict_state": {
+          "enum": [
+            "none",
+            "conflicting"
+          ]
+        },
+        "staleness_state": {
+          "enum": [
+            "current",
+            "stale"
+          ]
+        },
+        "operation_payload": {
+          "type": "object"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "comment"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation_payload": {
+                "$ref": "#/$defs/comment_payload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "replace"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation_payload": {
+                "$ref": "#/$defs/replace_payload"
+              },
+              "intent_kind": {
+                "enum": [
+                  "change_request",
+                  "both"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "insert_after"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation_payload": {
+                "$ref": "#/$defs/insert_after_payload"
+              },
+              "intent_kind": {
+                "enum": [
+                  "change_request",
+                  "both"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "remove"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation_payload": {
+                "$ref": "#/$defs/remove_payload"
+              },
+              "intent_kind": {
+                "enum": [
+                  "change_request",
+                  "both"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "annotation_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "annotation_id",
+        "outcome",
+        "addressed_explanation"
+      ],
+      "properties": {
+        "annotation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "outcome": {
+          "enum": [
+            "addressed",
+            "still_open",
+            "cannot_apply"
+          ]
+        },
+        "addressed_explanation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "updated_anchor": {
+          "$ref": "#/$defs/anchor"
+        },
+        "failure_code": {
+          "enum": [
+            "anchor_not_found",
+            "annotation_conflicting",
+            "annotation_stale",
+            "payload_invalid",
+            "structured_output_invalid",
+            "capability_chat_handoff_only"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "cannot_apply"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "failure_code"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "addressed"
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "required": [
+                "failure_code"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+Failure codes of `annotation_result.failure_code`: `anchor_not_found` (position and quote re-anchoring both failed, in the order `Plans/Crosswalk.md` section 3.14 sets); `annotation_conflicting` (`conflict_state = conflicting`, excluded from automatic revision); `annotation_stale` (`staleness_state = stale`, excluded); `payload_invalid` (input payload failed its schema); `structured_output_invalid` (model output failed validation after the one automatic retry); `capability_chat_handoff_only` (effective capability is `chat_handoff_only`, so the mutation was forwarded to chat). `cannot_apply` requires a `failure_code`; `still_open` may carry one; `addressed` never does. The runtime validates every result against `annotation_result`, checks that the results are one per input in input order, and only then moves annotation or document state.
 
 ## 4. Integration Surfaces
 

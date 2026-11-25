@@ -147,7 +147,7 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Inv
 
 - **Gap:** On merge conflict, `cleanup_subtask_worktree` returns without removing the worktree but removes the node from `active_worktrees`. Re-running the same subtask calls `create_subtask_worktree` → `create_worktree` → "if path exists remove_worktree", so the conflicting worktree is removed and the conflict state is lost.
 - **Fix:**
-  - On conflict, either: (1) surface the worktree path to the user (e.g. toast or status) and avoid reusing that node_id for a new worktree until the user resolves or discards, or (2) document clearly that re-running will replace the worktree and lose unmerged state.
+  - On conflict, surface the worktree path to the user (e.g. toast or status) and do not reuse that node_id for a new worktree until the user resolves or discards. The conflict is recorded durably as `worktree_conflict_state.v1:{project_id}:{worktree_id}` (section 7.4, resolved in section 7.14 Worktree item 3), so the block survives restart. The earlier alternative of documenting that a re-run replaces the worktree and loses unmerged state is retired.
   - Optionally: add a "Resolve worktree conflicts" action that lists worktrees with merge conflicts and offers to open in editor or remove after confirmation.
 
 ### 2.4 Node ID and branch name sanitization
@@ -168,6 +168,20 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Inv
 
 - **Gap:** `list_worktrees` only sets `branch` when it sees a `branch refs/heads/...` line. Detached HEAD worktrees yield empty `branch`; `merge_worktree` would then call `git merge ""`.
 - **Fix:** When parsing porcelain output, treat missing branch as "detached". In `merge_worktree`, if source_branch is empty, skip merge or merge by commit hash and document behavior.
+
+### 2.7 worktree_exists validity
+
+- **Gap:** `worktree_exists(node_id)` returns true when the directory `worktree_base.join(node_id)` exists, so an empty folder, a folder whose `.git` link points at a pruned gitdir, or a worktree of another repo or branch counts as a usable worktree; create, cleanup, re-registration (section 2.2, 7.14 Worktree item 2) and conflict preservation (section 2.3) all rely on it.
+- **Fix:** `worktree_exists(node_id, expected_branch: Option<&str>) -> WorktreeValidity` runs these checks in order from the project repo root and returns the first state that fails; it never mutates the path, the gitdir or any ref.
+  1. Resolve the sanitized path (section 2.4) under `worktree_base`; the path must pass the path guard rules (section 2.0.1). Path absent → `missing`. Metadata read refused by the OS → `permission_denied`.
+  2. The path holds a `.git` file whose `gitdir:` target exists and lies under the main repo's `.git/worktrees/`. No `.git` file, or its target is absent → `gitdir_missing`.
+  3. `git rev-parse --is-inside-work-tree` in the path prints `true`, and `git rev-parse --git-common-dir` resolves to the project repo's common dir, which carries the current `repo_id` (section 2.8, "Worktree identity, active context, and copy contracts"). A different common dir → `wrong_repo`.
+  4. The path appears in `list_worktrees()`. When `expected_branch` is supplied, the porcelain `branch refs/heads/<expected_branch>` line matches; a detached entry (section 2.6) matches only when no branch was expected. Mismatch → `wrong_branch`.
+  5. Any git exit or I/O error not named above → `unknown_error`, carrying the git exit class from section 3.0.1.
+  6. All checks pass → `exists_valid`.
+- **`WorktreeValidity` is a closed enum:** `exists_valid`, `missing`, `gitdir_missing`, `wrong_repo`, `wrong_branch`, `permission_denied`, `unknown_error` (the same seven states as the 2026-07-08 repair addendum at the end of this document).
+- **Callers:** only `exists_valid` counts as an existing worktree; every other state counts as not usable. Create proceeds on `missing`. On `gitdir_missing` it runs `git worktree prune` and recreates only when the node is not in the conflict set (section 2.3, 7.14 Worktree item 3). On `wrong_repo`, `wrong_branch` or `permission_denied` it fails with that state and deletes nothing. Cleanup removes only an `exists_valid` worktree. Re-registration into `active_worktrees` requires `exists_valid`. `unknown_error` follows the section 3.0.1 table for its exit class: retryable classes (lock contention) retry as that table bounds them, fatal classes are not retried; once it settles failed, the operation fails with `unknown_error` and changes nothing on disk.
+- **Acceptance:** a temp repo test asserts each of the seven states: valid worktree; absent path; folder with no `.git`; `.git` pointing at a pruned gitdir; worktree of a second repo placed at the path; worktree on a different branch with `expected_branch` set; unreadable path (skipped where the platform cannot deny reads). For each non-valid state it also asserts that create and cleanup leave the path and refs byte-for-byte unchanged, except the prune-and-recreate path for `gitdir_missing`.
 
 ### 2.8 Lane/worktree lifecycle, storage families, and historical vocabulary
 
@@ -499,7 +513,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 ### Dependency order (implement in this order within phases)
 
 - **Phase 1** must complete before Phase 2 and Phase 3 (config and project path are prerequisites).
-- **Phase 2:** 2.4 (sanitize) → 2.1, 2.5, 2.9; 2.7 (worktree_exists validity) before create/cleanup that rely on it; 2.8 (recovery uses project path) → 2.2, 2.11; 2.6 (detached HEAD) → 2.10.
+- **Phase 2:** 2.4 (sanitize) → 2.1, 2.5, 2.9; 2.7 (worktree_exists validity) before create/cleanup that rely on it; recovery uses project path (section 7.3 and section 7.14, Worktree item 5) → 2.2, 2.11; 2.6 (detached HEAD) → 2.10. (Section 2.8 is now lane/worktree lifecycle; the recovery item formerly numbered 2.8 lives in section 7.3.)
 - **Phase 3:** 3.1 (git binary) → 3.3, 3.4, 3.10; 3.2 (GitHub API PR integration) independent; 3.5 → 3.6 → 3.7.
 - **Cross-phase:** Phase 3.1 before Phase 2.11 (Doctor worktrees check uses shared git resolution).
 - **Phase 2 and Phase 3** can proceed in parallel after Phase 1; **Phase 5** integration tests assume both Phase 2 and Phase 3 are done.
@@ -624,7 +638,7 @@ pub enum BranchGranularity {
 
 ### 7.4 Merge conflicts: persisting "conflict worktrees"
 
-- To "avoid reusing that node_id for a new worktree until the user resolves," the app must remember which node_ids have unresolved merge conflicts. Options: (1) typed conflict rows (node_id, branch, recorded time) in the canonical redb family (SP-340), written when a merge fails and cleared when the user runs "Recover worktrees" or resolves manually; no JSON state file is written (SP-339); (2) in-memory only (lost on restart, so re-run would still overwrite after restart). The plan should specify which approach or mark as "optional: in-memory set for the session only" to avoid scope creep.
+- To "avoid reusing that node_id for a new worktree until the user resolves," the app must remember which node_ids have unresolved merge conflicts. **Resolved (no longer an option list):** typed conflict rows keyed `worktree_conflict_state.v1:{project_id}:{worktree_id}` in the canonical redb family (SP-340), carrying `node_id`, `branch`, `worktree_path` (display only), and `recorded_at`, written when a merge fails and cleared only when the user resolves the conflict or explicitly discards the worktree (including through "Recover worktrees"); no JSON state file is written (SP-339). The in-memory `HashSet<node_id>` is a per-session projection loaded from those rows at startup or project open and never the authority. The former choice "(2) in-memory only (lost on restart, so re-run would still overwrite after restart)" and the fallback "optional: in-memory set for the session only" are retired, because a child worktree in conflict must stay `blocked_preserved` across restart (section "Child Worktree Runtime Lifecycle and Typed Lease Protocol", "Integration failure and result survival" and "Restart reconciliation and safe cold revival").
 
 ### 7.5 Binary resolution: exact functions
 
@@ -657,7 +671,7 @@ pub enum BranchGranularity {
 
 All gaps from audit are closed with the following decisions. Implementers should follow these so the plan has no ambiguity.
 
-**Worktree (Section 2):** (1) **Base branch:** Use checkout base_branch then add for initial release; create from ref (e.g. `git worktree add -b <branch> <path> <base_branch>`) is optional later. (2) **active_worktrees repopulation:** On first resolve with no entry, if path exists and is in `list_worktrees()`, use it and re-register in `active_worktrees` for that session. (3) **Conflict persistence:** In-memory only for initial release -- `HashSet<node_id>` of conflict worktrees; optional Phase 6: typed conflict rows in the canonical redb family (SP-340). No JSON file is written (SP-339). (4) **Detached HEAD merge:** In `merge_worktree`, if source_branch is empty: read HEAD commit from that worktree (`git rev-parse HEAD` in worktree path), then in main repo `git merge --no-ff <commit>`; document in STATE_FILES.md. (5) **Recovery:** If no project path at startup, skip worktree recovery; run recovery when user first selects/opens a project or when a run starts with config hint. (6) **Repopulation failure:** If `list_worktrees()` fails during repopulation, log error and start with empty `active_worktrees`. (7) **Doctor worktrees:** Must run `list_worktrees` and report state; optionally call `detect_orphaned_worktrees()` and include count; Recover remains a separate UI action. (8) **Platform:** Sanitization and path handling must be safe on Windows (use `PathBuf`/`join`; no assumption that `/` is the only separator). (9) **Section 2.12:** Re-validate worktree path before use is Phase 6 / optional.
+**Worktree (Section 2):** (1) **Base branch:** Use checkout base_branch then add for initial release; create from ref (e.g. `git worktree add -b <branch> <path> <base_branch>`) is optional later. (2) **active_worktrees repopulation:** On first resolve with no entry, if path exists and is in `list_worktrees()`, use it and re-register in `active_worktrees` for that session. (3) **Conflict persistence:** Durable from the initial release: typed `worktree_conflict_state.v1:{project_id}:{worktree_id}` rows in the canonical redb family (SP-340), as section 7.4 specifies; the `HashSet<node_id>` of conflict worktrees is a per-session projection rebuilt from those rows and never the authority. The earlier "in-memory only for initial release, typed rows optional in Phase 6" decision is retired. No JSON file is written (SP-339). (4) **Detached HEAD merge:** In `merge_worktree`, if source_branch is empty: read HEAD commit from that worktree (`git rev-parse HEAD` in worktree path), then in main repo `git merge --no-ff <commit>`; document in STATE_FILES.md. (5) **Recovery:** If no project path at startup, skip worktree recovery; run recovery when user first selects/opens a project or when a run starts with config hint. (6) **Repopulation failure:** If `list_worktrees()` fails during repopulation, log error and start with empty `active_worktrees`. (7) **Doctor worktrees:** Must run `list_worktrees` and report state; optionally call `detect_orphaned_worktrees()` and include count; Recover remains a separate UI action. (8) **Platform:** Sanitization and path handling must be safe on Windows (use `PathBuf`/`join`; no assumption that `/` is the only separator). (9) **Section 2.12:** Re-validate worktree path before use is Phase 6 / optional.
 
 **Git (Section 3):** (1) **Git binary:** Add `path_utils::resolve_git_executable() -> Option<PathBuf>` (same logic as `find_tool_executable("git")`); GitManager and GitInstalledCheck both use it; tag `// DRY:FN:resolve_git_executable`. If resolver returns None, GitManager fails the operation; Doctor fails the check. (2) **GitHub PRs:** PR creation uses GitHub HTTPS API only (no GitHub CLI) per `Plans/GitHub_API_Auth_and_Flows.md`. (3) **naming_pattern:** Hide in GUI and document Reserved for future use in initial release; do not wire to branch naming. (4) **git-actions.log:** Move to `.puppet-master/logs/git-actions.log`; add to .gitignore as runtime-only per STATE_FILES.
 
@@ -3633,7 +3647,7 @@ plan_unit_id: W-050
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: "Conflict worktree persistence may be in-memory for the initial release, while longer-lived conflict state records use typed rows in the canonical redb family (SP-340) with no JSON state file (SP-339), without conflating conflict cleanup with normal worktree cleanup."
+canonical_text: "Conflict worktree persistence is durable from the initial release: each unresolved merge conflict is a typed worktree_conflict_state.v1:{project_id}:{worktree_id} row in the canonical redb family (SP-340) with no JSON state file (SP-339), cleared only on resolve or explicit discard; any in-memory HashSet<node_id> is a per-session projection of those rows and never the authority (the former in-memory-only initial release option is retired), and conflict cleanup is never conflated with normal worktree cleanup."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
 split_recommended: false
@@ -3648,6 +3662,8 @@ depends_on:
 - W-033
 unblocks: []
 acceptance_criteria:
+- "After a merge conflict on node N, restarting the app and re-running N does not remove or recreate N's worktree: the worktree_conflict_state.v1 row is read at startup or project open and reuse stays blocked until resolve or explicit discard deletes the row."
+- "Clearing the in-memory projection (new session) without deleting the worktree_conflict_state.v1 row leaves the conflict visible and reuse blocked; ordinary worktree cleanup never deletes a worktree whose row exists."
 - "W-050 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
 - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
@@ -5286,6 +5302,52 @@ This addendum repairs non-runtime worktree rows without creating WorkNodes, impl
 - Repairs `sfk-b3fbf73ded6ce2be14dd9c88`: `worktree_exists` validity checks path existence, `.git` link or gitdir validity, `git rev-parse --is-inside-work-tree`, expected repo id, expected branch/ref when supplied, and permission policy. Result states are `exists_valid`, `missing`, `gitdir_missing`, `wrong_repo`, `wrong_branch`, `permission_denied`, and `unknown_error`.
 - Repairs `sfk-be3c6367e06fceee5d56722a`: conflict-worktree persistence uses `worktree_conflict_state.v1:{project_id}:{worktree_id}`. In-memory hints and branch-name derivations are projections only.
 - Repairs `sfk-6bbb00970054c395801c3aab`: Source Control graph, AI commit batching, and conflict assistant commands are enabled only when repo identity is valid, worktree status is fresh, no protected-branch mutation is pending, and permission snapshot allows the requested command. Disabled reason codes are `repo_missing`, `status_stale`, `protected_branch`, `permission_denied`, and `operation_in_progress`.
+
+### Source Control graph and AI commit batching payloads and failure results (2026-11-25)
+
+This completes `sfk-6bbb00970054c395801c3aab` for the graph and AI commit batching surfaces (section 4.1); the conflict assistant keeps its own payload rows in `Plans/UI_Command_Catalog.md` ("Source Control review and conflict commands"). The activation rule and disabled reason codes above apply to every command here. Field types: `identity_id` and `timestamp` are the `Plans/source_control_contracts.schema.json` `$defs` of those names; `full_oid` is a full 40- or 64-hex commit object id; `repo_relative_path` is a forward-slash path under the repo root with no `..` segment. Compatibility aliases (`cmd.source_control.graph_focus`, `cmd.source_control.graph_filter`, `cmd.source_control.graph.focus/filter/layout`, `cmd.source_control.suggest_commit_groups`) normalize to the canonical id before payload validation and carry the canonical payload.
+
+**Graph commands.** They change Project view state only, never repository state, refs, the index or files.
+
+| Command | Payload (all fields required unless marked `?`) | Result on success |
+|---|---|---|
+| `cmd.source_control.graph.focus` | `project_id: identity_id`, `repo_id: identity_id`, `target_kind: "branch" \| "commit" \| "worktree" \| "run"`, `target_ref: string` (branch name, `full_oid`, `worktree_id` or `run_id`, matching `target_kind`), `projection_id?: identity_id` | `outcome: "focused"`, `projection_id: identity_id`, `node_ref: string` (the `source_graph_projection` node now selected) |
+| `cmd.source_control.graph.filter` | `project_id`, `repo_id`, `branches?: string[]` (at most 64), `worktree_ids?: identity_id[]` (at most 64), `worktree_overlay: boolean`, `ownership: "any" \| "run_owned" \| "user_owned"`, `status?: ("ahead" \| "behind" \| "diverged" \| "conflicted")[]` | `outcome: "applied"`, `projection_id`, `returned_count: integer >= 0` |
+| `cmd.source_control.graph.layout` | `project_id`, `repo_id`, `density: "compact" \| "expanded"` | `outcome: "applied"` |
+
+Graph failure results are `outcome: "failed"` with one `failure_code` from this closed set:
+
+| `failure_code` | When | Retry | How it settles |
+|---|---|---|---|
+| `payload_invalid` | payload fails the shape above | none | prior focus, filter and layout unchanged |
+| `repo_identity_invalid` | `repo_id` does not resolve to the current durable repo identity | none | unchanged; the `repo_missing` disabled reason is shown |
+| `target_not_found` | focus target absent from the repo or the current projection | none | prior focus kept; inline reason names the target |
+| `projection_stale` | `source_graph_projection.currentness.state` is `stale` or past `expires_at_utc` | one automatic projection refresh, then one retry | if still stale: unchanged, stale banner with a Refresh action |
+| `graph_parse_failed` | the repo graph cannot be parsed | none | graph surface degrades to branch list and history (section 4.1 disabled fallback) |
+
+Filter and layout write Project view state only on `applied`; a failed command writes nothing.
+
+**AI commit batching.** Suggestions are advisory and never stage, commit or change the index.
+
+| Command | Payload | Result on success |
+|---|---|---|
+| `cmd.source_control.suggest_commit_batches` | `project_id`, `repo_id`, `worktree_id: identity_id`, `scope: "staged" \| "unstaged" \| "both"`, `expected_head_oid: full_oid`, `status_generation: integer >= 0`, `max_batches?: integer 1..20` (default 8). Aggressiveness, tone and cross-directory grouping come from the Settings ladder (section 4.1), not the payload. | `outcome: "suggested"` with `suggestion_set_id: identity_id`, `created_at: timestamp`, `batches: [{ batch_id: identity_id, paths: repo_relative_path[]` (at least 1), `hunk_ids?: string[]`, `draft_message: string`, `rationale: string }]` (1 to `max_batches`, no path in two batches); or `outcome: "no_changes"` with an empty `batches` when the scope has no changes |
+| `cmd.source_control.accept_commit_group` | `project_id`, `repo_id`, `worktree_id`, `suggestion_set_id`, `batch_id`, `expected_head_oid: full_oid`, `status_generation: integer >= 0` | `outcome: "staged_for_review"`: exactly the batch's paths or hunks are staged through `cmd.git.stage_hunks` and FileSafe validation and its `draft_message` fills the commit box; nothing is committed |
+
+A suggestion set lives in Project view state until accepted, discarded, or superseded by a new set or by a status change (new `HEAD` or `status_generation`), which marks it stale. Batching failure results are `outcome: "failed"` with one `failure_code` from this closed set:
+
+| `failure_code` | Commands | When | Retry | How it settles |
+|---|---|---|---|---|
+| `payload_invalid` | both | payload fails the shape above | none | nothing changes |
+| `status_stale` | both | `HEAD` differs from `expected_head_oid` or `status_generation` is older than current | none automatic; the user refreshes status and runs again | nothing changes; an earlier suggestion set is shown as stale |
+| `permission_denied` | both | permission snapshot refuses the command | none | nothing changes; disabled reason `permission_denied` |
+| `assistant_unavailable` | suggest | no assistant provider or model is configured or reachable | none automatic; user may run again | nothing changes; manual staging remains available |
+| `assistant_failed` | suggest | the model call errors or times out | one automatic retry with the same inputs | if the retry fails: nothing changes, no partial batches are shown |
+| `output_invalid` | suggest | model output does not parse into the result shape, names a path outside the scope's diff, or puts a path in two batches | one automatic retry with the same inputs | if the retry fails: nothing changes, no partial batches are shown |
+| `suggestion_not_found` | accept | `suggestion_set_id` or `batch_id` is unknown, discarded or stale | none | nothing changes |
+| `stage_failed` | accept | the stage step fails (git or FileSafe) | none (section 3.0.1 governs git retries inside the stage step) | the index is restored to its pre-accept state; the suggestion set stays selectable |
+
+Acceptance: (1) each graph command with a valid payload returns its success result and leaves `git status --porcelain` and every ref unchanged; (2) each graph `failure_code` row is produced by its stated cause and leaves prior view state unchanged; (3) `suggest_commit_batches` on a repo with changes returns at least one batch whose paths are all in the scope's diff and the index is unchanged; (4) a forced model timeout yields one retry then `assistant_failed` with no batches shown; (5) changing `HEAD` between suggest and accept yields `status_stale` on accept with the index unchanged; (6) a stage failure during accept restores the pre-accept index.
 
 ## Cozy Shelves Panel Reconciliation Addendum - 2026-07-27
 
