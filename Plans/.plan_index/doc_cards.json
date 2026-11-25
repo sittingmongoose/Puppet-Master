@@ -2479,7 +2479,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "a0157c806d4ded6291ad94ab7fb2c1fd7c116af8271c33ea9a76d4c120734dbf",
+      "sha256": "df0812ca3bb3dc291d70db532f89cdbf157c8bdc7e01d1996960f51d00a9343e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 207,
@@ -17020,7 +17020,7 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 2385,
+      "line_count": 2389,
       "path": "Plans/Plan_To_Node_Compilation.md",
       "plan_unit_count": 28,
       "plan_unit_ids": [
@@ -17081,7 +17081,7 @@
         "weak_test_oracle",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "2c689f37647e8f31bc11ed00addd6c0924de064b7f0f9b54aae6df1100ff7d81",
+      "sha256": "8befd4b461b489709a798be5f94f9cd6794d59151731ed206aa54e16871815ac",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 28
@@ -17427,7 +17427,7 @@
         "unbounded_review_loop_or_suppressed_finding",
         "wizard_lifecycle_owner_drift"
       ],
-      "sha256": "59ba78182f0c79b452851237ef8b2c5bdd15c76da0ad1fbbd092077644cdc3ea",
+      "sha256": "2c34809af8ee0ed477eef6ad8d6ade99fbdb45f964c0f62a5089a5b0c3b52084",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 37,
@@ -25268,7 +25268,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-25T09:44:05Z",
+  "generated_at_utc": "2026-11-25T09:59:20Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

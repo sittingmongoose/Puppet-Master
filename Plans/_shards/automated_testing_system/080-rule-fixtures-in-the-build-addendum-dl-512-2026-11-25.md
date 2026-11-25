@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L16494-L16581
 
-Source SHA256: `a0157c806d4ded6291ad94ab7fb2c1fd7c116af8271c33ea9a76d4c120734dbf`
+Source SHA256: `df0812ca3bb3dc291d70db532f89cdbf157c8bdc7e01d1996960f51d00a9343e`
 
 ---
 
@@ -65,7 +65,7 @@ unblocks: []
 acceptance_criteria:
   - "A WorkNode with bound rule tests completes only when every bound fixture meets its expected outcome (accepted with any stated result, or refused with its declared code and, where recorded, its error path and member or the exposed diagnostic of a semantic refusal) and every state and effect assertion it carries holds through its observation surface, every bound ATS-003 oracle passes, and every recorded test gap is honoured under its test_gap_policy, a deferred harness candidate leaving the node incomplete until the harness work lets its test run and pass, as its TestRunReceipt records."
   - "A fixture for a rule split across nodes counts at completion only when it ran on the designated node's final build with the completed outputs of every other node it exercises, all named in its TestRunReceipt; a pass on an earlier or partial build never counts."
-  - "Payload fixtures run against the built validator or a declared consuming operation, except that a fixture for a rule enforced outside the compile's write scope runs only against the exact owner build the node resolves, named in its receipt, counts only when that build's identity matches the node's final owner dependency, a changed dependency needing a fresh run, and counts a refusal only when that build produced it; behaviour fixture adapters are generated from the contract's interface binding and reach prior states by replaying owner operations or a declared seeding port, never by direct storage writes; a hand-written adapter is checked by an automated verification agent that is not the builder; a fixture with no automatic route is a recorded test gap."
+  - "Payload fixtures run against the built validator or a declared consuming operation, except that a fixture for a rule enforced outside the compile's write scope runs only against the exact owner build the node resolves, named in its receipt, counts only when that build's identity matches the node's final owner dependency, a changed dependency needing a fresh run, and counts a refusal only when that build produced it; behaviour fixture adapters are generated from the contract's interface binding and reach prior states by replaying owner operations or a declared seeding port, never by direct storage writes; a hand-written adapter is checked by an automated verification agent that is not the builder; a fixture with no automatic route is a recorded test gap, except on a surface whose owner forbids automated access, where the permitted boundary and lifecycle checks are the required tests."
   - "A fixture that contradicts its cited span stays required until a successor plan corrects it; the builder never waives or edits a fixture."
   - "Each builder report entry cites its source span and the different build it would have caused, carries a PWIZ-012 gap class, goes to the planning repair route or the plan's approver, and is kept as a plan conversion regression case in the project's planning evidence."
   - "The user sees a builder report entry only as a plain policy or risk-acceptance decision, and no entry changes a plan without its owner's decision."
