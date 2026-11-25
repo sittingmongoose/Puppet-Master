@@ -221,6 +221,15 @@ groups. The tour: 76 views (one fewer: the Templates tab), nothing spills sidewa
 and the top of a chapter were looked at in Basic dark, Glass dark and light, Friendly light, Retro dark and NieR light.
 **Not run:** stream F's Settings checks (see the end of this file).
 
+**Checked again on 2026-11-25, on main `3b0c31bbc5` and with the search fix:** the fifteen tests, 188 checks, pass in
+one run against that main's own page, "nothing was dropped" among them; the two search checks fail on the build
+before the fix. `tabs.check.mjs` in all ten looks: the same kinds of strip as on the last build, none whose box does
+not follow its chip. `align.check.mjs` in Basic dark: the same 21 explained lines. The tour: 76 views, nothing spills
+sideways. The side column's chip follows a jump and a wheel scroll to the same entry as before main's newer index
+code. Looked at: search before and after; Personas, Crews and Providers, which main changed underneath (Basic dark);
+the Planning page's checks (Basic dark, Friendly light); the Goals tabs (Glass dark and light); Personas' Defaults
+(Retro dark, NieR light). **Not run:** stream F's Settings checks.
+
 **To merge this into PMConcept7:** see "Merging this into PMConcept7" above (the glass.css fix, where the names are
 defined, the fifty rows).
 
