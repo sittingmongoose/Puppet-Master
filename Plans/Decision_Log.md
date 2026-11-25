@@ -63385,3 +63385,52 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-333, ContractName:Plans/Decision_Log.md#DL-341, ContractName:Plans/PRD_Builder.md#PRDB-014, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-328, ContractName:Plans/FinalGUISpec.md#F3-389
+
+### DL-2603 - C-FIX79: how DL-2602 answer 9 (Free Models top-10) is applied
+
+```yaml
+plan_unit_id: DL-2603
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  DL-2602 answer 9 records Jared's answer that the Free Models top-10 is the model defaults list in Settings, not a second list. Each model default in Settings is one job row holding one model (Models_System 7.2, settings_inventory model_defaults.list_setting_ids), so no ranked ten-model list can be the same thing as ai.models.default-model. Applied on 2026-11-25 under Jared's standing rule of one defaults list in Settings: free models are picked per job row of the Settings > Models Default models list, saved by the Settings transaction; there is no ranked top-10 store or editor anywhere. The Free Models screen keeps availability rows, Retry check (cmd.model.refresh with refresh_reason free_models_update_retry), View details, and one per-model action, Use for a job, which writes one job row through the same Settings transaction. Older passages that say "top-10" are read by the rule in MS-120. This entry clarifies how DL-2602 answer 9 is written into the plans; it changes no other answer and does not rewrite DL-2602.
+gui_related: true
+gui_classification_reason: It decides which control the Free Models screen shows and that the ranked editor is retired.
+split_recommended: false
+depends_on: [DL-2602, MS-120, F3-408, F3-409]
+unblocks: []
+acceptance_criteria:
+- MS-120, F3-408 and F3-409 state that free models are chosen on Default models job rows and that no ranked top-10 store or editor exists.
+- The Free Models screen's only write path is the Settings transaction on one job row.
+validation_surfaces:
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-plan-index.py validate
+risk_class: owner_choice_drift
+reasoning_tier: medium
+context_scope: closure_reaudit_fix79_owner_answers
+implementation_surfaces:
+- Plans/Models_System.md
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- "Plans/Decision_Log.md#DL-2602 answer 9"
+- "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/fix79/K5-gui-commands/review-neon.jsonl (row 1469 and regression 4) and FIXR1-NOTES.md (1469)"
+preserved_exact_tokens:
+- DL-2603
+- DL-2602
+- free_models_update_retry
+- Use for a job
+negative_constraints:
+- Do not rewrite DL-2602; this entry records how answer 9 is applied.
+- Do not add a second model list outside Settings.
+owner_hints:
+- Plans/Decision_Log.md
+- Plans/Models_System.md
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-2602, ContractName:Plans/Models_System.md#MS-120, ContractName:Plans/FinalGUISpec.md#F3-409, ContractName:Plans/FinalGUISpec.md#F3-408
