@@ -2189,7 +2189,10 @@ canonical_text: >-
   adds to its required_before_completion every such node not already ordered before it; when no candidate qualifies,
   the rule has no lawful target. Those fixtures count toward the designated node's completion only when they ran against the designated node's
   final build together with the completed outputs of every other node they exercise, all named in their
-  TestRunReceipt; a pass on an earlier or partial build never counts (Plans/Automated_Testing_System.md#ATS-401). A rule whose enforcement lies
+  TestRunReceipt; a pass on an earlier or partial build never counts (Plans/Automated_Testing_System.md#ATS-401). Write-scope membership and the execution target are fixed per rule
+  surface at WorkGraph construction, so one rule can have surfaces on both sides: a surface enforced inside the write
+  scope follows the owner and split-output ordering above, and a surface enforced outside it follows the verification
+  route below. A rule surface whose enforcement lies
   outside the compile's write scope, as when the compile reaches its contract only through consumer_reference edges, is
   verified rather than rebuilt: each node in the compile that reaches the contract binds that rule's required tests
   exactly as this unit produces them for a rule inside the write scope, for the plan version the compile consumes,
@@ -2219,9 +2222,11 @@ canonical_text: >-
   to be accepted; the passing polarity counts as impossible only on recorded code evidence that no accepted input reaches and satisfies the assertion in its branch (as with a false subschema), and the refusing polarity only on recorded code evidence of a kind the companion defines and validates (such as catching rules that always refuse every violation first, which is a named gap, a selector that guarantees the assertion, or a deletion that changes no approved outcome); where the bounded search records code evidence that no attributable refusal demonstrates the assertion's deletion, a recorded deletion witness, a payload whose whole-contract outcome changes when just that assertion is deleted, bound with its original approved outcome (accepted, or refused by an enclosing wrapper), is the rule's required test for the refusing polarity and earns deletion-detection credit, never refusal credit; any other impossible polarity needs no fixture and earns no credit, a polarity missing without that evidence or witness is a test gap, and the companion fixes the evidence kinds and the proof method; for an assertion an if selects, the passing payloads include one on each
   route that can accept a payload under the whole approved contract (a route the contract requires to accept but for
   which no valid case exists keeps its finding or test gap) and, as an additional case, wherever the contract admits one, a contrasting accepted control: an input that breaks the assertion on a route that does not select it, with any routing fields that route requires, expected to be accepted; it reuses a selector-switched refusing payload where that payload is valid on the other route, and is otherwise generated separately. A declared failure result gets two behaviour fixtures: an input that
-  meets its failing condition, expected to be refused with that failure's code, and, on the same surface wherever the
-  approved contract admits an accepted call there, the same input without the failing condition, expected to be
-  accepted; on a surface the contract declares refusal-only, the refusing fixture binds with its stated effect
+  meets its failing condition, expected to be refused with that failure's code, and, within the failure's applicable route on the
+  same surface wherever the approved contract admits an accepted call on that route, the same input without the failing
+  condition, expected to be accepted; where approved outcomes establish that the route admits no accepted call, the
+  reachable refusal binds with that evidenced limit recorded, and any separately required successful route binds under
+  its own approved expectation; on a surface the contract declares refusal-only, the refusing fixture binds with its stated effect
   assertions and the record states why an accepted call is outside the contract, while a lawful control on a distinct
   surface keeps its own binding. When code establishes that an earlier approved check refuses every input meeting
   a declared failure's condition before that failure can be reached (as when a schema bound always refuses first), the declared failure is a shadowed refusal on that surface: its refusing fixture binds with the outcome the contract
@@ -2244,7 +2249,11 @@ canonical_text: >-
   assertions and asserting the outcome the criterion states on its input or sequence: a refusal where the
   criterion prescribes one, otherwise the stated result, compared so that a wrong result fails (a duplicate delivery
   that must return the existing identity fails when another identity comes back). Any other acceptance criterion
-  (a latency gate, a visual or browser check, an artifact that must not exist) binds its ATS-003 oracle as its test.
+  (a latency gate, a visual or browser check, an artifact that must not exist) binds its ATS-003 oracle as its test. A
+  criterion that mixes both routes each stated obligation to a test that can verify it: its input-and-outcome
+  obligations to behaviour fixtures and its measured ones, such as latency percentiles, to its ATS-003 oracle, one
+  existing oracle covering several obligations when its evidence verifies all of them, and measured release assertions
+  staying with the build.
   No contract is exempt from schema fixtures because its acceptance criteria use other oracles. The compile model writes
   behaviour fixtures; each cites the exact span it comes from and keeps an immutable reference to that span in the
   approved plan version, and before it binds, code validates the fixture record, confirms that its input has the schema result the approved
@@ -2254,7 +2263,9 @@ canonical_text: >-
   contracts add the cases of the planning referee check (Plans/Planning_Wizard.md#PWIZ-111). A fixture's expected
   outcome comes only from the approved contract: accepted with any stated result, or refused with the declared failure code and, when several schema rules share that
   code, the validator's error path (with the member for a per-member rule) that names the rule, a schema refusal reached
-  early in a behaviour fixture included; an owner's semantic refusal is identified by its declared code together with
+  early in a behaviour fixture included; a deletion witness keeps its target assertion's id for deletion-detection
+  credit while its expected diagnostic is the one the approved contract actually reports, an enclosing wrapper's path
+  included; an owner's semantic refusal is identified by its declared code together with
   the isolated case's state and effect assertions and any diagnostic its approved interface exposes, never by a
   validator path; every expected state comes from the owner-stated state and
   effect assertions. A referee case binds only when the
@@ -2338,7 +2349,10 @@ canonical_text: >-
   surface certified by an executed denial with zero-effect evidence that still blocks when the refusal is missing or
   fails, a shadowed pair bound on one surface beside an ordinary test gap on a second surface, a shadowed failure on a
   refusal-only surface, a rule bound to both the standalone validator and a separately declared operation, where the operation still
-  gives the approved result while the standalone validator is broken and the node must fail completion, and a data
+  gives the approved result while the standalone validator is broken and the node must fail completion, a local
+  operation beside a read-only standalone validator, where a passing receipt from a stale validator build leaves the
+  node incomplete, a legacy route whose declared failure has no accepted call on that route and binds its refusal with
+  the evidenced limit, and a data
   shape consumed by two operations, one of them refusal-only, that gets one schema
   disposition and no blocking gap, a latency oracle that binds and runs with no operation-level accepted call and
   no completeness gap, and a surface silent on acceptance both carried from planning and first found at compile
@@ -2363,7 +2377,7 @@ acceptance_criteria:
   - "A change after approval to a contract or to a resolved dependency its checks or tests use reruns its checks in the successor plan and regenerates its tests, and the PlanDiffImpactReport classifies every consuming node."
   - "The handoff schema change for payload fixture, behaviour fixture and recorded-gap records, and for per-test outcomes in test_run_receipt, is a recorded companion change, required before any compile uses this unit; it also fixes the per-keyword candidate generators, the named-gap coverage conditions, the effective-assertion definitions and refusal attribution for applicators, the per-member identity, the fixture-owner designation rule and the TestRunReceipt fields that name a split rule's build inputs and an out-of-scope run's owner build, with the
   pattern, length-bound, required-member, discriminated-oneOf same-branch control, out-of-scope alternate arm, selector-guaranteed assertion, false subschema, a named shape with no valid input whose refusal binds from a directly constructed negative candidate, a oneOf arm deletion caught by another arm's accepted input, a deletion-inert oneOf-arm rule keeping its passing fixture with no refusing fixture, deletion witness or test gap, a second match leaving one payload's whole outcome unchanged, in which the same-branch passing control binds, the unchanged payload earns no witness credit, and, where the bounded search records code evidence that no attributable refusal demonstrates the deletion, a payload whose whole-contract outcome changes with the assertion deleted binds as the witness with its approved outcome, with no refusing fixture or test gap, a witness beside an attributable refusal where the refusal binds, a wrapper-refusal witness bound with its approved outcome, a separately generated contrasting control, a human-only action bound by its permitted checks, a human-only action whose only required outcome is a refusal inside it, branch-switch, independent-assertion, negation,
-  conditional-selector contrasting-control, optional-field passing-control, shared-code semantic-guard, state-preserving refusal and replay scenarios, and one scenario for each graph shape (a single owner, split parallel owners with an early or stale-build pass that must not count, enforcement outside the write scope whose existing owner tests must not stand in for its required cases and whose refusal the receiving node's own check or a different owner build must not satisfy, an integration node that also qualifies as fixture owner, a candidate whose edges would create a cycle, no lawful target, a shadowed declared failure, an absent owner build, a refusal-only surface, a rule bound to both the standalone validator and a separately declared operation where a broken standalone validator must fail completion, a shadowed pair beside a gap on a second surface, a shadowed failure on a refusal-only surface, a shape consumed by a refusal-only operation, a latency oracle with no accepted call and no gap, and a silent surface carried and first found at compile time)."
+  conditional-selector contrasting-control, optional-field passing-control, shared-code semantic-guard, state-preserving refusal and replay scenarios, and one scenario for each graph shape (a single owner, split parallel owners with an early or stale-build pass that must not count, enforcement outside the write scope whose existing owner tests must not stand in for its required cases and whose refusal the receiving node's own check or a different owner build must not satisfy, an integration node that also qualifies as fixture owner, a candidate whose edges would create a cycle, no lawful target, a shadowed declared failure, an absent owner build, a refusal-only surface, a rule bound to both the standalone validator and a separately declared operation where the separately declared operation keeps giving the approved result while the broken standalone validator fails its bound test and completion, a shadowed pair beside a gap on a second surface, a shadowed failure on a refusal-only surface, a shape consumed by a refusal-only operation, a latency oracle with no accepted call and no gap, and a silent surface carried and first found at compile time)."
   - "A carried completeness or design gap keeps its PWIZ-012 class and is resolved under that class, not under the test-gap policies."
   - "No NodeSeeds, WorkNodes, executable queues, final node manifests, production build tasks, implementation files or source code are created by this PlanUnit."
 validation_surfaces:
