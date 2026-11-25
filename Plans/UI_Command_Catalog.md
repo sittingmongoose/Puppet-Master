@@ -8656,6 +8656,8 @@ The Persona rows below preserve historical Project-only command sketches, not th
 
 The selected Persona result vocabulary is `requested_persona` / `effective_persona` (Personas section 10), never parallel `_id` runtime fields. The select result’s existing authenticated owner_result_ref carries original frozen resolution evidence (CV-691 persona_selected_resolution); historical `_id` spellings are read-only migration/source-lineage aliases and cannot authorize a current write or fresh Settings resolution. CV-691/P-124 supplies the exact event binding.
 
+**Persona update operations (2026-11-25, DL-2602).** The historical `cmd.persona.update` row below keeps its `persona_patch` sketch. The active request is `persona_update_request_v2`, a whole-record request whose `update_operation` field selects `edit` (default), `set_enabled` (with `enabled: boolean`) or `restore_shipped_default`, with the refusals in `Plans/Personas.md` §4.1 item 5 (`invalid_args` for a protected core built-in or a Persona with no shipped default, `stale_projection` for a stale `expected_owner_revision`); every operation's success is `persona.updated`. There are no separate disable, restore or validate-schema commands.
+
 **DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.
 
 | Command ID | Payload fields | Result fields | Error/disabled fields | Receipt or event effect |

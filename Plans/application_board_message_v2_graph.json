@@ -15,7 +15,7 @@
     {
       "path": "Plans/shared_integration_runtime.schema.json",
       "schema_uri": "pm.shared_integration_runtime.command_contracts.schema.v1",
-      "sha256": "0e41d89065463e0581357a514ad3d2510d6db8a3e9356dcd23f717f5db4118f5"
+      "sha256": "55af91ab515d32f556efe0b46e8f47417c4e16fca3e8486fe38f1999f88e5af0"
     },
     {
       "path": "Plans/coordination_projection_contracts.schema.json",
@@ -160,5 +160,5 @@
     "withdrawal": "fence exact v2 writer, settle original full receipts, fence exact v2 reader/publication before successor; retain original V1/V2 bytes and independent generic index"
   },
   "adoption_disposition": "specified_unimplemented",
-  "graph_sha256": "afc924bea14ef8aee759f25030a85cb85899b302c7d90b50a367bbd2f792e0df"
+  "graph_sha256": "8d27246d7aa92b7a054935472571e8f7b91dd160c7d461f7d1d8b6301f3be062"
 }

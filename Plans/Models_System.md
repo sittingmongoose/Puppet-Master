@@ -9800,7 +9800,7 @@ Fields only MS-135 adds:
 | `capability_snapshot_ref` | string | Ref of the §10.4.3 capability snapshot the resolver read. |
 | `credential_route_epoch_id` | string | The MA-067 credential route epoch the effective account used. |
 | `fallback_used` | boolean | `true` only when `resolved_model_id` came from a `fallback_chain[]` entry instead of the precedence winner. |
-| `clamp_reason?` | string, closed: `policy_ceiling`, `computer_capacity_limit`, `effort_unsupported`, `variant_unsupported`, `context_window_limit` | Present only when a requested value was narrowed for a reason other than fallback. |
+| `clamp_reason?` | string, closed to these members of the `clamp/substitution` reason-code family ("Provider capability and cost gating" above): `effort_unsupported`, `effort_clamped`, `auth_family_capability_clamped`, `capability_unknown`, `instruction_projection_partial`, `skill_projection_partial` | Present only when a requested value was not applied exactly for a reason other than model fallback, with the family's meanings (`effort_clamped` = accepted but narrowed effort; `effort_unsupported` = the effort control is unsupported). The model-level family codes `model_unavailable`, `model_routed_by_provider` and `model_substituted` are never written here: model fallback is `fallback_used = true` with `selection_reason.fallback_reason`. When more than one code applies, the first in this list is recorded and the others stay in the attempt's `EffortSettlementReceipt` and `skipped_persona_controls[]`. Why an effort was narrowed (model maximum, policy ceiling, budget, provider mapping) is the attempt's `EffortSettlementReceipt.clamp_reason`, not this field. |
 | `visibility_state` | string, closed: `visible`, `visible_with_notice`, `hidden_from_picker`, `history_only` | Derived from the effective model's `model_lifecycle_state` by the model lifecycle table below. |
 
 Example 1, the run's own pick is honored:
@@ -9876,7 +9876,7 @@ Example 2, the picked model is sunset, the first fallback runs, and effort is cl
   "capability_snapshot_ref": "capsnap://codex/gpt-5.5-codex/rev-41",
   "credential_route_epoch_id": "cre_19bd",
   "fallback_used": true,
-  "clamp_reason": "effort_unsupported",
+  "clamp_reason": "effort_clamped",
   "visibility_state": "visible"
 }
 ```
@@ -9918,11 +9918,13 @@ Open-string values in the examples (platform, model, account, auth mode, executi
 | `requested_effort` | string or null | The label requested for this run; null when none was requested. |
 | `policy_effort` | string or null | The label after scope policy ceilings; null when no policy applied. |
 | `effective_effort` | string or null | The label actually honored; null when the route has no effort control or the request was skipped. |
-| `effective_wire_value` | string or null | The exact provider-native value sent, such as `high` for `model_reasoning_effort`. |
+| `effective_wire_effort` | string or null | The exact provider-native value sent, such as `high` for `model_reasoning_effort`. |
 | `provider_native_field` | string or null | The provider field it was sent in, such as `model_reasoning_effort` or `thinking`. |
 | `display_label` | string | The label the GUI shows for the effective effort. |
 | `settlement_reason` | string, closed: `honored`, `not_requested`, `clamped`, `transformed`, `skipped_unsupported`, `ignored_by_provider`, `blocked_by_policy`, `reset_on_continuation` | Outcome of the effort request for this attempt. |
-| `clamp_reason` | string or null, closed: `model_max_effort`, `policy_ceiling`, `budget_limit`, `provider_mapping` | Required when `settlement_reason` is `clamped` or `transformed`; null otherwise. |
+| `clamp_reason` | string or null, closed: `model_max_effort`, `policy_ceiling`, `budget_limit`, `provider_mapping` | Required when `settlement_reason` is `clamped` or `transformed`; null otherwise. These values are the cause of the narrowing, not `clamp/substitution` family codes: the resolver record for the same attempt carries the family code, `effort_clamped` for `clamped`, and for `transformed` when the transform lowered the effort, and `effort_unsupported` for `skipped_unsupported`. |
+| `fallback_reason` | string or null | When this attempt runs on a fallback model, the same value as the resolver record's `selection_reason.fallback_reason`, and the effort is settled again against the fallback model's capability snapshot; null when no fallback happened. |
+| `reset_detection` | string, closed: `not_applicable`, `preserved`, `reset_detected` | `not_applicable` on the first attempt of a session lineage. On a model switch, compaction, resume, continuation or subagent spawn PM compares this attempt's effective effort with the previous receipt of the same lineage: `preserved` when the requested effort is still applied, `reset_detected` when the provider or harness dropped it back to a default. `reset_detected` requires `settlement_reason = reset_on_continuation`, and `reset_on_continuation` requires `reset_detected`. |
 | `token_budget` | integer or null | Reasoning token budget sent; null when the route has none. |
 | `cost_ceiling_microusd` | integer or null | Cost ceiling applied to the attempt; null when none. |
 | `support_source` | string, closed: `documented`, `empirical`, `inferred` | Same meaning as §10.4.3 `source`. |
@@ -9931,7 +9933,7 @@ Open-string values in the examples (platform, model, account, auth mode, executi
 | `display_mismatch` | boolean | `true` when the provider accepted the request but the GUI label differs from `effective_effort`. |
 | `created_at_utc` | string (RFC 3339) | When the receipt was written. |
 
-`settlement_reason = honored` requires `requested_effort` and `effective_effort` to be equal and non-null; only `honored` may be shown as honored. `not_requested` requires `requested_effort = null`.
+`settlement_reason = honored` requires `requested_effort` and `effective_effort` to be equal and non-null; only `honored` may be shown as honored. `not_requested` requires `requested_effort = null`. The field names follow MS-126's EffortSettlementReceipt list exactly (`requested_effort`, `policy_effort`, `effective_wire_effort`, `provider_native_field`, `display_label`, `support_source`, `transform_version`, `fallback_reason`, `reset_detection`, `first_response_latency_bucket`); `settlement_reason`, `clamp_reason` and the other fields above are added beside them, and none replaces an MS-126 field. The model-switch replay rule is the first sentence of this payload: a model switch writes a fresh receipt, settled against the new model's snapshot.
 
 ```json
 {
@@ -9943,11 +9945,13 @@ Open-string values in the examples (platform, model, account, auth mode, executi
   "requested_effort": "max",
   "policy_effort": "max",
   "effective_effort": "high",
-  "effective_wire_value": "high",
+  "effective_wire_effort": "high",
   "provider_native_field": "reasoning_effort",
   "display_label": "High (Max not supported)",
   "settlement_reason": "transformed",
   "clamp_reason": "provider_mapping",
+  "fallback_reason": null,
+  "reset_detection": "not_applicable",
   "token_budget": null,
   "cost_ceiling_microusd": 250000,
   "support_source": "documented",

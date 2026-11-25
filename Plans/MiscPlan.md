@@ -852,7 +852,7 @@ Required. Use existing widgets; tag new helpers with DRY.
 **Dependencies**
 
 - **Requires:** GuiConfig and Option B run config (Worktree plan) for Shortcuts/Skills config persistence and for cleanup config wiring used by the same flows. platform_specs (or equivalent) for skill injection per platform when integrating Skills with runners.
-- Shortcuts have no dependency on Skills. Skills backend can stub `list_skills_for_agent` until orchestrator and platform_specs define how runners receive the skill list.
+- Shortcuts have no dependency on Skills. Skills backend can stub `list_skills_for_agent` until orchestrator and platform_specs define how runners receive the skill list. That condition is met (2026-11-25): M-083's `SkillRunnerBinding` defines how runners receive the skill list, so `list_skills_for_agent` is implemented with the M-083 signature and is no longer stubbed.
 
 **Recommended implementation order** (integrated with cleanup, worktree, and plan)
 
@@ -937,7 +937,7 @@ Implement in order; discovery path order is canonical (§7.10).
 - [ ] **8.9.3** Implement `load_skill(path) -> Result<SkillInfo>` with YAML frontmatter parsing and name/description validation (length, regex, dir-name match); return clear errors for invalid frontmatter or missing file; tag DRY:FN:load_skill.
 - [ ] **8.9.4** Add `skill_permissions` to GuiConfig; implement pattern-based resolve (allow/deny/ask) with wildcards; **explicit per-skill entry wins over pattern**; tag DRY:FN:resolve_skill_permission.
 - [ ] **8.9.5** Implement CRUD: create skill dir + SKILL.md (if target dir already contains SKILL.md, return error and do not overwrite -- §7.11); update SKILL.md; delete (with confirmation); persist only permissions in config. On config write failure, return error to caller.
-- [ ] **8.9.6** Implement `list_skills_for_agent(project_root, permissions) -> Vec<SkillInfo>` for runner/prompt integration; tag DRY:FN:list_skills_for_agent. Runtime delivery follows the canonical registry + permission filter + context bundling + `skill` tool path; provider-native formats remain interoperability inputs only.
+- [ ] **8.9.6** Implement `list_skills_for_agent(project_root, permissions) -> Vec<SkillInfo>` for runner/prompt integration; tag DRY:FN:list_skills_for_agent. Runtime delivery follows the canonical registry + permission filter + context bundling + `skill` tool path; provider-native formats remain interoperability inputs only. Superseded signature (2026-11-25, M-083): the helper this task implements is `list_skills_for_agent(project_root: Option<path>, runtime_platform_id: string, permission_snapshot_id: string) -> Result<SkillRunnerBinding, SkillListError>` as typed under "M-083 runner skill binding"; the `(project_root, permissions) -> Vec<SkillInfo>` form above is source lineage (the permissions argument became `permission_snapshot_id`, and the `SkillInfo` list became the binding's `entries[]`).
 - [ ] **8.9.7** Unit tests for skills: discover_skills (mock dirs, order and deduplication); load_skill (valid/invalid frontmatter, name validation, dir-name match); resolve_skill_permission (exact + wildcard, default allow, explicit over pattern). See §7.11.
 
 ### 8.10 Shortcuts and Skills: export/import, search/filter, discoverability, bulk permission, sort/filter, preview, last modified, validate all
@@ -5447,7 +5447,7 @@ acceptance_criteria:
 - Slint key-event capture location and KeyMap application are confirmed against Slint 1.17.1 or current stable docs before implementation.
 - Skill discovery handles Windows path case and separators as needed.
 - platform_specs or equivalent documents how each provider receives skill list, paths, content, environment, prompt injection, or tools.
-- list_skills_for_agent remains stubbed until platform-specific delivery is defined.
+- list_skills_for_agent remains stubbed until platform-specific delivery is defined. Since 2026-11-25 that delivery is defined by the M-083 SkillRunnerBinding, so the helper is no longer stubbed and uses the M-083 signature.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -5476,7 +5476,7 @@ preserved_exact_tokens:
 - Gemini
 negative_constraints: []
 compatibility_only_notes:
-- Provider skill injection remains stubbed until platform_specs or equivalent defines delivery.
+- Provider skill injection remains stubbed until platform_specs or equivalent defines delivery. The equivalent is the M-083 SkillRunnerBinding (2026-11-25), so injection is no longer stubbed.
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Provider docs and platform_specs own provider-specific delivery details.
