@@ -4977,7 +4977,8 @@ canonical_text: >-
   failure code; an entity whose state changes without a state machine that names its states, transitions, triggers
   and terminal states; a requirement without acceptance criteria or a validation surface; a pointer to a section, unit
   or artifact that does not resolve, including an operation or event without an interface binding (the callable
-  surface it maps to: a route, command, function or storage port, written by the planning agent); and the same identifier declared with different types or enumeration members, or
+  surface it maps to: a route, command, function or storage port, and the observation surfaces through which its
+  state and effects are read, written by the planning agent); and the same identifier declared with different types or enumeration members, or
   two statements that contradict each other. Code finds, without a model call, what structured declarations show:
   fields without types in tables and schemas, unresolved pointers, and one identifier declared with different types
   or enumeration members. These code-found findings are part of PWIZ-028's deterministic checks and must pass; a code-found finding passes as deferred only when its declaration carries an explicit gap marker (provenance gap with a
@@ -5044,8 +5045,8 @@ canonical_text: >-
   contract the topic's planning agent
   writes a referee from the owner's behaviour text, meaning its operations, states, transitions and declared failure
   results. The referee is a small executable owner model whose input is a prior owner state plus one operation or
-  event, or a short sequence of them, and whose output is the resulting state and any returned result, or a refusal with one of the contract's
-  declared failure codes. The referee's state marks which parts survive a cut or restart. A rule whose refusal has no
+  event, or a short sequence of them, and whose output is the resulting state, any returned result and the observable effects, or a refusal with one of the
+  contract's declared failure codes together with the state and effects that remain after it. The referee's state marks which parts survive a cut or restart. A rule whose refusal has no
   declared failure code is a PWIZ-110 finding; a declared validation code shared by several rules is enough when the
   validator's error path names the rule, and each case records the expected path. The rules under test are the contract's schema rules and its behavioural acceptance criteria (those with an input
   and an observable outcome), sourced separately from the referee; shape checks get an acceptance-only passing case,
@@ -5056,16 +5057,17 @@ canonical_text: >-
   least one illegal transition from each state; a write, a cut and a reopen; a stale writer after a fencing change;
   and a caller denied without permission. Where the contract has a schema, code also generates inputs that each break one rule, and the schema validator, not the referee, confirms which
   rules each breaks; only an input that breaks exactly one rule is credited as that rule's refusing case, and inputs
-  that break several rules stay admissible as named-gap evidence. Each refusing case must be refused with its rule's code, and each passing case accepted, with its resulting state
-  where the contract states one or the referee computes one. When the
+  that break several rules stay admissible as named-gap evidence. Each case carries its outcome (accepted with any stated result, or refused with its rule's code) and, for either
+  polarity, every state and effect assertion the owner text states, such as a refusal that must leave the record,
+  lifecycle and hold unchanged and append nothing, or a replay that must return the existing result without repeating
+  its effect; the referee checks every assertion, and a required assertion with no observation surface is a test gap. When the
   referee and a rule disagree, the owner text decides: a referee that departs from the owner text is repaired, and owner
   text that lacks the check is a design finding. Design findings carry finding_level and repair_required and go through PWIZ-028's bounded round; a non-blocking one
   that remains afterwards is recorded as an open question and reaches PNC-038 as a recorded gap, a blocking one that
   remains is a typed blocker under PWIZ-006, and either reaches the user only as a plain decision when fixing it is a
   product-policy choice. A rule is a
-  named gap only with code evidence: the generator tried at least five distinct single-rule breaks of that rule, or
-  every mutation of its schema keyword if there are fewer, every one also broke another rule, and the listed catching rules refused each such input with their own codes; those inputs are recorded. Without
-  that evidence the rule is a design finding or a test gap. Each risky contract has a budget the planning run sets,
+  named gap only after a complete keyword-aware isolation search: starting from a valid control, code tries for each keyword of the rule the candidate values that break only that keyword (for an enumeration, values of the admitted type outside the allowed set) and binds a refusal as soon as the schema validator confirms isolation; the rule is a named gap only when every candidate in that keyword's finite candidate domain also broke another rule, each such input refused by the catching rules with their own codes; those inputs are recorded. A search that ends on sampled collisions alone, or
+  without that evidence, leaves the rule a design finding or a test gap. Each risky contract has a budget the planning run sets,
   200 generated inputs or 10 minutes of machine time by default, whichever comes first; the required cases run first
   and count against it, and rules not reached within it are listed as test gaps for PNC-038, never as named gaps. The referee, its cases, the generated inputs, the observed outcomes, the named gaps and the test gaps are planning
   evidence. Plans/Plan_To_Node_Compilation.md#PNC-038 binds as WorkNode fixtures only the cases whose expected outcome
@@ -5082,7 +5084,8 @@ acceptance_criteria:
   - "The check runs before a topic becomes Ready and reruns for contracts that final integration changes."
   - "Referee inputs are a prior state plus an operation or event, or a short sequence, and the cases cover every state-machine transition with an illegal transition from each state, a write-cut-reopen case, a stale-writer case and a denied-caller case wherever the matching property applies."
   - "Refusal codes are the contract's declared failure codes; the schema validator confirms which rules each generated input breaks, and only an input that breaks exactly one rule is credited as that rule's refusing case, while multi-rule inputs remain admissible as named-gap evidence."
-  - "Each named gap carries at least five recorded single-rule break attempts (or every mutation of its schema keyword) showing that each also broke another rule, which refused it with its own code."
+  - "A named gap rests on a complete keyword-aware isolation search whose finite candidate domain all collided with other rules, each refused by a catching rule with its own code; a search that ends on sampled collisions is a test gap."
+  - "Every case checks its outcome and every owner-stated state and effect assertion through a declared observation surface, for either polarity."
   - "The budget ends at whichever limit comes first, required cases run first, and rules not reached within it are listed as test gaps, never as named gaps."
   - "Design findings follow PWIZ-028's bounded round; non-blocking leftovers are open questions and recorded gaps that do not hold the topic out of Ready, and a blocking leftover is a PWIZ-006 typed blocker."
   - "Referee cases cover schema rules and behavioural acceptance criteria only; other criteria keep their ATS-003 oracles."

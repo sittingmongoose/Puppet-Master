@@ -16502,9 +16502,9 @@ status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
   During a WorkNode build, the rule fixtures bound by Plans/Plan_To_Node_Compilation.md#PNC-038 run as required tests
-  of the node's test strategy (ATS-003). The node completes only when every bound fixture meets its expected outcome: accepted
-  (with its expected state where the fixture states one), the stated result, or refused with its declared failure code
-  (and its error path where the fixture records one). Every bound ATS-003 oracle must pass, and every recorded test gap
+  of the node's test strategy (ATS-003). The node completes only when every bound fixture meets its expected outcome (accepted with any stated result, or
+  refused with its declared failure code and, where the fixture records one, its error path) and every state and effect
+  assertion the fixture carries holds when read through its declared observation surface. Every bound ATS-003 oracle must pass, and every recorded test gap
   is honoured under its test_gap_policy (a block_completion gap blocks completion; a
   defer_non_executable_harness_candidate gap is recorded as ATS-004 requires). The TestRunReceipt records each of these through the companion schema change that
   Plans/Plan_To_Node_Compilation.md#PNC-038 names (ATS-004). A payload fixture runs against the built validator of its data shape, or through a declared consuming operation
