@@ -596,6 +596,73 @@ def verify_rollback(candidate, target):
     return 0
 
 
+def push_targets(root: Path) -> list[tuple[list[str], str]]:
+    """Every configured push target as ([remote names], URL), in configured order, one entry per URL.
+
+    A remote's push URLs, falling back to its URL when it has no push URL. The same URL named by two
+    remotes (the shared checkout's storage URL is origin's second push URL and the truenas-backup
+    remote's URL) is one target: pushing it twice would lease its own first push against it.
+    """
+    by_url: dict[str, list[str]] = {}
+    for name in git(root, "remote").stdout.split():
+        listed = git(root, "config", "--get-all", f"remote.{name}.pushurl", check=False)
+        urls = [url for url in listed.stdout.splitlines() if url]
+        if not urls:
+            fallback = git(root, "config", "--get-all", f"remote.{name}.url", check=False)
+            urls = [url for url in fallback.stdout.splitlines() if url]
+        for url in urls:
+            by_url.setdefault(url, []).append(name)
+    return [(names, url) for url, names in by_url.items()]
+
+
+def pushed_main(root: Path, url: str) -> Optional[str]:
+    """The published main at one push target, read without updating any local ref; None when it has none."""
+    for line in git(root, "ls-remote", "--refs", url, MAIN_REF).stdout.splitlines():
+        value, _, ref = line.partition("\t")
+        if ref == MAIN_REF:
+            return sha(value, f"main on {url}")
+    return None
+
+
+def publish_main(root: Path, lease: str, commit: str) -> int:
+    """Push the landed SHA to every configured push target under the verify lease, and verify each.
+
+    The hand push verify's PUBLISH_LEASE feeds used to reach a single target: with several push URLs
+    configured, the ones past the first (the storage URL behind the NAS remote) stayed behind with no
+    one noticing, because verify reads origin's tip only. This pushes each target itself and then
+    rereads each main, refusing loudly, naming the remote, when any did not land.
+    """
+    lease = commit_or_refuse(root, lease, "publication lease")
+    commit = commit_or_refuse(root, commit, "landed commit")
+    if not is_ancestor(root, lease, commit):
+        raise Refusal(f"publication lease {lease} is not an ancestor of landed commit {commit}: rebase on "
+                      "the pinned main and check again, so the push is a fast-forward")
+    targets = push_targets(root)
+    if not targets:
+        raise Refusal(f"no push targets are configured for {root}: add a remote before publishing")
+    failures: list[str] = []
+    pushed: list[tuple[list[str], str]] = []
+    for names, url in targets:
+        label = f"remote {', '.join(names)} ({url})"
+        result = git(root, "push", f"--force-with-lease={MAIN_REF}:{lease}", url, f"{commit}:{MAIN_REF}",
+                     check=False)
+        if result.returncode:
+            failures.append(f"{label}: push exited {result.returncode}"
+                            + (f": {result.stderr.strip()}" if result.stderr.strip() else ""))
+        else:
+            pushed.append((names, url))
+    for names, url in pushed:
+        label = f"remote {', '.join(names)} ({url})"
+        tip = pushed_main(root, url)
+        if tip != commit:
+            failures.append(f"{label}: main is {tip or 'missing'}; expected {commit}")
+    if failures:
+        raise Refusal("publishing the landed commit to every push target failed:\n" + "\n".join(failures))
+    for names, url in targets:
+        say(f"Published {commit} to remote {', '.join(names)} ({url}): main verified")
+    return 0
+
+
 def is_ancestor(root, earlier, later):
     result = git(root, "merge-base", "--is-ancestor", earlier, later, check=False)
     if result.returncode not in (0, 1):
@@ -2808,6 +2875,14 @@ def main(argv=None):
         member.add_argument("--lock-dir", type=Path, default=LOCK_DIR, help="the rule's lock directory (default: the landing lock)")
         member.add_argument("--check-source", type=Path, help="the landing check's source at the receipt's commit "
                                                               "(default: scripts/pm-landing-check.py at that commit in --repo)")
+        publish = commands.add_parser("publish",
+                                      help="push the landed SHA to every configured push target with the lease "
+                                           "and verify each")
+        publish.add_argument("--repo", type=Path, default=None,
+                             help="checkout the landed commit and the remotes are read from (default: this worktree)")
+        publish.add_argument("--lease", required=True, help="the PUBLISH_LEASE verify printed: the main every "
+                                                            "target must still be at")
+        publish.add_argument("--commit", required=True, help="the landed full SHA to publish to every target")
         args = parser.parse_args(argv)
         if args.command == "check":
             root = Path(git(Path.cwd(), "rev-parse", "--show-toplevel").stdout.strip())
@@ -2819,6 +2894,9 @@ def main(argv=None):
         if args.command == "batch-check":
             repo = args.repo or Path(git(Path.cwd(), "rev-parse", "--show-toplevel").stdout.strip())
             return batch_check(repo, args.lock_dir, args.receipt, args.check_source)
+        if args.command == "publish":
+            repo = args.repo or Path(git(Path.cwd(), "rev-parse", "--show-toplevel").stdout.strip())
+            return publish_main(repo, args.lease, args.commit)
         if args.rollback_check:
             if args.batch_start is not None or args.batch_close:
                 verify.error("--batch-start and --batch-close verify a receipt and do not go with --rollback-check")

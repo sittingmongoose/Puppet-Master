@@ -205,11 +205,11 @@ class LandingFixture(unittest.TestCase):
         with patch.object(land, "command", side_effect=local_status):
             land.remote_cleanup(self.folder, "nas1")
 
-    def test_public_cli_only_accepts_check_verify_and_the_two_batch_readers(self):
+    def test_public_cli_accepts_only_the_documented_subcommands(self):
         script = Path(__file__).with_name("pm-land.py")
         result = subprocess.run(["python3", "-B", str(script), "--help"], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0)
-        self.assertIn("{check,verify,batch-status,batch-check}", result.stdout)
+        self.assertIn("{check,verify,batch-status,batch-check,publish}", result.stdout)
         for removed in ("run", "inventory", "preflight", "fetch-main", "push-main", "_remote"):
             with self.subTest(command=removed):
                 result = subprocess.run(["python3", "-B", str(script), removed], capture_output=True, text=True)
@@ -3364,6 +3364,84 @@ class CheckBatchBaseTests(unittest.TestCase):
     def test_a_base_that_is_not_on_main_is_refused(self):
         with self.assertRaisesRegex(land.Refusal, "is not on the fetched origin/main"):
             land.check_topic(self.shared, self.branch, "nas1", self.head)
+
+
+class PublishAllTargetsTests(unittest.TestCase):
+    """publish pushes the landed SHA to every configured push target under one lease and verifies each."""
+
+    setUp = LandingFixture.setUp
+    git = LandingFixture.git
+    put = LandingFixture.put
+    make_record = LandingFixture.make_record
+
+    def bare(self, name, main):
+        path = self.root / name
+        self.git(self.shared, "clone", "--bare", str(self.shared), str(path))
+        self.git(path, "update-ref", land.MAIN_REF, main)
+        return path
+
+    def tip(self, bare):
+        return land.git(bare, "rev-parse", land.MAIN_REF).stdout.strip()
+
+    def two_push_urls(self):
+        nas = self.bare("nas.git", self.base)
+        self.git(self.shared, "config", "--add", "remote.origin.pushurl", str(self.origin))
+        self.git(self.shared, "config", "--add", "remote.origin.pushurl", str(nas))
+        return nas
+
+    def test_publish_reaches_every_push_url(self):
+        nas = self.two_push_urls()
+        output = io.StringIO()
+        with redirect_stdout(output):
+            self.assertEqual(land.publish_main(self.shared, self.base, self.head), 0)
+        self.assertEqual(self.tip(self.origin), self.head)
+        self.assertEqual(self.tip(nas), self.head)
+        self.assertIn(str(self.origin), output.getvalue())
+        self.assertIn(str(nas), output.getvalue())
+
+    def test_a_rejected_push_fails_loudly_naming_that_remote(self):
+        self.put(self.shared, "tracked.txt", "someone else's landing\n")
+        self.git(self.shared, "commit", "-am", "someone else")
+        diverged = land.revision(self.shared, "HEAD")
+        nas = self.bare("nas.git", diverged)
+        self.git(self.shared, "remote", "add", "truenas-backup", str(nas))
+        with self.assertRaisesRegex(land.Refusal, "truenas-backup"):
+            land.publish_main(self.shared, self.base, self.head)
+        self.assertEqual(self.tip(self.origin), self.head)
+        self.assertEqual(self.tip(nas), diverged)
+
+    def test_every_push_carries_the_same_safety_lease(self):
+        nas = self.two_push_urls()
+        real = land.git
+        pushes = []
+
+        def recording(root, *args, **kwargs):
+            if args and args[0] == "push":
+                pushes.append(args)
+            return real(root, *args, **kwargs)
+
+        with patch.object(land, "git", side_effect=recording):
+            self.assertEqual(land.publish_main(self.shared, self.base, self.head), 0)
+        self.assertEqual(len(pushes), 2)
+        for args in pushes:
+            self.assertIn(f"--force-with-lease={land.MAIN_REF}:{self.base}", args)
+            self.assertIn(f"{self.head}:{land.MAIN_REF}", args)
+        self.assertEqual({args[2] for args in pushes}, {str(self.origin), str(nas)})
+
+    def test_a_target_whose_main_differs_after_the_push_is_named(self):
+        nas = self.two_push_urls()
+        real = land.pushed_main
+
+        def unmoved(root, url):
+            if url == str(nas):
+                return self.base
+            return real(root, url)
+
+        with patch.object(land, "pushed_main", side_effect=unmoved):
+            with self.assertRaisesRegex(land.Refusal, re.escape(str(nas))):
+                land.publish_main(self.shared, self.base, self.head)
+        self.assertEqual(self.tip(self.origin), self.head)
+        self.assertEqual(self.tip(nas), self.head)
 
 
 if __name__ == "__main__":
