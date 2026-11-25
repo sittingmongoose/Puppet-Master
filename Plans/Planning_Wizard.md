@@ -4976,15 +4976,15 @@ canonical_text: >-
   finding: a named field without a type; an operation or command without its failure results, each with a declared
   failure code, or a declared failure of an operation, command or event whose contract leaves undecidable, on any of
   its callable surfaces, whether its passing neighbour, as Plans/Plan_To_Node_Compilation.md#PNC-038 defines it, is
-  accepted, a failure for which that definition finds no neighbour and the approved outcomes establish its
-  evidenced limit not being flagged (Plans/Plan_To_Node_Compilation.md#PNC-038 carries this finding as a recorded gap in
-  place of the missing passing neighbour); an entity whose state changes without a state machine that names its states, transitions, triggers
+  accepted (PNC-038 carries this finding as a recorded gap in place of the missing passing neighbour); an entity whose state changes without a state machine that names its states, transitions, triggers
   and terminal states, or whose state machine leaves the outcome of a named state and operation pair unstated; a requirement without acceptance criteria or a validation surface; a pointer to a section, unit
   or artifact that does not resolve, including an operation or event without an interface binding (the callable
   surface it maps to: a route, command, function or storage port, and the observation surfaces through which its
   state and effects are read, written by the planning agent), or without an observation surface for a state or
   effect assertion its owner text states; and the same identifier declared with incompatible types or enumeration members for overlapping cases, or
-  two statements that contradict each other. Code finds, without a model call, what structured declarations show:
+  two statements that contradict each other. A declared failure whose surface admits no accepted call on any route,
+  as an evidenced limit PNC-038 defines shows, is not that finding: PNC-038 binds its refusal with the limit and
+  records no gap. Code finds, without a model call, what structured declarations show:
   fields without types in tables and schemas, unresolved pointers, and one identifier declared with incompatible types
   or enumeration members for overlapping cases, where one identifier is one named contract, type, enumeration, event, command or state, or one
   field path of one contract, including a field the plan declares to be the same as another by reference or explicit
