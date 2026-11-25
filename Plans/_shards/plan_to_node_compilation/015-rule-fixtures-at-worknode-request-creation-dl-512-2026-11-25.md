@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_To_Node_Compilation.md`
 
-Source lines: L2169-L2309
+Source lines: L2169-L2317
 
-Source SHA256: `01f6005d6de1d83d1344c1378bf81ec67683fe309f4f7574d1cffb00b7045209`
+Source SHA256: `61bbe4364157b0f03e708d592f7728506429b484201b3b4e3fbaca572b55b580`
 
 ---
 
@@ -24,17 +24,24 @@ canonical_text: >-
   that any ordering edge the target needs is part of the graph that is validated. A rule whose enforcement one node's
   source_acceptance_unit_ids own binds to that node. A rule whose enforcement is split across several nodes, or that no
   single node owns, binds to one fixture owner designated among the nodes whose source units hold the contract's
-  owner_reference, and that node's completion must follow every node that implements a part the rule's fixtures
-  exercise (every owner_reference node when no node's source units own the rule): the designated node is the one the
-  graph already orders after all of them, or, when none is, the one the companion's deterministic tie-break names, to whose required_before_completion WorkGraph construction then adds each of the others. Those fixtures count toward the designated node's completion only when they ran against the designated node's
+  owner_reference, and that node's completion must follow every other node that implements a part the rule's
+  fixtures exercise (every other owner_reference node when no node's source units own the rule): the designated node is
+  the candidate the graph already orders after every other such node, or, when no candidate is so ordered, the one the
+  companion's deterministic tie-break names, to whose required_before_completion WorkGraph construction then adds every
+  other such node. Those fixtures count toward the designated node's completion only when they ran against the designated node's
   final build together with the completed outputs of every other node they exercise, all named in their
   TestRunReceipt; a pass on an earlier or partial build never counts (Plans/Automated_Testing_System.md#ATS-401). A rule whose enforcement lies
   outside the compile's write scope, as when the compile reaches its contract only through consumer_reference edges, is
   verified rather than rebuilt: each node in the compile that reaches the contract binds that rule's required tests
   exactly as this unit produces them for a rule inside the write scope, for the plan version the compile consumes and
   run against the enforcing owner's built surfaces, and the rule ends in the same dispositions; the owner's existing
-  tests never stand in for a required case. A failing test keeps the receiving node incomplete until a successor plan
-  for the owner (PNC-015) lets it pass; it is never repaired inside the receiving node's write scope. A
+  tests never stand in for a required case. A failing test keeps the receiving node incomplete until a valid run of it
+  passes. The Executor's repair loop classifies the failure (Plans/Executor_Protocol.md#EP-102): a fault in the receiving
+  node's own consuming code is repaired in its write scope, a fault in an adapter or the test harness goes through the
+  test-harness repair route (EP-101, EP-102), and the test then reruns; only a confirmed enforcement defect in the
+  out-of-scope owner goes to that owner through a successor plan (PNC-015), never repaired inside the receiving node's
+  write scope, and a change to an approved fixture or its expectation likewise arrives only through a successor
+  plan. A
   rule left without a lawful target, because the edges it needs would create a cycle or break the graph's phase order
   or no node in the compile can receive it, goes through the WorkGraph construction stage's repair route (PNC-016),
   and if repair gives it no target, compile certification fails closed with a finding naming the rule. A contract's rules are its schema rules (the contract's effective validation assertions as Plans/Planning_Wizard.md#PWIZ-111 defines them, with each member of
@@ -105,7 +112,8 @@ gui_classification_reason: Defines how compile artifacts carry test fixtures; no
 depends_on: [DL-512, PNC-013, PNC-015, PNC-016, EP-101, EP-102, PWIZ-110, PWIZ-111, ATS-003, ATS-004]
 unblocks: [ATS-401]
 acceptance_criteria:
-  - "Every rule of every contract gets a test target fixed at WorkGraph construction: the one node that owns its enforcement; a designated fixture owner whose completion follows every node its fixtures exercise; or, for a rule enforced outside the compile's write scope, each node in the compile that reaches its contract, with the required tests and dispositions an in-scope rule gets, run against the enforcing owner's built surfaces, and no existing owner test standing in for a required case; a split rule's fixtures count only when run on the designated node's final build with the completed outputs of every other node they exercise, all named in their receipt; a rule with no lawful target goes through the stage's repair route and otherwise fails certification closed."
+  - "Every rule of every contract gets a test target fixed at WorkGraph construction: the one node that owns its enforcement; a designated fixture owner whose completion follows every other node its fixtures exercise; or, for a rule enforced outside the compile's write scope, each node in the compile that reaches its contract, with the required tests and dispositions an in-scope rule gets, run against the enforcing owner's built surfaces, and no existing owner test standing in for a required case; a split rule's fixtures count only when run on the designated node's final build with the completed outputs of every other node they exercise, all named in their receipt; a rule with no lawful target goes through the stage's repair route and otherwise fails certification closed."
+  - "A failing test for a rule enforced outside the write scope keeps the receiving node incomplete until a valid run passes; faults in the receiving node's consuming code, an adapter or the harness are repaired through their own routes and the test reruns, and only a confirmed enforcement defect in the owner waits for the owner's successor plan."
   - "Every rule ends in exactly one disposition: its required tests bound; a passing payload with a named gap evidenced to PWIZ-111's standard, by the planning check or by PlanCompile, for an unisolatable schema refusal; or a test gap for each required test that could not be produced, failed its pre-bind check, or has no automatic route."
   - "A schema rule's required tests are a refusing and a passing payload fixture, and for an assertion an if selects also a passing payload on each route the contract distinguishes and, wherever the contract admits one, a contrasting accepted control that still breaks the assertion on a route that does not select it; a declared failure result's are a refusing input and its passing neighbour; a behavioural criterion's is one fixture per input condition it lists, each asserting its stated outcome so that a wrong result fails; any other criterion's is its ATS-003 oracle; no contract is exempt from schema fixtures; each member of a required list or other per-member constraint is its own rule with its own refusing fixture."
   - "Every behaviour fixture carries the owner-stated state and effect assertions for its polarity, each read through a declared observation surface; where a surface is missing, the carried PWIZ-110 completeness gap stands, or an assertion test gap if the gap was first found at compile time."
