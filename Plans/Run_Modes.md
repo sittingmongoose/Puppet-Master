@@ -1073,7 +1073,7 @@ canonical_text: P5 recovery remains lineage for the independently unresolved sta
   to `RMB-015`) of this document's FABLE Deferred Action Concrete Repair Addendum - 2026-07-08, whose `status`
   values are authoritative; no obligation is live mode behavior while its blocker is `open` or `owner_decision_required`,
   and a run that would depend on one is refused at admission with the blocker id as the reason. GATE-007 / GATE-008
-  placement is resolved (`RMB-010`: reserved/tombstoned in Progression_Gates) and the unstable recovery UI labels
+  placement is resolved (`RMB-010`, reserved/tombstoned in Progression_Gates) and the unstable recovery UI labels
   are resolved (`RMB-013`). The former universal publication-approval/YOLO ambiguity is superseded by PS-146/147/148
   and RM-053 (`RMB-011`). That policy resolution is not evidence that providers, jails or remote interception
   already implement it.
