@@ -1017,6 +1017,8 @@ ContractRef: UICommand:cmd.orchestrator.preview_open, UICommand:cmd.orchestrator
 - `cmd.orchestrator.build_run`
 - `cmd.orchestrator.open_build_artifact`
 
+Both IDs are now registered in `Plans/UI_Command_Catalog.md` and wired in `Plans/Wiring_Matrix.production.json`; "reserved" above is historical, and those owners hold the command contracts (noted 2026-11-25).
+
 ContractRef: UICommand:cmd.orchestrator.build_run, UICommand:cmd.orchestrator.open_build_artifact, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/UI_Command_Catalog.md
 
 ### 14.7 Docker runtime + DockerHub contract
@@ -5852,7 +5854,9 @@ plan_unit_id: N2-100
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: GuiToolCatalog entries expose capability flags supports_visible_run, supports_attach_existing, supports_recording, requires_display_server, supports_pm_built_in_browser_visible, and supports_pm_browser_focus_or_reopen.
+canonical_text: >-
+  GuiToolCatalog entries expose capability flags supports_visible_run, supports_attach_existing, supports_recording, requires_display_server, supports_pm_built_in_browser_visible, and supports_pm_browser_focus_or_reopen.
+  Amended 2026-11-25 (C-FIX79 K3 r1): the source list this unit atomizes ("GuiToolCatalog capability flags" in the concrete schema/config entries) names the last two flags in the Browser Program vocabulary, and those names are canonical: supports_browser_program_visible (formerly supports_pm_built_in_browser_visible) and supports_browser_program_focus_or_reopen (formerly supports_pm_browser_focus_or_reopen). The former names are retired aliases kept for traceability and are not catalog fields.
 gui_related: false
 gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
 split_recommended: false
@@ -5885,7 +5889,8 @@ preserved_exact_tokens:
 - supports_pm_browser_focus_or_reopen
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Retired aliases 2026-11-25: supports_pm_built_in_browser_visible -> supports_browser_program_visible; supports_pm_browser_focus_or_reopen -> supports_browser_program_focus_or_reopen (Browser Program vocabulary of the source list).'
 owner_boundary_notes: []
 owner_hints:
 - Plans/newtools.md
@@ -6745,7 +6750,8 @@ preserved_exact_tokens:
 - cmd.orchestrator.open_build_artifact
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-25: "reserved" is historical; cmd.orchestrator.build_run and cmd.orchestrator.open_build_artifact are registered in Plans/UI_Command_Catalog.md and wired in Plans/Wiring_Matrix.production.json, which own their contracts.'
 owner_boundary_notes: []
 owner_hints:
 - Plans/newtools.md
@@ -8652,7 +8658,7 @@ Field types (added 2026-11-25). These two records are the entry shapes of `GuiTo
 | `install_summary` | string | §6.1 install/setup summary; may be empty for `pm_native` tools. |
 | `doc_url?` | string | Absolute `https` URL. |
 | `capability_tags[]` | array of string | Unique lowercase tokens (for example `hot_reload`, `web_preview`, `headless_test`, `real_time_dev_ui`). |
-| `capability_flags` | object | The six N2-100 booleans `supports_visible_run`, `supports_attach_existing`, `supports_recording`, `requires_display_server`, `supports_browser_program_visible`, and `supports_browser_program_focus_or_reopen`; each defaults to `false`. |
+| `capability_flags` | object | The six N2-100 booleans `supports_visible_run`, `supports_attach_existing`, `supports_recording`, `requires_display_server`, `supports_browser_program_visible`, and `supports_browser_program_focus_or_reopen`; each defaults to `false`. The last two are the canonical Browser Program names; N2-100's older `supports_pm_built_in_browser_visible` and `supports_pm_browser_focus_or_reopen` are their retired aliases and are not fields. |
 | `default_enabled` | boolean | |
 | `support_classification` | enum | `pm_native` (Browser Program and Expert Browser Program), `project_native` (an in-repo tool such as a headless runner), or `external_runner` (an independently managed external test tool). |
 | `requires_mcp` | boolean | `false` for every `pm_native` tool; Browser Program never routes through MCP. |
@@ -8731,7 +8737,7 @@ Repairs rows `sfk-69876bef3b441cb17b89d231` and `sfk-db7708202eb32b69931bb737`.
 | N2-098 | `requested_visual_mode`, `effective_visual_mode` and `fallback_reason` are one audit triple; none is meaningful alone. | A visual mode beyond `auto`, `forced_visible` and `forced_headless` is added. |
 | N2-116 | BUILD status, profile resolution, artifact list and chat summary are one build-control surface with one owner. | Build controls move to a different owner surface, or a build profile beyond native, web, mobile and container is added. |
 | N2-117 | `build_result` is one payload; its fields are not separately buildable. | `build_result` gains a second producer or a schema version beyond its first. |
-| N2-118 | The output examples and the two reserved command IDs describe one build-output contract. | `cmd.orchestrator.build_run` or `cmd.orchestrator.open_build_artifact` is wired in the wiring matrix, or the installer output layout changes. |
+| N2-118 | The two command IDs are no longer only reserved: both are registered in `Plans/UI_Command_Catalog.md` and wired in `Plans/Wiring_Matrix.production.json` (`catalog.orchestrator_build_run`, `catalog.orchestrator_open_build_artifact`), so their contracts live with those owners and N2-118 keeps only the reference to them beside the output-path examples. What is left in the unit is one build-output naming contract (where installer outputs land and which two commands run and open them), with nothing separately buildable to split off. | The installer output layout changes (a path other than `installer/linux/` or the per-platform helper report), either command ID is renamed or retired in `Plans/UI_Command_Catalog.md`, or newtools takes ownership of either command's payload or result contract instead of referencing it. |
 | N2-137 | The Docker/Unraid matrix is one gating table keyed by action scope; splitting rows would separate a check from the side effect it gates. | A new action scope or validation check is added to the matrix. |
 | N2-138 | `after_build` dispatch and the `*.blocked` versus `*.failed` outcome split are one push-step rule. | A `push_policy` value other than `after_build` is added. |
 | N2-139 | `requested_auth_mode` and its resolution into effective state, capabilities, identity and degraded reason are one validation step. | An auth mode beyond `browser` and `pat` is admitted. |
