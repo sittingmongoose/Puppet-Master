@@ -4975,9 +4975,9 @@ canonical_text: >-
   commands, operations, stateful entities and requirements the plan defines. The check looks for six kinds of
   finding: a named field without a type; an operation or command without its failure results, each with a declared
   failure code, or a declared failure of an operation, command or event whose contract leaves undecidable, on any of
-  its callable surfaces, whether its passing neighbour, read within the failure's applicable route as
-  Plans/Plan_To_Node_Compilation.md#PNC-038 defines it, is accepted there, a route whose approved outcomes close it not
-  being flagged (PNC-038 carries it as a recorded gap in place of the missing passing neighbour); an entity whose state changes without a state machine that names its states, transitions, triggers
+  its callable surfaces, whether its passing neighbour, as Plans/Plan_To_Node_Compilation.md#PNC-038 defines it, is
+  accepted, a failure for which the approved outcomes establish the evidenced limit that definition names not being
+  flagged (PNC-038 carries it as a recorded gap in place of the missing passing neighbour); an entity whose state changes without a state machine that names its states, transitions, triggers
   and terminal states, or whose state machine leaves the outcome of a named state and operation pair unstated; a requirement without acceptance criteria or a validation surface; a pointer to a section, unit
   or artifact that does not resolve, including an operation or event without an interface binding (the callable
   surface it maps to: a route, command, function or storage port, and the observation surfaces through which its

@@ -1,25 +1,25 @@
 # Shard Index: Plans/Plan_To_Node_Compilation.md
 
-Generated: 2026-11-25T12:45:38Z
+Generated: 2026-11-25T12:52:52Z
 
-Source SHA256: `9a6edd8bea623676f365605149c1ffa9b17d9d6883da2e55358fae77cc029e97`
+Source SHA256: `16c4b9678941eb5cad7df72caae1dc321fe34a3eb7945f66fbd29212a9e5e7e6`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L3 `4df905c66d47176be5925025537304be616b38787ba9e86079bd337f89173063`
-- [002 - 0. Scope](002-0.-scope.md) L5-L9 `cb98acf5720f89bedf25e50659c9ba974b2281c0fe39311df1ba40389aacc6f1`
-- [003 - 1. Boundary](003-1.-boundary.md) L11-L21 `3e1c9b27b48fb6b6d464c1815332d74119ee6a3e505fe1ce30b4e0c65a9e725f`
-- [004 - 2. PlanUnits](004-2.-planunits.md) L23-L142 `21a969a83d965308576aebcbde475f2796ae049feed0c57cc88ef442d13c4a30`
-- [005 - FABLE Residual Plan-To-Node Contract Cleanup Addendum - 2026-07-07](005-fable-residual-plan-to-node-contract-cleanup-addendum-2026-07-07.md) L144-L204 `1bf3cfb11922107e84a90819b7655e3f390e01ce9adaa387b3f36884d8db3780`
-- [006 - Implementation Readiness Gate Addendum - 2026-07-05](006-implementation-readiness-gate-addendum-2026-07-05.md) L206-L510 `e8ff84c83e0288131312543f467832f2481dfc19aca9b230c3476391e5a41acf`
-- [007 - 4. Runtime Compiler Algorithm And Enablement](007-4.-runtime-compiler-algorithm-and-enablement.md) L512-L611 `7abc51d26790ca5cb22da4330e7b2c9a6845b08439e11c3005fbd9701e7678fa`
-- [008 - 5. Compilation Coverage](008-5.-compilation-coverage.md) L613-L632 `61b7e4c79dd28a41138fb815794950e751f8edeafbe056010209c796c4342df6`
-- [009 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](009-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L634-L1053 `bb570b6a0fc1fdd02e5c72e5e3e46b6f1cc1ec0b6b729baef19b2053b93a5808`
-- [010 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L1056-L1451 `426be80f60a6c12c343d2119d8ec1cfe992dcc157e1cba141f0ed63153e8499e`
-- [011 - Ledger Compile Addendum - pldg-20260622-001-fff](011-ledger-compile-addendum-pldg-20260622-001-fff.md) L1453-L1496 `945f161152cb17d1b2919f72bea16cde8500f4c076e89b817a6ee44001ebb300`
-- [012 - Compile receipt timing and original dispatch evidence - 2026-09-13](012-compile-receipt-timing-and-original-dispatch-evidence-2026-09-13.md) L1499-L1682 `ce953d4c88abb7167957f1f6b117528c6a27274593925ed253f9f262791b7d82`
-- [013 - PERF-001 Named Plan join consumer (2026-09-27)](013-perf-001-named-plan-join-consumer-2026-09-27.md) L1684-L1758 `f8e15d9bc60964652abd2e88a99a26906f4522c3d136074214e283d6de2a5303`
-- [014 - Command payload definitions (DL-333, 2026-11-05)](014-command-payload-definitions-dl-333-2026-11-05.md) L1760-L2167 `e14c0a6dec0b006ce56cedc9eb058c3306846f3abba6925014e3661035a7fabc`
-- [015 - Rule fixtures at WorkNode request creation (DL-512, 2026-11-25)](015-rule-fixtures-at-worknode-request-creation-dl-512-2026-11-25.md) L2169-L2424 `318d2760dee3e6745854478895457c7ee5ef2f1a893cb55ace7fe539b3357bc5`
+- [001 - Preamble](001-preamble.md) L1-L3 `5481d8a2191bbeec3c50a623e7318b0d9e30e1e4d54130fdf6ad44edeb541192`
+- [002 - 0. Scope](002-0.-scope.md) L5-L9 `2046a2813c6f9dc181683d1ce6def2af2395c223c484f58bde912c91ab7ea28a`
+- [003 - 1. Boundary](003-1.-boundary.md) L11-L21 `10cc137ad09192eb8118dee3722e76cd03ebd38993292794ad46a3bccaf81267`
+- [004 - 2. PlanUnits](004-2.-planunits.md) L23-L142 `4dfc63580409bfa50907331bce7528aa8b91d3d720adbeb2858d4ac80d4379b3`
+- [005 - FABLE Residual Plan-To-Node Contract Cleanup Addendum - 2026-07-07](005-fable-residual-plan-to-node-contract-cleanup-addendum-2026-07-07.md) L144-L204 `d56ab861f1276d4b37662c0c96756d6cb771627f7b491596328e66e09d6d95d6`
+- [006 - Implementation Readiness Gate Addendum - 2026-07-05](006-implementation-readiness-gate-addendum-2026-07-05.md) L206-L510 `7dda1db9030ca3bcf96d4875fc3fc5aeaa6d937abe36c1d27d6def92f31857c4`
+- [007 - 4. Runtime Compiler Algorithm And Enablement](007-4.-runtime-compiler-algorithm-and-enablement.md) L512-L611 `a8841bcef92463c968b253b1ab528ec849b17604833ade0a36e2b5ea080ec2fb`
+- [008 - 5. Compilation Coverage](008-5.-compilation-coverage.md) L613-L632 `7238ad2c938a73019bb8bc05aaee01d11e2cbc7f6ab0e77acadcc0620b34e677`
+- [009 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](009-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L634-L1053 `73adc279ba412d3acf842e68bc791127eb48a729d80b3f05364f09954cba94f2`
+- [010 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L1056-L1451 `1429e05906a28caf4f7d9cf52c764d7cf34a8fbea009449335dadfb2dcea9a17`
+- [011 - Ledger Compile Addendum - pldg-20260622-001-fff](011-ledger-compile-addendum-pldg-20260622-001-fff.md) L1453-L1496 `3c9c71a200f838d9877b1bd1d26fd01254deceeb35e4b2a7686230f71d73ae49`
+- [012 - Compile receipt timing and original dispatch evidence - 2026-09-13](012-compile-receipt-timing-and-original-dispatch-evidence-2026-09-13.md) L1499-L1682 `e6fe6ddc27e79387b01b8cbb7a2ddbfb5c3acfa0c34c003011216ae8d20cff7e`
+- [013 - PERF-001 Named Plan join consumer (2026-09-27)](013-perf-001-named-plan-join-consumer-2026-09-27.md) L1684-L1758 `2b1edbd98f499d998000031e88d8147c2a716dac01e1bc58a45445563b87b105`
+- [014 - Command payload definitions (DL-333, 2026-11-05)](014-command-payload-definitions-dl-333-2026-11-05.md) L1760-L2167 `d62345c641f8e8c3a43f50579c96ea1ce1743e39627e3c6a61fa88b5a1fe0171`
+- [015 - Rule fixtures at WorkNode request creation (DL-512, 2026-11-25)](015-rule-fixtures-at-worknode-request-creation-dl-512-2026-11-25.md) L2169-L2416 `30655504f1841deb74217cb374d6ba62e15ed96c161431ebeb2b6cbede6a9e28`
