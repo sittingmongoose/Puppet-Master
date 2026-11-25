@@ -2187,7 +2187,8 @@ canonical_text: >-
   a payload that passes, expected to be accepted. A declared failure result gets two behaviour fixtures: an input that
   meets its failing condition, expected to be refused with that failure's code, and the same input without the failing
   condition, expected to be accepted. A behavioural acceptance criterion (one with an input and an observable outcome)
-  gets a behaviour fixture that asserts the outcome the criterion states on its input or sequence: a refusal where the
+  gets one behaviour fixture for each input condition it lists, each carrying the criterion's state and effect
+  assertions and asserting the outcome the criterion states on its input or sequence: a refusal where the
   criterion prescribes one, otherwise the stated result, compared so that a wrong result fails (a duplicate delivery
   that must return the existing identity fails when another identity comes back). Any other acceptance criterion
   (a latency gate, a visual or browser check, an artifact that must not exist) binds its ATS-003 oracle as its test.
@@ -2195,25 +2196,28 @@ canonical_text: >-
   behaviour fixtures; each cites the exact span it comes from and keeps an immutable reference to that span in the
   approved plan version, and code checks it against the schema and the declared failure codes before it binds. Risky
   contracts add the cases of the planning referee check (Plans/Planning_Wizard.md#PWIZ-111). A fixture's expected
-  outcome comes only from the approved contract: accepted, with a resulting state only where the contract states it
-  or the referee computes it from the contract; a stated result; or refused with the declared failure code and, when
-  several rules share that code, the validator's error path that names the rule. A referee case binds only when the
+  outcome comes only from the approved contract: accepted with any stated result, or refused with the declared failure code and, when several rules share that
+  code, the validator's error path that names the rule; every expected state comes from the owner-stated state and
+  effect assertions. A referee case binds only when the
   approved contract states its expected outcome; a case where the referee and the contract disagree, or where the
   contract states no outcome, stays a design finding or gap evidence and never becomes a fixture, and the outcome the
   referee observed is recorded beside the case but never used as an expectation. A payload fixture record holds a
   fixture id, the contract ref, the rule id, the payload and its expected outcome; a behaviour fixture record holds the same fields with an input (a prior owner state plus an operation or event,
   or a short sequence) in place of the payload, its span reference, and the owner-stated state and effect assertions
   that apply to either polarity, each read through a declared observation surface (Plans/Planning_Wizard.md#PWIZ-110);
-  a required assertion with no observation surface is a test gap. Fixtures are listed in generated_test_ids (Plans/Automated_Testing_System.md#ATS-003); a bound oracle is listed in
+  an assertion whose observation surface is still missing at compile time and carries no gap marker is a test gap,
+  and a gap-marked missing surface is carried once, as a completeness gap. Fixtures are listed in generated_test_ids (Plans/Automated_Testing_System.md#ATS-003); a bound oracle is listed in
   generated_test_ids, or in reused_test_ids when it is an existing test. Each rule ends in exactly one disposition: its required tests bound;
   for a schema rule whose refusing payload cannot be isolated, the passing payload bound together with a named gap
-  evidenced to the standard of Plans/Planning_Wizard.md#PWIZ-111 (a complete keyword-aware isolation search: starting from a valid control, code tries for each keyword of the rule the candidate values that break only that keyword (for an enumeration, values of the admitted type outside the allowed set) and binds a refusal as soon as the schema validator confirms isolation; the rule is a named gap only when every candidate in that keyword's finite candidate domain also broke another rule, each such input refused by the catching rules with their own codes), whether
+  evidenced to the standard of Plans/Planning_Wizard.md#PWIZ-111 (a complete keyword-aware isolation search over the
+  fixed candidate domains PWIZ-111 defines, which also bound PlanCompile's own search), whether
   the planning check or PlanCompile's own code produced that evidence, as the disposition of the refusal, binding a recorded multi-rule input
   as a regression fixture only where the approved contract determines the refusal for that exact input, and never with
   single-rule coverage credit; or a test gap for each required test that is missing because it could not be
   produced, failed its pre-bind check, or has no automatic route. A PWIZ-111 budget test gap whose rule PlanCompile then
-  covers with bound required tests stays as planning evidence only. A test gap is a
-  recorded-gap record holding the rule id, the missing test, the reason, evidence refs, catching rules and its
+  covers with bound required tests stays as planning evidence only. A bound fixture with a missing assertion keeps the rule's disposition as bound, and that assertion's test gap
+  still applies at completion. A test gap is a recorded-gap record holding the rule id, the missing test or the
+  missing assertion of a bound fixture, the reason, evidence refs, catching rules and its
   test_gap_policy, which is block_completion or defer_non_executable_harness_candidate as ATS-004 requires for
   verification that cannot run automatically; allow_with_disposition and not_applicable are never used for a rule's
   required test. A completeness or design finding carried as a recorded gap (Plans/Planning_Wizard.md#PWIZ-110 and #PWIZ-111) keeps
@@ -2232,7 +2236,7 @@ depends_on: [DL-512, PNC-013, PNC-015, PNC-016, EP-102, PWIZ-110, PWIZ-111, ATS-
 unblocks: [ATS-401]
 acceptance_criteria:
   - "Every rule of every contract binds to the node that owns its enforcement, or to the node that completes the contract, and ends in exactly one disposition: its required tests bound; a passing payload with a named gap evidenced to PWIZ-111's standard, by the planning check or by PlanCompile, for an unisolatable schema refusal; or a test gap for each required test that could not be produced, failed its pre-bind check, or has no automatic route."
-  - "A schema rule's required tests are a refusing and a passing payload fixture; a declared failure result's are a refusing input and its passing neighbour; a behavioural criterion's is one fixture asserting its stated outcome so that a wrong result fails; any other criterion's is its ATS-003 oracle; no contract is exempt from schema fixtures."
+  - "A schema rule's required tests are a refusing and a passing payload fixture; a declared failure result's are a refusing input and its passing neighbour; a behavioural criterion's is one fixture per input condition it lists, each asserting its stated outcome so that a wrong result fails; any other criterion's is its ATS-003 oracle; no contract is exempt from schema fixtures."
   - "Every behaviour fixture carries the owner-stated state and effect assertions for its polarity, each read through a declared observation surface, or a test gap where none exists."
   - "Every expected outcome comes from the approved contract; a referee case that disagrees with the contract or lacks a contract outcome never binds, and observed planning outcomes are kept only as evidence."
   - "Every behaviour fixture cites its source span, passes the schema and declared-failure-code check before it binds, and keeps an immutable reference to that span in the approved plan version."

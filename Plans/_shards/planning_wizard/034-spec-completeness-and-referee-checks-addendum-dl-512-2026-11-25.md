@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L4959-L5119
+Source lines: L4959-L5120
 
-Source SHA256: `6415db3bd48ea274b1d210b7a8b4f17633d864d0fc05bbdc5a909564bc49665c`
+Source SHA256: `6d7905135832c10c7bcf51dc13158c8db1e0d8eca874a9bd4fdb7801aefaf690`
 
 ---
 
@@ -30,7 +30,8 @@ canonical_text: >-
   and terminal states; a requirement without acceptance criteria or a validation surface; a pointer to a section, unit
   or artifact that does not resolve, including an operation or event without an interface binding (the callable
   surface it maps to: a route, command, function or storage port, and the observation surfaces through which its
-  state and effects are read, written by the planning agent); and the same identifier declared with different types or enumeration members, or
+  state and effects are read, written by the planning agent), or without an observation surface for a state or
+  effect assertion its owner text states; and the same identifier declared with different types or enumeration members, or
   two statements that contradict each other. Code finds, without a model call, what structured declarations show:
   fields without types in tables and schemas, unresolved pointers, and one identifier declared with different types
   or enumeration members. These code-found findings are part of PWIZ-028's deterministic checks and must pass; a code-found finding passes as deferred only when its declaration carries an explicit gap marker (provenance gap with a
@@ -55,7 +56,7 @@ acceptance_criteria:
   - "The check runs over the topic's contracts before the topic becomes Ready and over every contract at final integration, and records each finding with its contract, kind, PWIZ-012 gap class, finding_level and outcome."
   - "Fields without types in structured declarations, unresolved pointers, and one identifier declared with different types or enumeration members are found by code without a model call, and must pass as PWIZ-028 deterministic checks."
   - "Auditor-found findings go through PWIZ-028's bounded round; non-blocking ones left are recorded as open questions and as recorded gaps for PNC-038 and do not hold the topic out of Ready, and a blocking one left is a PWIZ-006 typed blocker."
-  - "Every operation or event has an interface binding that resolves, or a completeness finding of the pointer kind."
+  - "Every operation or event has an interface binding that resolves, including an observation surface for every owner-stated state or effect assertion, or a completeness finding of the pointer kind."
   - "No completeness finding becomes a technical question to the user; only a product-policy gap reaches the user, as a plain decision."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -102,8 +103,8 @@ canonical_text: >-
   declared failure code is a PWIZ-110 finding; a declared validation code shared by several rules is enough when the
   validator's error path names the rule, and each case records the expected path. The rules under test are the contract's schema rules and its behavioural acceptance criteria (those with an input
   and an observable outcome), sourced separately from the referee; shape checks get an acceptance-only passing case,
-  and criteria without an input and an outcome (latency gates, visual checks) keep their ATS-003 oracles. Each schema rule gets one passing and one refusing case; each behavioural acceptance criterion gets a case
-  asserting the outcome it states (a refusal only where it prescribes one, otherwise its stated resulting state or
+  and criteria without an input and an outcome (latency gates, visual checks) keep their ATS-003 oracles. Each schema rule gets one passing and one refusing case; each behavioural acceptance criterion gets a case for each input condition it lists, asserting the outcome it
+  states and carrying its state and effect assertions (a refusal only where it prescribes one, otherwise its stated resulting state or
   returned result); and each
   risk property gets its matching cases: every state-machine transition and at
   least one illegal transition from each state; a write, a cut and a reopen; a stale writer after a fencing change;
@@ -112,13 +113,13 @@ canonical_text: >-
   that break several rules stay admissible as named-gap evidence. Each case carries its outcome (accepted with any stated result, or refused with its rule's code) and, for either
   polarity, every state and effect assertion the owner text states, such as a refusal that must leave the record,
   lifecycle and hold unchanged and append nothing, or a replay that must return the existing result without repeating
-  its effect; the referee checks every assertion, and a required assertion with no observation surface is a test gap. When the
+  its effect; the referee checks every assertion, and a required assertion with no observation surface is a PWIZ-110 completeness finding. When the
   referee and a rule disagree, the owner text decides: a referee that departs from the owner text is repaired, and owner
   text that lacks the check is a design finding. Design findings carry finding_level and repair_required and go through PWIZ-028's bounded round; a non-blocking one
   that remains afterwards is recorded as an open question and reaches PNC-038 as a recorded gap, a blocking one that
   remains is a typed blocker under PWIZ-006, and either reaches the user only as a plain decision when fixing it is a
   product-policy choice. A rule is a
-  named gap only after a complete keyword-aware isolation search: starting from a valid control, code tries for each keyword of the rule the candidate values that break only that keyword (for an enumeration, values of the admitted type outside the allowed set) and binds a refusal as soon as the schema validator confirms isolation; the rule is a named gap only when every candidate in that keyword's finite candidate domain also broke another rule, each such input refused by the catching rules with their own codes; those inputs are recorded. A search that ends on sampled collisions alone, or
+  named gap only after a complete keyword-aware isolation search, in which one schema keyword at one location is one rule: starting from a valid control, code tries every candidate in that keyword's fixed candidate domain (for type, one value of each other JSON type; for enum and const, one value of each admitted type outside the allowed set; for minimum, maximum and their exclusive forms, the nearest value on the wrong side of the bound; for minLength, maxLength, minItems and maxItems, a length one past the bound; for required, the control without the property; for additionalProperties false, the control with one extra property; for pattern and format, a recorded list of non-matching strings) and binds a refusal as soon as the schema validator confirms isolation; the rule is a named gap only when every candidate in that domain also broke another rule, each such input refused by the catching rules with their own codes, and a keyword without a fixed domain ends only in a binding or a test gap; those inputs are recorded. A search that ends on sampled collisions alone, or
   without that evidence, leaves the rule a design finding or a test gap. Each risky contract has a budget the planning run sets,
   200 generated inputs or 10 minutes of machine time by default, whichever comes first; the required cases run first
   and count against it, and rules not reached within it are listed as test gaps for PNC-038, never as named gaps. The referee, its cases, the generated inputs, the observed outcomes, the named gaps and the test gaps are planning
@@ -136,7 +137,7 @@ acceptance_criteria:
   - "The check runs before a topic becomes Ready and reruns for contracts that final integration changes."
   - "Referee inputs are a prior state plus an operation or event, or a short sequence, and the cases cover every state-machine transition with an illegal transition from each state, a write-cut-reopen case, a stale-writer case and a denied-caller case wherever the matching property applies."
   - "Refusal codes are the contract's declared failure codes; the schema validator confirms which rules each generated input breaks, and only an input that breaks exactly one rule is credited as that rule's refusing case, while multi-rule inputs remain admissible as named-gap evidence."
-  - "A named gap rests on a complete keyword-aware isolation search whose finite candidate domain all collided with other rules, each refused by a catching rule with its own code; a search that ends on sampled collisions is a test gap."
+  - "A named gap's evidence lists every candidate of its keyword's fixed candidate domain, each with the rules it broke and the catching rules' codes; a keyword without a fixed domain never becomes a named gap, and a search that ends on sampled collisions is a test gap."
   - "Every case checks its outcome and every owner-stated state and effect assertion through a declared observation surface, for either polarity."
   - "The budget ends at whichever limit comes first, required cases run first, and rules not reached within it are listed as test gaps, never as named gaps."
   - "Design findings follow PWIZ-028's bounded round; non-blocking leftovers are open questions and recorded gaps that do not hold the topic out of Ready, and a blocking leftover is a PWIZ-006 typed blocker."

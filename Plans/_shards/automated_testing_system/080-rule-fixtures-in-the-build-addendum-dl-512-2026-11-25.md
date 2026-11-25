@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L16494-L16569
 
-Source SHA256: `9f9d43b12ed47ee2eeee3407afb08c894bbda804f8ced6ba1e4e050d42649e45`
+Source SHA256: `52932895f898d9332453b2413f761a59975bb09cf3d4e8407aa236643e87ea65`
 
 ---
 
@@ -52,7 +52,7 @@ gui_classification_reason: Defines automated build verification and a builder re
 depends_on: [DL-512, PNC-038, PNC-015, EP-102, PWIZ-012, PWIZ-110, ATS-003, ATS-004]
 unblocks: []
 acceptance_criteria:
-  - "A WorkNode with bound rule tests completes only when every bound fixture meets its expected outcome, every bound ATS-003 oracle passes, and every recorded test gap is honoured under its test_gap_policy, as its TestRunReceipt records."
+  - "A WorkNode with bound rule tests completes only when every bound fixture meets its expected outcome and every state and effect assertion it carries holds through its observation surface, every bound ATS-003 oracle passes, and every recorded test gap is honoured under its test_gap_policy, as its TestRunReceipt records."
   - "Payload fixtures run against the built validator or a declared consuming operation; behaviour fixture adapters are generated from the contract's interface binding and reach prior states by replaying owner operations or a declared seeding port, never by direct storage writes; a hand-written adapter is checked by an automated verification agent that is not the builder; a fixture with no automatic route is a recorded test gap."
   - "A fixture that contradicts its cited span stays required until a successor plan corrects it; the builder never waives or edits a fixture."
   - "Each builder report entry cites its source span and the different build it would have caused, carries a PWIZ-012 gap class, goes to the planning repair route or the plan's approver, and is kept as a plan conversion regression case in the project's planning evidence."
