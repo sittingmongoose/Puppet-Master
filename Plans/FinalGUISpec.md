@@ -4101,7 +4101,7 @@ All items previously listed as future considerations are MVP scope and are fully
 | Instant project switch | Workspace-tab project switch model (§3.4) |
 | Sound effects | UX Patterns §10.13 + Settings > General |
 | Hot reload controls | Runtime/dev surfaces in `Plans/assistant-chat-design.md` §22 and `Plans/FileManager.md` §14.6 |
-| In-app instructions editor | File Editor instructions mode in `Plans/FileManager.md` |
+| In-app instructions editor | Settings > Personas & Crews > Defaults > Standing instructions (Rules for every project, Rules for this project) in `Plans/agent-rules-context.md` (ARC-011 and its 2026-07-08 addendum's current binding); edits use the Teach sheet (`cmd.chat.teach.capture` / `cmd.chat.teach.confirm`). The File Editor has no instructions mode. |
 | Additional themes / custom themes | Theme extensibility (§6.6) |
 | Language/framework auto-detection and LSP-aware navigation | Project state + `Plans/LSPSupport.md` + `Plans/FileManager.md` §10 |
 | Catalog / one-click install | Settings > Catalog tab |
