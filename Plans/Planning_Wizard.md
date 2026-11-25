@@ -4981,11 +4981,13 @@ canonical_text: >-
   state and effects are read, written by the planning agent), or without an observation surface for a state or
   effect assertion its owner text states; and the same identifier declared with different types or enumeration members, or
   two statements that contradict each other. Code finds, without a model call, what structured declarations show:
-  fields without types in tables and schemas, unresolved pointers, and one identifier declared with different types
-  or enumeration members, where one identifier is one named contract, type, enumeration, event, command or state, or one
+  fields without types in tables and schemas, unresolved pointers, and one identifier declared with incompatible types
+  or enumeration members for overlapping cases, where one identifier is one named contract, type, enumeration, event, command or state, or one
   field path of one contract, including a field the plan declares to be the same as another by reference or explicit
   pointer; same-named fields of distinct contracts are not a code-found finding, and the Auditor judges them as possible
-  drift. These code-found findings are part of PWIZ-028's deterministic checks and must pass; a code-found finding passes as deferred only when its declaration carries an explicit gap marker (provenance gap with a
+  drift. Declared unions, mutually exclusive routes or conditional branches, and versioned definitions are judged within
+  their own scope, a selector predicate is read as a selector, and where code cannot establish that two declarations
+  apply to overlapping cases the pair goes to the Auditor instead of failing the check. These code-found findings are part of PWIZ-028's deterministic checks and must pass; a code-found finding passes as deferred only when its declaration carries an explicit gap marker (provenance gap with a
   gap_note), and it then reaches PNC-038 as a recorded gap. A gap marker documents the deferral for the completeness
   check only and carries no approval authority: PWIZ-012's zero-incomplete gate still governs approval of any required
   detail left unresolved. The
@@ -5005,7 +5007,7 @@ depends_on: [DL-512, PWIZ-006, PWIZ-007, PWIZ-011, PWIZ-012, PWIZ-028]
 unblocks: [PWIZ-111, PNC-038]
 acceptance_criteria:
   - "The check runs over the topic's contracts before the topic becomes Ready and over every contract at final integration, and records each finding with its contract, kind, PWIZ-012 gap class, finding_level and outcome."
-  - "Fields without types in structured declarations, unresolved pointers, and one identifier (one named contract, type, enumeration, event, command or state, or one field path of one contract, including a field declared the same as another by reference or pointer) declared with different types or enumeration members are found by code without a model call, and must pass as PWIZ-028 deterministic checks; same-named fields of distinct contracts are left to the Auditor as possible drift."
+  - "Fields without types in structured declarations, unresolved pointers, and one identifier (one named contract, type, enumeration, event, command or state, or one field path of one contract, including a field declared the same as another by reference or pointer) declared with incompatible types or enumeration members for overlapping cases are found by code without a model call, and must pass as PWIZ-028 deterministic checks; same-named fields of distinct contracts are left to the Auditor as possible drift; a lawful conditional pair, such as a terminal route's null target beside a continuing route's stage name, passes, a genuine same-scope conflict fails, and uncertain overlap goes to the Auditor."
   - "Auditor-found findings go through PWIZ-028's bounded round; non-blocking ones left are recorded as open questions and as recorded gaps for PNC-038 and do not hold the topic out of Ready, and a blocking one left is a PWIZ-006 typed blocker."
   - "Every operation or event has an interface binding that resolves, including an observation surface for every owner-stated state or effect assertion, or a completeness finding of the pointer kind."
   - "No completeness finding becomes a technical question to the user; only a product-policy gap reaches the user, as a plain decision."
