@@ -4983,7 +4983,7 @@ canonical_text: >-
   state and effects are read, written by the planning agent), or without an observation surface for a state or
   effect assertion its owner text states; and the same identifier declared with incompatible types or enumeration members for overlapping cases, or
   two statements that contradict each other. A declared failure whose surface admits no accepted call on any route,
-  as an evidenced limit PNC-038 defines shows, is not that finding: PNC-038 binds its refusal with the limit and
+  as an evidenced limit PNC-038 defines shows, is not a finding for an undecidable neighbour: PNC-038 binds its refusal with the limit and
   records no gap. Code finds, without a model call, what structured declarations show:
   fields without types in tables and schemas, unresolved pointers, and one identifier declared with incompatible types
   or enumeration members for overlapping cases, where one identifier is one named contract, type, enumeration, event, command or state, or one
