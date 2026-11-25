@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L28747-L63360
 
-Source SHA256: `9ba10ed02acb08912503bcd14d5b89fcff27a899b4986d0d9a5f5c6101fc2280`
+Source SHA256: `4dc499a22d147cb16fa1eb4f92f62e8336e6aec5e8faf4c1d655b2df2d3a38bf`
 
 ---
 
@@ -3914,8 +3914,8 @@ canonical_text: >-
   the card named (the same identifier declared differently, or two statements that contradict), because stream C's
   open findings include such contradictions. Plans/Planning_Wizard.md#PWIZ-111 gives every risky contract a referee,
   a small owner model built from the owner's behaviour text that takes a prior state and an operation or a short
-  sequence, and has code try to break each rule within a budget; rules no single input can isolate are named gaps
-  backed by recorded inputs, not proofs. Plans/Plan_To_Node_Compilation.md#PNC-038 generates fixtures for every
+  sequence, and has code try to break each rule within a budget; rules no single input can isolate are named gaps backed by recorded inputs and a coverage condition that code
+  checks, not by proofs or reviewers. Plans/Plan_To_Node_Compilation.md#PNC-038 generates fixtures for every
   contract and binds each rule's fixtures to the WorkNode requests that enforce it, and
   Plans/Automated_Testing_System.md#ATS-401 makes the build run them and has the builder report source sentences it
   needed that no record carries. The same evening Jared answered card S2 with option A for Puppet Master's own plans

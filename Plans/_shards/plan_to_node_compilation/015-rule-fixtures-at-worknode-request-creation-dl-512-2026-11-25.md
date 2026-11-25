@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_To_Node_Compilation.md`
 
-Source lines: L2169-L2281
+Source lines: L2169-L2282
 
-Source SHA256: `44a74a0863f569841a329ff25c049cf0239b6f86c387b1e191a86e7554e980eb`
+Source SHA256: `db0c0cbd72d20a13db1f93253bd9fc13516a96af70167d70f2280659da5ea2ae`
 
 ---
 
@@ -24,7 +24,8 @@ canonical_text: >-
   bind to the node or nodes whose source_acceptance_unit_ids own enforcement of that rule; a rule that no single node
   owns binds to the node that completes the contract, the last node in build order whose source units hold the
   contract's owner_reference, ordered through required_before_completion. A contract's rules are its schema rules (one keyword at one location, with each member of a required list or other
-  per-member constraint as its own rule and that member part of the refusal's identity), its
+  per-member constraint as its own rule and that member part of the refusal's identity, and a rule under an applicator
+  isolated within the branch the valid control selects, as Plans/Planning_Wizard.md#PWIZ-111 defines), its
   declared failure results and its acceptance criteria, and each kind of rule gets its own tests. A schema rule gets
   two payload fixtures: a payload that the schema validator confirms breaks only that rule, expected to be refused, and
   a payload that passes, expected to be accepted. A declared failure result gets two behaviour fixtures: an input that
@@ -40,7 +41,7 @@ canonical_text: >-
   approved plan version, and code checks it against the schema and the declared failure codes before it binds. Risky
   contracts add the cases of the planning referee check (Plans/Planning_Wizard.md#PWIZ-111). A fixture's expected
   outcome comes only from the approved contract: accepted with any stated result, or refused with the declared failure code and, when several rules share that
-  code, the validator's error path that names the rule; every expected state comes from the owner-stated state and
+  code, the validator's error path (with the member for a per-member rule) that names the rule; every expected state comes from the owner-stated state and
   effect assertions. A referee case binds only when the
   approved contract states its expected outcome; a case where the referee and the contract disagree, or where the
   contract states no outcome, stays a design finding or gap evidence and never becomes a fixture, and the outcome the
@@ -71,8 +72,8 @@ canonical_text: >-
   carry payload fixture, behaviour fixture or recorded-gap records, or per-test outcomes with references to each
   recorded gap and its policy; that schema change is a required companion change before any compile uses this unit,
   it also fixes the per-keyword candidate generators and named-gap coverage conditions PWIZ-111 relies on, and its
-  validation scenarios include a pattern rule and a length bound whose isolating witness must bind, a required list
-  whose members each need their own refusal, a refusal that must preserve state, and a replay that must return the right
+  validation scenarios include a pattern rule and a length bound whose isolating witness must bind, a required list whose members each need their own refusal, a discriminated oneOf whose per-branch required member
+  must bind an isolated refusal, a refusal that must preserve state, and a replay that must return the right
   value without repeating its effect. This unit specifies the binding
   only; it emits no NodeSeeds, WorkNodes, executable queues or build tasks.
 gui_related: false
@@ -81,14 +82,14 @@ depends_on: [DL-512, PNC-013, PNC-015, PNC-016, EP-102, PWIZ-110, PWIZ-111, ATS-
 unblocks: [ATS-401]
 acceptance_criteria:
   - "Every rule of every contract binds to the node that owns its enforcement, or to the node that completes the contract, and ends in exactly one disposition: its required tests bound; a passing payload with a named gap evidenced to PWIZ-111's standard, by the planning check or by PlanCompile, for an unisolatable schema refusal; or a test gap for each required test that could not be produced, failed its pre-bind check, or has no automatic route."
-  - "A schema rule's required tests are a refusing and a passing payload fixture; a declared failure result's are a refusing input and its passing neighbour; a behavioural criterion's is one fixture per input condition it lists, each asserting its stated outcome so that a wrong result fails; any other criterion's is its ATS-003 oracle; no contract is exempt from schema fixtures."
+  - "A schema rule's required tests are a refusing and a passing payload fixture; a declared failure result's are a refusing input and its passing neighbour; a behavioural criterion's is one fixture per input condition it lists, each asserting its stated outcome so that a wrong result fails; any other criterion's is its ATS-003 oracle; no contract is exempt from schema fixtures; each member of a required list or other per-member constraint is its own rule with its own refusing fixture."
   - "Every behaviour fixture carries the owner-stated state and effect assertions for its polarity, each read through a declared observation surface; where a surface is missing, the carried PWIZ-110 completeness gap stands, or an assertion test gap if the gap was first found at compile time."
   - "Every expected outcome comes from the approved contract; a referee case that disagrees with the contract or lacks a contract outcome never binds, and observed planning outcomes are kept only as evidence."
   - "Every behaviour fixture cites its source span, passes the schema and declared-failure-code check before it binds, and keeps an immutable reference to that span in the approved plan version."
   - "A named-gap regression input binds only where the approved contract determines its refusal, and never with single-rule coverage credit."
   - "A test gap's test_gap_policy is block_completion or defer_non_executable_harness_candidate; allow_with_disposition and not_applicable are never used for a rule's required test."
   - "A contract change after approval reruns its checks in the successor plan and regenerates its tests, and the PlanDiffImpactReport classifies every consuming node."
-  - "The handoff schema change for payload fixture, behaviour fixture and recorded-gap records, and for per-test outcomes in test_run_receipt, is a recorded companion change, required before any compile uses this unit."
+  - "The handoff schema change for payload fixture, behaviour fixture and recorded-gap records, and for per-test outcomes in test_run_receipt, is a recorded companion change, required before any compile uses this unit; it also fixes the per-keyword candidate generators, the named-gap coverage conditions, the branch mapping for applicators and the per-member identity, with the pattern, length-bound, required-member, discriminated-oneOf, state-preserving refusal and replay scenarios."
   - "A carried completeness or design gap keeps its PWIZ-012 class and is resolved under that class, not under the test-gap policies."
   - "No NodeSeeds, WorkNodes, executable queues, final node manifests, production build tasks, implementation files or source code are created by this PlanUnit."
 validation_surfaces:
