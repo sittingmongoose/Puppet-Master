@@ -4,7 +4,7 @@ Source: `Plans/WorktreeGitImprovement.md`
 
 Source lines: L938-L4928
 
-Source SHA256: `427537685ea94d57fca424de8a12cce845132918575bb37aee9cf833a3f49730`
+Source SHA256: `0c1b687ef18e4d7f81250416ac53304eeb219c6257bf4adb8121be4cd9fe98c8`
 
 ---
 
@@ -3037,7 +3037,7 @@ plan_unit_id: W-056
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: "Resolved worktree decisions require HashSet<node_id> active tracking, detached HEAD merge handling, recovery timing, and Windows-safe path behavior for worktree lifecycle implementation."
+canonical_text: "Resolved worktree decisions require durable conflict persistence as typed worktree_conflict_state.v1:{project_id}:{worktree_id} rows in the canonical redb family (SP-340), with the HashSet<node_id> active tracking of conflict worktrees kept only as a per-session projection rebuilt from those rows and never the authority (section 7.14 Worktree item 3, section 7.4), plus detached HEAD merge handling, recovery timing, and Windows-safe path behavior for worktree lifecycle implementation."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
 split_recommended: false
