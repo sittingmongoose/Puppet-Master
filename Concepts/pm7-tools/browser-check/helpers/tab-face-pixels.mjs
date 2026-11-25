@@ -4,20 +4,32 @@
 // A part (a label's or a kind glyph's box, window pixels) is read against the same part in a reference frame of the same
 // press, taken when the switch has settled: there its glyph pixels G are those at least STRONG:1 from the box's median
 // colour, and its ground pixels N those within WEAK:1 of it. With the frame before the press as a second reference, G and
-// N keep only the positions that are glyph (or ground) in both frames (FO-236, partMask). In a frame being judged, the
-// part is painted when every group of G (a colon's dot, a letter's stroke) has at least one pixel PAINTED:1 or more from
-// the frame's ground colour N.
+// N keep only the positions that are glyph (or ground) in both frames (FO-236, partMask).
 //
-// Why per group, not the median of G (FO236-WIN158-FIVE-PIXEL-REFERENCE): on Windows Chrome 158 the Retro `::` glyph's
-// core reads 1.999:1 against its chip and one pixel per dot passes STRONG, so G can be a handful of dot cores plus as
-// many antialiasing edges; their median sat at 1.67-1.79 on frames whose dots are plainly there (the four-location read
-// in streams/F/reviews/astra-max-12e13.md found every dot at 1.999:1 or more), and a real press failed. Each group's
-// strongest pixel is the dot's own ink; a blank part (the double paint FO-229 fixed: ink the colour of the ground) still
-// reads about 1.0 at every pixel, and a part with one dot or one letter stroke missing fails on that group alone.
+// Each 8-connected group of G (a colon's dot, a letter's stroke) has a settled core: the positions whose settled-reference
+// contrast is at least the midpoint between STRONG and that group's peak settled contrast, (peak + STRONG) / 2. That
+// separates the solid interior of each dot or stroke from its anti-aliased fringe without changing STRONG or PAINTED:
+//   - FO236-WIN158-FIVE-PIXEL-REFERENCE: on Windows Chrome 158 at DPR 1, a Retro `::` dot's single core pixel clears the
+//     midpoint while its dimmer anti-aliased edge drops out, so a real press (whose core reads >= 1.94:1 while its edge
+//     sits at 1.60-1.72:1 on the pressed chip) still passes.
+//   - NM19-TABFACE-SYNTHETIC-PARTIAL & FO236-PARTIAL-GLYPH: in a frame being judged, each group's contrast is the lower
+//     median of per-pixel contrasts across its settled core — i.e., strictly more than half (> 50%) of every group's
+//     settled core must reach PAINTED:1 from the frame's ground N. A single surviving pixel on a covered letter (10-11 px
+//     top cover on the 15 px Agents label), opacity 0.35 dimming, a 1 px dimmed shift, or half a bright core on a dark
+//     chip (4 of 8 pixels, or 1 of 2 core pixels in a dot) all fail (< PAINTED).
 //
 // A part is judgeable when the settled reference shows a real glyph and ground (MIN_GLYPH each) and the pre-press frame
 // keeps at least one pixel of every glyph group the settled frame shows: only the positions are narrowed, never the bar.
 export const STRONG = 2.0, WEAK = 1.25, PAINTED = 1.8, MIN_GLYPH = 6;
+
+// FO229-MISSING-PARTS: Home's tab is intentionally icon-only (its text label may be null); Home's glyph and Agents' label
+// and glyph are required parts and must never be silently skipped when their geometry is null.
+export const REQUIRED_PARTS = [['Home', 'glyph'], ['Agents', 'label'], ['Agents', 'glyph']];
+export function missingTabParts(tabs) {
+	const missing = [];
+	for (const [tab, part] of REQUIRED_PARTS) if (!tabs || !tabs[tab] || !tabs[tab][part]) missing.push(`${tab} ${part}`);
+	return missing;
+}
 
 const lin = (v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
 export const luminance = (c) => 0.2126 * lin(c[0]) + 0.7152 * lin(c[1]) + 0.0722 * lin(c[2]);
@@ -71,23 +83,39 @@ function groups(positions, w) {
 // pixel of every glyph group the settled frame shows (not a flat six pixels, which a real five-pixel press never reaches);
 // the settled reference still needs MIN_GLYPH glyph and ground pixels, so a part that is blank there is unread, not judged.
 export function partMask(ref, box, before) {
-	const classify = (img) => { const px = pixels(img, box), bg = median(px); return { px, w: boxWidth(img, box), bg, k: px.map((p) => { const c = contrast(p, bg); return c >= STRONG ? 'g' : c <= WEAK ? 'n' : ''; }) }; };
+	const classify = (img) => {
+		const px = pixels(img, box), bg = median(px), c = px.map((p) => contrast(p, bg));
+		return { px, w: boxWidth(img, box), bg, c, k: c.map((v) => (v >= STRONG ? 'g' : v <= WEAK ? 'n' : '')) };
+	};
 	const a = classify(ref), b = before ? classify(before) : null, g = [], n = [], settled = [];
-	if (b && b.px.length !== a.px.length) return { box, g, n, size: a.px.length, bg: a.bg, ok: false, both: true, gSettled: 0, clusters: [], groupsSettled: 0, groupsKept: 0 };
+	if (b && b.px.length !== a.px.length) return { box, g, n, size: a.px.length, bg: a.bg, ok: false, both: true, gSettled: 0, clusters: [], cores: [], groupsSettled: 0, groupsKept: 0 };
 	a.k.forEach((k, i) => { if (k === 'g') settled.push(i); if (k === 'g' && (!b || b.k[i] === 'g')) g.push(i); else if (k === 'n' && (!b || b.k[i] === 'n')) n.push(i); });
 	const kept = new Set(g), groupsSettled = groups(settled, a.w), preserved = groupsSettled.filter((group) => group.some((i) => kept.has(i)));
 	const ok = settled.length >= MIN_GLYPH && n.length >= MIN_GLYPH && g.length > 0 && preserved.length === groupsSettled.length;
-	return { box, g, n, size: a.px.length, bg: a.bg, ok, both: !!b, gSettled: settled.length, clusters: groups(g, a.w), groupsSettled: groupsSettled.length, groupsKept: preserved.length };
+	const clusters = groups(g, a.w);
+	// Each group's settled core: positions at or above the midpoint between STRONG and the group's settled peak contrast.
+	const cores = clusters.map((group) => {
+		const peak = Math.max(...group.map((i) => a.c[i]));
+		const bar = (peak + STRONG) / 2;
+		return group.filter((i) => a.c[i] >= bar);
+	});
+	return { box, g, n, size: a.px.length, bg: a.bg, ok, both: !!b, gSettled: settled.length, clusters, cores, groupsSettled: groupsSettled.length, groupsKept: preserved.length };
 }
-// the part's contrast in one frame: its weakest glyph group's strongest pixel against the frame's ground colour (the
-// ground being the median of N; ink is the median of G, kept for the log and the report). A group whose strongest pixel
-// is under PAINTED:1 is a dot or stroke that is not drawn in this frame.
+// the part's contrast in one frame: its weakest glyph group's settled-core lower-median contrast against the frame's ground
+// colour (the ground being the median of N; ink is the median of G, kept for the log and the report). A group passes
+// PAINTED:1 only when strictly more than half (> 50%) of its settled core reaches PAINTED:1 from the frame's ground.
 export function partContrast(img, mask) {
 	const px = pixels(img, mask.box);
 	if (px.length !== mask.size) return { c: 0, ink: null, ground: null, groups: 0, weakest: null };
 	const ink = median(mask.g.map((i) => px[i])), ground = median(mask.n.map((i) => px[i]));
-	const cores = (mask.clusters || [mask.g]).map((group) => { let best = 0, at = group[0]; for (const i of group) { const c = contrast(px[i], ground); if (c > best) { best = c; at = i; } } return { c: best, at }; });
-	if (!cores.length) return { c: 0, ink, ground, groups: 0, weakest: null };
-	const weakest = cores.reduce((p, q) => (q.c < p.c ? q : p));
-	return { c: Math.round(weakest.c * 100) / 100, ink, ground, groups: cores.length, weakest, core: px[weakest.at], median: Math.round(contrast(ink, ground) * 100) / 100 };
+	const scores = (mask.cores || mask.clusters || [mask.g]).map((group) => {
+		const ranked = group.map((i) => ({ c: contrast(px[i], ground), at: i })).sort((p, q) => p.c - q.c);
+		const pick = ranked[(ranked.length - 1) >> 1];
+		return { c: pick.c, at: pick.at, size: ranked.length, painted: ranked.filter((x) => x.c >= PAINTED).length };
+	});
+	if (!scores.length) return { c: 0, ink, ground, groups: 0, weakest: null };
+	const weakest = scores.reduce((p, q) => (q.c < p.c ? q : p));
+	const allC = mask.g.map((i) => contrast(px[i], ground)).sort((p, q) => p - q);
+	const medC = allC.length ? allC[(allC.length - 1) >> 1] : 0;
+	return { c: Math.round(weakest.c * 100) / 100, ink, ground, groups: scores.length, weakest, core: px[weakest.at], median: Math.round(medC * 100) / 100 };
 }

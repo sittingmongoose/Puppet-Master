@@ -107,17 +107,49 @@ async function slowTab(t, f, ws, tab) {
 	await waitMgrClear(f, ws, 2000);
 	await t.settle();
 }
-/* Two real mouse clicks at the tabs' own centres, gap ms apart; no actionability wait between them. */
-async function rapid(t, f, m, gap) {
+/* Two trusted presses with no full per-press round trip between them (OM17-MIDMORPH-TIMING): each awaited mouse.click
+   is a move/down/up round trip, so on a busy host the sent 55/85/115 ms landed 167-539 ms apart and reps arrived after
+   the first morph's done(). The input events go down one CDP session in send order (CDP input is trusted, like
+   Playwright's own mouse). Between the presses, `between` waits for the first morph's page-side onset (.o55-leaving /
+   data-o55-morph): the morph starts after an after-paint rAF+task (74-138 ms on a loaded host), so a press sent only
+   `gap` ms after the first would land before it started and be discarded. Press 2 is delivered `gap` ms after that
+   onset; gap (<=115 ms) is under the morph's 300 ms, so click 2 lands mid-morph on any host. Where no CDP session
+   opens, the awaited-click path keeps the old delivery. */
+async function pressPair(t, p1, p2, gap, between = null) {
+	const cdp = await t.page.context().newCDPSession(t.page).catch(() => null);
+	if (!cdp) {
+		await t.page.mouse.click(p1.x, p1.y);
+		if (between) await between();
+		await t.page.waitForTimeout(gap);
+		await t.page.mouse.click(p2.x, p2.y);
+		return;
+	}
+	const press = (p) => {
+		cdp.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: p.x, y: p.y, buttons: 0 }).catch(() => {});
+		cdp.send('Input.dispatchMouseEvent', { type: 'mousePressed', x: p.x, y: p.y, button: 'left', buttons: 1, clickCount: 1 }).catch(() => {});
+		cdp.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: p.x, y: p.y, button: 'left', buttons: 0, clickCount: 1 }).catch(() => {});
+	};
+	press(p1);
+	if (between) await between();
+	await t.page.waitForTimeout(gap);
+	press(p2);
+	await cdp.detach().catch(() => {});
+}
+/* Two real mouse clicks at the tabs' own centres; no actionability wait between them. Under Reduced Motion every swap
+   is immediate (no morph onset to wait for). */
+async function rapid(t, f, m, gap, reduced = false) {
 	const b = tabBtn(f, m.ws, m.B), c = tabBtn(f, m.ws, m.C);
 	await b.scrollIntoViewIfNeeded();
 	const bb = await b.boundingBox(), cb = await c.boundingBox();
 	if (!bb || !cb) throw new Error(`${m.ws}: tab ${m.B} or ${m.C} has no box on screen`);
 	await f.evaluate((ws) => { window.__foS2Clicks = window.__foS2Clicks.filter((x) => x.ws !== ws); }, m.ws);
 	const t0 = Date.now();
-	await t.page.mouse.click(bb.x + bb.width / 2, bb.y + bb.height / 2);
-	await t.page.waitForTimeout(gap);
-	await t.page.mouse.click(cb.x + cb.width / 2, cb.y + cb.height / 2);
+	await pressPair(t, { x: bb.x + bb.width / 2, y: bb.y + bb.height / 2 }, { x: cb.x + cb.width / 2, y: cb.y + cb.height / 2 }, gap,
+		reduced ? null : () => f.waitForFunction((ws) => {
+			const body = document.querySelector(`[data-continuous-workspace-body="${ws}"]`);
+			const page = body && body.querySelector('.pm51-mgr');
+			return !!page && (page.querySelector('.o55-leaving') != null || page.dataset.o55Morph != null);
+		}, m.ws, { timeout: 1500 }).catch(() => {}));
 	const landed = Date.now() - t0;
 	await t.page.waitForTimeout(250);
 	await waitMgrClear(f, m.ws, 1200);
@@ -746,7 +778,7 @@ for (const surface of ['normal', 'sandbox']) {
 					t.log(`${m.ws} ${m.B}->${m.C} gap ${gap} ms (reduced): rep not judged — baseline ${m.start} not reached (${base.detail})`);
 					continue;
 				}
-				const timing = await rapid(t, f, m, gap);
+				const timing = await rapid(t, f, m, gap, true);
 				const r = await judge(t, f, m, timing, 'basic-dark', true);
 				if (r === 'failed-delivery') deliveryFailed++;
 				else judged++;

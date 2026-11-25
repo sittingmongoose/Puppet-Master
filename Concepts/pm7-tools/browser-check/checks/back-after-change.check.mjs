@@ -1752,10 +1752,22 @@ export const tests = {
         await A.boot({ look }); await t.emulate({ reducedMotion: motion });
         /* (the frame's offset in the window: page.mouse speaks window coordinates, the page its own) */
         const fe = A.frame() === t.page.mainFrame() ? null : await A.frame().frameElement(), off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
+        /* A resting hovered box paints a few dozen pixels of anti-aliasing shimmer around its radio/help glyphs
+           (measured 20 px on the files-sheet cards, up to 75 px on a look tile: sub-0.3% at 76-170 fps), while a real
+           tremble moves the whole edge and its text (>=243 px a pair, usually thousands). Judge stillness against a
+           small absolute floor of 128 changed pixels rather than a share of the region, so the shimmer does not fail a
+           near-static cell and a tremble or a 3 px step still does. The floor is the larger of the tool's 0.02% share
+           and 128 device pixels of the viewport-clipped capture region. */
+        const STILL_FLOOR_PX = 128;
+        const regionPixels = () => A.frame().evaluate(() => { const e = document.querySelector('[data-kit-still="1"]'); if (!e) return 1; const r = e.getBoundingClientRect(), d = window.devicePixelRatio || 1; const w = Math.min(innerWidth, r.right) - Math.max(0, r.left), h = Math.min(innerHeight, r.bottom) - Math.max(0, r.top); return Math.max(1, Math.round(w * d) * Math.round(h * d)); });
         const judge = async (where) => { await A.sleep(900); const r = await A.frame().evaluate(SAMPLE, [90]);
           t.log(`${label} ${where}: ${r.distinct.length} position(s), ${r.flips} hover flip(s) in ${r.n} frames, hovered ${r.hovered}${r.distinct.length > 1 ? ' (' + r.distinct.slice(0, 6).join(' | ') + ')' : ''}, transform ${r.transform}`);
           if (r.distinct.length > 1 || r.flips) bad.push(`${where}: under a resting pointer it moved or its hover flipped: ${r.distinct.length} positions, ${r.flips} flips in ${r.n} frames`);
-          await t.still('[data-kit-still="1"]', `${label} ${where}: still on compositor frames`, { ms: 1200 }); };
+          /* (disclosed selftest=nudge: a 3 px step of the marked box landing inside the still window, proving the floor does not hide a real displacement) */
+          if (SELFTEST === 'nudge') await A.frame().evaluate(() => { setTimeout(() => { const el = document.querySelector('[data-kit-still="1"]'); if (el) el.style.translate = '3px 0px'; }, 500); });
+          const px = await regionPixels();
+          await t.still('[data-kit-still="1"]', `${label} ${where}: still on compositor frames`, { ms: 1200, maxChanged: Math.max(0.0002, STILL_FLOOR_PX / px) });
+          if (SELFTEST === 'nudge') await A.frame().evaluate(() => { const e = document.querySelector('[data-kit-still="1"]'); if (e) e.style.translate = ''; }); };
         const atEdges = async (sel, what) => { await t.page.mouse.move(2, 2); await A.sleep(700); const list = await boxes(A, sel);
           if (!list.length) bad.push(`no ${what} on show`);
           /* (each box is found at that point while it rests, before the pointer comes: a lift that moves its box would take it away) */

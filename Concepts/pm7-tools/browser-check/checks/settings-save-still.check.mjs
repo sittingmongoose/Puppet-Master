@@ -160,8 +160,10 @@ for (const surface of ['normal', 'sandbox']) {
 		const names = t.args.cases ? String(t.args.cases).split(',') : Object.keys(CASES);
 		for (const [w, h] of sizes) {
 			await t.viewport(w, h);
-			const f = await t.app.open({ sandbox: surface === 'sandbox' });
+			/* Reset the saved look on the outgoing page (and block its pagehide write) BEFORE this fresh page boots,
+			   so the phase that assumes Basic Dark measures Basic Dark whatever the previous check saved (FO154R2-SETLEAK). */
 			await t.app.resetLayout();
+			const f = await t.app.open({ sandbox: surface === 'sandbox' });
 			await f.locator('#tab-settings').click();
 			await t.settle();
 			await captureBaseline(t, f);
