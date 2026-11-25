@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L4959-L5131
+Source lines: L4959-L5134
 
-Source SHA256: `e51d7e69d26f81fd688af239868109b765cab450b9ef146213e23dbcbf0186f9`
+Source SHA256: `d8c7b3510ae4eaeccd8b1bcfa490de1273c32041c08ce8bf32e1994170ce522a`
 
 ---
 
@@ -103,8 +103,10 @@ canonical_text: >-
   declared failure code is a PWIZ-110 finding; a declared validation code shared by several rules is enough when the validator's error path, together with the
   member for a per-member rule, names the rule, and each case records that expected identity. The rules under test are the contract's schema rules and its behavioural acceptance criteria (those with an input
   and an observable outcome), sourced separately from the referee; shape checks get an acceptance-only passing case,
-  and criteria without an input and an outcome (latency gates, visual checks) keep their ATS-003 oracles. Each schema rule gets one passing and one refusing case, and the passing cases of rules an if selects include a
-  payload on each route the contract distinguishes; each behavioural acceptance criterion gets a case for each input condition it lists, asserting the outcome it
+  and criteria without an input and an outcome (latency gates, visual checks) keep their ATS-003 oracles. Each schema rule gets at least one passing and one refusing case, and for an assertion an if selects the passing
+  cases include one on each route the contract distinguishes and, wherever the contract admits one, a contrasting
+  accepted control: the refusing input with the selector switched to a route that does not select the assertion, and
+  with any routing fields that route requires, still breaking the assertion and expected to be accepted; each behavioural acceptance criterion gets a case for each input condition it lists, asserting the outcome it
   states and carrying its state and effect assertions (a refusal only where it prescribes one, otherwise its stated resulting state or
   returned result); and each
   risk property gets its matching cases: every state-machine transition and at
@@ -126,9 +128,9 @@ canonical_text: >-
   else assertions rather than a rule of its own. Starting from a valid control, code runs the rule's bounded candidate
   generator and binds a refusal as soon as the whole contract refuses an input because of that rule alone, as the
   companion's attribution of the validator's output shows; a wrapper error counts as that cause only when the wrapper
-  refused through the rule's own failure; the rule is a named gap only when code establishes that its catching rules cover every violation of it (for example, a type restriction whose sibling enumeration admits only that type), each recorded input refused by the catching rules with their own codes and recorded; a search that ends on
-  collisions without that coverage leaves a test gap whose test_gap_policy is defer_non_executable_harness_candidate,
-  since other rules already refused every recorded input. An input the contract accepts through another branch, or refuses only because of an independent assertion, is never
+  refused through the rule's own failure; the rule is a named gap only when code establishes that its catching rules cover every violation of it (for example, a type restriction whose sibling enumeration admits only that type), each recorded input refused by the catching rules with their own codes and recorded; a search that ends on collisions without that coverage leaves a test gap for the missing refusing case, carrying
+  the exhausted search with its recorded inputs and codes as evidence, whose test_gap_policy PlanCompile sets from what
+  is actually missing (Plans/Plan_To_Node_Compilation.md#PNC-038). An input the contract accepts through another branch, or refuses only because of an independent assertion, is never
   credited to a branch's rule. A keyword the companion does not support ends only in a binding or a test gap, never in a named gap. The candidate generator and the coverage condition for each supported keyword, with their validation scenarios, are fixed in the companion change that Plans/Plan_To_Node_Compilation.md#PNC-038 names, together with the effective-assertion definitions, the refusal attribution for oneOf, anyOf, not and if/then/else,
   and how a per-member rule's member is read,
   and the planning check and PlanCompile use the same generators and stopping condition. Each risky contract has a budget the planning run sets,
@@ -150,6 +152,7 @@ acceptance_criteria:
   - "Refusal codes are the contract's declared failure codes; a generated input is credited to a rule only when the whole contract refuses it because of that rule, by the companion's attribution, while multi-rule inputs remain admissible as named-gap evidence."
   - "A named gap rests on code-established coverage of the rule by its catching rules, with the recorded inputs and codes; a search that ends on collisions without that coverage is a test gap; each member of a required list or other per-member constraint is its own rule with its own refusal; a refusal is credited to a rule only when the whole contract refuses the input because of that rule, by the companion's attribution."
   - "Every case checks its outcome and every owner-stated state and effect assertion through a declared observation surface, for either polarity."
+  - "An assertion an if selects has a passing case on each route the contract distinguishes and, wherever the contract admits one, a contrasting accepted control that still breaks it on a route that does not select it."
   - "The budget ends at whichever limit comes first, required cases run first, and rules not reached within it are listed as test gaps, never as named gaps."
   - "Design findings follow PWIZ-028's bounded round; non-blocking leftovers are open questions and recorded gaps that do not hold the topic out of Ready, and a blocking leftover is a PWIZ-006 typed blocker."
   - "Referee cases cover schema rules and behavioural acceptance criteria only; other criteria keep their ATS-003 oracles."

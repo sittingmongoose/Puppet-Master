@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L16494-L16570
+Source lines: L16494-L16571
 
-Source SHA256: `a5cf2249f67d32f76c49c894bf86548afdba16d2a8c1d8b73c5b5e0664594aa3`
+Source SHA256: `c6f00f6f1c7649953605e9e7e896e281867d75c80753cdf30064c76fa1731b76`
 
 ---
 
@@ -23,8 +23,9 @@ canonical_text: >-
   refused with its declared failure code and, where the fixture records one, its error path with the member for a
   per-member rule) and every state and effect
   assertion the fixture carries holds when read through its declared observation surface. Every bound ATS-003 oracle must pass, and every recorded test gap
-  is honoured under its test_gap_policy (a block_completion gap blocks completion; a
-  defer_non_executable_harness_candidate gap is recorded as ATS-004 requires). The TestRunReceipt records each of these through the companion schema change that
+  is honoured under its test_gap_policy (a block_completion gap blocks completion; a defer_non_executable_harness_candidate gap is recorded with its test-harness WorkNode request candidate as
+  ATS-004 requires and keeps the rule's verification open, so the node is not marked complete until the harness work
+  lets the test run and pass, as Plans/Executor_Protocol.md#EP-101 requires). The TestRunReceipt records each of these through the companion schema change that
   Plans/Plan_To_Node_Compilation.md#PNC-038 names (ATS-004). A payload fixture runs against the built validator of its data shape, or through a declared consuming operation
   that exercises that validation. A behaviour fixture reaches the built code through an adapter generated from the
   contract's interface binding (the callable surface each operation or event maps to,
@@ -50,10 +51,10 @@ canonical_text: >-
   owner's decision, and none counts as a passed requirement.
 gui_related: false
 gui_classification_reason: Defines automated build verification and a builder report; no visual presentation.
-depends_on: [DL-512, PNC-038, PNC-015, EP-102, PWIZ-012, PWIZ-110, ATS-003, ATS-004]
+depends_on: [DL-512, PNC-038, PNC-015, EP-101, EP-102, PWIZ-012, PWIZ-110, ATS-003, ATS-004]
 unblocks: []
 acceptance_criteria:
-  - "A WorkNode with bound rule tests completes only when every bound fixture meets its expected outcome and every state and effect assertion it carries holds through its observation surface, every bound ATS-003 oracle passes, and every recorded test gap is honoured under its test_gap_policy, as its TestRunReceipt records."
+  - "A WorkNode with bound rule tests completes only when every bound fixture meets its expected outcome and every state and effect assertion it carries holds through its observation surface, every bound ATS-003 oracle passes, and every recorded test gap is honoured under its test_gap_policy, a deferred harness candidate leaving the node incomplete until the harness work lets its test run and pass, as its TestRunReceipt records."
   - "Payload fixtures run against the built validator or a declared consuming operation; behaviour fixture adapters are generated from the contract's interface binding and reach prior states by replaying owner operations or a declared seeding port, never by direct storage writes; a hand-written adapter is checked by an automated verification agent that is not the builder; a fixture with no automatic route is a recorded test gap."
   - "A fixture that contradicts its cited span stays required until a successor plan corrects it; the builder never waives or edits a fixture."
   - "Each builder report entry cites its source span and the different build it would have caused, carries a PWIZ-012 gap class, goes to the planning repair route or the plan's approver, and is kept as a plan conversion regression case in the project's planning evidence."
@@ -84,4 +85,4 @@ negative_constraints:
 owner_hints: [Plans/Automated_Testing_System.md, Plans/Plan_To_Node_Compilation.md, Plans/Executor_Protocol.md, Plans/Planning_Wizard.md]
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-512, ContractName:Plans/Plan_To_Node_Compilation.md#PNC-038, ContractName:Plans/Automated_Testing_System.md#ATS-003, ContractName:Plans/Automated_Testing_System.md#ATS-004, ContractName:Plans/Plan_To_Node_Compilation.md#PNC-015, ContractName:Plans/Executor_Protocol.md#EP-102, ContractName:Plans/Planning_Wizard.md#PWIZ-012, ContractName:Plans/Planning_Wizard.md#PWIZ-110, ContractName:Plans/Planning_Wizard.md#PWIZ-111
+ContractRef: ContractName:Plans/Decision_Log.md#DL-512, ContractName:Plans/Plan_To_Node_Compilation.md#PNC-038, ContractName:Plans/Automated_Testing_System.md#ATS-003, ContractName:Plans/Automated_Testing_System.md#ATS-004, ContractName:Plans/Plan_To_Node_Compilation.md#PNC-015, ContractName:Plans/Executor_Protocol.md#EP-101, ContractName:Plans/Executor_Protocol.md#EP-102, ContractName:Plans/Planning_Wizard.md#PWIZ-012, ContractName:Plans/Planning_Wizard.md#PWIZ-110, ContractName:Plans/Planning_Wizard.md#PWIZ-111
