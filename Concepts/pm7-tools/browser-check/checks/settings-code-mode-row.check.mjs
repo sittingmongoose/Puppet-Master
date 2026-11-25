@@ -5,8 +5,11 @@
 // and a second click turns it On again. Judged from the row's own markup (data-setting-id / data-setting), never from
 // a position on the page.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-code-mode-row.check.mjs --set page=<build>
-// --set size=1440x900 changes the window.
+// --set size=1440x900 changes the window. --set shots=basic-light,basic-dark also takes one picture of the row among
+// its neighbours in each named look (picked through Settings' own Theme rows, after the switch is back On), for the
+// by-eye comparison of switch and spacing; it asserts only that the look named is the one painted.
 import { readFileSync } from 'node:fs';
+import { setLookBySetting, guardPaintedLook } from '../helpers/settings-look.mjs';
 
 const ID = 'code.execution.code-mode';
 /* the inventory row itself: the label and the complete sentence the page has to draw */
@@ -92,4 +95,22 @@ export default async function (t) {
 	await t.page.waitForTimeout(900);
 	row = await f.evaluate(ROW, [ID, norm(INV.label), norm(INV.desc)]);
 	await t.check('a second click turns it On again', row.drawn === true && row.checked === 'true', JSON.stringify(row));
+
+	for (const look of (t.args.shots ? String(t.args.shots).split(',').filter(Boolean) : [])) {
+		await setLookBySetting(t, f, look);
+		const again = f.locator('#pm-settings-root [data-global-search]:visible').first();
+		await again.click();
+		await again.fill('');
+		await again.type('Code Mode', { delay: 15 });
+		const hits = f.locator('.search-results[data-mode="rail"] .search-result');
+		await hits.first().waitFor({ state: 'visible', timeout: 5000 });
+		const names = await hits.evaluateAll((els) => els.map((el) => ((el.innerText || '').split('\n').map((s) => s.replace(/\s+/g, ' ').trim()).filter(Boolean)[0] || '')));
+		await hits.nth(Math.max(0, names.findIndex(sameLabel))).click();
+		await t.settle();
+		await f.locator(`.toggle[role="switch"][data-setting="${ID}"]:visible, [data-setting-id="${ID}"] .toggle[role="switch"]:visible`).first()
+			.evaluate((el) => el.scrollIntoView({ block: 'center', behavior: 'instant' }));
+		await t.page.waitForTimeout(1200);
+		await guardPaintedLook(t, f, look, `${look}: before the picture`);
+		await t.shot(`code-mode-row-${look}`, `${look}: the Code Mode row among its neighbours: the same switch, the same row height and spacing, label and sentence readable`);
+	}
 }

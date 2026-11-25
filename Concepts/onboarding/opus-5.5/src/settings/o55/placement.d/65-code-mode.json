@@ -1,0 +1,13 @@
+{
+ "_about": "Tools T-191 (Jared, 2026-11-24: Code Mode has to be an option in Settings that can be turned off). The admitted row code.execution.code-mode would otherwise fall to its subgroup's default section, Containers > Building & publishing images, between the Compose rows. It is a fine control over how a model uses tools, so it sits in AI & Providers > Models > How models answer, straight after Think between tool steps.",
+ "overrides": [
+  {"section": "providers-answers", "ids": ["code.execution.code-mode"]}
+ ],
+ "sections": {
+  "providers-answers": {
+   "after": {
+    "code.execution.code-mode": "ai.models.interleaved-thinking"
+   }
+  }
+ }
+}
