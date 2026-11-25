@@ -4,7 +4,7 @@ Source: `Plans/Tools.md`
 
 Source lines: L13358-L13674
 
-Source SHA256: `c24350a7a713cac37b694454fc1d365f2345cf92ad737c75f4c1be4676af8349`
+Source SHA256: `eaeb379f4cff4e6f70101bcbef4bfbba7c8034ed001d21a72387b366ce153101`
 
 ---
 
@@ -106,7 +106,7 @@ canonical_text: >-
   the same channel as the script tool. If the script tool is not offered, the run uses the route's ordinary
   tool-call path, with T-188's effective-mode and typed-reason rules: where the route already has one it is
   preserved unchanged, and the in-band and DAE sentences below define it for the routes that had none. Under
-  Host Tool Execution on a direct API route whose Models_System tool_use capability is true it is a tool in
+  Host Tool Execution on a direct API route whose Models_System tool_use capability is true the script tool is a tool in
   the provider's tool-call API, and where it is false the owned in-band path below is used; on a bridged CLI under the HTE strategy it, and the directly callable tools named in T-190, travel through the
   Run_Modes hosted action loop as structured tool intents where its capability entry reports structured_tool_intents
   supported, otherwise as in-band tool calls, never as a provider tool_use; under
