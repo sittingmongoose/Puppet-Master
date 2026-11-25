@@ -4,7 +4,7 @@ Source: `Plans/MiscPlan.md`
 
 Source lines: L1381-L6359
 
-Source SHA256: `8a15468dff609e8f2bd9811a901a8349ceb8fa5e53c98edc07a6030b51a5d4b8`
+Source SHA256: `98df60e418b043b69dd39839c655b173efbcb36ecb57d29e3bda1854fdeb6925`
 
 ---
 
@@ -4077,7 +4077,7 @@ acceptance_criteria:
 - Slint key-event capture location and KeyMap application are confirmed against Slint 1.17.1 or current stable docs before implementation.
 - Skill discovery handles Windows path case and separators as needed.
 - platform_specs or equivalent documents how each provider receives skill list, paths, content, environment, prompt injection, or tools.
-- list_skills_for_agent remains stubbed until platform-specific delivery is defined.
+- list_skills_for_agent remains stubbed until platform-specific delivery is defined. Since 2026-11-25 that delivery is defined by the M-083 SkillRunnerBinding, so the helper is no longer stubbed and uses the M-083 signature.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -4106,7 +4106,7 @@ preserved_exact_tokens:
 - Gemini
 negative_constraints: []
 compatibility_only_notes:
-- Provider skill injection remains stubbed until platform_specs or equivalent defines delivery.
+- Provider skill injection remains stubbed until platform_specs or equivalent defines delivery. The equivalent is the M-083 SkillRunnerBinding (2026-11-25), so injection is no longer stubbed.
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Provider docs and platform_specs own provider-specific delivery details.

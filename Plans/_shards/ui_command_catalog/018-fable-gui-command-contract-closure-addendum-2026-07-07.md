@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8646-L8851
+Source lines: L8646-L8853
 
-Source SHA256: `37db9bd4a9a7fc02934065e0831b6ca4b187361d9b3ca402f8e7e504b7b9d4a9`
+Source SHA256: `7a505fc3c933b16467a15b2a14377865e4299397a84d32ea23b309f91e53a212`
 
 ---
 
@@ -21,6 +21,8 @@ Every command in this addendum consumes the closed v2 `UICommandResponse` in `Pl
 The Persona rows below preserve historical Project-only command sketches, not the active scope contract. UCC-214 and P-060 select each exact `persona_<operation>_request_v2` / `persona_<operation>_result_v2` from `Plans/projects_refresh_command_bindings.json`, including create/delete/export/import/select/update and the distinct-ID duplicate route. Each uses WorkflowScopeV2 (CV-365): the actual Server application scope has required-present null Project fields; actual Project operations retain real Project identity. Existing historical Project schemas remain unchanged. Save writes the current whole-record home under expected revision; `persona_patch` in the historical sketch does not grant per-field layering. No event is admitted here.
 
 The selected Persona result vocabulary is `requested_persona` / `effective_persona` (Personas section 10), never parallel `_id` runtime fields. The select result’s existing authenticated owner_result_ref carries original frozen resolution evidence (CV-691 persona_selected_resolution); historical `_id` spellings are read-only migration/source-lineage aliases and cannot authorize a current write or fresh Settings resolution. CV-691/P-124 supplies the exact event binding.
+
+**Persona update operations (2026-11-25, DL-2602).** The historical `cmd.persona.update` row below keeps its `persona_patch` sketch. The active request is `persona_update_request_v2`, a whole-record request whose `update_operation` field selects `edit` (default), `set_enabled` (with `enabled: boolean`) or `restore_shipped_default`, with the refusals in `Plans/Personas.md` §4.1 item 5 (`invalid_args` for a protected core built-in or a Persona with no shipped default, `stale_projection` for a stale `expected_owner_revision`); every operation's success is `persona.updated`. There are no separate disable, restore or validate-schema commands.
 
 **DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.
 
