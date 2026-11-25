@@ -517,7 +517,7 @@ Child/orchestrator lineage consumers must retire tier-era side files and selecto
 
 Widget and ledger projections consume provider-account storage families rather than owning account state. `widget.multi_account`, `settings/multi_account.*`, `/multi_account`, `/account/receipt-aware`, `/account/trust`, `provider_accounts`, `provider_accounts.*`, `tier-era`, `/effective`, switch-history, projection-trust, attempt/account/receipt-aware routing, and receipt-aware filters must route through the canonical provider_accounts family, requested/effective account envelope, and projection-trust contract before a widget, ledger, or Orchestrator summary displays account health or filters history.
 
-Tool and artifact events are runtime contracts when they affect execution, mutation authority, denial recovery, or provider/account routing. `tool.invoked`, `tool.denied`, `/tool`, `/event`, `/event/policy`, `/attempt/actor/account`, and `mutation_capable` records carry the same blocked reason taxonomy and identity envelope as orchestration events. When a tool event intersects Orchestrator execution it is `runtime-attributed`, not merely `analytics-only`, and the record exposes canonical optional refs for `node_id`, `attempt_id`, `lane_id`, `work_package_id`, `feature_seam_id`, `execution_role`, `/runtime`, `/effective`, `effective_account_id`, and `operational_identity`. Tool/artifact linkage must preserve `artifact_id` back to `attempt_id`, resulting artifact refs, and `usage_event_ref` as a secondary `drill-through` anchor rather than the sole evidence trail.
+Tool and artifact events are runtime contracts when they affect execution, mutation authority, denial recovery, or provider/account routing. `tool.invoked`, `tool.denied`, `/tool`, `/event`, `/event/policy`, `/attempt/actor/account`, and `mutation_capable` records carry the same blocked reason taxonomy and identity envelope as orchestration events. When a tool event intersects Orchestrator execution it is `runtime-attributed`, not merely `analytics-only`, and the record exposes canonical optional refs for `node_id`, `attempt_id`, `lane_id`, `package_id`, `execution_role`, `/runtime`, `/effective`, `effective_account_id`, and `operational_identity` (a `work_package_id` input is import/export compatibility only and normalizes to `package_id` before persistence, and `tool.invoked` / `tool.denied` payloads carry no `feature_seam_id`; CV-038, CV-097, CV-098). Tool/artifact linkage must preserve `artifact_id` back to `attempt_id`, resulting artifact refs, and `usage_event_ref` as a secondary `drill-through` anchor rather than the sole evidence trail.
 
 Runtime attribution packets are carried by immutable prompt handoff bundles, `attempt.started`, `attempt_record`, `/dispatch`, and usage/worker-inspection projections when relevant. `tool.invoked` and `tool.denied` are both first-class runtime trace records; `tool.invoked` must not remain under-attributed analytics exhaust when it affects execution, artifacts, receipts, usage, or operational identity.
 
@@ -10162,9 +10162,9 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   tool.invoked, tool.denied, runtime artifacts, receipts, usage, and evidence
-  share runtime attribution with node_id, attempt_id, lane_id, work_package_id,
-  feature_seam_id, execution_role, /runtime, /effective, effective_account_id,
-  operational_identity, artifact_id, and secondary usage_event_ref.
+  share runtime attribution with node_id, attempt_id, lane_id, package_id (the persisted key; a work_package_id input is import/export compatibility only and normalizes to package_id before persistence, as the Runtime attribution ownership split and CV-097/CV-098 state),
+  execution_role, /runtime, /effective, effective_account_id, operational_identity, artifact_id, and secondary usage_event_ref. tool.invoked and tool.denied persisted payloads carry no feature_seam_id;
+  seam context, where a record has one, is reached through attempt_id and the attempt record, never as a second tool-payload key.
 gui_related: false
 gui_classification_reason: This unit defines runtime attribution payloads and joins rather than UI presentation.
 split_recommended: true
@@ -10172,7 +10172,7 @@ depends_on: [CV-016, CV-029]
 unblocks: [CV-039, CV-060]
 acceptance_criteria:
   - tool.invoked and tool.denied are first-class runtime trace records when they affect execution or artifacts.
-  - Runtime artifacts, receipts, usage, and evidence share runtime attribution keys.
+  - Runtime artifacts, receipts, usage, and evidence share runtime attribution keys, and persisted tool.invoked and tool.denied payloads carry package_id, never work_package_id (normalized at import) or feature_seam_id.
   - usage_event_ref remains secondary drill-through evidence, not the sole evidence trail.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
