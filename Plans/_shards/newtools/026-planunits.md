@@ -2,9 +2,9 @@
 
 Source: `Plans/newtools.md`
 
-Source lines: L1308-L8598
+Source lines: L1310-L8604
 
-Source SHA256: `e0edf69befc13b16a4f9010b662f5fa6e2ef176ab53c5777d8070089f44085b0`
+Source SHA256: `04108607e8c0f1a3a4189f0d13f9c4156bbe3e3f1c4ffd2e7f79528e879c5b25`
 
 ---
 
@@ -4555,7 +4555,9 @@ plan_unit_id: N2-100
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: GuiToolCatalog entries expose capability flags supports_visible_run, supports_attach_existing, supports_recording, requires_display_server, supports_pm_built_in_browser_visible, and supports_pm_browser_focus_or_reopen.
+canonical_text: >-
+  GuiToolCatalog entries expose capability flags supports_visible_run, supports_attach_existing, supports_recording, requires_display_server, supports_pm_built_in_browser_visible, and supports_pm_browser_focus_or_reopen.
+  Amended 2026-11-25 (C-FIX79 K3 r1): the source list this unit atomizes ("GuiToolCatalog capability flags" in the concrete schema/config entries) names the last two flags in the Browser Program vocabulary, and those names are canonical: supports_browser_program_visible (formerly supports_pm_built_in_browser_visible) and supports_browser_program_focus_or_reopen (formerly supports_pm_browser_focus_or_reopen). The former names are retired aliases kept for traceability and are not catalog fields.
 gui_related: false
 gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
 split_recommended: false
@@ -4588,7 +4590,8 @@ preserved_exact_tokens:
 - supports_pm_browser_focus_or_reopen
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Retired aliases 2026-11-25: supports_pm_built_in_browser_visible -> supports_browser_program_visible; supports_pm_browser_focus_or_reopen -> supports_browser_program_focus_or_reopen (Browser Program vocabulary of the source list).'
 owner_boundary_notes: []
 owner_hints:
 - Plans/newtools.md
@@ -5448,7 +5451,8 @@ preserved_exact_tokens:
 - cmd.orchestrator.open_build_artifact
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-25: "reserved" is historical; cmd.orchestrator.build_run and cmd.orchestrator.open_build_artifact are registered in Plans/UI_Command_Catalog.md and wired in Plans/Wiring_Matrix.production.json, which own their contracts.'
 owner_boundary_notes: []
 owner_hints:
 - Plans/newtools.md

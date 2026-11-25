@@ -4,7 +4,7 @@ Source: `Plans/Tools.md`
 
 Source lines: L12421-L12534
 
-Source SHA256: `6bf31b611dd8e97cde68ed44dacddde22cce456ef5b95348899865d6fc5974fc`
+Source SHA256: `451015240709f6db7e97e3b23696f3f8cb2b86890ae474bc245f302a7de4bffc`
 
 ---
 
@@ -76,7 +76,7 @@ T-172's receipt is one immutable record per session namespace generation:
 
 `ToolNamespaceEntry` fields: `namespace_id` (string; the canonical tool or family name, such as `bash`, `computer.screen`, or `mcp.<server>`), `capability_ref` (string; the `CapabilityStageRecord` capability), `configured`, `allowed`, `injected`, `visible_to_model`, `visible_to_ui` (all boolean), `startup_status` (closed enum `not_required`, `pending`, `ready`, `failed`, `timed_out`), `denial_reason_code?`, `schema_ref?` (`{ schema_id, schema_version, schema_sha256 }`, required when `visible_to_model` is true), and `evidence_ref?` (string).
 
-`configured` is true when the capability's `installed` and `project_enabled` stages are true; `allowed` when `policy_available` is also true; `injected` when its L2 schema was materialized into this provider request. `injected` requires `allowed`, `allowed` requires `configured`, `visible_to_model` requires `injected`, and `visible_to_ui` requires `configured`. `denial_reason_code` is required whenever any of the five booleans is false or `startup_status` is `failed` or `timed_out`; its values are the §1.0A omission codes (`not_installed`, `project_disabled`, `policy_denied`, `incompatible_runtime`, `unavailable`, `not_selected`, `budget_deferred`, `schema_unavailable`, `collision_suppressed`) plus `provider_not_receiving` and `startup_failed`.
+`configured` is true when the capability's `installed` and `project_enabled` stages are true; `allowed` when `policy_available` is also true; `injected` when its L2 schema was materialized into this provider request. `injected` requires `allowed`, `allowed` requires `configured`, `visible_to_model` requires `injected`, and `visible_to_ui` requires `configured`. `denial_reason_code` is required whenever any of the five booleans is false or `startup_status` is `pending`, `failed`, or `timed_out`; its values are the §1.0A omission codes (`not_installed`, `project_disabled`, `policy_denied`, `incompatible_runtime`, `unavailable`, `not_selected`, `budget_deferred`, `schema_unavailable`, `collision_suppressed`) plus `provider_not_receiving`, `startup_pending`, and `startup_failed`. When all five booleans are true, `startup_status` decides the code: `pending` gives `startup_pending`, and `failed` or `timed_out` gives `startup_failed`; `ready` and `not_required` carry no code. A `startup_pending` denial is not final: the startup settling is an entry change, so it writes the next receipt generation with `startup_status` `ready` (no code) or `failed`/`timed_out` (`startup_failed`).
 
 A tool may be dispatched only when its entry has all five booleans true and `startup_status` is `ready` or `not_required`. Any other entry denies the call with that entry's `denial_reason_code` before dispatch (T-172 criterion 2). Tool mentions, UI chips, and model-visible schemas read one receipt at one `namespace_generation` (T-172 criterion 3).
 

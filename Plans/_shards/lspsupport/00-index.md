@@ -1,34 +1,34 @@
 # Shard Index: Plans/LSPSupport.md
 
-Generated: 2026-11-25T04:15:00Z
+Generated: 2026-11-25T12:41:01Z
 
-Source SHA256: `9ee1af4caafe478d9b04c50772acb552eba5701399dea4b8ca14e6700a350cad`
+Source SHA256: `e43db9e1e5d6969dd3d1bd9a5de2e8080d3754c32657d26e15b895e42714b00e`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L18 `df85947ef39f418e53704aa480af82e40a54ec714abd45655112a9a3f1eedb58`
-- [002 - 1. Purpose](002-1.-purpose.md) L20-L70 `77e9f9f2cf1e835138ddc30970a2dad9c10960c2fbac27c281b00bc32c20de87`
-- [003 - 2. LSP Basics (Reference)](003-2.-lsp-basics-reference.md) L72-L87 `ae909b1c6b32ade908ef865c578fc8473c2ebfdc2e2f50f4e2207c67b8ccbbcc`
-- [004 - 3. How OpenCode Does It (Reference for Rewrite)](004-3.-how-opencode-does-it-reference-for-rewrite.md) L89-L268 `598f728a97ef6a9718ffc380a1e42f2809c988f2c0a067e3ec62ec63e6fdb402`
-- [005 - 4. Rust Stack (Client Side)](005-4.-rust-stack-client-side.md) L270-L283 `bd947f8baa910e22dddc036a7dde3d3324f16053cef9abe0e06c8bf51950ccc0`
-- [006 - 5. Integration with Our Editor (FileManager / Rewrite)](006-5.-integration-with-our-editor-filemanager-rewrite.md) L285-L360 `e1b3efbef07889e862b708a3027df6954bb474e3c1f492c1e6421fad9a793160`
-- [007 - 6. Scope and Phasing](007-6.-scope-and-phasing.md) L362-L368 `8c625c3d3c25a22ea0c993f806a1d861c23581d182f0515a9143681f59f1503c`
-- [008 - 7. Resolved design decisions and implementation constraints](008-7.-resolved-design-decisions-and-implementation-constraints.md) L370-L391 `ceef29a718e1be5bbc40fd82d02dba1c0d49c653baaa4c7776ed90a18b34362b`
-- [009 - 8. Potential issues and mitigations](009-8.-potential-issues-and-mitigations.md) L393-L409 `db76bc055a32b83ba937d3d05bbf5bc5400c3aa16ff967515164231c641506a9`
-- [010 - 9. MVP LSP features (summary)](010-9.-mvp-lsp-features-summary.md) L411-L444 `716d59cbabe6cebe2968e64ed375d86ea614196522bdab25c0a03c7332e94933`
-- [011 - 10. Transport alternatives and bridge pattern](011-10.-transport-alternatives-and-bridge-pattern.md) L445-L461 `697f53b927ca02262684018384068f50ca621037c477541de01945c6b76b3acf`
-- [012 - 11. References](012-11.-references.md) L463-L480 `94ae89abbaee7e5096542a5a06cf782d7d1f056f130a3506bb4020cf124b8aa9`
-- [013 - 12. Implementation checklist (when phased in)](013-12.-implementation-checklist-when-phased-in.md) L482-L539 `4f9beca83fe3da2d3a74da01104cf8471bfed24e0015b17fbddb17fb6690f1b4`
-- [014 - 13. GUI requirements and cross-references](014-13.-gui-requirements-and-cross-references.md) L541-L564 `86c42e0735d4975d90e998b87ee91eeae5b2bbc684046a0227f043f07b8f4c88`
-- [015 - 14. Technical implementation (implementation guide source)](015-14.-technical-implementation-implementation-guide-source.md) L566-L783 `691731b307a4e105ef8c61e774f44a9ae4c7613f304e8f4f586c9d104468e519`
-- [016 - 15. Implementation phases and acceptance criteria](016-15.-implementation-phases-and-acceptance-criteria.md) L785-L802 `37cf0a1363adf84d7eb34579c633c5c3643289adfd33abeb1c5f8020748789ed`
-- [017 - 16. Open points and decisions for implementer](017-16.-open-points-and-decisions-for-implementer.md) L804-L854 `598cc3992843e66c1d9b95df18896a36405abade880fa95e1613a89b286b5040`
-- [018 - Appendix: Implementation plan checklist (single ordered list for implementers)](018-appendix-implementation-plan-checklist-single-ordered-list-for-i.md) L855-L910 `cb3024edd4346f858acf71f7c96e34122e540de13c31cd631c5701ab4a04fa7c`
-- [019 - 17. LSP verification gate, evidence, subagent selection (implementation spec)](019-17.-lsp-verification-gate-evidence-subagent-selection-implementa.md) L912-L1079 `63a8374d7ea88bbdb59f42d145415e0a4effade645aa0e4048c665ce62910692`
-- [020 - Owner / Consumer Map](020-owner-consumer-map.md) L1081-L1085 `f45a5fa1d8115aa0f63c372df01ba94b234249cbfed71e2e664fbb04a200ebaa`
-- [021 - PlanUnits](021-planunits.md) L1087-L7031 `548359c8f4eff4d6f2f1f1ee30227b421a64f181f4885a2315c6abb47f3cfcab`
-- [022 - Migration Coverage](022-migration-coverage.md) L7032-L7042 `49637cbd8b249601ce678650bfd13ad43e9207aff63b03dc14129c4e293abffc`
-- [023 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](023-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L7044-L7052 `b357fa2804f24d3bc0d49b557e72dc09e6879e7ab2e58ea51058ccafe039edc6`
-- [024 - Remaining Runtime Integration Addendum - LSP Write Transaction - 2026-08-13](024-remaining-runtime-integration-addendum-lsp-write-transaction-202.md) L7054-L7303 `b93e8f0a6c2369b57c81ffba93180fe507e0970805cef8794ae72b3dd02135fc`
+- [001 - Preamble](001-preamble.md) L1-L18 `da755a2629f9495f9ba1d394b9f6ed28de39d3261fd79a517ca8bece9c93b7ac`
+- [002 - 1. Purpose](002-1.-purpose.md) L20-L70 `a2d21d6b62100d930787c01affbd1c4af708a28d3eab353911d5d2ddcb58ee8d`
+- [003 - 2. LSP Basics (Reference)](003-2.-lsp-basics-reference.md) L72-L87 `2e35feb4c877adb9d24f97344dd27c66de15dffb24c9c875768c8a98d2fa7560`
+- [004 - 3. How OpenCode Does It (Reference for Rewrite)](004-3.-how-opencode-does-it-reference-for-rewrite.md) L89-L268 `46d8ba54b3f1dcf1a43ae5583a20adb6c031283c50922e4392cad01fbf8af176`
+- [005 - 4. Rust Stack (Client Side)](005-4.-rust-stack-client-side.md) L270-L283 `87a1a834ffbb1e7fcdb01e35b74ec3971d8187176caa1380fe23763e2c5edc5b`
+- [006 - 5. Integration with Our Editor (FileManager / Rewrite)](006-5.-integration-with-our-editor-filemanager-rewrite.md) L285-L360 `f7330dd878816bf34e61d4522bcb15447c84e7d1c22b2129a3f0c53fd2606401`
+- [007 - 6. Scope and Phasing](007-6.-scope-and-phasing.md) L362-L368 `92ba17d74ecc3f7f6d72538769138b5ead3a84eccf505607d7db646750334a14`
+- [008 - 7. Resolved design decisions and implementation constraints](008-7.-resolved-design-decisions-and-implementation-constraints.md) L370-L391 `9a116fe213019c62a680ed01137432e906a0561b2c1695ab7e0419e844b4c09b`
+- [009 - 8. Potential issues and mitigations](009-8.-potential-issues-and-mitigations.md) L393-L409 `3dc5577bf70460b1ec466607a8079cf6d0c4e6d27b71b6dbf497e474c73c4cba`
+- [010 - 9. MVP LSP features (summary)](010-9.-mvp-lsp-features-summary.md) L411-L444 `7eda347adefe0b9ef0e6f3c475d61f3c83a71224c0e455087c0c78504f834b5f`
+- [011 - 10. Transport alternatives and bridge pattern](011-10.-transport-alternatives-and-bridge-pattern.md) L445-L461 `c301074da135b8d1e57c09bbe879a10fabd0c6e1b3ada69e9c6410420cadf345`
+- [012 - 11. References](012-11.-references.md) L463-L480 `d9efe94e9639fbd99c5573fbf7d74e28127321e83f1f429463d5886b3d0838d3`
+- [013 - 12. Implementation checklist (when phased in)](013-12.-implementation-checklist-when-phased-in.md) L482-L539 `fec29ef8bb103bf5ecb41e7c0c7cf7278fbc5b1be891f93750d60a037a7aef0e`
+- [014 - 13. GUI requirements and cross-references](014-13.-gui-requirements-and-cross-references.md) L541-L564 `77d9dbf26ffbd9b16688fa4e8dd97816621b0acd8ab20152c0a77e5c58c8acf6`
+- [015 - 14. Technical implementation (implementation guide source)](015-14.-technical-implementation-implementation-guide-source.md) L566-L783 `f1467dae0584ef8126f03667320edd4fad0ac7de1bb07ed977e984c6e4951541`
+- [016 - 15. Implementation phases and acceptance criteria](016-15.-implementation-phases-and-acceptance-criteria.md) L785-L802 `09109c640bcf2572811da966400728e847ceaf6996029e5f4fbcb3049b9c33b4`
+- [017 - 16. Open points and decisions for implementer](017-16.-open-points-and-decisions-for-implementer.md) L804-L854 `cd15b05aac64de006d9692187342753e9577bbd8b8a4d09b1d69178a749e15da`
+- [018 - Appendix: Implementation plan checklist (single ordered list for implementers)](018-appendix-implementation-plan-checklist-single-ordered-list-for-i.md) L855-L910 `ca42e095595590f0860210974aca04b554a5e1d7c04fbaf72eb3bf4392e1beb4`
+- [019 - 17. LSP verification gate, evidence, subagent selection (implementation spec)](019-17.-lsp-verification-gate-evidence-subagent-selection-implementa.md) L912-L1079 `5830147b0532aa0800e19a6337e9ed4d4b4d3832a48b26e886bbd61c9152f041`
+- [020 - Owner / Consumer Map](020-owner-consumer-map.md) L1081-L1085 `19be9e0dd255f3eb8ff31130616e63c9e56e62f7f068bc0afbfcbc26848196a0`
+- [021 - PlanUnits](021-planunits.md) L1087-L7031 `4759f11516af78e430e13a8c21a686af20fcf5c382a71d9e9d3927337ae39c28`
+- [022 - Migration Coverage](022-migration-coverage.md) L7032-L7042 `4094c9c293f2c43296a94150706650c7a88372e6fd84667901578744b47d14c1`
+- [023 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](023-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L7044-L7052 `23a38f1cc5dad20bb0d52fb9ca86de7f6cc5981d25130a86512161fd516c514f`
+- [024 - Remaining Runtime Integration Addendum - LSP Write Transaction - 2026-08-13](024-remaining-runtime-integration-addendum-lsp-write-transaction-202.md) L7054-L7303 `5b4b38ad305ed44d1fb7aea3d27a21690566d4caba13827bb640ea06bf670c08`
