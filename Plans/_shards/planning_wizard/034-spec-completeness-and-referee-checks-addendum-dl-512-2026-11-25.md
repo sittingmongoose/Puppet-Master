@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L4959-L5124
+Source lines: L4959-L5129
 
-Source SHA256: `994aa3b06819be574f5b5e17a4e0f149f76bbf24ffe1a012ec8f86de512365f7`
+Source SHA256: `406ab383b652a92e8244cdcfc17c98bf6b792c1b4babe67e6ef8fc927e55f5c1`
 
 ---
 
@@ -119,11 +119,16 @@ canonical_text: >-
   that remains afterwards is recorded as an open question and reaches PNC-038 as a recorded gap, a blocking one that
   remains is a typed blocker under PWIZ-006, and either reaches the user only as a plain decision when fixing it is a
   product-policy choice. A rule is a
-  named gap only after a bounded isolation search, in which one schema keyword at one location is one rule and each member of a required list or other per-member constraint is its own rule: starting from a valid control, code runs the keyword's bounded candidate generator and binds a refusal as soon as the schema validator confirms isolation; the rule is a named gap only when code establishes that its catching rules cover every violation of it (for example, a type restriction whose sibling enumeration admits only that type), each recorded input refused by the catching rules with their own codes and recorded; a search that ends on
-  collisions without that coverage leaves a test gap. A rule under oneOf, anyOf, not or if/then/else is scoped to the
-  branch the valid control selects: an input isolates it when, within that branch, it is the only failing assertion,
-  and the applicator's own wrapper error and the other branches' non-matching assertions do not count as further broken
-  rules. A keyword the companion does not support ends only in a binding or a test gap, never in a named gap. The candidate generator and the coverage condition for each supported keyword, with their validation scenarios, are fixed in the companion change that Plans/Plan_To_Node_Compilation.md#PNC-038 names, together with how each validator's output maps to the selected branch and how a per-member rule's member is read,
+  named gap only after a bounded isolation search, over the contract's schema rules, which are its effective validation assertions as the companion defines them: by
+  default one keyword at one location, each member of a required list or other per-member constraint as its own rule, a
+  not as one negative assertion (accepted on a non-match, refused on a match), and an if as a selector of its then or
+  else assertions rather than a rule of its own. Starting from a valid control, code runs the rule's bounded candidate
+  generator and binds a refusal as soon as the whole contract refuses an input because of that rule alone, as the
+  companion's attribution of the validator's output shows; a wrapper error counts as that cause only when the wrapper
+  refused through the rule's own failure; the rule is a named gap only when code establishes that its catching rules cover every violation of it (for example, a type restriction whose sibling enumeration admits only that type), each recorded input refused by the catching rules with their own codes and recorded; a search that ends on
+  collisions without that coverage leaves a test gap. An input the contract accepts through another branch, or refuses only because of an independent assertion, is never
+  credited to a branch's rule. A keyword the companion does not support ends only in a binding or a test gap, never in a named gap. The candidate generator and the coverage condition for each supported keyword, with their validation scenarios, are fixed in the companion change that Plans/Plan_To_Node_Compilation.md#PNC-038 names, together with the effective-assertion definitions, the refusal attribution for oneOf, anyOf, not and if/then/else,
+  and how a per-member rule's member is read,
   and the planning check and PlanCompile use the same generators and stopping condition. Each risky contract has a budget the planning run sets,
   200 generated inputs or 10 minutes of machine time by default, whichever comes first; the required cases run first
   and count against it, and rules not reached within it are listed as test gaps for PNC-038, never as named gaps. The referee, its cases, the generated inputs, the observed outcomes, the named gaps and the test gaps are planning
@@ -141,7 +146,7 @@ acceptance_criteria:
   - "The check runs before a topic becomes Ready and reruns for contracts that final integration changes."
   - "Referee inputs are a prior state plus an operation or event, or a short sequence, and the cases cover every state-machine transition with an illegal transition from each state, a write-cut-reopen case, a stale-writer case and a denied-caller case wherever the matching property applies."
   - "Refusal codes are the contract's declared failure codes; the schema validator confirms which rules each generated input breaks, and only an input that breaks exactly one rule is credited as that rule's refusing case, while multi-rule inputs remain admissible as named-gap evidence."
-  - "A named gap rests on code-established coverage of the rule by its catching rules, with the recorded inputs and codes; a search that ends on collisions without that coverage is a test gap; each member of a required list or other per-member constraint is its own rule with its own refusal; a rule under an applicator is isolated within the branch the valid control selects."
+  - "A named gap rests on code-established coverage of the rule by its catching rules, with the recorded inputs and codes; a search that ends on collisions without that coverage is a test gap; each member of a required list or other per-member constraint is its own rule with its own refusal; a refusal is credited to a rule only when the whole contract refuses the input because of that rule, by the companion's attribution."
   - "Every case checks its outcome and every owner-stated state and effect assertion through a declared observation surface, for either polarity."
   - "The budget ends at whichever limit comes first, required cases run first, and rules not reached within it are listed as test gaps, never as named gaps."
   - "Design findings follow PWIZ-028's bounded round; non-blocking leftovers are open questions and recorded gaps that do not hold the topic out of Ready, and a blocking leftover is a PWIZ-006 typed blocker."
