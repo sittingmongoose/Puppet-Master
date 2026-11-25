@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_To_Node_Compilation.md`
 
-Source lines: L2169-L2285
+Source lines: L2169-L2286
 
-Source SHA256: `097cb3a8ee48b596901efea84f3ebc3827d90235559286df80698389953ebc96`
+Source SHA256: `acb64da11cb4f443c0882e35456dbb15a020a8014de9a24457f15454e9f28d7e`
 
 ---
 
@@ -28,7 +28,8 @@ canonical_text: >-
   declared failure results and its acceptance criteria, and each kind of rule gets its own tests. A schema rule gets
   two payload fixtures: a payload the whole contract refuses because of that rule alone, by the companion's attribution, expected to be
   refused, and
-  a payload that passes, expected to be accepted. A declared failure result gets two behaviour fixtures: an input that
+  a payload that passes, expected to be accepted; for rules an if selects, the passing payloads include one on each
+  route the contract distinguishes. A declared failure result gets two behaviour fixtures: an input that
   meets its failing condition, expected to be refused with that failure's code, and the same input without the failing
   condition, expected to be accepted. A behavioural acceptance criterion (one with an input and an observable outcome)
   gets one behaviour fixture for each input condition it lists, each carrying the criterion's state and effect

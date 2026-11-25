@@ -2186,7 +2186,8 @@ canonical_text: >-
   declared failure results and its acceptance criteria, and each kind of rule gets its own tests. A schema rule gets
   two payload fixtures: a payload the whole contract refuses because of that rule alone, by the companion's attribution, expected to be
   refused, and
-  a payload that passes, expected to be accepted. A declared failure result gets two behaviour fixtures: an input that
+  a payload that passes, expected to be accepted; for rules an if selects, the passing payloads include one on each
+  route the contract distinguishes. A declared failure result gets two behaviour fixtures: an input that
   meets its failing condition, expected to be refused with that failure's code, and the same input without the failing
   condition, expected to be accepted. A behavioural acceptance criterion (one with an input and an observable outcome)
   gets one behaviour fixture for each input condition it lists, each carrying the criterion's state and effect

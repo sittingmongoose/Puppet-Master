@@ -5051,14 +5051,14 @@ canonical_text: >-
   declared failure code is a PWIZ-110 finding; a declared validation code shared by several rules is enough when the validator's error path, together with the
   member for a per-member rule, names the rule, and each case records that expected identity. The rules under test are the contract's schema rules and its behavioural acceptance criteria (those with an input
   and an observable outcome), sourced separately from the referee; shape checks get an acceptance-only passing case,
-  and criteria without an input and an outcome (latency gates, visual checks) keep their ATS-003 oracles. Each schema rule gets one passing and one refusing case; each behavioural acceptance criterion gets a case for each input condition it lists, asserting the outcome it
+  and criteria without an input and an outcome (latency gates, visual checks) keep their ATS-003 oracles. Each schema rule gets one passing and one refusing case, and the passing cases of rules an if selects include a
+  payload on each route the contract distinguishes; each behavioural acceptance criterion gets a case for each input condition it lists, asserting the outcome it
   states and carrying its state and effect assertions (a refusal only where it prescribes one, otherwise its stated resulting state or
   returned result); and each
   risk property gets its matching cases: every state-machine transition and at
   least one illegal transition from each state; a write, a cut and a reopen; a stale writer after a fencing change;
-  and a caller denied without permission. Where the contract has a schema, code also generates inputs that each break one rule, and the schema validator, not the referee, confirms which
-  rules each breaks; only an input that breaks exactly one rule is credited as that rule's refusing case, and inputs
-  that break several rules stay admissible as named-gap evidence. Each case carries its outcome (accepted with any stated result, or refused with its rule's code) and, for either
+  and a caller denied without permission. Where the contract has a schema, code also generates refusing inputs for its schema rules and credits them only as the
+  search below describes; inputs that break several rules stay admissible as named-gap evidence. Each case carries its outcome (accepted with any stated result, or refused with its rule's code) and, for either
   polarity, every state and effect assertion the owner text states, such as a refusal that must leave the record,
   lifecycle and hold unchanged and append nothing, or a replay that must return the existing result without repeating
   its effect; the referee checks every assertion, and a required assertion with no observation surface is a PWIZ-110 completeness finding. When the
@@ -5069,12 +5069,14 @@ canonical_text: >-
   product-policy choice. A rule is a
   named gap only after a bounded isolation search, over the contract's schema rules, which are its effective validation assertions as the companion defines them: by
   default one keyword at one location, each member of a required list or other per-member constraint as its own rule, a
-  not as one negative assertion (accepted on a non-match, refused on a match), and an if as a selector of its then or
+  not as one negative assertion whatever its subschema holds, with no per-member splitting inside it (accepted on a
+  non-match, refused on a match), and an if as a selector of its then or
   else assertions rather than a rule of its own. Starting from a valid control, code runs the rule's bounded candidate
   generator and binds a refusal as soon as the whole contract refuses an input because of that rule alone, as the
   companion's attribution of the validator's output shows; a wrapper error counts as that cause only when the wrapper
   refused through the rule's own failure; the rule is a named gap only when code establishes that its catching rules cover every violation of it (for example, a type restriction whose sibling enumeration admits only that type), each recorded input refused by the catching rules with their own codes and recorded; a search that ends on
-  collisions without that coverage leaves a test gap. An input the contract accepts through another branch, or refuses only because of an independent assertion, is never
+  collisions without that coverage leaves a test gap whose test_gap_policy is defer_non_executable_harness_candidate,
+  since other rules already refused every recorded input. An input the contract accepts through another branch, or refuses only because of an independent assertion, is never
   credited to a branch's rule. A keyword the companion does not support ends only in a binding or a test gap, never in a named gap. The candidate generator and the coverage condition for each supported keyword, with their validation scenarios, are fixed in the companion change that Plans/Plan_To_Node_Compilation.md#PNC-038 names, together with the effective-assertion definitions, the refusal attribution for oneOf, anyOf, not and if/then/else,
   and how a per-member rule's member is read,
   and the planning check and PlanCompile use the same generators and stopping condition. Each risky contract has a budget the planning run sets,
@@ -5093,7 +5095,7 @@ acceptance_criteria:
   - "Each risky contract is recorded with the property that made it risky; plain create, read, update and delete persistence, or plain authentication, alone does not make a contract risky."
   - "The check runs before a topic becomes Ready and reruns for contracts that final integration changes."
   - "Referee inputs are a prior state plus an operation or event, or a short sequence, and the cases cover every state-machine transition with an illegal transition from each state, a write-cut-reopen case, a stale-writer case and a denied-caller case wherever the matching property applies."
-  - "Refusal codes are the contract's declared failure codes; the schema validator confirms which rules each generated input breaks, and only an input that breaks exactly one rule is credited as that rule's refusing case, while multi-rule inputs remain admissible as named-gap evidence."
+  - "Refusal codes are the contract's declared failure codes; a generated input is credited to a rule only when the whole contract refuses it because of that rule, by the companion's attribution, while multi-rule inputs remain admissible as named-gap evidence."
   - "A named gap rests on code-established coverage of the rule by its catching rules, with the recorded inputs and codes; a search that ends on collisions without that coverage is a test gap; each member of a required list or other per-member constraint is its own rule with its own refusal; a refusal is credited to a rule only when the whole contract refuses the input because of that rule, by the companion's attribution."
   - "Every case checks its outcome and every owner-stated state and effect assertion through a declared observation surface, for either polarity."
   - "The budget ends at whichever limit comes first, required cases run first, and rules not reached within it are listed as test gaps, never as named gaps."
