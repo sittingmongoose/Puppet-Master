@@ -4974,17 +4974,17 @@ canonical_text: >-
   at final integration (PWIZ-007) it runs over every contract in the plan as part of PWIZ-011's Final Plan Pack audit. Contracts are the data shapes, events,
   commands, operations, stateful entities and requirements the plan defines. The check looks for six kinds of
   finding: a named field without a type; an operation or command without its failure results, each with a declared
-  failure code, or a declared failure of an operation, command or event whose contract leaves undecidable, on any of
-  its callable surfaces, whether its passing neighbour, as Plans/Plan_To_Node_Compilation.md#PNC-038 defines it, is
-  accepted (PNC-038 carries this finding as a recorded gap in place of the missing passing neighbour); an entity whose state changes without a state machine that names its states, transitions, triggers
+  failure code, or a declared failure of an operation, command or event for which, on any of its callable surfaces, the
+  approved contract establishes none of the cases Plans/Plan_To_Node_Compilation.md#PNC-038 defines for its passing
+  neighbour (an accepted call on the failure's route, an accepted alternate with the route's evidenced limit, or the surface's evidenced limit), which PNC-038 carries as a recorded gap in place of the missing passing
+  neighbour; an entity whose state changes without a state machine that names its states, transitions, triggers
   and terminal states, or whose state machine leaves the outcome of a named state and operation pair unstated; a requirement without acceptance criteria or a validation surface; a pointer to a section, unit
   or artifact that does not resolve, including an operation or event without an interface binding (the callable
   surface it maps to: a route, command, function or storage port, and the observation surfaces through which its
   state and effects are read, written by the planning agent), or without an observation surface for a state or
   effect assertion its owner text states; and the same identifier declared with incompatible types or enumeration members for overlapping cases, or
-  two statements that contradict each other. A declared failure whose surface admits no accepted call on any route,
-  as an evidenced limit PNC-038 defines shows, is not a finding for an undecidable neighbour: PNC-038 binds its refusal with the limit and
-  records no gap. Code finds, without a model call, what structured declarations show:
+  two statements that contradict each other. A declared failure whose surface's evidenced limit is established is therefore not that
+  finding: PNC-038 binds its refusal with the limit and records no gap. Code finds, without a model call, what structured declarations show:
   fields without types in tables and schemas, unresolved pointers, and one identifier declared with incompatible types
   or enumeration members for overlapping cases, where one identifier is one named contract, type, enumeration, event, command or state, or one
   field path of one contract, including a field the plan declares to be the same as another by reference or explicit
@@ -5065,7 +5065,8 @@ canonical_text: >-
   integration run stays within PWIZ-028's bounded review and the budget below. For each risky
   contract the topic's planning agent
   writes a referee from the owner's behaviour text, meaning its operations, states, transitions and declared failure
-  results. The referee is a small executable owner model whose input is a prior owner state plus one operation or
+  results; at final integration the PWIZ-007 Overseer writes it the same way for a contract first found risky there,
+  and updates one whose owner behaviour text changed. The referee is a small executable owner model whose input is a prior owner state plus one operation or
   event, or a short sequence of them, and whose output is the resulting state, any returned result and the observable effects, or a refusal with one of the
   contract's declared failure codes together with the state and effects that remain after it. The referee's state marks which parts survive a cut or restart. A rule whose refusal has no
   declared failure code is a PWIZ-110 finding; a declared validation code shared by several rules is enough when the validator's error path, together with the
