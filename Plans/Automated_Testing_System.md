@@ -16502,9 +16502,12 @@ status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
   During a WorkNode build, the rule fixtures bound by Plans/Plan_To_Node_Compilation.md#PNC-038 run as required tests
-  of the node's test strategy (ATS-003). The node completes only when every positive fixture is accepted (with its
-  expected state where the fixture states one) and every negative fixture is refused with its declared failure code
-  (and its error path where the fixture records one), as its TestRunReceipt records (ATS-004). A payload fixture runs against the built validator of its data shape, or through a declared consuming operation
+  of the node's test strategy (ATS-003). The node completes only when every bound fixture meets its expected outcome: accepted
+  (with its expected state where the fixture states one), the stated result, or refused with its declared failure code
+  (and its error path where the fixture records one). Every bound ATS-003 oracle must pass, and every recorded test gap
+  is honoured under its test_gap_policy (a block_completion gap blocks completion; a
+  defer_non_executable_harness_candidate gap is recorded as ATS-004 requires). The TestRunReceipt records each of these
+  (ATS-004). A payload fixture runs against the built validator of its data shape, or through a declared consuming operation
   that exercises that validation. A behaviour fixture reaches the built code through an adapter generated from the
   contract's interface binding (the callable surface each operation or event maps to,
   Plans/Planning_Wizard.md#PWIZ-110). A fixture with no automatic route is a recorded test gap under ATS-004, never a
@@ -16532,7 +16535,7 @@ gui_classification_reason: Defines automated build verification and a builder re
 depends_on: [DL-512, PNC-038, PNC-015, EP-102, PWIZ-012, PWIZ-110, ATS-003, ATS-004]
 unblocks: []
 acceptance_criteria:
-  - "A WorkNode with bound rule fixtures completes only when every positive fixture is accepted (with its expected state where stated) and every negative fixture is refused with its declared failure code (and error path where recorded), as its TestRunReceipt records."
+  - "A WorkNode with bound rule tests completes only when every bound fixture meets its expected outcome, every bound ATS-003 oracle passes, and every recorded test gap is honoured under its test_gap_policy, as its TestRunReceipt records."
   - "Payload fixtures run against the built validator or a declared consuming operation; behaviour fixture adapters are generated from the contract's interface binding and reach prior states by replaying owner operations or a declared seeding port, never by direct storage writes; a hand-written adapter is checked by an automated verification agent that is not the builder; a fixture with no automatic route is a recorded test gap."
   - "A fixture that contradicts its cited span stays required until a successor plan corrects it; the builder never waives or edits a fixture."
   - "Each builder report entry cites its source span and the different build it would have caused, carries a PWIZ-012 gap class, goes to the planning repair route or the plan's approver, and is kept as a plan conversion regression case in the project's planning evidence."

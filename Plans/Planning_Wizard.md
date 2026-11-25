@@ -5049,8 +5049,9 @@ canonical_text: >-
   declared failure code is a PWIZ-110 finding; a declared validation code shared by several rules is enough when the
   validator's error path names the rule, and each case records the expected path. The rules under test are the contract's schema rules and its behavioural acceptance criteria (those with an input
   and an observable outcome), sourced separately from the referee; shape checks get an acceptance-only passing case,
-  and criteria without an input and an outcome (latency gates, visual checks) keep their ATS-003 oracles. Each rule gets one
-  passing and one refusing case, and each risk property its matching cases: every state-machine transition and at
+  and criteria without an input and an outcome (latency gates, visual checks) keep their ATS-003 oracles. Each schema rule and declared failure result gets one passing and one refusing case; each behavioural
+  acceptance criterion gets a case asserting the outcome it states, a refusal only where it prescribes one; and each
+  risk property gets its matching cases: every state-machine transition and at
   least one illegal transition from each state; a write, a cut and a reopen; a stale writer after a fencing change;
   and a caller denied without permission. Where the contract has a schema, code also generates inputs that each break one rule, and the schema validator, not the referee, confirms which
   rules each breaks; only an input that breaks exactly one rule is credited as that rule's refusing case, and inputs
