@@ -6904,6 +6904,21 @@
               "maxLength": 256
             }
           }
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_graph_focus_request_v2"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_graph_filter_request_v2"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_graph_layout_request_v2"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/commit_batch_suggest_request_v2"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/commit_batch_accept_request_v2"
         }
       ]
     },
@@ -7012,7 +7027,899 @@
           "minLength": 1,
           "maxLength": 256
         }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.source_control.graph.focus",
+                  "cmd.source_control.graph.filter",
+                  "cmd.source_control.graph.layout",
+                  "cmd.source_control.suggest_commit_batches",
+                  "cmd.source_control.accept_commit_group",
+                  "cmd.source_control.graph_focus",
+                  "cmd.source_control.graph_filter",
+                  "cmd.source_control.suggest_commit_groups"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "owner_result_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "inspection": {
+                "type": "null"
+              },
+              "local_config_before_sha256": {
+                "type": "null"
+              },
+              "local_config_after_sha256": {
+                "type": "null"
+              },
+              "network_effect_performed": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "source_view_full_oid": {
+      "type": "string",
+      "pattern": "^([0-9a-f]{40}|[0-9a-f]{64})$"
+    },
+    "source_view_repo_relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "pattern": "^(?!/)(?!.*(^|/)\\.\\.(/|$))[^\\\\\\u0000]+$"
+    },
+    "source_graph_focus_request_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "project_id",
+        "repo_id",
+        "target_kind",
+        "target_ref",
+        "idempotency_key",
+        "return_context_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.command_request.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "const": "cmd.source_control.graph.focus"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "repo_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "target_kind": {
+          "enum": [
+            "branch",
+            "commit",
+            "worktree",
+            "run"
+          ]
+        },
+        "target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "projection_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "commit"
+              }
+            },
+            "required": [
+              "target_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target_ref": {
+                "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_view_full_oid"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "source_graph_filter_request_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "project_id",
+        "repo_id",
+        "worktree_overlay",
+        "ownership",
+        "idempotency_key",
+        "return_context_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.command_request.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "const": "cmd.source_control.graph.filter"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "repo_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "branches": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "worktree_ids": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+          }
+        },
+        "worktree_overlay": {
+          "type": "boolean"
+        },
+        "ownership": {
+          "enum": [
+            "any",
+            "run_owned",
+            "user_owned"
+          ]
+        },
+        "status": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "ahead",
+              "behind",
+              "diverged",
+              "conflicted"
+            ]
+          }
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
       }
+    },
+    "source_graph_layout_request_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "project_id",
+        "repo_id",
+        "density",
+        "idempotency_key",
+        "return_context_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.command_request.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "const": "cmd.source_control.graph.layout"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "repo_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "density": {
+          "enum": [
+            "compact",
+            "expanded"
+          ]
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "commit_batch_suggest_request_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "project_id",
+        "repo_id",
+        "worktree_id",
+        "scope",
+        "expected_head_oid",
+        "status_generation",
+        "idempotency_key",
+        "return_context_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.command_request.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "const": "cmd.source_control.suggest_commit_batches"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "repo_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "worktree_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "scope": {
+          "enum": [
+            "staged",
+            "unstaged",
+            "both"
+          ]
+        },
+        "expected_head_oid": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_view_full_oid"
+        },
+        "status_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_batches": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20,
+          "default": 8
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "commit_batch_accept_request_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "project_id",
+        "repo_id",
+        "worktree_id",
+        "suggestion_set_id",
+        "batch_id",
+        "expected_head_oid",
+        "status_generation",
+        "idempotency_key",
+        "return_context_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.command_request.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "const": "cmd.source_control.accept_commit_group"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "repo_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "worktree_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "suggestion_set_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "batch_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "expected_head_oid": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_view_full_oid"
+        },
+        "status_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "commit_batch_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "batch_id",
+        "paths",
+        "hunk_selections",
+        "draft_message",
+        "rationale"
+      ],
+      "properties": {
+        "batch_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "paths": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_view_repo_relative_path"
+          },
+          "description": "Whole-file paths; staged on accept through cmd.git.stage paths[] (UCC-167)."
+        },
+        "hunk_selections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "hunk_ids"
+            ],
+            "properties": {
+              "path": {
+                "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_view_repo_relative_path"
+              },
+              "hunk_ids": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_empty_string"
+                }
+              }
+            }
+          },
+          "description": "Hunk-scoped selections; each staged on accept through cmd.git.stage_hunks { path, hunk_ids }."
+        },
+        "draft_message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      },
+      "anyOf": [
+        {
+          "properties": {
+            "paths": {
+              "minItems": 1
+            }
+          }
+        },
+        {
+          "properties": {
+            "hunk_selections": {
+              "minItems": 1
+            }
+          }
+        }
+      ],
+      "x-puppet-master-assertions": [
+        "a path appears at most once across paths and hunk_selections of one batch and in at most one batch of a suggestion set",
+        "whole-file paths never normalize to hunk commands (UCC-167)"
+      ]
+    },
+    "source_view_command_owner_result_v1": {
+      "description": "Owner result referenced by source_control_command_result_v2.owner_result_ref for the Source Control graph and AI commit batching commands (WorktreeGitImprovement.md, Source Control graph and AI commit batching payloads and failure results).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "command_id",
+        "operation_id",
+        "outcome",
+        "retry_attempts",
+        "completed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.view_command_owner_result.v1"
+        },
+        "command_id": {
+          "enum": [
+            "cmd.source_control.graph.focus",
+            "cmd.source_control.graph.filter",
+            "cmd.source_control.graph.layout",
+            "cmd.source_control.suggest_commit_batches",
+            "cmd.source_control.accept_commit_group"
+          ]
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "outcome": {
+          "enum": [
+            "focused",
+            "applied",
+            "suggested",
+            "no_changes",
+            "staged_for_review",
+            "failed"
+          ]
+        },
+        "failure_code": {
+          "enum": [
+            "payload_invalid",
+            "repo_identity_invalid",
+            "target_not_found",
+            "projection_stale",
+            "graph_parse_failed",
+            "status_stale",
+            "permission_denied",
+            "assistant_unavailable",
+            "assistant_failed",
+            "output_invalid",
+            "suggestion_not_found",
+            "stage_failed",
+            "backend_unsupported"
+          ]
+        },
+        "retry_attempts": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "projection_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "node_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "returned_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "suggestion_set_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "created_at": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/timestamp"
+        },
+        "batches": {
+          "type": "array",
+          "maxItems": 20,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/commit_batch_v1"
+          }
+        },
+        "batch_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "stage_result_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+          },
+          "description": "cmd.git.stage git_command_result refs and cmd.git.stage_hunks dispatch receipts, one per stage step."
+        },
+        "completed_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "failed"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "required": [
+              "failure_code"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "not": {
+                  "const": "failed"
+                }
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "failure_code"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.graph.focus"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "focused",
+                  "failed"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.graph.filter"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "applied",
+                  "failed"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.graph.layout"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "applied",
+                  "failed"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.suggest_commit_batches"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "suggested",
+                  "no_changes",
+                  "failed"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.accept_commit_group"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "staged_for_review",
+                  "failed"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.source_control.graph.focus",
+                  "cmd.source_control.graph.filter",
+                  "cmd.source_control.graph.layout"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "failure_code": {
+                "enum": [
+                  "payload_invalid",
+                  "repo_identity_invalid",
+                  "target_not_found",
+                  "projection_stale",
+                  "graph_parse_failed"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.source_control.suggest_commit_batches",
+                  "cmd.source_control.accept_commit_group"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "failure_code": {
+                "enum": [
+                  "payload_invalid",
+                  "status_stale",
+                  "permission_denied",
+                  "assistant_unavailable",
+                  "assistant_failed",
+                  "output_invalid",
+                  "suggestion_not_found",
+                  "stage_failed",
+                  "backend_unsupported"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "focused"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "required": [
+              "projection_id",
+              "node_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.graph.filter"
+              },
+              "outcome": {
+                "const": "applied"
+              }
+            },
+            "required": [
+              "command_id",
+              "outcome"
+            ]
+          },
+          "then": {
+            "required": [
+              "projection_id",
+              "returned_count"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "suggested"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "required": [
+              "suggestion_set_id",
+              "created_at",
+              "batches"
+            ],
+            "properties": {
+              "batches": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "no_changes"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "required": [
+              "batches"
+            ],
+            "properties": {
+              "batches": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "staged_for_review"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "required": [
+              "suggestion_set_id",
+              "batch_id",
+              "stage_result_refs"
+            ],
+            "properties": {
+              "stage_result_refs": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
     },
     "publication_authority_v2": {
       "type": "object",

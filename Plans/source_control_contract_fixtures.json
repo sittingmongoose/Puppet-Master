@@ -3064,6 +3064,121 @@
         "cross_format_migration_requested": false,
         "runtime_evidence_claimed": false
       }
+    },
+    {
+      "name": "graph_focus_request_v2_commit_target",
+      "definition": "source_control_command_request_v2",
+      "value": {
+        "schema_id": "pm.source_control.command_request.v2",
+        "schema_version": "2.0.0",
+        "project_id": "project:batching",
+        "repo_id": "repo:batching",
+        "command_id": "cmd.source_control.graph.focus",
+        "target_kind": "commit",
+        "target_ref": "1111111111111111111111111111111111111111",
+        "idempotency_key": "idem:graph-focus:1",
+        "return_context_ref": "return:source-control:graph"
+      }
+    },
+    {
+      "name": "suggest_commit_batches_request_v2",
+      "definition": "source_control_command_request_v2",
+      "value": {
+        "schema_id": "pm.source_control.command_request.v2",
+        "schema_version": "2.0.0",
+        "project_id": "project:batching",
+        "repo_id": "repo:batching",
+        "command_id": "cmd.source_control.suggest_commit_batches",
+        "worktree_id": "git-worktree:batching",
+        "scope": "both",
+        "expected_head_oid": "1111111111111111111111111111111111111111",
+        "status_generation": 7,
+        "max_batches": 4,
+        "idempotency_key": "idem:suggest:1",
+        "return_context_ref": "return:source-control:commit"
+      }
+    },
+    {
+      "name": "accept_commit_group_request_v2",
+      "definition": "source_control_command_request_v2",
+      "value": {
+        "schema_id": "pm.source_control.command_request.v2",
+        "schema_version": "2.0.0",
+        "project_id": "project:batching",
+        "repo_id": "repo:batching",
+        "command_id": "cmd.source_control.accept_commit_group",
+        "worktree_id": "git-worktree:batching",
+        "suggestion_set_id": "suggestion-set:1",
+        "batch_id": "batch:1",
+        "expected_head_oid": "1111111111111111111111111111111111111111",
+        "status_generation": 7,
+        "idempotency_key": "idem:accept:1",
+        "return_context_ref": "return:source-control:commit"
+      }
+    },
+    {
+      "name": "accept_commit_group_result_v2_succeeded",
+      "definition": "source_control_command_result_v2",
+      "value": {
+        "schema_id": "pm.source_control.command_result.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.source_control.accept_commit_group",
+        "operation_id": "operation:accept:1",
+        "status": "succeeded",
+        "owner_result_ref": "view-command-owner-result:accept:1",
+        "inspection": null,
+        "local_config_before_sha256": null,
+        "local_config_after_sha256": null,
+        "native_result_evidence": null,
+        "network_effect_performed": false,
+        "return_context_ref": "return:source-control:commit"
+      }
+    },
+    {
+      "name": "suggest_owner_result_splits_whole_files_from_hunks",
+      "definition": "source_view_command_owner_result_v1",
+      "value": {
+        "schema_id": "pm.source_control.view_command_owner_result.v1",
+        "command_id": "cmd.source_control.suggest_commit_batches",
+        "operation_id": "operation:suggest:1",
+        "outcome": "suggested",
+        "retry_attempts": 0,
+        "suggestion_set_id": "suggestion-set:1",
+        "created_at": "2026-11-25T12:00:00Z",
+        "batches": [
+          {
+            "batch_id": "batch:1",
+            "paths": [
+              "assets/logo.png",
+              "docs/new-notes.md"
+            ],
+            "hunk_selections": [
+              {
+                "path": "src/lib.rs",
+                "hunk_ids": [
+                  "hunk:3"
+                ]
+              }
+            ],
+            "draft_message": "Add logo and notes",
+            "rationale": "Asset and docs change together"
+          }
+        ],
+        "completed_at_utc": "2026-11-25T12:00:01Z"
+      }
+    },
+    {
+      "name": "accept_owner_result_failed_backend_unsupported",
+      "definition": "source_view_command_owner_result_v1",
+      "value": {
+        "schema_id": "pm.source_control.view_command_owner_result.v1",
+        "command_id": "cmd.source_control.accept_commit_group",
+        "operation_id": "operation:accept:2",
+        "outcome": "failed",
+        "failure_code": "backend_unsupported",
+        "retry_attempts": 0,
+        "completed_at_utc": "2026-11-25T12:00:02Z"
+      }
     }
   ],
   "invalid": [
@@ -4638,6 +4753,68 @@
         "secret_material_exposed": false,
         "reason_code": null
       }
+    },
+    {
+      "name": "graph_focus_request_v2_rejects_unknown_field",
+      "definition": "source_control_command_request_v2",
+      "base_valid": "graph_focus_request_v2_commit_target",
+      "patch": {
+        "outcome": "focused"
+      },
+      "expected_error": "strict v2 request branch has additionalProperties false"
+    },
+    {
+      "name": "graph_focus_request_v2_commit_target_must_be_full_oid",
+      "definition": "source_control_command_request_v2",
+      "base_valid": "graph_focus_request_v2_commit_target",
+      "patch": {
+        "target_ref": "main"
+      },
+      "expected_error": "commit target_ref is a full object id"
+    },
+    {
+      "name": "view_command_result_v2_never_claims_network_effect",
+      "definition": "source_control_command_result_v2",
+      "base_valid": "accept_commit_group_result_v2_succeeded",
+      "patch": {
+        "network_effect_performed": true
+      },
+      "expected_error": "graph and batching commands perform no network effect"
+    },
+    {
+      "name": "owner_result_failed_requires_failure_code",
+      "definition": "source_view_command_owner_result_v1",
+      "base_valid": "accept_owner_result_failed_backend_unsupported",
+      "remove": [
+        "failure_code"
+      ],
+      "expected_error": "failed outcome carries a failure_code"
+    },
+    {
+      "name": "owner_result_graph_code_not_valid_for_accept",
+      "definition": "source_view_command_owner_result_v1",
+      "base_valid": "accept_owner_result_failed_backend_unsupported",
+      "patch": {
+        "failure_code": "graph_parse_failed"
+      },
+      "expected_error": "batching commands use the batching failure codes"
+    },
+    {
+      "name": "owner_result_batch_needs_paths_or_hunks",
+      "definition": "source_view_command_owner_result_v1",
+      "base_valid": "suggest_owner_result_splits_whole_files_from_hunks",
+      "patch": {
+        "batches": [
+          {
+            "batch_id": "batch:1",
+            "paths": [],
+            "hunk_selections": [],
+            "draft_message": "Empty",
+            "rationale": "Empty"
+          }
+        ]
+      },
+      "expected_error": "a batch stages at least one whole file or hunk selection"
     }
   ],
   "server_gap_b_coverage": {
