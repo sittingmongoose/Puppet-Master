@@ -1406,8 +1406,8 @@
       "command_id": "cmd.browser.open_devtools",
       "owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180",
       "handler": "handlers::browser_runtime::devtools_open",
-      "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2",
-      "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionResultV2",
+      "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenRequest",
+      "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenResultV1",
       "group": "no_project",
       "gui_consumers": [
         "Puppet Master Assistant > browser_toolbar"

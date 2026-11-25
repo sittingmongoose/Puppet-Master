@@ -8466,7 +8466,10 @@ canonical_text: 'The Free Models priority setting is a PM-wide top-10 provider/m
   per-account authentication, entitlement, health or quota truth: Ready is the shared account owner’s current usable
   result, not merely signed in. DL-259 D4, Jared 2026-10-31: immediately before PM is built, confirm Z.AI’s listed-tools
   rule, Kimi Code’s client/session identity, OpenCode Go’s client/session identity and Muse’s Muse-only subscription
-  credential. This is the pre-build provider-conformance checklist, not a wizard warning, badge or disabled choice.'
+  credential. This is the pre-build provider-conformance checklist, not a wizard warning, badge or disabled choice.
+  DL-2602, Jared 2026-11-24 (C-FIX79): the Free Models top-10 is the model defaults list (ai.models.default-model
+  with its project and Everywhere layers; section, surface and role lists are the other model_defaults.list_setting_ids),
+  not a separate stored setting; its editor saves through the Settings transaction on that list.'
 gui_related: true
 gui_classification_reason: Governs the user-visible top-10 list, section override disclosure, selector behavior, and fallback labels.
 depends_on: []

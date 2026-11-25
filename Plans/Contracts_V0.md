@@ -241,7 +241,7 @@ Shared governance/runtime records carry `record_id`, `record_kind`, `schema_vers
 
 ### Concern record family definition
 
-`ConcernRecord` is the cross-surface record for user-visible or governance-visible concerns. Required fields are `concern_id`, `schema_version`, `concern_category`, `severity`, `visibility_level`, `attention_level`, `status`, `owner_ref`, `creator_ref`, `subject_ref`, `source_event_refs[]`, `summary`, `created_at`, and `updated_at`. Optional fields are `blocking_effect`, `resolution_kind`, `accepted_risk`, `resolver_ref`, `resolved_at`, `linked_record_refs[]`, `suggested_action_ids[]`, and `evidence_refs[]`.
+`ConcernRecord` is the cross-surface record for user-visible or governance-visible concerns. Required fields are `concern_id`, `schema_version`, `concern_category`, `severity`, `visibility_level`, `attention_level`, `status`, `owner_ref`, `creator_ref`, `subject_ref`, `source_event_refs[]`, `summary`, `created_at`, and `updated_at`. Optional fields are `blocking_effect`, `resolution_kind`, `accepted_risk`, `resolver_ref`, `resolved_at`, `linked_record_refs[]`, `suggested_action_ids[]`, and `evidence_refs[]`. Closed value sets (C-FIX79 decision, 2026-11-24): `concern_category` is `coverage_blocker | projection_trust | risk | weak_integration`; `severity` is `info | warning | error | critical`; `visibility_level` is `user_visible | project | restricted`; `attention_level` is `info | warning | needs_action`. `Plans/concern_created_contracts/concern_record.schema.json` and `concern_created_operation.schema.json` carry these enums.
 
 ### Concern lifecycle and resolution kinds
 
@@ -299,7 +299,7 @@ Updates with the same `subject_ref`, `concern_category`, and `owner_ref` amend t
 The minimum serialized shape is:
 
 ```json
-{"concern_id":"concern_01","schema_version":"1.0.0","concern_category":"coverage_blocker","severity":"high","visibility_level":"user_visible","attention_level":"needs_action","status":"active","owner_ref":"Plans/Contracts_V0.md","creator_ref":"validator:pm-audit-closure","subject_ref":"Plans/Contracts_V0.md::owner-section","source_event_refs":[],"summary":"Owner section lacks typed fields.","created_at":"2026-07-07T00:00:00Z","updated_at":"2026-07-07T00:00:00Z","evidence_refs":[]}
+{"concern_id":"concern_01","schema_version":"1.0.0","concern_category":"coverage_blocker","severity":"error","visibility_level":"user_visible","attention_level":"needs_action","status":"active","owner_ref":"Plans/Contracts_V0.md","creator_ref":"validator:pm-audit-closure","subject_ref":"Plans/Contracts_V0.md::owner-section","source_event_refs":[],"summary":"Owner section lacks typed fields.","created_at":"2026-07-07T00:00:00Z","updated_at":"2026-07-07T00:00:00Z","evidence_refs":[]}
 ```
 
 ## PMConcept7 Home Workspace OpenFile placement addendum (2026-08-04)
@@ -860,11 +860,11 @@ Runtime identity, handoff, and stewardship records preserve their concrete keys.
 | `owner_kind` / `owner_ref` | Current owner surface; distinct from creator and resolver. |
 | `created_by_kind` / `created_by_ref` | Actor or system that created the concern. |
 | `status` | Closed enum `active | acknowledged | resolved | dismissed`. |
-| `severity` | Impact severity, independent from `blocking_effect`. |
-| `category` | Stable concern category for dedupe and routing. |
+| `severity` | Impact severity, independent from `blocking_effect`. Closed enum `info | warning | error | critical`. |
+| `category` | Stable concern category for dedupe and routing. Closed enum `coverage_blocker | projection_trust | risk | weak_integration`, stored as `ConcernRecord.concern_category` (C-FIX79 decision, 2026-11-24, recorded in Decision_Log; Orchestrator_Page OP-004 stays the semantic owner of the concern family). |
 | `evidence_refs[]` / `source_refs[]` | Evidence and source-lineage refs supporting the concern. |
 | `lineage_refs[]` | Reopen, split, merge, supersession, or graph-patch lineage refs. |
-| `visibility_level` / `attention_level` / `chatworthy` | Projection controls for user attention without changing lifecycle state. |
+| `visibility_level` / `attention_level` / `chatworthy` | Projection controls for user attention without changing lifecycle state. `visibility_level` is the closed enum `user_visible | project | restricted`; `attention_level` is the closed enum `info | warning | needs_action`; `chatworthy` is a boolean (C-FIX79 decision, 2026-11-24). |
 | `blocking_effect?` | Runtime/blocking impact, explicitly separate from severity. |
 | `resolution_kind?` | Closed enum `fixed | accepted_risk | superseded | merged | split | invalidated | obsoleted_by_patch | obsoleted_by_recovery`. |
 | `resolved_by_kind?` / `resolved_by_ref?` | Resolver identity when status is `resolved` or `dismissed`. |

@@ -2851,7 +2851,7 @@ Rules:
 Bundle Controls govern revision loops and approval readiness for reviewed document/file bundles.
 
 Required behavior:
-- `Resubmit` in bundle review sends all unresolved notes as revision context
+- `Resubmit` in bundle review sends all unresolved notes as revision context; it dispatches `cmd.prd_builder.revision.resubmit` (the PRDB-014 targeted revision pass, DL-2602) with `bundle_id`, the open annotation ids in deterministic order and `expected_bundle_revision`
 - final approval is blocked until every note is resolved, responded to, or dismissed
 - bundle status progression is `draft -> in_review -> all_notes_resolved -> approved -> merged`
 - bundle-level persistence uses `bundle_registry.v1:{project_id}:{bundle_id}` with linked `note_record.v1:*` entries
@@ -4390,6 +4390,7 @@ If a control is skipped, the UI must disclose it in at least one of:
 - When a limitation is known before execution, render the control disabled or warning-badged in place; do not let the user believe it is actionable.
 - When a limitation is only discovered at runtime, surface the disclosure inline on the active surface **and** persist the same information in run detail/history so it is auditable later.
 - Disclosures must name the provider explicitly (for example: `Claude Code skipped temperature; this transport does not expose that Persona control`). Run-requested effort disclosure remains in the model picker/run history owner; it is not a Persona field.
+- Delivery (bound 2026-11-24, DL-2602): no new event carries disclosures. Skipped and Clamped controls travel in the model resolver's shared emit record, `skipped_persona_controls[]` (`Plans/Models_System.md` "Resolver inputs and emit shape" and §10.5), one entry per control with the fields above (`control`, `requested_value`, `effective_value?`, `outcome = skipped | clamped`, `provider`, `reason`). That record is consumed by the runtime snapshot, so the inline disclosure and the run detail/history panel read the same persisted entries. A control with no entry was honored.
 
 ### 19.8 Interview/Builder/Orchestrator mapping editors
 
@@ -4400,6 +4401,12 @@ Settings or surface-specific configuration must support mapping Persona defaults
 - Multi-Pass review passes.
 
 These editors should also allow platform/model selection per mapping and show compatibility warnings.
+
+Narrowed 2026-11-24 (Decision_Log DL-2602, C-FIX79). The live Persona mapping editors are only those with settings behind them:
+- Requirements Builder steps/passes: the four `planning.interview.builder-*` settings (`planning.interview.builder-persona-mode`, `planning.interview.builder-intake-persona`, `planning.interview.builder-drafting-persona`, `planning.interview.builder-review-personas`), saved through the ordinary Settings transaction (`cmd.settings.transaction.preview` / `cmd.settings.transaction.apply`) with that route's validation.
+- Orchestrator Personas: the existing crew Persona selections (`branching.crew.crew-members` "Default lineup" and `branching.crew.crew-coordinator` "Who leads") and the protected core `overseer` Persona the Orchestrator's overseer uses.
+
+The Interview-stage editor, the Orchestrator node/package/lane/seam mapping editor and the generic Multi-Pass review-pass mapping editor are retired, and so is per-mapping platform/model selection: under MD2 NEITHER no Persona mapping carries a model, and models come from the one model defaults list (`Plans/Models_System.md`). Compatibility warnings stay on the remaining editors.
 
 ### 19.9 Acceptance criteria addendum
 
@@ -4593,7 +4600,7 @@ Deep Plan documents reuse the Embedded Document Pane annotation/revision contrac
 Required behavior:
 - highlight text -> annotation action palette
 - annotation markers in margin + annotation list/drawer
-- `Resubmit with Annotations` launches targeted revision for the plan document
+- `Resubmit with Annotations` launches targeted revision for the plan document by dispatching `cmd.prd_builder.revision.resubmit` (DL-2602)
 - deterministic annotation re-anchoring after edits
 - no silent annotation loss
 - no automatic Multi-Pass Review requirement before plan approval/execution
@@ -13820,7 +13827,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  Bundle controls govern revision loops and approval readiness with Resubmit sending unresolved notes as revision context, final approval blocked until notes are handled, status progression, bundle registry persistence, and linked note records. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
+  Bundle controls govern revision loops and approval readiness with Resubmit sending unresolved notes as revision context (Resubmit dispatches cmd.prd_builder.revision.resubmit, the PRDB-014 targeted revision pass, from 2026-11-24 under DL-2602), final approval blocked until notes are handled, status progression, bundle registry persistence, and linked note records. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: Bundle controls and review gates are visible controls despite the source span inference being false.
 split_recommended: false
@@ -21913,6 +21920,11 @@ canonical_text: >-
   stages/phases, Requirements Builder steps/passes, Orchestrator node/package/lane/seam
   mappings, and Multi-Pass review passes, with per-mapping platform/model selection and
   compatibility warnings.
+  Narrowed 2026-11-24 (DL-2602): only the Requirements Builder mapping (the four
+  planning.interview.builder-* settings, saved through the Settings transaction) and the existing
+  crew and overseer Persona selections remain; the Interview-stage, Orchestrator
+  node/package/lane/seam and Multi-Pass mapping editors and every per-mapping platform/model choice
+  are retired (MD2 NEITHER; models come from the one model defaults list).
 gui_related: true
 gui_classification_reason: >-
   This unit defines surface-specific Persona mapping editors despite the source inference
@@ -21947,7 +21959,9 @@ preserved_exact_tokens:
 - "compatibility warnings"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Retired 2026-11-24 (DL-2602): Interview stages/phases, Orchestrator node/package/lane/seam mappings and Multi-Pass review passes mapping editors."
+- "Retired 2026-11-24 (DL-2602): per-mapping platform/model selection (MD2 NEITHER)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -23343,7 +23357,8 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Deep Plan documents reuse the Embedded Document Pane annotation and revision contract:
   highlighted text opens an annotation action palette, margin markers and an annotation
-  drawer/list show annotations, Resubmit with Annotations launches targeted revision,
+  drawer/list show annotations, Resubmit with Annotations launches targeted revision
+  (it dispatches cmd.prd_builder.revision.resubmit, DL-2602),
   annotation anchors re-anchor deterministically after edits, annotation loss is never silent,
   and Multi-Pass Review is not automatically required before approval or execution.
 gui_related: true
@@ -27176,6 +27191,12 @@ canonical_text: >-
   Section 15.3 Tantivy Indices reference; promoted-widget catalog material must use a non-conflicting addendum anchor or an
   explicitly named promoted-widget section. Terminal Settings Ownership and Agent Config Skills are nested under Settings and
   inspectors rather than remaining competing Section 7.4 headings.
+  Amended 2026-11-24 (DL-2602, C-FIX79): the accepted end state is the named-heading rule of "Settings Registry And
+  Numbering Supersession", not a rename. The two `## 15.` chapters (`## 15. Persistence` and `## 15. Promoted widget
+  catalog (web tools, planning, question, operation cards)`) and the two `#### 7.4.2` headings (`#### 7.4.2 Indexing
+  settings subsection` and `#### 7.4.2 Agent Config Skills tab`) stay as declared aliases, and no heading is renamed.
+  Citations into any of them use the full heading name; a bare §15 or §15.n means the Persistence chapter, and a bare
+  §7.4.2 is not cited. Renumbering is left to a scheduled structural cleanup.
 gui_related: true
 gui_classification_reason: Numbering deconfliction affects user-visible GUI spec sections, settings sections, and cross-reference anchors.
 depends_on: [F3-387]
@@ -27184,6 +27205,7 @@ acceptance_criteria:
   - Section 15.3 resolves to Persistence/Tantivy rather than an ambiguous promoted-widget chapter.
   - Terminal Settings Ownership and Agent Config Skills tab are subordinate Settings anchors.
   - Structural renumbering does not change GUI behavior or widget ownership.
+  - Until a scheduled structural cleanup, the duplicate `## 15.` and `#### 7.4.2` headings are declared aliases and every citation into them names the full heading (DL-2602).
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - manual FinalGUISpec heading review
@@ -28969,7 +28991,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The model settings GUI exposes a manual all-provider model refresh button near model settings and passive Free Models update timestamps. Successful validated Auto Apply updates create no notification/inbox item and normal settings show only `Last checked` and `Last updated`, with recent-change details behind details or Advanced/Support. Failed or quarantined Free Models updates keep current known-good active and show `Free Models update needs attention` with `Retry check` and `View details`. Routine automatic offline/launch failures remain passive as `Could not check` unless routing availability is affected.
+  The model settings GUI exposes a manual all-provider model refresh button near model settings and passive Free Models update timestamps. Successful validated Auto Apply updates create no notification/inbox item and normal settings show only `Last checked` and `Last updated`, with recent-change details behind details or Advanced/Support. Failed or quarantined Free Models updates keep current known-good active and show `Free Models update needs attention` with `Retry check` and `View details`. Routine automatic offline/launch failures remain passive as `Could not check` unless routing availability is affected. Bound 2026-11-24 (DL-2602): `Refresh Models` and `Retry check` both dispatch `cmd.model.refresh`; `Retry check` sends `refresh_reason = free_models_update_retry` and no `provider_id` (the Free Models grouping is not a provider id, MS-118), and its result and `model.catalog_refreshed` update `Last checked` and `Last updated`. `View details` is a no-persist disclosure that opens the failed or quarantined update's existing activation, quarantine and rollback records (Models_System MS-119); it dispatches no command and writes nothing.
 gui_related: true
 gui_classification_reason: Owns visible model refresh button, update status, timestamps, and attention-state wording.
 depends_on: []
@@ -29033,7 +29055,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Free Models setup and top-10 screens default to global configuration to keep the GUI cleaner, while making clear that section/surface/role settings override the global top-10. Onboarding/doctor sequencing should set up paid providers first, then show Free Models and let the user configure the top-10. Free Models rows use plain setup actions and friendly unavailable labels, with expanded details for underlying provider/account, current skip reason, cooldown/Retry now state, source/ref, and return context.
+  Free Models setup and top-10 screens default to global configuration to keep the GUI cleaner, while making clear that section/surface/role settings override the global top-10. Onboarding/doctor sequencing should set up paid providers first, then show Free Models and let the user configure the top-10. Free Models rows use plain setup actions and friendly unavailable labels, with expanded details for underlying provider/account, current skip reason, cooldown/Retry now state, source/ref, and return context. Bound 2026-11-24 (DL-2602): the top-10 is not a second list. It is the model defaults list (`ai.models.default-model` with its project and Everywhere layers, `model_defaults.source_order` `project_list` then `everywhere_factory_list` in `Plans/settings_inventory.json`), shown capped and labelled top 10 on the Free Models screens, and the top-10 editor saves through the ordinary Settings transaction (`cmd.settings.transaction.preview` / `cmd.settings.transaction.apply`) on that setting. The section, surface and role settings that override it are the other `model_defaults.list_setting_ids` lists.
 gui_related: true
 gui_classification_reason: Owns top-10 setup, onboarding placement, override disclosure, setup labels, and visible availability states.
 depends_on: []
@@ -29735,6 +29757,7 @@ Repairs rows `sfk-66fc2872ed5f759cc6aaa0f5`, `sfk-832d3cce203e9e0009e0b90b`, and
 - `Settings > Terminal` is owned by the terminal settings subsection; `Agent Config Skills` is owned by Agent Config and Skills owner docs.
 - The duplicate promoted-widget `## 15` heading is superseded by the named promoted-widget addendum anchor. Any "Section 15 terminal-core architecture" reference resolves to the terminal-core screen/buffer section, not the promoted-widget catalog.
 - New citations must use explicit heading names instead of bare `§7.4` or `§15` when more than one migration-era alias exists.
+- Declared aliases (2026-11-24, DL-2602): `## 15. Persistence` and `## 15. Promoted widget catalog (web tools, planning, question, operation cards)` share the number 15, and `#### 7.4.2 Indexing settings subsection` and `#### 7.4.2 Agent Config Skills tab` share 7.4.2. All four headings stay as they are; citations use the full heading name, and renumbering waits for a scheduled structural cleanup (F3-389).
 
 ### Slint Host File Inventory
 

@@ -970,7 +970,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 |---|---|---|---|
 | `goal` | `string` | yes | The delegated work to perform. |
 | `context?` | `object` | no | Structured supporting context, refs, or constraints. |
-| `owner_hint?` | `string` | no | Exact-match hint against `crew.roles`; on no match the current session remains the owner. |
+| `owner_hint?` | `string` | no | Exact-match hint against `crew.roles`, matched to a `role_id` from the closed set `planner`, `implementer`, `reviewer`, `tester`, `designer`, `security`, `release`, `governance` (Personas §10, DL-2602); on no match the current session remains the owner. |
 | `subagent_type?` | `string` | no | Optional child role selector; when present, validate it against the `subagent_registry` enum of 42 subagent types before launch. |
 | `resume?` | `{ delegated_session_id: string }` | no | Resume token for an existing delegated run. |
 | `timeout_s?` | `number` | no | Caller-selected ceiling when policy allows. |
@@ -12427,8 +12427,8 @@ This addendum is canonical tool contract text for deferred non-runtime FABLE row
 Repairs row `sfk-88d65b2be00892daadd2f0d8`.
 
 - The first `## 10. Implementation plan: permissions (spec for implementers)` remains a permissions implementation-plan compatibility section.
-- The second `## 10. Firecrawl provider integration` is canonically superseded as `## 11. Firecrawl provider integration`.
-- Citations to Firecrawl subsections must use `Firecrawl provider integration` plus the subsection title rather than bare `§10.x` until the heading numbers are mechanically renumbered in a dedicated structural cleanup.
+- The second block of numbered chapters, from the second `## 10. Firecrawl provider integration` through `## 15. Assistant collaboration, To-Do proposal, and read-only advisor tool boundaries` (with its `## 11.` to `## 14.`), is cited by heading name: the chapter and subsection numbers in that block are not authoritative, because `## 10.` to `## 13.` also number the first block (`Implementation plan: permissions`, `Relationship to other plans`, `Implementation checklist`, `References`). Corrected 2026-11-24 (Decision_Log DL-2602, C-FIX79): the earlier line here that superseded the second `## 10.` as `## 11. Firecrawl provider integration` is withdrawn, since `## 11. Relationship to other plans` already holds that number; no heading is renamed.
+- Citations to Firecrawl subsections must use `Firecrawl provider integration` plus the subsection title rather than bare `§10.x`. Renumbering the second block is left to a scheduled structural cleanup.
 - Citations to permissions implementation subsections must include `Implementation plan: permissions` plus the subsection title.
 
 ### Tool Turn Contract Minima

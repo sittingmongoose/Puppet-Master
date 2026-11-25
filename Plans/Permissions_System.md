@@ -780,7 +780,7 @@ threshold = 3
 
 ### 9.2 Config key in redb
 
-The resolved permission set for the active session (merged from all layers) is also persisted to redb as part of `config:v1` under the key `tool_permissions` for compatibility with the existing config schema defined in `Plans/Tools.md` §10.1. The TOML files are the durable source of truth; the redb key is a projection.
+The resolved permission set for the active session (merged from all layers) is also persisted to redb as part of `config:v1` under the key `tool_permissions` for compatibility with the existing config schema defined in `Plans/Tools.md` §10.1 (chapter `Implementation plan: permissions (spec for implementers)`, subsection `10.1 Config schema`; Tools.md numbers `## 10.` twice, so the heading name decides, per its Section 10 Numbering Supersession). The TOML files are the durable source of truth; the redb key is a projection.
 
 ContractRef: ContractName:Plans/Tools.md
 

@@ -5147,7 +5147,6 @@
             "cmd.browser.let_agent_continue",
             "cmd.browser.navigate",
             "cmd.browser.open_detached_preview",
-            "cmd.browser.open_devtools",
             "cmd.browser.open_workspace_preview",
             "cmd.browser.page.activate",
             "cmd.browser.page.close",
@@ -5310,6 +5309,47 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 256
+        }
+      }
+    },
+    "BrowserDevToolsOpenRequest": {
+      "description": "Request of cmd.browser.open_devtools, a navigation wrapper that changes browser layout/UI state only (C-FIX79 decision, 2026-11-24; UI_Command_Catalog payload { browser_session_id, mode? }). The id pattern refuses the protected authentication browser. cmd.browser.open_devtools is not a BrowserActionRequestV2 command.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "browser_session_id"
+      ],
+      "properties": {
+        "browser_session_id": {
+          "$ref": "#/$defs/id"
+        },
+        "mode": {
+          "enum": [
+            "docked_bottom",
+            "docked_right",
+            "undocked"
+          ]
+        }
+      }
+    },
+    "BrowserDevToolsOpenResultV1": {
+      "description": "Typed route result of cmd.browser.open_devtools (C-FIX79 decision, 2026-11-24). Output fields are the Section15 Browser Action Table row for cmd.browser.open_devtools. No EventRecord is emitted.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "devtools_session_id",
+        "boundary_ref",
+        "opened_at_utc"
+      ],
+      "properties": {
+        "devtools_session_id": {
+          "$ref": "#/$defs/id"
+        },
+        "boundary_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "opened_at_utc": {
+          "$ref": "#/$defs/timestamp"
         }
       }
     }

@@ -1993,7 +1993,11 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         # (1333 -> 1335): catalog.chat_memory_add and catalog.chat_memory_delete, the Memory
         # page's real Add and Delete beside the existing Edit. No Touch row, profile, alias,
         # exclusion, native handler or proof is added.
-        "production_wiring_entry_count": 1335,
+        # C-FIX79 / DL-2602 answer 7: +1 production-intent row (1335 -> 1336):
+        # catalog.prd_builder_revision_resubmit for the minted cmd.prd_builder.revision.resubmit
+        # (PRDB-014 targeted revision pass). No Touch row, profile, alias, exclusion, native
+        # handler or proof is added.
+        "production_wiring_entry_count": 1336,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),

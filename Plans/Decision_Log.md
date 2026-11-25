@@ -63290,3 +63290,98 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/DRY_Rules.md#DR-093, ContractName:Plans/UI_Command_Catalog.md#UCC-074, ContractName:Plans/assistant-chat-design.md#ACD-641, ContractName:Plans/assistant-chat-design.md#ACD-642, ContractName:Plans/assistant-chat-design.md#ACD-643, ContractName:Plans/FileManager.md#F-162, ContractName:Plans/Automated_Testing_System.md#ATS-086
+
+### DL-2602 - C-FIX79: Jared takes the recommended answers to eleven closure plan questions
+
+```yaml
+plan_unit_id: DL-2602
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  On 2026-11-24 at about 10:40 PM EST, Jared answered card C-FIX79 ("Take the recommended answers to 11 small plan questions?") with "A take all the recommended answers." The answer was relayed to the stream C lead pm-closure-lead (pm-mail 1125033823-33e4). Each answer below is the card's recommended option, and the registry lines are rows of Plans/.audits/_semantic_closure_registry.jsonl.
+
+  1. Lines 1470 and 1477, concern labels: the closed sets are the union of values already in use. visibility_level is user_visible | project | restricted; attention_level is info | warning | needs_action; concern_category is coverage_blocker | projection_trust | risk | weak_integration. The concern record and concern.created operation schemas and their storage value registry copies carry these enums, and the Contracts_V0 minimum concern example uses severity error instead of high. Orchestrator_Page OP-004 stays the semantic owner of the concern family.
+  2. Line 1785, opening DevTools: cmd.browser.open_devtools is a navigation wrapper. Its request is BrowserDevToolsOpenRequest {browser_session_id, mode?: docked_bottom | docked_right | undocked} and its typed route result is BrowserDevToolsOpenResultV1 {devtools_session_id, boundary_ref, opened_at_utc}, both in Plans/section15_browser_program_contracts.schema.json. The wiring rows name them, BrowserActionRequestV2 no longer lists the command, and the DL-341 handler_unavailable refusal for its unsettled request ends.
+  3. Line 1546, Tools.md duplicate chapters 10 to 13: the physical numbers stay. Chapters of the second block (the second ## 10. Firecrawl provider integration through ## 15.) are cited by heading name and their numbers are not authoritative; the 2026-07-08 supersession's ## 11. target is withdrawn. Permissions PS-058's pinned Tools.md §10.1 citation names its heading. No heading is renamed.
+  4. Line 1343, LSP client foundation: Puppet Master builds its own client on the LSPSupport §3.6.1 stack (lsp-types, tokio, tokio-util, serde_json, tracing). async-lsp may be used only as an optional internal wire helper. lsp-client and async_lsp_client are rejected alternatives, not dependencies.
+  5. Line 1381, persona disable and restore: both are typed operations of cmd.persona.update, set_enabled and restore_shipped_default, under the existing expected_owner_revision compare-and-swap and full PERSONA.md validation, and their success is the existing persona.updated. The Personas addendum's cmd.persona.edit, cmd.persona.disable, cmd.persona.restore and cmd.persona.validate_schema spellings are retired.
+  6. Line 1382, crew roles: crew.roles is the role record map {display_name, description, required_capabilities[], default_persona_id?, allowed_persona_ids[]} keyed by the closed role_id set planner, implementer, reviewer, tester, designer, security, release, governance. owner_hint matches a role_id exactly, the Persona comes from allowed_persona_ids[] or default_persona_id, and provider and model come only from the Models_System selection order. The provider/model/persona tuple form is retired source lineage.
+  7. Line 1467, Resubmit: the PRDB-014 targeted revision pass is the new command cmd.prd_builder.revision.resubmit, with a UI_Command_Catalog row, a payload definition under PRDB-024, a prd_planning_runtime_contracts entry and the production wiring row catalog.prd_builder_revision_resubmit. FinalGUISpec 7.19.2 bundle Resubmit, F3-150, F3-322 and PRD Builder bind to it. The canonical PRD Builder, Planning Wizard and Plan Compile command set of DL-333 grows from 28 to 29 ids; DL-333's own text is unchanged.
+  8. Line 1468, persona mapping editors: FinalGUISpec 19.8 and F3-296 narrow to the planning.interview.builder-* settings, saved through the Settings transaction, plus the existing crew and overseer Persona selections. The Interview-stage, Orchestrator node/package/lane/seam and Multi-Pass mapping editors and every per-mapping platform/model choice are retired. Provider-gap disclosures travel in the resolver's skipped_persona_controls[].
+  9. Line 1469, Free Models: the top-10 is the model defaults list (Settings transaction on ai.models.default-model and its layers), not a second list. Retry check is cmd.model.refresh with refresh_reason free_models_update_retry, and View details is a no-persist disclosure of the failed update's activation, quarantine and rollback records.
+  10. Line 1533, FinalGUISpec duplicate ## 15 and #### 7.4.2: F3-389 is amended so both pairs stay as declared aliases and citations use the full heading name. Renumbering is left to a scheduled structural cleanup; no heading is renamed.
+  11. Line 1605, Decisions page: Puppet Master shows no Decisions GUI. The sentence "GUI visibility is through Settings > Governance > Decisions when surfaced by FinalGUISpec" in the 2026-07-08 FABLE Deferred Action Concrete Repair Addendum of this log is retired by this entry, and DecisionRecord gui_surface_ref is always absent. DecisionRecord is the planning-canon shape of a Decision_Log entry. The old entry's text is not rewritten.
+
+  The card also listed four choices that agents had already made, and Jared left them as they were: the user confirms the technology choices at the end of the architecture step (line 1521); a checked image-generation route stays trusted for 7 days and is re-checked only when the user asks (K4, line 1345); conflict worktrees are durable records (line 1365); and the FileSafe trace defaults are 8 MiB per trace and 256 MiB per run (line 1330).
+gui_related: true
+gui_classification_reason: Several answers change visible controls (Resubmit, persona editors, Free Models top-10, DevTools) or retire GUI surfaces.
+split_recommended: false
+depends_on: [DL-333, DL-341, OP-004, SMPFS-328, PRDB-014, PRDB-024, F3-296, F3-389, P-030, LSPS-075]
+unblocks: []
+acceptance_criteria:
+- Each of the eleven answers is written into its owner text, and that text cites DL-2602.
+- cmd.prd_builder.revision.resubmit has a catalog row, a payload definition and a production wiring row.
+- No heading is renamed for answers 3 and 10, and no earlier Decision_Log entry is rewritten.
+validation_surfaces:
+- python3 scripts/pm-command-payload-defs-check.py
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-concern-created-contracts-check.py
+risk_class: owner_choice_drift
+reasoning_tier: high
+context_scope: closure_reaudit_fix79_owner_answers
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/concern_created_contracts/concern_record.schema.json
+- Plans/concern_created_contracts/concern_created_operation.schema.json
+- Plans/storage_value_registry.json
+- Plans/section15_browser_program_contracts.schema.json
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Wiring_Matrix.production.json
+- Plans/Commands_System.md
+- Plans/Tools.md
+- Plans/Permissions_System.md
+- Plans/LSPSupport.md
+- Plans/Personas.md
+- Plans/UI_Command_Catalog.md
+- Plans/PRD_Builder.md
+- Plans/prd_planning_runtime_contracts.json
+- Plans/FinalGUISpec.md
+- Plans/Models_System.md
+node_compile_hint:
+  mode: owner_decision_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/fix79/card/card.json, SHA-256 3a162d33d7abf99fb902715a717b7a7afcb653f673972633da0c83121504acdf"
+- "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/fix79/K1-mvp-contracts/FIX-NOTES.md, K3-tools-lsp-files/FIX-NOTES.md, K4-media-models/FIX-NOTES.md, K5-gui-commands/FIX-NOTES.md (OWNER-CHOICE sections)"
+- "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/LEAD-STATE.md (2026-11-24 10:40 PM EST entry)"
+preserved_exact_tokens:
+- DL-2602
+- C-FIX79
+- "A take all the recommended answers."
+- cmd.prd_builder.revision.resubmit
+- BrowserDevToolsOpenRequest
+- BrowserDevToolsOpenResultV1
+- set_enabled
+- restore_shipped_default
+- free_models_update_retry
+- "Settings > Governance > Decisions when surfaced by FinalGUISpec"
+negative_constraints:
+- Do not rename Tools.md or FinalGUISpec headings under this decision.
+- Do not rewrite DL-333 or the 2026-07-08 FABLE addendum text; this entry records the changes.
+- Do not reseal governance artifacts or claim native execution proof from these Plan edits.
+owner_hints:
+- Plans/Decision_Log.md
+- Plans/Contracts_V0.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/LSPSupport.md
+- Plans/Personas.md
+- Plans/UI_Command_Catalog.md
+- Plans/PRD_Builder.md
+- Plans/FinalGUISpec.md
+- Plans/Models_System.md
+- Plans/Tools.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-333, ContractName:Plans/Decision_Log.md#DL-341, ContractName:Plans/PRD_Builder.md#PRDB-014, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-328, ContractName:Plans/FinalGUISpec.md#F3-389

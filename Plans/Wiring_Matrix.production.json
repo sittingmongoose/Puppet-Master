@@ -524,7 +524,7 @@
       "handler_location": "handlers::browser_runtime::devtools_open",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.browser.open_devtools dispatches the typed request BrowserDevToolsOpenRequest and returns RouteResult; the surfaces that may raise it are exactly: browser_toolbar, browser_selection_bar.",
+        "cmd.browser.open_devtools is a navigation wrapper: it dispatches the typed request BrowserDevToolsOpenRequest and returns its typed route result BrowserDevToolsOpenResultV1 (C-FIX79 decision, 2026-11-24); the surfaces that may raise it are exactly: browser_toolbar, browser_selection_bar.",
         "Read state.assistant_redesign.browser_devtools_open.availability and state.assistant_redesign.browser_devtools_open.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/Section15_MVP_Promoted_Features_Spec.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
@@ -538,7 +538,7 @@
         "Projects refresh exact effect: Owner typed result and projection under Plans/Section15_MVP_Promoted_Features_Spec.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication. cmd.browser.open_devtools is layout/UI state only and emits no event.",
         "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
       ],
-      "evidence_required": "Future production evidence for cmd.browser.open_devtools: source-hashed native dispatcher and sole handler handlers::browser_runtime::devtools_open, typed BrowserDevToolsOpenRequest/RouteResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Section15_MVP_Promoted_Features_Spec.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.browser.open_devtools. The owner binding and this production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.browser.open_devtools: source-hashed native dispatcher and sole handler handlers::browser_runtime::devtools_open, typed BrowserDevToolsOpenRequest/BrowserDevToolsOpenResultV1/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Section15_MVP_Promoted_Features_Spec.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.browser.open_devtools. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.browser_devtools_open.availability",
       "disabled_reason_projection": "state.assistant_redesign.browser_devtools_open.disabled_reason",
       "effect_contract": {
@@ -546,7 +546,7 @@
         "description": "Owner typed result and projection under Plans/Section15_MVP_Promoted_Features_Spec.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication. cmd.browser.open_devtools is layout/UI state only and emits no event. Projects refresh: Owner typed result and projection under Plans/Section15_MVP_Promoted_Features_Spec.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication. cmd.browser.open_devtools is layout/UI state only and emits no event.",
         "receipt_or_event_refs": [
           "Plans/Section15_MVP_Promoted_Features_Spec.md",
-          "RouteResult projection"
+          "BrowserDevToolsOpenResultV1 route result"
         ]
       },
       "accessibility_contract": {
@@ -600,8 +600,8 @@
       "event_test_requirements": [
         "No EventRecord may be emitted for cmd.browser.open_devtools until its Event Authority is adjudicated centrally; assert zero unregistered event emissions."
       ],
-      "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2",
-      "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionResultV2"
+      "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenRequest",
+      "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenResultV1"
     },
     "assistant.redesign.cmd.bsd_assignment_pause": {
       "ui_element_id": "assistant.redesign.cmd.bsd_assignment_pause",
@@ -15093,6 +15093,7 @@
         "cmd.browser.open_devtools must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "Canonical id of the DevTools action (UCC-202): it takes UCC-156's preconditions, request and result contract and sole handler handlers::browser_runtime::devtools_open, and refuses the protected authentication browser.",
         "cmd.browser.devtools.open is alias metadata only and normalizes to this id before dispatch; it has no row.",
+        "Navigation wrapper (C-FIX79 decision, 2026-11-24): the request is BrowserDevToolsOpenRequest { browser_session_id, mode?: docked_bottom | docked_right | undocked } and the result is the typed route result BrowserDevToolsOpenResultV1 { devtools_session_id, boundary_ref, opened_at_utc }; cmd.browser.open_devtools is not a BrowserActionRequestV2 command.",
         "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
         "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
@@ -15156,8 +15157,8 @@
       "event_test_requirements": [
         "Assert cmd.browser.open_devtools records a no-persist dispatch receipt and emits no browser/runtime domain event."
       ],
-      "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2",
-      "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionResultV2"
+      "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenRequest",
+      "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenResultV1"
     },
     "catalog.browser_open_workspace_preview": {
       "ui_element_id": "catalog.browser_open_workspace_preview",
@@ -51893,6 +51894,62 @@
       ],
       "event_test_requirements": [
         "Assert cmd.prd_builder.pack.reopen records dispatch receipt cmd.prd_builder.pack.reopen.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.prd_builder_revision_resubmit": {
+      "ui_element_id": "catalog.prd_builder_revision_resubmit",
+      "ui_location": "PRD Builder workspace and bundle review (FinalGUISpec 7.19.2 Resubmit, F3-150; Deep Plan Resubmit with Annotations, F3-322)",
+      "ui_command_id": "cmd.prd_builder.revision.resubmit",
+      "handler_location": "handlers::prd_builder::revision_resubmit",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.prd_builder.revision.resubmit must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.prd_builder.revision.resubmit must expose projected state selector and disabled reason before dispatch",
+        "cmd.prd_builder.revision.resubmit dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.prd_builder.revision.resubmit must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.prd_builder.revision.resubmit must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.prd_builder.revision.resubmit runs the PRDB-014 targeted revision pass (Resubmit with Annotations) over the open annotations of bundle_id at expected_bundle_revision, never triggers Multi-Pass Review, allows one automatic retry on structured validation failure and then fails explicitly, and returns one outcome per annotation in input order (DL-2602)."
+      ],
+      "evidence_required": "Production wiring contract for cmd.prd_builder.revision.resubmit; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.prd_builder_revision_resubmit.availability",
+      "disabled_reason_projection": "state.commands.prd_builder_revision_resubmit.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.prd_builder.revision.resubmit records the targeted revision receipt and per-annotation outcome records (PRDB-014); placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.prd_builder.revision.resubmit.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.prd_builder_revision_resubmit exposes a stable role/name/description matching cmd.prd_builder.revision.resubmit.",
+        "keyboard_access": "catalog.prd_builder_revision_resubmit is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.prd_builder_revision_resubmit preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.prd_builder_revision_resubmit surfaces state.commands.prd_builder_revision_resubmit.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.prd_builder_revision_resubmit.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.prd_builder.revision.resubmit reaches handlers::prd_builder::revision_resubmit with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.prd_builder_revision_resubmit.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.prd_builder_revision_resubmit.availability and disabled copy reads state.commands.prd_builder_revision_resubmit.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.prd_builder_revision_resubmit.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.prd_builder.revision.resubmit records the targeted revision receipt and one outcome record per input annotation in input order; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.prd_builder_revision_resubmit.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.prd_builder.revision.resubmit records dispatch receipt cmd.prd_builder.revision.resubmit.dispatch_receipt and emits no unexpected persisted domain event."
       ]
     },
     "catalog.prd_builder_source_import": {

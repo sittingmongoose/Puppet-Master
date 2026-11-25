@@ -272,13 +272,13 @@ Our GUI is **Rust + Slint** (FinalGUISpec); we include **slint-lsp** so that edi
 Our rewrite is Rust/Slint (Slint 1.17.1). We only need an **LSP client** in the app.
 
 - **Protocol types:** [lsp-types](https://docs.rs/lsp-types/) -- LSP 3.x types (requests, notifications, capabilities, DocumentUri, Range, Diagnostic, etc.). Use for all LSP data structures.
-- **Client implementation:** One of:
+- **Client implementation:** Puppet Master's own client (§3.6.1 `/client-architecture`) on `lsp-types`, `tokio`, `tokio-util`, `serde_json` and `tracing`; `async-lsp` may be used only as an optional internal `/wire` helper (decided 2026-11-24, Decision_Log DL-2602). The crates below were evaluated as ready-made clients and are rejected alternatives, kept as research inputs, not dependencies:
   - [lsp-client](https://docs.rs/lsp-client/) -- async, uses jsonrpsee + lsp-types.
   - [async_lsp_client](https://docs.rs/async_lsp_client/) -- async, lifecycle (initialize, shutdown, exit), document sync, hover, completion, goto definition.
   - [lsp-client-rs](https://github.com/sudarshan-reddy/lsp-client-rs) -- TCP/Unix socket + async; used with gopls in examples.
 - **Server implementation (optional):** If we ever implement our own LSP server (e.g. for a custom language), [tower-lsp](https://docs.rs/tower-lsp/) / [tower-lsp-server](https://lib.rs/crates/tower-lsp-server) (community fork, active).
 
-Recommendation: use **lsp-types** plus one async LSP **client** crate that supports stdio (spawn process, stdin/stdout). Evaluate `lsp-client` and `async_lsp_client` for lifecycle, document sync, and the few methods we need (diagnostics, hover, completion, goto definition).
+Decision (2026-11-24, DL-2602): use **lsp-types** plus Puppet Master's own async stdio **client** (spawn process, stdin/stdout) built on the §3.6.1 baseline stack, covering lifecycle, document sync, and the methods we need (diagnostics, hover, completion, goto definition). `async-lsp` is allowed only as an internal `/wire` helper if it fits PM's supervisor/session model. `lsp-client` and `async_lsp_client` were evaluated for those needs and are rejected as the client foundation.
 
 ---
 
@@ -618,7 +618,7 @@ ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileMa
   - `registry.rs` -- Server registry (id, extensions, root finder, spawn); reads config.
   - `session.rs` or `server_handle.rs` -- Per-`(host_id, server_id, root_identity)` process handle and state.
   - `document.rs` or `sync.rs` -- Document version tracking and didOpen/didChange/didClose/didSave.
-- **Dependencies:** `lsp-types`, chosen LSP client crate (e.g. `lsp-client` or `async_lsp_client`), `tokio` for async. No need for tower-lsp unless implementing a server.
+- **Dependencies:** `lsp-types`, `tokio`, `tokio-util`, `serde_json` and `tracing` for PM's own client (§3.6.1); `async-lsp` only if used as an internal `/wire` helper. No ready-made client crate is a dependency: `lsp-client` and `async_lsp_client` are rejected alternatives (§4, DL-2602). No need for tower-lsp unless implementing a server.
 
 ### 14.3 Core data structures (conceptual)
 
@@ -857,11 +857,11 @@ ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FileSafe.md, 
 
 Use this as the **single, implementation-ready checklist** an agent can follow. Cross-references: §5.1 = LSP in the Chat Window; §9.1 = Additional enhancements (optional/recommended). FinalGUISpec §7.16 = Chat, §7.20 = Bottom Panel (Problems), §7.4.2 = Settings > LSP; FileManager §10.
 
-**Acceptance (done when):** Each Phase 1-4 item is done when: (1) **Prerequisites:** App builds with lsp-types + chosen client crate; config schema and keys exist in storage. (2) **Phase 1:** Opening a file with a matching server spawns the server; diagnostics appear in Problems tab and gutter; hover and completion work with timeout/stale discard; status bar shows server state. (3) **Phase 2:** Go to definition, Find references, Rename, Format work; code actions apply via FileSafe; code lens invokes; Settings > LSP lists all servers and custom entries with validation. (4) **Phase 3:** Assistant/Interview context includes diagnostic summary (capped 10 files, 50 diagnostics); @ symbol includes LSP workspace/symbol; code blocks in Chat support hover and click-to-definition; Problems link in Chat footer opens Problems tab. (5) **Phase 4:** Optional gate, evidence snapshot, subagent bias, and Chat/Interview enhancements implemented per §9.1 or explicitly deferred and documented.
+**Acceptance (done when):** Each Phase 1-4 item is done when: (1) **Prerequisites:** App builds with lsp-types + chosen client crate (since DL-2602 the "client crate" is PM's own client on the §3.6.1 baseline stack); config schema and keys exist in storage. (2) **Phase 1:** Opening a file with a matching server spawns the server; diagnostics appear in Problems tab and gutter; hover and completion work with timeout/stale discard; status bar shows server state. (3) **Phase 2:** Go to definition, Find references, Rename, Format work; code actions apply via FileSafe; code lens invokes; Settings > LSP lists all servers and custom entries with validation. (4) **Phase 3:** Assistant/Interview context includes diagnostic summary (capped 10 files, 50 diagnostics); @ symbol includes LSP workspace/symbol; code blocks in Chat support hover and click-to-definition; Problems link in Chat footer opens Problems tab. (5) **Phase 4:** Optional gate, evidence snapshot, subagent bias, and Chat/Interview enhancements implemented per §9.1 or explicitly deferred and documented.
 
 ### Prerequisites
 
-- [ ] Choose Rust LSP client crate (lsp-types + stdio-capable client; e.g. lsp-client or async_lsp_client). Add to Cargo.toml.
+- [ ] Build PM's own stdio-capable client on the §3.6.1 baseline stack (lsp-types, tokio, tokio-util, serde_json, tracing; async-lsp only as an optional internal wire helper) and add those crates to Cargo.toml. lsp-client and async_lsp_client are rejected alternatives, not dependencies (DL-2602, 2026-11-24).
 - [ ] Define LSP config schema (OpenCode-aligned: lsp.enabled, lsp.servers.<id>.disabled, command, extensions, env, initialization). Store in redb; document in §14.4.
 - [ ] Add config keys for debounce and timeouts (lsp.didChangeDebounceMs, lsp.hoverTimeoutMs, lsp.completionTimeoutMs, lsp.workspaceSymbolTimeoutMs). See §14.4.
 
@@ -5144,7 +5144,7 @@ plan_unit_id: LSPS-075
 unit_type: requirement
 status: accepted
 owner_doc: Plans/LSPSupport.md
-canonical_text: Prerequisites require choosing a Rust stdio-capable LSP client, adding it to Cargo.toml, defining OpenCode-aligned LSP config schema, storing it in redb, and adding debounce/timeout config keys.
+canonical_text: Prerequisites require building Puppet Master's own Rust stdio-capable LSP client on the §3.6.1 baseline stack (lsp-types, tokio, tokio-util, serde_json, tracing; async-lsp only as an optional internal wire helper; lsp-client and async_lsp_client are rejected alternatives per DL-2602), adding those crates to Cargo.toml, defining OpenCode-aligned LSP config schema, storing it in redb, and adding debounce/timeout config keys.
 gui_related: false
 gui_classification_reason: The unit defines LSP runtime, protocol, registry, verification, evidence, or implementation constraints rather than direct GUI presentation.
 split_recommended: false
@@ -7049,6 +7049,7 @@ This addendum repairs non-runtime LSP rows without creating WorkNodes, implement
 - Repairs `sfk-c158d84b7bc8d4d4bcaf2d96`: every LSP server catalog row has `default_enabled` and `support_classification`, and the §3.2 table states both per row. Values use only the §14.9 registry vocabulary (`supported-by-registry`, `default-managed`, `toolchain-bound/manual`, `experimental/degraded`, `deprecated/replaced`). The earlier spellings are retired: `first_class` and `bundled` read as `default-managed`, `auto_detected` as `toolchain-bound/manual`, and `manual_setup` as `supported-by-registry`. A catalog row added without explicit values defaults to `default_enabled=false` and `support_classification=supported-by-registry`.
 - Repairs `sfk-5e96353b2b86e879e26f845a`: gate `scope = project` means files under the project root, excluding generated, ignored, vendored, and policy-hidden paths (§17.1 Contract). Open-document-only is the `open` scope value of `verification.lsp_gate.scope` (§17.1 Config table, LSPS-091) and is not an alias for project. The spelling `open_documents` used here earlier is retired and is not a config value.
 - Repairs `sfk-8290829cf3f3df11f6f5e87f`: Phase 1 uses `async-lsp` as the canonical Rust crate decision. `lsp-client` remains source-lineage research only unless a future currentness review replaces the crate choice.
+  - Corrected 2026-11-24 (Decision_Log DL-2602, C-FIX79): the sentence above overstated the choice and is withdrawn. Phase 1 builds Puppet Master's own client on the §3.6.1 baseline stack (`lsp-types`, `tokio`, `tokio-util`, `serde_json`, `tracing`); `async-lsp` is permitted only as an internal `/wire` helper, never as the client foundation. `lsp-client` and `async_lsp_client` stay research inputs and rejected alternatives.
 
 ## Remaining Runtime Integration Addendum - LSP Write Transaction - 2026-08-13
 

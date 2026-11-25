@@ -14057,11 +14057,16 @@ canonical_text: >-
   envelope's optional thread_id binding on capture rows stays the overlay's common optional field; only
   cmd.browser.share_with_agent narrows it to required, as its catalog row states it unadorned. Canon does
   not type the open rows' target, the DevTools mode and dock values, or agent_share_scope; each is marked
-  provenance gap and left open for the compile review rather than invented.
+  provenance gap and left open for the compile review rather than invented. Amended 2026-11-24 (DL-2602,
+  C-FIX79): the DevTools mode is now typed (docked_bottom | docked_right | undocked) and
+  cmd.browser.open_devtools is a navigation wrapper with BrowserDevToolsOpenRequest and the typed route result
+  BrowserDevToolsOpenResultV1 in Plans/section15_browser_program_contracts.schema.json; the dock values stay open.
   Shared conventions of the definitions block: its row cites are the browser command table
   (UI_Command_Catalog.md:825-846), whose Payload column is history under DL-333 resolution 10 and stays the
   command-row authority for names. Every wiring row (Wiring_Matrix.production.json entries catalog.browser_*)
-  names BrowserActionRequestV2 and BrowserActionResultV2 (Plans/section15_browser_program_contracts.schema.json).
+  names BrowserActionRequestV2 and BrowserActionResultV2 (Plans/section15_browser_program_contracts.schema.json),
+  except catalog.browser_open_devtools and assistant.redesign.cmd.browser_devtools_open, which name
+  BrowserDevToolsOpenRequest and BrowserDevToolsOpenResultV1 from 2026-11-24 (DL-2602).
   The table states no command_kind and no disabled reasons for these rows; only cmd.browser.open_devtools has a
   kind cell, navigation_wrapper, in the row its canonical id takes over (UI_Command_Catalog.md:15658, :19026).
   CV-360's placement fields go only on the routes its open-routes table lists (UI_Command_Catalog.md:18314-18334):
@@ -14072,7 +14077,9 @@ canonical_text: >-
   stop_agent_keep_browser, detach_browser_tab, open_devtools, toggle_devtools_dock, focus_browser_tab,
   promote_to_normal_browsing, reopen, retry and keep_closed keep the wired request, map the command onto no action_type, never turn share or revoke into a
   capture, and record the conflict in their owner_request judgments; a handler refuses them with
-  handler_unavailable until the browser owner settles the request (DL-341).
+  handler_unavailable until the browser owner settles the request (DL-341). Settled for open_devtools on
+  2026-11-24 (DL-2602): its definition names BrowserDevToolsOpenRequest, carries no owner_request judgment,
+  and its DL-341 refusal ends; handler_unavailable then stands only until native evidence exists.
 gui_related: true
 gui_classification_reason: Defines the arguments of user-visible browser, preview and DevTools commands.
 split_recommended: false
@@ -14397,20 +14404,16 @@ command_payload_definitions:
           provenance: canon
           source: "catalog row payload (UI_Command_Catalog.md:829); overlay UCC-061..065 identity browser_session_id?"
         mode:
-          type: string
+          type: enum
+          values: [docked_bottom, docked_right, undocked]
           required: false
           default: none
-          provenance: gap
-          gap_note: >-
-            Catalog payload names mode? with no values (UI_Command_Catalog.md:829). The named request contract
-            BrowserDevToolsOpenRequest (UI_Command_Catalog.md:15658, :19026) is placed at
-            Plans/browser_capture_contracts.schema.json by Commands_System.md:6486, and that file does not exist
-            in Plans, so the DevTools mode vocabulary is still open. JUDGMENT: string holds the value; an enum
-            needs the owner to name the modes.
-      owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
+          provenance: canon
+          source: "Decision_Log DL-2602 (C-FIX79, 2026-11-24): Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenRequest; catalog row payload mode? (UI_Command_Catalog.md:829)"
+      owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenRequest
       result:
         response: Plans/ui_command_response.schema.json
-        owner_result: local:BrowserDevToolsOpenResultV1
+        owner_result: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenResultV1
       error_codes: [invalid_args, invalid_route, permission_denied, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported, permission_required]
       aliases:
@@ -14423,32 +14426,6 @@ command_payload_definitions:
             devtools_policy_allows (UI_Command_Catalog.md:15658, :19026) but no disabled reasons; unsupported
             stands for a missing browser runtime or the protected authentication browser, and
             permission_required for the DevTools policy.
-        - key: owner_request
-          choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
-          gap_note: >-
-            Canon conflict: the wiring rows catalog.browser_open_devtools and
-            assistant.redesign.cmd.browser_devtools_open name BrowserActionRequestV2, while the catalog
-            (UI_Command_Catalog.md:15658, :19026) and Commands_System.md:6486 name BrowserDevToolsOpenRequest,
-            which has no schema in Plans. The definition takes the wiring row, the only one that resolves.
-            The wired request also requires a closed browser_action
-            (Plans/section15_browser_program_contracts.schema.json:5114, :5216), whose action_type enum (:377) has
-            no DevTools action (console and network take query refs and open no DevTools), and its closed action
-            arguments (:423) have no field for mode (UI_Command_Catalog.md:829). As recorded on
-            cmd.browser.share_with_agent, the definition maps the command onto no action_type, and a handler sends
-            no BrowserActionRequestV2 for it and refuses it with handler_unavailable until the browser owner settles
-            the request (DL-341 open_owner_questions).
-        - key: owner_result
-          choice: local:BrowserDevToolsOpenResultV1
-          gap_note: >-
-            Canon conflict: the catalog (UI_Command_Catalog.md:15658, :19026) and Commands_System.md:6486
-            name RouteResult, and both RouteResult schemas in Plans are fixed to other commands
-            (Plans/assistant_chat_contracts.schema.json#/$defs/RouteResult to cmd.chat.goal.open_editor,
-            Plans/collaborative_workflows_contracts.schema.json#/$defs/RouteResult to cmd.chat.crew_auto.open_config);
-            the wiring rows name BrowserActionResultV2; Section15's Browser Action Table gives this action's
-            output fields (Section15_MVP_Promoted_Features_Spec.md:9953).
-            The definition takes Section15's fields, because the wiring rows' own effect_contract says "Owner
-            typed result and projection under Plans/Section15_MVP_Promoted_Features_Spec.md"; the owner should
-            pick one contract.
     - command_id: cmd.browser.toggle_devtools_dock
       ucc_units: [UCC-063, UCC-061, UCC-062]
       command_kind: shell_view
@@ -15183,11 +15160,6 @@ command_payload_definitions:
             onto no action_type, and a handler sends no BrowserActionRequestV2 for it and refuses it with
             handler_unavailable until the browser owner settles the request (DL-341 open_owner_questions).
   results:
-    BrowserDevToolsOpenResultV1:
-      fields:
-        devtools_session_id: {type: id, required: true, default: none, provenance: gap, gap_note: "named at Section15_MVP_Promoted_Features_Spec.md:9953 (Browser Action Table output fields); no typed contract exists. The owner_result judgment of cmd.browser.open_devtools records the RouteResult and BrowserActionResultV2 sides of the canon conflict"}
-        boundary_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "named at Section15_MVP_Promoted_Features_Spec.md:9953; no typed contract exists"}
-        opened_at_utc: {type: timestamp, required: true, default: none, provenance: gap, gap_note: "named at Section15_MVP_Promoted_Features_Spec.md:9953; no typed contract exists"}
     BrowserShareWithAgentResultV1:
       fields:
         share_receipt_id: {type: id, required: true, default: none, provenance: gap, gap_note: "named at Section15_MVP_Promoted_Features_Spec.md:9950 (Browser Action Table output fields); no typed contract exists"}

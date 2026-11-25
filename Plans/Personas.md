@@ -171,6 +171,7 @@ aliases: []
 | `tool_usage_guidance` | Optional | `string` | Freeform tool-planning guidance for this Persona. |
 | `tags` | Recommended | `string[]` | Free tags for filtering and search. Suggested kinds: `phase`, `task`, `subtask`, `iteration`, `cross-phase`, `language`, `domain`, `framework`; arbitrary freeform tags are valid. Settings row `personas.library.persona-tags` exposes this tag input (DL-474). |
 | `aliases` | Optional | `string[]` | Natural-language invocation aliases and display synonyms used during Persona resolution. |
+| `enabled` | Optional | `boolean` | Default `true`. Only a bundled first-party specialty Persona may be `false` (disabled). Protected core built-ins are always enabled; user-created and imported Personas are deleted, not disabled. Written only by the `cmd.persona.update` operation `set_enabled` (§4.1 item 5, DL-2602). |
 
 MD2 NEITHER (Jared, 2026-11-12): Personas carry no model, provider preference, preset or thinking depth. Old `default_platform`, `default_model`, `default_variant` and `reasoning_effort` are compatibility-read only. Preserve source bytes for inspection/export, display the retirement and omit the fields from new/imported owner writes; they never affect resolution or silently migrate into shared defaults. Set a lasting model/depth in Settings > Models or choose it for a run. Cost caps and supported answer controls retain their existing meaning.
 
@@ -224,7 +225,7 @@ Agent Config > Personas MUST provide:
 
 4. **Edit:** Open the same editor. Save writes the current thing home under expected revision and returns narrow Undo/re-target feedback. A library Persona can explicitly Make a version for [Project] through the existing save-as-override route; Go back to the library version removes only the eligible Project version. Protected core built-ins remain read-only; duplicate under a non-reserved ID only.
 
-5. **Disable and restore:** Bundled first-party specialty Personas can be disabled and restored to the shipped default after user customization. Protected core built-ins cannot be disabled. User-created and imported Personas can be deleted with confirmation.
+5. **Disable and restore:** Bundled first-party specialty Personas can be disabled and restored to the shipped default after user customization. Protected core built-ins cannot be disabled. User-created and imported Personas can be deleted with confirmation. Both actions are typed operations of the existing `cmd.persona.update` (decided 2026-11-24, Decision_Log DL-2602), not separate commands: `set_enabled { enabled: boolean }` writes the whole record with the §3.2 `enabled` field changed, and `restore_shipped_default` writes the whole record equal to the Persona's shipped default target (the bundled first-party version that reset and upgrade merge already keep). Each goes through the same `expected_owner_revision` compare-and-swap, full PERSONA.md validation and whole-record commit as any other update, and its success is the existing `persona.updated` event (P-125). Either operation on a protected core built-in, or on a Persona with no shipped default (user-created or imported), is refused with `invalid_args` and changes nothing; a stale revision is refused with `stale_projection`.
 
 6. **Delete:** Delete button with confirmation modal. Deleting a project-local Persona that overrides a global one reveals the global version. Deleting a global Persona with no project override removes it entirely. Delete is not shown for protected core built-ins.
 
@@ -464,6 +465,8 @@ Rules:
 - `persona_override_owner_id` must align to thread/run/node/attempt/actor lineage rather than to `tier_id`
 
 `owner_hint` is advisory until resolved by the crew-role map. PM checks the active agent config `crew.roles` map, for example `{ "code-review": { provider, model, persona } }`, using exact tag matches such as `code-review`, `test-writer`, or `researcher`; partial matches are not supported in MVP. If no mapping exists, PM falls back to the current session provider/model while selecting the requested Persona behavior. If a mapping exists but the mapped provider or model is unavailable, PM returns `capability_unavailable` and does not silently fall back to a different provider/model/persona tuple.
+
+Superseded 2026-11-24 (Decision_Log DL-2602, C-FIX79): `crew.roles` maps a `role_id` to the role record `{display_name, description, required_capabilities[], default_persona_id?, allowed_persona_ids[]}`, and `role_id` is the closed set `planner`, `implementer`, `reviewer`, `tester`, `designer`, `security`, `release`, `governance`. `owner_hint` matches a `role_id` exactly; partial matches are still not supported. A matched role resolves its Persona as the requested Persona when that Persona is in `allowed_persona_ids[]`, otherwise as `default_persona_id`; when neither applies PM returns `capability_unavailable` and substitutes no other Persona. Provider and model never come from `crew.roles`: they come only from the `Plans/Models_System.md` selection order (the one model defaults list), so a role cannot pin a provider or model. With no matching role, the current session stays the owner and the requested Persona behavior applies, as before. The `{ "code-review": { provider, model, persona } }` tuple form and the example tags `code-review`, `test-writer` and `researcher` above are retired source lineage.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Crosswalk.md
 ## 11. Core Persona catalog
@@ -2055,6 +2058,7 @@ status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
   Persona auto-resolution uses explicit manual/run override, scoped natural-language override, surface-specific explicit mapping, surface auto resolver candidate, config default, then canonical fallback; actor and operation type outrank stack hints, governance/review/corroboration Personas do not collapse into implementation Personas, and exact crew.roles tag mappings either resolve or return capability_unavailable without silent tuple fallback.
+  From 2026-11-24 (DL-2602): crew.roles is the role record map keyed by the closed role_id set planner, implementer, reviewer, tester, designer, security, release, governance; owner_hint matches a role_id exactly, the Persona comes from allowed_persona_ids[] or default_persona_id, and provider and model come only from the Models_System selection order; the provider/model/persona tuple form is retired source lineage.
 gui_related: false
 gui_classification_reason: This unit defines runtime resolution and crew-role routing behavior rather than visual presentation.
 split_recommended: false
@@ -2066,6 +2070,7 @@ acceptance_criteria:
   - Auto-resolution precedence remains ordered and deterministic.
   - owner_hint is advisory until resolved by the crew-role map.
   - Missing exact tag mappings fall back to the current session provider/model with requested Persona behavior, while unavailable mapped provider/model returns capability_unavailable.
+  - From DL-2602, a matched role_id resolves the requested Persona when it is in allowed_persona_ids[], else default_persona_id, else capability_unavailable; no crew.roles entry carries a provider or model.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -3500,7 +3505,9 @@ owner_hints:
 This addendum repairs non-runtime persona rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
 - Repairs `sfk-bb3280798bd1706bc464fd91`: persona GUI command IDs are `cmd.persona.create`, `cmd.persona.edit`, `cmd.persona.disable`, `cmd.persona.restore`, `cmd.persona.delete`, `cmd.persona.save_as_override`, and `cmd.persona.validate_schema`.
+  - Corrected 2026-11-24 (Decision_Log DL-2602, C-FIX79): the list above is retired. The persona GUI commands are the catalog's `cmd.persona.create`, `cmd.persona.update`, `cmd.persona.delete` and `cmd.persona.save_as_override` (beside select, duplicate, import and export). Edit is `cmd.persona.update`; disable and restore-to-shipped-default are its `set_enabled` and `restore_shipped_default` operations (§4.1 item 5), emitting `persona.updated`; schema validation runs inside create, update and import and reports `invalid_args`. There are no `cmd.persona.edit`, `cmd.persona.disable`, `cmd.persona.restore` or `cmd.persona.validate_schema` commands.
 - Repairs `sfk-5ebb077583e46703c74baa39`: `crew.roles` is a map from `role_id` to `{display_name, description, required_capabilities[], default_persona_id?, allowed_persona_ids[]}`. Role tag values are `planner`, `implementer`, `reviewer`, `tester`, `designer`, `security`, `release`, and `governance`.
+  - Confirmed 2026-11-24 (Decision_Log DL-2602, C-FIX79): this role record and its eight tags are canonical; §10's `{ provider, model, persona }` tuple form is retired source lineage (see the §10 rule after the `owner_hint` paragraph).
 - Current selection fields remain `requested_persona`, `effective_persona`, `persona_selection_source`, `persona_policy_snapshot_id`, `fallback_reason_code?`, and `created_at_utc`. The scope-aware successor adds `everywhere_default` and `computer_default` beside `user_selected`, `project_default`, `role_default`, `policy_override`, and `fallback`. Historical Project resolution bytes/enums stay readable under their original version; app dispatch requires the successor schema binding from the Personas and Models owners. P-056/P-060 preserve immutable frozen identity.
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

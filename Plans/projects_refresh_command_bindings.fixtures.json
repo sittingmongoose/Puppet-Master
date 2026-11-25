@@ -5,7 +5,7 @@
   "evidence_level": "static_contract_examples_only",
   "native_runtime_executed": false,
   "source_companion_ref": "Plans/projects_refresh_command_bindings.json",
-  "source_companion_sha256": "6cdbc8daffb51742d680c70a882169ebfbc709cbe7a4b40910c9ceea1cd9ee30",
+  "source_companion_sha256": "38ccf34636b0889085552f2975ee0b159668b4bd244f01277ede5ec9f9feea5d",
   "projects_refresh_cases": [
     {
       "case_id": "fd-binding-commands",
@@ -1682,8 +1682,8 @@
             "command_id": "cmd.browser.open_devtools",
             "owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180",
             "handler": "handlers::browser_runtime::devtools_open",
-            "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2",
-            "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionResultV2",
+            "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenRequest",
+            "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenResultV1",
             "group": "no_project",
             "gui_consumers": [
               "Puppet Master Assistant > browser_toolbar"
@@ -29259,8 +29259,8 @@
             "command_id": "cmd.browser.open_devtools",
             "owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180",
             "handler": "handlers::browser_runtime::devtools_open",
-            "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2",
-            "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionResultV2",
+            "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenRequest",
+            "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenResultV1",
             "group": "no_project",
             "gui_consumers": [
               "Puppet Master Assistant > browser_toolbar"
