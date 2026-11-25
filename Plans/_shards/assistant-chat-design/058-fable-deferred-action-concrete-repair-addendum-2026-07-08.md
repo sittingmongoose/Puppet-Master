@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L24732-L24778
 
-Source SHA256: `107f29337df5403adb7fad8f9a34b6a22271cee57d2c9a27ac889a4c01e5c1b7`
+Source SHA256: `f8d1ba85b68d815aa3bc1d39db63e7a1ec013f070ade0539bfce30ef99c08b6a`
 
 ---
 
@@ -39,7 +39,7 @@ Command IDs:
 - `cmd.investigation_context.revoke_item`
 - `cmd.terminal.open`
 
-Amended 2026-11-25: the command catalog and the wiring bind Export bundle and Revoke item to the `cmd.chat.*` ids, and those ids are canonical here too. Export bundle is `cmd.chat.export_investigation_bundle`: it writes the bundle manifest and emits the export event. Revoke item is `cmd.chat.revoke_investigation_item`: it marks the item revoked and keeps it out of future prompt injection (`Plans/UI_Command_Catalog.md#section=PMConcept command aliases and retirements`, `Plans/Wiring_Matrix.md#section=Debug investigation minimum rows`). `cmd.investigation_context.export_bundle` and `cmd.investigation_context.revoke_item` are retired source spellings: they are not commands, aliases or wiring rows, and nothing dispatches them. Open in Terminal is `cmd.terminal.open` (`Plans/UI_Command_Catalog.md`, Open in Terminal row), revealing the existing terminal session. `cmd.investigation_context.open_target` stays this document's id for Open target; it has no catalog or wiring row yet.
+Amended 2026-11-25: the command catalog and the wiring bind Export bundle and Revoke item to the `cmd.chat.*` ids, and those ids are canonical here too. Export bundle is `cmd.chat.export_investigation_bundle`: it writes the bundle manifest and emits the export event. Revoke item is `cmd.chat.revoke_investigation_item`: it marks the item revoked and keeps it out of future prompt injection (`Plans/UI_Command_Catalog.md#section=PMConcept command aliases and retirements`, `Plans/Wiring_Matrix.md#section=Debug investigation minimum rows`). `cmd.investigation_context.export_bundle` and `cmd.investigation_context.revoke_item` are retired source spellings: they are not commands, aliases or wiring rows, and nothing dispatches them. Open in Terminal is `cmd.terminal.open` (`Plans/UI_Command_Catalog.md`, Open in Terminal row), revealing the existing terminal session. Open target is `cmd.chat.open_investigation_target` (cataloged and wired 2026-11-25, `Plans/UI_Command_Catalog.md#section=PMConcept command aliases and retirements`, `Plans/Wiring_Matrix.md#section=Debug investigation minimum rows`, production row `catalog.chat_open_investigation_target`): a no-persist route/open command with `thread_id` and `investigation_id` that opens the investigation's `effective_target` (else `target`) in the surface that owns it, disabled with `stale_projection` when the target no longer resolves (run `Revalidate target` first) or `unreachable` when that surface cannot open it, and emitting no event. `cmd.investigation_context.open_target` is now a retired source spelling like the other two.
 
 Operation card state transitions:
 

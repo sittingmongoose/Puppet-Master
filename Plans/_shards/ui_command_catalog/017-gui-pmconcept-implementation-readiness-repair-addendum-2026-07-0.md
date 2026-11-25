@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8573-L8643
+Source lines: L8573-L8644
 
-Source SHA256: `fcecc58ccf0a0ce574c5a37360cb6a6c0c1debe947c16cc3e68b721e01a0238d`
+Source SHA256: `37db9bd4a9a7fc02934065e0831b6ca4b187361d9b3ca402f8e7e504b7b9d4a9`
 
 ---
 
@@ -72,6 +72,7 @@ Testing policy UI is a first-class command surface, not settings prose alone.
 | PMConcept token | Disposition |
 |---|---|
 | `cmd.chat.effort`, `cmd.chat.settings`, `cmd.chat.model`, `cmd.chat.mode`, `cmd.chat.open_debug_target_picker`, `cmd.chat.export_investigation_bundle`, `cmd.chat.revoke_investigation_item` | Cataloged command IDs for chat setting/debug routes; payloads carry thread/project/context scope and cannot mutate model/provider state without the owning settings contract. |
+| `cmd.chat.open_investigation_target` | Cataloged 2026-11-25 (C-FIX79): the Investigation Context `Open target` action (`Plans/assistant-chat-design.md` ACD-100). A no-persist `navigation_wrapper`: payload `thread_id` and `investigation_id`; it opens the investigation's `effective_target` (else `target`, by `debug_target_kind`) in the surface that owns that target through that surface's existing route, and never opens a raw payload (ACD-092). Disabled reasons: `stale_projection` when the target no longer resolves (the user runs `Revalidate target` first) and `unreachable` when the owning surface cannot open it. It records a no-persist route/open disposition and emits no event. The chat document's older Open target spelling is retired there, not aliased. |
 | `cmd.file.copy_full_path`, `cmd.file.copy_relative_path` | Cataloged compatibility wrappers over `cmd.file.copy_path` with `format = "absolute"` or `format = "relative"`; production UI may use either explicit wrapper if the wiring row declares the normalized copy-path payload. |
 | `cmd.git.open_diff` | Compatibility alias for `cmd.git.diff_open`; production wiring records the alias and the canonical target. |
 | `cmd.git.show_commit` | Compatibility alias for `cmd.source_control.history_open_commit`; production wiring records the alias and the canonical target. |

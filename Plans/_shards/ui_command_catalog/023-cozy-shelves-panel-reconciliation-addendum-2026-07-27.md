@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L12604-L13557
+Source lines: L12605-L13561
 
-Source SHA256: `fcecc58ccf0a0ce574c5a37360cb6a6c0c1debe947c16cc3e68b721e01a0238d`
+Source SHA256: `37db9bd4a9a7fc02934065e0831b6ca4b187361d9b3ca402f8e7e504b7b9d4a9`
 
 ---
 
@@ -59,6 +59,9 @@ Metadata legend for the registration tables: availability classes are `always` (
 | `cmd.actions.cancel` | alias-of `cmd.github.actions.cancel` | canonical row registered below |
 | `cmd.github.actions.dispatch` | newly registered | carries typed workflow_dispatch inputs payload |
 | `cmd.github.actions.pin` / `cmd.github.actions.unpin` | canonical (existing) | |
+| `cmd.actions.show` | alias-of `cmd.panel.switch` with `panel_id: github_actions` | UCC-047 preserved token, disposed 2026-11-25: opens the GitHub Actions side panel; the existing wiring row `catalog.actions_show` stays as the alias route, and legacy `cmd.github_actions.show` normalizes to the same target |
+| `cmd.actions.switch_subview` | live compatibility row (existing; stays live until a `cmd.github.actions.*` Workflows subview id is minted by its owner) | UCC-047 preserved token, disposed 2026-11-25: a no-persist `shell_view` switch among the three stable GI-008 subviews, `subview` = `current_branch` \| `workflows` \| `settings`; `current_branch` and `settings` normalize to `cmd.github.actions.open_current_branch` and `cmd.github.actions.settings.open`, and `workflows` stays on this row; wiring row `catalog.actions_switch_subview`; legacy `cmd.github_actions.switch_subview` normalizes here; no further `cmd.actions.*` id may be minted |
+| `cmd.github.actions.open_run_diff` | alias-of `cmd.github.actions.open_related_diff` (run-scoped) | UCC-047 preserved token, disposed 2026-11-25: the existing wiring row `catalog.github_actions_open_run_diff_canonical` already normalizes this way, and legacy `cmd.github_actions.open_run_diff` reaches the same target |
 | `cmd.docker.set_context` | alias-of `cmd.docker.context.select` | UCC-049 preserved token; the bare K8s-era `set_context` form still normalizes to `cmd.docker.k8s.select_context` per section 2.5B |
 | `cmd.docker.run` (prototype start-stopped usage) | retired -> `cmd.docker.container.start` | `cmd.docker.run` itself stays live as create-from-image |
 | `cmd.docker.container.stop` | canonical (registered below) | `cmd.docker.stop` becomes a recorded compatibility alias |
@@ -126,7 +129,7 @@ Metadata legend for the registration tables: availability classes are `always` (
 | `cmd.github.actions.open_current_branch` | Open Current Branch | `navigation_wrapper` | always | none | `unsupported` | github_actions |
 | `cmd.github.actions.settings.open` | Open Actions Settings | `navigation_wrapper` | always | none | `unsupported` | github_actions |
 
-Added 2026-11-25: `cmd.github.actions.open_current_branch` opens the GitHub Actions `Current Branch` subview and `cmd.github.actions.settings.open` opens its `Settings` subview, two of the three stable subviews `Plans/GitHub_Integration.md#GI-008` names (`Current Branch`, `Workflows`, `Settings`). Both are route/open commands with no persisted event: each records a no-persist route/open disposition, and the subview itself shows a missing GitHub link or sign-in as its own state, so neither command is disabled for it. They are the live rows for the two ids UCC-047 preserves, already wired in `Plans/Wiring_Matrix.production.json` (`catalog.github_actions_open_current_branch` to `handlers::github::actions_open_current_branch`, and `catalog.github_actions_settings_open` to `handlers::github::actions_settings_open`). The legacy route token `/Workflows/Settings` resolves to `cmd.github.actions.settings.open`.
+Added 2026-11-25: `cmd.github.actions.open_current_branch` opens the GitHub Actions `Current Branch` subview and `cmd.github.actions.settings.open` opens its `Settings` subview, two of the three stable subviews `Plans/GitHub_Integration.md#GI-008` names (`Current Branch`, `Workflows`, `Settings`). Both are route/open commands with no persisted event: each records a no-persist route/open disposition, and the subview itself shows a missing GitHub link or sign-in as its own state, so neither command is disabled for it. They are the live rows for the two ids UCC-047 preserves, already wired in `Plans/Wiring_Matrix.production.json` (`catalog.github_actions_open_current_branch` to `handlers::github::actions_open_current_branch`, and `catalog.github_actions_settings_open` to `handlers::github::actions_settings_open`). The legacy route token `/Workflows/Settings` resolves to `cmd.github.actions.settings.open`. The other three UCC-047 tokens without a row of their own have individual dispositions in the reconciliation table above: `cmd.actions.show` is an alias of `cmd.panel.switch` with `panel_id: github_actions`, `cmd.actions.switch_subview` is a live compatibility row for the three GI-008 subviews, and `cmd.github.actions.open_run_diff` is an alias of `cmd.github.actions.open_related_diff`.
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md
 

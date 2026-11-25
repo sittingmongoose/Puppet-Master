@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L27094-L27225
+Source lines: L27094-L27229
 
-Source SHA256: `8bf4b6345c10e4c1da9d13a53b473feeac58abcfb85cd80f35db86a176ebd116`
+Source SHA256: `0737f9c7548e6723552109b18a980ef3bac1ed8bf8b11f41f3e801801596f4db`
 
 ---
 
@@ -113,7 +113,11 @@ canonical_text: >-
   catalog (web tools, planning, question, operation cards)`) and the two `#### 7.4.2` headings (`#### 7.4.2 Indexing
   settings subsection` and `#### 7.4.2 Agent Config Skills tab`) stay as declared aliases, and no heading is renamed.
   Citations into any of them use the full heading name; a bare §15 or §15.n means the Persistence chapter, and a bare
-  §7.4.2 is not cited. Renumbering is left to a scheduled structural cleanup.
+  §7.4.2 is not cited. Renumbering is left to a scheduled structural cleanup. Applied 2026-11-25: the bare §7.4.2
+  citations in 00-plans-index, this document, OpenCode_Coverage_Matrix and LSPSupport now name the full heading; the
+  Settings > LSP ones never meant either 7.4.2 heading and now cite `§7.4.4 Settings (Unified) panel specification`
+  (its LSP row). Where a preserved exact token pins the old wording (the LSPSupport checklist lines), the bare §7.4.2
+  stays inside that token with the full heading named beside it.
 gui_related: true
 gui_classification_reason: Numbering deconfliction affects user-visible GUI spec sections, settings sections, and cross-reference anchors.
 depends_on: [F3-387]
@@ -122,7 +126,7 @@ acceptance_criteria:
   - Section 15.3 resolves to Persistence/Tantivy rather than an ambiguous promoted-widget chapter.
   - Terminal Settings Ownership and Agent Config Skills tab are subordinate Settings anchors.
   - Structural renumbering does not change GUI behavior or widget ownership.
-  - Until a scheduled structural cleanup, the duplicate `## 15.` and `#### 7.4.2` headings are declared aliases and every citation into them names the full heading (DL-2602).
+  - Until a scheduled structural cleanup, the duplicate `## 15.` and `#### 7.4.2` headings are declared aliases and every citation into them names the full heading (DL-2602); a §7.4.2 kept inside a preserved exact token has the full heading named beside it.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - manual FinalGUISpec heading review

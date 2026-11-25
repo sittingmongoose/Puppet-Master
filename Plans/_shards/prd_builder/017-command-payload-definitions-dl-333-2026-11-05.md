@@ -2,9 +2,9 @@
 
 Source: `Plans/PRD_Builder.md`
 
-Source lines: L1615-L2093
+Source lines: L1615-L2094
 
-Source SHA256: `d5b9e3cdca976bdc536cde3af5bbbea32968405a1ee344cd79a212801cdb50b1`
+Source SHA256: `15424a6217552bf9161fe6b8d8dd2c27c65dcad8c58d87a20091ee290a0e2813`
 
 ---
 
@@ -18,8 +18,9 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/PRD_Builder.md
 canonical_text: >-
-  Typed payload definitions for the seven cmd.prd_builder.* commands that UI_Command_Catalog UCC-098
-  registers and UCC-230 routes to this doc (DL-333). Each command's field list is the runtime contract
+  Typed payload definitions for the eight cmd.prd_builder.* commands that UI_Command_Catalog UCC-098
+  registers and UCC-230 routes to this doc (DL-333; seven until cmd.prd_builder.revision.resubmit joined
+  on 2026-11-24 under DL-2602). Each command's field list is the runtime contract
   row keyed by its catalog id in Plans/prd_planning_runtime_contracts.json ui_command_contracts
   (DL-333 coordinator resolution 1); that file's former ids are recorded compatibility aliases, and the
   catalog row's payload summary column is history. The definitions block below gives each command its

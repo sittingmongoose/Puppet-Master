@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-11-25T02:55:27Z",
+  "generated_at_utc": "2026-11-25T13:06:05Z",
   "index_path": "Plans/_shards/opencode_coverage_matrix/00-index.md",
-  "index_sha256": "e84b562ef3c3116e731c22f0c84796563393aa30a11f4f75f8a348bd3b8dae71",
+  "index_sha256": "34d0403269887a3a083f926b62a7b5d783ecfee16ae31e3442ac66acbea4a71f",
   "manifest_path": "Plans/_shards/opencode_coverage_matrix/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/opencode_coverage_matrix/001-preamble.md",
-      "sha256": "21a8f36effdf581dfa17519720a0d9a0e82af69a2f8ddf6ccaee2fecff608561",
+      "sha256": "decddab84694284666574e76eb4a92fd6f98cb53d96c9f9031b9dc06aef4ed2c",
       "shard_id": "001",
       "source_line_end": 6,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "1. Scope and Method",
       "path": "Plans/_shards/opencode_coverage_matrix/002-1.-scope-and-method.md",
-      "sha256": "ff645bf11f179daa67c6a22f2e1cfa4d37b842c5db86eb89ab741bae9b2f714b",
+      "sha256": "941fd42c14f800de793715671fd813c4ee35854666332a0a6609559e8610f48d",
       "shard_id": "002",
       "source_line_end": 66,
       "source_line_start": 8,
@@ -26,7 +26,7 @@
     {
       "heading": "2. Coverage Matrix",
       "path": "Plans/_shards/opencode_coverage_matrix/003-2.-coverage-matrix.md",
-      "sha256": "3a9307f714205235dea312ca7c8880891bdaf0868bd94f832ca698bdb9de3950",
+      "sha256": "3529514724f96609444755ef7f9454757454b81003828a6b30189d0fcb2450ab",
       "shard_id": "003",
       "source_line_end": 123,
       "source_line_start": 68,
@@ -35,7 +35,7 @@
     {
       "heading": "3. DRY Authority Audit",
       "path": "Plans/_shards/opencode_coverage_matrix/004-3.-dry-authority-audit.md",
-      "sha256": "c1b73da87c47248ea7bb55706d27d704ca553f568a3fed1cd061c489ac7ea32a",
+      "sha256": "cfd609633448159b096e96bdc8aa5d05a5caf98f7d856d0b9ab8592d086fc7af",
       "shard_id": "004",
       "source_line_end": 147,
       "source_line_start": 124,
@@ -44,7 +44,7 @@
     {
       "heading": "4. GUI + Config Wiring Audit",
       "path": "Plans/_shards/opencode_coverage_matrix/005-4.-gui-config-wiring-audit.md",
-      "sha256": "8859b25f1ce6b19709a103dd543672f500de28c3cf42b5a8115a054f9348d4cd",
+      "sha256": "a770e2ddc0f6ba5dc2b44c4b8d33e25bcc6c51f7286d3db6cdb746552d1bdc09",
       "shard_id": "005",
       "source_line_end": 205,
       "source_line_start": 149,
@@ -53,7 +53,7 @@
     {
       "heading": "5. Mandatory Fix List",
       "path": "Plans/_shards/opencode_coverage_matrix/006-5.-mandatory-fix-list.md",
-      "sha256": "e9d4ba88438a5979e52a83f1e76886212858f88e2b9977ced4acb104ab34afac",
+      "sha256": "96327a09e9df476f2bb1305db87aac081719cdcad7c20e9e78d5113cda5d13b2",
       "shard_id": "006",
       "source_line_end": 247,
       "source_line_start": 207,
@@ -62,7 +62,7 @@
     {
       "heading": "6. Summary",
       "path": "Plans/_shards/opencode_coverage_matrix/007-6.-summary.md",
-      "sha256": "6c1116ff58e850c1feb6add0d7e7a916f4a30563fd126a6bf2db5873909dbdc1",
+      "sha256": "6a4f1326d9ef19da147f69d0f62f4ec58e2b64e9bd2e1f62f0086c155ef8201f",
       "shard_id": "007",
       "source_line_end": 256,
       "source_line_start": 249,
@@ -71,7 +71,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/opencode_coverage_matrix/008-owner-consumer-map.md",
-      "sha256": "2ce9a504f38357b91057cc50151bf068e694c7612ad1f7a1f8c7ed908554cc1f",
+      "sha256": "2d0ac61a26604701de641ae8ce65f34a96082be6ca9fca1c97eb9d44928c3de2",
       "shard_id": "008",
       "source_line_end": 262,
       "source_line_start": 258,
@@ -80,7 +80,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/opencode_coverage_matrix/009-planunits.md",
-      "sha256": "6e81acd5fa7e0a198c62c4f01e800e334ceb33f5cb2fb0c8b3d3b6b7871bddcc",
+      "sha256": "13b77a287aeb50dc2c274b510d42a6f12ec0cac572f0026126117e1cf2dafd31",
       "shard_id": "009",
       "source_line_end": 1197,
       "source_line_start": 264,
@@ -89,7 +89,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/opencode_coverage_matrix/010-migration-coverage.md",
-      "sha256": "5b1c114b7085956d24cd30ffe41d40da3441f785b86f25cd8541c82a65eefb2a",
+      "sha256": "457b33fa789da77e48ef4aa986fe23c20800140acf7f1a6be60176eed9a750dd",
       "shard_id": "010",
       "source_line_end": 1209,
       "source_line_start": 1199,
@@ -98,7 +98,7 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/opencode_coverage_matrix/011-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "b48f70285baa4840349fd2c7686ce9bc6acd6a6256f340c3fcc2f40ec32a540d",
+      "sha256": "e13be5f0fefb2e5b39e367492cd853701ea8e6dd6bcae76e0d67eacd966056dc",
       "shard_id": "011",
       "source_line_end": 1215,
       "source_line_start": 1211,
@@ -108,6 +108,6 @@
   "source": {
     "line_count": 1215,
     "path": "Plans/OpenCode_Coverage_Matrix.md",
-    "sha256": "e626f684f9b672d911b72ec0dfff170ce351c33399f50652585c8fe072bb0d31"
+    "sha256": "62fa16cc201231731ed351a6f8f5993dd1df3f7996b636f0492b79ee8870a978"
   }
 }
