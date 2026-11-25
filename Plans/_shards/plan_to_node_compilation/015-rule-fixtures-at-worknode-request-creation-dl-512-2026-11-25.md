@@ -4,7 +4,7 @@ Source: `Plans/Plan_To_Node_Compilation.md`
 
 Source lines: L2169-L2340
 
-Source SHA256: `d0508e4ce4cb9cddecf4586c700b9923742486e0bd7c4d4c9406e6471d2dfdf6`
+Source SHA256: `3931e55a30769ee608128b2e9806ddc7ddc390f17993062ef4dba1739f8fc7a7`
 
 ---
 
@@ -62,11 +62,11 @@ canonical_text: >-
   fields that route requires, still breaking the assertion and expected to be accepted. A declared failure result gets two behaviour fixtures: an input that
   meets its failing condition, expected to be refused with that failure's code, and the same input without the failing
   condition, expected to be accepted. When code establishes that an earlier approved check refuses every input meeting
-  a declared failure's condition before that failure can be reached (as when a schema bound always refuses first), the
-  declared failure is a shadowed refusal: its refusing fixture binds with the outcome the contract actually produces,
-  the earlier check's code, the shadowed result is recorded with that coverage evidence and earns no independent
-  coverage credit, and a separately declared owner surface that can reach the original result still exercises it; a
-  search that ends without that coverage evidence leaves a test gap. A behavioural acceptance criterion (one with an input and an observable outcome)
+  a declared failure's condition before that failure can be reached (as when a schema bound always refuses first), the declared failure is a shadowed refusal on that surface: its refusing fixture binds with the outcome the contract
+  actually produces, the earlier check's code, its passing neighbour still binds, and the shadowed result is recorded
+  with that coverage evidence and earns no independent coverage credit. Shadowing is judged per declared surface: a
+  separately declared owner surface that can reach the original result binds that result's own required tests under
+  the ordinary disposition and gap policy. A search that ends without that coverage evidence leaves a test gap. A behavioural acceptance criterion (one with an input and an observable outcome)
   gets one behaviour fixture for each input condition it lists, each carrying the criterion's state and effect
   assertions and asserting the outcome the criterion states on its input or sequence: a refusal where the
   criterion prescribes one, otherwise the stated result, compared so that a wrong result fails (a duplicate delivery
@@ -91,7 +91,7 @@ canonical_text: >-
   a missing observation surface that already has a carried PWIZ-110 completeness finding keeps that disposition and is
   carried once, as a completeness gap, while one first found at compile time is an assertion test gap. Fixtures are listed in generated_test_ids (Plans/Automated_Testing_System.md#ATS-003); a bound oracle is listed in
   generated_test_ids, or in reused_test_ids when it is an existing test. Each rule ends in exactly one disposition: its required tests bound; for a shadowed refusal, its reachable refusal
-  bound with the recorded coverage evidence;
+  and its passing neighbour both bound, with the recorded coverage evidence;
   for a schema rule whose refusing payload cannot be isolated, the passing payload bound together with a named gap
   evidenced to the standard of Plans/Planning_Wizard.md#PWIZ-111 (code-established coverage of the rule by its catching rules, found by the bounded isolation search PWIZ-111
   defines, with the same generators and stopping condition at compile time), whether
@@ -137,7 +137,7 @@ unblocks: [ATS-401]
 acceptance_criteria:
   - "Every rule of every contract gets a test target fixed at WorkGraph construction: the one node that owns its enforcement; a designated fixture owner, picked by the companion's deterministic rule among candidates whose added edges keep the graph lawful, whose completion follows every other node its fixtures exercise; or, for a rule enforced outside the compile's write scope, each node in the compile that reaches its contract, with the required tests and dispositions an in-scope rule gets, run against the enforcing owner's built surfaces, and no existing owner test standing in for a required case; a split rule's fixtures count only when run on the designated node's final build with the completed outputs of every other node they exercise, all named in their receipt; a rule with no lawful target goes through the stage's repair route and otherwise fails certification closed."
   - "A test for a rule enforced outside the write scope runs directly against the exact owner build the receiving node resolves, never through the receiving node's code; a run counts only when its receipt binds that build's identity and it matches the receiving node's final owner dependency, a refusal only when that build produced it, and a changed owner dependency needs a fresh run; a failing test keeps the receiving node incomplete until a valid run passes, an adapter or harness fault is repaired through the test-harness route and the test reruns, and a failure that reproduces against the owner's surface waits for the owner's successor plan."
-  - "Every rule ends in exactly one disposition: its required tests bound; for a declared failure an earlier approved check always intercepts, its reachable refusal bound with code-established coverage evidence and no independent coverage credit for the shadowed result; a passing payload with a named gap evidenced to PWIZ-111's standard, by the planning check or by PlanCompile, for an unisolatable schema refusal; or a test gap for each required test that could not be produced, failed its pre-bind check, or has no automatic route."
+  - "Every rule ends in exactly one disposition: its required tests bound; for a declared failure an earlier approved check always intercepts on a surface, its reachable refusal and its passing neighbour both bound, with code-established coverage evidence and no independent coverage credit for the shadowed result, while any other declared surface that reaches the original result binds that result's own required tests; a passing payload with a named gap evidenced to PWIZ-111's standard, by the planning check or by PlanCompile, for an unisolatable schema refusal; or a test gap for each required test that could not be produced, failed its pre-bind check, or has no automatic route."
   - "A schema rule's required tests are a refusing and a passing payload fixture, and for an assertion an if selects also a passing payload on each route the contract distinguishes and, wherever the contract admits one, a contrasting accepted control that still breaks the assertion on a route that does not select it; a declared failure result's are a refusing input and its passing neighbour; a behavioural criterion's is one fixture per input condition it lists, each asserting its stated outcome so that a wrong result fails; any other criterion's is its ATS-003 oracle; no contract is exempt from schema fixtures; each member of a required list or other per-member constraint is its own rule with its own refusing fixture."
   - "Every behaviour fixture carries the owner-stated state and effect assertions for its polarity, each read through a declared observation surface; where a surface is missing, the carried PWIZ-110 completeness gap stands, or an assertion test gap if the gap was first found at compile time."
   - "Every expected outcome comes from the approved contract; a referee case that disagrees with the contract or lacks a contract outcome never binds, and observed planning outcomes are kept only as evidence."
