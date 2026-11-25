@@ -1997,7 +1997,11 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         # catalog.prd_builder_revision_resubmit for the minted cmd.prd_builder.revision.resubmit
         # (PRDB-014 targeted revision pass). No Touch row, profile, alias, exclusion, native
         # handler or proof is added.
-        "production_wiring_entry_count": 1336,
+        # C-FIX79 fix round K5-r1 (registry line 1536), 2026-11-25: +1 production-intent row
+        # (1336 -> 1337): catalog.chat_open_investigation_target for the minted
+        # cmd.chat.open_investigation_target (Investigation Context Open target, ACD-100). No Touch
+        # row, profile, alias, exclusion, native handler or proof is added.
+        "production_wiring_entry_count": 1337,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),

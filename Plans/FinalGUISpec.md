@@ -2746,7 +2746,7 @@ Required behavior summary:
 - Tree-level actions include `New file`, `New folder`, `Rename`, `Delete`, Copy full path, Copy relative path, Add to Assistant Chat, Open With, Download / Save Local Copy, and `/Cut/Paste` for workspace nodes. `cmd.file` / `cmd.file.*` is the command-family for workspace-node actions, and missing actions must not remain anonymous context-menu-only behavior; terminal reveal actions stay in the terminal family, with `Open in Terminal` using `cmd.terminal.open` and `Show Terminal` using `cmd.terminal.show`.
 - Workspace-node clipboard is a dedicated file-operation model: paste and `/drop` reuse one path-validation plus conflict-resolution engine, cut-pending state remains visibly armed until paste or clear, and successful paste uses the same progress and toast feedback as drag/drop instead of a second feedback path.
 - File-manager operational GUI coverage remains MVP and implementation-ready for `/file-manager/remote/review/runtime` seams: `/delete/duplicate/bulk`, `/refresh/conflicts`, generated-vs-workspace-file identity, `/open/save/export`, `/hiding`, `/test/share`, `/ignored-file` behavior, `/browser/terminal/artifacts` reveal/reuse rules, chat-thread diff exposure, multi-surface routing, exact-session terminal reveal, and project-driven orchestration-native feature-fleshing. These are PM-native obligations, not competitor-derived features to add blindly.
-- Known GUI ownership references are explicit: `§7.16` Chat, `§7.18` File Editor, `§7.20` Bottom Panel / Browser / Problems / Debug / Ports, `§7.4.2` Settings > LSP, `§7.4.5` Settings > SSH, and `§7.4.6` Settings > Debug. Remote-LSP GUI projections consume host-aware owner contracts such as `(server_id, root)` only as display context until the LSP owner provides the stronger root identity.
+- Known GUI ownership references are explicit: `§7.16` Chat, `§7.18` File Editor, `§7.20` Bottom Panel / Browser / Problems / Debug / Ports, `§7.4.4 Settings (Unified) panel specification` (its LSP row) Settings > LSP, `§7.4.5` Settings > SSH, and `§7.4.6` Settings > Debug. Remote-LSP GUI projections consume host-aware owner contracts such as `(server_id, root)` only as display context until the LSP owner provides the stronger root identity.
 
 ### 7.18 File Editor
 
@@ -27196,7 +27196,11 @@ canonical_text: >-
   catalog (web tools, planning, question, operation cards)`) and the two `#### 7.4.2` headings (`#### 7.4.2 Indexing
   settings subsection` and `#### 7.4.2 Agent Config Skills tab`) stay as declared aliases, and no heading is renamed.
   Citations into any of them use the full heading name; a bare §15 or §15.n means the Persistence chapter, and a bare
-  §7.4.2 is not cited. Renumbering is left to a scheduled structural cleanup.
+  §7.4.2 is not cited. Renumbering is left to a scheduled structural cleanup. Applied 2026-11-25: the bare §7.4.2
+  citations in 00-plans-index, this document, OpenCode_Coverage_Matrix and LSPSupport now name the full heading; the
+  Settings > LSP ones never meant either 7.4.2 heading and now cite `§7.4.4 Settings (Unified) panel specification`
+  (its LSP row). Where a preserved exact token pins the old wording (the LSPSupport checklist lines), the bare §7.4.2
+  stays inside that token with the full heading named beside it.
 gui_related: true
 gui_classification_reason: Numbering deconfliction affects user-visible GUI spec sections, settings sections, and cross-reference anchors.
 depends_on: [F3-387]
@@ -27205,7 +27209,7 @@ acceptance_criteria:
   - Section 15.3 resolves to Persistence/Tantivy rather than an ambiguous promoted-widget chapter.
   - Terminal Settings Ownership and Agent Config Skills tab are subordinate Settings anchors.
   - Structural renumbering does not change GUI behavior or widget ownership.
-  - Until a scheduled structural cleanup, the duplicate `## 15.` and `#### 7.4.2` headings are declared aliases and every citation into them names the full heading (DL-2602).
+  - Until a scheduled structural cleanup, the duplicate `## 15.` and `#### 7.4.2` headings are declared aliases and every citation into them names the full heading (DL-2602); a §7.4.2 kept inside a preserved exact token has the full heading named beside it.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - manual FinalGUISpec heading review
@@ -29055,7 +29059,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Free Models setup and top-10 screens default to global configuration to keep the GUI cleaner, while making clear that section/surface/role settings override the global top-10. Onboarding/doctor sequencing should set up paid providers first, then show Free Models and let the user configure the top-10. Free Models rows use plain setup actions and friendly unavailable labels, with expanded details for underlying provider/account, current skip reason, cooldown/Retry now state, source/ref, and return context. Bound 2026-11-24 (DL-2602): the top-10 is not a second list. It is the model defaults list (`ai.models.default-model` with its project and Everywhere layers, `model_defaults.source_order` `project_list` then `everywhere_factory_list` in `Plans/settings_inventory.json`), shown capped and labelled top 10 on the Free Models screens, and the top-10 editor saves through the ordinary Settings transaction (`cmd.settings.transaction.preview` / `cmd.settings.transaction.apply`) on that setting. The section, surface and role settings that override it are the other `model_defaults.list_setting_ids` lists.
+  Free Models setup and top-10 screens default to global configuration to keep the GUI cleaner, while making clear that section/surface/role settings override the global top-10. Onboarding/doctor sequencing should set up paid providers first, then show Free Models and let the user configure the top-10. Free Models rows use plain setup actions and friendly unavailable labels, with expanded details for underlying provider/account, current skip reason, cooldown/Retry now state, source/ref, and return context. Bound 2026-11-24 (DL-2602), applied 2026-11-25: the top-10 is not a second list. Free models are chosen in the one model defaults list, Settings > Models `Default models` (Models_System §7.2): each job row is one `model_defaults.list_setting_ids` setting in `Plans/settings_inventory.json`, holds one model selection at its This project or Everywhere layer, and is saved by the ordinary Settings transaction (`cmd.settings.transaction.preview` / `cmd.settings.transaction.apply`); any Free Models entry can be picked for any job there. The ranked top-10 editor is retired and no ranked top-10 store exists; read top-10 wording as Models_System MS-120 defines it. The Free Models screens show availability rows (the labels above, `Retry check` and `View details` as F3-408 binds them) and one per-model action, `Use for a job`, which asks for a job row and layer and sets that row to the model through the same Settings transaction. Configuring the top-10 in onboarding or Doctor means choosing Free Models on those rows. A section, surface or role setting that overrides the global choice is another job row or a Models_System §2 rung above it, and the GUI states requested/effective behavior.
 gui_related: true
 gui_classification_reason: Owns top-10 setup, onboarding placement, override disclosure, setup labels, and visible availability states.
 depends_on: []
@@ -29065,6 +29069,7 @@ acceptance_criteria:
   - Top-10 setup is global by default and does not hide that the list spans all providers/models.
   - Future onboarding/doctor flow sets up paid providers before Free Models top-10 configuration.
   - Unavailable rows use the priority `Needs sign-in`, `Rate limited`, `Provider offline`, `No longer free`, `Update issue`, `Unknown`, or `Multiple issues`.
+  - No ranked top-10 editor or store exists (DL-2602); `Use for a job` writes exactly one Default models job row through `cmd.settings.transaction.preview` / `cmd.settings.transaction.apply`, and a cancelled preview writes nothing.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Top-10 override disclosure fixtures

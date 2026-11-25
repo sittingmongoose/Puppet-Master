@@ -19456,6 +19456,62 @@
       "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
       "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2"
     },
+    "catalog.chat_open_investigation_target": {
+      "ui_element_id": "catalog.chat_open_investigation_target",
+      "ui_location": "Assistant Chat Investigation Context card and Context Detail Pane (assistant-chat-design ACD-100 Open target)",
+      "ui_command_id": "cmd.chat.open_investigation_target",
+      "handler_location": "handlers::chat::open_investigation_target",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.chat.open_investigation_target must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.chat.open_investigation_target must expose projected state selector and disabled reason before dispatch",
+        "cmd.chat.open_investigation_target dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.chat.open_investigation_target must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.chat.open_investigation_target must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.chat.open_investigation_target takes thread_id and investigation_id, opens the investigation's effective_target (else target) in the surface that owns it through that surface's existing route, never opens a raw payload, and is disabled with stale_projection when the target no longer resolves or unreachable when the owning surface cannot open it (C-FIX79, 2026-11-25)."
+      ],
+      "evidence_required": "Production wiring contract for cmd.chat.open_investigation_target; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.chat_open_investigation_target.availability",
+      "disabled_reason_projection": "state.commands.chat_open_investigation_target.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.chat.open_investigation_target has no declared persisted event; dispatch records a no-persist route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.chat.open_investigation_target.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.chat_open_investigation_target exposes a stable role/name/description matching cmd.chat.open_investigation_target.",
+        "keyboard_access": "catalog.chat_open_investigation_target is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.chat_open_investigation_target preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.chat_open_investigation_target surfaces state.commands.chat_open_investigation_target.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.chat_open_investigation_target.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.chat.open_investigation_target reaches handlers::chat::open_investigation_target with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.chat_open_investigation_target.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.chat_open_investigation_target.availability and disabled copy reads state.commands.chat_open_investigation_target.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.chat_open_investigation_target.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.chat.open_investigation_target records a no-persist route/open disposition and emits no persisted domain event."
+        },
+        {
+          "test_id": "wiring.catalog.chat_open_investigation_target.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.chat.open_investigation_target records dispatch receipt cmd.chat.open_investigation_target.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
     "catalog.chat_export_investigation_bundle": {
       "ui_element_id": "catalog.chat_export_investigation_bundle",
       "ui_location": "Assistant Chat surface; Projects refresh reverse consumers: No project chat/Files/Search/History/Context; conversion report and exact captured source",
