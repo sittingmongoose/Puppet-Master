@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_To_Node_Compilation.md`
 
-Source lines: L2169-L2327
+Source lines: L2169-L2329
 
-Source SHA256: `bb5efaf7313c3146cf17a432fec617f494c55601f674f0e1925acf52fd0221ab`
+Source SHA256: `1e9bc6391faac6bf5e6e32fe8cb7f30369dd714a8cd90632334d27c84ba2f94e`
 
 ---
 
@@ -42,11 +42,13 @@ canonical_text: >-
   identity of the owner build it ran against and that identity matches the owner dependency the receiving node's final
   build resolves; a refusal counts only when that owner build produced it, a run against any other owner build never
   counts, a changed owner dependency needs a fresh run, and a node with no automatic route to that exact build records
-  a test gap under the policy above. A failing test keeps the receiving node incomplete until a valid run of it passes:
+  a test gap whose test_gap_policy PlanCompile sets as this unit states below, except that a gap whose missing
+  piece is the owner build itself is block_completion and names that build. A failing test keeps the receiving node incomplete until a valid run of it passes:
   an adapter or harness fault goes through the test-harness repair route (Plans/Executor_Protocol.md#EP-101 and
   #EP-102) and the test reruns, while a failure that reproduces directly against that same owner build is an
-  enforcement defect of that owner and goes to it through a successor plan (PNC-015). No change inside the receiving node's write scope can
-  satisfy such a test, and a change to an approved fixture or its expectation likewise arrives only through a successor
+  enforcement defect of that owner and goes to it through a successor plan (PNC-015). No change to the receiving node's own code can satisfy such a test; a change to which owner build it resolves only
+  changes the build the test must run against and needs a fresh run, and that build must implement the plan version the
+  compile consumes. A change to an approved fixture or its expectation likewise arrives only through a successor
   plan. A
   rule left without a lawful target, because the edges it needs would create a cycle or break the graph's phase order
   or no node in the compile can receive it, goes through the WorkGraph construction stage's repair route (PNC-016),
