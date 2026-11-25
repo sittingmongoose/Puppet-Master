@@ -388,6 +388,13 @@ export const tests = {
 
 	async 'seventh pass: the simple Goal\'s page, the new names, the checks on the Planning page, Glass\'s line and pinned frost'(t) {
 		const f = await openSettings(t);
+		/* found after the seventh pass was shown (2026-11-25): search still listed the old Goal's templates and its "active
+		   Goals" with a phase and a percentage, and wrote the old names into the paths of memories, personas and crews */
+		const find = (q) => f.evaluate(async (q) => { const i = document.querySelector('#pm-settings-root [data-hero-search]'); if (!i) return null; const wait = (ms) => new Promise((r) => setTimeout(r, ms)); i.focus(); i.value = q; i.dispatchEvent(new Event('input', { bubbles: true })); await wait(500); const rows = [...document.querySelectorAll('.search-result')].filter((e) => e.getClientRects().length).map((e) => ({ type: e.dataset.searchResult, title: (e.querySelector('.search-result-title') || {}).textContent, path: (e.querySelector('.search-result-path') || {}).textContent || '' })); i.value = ''; i.dispatchEvent(new Event('input', { bubbles: true })); await wait(200); return rows; }, q);
+		const found = {}; for (const q of ['Implementation Goal', 'Kimi refinement', 'phase', 'crew', 'Generalist', 'memory']) found[q] = await find(q);
+		const hits = Object.values(found).flat().filter(Boolean), oldHits = hits.filter((r) => r.type === 'goal-template' || r.type === 'active-goal');
+		await t.check('search finds no template and no "active Goal" of the old Goal', Object.values(found).every(Boolean) && hits.length > 4 && oldHits.length === 0, JSON.stringify(oldHits).slice(0, 300));
+		await t.check('and a result\'s path says the names the rail says', (found.crew || []).some((r) => r.type === 'crew' && r.path.indexOf('Memory & Goals › Personas & Crews') === 0) && !hits.some((r) => /Automation/.test(r.path)), JSON.stringify(hits.filter((r) => /Automation/.test(r.path)).slice(0, 4)));
 		/* Jared, 2026-11-24, on "Rename the two Automation titles?": "A, rename them." */
 		await go(f, 'memory', 'goals');
 		const names = await f.evaluate(() => ({ rail: [...document.querySelectorAll('#pm-settings-root .domain-link')].map((n) => n.textContent.replace(/\s+/g, ' ').trim()), track: [...document.querySelectorAll('#pm-settings-root nav.workspace-tabs.rf-bar .workspace-tab')].map((n) => n.textContent.replace(/\s+/g, ' ').trim()), any: /Automation/.test(document.querySelector('#pm-settings-root').textContent) }));

@@ -11,10 +11,18 @@
      planning helpers and reviewers are shown with a way to change them where they live; the own "inheritance"
      switches repeated the per-persona model and permission rows and are gone. Settings has no open chat, so the
      chat rows read as what new chats start with and where one chat changes its own (review, 2026-09-27).
-   - Creativity and Word choice range are sliders with plain words at each end, and read "Same as the project" until
-     a persona sets its own; the Spending cap reads "No cap" until a cap is set. They were number boxes that showed
-     nothing but a placeholder. Notes on using tools open an editor like Instructions instead of a one-line box, and
-     a persona's own tools, skills and plugins stay visible as chips even when they are not in the usual list.
+   - Creativity and Word choice range are sliders with plain words at each end; until a persona sets its own they
+     show the number they use and where it comes from ("Model default · from Randomness"); the Spending cap reads
+     "No cap" until a cap is set. They were number boxes that showed nothing but a placeholder. Notes on using tools
+     open an editor like Instructions instead of a one-line box, and a persona's own tools, skills and plugins stay
+     visible as chips even when they are not in the usual list.
+   - No choice here follows "the project" without naming what it follows (Jared, 2026-11-20, removing the generic
+     project label; his option A): a choice that follows another setting names it and what it is now, "Same as new
+     agent runs · Getting on with it", "Same as Profile in use · Review first", as the model rows do
+     (kit.d/31-model-rows.js).
+   - Personas carry no model (Plans/Personas.md MD2, Jared 2026-11-12; DL-476 retired Preferred model, Preferred AI
+     service, edition and thinking effort): New persona asks for none, nothing writes those keys, and Try shows the
+     model a persona's run uses, the Everyday model from Settings › Models.
    - Tags are free (FO-161, Plans/Personas.md P-010 / DL-474): type any tag and add it with Enter or comma, each a
      removable chip; the eight suggested kinds sit under the box and typing filters them. The library row carries the
      tags, so the roster filter finds a persona by them.
@@ -44,7 +52,7 @@
   };
   const GROUPS = [
     { title: 'How it answers', help: 'Style and length of its replies.', ids: [S.style, S.format, S.mode], more: [S.verbosity, S.talk] },
-    { title: 'Model and cost', help: 'Which AI it prefers and how much it may spend.', ids: [S.platform, S.model, S.variant, S.effort, S.budget], more: [S.temp, S.topp] },
+    { title: 'Model and cost', help: 'How much it may spend, and how inventive its answers are.', ids: [S.budget], more: [S.temp, S.topp] },
     { title: 'Tools and instructions', help: 'What it works from and which tools it reaches for.', ids: [S.perms, S.posture, S.prefer, S.avoid, S.skills, S.plugins], more: [S.guidance] }
   ];
   const SCOPED = [S.name, S.desc, S.pid, S.aliases, S.tags, S.prompt].concat(...GROUPS.map(g => g.ids.concat(g.more)));
@@ -55,6 +63,10 @@
   let seq = 0;
   const newId = p => p + '-' + Date.now().toString(36) + '-' + (++seq);
   const slug = s => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'persona';
+  /* personas carry no model (Plans/Personas.md MD2; DL-476 retired these rows, write_policy omit_retired_key): an old
+     record's model, service, edition and thinking effort are never written into a new or copied persona */
+  const RETIRED = [S.platform, S.model, S.variant, S.effort];
+  const ownProps = props => { const out = Object.assign({}, props || {}); RETIRED.forEach(k => delete out[k]); return out; };
 
   const ps = () => { const s = PM51.s().personas; if (!s.show) s.show = 'all'; delete s.followProvider; delete s.inheritTools; return s; };
   const personas = () => state.personas || (state.personas = []);
@@ -78,19 +90,19 @@
      model route" and the rest are the models that are ready. A member's depth is kept beside its model under a key of
      its own (the picker's depth store), per crew and member; the guided window works on a draft key and hands its
      depths to the crew when it is saved, so closing the window changes nothing. */
-  const CREW_MODEL = 'personas.crew.member-model', FOLLOW = 'inherit';
+  const CREW_MODEL = 'personas.crew.member-model', ROUTE = 'inherit';
   (function crewModelChoices() {
     if (typeof O55_MODEL_CANON !== 'object' || !O55_MODEL_CANON || O55_MODEL_CANON[CREW_MODEL]) return;
-    O55_MODEL_CANON[CREW_MODEL] = { label: 'Model', options: [FOLLOW], inheritFrom: 'normal_defaults', inheritLabel: 'Follow the model route' };
-    O55L.bySetting[CREW_MODEL] = Object.assign({}, O55L.bySetting[CREW_MODEL] || {}, { [FOLLOW]: 'Follow the model route' });
+    O55_MODEL_CANON[CREW_MODEL] = { label: 'Model', options: [ROUTE], inheritFrom: 'normal_defaults', inheritLabel: 'Follow the model route' };
+    O55L.bySetting[CREW_MODEL] = Object.assign({}, O55L.bySetting[CREW_MODEL] || {}, { [ROUTE]: 'Follow the model route' });
   })();
   const crewModels = c => c.models || (c.models = {});
   const depths = () => { const st = PM51.s(); return st.o55Depth || (st.o55Depth = {}); };
   const depthKey = (crewId, name) => `crew:${crewId}:${name}`;
   const moveDepths = (from, to, members, keep) => members.forEach(n => { const d = depths(), v = d[depthKey(from, n)]; if (v) d[depthKey(to, n)] = clone(v); else delete d[depthKey(to, n)]; if (!keep) delete d[depthKey(from, n)]; });
-  const modelControl = (crewId, name, value, action) => PM51.modelSelect(CREW_MODEL, value || FOLLOW, { action, data: { crew: crewId, member: name }, label: `Model for ${name}`, depthKey: depthKey(crewId, name) });
+  const modelControl = (crewId, name, value, action) => PM51.modelSelect(CREW_MODEL, value || ROUTE, { action, data: { crew: crewId, member: name }, label: `Model for ${name}`, depthKey: depthKey(crewId, name) });
   const modelRows = (crewId, members, lead, models, action, last) => PM51.rows(members.map(n => ({ label: n, pill: n === lead ? `<span class="rf-crew-lead">Lead</span>` : '', control: modelControl(crewId, n, models[n], action) })).concat(last || []), { cls: 'rf-crew-models' });
-  const pickedCount = (members, models) => members.filter(n => models[n] && models[n] !== FOLLOW).length;
+  const pickedCount = (members, models) => members.filter(n => models[n] && models[n] !== ROUTE).length;
   /* the example crews open with one model picked, so the list shows what a pick looks like (a concept's prefilled choice) */
   const seedCrewModels = () => {
     const st = ps(); if (st.crewModelsSeeded) return; st.crewModelsSeeded = true;
@@ -131,19 +143,46 @@
   const o55PersonaValueText = PM51.valueText;
   PM51.valueText = (setting, v) => setting && setting.id === S.tags && Array.isArray(v) ? tagText(uniqueTags(v)) : o55PersonaValueText(setting, v);
   const personaMeta = x => [x.locked ? 'Core · locked' : x.group === 'Bundled' ? 'Bundled' : 'Yours', x.chat === false ? 'helper only' : '', isHidden(x) ? 'hidden' : '', tagList(x).map(tagWord).join(', ')].filter(Boolean).join(' · ');
-  /* a persona's own number, or "the project's": sliders with a word for where they sit, and a cap that is off at 0 */
+  /* A choice that follows another setting names that setting and what it is now (Jared, 2026-11-20, option A: "Same
+     as Everyday model · Claude Opus 4"); the old generic project label named neither. Starts by follows how new
+     agent runs start, in this row's own words; What it may do without asking follows the permission profile in use;
+     Creativity and Word choice range follow Randomness and Word-choice focus (Settings › Models › How models
+     answer). */
+  const FOLLOW = {
+    [S.mode]: { from: 'code.execution.run-mode', name: 'new agent runs' },
+    [S.perms]: { from: 'safety.rules.permission-preset' },
+    [S.temp]: { from: 'ai.models.temperature' },
+    [S.topp]: { from: 'ai.models.top-p' }
+  };
+  const o55PersonaLabel = PM51.valueLabel;
+  const followName = id => { const f = FOLLOW[id], s = PM51.setting(f.from); return f.name || (s ? PM51.rowLabel(s) : f.from); };
+  function followNow(id) {
+    const from = FOLLOW[id].from, v = PM51.value(from);
+    if (id === S.mode) { const own = String(v == null ? '' : v).toLowerCase(); return (O55R[S.mode]?.options || {})[own] ? o55PersonaLabel(S.mode, own) : PM51.valueLabel(from, v); }
+    if (id === S.perms) { const inUse = PM51.profileInUse ? PM51.profileInUse() : (state.permissionProfiles || []).find(x => x.status === 'default'); return inUse ? inUse.name : PM51.valueLabel(from, v); }
+    const n = Number(v);
+    return v !== '' && v != null && Number.isFinite(n) ? String(+n.toFixed(2)) : cap(String(PM51.valueLabel(from, v)));
+  }
+  const followWords = id => `Same as ${followName(id)} · ${followNow(id)}`;
+  PM51.valueLabel = (id, raw) => String(raw) === 'inherit' && (id === S.mode || id === S.perms) ? followWords(id) : o55PersonaLabel(id, raw);
+  /* a persona's own number, or the one it follows: sliders with a word for where they sit, and a cap that is off at 0 */
   const TUNE = {
     [S.temp]: { min: 0, max: 2, step: 0.1, start: 0.8, ends: ['Predictable', 'Inventive'], word: v => v < 0.3 ? 'Very predictable' : v < 0.6 ? 'Predictable' : v <= 1 ? 'Balanced' : v <= 1.4 ? 'Inventive' : 'Very inventive' },
     [S.topp]: { min: 0.05, max: 1, step: 0.05, start: 0.9, ends: ['Likeliest words', 'Any word'], word: v => v < 0.4 ? 'Narrow' : v < 0.75 ? 'Focused' : v < 0.95 ? 'Wide' : 'Full range' }
   };
   const tuneNum = v => (v == null || v === '' || v === 'inherit') ? NaN : Number(v);
-  const tuneText = (id, v) => { const n = tuneNum(v); return Number.isFinite(n) ? `${+n.toFixed(2)} · ${TUNE[id].word(n)}` : 'Same as the project'; };
+  const tuneText = (id, v) => { const n = tuneNum(v); return Number.isFinite(n) ? `${+n.toFixed(2)} · ${TUNE[id].word(n)}` : `${followNow(id)} · from ${followName(id)}`; };
+  /* the Details panel's list of what each persona has reads the same words as the row */
+  const o55PersonaTuneText = PM51.valueText;
+  PM51.valueText = (setting, v) => setting && TUNE[setting.id] ? tuneText(setting.id, v) : o55PersonaTuneText(setting, v);
   const capOn = v => Number(v) > 0;
   function tuneCtl(p, id) {
     const t = TUNE[id], n = tuneNum(pval(p, id)), d = { id: p.id, setting: id };
-    if (!Number.isFinite(n)) return `<span class="o55-inherit o55-mgp-own"><span class="o55-auto">${icon('spark')}<span>Same as the project</span></span><button type="button" class="o55-textbtn" data-action="pm51-personas-own" ${dataAttrs(d)}>Set its own</button></span>`;
+    /* following: the value it uses, and on a small line where it comes from (as the model picker's face does), so the
+       row's words keep their width */
+    if (!Number.isFinite(n)) return `<span class="o55-inherit o55-mgp-own"><span class="o55-auto">${icon('spark')}<span class="o55-mgp-follow"><span>${h(followNow(id))}</span><small>from ${h(followName(id))}</small></span></span><button type="button" class="o55-textbtn" data-action="pm51-personas-own" ${dataAttrs(d)}>Set its own</button></span>`;
     const v = Math.max(t.min, Math.min(t.max, n));
-    return `<div class="o55-mgp-tune"><div class="o55-mgp-tune-track"><span class="o55-mgp-tune-end" aria-hidden="true">${h(t.ends[0])}</span><input type="range" min="${t.min}" max="${t.max}" step="${t.step}" value="${v}" data-action="pm51-personas-tune" ${dataAttrs(d)} aria-label="${a(PM51.rowLabel(PM51.setting(id)))}" aria-valuetext="${a(tuneText(id, v))}"><span class="o55-mgp-tune-end" aria-hidden="true">${h(t.ends[1])}</span></div><div class="o55-mgp-tune-foot"><output class="o55-mgp-tune-now">${h(tuneText(id, v))}</output><button type="button" class="o55-textbtn" data-action="pm51-personas-inherit" ${dataAttrs(d)}>Same as the project</button></div></div>`;
+    return `<div class="o55-mgp-tune"><div class="o55-mgp-tune-track"><span class="o55-mgp-tune-end" aria-hidden="true">${h(t.ends[0])}</span><input type="range" min="${t.min}" max="${t.max}" step="${t.step}" value="${v}" data-action="pm51-personas-tune" ${dataAttrs(d)} aria-label="${a(PM51.rowLabel(PM51.setting(id)))}" aria-valuetext="${a(tuneText(id, v))}"><span class="o55-mgp-tune-end" aria-hidden="true">${h(t.ends[1])}</span></div><div class="o55-mgp-tune-foot"><output class="o55-mgp-tune-now">${h(tuneText(id, v))}</output><button type="button" class="o55-textbtn" data-action="pm51-personas-inherit" ${dataAttrs(d)}>${h(`Same as ${followName(id)} · ${followNow(id)}`)}</button></div></div>`;
   }
   function capCtl(p) {
     const v = pval(p, S.budget), d = { id: p.id, setting: S.budget };
@@ -260,23 +299,20 @@
   function personaWizard() {
     const cards = () => [{ title: 'Blank', text: 'Start from nothing and set it up yourself.', icon: 'plus', value: '' }].concat(personas().map(x => ({ title: x.name, text: x.description, icon: x.locked ? 'lock' : 'user', value: x.id })));
     PM51.wizard({
-      title: 'New persona', subtitle: 'A persona is a role the assistant plays: a purpose, a way of answering, a model and tools.', eyebrow: 'Persona', icon: 'user',
-      draft: { base: null, name: '', description: '', style: 'balanced', model: 'inherit' }, finishLabel: 'Create persona',
+      title: 'New persona', subtitle: 'A persona is a role the assistant plays: a purpose, a way of answering, and tools.', eyebrow: 'Persona', icon: 'user',
+      draft: { base: null, name: '', description: '', style: 'balanced' }, finishLabel: 'Create persona',
       steps: [
         { label: 'Start', title: 'Where should it start from?', lead: 'Copy a persona that is close to what you want, or start blank.', render: d => PM51.tiles(cards().map(c => ({ title: c.title, text: c.text, icon: c.icon, selected: d.base === c.value, data: { base: c.value } })), { action: 'pm51-personas-w-base' }), check: d => d.base == null ? 'Pick where to start.' : '' },
         { label: 'Name', icon: 'edit', title: 'What is it called, and what is it for?', lead: 'The name shows in pickers. One line on its purpose helps you and automatic picking.', recap: d => d.name,
           render: d => `<div class="o55-setup-fields">${PM51.field('Name', `<input class="text-control o55-pw-name" value="${a(d.name)}" placeholder="For example: Release Manager" autocomplete="off"/>`)}${PM51.field('What it is for', `<input class="text-control o55-pw-desc" value="${a(d.description)}" placeholder="For example: Prepares releases and writes the notes." autocomplete="off"/>`)}</div>`,
           collect: (w, d) => { d.name = String(w.querySelector('.o55-pw-name').value || '').trim(); d.description = String(w.querySelector('.o55-pw-desc').value || '').trim(); },
           check: d => { if (!d.name) return 'Give it a name.'; if (RESERVED.has(slug(d.name)) || O55_CORE_PERSONAS.some(c => c.name.toLowerCase() === d.name.toLowerCase())) return `${d.name} is kept for a built-in persona. Pick another name.`; if (names().some(n => n.toLowerCase() === d.name.toLowerCase())) return `There is already a persona called ${d.name}.`; return ''; } },
-        { label: 'Answers', icon: 'sliders', title: 'How should it answer?', lead: 'You can fine-tune length, format and chatter afterwards.', render: d => PM51.tiles(['concise', 'balanced', 'detailed'].map((v, i) => ({ title: PM51.valueLabel(S.style, v), text: ['Gets to the point in a few lines.', 'Enough detail to follow, no more.', 'Explains its reasoning and the options.'][i], icon: ['bolt', 'sliders', 'list'][i], selected: d.style === v, data: { style: v } })), { action: 'pm51-personas-w-style' }) },
-        { label: 'Model', icon: 'brain', title: 'Which model should it prefer?', lead: 'Same as the project is usually right. Pick one when this persona needs something special.', recap: d => PM51.valueLabel(S.model, d.model),
-          render: d => PM51.field('Preferred model', PM51.dropdown(d.model, [{ value: 'inherit', label: 'Same as the project' }].concat(PM51.readyModels ? PM51.readyModels() : []), { cls: 'o55-pw-model', label: 'Preferred model' }), 'Only models on your connected accounts are offered.'),
-          collect: (w, d) => { const m = w.querySelector('.o55-pw-model'); if (m) d.model = m.value; } }
+        { label: 'Answers', icon: 'sliders', title: 'How should it answer?', lead: 'You can fine-tune length, format and chatter afterwards.', render: d => PM51.tiles(['concise', 'balanced', 'detailed'].map((v, i) => ({ title: PM51.valueLabel(S.style, v), text: ['Gets to the point in a few lines.', 'Enough detail to follow, no more.', 'Explains its reasoning and the options.'][i], icon: ['bolt', 'sliders', 'list'][i], selected: d.style === v, data: { style: v } })), { action: 'pm51-personas-w-style' }) }
       ],
       onFinish: d => {
         const base = personas().find(x => x.id === d.base);
         const rec = Object.assign(base ? clone(base) : { tone: '', route: routes()[0] || 'Balanced route', tools: ['Standard tools'], prompt: '' }, { id: newId('persona'), name: d.name, description: d.description || (base ? base.description : ''), group: 'Custom', locked: false, crews: [], chat: true });
-        rec.props = Object.assign({}, (base && base.props) || {}, { [S.style]: d.style, [S.model]: d.model });
+        rec.props = Object.assign(ownProps(base && base.props), { [S.style]: d.style });
         personas().push(rec); ps().show = 'all'; PM51.setSel(ID, rec.id); PM51.setTab(ID, 'personas'); saveState(); refresh();
         const where = String(PM51.value('personas.library.custom-scope') || 'project') === 'global' ? 'every project' : 'this project';   /* FO-131 */
         PM51.toast('Persona created', `${d.name} is saved for ${where}. Fine-tune it below.`);
@@ -284,7 +320,7 @@
     });
   }
   function duplicate(p) {
-    const copy = clone(p); copy.id = newId('persona'); copy.name = p.name + ' copy'; copy.group = 'Custom'; copy.locked = false; copy.crews = []; copy.chat = true;
+    const copy = clone(p); copy.id = newId('persona'); copy.name = p.name + ' copy'; copy.group = 'Custom'; copy.locked = false; copy.crews = []; copy.chat = true; copy.props = ownProps(p.props);
     personas().push(copy); ps().show = 'all'; PM51.setSel(ID, copy.id); saveState(); refresh(); PM51.toast('Persona duplicated', `${copy.name} is yours to change.`);
   }
   function addToCrew(p) {
@@ -388,7 +424,7 @@
       onFinish: d => {
         const rec = isNew ? { id: newId('crew') } : c; const old = c ? c.name : '';
         Object.assign(rec, { name: d.name, lead: d.lead, members: d.members.slice(), route: d.route, handoff: d.handoff, concurrency: d.atOnce });
-        rec.models = {}; d.members.forEach(n => { if (d.models[n] && d.models[n] !== FOLLOW) rec.models[n] = d.models[n]; });
+        rec.models = {}; d.members.forEach(n => { if (d.models[n] && d.models[n] !== ROUTE) rec.models[n] = d.models[n]; });
         moveDepths(d.key, rec.id, names());
         if (isNew) crews().push(rec);
         for (const p of personas()) { p.crews = (p.crews || []).filter(n => n !== rec.name && n !== old); if (rec.members.includes(p.name)) p.crews.push(rec.name); }
@@ -451,8 +487,6 @@
   PM51.moreChoices(S.chatDefault, chatPersonas);
   PM51.moreChoices(S.active, chatPersonas);
   PM51.moreChoices(S.hidden, () => personas().filter(p => p.group === 'Bundled').map(p => ({ value: p.id, label: p.name })));
-  PM51.moreChoices(S.model, () => (PM51.readyModels ? PM51.readyModels() : []));
-  PM51.moreChoices(S.platform, () => (state.providers || []).filter(p => p.status === 'active').map(p => ({ value: p.id, label: p.name })));
   PM51.moreChoices(S.perms, () => (state.permissionProfiles || []).map(p => ({ value: p.id, label: p.name })));
   [S.prefer, S.avoid].forEach(id => PM51.moreChoices(id, () => TOOLS.map(t => ({ value: t, label: t }))));
   PM51.moreChoices(S.skills, () => ((PM51.s().skills) || []).map(k => ({ value: k.name, label: k.name })));
@@ -556,19 +590,20 @@
     });
   });
   PM51.on('personas-reveal', el => { if (PM51.revealSetting) PM51.revealSetting(ds(el, 'setting')); });
-  /* a persona's own number: set one, slide it, or hand it back to the project */
+  /* a persona's own number: set one (from the number it follows, when that is a number), slide it, or follow again */
   const ownPersona = el => { const p = personas().find(x => x.id === ds(el, 'id')); if (!p || p.locked) return null; p.props = p.props || {}; return p; };
   const focusOwn = id => window.setTimeout(() => { const row = root.querySelector(`[data-pm51-manager="personas"] .o55-scoped[data-setting-id="${cssEscape(id)}"]`); const f = row && row.querySelector('input, .o55-textbtn'); if (f) f.focus({ preventScroll: true }); }, 30);
+  const tuneStart = id => { const t = TUNE[id], n = tuneNum(PM51.value(FOLLOW[id].from)); return Number.isFinite(n) ? Math.max(t.min, Math.min(t.max, n)) : t.start; };
   PM51.on('personas-own', el => {
     const p = ownPersona(el), id = ds(el, 'setting'); if (!p) return;
-    p.props[id] = TUNE[id] ? TUNE[id].start : 5; saveState(); refresh(); focusOwn(id);
+    p.props[id] = TUNE[id] ? tuneStart(id) : 5; saveState(); refresh(); focusOwn(id);
     PM51.toast('Saved', TUNE[id] ? `${PM51.rowLabel(PM51.setting(id))} for ${p.name}: ${tuneText(id, p.props[id])}. Slide to change it.` : `${p.name} may spend up to $${p.props[id]} per run. Change the amount beside it.`);
   });
   PM51.on('personas-inherit', el => {
     const p = ownPersona(el), id = ds(el, 'setting'); if (!p) return;
     if (id === S.budget) p.props[id] = 0; else delete p.props[id];
     saveState(); refresh(); focusOwn(id);
-    PM51.toast('Saved', id === S.budget ? `${p.name} has no spending cap.` : `${PM51.rowLabel(PM51.setting(id))} for ${p.name} is the same as the project again.`);
+    PM51.toast('Saved', id === S.budget ? `${p.name} has no spending cap.` : `${PM51.rowLabel(PM51.setting(id))} for ${p.name} follows ${followName(id)} again: ${followNow(id)}.`);
   });
   const tuneLive = el => { const id = ds(el, 'setting'), text = tuneText(id, el.value); el.setAttribute('aria-valuetext', text); const out = el.closest('.o55-mgp-tune')?.querySelector('.o55-mgp-tune-now'); if (out) out.textContent = text; return id; };
   PM51.onInput('personas-tune', el => tuneLive(el));
@@ -586,10 +621,12 @@
     });
   });
   PM51.on('personas-duplicate', el => { const p = personas().find(x => x.id === ds(el, 'id')); if (p) duplicate(p); });
+  /* the model a persona's run uses: personas carry none (MD2), so it is the Everyday model, with its depth */
+  const runModel = () => { const s = PM51.setting('ai.models.default-model'); return s ? `${PM51.rowLabel(s)} · ${PM51.valueText(s, PM51.value(s.id))} (set in Settings › Models)` : 'Set in Settings › Models'; };
   const tryPanel = (p, question) => PM51.panel({
     title: `Try ${p.name}`, subtitle: 'This preview cannot run a model. Here is what would shape the reply.',
     body: (question ? PM51.panelSection('Your question', `<div class="pm51-example">${h(question)}</div>`) : '')
-      + PM51.panelSection('How it would approach it', PM51.kv([['Answer style', PM51.valueLabel(S.style, pval(p, S.style))], ['Preferred model', PM51.valueLabel(S.model, pval(p, S.model))], ['Tools it prefers', (pval(p, S.prefer) || []).join(' · ') || 'None'], ['Instructions', p.prompt || 'None']]))
+      + PM51.panelSection('How it would approach it', PM51.kv([['Answer style', PM51.valueLabel(S.style, pval(p, S.style))], ['Model', runModel()], ['Tools it prefers', (pval(p, S.prefer) || []).join(' · ') || 'None'], ['Instructions', p.prompt || 'None']]))
       + PM51.note('In the app, the reply appears here without starting a real task.')
   });
   PM51.on('personas-try-open', el => { const p = personas().find(x => x.id === ds(el, 'id')); if (p) tryPanel(p, ''); });
@@ -616,10 +653,10 @@
   PM51.on('personas-crew-add-member', el => { const c = crews().find(x => x.id === ds(el, 'id')); if (c) addMember(c); });
   PM51.onChange('personas-crew-model', el => {
     const c = crews().find(x => x.id === ds(el, 'crew')), n = ds(el, 'member'); if (!c || !n) return;
-    if (el.value === FOLLOW) delete crewModels(c)[n]; else crewModels(c)[n] = el.value;
+    if (el.value === ROUTE) delete crewModels(c)[n]; else crewModels(c)[n] = el.value;
     saveState();
     const r = PM51.modelResolve ? PM51.modelResolve(CREW_MODEL, el.value) : null, d = depths()[depthKey(c.id, n)];
-    PM51.toast('Saved', el.value === FOLLOW ? `${n} follows the model route.` : `${n}: ${(r && r.name) || el.value}${d && d.model === el.value && d.effort ? ` · ${d.effort} depth` : ''}.`);
+    PM51.toast('Saved', el.value === ROUTE ? `${n} follows the model route.` : `${n}: ${(r && r.name) || el.value}${d && d.model === el.value && d.effort ? ` · ${d.effort} depth` : ''}.`);
     /* the line under the crew's name counts the members with a model of their own */
     const sub = el.closest('.pm51-detail'); const line = sub && sub.querySelector('.pm51-detail-head .pm51-detail-sub, .pm51-detail-head .resource-subtitle');
     if (line) { const k = pickedCount(c.members || [], crewModels(c)); line.textContent = `${(c.members || []).length} members · ${k ? `${k} with a model of ${k === 1 ? 'its' : 'their'} own` : c.route}`; }
@@ -633,7 +670,7 @@
   }));
   PM51.on('personas-help', () => PM51.panel({
     title: 'How personas work',
-    body: PM51.panelSection('In short', '<p class="pm51-ps-text">A persona is a role the assistant plays: a purpose, a way of answering, a preferred model, and the tools it reaches for. Crews are teams of personas with a lead.</p>')
+    body: PM51.panelSection('In short', '<p class="pm51-ps-text">A persona is a role the assistant plays: a purpose, a way of answering, and the tools it reaches for. It uses the model set in Settings › Models. Crews are teams of personas with a lead.</p>')
       + PM51.panelSection('Core, bundled, yours', PM51.kv([['Core', 'Nine built-in personas, always there and locked. Duplicate one to make your own version.'], ['Bundled', 'Specialists that ship with Puppet Master. Change them, or hide them from pickers.'], ['Yours', 'Made by you. Change, export or delete them freely.']]))
       + PM51.panelSection('Working together', PM51.kv([['Crews', 'A team with a lead, for one job.'], ['Group work', 'BrainStorm, Review and Chat Room.'], ['Helpers', 'Short-lived agents for one bounded task.']]))
   }));

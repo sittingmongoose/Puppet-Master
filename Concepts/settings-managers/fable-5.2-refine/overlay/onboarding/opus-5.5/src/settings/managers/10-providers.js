@@ -93,6 +93,12 @@
   const accModel = (acc, id) => accModels(acc).find(m => m.id === id);
   const accModelOn = (acc, id) => { const m = accModel(acc, id); return !!(m && m.enabled); };
   const accEnabled = (p, acc) => (p.models || []).filter(m => accModelOn(acc, m.id));
+  /* Models for work that writes, excluding models that only make or read images. */
+  const writes = m => !(m.caps || []).length || (m.caps || []).some(c => !/^image-/.test(c));
+  const accountModelChoices = (p, acc) => accEnabled(p, acc).filter(writes);
+  const modelValue = (p, m) => `${p.id}/${m.id}`;
+  const accountModelPickAllowed = (p, acc, pick) =>
+    pick === 'inherit' || accountModelChoices(p, acc).some(m => modelValue(p, m) === pick);
   const seatless = acc => /seat/i.test(String(acc.health || ''));
   const limitHit = acc => /limit/i.test(String(acc.health || '')) || Object.values(usage(acc).windows || {}).some(w => w && typeof w === 'object' && Number(w.pct) >= 100);
   const routingOf = p => { if (!p.routing || typeof p.routing !== 'object') p.routing = EMPTY_ROUTING(); if (!Array.isArray(p.routing.accountOrder)) p.routing.accountOrder = []; return p.routing; };
@@ -183,8 +189,24 @@
     if (typeof acc.usage.text !== 'string') acc.usage.text = acc.usage.text == null ? '' : String(acc.usage.text);
     if (!acc.usage.windows || typeof acc.usage.windows !== 'object' || Array.isArray(acc.usage.windows)) acc.usage.windows = {};
     if (!Array.isArray(acc.models)) acc.models = (p.models || []).map(m => ({ id: m.id, enabled: !!m.enabled }));
-    if (typeof acc.defaultModel !== 'string') { const want = (p.routing || {}).defaultModel; acc.defaultModel = accModelOn(acc, want) ? want : ((acc.models.find(m => m.enabled) || {}).id || ''); }
     if (!acc.props || typeof acc.props !== 'object' || Array.isArray(acc.props)) acc.props = {};
+    /* FO-228: replay saved flags for models still on the account before checking either default. */
+    const savedModel = (state.accountModels || {})[`${p.id}/${acc.id}`];
+    const flags = savedModel?.enabled;
+    if (flags && typeof flags === 'object' && !Array.isArray(flags)) {
+      for (const m of acc.models) {
+        if (Object.hasOwn(flags, m.id) && typeof flags[m.id] === 'boolean') m.enabled = flags[m.id];
+      }
+    }
+    if (typeof savedModel?.model === 'string' && accModelOn(acc, savedModel.model)) {
+      acc.defaultModel = savedModel.model;
+    } else if (typeof acc.defaultModel !== 'string' || (acc.defaultModel && !accModelOn(acc, acc.defaultModel))) {
+      const want = p.routing?.defaultModel;
+      acc.defaultModel = accModelOn(acc, want) ? want : (accEnabled(p, acc)[0]?.id || '');
+    }
+    const pick = savedModel?.pick ?? acc.props[ACCOUNT_MODEL];
+    if (accountModelPickAllowed(p, acc, pick)) acc.props[ACCOUNT_MODEL] = pick;
+    else delete acc.props[ACCOUNT_MODEL];
     /* USG-1 (Jared 2026-10-10): an account's own switch level is ai.accounts.hard-switch-level at scope account and
        ai.accounts.account-threshold-override is retired. A value saved under the old id is read once and carried to the
        new one (an own value already there wins), held under the warn level that applies to the account; then the old
@@ -538,10 +560,9 @@
       key ? keyLine(p, acc) : '',
       PM51.scoped.row('ai.accounts.account-roles', v('ai.accounts.account-roles'), Object.assign({}, opt, { label: 'Jobs it may do', help: 'None picked means any job. Keep a costly account off routine work.' })),
       PM51.scoped.row('ai.accounts.billing-entity', v('ai.accounts.billing-entity'), Object.assign({}, opt, { label: 'Who is billed', help: 'Costs on the Usage page are grouped by this.' })),
-      /* FO-183: the inventory's model row for one account (it had no row anywhere); the shared model picker, with this
-         service's models and the inherit choice in the inventory's own words ("Use the normal defaults list") */
+      /* The shared picker uses this account's models and the inventory's own inherit choice. */
       PM51.scoped.row(ACCOUNT_MODEL, v(ACCOUNT_MODEL), Object.assign({}, opt, { label: 'Default model for this account', help: 'For runs you send to this account yourself, when nothing earlier names a model.',
-        control: PM51.modelSelect(ACCOUNT_MODEL, v(ACCOUNT_MODEL), { action: 'pm51-scoped-select', data: { scope: ACC, provider: p.id, account: acc.id }, label: 'Default model for this account', depthKey: `${ACCOUNT_MODEL}|${p.id}|${acc.id}`, provider: p.id }) }))
+        control: PM51.modelSelect(ACCOUNT_MODEL, v(ACCOUNT_MODEL), { action: 'pm51-scoped-select', data: { scope: ACC, ...data }, label: 'Default model for this account', depthKey: `${ACCOUNT_MODEL}|${p.id}|${acc.id}` }) }))
     ];
     const low = PM51.scoped.fields([
       accountPolicyField(p, acc, 'ai.accounts.hard-switch-level', 'Switch when this much is left', accountLevelControl(p, acc)),
@@ -1189,10 +1210,15 @@
   const MODEL_PICKERS = ['ai.models.default-model', 'ai.models.overseer-model', 'ai.models.worker-model', 'ai.models.gui-worker-model', 'ai.models.high-effort-worker-model', 'ai.models.auditor-model', 'ai.models.teach-model', 'ai.models.thread-title-model'];
   /* a model that only makes pictures (GPT Image) answers no chat, plan or review, so the model pickers never offer it
      (lane-aimore 7); every picker of a model that writes, the Back Seat Driver's backup included, reads this one list */
-  const writes = m => !(m.caps || []).length || (m.caps || []).some(c => !/^image-/.test(c));
-  const readyModels = () => all().filter(p => p.status === 'active').flatMap(p => enabledModels(p).filter(writes).map(m => ({ value: `${p.id}/${m.id}`, label: `${m.name} · ${p.name}`, meta: p.id === 'free-models' ? 'A free route' : `On your ${p.name} ${p.bill === 'use' ? 'account' : 'plan'}`, pid: p.id, mid: m.id, provider: p.name, model: m.name })));
+  const pickerModel = (p, m) => ({ value: modelValue(p, m), label: `${m.name} · ${p.name}`, meta: p.id === 'free-models' ? 'A free route' : `On your ${p.name} ${p.bill === 'use' ? 'account' : 'plan'}`, pid: p.id, mid: m.id, provider: p.name, model: m.name });
+  const readyModels = () => all().filter(p => p.status === 'active').flatMap(p => enabledModels(p).filter(writes).map(m => pickerModel(p, m)));
   MODEL_PICKERS.forEach(id => PM51.moreChoices(id, readyModels));
   PM51.readyModels = readyModels;
+  PM51.accountModels = (provider, account) => {
+    const p = find(provider);
+    const acc = p?.accounts?.find(x => x.id === account);
+    return acc ? accountModelChoices(p, acc).map(m => pickerModel(p, m)) : [];
+  };
   PM51.perValues('ai.models.provider-enabled', () => all().filter(p => p.status !== 'setup' && p.status !== 'not-installed').map(p => ({ name: p.name, value: p.status !== 'disabled' })));
   PM51.perValues('ai.accounts.auth-mode', () => all().filter(p => authModes(p).length > 2).map(p => ({ name: p.name, value: PM51.scopedValue(p, 'ai.accounts.auth-mode') })));
 
@@ -1214,6 +1240,7 @@
       PM51.refresh(ID, { swap: false });
       return String(held[0].value) !== String(value) ? { who: acc.nickname, value: held[0].value } : acc.nickname;
     }
+    if (id === ACCOUNT_MODEL && !accountModelPickAllowed(p, acc, value)) return false;
     acc.props[id] = value; saveState();
     if (id === 'ai.accounts.claude-login-method') {
       const way = { sso: 'signin-sso', claudeai: 'signin-claude', email: 'signin-claude', console: 'signin-console' }[value];
@@ -1595,6 +1622,7 @@
     const m = accModel(acc, ds(el, 'model')); if (!m) return;
     m.enabled = !m.enabled;
     if (!m.enabled && acc.defaultModel === m.id) acc.defaultModel = (accEnabled(p, acc)[0] || {}).id || '';
+    if (!m.enabled && acc.props[ACCOUNT_MODEL] === modelValue(p, m)) delete acc.props[ACCOUNT_MODEL];
     if (m.enabled && !acc.defaultModel) acc.defaultModel = m.id;
     recompute(p); save();
   });
@@ -1651,7 +1679,7 @@
     PM51.panel({ title: 'Quota and budget console', subtitle: 'Every limit, budget and warning, in one place', icon: 'gauge', body });
   });
   PM51.on('providers-reset', () => PM51.confirm('Reset services to the example defaults?', 'Accounts, model choices, and routes go back to the example defaults. Settings on the other tabs are kept.', 'Reset', () => {
-    state.providers = clone(D.providers); state.freeRoutes = clone(D.freeRoutes); state.selectedProvider = state.providers[0]?.id || null; migrate(); save(); PM51.toast('Services reset', 'The example defaults are back.');
+    state.providers = clone(D.providers); state.freeRoutes = clone(D.freeRoutes); state.selectedProvider = state.providers[0]?.id || null; delete state.accountModels; migrate(); save(); PM51.toast('Services reset', 'The example defaults are back.');
   }, true));
   PM51.on('providers-help', () => PM51.panel({
     title: 'How AI services work', icon: 'info',

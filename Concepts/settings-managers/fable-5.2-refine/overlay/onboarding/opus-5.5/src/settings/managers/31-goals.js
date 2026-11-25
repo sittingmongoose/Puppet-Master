@@ -55,6 +55,30 @@
   D.domains.forEach(d => { if (d.workspaces.some(w => w.id === ID)) d.label = CHAPTER; d.workspaces.forEach(w => { if (w.id === ID) w.label = NAME; }); });
   if (typeof INTROS === 'object' && INTROS) INTROS[ID] = 'What a new Goal may do, what happens when one is interrupted, timed runs, and the proof a finished Goal leaves.';
 
+  /* Search. The engine's index also lists what the old Goal kept in Settings, its templates and its "active Goals"
+     with a phase and a percentage ("Implementation Goal", "Paused · phase Repair · 58%"), and it writes the old
+     chapter and page names into the paths of memories, personas and crews. A Goal has no template or phase, and
+     Settings has no Active Goals tab (Plans/Settings_System.md), so those results are gone and the paths read as the
+     rail does. Found on 2026-11-25, after the seventh pass was shown: search was not among the pages it walked. */
+  const OLD_RESULTS = ['goal-template', 'active-goal'];
+  const OLD_PATH = /Memory & Automation|Goals & Automation/;
+  const rfGoalsIndex = buildSearchIndex;
+  buildSearchIndex = function () {
+    const list = rfGoalsIndex.apply(this, arguments);
+    if (!Array.isArray(list) || list.rfGoals) return list;
+    for (let i = list.length - 1; i >= 0; i--) {
+      const e = list[i];
+      if (OLD_RESULTS.includes(e.type)) { list.splice(i, 1); continue; }
+      if (typeof e.path !== 'string' || !OLD_PATH.test(e.path)) continue;
+      const was = e.path;
+      e.path = was.replace('Memory & Automation', CHAPTER).replace('Goals & Automation', NAME);
+      if (typeof e.hay === 'string') e.hay = e.hay.replace(was.toLowerCase(), e.path.toLowerCase());
+    }
+    list.rfGoals = true;
+    return list;
+  };
+  searchIndexDirty = true;
+
   /* a tab saved under the old page (Templates, Recovery, Checks) opens the tab that holds what is left of it */
   const OLD_TAB = { templates: 'defaults', checkpoints: 'defaults', verification: 'proof' };
 

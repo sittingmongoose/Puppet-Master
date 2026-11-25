@@ -38,7 +38,8 @@ and edge-to-edge lines on a page with both kinds of card; Away From Home's colum
 (a tab strip's box follows its chip; the one bar on top of a chapter with its three buttons, its line and its axis; a
 chapter with one manager; a long chapter in a narrow window; a crew's model pickers and the Models step; the
 browser's four tabs, their rows, the video formats, and the line of facts following a change); the seventh pass
-(the two new names; the Goals page's three tabs, each drawing exactly its own settings and no word of the old Goal;
+(the two new names; search finding none of the old Goal's templates or "active Goals" and saying the new names in a
+result's path; the Goals page's three tabs, each drawing exactly its own settings and no word of the old Goal;
 the example receipt; the fourteen checks on planned work on the Planning page with their options; in Glass, no line
 under the bar and a pinned sheet pinning its frost and nothing else); the one home of
 a service's switching rules; the example staying in view in Editor and Terminal Customize, Customize Pip and Adjust
@@ -58,14 +59,73 @@ or Connect button and pictures what appears), `icons.check.mjs` (lists every but
 height, rows with no line or a line that stops short of its card, and any painted pane that sits inside a card of
 another tone).
 
+## Merging this into PMConcept7
+
+Jared approved the concept on 2026-11-25: "looks good otherwise. Make that last change and then wait until I have a
+different agent merge this in." Nothing here is landed. The overlay sits on main `3b0c31bbc5` (2026-11-25, after
+stream F's batch 20). For the agent that merges it, in this order:
+
+1. **Bring the overlay to the main you merge into, before anything else:** `git fetch origin`, then
+   `tools/rebase.sh origin/main` (`DRY=1` first shows what would happen and writes nothing). Every changed file under
+   `overlay/` is a whole copy of one of PMConcept7's files with this work in it. Copied over a newer main as it is, it
+   would silently undo whatever main changed in that file after `BASE`. The tool merges main's changes into each copy
+   (three-way) and moves `BASE` only when nothing conflicts; a conflict is written beside the file as
+   `<file>.CONFLICT`. A clean text merge can still clash in meaning: on 2026-11-25 main and the overlay had each added
+   a constant named `FOLLOW` to `managers/32-personas.js` (the overlay's is `ROUTE` now), and only `node --check`
+   showed it. So after the rebase: `node --check` on every `.js` under `overlay/`, `tools/build.sh`, and the fifteen
+   tests with `--set before=` a build of that main (which is `Concepts/PMConcept7.html` of that commit whenever the
+   page was republished with it; on `3b0c31bbc5` the two are byte-identical).
+2. **The fifty proposed browser rows need a home first** (`proposed/browser-rows.json`, sixth pass; Jared asked for
+   more browser and recording settings). They are in no Plans inventory, and PMConcept7's build refuses a placement
+   rule that names an id the inventory does not have ("O55 placement: rule names unknown id"). `tools/build.sh` adds
+   them to a scratch copy of the inventory. For the merge, either PMConcept7's build learns the same thing (a
+   pending-rows list read beside the inventory, the twelve lines of Python at the end of `tools/build.sh`), or the rows
+   are admitted to `Plans/settings_inventory.json` by a Plans task of its own. The first unblocks the merge; the second
+   is still owed, so that the rows are canon.
+3. **Lay the overlay over PMConcept7's sources:** from the repository root,
+   `cp -a Concepts/settings-managers/fable-5.2-refine/overlay/. Concepts/`. That is all `tools/build.sh` does in its
+   scratch copy. 25 files replace PMConcept7's own (ten managers, two `kit.d` files, `placement.json`, three placement
+   and six row files, and three under `home-redesign/src` for the Customize screens) and 9 are new
+   (`managers/90-refine-frame.js`, `o55/placement.d/24a-browser-rows.json` and `90-refine-goal-words.json`, the five
+   `styles.d/9*-refine*.css`, and `home-redesign/src/terminal/css/27-customize-refine.css`). Then PMConcept7's own
+   build and republish, as stream F does them.
+4. **Glass's wallpaper jump is fixed in the wrong place for a merge.** The bug is PMConcept7's own
+   (`liquid-glass/opus-5.5/src/glass.css`, the two `[data-lg-fixed]` rules, lines 254 and 299 on `3b0c31bbc5`: six
+   entries for a stack of five layers; see the seventh pass, 4). Take one `scroll,` and one `0 0,` out of each. The
+   overlay only overrides them, with the first two rules of `styles.d/99-refine-pass7.css`, which can go once
+   `glass.css` is right.
+5. **The names live in a file the overlay does not hold.** The chapter's and the page's labels ("Memory &
+   Automation", "Goals & Automation"), five search paths and the search entries for the old Goal's templates and
+   "active Goals" are in `onboarding/opus-5.5/base/script/pm4-settings-js.js`. The overlay renames them and cleans the
+   search index when its Goals manager loads (`managers/31-goals.js`); changing them at the source is the cleaner
+   merge, after which those few lines repeat it. "Server & Project Location", the Servers chapter's old name, is still
+   said to people by the first-run tour and by Pip: `src/copy.json` (5 places) and `src/copy.d/48-pip.json` (5 places)
+   should say "Servers & Remote Access". Neither says "Memory & Automation".
+6. **Stream F's kit.** "Stream F's checks that need a small change when this is merged", at the end of this file,
+   lists which of its Settings checks read something this work changed on purpose, and what each should read instead.
+   The kit was last run here in full on the second pass (2026-11-21); what the later passes add to the list is from
+   reading the checks, not from a run. Run the whole kit on the merged build and on main, as every PM7 landing does,
+   and judge each failure against that section.
+7. **This folder's tests go with it.** `tools/refine.check.mjs` reads only the built page, so it runs on the merged
+   PMConcept7 as it is; "nothing was dropped" needs `--set before=` the page from before the merge.
+8. **What Jared ruled, which a merge must not undo** (each under its pass below): the managers are refined, not
+   redesigned, and no option is removed; the Customize screens of Editor, Terminal, Pip and NieR are as they were,
+   with the example staying in view; no coloured stripe down one side of a chosen row or tab; a tab strip's box
+   follows its chip in every look and a chapter has one bar on top; Servers & Remote Access is its own chapter; the
+   chapter is Memory & Goals and the page Goals & Schedules; the Goals page is the simple Goal's (no templates,
+   phases, crew, model or checks of its own); the fourteen checks on planned work are on the Planning page.
+
+**Not done here, on purpose:** stream F's kit on the final build and the reviews of a landing. They belong to the
+merge.
+
 ## Seventh pass (2026-11-24), after Jared's sixth review
 
 Jared: "This looks a lot better all around! There is a couple of small bugs I found though." Four things:
 
 **1. The names.** On "Rename the two Automation titles?": "A, rename them." The chapter is **Memory & Goals** and the
 page is **Goals & Schedules** (set where the page is drawn, `managers/31-goals.js`; the 20 "where to change it" lines
-of `o55/rows.d/32-personas.json` follow). PMConcept7's first-run tour and Pip's lines are not Settings sources and
-still say the old names: to rename at the merge, with "Server & Project Location".
+of `o55/rows.d/32-personas.json` follow). The labels themselves are in PMConcept7's base script, which the overlay
+does not hold (see "Merging this into PMConcept7", 5).
 
 **2. The Goals page still showed the old Goal.** "There are still some artifacts from the old version of goals, that
 makes things in the settings for goals not make a lot of sense anymore. So that needs to be cleaned up." The page was
@@ -103,8 +163,23 @@ are drawn nowhere and found by no search. **Fourteen settings stayed live in the
 five ids, not these), and they are about checking planned work, not about a Goal: Speed or thoroughness, Double-check
 finished work, Never let the builder grade its own work, Show check reports; the five rows of When a check fails; and
 the five of Stricter proof. They are on **Planning › Planning & Interviews** now, in the same three groups with the
-same options ("Checking finished work", "When a check fails", and "Stricter proof" under More options). Whether they
-stay there, go to Testing & Debug, or are retired by a Plans change is asked of Jared (card SM-PLAN-CHECKS).
+same options ("Checking finished work", "When a check fails", and "Stricter proof" under More options). Asked whether
+they stay there, go to Testing & Debug or are retired, Jared, 2026-11-25: "This is for the plan feature though in
+assistant chat not goals right? If that is the case, its fine to keep them in and put them on the planning page." It
+is the case, with one precision: the Plans' inventory ties each of the fourteen to the Planning Wizard and its
+requirements builder (`related_features: planning_wizard, prd_builder`), which is the work a plan produces, and none to
+Goals or to the chat's quick Plan mode by name; DL-478 took only Goal completion out of what is checked ("Planning
+Wizard approval, Plan Compile certification and WorkNode completion stay"). The Planning page holds the chat's Plan
+and Deep Plan rows and the wizard's, so they stay there.
+
+**Found after the pass was shown (2026-11-25): search still knew the old Goal.** The page walk that looked for
+leftovers read every view and not the search box. Typing "Implementation Goal", "audit" or "phase" into Settings'
+search listed the old Goal's three templates and two "active Goals" with a phase and a percentage ("Paused · phase
+Repair · 58%"), filed under "Memory & Automation › Goals & Automation"; memories, personas and crews carried the old
+chapter name in their paths too. The search index is built by PMConcept7's base script, from sample records the old
+Goals page used. `managers/31-goals.js` now takes the two kinds of result out of the index and corrects the paths. A
+sweep of every view, Settings Home and the rail for the old Goal's words found nothing else (the worktree owned by a
+running Goal and "Active Goal artifacts" under storage are the simple Goal's).
 
 Words left over from the old Goal on other pages: Personas (a crew works "on one job"; the Goals row of Defaults reads
 "Same as its chat" and has nothing to change), Providers (the model group is "Helpers and small jobs"; "Used unless a
@@ -146,8 +221,8 @@ groups. The tour: 76 views (one fewer: the Templates tab), nothing spills sidewa
 and the top of a chapter were looked at in Basic dark, Glass dark and light, Friendly light, Retro dark and NieR light.
 **Not run:** stream F's Settings checks (see the end of this file).
 
-**To merge this into PMConcept7:** the glass.css fix belongs in `liquid-glass/opus-5.5/src/glass.css`; the two names
-also live in the first-run tour and Pip's lines; and the answer to card SM-PLAN-CHECKS decides the fourteen rows' page.
+**To merge this into PMConcept7:** see "Merging this into PMConcept7" above (the glass.css fix, where the names are
+defined, the fifty rows).
 
 ## Sixth pass (2026-11-24), after Jared's fifth review
 
@@ -409,7 +484,8 @@ Nothing a person can do was removed. Each line says where the same thing still i
 
 - Personas' model lines, tag input, details line and list filter; every "Same as the project" line; every model
   field; the Abilities "For the whole project" highlight; account-model persistence in the Models manager. Streams F
-  and P are changing those.
+  and P were changing those; what they landed by 2026-11-25 (a persona carries no model, a choice that follows another
+  setting names it, an account's model choices survive a reload) is merged into the overlay's copies unchanged.
 - Browser & SCM › "Depends on": a check of stream F's kit names it.
 
 ## Stream F's checks that need a small change when this is merged
@@ -425,7 +501,10 @@ has another name, four tabs and fifty more rows; New crew has a fifth step.
 (shown as Goals), `schedules` and `proof` (no `templates`, `checkpoints` or `verification`); the chapter is
 `Memory & Goals`; fourteen `planning.verification.*` rows are on `planning-reference` in the groups `plan-checks`,
 `plan-repair` and `plan-checks-more`; five ids are retired; in Glass the chapter bar has no bottom border and the
-side column has a 14 px top margin.
+side column has a 14 px top margin; search has no `goal-template` or `active-goal` result. The kit's own files that
+name the old chapter or page, to be read against the new names: `settings-min-text.lines.json`,
+`settings-min-text.lines-fo167.json`, `settings-min-text.keymap.json`, `settings-managers-e.check.mjs`,
+`memory-quiet.check.mjs` and the kit's README (all under `pm7-tools/browser-check/`).
 
 The table below is the second pass's, still true; what the third, fourth and fifth passes add is under it.
 

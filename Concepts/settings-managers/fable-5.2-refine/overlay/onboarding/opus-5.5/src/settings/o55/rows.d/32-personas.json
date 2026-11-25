@@ -149,7 +149,7 @@
   "personas.tools.permission-profile": {
    "label": "What it may do without asking",
    "options": {
-    "inherit": "Same as the project"
+    "inherit": "Same as Profile in use"
    },
    "choices": [
     "inherit"
@@ -180,7 +180,7 @@
    "min": 0,
    "max": 2,
    "step": 0.1,
-   "empty": "Same as the project",
+   "empty": "From Randomness",
    "per": "persona",
    "perWhere": "Change it inside each persona: Memory & Goals › Personas & Crews › Personas."
   },
@@ -190,7 +190,7 @@
    "min": 0.05,
    "max": 1,
    "step": 0.05,
-   "empty": "Same as the project",
+   "empty": "From Word-choice focus",
    "per": "persona",
    "perWhere": "Change it inside each persona: Memory & Goals › Personas & Crews › Personas."
   },
@@ -241,7 +241,7 @@
   "personas.tuning.default-mode": {
    "label": "Starts by",
    "options": {
-    "inherit": "Same as the project",
+    "inherit": "Same as new agent runs",
     "ask": "Asking first",
     "plan": "Planning first",
     "regular": "Getting on with it",
