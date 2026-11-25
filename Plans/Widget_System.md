@@ -135,6 +135,37 @@ Transferred Progress labels and taxonomy:
 - Event taxonomy: `run_started`, `node_started`, `node_completed`, `concern_opened`, `approval_requested`, `approval_decided`, `recovery_started`, `recovery_completed`, `artifact_published`, `account_switched`
 - Condition-aging policy: advisory warnings may quiet after one stable refresh window; `attention_required` resurfaces on meaningful change or persistence; `blocked` and `escalated` never auto-quiet
 
+Example widget-shell payload for one catalog entry (added 2026-11-25). It carries the WS-006 shell fields: widget identity and type, scope, filter, sort and display config, and projection ref.
+
+```json
+{
+  "schema_version": "1.0.0",
+  "widget_id": "progress.blocked-concerns",
+  "widget_kind": "progress",
+  "host_surface": "orchestrator:progress",
+  "layout_namespace": "orchestrator:progress",
+  "scope": { "project_id": "proj-7f3a", "focused_run_id": "run-2041", "mode": "live" },
+  "config": {
+    "filter": { "states": ["blocked", "attention_required"] },
+    "sort": { "key": "condition_age", "direction": "desc" },
+    "display": { "max_rows": 8, "show_aging": true }
+  },
+  "data_ref": "projection.progress.blocked-concerns",
+  "drill_target": { "action_label": "Inspect", "target": "concern_lane", "filter": { "states": ["blocked", "attention_required"] } },
+  "refresh_interval_seconds": 30,
+  "empty_state": "no_blocking_concerns"
+}
+```
+
+Field rules:
+- `widget_id` is one of the 13 catalog ids above, and `widget_kind` is `progress` for every one of them.
+- `host_surface` and `layout_namespace` are `orchestrator:progress`. A Progress widget never names `dashboard` or `usage` (`### Progress-only widget hostability`, WS-030).
+- `scope` is inherited from router/page scope: `project_id`, `focused_run_id`, and `mode` (`live` or `historical`). A widget never sets its own run scope; switching mode retargets every widget (WS-004, WS-007).
+- `config.filter` may only narrow the page scope with the state labels above. `config.sort` and `config.display` change presentation only (WS-004).
+- `data_ref` names the compact projection the widget reads. It is never a raw event stream or a bespoke query (WS-006).
+- `drill_target` is the catalog's default drill target for that id, labelled with one of the action labels above. What the target page does is owned by the Orchestrator UI (WS-011).
+- `empty_state` is the copy key shown when the projection returns no rows. Trust and freshness chrome comes from the shared projection-trust model, never from the widget (WS-007).
+
 ## Owner / Consumer Map
 
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Widget_System.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
@@ -1185,8 +1216,11 @@ This addendum repairs non-runtime widget rows without creating WorkNodes, implem
 
 - Repairs `sfk-27612d81432b8c866dbb6e76`: `widget-custom-metrics` is the canonical id for custom metric widgets. Fields are `widget_id`, `metric_id`, `query_ref`, `unit`, `refresh_interval_seconds`, `empty_state_copy_id`, and `owner_doc_ref`.
 - Repairs `sfk-243d9819162bc839409ce15b`: external usage-feature references to Widget_System `§2`, `§3`, `§4`, or `§7` resolve to named widget hostability, projection trust, layout namespace, and Progress catalog anchors. New citations must use names instead of numeric section aliases.
+  Corrected 2026-11-25: the exact resolution is `§2` to `## 2. Hostability and data contracts`; `§3` to `## 3. Layout persistence` (grid, sizes and gestures are WS-017 and WS-019); `§4` as an add-widget-flow citation to WS-030's Catalogue, because `## 4. Orchestrator Progress widget scope and catalog linkage` is the Progress catalog, not the add-widget flow; `§7` and `#5` (widget configuration persistence) to `## 3. Layout persistence` with WS-020's `configuration_refs` and WS-004's configuration record. Plans/usage-feature.md cites these anchors directly.
 - Repairs `sfk-7d2d295617efe72e4e966b52`: external references to Widget_System `§7` map to the named `Progress catalog and hostability` section. New citations must use named anchors because this file's live headings are not numbered as §7.
+  Corrected 2026-11-25: no heading is named `Progress catalog and hostability`, and the only external `§7` citation (usage-feature.md, per-widget configuration) is about configuration persistence, not the Progress catalog. `§7` resolves to `## 3. Layout persistence` with WS-020 (`configuration_refs`) and WS-004 (configuration record). The Progress catalog's real headings are `### Progress-only widget hostability` and `### Catalog source and drill linkage` under `## 4. Orchestrator Progress widget scope and catalog linkage`.
 - Repairs `sfk-cdbe4e263b71df9ea3cb1655`: example widget-shell payload: `{\"widget_id\":\"widget.orchestrator_status\",\"widget_kind\":\"progress\",\"host_surface\":\"dashboard\",\"data_ref\":\"projection.widget.orchestrator_status\",\"refresh_interval_seconds\":30,\"empty_state\":\"no_active_run\",\"schema_version\":\"1.0.0\"}`.
+  Corrected 2026-11-25: that sample names no catalog entry and `dashboard` is not a Progress host (Progress widgets are on no dashboard until the Orchestrator redesign, WS-030). The catalog example is the `progress.blocked-concerns` payload under `### Catalog source and drill linkage`.
 
 ## u11 Prism II Usage Widget Disclosure Addendum - 2026-08-18
 

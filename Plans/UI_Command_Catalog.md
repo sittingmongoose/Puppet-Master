@@ -12699,6 +12699,10 @@ Metadata legend for the registration tables: availability classes are `always` (
 | `cmd.github.actions.rerun_failed` | Rerun Failed Jobs | `domain_action` | selection (`selected_run && has_failed_jobs`) | none | `unauthorized`, `unreachable`, `stale_projection`, `permission_required` | github_actions |
 | `cmd.github.actions.cancel` | Cancel Run | `domain_action` | live_subject (`run_in_progress`) | two_step | `unauthorized`, `unreachable`, `stale_projection` | github_actions |
 | `cmd.github.actions.dispatch` | Dispatch Workflow | `domain_action` | capability (`workflow_dispatchable && dispatch_readiness_valid`) | two_step | `not_configured`, `unauthorized`, `unreachable`, `degraded` | github_actions |
+| `cmd.github.actions.open_current_branch` | Open Current Branch | `navigation_wrapper` | always | none | `unsupported` | github_actions |
+| `cmd.github.actions.settings.open` | Open Actions Settings | `navigation_wrapper` | always | none | `unsupported` | github_actions |
+
+Added 2026-11-25: `cmd.github.actions.open_current_branch` opens the GitHub Actions `Current Branch` subview and `cmd.github.actions.settings.open` opens its `Settings` subview, two of the three stable subviews `Plans/GitHub_Integration.md#GI-008` names (`Current Branch`, `Workflows`, `Settings`). Both are route/open commands with no persisted event: each records a no-persist route/open disposition, and the subview itself shows a missing GitHub link or sign-in as its own state, so neither command is disabled for it. They are the live rows for the two ids UCC-047 preserves, already wired in `Plans/Wiring_Matrix.production.json` (`catalog.github_actions_open_current_branch` to `handlers::github::actions_open_current_branch`, and `catalog.github_actions_settings_open` to `handlers::github::actions_settings_open`). The legacy route token `/Workflows/Settings` resolves to `cmd.github.actions.settings.open`.
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md
 

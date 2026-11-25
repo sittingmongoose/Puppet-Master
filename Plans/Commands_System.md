@@ -336,6 +336,8 @@ File keys are the `*_override` spellings above, never the bare GUI labels `perso
 
 GUI↔file mapping (lossless, both directions): GUI `template` is the Markdown body; GUI `description`, `subtask`, `override_builtin`, `enabled` copy by value with the defaults above; GUI `persona`/`mode`/`permissionsProfile` map to `persona_override`/`mode_override`/`permissions_profile_override` with `Inherit`/empty omitting the file key. GUI `argumentsHint` binds to `arguments[0].hint`: reading a missing array, missing item, or missing `hint` key yields `""`; writing a non-empty hint sets exactly that key (creating array/item as needed) and preserves every other item and key; writing `""` removes the `hint` key, drops the item if it becomes empty, and drops the field if the array becomes empty. Richer `arguments` arrays round-trip byte-stable through edits that do not touch the hint. The file spec never adopts bare GUI key spellings without this mapping.
 
+Argument authoring boundary (2026-11-25): the GUI authors exactly one argument value, `Arguments hint` (`argumentsHint`, at most 200 characters), in the New Command form (§6.1.3) and in the hero sheet (F2 of the 2026-09-26 Commands & Shortcuts census). There is no GUI list editor for `arguments`: an item's `name` and `required`, and every item after `arguments[0]`, are authored in the command file, and the GUI's hint edits preserve them. Item keys other than `name`, `hint` and `required` are unknown keys: readers keep them byte-stable and never act on them. This table is the only live item shape; the 2026-07-08 FABLE addendum's richer item fields are retired (see that addendum).
+
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt_Pipeline.md
 
 MD2 NEITHER: a command definition carries no model or depth of its own. Compatibility readers accept an old `model_override` (or old GUI `model`) only as inert source data, show that it was retired and preserve the source for inspection/export. Create/update/import apply omit it, never silently writing it to a shared default. A run's actual model/depth selection still comes from its picker or the normal Defaults list; explicit model choices passed to a run or existing per-piece build route retain their owners and parent ceilings.
@@ -550,6 +552,7 @@ Sorted alphabetically by name; project-local entries sort before global when nam
 "New Command" button opens an editor form with:
 - **Name** (text input; validated per §2.5; collision check per §2.4)
 - **Description** (text input; required; max 200 chars)
+- **Arguments hint** (text input; optional; max 200 chars; writes `arguments[0].hint` through the §3.2 GUI↔file mapping; an empty value writes no `arguments` field)
 - **Persona** (dropdown populated from Persona registry, or null)
 - **Mode** (dropdown: inherit / ask / plan / regular / yolo)
 - **Subtask** (toggle; default off)
@@ -2367,7 +2370,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
-  New Command opens an editor form for name, description, Persona, mode, subtask, permissions profile
+  New Command opens an editor form for name, description, Arguments hint, Persona, mode, subtask, permissions profile
   override, override built-in, template body and project-local/global save scope, with existing
   validation and syntax highlighting. There is no saved model or depth field under MD2 NEITHER; old
   model_override data remains inspection-only through compatibility reads.
@@ -2381,6 +2384,7 @@ acceptance_criteria:
   - New Command opens an editor form.
   - Name is validated per section 2.5 and collision-checked per section 2.4.
   - Description is required and has max 200 chars.
+  - Arguments hint is optional, has max 200 chars, and writes `arguments[0].hint` through the section 3.2 mapping; other `arguments` items and keys are file-authored and preserved.
   - Persona, Mode, Subtask, Permissions profile override and Override built-in controls are present; no command model field is offered.
   - Override built-in is visible only in Expert mode.
   - Reserved Assistant Chat slash commands fail validation even if Override built-in is enabled.
@@ -4357,6 +4361,7 @@ owner_hints: [Plans/Commands_System.md, Plans/storage-plan.md, Plans/UI_Command_
 This addendum repairs non-runtime command-system rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
 - Repairs `sfk-f5d64ed00d4c22eab6a72e2e`: `arguments[]` entries have fields `name`, `type`, `required`, `default?`, `enum_values[]?`, `description`, and `ui_editor`. `type` values are `string`, `number`, `boolean`, `path`, `enum`, `object`, and `array`.
+  Retired 2026-11-25: the 2026-09-26 §3.2 rewrite is the live item shape: optional `name` (`string`), `hint` (`string`) and `required` (`boolean`), with unknown keys preserved. `type`, `default`, `enum_values`, `description` and `ui_editor` are not command-file keys; a file that carries them keeps them byte-stable as unknown keys and nothing validates or acts on them. The GUI authoring control is `Arguments hint` (§3.2 argument authoring boundary, §6.1.3).
 - Repairs `sfk-9e43a6ff3203f5ce66e0126d`: Section 6 numbering is structurally superseded by named headings. Missing `6.4` and `6.5` are retired aliases; new citations must use heading names, not bare section numbers.
 - Repairs `sfk-03404db2c315565320a4b3e9`: reserved command prefixes are `cmd.git.`, `cmd.github.`, `cmd.source_control.`, `cmd.file.`, `cmd.permissions.`, `cmd.runtime.`, `cmd.testing.`, `cmd.browser.`, and `cmd.persona.`. Non-owner docs may consume but not mint commands under those prefixes.
 

@@ -769,11 +769,11 @@ ContractRef: ContractName:Plans/Widget_System.md
 
 ### Usage Page is Widget-Composed
 
-The Usage page MUST be composed entirely of widgets from the widget catalog (Plans/Widget_System.md section 2). There is no static/fixed content area -- every panel, chart, and table is a widget that can be moved, resized, and configured.
+The Usage page MUST be composed entirely of widgets from the widget catalog (hostability: `Plans/Widget_System.md#section=2. Hostability and data contracts`; catalogue: `Plans/Widget_System.md#WS-030`). There is no static/fixed content area -- every panel, chart, and table is a widget that can be moved, resized, and configured.
 
 Users can:
 - **Move** widgets within the grid (drag-and-drop).
-- **Resize** widgets by grid spans (drag widget edge, grid-snapping per Plans/Widget_System.md section 3).
+- **Resize** widgets by grid spans (drag widget edge, grid-snapping per `Plans/Widget_System.md#WS-017` and `#WS-019`; layout persistence per `Plans/Widget_System.md#section=3. Layout persistence`).
 - **Configure** each widget individually (gear icon for time window, platform filter, chart type, etc.).
 - **Add** new widgets from the catalog via the add-widget flow.
 - **Remove** widgets they don't want to see.
@@ -800,7 +800,7 @@ Usage analytics consumers interpret grep/Search acceleration through `tool.invok
 
 ### Grid-Based Resizing
 
-- Uses the grid system from Plans/Widget_System.md section 3.
+- Uses the grid system of `Plans/Widget_System.md#WS-017` (tracks, width classes and size presets) with layout persistence per `Plans/Widget_System.md#section=3. Layout persistence`; the former "section 3" grid citation resolves to these anchors.
 - Column count is responsive: 2 columns (<1200px), 3 columns (1200-1600px), 4 columns (>1600px) per Plans/FinalGUISpec.md section 12.3.
 - Each widget can be independently resized within its declared min/max grid constraints.
 - Resizing a widget can affect what data it shows: e.g., a wider `widget.analytics_chart` shows more time granularity, a taller `widget.ledger_table` shows more rows.
@@ -820,9 +820,10 @@ Each Usage widget has a gear icon in its header for per-widget configuration. Ex
 | `widget.ledger_table` | Visible columns, page size, default sort, event type filter |
 | `widget.multi_account` | Platforms to show, show cooldown timers (on/off) |
 
-Configuration is persisted alongside the widget layout per Plans/Widget_System.md section 7.
+Configuration is persisted alongside the widget layout: each settled layout record carries `configuration_refs` (`Plans/Widget_System.md#WS-020`, `UsageWidgetLayoutRecord`), each resolving to that widget's configuration record governed by `Plans/Widget_System.md#WS-004` and this unit, and placement follows app default with project override per `Plans/Widget_System.md#section=3. Layout persistence`. On a dashboard board the configuration is kept in that board's envelope (`Plans/Widget_System.md#WS-030`). Widget_System has no section 5 or section 7: the former "section 7" citation and the `#5` ContractRef below are retired numeric aliases that resolve to these anchors.
 
 ContractRef: ContractName:Plans/Widget_System.md#5
+ContractRef: ContractName:Plans/Widget_System.md#WS-020, ContractName:Plans/Widget_System.md#WS-004, ContractName:Plans/Widget_System.md#WS-030
 
 ### Multi-Account Widget as First-Class Catalog Entry
 The multi-account widget remains a first-class catalog entry, but it is now a status and observability widget rather than the canonical setup surface.
@@ -847,7 +848,7 @@ Rules:
 ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md
 ### Reuse on Dashboard via Add-Widget Flow
 
-All widgets that appear on the Usage page are **also hostable on the Dashboard**. Users can add any Usage widget to the Dashboard through the add-widget flow (Plans/Widget_System.md section 4):
+All widgets that appear on the Usage page are **also hostable on the Dashboard**. Users can add any Usage widget to the Dashboard through the add-widget flow (`Plans/Widget_System.md#WS-030`, Catalogue; Widget_System's section 4 is the Orchestrator Progress catalog, so the former "section 4" citation and the `#4` ContractRef below resolve to WS-030):
 
 1. On the Dashboard, click "Add Widget".
 2. The catalog overlay shows all Dashboard-compatible widgets, including all Usage widgets.
@@ -861,7 +862,7 @@ ContractRef: ContractName:Plans/Widget_System.md#4
 
 ### Cross-References
 
-- Plans/Widget_System.md -- grid system (section 3), widget catalog (section 2), add-widget flow (section 4), layout persistence (section 7)
+- Plans/Widget_System.md -- grid, sizes and gestures (WS-017, WS-019), hostability (`#section=2. Hostability and data contracts`), widget catalogue and add-widget flow (WS-030), layout persistence (`#section=3. Layout persistence`, WS-020), widget configuration (WS-004); numeric section aliases are retired
 - Plans/Multi-Account.md -- multi-account data model and GUI requirements
 - Plans/FinalGUISpec.md -- responsive grid (section 12.3), existing Usage view (section 7.8)
 - Plans/storage-plan.md -- redb rollup keys for usage data
