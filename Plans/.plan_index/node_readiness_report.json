@@ -1,34 +1,18 @@
 {
-  "build_order_blockers": [
-    {
-      "blocker_type": "unresolved_dependency_references",
-      "items": [
-        {
-          "field": "depends_on",
-          "plan_unit_id": "RM-001",
-          "target": "RM-013"
-        },
-        {
-          "field": "depends_on",
-          "plan_unit_id": "RM-051",
-          "target": "RM-013"
-        }
-      ]
-    }
-  ],
+  "build_order_blockers": [],
   "dependency_graph_summary": {
-    "build_order_available": false,
+    "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27839,
+    "depends_on_edge_count": 27848,
     "downstream_blocked_node_count": 0,
-    "edge_count": 31064,
-    "node_count": 9624,
+    "edge_count": 31073,
+    "node_count": 9625,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
-    "unresolved_reference_count": 2
+    "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-25T12:27:37Z",
+  "generated_at_utc": "2026-11-25T12:35:36Z",
   "gui_related_units": {
     "count": 3943,
     "units": [
@@ -35062,8 +35046,8 @@
         "source_location": {
           "heading": "SMPFS-125 - P0-TERMINAL-OUTPUT-BACKPRESSURE",
           "heading_level": 3,
-          "heading_line": 10026,
-          "line": 10028,
+          "heading_line": 10041,
+          "line": 10043,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35073,8 +35057,8 @@
         "source_location": {
           "heading": "SMPFS-126 - P0-TERMINAL-ACCESSIBILITY-TEXT-MIRROR",
           "heading_level": 3,
-          "heading_line": 10106,
-          "line": 10108,
+          "heading_line": 10121,
+          "line": 10123,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35084,8 +35068,8 @@
         "source_location": {
           "heading": "SMPFS-127 - P1-TERMINAL-CLIPBOARD-PASTE-SAFETY",
           "heading_level": 3,
-          "heading_line": 10177,
-          "line": 10179,
+          "heading_line": 10192,
+          "line": 10194,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35095,8 +35079,8 @@
         "source_location": {
           "heading": "SMPFS-128 - P1-TERMINAL-SESSION-PRESERVE-UPDATE",
           "heading_level": 3,
-          "heading_line": 10257,
-          "line": 10259,
+          "heading_line": 10272,
+          "line": 10274,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35106,8 +35090,8 @@
         "source_location": {
           "heading": "SMPFS-129 - P1-TERMINAL-SEMANTIC-MARKER-PARSER",
           "heading_level": 3,
-          "heading_line": 10341,
-          "line": 10343,
+          "heading_line": 10356,
+          "line": 10358,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35117,8 +35101,8 @@
         "source_location": {
           "heading": "SMPFS-130 - P1-TERMINAL-CHUNK-SPANNING-PARSER",
           "heading_level": 3,
-          "heading_line": 10417,
-          "line": 10419,
+          "heading_line": 10432,
+          "line": 10434,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35128,8 +35112,8 @@
         "source_location": {
           "heading": "SMPFS-131 - P1-TERMINAL-A11Y-RANGE-MIRROR",
           "heading_level": 3,
-          "heading_line": 10489,
-          "line": 10491,
+          "heading_line": 10504,
+          "line": 10506,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35139,8 +35123,8 @@
         "source_location": {
           "heading": "SMPFS-132 - P1-TERMINAL-HOST-PROVENANCE-DOCTOR",
           "heading_level": 3,
-          "heading_line": 10559,
-          "line": 10561,
+          "heading_line": 10574,
+          "line": 10576,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35150,8 +35134,8 @@
         "source_location": {
           "heading": "SMPFS-133 - P1-TERMINAL-PTY-STREAM-CONTRACT",
           "heading_level": 3,
-          "heading_line": 10637,
-          "line": 10639,
+          "heading_line": 10652,
+          "line": 10654,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35161,8 +35145,8 @@
         "source_location": {
           "heading": "SMPFS-134 - P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS",
           "heading_level": 3,
-          "heading_line": 10706,
-          "line": 10708,
+          "heading_line": 10721,
+          "line": 10723,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35172,8 +35156,8 @@
         "source_location": {
           "heading": "SMPFS-135 - P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD",
           "heading_level": 3,
-          "heading_line": 10803,
-          "line": 10805,
+          "heading_line": 10818,
+          "line": 10820,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35183,8 +35167,8 @@
         "source_location": {
           "heading": "SMPFS-136 - P1-TERMINAL-INPUT-PASTEBOARD-MATRIX",
           "heading_level": 3,
-          "heading_line": 10874,
-          "line": 10876,
+          "heading_line": 10889,
+          "line": 10891,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35194,8 +35178,8 @@
         "source_location": {
           "heading": "SMPFS-137 - SMPFS-137",
           "heading_level": 3,
-          "heading_line": 10941,
-          "line": 10943,
+          "heading_line": 10956,
+          "line": 10958,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35348,8 +35332,8 @@
         "source_location": {
           "heading": "SMPFS-157 - Central Sole Future Handler Bindings",
           "heading_level": 3,
-          "heading_line": 11019,
-          "line": 11021,
+          "heading_line": 11034,
+          "line": 11036,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35359,8 +35343,8 @@
         "source_location": {
           "heading": "SMPFS-162 - Pane Advisory OSC Progress And Collision Policy",
           "heading_level": 3,
-          "heading_line": 11480,
-          "line": 11482,
+          "heading_line": 11495,
+          "line": 11497,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35370,8 +35354,8 @@
         "source_location": {
           "heading": "SMPFS-163 - Insert Command And Open Retained Output",
           "heading_level": 3,
-          "heading_line": 11563,
-          "line": 11565,
+          "heading_line": 11578,
+          "line": 11580,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35381,8 +35365,8 @@
         "source_location": {
           "heading": "SMPFS-164 - Environment Provenance And Pending Launch Changes",
           "heading_level": 3,
-          "heading_line": 11644,
-          "line": 11646,
+          "heading_line": 11659,
+          "line": 11661,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35392,8 +35376,8 @@
         "source_location": {
           "heading": "SMPFS-165 - Live Pane Input Protection",
           "heading_level": 3,
-          "heading_line": 11720,
-          "line": 11722,
+          "heading_line": 11735,
+          "line": 11737,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35403,8 +35387,8 @@
         "source_location": {
           "heading": "SMPFS-180 - One Terminal Session Per Tab",
           "heading_level": 3,
-          "heading_line": 13363,
-          "line": 13365,
+          "heading_line": 13378,
+          "line": 13380,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35414,8 +35398,8 @@
         "source_location": {
           "heading": "SMPFS-181 - Terminal Image Protocols And Their Safety Rules",
           "heading_level": 3,
-          "heading_line": 13516,
-          "line": 13518,
+          "heading_line": 13531,
+          "line": 13533,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35425,8 +35409,8 @@
         "source_location": {
           "heading": "SMPFS-182 - People And Agents In One Terminal",
           "heading_level": 3,
-          "heading_line": 13677,
-          "line": 13679,
+          "heading_line": 13692,
+          "line": 13694,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35436,8 +35420,8 @@
         "source_location": {
           "heading": "SMPFS-183 - Command Marks, Links, Find And Accessibility In The Engine",
           "heading_level": 3,
-          "heading_line": 13812,
-          "line": 13814,
+          "heading_line": 13827,
+          "line": 13829,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35447,8 +35431,8 @@
         "source_location": {
           "heading": "SMPFS-310 — browser.context_captured owner contract",
           "heading_level": 3,
-          "heading_line": 16042,
-          "line": 16044,
+          "heading_line": 16057,
+          "line": 16059,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35458,8 +35442,8 @@
         "source_location": {
           "heading": "SMPFS-315 — preview.session.started owner contract",
           "heading_level": 3,
-          "heading_line": 17040,
-          "line": 17042,
+          "heading_line": 17055,
+          "line": 17057,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35469,8 +35453,8 @@
         "source_location": {
           "heading": "SMPFS-316 — preview.session.refreshed owner contract",
           "heading_level": 3,
-          "heading_line": 17233,
-          "line": 17235,
+          "heading_line": 17248,
+          "line": 17250,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35480,8 +35464,8 @@
         "source_location": {
           "heading": "SMPFS-317 — preview.session.stopped owner contract",
           "heading_level": 3,
-          "heading_line": 17430,
-          "line": 17432,
+          "heading_line": 17445,
+          "line": 17447,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35491,8 +35475,8 @@
         "source_location": {
           "heading": "SMPFS-328 - Browser command payload definitions",
           "heading_level": 3,
-          "heading_line": 14045,
-          "line": 14047,
+          "heading_line": 14060,
+          "line": 14062,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35502,8 +35486,8 @@
         "source_location": {
           "heading": "SMPFS-329 - Terminal, dev-session and catalog command payload definitions",
           "heading_level": 3,
-          "heading_line": 15176,
-          "line": 15178,
+          "heading_line": 15191,
+          "line": 15193,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -43413,13 +43397,13 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 9624,
+  "plan_unit_count": 9625,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
       "high": 4939,
       "low": 10,
       "medium": 36,
-      "standard": 4639
+      "standard": 4640
     },
     "risk_class_counts": {
       "a11y_regression": 1,
@@ -45038,6 +45022,7 @@
       "governance_artifact_staleness": 1,
       "governance_boundary": 2,
       "governance_false_buildability": 1,
+      "governance_gap_loss": 1,
       "governance_integrity": 8,
       "governance_label_copy_drift": 1,
       "governance_role_conflation": 1,
@@ -47682,7 +47667,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 9344,
+      "accepted": 9345,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -47755,7 +47740,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 6122,
+      "requirement": 6123,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
@@ -47896,7 +47881,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "aeea3a3702cb96c5f69319fb3fb294abae284a2dd739a3d51c717a1d13107a4f",
+        "expected": "fcecc58ccf0a0ce574c5a37360cb6a6c0c1debe947c16cc3e68b721e01a0238d",
         "source_path": "Plans/UI_Command_Catalog.md"
       },
       {
@@ -47991,6 +47976,6 @@
   },
   "schema_id": "pm.plan_index.node_readiness_report.v1",
   "source_plan_unit_index": "Plans/.plan_index/plan_units.jsonl",
-  "status": "blocked_plans_incomplete",
-  "status_reason": "PlanUnit coverage or required metadata is incomplete; see missing_required_metadata and coverage_report blockers."
+  "status": "blocked_runtime_certification_incomplete",
+  "status_reason": "Plans are indexed with required PlanUnit metadata and the PlanCompile compiler contract is accepted, but native runtime readiness remains blocked by PNC-019 until an executable lifecycle certification harness passes and records evidence for the enabled runtime boundary."
 }

@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L224-L303
 
-Source SHA256: `681bb48a3cf380028f0ac5cbea76a97375e55be3084d6f94b2d6b5e0b77a205d`
+Source SHA256: `3f671fdbbc40fc770a4f279a620ff4fb16c6403cf1520cfe2ed6f61d4cf2baea`
 
 ---
 
@@ -28,7 +28,7 @@ Shared governance/runtime records carry `record_id`, `record_kind`, `schema_vers
 
 ### Concern record family definition
 
-`ConcernRecord` is the cross-surface record for user-visible or governance-visible concerns. Required fields are `concern_id`, `schema_version`, `concern_category`, `severity`, `visibility_level`, `attention_level`, `status`, `owner_ref`, `creator_ref`, `subject_ref`, `source_event_refs[]`, `summary`, `created_at`, and `updated_at`. Optional fields are `blocking_effect`, `resolution_kind`, `accepted_risk`, `resolver_ref`, `resolved_at`, `linked_record_refs[]`, `suggested_action_ids[]`, and `evidence_refs[]`. Closed value sets (C-FIX79 decision, 2026-11-24): `concern_category` is `coverage_blocker | projection_trust | risk | weak_integration`; `severity` is `info | warning | error | critical`; `visibility_level` is `user_visible | project | restricted`; `attention_level` is `info | warning | needs_action`. `Plans/concern_created_contracts/concern_record.schema.json` and `concern_created_operation.schema.json` carry these enums.
+`ConcernRecord` is the cross-surface record for user-visible or governance-visible concerns. Required fields are `concern_id`, `schema_version`, `concern_category`, `severity`, `visibility_level`, `attention_level`, `status`, `owner_ref`, `creator_ref`, `subject_ref`, `source_event_refs[]`, `summary`, `created_at`, and `updated_at`. Optional fields are `blocking_effect`, `resolution_kind`, `accepted_risk`, `resolver_ref`, `resolved_at`, `linked_record_refs[]`, `suggested_action_ids[]`, and `evidence_refs[]`. Closed value sets (C-FIX79 decision, 2026-11-24): `concern_category` is `coverage_blocker | projection_trust | risk | weak_integration`; `severity` is `info | warning | error | critical`; `visibility_level` is `user_visible | project | restricted`; `attention_level` is `info | warning | needs_action`. `Plans/concern_created_contracts/concern_record.schema.json` carries all four enums on the record. In `concern_created_operation.schema.json` they are carried by the command and record fields only: `original_command` (`category`, `severity`, `visibility_level`, `attention_level`) and `candidate_record` (`concern_category`, `severity`, `visibility_level`, `attention_level`). The `concern.created` event payload schemas are not yet closed: `concern_created_operation.schema.json#/properties/payload/properties/category`, `Plans/event_payloads/concern/concern_created.schema.json#/properties/category` and their `Plans/storage_value_registry.json` copies still accept any snake_case reason-code string. Those payload schemas belong to Event Authority and their hashes are pinned by fixtures outside Plans, so closing them to the same `concern_category` set is a follow-up for Event Authority; until then the closed set binds the command and the record, and a `concern.created` payload validated on its own does not enforce it.
 
 ### Concern lifecycle and resolution kinds
 

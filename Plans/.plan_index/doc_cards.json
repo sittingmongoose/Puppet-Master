@@ -6449,7 +6449,7 @@
         "worktree_lifecycle_record_loss",
         "wrong_original_source_realm_or_implicit_reference_alias"
       ],
-      "sha256": "681bb48a3cf380028f0ac5cbea76a97375e55be3084d6f94b2d6b5e0b77a205d",
+      "sha256": "3f671fdbbc40fc770a4f279a620ff4fb16c6403cf1520cfe2ed6f61d4cf2baea",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 769,
@@ -14844,7 +14844,7 @@
         "web_tool_search_site_reader",
         "worktree_config_cleanup_boundary"
       ],
-      "sha256": "c6c1769ab799a3aa121280b5544f668ba7b65fc92936caaa06504b41e6ac9ee3",
+      "sha256": "e0edf69befc13b16a4f9010b662f5fa6e2ef176ab53c5777d8070089f44085b0",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 163
@@ -16556,7 +16556,7 @@
         "visualizer_sandbox_escape",
         "wholesale_browser_state_or_auth_export"
       ],
-      "sha256": "20d149c1ff6d14dbda5c49ae74acf714fe49da640dd5b688b0f157007fe5b3ee",
+      "sha256": "d73f9975081045aaa294b4178ba4fa5fc51ad19bb532668c97e693b3831b9bb8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 151
@@ -19217,7 +19217,7 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 42,
+        "False": 43,
         "True": 10
       },
       "heading_count": 120,
@@ -19232,7 +19232,7 @@
       ],
       "line_count": 2008,
       "path": "Plans/Run_Modes.md",
-      "plan_unit_count": 52,
+      "plan_unit_count": 53,
       "plan_unit_ids": [
         "RM-002",
         "RM-003",
@@ -19245,6 +19245,7 @@
         "RM-010",
         "RM-011",
         "RM-012",
+        "RM-013",
         "RM-014",
         "RM-015",
         "RM-016",
@@ -19311,6 +19312,7 @@
         "external_baseline_owner_drift",
         "external_reference_drift",
         "failure_taxonomy_drift",
+        "governance_gap_loss",
         "headless_blocked_signal_drift",
         "headless_gui_affordance_drift",
         "helper_lifecycle_drift",
@@ -19342,16 +19344,16 @@
         "worktree_binding_drift",
         "worktree_gui_affordance_drift"
       ],
-      "sha256": "0a002ce44e1a7403bff106071cf6dc5a621eebcd8a229fff70c2ad4a52e49bfb",
+      "sha256": "a059cd1cf6878906b27e08f12dd901592f72a00ef3b8cbcd2e71d710be6f217a",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 51,
+        "accepted": 52,
         "retired": 1
       },
       "title": "Run Modes (Canonical SSOT)",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "requirement": 51
+        "requirement": 52
       },
       "validation_surfaces": [
         "future BSD mode-resolution and authority fixtures",
@@ -19818,7 +19820,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm_browser_program_semantics.py"
       ],
-      "line_count": 19232,
+      "line_count": 19275,
       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
       "plan_unit_count": 199,
       "plan_unit_ids": [
@@ -20164,7 +20166,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "9f35a27645e1fe187283a3a6056ecc702c6c3399b05763002707d5b1e7820ecf",
+      "sha256": "8d73fa1d5301ffe57223aefe0f59825abc7e5e58b9588c1a8e66a4dbbc95bbe3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 195,
@@ -24047,7 +24049,7 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "aeea3a3702cb96c5f69319fb3fb294abae284a2dd739a3d51c717a1d13107a4f",
+      "sha256": "fcecc58ccf0a0ce574c5a37360cb6a6c0c1debe947c16cc3e68b721e01a0238d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 197,
@@ -25265,7 +25267,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-25T12:27:37Z",
+  "generated_at_utc": "2026-11-25T12:35:35Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -25273,13 +25275,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 5681,
+      "False": 5682,
       "True": 3943
     },
-    "plan_unit_count": 9624,
+    "plan_unit_count": 9625,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 9344,
+      "accepted": 9345,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -25352,7 +25354,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 6122,
+      "requirement": 6123,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,

@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L9940-L10990
+Source lines: L9940-L11005
 
-Source SHA256: `9f35a27645e1fe187283a3a6056ecc702c6c3399b05763002707d5b1e7820ecf`
+Source SHA256: `8d73fa1d5301ffe57223aefe0f59825abc7e5e58b9588c1a8e66a4dbbc95bbe3`
 
 ---
 
@@ -21,12 +21,27 @@ Repairs rows `sfk-756cb4154b9e486d8a6d74db`, `sfk-0a996093252d3d35aa59e6f2`, `sf
 | `cmd.browser.share_with_agent` | user-mediated-share | 30000 | `share_receipt_id`, `target_agent_id`, `artifact_refs[]` | `guaranteed_everyday` | `always_allowed` (explicit share action) | `workspace_preview`, `automation_session`; never `AuthBrowserSession` | none | none: share state only, so `artifact_refs[]` stays empty unless a separate explicit capture command ran | `runtime_unavailable`; `session_class_restricted` for a protected session; until the browser owner settles its request the handler refuses with `handler_unavailable` (`#SMPFS-328`, DL-341) | browser chrome, assistant chat |
 | `cmd.browser.run_code` | page-evaluation | 5000 | `evaluation_id`, `stdout?`, `result_ref?`, `error_code?` | `advanced_debug_testing` | that of `cmd.browser.program.run`, which it normalizes to | `workspace_preview`, `automation_session`; never `AuthBrowserSession` | `capability_profile: advanced` | the Browser Program receipt and capture refs of the normalized run | input that does not compile losslessly to admitted named actions fails typed with no effect | none: compatibility input only, excluded from production wiring |
 | `cmd.browser.evaluate` | page-evaluation | 5000 | `evaluation_id`, `json_result_ref?`, `dom_scope_ref?`, `error_code?` | `advanced_debug_testing` | that of `cmd.browser.page.evaluate`, which it normalizes to | `workspace_preview`, `automation_session`; never `AuthBrowserSession` | none beyond `cmd.browser.page.evaluate` | none | as `cmd.browser.run_code` | none: compatibility input only, excluded from production wiring |
-| `cmd.browser.open_devtools` | diagnostic | 30000 | `devtools_session_id`, `boundary_ref`, `opened_at_utc` | `advanced_debug_testing` | `always_allowed` under `devtools_policy_allows` | ordinary sessions; never `AuthBrowserSession` | DevTools | none (layout/UI state only) | `runtime_unavailable`; `session_class_restricted` for a protected session; policy denial returns a typed permission result; until the browser owner settles its request the handler refuses with `handler_unavailable` (`#SMPFS-328`, DL-341) | browser chrome, command palette |
+| `cmd.browser.open_devtools` | diagnostic | 30000 | `devtools_session_id`, `boundary_ref`, `opened_at_utc` | `advanced_debug_testing` | `always_allowed` under `devtools_policy_allows` | ordinary sessions; never `AuthBrowserSession` | DevTools | none (layout/UI state only) | `runtime_unavailable`; `session_class_restricted` for a protected session; policy denial returns a typed permission result; the request is settled (`BrowserDevToolsOpenRequest` → `BrowserDevToolsOpenResultV1`, DL-2602), so the DL-341 refusal no longer applies; `handler_unavailable` stands only until native evidence exists (`#SMPFS-328`) | browser chrome, command palette |
 | `cmd.browser.capture_artifact` | artifact | 30000 | `artifact_manifest_id`, `artifact_refs[]`, `retention_until_utc` | `guaranteed_everyday` (screenshot capture; trace and video are the separate advanced actions) | `always_allowed` | `workspace_preview`, `automation_session`; a protected session returns an explicit exclusion, never an empty capture | screenshot capture | `BrowserArtifactManifest` and its `artifact_refs[]` | `runtime_unavailable`; `session_class_restricted` | none: no catalog or wiring row reaches it; visible capture uses `cmd.browser.capture.full_to_chat` and `cmd.browser.capture.region_to_chat` |
 
 The former `browser_run_code` and `browser_evaluate` tokens are compatibility aliases for `cmd.browser.run_code` and `cmd.browser.evaluate`. Timeout constants are disambiguated as follows: `5000ms` applies to page-evaluation commands; `30000ms` applies to user-mediated share, diagnostic, artifact, and open/wait actions; `30s` is display copy for `30000ms`.
 
 `BrowserArtifactManifest` fields are `artifact_manifest_id`, `browser_session_id`, `action_id`, `artifact_refs[]`, `retention_class`, `created_at_utc`, `redaction_profile_id`, and `schema_version`.
+
+Typed 2026-11-25 (C-FIX79 fix round, against `Plans/gui_automation_manifest.schema.json`, because `browser screenshots, traces, and combined selection+screenshot captures use the same artifact pipeline as GUI automation, including naming, retention, manifest shape`): `BrowserArtifactManifest` is one JSON object with exactly these eight fields, all required, unknown fields refused. It is the per-action browser view of the GUI automation manifest, not a second manifest shape: each `artifact_refs[]` entry is one artifact item of that schema.
+
+| Field | Type |
+| --- | --- |
+| `artifact_manifest_id` | string, 1 to 256 characters, unique per manifest |
+| `browser_session_id` | string, 1 to 256 characters: the ordinary `BrowserSession` the action ran in (never an `AuthBrowserSession`); every `artifact_refs[]` item carries the same value in its `browser_session_id` |
+| `action_id` | the `action_id` of the producing row in the action table above (`cmd.browser.capture_artifact`, or the separate advanced trace and video actions) |
+| `artifact_refs[]` | array of at least one item, each validating against `Plans/gui_automation_manifest.schema.json#/properties/artifacts/items` (`artifact_id`, `kind`, `relative_path`, `mime_type`, `sha256`, `size_bytes`, and its optional fields), with `kind` one of `browser_screenshot`, `browser_pdf`, `trace`, `recording`, `console`, `network`; that schema's rule that `browser_screenshot`, `browser_pdf`, `console` and `network` items carry `redaction_status` (`not_needed`, `applied` or `blocked`) applies. A protected session returns the explicit exclusion above, never a manifest with an empty array |
+| `retention_class` | string, 1 to 128 characters, naming a class of Testing's run-evidence retention (the retention row of `Plans/Settings_System.md`'s Built-in browser line); Section 15 adds no retention values of its own |
+| `created_at_utc` | RFC 3339 date-time in UTC, as `created_at_utc` in that schema |
+| `redaction_profile_id` | string, 1 to 256 characters, naming the redaction profile applied (`safety.protection.screenshot-redaction`) |
+| `schema_version` | the constant `"1.0.0"` |
+
+`cmd.browser.capture_artifact`'s `retention_until_utc` is an RFC 3339 UTC instant, or `null` while the retention class sets no limit (the shipped `evidence.retention_days: null` retains everything, `Plans/MiscPlan.md`). Two things stay with the testing owner (`Plans/Automated_Testing_System.md`, held while stream E edits it) and are follow-ups, not settled here: the numeric retention values per `retention_class` with the rule that derives `retention_until_utc` from them, and the naming and storage template (`relative_path` root) for interactive browser-session captures made outside a GUI-automation `run_id`.
 
 ### Tab-Cap Policy And Restore Identity
 

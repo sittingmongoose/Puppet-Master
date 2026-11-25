@@ -1,65 +1,31 @@
 {
-  "blockers": [
-    {
-      "blocker_type": "parse_errors",
-      "items": [
-        {
-          "detail": "mapping values are not allowed here\n  in \"<unicode string>\", line 11, column 35:\n      placement is resolved (`RMB-010`: reserved/tombstoned in Progres ... \n                                      ^",
-          "error": "plan_unit_yaml_parse_error",
-          "line": 1065,
-          "path": "Plans/Run_Modes.md"
-        }
-      ]
-    },
-    {
-      "blocker_type": "unresolved_dependency_references",
-      "items": [
-        {
-          "field": "depends_on",
-          "plan_unit_id": "RM-001",
-          "target": "RM-013"
-        },
-        {
-          "field": "depends_on",
-          "plan_unit_id": "RM-051",
-          "target": "RM-013"
-        }
-      ]
-    }
-  ],
+  "blockers": [],
   "field_coverage": {
-    "acceptance_criteria": 9624,
-    "canonical_text": 9624,
-    "context_scope": 9624,
-    "depends_on": 9624,
-    "gui_related": 9624,
-    "implementation_surfaces": 9624,
-    "node_compile_hint": 9624,
-    "owner_doc": 9624,
-    "plan_unit_id": 9624,
-    "reasoning_tier": 9624,
-    "risk_class": 9624,
-    "source_lineage": 9624,
-    "status": 9624,
-    "unblocks": 9624,
-    "unit_type": 9624,
-    "validation_surfaces": 9624
+    "acceptance_criteria": 9625,
+    "canonical_text": 9625,
+    "context_scope": 9625,
+    "depends_on": 9625,
+    "gui_related": 9625,
+    "implementation_surfaces": 9625,
+    "node_compile_hint": 9625,
+    "owner_doc": 9625,
+    "plan_unit_id": 9625,
+    "reasoning_tier": 9625,
+    "risk_class": 9625,
+    "source_lineage": 9625,
+    "status": 9625,
+    "unblocks": 9625,
+    "unit_type": 9625,
+    "validation_surfaces": 9625
   },
-  "generated_at_utc": "2026-11-25T12:27:37Z",
+  "generated_at_utc": "2026-11-25T12:35:36Z",
   "issues": {
     "docs_without_plan_units": [],
     "duplicate_plan_unit_ids": [],
     "missing_gui_related_boolean": [],
     "missing_required_metadata": [],
     "owner_doc_mismatches": [],
-    "parse_errors": [
-      {
-        "detail": "mapping values are not allowed here\n  in \"<unicode string>\", line 11, column 35:\n      placement is resolved (`RMB-010`: reserved/tombstoned in Progres ... \n                                      ^",
-        "error": "plan_unit_yaml_parse_error",
-        "line": 1065,
-        "path": "Plans/Run_Modes.md"
-      }
-    ]
+    "parse_errors": []
   },
   "migration_coverage": {
     "allowed_residuals": [
@@ -503,11 +469,11 @@
         "structural_disposition": 8
       },
       "doc_count": 72,
-      "live_plan_unit_count": 9624,
+      "live_plan_unit_count": 9625,
       "source_preserving_unit_count": 0,
       "source_preserving_unit_ids": [],
       "span_count": 3933,
-      "unique_live_plan_unit_count": 9624
+      "unique_live_plan_unit_count": 9625
     },
     "coverage_rows": 3933,
     "coverage_span_ids_unique": true,
@@ -935,7 +901,7 @@
       "structural_disposition": 8
     },
     "final_status": "COMPLETE",
-    "live_plan_unit_count": 9624,
+    "live_plan_unit_count": 9625,
     "live_plan_unit_count_source": "current_live_plan_index",
     "next_batch_cursor": null,
     "nodeseeds_created": null,
@@ -965,7 +931,7 @@
   ],
   "schema_id": "pm.plan_index.coverage_report.v1",
   "source_scope": "top-level live Plans/*.md PlanUnit YAML fences",
-  "status": "fail",
+  "status": "pass",
   "summary": {
     "cycle_blocker_count": 0,
     "doc_count": 96,
@@ -974,9 +940,9 @@
     "duplicate_plan_unit_id_count": 0,
     "missing_gui_related_boolean_count": 0,
     "missing_required_metadata_count": 0,
-    "parse_error_count": 1,
-    "plan_unit_count": 9624,
-    "unique_plan_unit_count": 9624,
-    "unresolved_dependency_reference_count": 2
+    "parse_error_count": 0,
+    "plan_unit_count": 9625,
+    "unique_plan_unit_count": 9625,
+    "unresolved_dependency_reference_count": 0
   }
 }

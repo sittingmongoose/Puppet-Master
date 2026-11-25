@@ -6869,6 +6869,7 @@
     "RM-008",
     "RM-009",
     "RM-011",
+    "RM-013",
     "RM-015",
     "RM-016",
     "RM-017",
@@ -99147,6 +99148,51 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "RM-013",
+      "to": "CV-215"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RM-013",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RM-013",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RM-013",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RM-013",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RM-013",
+      "to": "PS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RM-013",
+      "to": "PS-148"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RM-013",
+      "to": "RM-053"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RM-013",
+      "to": "SP-001"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "RM-014",
       "to": "ACD-008"
     },
@@ -164951,7 +164997,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-25T12:27:37Z",
+  "generated_at_utc": "2026-11-25T12:35:35Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -291689,6 +291735,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "runtime_governance_gaps",
+      "gui_related": false,
+      "owner_doc": "Plans/Run_Modes.md",
+      "plan_unit_id": "RM-013",
+      "reasoning_tier": "standard",
+      "risk_class": "governance_gap_loss",
+      "source_location": {
+        "heading": "RM-013 - Runtime Governance Recovery Gap Register",
+        "heading_level": 3,
+        "heading_line": 1063,
+        "line": 1065,
+        "path": "Plans/Run_Modes.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "runtime_governance_gui",
       "gui_related": true,
       "owner_doc": "Plans/Run_Modes.md",
@@ -297240,8 +297303,8 @@
       "source_location": {
         "heading": "SMPFS-125 - P0-TERMINAL-OUTPUT-BACKPRESSURE",
         "heading_level": 3,
-        "heading_line": 10026,
-        "line": 10028,
+        "heading_line": 10041,
+        "line": 10043,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297257,8 +297320,8 @@
       "source_location": {
         "heading": "SMPFS-126 - P0-TERMINAL-ACCESSIBILITY-TEXT-MIRROR",
         "heading_level": 3,
-        "heading_line": 10106,
-        "line": 10108,
+        "heading_line": 10121,
+        "line": 10123,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297274,8 +297337,8 @@
       "source_location": {
         "heading": "SMPFS-127 - P1-TERMINAL-CLIPBOARD-PASTE-SAFETY",
         "heading_level": 3,
-        "heading_line": 10177,
-        "line": 10179,
+        "heading_line": 10192,
+        "line": 10194,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297291,8 +297354,8 @@
       "source_location": {
         "heading": "SMPFS-128 - P1-TERMINAL-SESSION-PRESERVE-UPDATE",
         "heading_level": 3,
-        "heading_line": 10257,
-        "line": 10259,
+        "heading_line": 10272,
+        "line": 10274,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297308,8 +297371,8 @@
       "source_location": {
         "heading": "SMPFS-129 - P1-TERMINAL-SEMANTIC-MARKER-PARSER",
         "heading_level": 3,
-        "heading_line": 10341,
-        "line": 10343,
+        "heading_line": 10356,
+        "line": 10358,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297325,8 +297388,8 @@
       "source_location": {
         "heading": "SMPFS-130 - P1-TERMINAL-CHUNK-SPANNING-PARSER",
         "heading_level": 3,
-        "heading_line": 10417,
-        "line": 10419,
+        "heading_line": 10432,
+        "line": 10434,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297342,8 +297405,8 @@
       "source_location": {
         "heading": "SMPFS-131 - P1-TERMINAL-A11Y-RANGE-MIRROR",
         "heading_level": 3,
-        "heading_line": 10489,
-        "line": 10491,
+        "heading_line": 10504,
+        "line": 10506,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297359,8 +297422,8 @@
       "source_location": {
         "heading": "SMPFS-132 - P1-TERMINAL-HOST-PROVENANCE-DOCTOR",
         "heading_level": 3,
-        "heading_line": 10559,
-        "line": 10561,
+        "heading_line": 10574,
+        "line": 10576,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297376,8 +297439,8 @@
       "source_location": {
         "heading": "SMPFS-133 - P1-TERMINAL-PTY-STREAM-CONTRACT",
         "heading_level": 3,
-        "heading_line": 10637,
-        "line": 10639,
+        "heading_line": 10652,
+        "line": 10654,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297393,8 +297456,8 @@
       "source_location": {
         "heading": "SMPFS-134 - P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS",
         "heading_level": 3,
-        "heading_line": 10706,
-        "line": 10708,
+        "heading_line": 10721,
+        "line": 10723,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297410,8 +297473,8 @@
       "source_location": {
         "heading": "SMPFS-135 - P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD",
         "heading_level": 3,
-        "heading_line": 10803,
-        "line": 10805,
+        "heading_line": 10818,
+        "line": 10820,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297427,8 +297490,8 @@
       "source_location": {
         "heading": "SMPFS-136 - P1-TERMINAL-INPUT-PASTEBOARD-MATRIX",
         "heading_level": 3,
-        "heading_line": 10874,
-        "line": 10876,
+        "heading_line": 10889,
+        "line": 10891,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297444,8 +297507,8 @@
       "source_location": {
         "heading": "SMPFS-137 - SMPFS-137",
         "heading_level": 3,
-        "heading_line": 10941,
-        "line": 10943,
+        "heading_line": 10956,
+        "line": 10958,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297784,8 +297847,8 @@
       "source_location": {
         "heading": "SMPFS-157 - Central Sole Future Handler Bindings",
         "heading_level": 3,
-        "heading_line": 11019,
-        "line": 11021,
+        "heading_line": 11034,
+        "line": 11036,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297801,8 +297864,8 @@
       "source_location": {
         "heading": "SMPFS-158 - Enhanced Keyboard Protocol Capability Profile",
         "heading_level": 3,
-        "heading_line": 11169,
-        "line": 11171,
+        "heading_line": 11184,
+        "line": 11186,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297818,8 +297881,8 @@
       "source_location": {
         "heading": "SMPFS-159 - Richer Shell Context In The PM Parser",
         "heading_level": 3,
-        "heading_line": 11256,
-        "line": 11258,
+        "heading_line": 11271,
+        "line": 11273,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297835,8 +297898,8 @@
       "source_location": {
         "heading": "SMPFS-160 - Provider Output Snapshot Classification",
         "heading_level": 3,
-        "heading_line": 11330,
-        "line": 11332,
+        "heading_line": 11345,
+        "line": 11347,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297852,8 +297915,8 @@
       "source_location": {
         "heading": "SMPFS-161 - Per-Host Remote Terminal Compatibility Setup",
         "heading_level": 3,
-        "heading_line": 11404,
-        "line": 11406,
+        "heading_line": 11419,
+        "line": 11421,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297869,8 +297932,8 @@
       "source_location": {
         "heading": "SMPFS-162 - Pane Advisory OSC Progress And Collision Policy",
         "heading_level": 3,
-        "heading_line": 11480,
-        "line": 11482,
+        "heading_line": 11495,
+        "line": 11497,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297886,8 +297949,8 @@
       "source_location": {
         "heading": "SMPFS-163 - Insert Command And Open Retained Output",
         "heading_level": 3,
-        "heading_line": 11563,
-        "line": 11565,
+        "heading_line": 11578,
+        "line": 11580,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297903,8 +297966,8 @@
       "source_location": {
         "heading": "SMPFS-164 - Environment Provenance And Pending Launch Changes",
         "heading_level": 3,
-        "heading_line": 11644,
-        "line": 11646,
+        "heading_line": 11659,
+        "line": 11661,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297920,8 +297983,8 @@
       "source_location": {
         "heading": "SMPFS-165 - Live Pane Input Protection",
         "heading_level": 3,
-        "heading_line": 11720,
-        "line": 11722,
+        "heading_line": 11735,
+        "line": 11737,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297937,8 +298000,8 @@
       "source_location": {
         "heading": "SMPFS-166 - Browser Event And Consumer Admission Boundary",
         "heading_level": 3,
-        "heading_line": 11859,
-        "line": 11861,
+        "heading_line": 11874,
+        "line": 11876,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297954,8 +298017,8 @@
       "source_location": {
         "heading": "SMPFS-167 - Workspace-created transition and historical inventory consumer",
         "heading_level": 3,
-        "heading_line": 12099,
-        "line": 12101,
+        "heading_line": 12114,
+        "line": 12116,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297971,8 +298034,8 @@
       "source_location": {
         "heading": "SMPFS-168 - Workspace-reset transition and historical boundary consumer",
         "heading_level": 3,
-        "heading_line": 12327,
-        "line": 12329,
+        "heading_line": 12342,
+        "line": 12344,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297988,8 +298051,8 @@
       "source_location": {
         "heading": "SMPFS-169 - Browser Program Result Budget And Output-Schema Binding",
         "heading_level": 3,
-        "heading_line": 13247,
-        "line": 13249,
+        "heading_line": 13262,
+        "line": 13264,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298005,8 +298068,8 @@
       "source_location": {
         "heading": "SMPFS-170 - Terminal workgroup moved retired compatibility lineage",
         "heading_level": 3,
-        "heading_line": 13290,
-        "line": 13292,
+        "heading_line": 13305,
+        "line": 13307,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "superseded",
@@ -298022,8 +298085,8 @@
       "source_location": {
         "heading": "SMPFS-180 - One Terminal Session Per Tab",
         "heading_level": 3,
-        "heading_line": 13363,
-        "line": 13365,
+        "heading_line": 13378,
+        "line": 13380,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298039,8 +298102,8 @@
       "source_location": {
         "heading": "SMPFS-181 - Terminal Image Protocols And Their Safety Rules",
         "heading_level": 3,
-        "heading_line": 13516,
-        "line": 13518,
+        "heading_line": 13531,
+        "line": 13533,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298056,8 +298119,8 @@
       "source_location": {
         "heading": "SMPFS-182 - People And Agents In One Terminal",
         "heading_level": 3,
-        "heading_line": 13677,
-        "line": 13679,
+        "heading_line": 13692,
+        "line": 13694,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298073,8 +298136,8 @@
       "source_location": {
         "heading": "SMPFS-183 - Command Marks, Links, Find And Accessibility In The Engine",
         "heading_level": 3,
-        "heading_line": 13812,
-        "line": 13814,
+        "heading_line": 13827,
+        "line": 13829,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298090,8 +298153,8 @@
       "source_location": {
         "heading": "SMPFS-184 - The Terminal Engine Stays Puppet Master's Own",
         "heading_level": 3,
-        "heading_line": 13965,
-        "line": 13967,
+        "heading_line": 13980,
+        "line": 13982,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298107,8 +298170,8 @@
       "source_location": {
         "heading": "SMPFS-244 - browser.session.created prepared semantic contract",
         "heading_level": 3,
-        "heading_line": 18591,
-        "line": 18593,
+        "heading_line": 18606,
+        "line": 18608,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298124,8 +298187,8 @@
       "source_location": {
         "heading": "SMPFS-245 - browser.session.state_changed prepared semantic contract",
         "heading_level": 3,
-        "heading_line": 18701,
-        "line": 18703,
+        "heading_line": 18716,
+        "line": 18718,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298141,8 +298204,8 @@
       "source_location": {
         "heading": "SMPFS-246 - browser.session.closed prepared semantic contract",
         "heading_level": 3,
-        "heading_line": 18812,
-        "line": 18814,
+        "heading_line": 18827,
+        "line": 18829,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298158,8 +298221,8 @@
       "source_location": {
         "heading": "SMPFS-247 - browser.session.promoted prepared semantic contract",
         "heading_level": 3,
-        "heading_line": 18921,
-        "line": 18923,
+        "heading_line": 18936,
+        "line": 18938,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298175,8 +298238,8 @@
       "source_location": {
         "heading": "SMPFS-248 - browser.session.takeover_state_changed prepared semantic contract",
         "heading_level": 3,
-        "heading_line": 19031,
-        "line": 19033,
+        "heading_line": 19046,
+        "line": 19048,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298192,8 +298255,8 @@
       "source_location": {
         "heading": "SMPFS-310 — browser.context_captured owner contract",
         "heading_level": 3,
-        "heading_line": 16042,
-        "line": 16044,
+        "heading_line": 16057,
+        "line": 16059,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298209,8 +298272,8 @@
       "source_location": {
         "heading": "SMPFS-311 — dev.session.started owner contract",
         "heading_level": 3,
-        "heading_line": 16270,
-        "line": 16272,
+        "heading_line": 16285,
+        "line": 16287,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298226,8 +298289,8 @@
       "source_location": {
         "heading": "SMPFS-312 — dev.session.stopping owner contract",
         "heading_level": 3,
-        "heading_line": 16463,
-        "line": 16465,
+        "heading_line": 16478,
+        "line": 16480,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298243,8 +298306,8 @@
       "source_location": {
         "heading": "SMPFS-313 — dev.session.stopped owner contract",
         "heading_level": 3,
-        "heading_line": 16655,
-        "line": 16657,
+        "heading_line": 16670,
+        "line": 16672,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298260,8 +298323,8 @@
       "source_location": {
         "heading": "SMPFS-314 — dev.session.restarting owner contract",
         "heading_level": 3,
-        "heading_line": 16847,
-        "line": 16849,
+        "heading_line": 16862,
+        "line": 16864,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298277,8 +298340,8 @@
       "source_location": {
         "heading": "SMPFS-315 — preview.session.started owner contract",
         "heading_level": 3,
-        "heading_line": 17040,
-        "line": 17042,
+        "heading_line": 17055,
+        "line": 17057,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298294,8 +298357,8 @@
       "source_location": {
         "heading": "SMPFS-316 — preview.session.refreshed owner contract",
         "heading_level": 3,
-        "heading_line": 17233,
-        "line": 17235,
+        "heading_line": 17248,
+        "line": 17250,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298311,8 +298374,8 @@
       "source_location": {
         "heading": "SMPFS-317 — preview.session.stopped owner contract",
         "heading_level": 3,
-        "heading_line": 17430,
-        "line": 17432,
+        "heading_line": 17445,
+        "line": 17447,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298328,8 +298391,8 @@
       "source_location": {
         "heading": "SMPFS-318 — catalog.install.started owner contract",
         "heading_level": 3,
-        "heading_line": 17622,
-        "line": 17624,
+        "heading_line": 17637,
+        "line": 17639,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298345,8 +298408,8 @@
       "source_location": {
         "heading": "SMPFS-319 — catalog.install.completed owner contract",
         "heading_level": 3,
-        "heading_line": 17760,
-        "line": 17762,
+        "heading_line": 17775,
+        "line": 17777,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298362,8 +298425,8 @@
       "source_location": {
         "heading": "SMPFS-320 — browser.context_shared deck-2 owner contract",
         "heading_level": 3,
-        "heading_line": 17899,
-        "line": 17901,
+        "heading_line": 17914,
+        "line": 17916,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298379,8 +298442,8 @@
       "source_location": {
         "heading": "SMPFS-321 — browser.context_share_revoked deck-2 owner contract",
         "heading_level": 3,
-        "heading_line": 18103,
-        "line": 18105,
+        "heading_line": 18118,
+        "line": 18120,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298396,8 +298459,8 @@
       "source_location": {
         "heading": "SMPFS-322 — catalog.update.started deck-2 owner contract",
         "heading_level": 3,
-        "heading_line": 18312,
-        "line": 18314,
+        "heading_line": 18327,
+        "line": 18329,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298413,8 +298476,8 @@
       "source_location": {
         "heading": "SMPFS-323 — catalog.update.completed deck-2 owner contract",
         "heading_level": 3,
-        "heading_line": 18368,
-        "line": 18370,
+        "heading_line": 18383,
+        "line": 18385,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298430,8 +298493,8 @@
       "source_location": {
         "heading": "SMPFS-324 — catalog.remove.started deck-2 owner contract",
         "heading_level": 3,
-        "heading_line": 18424,
-        "line": 18426,
+        "heading_line": 18439,
+        "line": 18441,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298447,8 +298510,8 @@
       "source_location": {
         "heading": "SMPFS-325 — catalog.remove.completed deck-2 owner contract",
         "heading_level": 3,
-        "heading_line": 18480,
-        "line": 18482,
+        "heading_line": 18495,
+        "line": 18497,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298464,8 +298527,8 @@
       "source_location": {
         "heading": "SMPFS-326 — tool.custom_headless.skipped deck-2 owner contract",
         "heading_level": 3,
-        "heading_line": 18536,
-        "line": 18538,
+        "heading_line": 18551,
+        "line": 18553,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298481,8 +298544,8 @@
       "source_location": {
         "heading": "SMPFS-328 - Browser command payload definitions",
         "heading_level": 3,
-        "heading_line": 14045,
-        "line": 14047,
+        "heading_line": 14060,
+        "line": 14062,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298498,8 +298561,8 @@
       "source_location": {
         "heading": "SMPFS-329 - Terminal, dev-session and catalog command payload definitions",
         "heading_level": 3,
-        "heading_line": 15176,
-        "line": 15178,
+        "heading_line": 15191,
+        "line": 15193,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -328565,27 +328628,16 @@
   "schema_id": "pm.plan_index.dependencies.v1",
   "source_plan_unit_index": "Plans/.plan_index/plan_units.jsonl",
   "summary": {
-    "build_order_available": false,
+    "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27839,
+    "depends_on_edge_count": 27848,
     "downstream_blocked_node_count": 0,
-    "edge_count": 31064,
-    "node_count": 9624,
+    "edge_count": 31073,
+    "node_count": 9625,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
-    "unresolved_reference_count": 2
+    "unresolved_reference_count": 0
   },
-  "unresolved_references": [
-    {
-      "field": "depends_on",
-      "plan_unit_id": "RM-001",
-      "target": "RM-013"
-    },
-    {
-      "field": "depends_on",
-      "plan_unit_id": "RM-051",
-      "target": "RM-013"
-    }
-  ]
+  "unresolved_references": []
 }
