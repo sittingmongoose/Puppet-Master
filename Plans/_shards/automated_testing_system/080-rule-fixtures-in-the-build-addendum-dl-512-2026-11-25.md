@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L16494-L16575
+Source lines: L16494-L16576
 
-Source SHA256: `2d22dff96cfa7bf5d4ecb8e7081b032ab808ce49dec994ecb6cb7370af13763e`
+Source SHA256: `bfe1f88f8f06d79c825a512e7a86472961c45194610f6c9b29ea6c9932314493`
 
 ---
 
@@ -23,9 +23,10 @@ canonical_text: >-
   refused with its declared failure code and, where the fixture records one, its error path with the member for a
   per-member rule) and every state and effect
   assertion the fixture carries holds when read through its declared observation surface. A fixture bound to a designated fixture owner for a rule split across nodes
-  (Plans/Plan_To_Node_Compilation.md#PNC-038) counts only when it ran against a build that includes the completed
-  outputs of every node it exercises and its TestRunReceipt names those outputs; a pass on an earlier or partial build
-  never counts, and the fixture runs again once those outputs are in. Every bound ATS-003 oracle must pass, and every recorded test gap
+  (Plans/Plan_To_Node_Compilation.md#PNC-038) counts only when it ran against the designated node's final build
+  together with the completed outputs of every other node it exercises, which the Executor brings into that build
+  (Plans/Executor_Protocol.md#EP-100), and its TestRunReceipt names all of them; a pass on an earlier or partial build
+  never counts, and the fixture runs again once they are in. Every bound ATS-003 oracle must pass, and every recorded test gap
   is honoured under its test_gap_policy (a block_completion gap blocks completion; a defer_non_executable_harness_candidate gap is recorded with its test-harness WorkNode request candidate as
   ATS-004 requires and keeps the rule's verification open, so the node is not marked complete until the harness work
   lets the test run and pass, as Plans/Executor_Protocol.md#EP-101 requires). The TestRunReceipt records each of these through the companion schema change that
@@ -54,11 +55,11 @@ canonical_text: >-
   owner's decision, and none counts as a passed requirement.
 gui_related: false
 gui_classification_reason: Defines automated build verification and a builder report; no visual presentation.
-depends_on: [DL-512, PNC-038, PNC-015, EP-101, EP-102, PWIZ-012, PWIZ-110, ATS-003, ATS-004]
+depends_on: [DL-512, PNC-038, PNC-015, EP-100, EP-101, EP-102, PWIZ-012, PWIZ-110, ATS-003, ATS-004]
 unblocks: []
 acceptance_criteria:
   - "A WorkNode with bound rule tests completes only when every bound fixture meets its expected outcome and every state and effect assertion it carries holds through its observation surface, every bound ATS-003 oracle passes, and every recorded test gap is honoured under its test_gap_policy, a deferred harness candidate leaving the node incomplete until the harness work lets its test run and pass, as its TestRunReceipt records."
-  - "A fixture for a rule split across nodes counts at completion only when it ran on a build that includes the completed outputs of every node it exercises, named in its TestRunReceipt; a pass on an earlier or partial build never counts."
+  - "A fixture for a rule split across nodes counts at completion only when it ran on the designated node's final build with the completed outputs of every other node it exercises, all named in its TestRunReceipt; a pass on an earlier or partial build never counts."
   - "Payload fixtures run against the built validator or a declared consuming operation; behaviour fixture adapters are generated from the contract's interface binding and reach prior states by replaying owner operations or a declared seeding port, never by direct storage writes; a hand-written adapter is checked by an automated verification agent that is not the builder; a fixture with no automatic route is a recorded test gap."
   - "A fixture that contradicts its cited span stays required until a successor plan corrects it; the builder never waives or edits a fixture."
   - "Each builder report entry cites its source span and the different build it would have caused, carries a PWIZ-012 gap class, goes to the planning repair route or the plan's approver, and is kept as a plan conversion regression case in the project's planning evidence."
@@ -89,4 +90,4 @@ negative_constraints:
 owner_hints: [Plans/Automated_Testing_System.md, Plans/Plan_To_Node_Compilation.md, Plans/Executor_Protocol.md, Plans/Planning_Wizard.md]
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-512, ContractName:Plans/Plan_To_Node_Compilation.md#PNC-038, ContractName:Plans/Automated_Testing_System.md#ATS-003, ContractName:Plans/Automated_Testing_System.md#ATS-004, ContractName:Plans/Plan_To_Node_Compilation.md#PNC-015, ContractName:Plans/Executor_Protocol.md#EP-101, ContractName:Plans/Executor_Protocol.md#EP-102, ContractName:Plans/Planning_Wizard.md#PWIZ-012, ContractName:Plans/Planning_Wizard.md#PWIZ-110, ContractName:Plans/Planning_Wizard.md#PWIZ-111
+ContractRef: ContractName:Plans/Decision_Log.md#DL-512, ContractName:Plans/Plan_To_Node_Compilation.md#PNC-038, ContractName:Plans/Automated_Testing_System.md#ATS-003, ContractName:Plans/Automated_Testing_System.md#ATS-004, ContractName:Plans/Plan_To_Node_Compilation.md#PNC-015, ContractName:Plans/Executor_Protocol.md#EP-100, ContractName:Plans/Executor_Protocol.md#EP-101, ContractName:Plans/Executor_Protocol.md#EP-102, ContractName:Plans/Planning_Wizard.md#PWIZ-012, ContractName:Plans/Planning_Wizard.md#PWIZ-110, ContractName:Plans/Planning_Wizard.md#PWIZ-111
