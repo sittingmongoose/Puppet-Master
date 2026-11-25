@@ -96003,6 +96003,11 @@
     {
       "edge_type": "depends_on",
       "from": "PWIZ-111",
+      "to": "PWIZ-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-111",
       "to": "PWIZ-006"
     },
     {
@@ -165191,7 +165196,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-25T08:42:41Z",
+  "generated_at_utc": "2026-11-25T09:07:58Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -289694,8 +289699,8 @@
       "source_location": {
         "heading": "PWIZ-111 - Referee Check For Risky Contracts While Planning",
         "heading_level": 3,
-        "heading_line": 5040,
-        "line": 5042,
+        "heading_line": 5044,
+        "line": 5046,
         "path": "Plans/Planning_Wizard.md"
       },
       "status": "accepted",
@@ -328893,9 +328898,9 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27878,
+    "depends_on_edge_count": 27879,
     "downstream_blocked_node_count": 0,
-    "edge_count": 31111,
+    "edge_count": 31112,
     "node_count": 9629,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3233,

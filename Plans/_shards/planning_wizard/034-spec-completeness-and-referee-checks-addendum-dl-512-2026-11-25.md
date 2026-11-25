@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L4959-L5145
+Source lines: L4959-L5154
 
-Source SHA256: `3f1fba01298b612bf0cf438df8c1c54f8d9b9cad9afb34c60ac7dbaa0deffa33`
+Source SHA256: `a174ee4e04e2faa6e9a852dcf05964396b1a2216e2b08ada6c8549d32abf97cb`
 
 ---
 
@@ -54,7 +54,11 @@ canonical_text: >-
   completeness finding takes one of the PWIZ-012 classes auto_resolvable, safe_default_with_assumption,
   defer_to_plan_compile or defer_to_worknode_system. It becomes requires_user_policy_decision only when the missing
   detail is a product-policy choice with no safe inference, and it then reaches the user as a plain decision; a
-  technical detail never becomes a question for the user.
+  technical detail never becomes a question for the user. A pointer is an unresolved-pointer finding only when its
+  target is confirmed absent: a lookup stopped at an existing access or authority gate (such as a changed SSH host key
+  awaiting the approval its own contract requires) keeps the PWIZ-012 class or typed blocker that gate defines
+  (requires_external_credential, requires_user_risk_acceptance or an infrastructure blocker), goes through that gate's
+  existing owner, and is retried once access returns.
 gui_related: false
 gui_classification_reason: Backend planning check; its findings reach the user only through existing plain decision cards.
 depends_on: [DL-512, PWIZ-006, PWIZ-007, PWIZ-011, PWIZ-012, PWIZ-028]
@@ -64,7 +68,7 @@ acceptance_criteria:
   - "Fields without types in structured declarations, unresolved pointers, and one identifier (one named contract, type, enumeration, event, command or state, or one field path of one contract, including a field declared the same as another by reference or pointer) declared with incompatible types or enumeration members for overlapping cases are found by code without a model call, and must pass as PWIZ-028 deterministic checks; same-named fields of distinct contracts are left to the Auditor as possible drift; a lawful conditional pair, such as a terminal route's null target beside a continuing route's stage name, passes, a genuine same-scope conflict fails, and uncertain overlap, or established overlap with unresolved type or enumeration-member compatibility, goes to the Auditor."
   - "Auditor-found findings go through PWIZ-028's bounded round; non-blocking ones left are recorded as open questions and as recorded gaps for PNC-038 and do not hold the topic out of Ready, and a blocking one left is a PWIZ-006 typed blocker."
   - "Every operation or event has an interface binding that resolves, including an observation surface for every owner-stated state or effect assertion, or a completeness finding of the pointer kind."
-  - "No completeness finding becomes a technical question to the user; only a product-policy gap reaches the user, as a plain decision."
+  - "No completeness finding becomes a technical question to the user; only a product-policy gap reaches the user, as a plain decision; a lookup stopped at an access or authority gate keeps that gate's PWIZ-012 class or typed blocker and is retried once access returns, never recorded as an unresolved pointer."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
 risk_class: spec_gap_escape
@@ -101,7 +105,10 @@ canonical_text: >-
   correctness depends on ordering, idempotency, restore or recovery, such as checkpoints, restore points or an event
   log (plain create, read, update and delete persistence does not count); more than one writer (fencing or leases);
   or a security or permission boundary under which the owner's rules differ by caller beyond plain authentication.
-  The check runs before a topic becomes Ready and reruns for contracts that final integration changes. For each risky
+  The check runs before a topic becomes Ready and reruns for a risky contract when final integration changes its own
+  declaration or any resolved dependency its referee or cases use, such as a referenced owner schema behind a
+  byte-identical consumer declaration; the dependencies come from PWIZ-005's impact propagation and PWIZ-007's
+  integration dependency computation, and the rerun stays within PWIZ-028's bounded review. For each risky
   contract the topic's planning agent
   writes a referee from the owner's behaviour text, meaning its operations, states, transitions and declared failure
   results. The referee is a small executable owner model whose input is a prior owner state plus one operation or
@@ -111,7 +118,7 @@ canonical_text: >-
   member for a per-member rule, names the rule, and each case records that expected identity. The rules under test are the contract's schema rules and its behavioural acceptance criteria (those with an input
   and an observable outcome), sourced separately from the referee; shape checks get an acceptance-only passing case,
   and criteria without an input and an outcome (latency gates, visual checks) keep their ATS-003 oracles. Each schema rule gets a case for each polarity the approved contract makes possible for its effective assertion,
-  so that together they fail a validator that drops the rule or rejects every valid value of the active field, and, with the contrasting control below, one that applies an if-selected assertion on a route its selector does not select (the companion's validation scenarios fix that fault set): a refusing case and a passing case that reaches and satisfies the same assertion in the same applicable branch
+  so that together they fail a validator that drops the rule, wherever dropping it can change the approved outcome, or rejects every valid value of the active field, and, with the contrasting control below, one that applies an if-selected assertion on a route its selector does not select (the companion's validation scenarios fix that fault set): a refusing case and a passing case that reaches and satisfies the same assertion in the same applicable branch
   or route; a polarity counts as impossible only on code-established evidence recorded with the rule: other rules always refuse every violation first (a named gap on their coverage), no accepted input reaches the assertion (as when its selector conflicts with an enclosing const or enum, or its subschema is false), or its selector guarantees the assertion on every input of its branch so that no violation applies; an impossible polarity needs no fixture and earns no credit, a polarity missing without that evidence is a test gap, and the companion fixes the proof method; for an assertion an if selects
   the passing cases include one on each route that can accept a payload under the whole approved contract (a route the
   contract requires to accept but for which no valid case exists keeps its finding or test gap) and, wherever the contract admits one, a contrasting accepted control: an input that breaks the assertion on a route that does not select it, with any routing fields that route requires, expected to be accepted, built where a refusing input exists from it with the selector switched; each behavioural acceptance criterion gets a case for each input condition it lists, asserting the outcome it
@@ -135,7 +142,9 @@ canonical_text: >-
   default one keyword at one location, each member of a required list or other per-member constraint as its own rule, a
   not as one negative assertion whatever its subschema holds, with no per-member splitting inside it (accepted on a
   non-match, refused on a match), and an if as a selector of its then or
-  else assertions rather than a rule of its own. Starting from a valid control, code runs the rule's bounded candidate
+  else assertions rather than a rule of its own. Starting from a valid control where the contract admits one, or, where code establishes that the target admits
+  no passing input, from a directly constructed negative candidate held to the same whole-contract refusal and
+  attribution checks, code runs the rule's bounded candidate
   generator and binds a refusal as soon as the whole contract refuses an input because of that rule alone, as the
   companion's attribution of the validator's output shows; a wrapper error counts as that cause only when the wrapper
   refused through the rule's own failure; the rule is a named gap only when code establishes that its catching rules cover every violation of it (for example, a type restriction whose sibling enumeration admits only that type), each recorded input refused by the catching rules with their own codes and recorded; a search that ends on collisions without that coverage leaves a test gap for the missing refusing case, carrying
@@ -154,14 +163,14 @@ canonical_text: >-
   completeness check and PNC-038's generated fixtures.
 gui_related: false
 gui_classification_reason: Backend planning check; design findings reach the user only through existing plain decision cards.
-depends_on: [DL-512, PWIZ-110, PWIZ-006, PWIZ-007, PWIZ-011, PWIZ-012, PWIZ-028]
+depends_on: [DL-512, PWIZ-110, PWIZ-005, PWIZ-006, PWIZ-007, PWIZ-011, PWIZ-012, PWIZ-028]
 unblocks: [PNC-038]
 acceptance_criteria:
   - "Each risky contract is recorded with the property that made it risky; plain create, read, update and delete persistence, or plain authentication, alone does not make a contract risky."
-  - "The check runs before a topic becomes Ready and reruns for contracts that final integration changes."
+  - "The check runs before a topic becomes Ready and reruns when final integration changes the contract's own declaration or a resolved dependency its referee or cases use, a referenced owner change behind a byte-identical consumer declaration included."
   - "Referee inputs are a prior state plus an operation or event, or a short sequence, and the cases cover every state-machine transition with an illegal transition from each state wherever a declared operation or sequence can produce one, a total transition table recording its covered pairs instead, a write-cut-reopen case, a stale-writer case and a denied-caller case wherever the matching property applies."
   - "Refusal codes are the contract's declared failure codes; a generated input is credited to a rule only when the whole contract refuses it because of that rule, by the companion's attribution, while multi-rule inputs remain admissible as named-gap evidence."
-  - "A named gap rests on code-established coverage of the rule by its catching rules, with the recorded inputs and codes; a search that ends on collisions without that coverage is a test gap; each member of a required list or other per-member constraint is its own rule with its own refusal; a refusal is credited to a rule only when the whole contract refuses the input because of that rule, by the companion's attribution."
+  - "A named gap rests on code-established coverage of the rule by its catching rules, with the recorded inputs and codes; a search that ends on collisions without that coverage is a test gap; each member of a required list or other per-member constraint that stays per-member after the companion's attribution (not one inside a not, which is one assertion) is its own rule, with its own refusal wherever that polarity is possible or its named gap; a refusal is credited to a rule only when the whole contract refuses the input because of that rule, by the companion's attribution."
   - "Every case checks its outcome and every owner-stated state and effect assertion through a declared observation surface, for either polarity."
   - "A schema rule has a case for each polarity the approved contract makes possible, its passing case reaching and satisfying the same effective assertion in the same applicable branch of the assertion, and a polarity counts as impossible only on code-established evidence recorded with the rule (a named gap, an assertion no accepted input reaches, or one its selector guarantees); an assertion an if selects has a passing case on each route that can accept a payload under the whole approved contract and, wherever the contract admits one, a contrasting accepted control that still breaks it on a route that does not select it."
   - "The budget ends at whichever limit comes first, required cases run first, and every required case left unrun at the limit, including the rest of a rule whose cases were partly run (as when the budget ends between two required cases of one rule), is listed under its rule as a test gap, never as a named gap."
@@ -194,4 +203,4 @@ negative_constraints:
 owner_hints: [Plans/Planning_Wizard.md, Plans/Plan_To_Node_Compilation.md, Plans/Automated_Testing_System.md]
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-512, ContractName:Plans/Planning_Wizard.md#PWIZ-006, ContractName:Plans/Planning_Wizard.md#PWIZ-007, ContractName:Plans/Planning_Wizard.md#PWIZ-011, ContractName:Plans/Planning_Wizard.md#PWIZ-012, ContractName:Plans/Planning_Wizard.md#PWIZ-028, ContractName:Plans/Plan_To_Node_Compilation.md#PNC-038
+ContractRef: ContractName:Plans/Decision_Log.md#DL-512, ContractName:Plans/Planning_Wizard.md#PWIZ-005, ContractName:Plans/Planning_Wizard.md#PWIZ-006, ContractName:Plans/Planning_Wizard.md#PWIZ-007, ContractName:Plans/Planning_Wizard.md#PWIZ-011, ContractName:Plans/Planning_Wizard.md#PWIZ-012, ContractName:Plans/Planning_Wizard.md#PWIZ-028, ContractName:Plans/Plan_To_Node_Compilation.md#PNC-038
