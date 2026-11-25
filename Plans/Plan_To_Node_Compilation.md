@@ -2181,7 +2181,8 @@ canonical_text: >-
   source_acceptance_unit_ids reach through an owner_reference or consumer_reference edge (PNC-016). Each rule's tests
   bind to the node or nodes whose source_acceptance_unit_ids own enforcement of that rule; a rule that no single node
   owns binds to the node that completes the contract, the last node in build order whose source units hold the
-  contract's owner_reference, ordered through required_before_completion. A contract's rules are its schema rules, its
+  contract's owner_reference, ordered through required_before_completion. A contract's rules are its schema rules (one keyword at one location, with each member of a required list or other
+  per-member constraint as its own rule and that member part of the refusal's identity), its
   declared failure results and its acceptance criteria, and each kind of rule gets its own tests. A schema rule gets
   two payload fixtures: a payload that the schema validator confirms breaks only that rule, expected to be refused, and
   a payload that passes, expected to be accepted. A declared failure result gets two behaviour fixtures: an input that
@@ -2205,12 +2206,12 @@ canonical_text: >-
   fixture id, the contract ref, the rule id, the payload and its expected outcome; a behaviour fixture record holds the same fields with an input (a prior owner state plus an operation or event,
   or a short sequence) in place of the payload, its span reference, and the owner-stated state and effect assertions
   that apply to either polarity, each read through a declared observation surface (Plans/Planning_Wizard.md#PWIZ-110);
-  an assertion whose observation surface is still missing at compile time and carries no gap marker is a test gap,
-  and a gap-marked missing surface is carried once, as a completeness gap. Fixtures are listed in generated_test_ids (Plans/Automated_Testing_System.md#ATS-003); a bound oracle is listed in
+  a missing observation surface that already has a carried PWIZ-110 completeness finding keeps that disposition and is
+  carried once, as a completeness gap, while one first found at compile time is an assertion test gap. Fixtures are listed in generated_test_ids (Plans/Automated_Testing_System.md#ATS-003); a bound oracle is listed in
   generated_test_ids, or in reused_test_ids when it is an existing test. Each rule ends in exactly one disposition: its required tests bound;
   for a schema rule whose refusing payload cannot be isolated, the passing payload bound together with a named gap
-  evidenced to the standard of Plans/Planning_Wizard.md#PWIZ-111 (a complete keyword-aware isolation search over the
-  fixed candidate domains PWIZ-111 defines, which also bound PlanCompile's own search), whether
+  evidenced to the standard of Plans/Planning_Wizard.md#PWIZ-111 (code-established coverage of the rule by its catching rules, found by the bounded isolation search PWIZ-111
+  defines, with the same generators and stopping condition at compile time), whether
   the planning check or PlanCompile's own code produced that evidence, as the disposition of the refusal, binding a recorded multi-rule input
   as a regression fixture only where the approved contract determines the refusal for that exact input, and never with
   single-rule coverage credit; or a test gap for each required test that is missing because it could not be
@@ -2227,8 +2228,10 @@ canonical_text: >-
   node, with changed tests counting as an impact. The test_binding, test_case and test_run_receipt definitions in Plans/plans_to_code_handoff.schema.json do not yet
   carry payload fixture, behaviour fixture or recorded-gap records, or per-test outcomes with references to each
   recorded gap and its policy; that schema change is a required companion change before any compile uses this unit,
-  and its validation scenarios include a refusal that must preserve state and a replay that must return the right value
-  without repeating its effect. This unit specifies the binding
+  it also fixes the per-keyword candidate generators and named-gap coverage conditions PWIZ-111 relies on, and its
+  validation scenarios include a pattern rule and a length bound whose isolating witness must bind, a required list
+  whose members each need their own refusal, a refusal that must preserve state, and a replay that must return the right
+  value without repeating its effect. This unit specifies the binding
   only; it emits no NodeSeeds, WorkNodes, executable queues or build tasks.
 gui_related: false
 gui_classification_reason: Defines how compile artifacts carry test fixtures; no visual presentation.
@@ -2237,7 +2240,7 @@ unblocks: [ATS-401]
 acceptance_criteria:
   - "Every rule of every contract binds to the node that owns its enforcement, or to the node that completes the contract, and ends in exactly one disposition: its required tests bound; a passing payload with a named gap evidenced to PWIZ-111's standard, by the planning check or by PlanCompile, for an unisolatable schema refusal; or a test gap for each required test that could not be produced, failed its pre-bind check, or has no automatic route."
   - "A schema rule's required tests are a refusing and a passing payload fixture; a declared failure result's are a refusing input and its passing neighbour; a behavioural criterion's is one fixture per input condition it lists, each asserting its stated outcome so that a wrong result fails; any other criterion's is its ATS-003 oracle; no contract is exempt from schema fixtures."
-  - "Every behaviour fixture carries the owner-stated state and effect assertions for its polarity, each read through a declared observation surface, or a test gap where none exists."
+  - "Every behaviour fixture carries the owner-stated state and effect assertions for its polarity, each read through a declared observation surface; where a surface is missing, the carried PWIZ-110 completeness gap stands, or an assertion test gap if the gap was first found at compile time."
   - "Every expected outcome comes from the approved contract; a referee case that disagrees with the contract or lacks a contract outcome never binds, and observed planning outcomes are kept only as evidence."
   - "Every behaviour fixture cites its source span, passes the schema and declared-failure-code check before it binds, and keeps an immutable reference to that span in the approved plan version."
   - "A named-gap regression input binds only where the approved contract determines its refusal, and never with single-rule coverage credit."
