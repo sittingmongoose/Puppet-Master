@@ -106,42 +106,44 @@ We are aligning with OpenCode-style architecture where useful; their LSP approac
 
 We support the same set of built-in LSP servers as [OpenCode](https://opencode.ai/docs/lsp/) **plus slint-lsp** for Slint UI (`.slint`). When implementing the server registry, include all of the following so that Puppet Master can provide diagnostics and code intelligence for every listed language. Each row defines server id, file extensions, and requirements (command or dependency).
 
-| LSP Server | Extensions | Requirements |
-|------------|------------|--------------|
-| astro | .astro | Auto-installs for Astro projects |
-| bash | .sh, .bash, .zsh, .ksh | Auto-installs bash-language-server |
-| clangd | .c, .cpp, .cc, .cxx, .c++, .h, .hpp, .hh, .hxx, .h++ | Auto-installs for C/C++ projects |
-| csharp | .cs | .NET SDK installed |
-| clojure-lsp | .clj, .cljs, .cljc, .edn | clojure-lsp command available |
-| dart | .dart | dart command available |
-| deno | .ts, .tsx, .js, .jsx, .mjs | deno command available (auto-detects deno.json/deno.jsonc) |
-| elixir-ls | .ex, .exs | elixir command available |
-| eslint | .ts, .tsx, .js, .jsx, .mjs, .cjs, .mts, .cts, .vue | eslint dependency in project |
-| fsharp | .fs, .fsi, .fsx, .fsscript | .NET SDK installed |
-| gleam | .gleam | gleam command available |
-| gopls | .go | go command available |
-| hls | .hs, .lhs | haskell-language-server-wrapper command available |
-| jdtls | .java | Java SDK (version 21+) installed |
-| julials | .jl | julia and LanguageServer.jl installed |
-| kotlin-ls | .kt, .kts | Auto-installs for Kotlin projects |
-| lua-ls | .lua | Auto-installs for Lua projects |
-| nixd | .nix | nixd command available |
-| ocaml-lsp | .ml, .mli | ocamllsp command available |
-| oxlint | .ts, .tsx, .js, .jsx, .mjs, .cjs, .mts, .cts, .vue, .astro, .svelte | oxlint dependency in project |
-| php intelephense | .php | Auto-installs for PHP projects |
-| prisma | .prisma | prisma command available |
-| pyright | .py, .pyi | pyright dependency installed |
-| ruby-lsp (rubocop) | .rb, .rake, .gemspec, .ru | ruby and gem commands available |
-| rust | .rs | rust-analyzer command available |
-| slint-lsp | .slint | slint-lsp command available (cargo install slint-lsp or PATH; see §3.3.1) |
-| sourcekit-lsp | .swift, .objc, .objcpp | swift installed (xcode on macOS) |
-| svelte | .svelte | Auto-installs for Svelte projects |
-| terraform | .tf, .tfvars | Auto-installs from GitHub releases |
-| tinymist | .typ, .typc | Auto-installs from GitHub releases |
-| typescript | .ts, .tsx, .js, .jsx, .mjs, .cjs, .mts, .cts | typescript dependency in project |
-| vue | .vue | Auto-installs for Vue projects |
-| yaml-ls | .yaml, .yml | Auto-installs Red Hat yaml-language-server |
-| zls | .zig, .zon | zig command available |
+| LSP Server | Extensions | Requirements | `support_classification` | `default_enabled` |
+|------------|------------|--------------|--------------------------|-------------------|
+| astro | .astro | Auto-installs for Astro projects | supported-by-registry | false |
+| bash | .sh, .bash, .zsh, .ksh | Auto-installs bash-language-server | default-managed | true |
+| clangd | .c, .cpp, .cc, .cxx, .c++, .h, .hpp, .hh, .hxx, .h++ | Auto-installs for C/C++ projects | default-managed | true |
+| csharp | .cs | .NET SDK installed | toolchain-bound/manual | true |
+| clojure-lsp | .clj, .cljs, .cljc, .edn | clojure-lsp command available | toolchain-bound/manual | true |
+| dart | .dart | dart command available | toolchain-bound/manual | true |
+| deno | .ts, .tsx, .js, .jsx, .mjs | deno command available (auto-detects deno.json/deno.jsonc) | default-managed | true |
+| elixir-ls | .ex, .exs | elixir command available | toolchain-bound/manual | true |
+| eslint | .ts, .tsx, .js, .jsx, .mjs, .cjs, .mts, .cts, .vue | eslint dependency in project | toolchain-bound/manual | true |
+| fsharp | .fs, .fsi, .fsx, .fsscript | .NET SDK installed | toolchain-bound/manual | true |
+| gleam | .gleam | gleam command available | toolchain-bound/manual | true |
+| gopls | .go | go command available | default-managed | true |
+| hls | .hs, .lhs | haskell-language-server-wrapper command available | toolchain-bound/manual | true |
+| jdtls | .java | Java SDK (version 21+) installed | toolchain-bound/manual | true |
+| julials | .jl | julia and LanguageServer.jl installed | toolchain-bound/manual | true |
+| kotlin-ls | .kt, .kts | Auto-installs for Kotlin projects | supported-by-registry | false |
+| lua-ls | .lua | Auto-installs for Lua projects | supported-by-registry | false |
+| nixd | .nix | nixd command available | toolchain-bound/manual | true |
+| ocaml-lsp | .ml, .mli | ocamllsp command available | toolchain-bound/manual | true |
+| oxlint | .ts, .tsx, .js, .jsx, .mjs, .cjs, .mts, .cts, .vue, .astro, .svelte | oxlint dependency in project | toolchain-bound/manual | true |
+| php intelephense | .php | Auto-installs for PHP projects | supported-by-registry | false |
+| prisma | .prisma | prisma command available | toolchain-bound/manual | true |
+| pyright | .py, .pyi | pyright dependency installed | default-managed | true |
+| ruby-lsp (rubocop) | .rb, .rake, .gemspec, .ru | ruby and gem commands available | toolchain-bound/manual | true |
+| rust | .rs | rust-analyzer command available | default-managed | true |
+| slint-lsp | .slint | slint-lsp command available (cargo install slint-lsp or PATH; see §3.3.1) | default-managed | true |
+| sourcekit-lsp | .swift, .objc, .objcpp | swift installed (xcode on macOS) | toolchain-bound/manual | true |
+| svelte | .svelte | Auto-installs for Svelte projects | supported-by-registry | false |
+| terraform | .tf, .tfvars | Auto-installs from GitHub releases | supported-by-registry | false |
+| tinymist | .typ, .typc | Auto-installs from GitHub releases | supported-by-registry | false |
+| typescript | .ts, .tsx, .js, .jsx, .mjs, .cjs, .mts, .cts | typescript dependency in project | default-managed | true |
+| vue | .vue | Auto-installs for Vue projects | supported-by-registry | false |
+| yaml-ls | .yaml, .yml | Auto-installs Red Hat yaml-language-server | default-managed | true |
+| zls | .zig, .zon | zig command available | toolchain-bound/manual | true |
+
+The last two columns are each row's `ServerSpec` catalog-base values (§14.9), in the registry's own vocabulary; user and project overrides layer on top of them. `default-managed` rows are the PM-managed out-of-box set named below; PM provisions only these. `toolchain-bound/manual` rows are enabled by default but start only when the availability probe finds the command, SDK or project dependency in the Requirements column. `supported-by-registry` rows are in the catalog but off by default, because their upstream "Auto-installs" requirement is an OpenCode behavior PM does not perform; the user provisions the server and enables the row. "Auto-installs" in the Requirements column records the upstream OpenCode behavior only. No row of this table is `experimental/degraded` or `deprecated/replaced` today.
 
 Servers are enabled when a file's extension matches and the requirement is met. Root discovery and spawn logic per server (e.g. Cargo.toml for Rust, package.json for eslint/TypeScript) are in OpenCode's server.ts; we align with that. See §3.3 for reinforced ESLint (JS/TS), §3.3.1 for Slint LSP, §3.4 for implementation notes, §3.5 for the root discovery table, and §3.6 for extension conflict rules.
 
@@ -307,7 +309,7 @@ Fallback, index, and cross-reference rules:
 - Stale references to `FileManager.md §12.1.4`, `§12.1.4`, `§12.2.7`, `§12.4`, `§12.5`, `§12.6`, `§11`, `TOC`, and `Projects (§7.3)` / `§7.3` are legacy cross-reference residue. `FinalGUISpec` and FileManager consumers must route to the current FileManager §10 navigation/fallback contract or this LSPSupport section rather than keeping anchors that do not exist.
 - The semantic requirements formerly named `§12.1.4 Symbol search without LSP` and `§12.2.7 Symbol index staleness` are retained here as live obligations: fallback symbol search supports regex / heuristic outline and optional indexed-symbol paths; stale index labels, rebuild expectations, and remote degraded/unavailable interactions must be visible in the command palette, Go to symbol, Problems, Search, and chat consumers.
 - The LSP indexing/autodetect seam is research-locked around distinct GUI state layers. PM must keep `detected_languages` / project badges, selected preset, requested LSP enablement and server overrides, effective attached LSP sessions, and code index freshness/health separate in product language and state; a detected-language badge is advisory/project-scoped and must not collapse into "LSP ready." Later re-detection happens on project add/open and later project-signal changes, but actual attach remains `/path/root/context-driven`, based on extension, requirement/availability, root discovery, and primary/supplementary conflict resolution. `/cross-reference` consumers must distinguish `/opening` detection from later refresh, optional tool-download guidance, and `/retrieval/index` freshness.
-- The FileManager editor-surface map is explicit for LSP consumers: `§10.1 Breadcrumbs / outline` owns the breadcrumb strip and outline, with LSP using `documentSymbol` and fallback using heuristic / regex outline; `§10.2 Go to symbol` owns command-palette and quick-open symbols, with LSP using `documentSymbol` and `workspace/symbol`, while the legacy `§12.1.4` name survives only as a compatibility pointer to this fallback rule. `§10.10 LSP support (MVP)` is the editor-side owner for diagnostics, hover, completion, signature help, inlay hints, code actions, code lens, semantic highlighting, definition/references, `/rename/applyEdit`, format, `document/workspace symbols`, editor/chat adjacency, and the finer `§10.10.5`, `§10.10.6`, `§10.10.7`, and `§10.10.8` responsibility split. FileManager remains the visible editor owner; LSPSupport owns the LSP protocol/client constraints.
+- The FileManager editor-surface map is explicit for LSP consumers: `§10.1 Breadcrumbs / outline` owns the breadcrumb strip and outline, with LSP using `documentSymbol` and fallback using heuristic / regex outline; `§10.2 Go to symbol` owns command-palette and quick-open symbols, with LSP using `documentSymbol` and `workspace/symbol`, while the legacy `§12.1.4` name survives only as a compatibility pointer to this fallback rule. `§10.3 Diagnostics, gutter markers, and change markers` owns editor diagnostics; `§10.4 Definition, references, hover, and code actions` owns definition/references, hover, code actions, `/rename/applyEdit`, and format; `document/workspace symbols` stay with §10.1 and §10.2. Completion, signature help, inlay hints, code lens, semantic highlighting, and editor/chat adjacency render in the FileManager §10 editor surface, with protocol behavior in LSPSupport §9 and §5.1. `§10.10 LSP support (MVP)` and its `§10.10.5`, `§10.10.6`, `§10.10.7`, and `§10.10.8` split never existed in FileManager; they are retired aliases (FileManager's FABLE Deferred Action Concrete Repair Addendum) and are not owners. FileManager remains the visible editor owner; LSPSupport owns the LSP protocol/client constraints.
 - Search remains text-first. The Search side panel consumes content-search / project code-search output with stable path, `/range/snippet`, and snippet identity, then routes open and `/highlight` through the same shell/editor path as chat, `/file-manager/LSP`, and LSP navigation opens. LSP symbol mode stays in Go to symbol, breadcrumbs, and semantic navigation; the Search panel must not become a second default symbol browser.
 - Status-bar /search-language copy in `Plans/LSPSupport.md` (`/LSPSupport.md`) keeps symbol search and regex grep non-conflicting: LSP may report server health, symbol navigation, and fallback state, while `grep` and Search regex acceleration remain text-search vocabulary and must not be labeled as LSP symbol health.
 - LSP command routing is route-aware and `/navigation-aware`: a flat `element -> command -> handler` contract is insufficient once diagnostics, symbols, references, code actions, and chat links open through route-target, navigation, and editor owners.
@@ -396,7 +398,7 @@ Each mitigation is **actionable**: who does what, and when.
 |-------|------------------------------|
 | **Server crash or exit** | **Client (LSP layer):** On process exit or broken pipe (e.g. when writing to stdin fails), (1) mark that server's state as Error, (2) clear all diagnostics for documents owned by that server (DiagnosticsCache), (3) notify UI to refresh Problems panel and gutter. **UI:** Show "Error" in status bar for that server; offer "Restart language server" button (or auto-restart with exponential backoff, e.g. 1s, 2s, 4s, cap 30s). **Logging:** Log exit code and stderr tail for debugging. |
 | **Server slow or unresponsive** | **Client:** Apply request timeouts (§14.4); on timeout, discard response and show "Timed out". Send LSP cancel on user navigate/edit. **UI:** While a request is in flight and no response yet, show "Waiting for language server..." in status bar; never block UI thread on LSP. **Optional (client):** After N timeouts for a server in a session, throttle or disable heavy features (e.g. workspace symbol) for that server until next restart. |
-| **Many open documents** | **Client:** Limit documents pushed to each server (e.g. only currently open tabs, or N most recent per root). **Editor/FileManager:** When a buffer is evicted (FileManager §12.2.1), **client** sends `didClose` for that URI so the server can free memory. **Config:** Optional cap (e.g. max 50 open docs per server) in Settings. |
+| **Many open documents** | **Client:** Limit documents pushed to each server (e.g. only currently open tabs, or N most recent per root). **Editor/FileManager:** When a buffer is evicted (FileManager `File watcher and LRU eviction`; the old `§12.2.1` pointer never existed), **client** sends `didClose` for that URI so the server can free memory. **Config:** Optional cap (e.g. max 50 open docs per server) in Settings. |
 | **Large workspace at init** | **Client:** At initialize, send only roots that have at least one open document, capped at 10 (§7, §14.6). **When:** During `initialize` request; do not send thousands of paths. |
 | **didChange flood** | **Client:** Debounce `didChange` (default 100 ms after last edit; §7, §14.4). When server supports incremental sync, send only `contentChanges`; otherwise full content. **When:** On every buffer edit, start/reset debounce timer; on timer fire, send one `didChange`. |
 | **Symbol index staleness (without LSP)** | **FileManager:** fallback symbol navigation lives in §10.2. **When LSP present:** Diagnostics and symbols come from server. **When LSP disabled or unavailable:** Keep regex/heuristic symbol path (FileManager §10.2); optional install hint. **Client:** No action for index; fallback is editor/FileManager responsibility. |
@@ -920,7 +922,7 @@ This section defines the **contract, config, failure handling, evidence schema, 
 - **Scope:** What files are checked. One of:
   - **`changed_files`** -- Only files that were modified in the last iteration (or in the current subtask). Requires tracking changed paths (e.g. from git diff or execution engine "files touched").
   - **`open`** -- Only files currently open in the editor (or in the run context). Requires LSP client to know "open" set for the run.
-  - **`project`** -- All project files that have an LSP server (bounded: e.g. under project root, or only files with open documents). Default: **`changed_files`** to keep checks fast and relevant.
+  - **`project`** -- All files under the project root that have an LSP server, excluding generated, ignored, vendored, and policy-hidden paths. Open documents are not a bound of this scope; checking open documents only is the `open` scope. Default: **`changed_files`** to keep checks fast and relevant.
 - **"No LSP errors" meaning:** Configurable severity threshold:
   - **`error`** -- Gate passes if there are **no diagnostics with severity Error** in scope. Warnings and Info are ignored.
   - **`error_and_warning`** -- Gate passes if there are **no diagnostics with severity Error or Warning** in scope. Info is ignored.
@@ -7044,8 +7046,8 @@ Phase 2B batch 084 atomized `LSPSupport-S0001` through `LSPSupport-S0017` and `L
 This addendum repairs non-runtime LSP rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
 - Repairs `sfk-5db5df835f867a5d96bf0b74`: `rust-analyzer` is self-managed by default. PM detects it on PATH and may suggest install guidance, but PM does not auto-install it unless a future owner doc adds an explicit installer contract.
-- Repairs `sfk-c158d84b7bc8d4d4bcaf2d96`: every LSP server catalog row has `default_enabled` and `support_classification`. Defaults are `default_enabled=false` and `support_classification=manual_setup` unless a row explicitly says `first_class`, `bundled`, or `auto_detected`.
-- Repairs `sfk-5e96353b2b86e879e26f845a`: gate `scope = project` means files under the project root, excluding generated, ignored, vendored, and policy-hidden paths. Open-document-only is `scope = open_documents` and is not an alias for project.
+- Repairs `sfk-c158d84b7bc8d4d4bcaf2d96`: every LSP server catalog row has `default_enabled` and `support_classification`, and the §3.2 table states both per row. Values use only the §14.9 registry vocabulary (`supported-by-registry`, `default-managed`, `toolchain-bound/manual`, `experimental/degraded`, `deprecated/replaced`). The earlier spellings are retired: `first_class` and `bundled` read as `default-managed`, `auto_detected` as `toolchain-bound/manual`, and `manual_setup` as `supported-by-registry`. A catalog row added without explicit values defaults to `default_enabled=false` and `support_classification=supported-by-registry`.
+- Repairs `sfk-5e96353b2b86e879e26f845a`: gate `scope = project` means files under the project root, excluding generated, ignored, vendored, and policy-hidden paths (§17.1 Contract). Open-document-only is the `open` scope value of `verification.lsp_gate.scope` (§17.1 Config table, LSPS-091) and is not an alias for project. The spelling `open_documents` used here earlier is retired and is not a config value.
 - Repairs `sfk-8290829cf3f3df11f6f5e87f`: Phase 1 uses `async-lsp` as the canonical Rust crate decision. `lsp-client` remains source-lineage research only unless a future currentness review replaces the crate choice.
 
 ## Remaining Runtime Integration Addendum - LSP Write Transaction - 2026-08-13
