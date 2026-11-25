@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L4959-L5108
+Source lines: L4959-L5113
 
-Source SHA256: `8b71ba4bfa08d95f4c010babebcdb61beb2dd5673ab8ff7391e8fdfa685a5e18`
+Source SHA256: `386037a082403abeb91ce5331d0f1291da7ee3155ad121adc82ad94e6aef6044`
 
 ---
 
@@ -32,9 +32,10 @@ canonical_text: >-
   surface it maps to: a route, command, function or storage port, written by the planning agent); and the same identifier declared with different types or enumeration members, or
   two statements that contradict each other. Code finds, without a model call, what structured declarations show:
   fields without types in tables and schemas, unresolved pointers, and one identifier declared with different types
-  or enumeration members. These code-found findings are part of PWIZ-028's deterministic checks and must pass; a code-found finding passes
-  as deferred only when its declaration carries an explicit gap marker (provenance gap with a gap_note), and it then
-  reaches PNC-038 as a recorded gap. The
+  or enumeration members. These code-found findings are part of PWIZ-028's deterministic checks and must pass; a code-found finding passes as deferred only when its declaration carries an explicit gap marker (provenance gap with a
+  gap_note), and it then reaches PNC-038 as a recorded gap. A gap marker documents the deferral for the completeness
+  check only and carries no approval authority: PWIZ-012's zero-incomplete gate still governs approval of any required
+  detail left unresolved. The
   PWIZ-006 Auditor agent, which may run on the same model as the topic, checks the rest, including names that drift
   and prose that contradicts itself. Its findings carry finding_level and repair_required like any review finding and
   go through PWIZ-028's one bounded repair round and affected-rows re-review. A non-blocking finding that remains
@@ -98,17 +99,20 @@ canonical_text: >-
   event, or a short sequence of them, and whose output is the resulting state or a refusal with one of the contract's
   declared failure codes. The referee's state marks which parts survive a cut or restart. A rule whose refusal has no
   declared failure code is a PWIZ-110 finding; a declared validation code shared by several rules is enough when the
-  validator's error path names the rule, and each case records the expected path. The rules under test
-  are the contract's schema rules and acceptance criteria, sourced separately from the referee. Each rule gets one
+  validator's error path names the rule, and each case records the expected path. The rules under test are the contract's schema rules and its behavioural acceptance criteria (those with an input
+  and an observable outcome), sourced separately from the referee; shape checks get an acceptance-only passing case,
+  and criteria without an input and an outcome (latency gates, visual checks) keep their ATS-003 oracles. Each rule gets one
   passing and one refusing case, and each risk property its matching cases: every state-machine transition and at
   least one illegal transition from each state; a write, a cut and a reopen; a stale writer after a fencing change;
-  and a caller denied without permission. Where the contract has a schema, code also generates inputs that each break
-  exactly one rule, and the schema validator, not the referee, confirms that each breaks only that rule. Each refusing
+  and a caller denied without permission. Where the contract has a schema, code also generates inputs that each break one rule, and the schema validator, not the referee, confirms which
+  rules each breaks; only an input that breaks exactly one rule is credited as that rule's refusing case, and inputs
+  that break several rules stay admissible as named-gap evidence. Each refusing
   case must be refused with its rule's code, and each passing case accepted with the expected resulting state. When the
   referee and a rule disagree, the owner text decides: a referee that departs from the owner text is repaired, and owner
-  text that lacks the check is a design finding. Design findings carry finding_level and repair_required and go
-  through PWIZ-028's bounded round; one that remains afterwards is recorded as an open question, reaches PNC-038 as a
-  recorded gap, and reaches the user only as a plain decision when fixing it is a product-policy choice. A rule is a
+  text that lacks the check is a design finding. Design findings carry finding_level and repair_required and go through PWIZ-028's bounded round; a non-blocking one
+  that remains afterwards is recorded as an open question and reaches PNC-038 as a recorded gap, a blocking one that
+  remains is a typed blocker under PWIZ-006, and either reaches the user only as a plain decision when fixing it is a
+  product-policy choice. A rule is a
   named gap only with code evidence: the generator tried at least five distinct single-rule breaks of that rule, or
   every mutation of its schema keyword if there are fewer, every one also broke another rule, and the listed catching rules refused each such input with their own codes; those inputs are recorded. Without
   that evidence the rule is a design finding or a test gap. Each risky contract has a budget the planning run sets,
@@ -129,7 +133,8 @@ acceptance_criteria:
   - "Refusal codes are the contract's declared failure codes, and the schema validator confirms that each generated input breaks exactly one rule."
   - "Each named gap carries at least five recorded single-rule break attempts (or every mutation of its schema keyword) showing that each also broke another rule, which refused it with its own code."
   - "The budget ends at whichever limit comes first, required cases run first, and rules not reached within it are listed as test gaps, never as named gaps."
-  - "Design findings follow PWIZ-028's bounded round; leftovers are open questions and recorded gaps and do not hold the topic out of Ready."
+  - "Design findings follow PWIZ-028's bounded round; non-blocking leftovers are open questions and recorded gaps that do not hold the topic out of Ready, and a blocking leftover is a PWIZ-006 typed blocker."
+  - "Referee cases cover schema rules and behavioural acceptance criteria only; other criteria keep their ATS-003 oracles."
   - "The check needs no additional independent model, no two-reviewer proof and no technical user question."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate

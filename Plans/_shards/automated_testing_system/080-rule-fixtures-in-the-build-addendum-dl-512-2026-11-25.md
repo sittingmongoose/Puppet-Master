@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L16494-L16561
+Source lines: L16494-L16564
 
-Source SHA256: `022812a0667e9e2c543506623d998f841be02b338dcb9375c55482b9eab95fc8`
+Source SHA256: `d211cd7e9cf2b8d42e17623317dabb2c8c4564548b6950882ce6dde57b2fe785`
 
 ---
 
@@ -35,8 +35,10 @@ canonical_text: >-
   fixture. Each entry cites its span and says what the builder would otherwise have built differently; an entry
   without both is dropped. Each entry carries a PWIZ-012 gap class. A technical entry goes to the planning repair
   route; a policy entry goes to the plan's approver, so the user sees only requires_user_policy_decision or
-  risk-acceptance cases, as plain decisions. The builder proceeds on a recorded safe_default_with_assumption, and the
-  node's completion does not wait for routed entries. A material entry produces a successor plan (PNC-015), and its
+  risk-acceptance cases, as plain decisions. Where an actual safe default exists, the builder proceeds on a recorded safe_default_with_assumption and the node's
+  completion does not wait for the routed entry. Where PWIZ-012 requires a decision before proceeding (product policy
+  with no safe inference, material risk acceptance, or a destructive or irreversible operation), the affected behaviour
+  stays behind that authority boundary until the decision arrives, while independent work continues. A material entry produces a successor plan (PNC-015), and its
   PlanDiffImpactReport reclassifies the node if the decision differs from the assumption. Each entry is also kept as a
   regression case for plan conversion in the project's planning evidence. No entry is added to a plan without its
   owner's decision, and none counts as a passed requirement.
@@ -50,6 +52,7 @@ acceptance_criteria:
   - "A fixture that contradicts its cited span stays required until a successor plan corrects it; the builder never waives or edits a fixture."
   - "Each builder report entry cites its source span and the different build it would have caused, carries a PWIZ-012 gap class, goes to the planning repair route or the plan's approver, and is kept as a plan conversion regression case in the project's planning evidence."
   - "The user sees a builder report entry only as a plain policy or risk-acceptance decision, and no entry changes a plan without its owner's decision."
+  - "The builder proceeds on a recorded assumption only where an actual safe default exists; behaviour that needs a PWIZ-012 decision first stays behind that authority boundary while independent work continues."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema

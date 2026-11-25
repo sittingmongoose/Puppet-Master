@@ -2188,8 +2188,9 @@ canonical_text: >-
   cites the exact failure-result or acceptance-criterion span it comes from, and code checks it against the schema and
   the declared failure codes before it binds. Acceptance criteria that are not an input and an outcome (latency gates,
   visual or browser checks, artifacts that must not exist) keep their ATS-003 oracles and are not rule fixtures. Risky contracts add the cases and generated
-  inputs of the planning referee check (Plans/Planning_Wizard.md#PWIZ-111). A fixture record holds a fixture id, the
-  contract ref, the rule id, its polarity (positive or negative), its input (a prior owner state plus an operation or
+  inputs of the planning referee check (Plans/Planning_Wizard.md#PWIZ-111). A contract whose criteria are all non-behavioural gets no rule fixtures and is verified through its ATS-003
+  oracles. A fixture record holds a fixture id, the contract ref, the rule id, its polarity (positive or negative), for
+  a model-written fixture an immutable reference to its source span in the approved plan version, its input (a prior owner state plus an operation or
   event, or a short sequence) and its expected outcome: accepted, with a resulting state only where a referee computes it or the contract states it,
   or refused with the declared failure code and, when several rules share that code, the validator's error path that
   names the rule. Fixtures
@@ -2197,9 +2198,10 @@ canonical_text: >-
   Plans/Planning_Wizard.md#PWIZ-110 and #PWIZ-111 travel with the node as recorded-gap records (rule id, kind
   named_gap or test_gap, evidence refs, catching rules, test_gap_policy and disposition), never as passing tests. A
   named gap needs no test_gap_policy of its own: its recorded inputs bind as negative fixtures under the catching
-  rules. A rule that reaches a node with no
-  fixture is a test gap whose test_gap_policy is block_completion, defer_non_executable_harness_candidate, or
-  allow_with_disposition with a recorded disposition; never not_applicable. When a contract changes after approval,
+  rules. A rule that reaches a node with no fixture, or with only one of the two polarities it needs, is a test gap whose
+  test_gap_policy is block_completion, defer_non_executable_harness_candidate, or allow_with_disposition with a
+  recorded disposition, never not_applicable; a rule with one polarity keeps that fixture and records which polarity is
+  missing and why. When a contract changes after approval,
   the successor plan reruns its PWIZ-110 and PWIZ-111 checks and regenerates its fixtures, and the PlanDiffImpactReport
   (Plans/Executor_Protocol.md#EP-102) classifies each consuming node, with changed fixtures counting as an impact. The
   test_binding and test_case definitions in Plans/plans_to_code_handoff.schema.json do not yet carry the fixture and
@@ -2213,7 +2215,8 @@ acceptance_criteria:
   - "Every rule of every contract binds to the node that owns its enforcement, or to the node that completes the contract, as a negative and a positive fixture, a recorded named gap, or a test gap whose test_gap_policy is not not_applicable."
   - "Every contract gets generated fixtures, not only risky contracts."
   - "Fixture and recorded-gap records hold the fields this unit names, and named gaps and test gaps never count as passing tests."
-  - "Every model-written example cites its source span and passes the schema and declared-failure-code check before it binds; a positive fixture asserts a resulting state only when a referee computes it or the contract states it."
+  - "Every model-written example cites its source span and passes the schema and declared-failure-code check before it binds, and its fixture record keeps an immutable reference to that span in the approved plan version; a positive fixture asserts a resulting state only when a referee computes it or the contract states it."
+  - "A rule with only one of its two required polarities is a recorded test gap that names the missing polarity and why, and keeps the fixture it has."
   - "A contract change after approval reruns its checks in the successor plan and regenerates its fixtures, and the PlanDiffImpactReport classifies every consuming node."
   - "The handoff schema change for fixture and recorded-gap records is a recorded companion change, required before any compile uses this unit."
   - "No NodeSeeds, WorkNodes, executable queues, final node manifests, production build tasks, implementation files or source code are created by this PlanUnit."
