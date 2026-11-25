@@ -6680,7 +6680,17 @@ Tie-break order when multiple eligible rows remain is: highest `support_state` r
 
 **Route verification probe (2026-11-25).** A route row becomes `support_state = verified` for one output mode only through a passed `generated_media_route_probe` for that exact row and mode. This is the "E2E generated artifact proof" the provider rows require, and it fills the CV-292 provider route support evidence envelope (`proof_kind = generated_artifact_roundtrip`, `proof_timestamp = completed_at_utc`, `verification_state = verified`). Catalog presence, an HTTP 200 model listing, image-input or API-key proof, and output routed through another provider never pass a probe.
 
-The probe sends one `media.generate` request of the row's output kind through the row's own `provider_id`, `account_id` and `model_id`, with `count = 1`, the smallest size the route accepts, and the fixed prompt `A plain red circle centered on a white background` for `image` (kind-equivalent short fixed prompts for `video`, `audio` and `text_caption`). It passes only when the response has `success = true`, `engine.generated_media_route_id` equal to the probed `route_id`, and at least one artifact whose bytes are durable, whose `sha256` matches, whose `mime` is in the row's output mode (for `image`: `image/png`, `image/jpeg` or `image/webp`), and whose decoded `meta.w` and `meta.h` (or `meta.duration` for audio and video) are greater than zero. The probe artifact is kept only as its hash and metadata; its bytes are dropped after the check.
+The probe sends one `media.generate` request through the row's own `provider_id`, `account_id` and `model_id`, with `count = 1`, the smallest size the route accepts, and a §2.2 `kind` (only `image`, `video`, `tts` or `music`) chosen from the output mode by this total table:
+
+| Probed `media_output_mode` | §2.2 `kind` sent | Fixed prompt |
+| --- | --- | --- |
+| `image` | `image` | `A plain red circle centered on a white background` |
+| `video` | `video` | `A plain red circle moving left to right on a white background`, with the shortest `duration` the route accepts |
+| `audio` | `tts` for a route that serves the §1.5 `media.tts` capability, `music` for one that serves `media.music`; a route that serves both is probed once per kind and `audio` is verified only when both pass | `Puppet Master route check.` for `tts`; `A short calm piano phrase` with the shortest `duration` the route accepts for `music` |
+| `text_caption` | none | No `media.generate` probe exists, because §2.2 has no caption kind. |
+| `artifact_bundle` | none | No `media.generate` probe exists, because §2.2 has no bundle kind. |
+
+A row cannot become `verified` for `text_caption` or `artifact_bundle`; for those modes it stays `unverified` with `disabled_reason = route_unverified` (or `capability_gated` when its gate applies), and a `MediaFallbackCaptionPolicy` that names such a route still runs under its own permission, confidence and budget rules below. It passes only when the response has `success = true`, `engine.generated_media_route_id` equal to the probed `route_id`, and at least one artifact whose bytes are durable, whose `sha256` matches, whose `mime` is in the row's output mode (for `image`: `image/png`, `image/jpeg` or `image/webp`), and whose decoded `meta.w` and `meta.h` (or `meta.duration` for `tts`, `music` and `video`) are greater than zero. The probe artifact is kept only as its hash and metadata; its bytes are dropped after the check.
 
 `verification_probe_ref` points to a record with these fields: `probe_id` (string), `route_id` (string), `provider_id` (string), `account_id` (string or null), `model_id` (string), `effective_model_id` (string), `media_output_mode` (string), `proof_kind` (`generated_artifact_roundtrip`), `result` (`passed`, `failed` or `inconclusive`), `failure_code` (a §2.6 `error.code`, or `artifact_invalid` when the provider succeeded but the artifact check failed; null when passed), `artifact_mime` (string or null), `artifact_sha256` (string or null), `artifact_w` and `artifact_h` (integer or null), `artifact_duration_s` (number or null), `capability_snapshot_ref` (string), `credential_route_epoch_id` (string), `started_at_utc` and `completed_at_utc` (RFC 3339 strings). `failed` sets the row to `support_state = unverified` with `disabled_reason = route_unverified`; `inconclusive` (timeout, `RATE_LIMITED` or `QUOTA_EXCEEDED`) leaves the previous state unchanged. A probe is never retried automatically.
 
@@ -6786,10 +6796,11 @@ Settlement states. `settled_native`, `settled_with_captions` and `failed` are te
 
 | From | To | When |
 | --- | --- | --- |
+| `pending` | `failed` | At least one input is rejected with `mime_unsupported` or `artifact_missing`. This is checked first, before any provider request, including a caption call (MGAC-100: wrong MIME is blocked before the provider request), and no caption policy applies to these inputs. |
 | `pending` | `settled_native` | Every input is accepted natively by the selected route. |
-| `pending` | `awaiting_caption_permission` | At least one input is rejected, the policy is `enabled`, and `requires_user_permission = true`. |
-| `pending` | `captioning` | At least one input is rejected, the policy is `enabled`, and `requires_user_permission = false`. |
-| `pending` | `failed` | At least one input is rejected and no enabled policy applies. Inputs are never dropped silently. |
+| `pending` | `awaiting_caption_permission` | At least one input is rejected, every rejected input's code is `input_mode_unsupported` or `input_too_large` (the only captionable codes), the policy is `enabled`, and `requires_user_permission = true`. |
+| `pending` | `captioning` | At least one input is rejected, every rejected input's code is `input_mode_unsupported` or `input_too_large`, the policy is `enabled`, and `requires_user_permission = false`. |
+| `pending` | `failed` | At least one input is rejected with a captionable code and no enabled policy applies. Inputs are never dropped silently. |
 | `awaiting_caption_permission` | `captioning` | The person allows the caption for this request. |
 | `awaiting_caption_permission` | `failed` | The person declines or cancels; each pending input gets `caption_permission_denied`. |
 | `captioning` | `settled_with_captions` | Every rejected input has a caption artifact with `caption_confidence >= caption_confidence_min`. |

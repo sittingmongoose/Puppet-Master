@@ -56815,6 +56815,184 @@
         }
       ],
       "native_runtime_executed": false
+    },
+    {
+      "case_id": "c-fix79-persona-update-set-enabled",
+      "schema_ref": "Plans/shared_integration_runtime.schema.json#/$defs/persona_update_request_v2",
+      "record": {
+        "command_id": "cmd.persona.update",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "server_id": "server-settings-home",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null
+        },
+        "client_id": "client-one",
+        "persona_id": "writer-one",
+        "source_id": "writer-one",
+        "source_revision": 1,
+        "source_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "project_version_id": null,
+        "reach_ref": "ref:reach/every-project",
+        "expected_owner_revision": 1,
+        "return_context_ref": "ref:return/original",
+        "destination_home_ref": "ref:home/library",
+        "whole_record_ref": "ref:persona/whole",
+        "whole_record_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "project_switch_ids": [],
+        "permission_evidence": {
+          "schema_id": "pm.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Permissions_System.md",
+          "source_ref": "ref:permission/one",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "idempotency_key": "persona-op-c-fix79-persona-update-set-enabled",
+        "update_operation": "set_enabled",
+        "enabled": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "c-fix79-persona-update-restore-shipped-default",
+      "schema_ref": "Plans/shared_integration_runtime.schema.json#/$defs/persona_update_request_v2",
+      "record": {
+        "command_id": "cmd.persona.update",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "server_id": "server-settings-home",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null
+        },
+        "client_id": "client-one",
+        "persona_id": "writer-one",
+        "source_id": "writer-one",
+        "source_revision": 1,
+        "source_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "project_version_id": null,
+        "reach_ref": "ref:reach/every-project",
+        "expected_owner_revision": 1,
+        "return_context_ref": "ref:return/original",
+        "destination_home_ref": "ref:home/library",
+        "whole_record_ref": "ref:persona/whole",
+        "whole_record_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "project_switch_ids": [],
+        "permission_evidence": {
+          "schema_id": "pm.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Permissions_System.md",
+          "source_ref": "ref:permission/one",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "idempotency_key": "persona-op-c-fix79-persona-update-restore-shipped-default",
+        "update_operation": "restore_shipped_default"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "c-fix79-persona-update-reject-set-enabled-without-enabled",
+      "schema_ref": "Plans/shared_integration_runtime.schema.json#/$defs/persona_update_request_v2",
+      "record": {
+        "command_id": "cmd.persona.update",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "server_id": "server-settings-home",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null
+        },
+        "client_id": "client-one",
+        "persona_id": "writer-one",
+        "source_id": "writer-one",
+        "source_revision": 1,
+        "source_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "project_version_id": null,
+        "reach_ref": "ref:reach/every-project",
+        "expected_owner_revision": 1,
+        "return_context_ref": "ref:return/original",
+        "destination_home_ref": "ref:home/library",
+        "whole_record_ref": "ref:persona/whole",
+        "whole_record_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "project_switch_ids": [],
+        "permission_evidence": {
+          "schema_id": "pm.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Permissions_System.md",
+          "source_ref": "ref:permission/one",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "idempotency_key": "persona-op-c-fix79-persona-update-reject-set-enabled-without-enabled",
+        "update_operation": "set_enabled"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "c-fix79-persona-update-reject-operation-on-create",
+      "schema_ref": "Plans/shared_integration_runtime.schema.json#/$defs/persona_update_request_v2",
+      "record": {
+        "command_id": "cmd.persona.create",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "server_id": "server-settings-home",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null
+        },
+        "client_id": "client-one",
+        "persona_id": "writer-one",
+        "source_id": "writer-one",
+        "source_revision": 1,
+        "source_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "project_version_id": null,
+        "reach_ref": "ref:reach/every-project",
+        "expected_owner_revision": 1,
+        "return_context_ref": "ref:return/original",
+        "destination_home_ref": "ref:home/library",
+        "whole_record_ref": "ref:persona/whole",
+        "whole_record_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "project_switch_ids": [],
+        "permission_evidence": {
+          "schema_id": "pm.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Permissions_System.md",
+          "source_ref": "ref:permission/one",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "idempotency_key": "persona-op-c-fix79-persona-update-reject-operation-on-create",
+        "update_operation": "set_enabled",
+        "enabled": true
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
     }
   ],
   "remote_sync_owner_sources": {
