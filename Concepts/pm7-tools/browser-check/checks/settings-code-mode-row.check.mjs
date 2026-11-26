@@ -224,6 +224,6 @@ export default async function (t) {
 		await t.check(`${look}: Search finds the row in this look and it is drawn, before its picture is taken`, again.at >= 0 && there.drawn === true, again.titles.slice(0, 8).join(' | '));
 		if (!(again.at >= 0 && there.drawn === true)) continue;
 		await guardPaintedLook(t, f, look, `${look}: before the picture`);
-		await t.shot(`code-mode-row-${look}`, `${look}: the Code Mode row among its neighbours: the same switch, the same row height and spacing, label and sentence readable`);
+		await t.shot(`code-mode-row-${look}`, `${look}: Code Mode and neighbouring rows, for a by-eye comparison of switch, row height and spacing`);
 	}
 }
