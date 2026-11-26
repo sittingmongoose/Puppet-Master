@@ -123,14 +123,19 @@ import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arriv
 	// a programmatic scroll crosses the viewport before any wheel: it must not arm, and credits no travel
 	assert.equal(flingScrollGate(R, 900).arms, false, 'no delivered wheel: a programmatic scroll cannot arm the sample');
 	assert.equal(flingScrollGate(R, 900).moved, null, 'no wheel delivery position: no travel is credited');
-	// the wheel is delivered at scrollTop 900 (after the programmatic scroll); a further 50 px is the wheel's own
+	// the wheel is delivered at scrollTop 900 (after the programmatic scroll); its first small event is only
+	// 10 px of wheel travel and must not arm merely because the commit started at 0
 	const delivered = { ...R, wheel: 1234, wheelTop: 900 };
-	const g = flingScrollGate(delivered, 950);
-	assert.equal(g.arms, true, 'a scroll after the delivered wheel arms');
-	assert.equal(g.moved, 50, 'the travel is measured from the wheel delivery position, not the commit');
-	// and the verdict fails the viewport crossing on that 50 px: the programmatic 900 px is not the wheel's
-	const rows = flingVerdict({ wheel: 1234, wheelPending: 5, wheelTargetPending: true, pending: 5, targetPending: true, sampled: true, moved: g.moved, height: 800, targetInView: true, empty: [] });
-	assert.equal(rows[1].ok, false, 'the wheel itself crossed no viewport: the row fails');
+	const small = flingScrollGate(delivered, 910);
+	assert.equal(small.arms, false, 'a pre-wheel programmatic scroll cannot arm the first small wheel event');
+	assert.equal(small.moved, 10, 'the first event credits only 10 px from the wheel delivery position');
+	const rows = flingVerdict({ wheel: 1234, wheelPending: 5, wheelTargetPending: true, pending: 5, targetPending: true, sampled: true, moved: small.moved, height: 800, targetInView: true, empty: [] });
+	assert.equal(rows[1].ok, false, 'the first small event crossed no viewport');
+	// after a full viewport of wheel travel from the delivery position, the gate arms and the row can pass
+	const full = flingScrollGate(delivered, 1700);
+	assert.equal(full.arms, true, 'a full viewport of wheel travel arms the sample');
+	assert.equal(full.moved, 800, 'the full wheel travel is measured from its delivery position');
+	assert.equal(flingVerdict({ wheel: 1234, wheelPending: 5, wheelTargetPending: true, pending: 5, targetPending: true, sampled: true, moved: full.moved, height: 800, targetInView: true, empty: [] })[1].ok, true);
 	// a real fling from the delivery position keeps its pass
 	const real = flingScrollGate({ ...delivered, wheelTop: 0 }, 900);
 	assert.equal(real.arms, true);
