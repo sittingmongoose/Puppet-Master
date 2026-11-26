@@ -183,6 +183,13 @@
     return { focusKey: key && key.psxKey };
   }
 
+  function modelPickerAnchor(cur) {
+    if (!cur || !PSX.isModel(cur.id)) return null;
+    const picker = cur.body.querySelector('[data-action="o55-insp-pick"]')?.getBoundingClientRect();
+    const body = cur.body.getBoundingClientRect();
+    return picker && picker.top >= body.top && picker.bottom <= body.bottom ? picker.top : null;
+  }
+
   function decorate(o) {
     o = o || {};
     const cur = current(); if (!cur || !cur.id) return;
@@ -192,6 +199,7 @@
     // a draft being typed is not a reason to redraw (it would lose the caret and the reason shown under it)
     const sig = JSON.stringify([id, PSX.W.rev, S.ctx, S.actor, S.runMode, S.opt.end, S.targets[id] || null, editing && [editing.id, editing.level, editing.key, editing.isNew, editing.error], S.firstStart]);
     if (!o.force && page.dataset.psxDone === sig && (body.querySelector('[data-psx-block="where"]') || !DEF[id])) return;
+    const pickerTop = o.pickerTop === undefined ? modelPickerAnchor(cur) : o.pickerTop;
     const act = D.activeElement;
     const keep = o.focusKey || (act && page.contains(act) && act.closest('[data-psx-key]') ? act.closest('[data-psx-key]').dataset.psxKey : null);
     page.dataset.psxDone = sig;
@@ -217,6 +225,9 @@
     // a row's Change in place of a control that can't hold its value (rows.js): the editor opens where the value comes from
     if (pendingEdit && pendingEdit.id === id) { const pe = pendingEdit; pendingEdit = null; setTimeout(() => startAt(id, pe.level, pe.key), 0); }
     if (editing && editing.id === id) { const ctl = where.querySelector('[data-psx-edit-control]'); if (ctl && !page.contains(D.activeElement && D.activeElement.closest('[data-psx-edit-control]'))) try { ctl.focus({ preventScroll: true }); } catch (e) { /* gone */ } }
+    // Replacing Where it applies above Your choices can clamp the inspector's scroll position during the refresh.
+    const picker = pickerTop === null ? null : body.querySelector('[data-action="o55-insp-pick"]');
+    if (picker) body.scrollTop += picker.getBoundingClientRect().top - pickerTop;
   }
   function closeWord(head) {
     const b = head && head.querySelector('.pm51-panel-close');
@@ -1235,9 +1246,10 @@
     if (P && P.syncInspector && !P.syncInspector.__psx) {
       const base = P.syncInspector;
       const wrapped = function () {
+        const pickerTop = modelPickerAnchor(current());
         const keep = strip();
         const r = base.apply(this, arguments);
-        try { decorate({ force: true, focusKey: keep.focusKey }); } catch (e) { console.error('[psx panel]', e); }
+        try { decorate({ force: true, focusKey: keep.focusKey, pickerTop }); } catch (e) { console.error('[psx panel]', e); }
         return r;
       };
       wrapped.__psx = true;

@@ -671,7 +671,45 @@
   /* ------------------------------------------------------------------ the note after a change (6.4)
      The layer's own div.psx-note[role=status] in #pm-settings-portals, in Settings' toast material; one at a time, six
      seconds, paused while hovered or focused. Never a PM Notify toast (its actions are a closed set, F3-461). */
-  let noteEl = null, noteTimer = 0, notePaused = false, noteLeft = 0, noteStart = 0, noteActs = null;
+  let noteEl = null, noteTimer = 0, notePaused = false, noteLeft = 0, noteStart = 0, noteActs = null, notePlacement = 0;
+  function placeModelNote(el, host, id) {
+    const gap = 8;
+    const bounds = host.getBoundingClientRect();
+    const stage = D.getElementById('rsStage')?.getBoundingClientRect();
+    const { width, height } = el.getBoundingClientRect();
+    const minX = bounds.left + gap, maxX = bounds.right - width - gap;
+    const maxY = bounds.bottom - height - gap;
+    const x = Math.max(minX, Math.min(maxX, (stage?.width ? stage.right : bounds.right) - width));
+    const y = Math.min(maxY, Math.max(bounds.top + gap, stage?.width ? stage.top : bounds.top));
+    // Protect the row as well as its Details picker. Either can move while the receipt is up.
+    const controls = [...D.querySelectorAll(`#pm-settings-root .o55-pick-trigger[data-setting="${CSS.escape(id)}"]`)]
+      .map((b) => b.getBoundingClientRect()).filter((r) => r.width && r.height);
+    const xs = [x, ...controls.flatMap((r) => [r.left - width - gap, r.right + gap])];
+    xs.sort((a, b) => Math.abs(a - x) - Math.abs(b - x));
+    const ys = [y, ...controls.map((r) => r.bottom + gap)].sort((a, b) => a - b);
+    for (const top of ys) {
+      if (top < y || top > maxY) continue;
+      const left = xs.find((left) => left >= minX && left <= maxX && controls.every((r) =>
+        left + width + gap <= r.left || left >= r.right + gap || top + height + gap <= r.top || top >= r.bottom + gap));
+      if (left === undefined) continue;
+      const localTop = `${top - bounds.top}px`, localLeft = `${left - bounds.left}px`;
+      if (el.style.getPropertyValue('--psx-note-top') !== localTop) el.style.setProperty('--psx-note-top', localTop);
+      if (el.style.getPropertyValue('--psx-note-left') !== localLeft) el.style.setProperty('--psx-note-left', localLeft);
+      break;
+    }
+  }
+  function trackModelNote(el, host, id) {
+    W.cancelAnimationFrame(notePlacement);
+    if (!id) { delete el.dataset.modelSetting; return; }
+    el.dataset.modelSetting = id;
+    function place() {
+      if (!el.isConnected) return;
+      placeModelNote(el, host, id);
+      // Scroll, resize and the Details transition can all move a trigger during the receipt's lifetime.
+      notePlacement = W.requestAnimationFrame(place);
+    }
+    place();
+  }
   /* one live region that stays in the page, so a screen reader hears each note (a region inserted with its text
      already in it is the one they most often miss); the visible note itself is not a second live region */
   function live() {
@@ -702,6 +740,7 @@
     const x = noteEl.querySelector('[data-close]'); if (x) x.addEventListener('click', () => hideNote());
     noteEl.removeAttribute('data-leaving'); noteEl.setAttribute('data-open', '');
     noteEl.dataset.kind = o.kind || '';
+    trackModelNote(noteEl, host, o.modelSetting);
     noteLeft = o.ms || 6000; notePaused = false; noteStart = Date.now();
     if (!o.sticky) noteTimer = setTimeout(hideNote, noteLeft);
     PSX.lastNote = { title: o.title, body: o.body || '', actions: (o.actions || []).map((a) => a.label), tip: o.tip || '' };

@@ -318,4 +318,111 @@ export default async function (t) {
 		);
 		await t.shot('fo158-r4-row-depth', 'Depth-only change from Everyday building row picker and its Details panel');
 	});
+
+	// FO-158 r6: replay the opening click while the save receipt is still visible.
+	const receiptMatrix = [
+		['basic-dark', 1920, 1080], ['glass-light', 1280, 500],
+		['glass-dark', 1280, 500], ['glass-dark', 740, 900],
+	];
+	const noteSelector = '#pm-settings-portals > .psx-note[data-open]:not([data-leaving])';
+	const detailsPicker = '.detail-inspector[aria-hidden="false"] [data-action="o55-insp-pick"]';
+	const rowPicker = (id) => `#pm-settings-root .o55-msel[data-o55-msel="${id}"] [role="combobox"]`;
+	async function checkReceipt(frame, selector, who) {
+		const hits = await frame.evaluate(({ selector, noteSelector }) => {
+			const trigger = document.querySelector(selector);
+			const note = document.querySelector(noteSelector);
+			const undo = [...(note?.querySelectorAll('button') || [])].find((btn) => btn.textContent === 'Undo');
+			const hit = (r, target) => {
+				const x = r.left + r.width / 2, y = r.top + r.height / 2;
+				const top = document.elementFromPoint(x, y);
+				return { x, y, reaches: r.width > 0 && r.height > 0 && target.contains(top), top: top?.outerHTML.split('>')[0] };
+			};
+			const depth = 'High depth';
+			const line = trigger?.querySelector('small')?.firstChild;
+			const start = line?.nodeValue?.indexOf(depth) ?? -1;
+			const letters = [];
+			if (start >= 0) {
+				const range = document.createRange();
+				for (let i = start; i < start + depth.length; i++) {
+					range.setStart(line, i);
+					range.setEnd(line, i + 1);
+					letters.push(hit(range.getBoundingClientRect(), trigger));
+				}
+			}
+			return {
+				visible: !!note && Number(getComputedStyle(note).opacity) > 0.9,
+				centre: trigger && hit(trigger.getBoundingClientRect(), trigger), letters,
+				undo: undo && hit(undo.getBoundingClientRect(), undo),
+			};
+		}, { selector, noteSelector });
+		await t.check(`${who}: visible receipt leaves the trigger centre and every depth character exposed`,
+			hits.visible && hits.centre?.reaches && hits.letters.length === 'High depth'.length && hits.letters.every((p) => p.reaches),
+			JSON.stringify(hits));
+		await t.check(`${who}: Undo is reachable while the receipt is visible`, hits.visible && hits.undo?.reaches, JSON.stringify(hits.undo));
+	}
+
+	for (const [look, width, height] of receiptMatrix) {
+		for (const route of ['row', 'Details']) {
+			const who = `receipt ${look} ${width}x${height} (${route})`;
+			await t.step(who, async () => {
+				await t.viewport(width, height);
+				const frame = await t.app.open();
+				await frame.waitForFunction(() => !!window.PSX?.lastReport, null, { timeout: 60000 });
+				await frame.evaluate((look) => PSX.setLook(look), look);
+				const details = route === 'Details';
+				const id = details ? 'ai.models.default-model' : 'ai.models.worker-model';
+				const selector = details ? detailsPicker : rowPicker(id);
+				if (details) {
+					await frame.locator(`[id="setting-${id}"] > .o55-about`).click({ timeout: 8000 });
+					const destination = frame.locator('.psx-target-btn');
+					if (!/tastebook/i.test(await destination.innerText({ timeout: 8000 }))) {
+						await destination.click({ timeout: 8000 });
+						await frame.getByText('This project (tastebook)', { exact: true }).click({ timeout: 8000 });
+					}
+				}
+				const trigger = frame.locator(selector);
+				await trigger.scrollIntoViewIfNeeded({ timeout: 8000 });
+				const box = await trigger.boundingBox(); // Mouse input uses page coordinates on both surfaces.
+				const x = box.x + box.width / 2, y = box.y + box.height / 2;
+				await t.page.mouse.click(x, y);
+				if (!await pressDepth(frame, 'High', who)) return;
+				const note = frame.locator(noteSelector);
+				await note.getByText('Saved for tastebook.', { exact: true }).waitFor({ timeout: 8000 });
+				await frame.waitForFunction((selector) => document.querySelector(selector) &&
+					Number(getComputedStyle(document.querySelector(selector)).opacity) > 0.9, noteSelector, { timeout: 2000 });
+				const actual = await frame.evaluate(() => [document.documentElement.dataset.theme, innerWidth, innerHeight]);
+				await t.equal(`${who}: look and viewport after save`, actual.join(' '), `${look} ${width} ${height}`);
+				await checkReceipt(frame, selector, who);
+				if (!details && (width === 1920 || look === 'glass-dark' && width === 1280)) {
+					await t.shot(`fo158-receipt-${look}-${width}x${height}`, 'Save receipt and Everyday building’s High depth');
+				}
+				await t.page.mouse.click(x, y);
+				const opened = await trigger.getAttribute('aria-expanded') === 'true';
+				const st = await readModelState(frame, id);
+				const replay = JSON.stringify({ x, y, opened, saved: st.ownEffort });
+				t.log(`${who} replay ${replay}`);
+				await t.check(`${who}: clicking the original point reopens the picker and keeps High saved`,
+					opened && st.ownEffort === 'High', replay);
+				if (opened) await t.page.keyboard.press('Escape');
+				if (details) {
+					await t.page.keyboard.press('Enter');
+					const keyboardOpen = await trigger.getAttribute('aria-expanded') === 'true';
+					await t.check(`${who}: Enter also reopens the picker`, keyboardOpen);
+					if (keyboardOpen) await t.page.keyboard.press('Escape');
+					await frame.locator('.detail-inspector [data-action="close-details"]').click({ timeout: 8000 });
+					await frame.locator('.detail-scrim.is-open').waitFor({ state: 'hidden', timeout: 2000 });
+					await frame.locator(rowPicker(id)).scrollIntoViewIfNeeded({ timeout: 2000 });
+					await checkReceipt(frame, rowPicker(id), `${who} after closing Details`);
+					if (look === 'glass-dark' && width === 1280) {
+						await t.shot('fo158-receipt-glass-dark-1280x500-after-details', 'Save receipt and Everyday model’s High depth after closing Details');
+					}
+				}
+				if (opened && !details) {
+					await note.getByRole('button', { name: 'Undo', exact: true }).click({ timeout: 3000 });
+					await frame.waitForFunction((id) => PSX.effortOf(PSX.getAt(PSX.W, 'project', 'tastebook', id)) !== 'High', id, { timeout: 3000 });
+					await t.check(`${who}: Undo removes the saved High depth`, true);
+				}
+			});
+		}
+	}
 }

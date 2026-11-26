@@ -31,12 +31,16 @@ html[data-theme^="retro"] #panel-settings .psx-tb, html[data-o55-nier="on"] #pan
 #panel-settings .psx-grow { flex: 1 1 auto; }
 #panel-settings .psx-muted { color: var(--k3-text-3); }
 
-/* ---- the note after a change (6.4): Settings' toast material, bottom right of the Settings host ------------------ */
+/* ---- the note after a change (6.4): model receipts start under the bell, clear of the edited control ------------ */
 #panel-settings > #pm-settings-portals > .psx-note {
   position: absolute; right: 18px; bottom: 18px; z-index: 130; width: min(400px, calc(100% - 36px)); box-sizing: border-box;
   display: flex; flex-direction: column; gap: 8px; padding: 12px 12px 10px 14px;
   border: 1px solid color-mix(in srgb, var(--k3-accent) 26%, var(--k3-line)); border-radius: 11px; background: var(--k3-surface-1); box-shadow: var(--k3-shadow-md);
   color: var(--k3-text-2); opacity: 0; transition: opacity 180ms var(--k3-ease-out, ease);
+}
+#panel-settings > #pm-settings-portals > .psx-note[data-model-setting] {
+  inset: var(--psx-note-top, 8px) auto auto var(--psx-note-left, 8px);
+  width: min(400px, calc(100% - 16px)); max-height: calc(100% - 16px); overflow: auto;
 }
 #panel-settings > #pm-settings-portals > .psx-note[data-open] { opacity: 1; }
 #panel-settings > #pm-settings-portals > .psx-note[data-leaving] { opacity: 0; }

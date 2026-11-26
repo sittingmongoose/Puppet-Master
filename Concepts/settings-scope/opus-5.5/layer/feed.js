@@ -596,7 +596,7 @@
     if (o.by === 'assistant') title = `The assistant set ${label(id)} to ${vt(id, after.asked !== undefined ? after.asked : after.value)} ${tg.level === 'project' ? 'for ' + tg.key : 'everywhere'}.`;
     const first = !S.tipShown;
     if (first) { S.tipShown = true; PSX.store.save({ tipShown: true }); }
-    PSX.note({ title, body, actions, kind: 'saved', tip: first ? 'Settings apply to all your projects and computers. To change one project only, use the word at the end of the row.' : '' });
+    PSX.note({ title, body, actions, kind: 'saved', modelSetting: PSX.isModel(id) ? id : null, tip: first ? 'Settings apply to all your projects and computers. To change one project only, use the word at the end of the row.' : '' });
   }
   /* "Only for tastebook" is one transaction: Everywhere back, tastebook's own written (3.2) */
   function onlyFor(id, tx, tg) {
