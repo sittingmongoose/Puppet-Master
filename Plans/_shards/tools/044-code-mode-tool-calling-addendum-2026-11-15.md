@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L13358-L13714
+Source lines: L13358-L13715
 
-Source SHA256: `4f779a24c6898dc81c4d7dede6f16df9e64d7cb37405bcf33a490eba962ca063`
+Source SHA256: `cd8165a960b6552c4934bf00427df0e58b267af16bb27579291b070ea06b3985`
 
 ---
 
@@ -40,9 +40,10 @@ canonical_text: >-
   having a code mode of its own. The effective mode is Code Mode, mixed or ordinary tool calls,
   where ordinary tool calls means the run was not offered the Puppet Master script tool; a run offered it that made
   no tool calls, or only the directly callable calls named in T-190, keeps Code Mode unless T-189 records the route as
-  mixed. The offer is decided for each request: a run that is offered the script tool on some requests and not on
-  others, because the approved JavaScript EvalSession or the policy admission changed during the run, is mixed, with
-  the typed reason that applied to the requests on which it was not offered. When it is not Code Mode the run records one typed reason: setting when the run did not
+  mixed. The offer is decided for each request. A run that is offered the script tool on some requests and not on
+  others is mixed when any tool other than the directly callable tools named in T-190 was dispatched on a request
+  on which it was not offered, with the typed reason that applied to that request; when no such tool was dispatched
+  on those requests it keeps Code Mode like any other run offered the script tool. When it is not Code Mode the run records one typed reason: setting when the run did not
   request Code Mode, and otherwise the first that applies
   of the execution shape named in T-189, no approved JavaScript EvalSession, policy, and provider-kept native tools;
   it is never a silent fallback, and Code Mode is never reported as effective
@@ -138,7 +139,7 @@ canonical_text: >-
   permission, approval, FileSafe, network and schema checks a script's call to that tool gets; that is the ordinary tool-call path of
   such a route, and the CLI's own jailed tools stay under the DAE restriction and reconciliation rules either way.
   So on any one route the tools a run can reach do not depend on whether the script tool is offered, on any request
-  of the run; a run that loses the script tool partway keeps its tools through these paths and is recorded as T-188 says.
+  of the run; a run that stops being offered the script tool partway keeps its tools through these paths and is recorded as T-188 says.
   Where the script tool is offered and the provider keeps native tools that
   Puppet Master cannot disable, the script tool is not withdrawn, the provider's own tool calls stay outside Code
   Mode, and the run's effective mode is mixed. Where a provider accepts no Puppet Master tools at all, the effective
@@ -155,7 +156,7 @@ acceptance_criteria:
   - A model whose Models_System tool_use is false can use Code Mode through an owned in-band dialect, and a tool result the model wrote itself never reaches replayable history.
   - On a request on which the script tool is not offered, whether the row of T-191 is Off or T-188's gates do not admit the script tool for that request, on a route that carries Puppet Master tool calls in-band (a direct API route under Host Tool Execution whose model has no provider tool-call API, or a bridged CLI under the HTE strategy without supported structured tool intents), every Puppet Master tool call made on that request is an in-band tool call in the owned dialect, under the same admission gate, and a run never offered the script tool records effective mode ordinary tool calls; on a bridged CLI under HTE with supported structured tool intents the same calls are structured tool intents, never in-band.
   - Under the DAE strategy, wherever the script tool is not projected, for either reason, a CLI that accepts projected Puppet Master tools is offered each request-selected Puppet Master tool as its own projected tool, Puppet Master dispatches each call with the checks a script's call to that tool gets, and a run never offered the script tool records effective mode ordinary tool calls.
-  - A run that requested Code Mode and is offered the script tool on some requests and not on others, because the approved JavaScript EvalSession or the policy admission changed during the run, can still make its request-selected tool calls on every request, and its record shows effective mode mixed with the typed reason that applied to the requests on which it was not offered.
+  - A run that requested Code Mode and is offered the script tool on some requests and not on others, whatever the reason, can still make its request-selected tool calls on every request. If any tool other than the directly callable tools named in T-190 is dispatched on a request on which the script tool was not offered, its record shows effective mode mixed with the typed reason that applied to that request; otherwise it keeps Code Mode.
   - A bridged CLI under the HTE strategy on which the script tool is offered runs in Code Mode through the hosted action loop with no provider tool_use, unless the next criterion applies, whether or not that CLI has a code mode of its own; under the DAE strategy with the Puppet Master script tool offered, the run is recorded as mixed. The exception changes only the effective tool-calling mode label; under HTE, RM-021 still terminates the run on a provider-originated tool_use.
   - A run on which the script tool is offered, on a provider that keeps native tools Puppet Master could not disable, is recorded as mixed, never as Code Mode.
 validation_surfaces:
