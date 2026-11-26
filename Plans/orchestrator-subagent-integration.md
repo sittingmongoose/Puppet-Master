@@ -2372,6 +2372,9 @@ pub trait BeforeUnitHook: Send + Sync {
 pub trait AfterUnitHook: Send + Sync {
     fn execute(&self, ctx: &AfterUnitContext) -> Result<AfterUnitResult>;
     fn name(&self) -> &str;
+    fn is_required_handoff_validator(&self) -> bool {
+        false
+    }
 }
 
 pub struct BeforeUnitResult {
@@ -2430,6 +2433,11 @@ impl HookRegistry {
                 Ok(result) => {
                     if !result.validation_passed { validation_passed = false; validation_error = result.validation_error; request_retry = result.request_retry; retry_reason = result.retry_reason; break; }
                 }
+                Err(error) if hook.is_required_handoff_validator() => {
+                    validation_passed = false;
+                    validation_error = Some(error.to_string());
+                    break;
+                }
                 Err(e) => { log::warn!("AfterUnit hook {} failed: {}", hook.name(), e); }
             }
         }
@@ -2442,7 +2450,7 @@ where F: FnOnce() -> Result<T>,
 { hook_fn() }
 ```
 
-**Built-in hooks:** `ActiveSubagentTrackerHook` (BeforeUnit), `TierContextInjectorHook` (BeforeUnit), `StaleStatePrunerHook` (BeforeUnit), `HandoffValidatorHook` (AfterUnit).
+**Built-in hooks:** `ActiveSubagentTrackerHook` (BeforeUnit), `TierContextInjectorHook` (BeforeUnit), `StaleStatePrunerHook` (BeforeUnit), `HandoffValidatorHook` (AfterUnit, returns `true` from `is_required_handoff_validator`). A validator error returns failed validation and keeps the attempt outside `VerifyUnitEnd` under the Handoff failure boundary.
 
 **Integration:** In `src/core/orchestrator.rs`, call `hook_registry.execute_before_unit` before subagent execution and `hook_registry.execute_after_unit` after. Update `ExecutionUnitContext.active_subagent` from `BeforeUnitResult`. Always register built-in hooks even when platform-native hooks are also registered.
 ### 2. Structured Handoff Report Validation
@@ -12162,7 +12170,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Interview execution must wire require_architecture_confirmation into InterviewOrchestratorConfig from gui_config.interview in app.rs and, when enabled, require explicit architecture/tech-stack confirmation through a phase gate before phase completion. The phase gate is the one mechanism; a dedicated phase and a prompt line are rejected alternatives. Trigger: the phase-complete transition of the `architecture_technology` phase (chain-wizard-flexibility canonical phase registry) when its phase-plan depth is Full or Short. The gate asks one required shared question card (`QuestionItem`, options Confirm and Change, `allow_freeform` true) that summarizes the phase's architecture and tech-stack decisions. Completion: the phase completes only after the user answers Confirm, recorded as explicit confirmation in the phase's validation artifacts; Change keeps the phase open with the user's note as new phase input and asks again at the next phase-complete attempt. There is no timeout and no agent self-confirmation. The soft cap in OSI-089 also enters this gate and cannot complete the phase. DL-2602 records the user confirmation as the kept choice. When the setting is false, or the phase plan sets `architecture_technology` to Skip, the gate does not run.
+  Interview execution must wire require_architecture_confirmation into InterviewOrchestratorConfig from gui_config.interview in app.rs and, when enabled, require explicit architecture/tech-stack confirmation through a phase gate before phase completion. The phase gate is the one mechanism; a dedicated phase and a prompt line are rejected alternatives. This contract identifies the interview's architecture and technology phase as `architecture_technology` and applies the gate on that phase's completion transition at Full or Short depth. The gate asks one required shared question card (`QuestionItem`, options Confirm and Change, `allow_freeform` true) that summarizes the phase's architecture and tech-stack decisions. Completion: the phase completes only after the user answers Confirm, recorded as explicit confirmation in the phase's validation artifacts; Change keeps the phase open with the user's note as new phase input and asks again at the next phase-complete attempt. There is no timeout and no agent self-confirmation. The soft cap in OSI-089 also enters this gate and cannot complete the phase. DL-2602 records the user confirmation as the kept choice. When the setting is false, or the phase plan sets `architecture_technology` to Skip, the gate does not run.
 gui_related: true
 gui_classification_reason: This unit covers interview flow UX and confirmation behavior.
 split_recommended: false
@@ -12203,7 +12211,7 @@ preserved_exact_tokens:
 - 'prompt line'
 - 'AGENTS.md'
 negative_constraints: []
-compatibility_only_notes: []
+compatibility_only_notes: [The retired Chain Wizard phase registry is source lineage for the phase identifier.]
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -15029,8 +15037,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  AfterUnit hook execution runs each hook through safe_hook_main, short-circuits on validation failure, carries validation_error,
-  request_retry, and retry_reason, logs hook failures as warnings, and returns the combined AfterUnitResult.
+  AfterUnit hook execution runs each hook through safe_hook_main and returns the combined AfterUnitResult with validation_error,
+  request_retry, and retry_reason. A validation failure or an error from the required HandoffValidatorHook short-circuits with failed validation and blocks VerifyUnitEnd. Errors from ancillary hooks are logged as warnings.
 gui_related: false
 gui_classification_reason: This unit defines backend AfterUnit execution semantics.
 split_recommended: false
@@ -35248,7 +35256,7 @@ Repairs `sfk-15a9ffa7a7561411bb7625a4` (registry line 1518); binds OSI-094, Hand
 - Local spellings map to canonical `allowed_action_id` values: `retry` -> `retry_now`, or `restore_safe_point_then_retry` where the retry slot below holds it; `skip_with_operator_acceptance` -> `skip_node`; `view_raw_output` -> `open_details`. The recovery point's `allowed_action_ids[]` is the list the Executor emits for the blocked episode under its current blocked/retry policy (`Plans/Executor_Protocol.md` Approved baseline-target retry and restore lifecycle), and each prompt shows exactly those controls in the emitted order (Runtime Enum and Counter Alignment Addendum). For ordinary recovery the Executor emits at most `[<retry slot>, skip_node, open_details]` for the parser prompt and `[open_details, skip_node, <retry slot>, abort_run]` for the Assistant chat CTA (review, skip, retry, abort). The retry slot is filled by that Executor policy, never by the prompt: (a) when the episode has `requires_safe_point_restore = true`, the slot holds `restore_safe_point_then_retry` only if the Executor permits it for the episode. For example, an unrelated `verification_failed` or `reviewer_findings` outcome admits zero automatic retries. It reaches the CTA when its review or remediation path pauses for operator recovery. If that episode requires restoration, Restore and retry is its only legal rerun verb and appears only on Executor admission. (b) When restore is not required, the slot holds `retry_now` only when the policy admits `retry_now` for the episode and the failed attempt is bound to a repo and worktree, so the retry can carry the `worktree_head` target in the table; (c) otherwise the slot is empty and no retry control is shown, because a retry that carries no SCM target may follow only an owner-defined non-SCM retry path and no owner defines one. Wherever this document lists the parser prompt as [Retry] [Skip] [View raw output], or the Unrelated-failure CTA as review, skip, retry and abort, the retry control appears only when the slot is filled. The `handoff_retry_exhausted` record's `next_allowed_actions[] = [retry, skip_with_operator_acceptance, view_raw_output]` (Handoff Retry Ceiling) is that candidate list in local spellings, not the live list: its `retry` becomes whatever the slot holds, or nothing when the slot is empty.
 - When the Executor projects `recovery_unavailable`, including when a required safe point is missing or corrupt, retain the same blocked episode and show the exact owner reason and ordered `allowed_action_ids[]` under `Plans/UI_Command_Catalog.md` (Known-37 recovery-unavailable catalog rows). The ordinary action lists and retry slot apply only outside `recovery_unavailable`. Restore and retry stays disabled in that state.
 
-For the five ordinary controls below, payloads are the typed args of each command's definition in `Plans/Executor_Protocol.md` (the `cmd.runtime.*` command definitions, which UCC-230 names; the catalog's minimum-args column is history, DL-333). Every action carries the blocked-episode identity the definition requires: `run_id`, `node_id`, the recovery point's `blocked_sequence` (integer, at least 1) and `allowed_action_id` (the value in the Control row). The requester is the UICommand envelope `actor_ref` for all five; no action carries `requested_by` in its args.
+For the five ordinary controls below, payloads use the typed args in `Plans/Executor_Protocol.md#EP-236` (UCC-230; the catalog's minimum-args column is history, DL-333). Every action carries the blocked-episode identity the definition requires: `run_id`, `node_id`, the recovery point's `blocked_sequence` (integer, at least 1) and `allowed_action_id` (the value in the Control row). For all five, including Abort run, the UICommand envelope `actor_ref` alone carries the requester. The earlier HITL name `requested_by` refers to that envelope identity.
 
 | Control | `allowed_action_id` | Command | Typed args (beyond `run_id`, `node_id`, `blocked_sequence`, `allowed_action_id`) | Result and recovery state |
 |---|---|---|---|---|

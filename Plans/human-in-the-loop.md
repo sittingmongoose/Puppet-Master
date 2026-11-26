@@ -2650,9 +2650,7 @@ This addendum is canonical HITL spec text for deferred non-runtime FABLE rows. I
 
 Repairs row `sfk-52b55259003ddf5c68bd4d44`.
 
-`PAUSE.md` is a project-root operator gate file, located at `<project root>/.puppet-master/PAUSE.md` (the Orchestrator's Pause File Location; one file per project), with frontmatter fields `pause_id`, `scope`, `reason`, `created_by`, `created_at_utc`, `expires_at_utc?`, and `allowed_action_ids[]`. While active, a valid PAUSE gate blocks new mutating execution in scope unless `allowed_action_ids[]` includes the exact requested action's canonical ID. Evaluate PAUSE first. For an action that passes PAUSE, evaluate any required HITL approval before dispatch.
-
-The watcher, the closed `scope` values and the handling of a file with missing or invalid frontmatter are owned by `Plans/orchestrator-subagent-integration.md#section=Closure Re-audit Repair Addendum - 2026-11-25` (### Pause Gate Live Contract); OSI-387 is that live per-dispatch check.
+`PAUSE.md` is a project-root operator gate file, located at `<project root>/.puppet-master/PAUSE.md` (the Orchestrator's Pause File Location; one file per project), with frontmatter fields `pause_id`, `scope`, `reason`, `created_by`, `created_at_utc`, `expires_at_utc?`, and `allowed_action_ids[]`. While active, a valid PAUSE gate blocks new mutating execution in scope unless `allowed_action_ids[]` includes the exact requested action's canonical ID. Evaluate PAUSE first. For an action that passes PAUSE, evaluate any required HITL approval before dispatch. The watcher, closed `scope` values and handling of missing or invalid frontmatter follow Pause Gate Live Contract in `Plans/orchestrator-subagent-integration.md#section=Closure Re-audit Repair Addendum - 2026-11-25`. OSI-387 owns the per-dispatch check.
 
 ### Canonical HITL Request Contract
 
@@ -2666,7 +2664,7 @@ Provider-native correlation stores `provider_correlation_id`, `provider_id`, `pr
 
 ### Skip And Cancel Commands
 
-Repairs row `sfk-e480989a4656856d249b9ed8`.
+Repairs row `sfk-e480989a4656856d249b9ed8`. The Cancel run field list below is historical source lineage. The live `cmd.runtime.abort_run` payload uses the typed args in `Plans/Executor_Protocol.md#EP-236`. The UICommand envelope `actor_ref` alone carries the requester.
 
 - Skip node command: `cmd.runtime.skip_node` with fields `node_id`, `run_id`, `reason_code`, and `operator_note?`.
 - Cancel run command: `cmd.runtime.abort_run` with fields `run_id`, `reason_code`, `requested_by`, and `created_at_utc`.
