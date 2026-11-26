@@ -4,7 +4,7 @@ Source: `Plans/Widget_System.md`
 
 Source lines: L1080-L1141
 
-Source SHA256: `b56fd1c955ae71f6f6d6bb6b88497786c42a74a57c54094936b9c4558797920d`
+Source SHA256: `7d291dba46b53f3751c546e112b3eb7af72dcca28e9f6c0e742ca1adfbfa6d18`
 
 ---
 
@@ -50,7 +50,7 @@ source_lineage:
   - "Plans/Widget_System.md:65-70"
   - "Plans/Widget_System.md:830-889"
   - "Plans/FinalGUISpec.md:1265-1293"
-  - "Plans/FinalGUISpec.md:18585-18680"
+  - "Plans/FinalGUISpec.md:18596-18691"
   - "Plans/usage-feature.md:5412-5605"
 preserved_exact_tokens:
   - Dashboard
