@@ -238,8 +238,8 @@ class ValidatorSlots:
 
     A held-back start releases the lock, says so once a minute and retries; the validator that is
     running can finish, which makes the next start the first one again, so the run always advances.
-    Without the slot directory, fcntl, or a MemAvailable reading none of it is enforced and the
-    validator runs exactly as it ran before this budget existed.
+    A standalone verifier has no slot directory, and a host without fcntl cannot share slots.
+    If the host has no MemAvailable reading, only the slot count is enforced.
     """
 
     def __init__(self, directory, count: int, floor_mb: int = 0, *, fcntl_module,
@@ -292,49 +292,28 @@ class ValidatorSlots:
         return cls(directory, count_value, floor_value, fcntl_module=fcntl,
                    headroom_mb=headroom_value, settle_seconds=settle_value)
 
+    def _try_slot_lock(self, handle) -> bool:
+        try:
+            self.fcntl.flock(handle.fileno(), self.fcntl.LOCK_EX | self.fcntl.LOCK_NB)
+        except BlockingIOError:
+            return False
+        return True
+
     def _running_count(self) -> int:
         """How many slots of this run are held right now; read under the start lock."""
         running = 0
         for index in range(self.count):
-            try:
-                handle = (self.directory / f"slot-{index}.lock").open("a+b")
-            except OSError:
-                continue
-            try:
-                self.fcntl.flock(handle.fileno(), self.fcntl.LOCK_EX | self.fcntl.LOCK_NB)
-            except OSError:
-                running += 1
-            else:
-                try:
-                    self.fcntl.flock(handle.fileno(), self.fcntl.LOCK_UN)
-                except OSError:
-                    pass
-            finally:
-                handle.close()
+            with (self.directory / f"slot-{index}.lock").open("a+b") as handle:
+                if not self._try_slot_lock(handle):
+                    running += 1
         return running
 
     @contextmanager
     def _start_lock(self):
-        """The one cross-process start lock, or False where this host cannot take it."""
-        try:
-            handle = (self.directory / START_LOCK_NAME).open("a+b")
-        except OSError:
-            yield False
-            return
-        try:
+        """Hold the cross-process start lock until the file is closed."""
+        with (self.directory / START_LOCK_NAME).open("a+b") as handle:
             self.fcntl.flock(handle.fileno(), self.fcntl.LOCK_EX)
-        except OSError:
-            handle.close()
-            yield False
-            return
-        try:
-            yield True
-        finally:
-            try:
-                self.fcntl.flock(handle.fileno(), self.fcntl.LOCK_UN)
-            except OSError:
-                pass
-            handle.close()
+            yield
 
     def _settle_if_needed(self) -> None:
         """Wait out the settle time since the last start, so memory includes that process."""
@@ -365,55 +344,34 @@ class ValidatorSlots:
               file=sys.stderr, flush=True)
 
     def _take(self):
-        """A held slot handle, None when all are busy, or False when no slot file can be opened."""
-        opened = 0
+        """Return a held slot handle, or None when all are busy."""
         for index in range(self.count):
+            handle = (self.directory / f"slot-{index}.lock").open("a+b")
             try:
-                handle = (self.directory / f"slot-{index}.lock").open("a+b")
-            except OSError:
-                continue
-            opened += 1
-            try:
-                self.fcntl.flock(handle.fileno(), self.fcntl.LOCK_EX | self.fcntl.LOCK_NB)
+                locked = self._try_slot_lock(handle)
             except OSError:
                 handle.close()
-                continue
-            return handle
-        return None if opened else False
-
-    def _release(self, handle) -> None:
-        try:
-            self.fcntl.flock(handle.fileno(), self.fcntl.LOCK_UN)
-        except OSError:
-            pass
-        finally:
+                raise
+            if locked:
+                return handle
             handle.close()
+        return None
 
     def _try_start(self, label: str):
-        """A held slot, None when held back, or False when this host cannot enforce the budget."""
-        with self._start_lock() as locked:
-            if not locked:
-                return False
+        """Take a slot or return None while another validator has to finish first."""
+        with self._start_lock():
             running = self._running_count()
             if running:
                 self._settle_if_needed()
                 running = self._running_count()
-            if running == 0:
-                # Base's serial behaviour: one validator always runs, whatever the memory reading.
-                slot = self._take()
-                if slot is False:
-                    return False
-                if slot is not None:
-                    self._note_start()
-                return slot
-            threshold = self.floor_mb + self.headroom_mb * running
-            available = self._available()
-            if available is not None and available < threshold:
-                self._log_held_back(label, available, threshold, running)
-                return None
+            # The first validator may start regardless of the memory reading.
+            if running:
+                threshold = self.floor_mb + self.headroom_mb * running
+                available = self._available()
+                if available is not None and available < threshold:
+                    self._log_held_back(label, available, threshold, running)
+                    return None
             slot = self._take()
-            if slot is False:
-                return False
             if slot is not None:
                 self._note_start()
             return slot
@@ -421,16 +379,13 @@ class ValidatorSlots:
     @contextmanager
     def hold(self, label: str):
         while True:
-            slot = self._try_start(label)
-            if slot is False:
-                # The budget cannot be enforced here (no slot files); run rather than hang.
-                yield
-                return
+            try:
+                slot = self._try_start(label)
+            except OSError as exc:
+                raise RuntimeError(f"cannot acquire the shared validator budget for {label}: {exc}") from exc
             if slot is not None:
-                try:
+                with slot:
                     yield
-                finally:
-                    self._release(slot)
                 return
             self._sleep(START_RETRY_SECONDS)
 

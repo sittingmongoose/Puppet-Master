@@ -927,11 +927,32 @@ class ValidatorSlotsTests(unittest.TestCase):
         self.assertIn("holding back validate-plan-graph", errors.getvalue())
         self.assertIn("need 8.0 GiB", errors.getvalue())
 
-    def test_a_missing_slot_directory_never_hangs_the_validator(self):
+    def test_a_permanent_flock_error_refuses_start_without_retrying(self):
+        import errno
+
+        retry = mock.Mock(side_effect=AssertionError("retried a permanent lock failure"))
+        pool = self.pool(2, sleep=retry)
+        fcntl = pool.fcntl
+        real_flock = fcntl.flock
+        for fail_start in (True, False):
+            with self.subTest(fail_start=fail_start):
+                def lock(fd, mode):
+                    if fail_start or mode & fcntl.LOCK_NB:
+                        raise OSError(errno.ENOLCK, "No locks available")
+                    return real_flock(fd, mode)
+
+                with mock.patch.object(fcntl, "flock", side_effect=lock), \
+                        self.assertRaisesRegex(RuntimeError, "shared validator budget.*No locks available"):
+                    with pool.hold("probe"):
+                        self.fail("started without a working lock")
+        retry.assert_not_called()
+
+    def test_a_missing_slot_directory_refuses_start(self):
         pool = pm_plans_verify.ValidatorSlots(
             self.directory / "absent", 2, 0, fcntl_module=__import__("fcntl"))
-        with pool.hold("probe"):
-            pass
+        with self.assertRaisesRegex(RuntimeError, "shared validator budget"):
+            with pool.hold("probe"):
+                self.fail("started without a working lock")
 
     def test_a_standalone_run_has_no_budget(self):
         with mock.patch.dict(os.environ, {}, clear=True):
