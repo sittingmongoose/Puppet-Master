@@ -69,6 +69,13 @@ async function exercise(t, surface, look) {
 	};
 	const closed = () => f.evaluate(drawerClosed, SHELL);
 	const waitClosed = () => f.waitForFunction(drawerClosed, SHELL, { timeout: 5000 });
+	const closeByChapter = async () => {
+		await f.waitForFunction(drawerOpen, SHELL, { timeout: 5000 });
+		const active = f.locator(ACTIVE);
+		await active.scrollIntoViewIfNeeded();
+		await click(t, active);
+		await waitClosed();
+	};
 
 	await t.viewport(740, 900);
 	await open();
@@ -121,9 +128,7 @@ async function exercise(t, surface, look) {
 		await closed() && earlyEscape.menu, JSON.stringify(earlyEscape));
 
 	if (earlyEscape.drawer) {
-		await f.waitForFunction(drawerOpen, SHELL, { timeout: 5000 });
-		await click(t, f.locator(ACTIVE));
-		await waitClosed();
+		await closeByChapter();
 	} else {
 		await t.page.keyboard.press('Shift+Tab');
 		const reverse = await read();
@@ -149,10 +154,7 @@ async function exercise(t, surface, look) {
 	await t.check('Escape after a backdrop click leaves the drawer closed and focus on the menu',
 		await closed() && afterEscape.menu, JSON.stringify(afterEscape));
 
-	if (afterEscape.drawer) {
-		await click(t, f.locator(ACTIVE));
-		await waitClosed();
-	}
+	if (afterEscape.drawer) await closeByChapter();
 	await open();
 	await t.page.mouse.move(x, y);
 	await t.page.mouse.down();
