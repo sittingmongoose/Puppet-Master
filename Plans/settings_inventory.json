@@ -16417,7 +16417,7 @@
       "label":
         "Code Mode",
       "desc":
-        "When Puppet Master tools are available, the agent can use a short script to make several checked calls in one step, or call the tools directly when Code Mode is off or a script can't run.",
+        "When Puppet Master tools are available, the agent can group several checked tool calls in a short script if one is offered (Code Mode must be on), and calls the tools directly if not.",
       "type": "toggle",
       "default": true,
       "scope": [

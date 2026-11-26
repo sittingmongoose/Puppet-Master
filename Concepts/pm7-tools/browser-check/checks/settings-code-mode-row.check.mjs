@@ -6,8 +6,8 @@
 // computed visibility, box inside the window and every clipping ancestor), really paint (its pixels differ from the
 // same spot with the switch hidden, and again with only its knob hidden, so no filter or transparent knob passes),
 // carry the row's label as its computed accessible name (found by role and name, not by reading aria-label), and be
-// drawn in the state aria-checked reports (the .on class, and the knob's centre on the far or near half of the
-// track); Off also has to survive leaving the row and finding it again by Search, and the On and Off pictures differ.
+// drawn in the state aria-checked reports (the .on class, the knob's centre on the far or near half of the track by
+// its styles, and the knob's ink at that end of the track in the picture, so a mirrored switch fails); Off also has to survive leaving the row and finding it again by Search, and the On and Off pictures differ.
 // Judged from the row's own markup (data-setting-id / data-setting), never from a position on the page.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-code-mode-row.check.mjs --set page=<build>
 // --set size=1440x900 changes the window. --set shots=basic-light,basic-dark also takes one picture of the row among
@@ -109,7 +109,13 @@ export default async function (t) {
 		const b = await el.boundingBox();
 		const clip = { x: Math.floor(b.x), y: Math.floor(b.y), width: Math.ceil(b.width), height: Math.ceil(b.height) };
 		const drawn = await t.page.screenshot({ clip });
-		let noSwitch, noKnob;
+		/* the two ends of the track, a third each: where the knob's ink is, read from the picture, not from styles */
+		const third = Math.floor(clip.width / 3);
+		const startClip = { x: clip.x, y: clip.y, width: third, height: clip.height };
+		const endClip = { x: clip.x + clip.width - third, y: clip.y, width: third, height: clip.height };
+		const drawnStart = await t.page.screenshot({ clip: startClip });
+		const drawnEnd = await t.page.screenshot({ clip: endClip });
+		let noSwitch, noKnob, noKnobStart, noKnobEnd;
 		/* remember the switch's own inline visibility exactly, and keep a handle to the one style node added */
 		const before = await el.evaluate((node) => [node.style.getPropertyValue('visibility'), node.style.getPropertyPriority('visibility')]);
 		let knobOff = null;
@@ -124,12 +130,16 @@ export default async function (t) {
 				return st;
 			});
 			noKnob = await t.page.screenshot({ clip });
+			noKnobStart = await t.page.screenshot({ clip: startClip });
+			noKnobEnd = await t.page.screenshot({ clip: endClip });
 		} finally {
 			/* always put the page back exactly as it was */
 			await el.evaluate((node, [v, pr]) => { if (v) node.style.setProperty('visibility', v, pr); else node.style.removeProperty('visibility'); }, before).catch(() => {});
 			if (knobOff) await knobOff.evaluate((st) => st.remove()).catch(() => {});
 		}
-		return { drawn, noSwitch, noKnob };
+		/* the knob is painted at the end of the track where hiding it changes the picture */
+		const atStart = !drawnStart.equals(noKnobStart), atEnd = !drawnEnd.equals(noKnobEnd);
+		return { drawn, noSwitch, noKnob, knobPainted: atStart && !atEnd ? 'start' : atEnd && !atStart ? 'end' : atStart && atEnd ? 'both ends' : 'neither end' };
 	};
 	/* one state, judged whole: reported, shown, named and drawn alike */
 	const judge = async (when, row, on) => {
@@ -145,6 +155,7 @@ export default async function (t) {
 		await t.check(`${when}: the switch paints: its pixels differ from the same spot with the switch hidden`, !pic.drawn.equals(pic.noSwitch), `${pic.drawn.length} and ${pic.noSwitch.length} bytes`);
 		await t.check(`${when}: the knob paints: the pixels differ from the same spot with only the knob hidden`, row.knobStyled === true && !pic.drawn.equals(pic.noKnob), `knob styled ${row.knobStyled}`);
 		await t.check(`${when}: the switch is drawn ${on ? 'On' : 'Off'}, as aria-checked says (the .on class, and the knob's centre ${on ? 'past' : 'short of'} the middle of the track)`, row.onClass === on && (on ? row.knobCentre > row.trackMid + 2 : row.knobCentre < row.trackMid - 2), `class on ${row.onClass}, knob centre ${row.knobCentre} of a track whose middle is ${row.trackMid}`);
+		await t.check(`${when}: the knob's ink is at the ${on ? 'far' : 'near'} end of the track in the picture (a mirrored or shifted switch fails here)`, pic.knobPainted === (on ? 'end' : 'start'), `hiding the knob changed the picture at: ${pic.knobPainted}`);
 		return pic.drawn;
 	};
 
