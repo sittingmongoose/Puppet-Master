@@ -4802,6 +4802,12 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     let p = {};
     try { p = JSON.parse(buttonEl.getAttribute('data-search-payload') || '{}'); } catch (_) { p = {}; }
     closeSearch();
+    const menu = state.railOpen ? visibleChapterMenu() : null;
+    if (menu) {
+      closeChapterDrawer();
+      // Give destination dialogs their return target before they take focus.
+      menu.focus({ preventScroll: true });
+    }
     applySearchSelection(p);
   }
 

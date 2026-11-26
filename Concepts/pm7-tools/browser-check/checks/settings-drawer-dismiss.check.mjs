@@ -1,4 +1,4 @@
-// FO-241 round 2. Replay the drawer focus and backdrop findings with trusted mouse and keyboard input.
+// FO-241. Replay drawer dismissal and acceptance of Settings search results with real input.
 const LOOKS = [
 	'basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'retro-dark',
 	'retro-light', 'glass-dark', 'glass-light', 'nier-dark', 'nier-light',
@@ -44,7 +44,7 @@ const readFocus = (shell) => {
 	};
 };
 
-async function exercise(t, surface, look) {
+async function openSettings(t, surface, look) {
 	await t.viewport(1390, 900);
 	await t.emulate({ reducedMotion: look.endsWith('-light') ? 'reduce' : 'no-preference' });
 	const f = await t.app.open({ sandbox: surface === 'sandbox' });
@@ -52,7 +52,11 @@ async function exercise(t, surface, look) {
 	await t.app.look(t, look, { save: true });
 	await click(t, f.locator('#tab-settings'));
 	await t.settle();
+	return f;
+}
 
+async function exercise(t, surface, look) {
+	const f = await openSettings(t, surface, look);
 	const shell = f.locator(SHELL);
 	const menu = f.locator(MENU);
 	const general = f.locator(GENERAL);
@@ -196,9 +200,74 @@ async function exercise(t, surface, look) {
 	}
 }
 
+async function exerciseSearch(t, surface, look) {
+	const f = await openSettings(t, surface, look);
+	const shell = f.locator(SHELL);
+	const tab = (id) => f.locator(`${SHELL} .workspace-tab[data-workspace="${id}"]`);
+	const providers = shell.locator('[data-continuous-workspace-body="providers"][data-workspace-mounted="true"]');
+	const detail = providers.locator('.resource-detail').first();
+	const search = async (query, kind, title) => {
+		await t.page.keyboard.press('Control+k');
+		await t.page.keyboard.press('Control+a');
+		await t.page.keyboard.type(query);
+		const row = f.locator(`.search-result[data-search-result="${kind}"]`).filter({
+			has: f.locator('.search-result-title', { hasText: title }),
+		}).first();
+		await row.waitFor({ timeout: 7000 });
+		const payload = await row.evaluate((el) => JSON.parse(el.dataset.searchPayload));
+		await click(t, row);
+		await t.settle();
+		return payload;
+	};
+
+	await click(t, shell.locator('.domain-link[data-domain="ai"]'));
+	await detail.waitFor({ timeout: 7000 });
+	await t.settle();
+	await t.viewport(740, 900);
+	await f.locator(MENU).waitFor({ timeout: 5000 });
+	await click(t, tab('providers'));
+	await t.settle();
+
+	const mounted = await providers.elementHandle();
+	const picked = await search('Codex', 'provider', /^ChatGPT \/ Codex$/);
+	const selected = await providers.locator('#provider-roster .resource-row.active').first().evaluate((el) => el.dataset.provider || el.dataset.id);
+	const afterProvider = await shell.evaluate(readFocus);
+	const exposed = await f.evaluate(drawerClosed, SHELL);
+	t.log('provider result ' + JSON.stringify({ picked, selected, afterProvider, exposed }));
+	await t.check('Ctrl+K selects ChatGPT / Codex in the same mounted Providers & Accounts workspace',
+		selected === picked.id && await mounted.evaluate((el) => el.isConnected), JSON.stringify({ picked, selected }));
+	await t.check('accepting the in-place provider result closes the drawer and returns focus to the menu',
+		exposed && afterProvider.menu, JSON.stringify(afterProvider));
+
+	// Use the coordinates even on the control with the scrim covering the tab.
+	const firstHit = await tab('web').evaluate((el) => {
+		const box = el.getBoundingClientRect();
+		const hit = document.elementFromPoint(box.left + box.width / 2, box.top + box.height / 2);
+		return { tab: el.contains(hit), scrim: hit === el.closest('.pm-shell') };
+	});
+	await click(t, tab('web'));
+	await t.settle();
+	const activeWorkspace = await shell.locator('.workspace-tab.active').evaluate((el) => el.dataset.workspace);
+	t.log('first workspace click ' + JSON.stringify({ firstHit, activeWorkspace }));
+	await t.check('the first click on Web & Research after accepting the provider activates that tab',
+		firstHit.tab && activeWorkspace === 'web', JSON.stringify({ firstHit, activeWorkspace }));
+
+	await search('MacBook Air', 'sync-client', /^MacBook Air$/);
+	const dialog = f.getByRole('dialog', { name: 'Project Sync item unavailable', exact: true });
+	await dialog.waitFor({ timeout: 7000 });
+	const dialogFocus = await dialog.evaluate((el) => {
+		const active = document.activeElement;
+		return { inside: el.contains(active), body: active.matches('.pm51-panel-body') };
+	});
+	const drawerShut = await f.evaluate(drawerClosed, SHELL);
+	t.log('dialog result ' + JSON.stringify({ drawerShut, dialogFocus }));
+	await t.check('accepting the client search result closes the chapter drawer and gives the destination dialog focus',
+		drawerShut && dialogFocus.inside && dialogFocus.body, JSON.stringify({ drawerShut, dialogFocus }));
+}
+
 export const tests = {};
 for (const surface of ['normal', 'sandbox']) {
-	tests['FO-241 drawer returns focus and dismisses (' + surface + ')'] = async (t) => {
+	const run = (exercise) => async (t) => {
 		if (!t.app.surfaces().includes(surface)) return;
 		const looks = t.args.looks ? String(t.args.looks).split(',').map((look) => look.trim()) : LOOKS;
 		for (const look of looks) {
@@ -206,4 +275,6 @@ for (const surface of ['normal', 'sandbox']) {
 			await t.step(look, () => exercise(t, surface, look));
 		}
 	};
+	tests['FO-241 drawer returns focus and dismisses (' + surface + ')'] = run(exercise);
+	tests['FO-241 Settings search accepts results (' + surface + ')'] = run(exerciseSearch);
 }
