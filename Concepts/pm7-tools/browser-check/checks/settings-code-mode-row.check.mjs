@@ -1,6 +1,6 @@
 // Tools T-191 (Jared, 2026-11-24: "is code mode an option in settings that can be turned off? If not, it needs to
 // be."): the inventory row code.execution.code-mode is an ordinary Settings row. By real typing and real clicks:
-// Settings Search for "Code Mode" lists a result named Code Mode; the result opens a page whose row holds the
+// Settings Search for "Code Mode" lists a result named Code Mode; after a click on that result the page draws the row, which holds the
 // inventory's label and sentence as text that passes the computed visibility and box checks (not a reading of the
 // words' ink) and one switch; the switch starts On (the inventory default), a click turns it Off,
 // and a second click turns it On again. In each of the three states the switch itself has to be shown (opacity-aware
@@ -184,7 +184,7 @@ export default async function (t) {
 
 	let row = await read();
 	t.log(`after the search: ${JSON.stringify(row)}`);
-	await t.check('the result opens a page that draws the Code Mode row with a switch', row.drawn === true, JSON.stringify(row));
+	await t.check('after the click on the result, the Code Mode row is drawn with a switch', row.drawn === true, JSON.stringify(row));
 	if (!row.drawn) return;
 	await t.check('the row\'s first line is the inventory label', sameLabel(row.lines[0]), JSON.stringify(row.lines));
 	await t.check('the row holds the inventory\'s complete sentence, as one of its lines', row.lines.includes(norm(INV.desc)), JSON.stringify(row.lines));
