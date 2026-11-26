@@ -50,30 +50,32 @@ export function backingVerdict({ a1, a2, b, c, c0, width, height }) {
 	return { n: m.n, mx: m.mx, share: m.n / Math.max(1, counted), motion: 1 - counted / mask.length };
 }
 
-// R135-F5, R136-N2: the pane's own layout signature — its scroll state and the row boxes the plates depend on:
-// the boxes carrying the surface's painted non-text content (rows, icons, controls), tracked by their offset
-// top/left/height (offset positions ignore transforms, so a spinning icon is not a reflow), rounded to whole
-// pixels, only where they intersect the surface's visible clip. A timer leaf's shrink-wrapped text width is not
-// part of it: on the real Agents pane 22 live <i data-work-time> flex items change width every second without
-// moving a row, and rows scrolled outside the clip paint nothing. When a timer row WRAPS, the row boxes below
-// shift and the non-text .wk-lead/.wk-kind icons move to positions neither the baseline plate nor the own-glyph
-// mask covers, counting as read-through (the sol-max-15 witness: 0.38%-1.32%).
+// R135-F5, R136-N2, R137-H2: the pane's own layout signature — its scroll state and the row/leaf boxes the plates
+// depend on. HTML boxes use offset top/left/height (offset positions ignore transforms); SVG leaves have no offset
+// box, so their client rect is used. Painted controls and icon leaves are tracked, along with span/i leaves that can
+// carry a CSS-only dot or badge. Width-only text jitter is not part of the signature, and rows outside the visible
+// clip paint nothing. When a timer row WRAPS, the row boxes below shift and the icons move to positions neither the
+// baseline plate nor the own-glyph mask covers, counting as read-through (the sol-max-15 witness: 0.38%-1.32%).
 function bcLayoutSig(s) {
 	const e = document.querySelector(s); if (!e) return null;
 	const b = e.getBoundingClientRect();
 	const top = Math.max(0, b.top), left = Math.max(0, b.left);
 	const bottom = Math.min(b.bottom, innerHeight), right = Math.min(b.right, innerWidth);
 	const parts = [e.scrollTop, e.scrollHeight, e.clientWidth, e.clientHeight];
-	// The row boxes: every ancestor of a non-text element up to the surface. Pure-text subtrees (timer leaves,
-	// labels) are masked by the own-glyph plates, and their width jitter moves no painted box.
-	const NON_TEXT = 'svg, img, canvas, video, iframe, input, select, textarea, button, hr';
+	// The row and painted-leaf boxes: every ancestor of a tracked leaf up to the surface. Text width alone is not
+	// hashed, so a shrink-wrapped timer's width tick does not look like reflow.
+	const TRACKED = 'svg, img, canvas, video, iframe, input, select, textarea, button, hr, span, i';
 	const boxes = new Set();
-	for (const el of e.querySelectorAll(NON_TEXT)) for (let n = el; n && n !== e; n = n.parentElement) boxes.add(n);
+	for (const el of e.querySelectorAll(TRACKED)) for (let n = el; n && n !== e; n = n.parentElement) boxes.add(n);
 	for (const el of e.querySelectorAll('*')) {
-		if (!boxes.has(el) || el.offsetParent === null) continue;
+		if (!boxes.has(el)) continue;
 		const r = el.getBoundingClientRect();
 		if (r.bottom <= top || r.top >= bottom || r.right <= left || r.left >= right) continue;
-		parts.push(Math.round(el.offsetTop) + ':' + Math.round(el.offsetLeft) + ':' + Math.round(el.offsetHeight));
+		if (el.namespaceURI === 'http://www.w3.org/2000/svg') parts.push(Math.round(r.top) + ':' + Math.round(r.left) + ':' + Math.round(r.height));
+		else {
+			if (el.offsetParent === null) continue;
+			parts.push(Math.round(el.offsetTop) + ':' + Math.round(el.offsetLeft) + ':' + Math.round(el.offsetHeight));
+		}
 	}
 	return parts.join('|');
 }
