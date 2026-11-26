@@ -67,7 +67,7 @@ const ROW = ([id, label, desc]) => {
 		onClass: sw.classList.contains('on'), knobX, knobCentre: Math.round(knobCentre * 10) / 10, trackMid: Math.round(r.width / 2 * 10) / 10, knobStyled,
 		/* the setting's own value, read back from Settings, not from the switch's markup */
 		stored: (typeof PM51 !== 'undefined' && PM51 && typeof PM51.value === 'function') ? PM51.value(id) : 'unreadable',
-		switches: row.querySelectorAll('.toggle[role="switch"]').length, inView: r.top >= 0 && r.bottom <= innerHeight, at: [Math.round(r.left), Math.round(r.top)] };
+		switches: row.querySelectorAll('[role="switch"]').length, inView: r.top >= 0 && r.bottom <= innerHeight, at: [Math.round(r.left), Math.round(r.top)] };
 };
 
 export default async function (t) {
