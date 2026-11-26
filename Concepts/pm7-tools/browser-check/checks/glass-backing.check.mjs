@@ -50,30 +50,46 @@ export function backingVerdict({ a1, a2, b, c, c0, width, height }) {
 	return { n: m.n, mx: m.mx, share: m.n / Math.max(1, counted), motion: 1 - counted / mask.length };
 }
 
-// R135-F5, R136-N2: the pane's own layout signature — its scroll state and the row boxes the plates depend on:
-// the boxes carrying the surface's painted non-text content (rows, icons, controls), tracked by their offset
-// top/left/height (offset positions ignore transforms, so a spinning icon is not a reflow), rounded to whole
-// pixels, only where they intersect the surface's visible clip. A timer leaf's shrink-wrapped text width is not
-// part of it: on the real Agents pane 22 live <i data-work-time> flex items change width every second without
-// moving a row, and rows scrolled outside the clip paint nothing. When a timer row WRAPS, the row boxes below
-// shift and the non-text .wk-lead/.wk-kind icons move to positions neither the baseline plate nor the own-glyph
-// mask covers, counting as read-through (the sol-max-15 witness: 0.38%-1.32%).
-function bcLayoutSig(s) {
-	const e = document.querySelector(s); if (!e) return null;
-	const b = e.getBoundingClientRect();
-	const top = Math.max(0, b.top), left = Math.max(0, b.left);
-	const bottom = Math.min(b.bottom, innerHeight), right = Math.min(b.right, innerWidth);
-	const parts = [e.scrollTop, e.scrollHeight, e.clientWidth, e.clientHeight];
-	// The row boxes: every ancestor of a non-text element up to the surface. Pure-text subtrees (timer leaves,
-	// labels) are masked by the own-glyph plates, and their width jitter moves no painted box.
+// The pane's scroll state and the visible layout boxes that carry its non-text paint (R135-F5, R136-N2, R137-H2).
+// A wrapping timer can move the next row's icons beyond both glyph masks. A timer whose text only changes
+// width, or an SVG whose drawing sways inside its host, leaves the layout signature alone.
+function bcLayoutSig({ sel, clip, baseline = false }) {
+	const surface = document.querySelector(sel);
+	if (!surface) return null;
+	const right = clip.x + clip.width, bottom = clip.y + clip.height;
+	const parts = [surface.scrollTop, surface.scrollHeight, surface.clientWidth, surface.clientHeight];
 	const NON_TEXT = 'svg, img, canvas, video, iframe, input, select, textarea, button, hr';
+	const SVG_NS = 'http://www.w3.org/2000/svg';
 	const boxes = new Set();
-	for (const el of e.querySelectorAll(NON_TEXT)) for (let n = el; n && n !== e; n = n.parentElement) boxes.add(n);
-	for (const el of e.querySelectorAll('*')) {
-		if (!boxes.has(el) || el.offsetParent === null) continue;
+	const addBoxes = (leaf) => {
+		for (let el = leaf; el && el !== surface; el = el.parentElement) {
+			if (el.namespaceURI !== SVG_NS) boxes.add(el);
+		}
+	};
+	for (const el of surface.querySelectorAll(NON_TEXT)) addBoxes(el);
+	// Classify empty painted marks on the normal plate. The transparent-text stylesheet can also
+	// hide currentColor backgrounds and borders. Keep measuring those same layout boxes on every plate.
+	if (baseline) {
+		const visibleColor = (value) => !/^(?:transparent|(?:rgba|color)\(.*[,/]\s*0(?:\.0+)?%?\))$/.test(value);
+		surface.__bcPaintedMarks = new WeakSet();
+		for (const el of surface.querySelectorAll('span:empty, i:empty')) {
+			const c = getComputedStyle(el);
+			const border = ['top', 'right', 'bottom', 'left'].some((side) =>
+				parseFloat(c.getPropertyValue(`border-${side}-width`)) > 0 && visibleColor(c.getPropertyValue(`border-${side}-color`)));
+			if (visibleColor(c.backgroundColor) || c.backgroundImage !== 'none' || c.boxShadow !== 'none' || border) {
+				surface.__bcPaintedMarks.add(el);
+			}
+		}
+	}
+	for (const el of surface.querySelectorAll('span:empty, i:empty')) {
+		if (surface.__bcPaintedMarks?.has(el)) addBoxes(el);
+	}
+	for (const el of surface.querySelectorAll('*')) {
+		if (!boxes.has(el) || el.offsetParent == null) continue;
 		const r = el.getBoundingClientRect();
-		if (r.bottom <= top || r.top >= bottom || r.right <= left || r.left >= right) continue;
-		parts.push(Math.round(el.offsetTop) + ':' + Math.round(el.offsetLeft) + ':' + Math.round(el.offsetHeight));
+		if (r.bottom <= clip.y || r.top >= bottom || r.right <= clip.x || r.left >= right) continue;
+		// Offset metrics use layout positions and whole pixels even when a box is transformed.
+		parts.push(`${Math.round(el.offsetTop)}:${Math.round(el.offsetLeft)}:${Math.round(el.offsetHeight)}`);
 	}
 	return parts.join('|');
 }
@@ -91,14 +107,15 @@ async function readThrough(t, f, sel, { rerenderAgents = false } = {}) {
 	if (!r) return null;
 	await f.waitForTimeout(400);
 	const ACQUISITIONS = 3;
+	const layoutTarget = { sel, clip: r };
 	for (let attempt = 1; ; attempt++) {
 		// R136-N3, R137-F1, R138-H1: sample on both sides of each shot. A wrap can start in the wait
 		// between plates and end during a slow capture, leaving two equal post-shot samples around
 		// a plate that painted shifted rows. Compare every sample to the first.
-		const sigStart = await f.evaluate(bcLayoutSig, sel);
+		const sigStart = await f.evaluate(bcLayoutSig, { ...layoutTarget, baseline: true });
 		if (sigStart === null) return null;
 		const sigs = [sigStart];
-		const sampleLayout = async () => { sigs.push(await f.evaluate(bcLayoutSig, sel)); };
+		const sampleLayout = async () => { sigs.push(await f.evaluate(bcLayoutSig, layoutTarget)); };
 		const capture = async () => {
 			await sampleLayout();
 			const plate = await shot(t, r);
@@ -162,11 +179,13 @@ async function readThrough(t, f, sel, { rerenderAgents = false } = {}) {
 			const c = await capture();
 			if (sigs.every((s) => s !== null && s === sigStart)) return { rect: r, ...backingVerdict({ a1, a2, b, c, c0, width: r.width, height: r.height }) };
 		} finally {
-			await f.evaluate(() => {
+			await f.evaluate((s) => {
 				const st = document.getElementById('bc-through');
 				st.remove();
 				st.__bcRestore();
-			});
+				const surface = document.querySelector(s);
+				if (surface) delete surface.__bcPaintedMarks;
+			}, sel);
 		}
 		if (attempt >= ACQUISITIONS) return { rect: r, reflowed: true, attempts: attempt };
 		t.log(`Glass backing ${sel}: own pane reflowed between the baseline and read-through plates (acquisition ${attempt}/${ACQUISITIONS}); reacquiring`);

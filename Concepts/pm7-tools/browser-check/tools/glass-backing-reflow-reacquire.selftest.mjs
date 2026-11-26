@@ -45,8 +45,8 @@ const TRANSPARENT = 'rgba(0, 0, 0, 0)';
 // the pane: five visible rows plus three scrolled below the clip; every row carries a non-text icon and a
 // shrink-wrapped <i data-work-time> timer leaf whose width ticks without moving the row (the real pane's 22
 // live timers, R136-N2). A wrap tick shifts rows 2-4 up 15 px (the witness's dy).
-function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = false, shotMs = {}, pulseAt = null } = {}) {
-	let shifted = false, wide = false, shots = 0, appended = null, now = 0;
+function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = false, shotMs = {}, pulseAt = null, cssOnly = false, currentColor = false, transformShots = [] } = {}) {
+	let shifted = false, wide = false, swaying = false, shots = 0, appended = null, now = 0;
 	const advance = (ms) => {
 		now += ms;
 		if (pulseAt !== null) shifted = now >= pulseAt && now < pulseAt + 1000;
@@ -62,9 +62,13 @@ function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = fa
 			getBoundingClientRect: () => ({ top: 57 + rowY(i), left: 61, bottom: 57 + rowY(i) + 30, right: 61 + W, width: W, height: 30 }),
 		};
 		const icon = { // the .wk-lead svg: non-text, survives color:transparent
-			offsetParent: row, parentElement: row, children: [],
-			offsetTop: 2, offsetLeft: 8, offsetHeight: 12, offsetWidth: 12,
-			getBoundingClientRect: () => ({ top: 57 + rowY(i) + 2, left: 69, bottom: 57 + rowY(i) + 14, right: 81, width: 12, height: 12 }),
+			namespaceURI: cssOnly ? 'http://www.w3.org/1999/xhtml' : 'http://www.w3.org/2000/svg',
+			parentElement: row, children: [],
+			...(cssOnly ? { offsetParent: row, offsetTop: 2, offsetLeft: 8, offsetHeight: 12 } : {}),
+			getBoundingClientRect: () => {
+				const x = 69 + (swaying ? 2 : 0);
+				return { top: 57 + rowY(i) + 2, left: x, bottom: 57 + rowY(i) + 14, right: x + 12, width: 12, height: 12 };
+			},
 		};
 		const timer = { // the <i data-work-time> text leaf: width ticks, the row does not move
 			offsetParent: row, parentElement: row, children: [],
@@ -83,7 +87,7 @@ function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = fa
 		style: { setProperty(p, v) { inline.set(p, v); } },
 		getBoundingClientRect: () => ({ left: 61, top: 57, right: 61 + W, bottom: 57 + H, width: W, height: H }),
 		scrollTop: 0, scrollHeight: 1200, clientWidth: W, clientHeight: H,
-		querySelectorAll: (sel) => (sel === '*' ? rows.flatMap((r, i) => [r, icons[i], timers[i]]) : sel.includes('svg') ? icons : []),
+		querySelectorAll: (sel) => (sel === '*' ? rows.flatMap((r, i) => [r, icons[i], timers[i]]) : sel.includes('svg') ? (cssOnly ? [] : icons) : sel.includes(':empty') && cssOnly ? icons : []),
 	};
 	rows.forEach((r) => { r.offsetParent = e; r.parentElement = e; });
 	const st = { id: '', textContent: '', remove() { appended = null; } };
@@ -96,7 +100,15 @@ function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = fa
 	// live computed style, as CSSOM: the appended rule and the inline !important pin decide the surface's colour
 	const surfaceColour = () => inline.has('color') ? inline.get('color')
 		: (appended && appended.textContent.includes(`${SEL}, ${SEL} *`) ? TRANSPARENT : REAL['color']);
-	const getComputedStyle = () => ({ visibility: 'visible', getPropertyValue: (p) => (p === 'color' || p === '-webkit-text-fill-color' ? surfaceColour() : REAL[p]) });
+	const getComputedStyle = (node) => ({
+		visibility: 'visible',
+		backgroundColor: cssOnly && icons.includes(node)
+			? (currentColor ? surfaceColour() : 'rgb(100, 217, 255)')
+			: TRANSPARENT,
+		backgroundImage: 'none',
+		boxShadow: 'none',
+		getPropertyValue: (p) => (p === 'color' || p === '-webkit-text-fill-color' ? surfaceColour() : REAL[p]),
+	});
 	const paint = (data, x, y, w, h, rgb) => { for (let yy = y; yy < y + h; yy++) for (let xx = x; xx < x + w; xx++) { const i = (yy * W + xx) * 4; data[i] = rgb[0]; data[i + 1] = rgb[1]; data[i + 2] = rgb[2]; data[i + 3] = 255; } };
 	const render = () => {
 		const data = new Uint8Array(W * H * 4);
@@ -118,6 +130,7 @@ function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = fa
 			const duration = shotMs[shots] ?? 40;
 			advance(duration / 2);
 			if (tickShots.includes(shots)) shifted = !shifted; // the wrap tick lands before this shot
+			if (transformShots.includes(shots)) swaying = !swaying;
 			if (widthShots.includes(shots)) wide = !wide; // a width-only timer tick lands before this shot
 			const full = render();
 			const lx = clip.x - 61, ly = clip.y - 57, out = new Uint8Array(clip.width * clip.height * 4);
@@ -216,6 +229,33 @@ function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = fa
 	assert.ok(m && !m.reflowed && m.share <= 0.002, `the A->B->A pulse must reacquire, not judge (base share ${m && (m.share * 100).toFixed(3)}%)`);
 	assert.equal(w.shots(), 10, 'the mid-sequence pulse is caught and the quiet reacquisition judges');
 	assert.ok(w.logs.some((l) => /reflowed/.test(l) && /reacquir/.test(l)), 'the reacquisition is logged');
+}
+// R137-H2: sample the production signature directly so the verdict's motion mask cannot hide a bad sample.
+{
+	const signature = new Function(layoutSigSrc + '\nreturn bcLayoutSig;')();
+	const clip = { x: 63, y: 59, width: W - 4, height: H - 4 };
+	const sample = (w, baseline = false) => w.f.evaluate(signature, layoutSigSrc.startsWith('function bcLayoutSig(s)') ? SEL : { sel: SEL, clip, baseline });
+	const capture = (w) => w.t.page.screenshot({ clip });
+
+	const svg = world([2], { widthShots: [1], transformShots: [1] });
+	const still = await sample(svg, true);
+	await capture(svg);
+	assert.equal(await sample(svg), still, 'SVG sway and live text width do not move a visible row box');
+	await capture(svg);
+	assert.notEqual(await sample(svg), still, 'a visible SVG row shift changes the signature');
+
+	const css = world([1], { cssOnly: true });
+	const before = await sample(css, true);
+	await capture(css);
+	assert.notEqual(await sample(css), before, 'a visible CSS-painted row shift changes the signature');
+	assert.ok(!String(still).includes('NaN'), 'SVGs are represented by their host boxes, with finite offsets');
+}
+// The transparent-text stylesheet can also hide a CSS mark painted with currentColor.
+{
+	const w = world([], { cssOnly: true, currentColor: true });
+	const m = await readThrough(w.t, w.f, SEL);
+	assert.ok(m && !m.reflowed, 'the text mask changing a CSS mark’s color must not read as reflow');
+	assert.equal(w.shots(), 5, 'the quiet CSS-painted pane keeps its first acquisition');
 }
 // R138-H1: a1 ends at 440 ms, then the wrap starts during the wait before a2. The slow a2 takes
 // 750 ms and paints the shifted rows. The pulse ends before a2 returns at 1490 ms, leaving both
