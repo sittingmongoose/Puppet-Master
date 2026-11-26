@@ -624,6 +624,18 @@ def pushed_main(root: Path, url: str) -> Optional[str]:
     return None
 
 
+def update_publish_tracking_refs(root: Path, names: Collection[str], commit: str) -> None:
+    """Advance each verified remote's local main without overwriting a concurrent update."""
+    for name in sorted(names):
+        ref = f"refs/remotes/{name}/main"
+        previous = git(root, "rev-parse", "--verify", "--quiet", ref, check=False).stdout.strip()
+        if previous == commit:
+            continue
+        if previous and not is_ancestor(root, previous, commit):
+            raise Refusal(f"{ref} at {previous} cannot fast-forward to {commit}; inspect the tracking ref")
+        git(root, "update-ref", "--no-deref", ref, commit, previous or "0" * len(commit))
+
+
 def publish_main(root: Path, lease: str, commit: str) -> int:
     """Push the landed SHA to every configured push target under the verify lease, and verify each.
 
@@ -658,6 +670,7 @@ def publish_main(root: Path, lease: str, commit: str) -> int:
             failures.append(f"{label}: main is {tip or 'missing'}; expected {commit}")
     if failures:
         raise Refusal("publishing the landed commit to every push target failed:\n" + "\n".join(failures))
+    update_publish_tracking_refs(root, {name for names, _ in targets for name in names}, commit)
     for names, url in targets:
         say(f"Published {commit} to remote {', '.join(names)} ({url}): main verified")
     return 0

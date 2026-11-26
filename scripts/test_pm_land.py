@@ -3399,6 +3399,23 @@ class PublishAllTargetsTests(unittest.TestCase):
         self.assertIn(str(self.origin), output.getvalue())
         self.assertIn(str(nas), output.getvalue())
 
+    def test_verified_publish_updates_both_named_tracking_refs(self):
+        nas = self.two_push_urls()
+        self.git(self.shared, "remote", "add", "truenas-backup", str(nas))
+        self.git(self.shared, "fetch", "truenas-backup")
+        # Both targets are at the lease, with a stale local backup tracking ref.
+        self.git(self.origin, "update-ref", land.MAIN_REF, self.head, self.base)
+        self.git(nas, "update-ref", land.MAIN_REF, self.head, self.base)
+        self.git(self.shared, "fetch", "origin")
+        self.git(self.shared, "merge", "--ff-only", self.head)
+        self.git(self.shared, "commit", "--allow-empty", "-m", "next landing")
+        landed = land.revision(self.shared, land.MAIN_REF)
+
+        self.assertEqual(land.publish_main(self.shared, self.head, landed), 0)
+
+        self.assertEqual(land.full_main(self.shared), landed)
+        self.assertEqual(land.revision(self.shared, "refs/remotes/truenas-backup/main"), landed)
+
     def test_a_rejected_push_fails_loudly_naming_that_remote(self):
         self.put(self.shared, "tracked.txt", "someone else's landing\n")
         self.git(self.shared, "commit", "-am", "someone else")
