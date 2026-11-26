@@ -597,11 +597,10 @@ def verify_rollback(candidate, target):
 
 
 def push_targets(root: Path) -> list[tuple[list[str], str]]:
-    """Every configured push target as ([remote names], URL), in configured order, one entry per URL.
+    """List each push URL once with the names of all remotes that use it.
 
-    A remote's push URLs, falling back to its URL when it has no push URL. The same URL named by two
-    remotes (the shared checkout's storage URL is origin's second push URL and the truenas-backup
-    remote's URL) is one target: pushing it twice would lease its own first push against it.
+    Git lists remote names alphabetically. For each remote, visit its push URLs in configured
+    order, falling back to its fetch URLs. Shared URLs need only one push and verification.
     """
     by_url: dict[str, list[str]] = {}
     for name in git(root, "remote").stdout.split():
@@ -610,7 +609,7 @@ def push_targets(root: Path) -> list[tuple[list[str], str]]:
         if not urls:
             fallback = git(root, "config", "--get-all", f"remote.{name}.url", check=False)
             urls = [url for url in fallback.stdout.splitlines() if url]
-        for url in urls:
+        for url in dict.fromkeys(urls):
             by_url.setdefault(url, []).append(name)
     return [(names, url) for url, names in by_url.items()]
 
@@ -653,10 +652,8 @@ def behind_publish_target(root: Path, url: str, lease: str) -> Optional[str]:
 def publish_main(root: Path, lease: str, commit: str) -> int:
     """Push the landed SHA to every configured push target under the verify lease, and verify each.
 
-    The hand push verify's PUBLISH_LEASE feeds used to reach a single target: with several push URLs
-    configured, the ones past the first (the storage URL behind the NAS remote) stayed behind with no
-    one noticing, because verify reads origin's tip only. This pushes each target itself and then
-    rereads each main, refusing loudly, naming the remote, when any did not land.
+    The hand-push workflow only verified origin's fetch URL. Read main at every push target
+    before reporting publication complete.
     """
     lease = commit_or_refuse(root, lease, "publication lease")
     commit = commit_or_refuse(root, commit, "landed commit")
@@ -666,10 +663,11 @@ def publish_main(root: Path, lease: str, commit: str) -> int:
     targets = push_targets(root)
     if not targets:
         raise Refusal(f"no push targets are configured for {root}: add a remote before publishing")
+    destinations = [(f"remote {', '.join(names)} ({url})", url) for names, url in targets]
+    say("Push targets:\n" + "\n".join(f"  {label}" for label, _ in destinations))
     failures: list[str] = []
     pushed: list[tuple[str, str]] = []
-    for names, url in targets:
-        label = f"remote {', '.join(names)} ({url})"
+    for label, url in destinations:
         result = git(root, "push", f"--force-with-lease={MAIN_REF}:{lease}", url, f"{commit}:{MAIN_REF}",
                      check=False)
         if result.returncode:

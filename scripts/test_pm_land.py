@@ -3494,6 +3494,29 @@ class PublishAllTargetsTests(unittest.TestCase):
             self.assertIn(f"{self.head}:{land.MAIN_REF}", args)
         self.assertEqual({args[2] for args in pushes}, {str(self.origin), str(nas)})
 
+    def test_publish_lists_deduplicated_targets_before_the_first_push(self):
+        nas = self.two_push_urls()
+        self.git(self.shared, "config", "--add", "remote.origin.pushurl", str(nas))
+        self.git(self.shared, "remote", "add", "truenas-backup", str(nas))
+        real = land.git
+        output = io.StringIO()
+        previews = []
+
+        def recording(root, *args, **kwargs):
+            if args[0] == "push":
+                previews.append(output.getvalue())
+            return real(root, *args, **kwargs)
+
+        with redirect_stdout(output), patch.object(land, "git", side_effect=recording):
+            self.assertEqual(land.publish_main(self.shared, self.base, self.head), 0)
+
+        self.assertEqual(len(previews), 2)
+        self.assertEqual(previews[0].splitlines(), [
+            "Push targets:",
+            f"  remote origin ({self.origin})",
+            f"  remote origin, truenas-backup ({nas})",
+        ])
+
     def test_a_target_whose_main_differs_after_the_push_is_named(self):
         nas = self.two_push_urls()
         real = land.pushed_main
