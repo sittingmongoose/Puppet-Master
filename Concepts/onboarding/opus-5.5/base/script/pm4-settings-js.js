@@ -3156,43 +3156,53 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     return String(value).replace(/(["\\.#:[\]()=])/g, '\\$1');
   }
 
+  function visibleChapterMenu() {
+    const menu = root.querySelector('.mobile-menu');
+    return menu?.getClientRects().length ? menu : null;
+  }
+
+  function closeChapterDrawer() {
+    state.railOpen = false;
+    root.querySelector('.pm-shell')?.classList.remove('rail-open');
+  }
+
   function navigate(domainId, workspaceId, options = {}) {
     settingsSoundPreview.stop('settings-navigation');
     const domain = getDomain(domainId);
     const workspace = domain.workspaces.find(w => w.id === workspaceId) || domain.workspaces[0];
     const sameDomainView = !state.home && state.domain === domain.id && !!root.querySelector('[data-workspace-block]');
     const hadDetail = !!state.detailSetting;
+    const restoreMenuFocus = state.railOpen && !!visibleChapterMenu();
+    closeChapterDrawer();
     state.home = false;
     state.domain = domain.id;
     state.workspace = workspace.id;
     if (Object.prototype.hasOwnProperty.call(options, 'detailSetting')) state.detailSetting = options.detailSetting;
     else state.detailSetting = null;
-    state.railOpen = false;
     state.resourceRosterOpen = false;
     if (options.section) state.activeSection[workspace.id] = options.section;
     saveState();
 
     const needsRemount = !sameDomainView || hadDetail || !!state.detailSetting;
-    if (!needsRemount) {
-      /* FO-241: the no-remount path keeps the mounted shell, so close the chapter drawer here the way Escape
-         does (state.railOpen is already false above); otherwise .rail-open and its scrim stay over Settings. */
-      root.querySelector('.pm-shell')?.classList.remove('rail-open');
+    if (needsRemount) {
+      pendingScroll = { workspace: workspace.id, section: options.section || null };
+      renderApp();
+    } else {
       updateHash();
       jumpToWorkspace(workspace.id, options.section ? 'auto' : undefined);
       if (options.section) scrollToSection(options.section, true);
-      return;
     }
-
-    pendingScroll = { workspace: workspace.id, section: options.section || null };
-    renderApp();
+    if (restoreMenuFocus) visibleChapterMenu()?.focus({ preventScroll: true });
   }
 
   function goHome() {
+    const restoreMenuFocus = state.railOpen && !!visibleChapterMenu();
+    closeChapterDrawer();
     state.home = true;
     state.detailSetting = null;
-    state.railOpen = false;
     pendingScroll = null;
     renderApp();
+    if (restoreMenuFocus) visibleChapterMenu()?.focus({ preventScroll: true });
   }
 
   function renderApp(options = {}) {
@@ -3808,6 +3818,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
 
   function onDetailEsc(e) {
     if (e.key !== 'Escape' || !window.PM7_SETTINGS_TOME.ownsEvent(e.target)) return;
+    if (state.railOpen && visibleChapterMenu()) return;
     e.stopPropagation();
     closeDetailSetting();
   }
@@ -4171,9 +4182,13 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
   }
 
   function focusSettingsSearch() {
+    if (!state.railOpen && visibleChapterMenu()) {
+      state.railOpen = true;
+      renderApp();
+    }
     const input = root.querySelector('[data-global-search]');
     if (!input) return null;
-    input.focus();
+    input.focus({ preventScroll: true });
     openSearch(input);
     return input;
   }
@@ -4787,6 +4802,12 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     let p = {};
     try { p = JSON.parse(buttonEl.getAttribute('data-search-payload') || '{}'); } catch (_) { p = {}; }
     closeSearch();
+    const menu = state.railOpen ? visibleChapterMenu() : null;
+    if (menu) {
+      closeChapterDrawer();
+      // Give destination dialogs their return target before they take focus.
+      menu.focus({ preventScroll: true });
+    }
     applySearchSelection(p);
   }
 
@@ -7108,7 +7129,15 @@ if(state.projectSyncTab==='move')return `<div class="card-grid two"><section cla
         jumpToWorkspace(ds(el, 'workspace'));
         return;
       }
-      case 'toggle-rail': state.railOpen=!state.railOpen;renderApp();return;
+      case 'toggle-rail':
+        if (state.railOpen) {
+          closeChapterDrawer();
+          el.focus({ preventScroll: true });
+        } else {
+          state.railOpen = true;
+          renderApp();
+        }
+        return;
       case 'toggle-resource-roster': state.resourceRosterOpen=!state.resourceRosterOpen;renderApp();return;
       case 'open-search': focusSettingsSearch(); return;
       case 'page-options': {
@@ -7998,6 +8027,17 @@ if(state.projectSyncTab==='move')return `<div class="card-grid two"><section cla
   function bindEvents() {
     document.addEventListener('click', event => {
       if(!window.PM7_SETTINGS_TOME.ownsEvent(event.target)){portalRoot().querySelectorAll('.popover').forEach(el=>el.remove());if(searchEl)closeSearch();return;}
+      // The scrim is a pseudo-element, so its clicks target the shell itself.
+      if (event.target.matches('.pm-shell.rail-open')) {
+        const menu = visibleChapterMenu();
+        if (menu) {
+          hideTooltip();
+          closeSearch();
+          closeChapterDrawer();
+          menu.focus({ preventScroll: true });
+          return;
+        }
+      }
       const callbackEl=event.target.closest('[data-callback]');
       if(callbackEl){event.preventDefault();const cb=actionCallbacks.get(callbackEl.dataset.callback);if(cb){try{cb(callbackEl,event);}catch(err){diagnostics.errors.push(String(err));showToast('Action failed',err.message,'error');}}return;}
       const openPop = portalRoot().querySelector('.popover');
@@ -8037,14 +8077,22 @@ if(state.projectSyncTab==='move')return `<div class="card-grid two"><section cla
     /* T47 PMHoverTagController owns all Settings pointer/focus tooltip presentation. */
     /* data-tooltip remains descriptor input for the shared T47 controller. */
     document.addEventListener('keydown',event=>{
-      if(!window.PM7_SETTINGS_TOME.ownsEvent(event.target))return;
-      if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){
+      const menu = event.key === 'Escape' && state.railOpen && root.closest('#panel-settings.active')
+        ? visibleChapterMenu() : null;
+      if (!menu && !window.PM7_SETTINGS_TOME.ownsEvent(event.target)) return;
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
         event.preventDefault();
-        const input = root.querySelector('[data-global-search]');
-        if (input) { input.focus(); openSearch(input); }
+        focusSettingsSearch();
         return;
       }
-      if(event.key==='Escape'){hideTooltip();closeSearch();closeOverlay();state.railOpen=false;state.resourceRosterOpen=false;root.querySelector('.pm-shell')?.classList.remove('rail-open');return;}
+      if (event.key === 'Escape') {
+        hideTooltip();
+        closeOverlay(!menu);
+        closeChapterDrawer();
+        state.resourceRosterOpen = false;
+        menu?.focus({ preventScroll: true });
+        return;
+      }
       focusTrap(event);
       const pop=event.target.closest('.popover');if(pop&&['ArrowDown','ArrowUp','Home','End'].includes(event.key)){
         const items=[...pop.querySelectorAll('button:not([disabled])')];if(!items.length)return;event.preventDefault();let i=items.indexOf(document.activeElement);if(event.key==='Home')i=0;else if(event.key==='End')i=items.length-1;else i=(i+(event.key==='ArrowDown'?1:-1)+items.length)%items.length;items[i].focus();
@@ -8112,7 +8160,7 @@ publishPending:(key,projectId,binding)=>{
  snaps[projectId]={label:projectId,settings:JSON.parse(JSON.stringify(staged.values)),fixture:true,receipt_id:staged.receipt};
  pending.delete(key);return {ok:true,project_id:projectId,count:Object.keys(staged.values).length,receipt:staged.receipt,fixtureMode:true};
 },
-discardPending:(key)=>({ok:true,discarded:pending.delete(key)})};})(),closeTransientUi:()=>{settingsSoundPreview.stop('settings-surface-close');if(typeof window.PM51_NOTIF_APP_PREVIEW_STOP==='function')window.PM51_NOTIF_APP_PREVIEW_STOP();hideTooltip();closeSearch();closeOverlay(false);document.removeEventListener('keydown',onDetailEsc,true);detailInspectorVisible=false;state.detailSetting=null;state.railOpen=false;state.resourceRosterOpen=false;root.querySelector('.pm-shell')?.classList.remove('rail-open');const active=document.activeElement;if(window.PM7_SETTINGS_TOME.ownsEvent(active)&&typeof active.blur==='function')active.blur();},
+discardPending:(key)=>({ok:true,discarded:pending.delete(key)})};})(),closeTransientUi:()=>{settingsSoundPreview.stop('settings-surface-close');if(typeof window.PM51_NOTIF_APP_PREVIEW_STOP==='function')window.PM51_NOTIF_APP_PREVIEW_STOP();hideTooltip();closeSearch();closeOverlay(false);document.removeEventListener('keydown',onDetailEsc,true);detailInspectorVisible=false;state.detailSetting=null;closeChapterDrawer();state.resourceRosterOpen=false;const active=document.activeElement;if(window.PM7_SETTINGS_TOME.ownsEvent(active)&&typeof active.blur==='function')active.blur();},
       returnToProviderInstallation:(providerId,action)=>{state.domain='ai';state.workspace='providers';state.providerTab='installation';if(providerId)state.selectedProvider=providerId;renderApp({soft:true});return {providerId,action};},
       navigate,
       renderApp,
