@@ -3579,9 +3579,15 @@ class AggregateReportsTests(unittest.TestCase):
 
 class AggregateReadinessInputs(LandingRun):
     def test_readiness_source_link_changes_refuse_comparison_and_recording(self):
+        self.check_readiness_source_link_changes(supports_snapshot=True)
+
+    def test_historical_readiness_source_link_changes_refuse_comparison_and_recording(self):
+        self.check_readiness_source_link_changes(supports_snapshot=False)
+
+    def check_readiness_source_link_changes(self, *, supports_snapshot):
         self.stub()
         self.module.target_worker_support = lambda root: (True, True)
-        self.module.target_readiness_snapshot_support = lambda root: True
+        self.module.target_readiness_snapshot_support = lambda root: supports_snapshot
         original_check = self.module.run_check
         mkdtemp = tempfile.mkdtemp
         edition_a, edition_b = (self.repo / name for name in ("edition-a", "edition-b"))
@@ -3620,8 +3626,8 @@ class AggregateReadinessInputs(LandingRun):
 
                         def run_check(check, root, run_dir, timeout, workers, env, supports_jobs):
                             if check == "run-gates" and timing != "startup":
-                                snapshot = Path(env[M.SNAPSHOT_ENV])
-                                seen.append(json.loads((snapshot / inventory).read_bytes())["edition"])
+                                edition = Path(env.get(M.SNAPSHOT_ENV, root / M.READINESS_AUDIT_REL))
+                                seen.append(json.loads((edition / inventory).read_bytes())["edition"])
                                 if timing in ("dispatch", "rollback"):
                                     publish(current, edition_b)
                                     if timing == "rollback":
@@ -3973,64 +3979,48 @@ print(json.dumps({"status": "pass"}))
 
 
 class HistoricalTargetEnvironment(LandingRun):
-    def test_a_target_with_only_fixed_readiness_paths_is_refused_before_dispatch(self):
-        publication, previous = (self.repo / name for name in ("publication", "previous"))
-        inventory = "CURRENT_EVENT_SOURCE_INVENTORY.json"
-        for parent, value in ((publication, "A"), (previous, "B")):
-            edition = parent / "edition"
-            edition.mkdir(parents=True)
-            (edition / inventory).write_text(json.dumps({"edition": value}), encoding="utf-8")
-        selected = publication / "edition"
-        source = ("--readiness-audit-root", str(selected))
-        baseline = self.repo / "baseline.json"
-        self.stub()
-        code, out = self.run_main(*source, "--record-baseline", "--baseline", str(baseline))
-        self.assertEqual(code, 0, out + self.stderr)
-        original_bytes = baseline.read_bytes()
+    def test_a_stable_historical_target_runs_serially_even_with_a_worker_budget(self):
+        import threading
 
         scripts = self.repo / "scripts"
         scripts.mkdir()
-        (scripts / "pm-plans-verify.py").write_text(OLD_TARGET_VERIFIER, encoding="utf-8")
-        self.module.target_readiness_snapshot_support = M.target_readiness_snapshot_support
+        verifier = NEW_TARGET_VERIFIER.replace("[--report FILE]",
+                                               f"[--report FILE] {M.LANDING_BUDGET_CAPABILITY}")
+        (scripts / "pm-plans-verify.py").write_text(verifier, encoding="utf-8")
+        (scripts / "pm-plan-migration.py").write_text(
+            """print('{"status": "pass", "failures": []}')""", encoding="utf-8")
+        self.module.current_run_dir = lambda root: "Plans/.plan_migration/run-017"
         self.module.aggregate_subcheck_commands = lambda *args: {}
-        original_check = self.module.run_check
-        seen = []
-        holding = publication.with_name("holding")
-        new_baseline = self.repo / "mixed.json"
-        rows = Path(self.enterContext(tempfile.TemporaryDirectory())) / "rows.json"
+        real_run_check = self.module.run_check
+        caller = threading.get_ident()
+        calls = []
 
-        def exchange_parents():
-            publication.rename(holding)
-            previous.rename(publication)
-            holding.rename(previous)
+        def run_check(name, root, run_dir, timeout, workers, env, supports_jobs):
+            calls.append((name, threading.get_ident(), workers))
+            self.assertTrue(set(M.SNAPSHOT_ENV_NAMES).isdisjoint(env))
+            self.assertNotIn(M.SLOTS_DIR_ENV, env)
+            return real_run_check(name, root, run_dir, timeout, workers, env, supports_jobs)
 
-        def read_live(check, root, *args):
-            if check in ("run-gates", "audit-governance"):
-                if check == "audit-governance":
-                    exchange_parents()
-                try:
-                    live = root / M.READINESS_AUDIT_REL / inventory
-                    seen.append(json.loads(live.read_bytes())["edition"])
-                finally:
-                    if check == "audit-governance":
-                        exchange_parents()
-            return original_check(check, root, *args)
-
-        for jobs in (1, 4):
-            for record in (False, True):
-                with self.subTest(jobs=jobs, record=record):
-                    mode = (("--record-baseline", "--baseline", str(new_baseline)) if record else
-                            ("--base", self.base, "--baseline", str(baseline), "--row-report", str(rows)))
-                    seen.clear()
-                    with patch.object(self.module, "run_check", read_live):
-                        code, out = self.run_main(*source, "--jobs", str(jobs), *mode)
-                    self.assertEqual(code, 3, (out, self.stderr, seen))
-                    self.assertIn("cannot pin readiness edition for this target", self.stderr)
-                    self.assertEqual(seen, [])
-                    self.assertEqual(baseline.read_bytes(), original_bytes)
-                    self.assertFalse(new_baseline.exists())
-                    self.assertFalse(rows.exists())
-                    self.assertFalse((self.repo / M.READINESS_AUDIT_REL).is_symlink())
+        source = self.repo / "edition"
+        source.mkdir()
+        (source / "CURRENT_EVENT_SOURCE_INVENTORY.json").write_text("{}", encoding="utf-8")
+        args = ("--readiness-audit-root", str(source))
+        expected_dispatch = [(name, caller, 1) for name in M.CHECKS]
+        results = []
+        with patch.object(self.module, "run_check", run_check):
+            for jobs in (1, 4):
+                with self.subTest(jobs=jobs):
+                    requested = (*args, "--jobs", str(jobs))
+                    calls.clear()
+                    code, out = self.run_main(*requested, "--record-baseline", "--baseline", "baseline.json")
+                    self.assertEqual(code, 0, out + self.stderr)
+                    code, out = self.run_main(*requested, "--base", self.base, "--baseline", "baseline.json")
+                    self.assertEqual(code, 0, out + self.stderr)
+                    results.append(out)
+                    self.assertEqual(calls, expected_dispatch * 2)
+                    self.assertEqual(self.stderr.count("historical target: serial with end-of-run check"), 1)
+                    self.assertFalse((self.repo / M.READINESS_AUDIT_REL).exists())
+        self.assertEqual(results, results[:1] * 2)
 
     def test_retired_cache_environment_cannot_change_a_verifier_result(self):
         scripts = self.repo / "scripts"
