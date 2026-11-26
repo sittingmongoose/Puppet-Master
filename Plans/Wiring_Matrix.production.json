@@ -524,7 +524,7 @@
       "handler_location": "handlers::browser_runtime::devtools_open",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.browser.open_devtools is a navigation wrapper: it dispatches the typed request BrowserDevToolsOpenRequest and returns its typed route result BrowserDevToolsOpenResultV1 (C-FIX79 decision, 2026-11-24); the surfaces that may raise it are exactly: browser_toolbar, browser_selection_bar.",
+        "cmd.browser.open_devtools is a navigation wrapper: it dispatches the typed request BrowserDevToolsOpenRequest and returns its typed route result BrowserDevToolsOpenResultV1 (C-FIX79 decision, 2026-11-24); the surfaces that may raise it are exactly: browser_toolbar, browser_selection_bar, command_palette.",
         "Read state.assistant_redesign.browser_devtools_open.availability and state.assistant_redesign.browser_devtools_open.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/Section15_MVP_Promoted_Features_Spec.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
@@ -15081,7 +15081,7 @@
     },
     "catalog.browser_open_devtools": {
       "ui_element_id": "catalog.browser_open_devtools",
-      "ui_location": "Browser preview and visible testing surfaces; Projects refresh reverse consumers: No project chat/Files/Search/History/Context; conversion report and exact captured source",
+      "ui_location": "Browser preview, command palette and visible testing surfaces; Projects refresh reverse consumers: No project chat/Files/Search/History/Context; conversion report and exact captured source",
       "ui_command_id": "cmd.browser.open_devtools",
       "handler_location": "handlers::browser_runtime::devtools_open",
       "expected_event_types": [],
