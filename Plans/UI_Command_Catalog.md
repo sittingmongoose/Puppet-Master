@@ -583,17 +583,11 @@ Broad-pass command and wiring reconciliation spans the command catalog plus its 
 
 Compare-open command identity is repository-scoped rather than UI-local. The compatibility token `compare_open` maps to `cmd.source_control.open_review` or `cmd.git.diff_open` with `project_id`, `repo_id`, optional `repo_relative_path`, left/right selectors that can bind to `worktree_id`, branch, commit, or revision, and presentation hints such as `side_by_side` versus `unified`. Path-level stage/unstage/discard commands remain separate from hunk-level aliases (`stage_hunk`, `unstage_hunk`, `discard_hunk`) and their plural command rows above. Conflict-review and `/open-resolution` actions must flow through Source Control conflict commands or `cmd.git.conflict_apply_resolution`; no consumer surface may create ad hoc compare, /diff, /compare, or /compare/stage state from path strings alone.
 
-The four Conflict Assistant rows select `Plans/source_control_contracts.schema.json#/$defs/conflict_assistant_request_v2` and carry `Plans/source_control_contracts.schema.json#/$defs/conflict_assistant_owner_result_v1` through `source_control_command_result_v2.owner_result_ref`. They carry the exact Project, repository, worktree, status generation and `conflict_selection_ref`. A file selection supplies its repo-relative `path` and `conflict_id`. Resolve Side adds `resolution_side`, `confirmation_ref`, optional `hunk_id`, and `manual_result_ref` for `manual` only. `Plans/WorktreeGitImprovement.md`, "Conflict Assistant command payloads and results", owns currentness, the Git writer lease, closed failures, exact return and effect receipts. DL-056 governs the Git-only mutations and Jujutsu view paths. The low-level `cmd.git.conflict_apply_resolution` keeps its separate request and choice set.
-
 Rules:
 - Review mode state is a Source Control view state with per-project persistence for compare target and filters; it is not canonical repository history.
-- Conflict Assistant open commands return typed routes. Open Merge Editor uses the shared opening module and emits the existing CV-361 `workspace.layout_changed` only when layout changes. Conflict mutations return owner effect receipts and admit no EventRecord through this binding. Blocked-state handoff stays with its existing event owner. Command receipts carry no conflicted file content.
+- Conflict Assistant open commands return typed routes. Open Merge Editor uses the shared opening module and emits the existing CV-361 `workspace.layout_changed` only when layout changes. Conflict mutations return owner effect receipts and admit no EventRecord through this binding. Blocked-state handoff stays with its existing event owner. Command receipts carry no conflicted file content. See [Conflict Assistant requests and results](#conflict-assistant-requests-and-results) for the typed contract.
 - `cmd.source_control.open_conflict` is the command-backed action behind the `Open Conflict Assistant` GUI entrypoint from `Source Control > Changes` and Orchestrator blocked worktree cards.
 - `/disabled` states must explain missing git, missing compare target, `stale-target`, absent conflict files, unavailable merge editor, or policy-restricted mutation rather than silently hiding the command.
-
-Retired audit wording is preserved below.
-
-> Conflict assistant commands record resolution events and blocked-state handoff outcomes through `/event/storage`; they do not persist conflicted file content.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 
@@ -8593,7 +8587,6 @@ The command family required by UCC-098 is concrete. Production GUI controls may 
 | `cmd.prd_builder.conflict.resolve` | Resolve PRD conflict | conflict id, chosen resolution, rationale, source refs; disabled when selected sources are stale or unavailable | Conflict-resolution receipt |
 | `cmd.prd_builder.approve_for_planning_wizard` | Approve PRD for Planning Wizard | PRD Pack id/version/hash, source manifest hash, unresolved-warning acknowledgement, idempotency key; disabled when blocking conflicts or ledger sync failure exist | Approved PRD Pack snapshot and handoff receipt |
 | `cmd.prd_builder.pack.reopen` | Reopen PRD Pack | approved pack id/version, reason, currentness proof; disabled when reopening would bypass immutable history | Reopen receipt and new draft identity |
-| `cmd.prd_builder.revision.resubmit` | Resubmit with Annotations | bundle id, open annotation ids (default: every open durable annotation in deterministic order), expected bundle revision, idempotency key; disabled when no open annotation exists, the bundle revision is stale, or a revision pass is already running | Targeted revision receipt and one outcome record per annotation (`addressed`, `still_open` or `cannot_apply`); owner `Plans/PRD_Builder.md` PRDB-014, added 2026-11-24 (DL-2602) |
 | `cmd.planning_wizard.start` | Start Planning Wizard | approved PRD Pack ref or normalized requirements input, project context snapshot, testing policy snapshot | PlanningRun created/opened |
 | `cmd.planning_wizard.topic.open` | Open topic | PlanningRun id, topic id, expected topic map version | Topic projection selected |
 | `cmd.planning_wizard.topic.add` | Add topic | PlanningRun id, parent/dependency refs, label, source reason, topic map version | Topic added and topic map version advanced |
@@ -8615,12 +8608,10 @@ The command family required by UCC-098 is concrete. Production GUI controls may 
 | `cmd.plan_compile.inspect_assignment` | Inspect assignment | PlanCompileRun id, assignment id | Opens assignment inspector |
 | `cmd.plan_compile.request_bounded_recompile` | Request bounded recompile | PlanCompileRun id, affected PlanUnit refs, reason, currentness token | Bounded recompile request receipt |
 | `cmd.plan_compile.open_build` | Open Build | PlanCompileRun id, build/run identity, target artifact or route; disabled until `BuildStarted` or resulting build identity exists | Opens resulting build or build artifact route |
+| `cmd.prd_builder.revision.resubmit` | Resubmit with Annotations | bundle id, open annotation ids (default: every open durable annotation in deterministic order), expected bundle revision, idempotency key; disabled when no open annotation exists, the bundle revision is stale, or a revision pass is already running | Targeted revision receipt and one outcome record per annotation (`addressed`, `still_open` or `cannot_apply`); owner `Plans/PRD_Builder.md` PRDB-014, added 2026-11-24 (DL-2602) |
 
-Lineage pointer (DL-333): for each command here that UCC-230 routes, the Required payload and guard summary column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
-
-Amended 2026-11-05 (DL-333): these 28 catalog ids are canonical. `Plans/prd_planning_runtime_contracts.json` `ui_command_contracts` is keyed by them, records each id it used before in `alias_command_ids` (UCC-230 lists those as compatibility aliases, excluded from production wiring), and adds `cmd.planning_wizard.topic.open` and `cmd.prd_builder.annotation.resolve` from the rows above; `cmd.plan_compile.open_build` takes the PlanCompileRun id these rows name, not a goal run id.
-
-Amended 2026-11-24 (DL-2602, C-FIX79): `cmd.prd_builder.revision.resubmit`, the PRDB-014 targeted revision pass (`Resubmit with Annotations`), joins this set, so the canonical PRD Builder, Planning Wizard and Plan Compile ids are now 29. FinalGUISpec §7.19.2 bundle `Resubmit`, F3-150 and F3-322 dispatch it; `Plans/prd_planning_runtime_contracts.json` `ui_command_contracts` carries its contract and `Plans/Wiring_Matrix.production.json` row `catalog.prd_builder_revision_resubmit` wires it.
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Required payload and guard summary column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.\
+Amended 2026-11-05 (DL-333): these 28 catalog ids are canonical. `Plans/prd_planning_runtime_contracts.json` `ui_command_contracts` is keyed by them, records each id it used before in `alias_command_ids` (UCC-230 lists those as compatibility aliases, excluded from production wiring), and adds `cmd.planning_wizard.topic.open` and `cmd.prd_builder.annotation.resolve` from the rows above; `cmd.plan_compile.open_build` takes the PlanCompileRun id these rows name, not a goal run id. See [PRD Builder revision resubmission](#prd-builder-revision-resubmission) for the subsequent 29th command.
 
 ### Testing capability and visible-session command rows
 
@@ -8639,8 +8630,7 @@ Testing policy UI is a first-class command surface, not settings prose alone.
 
 | PMConcept token | Disposition |
 |---|---|
-| `cmd.chat.effort`, `cmd.chat.settings`, `cmd.chat.model`, `cmd.chat.mode`, `cmd.chat.open_debug_target_picker`, `cmd.chat.export_investigation_bundle`, `cmd.chat.revoke_investigation_item` | Cataloged command IDs for chat setting/debug routes; payloads carry thread/project/context scope and cannot mutate model/provider state without the owning settings contract. |
-| `cmd.chat.open_investigation_target` | Cataloged 2026-11-25 (C-FIX79): the Investigation Context `Open target` action (`Plans/assistant-chat-design.md` ACD-100). A no-persist `navigation_wrapper`: payload `thread_id` and `investigation_id`; it opens the investigation's `effective_target` (else `target`, by `debug_target_kind`) in the surface that owns that target through that surface's existing route, and never opens a raw payload (ACD-092). Disabled reasons: `stale_projection` when the target no longer resolves (the user runs `Revalidate target` first) and `unreachable` when the owning surface cannot open it. It records a no-persist route/open disposition and emits no event. The chat document's older Open target spelling is retired there, not aliased. |
+| `cmd.chat.effort`, `cmd.chat.settings`, `cmd.chat.model`, `cmd.chat.mode`, `cmd.chat.open_debug_target_picker`, `cmd.chat.export_investigation_bundle`, `cmd.chat.revoke_investigation_item` | Cataloged command IDs for chat setting/debug routes; payloads carry thread/project/context scope and cannot mutate model/provider state without the owning settings contract. See [Investigation Context Open target](#investigation-context-open-target) for the command that opens the target. |
 | `cmd.file.copy_full_path`, `cmd.file.copy_relative_path` | Cataloged compatibility wrappers over `cmd.file.copy_path` with `format = "absolute"` or `format = "relative"`; production UI may use either explicit wrapper if the wiring row declares the normalized copy-path payload. |
 | `cmd.git.open_diff` | Compatibility alias for `cmd.git.diff_open`; production wiring records the alias and the canonical target. |
 | `cmd.git.show_commit` | Compatibility alias for `cmd.source_control.history_open_commit`; production wiring records the alias and the canonical target. |
@@ -8659,11 +8649,9 @@ Every command in this addendum consumes the closed v2 `UICommandResponse` in `Pl
 
 ### Added GUI command families
 
-The Persona rows below preserve historical Project-only command sketches, not the active scope contract. UCC-214 and P-060 select each exact `persona_<operation>_request_v2` / `persona_<operation>_result_v2` from `Plans/projects_refresh_command_bindings.json`, including create/delete/export/import/select/update and the distinct-ID duplicate route. Each uses WorkflowScopeV2 (CV-365): the actual Server application scope has required-present null Project fields; actual Project operations retain real Project identity. Existing historical Project schemas remain unchanged. Save writes the current whole-record home under expected revision; `persona_patch` in the historical sketch does not grant per-field layering. No event is admitted here.
+The Persona rows below preserve historical Project-only command sketches, not the active scope contract. UCC-214 and P-060 select each exact `persona_<operation>_request_v2` / `persona_<operation>_result_v2` from `Plans/projects_refresh_command_bindings.json`, including create/delete/export/import/select/update and the distinct-ID duplicate route. Each uses WorkflowScopeV2 (CV-365): the actual Server application scope has required-present null Project fields; actual Project operations retain real Project identity. Existing historical Project schemas remain unchanged. Save writes the current whole-record home under expected revision; `persona_patch` in the historical sketch does not grant per-field layering. No event is admitted here. See [Persona update operations](#persona-update-operations) for the active update request and refusals.
 
 The selected Persona result vocabulary is `requested_persona` / `effective_persona` (Personas section 10), never parallel `_id` runtime fields. The select result’s existing authenticated owner_result_ref carries original frozen resolution evidence (CV-691 persona_selected_resolution); historical `_id` spellings are read-only migration/source-lineage aliases and cannot authorize a current write or fresh Settings resolution. CV-691/P-124 supplies the exact event binding.
-
-**Persona update operations (2026-11-25, DL-2602).** The historical `cmd.persona.update` row below keeps its `persona_patch` sketch. The active request is `persona_update_request_v2`, a whole-record request whose `update_operation` field selects `edit` (default), `set_enabled` (with `enabled: boolean`) or `restore_shipped_default`, with the refusals in `Plans/Personas.md` §4.1 item 5 (`invalid_args` for a protected core built-in or a Persona with no shipped default, `stale_projection` for a stale `expected_owner_revision`); every operation's success is `persona.updated`. There are no separate disable, restore or validate-schema commands.
 
 **DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.
 
@@ -9758,8 +9746,7 @@ command_payload_definition_map:
     - cmd.prd_builder.pack.reopen
     - cmd.prd_builder.revision.resubmit
     - cmd.prd_builder.source.import
-    basis: Covers the 28 rows of Concrete PRD Builder, Planning Wizard, and Plan Compile command rows (UCC-098 adds
-      them), 29 with cmd.prd_builder.revision.resubmit from 2026-11-24 (DL-2602).
+    basis: Covers the 28 rows of Concrete PRD Builder, Planning Wizard, and Plan Compile command rows (UCC-098 adds them), 29 with cmd.prd_builder.revision.resubmit from 2026-11-24 (DL-2602).
   - unit: UCC-098
     adds:
     - cmd.plan_compile.cancel
@@ -9792,8 +9779,7 @@ command_payload_definition_map:
     - cmd.prd_builder.revision.resubmit
     - cmd.prd_builder.source.import
     covers: []
-    basis: Adds the 28 rows of Concrete PRD Builder, Planning Wizard, and Plan Compile command rows (the command
-      family required by UCC-098 is concrete), 29 with cmd.prd_builder.revision.resubmit from 2026-11-24 (DL-2602).
+    basis: Adds the 28 rows of Concrete PRD Builder, Planning Wizard, and Plan Compile command rows (the command family required by UCC-098 is concrete), 29 with cmd.prd_builder.revision.resubmit from 2026-11-24 (DL-2602).
   - unit: UCC-099
     adds: []
     covers:
@@ -10725,14 +10711,10 @@ command_payload_definition_map:
     maps_to: blocked_state_required
     sources:
     - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
-  - owner_state: no_invalidated_refs
-    maps_to: blocked_state_required
-    sources:
-    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
-  - owner_state: no_open_annotations
-    maps_to: blocked_state_required
-    sources:
-    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes (cmd.prd_builder.revision.resubmit, DL-2602)
+  - {owner_state: no_invalidated_refs, maps_to: blocked_state_required,
+     sources: ['Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes']}
+  - {owner_state: no_open_annotations, maps_to: blocked_state_required,
+     sources: ['Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes (cmd.prd_builder.revision.resubmit, DL-2602)']}
   - owner_state: operation_in_progress
     maps_to: blocked_state_required
     sources:
@@ -10758,14 +10740,10 @@ command_payload_definition_map:
     maps_to: blocked_state_required
     sources:
     - Plans/GitHub_Integration.md#GI-041; GitHub_Integration.md Worktree Topology Commands
-  - owner_state: required_topic
-    maps_to: blocked_state_required
-    sources:
-    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
-  - owner_state: revision_running
-    maps_to: blocked_state_required
-    sources:
-    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes (cmd.prd_builder.revision.resubmit, DL-2602)
+  - {owner_state: required_topic, maps_to: blocked_state_required,
+     sources: ['Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes']}
+  - {owner_state: revision_running, maps_to: blocked_state_required,
+     sources: ['Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes (cmd.prd_builder.revision.resubmit, DL-2602)']}
   - owner_state: runtime_context_missing
     maps_to: not_configured
     sources:
@@ -10821,14 +10799,10 @@ command_payload_definition_map:
     maps_to: stale_projection
     sources:
     - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
-  - owner_state: stale_approved_plan_pack
-    maps_to: stale_projection
-    sources:
-    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
-  - owner_state: stale_bundle_revision
-    maps_to: stale_projection
-    sources:
-    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes (cmd.prd_builder.revision.resubmit, DL-2602)
+  - {owner_state: stale_approved_plan_pack, maps_to: stale_projection,
+     sources: ['Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes']}
+  - {owner_state: stale_bundle_revision, maps_to: stale_projection,
+     sources: ['Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes (cmd.prd_builder.revision.resubmit, DL-2602)']}
   - owner_state: stale_final_audit_closure
     maps_to: stale_projection
     sources:
@@ -11245,17 +11219,9 @@ Historical `cmd.settings.open_notifications`, `cmd.settings.category.reset`, and
 Notifications destination emits `cmd.settings.open` with the Settings-owned typed target. Category reset
 and suggestion dismissal each compose `cmd.settings.transaction.preview` followed by
 `cmd.settings.transaction.apply`; neither bypasses the preview/currentness/confirmation/readback contract.
-The three historical spellings receive no primary handler, production-wiring row, or alias.
+The three historical spellings receive no primary handler, production-wiring row, or alias. See [Settings provider media route verification](#settings-provider-media-route-verification) for the media owner's Verify action.
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-018, SchemaID:pm.settings_system.contracts.v1, ContractName:Plans/FinalGUISpec.md
-
-### Settings provider media route verification
-
-| Command ID | Label | Preconditions and producer | Owner and sole handler | Typed payload and result |
-| --- | --- | --- | --- | --- |
-| `cmd.media.route.verify` | Verify | Explicit human activation in Settings > Providers on one exact provider/account/model/output-mode row. The media owner must admit the current row and its probe. | `Plans/Media_Generation_and_Capabilities.md`, "Generated Media Route Row Schema". `handlers::media::verify_route`. | `Plans/media_route_verification_contracts.schema.json#/$defs/MediaRouteVerifyRequest` → `Plans/media_route_verification_contracts.schema.json#/$defs/MediaRouteVerifyResult`. |
-
-This media-owned `domain_action` uses `catalog.media_route_verify` in `Plans/Wiring_Matrix.production.json`. Settings renders the per-row owner availability and disabled reason before dispatch and restores focus to the initiating row. It reads the route ID, output mode and capability snapshot from that same row. This action remains `handler_unavailable` until native handler proof exists. The closed `UICommandResponse` (CV-333) references the typed media result and receipt, with no new command EventRecord. Opening the Settings recovery link, verifying an auth profile or installation, and refreshing a model catalog do not invoke this action.
 
 ### Docker container start and Unraid template commands
 
@@ -12620,7 +12586,7 @@ owner_hints:
 
 ## Cozy Shelves Panel Reconciliation Addendum - 2026-07-27
 
-This addendum absorbs the command-ID census of the winning Cozy Shelves left-rail concept (`Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html` and `c2-cozy-shelves-files.html`, source lineage only; concept HTML defines no commands) into catalog canon, following the PMConcept aliases-and-retirements precedent (2026-07-02) and the PMConcept6 census addendum mechanism (2026-07-16). Every prototype token is adjudicated in the reconciliation table below as canonical, alias-of a recorded target, newly registered, or retired; new canonical rows carry the full section 2.0 metadata contract (`command_kind`, availability class, confirmation class for destructive rows, `disabled_reason` codes from the closed set at the UCC-049..106 schema overlay, and owning panel/domain). In-catalog contradictions (Docker container lifecycle naming, compose alias targets, K8s context verbs, GitHub Actions open-in-browser triplication, panel detach naming, terminal focus) are adjudicated by the new PlanUnits below; no existing PlanUnit block, preserved exact token, canonical text, or retired bridge is edited, and supersession is expressed only through the new units' explicit amendment notes. The implementation base is the c2 concept files patched in place (user decision 2026-07-27). Destructive confirmations route through the shared confirm surface referenced by the unified expander row contract, which is owned outside this catalog; blocked states carry `blocked_reason_code` plus ordered `allowed_action_ids[]` mapping to `cmd.runtime.*` per UCC-093/UCC-094. Every row registered here remains incomplete until a production Wiring_Matrix.md section 4.2 row binds command id to handler, UI surface, and acceptance checks. This addendum does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+This addendum absorbs the command-ID census of the winning Cozy Shelves left-rail concept (`Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html` and `c2-cozy-shelves-files.html`, source lineage only; concept HTML defines no commands) into catalog canon, following the PMConcept aliases-and-retirements precedent (2026-07-02) and the PMConcept6 census addendum mechanism (2026-07-16). Every prototype token is adjudicated in the reconciliation table below as canonical, alias-of a recorded target, newly registered, or retired; new canonical rows carry the full section 2.0 metadata contract (`command_kind`, availability class, confirmation class for destructive rows, `disabled_reason` codes from the closed set at the UCC-049..106 schema overlay, and owning panel/domain). In-catalog contradictions (Docker container lifecycle naming, compose alias targets, K8s context verbs, GitHub Actions open-in-browser triplication, panel detach naming, terminal focus) are adjudicated by the new PlanUnits below; no existing PlanUnit block, preserved exact token, canonical text, or retired bridge is edited, and supersession is expressed only through the new units' explicit amendment notes. The implementation base is the c2 concept files patched in place (user decision 2026-07-27). Destructive confirmations route through the shared confirm surface referenced by the unified expander row contract, which is owned outside this catalog; blocked states carry `blocked_reason_code` plus ordered `allowed_action_ids[]` mapping to `cmd.runtime.*` per UCC-093/UCC-094. Every row registered here remains incomplete until a production Wiring_Matrix.md section 4.2 row binds command id to handler, UI surface, and acceptance checks. This addendum does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks. The remaining GitHub Actions reconciliation rows appear under [GitHub Actions subview commands and alias dispositions](#github-actions-subview-commands-and-alias-dispositions).
 
 Structural repair recorded here: the GitHub Actions command family table in section 2.4 was duplicated verbatim (a second copy differing only in em-dash keybind cells and lacking the legacy-alias rule). The duplicate copy without the legacy-alias rule has been deleted; the surviving table is the one carrying the `cmd.github_actions.*` legacy-alias rule. No row content changed.
 
@@ -12669,9 +12635,6 @@ Metadata legend for the registration tables: availability classes are `always` (
 | `cmd.actions.cancel` | alias-of `cmd.github.actions.cancel` | canonical row registered below |
 | `cmd.github.actions.dispatch` | newly registered | carries typed workflow_dispatch inputs payload |
 | `cmd.github.actions.pin` / `cmd.github.actions.unpin` | canonical (existing) | |
-| `cmd.actions.show` | alias-of `cmd.panel.switch` with `panel_id: github_actions` | UCC-047 preserved token, disposed 2026-11-25: opens the GitHub Actions side panel; the existing wiring row `catalog.actions_show` stays as the alias route, and legacy `cmd.github_actions.show` normalizes to the same target |
-| `cmd.actions.switch_subview` | live compatibility row (existing; stays live until a `cmd.github.actions.*` Workflows subview id is minted by its owner) | UCC-047 preserved token, disposed 2026-11-25: a no-persist `shell_view` switch among the three stable GI-008 subviews, `subview` = `current_branch` \| `workflows` \| `settings`; `current_branch` and `settings` normalize to `cmd.github.actions.open_current_branch` and `cmd.github.actions.settings.open`, and `workflows` stays on this row; wiring row `catalog.actions_switch_subview`; legacy `cmd.github_actions.switch_subview` normalizes here; no further `cmd.actions.*` id may be minted |
-| `cmd.github.actions.open_run_diff` | alias-of `cmd.github.actions.open_related_diff` (run-scoped) | UCC-047 preserved token, disposed 2026-11-25: the existing wiring row `catalog.github_actions_open_run_diff_canonical` already normalizes this way, and legacy `cmd.github_actions.open_run_diff` reaches the same target |
 | `cmd.docker.set_context` | alias-of `cmd.docker.context.select` | UCC-049 preserved token; the bare K8s-era `set_context` form still normalizes to `cmd.docker.k8s.select_context` per section 2.5B |
 | `cmd.docker.run` (prototype start-stopped usage) | retired -> `cmd.docker.container.start` | `cmd.docker.run` itself stays live as create-from-image |
 | `cmd.docker.container.stop` | canonical (registered below) | `cmd.docker.stop` becomes a recorded compatibility alias |
@@ -12725,7 +12688,7 @@ Metadata legend for the registration tables: availability classes are `always` (
 
 ### GitHub Actions registration and adjudication rows
 
-`cmd.github.actions.*` is the sole minting namespace for hosted-run actions; `cmd.actions.*` retains no minting authority and its rerun/rerun_failed/cancel/open_in_browser rows become recorded compatibility aliases of the canonical ids below, following the pin/unpin alias precedent already in the section 2.4 table. `cmd.github.actions.open_in_github` is the single canonical open-on-GitHub command; `cmd.actions.open_in_browser` and `cmd.github.actions.open_run_in_browser` are recorded compatibility aliases and neither may become a second primary name. The `open_run` and `compare_last_success` rows below complete the metadata contract for the existing section 2.4 rows without changing their labels, descriptions, or preconditions.
+`cmd.github.actions.*` is the sole minting namespace for hosted-run actions; `cmd.actions.*` retains no minting authority and its rerun/rerun_failed/cancel/open_in_browser rows become recorded compatibility aliases of the canonical ids below, following the pin/unpin alias precedent already in the section 2.4 table. `cmd.github.actions.open_in_github` is the single canonical open-on-GitHub command; `cmd.actions.open_in_browser` and `cmd.github.actions.open_run_in_browser` are recorded compatibility aliases and neither may become a second primary name. The `open_run` and `compare_last_success` rows below complete the metadata contract for the existing section 2.4 rows without changing their labels, descriptions, or preconditions. See [GitHub Actions subview commands and alias dispositions](#github-actions-subview-commands-and-alias-dispositions) for the five remaining UCC-047 rows.
 
 | Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
 |---|---|---|---|---|---|---|
@@ -12736,10 +12699,6 @@ Metadata legend for the registration tables: availability classes are `always` (
 | `cmd.github.actions.rerun_failed` | Rerun Failed Jobs | `domain_action` | selection (`selected_run && has_failed_jobs`) | none | `unauthorized`, `unreachable`, `stale_projection`, `permission_required` | github_actions |
 | `cmd.github.actions.cancel` | Cancel Run | `domain_action` | live_subject (`run_in_progress`) | two_step | `unauthorized`, `unreachable`, `stale_projection` | github_actions |
 | `cmd.github.actions.dispatch` | Dispatch Workflow | `domain_action` | capability (`workflow_dispatchable && dispatch_readiness_valid`) | two_step | `not_configured`, `unauthorized`, `unreachable`, `degraded` | github_actions |
-| `cmd.github.actions.open_current_branch` | Open Current Branch | `navigation_wrapper` | always | none | `unsupported` | github_actions |
-| `cmd.github.actions.settings.open` | Open Actions Settings | `navigation_wrapper` | always | none | `unsupported` | github_actions |
-
-Added 2026-11-25: `cmd.github.actions.open_current_branch` opens the GitHub Actions `Current Branch` subview and `cmd.github.actions.settings.open` opens its `Settings` subview, two of the three stable subviews `Plans/GitHub_Integration.md#GI-008` names (`Current Branch`, `Workflows`, `Settings`). Both are route/open commands with no persisted event: each records a no-persist route/open disposition, and the subview itself shows a missing GitHub link or sign-in as its own state, so neither command is disabled for it. They are the live rows for the two ids UCC-047 preserves, already wired in `Plans/Wiring_Matrix.production.json` (`catalog.github_actions_open_current_branch` to `handlers::github::actions_open_current_branch`, and `catalog.github_actions_settings_open` to `handlers::github::actions_settings_open`). The legacy route token `/Workflows/Settings` resolves to `cmd.github.actions.settings.open`. The other three UCC-047 tokens without a row of their own have individual dispositions in the reconciliation table above: `cmd.actions.show` is an alias of `cmd.panel.switch` with `panel_id: github_actions`, `cmd.actions.switch_subview` is a live compatibility row for the three GI-008 subviews, and `cmd.github.actions.open_run_diff` is an alias of `cmd.github.actions.open_related_diff`.
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md
 
@@ -22092,3 +22051,50 @@ negative_constraints:
   - Do not rename or delete the unresolved legacy rows.
 owner_hints: [Plans/Containers_Registry_and_Unraid.md, Plans/WorktreeGitImprovement.md, Plans/GitHub_Integration.md]
 ```
+
+## Stream C closure fixes addendum (2026-11-26)
+
+### Conflict Assistant requests and results
+
+The four rows in [Source Control review and conflict commands](#source-control-review-and-conflict-commands) select `Plans/source_control_contracts.schema.json#/$defs/conflict_assistant_request_v2` and carry `Plans/source_control_contracts.schema.json#/$defs/conflict_assistant_owner_result_v1` through `source_control_command_result_v2.owner_result_ref`. They carry the exact Project, repository, worktree, status generation and `conflict_selection_ref`. A file selection supplies its repo-relative `path` and `conflict_id`. Resolve Side adds `resolution_side`, `confirmation_ref`, optional `hunk_id`, and `manual_result_ref` for `manual` only. `Plans/WorktreeGitImprovement.md`, "Conflict Assistant command payloads and results", owns currentness, the Git writer lease, closed failures, exact return and effect receipts. DL-056 governs the Git-only mutations and Jujutsu view paths. The low-level `cmd.git.conflict_apply_resolution` keeps its separate request and choice set.
+
+Retired audit wording is preserved below.
+
+> Conflict assistant commands record resolution events and blocked-state handoff outcomes through `/event/storage`; they do not persist conflicted file content.
+
+### PRD Builder revision resubmission
+
+Amended 2026-11-24 (DL-2602, C-FIX79): `cmd.prd_builder.revision.resubmit`, the PRDB-014 targeted revision pass (`Resubmit with Annotations`), joins [Concrete PRD Builder, Planning Wizard, and Plan Compile command rows](#concrete-prd-builder-planning-wizard-and-plan-compile-command-rows), bringing that table to 29 canonical command ids. FinalGUISpec §7.19.2 bundle `Resubmit`, F3-150 and F3-322 dispatch it; `Plans/prd_planning_runtime_contracts.json` `ui_command_contracts` carries its contract and `Plans/Wiring_Matrix.production.json` row `catalog.prd_builder_revision_resubmit` wires it.
+
+### Investigation Context Open target
+
+| PMConcept token | Disposition |
+|---|---|
+| `cmd.chat.open_investigation_target` | Cataloged 2026-11-25 (C-FIX79): the Investigation Context `Open target` action (`Plans/assistant-chat-design.md` ACD-100). A no-persist `navigation_wrapper`: payload `thread_id` and `investigation_id`; it opens the investigation's `effective_target` (else `target`, by `debug_target_kind`) in the surface that owns that target through that surface's existing route, and never opens a raw payload (ACD-092). Disabled reasons: `stale_projection` when the target no longer resolves (the user runs `Revalidate target` first) and `unreachable` when the owning surface cannot open it. It records a no-persist route/open disposition and emits no event. The chat document's older Open target spelling is retired there, not aliased. |
+
+### Persona update operations
+
+Amended 2026-11-25 (DL-2602). The historical `cmd.persona.update` row under [Added GUI command families](#added-gui-command-families) keeps its `persona_patch` sketch. The active request is `persona_update_request_v2`, a whole-record request whose `update_operation` field selects `edit` (default), `set_enabled` (with `enabled: boolean`) or `restore_shipped_default`, with the refusals in `Plans/Personas.md` §4.1 item 5 (`invalid_args` for a protected core built-in or a Persona with no shipped default, `stale_projection` for a stale `expected_owner_revision`); every operation's success is `persona.updated`. There are no separate disable, restore or validate-schema commands.
+
+### Settings provider media route verification
+
+| Command ID | Label | Preconditions and producer | Owner and sole handler | Typed payload and result |
+| --- | --- | --- | --- | --- |
+| `cmd.media.route.verify` | Verify | Explicit human activation in Settings > Providers on one exact provider/account/model/output-mode row. The media owner must admit the current row and its probe. | `Plans/Media_Generation_and_Capabilities.md`, "Generated Media Route Row Schema". `handlers::media::verify_route`. | `Plans/media_route_verification_contracts.schema.json#/$defs/MediaRouteVerifyRequest` → `Plans/media_route_verification_contracts.schema.json#/$defs/MediaRouteVerifyResult`. |
+
+This media-owned `domain_action` uses `catalog.media_route_verify` in `Plans/Wiring_Matrix.production.json`. Settings renders the per-row owner availability and disabled reason before dispatch and restores focus to the initiating row. It reads the route ID, output mode and capability snapshot from that same row. This action remains `handler_unavailable` until native handler proof exists. The closed `UICommandResponse` (CV-333) references the typed media result and receipt, with no new command EventRecord. Opening the Settings recovery link, verifying an auth profile or installation, and refreshing a model catalog do not invoke this action.
+
+### GitHub Actions subview commands and alias dispositions
+
+| Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
+|---|---|---|---|---|---|---|
+| `cmd.github.actions.open_current_branch` | Open Current Branch | `navigation_wrapper` | always | none | `unsupported` | github_actions |
+| `cmd.github.actions.settings.open` | Open Actions Settings | `navigation_wrapper` | always | none | `unsupported` | github_actions |
+
+Added 2026-11-25: `cmd.github.actions.open_current_branch` opens the GitHub Actions `Current Branch` subview and `cmd.github.actions.settings.open` opens its `Settings` subview, two of the three stable subviews `Plans/GitHub_Integration.md#GI-008` names (`Current Branch`, `Workflows`, `Settings`). Both are route/open commands with no persisted event: each records a no-persist route/open disposition, and the subview itself shows a missing GitHub link or sign-in as its own state, so neither command is disabled for it. They are the live rows for the two ids UCC-047 preserves, already wired in `Plans/Wiring_Matrix.production.json` (`catalog.github_actions_open_current_branch` to `handlers::github::actions_open_current_branch`, and `catalog.github_actions_settings_open` to `handlers::github::actions_settings_open`). The legacy route token `/Workflows/Settings` resolves to `cmd.github.actions.settings.open`. The other three UCC-047 tokens without a row of their own have individual dispositions in the alias disposition table below: `cmd.actions.show` is an alias of `cmd.panel.switch` with `panel_id: github_actions`, `cmd.actions.switch_subview` is a live compatibility row for the three GI-008 subviews, and `cmd.github.actions.open_run_diff` is an alias of `cmd.github.actions.open_related_diff`.
+
+| Token | Disposition | Canonical target and notes |
+|---|---|---|
+| `cmd.actions.show` | alias-of `cmd.panel.switch` with `panel_id: github_actions` | UCC-047 preserved token, disposed 2026-11-25: opens the GitHub Actions side panel; the existing wiring row `catalog.actions_show` stays as the alias route, and legacy `cmd.github_actions.show` normalizes to the same target |
+| `cmd.actions.switch_subview` | live compatibility row (existing; stays live until a `cmd.github.actions.*` Workflows subview id is minted by its owner) | UCC-047 preserved token, disposed 2026-11-25: a no-persist `shell_view` switch among the three stable GI-008 subviews, `subview` = `current_branch` \| `workflows` \| `settings`; `current_branch` and `settings` normalize to `cmd.github.actions.open_current_branch` and `cmd.github.actions.settings.open`, and `workflows` stays on this row; wiring row `catalog.actions_switch_subview`; legacy `cmd.github_actions.switch_subview` normalizes here; no further `cmd.actions.*` id may be minted |
+| `cmd.github.actions.open_run_diff` | alias-of `cmd.github.actions.open_related_diff` (run-scoped) | UCC-047 preserved token, disposed 2026-11-25: the existing wiring row `catalog.github_actions_open_run_diff_canonical` already normalizes this way, and legacy `cmd.github_actions.open_run_diff` reaches the same target |
