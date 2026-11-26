@@ -2093,14 +2093,37 @@ Typed field tables (amended 2026-11-25; they replace the untyped field lists fir
 | Field | Type | Rule |
 | --- | --- | --- |
 | `compare_origin` | enum `changes.unstaged` \| `changes.staged` \| `history.commit_parent` \| `conflict.review` \| `worktree.branch_compare` \| `actions.run_commit_range` \| `blocked.dirty_worktree` \| `recovery.safe_point_retry` | required |
-| `project_id`, `repo_id` | `identity_id` | required |
+| `project_id`, `repo_id` | `identity_id` | `repo_id` is required; `project_id` is required for Project scope and absent for an admitted application or pre-registration partition. The latter carries its exact scope/target as required by the identity rules above. |
 | `worktree_id` | `identity_id` | required for `changes.*`, `conflict.review`, `worktree.branch_compare`, `blocked.dirty_worktree`, `recovery.safe_point_retry` |
-| `base_ref`, `head_ref` | string (ref name or `full_oid`) | required |
-| `base_sha`, `head_sha` | `full_oid` | required; resolved at pivot time, never re-derived later from the ref |
-| `merge_base_sha` | `full_oid` | optional; present when the two sides share history |
+| `path` | `repo_relative_path` per the Git adapter schema | required for `changes.*` and `conflict.review`; optional for file-scoped pivots of other origins |
+| `operands` | closed tagged union `{kind: "two_way", base: endpoint, head: endpoint}` or `{kind: "three_way", base: endpoint, ours: endpoint, theirs: endpoint, result: endpoint}` | required; the origin determines the shape and endpoint kinds below |
+| `merge_base_sha` | `full_oid` | optional; records a resolved merge base for a commit pair |
 | `comparison_url` | string, absolute `https://` URL on the bound forge host | optional |
 | `owner_run_id`, `owner_node_id`, `owner_attempt_id` | `identity_id` | optional; required for `actions.run_commit_range` (`owner_run_id`) and `recovery.safe_point_retry` (all three) |
-| `revalidation_state` | enum `current` \| `degraded_historical` \| `blocked` | required; `current` when both SHAs still resolve in `repo_id`; `degraded_historical` opens review read-only on the recorded SHAs; `blocked` refuses every mutation from this origin. The UI never substitutes the current branch. |
+| `revalidation_state` | enum `current` \| `degraded_historical` \| `blocked` | required; `current` requires every recorded endpoint and owner join to revalidate; `degraded_historical` opens read-only only when the exact recorded operands remain reviewable from immutable commits or verified snapshots; `blocked` refuses the pivot when those operands cannot be recovered. Mutation is refused in either non-current state. |
+
+Each `endpoint` is a closed tagged object with the required fields listed below. IDs and refs resolve through Source Control in the record's exact repository and, for local operands, worktree. All snapshot references are `non_secret_ref` from the Source Control schema. `generation` is an integer ≥ 0. Capturing a pivot records the owner snapshot before opening the view.
+
+| `kind` | Other fields and freshness evidence |
+| --- | --- |
+| `commit` | `sha: full_oid`, `ref?: string`. Resolve the immutable commit in the bound repository. The optional ref records how it was selected, and reopening never substitutes that ref's new tip. A mutation requiring a live ref also checks the ref through its owner. |
+| `index` | `status_snapshot_ref`, `generation`, `index_sha256` (lowercase hex SHA-256). Require the same exact worktree, current status generation and index fingerprint. |
+| `working_tree` | `status_snapshot_ref`, `generation`, `content_sha256` (lowercase hex SHA-256 of the recorded file or scoped manifest). Require the same exact worktree, current generation and matching captured content, including untracked files. |
+| `empty` | No additional fields. In an untracked comparison the matching worktree status snapshot must still identify the named path as untracked. |
+| `conflict_stage` | `status_snapshot_ref`, `generation`, `index_sha256`, `stage: 1 \| 2 \| 3`, `blob_oid: string \| null` (full 40- or 64-hex blob OID, or known absent stage). Verify the named path's stage in the same conflict index snapshot and match its OID or known absence. Unreadable stages do not count as absent. |
+| `safe_point` | `safe_point_ref: non_secret_ref`, `snapshot_ref: non_secret_ref`. Verify the FileSafe owner's exact safe-point identity, scope and retained snapshot for this recovery pivot. |
+
+| Origin | Required operands |
+| --- | --- |
+| `changes.unstaged` | Two-way `index` → `working_tree`; for an untracked path use `empty` → `working_tree`. |
+| `changes.staged` | Two-way `commit` (recorded HEAD) → `index`. A repository with an unborn HEAD uses `empty` → `index` only when the owner verifies the unborn state. |
+| `history.commit_parent` | Two-way recorded first parent → selected commit. If the owner verifies the commit has no parent, the base is `empty`. |
+| `conflict.review` | Three-way `conflict_stage` 1 as `base`, 2 as `ours`, 3 as `theirs`, and `working_tree` as `result`. The four operands bind to the same exact worktree, path and status snapshot. |
+| `worktree.branch_compare`, `actions.run_commit_range` | Two-way commit pair selected by the worktree owner or recorded run range. |
+| `blocked.dirty_worktree` | Two-way baseline of `commit`, `index` or `empty` as recorded by the blocked detail, then `working_tree`. |
+| `recovery.safe_point_retry` | Two-way `safe_point` → `working_tree`, both scoped to the recorded recovery operation. |
+
+A local snapshot mismatch, an untracked path becoming tracked, or a conflict stage or result changing makes the recorded pivot non-current. Open the saved comparison only if all recorded operands are still available. A newly selected branch, live worktree or UI focus never replaces an old operand.
 
 **`graph_patch_request` record.** A graph patch changes a run graph generation, so this record binds to the `graph_patch` family of `Plans/Contracts_V0.md` ("Governance Runtime Records And Projection Trust"), which owns `graph_patch_id`, `patch_kind`, its states and transitions. Its fields are the five joins GI-025 requires.
 
@@ -2179,7 +2202,7 @@ Repairs row `sfk-4ca6da4b81de5f8665c4ae9f`.
 | `actions_dispatch_input_invalid` | blocked | yes | Fix the highlighted workflow inputs and dispatch again. |
 | `actions_workflow_file_invalid` | blocked | no | The workflow file has errors; fix it before running. |
 
-Extended 2026-11-25 so the table covers every canonical code of GI-037's union: the seven rows above the extension plus the eleven GI-017 codes GI-037 keeps canonical unchanged. Columns: `severity` is `blocked` (the action cannot proceed) or `warning` (it may proceed or is waiting on GitHub); `retryable` `yes` means the user can clear the condition from Puppet Master (sign-in, scopes, remote, secrets, variables, inputs) and retry the same action, while `no` means a change on GitHub or in the workflow file, or GitHub's own wait, must happen first and Puppet Master offers no retry until a fresh observation clears the reason. The compatibility aliases `actions_auth_required` and `actions_branch_rule_mismatch` take the row of their canonical code (`actions_auth_missing`, `actions_branch_protected`) after normalization. Each row's recovery actions remain the blocked payload's ordered `allowed_action_ids[]`.
+Extended 2026-11-25 so the table covers every canonical code of GI-037's union: the seven rows above the extension plus the eleven GI-017 codes GI-037 keeps canonical unchanged. `severity` is `blocked` when the action cannot proceed, or `warning` when it may proceed or is waiting on GitHub. `retryable=yes` means Puppet Master offers Retry of the same action once that row's gate clears: after the named correction or refresh for sign-in, scopes, remote, secrets, variables, inputs or stale observations, and, for `actions_rate_limited` and `actions_runner_unavailable`, after a fresh observation shows that the limit has cleared (GitHub's retry time, when supplied, is the earliest point) or that a runner is available. Until the gate clears, Retry is shown disabled with the reason, and nothing is resubmitted automatically. `retryable=no` means the current result offers no Retry: a change on GitHub or in the workflow file must happen first, or, for `actions_environment_review_required` and `actions_environment_wait_timer`, the queued job proceeds by itself once the approval or timer completes. Availability is then re-evaluated from a fresh observation. The compatibility aliases `actions_auth_required` and `actions_branch_rule_mismatch` take the row of their canonical code (`actions_auth_missing`, `actions_branch_protected`) after normalization. Each row's recovery actions remain the blocked payload's ordered `allowed_action_ids[]`.
 
 ### Worktree Topology Commands
 
