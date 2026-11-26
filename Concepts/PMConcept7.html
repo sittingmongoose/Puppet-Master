@@ -8131,6 +8131,11 @@ body.pm-resizing #projectMenuBtn .pm6-tb-project-badge .nx-st::before { animatio
   #panel-settings .pm-shell { grid-template-columns: 1fr; }
   #panel-settings .domain-rail { position: absolute; left: 0; top: 0; bottom: 0; width: min(280px,84%); transform: translateX(-105%); transition: transform 300ms var(--k3-ease-out); z-index: 80; }
   #panel-settings .pm-shell.rail-open .domain-rail { transform: none; }
+  /* Exclude the folded rail from focus immediately while its closing slide finishes. */
+  #panel-settings .pm-shell:not(.rail-open) .domain-rail { interactivity: inert; }
+  @supports not (interactivity: inert) {
+    #panel-settings .pm-shell:not(.rail-open) .domain-rail { visibility: hidden; }
+  }
   #panel-settings .pm-shell.rail-open::after { content:""; position: absolute; inset: 0; z-index: 70; background: rgba(3,5,11,.56);  }
   #panel-settings .rail-project, #panel-settings .rail-search input, #panel-settings .rail-search .kbd, #panel-settings .domain-copy, #panel-settings .rail-heading, #panel-settings .side-card { display: revert; }
   #panel-settings .rail-head { text-align: left; padding: 15px 12px 10px; }
@@ -73674,6 +73679,8 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is([data-lg-kind="card"]),
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is([data-lg-kind="bar"]) {
   -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
 }
+/* Five-layer sheet stacks (spec, head-shade, tint, ring, frost). Keep both [data-lg-fixed] pin rules below
+   (sheets and [data-lg-xf]::after) matched to this exact layer count so frost stays the final `fixed` entry. */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="panel"] {
   background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
     var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-heavy, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat !important;
@@ -73693,7 +73700,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="bar"] {
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 16px 34px -18px var(--lg-shadow), 0 1px 4px var(--lg-shadow-near) !important;
 }
 /* Resize-drag paint diet (2026-10-28 pass 2, pass 4): while a column divider drags, the sheets being resized
-   repaint their six-layer background stack every frame; the baked specular/rim/glow images are size-locked
+   repaint their five-layer background stack every frame; the baked specular/rim images are size-locked
    to the previous geometry anyway (glass.js holds bakes during .pm-resizing), so flatten them and the deep
    shadow. Tint, head shade and frost stay, so the sheet still reads as glass. glass.js puts lg-drag-flat on
    <html> at the first held resize of a baked sheet and lifts it only once no bake work is left anywhere
@@ -73709,7 +73716,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz).lg-drag-flat :is([data-lg-kind
 /* Jared #13 (2026-10-14): while its scroller moves, a sheet's frost is pinned to the viewport by the browser itself, so
    it never trails the content (glass.js sets data-lg-fixed at the first scroll event and lifts it when the scroll settles) */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-fixed] {
-  background-attachment: scroll, scroll, scroll, scroll, scroll, fixed !important; background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0 !important;
+  background-attachment: scroll, scroll, scroll, scroll, fixed !important; background-position: 0 0, 0 0, 0 0, 0 0, 0 0 !important;
 }
 /* The frost crossfade (pm7-frost-crossfade, Jared 2026-10-16, F3-653). While a wallpaper change fades the body's print,
    each shown sheet carries data-lg-xf (glass.js startFrostFade), and its ::after paints the sheet's outgoing background
@@ -73756,7 +73763,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) [data-lg-kind="bar"]
     var(--lg-xf-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-xf-light, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-fixed][data-lg-xf]::after {
-  background-attachment: scroll, scroll, scroll, scroll, scroll, fixed; background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
+  background-attachment: scroll, scroll, scroll, scroll, fixed; background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
 }
 /* the page-in class stays on a page after its entrance ends, and its will-change: transform would make every pinned
    frost element-relative; a running entrance still gets its own layer without it */
@@ -116153,43 +116160,53 @@ function migrateGlassWallpaper(preference) {
     return String(value).replace(/(["\\.#:[\]()=])/g, '\\$1');
   }
 
+  function visibleChapterMenu() {
+    const menu = root.querySelector('.mobile-menu');
+    return menu?.getClientRects().length ? menu : null;
+  }
+
+  function closeChapterDrawer() {
+    state.railOpen = false;
+    root.querySelector('.pm-shell')?.classList.remove('rail-open');
+  }
+
   function navigate(domainId, workspaceId, options = {}) {
     settingsSoundPreview.stop('settings-navigation');
     const domain = getDomain(domainId);
     const workspace = domain.workspaces.find(w => w.id === workspaceId) || domain.workspaces[0];
     const sameDomainView = !state.home && state.domain === domain.id && !!root.querySelector('[data-workspace-block]');
     const hadDetail = !!state.detailSetting;
+    const restoreMenuFocus = state.railOpen && !!visibleChapterMenu();
+    closeChapterDrawer();
     state.home = false;
     state.domain = domain.id;
     state.workspace = workspace.id;
     if (Object.prototype.hasOwnProperty.call(options, 'detailSetting')) state.detailSetting = options.detailSetting;
     else state.detailSetting = null;
-    state.railOpen = false;
     state.resourceRosterOpen = false;
     if (options.section) state.activeSection[workspace.id] = options.section;
     saveState();
 
     const needsRemount = !sameDomainView || hadDetail || !!state.detailSetting;
-    if (!needsRemount) {
-      /* FO-241: the no-remount path keeps the mounted shell, so close the chapter drawer here the way Escape
-         does (state.railOpen is already false above); otherwise .rail-open and its scrim stay over Settings. */
-      root.querySelector('.pm-shell')?.classList.remove('rail-open');
+    if (needsRemount) {
+      pendingScroll = { workspace: workspace.id, section: options.section || null };
+      renderApp();
+    } else {
       updateHash();
       jumpToWorkspace(workspace.id, options.section ? 'auto' : undefined);
       if (options.section) scrollToSection(options.section, true);
-      return;
     }
-
-    pendingScroll = { workspace: workspace.id, section: options.section || null };
-    renderApp();
+    if (restoreMenuFocus) visibleChapterMenu()?.focus({ preventScroll: true });
   }
 
   function goHome() {
+    const restoreMenuFocus = state.railOpen && !!visibleChapterMenu();
+    closeChapterDrawer();
     state.home = true;
     state.detailSetting = null;
-    state.railOpen = false;
     pendingScroll = null;
     renderApp();
+    if (restoreMenuFocus) visibleChapterMenu()?.focus({ preventScroll: true });
   }
 
   function renderApp(options = {}) {
@@ -116805,6 +116822,7 @@ function migrateGlassWallpaper(preference) {
 
   function onDetailEsc(e) {
     if (e.key !== 'Escape' || !window.PM7_SETTINGS_TOME.ownsEvent(e.target)) return;
+    if (state.railOpen && visibleChapterMenu()) return;
     e.stopPropagation();
     closeDetailSetting();
   }
@@ -117168,9 +117186,13 @@ function migrateGlassWallpaper(preference) {
   }
 
   function focusSettingsSearch() {
+    if (!state.railOpen && visibleChapterMenu()) {
+      state.railOpen = true;
+      renderApp();
+    }
     const input = root.querySelector('[data-global-search]');
     if (!input) return null;
-    input.focus();
+    input.focus({ preventScroll: true });
     openSearch(input);
     return input;
   }
@@ -117784,6 +117806,12 @@ function migrateGlassWallpaper(preference) {
     let p = {};
     try { p = JSON.parse(buttonEl.getAttribute('data-search-payload') || '{}'); } catch (_) { p = {}; }
     closeSearch();
+    const menu = state.railOpen ? visibleChapterMenu() : null;
+    if (menu) {
+      closeChapterDrawer();
+      // Give destination dialogs their return target before they take focus.
+      menu.focus({ preventScroll: true });
+    }
     applySearchSelection(p);
   }
 
@@ -120105,7 +120133,15 @@ if(state.projectSyncTab==='move')return `<div class="card-grid two"><section cla
         jumpToWorkspace(ds(el, 'workspace'));
         return;
       }
-      case 'toggle-rail': state.railOpen=!state.railOpen;renderApp();return;
+      case 'toggle-rail':
+        if (state.railOpen) {
+          closeChapterDrawer();
+          el.focus({ preventScroll: true });
+        } else {
+          state.railOpen = true;
+          renderApp();
+        }
+        return;
       case 'toggle-resource-roster': state.resourceRosterOpen=!state.resourceRosterOpen;renderApp();return;
       case 'open-search': focusSettingsSearch(); return;
       case 'page-options': {
@@ -120995,6 +121031,17 @@ if(state.projectSyncTab==='move')return `<div class="card-grid two"><section cla
   function bindEvents() {
     document.addEventListener('click', event => {
       if(!window.PM7_SETTINGS_TOME.ownsEvent(event.target)){portalRoot().querySelectorAll('.popover').forEach(el=>el.remove());if(searchEl)closeSearch();return;}
+      // The scrim is a pseudo-element, so its clicks target the shell itself.
+      if (event.target.matches('.pm-shell.rail-open')) {
+        const menu = visibleChapterMenu();
+        if (menu) {
+          hideTooltip();
+          closeSearch();
+          closeChapterDrawer();
+          menu.focus({ preventScroll: true });
+          return;
+        }
+      }
       const callbackEl=event.target.closest('[data-callback]');
       if(callbackEl){event.preventDefault();const cb=actionCallbacks.get(callbackEl.dataset.callback);if(cb){try{cb(callbackEl,event);}catch(err){diagnostics.errors.push(String(err));showToast('Action failed',err.message,'error');}}return;}
       const openPop = portalRoot().querySelector('.popover');
@@ -121034,14 +121081,22 @@ if(state.projectSyncTab==='move')return `<div class="card-grid two"><section cla
     /* T47 PMHoverTagController owns all Settings pointer/focus tooltip presentation. */
     /* data-tooltip remains descriptor input for the shared T47 controller. */
     document.addEventListener('keydown',event=>{
-      if(!window.PM7_SETTINGS_TOME.ownsEvent(event.target))return;
-      if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){
+      const menu = event.key === 'Escape' && state.railOpen && root.closest('#panel-settings.active')
+        ? visibleChapterMenu() : null;
+      if (!menu && !window.PM7_SETTINGS_TOME.ownsEvent(event.target)) return;
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
         event.preventDefault();
-        const input = root.querySelector('[data-global-search]');
-        if (input) { input.focus(); openSearch(input); }
+        focusSettingsSearch();
         return;
       }
-      if(event.key==='Escape'){hideTooltip();closeSearch();closeOverlay();state.railOpen=false;state.resourceRosterOpen=false;root.querySelector('.pm-shell')?.classList.remove('rail-open');return;}
+      if (event.key === 'Escape') {
+        hideTooltip();
+        closeOverlay(!menu);
+        closeChapterDrawer();
+        state.resourceRosterOpen = false;
+        menu?.focus({ preventScroll: true });
+        return;
+      }
       focusTrap(event);
       const pop=event.target.closest('.popover');if(pop&&['ArrowDown','ArrowUp','Home','End'].includes(event.key)){
         const items=[...pop.querySelectorAll('button:not([disabled])')];if(!items.length)return;event.preventDefault();let i=items.indexOf(document.activeElement);if(event.key==='Home')i=0;else if(event.key==='End')i=items.length-1;else i=(i+(event.key==='ArrowDown'?1:-1)+items.length)%items.length;items[i].focus();
@@ -121109,7 +121164,7 @@ publishPending:(key,projectId,binding)=>{
  snaps[projectId]={label:projectId,settings:JSON.parse(JSON.stringify(staged.values)),fixture:true,receipt_id:staged.receipt};
  pending.delete(key);return {ok:true,project_id:projectId,count:Object.keys(staged.values).length,receipt:staged.receipt,fixtureMode:true};
 },
-discardPending:(key)=>({ok:true,discarded:pending.delete(key)})};})(),closeTransientUi:()=>{settingsSoundPreview.stop('settings-surface-close');if(typeof window.PM51_NOTIF_APP_PREVIEW_STOP==='function')window.PM51_NOTIF_APP_PREVIEW_STOP();hideTooltip();closeSearch();closeOverlay(false);document.removeEventListener('keydown',onDetailEsc,true);detailInspectorVisible=false;state.detailSetting=null;state.railOpen=false;state.resourceRosterOpen=false;root.querySelector('.pm-shell')?.classList.remove('rail-open');const active=document.activeElement;if(window.PM7_SETTINGS_TOME.ownsEvent(active)&&typeof active.blur==='function')active.blur();},
+discardPending:(key)=>({ok:true,discarded:pending.delete(key)})};})(),closeTransientUi:()=>{settingsSoundPreview.stop('settings-surface-close');if(typeof window.PM51_NOTIF_APP_PREVIEW_STOP==='function')window.PM51_NOTIF_APP_PREVIEW_STOP();hideTooltip();closeSearch();closeOverlay(false);document.removeEventListener('keydown',onDetailEsc,true);detailInspectorVisible=false;state.detailSetting=null;closeChapterDrawer();state.resourceRosterOpen=false;const active=document.activeElement;if(window.PM7_SETTINGS_TOME.ownsEvent(active)&&typeof active.blur==='function')active.blur();},
       returnToProviderInstallation:(providerId,action)=>{state.domain='ai';state.workspace='providers';state.providerTab='installation';if(providerId)state.selectedProvider=providerId;renderApp({soft:true});return {providerId,action};},
       navigate,
       renderApp,
