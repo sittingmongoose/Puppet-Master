@@ -1381,9 +1381,10 @@ selection_reason {
   selected_model: string,              // e.g., 'gpt-4', 'claude-3-opus'
   precedence_tier: number,             // 1–6, using the versioned MS-005/099 source order
   fallback_reason?: string,            // If a fallback was triggered (capability, cost, unavailability)
-  alternatives: Array,                 // Other models that were considered and why they were skipped
+  alternatives: Array,                 // Other models that were considered and why they were skipped; a ModelSelectionRouter result lists every candidate, the winner included (MS-135)
   selection_time_utc: string,          // When the decision was made
   execution_unit_id: string,           // Tied to the unit making the selection
+  router_input_ref?: string,           // MS-135: present exactly when resolver_matrix_entry is "model_selection_router"
 }
 ```
 
@@ -9758,6 +9759,7 @@ acceptance_criteria:
   - model_lifecycle_state (active, deprecated, sunset_pending, sunset, removed) changes only along the MS-135 model lifecycle transition table, which is separate from the provider lifecycle above; each state maps to one dispatch rule and one visibility_state shown in the model picker.
   - EffortSettlementReceipt is the typed payload in the MS-135 table, with closed settlement_reason and clamp_reason values, and only settlement_reason honored may display as honored.
   - ModelSelectionRouter applies the MS-135 gates, integer 0-1000 factor scores, policy-adjusted integer weights summing to 100, and the highest total_score, so conflicting cost and latency inputs select the same winner in every implementation.
+  - ModelSelectionRouterInput is the closed typed router input carrying the MS-128 inputs and pinned by selection_reason.router_input_ref, and Example 3 below MS-135 shows every candidate's gate result, factor scores, weights and total_score, with an unknown price kept pickable and shown as unknown.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py lint-contractrefs
@@ -9983,6 +9985,29 @@ Open-string values in the examples (platform, model, account, auth mode, executi
 
 **MS-135 ModelSelectionRouter scoring (2026-11-25).** The router never replaces a concrete model chosen by the precedence tiers in "Deterministic precedence by scope". It runs only when the winning tier names a routing policy instead of a model (an auto-selected default recorded in the resolver record, such as `/easiest`). A concrete pick that is not eligible goes to `fallback_chain[]` in `priority` order, not to the router. The router's result sets `resolver_matrix_entry = "model_selection_router"` and lists every candidate in `selection_reason.alternatives[]`.
 
+Router input. Each routing decision reads one closed `ModelSelectionRouterInput` record, written before Step 1 and pinned in the resolver record by `selection_reason.router_input_ref`; it carries MS-128's inputs. All fields are required.
+
+| Field | Type | Source and use |
+| --- | --- | --- |
+| `router_input_id` | string | Unique per routing decision; `selection_reason.router_input_ref` holds this value. |
+| `routing_policy_ref` | string | The routing policy the winning precedence tier named, such as `/easiest`. |
+| `execution_unit_id` | string | Same value as `selection_reason.execution_unit_id`. |
+| `task_kind` | string | The execution unit's task kind, from its dispatch context; the vocabulary stays with the dispatching owner. |
+| `risk_class` | string | The execution unit's risk class, from the same place and with the same vocabulary rule. |
+| `context_size` | object `{estimated_input_tokens: integer, reserved_output_tokens: integer}` | The `context_window` gate and factor; "required tokens" below is their sum. |
+| `modalities[]` | array of string, capability names from the §10.4.3 snapshot | Required modalities; `capability_match` gate. |
+| `tool_need[]` | array of string, capability names from the §10.4.3 snapshot | Required tool capabilities; `capability_match` gate. |
+| `verification_tier` | string or null | A capability the candidate's snapshot must list; null when the policy requires none; `capability_match` gate. |
+| `preferred_capabilities[]` | array of string | Optional preferred capabilities; `capability_match` factor. |
+| `cost_policy` | string, closed: `default`, `prefer_low_cost`, `ignore_cost` | Step 3. |
+| `latency_policy` | string, closed: `default`, `prefer_low_latency`, `ignore_latency` | Step 3. |
+| `preference_list[]` | ordered array of `{provider_id: string, model_id: string}` | `user_preference` factor. |
+| `persona_cost_budget_microusd` | integer or null | `cost_budget` gate; null when no active Persona cost budget applies. |
+| `candidates[]` | array of objects, one per provider/model pair the routing policy allows on an account the person can use (MS-128's provider availability) | Each has `provider_id` (string), `model_id` (string), `account_id` (string or null), `capability_snapshot_ref` (string), `quota_settlement_ref` (string, the EntitlementQuotaSettlement the `account_entitlement` gate reads), `provider_lifecycle_state` (string), `model_lifecycle_state` (string), `effective_context_window_tokens` (integer), `estimated_cost_microusd` (integer or null, null when the price is unknown), `expected_first_response_latency_ms` (integer or null) and `priority` (integer or null, null when unlisted). |
+| `fallback_chain[]` | array of the `fallback_chain[]` items above | Step 4, only when no candidate is eligible. |
+
+`task_kind` and `risk_class` never score. A routing policy states what a task kind and risk class need through `modalities[]`, `tool_need[]`, `verification_tier`, `preferred_capabilities[]`, `cost_policy` and `latency_policy`. Whether cost may weigh more for a low-risk task, and which `verification_tier` a verifier's or adjudicator's model must have, are therefore set by the policy and never relaxed by the router: a candidate without the required tier fails `capability_match` (MS-128). The router's winner is the requested pair of the resolver record (MS-128: router output is requested and effective): `requested_platform`, `requested_model` and the MS-135 `requested_model_id` and `requested_provider_id` hold the winner, and the effective fields differ from them only through the fallback and clamp rules above.
+
 Step 1, gates. A candidate that fails any gate is excluded and listed with `eligible = false` and one `exclusion_reason`, checked in this order:
 
 | Gate | Passes when | `exclusion_reason` |
@@ -10012,6 +10037,65 @@ Step 3, weights. Weights are integer percentages that always sum to 100. The def
 Step 4, choice. `total_score = sum(weight * factor_score)`, an integer from 0 to 100000. The highest `total_score` wins. A tie is broken by lower configured `priority` (unlisted candidates take 2147483647), then `provider_id`, then `model_id`, both in ascending UTF-8 byte order. When no candidate is eligible the router returns `no_eligible_candidate`, the resolver walks `fallback_chain[]` up to `max_depth`, and exhaustion emits `fallback_exhausted`. When any candidate or fallback was excluded with `over_cost_budget`, that exhaustion also emits the MS-102 cost-budget concern with cheaper alternatives or escalation. Cost, latency, capability and quota inputs are read from refs pinned in the resolver record, so the same inputs always select the same winner.
 
 Each `selection_reason.alternatives[]` entry from the router has `provider_id` (string), `model_id` (string), `eligible` (boolean), `exclusion_reason?` (one of the six gate codes), `estimated_cost_microusd` (integer or null; null when the price is unknown, and the GUI then shows the price as unknown, never `$0.00`), `factor_scores?` (object with the six integer factor scores), `weights` (object with the six integer weights), `total_score?` (integer) and `priority` (integer).
+
+Example 3, a routing policy picks the model. Input (abridged to the fields that change the result; the fields not shown are present as the table above requires):
+
+```json
+{
+  "router_input_id": "rti_0311",
+  "routing_policy_ref": "/easiest",
+  "execution_unit_id": "node_0101",
+  "task_kind": "summarize",
+  "risk_class": "low",
+  "context_size": { "estimated_input_tokens": 60000, "reserved_output_tokens": 8000 },
+  "preferred_capabilities": ["structured_output", "long_context"],
+  "cost_policy": "prefer_low_cost",
+  "latency_policy": "default",
+  "preference_list": [
+    { "provider_id": "claude-code", "model_id": "claude-sonnet-4-6" },
+    { "provider_id": "codex", "model_id": "gpt-5.5-codex" }
+  ],
+  "persona_cost_budget_microusd": 200000,
+  "candidates": [
+    { "provider_id": "claude-code", "model_id": "claude-sonnet-4-6", "provider_lifecycle_state": "healthy", "effective_context_window_tokens": 200000, "estimated_cost_microusd": 120000, "expected_first_response_latency_ms": 2000, "priority": 1 },
+    { "provider_id": "codex", "model_id": "gpt-5.5-codex", "provider_lifecycle_state": "degraded", "effective_context_window_tokens": 128000, "estimated_cost_microusd": 80000, "expected_first_response_latency_ms": 4000, "priority": 2 },
+    { "provider_id": "gemini", "model_id": "gemini-3-pro", "provider_lifecycle_state": "healthy", "effective_context_window_tokens": 1000000, "estimated_cost_microusd": null, "expected_first_response_latency_ms": null, "priority": null },
+    { "provider_id": "claude-code", "model_id": "claude-opus-4-6", "provider_lifecycle_state": "healthy", "effective_context_window_tokens": 200000, "estimated_cost_microusd": 450000, "expected_first_response_latency_ms": 3000, "priority": 3 }
+  ]
+}
+```
+
+Every candidate passes `capability_match`, `account_entitlement`, `route_health`, model lifecycle and `context_window` (required tokens 68000). `claude-opus-4-6` fails `cost_budget` (450000 > 200000) and is excluded. `gemini-3-pro` has an unknown price, so it passes `cost_budget` and stays pickable (DL-2604). Of the preferred capabilities, `claude-sonnet-4-6` and `gemini-3-pro` have both and `gpt-5.5-codex` has one. `prefer_low_cost` moves 10 points from `user_preference` to `cost`, giving weights `capability_match` 30, `route_health` 20, `user_preference` 10, `cost` 25, `latency` 10, `context_window` 5. The known costs are 120000 and 80000 and the known latencies 2000 and 4000, so `min` and `max` come from those two candidates only. `claude-sonnet-4-6` wins with 75000. The resolver record's `selection_reason` (other fields as in Examples 1 and 2):
+
+```json
+{
+  "selected_provider": "claude-code",
+  "selected_model": "claude-sonnet-4-6",
+  "precedence_tier": 2,
+  "router_input_ref": "rti_0311",
+  "alternatives": [
+    { "provider_id": "claude-code", "model_id": "claude-sonnet-4-6", "eligible": true, "estimated_cost_microusd": 120000,
+      "factor_scores": { "capability_match": 1000, "route_health": 1000, "user_preference": 1000, "cost": 0, "latency": 1000, "context_window": 1000 },
+      "weights": { "capability_match": 30, "route_health": 20, "user_preference": 10, "cost": 25, "latency": 10, "context_window": 5 },
+      "total_score": 75000, "priority": 1 },
+    { "provider_id": "codex", "model_id": "gpt-5.5-codex", "eligible": true, "estimated_cost_microusd": 80000,
+      "factor_scores": { "capability_match": 500, "route_health": 500, "user_preference": 500, "cost": 1000, "latency": 0, "context_window": 500 },
+      "weights": { "capability_match": 30, "route_health": 20, "user_preference": 10, "cost": 25, "latency": 10, "context_window": 5 },
+      "total_score": 57500, "priority": 2 },
+    { "provider_id": "gemini", "model_id": "gemini-3-pro", "eligible": true, "estimated_cost_microusd": null,
+      "factor_scores": { "capability_match": 1000, "route_health": 1000, "user_preference": 0, "cost": 0, "latency": 0, "context_window": 1000 },
+      "weights": { "capability_match": 30, "route_health": 20, "user_preference": 10, "cost": 25, "latency": 10, "context_window": 5 },
+      "total_score": 55000, "priority": 2147483647 },
+    { "provider_id": "claude-code", "model_id": "claude-opus-4-6", "eligible": false, "exclusion_reason": "over_cost_budget", "estimated_cost_microusd": 450000,
+      "weights": { "capability_match": 30, "route_health": 20, "user_preference": 10, "cost": 25, "latency": 10, "context_window": 5 },
+      "priority": 3 }
+  ],
+  "selection_time_utc": "2026-11-26T14:20:00Z",
+  "execution_unit_id": "node_0101"
+}
+```
+
+The same record has `resolver_matrix_entry = "model_selection_router"`, `requested_platform` and `effective_platform` `claude-code`, `requested_model`, `effective_model`, `requested_model_id` and `resolved_model_id` `claude-sonnet-4-6`, and `fallback_used = false`. Wherever this choice is shown, `gemini-3-pro`'s price reads as unknown, never `$0.00` or within budget.
 
 ## Usage GUI Propagation Addendum - 2026-07-09
 
