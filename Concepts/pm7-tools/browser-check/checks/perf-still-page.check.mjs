@@ -125,7 +125,7 @@ export const CENSUS = async () => {
 		for (let i = 0; i < pendingAfterFrames; i++) await new Promise((resolve) => requestAnimationFrame(resolve));
 		for (const [a, rec] of pending) {
 			rec.pendingAfterFrames = pendingAfterFrames;
-			rec.stillPending = !!(a.pending && a.start == null && (a.currentTime == null || a.currentTime === 0));
+			rec.stillPending = !!(a.playState === 'running' && a.pending && a.startTime == null && (a.currentTime == null || a.currentTime === 0));
 		}
 		out.pendingRecheckMs = Math.round(performance.now() - out.now);
 	}
@@ -164,8 +164,8 @@ export function stillJudged(view, { drawn = 15, main = 10, starts = 60, hz = nul
 }
 
 // The 23 s Home census split (PM7PERF-STILL-PENDING-AGE): a queued animation (Chrome's pending flag, null start,
-// current time 0) is rechecked after four frames. One that starts in that budget is logged, not judged; one still
-// pending is due. An older loop (started before the still mark, or more than lookAgain before the census, or an
+// current time 0) is rechecked after four frames. One that has started or paused is logged; one still running
+// and pending with a null start and zero or null current time is due. An older loop (started before the still mark, or more than lookAgain before the census, or an
 // unclassified null start) is due; one that began after the still mark and less than lookAgain before the census is
 // young, logged. Exported for tools/still-home-census.selftest.mjs.
 export function stillHomeDue(runAt, { stillAt, now, lookAgain = 5000 }) {

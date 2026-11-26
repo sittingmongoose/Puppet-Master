@@ -33,7 +33,9 @@ const queuedReal = [
 const older = anim('ab-breathe', 'nx nx-r-status', { start: 4000, current: NOW - 4000 });
 const young = anim('orbit-pulse', 'orbit-node-pip', { start: 21500, current: NOW - 21500 });
 const stuck = anim('stuck-loop', 'nx nx-r-status', { pending: true });
-const animations = [...queuedReal, older, young, stuck];
+const starting = anim('starting-loop', 'nx', { pending: true });
+const pausing = anim('pausing-loop', 'nx', { pending: true });
+const animations = [...queuedReal, older, young, stuck, starting, pausing];
 let frame = 0;
 const context = vm.createContext({
 	window: { PM_STILL: {} },
@@ -42,7 +44,12 @@ const context = vm.createContext({
 	requestAnimationFrame: (cb) => queueMicrotask(() => {
 		cb(++frame);
 		// the five real queued animations leave pending within two frames; the constructed stuck one does not
-		if (frame === 2) for (const a of queuedReal) { a.pending = false; a.startTime = NOW - 16; a.currentTime = 16; }
+		if (frame === 2) {
+			for (const a of queuedReal) { a.pending = false; a.startTime = NOW - 16; a.currentTime = 16; }
+			// The running start and the requested pause are visible even while pending is still true.
+			starting.startTime = NOW;
+			pausing.playState = 'paused';
+		}
 	})
 });
 const start = source.indexOf('const CENSUS ='), end = source.indexOf('// The try the frame rows judge', start);
@@ -52,7 +59,7 @@ const census = await context.window.__census;
 
 // 1. the receipt carries the queued state and a four-frame persistence recheck: red on base (runAt kept only
 // what/start/held/finite and had no pending recheck)
-assert.equal(census.runAt.length, 8);
+assert.equal(census.runAt.length, 10);
 for (const r of census.runAt.slice(0, 5)) {
 	assert.equal(r.pending, true, `the receipt must carry pending (${r.what})`);
 	assert.equal(r.currentTime, 0, `the receipt must carry currentTime (${r.what})`);
@@ -62,10 +69,14 @@ for (const r of census.runAt.slice(0, 5)) {
 	assert.equal(r.stillPending, false, 'the real queued animations left pending during the recheck');
 }
 
-// 2. the row separates the queued five from the older loop, the young one and the permanently pending loop
+// The recheck must use the current browser state even when the pending flag has not cleared.
+assert.deepEqual(Array.from(census.runAt.slice(8), (r) => r.stillPending), [false, false],
+	'a resolved startTime or a new pause ends the running, null-start pending state');
+
+// 2. the row separates the resolved cases from the older loop, the young one and the permanently pending loop
 assert.equal(typeof stillHomeDue, 'function', 'the 23 s row needs the queued/due/young split (base counted the queued five as running loops)');
 const split = stillHomeDue(census.runAt, { stillAt: census.stillAt ?? STILL_AT, now: census.now, lookAgain: 5000 });
-assert.equal(split.queued.length, 5, 'the five pending, null-start, current-time-0 animations that start during the recheck are queued, logged not judged');
+assert.equal(split.queued.length, 7, 'the seven animations that leave the queued shape during the recheck are logged, not judged');
 assert.equal(split.due.length, 2, 'the older loop and the animation still pending after four frames are due');
 assert.equal(split.due[0].start, 4000);
 assert.equal(split.due[1].what, 'stuck-loop on i.nx.nx-r-status');
