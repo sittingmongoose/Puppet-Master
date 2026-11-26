@@ -361,7 +361,7 @@ Recovery rules:
 - Blind reruns are prohibited. A retry requires a permitted failure class, remaining parent deadline/resource budget, a concrete changed recovery condition, and an unspent class-specific retry allowance.
 - MCP invocations use the stricter MCP-owner rule: at most one additional bounded invoke-time reconnect or noninteractive auth-refresh retry. The general tool retry allowance MUST NOT add retries above that MCP limit.
 - Complete large output is redacted before artifact spill. The model-visible result includes bounded head/tail, exact original size, truncation state, and a canonical artifact ref. If retention fails, settlement is `fatal` or `partial_truncated`, never success.
-- Amended 2026-10-31 (DL-270): the spill target is the content-addressed payload store (SP-337). The canonical artifact ref is a payload reference (BLAKE3 hash, pack, offset), and spilled output is stored once, reference-counted, with garbage collection honouring holds. The same applies to ToolRecoveryEnvelope and ToolManagedOutputRef (T-177).
+- Amended 2026-10-31 (DL-270): the spill target is the content-addressed payload store (SP-337). `ToolRecoveryEnvelope.artifact_or_spill_ref` is the canonical SP-337 payload reference. The payload index resolves its BLAKE3 content ID to the pack and offset. `ToolManagedOutputRef` (T-177) carries the same content ID in `ToolTurnSettlement.retention_ref`. Spilled output is stored once, reference-counted, with garbage collection honouring holds.
 - Artifact/spill refs follow canonical retention, access-control, cleanup, and redaction owners; raw secrets, decrypted headers, tokens, cookies, or unredacted environment values never enter the envelope, receipt, prompt, cache, or spill.
 - Terminal recovery reports `cwd_before`/`cwd_after`, bounded pattern-based hints, and the retained full redacted output ref. It tells the caller to inspect the artifact instead of rerunning only to recover omitted bytes.
 - Patch/write reports already-applied success/no-op only when post-read proof shows new content present and old content absent. Whitespace mismatch and ambiguous locations are explicit; mutation remains atomic, FileSafe-approved, and post-write verified.
@@ -1273,9 +1273,9 @@ Shell-dispatch rules are part of the canonical tool flow:
 - banned-command checks scan the full rendered command string, including metacharacter and control forms such as `;`, `&&`, `||`, `|`, subshell/grouping constructs, command substitution (`$()` and backticks), and redirection operators where relevant to the shell family; this is full-string validation for the shell-runtime surface
 - implementations SHOULD prefer structured parsing or AST-aware validation where the shell family makes it practical; fallback scanning still MUST evaluate the full rendered command rather than only the first token
 - dispatch occurs through exactly one shell interpretation layer; never eval, and `eval` or equivalent second-pass command construction is prohibited
-- Unix-style shell dispatch passes the already `shellQuote`-protected command through `exec.Command("bash", "-c", command)` or an equivalent one-layer platform runner; it must not run a second interpreter after quoting.
+- For standalone Unix `shell_string` dispatch (no `terminal_session_id`), pass the approved text unchanged as the single command argument after `-c` to the resolved interpreter, as in `exec.Command("bash", "-c", command)` for Bash. The session-bound form used by every `bash` tool call submits the approved literal buffer once to the persistent session interpreter using the Tool Turn Contract Minima. A reused `shellId` keeps the interpreter's working directory and exports (§3.5.1).
 - shell selection is platform-aware (`/bin/bash` or equivalent on Unix; `cmd.exe` / PowerShell family on Windows based on configured tool semantics)
-- all paths interpolated into shell commands MUST be shell-escaped for the target platform; on Windows this means quoting, double-backslash handling, or forward-slash conversion according to the selected shell, and individual tools MUST NOT implement their own competing escaping layer
+- When PM constructs a shell string, the shared escaping layer escapes internally interpolated values, including paths, for the selected shell before full-string validation and approval. Use `shellQuote` on Unix and the selected Windows shell's quoting, double-backslash handling or forward-slash conversion on Windows. Individual tools MUST NOT implement a competing escaping layer. Both dispatch forms use the approved `shell_string` byte for byte, with any terminal transport framing and submit action outside that text.
 - shell instances are isolated per agent tree so environment variables do not leak across session/agent boundaries
 - shell lifecycle is mutex-guarded; work queues MUST be `/non-blocking`, and writes to a dead shell return a structured error instead of hanging forever
 - `OC-LIFE-006` requires an alive-check before queue writes; if the shell is dead, PM returns a structured LIFE error instead of blocking forever
@@ -6938,7 +6938,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: Shell dispatch validates the full rendered command string, prefers structured parsing where practical, uses
-  exactly one shell interpretation layer, prohibits `eval`, and requires platform-correct path escaping.
+  exactly one shell interpretation layer, and prohibits `eval`. Platform-correct escaping applies to inputs PM
+  interpolates before validation and approval. Standalone Unix dispatch passes the approved shell string unchanged as
+  one command argument. Session-bound dispatch submits it unchanged to the persistent interpreter (T-018).
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -6947,7 +6949,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Banned-command checks scan the full rendered command string.
-- Unix shell dispatch uses one shell interpretation layer.
+- The standalone Unix runner receives the exact approved shell string as one command argument. The session-bound runner submits the exact approved buffer once to the persistent interpreter.
 - Individual tools do not implement competing escaping layers.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -11824,7 +11826,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  P2-CACHEABLE-TOOL-OUTPUT-REFS (P2) is compiled as canonical Puppet Master intent for Hash-addressed cache refs for stable large tool outputs: Large stable outputs use refs with TTL/redaction; secrets are never cached; model-visible preview references complete retained output. Amended 2026-10-31 (DL-270): hash-addressed refs for large stable outputs resolve to payload-store entries (SP-337). Dedupe, reference counts and garbage collection holds live in the payload store; the TTL here is a cache-eligibility rule, not a separate storage owner.
+  P2-CACHEABLE-TOOL-OUTPUT-REFS (P2) records the intent for Hash-addressed cache refs for stable large tool outputs.
+  Hash-addressed refs resolve to SP-337 payload-store entries under DL-270. Model-visible previews reference the
+  complete retained redacted output. Secrets are never cached. Cache eligibility TTL and reuse across calls are
+  deferred until Tools defines the cache key, TTL start, duration and expiry rule. Until then T-168 admits no cache
+  hits across calls. Authorized reads of retained output, deduplication, reference counts and garbage collection
+  holds still follow SP-337.
 gui_related: false
 gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
 depends_on:
@@ -11832,14 +11839,14 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- Large stable outputs use refs with TTL/redaction
+- Large stable outputs use refs with TTL/redaction once cache reuse is defined above. Until then a later call cannot use a T-168 cache hit even if a previous call retained an identical payload.
 - secrets are never cached
 - model-visible preview references complete retained output.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- Large stable outputs use refs with TTL/redaction
+- Large stable outputs use refs with TTL/redaction once cache reuse is defined above. Until then a later call cannot use a T-168 cache hit even if a previous call retained an identical payload.
 - secrets are never cached
 - model-visible preview references complete retained output.
 risk_class: p2_context_cache_coverage
@@ -12298,6 +12305,7 @@ status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
   tool_output_retention (P0) is compiled as canonical Puppet Master intent for tool_output_retention: Add ToolManagedOutputRef and retention-failure semantics The preserved PM gap/delta is: No hard no-lossy-success rule for managed tool output retention The observed external-repo signal remains source-lineage evidence: OpenCode v2 Tool output bounding/managed storage; large body issues
+  T-177 defines ToolManagedOutputRef as the content ID of the retained redacted output in the SP-337 payload store.
 gui_related: false
 gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
 depends_on:
@@ -12637,7 +12645,7 @@ One immutable settlement is written per tool call attempt, including a call the 
 | `error_ref` | string, optional | Reference to the structured error (its code, such as a gate code or `heartbeat_lost`, and the `ToolRecoveryEnvelope`). Required for `malformed`, `retryable` and `fatal` and for every gate denial; absent for `success`. |
 | `truncation_ref` | string, optional | Reference to the truncation facts: the bounded head/tail, exact original size and artifact ref of §3.5.0A, or the `provider_turn_malformed` record of a `length_truncated` denial. Required whenever output or arguments were truncated, so always for `partial_truncated`; absent for `success`. |
 | `redaction_ref` | string, optional | Reference to the redaction applied. Required whenever any result or output content was redacted, so always for `redacted`. |
-| `retention_ref` | string, optional | Reference to the managed output retention (`ToolManagedOutputRef`, T-177). Required whenever output was spilled or retained, so always for `retained`. |
+| `retention_ref` | `ToolManagedOutputRef` string, optional | The SP-337 content ID of this attempt's retained output, defined by T-177. Present whenever output was successfully spilled or retained, so always for `retained`. |
 | `retry_after_ms` | integer, at least 0, optional | Present only with `retryable`, when the retry row or a provider minimum delay sets one. |
 | `created_at_utc` | RFC 3339 UTC string | |
 | `schema_version` | string | `1.0.0`. |
@@ -12780,12 +12788,17 @@ canonical_text: >-
   artifact with bounded head/tail and exact size; blind retry and loss-shaped success are prohibited. Amended 2026-10-31
   (DL-270): the canonical artifact is a payload-store entry (SP-337) referenced by content hash; no separate artifact store
   exists for large output.
+  ToolManagedOutputRef is the BLAKE3 content ID (a 64-character lowercase hexadecimal string) of the SP-337 entry
+  containing the attempt's complete redacted output. ToolTurnSettlement.retention_ref carries that ID directly. When
+  ToolRecoveryEnvelope.artifact_or_spill_ref is present for the same attempt, its BLAKE3 content ID must equal
+  retention_ref. An authorized read resolves the ID in the attempt's SP-337 store to the complete redacted output bytes.
 gui_related: false
 gui_classification_reason: Backend result, retry, artifact, and verification contract; UI consumers only project its evidence.
 depends_on: [T-007, T-077, T-079, T-167, T-173, T-174]
 unblocks: []
 acceptance_criteria:
   - Truncated terminal output retains complete redacted artifact evidence, bounded head/tail, original size, and cwd changes.
+  - The settlement and recovery envelope identify the same payload, and an authorized read by that ID returns the full redacted output, including bytes omitted from the preview.
   - Already-applied patch is success/no-op only with post-read proof; ambiguous or whitespace-mismatched patch does not mutate.
   - Retention failure cannot settle as success, and policy/FileSafe/secret/schema denials cannot become transient retries.
   - Every retry is a separate attempt under one logical operation and requires a typed changed recovery condition.
