@@ -63505,3 +63505,64 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-2602, ContractName:Plans/Models_System.md#MS-120, ContractName:Plans/FinalGUISpec.md#F3-409, ContractName:Plans/FinalGUISpec.md#F3-408
+
+### DL-2604 - C-FIX79B: Jared takes the recommended answers to three more closure plan questions
+
+```yaml
+plan_unit_id: DL-2604
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  On 2026-11-25 at about 9:39 PM EST, Jared answered card C-FIX79B ("Take the recommended answers to 3 more small plan questions?") with "A", take all three recommended answers. The answer was relayed to the stream C lead pm-closure-lead (pm-mail 1126024113) and also signed on the card. Each answer below is the card's recommended option, and the registry lines are rows of Plans/.audits/_semantic_closure_registry.jsonl.
+
+  1. Line 1377, command arguments: the Commands manager keeps the single Arguments hint field (arguments[0].hint) of the selected design (Concepts/PMConcept7.html; Commands_System 3.2 and CS-030). Argument names, required flags and later arguments are authored in the command file and preserved by every GUI edit. The finding's request for a GUI list editor for arguments is retired by this decision.
+  2. Line 1549, browser command tiers: one tier rule under Section 15 "Browser Action Table And Timeouts" gives every cmd.browser.* command exactly one effect level by what it does, highest first runs_code_or_debugs (advanced_debug_testing), sends_data_out, changes_page_or_session and reads_page_only (each guaranteed_everyday). Rows already in the action table keep their explicit tier, which agrees with the rule. cmd.browser.program.pause, cmd.browser.program.cancel and cmd.browser.program.inspect are named as advanced_debug_testing because they act only on a Browser Program.
+  3. Line 1281, Persona cost budget: in the Models_System MS-135 router the cost_budget gate skips only a model whose known cost exceeds the active Persona cost budget. A model with an unknown price stays pickable, and wherever the choice is shown (the resolver record's selection_reason.alternatives[] entry, the model picker and settlement or receipt text) its price is shown as unknown, never as zero or as within budget.
+gui_related: true
+gui_classification_reason: It keeps the Commands manager's argument control, sets which feature tier each browser command belongs to, and decides how an unknown model price is shown.
+split_recommended: false
+depends_on: [DL-2602, CS-030, SMPFS-100, MS-102, MS-135]
+unblocks: []
+acceptance_criteria:
+- Commands_System 3.2 and CS-030 keep Arguments hint as the only argument control and cite DL-2604 for the retired list editor.
+- Every catalogued cmd.browser.* command appears at exactly one effect level of the Section 15 tier rule, and every explicit tier in the action table agrees with it.
+- Every Models_System passage that describes the Persona cost-budget gate says an unknown price stays pickable and is shown as unknown.
+- No earlier Decision_Log entry is rewritten.
+validation_surfaces:
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-plan-index.py validate
+risk_class: owner_choice_drift
+reasoning_tier: medium
+context_scope: closure_reaudit_fix79_owner_answers
+implementation_surfaces:
+- Plans/Commands_System.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Models_System.md
+node_compile_hint:
+  mode: owner_decision_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/fix79/card2/card.json, SHA-256 37d56a96f46133305cdeefd6729a6853d90b75d7d052ba97283fab29017c2371"
+- "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/fix79/DEEP/half-B/DFX-B2o-NOTES.md (1377), half-A/DFX-A1-NOTES.md (1549), half-B/DFX-B1-NOTES.md (1281)"
+- "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/LEAD-STATE.md (2026-11-25 9:42 PM EST entry)"
+preserved_exact_tokens:
+- DL-2604
+- C-FIX79B
+- Arguments hint
+- guaranteed_everyday
+- advanced_debug_testing
+- cost_budget
+negative_constraints:
+- Do not add a GUI list editor for command arguments under this decision.
+- Do not rewrite DL-2602, DL-2603 or any earlier entry; this entry records the three answers.
+- Do not reseal governance artifacts or claim native execution proof from these Plan edits.
+owner_hints:
+- Plans/Decision_Log.md
+- Plans/Commands_System.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Models_System.md
+```
+
+ContractRef: ContractName:Plans/Commands_System.md#CS-030, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-100, ContractName:Plans/Models_System.md#MS-102, ContractName:Plans/Models_System.md#MS-135

@@ -1347,7 +1347,7 @@ Resolve through §2 and MS-005/MS-099 only. The order is explicit run, scoped ow
 
 - **Capability check**: Before selecting a provider, verify it supports the required model and inference parameters (context length, output length, reasoning mode, etc.).
 - **Multi-account capability check**: Provider capability modeling MUST include multi-account-related behavior before any provider/account pool can be selected or switched. Required capability facts include `supports_multi_account`, signal sources/confidence, cooldown/retry-budget support, reset countdown support, and provider-specific limits that change account pressure interpretation or rotation safety.
-- **Cost gating**: If a model exceeds the active Persona's cost budget, skip it and move to the next in the precedence chain.
+- **Cost gating**: If a model exceeds the active Persona's cost budget, skip it and move to the next in the precedence chain. Only a model whose known cost is above the budget is skipped. A model whose price is unknown is not skipped by this gate and stays pickable; wherever that choice is shown (the resolver record's `selection_reason.alternatives[]`, the model picker and any settlement or receipt text) its price is shown as unknown (`cost_status` `unknown`), never as `$0.00` or as within budget (MS-135 `cost_budget` gate; DL-2604).
 - **Fallback**: If all preferred models exceed budget or are unavailable, emit a concern (not a silent failure) and suggest cheaper alternatives or escalation.
 
 Clamp/substitution decisions use the `clamp/substitution` reason-code family when the requested provider, model, effort, capability, instruction projection, or skill projection cannot be applied exactly.
@@ -7226,7 +7226,8 @@ status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: Cost gating skips models that exceed the active Persona cost budget and falls through; if all preferred models
   exceed budget or are unavailable, PM emits a concern and suggests cheaper alternatives or escalation rather than failing
-  silently.
+  silently. Only a known cost above the budget skips a model; a model with an unknown price stays pickable, and every place
+  that shows the choice shows its price as unknown (DL-2604).
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, data contracts, selection semantics, or backend audit behavior
   rather than direct GUI presentation.
@@ -7239,6 +7240,9 @@ acceptance_criteria:
 - The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
 - Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- A model whose known estimated cost is above the active Persona cost budget is skipped; a model whose price is unknown is
+  not skipped, and the resolver record, the model picker and settlement or receipt text show its price as unknown, never as
+  zero or as within budget (DL-2604).
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -9990,7 +9994,7 @@ Step 1, gates. A candidate that fails any gate is excluded and listed with `elig
 | `context_window` | `effective_context_window_tokens` is at least the request's estimated input tokens plus its reserved output tokens. | `context_too_small` |
 | `cost_budget` | No active Persona cost budget applies, or the candidate's estimated request cost is unknown, or it is known and at most that budget in microusd ("Provider capability and cost gating", MS-102). A known estimate above the budget fails. | `over_cost_budget` |
 
-The `cost_budget` gate is the hard "Cost gating" rule: an over-budget candidate is excluded before scoring, and no weight, `cost_policy` or `ignore_cost` setting can readmit it. The same gate is part of eligibility for a concrete pick and for every `fallback_chain[]` entry. An unknown estimate cannot be shown to exceed the budget, so it passes the gate and scores 0 on `cost` below.
+The `cost_budget` gate is the hard "Cost gating" rule: an over-budget candidate is excluded before scoring, and no weight, `cost_policy` or `ignore_cost` setting can readmit it. The same gate is part of eligibility for a concrete pick and for every `fallback_chain[]` entry. An unknown estimate cannot be shown to exceed the budget, so it passes the gate and scores 0 on `cost` below. A candidate with an unknown price therefore stays pickable (DL-2604). Wherever the choice is shown, in its `selection_reason.alternatives[]` entry, the model picker and any settlement or receipt text, its price is shown as unknown (`cost_status` `unknown`, as in usage-feature GUI-USG-003), never as `$0.00`, as a known estimate or as within budget. MS-136's visible unknown-cost fail-closed state is this display rule: it refuses to show or total an unknown price as a known cost, and it does not exclude the candidate.
 
 Step 2, factor scores. Each eligible candidate gets integer scores from 0 to 1000. `account_entitlement` and `cost_budget` are gates only and score nothing.
 
@@ -10007,7 +10011,7 @@ Step 3, weights. Weights are integer percentages that always sum to 100. The def
 
 Step 4, choice. `total_score = sum(weight * factor_score)`, an integer from 0 to 100000. The highest `total_score` wins. A tie is broken by lower configured `priority` (unlisted candidates take 2147483647), then `provider_id`, then `model_id`, both in ascending UTF-8 byte order. When no candidate is eligible the router returns `no_eligible_candidate`, the resolver walks `fallback_chain[]` up to `max_depth`, and exhaustion emits `fallback_exhausted`. When any candidate or fallback was excluded with `over_cost_budget`, that exhaustion also emits the MS-102 cost-budget concern with cheaper alternatives or escalation. Cost, latency, capability and quota inputs are read from refs pinned in the resolver record, so the same inputs always select the same winner.
 
-Each `selection_reason.alternatives[]` entry from the router has `provider_id` (string), `model_id` (string), `eligible` (boolean), `exclusion_reason?` (one of the six gate codes), `factor_scores?` (object with the six integer factor scores), `weights` (object with the six integer weights), `total_score?` (integer) and `priority` (integer).
+Each `selection_reason.alternatives[]` entry from the router has `provider_id` (string), `model_id` (string), `eligible` (boolean), `exclusion_reason?` (one of the six gate codes), `estimated_cost_microusd` (integer or null; null when the price is unknown, and the GUI then shows the price as unknown, never `$0.00`), `factor_scores?` (object with the six integer factor scores), `weights` (object with the six integer weights), `total_score?` (integer) and `priority` (integer).
 
 ## Usage GUI Propagation Addendum - 2026-07-09
 

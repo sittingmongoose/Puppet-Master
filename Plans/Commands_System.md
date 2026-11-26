@@ -336,7 +336,7 @@ File keys are the `*_override` spellings above, never the bare GUI labels `perso
 
 GUI↔file mapping (lossless, both directions): GUI `template` is the Markdown body; GUI `description`, `subtask`, `override_builtin`, `enabled` copy by value with the defaults above; GUI `persona`/`mode`/`permissionsProfile` map to `persona_override`/`mode_override`/`permissions_profile_override` with `Inherit`/empty omitting the file key. GUI `argumentsHint` binds to `arguments[0].hint`: reading a missing array, missing item, or missing `hint` key yields `""`; writing a non-empty hint sets exactly that key (creating array/item as needed) and preserves every other item and key; writing `""` removes only the `hint` key. An item left with no keys is dropped only when it is the sole item, and the `arguments` field is then dropped too; when later items exist, the emptied first item stays as `{}` so every later argument keeps its position. Richer `arguments` arrays round-trip byte-stable through edits that do not touch the hint. The file spec never adopts bare GUI key spellings without this mapping.
 
-Argument authoring boundary (2026-11-25): the GUI authors exactly one argument value, `Arguments hint` (`argumentsHint`, at most 200 characters), in the New Command form (§6.1.3) and in the hero sheet (F2 of the 2026-09-26 Commands & Shortcuts census). There is no GUI list editor for `arguments`: an item's `name` and `required`, and every item after `arguments[0]`, are authored in the command file, and the GUI's hint edits preserve them. Item keys other than `name`, `hint` and `required` are unknown keys: readers keep them byte-stable and never act on them. This table is the only live item shape; the 2026-07-08 FABLE addendum's richer item fields are retired (see that addendum).
+Argument authoring boundary (2026-11-25): the GUI authors exactly one argument value, `Arguments hint` (`argumentsHint`, at most 200 characters), in the New Command form (§6.1.3) and in the hero sheet (F2 of the 2026-09-26 Commands & Shortcuts census). There is no GUI list editor for `arguments`; the audit request for one (semantic closure registry line 1377) is retired by DL-2604, which keeps the selected one-field `Arguments hint` design (`Concepts/PMConcept7.html`, CS-030). An item's `name` and `required`, and every item after `arguments[0]`, are authored in the command file, and the GUI's hint edits preserve them. Item keys other than `name`, `hint` and `required` are unknown keys: readers keep them byte-stable and never act on them. This table is the only live item shape; the 2026-07-08 FABLE addendum's richer item fields are retired (see that addendum).
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt_Pipeline.md
 
@@ -2415,6 +2415,7 @@ preserved_exact_tokens:
   - "!`cmd`"
 negative_constraints:
   - "Reserved Assistant Chat slash commands fail validation even if override_builtin is enabled."
+  - "No GUI list editor for `arguments` is offered; Arguments hint is the only argument control (DL-2604 retires the list-editor request of registry line 1377)."
 owner_hints:
   - Plans/Commands_System.md
 ```
