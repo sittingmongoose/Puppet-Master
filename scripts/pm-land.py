@@ -81,19 +81,19 @@ def say(message: str) -> None:
     print(message, flush=True)
 
 
-def command(argv, *, capture=True, check=True, input_text=None):
+def command(argv, *, capture=True, check=True, input_text=None, env=None):
     result = subprocess.run(argv, check=False, text=True,
                             stdout=subprocess.PIPE if capture else None,
                             stderr=subprocess.PIPE if capture else None,
-                            encoding="utf-8", errors="surrogateescape", input=input_text)
+                            encoding="utf-8", errors="surrogateescape", input=input_text, env=env)
     if check and result.returncode:
         raise Refusal(f"{shlex.join(map(str, argv))} exited {result.returncode}"
                       + (f": {result.stderr.strip()}" if result.stderr else ""))
     return result
 
 
-def git(root, *args, check=True):
-    return command(["git", "--no-optional-locks", "-C", str(root), *args], check=check)
+def git(root, *args, check=True, env=None):
+    return command(["git", "--no-optional-locks", "-C", str(root), *args], check=check, env=env)
 
 
 def revision(root, ref):
@@ -610,16 +610,18 @@ def push_targets(root: Path) -> list[tuple[list[str], str]]:
     return [(names, url) for url, names in by_url.items()]
 
 
-def require_literal_push_target(root: Path, name: str, url: str) -> None:
+def require_literal_push_target(root: Path, probe: str, url: str) -> None:
     """Check how Git will interpret an already resolved URL when passed as a destination."""
     if git(root, "remote", "get-url", "--", url, check=False).returncode == 0:
         raise Refusal(f"push target {url!r} also names a Git remote; use an unambiguous URL")
     fetch_url = git(root, "ls-remote", "--get-url", "--", url).stdout.splitlines()
-    # Use a known remote temporarily configured with only this URL to ask Git how a
-    # destination without an explicit pushurl is rewritten. This performs no I/O to the remote.
-    push_urls = git(root, "-c", f"remote.{name}.url=", "-c", f"remote.{name}.pushurl=",
-                    "-c", f"remote.{name}.url={url}", "remote", "get-url", "--push", "--all",
-                    name).stdout.splitlines()
+    # Older Git does not clear configured URLs with empty overrides. A fresh remote
+    # exposes the push rewrite for this URL without contacting the remote.
+    rows = git(root, "-c", f"remote.{probe}.url={url}", "remote", "-v",
+               env={**os.environ, "LC_ALL": "C"}).stdout.splitlines()
+    prefix, suffix = f"{probe}\t", " (push)"
+    push_urls = [row.removeprefix(prefix).removesuffix(suffix)
+                 for row in rows if row.startswith(prefix) and row.endswith(suffix)]
     if push_urls != [url] or fetch_url != [url]:
         raise Refusal(f"Git would rewrite push target {url!r} when publishing by URL "
                       f"(push: {push_urls!r}, readback: {fetch_url!r}); check the URL rewrite rules")
@@ -685,8 +687,12 @@ def publish_main(root: Path, lease: str, commit: str) -> int:
     targets = push_targets(root)
     if not targets:
         raise Refusal(f"no push targets are configured for {root}: add a remote before publishing")
-    for names, url in targets:
-        require_literal_push_target(root, names[0], url)
+    remote_names = {name for names, _ in targets for name in names}
+    probe = "pm-land-push-probe"
+    while probe in remote_names:
+        probe += "-"
+    for _, url in targets:
+        require_literal_push_target(root, probe, url)
     destinations = [(f"remote {', '.join(names)} ({url})", url) for names, url in targets]
     say("Push targets:\n" + "\n".join(f"  {label}" for label, _ in destinations))
     push_errors: dict[str, str] = {}
@@ -721,7 +727,7 @@ def publish_main(root: Path, lease: str, commit: str) -> int:
             failures.append(f"{label}: {repair}")
     if not failures:
         try:
-            update_publish_tracking_refs(root, {name for names, _ in targets for name in names}, verified, commit)
+            update_publish_tracking_refs(root, remote_names, verified, commit)
         except Refusal as exc:
             failures.append(f"could not update local tracking refs: {exc}")
     if failures:

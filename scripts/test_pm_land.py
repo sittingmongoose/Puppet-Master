@@ -3395,6 +3395,7 @@ class PublishAllTargetsTests(unittest.TestCase):
 
     def test_publish_reaches_every_push_url(self):
         nas = self.two_push_urls()
+        self.git(self.shared, "remote", "add", "pm-land-push-probe", str(nas))
         output = io.StringIO()
         with redirect_stdout(output):
             self.assertEqual(land.publish_main(self.shared, self.base, self.head), 0)
