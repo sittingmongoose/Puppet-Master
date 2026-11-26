@@ -660,6 +660,9 @@ def publish_main(root: Path, lease: str, commit: str) -> int:
     if not is_ancestor(root, lease, commit):
         raise Refusal(f"publication lease {lease} is not an ancestor of landed commit {commit}: rebase on "
                       "the pinned main and check again, so the push is a fast-forward")
+    local_main = revision(root, MAIN_REF)
+    if commit != local_main:
+        raise Refusal(f"landed commit {commit} differs from {MAIN_REF} at {local_main} in {root}")
     targets = push_targets(root)
     if not targets:
         raise Refusal(f"no push targets are configured for {root}: add a remote before publishing")
@@ -2924,7 +2927,8 @@ def main(argv=None):
                              help="checkout the landed commit and the remotes are read from (default: this worktree)")
         publish.add_argument("--lease", required=True, help="the PUBLISH_LEASE verify printed: the main every "
                                                             "target must still be at")
-        publish.add_argument("--commit", required=True, help="the landed full SHA to publish to every target")
+        publish.add_argument("--commit", required=True,
+                             help="the landed full SHA, which must match refs/heads/main in --repo")
         args = parser.parse_args(argv)
         if args.command == "check":
             root = Path(git(Path.cwd(), "rev-parse", "--show-toplevel").stdout.strip())

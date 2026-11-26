@@ -3370,10 +3370,13 @@ class CheckBatchBaseTests(unittest.TestCase):
 class PublishAllTargetsTests(unittest.TestCase):
     """publish pushes the landed SHA to every configured push target under one lease and verifies each."""
 
-    setUp = LandingFixture.setUp
     git = LandingFixture.git
     put = LandingFixture.put
     make_record = LandingFixture.make_record
+
+    def setUp(self):
+        LandingFixture.setUp(self)
+        self.git(self.shared, "merge", "--ff-only", self.head)
 
     def bare(self, name, main):
         path = self.root / name
@@ -3400,6 +3403,19 @@ class PublishAllTargetsTests(unittest.TestCase):
         self.assertIn(str(self.origin), output.getvalue())
         self.assertIn(str(nas), output.getvalue())
 
+    def test_publish_refuses_a_commit_other_than_the_checkout_main(self):
+        nas = self.two_push_urls()
+        self.git(self.shared, "commit", "--allow-empty", "-m", "next landing")
+        current_main = land.revision(self.shared, land.MAIN_REF)
+
+        with self.assertRaises(land.Refusal) as refusal:
+            land.publish_main(self.shared, self.base, self.head)
+
+        self.assertIn(f"landed commit {self.head} differs from {land.MAIN_REF} at {current_main}",
+                      str(refusal.exception))
+        self.assertEqual(self.tip(self.origin), self.base)
+        self.assertEqual(self.tip(nas), self.base)
+
     def test_verified_publish_updates_both_named_tracking_refs(self):
         nas = self.two_push_urls()
         self.git(self.shared, "remote", "add", "truenas-backup", str(nas))
@@ -3408,7 +3424,6 @@ class PublishAllTargetsTests(unittest.TestCase):
         self.git(self.origin, "update-ref", land.MAIN_REF, self.head, self.base)
         self.git(nas, "update-ref", land.MAIN_REF, self.head, self.base)
         self.git(self.shared, "fetch", "origin")
-        self.git(self.shared, "merge", "--ff-only", self.head)
         self.git(self.shared, "commit", "--allow-empty", "-m", "next landing")
         landed = land.revision(self.shared, land.MAIN_REF)
 
@@ -3418,9 +3433,8 @@ class PublishAllTargetsTests(unittest.TestCase):
         self.assertEqual(land.revision(self.shared, "refs/remotes/truenas-backup/main"), landed)
 
     def test_a_rejected_push_fails_loudly_naming_that_remote(self):
-        self.put(self.shared, "tracked.txt", "someone else's landing\n")
-        self.git(self.shared, "commit", "-am", "someone else")
-        diverged = land.revision(self.shared, "HEAD")
+        diverged = self.git(self.shared, "commit-tree", self.tree, "-p", self.base,
+                            "-m", "someone else's landing").stdout.strip()
         nas = self.bare("nas.git", diverged)
         self.git(self.shared, "remote", "add", "truenas-backup", str(nas))
         with self.assertRaisesRegex(land.Refusal, "truenas-backup"):
@@ -3454,7 +3468,6 @@ class PublishAllTargetsTests(unittest.TestCase):
         nas = self.bare("behind mirror.git", self.base)
         self.git(self.shared, "remote", "add", "truenas-backup", str(nas))
         self.git(self.origin, "update-ref", land.MAIN_REF, self.head, self.base)
-        self.git(self.shared, "merge", "--ff-only", self.head)
         self.git(self.shared, "commit", "--allow-empty", "-m", "next landing")
         landed = land.revision(self.shared, land.MAIN_REF)
 
