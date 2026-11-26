@@ -12,9 +12,9 @@
     "unblocks_edge_count": 3233,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-26T11:10:49Z",
+  "generated_at_utc": "2026-11-26T11:30:28Z",
   "gui_related_units": {
-    "count": 3945,
+    "count": 3947,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -27254,6 +27254,17 @@
       },
       {
         "owner_doc": "Plans/Models_System.md",
+        "plan_unit_id": "MS-102",
+        "source_location": {
+          "heading": "MS-102 - Cost Budget Fallback Concern",
+          "heading_level": 3,
+          "heading_line": 7221,
+          "line": 7223,
+          "path": "Plans/Models_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Models_System.md",
         "plan_unit_id": "MS-104",
         "source_location": {
           "heading": "MS-104 - Clamp Substitution Semantics And Partial Evidence Disclosure",
@@ -27447,6 +27458,17 @@
           "heading_level": 3,
           "heading_line": 9528,
           "line": 9530,
+          "path": "Plans/Models_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Models_System.md",
+        "plan_unit_id": "MS-135",
+        "source_location": {
+          "heading": "MS-135 - Provider Capability, Fallback, Lifecycle, And Error Schema Closure",
+          "heading_level": 3,
+          "heading_line": 9733,
+          "line": 9735,
           "path": "Plans/Models_System.md"
         }
       },

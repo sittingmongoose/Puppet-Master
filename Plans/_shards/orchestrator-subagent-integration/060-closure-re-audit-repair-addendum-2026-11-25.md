@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L35234-L35272
 
-Source SHA256: `41cead1dd57e3bc73f7ccdad0ac7c2b9253f897209e55efbc277f4d8807cad54`
+Source SHA256: `97b1d391be028a118aa9ee837749dc861f7f51b6c37f2de93f71048ddf325371`
 
 ---
 
@@ -20,7 +20,7 @@ Repairs `sfk-52b55259003ddf5c68bd4d44` (registry lines 1501 and 1588).
 - Watcher: the Orchestrator reads the file at two points only: before dispatching each new execution-unit attempt (each loop iteration, OSI-387) and before admitting `cmd.orchestrator.resume` for a run the gate halted. No file-system notification is needed. An attempt already running is not interrupted and its result is recorded. Before an in-scope mutating dispatch, the watcher allows passage through the PAUSE check only when the gate's `allowed_action_ids[]` contains the exact requested action's canonical ID. It then evaluates applicable HITL approval. Read-only work (`ask`, `plan`) is not blocked.
 - Fields and order: the frontmatter fields and the PAUSE-before-HITL precedence are the human-in-the-loop.md contract. `scope` is closed: `project` (every run in this project) or `run:<run_id>` (that run only). `allowed_action_ids[]` holds canonical `allowed_action_id` values from the `Plans/UI_Command_Catalog.md` recovery table.
 - Fail-closed parsing: a file that exists with no frontmatter, unparseable frontmatter, an unknown `scope` value or a missing `pause_id` still pauses, read as `scope: project` with `allowed_action_ids[] = []`, and the run's pause notice says the gate file is invalid. A file whose `expires_at_utc` is in the past is inactive.
-- Halt: at a blocked dispatch the run logs the `pause_id` and reason, returns a halted result and waits (OSI-387).
+- Halt: at a blocked dispatch the run logs the `pause_id` and reason, returns a halted result and waits (OSI-387). For an invalid gate file (fail-closed parsing above) it logs the file's `pause_id` when one could be read and otherwise `pause_id: null`, logs the reason as `gate file invalid` with the parse problem (no frontmatter, unparseable frontmatter, unknown `scope` or missing `pause_id`) in place of the file's own `reason`, and still halts.
 - Resume: the gate clears only when the file is removed or expires. While it is active, `cmd.orchestrator.resume` for a run in scope is not admitted and the run keeps showing the pause reason. After it clears, a halted run continues at its next dispatch point once `cmd.orchestrator.resume` is admitted.
 
 ### Parser-Failure And Unrelated-Failure Recovery Actions

@@ -4,7 +4,7 @@ Source: `Plans/agent-rules-context.md`
 
 Source lines: L95-L110
 
-Source SHA256: `5fb81425507647a77ace998f0db987a831d18dd3550756c68db9e59eea37fae6`
+Source SHA256: `64d60448dac0a023b529346f47bff671430f35b8ba26fe20f72985f21483a43e`
 
 ---
 
@@ -13,7 +13,7 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, Contrac
 
 ### In-app instructions editor reconciliation
 
-The in-app project instructions editor writes the same runtime-consumed project rules and instruction files defined by this document. Jared’s 2026-11-12 answer at 8:12 AM EST was "Keep them there": Rules for every project and Rules for this project live in Settings > Personas & Crews > Defaults > Standing instructions. The first writes the existing application-rule source and the second the actual Project rule source; neither is a saved-note Memory control.
+The in-app project instructions editor writes the same runtime-consumed project rules and instruction files defined by this document. Jared’s 2026-11-12 answer at 8:12 AM EST was "Keep them there": Rules for every project and Rules for this project live in Settings > Personas & Crews > Defaults > Standing instructions. The first writes the existing application-rule source and the second the actual Project rule source; neither is a saved-note Memory control. The 2026-07-08 addendum's current binding below states each editor's save path: Rules for this project saves through the Project-scoped Teach confirm, and Rules for every project keeps this destination but its save waits on an application-scope confirm input that the assistant-memory owner has not yet defined.
 
 Rules:
 - the editor must show the canonical path and scope for the file being edited

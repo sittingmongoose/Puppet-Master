@@ -1,54 +1,54 @@
 # Shard Index: Plans/Tools.md
 
-Generated: 2026-11-26T10:53:52Z
+Generated: 2026-11-26T11:29:35Z
 
-Source SHA256: `c4294666817e5d30c5e77b88de5ae5cc65d9e6f938942af53547df076f9a19a5`
+Source SHA256: `5a1c2e648ae89837b6d0c011663260e7417690e98e8b1231ba02cbf913430f45`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L6 `21dfdd3a1b291b3d686ecf9bec02da61f99476593e09438e4a570636706d06ae`
-- [002 - SSOT references (DRY)](002-ssot-references-dry.md) L8-L17 `c6c5bc9a4aa2de40b4526bb38cf86ea3dbea3aaec3b279c36ec19115cee50cf3`
-- [003 - 1. Purpose and scope](003-1.-purpose-and-scope.md) L19-L70 `fff8d512c4e3876602ae69f93bff68060aaa648df48b92a8c59b7c6bd2bdd74c`
-- [004 - 2. Permission model](004-2.-permission-model.md) L72-L200 `691895aa169b10806cd0875413e14c827e24bfcdfca4ddc8f15d398cd6bbbd7b`
-- [005 - 3. Built-in tools (target set)](005-3.-built-in-tools-target-set.md) L202-L1076 `38809b804496de8e1785b2d6fd4e9847b03b830dfeedafec7d5fcd3a2816e9d7`
-- [006 - 4. Custom tools](006-4.-custom-tools.md) L1078-L1116 `1ae46c9e3ebd9bdeb97b5cb3692db9c858dcee72c901aedd6a7ea4789ac20c44`
-- [007 - 5. MCP integration (in scope)](007-5.-mcp-integration-in-scope.md) L1118-L1130 `0053d0a10e1861e6d42c487635e564cf5a61f4b6300a747dbb1b1acb56d8f9d2`
-- [008 - 6. Ways to add tools (implementation angles)](008-6.-ways-to-add-tools-implementation-angles.md) L1131-L1148 `8a2fca7e41a12a5463c9f40ef689f8f0f8bbcb6f6b150442017a2a6787218802`
-- [009 - 7. Per-platform MCP and tool config (reference)](009-7.-per-platform-mcp-and-tool-config-reference.md) L1150-L1166 `5b53ef5aad91e46d37bfcec028a73fb71102a18b2b04924dd8fae10f3d2f6d7e`
-- [010 - 8. Implementation details and technical notes](010-8.-implementation-details-and-technical-notes.md) L1168-L1380 `844eb84c405190845e341e008728555a815899da5cac3d4b8cf5f28c6606039b`
-- [011 - 10. Implementation plan: permissions (spec for implementers)](011-10.-implementation-plan-permissions-spec-for-implementers.md) L1382-L1477 `d0eede7555d20605440fafc4e7384ab80e334ed2cbb9862078dd71a12bf38a91`
-- [012 - 11. Relationship to other plans](012-11.-relationship-to-other-plans.md) L1478-L1494 `c2c2e202b73ee85962db3268a3b19e20d20c2dc900a364d0f623d4de873ea33a`
-- [013 - 12. Implementation checklist (ordered for implementation plan)](013-12.-implementation-checklist-ordered-for-implementation-plan.md) L1496-L1518 `dbedd3f032aefb9a6e0dd249d10c71473e1ba9fdf757a06d2070a506e6ae9f0a`
-- [014 - 13. References](014-13.-references.md) L1520-L1536 `2867a9952fc901a0541509111ae2002999fc8f82ec40f648c4853d86312d6fa4`
-- [015 - Tool Policy Outcome Taxonomy Addendum (2026-03-08)](015-tool-policy-outcome-taxonomy-addendum-2026-03-08.md) L1538-L1568 `fbf21c2d640192824e64e4594197135c61001d7b7f626e72a692fd801cc8b29d`
-- [016 - Tool Denial / Runtime Taxonomy Alignment Addendum (2026-03-09)](016-tool-denial-runtime-taxonomy-alignment-addendum-2026-03-09.md) L1569-L1583 `50018c6009b224084876e0a62fb07b5604610aa5cc50a234e8a5459912594f82`
-- [017 - Tool Denial and Runtime Action Canonical Alignment (2026-03-09)](017-tool-denial-and-runtime-action-canonical-alignment-2026-03-09.md) L1584-L1595 `71333e8bf9ebf705f38d6e69f57187e8c30310cc32cd8b35e8aec4efa8335243`
-- [018 - Tool Denial Runtime Blocked Payload Consolidation Addendum (2026-03-09)](018-tool-denial-runtime-blocked-payload-consolidation-addendum-2026-.md) L1596-L1617 `3557feff9d92558f3cf4efe81aab44b0c2316413c2329ec842dabb3c94c4a7db`
-- [019 - Tool Field Name and Taxonomy Alignment](019-tool-field-name-and-taxonomy-alignment.md) L1619-L1639 `6c13af8c1baf68271bc9e6af584da67d32b3476193eaf33f5d02fe062b58f6b2`
-- [020 - 10. Firecrawl provider integration](020-10.-firecrawl-provider-integration.md) L1641-L2027 `6844103b29b2ba991e5a76732f84a8a8427f4057d1f679d80b129a8598cb9ae4`
-- [021 - 11. Provider capability matrix](021-11.-provider-capability-matrix.md) L2028-L2149 `3bfae611f6d9fad923f5df6068b54b3b9b288e2a8908a9ccba6d75122ce24142`
-- [022 - 12. Web tool routing algorithm](022-12.-web-tool-routing-algorithm.md) L2150-L2225 `a16cb5c3ca1cd11d1030e2ec3c65b2b68f63f4de2ce8a0e22134e6f3f61eec43`
-- [023 - 13. Batch operations](023-13.-batch-operations.md) L2226-L2283 `046b412d8069304dd10a0e6e425505268efe843df4db2265ed57530c072e1070`
-- [024 - 14. Web content caching layer](024-14.-web-content-caching-layer.md) L2284-L2331 `b6ddf1666dd5785f346ecb3f2f9f241a1ae0ec60448ed04f4d2cc058037cc55a`
-- [025 - 15. Assistant collaboration, To-Do proposal, and read-only advisor tool boundaries](025-15.-assistant-collaboration-to-do-proposal-and-read-only-advisor.md) L2332-L2444 `eab2b81dfa68557ae0ede941367eabaedc144fe90930f75cbecae8f1bb0aeafa`
-- [026 - Canonical owner and consumer reconciliation](026-canonical-owner-and-consumer-reconciliation.md) L2447-L2477 `a84449fc98430885a73c8191411b3275d68999ae5749a3ae9bf8b9d5821c27cb`
-- [027 - Owner / Consumer Map](027-owner-consumer-map.md) L2479-L2483 `234ea7c6f03689039f9cea9e29fc2d54f72215651db81240ac2c1cc995afc451`
-- [028 - PlanUnits](028-planunits.md) L2485-L2544 `4a6eb1bfd6ec5d63db410afb12efdadc45558831b57cf8f5335c133634dff4b0`
-- [029 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](029-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L2546-L2625 `1cc376b17ee2cdbb84509a157c2af3df94512c3fe1db044085c0081d1eaf6923`
-- [030 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](030-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L2627-L11165 `1f839a5ac3c5d0b24ad6050febdaafba630bd94a9a39005ef9177f20a1443cb3`
-- [031 - Migration Coverage](031-migration-coverage.md) L11167-L11177 `201af8b9b5cce16141d76877e3039f6d149060280d93ed1c5f6ea253fd2b0a11`
-- [032 - Ledger Compile Addendum - pldg-20260614-001](032-ledger-compile-addendum-pldg-20260614-001.md) L11179-L11218 `6300642660dcfcbba6304e3e7872da75d15d16abe57e824c0bb5df6f49ed27bc`
-- [033 - Ledger Compile Addendum - pldg-20260615-001](033-ledger-compile-addendum-pldg-20260615-001.md) L11220-L11305 `058909e26ad6bdea44c37329f59e253d1689a53068ef416faa7973b71515873f`
-- [034 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](034-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L11307-L11360 `1df3768186e2fa83dbf189c3164b1f5dbb6880ce567a72d57391833ae2562990`
-- [035 - Ledger Compile Addendum - pldg-20260622-001-fff](035-ledger-compile-addendum-pldg-20260622-001-fff.md) L11362-L11555 `0ba0f76331d198ab98ea1d78f42ea42c8d9d5bb7d33ab6347aca99e9918d75a2`
-- [036 - Ledger Compile Addendum - pldg-20260626-001-feature-name](036-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L11558-L11727 `0e88fc6111ad5eeb0f2f2f795dace1bf564cf3374895fa22afbabe3c4c16591f`
-- [037 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](037-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L11729-L12438 `de61bf7ac8def35059de0e0b4d4a206cb62d2cf49a9584eca566be57fba199a2`
-- [038 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](038-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L12440-L12716 `93113f6de0888e888782f4ff93dc75524be8713aa859e13e740733b25ff23b39`
-- [039 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](039-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L12717-L12724 `69e45ae655b29e09601a47bffffe4f24a3054b1b62334c4a766c7aa0f944df9c`
-- [040 - Remaining Runtime Integration Addendum - 2026-08-13](040-remaining-runtime-integration-addendum-2026-08-13.md) L12726-L12910 `f9601dd0b11b3530eaca9d7012795a34e9e4267b32f463250ee2f0439ecbf079`
-- [041 - Assistant Redesign Consumer Addendum - 2026-09-03](041-assistant-redesign-consumer-addendum-2026-09-03.md) L12912-L13146 `c74ee3542ef530826cfc2f047318fa2ce94e971c4236d0c1cad46d8adf6ff743`
-- [042 - Working Notebook And Exact History Read Tool Addendum (2026-09-05)](042-working-notebook-and-exact-history-read-tool-addendum-2026-09-05.md) L13148-L13237 `63456ac62a4dc863307627876493223d9a4435d6ab4e2d65ca2af03314c9999b`
-- [043 - DL-042 — Historical TODO Event Migration Consumer Boundary (2026-09-11)](043-dl-042-historical-todo-event-migration-consumer-boundary-2026-09.md) L13240-L13611 `cd4a658103cc2da3f7cdb024080eeed635a926910e4302a24fc12fa39e92940b`
-- [044 - Code Mode Tool Calling Addendum - 2026-11-15](044-code-mode-tool-calling-addendum-2026-11-15.md) L13613-L13844 `92c215aed9647c91c471f8ace4114841fca7fb9b120529f15ca07dd559cc1461`
+- [001 - Preamble](001-preamble.md) L1-L6 `4d3f038923afceb22b681fdf75295f16dc6283bab6d9f0b8f05609d2602af87e`
+- [002 - SSOT references (DRY)](002-ssot-references-dry.md) L8-L17 `4643ea8799f08cc789caf8c8f7dab4d2e8513d81649049b1a1fada9ae15e882d`
+- [003 - 1. Purpose and scope](003-1.-purpose-and-scope.md) L19-L70 `1d9da0b8143e68a271f3dd01dd2d8f68db6796d163e897f12231ed290e53e1e2`
+- [004 - 2. Permission model](004-2.-permission-model.md) L72-L200 `e5557eb143ed9c8de1ed81718f37dce0e1c2d501c27110e4693300557ac817fd`
+- [005 - 3. Built-in tools (target set)](005-3.-built-in-tools-target-set.md) L202-L1076 `0b634ce1b796c1fbefaee252da765c70bed31fddae740c68be912ad4efacfea7`
+- [006 - 4. Custom tools](006-4.-custom-tools.md) L1078-L1116 `b64aee86ace0bc2dfa32238d28bdd6831e055e8b203f7a00a2da05749ca842a7`
+- [007 - 5. MCP integration (in scope)](007-5.-mcp-integration-in-scope.md) L1118-L1130 `f74d3059d2472e387c4c214f30572ca06c994884b9a1ea81ce7b0e210a129f08`
+- [008 - 6. Ways to add tools (implementation angles)](008-6.-ways-to-add-tools-implementation-angles.md) L1131-L1148 `8cf8fc5dfe5687d5ac21ce4a8a8809355c81428d945ccab847a0b5274ae64faa`
+- [009 - 7. Per-platform MCP and tool config (reference)](009-7.-per-platform-mcp-and-tool-config-reference.md) L1150-L1166 `d1575fe8f17bd32dbea693f57f175e3dcd42941d44ff57c9171cc5631c129a55`
+- [010 - 8. Implementation details and technical notes](010-8.-implementation-details-and-technical-notes.md) L1168-L1380 `d4a7946bbaf851d730cb18b20d4317e5104a47b2adf60ccfa2f3d5edf065ccfb`
+- [011 - 10. Implementation plan: permissions (spec for implementers)](011-10.-implementation-plan-permissions-spec-for-implementers.md) L1382-L1477 `16bfeee1ff5a168d109b6b2210d0029d45373ce6da1f19f58e67422e6451d715`
+- [012 - 11. Relationship to other plans](012-11.-relationship-to-other-plans.md) L1478-L1494 `ea8cc155ab9c251fd10b5e26f359d6c445cfafa53eb881b625784441eb2bbb1e`
+- [013 - 12. Implementation checklist (ordered for implementation plan)](013-12.-implementation-checklist-ordered-for-implementation-plan.md) L1496-L1518 `d367b59e642b2ada5158076bcae3dc50dcfe5a375559e225ce4463230eb8c3f2`
+- [014 - 13. References](014-13.-references.md) L1520-L1536 `bee634d80fd74809e95244673d20dffd83a6f922c694c279927ec3d433244cc7`
+- [015 - Tool Policy Outcome Taxonomy Addendum (2026-03-08)](015-tool-policy-outcome-taxonomy-addendum-2026-03-08.md) L1538-L1568 `98e8ded53f3c4d2e0e1ba0c61b5a8cafdcc5929d1a063168cd94115d7648d899`
+- [016 - Tool Denial / Runtime Taxonomy Alignment Addendum (2026-03-09)](016-tool-denial-runtime-taxonomy-alignment-addendum-2026-03-09.md) L1569-L1583 `f3fe220b18dfbe71bb4ae3978ec0f8351f024cbe9a14d457064f5a463a2f3a35`
+- [017 - Tool Denial and Runtime Action Canonical Alignment (2026-03-09)](017-tool-denial-and-runtime-action-canonical-alignment-2026-03-09.md) L1584-L1595 `11d5e1e3363dd208f003831b6a182335aa61f851e60e9d7c5d444945ef969f44`
+- [018 - Tool Denial Runtime Blocked Payload Consolidation Addendum (2026-03-09)](018-tool-denial-runtime-blocked-payload-consolidation-addendum-2026-.md) L1596-L1617 `b5ed45aeecfd7121ac9c3947dc9d54bfeef50145c3812a4ae7af7e25733c6dfe`
+- [019 - Tool Field Name and Taxonomy Alignment](019-tool-field-name-and-taxonomy-alignment.md) L1619-L1639 `ec4c51f0ef88c867af0f46d54a1c622b8bcb23001f55945d514632fad396328b`
+- [020 - 10. Firecrawl provider integration](020-10.-firecrawl-provider-integration.md) L1641-L2027 `f0810a90e08967bccb3acaaa4b4482fd5d32c8165e8b2a106ddf398f9b06cb5e`
+- [021 - 11. Provider capability matrix](021-11.-provider-capability-matrix.md) L2028-L2149 `6b42b7c9cf774a607fddeb7b818faefd3af761f1c5726619eed3656ff99df2c3`
+- [022 - 12. Web tool routing algorithm](022-12.-web-tool-routing-algorithm.md) L2150-L2225 `c5e67f3c584f6d68944a8de4ce8057b18f4cf3d7f724d5a17d737e2d86ccc946`
+- [023 - 13. Batch operations](023-13.-batch-operations.md) L2226-L2283 `060632bd0bfd841c24bc1363b80aec983f6fafcab6599d60393bd8be277762ed`
+- [024 - 14. Web content caching layer](024-14.-web-content-caching-layer.md) L2284-L2331 `9c2b995706d20eec92287f9040d0d64757bb39487552e1840a8215c4fc8e7f6b`
+- [025 - 15. Assistant collaboration, To-Do proposal, and read-only advisor tool boundaries](025-15.-assistant-collaboration-to-do-proposal-and-read-only-advisor.md) L2332-L2444 `0fe5ff35fb7954a0e9054ff9a9b8ac8e433460f289c43fc989b272dee061b158`
+- [026 - Canonical owner and consumer reconciliation](026-canonical-owner-and-consumer-reconciliation.md) L2447-L2477 `0ca267eed1c8232ad2090eb745287f9e5eca01e4f41c55709b5bb28c9edd3e1e`
+- [027 - Owner / Consumer Map](027-owner-consumer-map.md) L2479-L2483 `85c541c8650917d1a6dfd3ceb2437c3cbe9e00b7ad07266e369621800cdcdd95`
+- [028 - PlanUnits](028-planunits.md) L2485-L2544 `8b724ca8aa3b788fc445fb5d373047af9e07c3ae46a89974ad995f801d9e88fd`
+- [029 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](029-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L2546-L2625 `56b2c7c23af96dd24d839428640aaf9457a5afca7734a8f2363485a421607c0a`
+- [030 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](030-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L2627-L11165 `1651397592f6f917ea3ec29cfa2295c2162dec6556986a8ef68e58d88950fb4c`
+- [031 - Migration Coverage](031-migration-coverage.md) L11167-L11177 `a0ae5e80284578f81b0ee4dcdefdeee46177d934d40cbc1f95f99277e095b23e`
+- [032 - Ledger Compile Addendum - pldg-20260614-001](032-ledger-compile-addendum-pldg-20260614-001.md) L11179-L11218 `be1e597555fc446efca58be4fc4a5c3a0247ffd8fb2613f21196b81bcb92eddd`
+- [033 - Ledger Compile Addendum - pldg-20260615-001](033-ledger-compile-addendum-pldg-20260615-001.md) L11220-L11305 `d66f41c51dd5fcb614b08d9ed8585063c2723965e85f02ea46cf4cb2e071d0c9`
+- [034 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](034-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L11307-L11360 `ed51f9d0f09958e890d466b03a48c5642ad01bda46dee0ca90c7bc32db20e9af`
+- [035 - Ledger Compile Addendum - pldg-20260622-001-fff](035-ledger-compile-addendum-pldg-20260622-001-fff.md) L11362-L11555 `8680cd6109f2c1a76dbc8136ee2df3b9446abfe8d4b626b88f20f996d1c7e4a6`
+- [036 - Ledger Compile Addendum - pldg-20260626-001-feature-name](036-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L11558-L11727 `91ec8d5ebe222a5473b552d4a0483f708c8d4c2602005f1baa566dd147718621`
+- [037 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](037-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L11729-L12438 `4f16f72ff143eb7f9cf89559b18afead4a4552940cb6c9a910a75f9c4e978707`
+- [038 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](038-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L12440-L12716 `4087da2cc42476b11bb8e9f97742a37b18271549ad377fce04cda3a974800b3a`
+- [039 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](039-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L12717-L12724 `7ac458fcb22aee18ff716240beb19abac1fa5f3bd6af134a841c3101a4feb2c1`
+- [040 - Remaining Runtime Integration Addendum - 2026-08-13](040-remaining-runtime-integration-addendum-2026-08-13.md) L12726-L12910 `6e357a86d891c2300e77f4fe5ab727f5c534ae4e8b8603f2a50d5a45f7dc0a8b`
+- [041 - Assistant Redesign Consumer Addendum - 2026-09-03](041-assistant-redesign-consumer-addendum-2026-09-03.md) L12912-L13146 `6d5a11e72bc5864bedb51cccf3285837588dcd3706121211bb74ab54203092b8`
+- [042 - Working Notebook And Exact History Read Tool Addendum (2026-09-05)](042-working-notebook-and-exact-history-read-tool-addendum-2026-09-05.md) L13148-L13237 `4c7990402560ee6599d0d6185cca21a0bb22317846a8638920a5c19da89dee00`
+- [043 - DL-042 — Historical TODO Event Migration Consumer Boundary (2026-09-11)](043-dl-042-historical-todo-event-migration-consumer-boundary-2026-09.md) L13240-L13611 `50012fce42af707ffa5223fd3e4eb23d4b22c0facf9192ea0fa11835fe93735d`
+- [044 - Code Mode Tool Calling Addendum - 2026-11-15](044-code-mode-tool-calling-addendum-2026-11-15.md) L13613-L13844 `6234ddec70aa49e3caf301834978735c0e763f9216ae4c5f2f423d8ab863aa49`

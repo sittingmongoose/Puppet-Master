@@ -4,7 +4,7 @@ Source: `Plans/Models_System.md`
 
 Source lines: L9729-L10098
 
-Source SHA256: `cacc3e2efa43deeaeea1a96025e0f348aae2b1203a82df10552301c3196ce686`
+Source SHA256: `340bf9854a9139cf1e164d0a5b2681767e23b38fcfdf297a4b517497e4120706`
 
 ---
 
@@ -24,8 +24,8 @@ canonical_text: >-
   merge rules, fallback chain limits, resolver examples, lifecycle transitions, effort settlement, model routing,
   entitlement quota settlement, provider policy rules, metadata replay, and provider error envelopes. These contracts
   extend MS-134 without reactivating legacy platform_specs authority.
-gui_related: false
-gui_classification_reason: Provider/model capability schemas and routing defaults are backend contracts; GUI consumers may render them but do not own them.
+gui_related: true
+gui_classification_reason: Mostly backend provider/model contracts, but the unit also assigns model-picker visibility_state per lifecycle state and the unknown-price display, which are user-visible GUI presentation.
 depends_on: [MS-017, MS-031, MS-083, MS-124, MS-127, MS-134, MA-067]
 unblocks: []
 acceptance_criteria:

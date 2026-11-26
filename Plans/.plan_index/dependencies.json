@@ -165294,7 +165294,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-26T11:10:49Z",
+  "generated_at_utc": "2026-11-26T11:30:27Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -263116,7 +263116,7 @@
     },
     {
       "context_scope": "models_system_standardization",
-      "gui_related": false,
+      "gui_related": true,
       "owner_doc": "Plans/Models_System.md",
       "plan_unit_id": "MS-102",
       "reasoning_tier": "standard",
@@ -263677,7 +263677,7 @@
     },
     {
       "context_scope": "residual_feature_contract_cleanup",
-      "gui_related": false,
+      "gui_related": true,
       "owner_doc": "Plans/Models_System.md",
       "plan_unit_id": "MS-135",
       "reasoning_tier": "high",

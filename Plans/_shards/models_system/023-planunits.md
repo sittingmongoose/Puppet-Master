@@ -4,7 +4,7 @@ Source: `Plans/Models_System.md`
 
 Source lines: L1401-L7591
 
-Source SHA256: `cacc3e2efa43deeaeea1a96025e0f348aae2b1203a82df10552301c3196ce686`
+Source SHA256: `340bf9854a9139cf1e164d0a5b2681767e23b38fcfdf297a4b517497e4120706`
 
 ---
 
@@ -5839,9 +5839,9 @@ canonical_text: Cost gating skips models that exceed the active Persona cost bud
   exceed budget or are unavailable, PM emits a concern and suggests cheaper alternatives or escalation rather than failing
   silently. Only a known cost above the budget skips a model; a model with an unknown price stays pickable, and every place
   that shows the choice shows its price as unknown (DL-2604).
-gui_related: false
-gui_classification_reason: The unit covers model/runtime policy, data contracts, selection semantics, or backend audit behavior
-  rather than direct GUI presentation.
+gui_related: true
+gui_classification_reason: The unit sets cost-gating policy and also requires the model picker to show an unknown price as
+  unknown, which is user-visible GUI presentation (DL-2604).
 split_recommended: false
 depends_on:
 - MS-101
