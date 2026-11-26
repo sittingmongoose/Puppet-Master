@@ -5,8 +5,11 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { pathToFileURL } from 'node:url';
-import { isPageUrl, pageFile, pageHref } from '../helpers/page-path.mjs';
-import { pagePath, pageUrl } from '../helpers/onboarding-fields.mjs';
+import { isPageUrl, pageFile, pageHref, sourcePage } from '../helpers/page-path.mjs';
+import { pagePath, pageUrl, sourcePage as fieldsSourcePage } from '../helpers/onboarding-fields.mjs';
+import fs from 'node:fs';
+import http from 'node:http';
+import { createHash } from 'node:crypto';
 
 const win = process.platform === 'win32';
 // A drive letter is not a URL scheme (a URL scheme has 2+ characters before the colon): the bug in
@@ -57,5 +60,66 @@ assert.equal(pagePath({ args: { page: plain } }), plainAbs);
 // the adapter's default is the kit's committed page, read as a path and loaded as a URL
 const committed = new URL('../../../PMConcept7.html', import.meta.url);
 assert.equal(pagePath({ args: {} }), path.resolve(fileURLToPath(committed)));
+
+// FO20-L1 / NM19-PERFSTALLS-FILE-URL: a Windows drive path becomes its file: URL on ANY platform (a --host-files
+// run parses the page on the caller's node; the browser loads the copy on the Windows machine). On Windows it is
+// exactly pathToFileURL's own result; on POSIX it is the same URL, not `<cwd>/C:\...`.
+const winPath = 'C:\\Users\\me\\pm-scratch\\head.html';
+const winHref = 'file:///C:/Users/me/pm-scratch/head.html';
+if (win) {
+	assert.equal(pageHref(winPath), pathToFileURL(path.resolve(winPath)).href);
+	assert.equal(pageFile(winPath), path.resolve(winPath));
+	assert.equal(pageFile('file:///C:/Users/me/pm-scratch/head.html'), 'C:\\Users\\me\\pm-scratch\\head.html');
+} else {
+	assert.equal(pageHref(winPath), winHref);
+	assert.equal(pageHref('c:\\Users\\me\\head.html'), 'file:///c:/Users/me/head.html');
+	assert.equal(pageHref('C:/Users/me/head.html'), 'file:///C:/Users/me/head.html');
+	// the file's own characters are encoded once, exactly as Windows pathToFileURL writes them
+	assert.equal(pageHref('C:\\Users\\me\\a page 100%.html'), 'file:///C:/Users/me/a%20page%20100%25.html');
+	assert.equal(pageHref('C:\\Users\\me\\a#b.html'), 'file:///C:/Users/me/a%23b.html');
+	// reading a Windows file from a POSIX node is refused by name, never resolved to `<cwd>/C:\...` or `/C:/...`
+	assert.throws(() => pageFile(winPath), /Windows machine/);
+	assert.throws(() => pageFile('file:///C:/Users/me/head.html'), /Windows machine/);
+	await assert.rejects(() => sourcePage(winPath), /Windows machine/);
+}
+// a POSIX path is still resolved natively on either platform (unchanged)
+assert.equal(pageHref('/home/me/head.html'), pathToFileURL('/home/me/head.html').href);
+
+// FO216-SOL-HTTP-STATIC-PATH: sourcePage reads the built source — a file page from disk, an http(s) page over
+// HTTP, byte for byte (the sha256 is of the bytes read, never of a local lookalike).
+const selfBytes = fs.readFileSync(fileURLToPath(import.meta.url));
+const selfSha = createHash('sha256').update(selfBytes).digest('hex');
+const fromFile = await sourcePage(import.meta.url);
+	assert.equal(fromFile.bytes.equals(selfBytes), true);
+assert.equal(fromFile.sha256, selfSha);
+assert.equal(fromFile.url, new URL(import.meta.url).href);
+assert.equal(fromFile.text, selfBytes.toString('utf8'));
+assert.equal((await sourcePage(undefined, import.meta.url)).sha256, selfSha);
+assert.equal((await fieldsSourcePage({ args: { page: import.meta.url } })).sha256, selfSha);
+assert.equal(pagePath({ args: { page: import.meta.url } }), fileURLToPath(import.meta.url));
+
+// a served page: the bytes the server really sends, including one invalid UTF-8 byte; a one-byte change changes
+// the sha (the no-false-pass shape); a missing page is refused by name
+const served = Buffer.concat([Buffer.from('<!doctype html><title>fo20-l1 sourcePage</title>\n<p>é</p>\n'), Buffer.from([0xff]), Buffer.from('\nend\n')]);
+let current = served;
+const server = http.createServer((req, res) => {
+	if (req.url === '/head.html') { res.writeHead(200, { 'Content-Type': 'text/html' }); res.end(current); }
+	else { res.writeHead(404); res.end('not here'); }
+});
+await new Promise((r) => server.listen(0, '127.0.0.1', r));
+try {
+	const url = `http://127.0.0.1:${server.address().port}/head.html`;
+	const got = await sourcePage(url);
+	assert.equal(got.bytes.equals(served), true);
+	assert.equal(got.sha256, createHash('sha256').update(served).digest('hex'));
+	assert.equal(got.url, url);
+	current = Buffer.from(served); current[10] ^= 1;
+	const changed = await sourcePage(url);
+	assert.equal(changed.bytes.equals(served), false);
+	assert.notEqual(changed.sha256, got.sha256);
+	await assert.rejects(() => sourcePage(`http://127.0.0.1:${server.address().port}/missing.html`), /HTTP 404/);
+} finally {
+	server.close();
+}
 assert.equal(pageUrl({ args: {} }), committed.href);
-console.log('PASS one page argument: plain Windows path, POSIX path and file: URL give one file path and one file URL; drive letters are not schemes; a remote page is refused by name');
+console.log('PASS one page argument: plain Windows path, POSIX path and file: URL give one file path and one file URL; drive letters are not schemes and become file: URLs on any platform; a remote or cross-machine page is refused by name; sourcePage reads file and served bytes with their sha256');

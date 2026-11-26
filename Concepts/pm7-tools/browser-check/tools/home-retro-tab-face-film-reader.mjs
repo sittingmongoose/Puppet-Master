@@ -6,13 +6,16 @@
 // logs an FO229-FILM row (both tabs' label and glyph boxes, window pixels) and marks "press <tag>" and "settled <tag>". Every
 // frame from the press mark to the settled mark is decoded at its own size (ffmpeg crop, rgb24, passthrough timing); the
 // frames at the settled mark and at the press mark (before the press reached the page) are the references, a part's glyph
-// pixels those that are glyph in both (FO-236); a part is painted when each group of them (a colon's dot, a letter's
-// stroke) has a pixel 1.8:1 or more from the frame's ground (the same rule as the check, helpers/tab-face-pixels.mjs).
-// The verdict is FAIL when any frame of any press leaves a part blank, and lists them by film frame number (pts x 60).
+// pixels those that are glyph in both (FO-236); a part is painted when strictly more than half (> 50%) of each group's
+// settled core reads 1.8:1 or more from the frame's ground (helpers/tab-face-pixels.mjs). Expected parts (Home glyph,
+// Agents label and Agents glyph; Home's icon-only label exception preserved) must be present before and after every press
+// (FO229-MISSING-PARTS).
+// The verdict is FAIL when any frame of any press leaves a part blank or an expected part is missing/unread, and lists them
+// by film frame number (pts x 60).
 //   node tools/home-retro-tab-face-film-reader.mjs <video.mp4> <run folder> <out.json>
 import { readFileSync, writeFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
-import { partMask, partContrast, PAINTED } from '../helpers/tab-face-pixels.mjs';
+import { partMask, partContrast, missingTabParts, PAINTED } from '../helpers/tab-face-pixels.mjs';
 
 const [video, run, out] = process.argv.slice(2);
 if (!video || !run || !out) { console.error('usage: home-retro-tab-face-film-reader.mjs <video.mp4> <run folder> <out.json>'); process.exit(2); }
@@ -36,8 +39,12 @@ const report = { video, run, rule: `painted >= ${PAINTED}:1`, presses: [], blank
 for (const r of rows) {
 	const tag = `${r.look} ${r.i} ${r.name}`, tp = marks[`press ${tag}`], ts = marks[`settled ${tag}`];
 	if (tp == null || ts == null) { report.unread.push(`${tag}: marks missing`); continue; }
+	const missBefore = r.before ? missingTabParts(r.before) : [];
+	const missAfter = missingTabParts(r.after);
+	for (const miss of new Set([...missBefore, ...missAfter])) report.unread.push(`${tag}: ${miss} missing`);
 	const parts = [];
-	for (const n of ['Home', 'Agents']) for (const part of ['label', 'glyph']) { const b = r.after[n] && r.after[n][part]; if (b) parts.push({ name: `${n} ${part}`, b: [b[0] + r.off.x, b[1] + r.off.y, b[2], b[3]] }); }
+	for (const n of ['Home', 'Agents']) for (const part of ['label', 'glyph']) { const b = r.after && r.after[n] && r.after[n][part]; if (b) parts.push({ name: `${n} ${part}`, b: [b[0] + r.off.x, b[1] + r.off.y, b[2], b[3]] }); }
+	if (!parts.length) continue;
 	// one crop round both tabs, 4 px of margin; the parts' boxes in its pixels
 	const x0 = Math.floor(Math.min(...parts.map((p) => p.b[0])) - 4), y0 = Math.floor(Math.min(...parts.map((p) => p.b[1])) - 4);
 	const x1 = Math.ceil(Math.max(...parts.map((p) => p.b[0] + p.b[2])) + 4), y1 = Math.ceil(Math.max(...parts.map((p) => p.b[1] + p.b[3])) + 4);

@@ -7,10 +7,10 @@ export default async function(t) {
   const accepted=await f.evaluate(()=>PMW.chatCol.setWidth(400)); await t.check('400px width accepted',accepted.ok,JSON.stringify(accepted));
   await f.waitForFunction(()=>Math.round(document.querySelector('#chatPanel').getBoundingClientRect().width)===400);
   await t.emulate({reducedMotion:reduced?'no-preference':'reduce'}); await t.app.look(to);
-  await t.settle(); await f.evaluate(()=>document.fonts.ready); await t.page.waitForTimeout(600);
+  await t.settle(); await f.evaluate(()=>document.fonts.ready); await f.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
   const got=await f.evaluate(()=>{const b=document.querySelector('#pmRoot .composer-box[data-k="composer-box"]'),r=b.getBoundingClientRect();return {compact:b.classList.contains('is-compact'),width:r.width,controls:[...b.querySelectorAll('.composer-tools button')].map(e=>{const q=e.getBoundingClientRect();return {text:e.textContent.trim(),left:q.left-r.left,right:q.right-r.left}})}});
   const name=`${from} → ${to}, ${reduced?'reduced → normal':'normal → reduced'}`;
-  t.log(JSON.stringify({name,...got}));
+  t.log(JSON.stringify({name,read:'0 ms / 2 rAF',...got}));
   await t.check(name+' compact',got.compact,JSON.stringify(got));
   await t.check(name+' controls inside composer',got.controls.every(c=>c.left>=-1&&c.right<=got.width+1),JSON.stringify(got));
   if(!got.compact||got.controls.some(c=>c.left < -1||c.right>got.width+1)) await t.shot('fo156-overhang',name);

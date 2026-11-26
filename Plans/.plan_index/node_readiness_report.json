@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27838,
+    "depends_on_edge_count": 27879,
     "downstream_blocked_node_count": 0,
-    "edge_count": 31063,
-    "node_count": 9624,
+    "edge_count": 31112,
+    "node_count": 9629,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 3225,
+    "unblocks_edge_count": 3233,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-23T20:55:26Z",
+  "generated_at_utc": "2026-11-25T15:31:35Z",
   "gui_related_units": {
     "count": 3942,
     "units": [
@@ -12606,8 +12606,8 @@
         "source_location": {
           "heading": "DL-2601 - Rust Markdown Pipeline, Streaming Correctness, Sanitization, Math, Previews, And Testing Gates",
           "heading_level": 3,
-          "heading_line": 63174,
-          "line": 63176,
+          "heading_line": 63245,
+          "line": 63247,
           "path": "Plans/Decision_Log.md"
         }
       },
@@ -43386,10 +43386,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 9624,
+  "plan_unit_count": 9629,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 4938,
+      "high": 4943,
       "low": 10,
       "medium": 36,
       "standard": 4640
@@ -44420,6 +44420,7 @@
       "dependency_level_execution_flow_example": 1,
       "dependency_level_worktree_group_execution": 1,
       "derived_content_leak": 1,
+      "design_bug_escape": 1,
       "design_flow": 1,
       "destination_capability_overclaim_or_duplicate_auth_owner": 1,
       "destination_credential_exfiltration_or_recovery_key_loss": 1,
@@ -46946,6 +46947,7 @@
       "source_loss": 1,
       "source_preservation": 3,
       "source_trust_and_secret_custody_drift": 1,
+      "spec_gap_escape": 2,
       "spec_lock_prohibited_behavior": 1,
       "spec_lock_protocol_boundary_drift": 1,
       "spec_lock_update_step_loss": 1,
@@ -47536,7 +47538,7 @@
       "wand_surface_typography_or_crowding": 1,
       "weak_integration_underclassification": 1,
       "weak_platform_evidence_promoted_to_authoritative": 1,
-      "weak_test_oracle": 1,
+      "weak_test_oracle": 3,
       "weak_worker_false_completion": 1,
       "web_audit_cache_extras_drift": 1,
       "web_capability_mirror_site_reader_routing": 1,
@@ -47655,7 +47657,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 9344,
+      "accepted": 9349,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -47689,7 +47691,7 @@
       "contract": 203,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 909,
+      "decision": 910,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
@@ -47728,7 +47730,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 6123,
+      "requirement": 6127,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
@@ -47833,13 +47835,13 @@
       {
         "actual": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
         "error": "pnc019_source_hash_stale",
-        "expected": "8653f4ad3a16bad2a4463952a45387f6d3d2af85eeebfcc8cd71a72df95e25d1",
+        "expected": "bf6f9fbd0b25483e24fe31aade9f870a870c20ab02a23c7c44a851425af4f2cf",
         "source_path": "Plans/Plan_To_Node_Compilation.md"
       },
       {
         "actual": "fee6e23abff2aafb251f978165fdf014bcfe9a9beba3d805857ddf4212000ec0",
         "error": "pnc019_source_hash_stale",
-        "expected": "0d705e75a031704f2a13f3f467fc31ca949c02fb1e800b626fed3c137f7d7d36",
+        "expected": "2d22ebca8047c4b25ec50bb9d7c4a4b4aea049f226e2ad5836a6c86257533846",
         "source_path": "Plans/Planning_Wizard.md"
       },
       {
@@ -47863,7 +47865,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "dc14397b4cb04c537a1aba47c1c89071cb7fea7ef8272c08b1028fb548444f32",
+        "expected": "667bd157423fd5710949cd96d4435dce58c8037c9357c7747a9235a05c39a327",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {

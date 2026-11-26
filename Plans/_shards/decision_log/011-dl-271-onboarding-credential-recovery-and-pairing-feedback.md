@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L63292
+Source lines: L28747-L63363
 
-Source SHA256: `78412a22c2f315f2ee351efd952ae98a9ceb766da9184c3abfa1084dbf6b4171`
+Source SHA256: `3a1031d2d813bbada3f715cfe5309b98858286fc6949c78e169a16013f1d3e36`
 
 ---
 
@@ -3888,6 +3888,77 @@ preserved_exact_tokens:
   - "replaces_matrix_line"
 owner_hints:
   - Plans/Planning_Ledger_System.md
+```
+
+### DL-512 - Spec Checks Run While Planning And When WorkNodes Are Made
+
+```yaml
+plan_unit_id: DL-512
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-512 records Jared's answer of 2026-11-24 at 8:31 PM EST (2026-11-25T01:31Z) to card S1 of the Planning Wizard
+  thread (T3 thread c282e432-ac9b-4f08-b486-10d811b61940, writer windows.opus-typed-decisions), given in that thread's
+  chat as "S1 A": option A, "Check while planning and at WorkNodes". The card asked whether the Planning Wizard should
+  add design and detail checks. Two findings prompted it. Stream E's PNC-019 spec checking tried to break every schema
+  rule of the five Goal/Run event families, one rule at a time, against the planning repository's owner reference
+  models; it found three product findings and 25 rows where an owner needs a check that does not exist, none of which
+  a build test could find, because build tests check code against the spec, not the spec itself. Stream C's audit
+  closure recheck reopened 79 closures on real gaps in Plans text; about 40% of those it re-read are thin specs: names
+  or field lists without types, failure results, retry rules, state machines, schemas or acceptance criteria. Option A
+  promised that missing detail and design bugs are caught while a plan is still being written and that every rule
+  reaches the builder as a test, with no extra questions to the user and no two-reviewer proofs. It places the checks
+  in three owners. Plans/Planning_Wizard.md#PWIZ-110 runs a completeness check over a topic's contracts before it is
+  Ready and over every contract at final integration, inside PWIZ-028's bounded acceptance. It adds a sixth kind of finding to the five
+  the card named (the same identifier declared with incompatible types or enumeration members for overlapping cases, or two
+  statements that contradict), because stream C's
+  open findings include such contradictions. Plans/Planning_Wizard.md#PWIZ-111 gives every risky contract a referee,
+  a small owner model built from the owner's behaviour text that takes a prior state and an operation or a short
+  sequence, and has code try to break each rule within a budget; a rule whose test case the contract makes impossible rests on code-established evidence, a named gap where catching
+  rules cover every violation or another kind defined by the companion change that
+  Plans/Plan_To_Node_Compilation.md#PNC-038 names, or on a recorded deletion witness; a search with none of these
+  leaves a test gap, never a proof or a reviewer's judgement. Plans/Plan_To_Node_Compilation.md#PNC-038 generates fixtures for every
+  contract and binds each rule's fixtures to the WorkNode requests that enforce it, and
+  Plans/Automated_Testing_System.md#ATS-401 makes the build run them and has the builder report source sentences it
+  needed that no record carries. The same evening Jared answered card S2 with option A for Puppet Master's own plans
+  (fix the findings already recorded, then check the risky families); that is a program decision scheduled by
+  pm7-build and changes no Plans text here.
+gui_related: false
+gui_classification_reason: Records a planning-process decision about where spec checks run; no GUI contract changes.
+split_recommended: false
+depends_on: [PWIZ-006, PWIZ-007, PWIZ-012, PWIZ-028, PNC-013, ATS-003, ATS-004]
+unblocks: [PWIZ-110, PWIZ-111, PNC-038, ATS-401]
+acceptance_criteria:
+  - "Plans/Planning_Wizard.md#PWIZ-110 and #PWIZ-111, Plans/Plan_To_Node_Compilation.md#PNC-038 and Plans/Automated_Testing_System.md#ATS-401 exist and cite DL-512."
+  - "None of them adds a technical question for the user, a second model, or a two-reviewer proof to the Planning Wizard."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+risk_class: spec_gap_escape
+reasoning_tier: high
+context_scope: planning_spec_checks
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Planning_Wizard.md
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/Automated_Testing_System.md
+node_compile_hint: {mode: owner_decision_record, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - "T3 thread c282e432-ac9b-4f08-b486-10d811b61940, 2026-11-25T01:31Z: Jared's answer \"S1 A\" in chat; the card, withdrawn with his words, is /mnt/Cursor/agent-reports/v1/writers/windows.opus-typed-decisions/cards/windows.opus-typed-decisions--S1.json (SHA-256 66c2e12174bfd7aad81ebec95aae0983106a804db026ac097ac9cd5b49ae606b at withdrawal)"
+  - "Card S2, answered \"S2 A\" in the same chat at the same time and withdrawn with his words: /mnt/Cursor/agent-reports/v1/writers/windows.opus-typed-decisions/cards/windows.opus-typed-decisions--S2.json (SHA-256 5c8f1e372bbdcba8523c01ed4e7d31a79107cb9c282f89d2d451f311deb74bff at withdrawal)"
+  - "/mnt/Cursor/share/puppet-master/2026-11-23-spec-check-placement/README.md; SHA-256 130aebe78adb51fe582007e014c3da0cd673ec7f0c37e53966c842fc702e9517"
+  - "/mnt/Cursor/share/puppet-master/2026-11-23-spec-check-placement/E-ANSWERS.md; SHA-256 35c7ac929ca9079efd3cb6d7c1af04bd5080469fa2ae0c40f6cc6840789d164c"
+  - "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/C-REPORT.md, section 'Open findings left for the canon owners'; SHA-256 746354a67ce5e6b53ea7d38d4773f256e23e3099a27f34f529a17cb59a1458d9"
+  - "pm-mail 1125004841-a1d8 (pm-ea-lead) and 1125005622-a6bb (pm-closure-lead), 2026-11-25: what a referee needs, and thin specs outside the event families"
+preserved_exact_tokens:
+  - "DL-512"
+  - "Check while planning and at WorkNodes"
+  - "referee"
+  - "named gap"
+owner_hints:
+  - Plans/Planning_Wizard.md
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/Automated_Testing_System.md
 ```
 
 ### DL-520: Event Authority registers attempt.completed (admission merge 1)

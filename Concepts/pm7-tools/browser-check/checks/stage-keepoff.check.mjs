@@ -10,7 +10,9 @@
 //  - Glass Dark, Basic Light, Friendly Light, Retro Light and Retro Dark at 1920x1080, 1390x900, 860x768 and 740x768: a
 //    prop under the bubble on Name > Safe > Add one > Back > Review (a leaving prop rose through the bubble, the next words'
 //    bubble moved onto a prop still fading out, or, in Retro's 740 banner where no place was clear, claimed a place over
-//    the leaving sign); --set leaveLooks= limits the looks;
+//    the leaving sign); transitions use real held pointer presses (move, rest, down ~90 ms, up) with a page-side trusted
+//    press witness and a page-side settle witness (active props pr.settled plus post-settle swing dwell and minimum
+//    post-settle sampler frames, replacing blind fixed sleeps); --set leaveLooks= and --set leaveSizes= narrow this group;
 //  - Glass Dark and Basic Light at 1920x1080 and 1390x900, Begins as: an existing folder picked, then New, then the folder
 //    again, then New (AST3: the folder leaving went behind the new words' bubble for 11 frames);
 //  - Basic Light at 1920x1080 and 1390x900: Basic's check badge or the ring spreading from it past the stage's visible
@@ -116,6 +118,138 @@ async function nameIt(t, f) {
 // Safe's online copy, set below, left the next case's Review unable to create)
 const result = async (t, f) => { const S = await f.evaluate(() => { const S = window.__sk; window.__sk = null; return S; }); await t.app.resetLayout(t); return S; };
 
+// Real held pointer press (move, rest, mouse down ~90 ms, mouse up) verified by a page-side capture-phase witness on the
+// exact target control: requires trusted pointerdown, pointerup and click with zero untrusted clicks and measured page-side
+// hold duration >= minHoldMs, so DOM .click() or instant 0 ms clicks cannot satisfy it (FO214-SOL-STAGE-PRESSES).
+async function pressHeld(t, f, sel, { label, holdMs = 90, restMs = 120, minHoldMs = 50, timeoutMs = 15000 } = {}) {
+	const ready = await f.waitForFunction((s) => {
+		const els = [...document.querySelectorAll(s)];
+		const idx = els.findIndex((x) => x.getBoundingClientRect().width > 0 && !x.disabled && x.getAttribute('aria-disabled') !== 'true');
+		return idx >= 0 ? { idx } : null;
+	}, sel, { timeout: timeoutMs }).then((h) => h.jsonValue(), () => null);
+	if (!ready) return { ok: false, label, note: `press '${label}': no visible enabled control for ${sel}` };
+	const idx = ready.idx;
+	const prep = await f.evaluate(([s, i]) => new Promise((resolve) => {
+		const b = document.querySelectorAll(s)[i];
+		if (!b) return resolve({ ok: false, reason: 'target disappeared' });
+		b.scrollIntoView({ block: 'center', inline: 'center', behavior: 'instant' });
+		requestAnimationFrame(() => {
+			const q = b.getBoundingClientRect();
+			if (!(q.width > 0 && q.height > 0)) return resolve({ ok: false, reason: 'zero-size target' });
+			const cx = q.left + q.width / 2, cy = q.top + q.height / 2;
+			const hit = document.elementFromPoint(cx, cy);
+			if (!hit || (hit !== b && !b.contains(hit))) return resolve({ ok: false, reason: `target covered by ${hit ? hit.tagName + (hit.className ? '.' + String(hit.className).trim().split(/\s+/).join('.') : '') : 'null'}` });
+			if (window.__skPressOff) { try { window.__skPressOff(); } catch {} }
+			const w = { downCount: 0, upCount: 0, clickCount: 0, untrustedClick: 0, downAt: null, upAt: null, holdMs: 0, screenBefore: window.O55?.S?.sess?.screen || null };
+			const onDown = (e) => { if (e.button === 0 && (e.target === b || b.contains(e.target)) && e.isTrusted) { w.downCount++; if (w.downAt == null) w.downAt = performance.now(); } };
+			const onUp = (e) => { if (e.button === 0 && (e.target === b || b.contains(e.target)) && e.isTrusted) { w.upCount++; w.upAt = performance.now(); if (w.downAt != null) w.holdMs = Math.max(w.holdMs, w.upAt - w.downAt); } };
+			const onClick = (e) => { if (e.target === b || b.contains(e.target)) { if (e.isTrusted) w.clickCount++; else w.untrustedClick++; } };
+			document.addEventListener('pointerdown', onDown, true);
+			document.addEventListener('pointerup', onUp, true);
+			document.addEventListener('click', onClick, true);
+			window.__skPress = w;
+			window.__skPressOff = () => {
+				document.removeEventListener('pointerdown', onDown, true);
+				document.removeEventListener('pointerup', onUp, true);
+				document.removeEventListener('click', onClick, true);
+				window.__skPressOff = null;
+			};
+			resolve({ ok: true });
+		});
+	}), [sel, idx]);
+	if (!prep.ok) return { ok: false, label, note: `press '${label}': ${prep.reason}` };
+	const box = await f.locator(sel).nth(idx).boundingBox();
+	if (!box || !(box.width > 0 && box.height > 0)) {
+		await f.evaluate(() => { if (window.__skPressOff) window.__skPressOff(); window.__skPress = null; });
+		return { ok: false, label, note: `press '${label}': missing boundingBox` };
+	}
+	await t.page.mouse.move(box.x + box.width / 2, box.y + box.height / 2, { steps: 4 });
+	await f.waitForTimeout(restMs);
+	let down = false;
+	try {
+		await t.page.mouse.down();
+		down = true;
+		await f.waitForTimeout(holdMs);
+	} finally {
+		if (down) await t.page.mouse.up();
+	}
+	await f.waitForFunction(() => !!window.__skPress && window.__skPress.clickCount > 0, null, { timeout: 3000 }).catch(() => {});
+	const w = await f.evaluate(() => {
+		if (window.__skPressOff) window.__skPressOff();
+		const res = window.__skPress || null;
+		window.__skPress = null;
+		return res ? { ...res, screenAfter: window.O55?.S?.sess?.screen || null } : null;
+	});
+	const ok = !!w && w.downCount >= 1 && w.upCount >= 1 && w.clickCount >= 1 && w.untrustedClick === 0 && w.holdMs >= minHoldMs;
+	return {
+		ok, label, ...(w || {}),
+		note: ok ? '' : `press '${label}' witness failed: down=${w?.downCount} up=${w?.upCount} click=${w?.clickCount} untrusted=${w?.untrustedClick} holdMs=${w ? w.holdMs.toFixed(1) : 'null'}`
+	};
+}
+
+// Page-side settle witness (FO214-SOL-STAGE-PRESSES): waits until the screen is active, the FO-206 hold has released, and
+// every active non-preview entering prop has a measured box and reached pr.settled, then dwells through the post-settle
+// swing for at least postSettleMs AND at least minPostFrames sampler frames so slow hosts cannot skip post-settle overlap.
+async function waitStageSettled(f, { expectScreen, minProps = 1, postSettleMs = 1800, minPostFrames = 30, timeoutMs = 10000 } = {}) {
+	const settled = await f.waitForFunction(([scr, minP]) => {
+		const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage;
+		if (!st || !window.O55 || window.O55.S.sess.screen !== scr || st.held) return null;
+		const active = [...st.props.values()].filter((p) => p.state !== 'out' && !p.spec.preview);
+		if (active.length < minP) return null;
+		if (!active.every((p) => p.settled && !!p.box)) return null;
+		return { at: performance.now(), frames: window.__sk ? window.__sk.frames : 0, props: active.map((p) => p.spec.kind) };
+	}, [expectScreen, minProps], { timeout: timeoutMs }).then((h) => h.jsonValue(), () => null);
+	if (!settled) {
+		const diag = await f.evaluate(() => {
+			const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage;
+			return {
+				screen: window.O55?.S?.sess?.screen || null,
+				held: st ? !!st.held : null,
+				props: st ? [...st.props.values()].map((p) => ({ kind: p.spec.kind, state: p.state, settled: !!p.settled, box: !!p.box, preview: !!p.spec.preview })) : []
+			};
+		}).catch(() => null);
+		return { ok: false, screen: expectScreen, note: `settle '${expectScreen}' timed out (${JSON.stringify(diag)})` };
+	}
+	const post = await f.waitForFunction(([t0, f0, ms, minF]) => {
+		const elapsed = performance.now() - t0;
+		const frames = window.__sk ? window.__sk.frames - f0 : 0;
+		if (elapsed < ms || frames < minF) return null;
+		return { postMs: Math.round(elapsed), postFrames: frames };
+	}, [settled.at, settled.frames, postSettleMs, minPostFrames], { timeout: Math.max(timeoutMs, postSettleMs + 8000) }).then((h) => h.jsonValue(), () => null);
+	if (!post) return { ok: false, screen: expectScreen, props: settled.props, note: `settle '${expectScreen}' post-dwell did not reach ${postSettleMs}ms/${minPostFrames} frames` };
+	return { ok: true, screen: expectScreen, props: settled.props, ...post, note: '' };
+}
+
+async function nextHeld(t, f, to, settleOpts = {}) {
+	const presses = [];
+	for (let i = 0; i < 8 && (await f.evaluate(() => window.O55.S.sess.screen)) !== to; i++) {
+		const w = await pressHeld(t, f, `${LAYER} .o55-foot .o55-primary`, { label: `continue->${to}` });
+		presses.push(w);
+		if (!w.ok) return { ok: false, note: w.note, presses, settle: null };
+		const moved = await f.waitForFunction((prev) => window.O55?.S?.sess?.screen !== prev, w.screenBefore, { timeout: 5000 }).then(() => true, () => false);
+		if (!moved) return { ok: false, note: `press 'continue->${to}' did not leave '${w.screenBefore}'`, presses, settle: null };
+		const cur = await f.evaluate(() => window.O55.S.sess.screen);
+		if (cur === to) break;
+		await f.waitForFunction(() => { const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage; return !!st && !st.held; }, null, { timeout: 5000 }).catch(() => {});
+	}
+	const cur = await f.evaluate(() => window.O55.S.sess.screen);
+	if (cur !== to) return { ok: false, note: `did not reach '${to}' (at '${cur}')`, presses, settle: null };
+	const settle = await waitStageSettled(f, { expectScreen: to, ...settleOpts });
+	return { ok: settle.ok, note: settle.note, presses, settle };
+}
+
+async function pointHeld(t, f, act, expectScreen, settleOpts = {}) {
+	const w = await pressHeld(t, f, `${LAYER} [data-o55-do="${act}"]`, { label: `${act}->${expectScreen}` });
+	if (!w.ok) return { ok: false, note: w.note, presses: [w], settle: null };
+	const arrived = await f.waitForFunction((scr) => window.O55?.S?.sess?.screen === scr, expectScreen, { timeout: 5000 }).then(() => true, () => false);
+	if (!arrived) {
+		const cur = await f.evaluate(() => window.O55?.S?.sess?.screen || null);
+		return { ok: false, note: `press '${act}->${expectScreen}' landed on '${cur}'`, presses: [w], settle: null };
+	}
+	const settle = await waitStageSettled(f, { expectScreen, ...settleOpts });
+	return { ok: settle.ok, note: settle.note, presses: [w], settle };
+}
+
 // judges one of this file's keep-off assertions, each of which needs the sampler to have seen a leaving prop.
 // A slow GPU can drop every frame of the leaving phase (TOOL-ISSUES F13-NAS1-KEEPOFF-SAMPLES: Nas1 head runs with
 // 0 leaving samples and 0 overlaps), and such an attempt judged nothing: it must not pass, but before it fails the
@@ -123,16 +257,16 @@ const result = async (t, f) => { const S = await f.evaluate(() => { const S = wi
 // overlap (S.hits) from any attempt fails the assertion at once; thresholds and the overlap rule are unchanged, and
 // after three attempts with no leaving sample the assertion fails as unjudged rather than as a product defect.
 async function keepoff(t, run, tag, what, fail0 = () => '') {
-	let ok = true, S = null; const frames = [];
+	let ok = true, note = '', S = null; const frames = [];
 	for (let a = 0; a < 3; a++) {
-		({ ok = true, S } = await run());
+		({ ok = true, note = '', S } = await run());
 		if (!ok || S.hits.length || S.frames <= 200 || S.leaving > 0) break;
 		frames.push(S.frames);
 	}
 	const title = `${tag}: ${what}`;
 	return frames.length === 3
 		? t.check(title, false, `could not judge: no leaving sample in 3 attempts (${frames.join(', ')} frames each)`)
-		: t.check(title, ok && S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${fail0(ok)}${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps: ${S.hits.slice(0, 3).join(' ; ')}`);
+		: t.check(title, ok && S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${fail0(ok, note)}${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps: ${S.hits.slice(0, 3).join(' ; ')}`);
 }
 
 async function nier(t, mode) {
@@ -178,16 +312,26 @@ async function nier(t, mode) {
 }
 
 async function leave(t, mode) {
-	for (const look of t.args.leaveLooks ? String(t.args.leaveLooks).split(',') : ['glass-dark', 'basic-light', 'friendly-light', 'retro-light', 'retro-dark']) for (const size of [[1920, 1080], [1390, 900], [860, 768], [740, 768]]) {
+	const looks = t.args.leaveLooks ? String(t.args.leaveLooks).split(',') : ['glass-dark', 'basic-light', 'friendly-light', 'retro-light', 'retro-dark'];
+	const sizes = t.args.leaveSizes
+		? String(t.args.leaveSizes).split(',').map((s) => s.split('x').map(Number))
+		: [[1920, 1080], [1390, 900], [860, 768], [740, 768]];
+	for (const look of looks) for (const size of sizes) {
 		const tag = `${look} ${size.join('x')} ${mode}`;
 		await keepoff(t, async () => {
 			const f = await openAt(t, mode, look, size, 'name');
 			await nameIt(t, f);
-			const ok = await next(t, f, 'safe');
-			await point(t, f, mode, 'online'); await point(t, f, mode, 'back');
-			await next(t, f, 'review'); await f.waitForTimeout(1500);
-			return { ok, S: await result(t, f) };
-		}, tag, 'Name > Safe > Add one > Back > Review: no prop under the bubble', (ok) => ok ? '' : 'did not reach Safe; ');
+			const steps = [];
+			const s1 = await nextHeld(t, f, 'safe'); steps.push(s1);
+			const s2 = s1.ok ? await pointHeld(t, f, 'online', 'online-service') : { ok: false, note: 'skipped online', presses: [], settle: null }; steps.push(s2);
+			const s3 = s2.ok ? await pointHeld(t, f, 'back', 'safe') : { ok: false, note: 'skipped back', presses: [], settle: null }; steps.push(s3);
+			const s4 = s3.ok ? await nextHeld(t, f, 'review') : { ok: false, note: 'skipped review', presses: [], settle: null }; steps.push(s4);
+			const bad = steps.find((s) => !s.ok);
+			const holds = steps.flatMap((s) => (s.presses || []).map((p) => `${p.label}:${p.holdMs != null ? Math.round(p.holdMs) : '-'}ms`)).join(',');
+			const settles = steps.filter((s) => s.settle).map((s) => `${s.settle.screen}:${s.settle.postMs}ms/${s.settle.postFrames}f`).join(',');
+			t.log(`${tag}: held=[${holds}] settled=[${settles}]${bad ? ` fail=${bad.note}` : ''}`);
+			return { ok: !bad, note: bad ? `${bad.note}; ` : '', S: await result(t, f) };
+		}, tag, 'Name > Safe > Add one > Back > Review: no prop under the bubble', (ok, note) => (ok ? '' : note || 'did not reach Safe; '));
 	}
 }
 
