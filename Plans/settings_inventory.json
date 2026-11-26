@@ -16417,7 +16417,7 @@
       "label":
         "Code Mode",
       "desc":
-        "Lets new work you start use several Puppet Master tools in one step with a short script where the run allows it, each use still checked; when off, it calls those tools directly where it can use them.",
+        "Lets new work use several Puppet Master tools in one step with a short script where the run allows it, each use still checked; when off, or where it can't, the agent calls those tools directly.",
       "type": "toggle",
       "default": true,
       "scope": [

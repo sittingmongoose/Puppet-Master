@@ -3,9 +3,11 @@
 // Settings Search for "Code Mode" lists a result named Code Mode; the result opens a page that draws the row with the
 // inventory's label and sentence and one switch; the switch starts On (the inventory default), a click turns it Off,
 // and a second click turns it On again. In each of the three states the switch itself has to be shown (opacity-aware
-// computed visibility, box inside the window and every clipping ancestor), carry the row's label as its name, and be
-// drawn in the state aria-checked reports (the .on class and the knob's place); Off also has to survive leaving the
-// row and finding it again by Search (max review: aria-checked alone can pass a transparent or stale-drawn switch).
+// computed visibility, box inside the window and every clipping ancestor), really paint (its pixels differ from the
+// same spot with the switch hidden, and again with only its knob hidden, so no filter or transparent knob passes),
+// carry the row's label as its computed accessible name (found by role and name, not by reading aria-label), and be
+// drawn in the state aria-checked reports (the .on class, and the knob's centre on the far or near half of the
+// track); Off also has to survive leaving the row and finding it again by Search, and the On and Off pictures differ.
 // Judged from the row's own markup (data-setting-id / data-setting), never from a position on the page.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-code-mode-row.check.mjs --set page=<build>
 // --set size=1440x900 changes the window. --set shots=basic-light,basic-dark also takes one picture of the row among
@@ -52,12 +54,17 @@ const ROW = ([id, label, desc]) => {
 	};
 	/* the switch as drawn: shown like the words are, named, and painted in the state it reports. The knob (::after) sits
 	   at its start when Off and is moved along the track when On; the .on class is what the styles key on. */
-	const knob = getComputedStyle(sw, '::after').transform;
+	const kcs = getComputedStyle(sw, '::after');
+	const knob = kcs.transform;
 	const knobX = knob && knob !== 'none' ? Math.round(new DOMMatrixReadOnly(knob).m41) : 0;
+	/* where the knob's centre sits along the track, from its own box (left, width) and its shift; the track's middle
+	   is the line between "at the start" and "moved across" */
+	const knobCentre = (parseFloat(kcs.left) || 0) + (parseFloat(kcs.width) || 0) / 2 + knobX;
+	const knobStyled = kcs.content !== 'none' && kcs.display !== 'none' && kcs.visibility === 'visible' && Number(kcs.opacity) > 0.5 && parseFloat(kcs.width) >= 6 && parseFloat(kcs.height) >= 6;
 	return { drawn: true, checked: sw.getAttribute('aria-checked'), lines: lines.slice(0, 12), text: lines.join(' ').slice(0, 600),
 		labelShown: shown(holder(label)), descShown: shown(holder(desc)),
 		switchShown: shown(sw) && Number(getComputedStyle(sw).opacity) > 0.5 && r.width >= 16 && r.height >= 10,
-		switchName: sw.getAttribute('aria-label') || '', onClass: sw.classList.contains('on'), knobX,
+		onClass: sw.classList.contains('on'), knobX, knobCentre: Math.round(knobCentre * 10) / 10, trackMid: Math.round(r.width / 2 * 10) / 10, knobStyled,
 		/* the setting's own value, read back from Settings, not from the switch's markup */
 		stored: (typeof PM51 !== 'undefined' && PM51 && typeof PM51.value === 'function') ? PM51.value(id) : 'unreadable',
 		switches: row.querySelectorAll('.toggle[role="switch"]').length, inView: r.top >= 0 && r.bottom <= innerHeight, at: [Math.round(r.left), Math.round(r.top)] };
@@ -92,14 +99,49 @@ export default async function (t) {
 		return { at, titles };
 	};
 	const read = () => f.evaluate(ROW, [ID, norm(INV.label), norm(INV.desc)]);
+	/* three pictures of the switch's own box, pointer parked away and motion settled: as drawn, with the switch hidden,
+	   and with only its knob (::after) hidden. Byte-equal pictures mean the hidden part painted nothing. */
+	const paint = async () => {
+		/* a handle to the element itself: the locator asks for a visible switch and would lose it once hidden */
+		const el = await f.locator(SW).first().elementHandle();
+		await t.page.mouse.move(4, 4);
+		await t.page.waitForTimeout(700);
+		const b = await el.boundingBox();
+		const clip = { x: Math.floor(b.x), y: Math.floor(b.y), width: Math.ceil(b.width), height: Math.ceil(b.height) };
+		const drawn = await t.page.screenshot({ clip });
+		let noSwitch, noKnob;
+		try {
+			await el.evaluate((node) => node.style.setProperty('visibility', 'hidden', 'important'));
+			noSwitch = await t.page.screenshot({ clip });
+			await el.evaluate((node) => {
+				node.style.removeProperty('visibility');
+				const st = document.createElement('style');
+				st.id = 'cm-row-check-knob-off';
+				st.textContent = `.toggle[role="switch"][data-setting="${node.getAttribute('data-setting')}"]::after { visibility: hidden !important; }`;
+				document.head.appendChild(st);
+			});
+			noKnob = await t.page.screenshot({ clip });
+		} finally {
+			/* always put the page back as it was */
+			await el.evaluate((node) => { node.style.removeProperty('visibility'); const st = document.getElementById('cm-row-check-knob-off'); if (st) st.remove(); }).catch(() => {});
+		}
+		return { drawn, noSwitch, noKnob };
+	};
 	/* one state, judged whole: reported, shown, named and drawn alike */
 	const judge = async (when, row, on) => {
 		await t.check(`${when}: aria-checked says ${on ? 'On' : 'Off'}`, row.drawn === true && row.checked === String(on), JSON.stringify(row));
 		if (!row.drawn) return;
 		await t.check(`${when}: the setting's own value, read back from Settings, is ${on}`, row.stored === on, `PM51.value: ${JSON.stringify(row.stored)}`);
-		await t.check(`${when}: the switch is named by the inventory label`, sameLabel(row.switchName), row.switchName);
+		/* the computed accessible name: the switch for this setting is among the switches Chrome names "Code Mode"
+		   (aria-labelledby would win over aria-label, so the attribute alone is not read) */
+		const named = await f.getByRole('switch', { name: CANON_LABEL, exact: true }).evaluateAll((els, id) => els.filter((el) => (el.getAttribute('data-setting') === id || el.closest(`[data-setting-id="${id}"]`)) && el.checkVisibility()).length, ID);
+		await t.check(`${when}: the switch's computed accessible name is the inventory label`, INV.label === CANON_LABEL && named === 1, `switches for ${ID} with the role switch and the name "${CANON_LABEL}": ${named}`);
 		await t.check(`${when}: the switch itself is shown (opacity-aware visibility, box inside the window and every clipping ancestor)`, row.switchShown === true, JSON.stringify(row));
-		await t.check(`${when}: the switch is drawn ${on ? 'On' : 'Off'}, as aria-checked says (the .on class and the knob's place)`, row.onClass === on && (on ? row.knobX > 0 : row.knobX === 0), `class on ${row.onClass}, knob at ${row.knobX}`);
+		const pic = await paint();
+		await t.check(`${when}: the switch paints: its pixels differ from the same spot with the switch hidden`, !pic.drawn.equals(pic.noSwitch), `${pic.drawn.length} and ${pic.noSwitch.length} bytes`);
+		await t.check(`${when}: the knob paints: the pixels differ from the same spot with only the knob hidden`, row.knobStyled === true && !pic.drawn.equals(pic.noKnob), `knob styled ${row.knobStyled}`);
+		await t.check(`${when}: the switch is drawn ${on ? 'On' : 'Off'}, as aria-checked says (the .on class, and the knob's centre ${on ? 'past' : 'short of'} the middle of the track)`, row.onClass === on && (on ? row.knobCentre > row.trackMid + 2 : row.knobCentre < row.trackMid - 2), `class on ${row.onClass}, knob centre ${row.knobCentre} of a track whose middle is ${row.trackMid}`);
+		return pic.drawn;
 	};
 
 	await t.check('the inventory row\'s label is spelled as Tools T-191 fixes it, "Code Mode"', INV && INV.label === CANON_LABEL, String(INV && INV.label));
@@ -117,12 +159,13 @@ export default async function (t) {
 	await t.check('the label and the complete sentence pass the computed visibility checks, and their boxes fit inside the window and every scrolling or clipping ancestor', row.labelShown === true && row.descShown === true, `label ${row.labelShown}, sentence ${row.descShown}`);
 	await t.check('the row has exactly one switch', row.switches === 1, String(row.switches));
 	await t.check('the inventory row\'s default is On', INV.default === true, JSON.stringify(INV.default));
-	await judge('at first, the inventory default', row, INV.default === true);
+	const onPic = await judge('at first, the inventory default', row, INV.default === true);
 
 	await f.locator(SW).first().click();
 	await t.settle();
 	await t.page.waitForTimeout(900);
-	await judge('after one click', await read(), false);
+	const offPic = await judge('after one click', await read(), false);
+	await t.check('the Off picture of the switch differs from the On picture', !!onPic && !!offPic && !onPic.equals(offPic), 'compared the two pictures of the switch\'s box');
 
 	/* Off is kept, not only painted: leave the row for Settings Home, find it again by Search, and it is still Off */
 	await f.locator('#pm-settings-root [data-action="home"]:visible').first().click();
@@ -136,7 +179,8 @@ export default async function (t) {
 	await f.locator(SW).first().click();
 	await t.settle();
 	await t.page.waitForTimeout(900);
-	await judge('after a second click', await read(), true);
+	const onAgain = await judge('after a second click', await read(), true);
+	await t.check('the second On picture of the switch differs from the Off picture', !!onAgain && !!offPic && !onAgain.equals(offPic), 'compared the two pictures of the switch\'s box');
 
 	for (const look of (t.args.shots ? String(t.args.shots).split(',').filter(Boolean) : [])) {
 		await setLookBySetting(t, f, look);
