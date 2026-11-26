@@ -14716,11 +14716,32 @@ This addendum repairs non-runtime FileSafe rows without creating WorkNodes, impl
 
 This completes `sfk-e8baa3796f5c29cdb66f46eb` for the "bounded per-run log quotas" and "log sampling levels" of F2-197; the redaction hook stays where F2-195 puts it. Every log or trace event bound for disk passes these steps in this order, and a later step never runs on an event an earlier step dropped: (1) sensitivity classification; (2) `RedactionSettlement` (F2-195); (3) severity and sampling filter; (4) quota check; (5) write. Disk bytes are counted after redaction, as the serialized record written.
 
+**`RedactionSettlement` and `ObservabilityEnvelope` fields.** Both records are closed. These tables type the 2026-07-08 field lists above; `ObservabilityEnvelope` also carries `run_id`, which per-run quota accounting needs. `identity_id` and `non_secret_ref` use the like-named definitions in `Plans/source_control_contracts.schema.json`. All timestamps are RFC 3339 UTC strings. All fields are required unless their presence rule says otherwise.
+
+| `RedactionSettlement` field | Type and presence rule |
+| --- | --- |
+| `settlement_id` | `identity_id`; identifies this exact pre-write decision |
+| `source_ref` | `non_secret_ref`; opaque identity of the classified source, never a raw payload or local path |
+| `redaction_profile_id` | `identity_id`; exact redaction profile applied |
+| `decision` | Closed enum `clean` (content can be written as classified), `redacted` (write the redacted artifact), `blocked` (write no content; count one dropped event) |
+| `redacted_artifact_ref` | `non_secret_ref`; present only for `redacted`, names only the sanitized output to be written |
+| `blocked_reason_code` | Non-empty string; present only for `blocked`, carrying the redaction owner's reason code and no raw text |
+| `created_at_utc` | UTC timestamp of settlement |
+
+| `ObservabilityEnvelope` field | Type and presence rule |
+| --- | --- |
+| `envelope_id`, `trace_id`, `run_id` | `identity_id`; exact envelope, trace and owning run used for quota accounting |
+| `event_refs[]` | Non-empty ordered array of unique `non_secret_ref`; references only events covered by this settlement and admitted by filtering and quotas, never discarded content |
+| `sampling_policy_id` | `identity_id`; identifies the `TracePersistencePolicy.policy_id` in force when the envelope was created |
+| `quota_class` | Closed enum `provider_trace`, `stream` (WebSocket/SSE), `terminal`, `subagent`, `tool`, `mcp`, `memory`, `support_bundle`; all classes share the same per-run total |
+| `redaction_settlement_id` | `identity_id`; resolves to the exact `clean` or `redacted` settlement for every event named by the envelope |
+| `created_at_utc` | UTC timestamp of envelope creation |
+
 **`TracePersistencePolicy` fields and limits.**
 
 | Field | Type | Allowed values | Default |
 | --- | --- | --- | --- |
-| `policy_id` | string | non-empty | — |
+| `policy_id` | `identity_id` | non-empty | — |
 | `sampling_level` | enum | `errors`, `standard`, `debug` | `standard` |
 | `sample_rate` | number | 0.0 to 1.0 inclusive | 1.0 |
 | `max_bytes_per_trace` | integer bytes | 1 MiB to 64 MiB | 8 MiB |
@@ -14730,17 +14751,15 @@ This completes `sfk-e8baa3796f5c29cdb66f46eb` for the "bounded per-run log quota
 | `redaction_required` | boolean | always `true` for any persisted trace | `true` |
 | `export_allowed` | boolean | `true` only when the user enables the optional OTLP export adapter | `false` |
 
-**Sampling levels.** Event severities are `error`, `warn`, `info`, `debug`, `trace`. `errors` persists `error` and `warn`; `standard` adds `info`; `debug` adds `debug` and `trace`, subject to `sample_rate`. `sample_rate` applies only to `debug` and `trace` events and only at level `debug`. The decision is per trace, so a kept trace is complete: its `debug`/`trace` events persist when the first 8 bytes of `sha256(trace_id)`, read as an unsigned big-endian integer and divided by 2^64, are less than `sample_rate`. `error` and `warn` events, and the join events usage needs (attempt start, attempt end, and each usage record carrying `attempt_id`), are never sampled out at any level.
+**Sampling levels.** Event severities are `error`, `warn`, `info`, `debug`, `trace`. `errors` persists `error` and `warn`; `standard` adds `info`; `debug` adds `debug` and `trace`, subject to `sample_rate`. `sample_rate` applies only to `debug` and `trace` events and only at level `debug`. The sampling decision is per trace and applies uniformly to all eligible events: its `debug`/`trace` events persist when the first 8 bytes of `sha256(trace_id)`, read as an unsigned big-endian integer and divided by 2^64, are less than `sample_rate`. `error` and `warn` events, and the join events usage needs (attempt start, attempt end, and each usage record carrying `attempt_id`), are never sampled out at any level.
 
 **Terminal streams.** Terminal output is persisted as chunks, never per character: bytes are coalesced and a chunk is written when `terminal_coalesce_ms` has passed since the chunk opened or it reaches 64 KiB, whichever is first.
 
-**`quota_class`** on `ObservabilityEnvelope` is a closed enum: `provider_trace`, `stream` (WebSocket/SSE), `terminal`, `subagent`, `tool`, `mcp`, `memory`, `support_bundle`. Every class counts toward the same per-run total; quotas reset when a new run starts.
+**Overflow.** Before each write, check whether its serialized redacted bytes would exceed either cap. After crossing the base limit for the trace or the run, only `error`, `warn` and usage join events can use that scope's reserve of 10% of its limit (rounded down to whole bytes). The write must fit both applicable caps, including any available reserve. The writer counts each quota-rejected event once per run even if both caps refuse it. `dropped_bytes` counts the size of those serialized redacted records. A blocked redaction contributes one `dropped_events` and zero `dropped_bytes` because it yields no safe serialized record. Filtering and sampling exclusions are outside these counts. A new run starts with fresh quotas.
 
-**Overflow.** When a trace reaches `max_bytes_per_trace`, or a run reaches `max_bytes_per_run`, `info`, `debug` and `trace` events for that trace or run stop persisting. `error`, `warn` and usage join events continue into a reserve of 10% of the limit that was reached; past the reserve nothing more of that trace or run is written. On first overflow exactly one `quota_exceeded` marker is written, carrying `trace_id` or `run_id`, the limit reached, and running counts of dropped events and dropped bytes, which are updated in place of further writes. Overflow never pauses, fails or slows the run, and the run's log view shows "Log limit reached; N events not saved".
+**Quota marker.** The trace writer owns one bounded diagnostic summary per exact `run_id`. On the first quota refusal it sets one `quota_exceeded` marker on that summary, with `scope: trace | run`, `limit_bytes` and `trace_id` only when `scope=trace`. If both limits refuse the same write, record the run limit. The writer maintains `dropped_events` and `dropped_bytes` as monotonic, saturating unsigned 64-bit totals and publishes the final totals at run settlement. The marker and totals occupy one mutable redacted projection value, at most 1 KiB per run, accounted separately from the trace-event budget. Storage-plan §2.3.1 registration for that diagnostic value is required before durable publication. The projection is not an `EventRecord`; it never rewrites seglog or persists one event per drop. Live accounting stays with the trace writer, and overflow never pauses, fails or slows the run. The run's log view shows "Log limit reached; N events not saved" while the counts are available and shows the limit without a number if the summary cannot be verified.
 
-**Other enums.** `RedactionSettlement.decision` is `clean` (nothing to redact; written as is), `redacted` (written from `redacted_artifact_ref`) or `blocked` (not written; `blocked_reason_code` set; counted as a dropped event). `ObservabilityEnvelope.sampling_policy_id` names the `TracePersistencePolicy.policy_id` in force when the envelope was created.
-
-**Acceptance.** (1) With defaults, a run whose events exceed 256 MiB after redaction writes at most 256 MiB plus the 10% reserve, the reserve holds only `error`, `warn` and usage join events, and exactly one `quota_exceeded` marker exists with correct dropped counts. (2) The same `trace_id` and `sample_rate` give the same keep or drop decision on every run and machine. (3) At level `errors`, no `info`, `debug` or `trace` event is on disk, and every usage record still joins by `attempt_id`. (4) A terminal emitting one character per millisecond for 10 s writes at most 10 s / `terminal_coalesce_ms` + 1 chunks. (5) An event whose settlement is `blocked` is never on disk and appears in the dropped count.
+**Acceptance.** (1) With defaults, a run whose events exceed 256 MiB after redaction writes at most 256 MiB plus the 10% reserve, the reserve holds only `error`, `warn` and usage join events, and exactly one `quota_exceeded` marker exists with correct dropped counts. (2) The same `trace_id` and `sample_rate` give the same keep or drop decision on every run and machine. (3) At level `errors`, no `info`, `debug` or `trace` event is on disk, and every admitted usage record still joins by `attempt_id`. (4) A terminal emitting one character per millisecond for 10 s writes at most 10 s / `terminal_coalesce_ms` + 1 chunks. (5) An event whose settlement is `blocked` is never on disk and appears in the dropped count.
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
 ## FABLE Remaining Action Plan Repair Notes (2026-07-08)

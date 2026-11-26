@@ -334,7 +334,7 @@ File keys are the `*_override` spellings above, never the bare GUI labels `perso
 | `enabled` | Optional | `boolean` | Command availability. Default `true` when absent. `false` hides the command from chat and the palette; the file stays in place. GUI label `Enabled`. |
 | `subtask` | Optional | `boolean` | Canonical child-run boundary (§4.2). Preserved through every file round-trip; default `false` on create. |
 
-GUI↔file mapping (lossless, both directions): GUI `template` is the Markdown body; GUI `description`, `subtask`, `override_builtin`, `enabled` copy by value with the defaults above; GUI `persona`/`mode`/`permissionsProfile` map to `persona_override`/`mode_override`/`permissions_profile_override` with `Inherit`/empty omitting the file key. GUI `argumentsHint` binds to `arguments[0].hint`: reading a missing array, missing item, or missing `hint` key yields `""`; writing a non-empty hint sets exactly that key (creating array/item as needed) and preserves every other item and key; writing `""` removes the `hint` key, drops the item if it becomes empty, and drops the field if the array becomes empty. Richer `arguments` arrays round-trip byte-stable through edits that do not touch the hint. The file spec never adopts bare GUI key spellings without this mapping.
+GUI↔file mapping (lossless, both directions): GUI `template` is the Markdown body; GUI `description`, `subtask`, `override_builtin`, `enabled` copy by value with the defaults above; GUI `persona`/`mode`/`permissionsProfile` map to `persona_override`/`mode_override`/`permissions_profile_override` with `Inherit`/empty omitting the file key. GUI `argumentsHint` binds to `arguments[0].hint`: reading a missing array, missing item, or missing `hint` key yields `""`; writing a non-empty hint sets exactly that key (creating array/item as needed) and preserves every other item and key; writing `""` removes only the `hint` key. An item left with no keys is dropped only when it is the sole item, and the `arguments` field is then dropped too; when later items exist, the emptied first item stays as `{}` so every later argument keeps its position. Richer `arguments` arrays round-trip byte-stable through edits that do not touch the hint. The file spec never adopts bare GUI key spellings without this mapping.
 
 Argument authoring boundary (2026-11-25): the GUI authors exactly one argument value, `Arguments hint` (`argumentsHint`, at most 200 characters), in the New Command form (§6.1.3) and in the hero sheet (F2 of the 2026-09-26 Commands & Shortcuts census). There is no GUI list editor for `arguments`: an item's `name` and `required`, and every item after `arguments[0]`, are authored in the command file, and the GUI's hint edits preserve them. Item keys other than `name`, `hint` and `required` are unknown keys: readers keep them byte-stable and never act on them. This table is the only live item shape; the 2026-07-08 FABLE addendum's richer item fields are retired (see that addendum).
 
@@ -552,7 +552,7 @@ Sorted alphabetically by name; project-local entries sort before global when nam
 "New Command" button opens an editor form with:
 - **Name** (text input; validated per §2.5; collision check per §2.4)
 - **Description** (text input; required; max 200 chars)
-- **Arguments hint** (text input; optional; max 200 chars; writes `arguments[0].hint` through the §3.2 GUI↔file mapping; an empty value writes no `arguments` field)
+- **Arguments hint** (text input; optional; max 200 chars; writes `arguments[0].hint` through the §3.2 GUI↔file mapping; a new command starts with no `arguments` field, so leaving the hint empty at `Create command` writes none)
 - **Persona** (dropdown populated from Persona registry, or null)
 - **Mode** (dropdown: inherit / ask / plan / regular / yolo)
 - **Subtask** (toggle; default off)
@@ -565,6 +565,8 @@ Scope selector: project-local or global.
 #### 6.1.4 Edit
 
 Row click or edit button opens the same editor pre-populated. Editing a global command while a project is active offers "Save as project override" (creates project-local copy) or "Save globally."
+
+Under the 2026-09-26 Commands & Shortcuts census (Owned local file actions, F2), an existing command is edited in the hero sheet: each field, `Arguments hint` included, commits on edit through `commands.update`, and the two save labels above are the retired first-draft spellings. Clearing `Arguments hint` on an existing command follows the §3.2 mapping: it removes only `arguments[0].hint` and keeps the item's other keys and every later item.
 
 #### 6.1.5 Delete
 

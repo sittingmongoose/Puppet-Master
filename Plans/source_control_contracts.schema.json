@@ -7416,6 +7416,10 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 256
+        },
+        "include_untracked": {
+          "type": "boolean",
+          "description": "The explicit decision for the selected batch. Required by the owner when the batch contains whole-file paths."
         }
       }
     },
@@ -7552,6 +7556,7 @@
             "output_invalid",
             "suggestion_not_found",
             "stage_failed",
+            "stage_effect_unknown",
             "backend_unsupported"
           ]
         },
@@ -7781,10 +7786,7 @@
           "if": {
             "properties": {
               "command_id": {
-                "enum": [
-                  "cmd.source_control.suggest_commit_batches",
-                  "cmd.source_control.accept_commit_group"
-                ]
+                "const": "cmd.source_control.suggest_commit_batches"
               }
             },
             "required": [
@@ -7800,13 +7802,60 @@
                   "permission_denied",
                   "assistant_unavailable",
                   "assistant_failed",
-                  "output_invalid",
+                  "output_invalid"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.accept_commit_group"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "failure_code": {
+                "enum": [
+                  "payload_invalid",
+                  "status_stale",
+                  "permission_denied",
                   "suggestion_not_found",
                   "stage_failed",
+                  "stage_effect_unknown",
                   "backend_unsupported"
                 ]
               }
             }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "failure_code": {
+                "const": "stage_effect_unknown"
+              }
+            },
+            "required": [
+              "failure_code"
+            ]
+          },
+          "then": {
+            "properties": {
+              "retry_attempts": {
+                "const": 0
+              }
+            },
+            "required": [
+              "suggestion_set_id",
+              "batch_id"
+            ]
           }
         },
         {
