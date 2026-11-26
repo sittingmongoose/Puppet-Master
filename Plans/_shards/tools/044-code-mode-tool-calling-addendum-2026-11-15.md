@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L13358-L13791
+Source lines: L13358-L13798
 
-Source SHA256: `7163b0a544dd694a17505bdfc6d9ff571c9b9676d2dee12b7aa69312e927e27b`
+Source SHA256: `917e516bf384e8db5e48fa6c37d9990a32a6888e1316849ae63594fcf992dfc8`
 
 ---
 
@@ -89,8 +89,8 @@ acceptance_criteria:
   - A run that requested Code Mode and ended before the offer was decided for any request records its effective mode as not applicable with no typed reason; a request whose offer was decided counts even if it was never sent to the provider.
   - A run whose effective mode is mixed or ordinary tool calls carries exactly one typed reason, and no surface describes that run as Code Mode.
   - A run that requested Code Mode and is recorded as mixed or ordinary tool calls shows that effective mode and typed reason on its own status or stop entry in the transcript, and on every other surface that shows its tool-calling mode. This holds whichever request contributed the reason and whether or not any request was sent or produced a turn, including a DAE launch that was prepared and never spawned, or spawned and ended before any provider turn. A run whose policy denies the script tool on every request shows ordinary tool calls with the reason policy when no earlier reason in the order counts, and with that earlier reason when one does, for example when there is also no positive report of an approved JavaScript EvalSession.
-  - The script tool is not offered on a request for which Shared Integration Runtime gives no positive report of a product-approved JavaScript EvalSession for the exact Host/Environment, whether it reports none, is unavailable, or its approval evidence is missing or stale; that request's tools travel by the route's ordinary tool-call path under T-189, and a run that is ordinary or mixed for that cause records the typed reason no approved JavaScript EvalSession.
-  - A request with the row On, a positive report of an approved JavaScript EvalSession and policy admission, whose script tool is left out by selection or materialization under T-176 (not_selected, budget_deferred or schema_unavailable), is not offered the script tool; its request-selected tools travel by the ordinary path within the same bounds, and a run that is ordinary or mixed for that cause records the typed reason not materialized.
+  - The script tool is not offered on a request for which Shared Integration Runtime gives no positive report of a product-approved JavaScript EvalSession for the exact Host/Environment, whether it reports none, is unavailable, or its approval evidence is missing or stale; that request's tools travel by the route's ordinary tool-call path under T-189, and a run that is ordinary or mixed records the typed reason no approved JavaScript EvalSession when that is the earliest counted reason in this unit's order.
+  - A request with the row On, a positive report of an approved JavaScript EvalSession and policy admission, whose script tool is left out by selection or materialization under T-176 (not_selected, budget_deferred or schema_unavailable), is not offered the script tool; its request-selected tools travel by the ordinary path within the same bounds, and a run that is ordinary or mixed records the typed reason not materialized when that is the earliest counted reason in this unit's order. When one run has both causes on requests that count, on a route that keeps no native tools, it records no approved JavaScript EvalSession, the earlier of the two, and only that.
   - A run that requests Code Mode on a direct API route that keeps no native tools Puppet Master cannot disable, and is offered the script tool on its first requests but not on later ones because Shared Integration Runtime then reports no approved JavaScript EvalSession, records Code Mode when nothing, or only the directly callable tools named in T-190, was dispatched on the later requests, including when an ordinary call the model wrote there was rejected before dispatch, and mixed with the typed reason no approved JavaScript EvalSession when any other Puppet Master tool was dispatched on them.
   - The same run under the DAE strategy, on a CLI that accepts projected Puppet Master tools, or on any other route that keeps native tools Puppet Master cannot disable, records mixed in both cases, with the typed reason provider-kept native tools in the first case and no approved JavaScript EvalSession in the second.
   - A run whose only request had the script tool offered, on a route that keeps native tools Puppet Master cannot disable, and was stopped before that request was sent, records mixed with the typed reason provider-kept native tools.
@@ -162,15 +162,21 @@ canonical_text: >-
   in-band tool calls in that same owned dialect, under the same admission gate, call-ID and discarded-result rules;
   that is the ordinary tool-call path of such a route. On a direct API in-band route the result of an accepted
   in-band call, of the script tool or of an ordinary tool, goes back to the model in the next request, if one is
-  admitted and sent, as a Puppet
+  admitted and sent on a route that can carry the same dialect, as a Puppet
   Master-authored result in the owned dialect, tied to the Puppet Master-minted call ID, through the prompt
   transport that route permits, with its content shaped and replayed as Prompt_Pipeline's tool-result rules say, and when no later request is
-  sent the result and the stop keep their existing owners' handling; on
+  sent the result and the stop keep their existing owners' handling, while a later request on a different model
+  family or carriage takes the settled call and result pair through Prompt_Pipeline's replay and compatibility
+  rules, by the call's existing receipt, rather than in the old dialect; on
   a bridged CLI under HTE the hosted action loop returns the result as Run_Modes says. The carriage follows the route, not the model's
   tool_use flag alone: a bridged CLI under HTE that reports structured tool intents carries the request-selected
   tools as structured tool intents through the hosted action loop as before, a cooperative SDK or protocol route
   keeps returning tool intents to Puppet Master and a server bridge keeps its Puppet Master tool and MCP projection
-  as CLI_Bridged_Providers describes those classes, a DAE route follows the next sentence,
+  as CLI_Bridged_Providers describes those classes. A server bridge shows a request only the projection bound to
+  that run's own provider session, so one run's offer never changes what another run is shown; where a bridge
+  cannot keep runs apart in that way, for example because its tool configuration is shared by every run on the
+  profile, the script tool is not offered through it to any run, every run on it uses the bridge's ordinary
+  projection, and for a run that requested Code Mode that is T-188's not materialized reason. A DAE route follows the DAE sentences below,
   and a route that accepts no Puppet Master tools carries none. Each call travels by exactly one channel. Wherever
   this unit says the request-selected tools are carried or projected on an ordinary request, it means those the
   ordinary form materializes under T-176; a tool that owner defers or cannot materialize keeps its explicit
@@ -220,7 +226,8 @@ unblocks: [T-191]
 acceptance_criteria:
   - Under Host Tool Execution a request on which the script tool is offered carries it and does not also carry one provider tool schema per registry tool the script can call; a request on which it is not offered keeps the ordinary tool-call path.
   - A model whose Models_System tool_use is false can use Code Mode through an owned in-band dialect on an in-band route, and a tool result the model wrote itself never reaches replayable history.
-  - On a direct API in-band route, the result of an accepted in-band call, from a script or from an ordinary tool, reaches the model in the next request, if one is admitted and sent, as a Puppet Master-authored result in the owned dialect carrying the Puppet Master-minted call ID; when no later request is sent, the result and the stop keep their existing owners' handling.
+  - On a direct API in-band route, the result of an accepted in-band call, from a script or from an ordinary tool, reaches the model in the next request, if one is admitted and sent on a route that can carry the same dialect, as a Puppet Master-authored result in the owned dialect carrying the Puppet Master-minted call ID; when no later request is sent, the result and the stop keep their existing owners' handling; when the next request uses a different model family or carriage, the settled call and result pair goes through Prompt_Pipeline's replay and compatibility rules instead.
+  - Two runs on the same server-bridge profile, one with the row On and one with it Off, are each shown only their own projection; on a bridge that cannot keep them apart, neither is offered the script tool and both use the bridge's ordinary projection.
   - On a request on which the script tool is not offered, for any reason, on an in-band route (a direct API route under Host Tool Execution whose model's tool_use capability is false, or a bridged CLI under the HTE strategy without supported structured tool intents), every Puppet Master tool call made on that request is an in-band tool call in the owned dialect, under the same admission gate; on a bridged CLI under HTE with supported structured tool intents the same calls are structured tool intents, never in-band.
   - Under the DAE strategy, on a request on which the script tool is not offered, for any reason, a CLI that accepts projected Puppet Master tools is offered each request-selected Puppet Master tool that the ordinary form materializes as its own projected tool, and Puppet Master dispatches each call with the checks a script's call to that tool gets.
   - A run offered the script tool on some requests and not on others carries, on every request that is sent and whose route can carry Puppet Master tools, that request's selected tool calls by the one channel this unit gives it. A request stopped before it is sent carries nothing and is recorded as T-188 says; a request on a route that accepts no Puppet Master tools carries none.

@@ -1,7 +1,8 @@
 // Tools T-191 (Jared, 2026-11-24: "is code mode an option in settings that can be turned off? If not, it needs to
 // be."): the inventory row code.execution.code-mode is an ordinary Settings row. By real typing and real clicks:
-// Settings Search for "Code Mode" lists a result named Code Mode; the result opens a page that draws the row with the
-// inventory's label and sentence and one switch; the switch starts On (the inventory default), a click turns it Off,
+// Settings Search for "Code Mode" lists a result named Code Mode; the result opens a page whose row holds the
+// inventory's label and sentence as text that passes the computed visibility and box checks (not a reading of the
+// words' ink) and one switch; the switch starts On (the inventory default), a click turns it Off,
 // and a second click turns it On again. In each of the three states the switch itself has to be shown (opacity-aware
 // computed visibility, box inside the window and inside the outer box of every ancestor that clips by overflow, to within a pixel), really paint (its pixels differ from the
 // same spot with the switch hidden, and again with only its knob hidden, so a switch or knob that paints nothing fails),
@@ -123,9 +124,11 @@ export default async function (t) {
 			await el.evaluate((node) => node.style.setProperty('visibility', 'hidden', 'important'));
 			noSwitch = await t.page.screenshot({ clip });
 			await el.evaluate((node, [v, pr]) => { if (v) node.style.setProperty('visibility', v, pr); else node.style.removeProperty('visibility'); }, before);
+			/* mark the very switch being read, whichever attribute found it, and hide the knob of the marked one */
 			knobOff = await el.evaluateHandle((node) => {
+				node.setAttribute('data-cm-row-check-knob-off', '');
 				const st = document.createElement('style');
-				st.textContent = `.toggle[role="switch"][data-setting="${node.getAttribute('data-setting')}"]::after { visibility: hidden !important; }`;
+				st.textContent = '[data-cm-row-check-knob-off]::after { visibility: hidden !important; }';
 				document.head.appendChild(st);
 				return st;
 			});
@@ -136,6 +139,7 @@ export default async function (t) {
 			/* always put the page back exactly as it was */
 			await el.evaluate((node, [v, pr]) => { if (v) node.style.setProperty('visibility', v, pr); else node.style.removeProperty('visibility'); }, before).catch(() => {});
 			if (knobOff) await knobOff.evaluate((st) => st.remove()).catch(() => {});
+			await el.evaluate((node) => node.removeAttribute('data-cm-row-check-knob-off')).catch(() => {});
 		}
 		/* the knob is painted at the end of the track where hiding it changes the picture */
 		const atStart = !drawnStart.equals(noKnobStart), atEnd = !drawnEnd.equals(noKnobEnd);

@@ -16417,7 +16417,7 @@
       "label":
         "Code Mode",
       "desc":
-        "When Puppet Master tools are available, a run can group several checked tool calls in a short script if Code Mode is on for that run and a script is offered, or call the tools directly if not.",
+        "When Puppet Master tools are available, a run can group several checked tool calls in a short script if Code Mode is on for that run and the run can use scripts, or call the tools directly if not.",
       "type": "toggle",
       "default": true,
       "scope": [
