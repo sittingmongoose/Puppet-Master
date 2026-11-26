@@ -1,5 +1,6 @@
 // Tools T-191 (Jared, 2026-11-24: "is code mode an option in settings that can be turned off? If not, it needs to
-// be."): the inventory row code.execution.code-mode is an ordinary Settings row. By real typing and real clicks:
+// be."): the inventory row code.execution.code-mode is an ordinary Settings row. By real typing and real clicks (the check itself centres the row after
+// the result is clicked and before any box is measured, so it does not test where the click lands the page):
 // Settings Search for "Code Mode" lists a result named Code Mode; after a click on that result the page draws the row, which holds the
 // inventory's label and sentence as text that passes the computed visibility and box checks (not a reading of the
 // words' ink) and one switch; the switch starts On (the inventory default), a click turns it Off,
