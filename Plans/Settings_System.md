@@ -3767,7 +3767,7 @@ Amended 2026-10-31 (DL-270): in the Usage & budgets page above, `ai.usage.usage-
 
 ### 2. Canonical-id moves between pages
 
-These ids change the view that draws them. Nothing else about them changes.
+These ids change the view that draws them. Nothing else about them changes. A new row that is placed away from its subgroup's default page is listed too, with From saying so.
 
 | Canonical ids | From | To |
 |---|---|---|

@@ -116,7 +116,8 @@ export default async function (t) {
 	await t.check('the row holds the inventory\'s complete sentence, as one of its lines', row.lines.includes(norm(INV.desc)), JSON.stringify(row.lines));
 	await t.check('the label and the complete sentence pass the computed visibility checks, and their boxes fit inside the window and every scrolling or clipping ancestor', row.labelShown === true && row.descShown === true, `label ${row.labelShown}, sentence ${row.descShown}`);
 	await t.check('the row has exactly one switch', row.switches === 1, String(row.switches));
-	await judge('at first, the inventory default', row, true);
+	await t.check('the inventory row\'s default is On', INV.default === true, JSON.stringify(INV.default));
+	await judge('at first, the inventory default', row, INV.default === true);
 
 	await f.locator(SW).first().click();
 	await t.settle();
@@ -127,7 +128,7 @@ export default async function (t) {
 	await f.locator('#pm-settings-root [data-action="home"]:visible').first().click();
 	await t.settle();
 	await t.page.waitForTimeout(600);
-	await t.check('Settings Home is open and the row is no longer drawn', (await read()).drawn === false, JSON.stringify(await read()));
+	await t.check('after the click on Settings Home the row is no longer drawn', (await read()).drawn === false, JSON.stringify(await read()));
 	const again = await findBySearch();
 	await t.check('Search finds the row again after leaving it', again.at >= 0, again.titles.slice(0, 8).join(' | '));
 	await judge('found again after leaving the row', await read(), false);
