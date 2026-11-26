@@ -325,9 +325,45 @@ export default async function (t) {
 		['glass-dark', 1280, 500], ['glass-dark', 740, 900],
 	];
 	const noteSelector = '#pm-settings-portals > .psx-note[data-open]:not([data-leaving])';
+	const detailsBody = '.detail-inspector[aria-hidden="false"] .detail-body';
 	const detailsPicker = '.detail-inspector[aria-hidden="false"] [data-action="o55-insp-pick"]';
 	const closeDetails = '.detail-inspector[aria-hidden="false"] [data-action="close-details"]';
 	const rowPicker = (id) => `#pm-settings-root .o55-msel[data-o55-msel="${id}"] [role="combobox"]`;
+	function readDetailsPicker(frame) {
+		return frame.evaluate(({ detailsBody, detailsPicker }) => {
+			const pane = document.querySelector(detailsBody);
+			const trigger = document.querySelector(detailsPicker);
+			const body = pane.getBoundingClientRect();
+			const picker = trigger.getBoundingClientRect();
+			const x = picker.left + picker.width / 2, y = picker.top + picker.height / 2;
+			return {
+				scrollTop: pane.scrollTop, maxScroll: pane.scrollHeight - pane.clientHeight,
+				body: body.toJSON(), picker: picker.toJSON(),
+				centreVisible: y >= body.top && y < body.bottom && trigger.contains(document.elementFromPoint(x, y)),
+			};
+		}, { detailsBody, detailsPicker });
+	}
+	async function wheelDetailsPickerToEdge(frame, who) {
+		await frame.evaluate(() => document.fonts.ready.then(() => null));
+		const start = await readDetailsPicker(frame);
+		const topStop = start.scrollTop + start.picker.top - start.body.top + 10;
+		const bottomStop = start.scrollTop + start.picker.bottom - start.body.bottom - 10;
+		// A tall pane can run out of scroll before the picker reaches the top. Use its other visible edge there.
+		const target = topStop <= start.maxScroll ? topStop : bottomStop;
+		const wheel = Math.round(target - start.scrollTop);
+		const box = await frame.locator(detailsBody).boundingBox();
+		await t.page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+		await t.page.mouse.wheel(0, wheel);
+		await frame.waitForFunction(({ detailsBody, target }) =>
+			Math.abs(document.querySelector(detailsBody).scrollTop - target) <= 1, { detailsBody, target }, { timeout: 2000 });
+		const before = await readDetailsPicker(frame);
+		const clipped = Math.max(before.body.top - before.picker.top, before.picker.bottom - before.body.bottom);
+		const ready = before.scrollTop !== start.scrollTop && clipped > 0 && before.centreVisible;
+		const witness = JSON.stringify({ wheel, clipped, before });
+		t.log(`${who} wheel ${witness}`);
+		await t.check(`${who}: a real wheel partly clips the picker and leaves its centre clickable`, ready, witness);
+		return ready ? before : null;
+	}
 	async function checkReceiptBounds(frame, selector, name) {
 		const geometry = await frame.evaluate(({ selector, noteSelector }) => {
 			const note = document.querySelector(noteSelector);
@@ -383,14 +419,15 @@ export default async function (t) {
 	}
 
 	for (const [look, width, height] of receiptMatrix) {
-		for (const route of ['row', 'Details']) {
+		const routes = width === 740 ? ['row', 'Details'] : ['row', 'Details', 'wheeled Details'];
+		for (const route of routes) {
 			const who = `receipt ${look} ${width}x${height} (${route})`;
 			await t.step(who, async () => {
 				await t.viewport(width, height);
 				const frame = await t.app.open();
 				await frame.waitForFunction(() => !!window.PSX?.lastReport, null, { timeout: 60000 });
 				await frame.evaluate((look) => PSX.setLook(look), look);
-				const details = route === 'Details';
+				const details = route !== 'row', wheeled = route === 'wheeled Details';
 				const id = details ? 'ai.models.default-model' : 'ai.models.worker-model';
 				const selector = details ? detailsPicker : rowPicker(id);
 				if (details) {
@@ -402,7 +439,9 @@ export default async function (t) {
 					}
 				}
 				const trigger = frame.locator(selector);
-				await trigger.scrollIntoViewIfNeeded({ timeout: 8000 });
+				const wheelStart = wheeled ? await wheelDetailsPickerToEdge(frame, who) : null;
+				if (wheeled && !wheelStart) return;
+				if (!wheeled) await trigger.scrollIntoViewIfNeeded({ timeout: 8000 });
 				const box = await trigger.boundingBox(); // Mouse input uses page coordinates on both surfaces.
 				const x = box.x + box.width / 2, y = box.y + box.height / 2;
 				await t.page.mouse.click(x, y);
@@ -413,7 +452,15 @@ export default async function (t) {
 					Number(getComputedStyle(document.querySelector(selector)).opacity) > 0.9, noteSelector, { timeout: 2000 });
 				const actual = await frame.evaluate(() => [document.documentElement.dataset.theme, innerWidth, innerHeight]);
 				await t.equal(`${who}: look and viewport after save`, actual.join(' '), `${look} ${width} ${height}`);
-				await checkReceipt(frame, selector, who);
+				if (wheelStart) {
+					const after = await readDetailsPicker(frame);
+					const movement = after.picker.top - wheelStart.picker.top;
+					const witness = JSON.stringify({ movement, after });
+					t.log(`${who} after save ${witness}`);
+					await t.check(`${who}: picker centre stays visible at the same position after saving`,
+						after.centreVisible && Math.abs(movement) <= 1, witness);
+					await checkReceiptBounds(frame, selector, `${who}: visible receipt leaves the full picker trigger clear`);
+				} else await checkReceipt(frame, selector, who);
 				if (!details && (width === 1920 || look === 'glass-dark' && width === 1280)) {
 					await t.shot(`fo158-receipt-${look}-${width}x${height}`, 'Save receipt and Everyday building’s High depth');
 				}
@@ -425,6 +472,7 @@ export default async function (t) {
 				await t.check(`${who}: clicking the original point reopens the picker and keeps High saved`,
 					opened && st.ownEffort === 'High', replay);
 				if (opened) await t.page.keyboard.press('Escape');
+				if (wheeled) return;
 				if (details) {
 					await t.page.keyboard.press('Enter');
 					const keyboardOpen = await trigger.getAttribute('aria-expanded') === 'true';

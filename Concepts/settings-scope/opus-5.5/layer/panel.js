@@ -186,8 +186,10 @@
   function modelPickerAnchor(cur) {
     if (!cur || !PSX.isModel(cur.id)) return null;
     const picker = cur.body.querySelector('[data-action="o55-insp-pick"]')?.getBoundingClientRect();
+    if (!picker?.height) return null;
     const body = cur.body.getBoundingClientRect();
-    return picker && picker.top >= body.top && picker.bottom <= body.bottom ? picker.top : null;
+    const centre = picker.top + picker.height / 2;
+    return centre >= body.top && centre < body.bottom ? picker.top : null;
   }
 
   function decorate(o) {
