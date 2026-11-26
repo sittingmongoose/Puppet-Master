@@ -599,16 +599,12 @@ def verify_rollback(candidate, target):
 def push_targets(root: Path) -> list[tuple[list[str], str]]:
     """List each push URL once with the names of all remotes that use it.
 
-    Git lists remote names alphabetically. For each remote, visit its push URLs in configured
-    order, falling back to its fetch URLs. Shared URLs need only one push and verification.
+    Git lists remote names alphabetically and resolves each remote's push URLs in order.
+    Shared URLs need only one push and verification.
     """
     by_url: dict[str, list[str]] = {}
     for name in git(root, "remote").stdout.split():
-        listed = git(root, "config", "--get-all", f"remote.{name}.pushurl", check=False)
-        urls = [url for url in listed.stdout.splitlines() if url]
-        if not urls:
-            fallback = git(root, "config", "--get-all", f"remote.{name}.url", check=False)
-            urls = [url for url in fallback.stdout.splitlines() if url]
+        urls = git(root, "remote", "get-url", "--push", "--all", name).stdout.splitlines()
         for url in dict.fromkeys(urls):
             by_url.setdefault(url, []).append(name)
     return [(names, url) for url, names in by_url.items()]

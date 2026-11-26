@@ -3403,6 +3403,18 @@ class PublishAllTargetsTests(unittest.TestCase):
         self.assertIn(str(self.origin), output.getvalue())
         self.assertIn(str(nas), output.getvalue())
 
+    def test_publish_uses_git_push_urls_after_a_list_reset(self):
+        retired = self.bare("retired.git", self.base)
+        self.git(self.shared, "config", "--add", "remote.origin.pushurl", str(retired))
+        self.git(self.shared, "config", "--add", "remote.origin.pushurl", "")
+        nas = self.two_push_urls()
+
+        self.assertEqual(land.publish_main(self.shared, self.base, self.head), 0)
+
+        self.assertEqual(self.tip(self.origin), self.head)
+        self.assertEqual(self.tip(nas), self.head)
+        self.assertEqual(self.tip(retired), self.base)
+
     def test_publish_refuses_a_commit_other_than_the_checkout_main(self):
         nas = self.two_push_urls()
         self.git(self.shared, "commit", "--allow-empty", "-m", "next landing")
