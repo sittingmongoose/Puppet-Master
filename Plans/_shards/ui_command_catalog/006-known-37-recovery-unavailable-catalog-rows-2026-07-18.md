@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L133-L1193
 
-Source SHA256: `a56353a2edad47b64122e90bb5473b6914dee046a09b049f1c53b1a2e1863c53`
+Source SHA256: `9cd803a01005f2d94b59256797511cdbbd7e5a06b7a98b3651b4e41c3db42334`
 
 ---
 
@@ -736,7 +736,7 @@ Amended 2026-10-09 (DL-180): `cmd.browser.open_workspace_preview`'s `target_edit
 Capture event rules:
 - The four screenshot-to-chat rows declare `runtime_artifact.screenshot` consumer intent using `pm.runtime_artifact.screenshot.schema.v1` (`Plans/runtime_artifact_screenshot.schema.json`), owned by `Plans/Runtime_Artifacts_Panel.md#RAP-054`. RAP-054 / Event Authority admission remains pending; native handlers remain absent. Until separately authorized native persistence and real owner-resolved project_id, run_id, and attempt_id exist, fail closed with handler_unavailable; do not fabricate IDs, persist or emit events, advance checkpoints, or claim successful capture. Protected browser/auth content is excluded. Schema shape is not proof of real IDs, native capture, or retention execution.
 - `browser.context_captured` MUST carry `attachment_type: "browser_element_context" | "browser_selection_context"`, `chip_id`, `browser_session_id`, `thread_id?`, capture status, and source/provenance fields so element-pick and text-selection captures remain distinct through composer prep and prompt serialization.
-- `cmd.browser.share_with_agent` and `cmd.browser.revoke_share_with_agent` update browser-session share state only; they do not create `browser.context_captured` events and do not serialize page, selection, or element context without a separate explicit capture command.
+- **Browser-session share state.** `cmd.browser.share_with_agent` and `cmd.browser.revoke_share_with_agent` update browser-session share state only. They create no `browser.context_captured` events and serialize no page, selection, or element context without a separate explicit capture command.
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 

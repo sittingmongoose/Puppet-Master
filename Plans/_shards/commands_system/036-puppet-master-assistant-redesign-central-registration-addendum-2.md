@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L6400-L6644
+Source lines: L6392-L6636
 
-Source SHA256: `d543a6434fae33afeb5b5fede1af91af9d17bb4f774e4f160994d5eaad696a7b`
+Source SHA256: `847c8db424e86f17acade65fd11b6a6e3fadf25bea6a50a89da5c54dcf8e2dd2`
 
 ---
 
@@ -104,7 +104,7 @@ This addendum records the central command-contract registration for the approved
 | `cmd.browser.component.mode.set_default` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::component_mode_set_default` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserComponentModeRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/SettingsTransactionResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
 | `cmd.browser.devtools.open` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::devtools_open` | `Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenRequest` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenResultV1` (navigation wrapper; the typed route result; C-FIX79 decision 2026-11-24) | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
 
-The eleven contract schema documents named above are owner-authored artifacts that must exist and validate before any row leaves `handler_unavailable`. Naming them here does not create them and does not admit a storage key or an EventRecord.
+All owner-authored contract schema documents referenced in the table must exist and validate before any row leaves `handler_unavailable`. Registration records the schema references. Schema creation, storage key admission and EventRecord admission remain with their respective owners.
 
 ### Typed error vocabulary
 

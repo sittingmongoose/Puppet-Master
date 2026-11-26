@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L1547-L3538
+Source lines: L1547-L3546
 
-Source SHA256: `8818b20e32be6ed5a2732e83e3ac8bc3dbb313f211db79aeecb606ef3acb6a3b`
+Source SHA256: `8bea6f383d740e0e4abf7a4ad4bb3efeb854a38b872012cfa83d3168ca8fa6fd`
 
 ---
 
@@ -836,6 +836,9 @@ pub trait BeforeUnitHook: Send + Sync {
 pub trait AfterUnitHook: Send + Sync {
     fn execute(&self, ctx: &AfterUnitContext) -> Result<AfterUnitResult>;
     fn name(&self) -> &str;
+    fn is_required_handoff_validator(&self) -> bool {
+        false
+    }
 }
 
 pub struct BeforeUnitResult {
@@ -894,6 +897,11 @@ impl HookRegistry {
                 Ok(result) => {
                     if !result.validation_passed { validation_passed = false; validation_error = result.validation_error; request_retry = result.request_retry; retry_reason = result.retry_reason; break; }
                 }
+                Err(error) if hook.is_required_handoff_validator() => {
+                    validation_passed = false;
+                    validation_error = Some(error.to_string());
+                    break;
+                }
                 Err(e) => { log::warn!("AfterUnit hook {} failed: {}", hook.name(), e); }
             }
         }
@@ -906,7 +914,7 @@ where F: FnOnce() -> Result<T>,
 { hook_fn() }
 ```
 
-**Built-in hooks:** `ActiveSubagentTrackerHook` (BeforeUnit), `TierContextInjectorHook` (BeforeUnit), `StaleStatePrunerHook` (BeforeUnit), `HandoffValidatorHook` (AfterUnit).
+**Built-in hooks:** `ActiveSubagentTrackerHook` (BeforeUnit), `TierContextInjectorHook` (BeforeUnit), `StaleStatePrunerHook` (BeforeUnit), `HandoffValidatorHook` (AfterUnit, returns `true` from `is_required_handoff_validator`). A validator error returns failed validation and keeps the attempt outside `VerifyUnitEnd` under the Handoff failure boundary.
 
 **Integration:** In `src/core/orchestrator.rs`, call `hook_registry.execute_before_unit` before subagent execution and `hook_registry.execute_after_unit` after. Update `ExecutionUnitContext.active_subagent` from `BeforeUnitResult`. Always register built-in hooks even when platform-native hooks are also registered.
 ### 2. Structured Handoff Report Validation

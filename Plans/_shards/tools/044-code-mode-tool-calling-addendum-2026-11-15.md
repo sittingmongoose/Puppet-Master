@@ -4,7 +4,7 @@ Source: `Plans/Tools.md`
 
 Source lines: L13617-L13848
 
-Source SHA256: `7f1ecd302ec60c04aa95d5e2ec88510021837bc895f64d4de84507316ed4a1d1`
+Source SHA256: `1383f5cf06386189b604eebe90a53637620c99d08866c4706b883a194379c662`
 
 ---
 
@@ -106,9 +106,9 @@ canonical_text: >-
   the DAE strategy, where the CLI accepts Puppet Master tools through provider-native feature projection, it is a projected Puppet Master tool beside the CLI's own tools, so the run is mixed with the provider-kept native tools reason. When the script tool is offered, the request-selected registry tools other than the directly
   callable tools named in T-190 are described to the model as the
   script's callable catalog under T-176 materialization, rather than as one provider tool schema each. The host uses the selected
-  tool's L2 schema for nested dispatch under §4.4 and T-190. Wherever tool calls are carried
-  in-band, including where the selected model's Models_System tool_use capability is false, the script tool and the
-  directly callable tools named in T-190 are carried as in-band tool calls in an owned dialect that Tools selects for the model family and records on the run.
+  tool's L2 schema for nested dispatch under §4.4 and T-190. Computer tools require T-186's active-session receipt
+  proof for catalog inclusion and again at dispatch. On an in-band route, including when Models_System tool_use is
+  false, the script tool and T-190's directly callable tools use the owned dialect Tools selects for the model family and records on the run.
   The host mints a call ID for each recognized in-band call before the T-169 admission gate. Hosted structured intents also use IDs minted
   at the host's intake. The selected carriage determines ID provenance before validation, so a missing native ID still fails T-169. Text in which the model
   writes a tool result itself is discarded and never enters replayable history. Where the script tool is offered and the provider keeps native tools that

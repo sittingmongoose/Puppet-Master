@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L6633-L31397
+Source lines: L6641-L31405
 
-Source SHA256: `8818b20e32be6ed5a2732e83e3ac8bc3dbb313f211db79aeecb606ef3acb6a3b`
+Source SHA256: `8bea6f383d740e0e4abf7a4ad4bb3efeb854a38b872012cfa83d3168ca8fa6fd`
 
 ---
 
@@ -5540,7 +5540,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Interview execution must wire require_architecture_confirmation into InterviewOrchestratorConfig from gui_config.interview in app.rs and, when enabled, require explicit architecture/tech-stack confirmation through a phase gate before phase completion. The phase gate is the one mechanism; a dedicated phase and a prompt line are rejected alternatives. Trigger: the phase-complete transition of the `architecture_technology` phase (chain-wizard-flexibility canonical phase registry) when its phase-plan depth is Full or Short. The gate asks one required shared question card (`QuestionItem`, options Confirm and Change, `allow_freeform` true) that summarizes the phase's architecture and tech-stack decisions. Completion: the phase completes only after the user answers Confirm, recorded as explicit confirmation in the phase's validation artifacts; Change keeps the phase open with the user's note as new phase input and asks again at the next phase-complete attempt. There is no timeout and no agent self-confirmation. The soft cap in OSI-089 also enters this gate and cannot complete the phase. DL-2602 records the user confirmation as the kept choice. When the setting is false, or the phase plan sets `architecture_technology` to Skip, the gate does not run.
+  Interview execution must wire require_architecture_confirmation into InterviewOrchestratorConfig from gui_config.interview in app.rs and, when enabled, require explicit architecture/tech-stack confirmation through a phase gate before phase completion. The phase gate is the one mechanism; a dedicated phase and a prompt line are rejected alternatives. This contract identifies the interview's architecture and technology phase as `architecture_technology` and applies the gate on that phase's completion transition at Full or Short depth. The gate asks one required shared question card (`QuestionItem`, options Confirm and Change, `allow_freeform` true) that summarizes the phase's architecture and tech-stack decisions. Completion: the phase completes only after the user answers Confirm, recorded as explicit confirmation in the phase's validation artifacts; Change keeps the phase open with the user's note as new phase input and asks again at the next phase-complete attempt. There is no timeout and no agent self-confirmation. The soft cap in OSI-089 also enters this gate and cannot complete the phase. DL-2602 records the user confirmation as the kept choice. When the setting is false, or the phase plan sets `architecture_technology` to Skip, the gate does not run.
 gui_related: true
 gui_classification_reason: This unit covers interview flow UX and confirmation behavior.
 split_recommended: false
@@ -5581,7 +5581,7 @@ preserved_exact_tokens:
 - 'prompt line'
 - 'AGENTS.md'
 negative_constraints: []
-compatibility_only_notes: []
+compatibility_only_notes: [The retired Chain Wizard phase registry is source lineage for the phase identifier.]
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -8407,8 +8407,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  AfterUnit hook execution runs each hook through safe_hook_main, short-circuits on validation failure, carries validation_error,
-  request_retry, and retry_reason, logs hook failures as warnings, and returns the combined AfterUnitResult.
+  AfterUnit hook execution runs each hook through safe_hook_main and returns the combined AfterUnitResult with validation_error,
+  request_retry, and retry_reason. A validation failure or an error from the required HandoffValidatorHook short-circuits with failed validation and blocks VerifyUnitEnd. Errors from ancillary hooks are logged as warnings.
 gui_related: false
 gui_classification_reason: This unit defines backend AfterUnit execution semantics.
 split_recommended: false

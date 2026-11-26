@@ -4,7 +4,7 @@ Source: `Plans/Tools.md`
 
 Source lines: L11733-L12442
 
-Source SHA256: `7f1ecd302ec60c04aa95d5e2ec88510021837bc895f64d4de84507316ed4a1d1`
+Source SHA256: `1383f5cf06386189b604eebe90a53637620c99d08866c4706b883a194379c662`
 
 ---
 
@@ -525,7 +525,7 @@ unblocks: []
 acceptance_criteria:
 - Empty output remains empty with reason
 - Missing image does not become fake caption
-- Malformed JSON records parse error and raw captured bytes
+- Malformed JSON records parse error and raw captured bytes when safe capture is available. The parse error is always recorded. Available evidence has `raw_redacted_state` set to `available` and a `raw_redacted_ref` to the redacted capture. Otherwise `raw_redacted_state` is `unavailable` and the ref is omitted.
 - Apply the post-dispatch result table to zero bytes, empty arrays, absent required images and complete responses with invalid JSON. Check the settlement state, typed fact and evidence ref or explicit unavailability.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
@@ -533,7 +533,7 @@ validation_surfaces:
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
 - Empty output remains empty with reason
 - Missing image does not become fake caption
-- Malformed JSON records parse error and raw captured bytes
+- Malformed JSON records parse error and raw captured bytes when safe capture is available. Check the parse error and the `available` state with a redacted capture ref, or the `unavailable` state with the ref omitted.
 risk_class: p0_mcp_tools_and_tool_settlement_hardening
 reasoning_tier: high
 context_scope: mcp_tools_and_tool_settlement

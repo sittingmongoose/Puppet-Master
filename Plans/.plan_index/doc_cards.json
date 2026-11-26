@@ -4450,7 +4450,7 @@
         "future command palette",
         "future command parser"
       ],
-      "line_count": 11313,
+      "line_count": 11305,
       "path": "Plans/Commands_System.md",
       "plan_unit_count": 108,
       "plan_unit_ids": [
@@ -4665,7 +4665,7 @@
         "view_state_command_inflation",
         "web_slash_family_drift"
       ],
-      "sha256": "d543a6434fae33afeb5b5fede1af91af9d17bb4f774e4f160994d5eaad696a7b",
+      "sha256": "847c8db424e86f17acade65fd11b6a6e3fadf25bea6a50a89da5c54dcf8e2dd2",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 108
@@ -12605,7 +12605,7 @@
         "Plans/goal_own_c_contracts/protocol.md",
         "Plans/human-in-the-loop.md"
       ],
-      "line_count": 2930,
+      "line_count": 2928,
       "path": "Plans/human-in-the-loop.md",
       "plan_unit_count": 40,
       "plan_unit_ids": [
@@ -12664,7 +12664,7 @@
         "implementation_readiness",
         "migration_lineage"
       ],
-      "sha256": "078949cd413294a96f03c5e4eb2aa338b492e23e7f3630e82427dffd33749864",
+      "sha256": "97a7e70457d42fe62cdf5fb08e993d78a1c37728a82ed8a6a9763d4669f3df0f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 40
@@ -13369,7 +13369,7 @@
         "p1_security_release_supply_chain_hardening",
         "retired_gemini_cli_nanobanana_resurrection"
       ],
-      "sha256": "76cba209db2f3dea95ace12a3b64e43baa13ad1dfd8b0410089d53f06775b2a8",
+      "sha256": "59866e6dec8c7d4ecf7e2ec6a8bef3b056fd55803ee6c8d5ba7e4e1ea4413904",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 101
@@ -13937,7 +13937,7 @@
         "webresearch_tiering_automation_session_boundary",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "1bce879184c9d913b465ff3a5c80748555550ed3d5a2a08f42242e747557adad",
+      "sha256": "d434ae4f6d0a83180f01d7b7e23ed87d3dbf142481d9021ef183d45030166c5e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 140
@@ -15176,7 +15176,7 @@
         "future Orchestrator prompt routes",
         "future subagent handoff and child-run receipt records"
       ],
-      "line_count": 35264,
+      "line_count": 35272,
       "path": "Plans/orchestrator-subagent-integration.md",
       "plan_unit_count": 472,
       "plan_unit_ids": [
@@ -16101,7 +16101,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "8818b20e32be6ed5a2732e83e3ac8bc3dbb313f211db79aeecb606ef3acb6a3b",
+      "sha256": "8bea6f383d740e0e4abf7a4ad4bb3efeb854a38b872012cfa83d3168ca8fa6fd",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 470,
@@ -20179,7 +20179,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "5b86c98ec488a07c7fa1b7adb171061cf2116f8c2ab9ea435f19ea536ed05b79",
+      "sha256": "42a42c2fec916b53a1a642aa3aba43abf0162551e27f5d18bb7af0800c910694",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 195,
@@ -23653,7 +23653,7 @@
         "workflow_local_tool_registry_drift",
         "write_atomicity_drift"
       ],
-      "sha256": "7f1ecd302ec60c04aa95d5e2ec88510021837bc895f64d4de84507316ed4a1d1",
+      "sha256": "1383f5cf06386189b604eebe90a53637620c99d08866c4706b883a194379c662",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 189,
@@ -23680,7 +23680,7 @@
         "Large output fixtures",
         "Large stable outputs use refs with TTL/redaction once cache reuse is defined above. Until then a later call cannot use a T-168 cache hit even if a previous call retained an identical payload.",
         "Long-running MCP/subagent/browser/device tests",
-        "Malformed JSON records parse error and raw captured bytes",
+        "Malformed JSON records parse error and raw captured bytes when safe capture is available. Check the parse error and the `available` state with a redacted capture ref, or the `unavailable` state with the ref omitted.",
         "Missing image does not become fake caption",
         "Partial streamed JSON/tool XML never becomes replayable assistant history.",
         "Permission changes invalidate catalog slice.",
@@ -24063,7 +24063,7 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "a56353a2edad47b64122e90bb5473b6914dee046a09b049f1c53b1a2e1863c53",
+      "sha256": "9cd803a01005f2d94b59256797511cdbbd7e5a06b7a98b3651b4e41c3db42334",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 197,
@@ -25281,7 +25281,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-26T07:39:40Z",
+  "generated_at_utc": "2026-11-26T08:43:30Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

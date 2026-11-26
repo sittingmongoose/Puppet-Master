@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L793-L3554
+Source lines: L788-L3547
 
-Source SHA256: `d543a6434fae33afeb5b5fede1af91af9d17bb4f774e4f160994d5eaad696a7b`
+Source SHA256: `847c8db424e86f17acade65fd11b6a6e3fadf25bea6a50a89da5c54dcf8e2dd2`
 
 ---
 
@@ -1590,10 +1590,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
-  New Command opens an editor form for name, description, Arguments hint, Persona, mode, subtask, permissions profile
-  override, override built-in, template body and project-local/global save scope, with existing
-  validation and syntax highlighting. There is no saved model or depth field under MD2 NEITHER; old
-  model_override data remains inspection-only through compatibility reads.
+  New Command opens an editor form for name, description, Arguments hint, Persona, mode, subtask, permissions profile override, override built-in, template body and project-local/global save scope, with existing validation and syntax highlighting.
+  There is no saved model or depth field under MD2 NEITHER; old model_override data remains inspection-only through compatibility reads.
 gui_related: true
 gui_classification_reason: The create editor form is a visible command authoring UI.
 split_recommended: true

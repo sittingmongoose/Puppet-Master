@@ -4,7 +4,7 @@ Source: `Plans/Tools.md`
 
 Source lines: L2447-L2477
 
-Source SHA256: `7f1ecd302ec60c04aa95d5e2ec88510021837bc895f64d4de84507316ed4a1d1`
+Source SHA256: `1383f5cf06386189b604eebe90a53637620c99d08866c4706b883a194379c662`
 
 ---
 
@@ -16,7 +16,7 @@ Tools is the single-owner SSOT for tool-level web operation behavior, provider c
 
 OpenCode billing and /caching evidence confirms that extra abstraction layers make tracking HARDER, not easier; Tools therefore owns explicit tool-level cache-routing and provider-capability decisions while usage, storage, prompt-cache, and provider bridge owners keep their narrower accounting and persistence contracts.
 
-- Firecrawl/web operations in `Plans/Tools.md` span `### 3.5C`, `### 3.5D`, `## 10`, `### 10.3`, `### 10.7`, `### 11.1`, and `## 14`. This document owns Firecrawl integration, TODO contract carry-through, provider placement, cache, audit/error mapping, and the traceability obligations `obl-013`, `obl-014`, `obl-041`, `obl-053`, `obl-054`, `obl-062`, `obl-066`, `obl-067`, `obl-029`, `obl-040`, `obl-043`, and `obl-068`.
+- Firecrawl/web operations in `Plans/Tools.md` span `todowrite` and `todoread` runtime contract, Web operation family runtime contract, Firecrawl provider integration (PM-to-Firecrawl mapping and Audit, error, and self-hosted rules), Provider capability matrix (Provider classes, defaults, and fallback disclosure), and Web content caching layer. This document owns Firecrawl integration, TODO contract carry-through, provider placement, cache, audit/error mapping, and the traceability obligations `obl-013`, `obl-014`, `obl-041`, `obl-053`, `obl-054`, `obl-062`, `obl-066`, `obl-067`, `obl-029`, `obl-040`, `obl-043`, and `obl-068`.
 - Stale permission, LSP, and web-output carry-through markers such as `/LSP/web-output`, `/web-output/LSP/permission`, and legacy `web-output` phrasing are retired as owner text; live tool canon points to the dedicated Contracts and storage owners for WebAction, common web output fields, and blocked-action payloads.
 
 ### Consumer propagation

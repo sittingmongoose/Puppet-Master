@@ -4,7 +4,7 @@ Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
 Source lines: L13367-L14093
 
-Source SHA256: `5b86c98ec488a07c7fa1b7adb171061cf2116f8c2ab9ea435f19ea536ed05b79`
+Source SHA256: `42a42c2fec916b53a1a642aa3aba43abf0162551e27f5d18bb7af0800c910694`
 
 ---
 
@@ -232,7 +232,7 @@ canonical_text: >-
   shared memory is unlinked after reading. On native Windows the terminal unmaps its views and closes its handles
   to the named file mapping after reading. Remote (SSH) sessions and commands an agent typed may use direct
   transmission only, and their file, temporary-file and shared-memory media get the same `EBADF` answer. Every
-  error reply is a fixed string that never echoes anything the program sent: `EINVAL:Invalid graphics command`, `ENOENT:Image not
+  error message is fixed. The kitty reply wraps the message in protocol delimiters and includes any required numeric correlation fields such as `i`, serialized in decimal from validated identifiers. Replies never copy raw program text, paths or image data. Other fixed messages are `EINVAL:Invalid graphics command`, `ENOENT:Image not
   found`, `ENODATA:Insufficient image data`, `EFBIG:Too much data`, `ENOSPC:Storage quota exceeded`,
   `ENOMEM:Image too large`, `EBADPNG:Image could not be decoded`, `EILSEQ:Continuation for an upload that is not in
   progress`, `ETOODEEP`, `ECYCLE` and `ENOPARENT`. A program that sends too much is refused; it never freezes the
@@ -283,7 +283,7 @@ acceptance_criteria:
 - "A screen buffer keeps at most 4,096 placements, and the 4,097th drops the oldest placement that no other placement hangs from; no placement covers more than 10,000 cells."
 - "Every file-medium read failure answers exactly EBADF:Failed to read image file; /proc, /sys and /dev (except /dev/shm) are refused; symlink loops fail; temporary files are deleted only inside /tmp or /dev/shm and only with tty-graphics-protocol in the path. After reading shared memory, unlink it on macOS, Linux and WSL. On native Windows unmap all terminal views and close all terminal handles to the named file mapping."
 - "A remote (SSH) session and a command an agent typed can send images only by direct transmission; their file, temporary-file and shared-memory media get EBADF."
-- "Every error reply is one of the fixed strings and never echoes program data."
+- "The error message matches its fixed string exactly. A kitty reply carries only the validated numeric correlation fields required by the protocol wrapper and never echoes raw program bytes."
 - "Output after an image waits for it; images anchor, scroll, reflow and clip with their cells; text written over sixel and iTerm2 images cuts them out; tmux passthrough works through Unicode placeholders."
 - "Saved scrollback keeps images within the SP-332 quota; text never gives way to images; an evicted image leaves its placeholder label; a restored placeholder id never resolves to an image of the new session; saved images are never backed up, exported or synced."
 - "The accessible buffer and agent reads use [image W×H px], [image] and the placeholder label and never return image bytes; under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses."
