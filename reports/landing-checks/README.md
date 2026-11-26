@@ -116,9 +116,9 @@ A held-back start reports to stderr once a minute. The subcheck timeout starts w
 runs. When `MemAvailable` is unavailable, the slot count still applies.
 
 The checker reads `--jobs`, `landing-budget-v1` and `landing-readiness-snapshot-v1` support from the
-target verifier's help. A target missing any of these, or a host that cannot set up the shared slots, runs the aggregates
-serially. A verifier that accepts `--jobs` receives `--jobs 1` in that case. Earlier verifiers receive
-their legacy arguments.
+target verifier's help. A target without snapshot support exits 3 before dispatch. With snapshot
+support, missing worker options or a host that cannot set up the shared slots cause the aggregates
+to run serially. A verifier that accepts `--jobs` receives `--jobs 1` in that case.
 
 Both copies of a validator that `run-gates` and `audit-governance` share run on their own, once in
 each aggregate, as they always have: the pairing rule below judges them by what they report, not by
@@ -136,10 +136,9 @@ Both modes use one `--readiness-audit-root DIR` option, naming that currentness 
 they select `/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness` when it is
 present, otherwise the checked tree's directory. A clean worktree temporarily links its missing
 ignored directory to the selected source and removes its own link on success or failure.
-A compatible target's aggregates, validators and exports read the selected edition from one
-private, read-only copy under the run's temporary directory, including files examined by the Plan
-scans. Older targets read the selected live edition serially. Canonical sources are still
-read from the checked worktree. An existing local directory is never replaced: select it
+The aggregates, validators and exports read the selected edition from one private, read-only copy
+under the run's temporary directory, including files examined by the Plan scans. Canonical sources
+are read from the checked worktree. An existing local directory is never replaced: select it
 explicitly with `--readiness-audit-root`, or use a clean worktree. An explicit nonexistent source is
 an error; default local absence is recorded as absence and the validator still reports its failures.
 

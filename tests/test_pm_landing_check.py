@@ -971,6 +971,7 @@ class EndToEnd(unittest.TestCase):
         self.addCleanup(self.scratch.cleanup)
         self.repo = Path(self.scratch.name)
         self.module = load_module()
+        self.module.SHARED_READINESS_AUDIT_ROOT = self.repo / "no-shared-audit"
         self.git("init", "-q", "-b", "main")
         self.git("config", "user.email", "t@example.invalid")
         self.git("config", "user.name", "t")
@@ -1034,6 +1035,7 @@ class EndToEnd(unittest.TestCase):
             return report
         self.module.run_check = run_check
         self.module.current_run_dir = lambda root: "Plans/.plan_migration/run-017"
+        self.module.target_readiness_snapshot_support = lambda root: True
 
     def run_main(self, *argv):
         import io, contextlib
@@ -1460,6 +1462,7 @@ class LandingRun(unittest.TestCase):
         self.addCleanup(self.scratch.cleanup)
         self.repo = Path(self.scratch.name)
         self.module = load_module()
+        self.module.SHARED_READINESS_AUDIT_ROOT = self.repo / "no-shared-audit"
         self.git("init", "-q", "-b", "main")
         self.git("config", "user.email", "t@example.invalid")
         self.git("config", "user.name", "t")
@@ -1505,6 +1508,7 @@ class LandingRun(unittest.TestCase):
             return json.loads(json.dumps(reports[name]))
         self.module.run_check = run_check
         self.module.current_run_dir = lambda root: "Plans/.plan_migration/run-017"
+        self.module.target_readiness_snapshot_support = lambda root: True
 
     def run_main(self, *argv):
         import io, contextlib
@@ -3923,7 +3927,66 @@ print(json.dumps({"status": "pass"}))
 
 
 class HistoricalTargetEnvironment(LandingRun):
-    def test_retired_cache_environment_cannot_change_a_historical_target_result(self):
+    def test_a_target_with_only_fixed_readiness_paths_is_refused_before_dispatch(self):
+        publication, previous = (self.repo / name for name in ("publication", "previous"))
+        inventory = "CURRENT_EVENT_SOURCE_INVENTORY.json"
+        for parent, value in ((publication, "A"), (previous, "B")):
+            edition = parent / "edition"
+            edition.mkdir(parents=True)
+            (edition / inventory).write_text(json.dumps({"edition": value}), encoding="utf-8")
+        selected = publication / "edition"
+        source = ("--readiness-audit-root", str(selected))
+        baseline = self.repo / "baseline.json"
+        self.stub()
+        code, out = self.run_main(*source, "--record-baseline", "--baseline", str(baseline))
+        self.assertEqual(code, 0, out + self.stderr)
+        original_bytes = baseline.read_bytes()
+
+        scripts = self.repo / "scripts"
+        scripts.mkdir()
+        (scripts / "pm-plans-verify.py").write_text(OLD_TARGET_VERIFIER, encoding="utf-8")
+        self.module.target_readiness_snapshot_support = M.target_readiness_snapshot_support
+        self.module.aggregate_subcheck_commands = lambda *args: {}
+        original_check = self.module.run_check
+        seen = []
+        holding = publication.with_name("holding")
+        new_baseline = self.repo / "mixed.json"
+        rows = Path(self.enterContext(tempfile.TemporaryDirectory())) / "rows.json"
+
+        def exchange_parents():
+            publication.rename(holding)
+            previous.rename(publication)
+            holding.rename(previous)
+
+        def read_live(check, root, *args):
+            if check in ("run-gates", "audit-governance"):
+                if check == "audit-governance":
+                    exchange_parents()
+                try:
+                    live = root / M.READINESS_AUDIT_REL / inventory
+                    seen.append(json.loads(live.read_bytes())["edition"])
+                finally:
+                    if check == "audit-governance":
+                        exchange_parents()
+            return original_check(check, root, *args)
+
+        for jobs in (1, 4):
+            for record in (False, True):
+                with self.subTest(jobs=jobs, record=record):
+                    mode = (("--record-baseline", "--baseline", str(new_baseline)) if record else
+                            ("--base", self.base, "--baseline", str(baseline), "--row-report", str(rows)))
+                    seen.clear()
+                    with patch.object(self.module, "run_check", read_live):
+                        code, out = self.run_main(*source, "--jobs", str(jobs), *mode)
+                    self.assertEqual(code, 3, (out, self.stderr, seen))
+                    self.assertIn("cannot pin readiness edition for this target", self.stderr)
+                    self.assertEqual(seen, [])
+                    self.assertEqual(baseline.read_bytes(), original_bytes)
+                    self.assertFalse(new_baseline.exists())
+                    self.assertFalse(rows.exists())
+                    self.assertFalse((self.repo / M.READINESS_AUDIT_REL).is_symlink())
+
+    def test_retired_cache_environment_cannot_change_a_verifier_result(self):
         scripts = self.repo / "scripts"
         scripts.mkdir()
         (scripts / "pm-plans-verify.py").write_text(textwrap.dedent("""
@@ -3935,7 +3998,7 @@ class HistoricalTargetEnvironment(LandingRun):
             legacy_env = sorted(name for name in os.environ if name.startswith("PM_PLANS_VERIFY_DEDUPE"))
             Path(check + ".env.json").write_text(json.dumps(legacy_env))
             if check == "help":
-                print("usage: pm-plans-verify.py run-gates [--jobs N]")
+                print("usage: pm-plans-verify.py run-gates [--jobs N] landing-readiness-snapshot-v1")
                 raise SystemExit()
 
             # This version reuses a stale passing result when both cache inputs are present.
@@ -3983,7 +4046,7 @@ class HistoricalTargetEnvironment(LandingRun):
 
 
 class TargetBudgetNegotiation(LandingRun):
-    def test_targets_without_the_budget_or_snapshot_run_whole_aggregates_serially(self):
+    def test_snapshot_capable_targets_without_the_budget_run_whole_aggregates_serially(self):
         import threading
 
         scripts = self.repo / "scripts"
@@ -3992,20 +4055,21 @@ class TargetBudgetNegotiation(LandingRun):
             """print('{"status": "pass", "failures": []}')""", encoding="utf-8")
         caller = threading.get_ident()
         real_run_check = self.module.run_check
-        budget_target = NEW_TARGET_VERIFIER.replace("[--jobs N]", "[--jobs N] landing-budget-v1")
         for source, cli_jobs, reason in ((OLD_TARGET_VERIFIER, False, "--jobs"),
-                                         (NEW_TARGET_VERIFIER, True, "shared validator budget"),
-                                         (budget_target, True, "readiness snapshot support")):
+                                         (NEW_TARGET_VERIFIER, True, "shared validator budget")):
             with self.subTest(reason=reason):
                 # Probe each target once using the real subprocess path.
                 self.module = load_module()
+                self.module.SHARED_READINESS_AUDIT_ROOT = self.repo / "no-shared-audit"
                 self.module.current_run_dir = lambda root: "Plans/.plan_migration/run-017"
+                source = source.replace("[--report FILE]", f"[--report FILE] {M.SNAPSHOT_CAPABILITY}")
                 (scripts / "pm-plans-verify.py").write_text(source, encoding="utf-8")
                 calls = []
 
                 def run_check(name, root, run_dir, timeout, jobs, env, supports_jobs):
                     calls.append((name, threading.get_ident(), jobs, supports_jobs, M.SLOTS_DIR_ENV in env))
-                    self.assertTrue(set(M.SNAPSHOT_ENV_NAMES).isdisjoint(env))
+                    self.assertEqual(env[M.SNAPSHOT_REPO_ENV], str(root))
+                    self.assertNotEqual(env[M.SNAPSHOT_ENV], str(self.repo / "elsewhere"))
                     return real_run_check(name, root, run_dir, timeout, jobs, env, supports_jobs)
 
                 inherited = {key: str(self.repo / "elsewhere") for key in M.SNAPSHOT_ENV_NAMES}

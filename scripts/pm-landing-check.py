@@ -80,8 +80,8 @@ exit 0 to 1 and changes no other exit code. A baseline is never recorded from a 
 
 The readiness audit inputs are gitignored. Both modes select --readiness-audit-root (the shared
 currentness directory when present, otherwise this tree's), and expose it through a temporary
-symlink when this tree has no local copy. Compatible targets read one private read-only snapshot at
-any job count. Older targets run serially. The baseline binds the five direct inputs and the receipt's
+symlink when this tree has no local copy. Every run reads one private read-only snapshot at any job
+count. A target without snapshot support is refused. The baseline binds the five direct inputs and the receipt's
 artifact dependencies by presence and SHA-256. The checker verifies snapshot and live bytes and the
 live edition's identity before it returns a verdict or writes a baseline. A mismatch stops it with exit 3.
 
@@ -2326,6 +2326,9 @@ def main() -> int:
         source = source_identity[0]
         if args.readiness_audit_root and not source.is_dir():
             raise RuntimeError(f"readiness audit source is not a directory: {source}")
+        if not target_readiness_snapshot_support(root):
+            raise RuntimeError(f"cannot pin readiness edition for this target: the verifier in {root} "
+                               f"does not advertise {SNAPSHOT_CAPABILITY}")
         # One scratch directory for the run's worker slots, outside the repository.
         try:
             args.slots_root = Path(tempfile.mkdtemp(prefix="pm-landing-check-slots-"))
@@ -2426,15 +2429,9 @@ def check_main(args: argparse.Namespace, root: Path, source_path: Path,
     before = tree_state(root)
     after = None
     supports_jobs, supports_budget = target_worker_support(root)
-    supports_snapshot = target_readiness_snapshot_support(root)
     jobs = args.jobs
-    if jobs > 1 and not (supports_jobs and supports_budget and supports_snapshot):
-        if not supports_jobs:
-            reason = "--jobs"
-        elif not supports_budget:
-            reason = "the current shared validator budget"
-        else:
-            reason = "readiness snapshot support"
+    if jobs > 1 and not (supports_jobs and supports_budget):
+        reason = "the current shared validator budget" if supports_jobs else "--jobs"
         print(f"pm-landing-check: the target verifier lacks {reason}; running serially.", file=sys.stderr)
         jobs = 1
 
@@ -2446,23 +2443,19 @@ def check_main(args: argparse.Namespace, root: Path, source_path: Path,
                  START_SETTLE_SECONDS_ENV, AGGREGATE_CHILD_ENV):
         child_env.pop(name, None)
 
-    snapshot = None
-    snapshot_hashes = None
-    snapshot_stamp = None
-    if supports_snapshot:
-        snapshot_dir = scratch.enter_context(tempfile.TemporaryDirectory(prefix="pm-landing-readiness-"))
-        snapshot = Path(snapshot_dir).resolve() / "edition"
-        copy_readiness_edition(audit_source, snapshot)
-        snapshot_hashes = readiness_edition_hashes(snapshot)
-        snapshot_stamp = readiness_edition_stamp(snapshot)
-        if snapshot_hashes != live_hashes:
-            raise RuntimeError("readiness audit edition changed while taking its snapshot")
-        snapshot_inputs = readiness_audit_inputs(root, snapshot)
-        require_same_readiness_audit_inputs(audit_inputs, snapshot_inputs, "changed while taking the snapshot")
-        audit_inputs = snapshot_inputs
-        child_env[SNAPSHOT_ENV] = str(snapshot)
-        child_env[SNAPSHOT_REPO_ENV] = str(root)
-        child_env[SNAPSHOT_WALK_ENV] = "1" if live_edition.is_dir() and not live_edition.is_symlink() else "0"
+    snapshot_dir = scratch.enter_context(tempfile.TemporaryDirectory(prefix="pm-landing-readiness-"))
+    snapshot = Path(snapshot_dir).resolve() / "edition"
+    copy_readiness_edition(audit_source, snapshot)
+    snapshot_hashes = readiness_edition_hashes(snapshot)
+    snapshot_stamp = readiness_edition_stamp(snapshot)
+    if snapshot_hashes != live_hashes:
+        raise RuntimeError("readiness audit edition changed while taking its snapshot")
+    snapshot_inputs = readiness_audit_inputs(root, snapshot)
+    require_same_readiness_audit_inputs(audit_inputs, snapshot_inputs, "changed while taking the snapshot")
+    audit_inputs = snapshot_inputs
+    child_env[SNAPSHOT_ENV] = str(snapshot)
+    child_env[SNAPSHOT_REPO_ENV] = str(root)
+    child_env[SNAPSHOT_WALK_ENV] = "1" if live_edition.is_dir() and not live_edition.is_symlink() else "0"
     require_live_edition("before dispatch")
 
     export_pool = None
@@ -2565,8 +2558,8 @@ def check_main(args: argparse.Namespace, root: Path, source_path: Path,
     require_same_readiness_audit_inputs(audit_inputs, readiness_audit_inputs(root),
                                       "changed during the exports")
     def require_final_edition() -> None:
-        if snapshot is not None and (snapshot_hashes != readiness_edition_hashes(snapshot)
-                                     or snapshot_stamp != readiness_edition_stamp(snapshot)):
+        if (snapshot_hashes != readiness_edition_hashes(snapshot)
+                or snapshot_stamp != readiness_edition_stamp(snapshot)):
             raise RuntimeError("the readiness audit snapshot changed during the checks")
         require_live_edition("during the checks")
 
