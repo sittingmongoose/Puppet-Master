@@ -13620,7 +13620,8 @@ canonical_text: >-
   differ by Project, and Settings layering under Settings_System resolves it like any other inventory row. Its
   value is read once, when a run starts, and that run keeps it until it ends: changing the row applies from the next
   run and never changes a run in progress, and a run that is paused and resumed under the same run ID, or given a
-  new attempt, is still that run. On, the run requests Code Mode under T-188. Off, the run requests
+  new attempt, is still that run. A child or subagent run started by a run in progress uses the value its parent
+  read. On, the run requests Code Mode under T-188. Off, the run requests
   ordinary tool calls: Puppet Master does not offer the script tool or the script's callable catalog on any route or
   by any channel, including the in-band carriage and the DAE projection of T-189; the run uses the route's ordinary
   tool-call path: the existing one where the route has one, which is the provider's tool-call API on a direct API
@@ -13632,8 +13633,8 @@ canonical_text: >-
   recorded for every run that did not request Code Mode, whatever other reason would also apply. The row changes only
   whether the script tool is offered and how the request-selected tools are described to the model. The tools selected for
   the request, and each tool's own permission, approval, FileSafe, network and schema checks, deadline, events,
-  receipt and usage rules, apply the same way in both modes, so the row changes no tool authority: whatever a script
-  may call with the row On, the run may call directly with the row Off, and nothing more. What the records show
+  receipt and usage rules, apply the same way in both modes, so the row changes no tool authority: in both modes
+  the tools a run may call are the request's selection under its policy snapshot, and each call gets the same checks. What the records show
   follows what actually ran: with a script, T-190's script operation and nested-call attribution; and because a
   script can chain calls inside one provider round, the number of rounds a piece of work takes, where the run's
   tool-round ceiling falls, and the usage observed can differ between the two modes. The row governs Puppet Master's Code
@@ -13649,7 +13650,7 @@ unblocks: []
 acceptance_criteria:
   - Plans/settings_inventory.json holds exactly one row code.execution.code-mode, a toggle whose default is On; Settings renders and searches it from the inventory, with one manager home and no separately owned duplicate control. The ordinary All Settings entry of the same row, bound to the same value, is not a duplicate.
   - With the row Off for a run, no request of that run carries the script tool or the script's callable catalog on any route, and the run's record shows requested and effective ordinary tool calls with the typed reason setting.
-  - Changing the row while a run is in progress or paused does not change that run, including after it resumes under the same run ID or gets a new attempt; the next run follows the new value.
+  - Changing the row while a run is in progress or paused does not change that run, including after it resumes under the same run ID or gets a new attempt, and does not change a child or subagent run it starts afterwards; the next run follows the new value.
   - Every tool call a script could make in a run with the row On, a run with the same request, policy snapshot and route can make as an ordinary tool call with the row Off, with the same arguments; given the same call-time inputs and the same answer to any approval prompt, the permission, approval, FileSafe, network and schema decision on that call is the same. Only the script tool itself and its callable catalog are absent with the row Off; the script wrapper and nested identity on the records, the number of provider rounds and the observed usage may differ.
   - With the row Off, on a route that carries Puppet Master tool calls in-band under T-189, every Puppet Master tool call the run makes is carried in-band, any request-selected tool can be called that way, and the run's record shows requested and effective ordinary tool calls with the typed reason setting.
   - With the row Off on a delegated or reasoning-only route, the run's record shows the typed reason setting and the route's own execution-tier disclosure is still shown.

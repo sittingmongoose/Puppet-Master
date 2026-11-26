@@ -39,6 +39,9 @@ const ROW = ([id, label, desc]) => {
 		if (!el || !el.checkVisibility({ opacityProperty: true, visibilityProperty: true, contentVisibilityAuto: true })) return false;
 		const b = el.getBoundingClientRect();
 		if (b.width < 1 || b.height < 1 || b.top < 0 || b.left < 0 || b.bottom > innerHeight || b.right > innerWidth) return false;
+		/* the element may cut off its own words (ellipsis, line clamp): innerText still returns them all (review 8) */
+		const own = getComputedStyle(el);
+		if (/hidden|clip|auto|scroll/.test(own.overflowX + ' ' + own.overflowY) && (el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1)) return false;
 		for (let a = el.parentElement; a; a = a.parentElement) {
 			const cs = getComputedStyle(a);
 			if (!/hidden|clip|auto|scroll/.test(cs.overflowX + ' ' + cs.overflowY)) continue;
