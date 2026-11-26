@@ -3416,6 +3416,22 @@ class PublishAllTargetsTests(unittest.TestCase):
         self.assertEqual(self.tip(self.origin), self.base)
         self.assertEqual(self.tip(nas), self.base)
 
+    def test_publish_refuses_tag_object_ids_without_pushing(self):
+        nas = self.two_push_urls()
+        self.git(self.shared, "tag", "-a", "lease-tag", self.base, "-m", "tagged lease")
+        self.git(self.shared, "tag", "-a", "commit-tag", self.head, "-m", "tagged candidate")
+        lease_tag = land.revision(self.shared, "refs/tags/lease-tag")
+        commit_tag = land.revision(self.shared, "refs/tags/commit-tag")
+
+        for label, lease, commit in (("publication lease", lease_tag, self.head),
+                                     ("landed commit", self.base, commit_tag)):
+            with self.subTest(argument=label), patch.object(land, "git", wraps=land.git) as git:
+                with self.assertRaisesRegex(land.Refusal, f"{label} is not a commit"):
+                    land.publish_main(self.shared, lease, commit)
+                self.assertFalse(any(call.args[1] == "push" for call in git.call_args_list))
+                self.assertEqual(self.tip(self.origin), self.base)
+                self.assertEqual(self.tip(nas), self.base)
+
     def test_verified_publish_updates_both_named_tracking_refs(self):
         nas = self.two_push_urls()
         self.git(self.shared, "remote", "add", "truenas-backup", str(nas))

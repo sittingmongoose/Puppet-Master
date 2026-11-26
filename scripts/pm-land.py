@@ -655,8 +655,11 @@ def publish_main(root: Path, lease: str, commit: str) -> int:
     The hand-push workflow only verified origin's fetch URL. Read main at every push target
     before reporting publication complete.
     """
-    lease = commit_or_refuse(root, lease, "publication lease")
-    commit = commit_or_refuse(root, commit, "landed commit")
+    for label, value in (("publication lease", lease), ("landed commit", commit)):
+        sha(value, label)
+        result = git(root, "--no-replace-objects", "cat-file", "-t", value, check=False)
+        if result.returncode or result.stdout.strip() != "commit":
+            raise Refusal(f"{label} is not a commit in {root}: {value!r}")
     if not is_ancestor(root, lease, commit):
         raise Refusal(f"publication lease {lease} is not an ancestor of landed commit {commit}: rebase on "
                       "the pinned main and check again, so the push is a fast-forward")
