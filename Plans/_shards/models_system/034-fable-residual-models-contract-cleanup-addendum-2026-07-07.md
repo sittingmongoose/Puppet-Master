@@ -4,7 +4,7 @@ Source: `Plans/Models_System.md`
 
 Source lines: L9729-L10100
 
-Source SHA256: `4398dfc2990b4f773f5cefd5f57811558fd245c493619b182f886931bdc0c621`
+Source SHA256: `c4e0c6fb1ec69e4f5db3fb393db554fab570c6b49f5153d770afe9f052e413d1`
 
 ---
 
@@ -103,7 +103,7 @@ Fields only MS-135 adds:
 | `capability_snapshot_ref` | string | Ref of the §10.4.3 capability snapshot the resolver read. |
 | `credential_route_epoch_id` | string | The MA-067 credential route epoch the effective account used. |
 | `fallback_used` | boolean | `true` only when `resolved_model_id` came from a `fallback_chain[]` entry instead of the precedence winner. |
-| `clamp_reason?` | string, closed to these members of the `clamp/substitution` reason-code family ("Provider capability and cost gating" above): `effort_unsupported`, `effort_clamped`, `auth_family_capability_clamped`, `capability_unknown`, `instruction_projection_partial`, `skill_projection_partial` | Present only when a requested value was not applied exactly for a reason other than model fallback, with the family's meanings (`effort_clamped` = accepted but narrowed effort; `effort_unsupported` = the effort control is unsupported). The model-level family codes `model_unavailable`, `model_routed_by_provider` and `model_substituted` are never written here: a model fallback is `fallback_used = true`, its `model_substituted` code is `substitution_reason`, and `selection_reason.fallback_reason` names the gate the requested model failed. When more than one code applies, the first in this list is recorded and the others stay in the attempt's `EffortSettlementReceipt` and `skipped_persona_controls[]`. Why an effort was narrowed (model maximum, policy ceiling, budget, provider mapping) is the attempt's `EffortSettlementReceipt.clamp_reason`, not this field. |
+| `clamp_reason?` | string, closed to these members of the `clamp/substitution` reason-code family ("Provider capability and cost gating" above): `effort_unsupported`, `effort_clamped`, `auth_family_capability_clamped`, `capability_unknown`, `instruction_projection_partial`, `skill_projection_partial` | Present only when a requested value was not applied exactly for a reason other than model fallback, with the family's meanings (`effort_clamped` = accepted but narrowed effort; `effort_unsupported` = the effort control is unsupported). The model-level family codes `model_unavailable`, `model_routed_by_provider` and `model_substituted` are never written here: a model fallback is `fallback_used = true`; when it replaced a requested model, its `model_substituted` code is `substitution_reason` and `selection_reason.fallback_reason` names the gate that model failed (the `substitution_reason?` row below says when it is omitted). When more than one code applies, the first in this list is recorded and the others stay in the attempt's `EffortSettlementReceipt` and `skipped_persona_controls[]`. Why an effort was narrowed (model maximum, policy ceiling, budget, provider mapping) is the attempt's `EffortSettlementReceipt.clamp_reason`, not this field. |
 | `substitution_reason?` | string, closed: `model_substituted` | Present exactly when `fallback_used = true` replaced a requested model (a named model or the router's winner); omitted when the fallback follows the router's `no_eligible_candidate` result, since no router winner was replaced. It is the MS-103 `clamp/substitution` code that is explicit evidence of a requested/effective model difference caused by model fallback; `selection_reason.fallback_reason` stays the explanation of the failed gate (for example `model_not_dispatchable`). |
 | `visibility_state` | string, closed: `visible`, `visible_with_notice`, `hidden_from_picker`, `history_only` | Derived from the effective model's `model_lifecycle_state` by the model lifecycle table below. |
 
@@ -165,7 +165,7 @@ Example 2, the picked model is sunset, the first fallback runs, and effort is cl
     "precedence_tier": 5,
     "fallback_reason": "model_not_dispatchable",
     "alternatives": [
-      { "provider_id": "codex", "model_id": "gpt-5.2-codex", "eligible": false, "exclusion_reason": "model_not_dispatchable" }
+      { "provider_id": "codex", "model_id": "openai/gpt-5.2-codex", "eligible": false, "exclusion_reason": "model_not_dispatchable" }
     ],
     "selection_time_utc": "2026-11-25T15:10:00Z",
     "execution_unit_id": "overseer_0007"
