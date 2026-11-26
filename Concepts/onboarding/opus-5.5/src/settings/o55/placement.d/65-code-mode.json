@@ -1,5 +1,5 @@
 {
- "_about": "Tools T-191 (Jared, 2026-11-24: Code Mode has to be an option in Settings that can be turned off). The admitted row code.execution.code-mode would otherwise fall to its subgroup's default section, Containers > Building & publishing images, between the Compose rows. It is a fine control over how a model uses tools, so it sits in AI & Providers > Models > How models answer, straight after Think between tool steps.",
+ "_about": "Tools T-191 (Jared, 2026-11-24: Code Mode has to be an option in Settings that can be turned off). The admitted row code.execution.code-mode would otherwise fall to its subgroup's default section, Containers > Building & publishing images, between the Compose rows. It is a fine control over how a model uses tools, so it sits in AI & Providers > Providers & Accounts > Models > More options > How models answer, straight after Think between tool steps. The row is new: Containers is only where it would have fallen, never a place it was drawn.",
  "overrides": [
   {"section": "providers-answers", "ids": ["code.execution.code-mode"]}
  ],

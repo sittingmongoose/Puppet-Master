@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L13358-L13692
+Source lines: L13358-L13709
 
-Source SHA256: `8aebd6a90ea5152ae0e3fc6a9556fced55cf4a47fd46204d009c23ffe2008105`
+Source SHA256: `44431894502283ec07f0eaec355c821e4f3653d204cb5d4af23c1c0c047b79a5`
 
 ---
 
@@ -46,7 +46,8 @@ canonical_text: >-
   it is never a silent fallback, and Code Mode is never reported as effective
   for a run in which any tool other than the directly callable tools named in T-190 was dispatched another way. A new run in a resumed
   session or conversation reads T-191's row when it starts, like any other run; a run that continues under the same
-  run ID after a pause, a prerequisite resume or a new attempt keeps the value it read when it started. An effective mode that differs from the session's earlier
+  run ID after a pause, a prerequisite resume or a new attempt keeps the value it read when it started, and a child
+  or subagent run and a follow-up run spawned by context rotation take their value as T-191 says. An effective mode that differs from the session's earlier
   runs is recorded, with its typed reason when it is not Code Mode.
 gui_related: false
 gui_classification_reason: Runtime tool-dispatch mode and its recorded truth; presentation of the mode is owned elsewhere.
@@ -124,8 +125,10 @@ canonical_text: >-
   in-band tool calls in that same owned dialect, under the same admission gate, call-ID and discarded-result rules;
   that is the ordinary tool-call path of such a route for that run. The carriage follows the route, not the model's
   tool_use flag alone: a bridged CLI under HTE that reports structured tool intents carries the request-selected
-  tools as structured tool intents through the hosted action loop as before, a DAE route follows the next sentence,
-  and a route that accepts no Puppet Master tools carries none. On a run under the DAE strategy that did not request
+  tools as structured tool intents through the hosted action loop as before, a cooperative SDK or protocol route
+  keeps returning tool intents to Puppet Master and a server bridge keeps its Puppet Master tool and MCP projection
+  as CLI_Bridged_Providers describes those classes, a DAE route follows the next sentence,
+  and a route that accepts no Puppet Master tools carries none. Each call travels by exactly one channel. On a run under the DAE strategy that did not request
   Code Mode, where the CLI accepts Puppet Master
   tools through provider-native feature projection, the request-selected Puppet Master tools are projected one by one
   beside the CLI's own tools through that same projection, and Puppet Master dispatches each call with the same
@@ -274,23 +277,35 @@ canonical_text: >-
   value is read once, when a run starts, and that run keeps it until it ends: changing the row applies from the next
   run and never changes a run in progress, and a run that is paused and resumed under the same run ID, or given a
   new attempt, is still that run. A child or subagent run started by a run in progress uses the value its parent
-  read. On, the run requests Code Mode under T-188. Off, the run requests
+  read, and a follow-up run spawned by context rotation continues the run it follows and uses that run's value, as
+  Run_Modes has it inherit that run's mode, strategy, effective runtime state and tool-policy snapshot. On, the run requests Code Mode under T-188. Off, the run requests
   ordinary tool calls: Puppet Master does not offer the script tool or the script's callable catalog on any route or
   by any channel, including the in-band carriage and the DAE projection of T-189; the run uses the route's ordinary
-  tool-call path: the existing one where the route has one, which is the provider's tool-call API on a direct API
-  route or structured tool intents through the hosted action loop on a bridged CLI under HTE; T-189's in-band
+  tool-call path, one channel for each call: the existing adapter-owned channel where the route has one, whichever
+  adapter class of CLI_Bridged_Providers the route belongs to, for example
+  the provider's tool-call API on a direct API route, tool intents returned to Puppet Master on a cooperative SDK
+  or protocol route, Puppet Master tool and MCP projection on a server bridge, or structured tool intents through
+  the hosted action loop on a bridged CLI under HTE; T-189's in-band
   carriage of the request-selected tools themselves on a route that carries Puppet Master tool calls in-band; and
   T-189's one-by-one projection of them on a DAE route whose CLI accepts projected Puppet Master tools. A route that
   accepts no Puppet Master tools carries none, On or Off. The run records
   requested mode ordinary tool calls, effective mode ordinary tool calls and the typed reason setting. That reason is
-  recorded for every run that did not request Code Mode, whatever other reason would also apply. The row changes only
-  whether the script tool is offered and how the request-selected tools are described to the model. The tools selected for
+  recorded for every run that did not request Code Mode, whatever other reason would also apply. The row changes
+  whether the script tool is offered, how the request-selected tools are described to the model and, on the two
+  kinds of route for which T-189 adds an ordinary path, the channel they travel by. The tools selected for
   the request, and each tool's own permission, approval, FileSafe, network and schema checks, deadline, events,
   receipt and usage rules, apply the same way in both modes, so the row changes no tool authority: in both modes
-  the tools a run may call are the request's selection under its policy snapshot, and each call gets the same checks. What the records show
+  the tools a run may call are the request's selection under its policy snapshot, and each call gets the same checks.
+  Authority is not reach: on a route that had no ordinary path, which is one that carries Puppet Master tool calls
+  in-band or a DAE route that accepts projected Puppet Master tools, a run with the row On that is not offered the
+  script tool has no channel for its selected tools, while a run with the row Off reaches them through T-189's two
+  added paths. That difference is the question the 2026-11-24 note leaves with the owner; the row grants no
+  permission in either case. What the records show
   follows what actually ran: with a script, T-190's script operation and nested-call attribution; and because a
   script can chain calls inside one provider round, the number of rounds a piece of work takes, where the run's
-  tool-round ceiling falls, and the usage observed can differ between the two modes. The row governs Puppet Master's Code
+  tool-round ceiling falls, and the usage observed can differ between the two modes. A script can also pass a tool an
+  argument it computed; an ordinary call carries only what the model writes out in one reply, so not every call a
+  script made can be repeated as one ordinary call. The row governs Puppet Master's Code
   Mode only; a provider's own code mode stays a provider-native feature under the provider-native feature policy.
   Off is a choice, not a fault: no surface presents the Off preference, or the typed reason setting, as a fallback, a
   warning or a degraded run. Every other disclosure a run owes stays as its owner says, whatever the row's value:
@@ -303,10 +318,12 @@ unblocks: []
 acceptance_criteria:
   - Plans/settings_inventory.json holds exactly one row code.execution.code-mode, a toggle whose default is On; Settings renders and searches it from the inventory, with one manager home and no separately owned duplicate control. The ordinary All Settings entry of the same row, bound to the same value, is not a duplicate.
   - With the row Off for a run, no request of that run carries the script tool or the script's callable catalog on any route, and the run's record shows requested and effective ordinary tool calls with the typed reason setting.
-  - Changing the row while a run is in progress or paused does not change that run, including after it resumes under the same run ID or gets a new attempt, and does not change a child or subagent run it starts afterwards; the next run follows the new value.
-  - Every tool call a script could make in a run with the row On, a run with the same request, policy snapshot and route can make as an ordinary tool call with the row Off, with the same arguments; given the same call-time inputs and the same answer to any approval prompt, the permission, approval, FileSafe, network and schema decision on that call is the same. Only the script tool itself and its callable catalog are absent with the row Off; the script wrapper and nested identity on the records, the number of provider rounds and the observed usage may differ.
+  - Changing the row while a run is in progress or paused does not change that run, including after it resumes under the same run ID or gets a new attempt, and does not change a child or subagent run it starts afterwards or a follow-up run spawned by its context rotation; the next run follows the new value.
+  - With the row Off, the run is offered each request-selected tool through the route's ordinary channel, where the route has one or T-189 adds one.
+  - For any complete tool call that the route's ordinary channel can carry, the permission, approval, FileSafe, network and schema decision with the row Off is the same as for the same call made from a script with the row On, given the same request, policy snapshot, call-time inputs and answer to any approval prompt. Only the script tool itself and its callable catalog are absent with the row Off; the script wrapper and nested identity on the records, the number of provider rounds and the observed usage may differ, and a call whose arguments only a script could supply is not required to be repeatable as one ordinary call.
   - With the row Off, on a route that carries Puppet Master tool calls in-band under T-189, every Puppet Master tool call the run makes is carried in-band, any request-selected tool can be called that way, and the run's record shows requested and effective ordinary tool calls with the typed reason setting.
   - With the row Off on a delegated or reasoning-only route, the run's record shows the typed reason setting and the route's own execution-tier disclosure is still shown.
+  - On a route that carries Puppet Master tool calls in-band, or a DAE route that accepts projected Puppet Master tools, with no approved JavaScript EvalSession: a run with the row Off can call its request-selected tools through T-189's added path, a run with the row On behaves as it did before the 2026-11-24 amendment, and the permission, approval, FileSafe, network and schema decision on any call either run makes is the same for the same call-time inputs.
   - With the row Off, a run under the DAE strategy on a CLI that accepts projected Puppet Master tools is offered each request-selected Puppet Master tool as its own projected tool under T-189, and its record shows requested and effective ordinary tool calls with the typed reason setting.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py lint-contractrefs
@@ -334,7 +351,7 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not make the switch a hidden, debug-only, environment-variable or per-provider control; it is one ordinary Settings row.
   - Do not present the Off preference or the setting reason as an error, a fallback or a degraded state, and do not suppress any other disclosure a run owes because the row is Off.
-  - Do not let the row change which tools a run may call or any permission, approval or FileSafe result.
+  - Do not let the row change tool authority, which is the request's selection under its policy snapshot, or any permission, approval, FileSafe, network or schema decision; the one difference in what a run can reach is the one stated for routes that had no ordinary path.
   - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, generated governance artifacts, or governance seal outputs.
 owner_hints:
   - Plans/Tools.md

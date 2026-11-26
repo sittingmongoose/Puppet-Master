@@ -97,6 +97,7 @@ export default async function (t) {
 		await t.check(`${when}: aria-checked says ${on ? 'On' : 'Off'}`, row.drawn === true && row.checked === String(on), JSON.stringify(row));
 		if (!row.drawn) return;
 		await t.check(`${when}: the setting's own value, read back from Settings, is ${on}`, row.stored === on, `PM51.value: ${JSON.stringify(row.stored)}`);
+		await t.check(`${when}: the switch is named by the inventory label`, sameLabel(row.switchName), row.switchName);
 		await t.check(`${when}: the switch itself is shown (opacity-aware visibility, box inside the window and every clipping ancestor)`, row.switchShown === true, JSON.stringify(row));
 		await t.check(`${when}: the switch is drawn ${on ? 'On' : 'Off'}, as aria-checked says (the .on class and the knob's place)`, row.onClass === on && (on ? row.knobX > 0 : row.knobX === 0), `class on ${row.onClass}, knob at ${row.knobX}`);
 	};
@@ -115,7 +116,6 @@ export default async function (t) {
 	await t.check('the row holds the inventory\'s complete sentence, as one of its lines', row.lines.includes(norm(INV.desc)), JSON.stringify(row.lines));
 	await t.check('the label and the complete sentence pass the computed visibility checks, and their boxes fit inside the window and every scrolling or clipping ancestor', row.labelShown === true && row.descShown === true, `label ${row.labelShown}, sentence ${row.descShown}`);
 	await t.check('the row has exactly one switch', row.switches === 1, String(row.switches));
-	await t.check('the switch is named by the inventory label', sameLabel(row.switchName), row.switchName);
 	await judge('at first, the inventory default', row, true);
 
 	await f.locator(SW).first().click();
