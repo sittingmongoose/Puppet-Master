@@ -47,6 +47,27 @@
     "NullableRef": {
       "anyOf": [{"$ref": "#/$defs/NonemptyString"}, {"type": "null"}]
     },
+    "MediaFallbackCaptionPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_id", "enabled", "fallback_provider_id", "fallback_model_id",
+        "caption_confidence_min", "redaction_profile_id", "gui_disclosure_copy"
+      ],
+      "properties": {
+        "policy_id": {"$ref": "#/$defs/NonemptyString"},
+        "enabled": {"type": "boolean"},
+        "fallback_provider_id": {"$ref": "#/$defs/NonemptyString"},
+        "fallback_model_id": {"$ref": "#/$defs/NonemptyString"},
+        "requires_user_permission": {"type": "boolean", "default": true},
+        "retain_original_artifact": {"type": "boolean", "default": true},
+        "caption_confidence_min": {"type": "number", "minimum": 0, "maximum": 1},
+        "redaction_profile_id": {"$ref": "#/$defs/NonemptyString"},
+        "cost_budget_ref": {"$ref": "#/$defs/NullableRef", "default": null},
+        "latency_budget_ms": {"type": ["integer", "null"], "minimum": 1, "default": null},
+        "gui_disclosure_copy": {"$ref": "#/$defs/NonemptyString"}
+      }
+    },
     "InputArtifactRef": {
       "type": "string",
       "pattern": "^artifact://.+$"
@@ -73,7 +94,7 @@
       "required": [
         "input_ref", "source_surface", "media_type", "mime", "byte_size", "redaction_state",
         "redacted_input_ref", "model_modality_support", "reason_code", "caption_artifact_ref",
-        "caption_confidence", "payload_mode", "disposition", "delivery_evidence"
+        "caption_confidence", "caption_usage_record_id", "payload_mode", "disposition", "delivery_evidence"
       ],
       "properties": {
         "input_ref": {"$ref": "#/$defs/InputArtifactRef"},
@@ -87,6 +108,7 @@
         "reason_code": {"anyOf": [{"$ref": "#/$defs/InputRejectionReason"}, {"type": "null"}]},
         "caption_artifact_ref": {"$ref": "#/$defs/NullableRef"},
         "caption_confidence": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "caption_usage_record_id": {"$ref": "#/$defs/NullableRef", "description": "UF-085 UsageRecord identity for the dispatched caption call for this input."},
         "payload_mode": {"enum": ["native", "caption", null]},
         "disposition": {"enum": ["native", "caption", "not_delivered", "delivery_unknown", "not_sent", "rejected", "not_evaluated"]},
         "delivery_evidence": {"anyOf": [{"$ref": "#/$defs/InputDeliveryEvidence"}, {"type": "null"}]}
@@ -128,7 +150,8 @@
             "redaction_state": {"type": "null"},
             "redacted_input_ref": {"type": "null"},
             "model_modality_support": {"type": "null"},
-            "caption_artifact_ref": {"type": "null"}
+            "caption_artifact_ref": {"type": "null"},
+            "caption_usage_record_id": {"type": "null"}
           }}
         },
         {
@@ -150,7 +173,11 @@
         },
         {
           "if": {"properties": {"caption_artifact_ref": {"type": "string"}}},
-          "then": {"properties": {"caption_confidence": {"type": "number"}, "payload_mode": {"enum": ["caption", null]}}},
+          "then": {"properties": {
+            "caption_confidence": {"type": "number"},
+            "caption_usage_record_id": {"$ref": "#/$defs/NonemptyString"},
+            "payload_mode": {"enum": ["caption", null]}
+          }},
           "else": {"properties": {"caption_confidence": {"type": "null"}}}
         }
       ]
@@ -192,6 +219,17 @@
         "schema_version": {"const": 1}
       },
       "allOf": [
+        {
+          "if": {"properties": {"fallback_caption_route": {"type": "object"}}},
+          "then": {
+            "required": ["fallback_caption_policy_id"],
+            "properties": {"fallback_caption_policy_id": {"$ref": "#/$defs/NonemptyString"}}
+          },
+          "else": {"properties": {
+            "fallback_caption_policy_id": {"type": "null"},
+            "input_dispositions": {"items": {"properties": {"caption_usage_record_id": {"type": "null"}}}}
+          }}
+        },
         {
           "if": {"properties": {"provider_payload_shape": {"const": "none"}}},
           "then": {"properties": {
