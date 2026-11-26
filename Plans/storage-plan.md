@@ -35184,6 +35184,7 @@ acceptance_criteria:
   - "Replay of EventRecords skips control frames."
   - "A group published through restore admission carries its restore_admission in its commit frame, and every group's group_digest recomputes from its own frames."
   - "The fixture group's receipts and group digest reproduce from its bytes."
+  - "Append publishes the reservation as appended and advances the durable watermark only after the complete member/commit frame image passes post-sync readback; a readback refusal leaves the reservation unappended and cannot later answer already_appended."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"

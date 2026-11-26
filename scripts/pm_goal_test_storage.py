@@ -1506,6 +1506,7 @@ class TestOwnerStorage:
         commit_raw = encode_commit_frame(commit, segment['generation'], events[-1]['sequence_id'])
         member_bytes = b''.join(frames_raw)
         path = self._segment_path(segment['generation'])
+        durable_end = offset + len(commit_raw)
         with open(path, 'r+b') as handle_:
             handle_.seek(segment['watermark'])
             handle_.truncate(segment['watermark'])
@@ -1524,14 +1525,14 @@ class TestOwnerStorage:
             handle_.flush()
             os.fsync(handle_.fileno())
         self._cut('after_append_frames')
-        segment['watermark'] = offset + len(commit_raw)
-        r['state'] = 'appended'
-        r['event_ids'] = ids
         raw = path.read_bytes()
         scan = scan_segment(raw, generation=segment['generation'], name=segment['name'],
                             storage_instance_id=self.storage_instance_id,
-                            prior_sequence=None, stop=segment['watermark'])
+                            prior_sequence=None, stop=durable_end)
         require('append/readback', scan['tail'] is None and scan['groups'][-1]['commit'] == commit)
+        segment['watermark'] = durable_end
+        r['state'] = 'appended'
+        r['event_ids'] = ids
         self._index_group(segment, scan['groups'][-1])
         if fenced is not None:
             fenced['state'] = 'consumed'

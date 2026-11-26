@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L34334-L37706
+Source lines: L34334-L37707
 
-Source SHA256: `0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888`
+Source SHA256: `f9aeabf51a464afd2ff3660a2ecb2336a589dcf2b931c2c97868000898094b29`
 
 ---
 
@@ -861,6 +861,7 @@ acceptance_criteria:
   - "Replay of EventRecords skips control frames."
   - "A group published through restore admission carries its restore_admission in its commit frame, and every group's group_digest recomputes from its own frames."
   - "The fixture group's receipts and group digest reproduce from its bytes."
+  - "Append publishes the reservation as appended and advances the durable watermark only after the complete member/commit frame image passes post-sync readback; a readback refusal leaves the reservation unappended and cannot later answer already_appended."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"
