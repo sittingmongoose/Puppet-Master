@@ -13405,7 +13405,8 @@ canonical_text: >-
   setting, execution shape, no approved JavaScript EvalSession, policy, not materialized, provider-kept native tools, among the reasons
   that count for the run. Each condition of the offer that a request does not meet is a reason that kept the script
   tool off that request: setting when the run did not request Code Mode, the execution shape named in T-189,
-  delegated or reasoning-only, when the request's route cannot carry Puppet Master tools, no approved JavaScript
+  delegated or reasoning-only, when the request's route cannot carry Puppet Master tools, the shape recorded being
+  that of the earliest counted request with this reason when counted requests differ in shape, no approved JavaScript
   EvalSession when Shared Integration Runtime gives no positive report of a product-approved one for the exact
   Host/Environment, which covers a negative report, an unavailable owner and missing or stale approval evidence,
   with the owner's own diagnostics kept, policy when the request's policy does not admit the
@@ -13427,8 +13428,9 @@ canonical_text: >-
   run ID after a pause, a prerequisite resume or a new attempt keeps the value it read when it started, and a child
   or subagent run and a follow-up run spawned by context rotation take their value as T-191 says. An effective mode that differs from the session's earlier
   runs is recorded, with its typed reason when it is mixed or ordinary tool calls; a not applicable record carries no reason.
-gui_related: false
-gui_classification_reason: Runtime tool-dispatch mode and its recorded truth; presentation of the mode is owned elsewhere.
+gui_related: true
+gui_classification_reason: Mixed unit. It defines the runtime tool-dispatch mode and its record, and it also requires the run's transcript status or stop entry, and every other surface that shows the tool-calling mode, to show a fallback's effective mode and typed reason. Split recommended when a GUI owner unit for the transcript takes the presentation rule; kept together here so the record and its one required disclosure cannot drift apart.
+split_recommended: true
 depends_on: [T-169, T-176, T-177, T-178]
 unblocks: [T-189, T-190, T-191]
 acceptance_criteria:
@@ -13442,6 +13444,7 @@ acceptance_criteria:
   - A run that requests Code Mode on a direct API route that keeps no native tools Puppet Master cannot disable, and is offered the script tool on its first requests but not on later ones because Shared Integration Runtime then reports no approved JavaScript EvalSession, records Code Mode when nothing, or only the directly callable tools named in T-190, was dispatched on the later requests, including when an ordinary call the model wrote there was rejected before dispatch, and mixed with the typed reason no approved JavaScript EvalSession when any other Puppet Master tool was dispatched on them.
   - The same run under the DAE strategy, on a CLI that accepts projected Puppet Master tools, or on any other route that keeps native tools Puppet Master cannot disable, records mixed in both cases, with the typed reason provider-kept native tools in the first case and no approved JavaScript EvalSession in the second.
   - A run whose only request had the script tool offered, on a route that keeps native tools Puppet Master cannot disable, and was stopped before that request was sent, records mixed with the typed reason provider-kept native tools.
+  - A run that requested Code Mode whose first counted request is on a delegated route and whose second is on a reasoning-only route, neither able to carry Puppet Master tools, records ordinary tool calls with the execution-shape reason delegated, the shape of the earliest such request; each request keeps its own diagnostics.
   - T-189 and T-191 state no rule for the effective mode or the typed reason; every record they name is the one this unit derives.
   - Tools creates no second evaluator, kernel manager or script runtime for Code Mode.
 validation_surfaces:

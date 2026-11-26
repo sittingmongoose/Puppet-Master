@@ -205,7 +205,7 @@ export default async function (t) {
 	await t.page.waitForTimeout(600);
 	await t.check('after the click on Settings Home the row is no longer drawn', (await read()).drawn === false, JSON.stringify(await read()));
 	const again = await findBySearch();
-	await t.check('Search finds the row again after leaving it', again.at >= 0, again.titles.slice(0, 8).join(' | '));
+	await t.check('Search finds the row again after leaving it, and that result is visible', again.at >= 0 && again.seen === true, `${again.titles.slice(0, 8).join(' | ')}; visible ${again.seen}`);
 	await judge('found again after leaving the row', await read(), false);
 
 	await f.locator(SW).first().click();

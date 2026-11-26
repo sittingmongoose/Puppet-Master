@@ -23327,8 +23327,8 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 121,
-        "True": 70
+        "False": 120,
+        "True": 71
       },
       "heading_count": 341,
       "implementation_surfaces": [
@@ -23367,7 +23367,7 @@
         "future tool registry and shell/integration command dispatch",
         "future vision_bridge tool"
       ],
-      "line_count": 13812,
+      "line_count": 13815,
       "path": "Plans/Tools.md",
       "plan_unit_count": 191,
       "plan_unit_ids": [
@@ -23644,7 +23644,7 @@
         "workflow_local_tool_registry_drift",
         "write_atomicity_drift"
       ],
-      "sha256": "ae71e2442f0e521e9c333d58283fe0bd303c958fe09e0d919248952c07b7af5f",
+      "sha256": "3de3905ee3815d6aed89d73cf7f3ca6395105936fda0c900bfd77e31e94d6b43",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 190,
@@ -25273,7 +25273,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-26T09:11:42Z",
+  "generated_at_utc": "2026-11-26T09:27:28Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -25281,8 +25281,8 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 5687,
-      "True": 3943
+      "False": 5686,
+      "True": 3944
     },
     "plan_unit_count": 9630,
     "source_preserving_unit_count": 0,
