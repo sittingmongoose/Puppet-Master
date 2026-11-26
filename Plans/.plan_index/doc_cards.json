@@ -20513,7 +20513,7 @@
         "future shared Rust interface model and sole owner services; no implementation claimed",
         "future typed Settings owner projections"
       ],
-      "line_count": 5881,
+      "line_count": 5883,
       "path": "Plans/Settings_System.md",
       "plan_unit_count": 62,
       "plan_unit_ids": [
@@ -20638,7 +20638,7 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "c922bb49b93eda3d34b20ebe67b2e6a5667b0964962cafdfcc718fc93ba2eb2f",
+      "sha256": "ee72f28b1ae19e77eb3d00e5eb6dcce75ef6cf4984d50030591892403eb17a92",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 62
@@ -23367,7 +23367,7 @@
         "future tool registry and shell/integration command dispatch",
         "future vision_bridge tool"
       ],
-      "line_count": 13674,
+      "line_count": 13689,
       "path": "Plans/Tools.md",
       "plan_unit_count": 191,
       "plan_unit_ids": [
@@ -23644,7 +23644,7 @@
         "workflow_local_tool_registry_drift",
         "write_atomicity_drift"
       ],
-      "sha256": "eaeb379f4cff4e6f70101bcbef4bfbba7c8034ed001d21a72387b366ce153101",
+      "sha256": "c179afbe5752a67fe24bc71c72f783e5e4d9a76481792fdf0b35ec630316a2d9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 190,
@@ -25273,7 +25273,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-25T23:49:06Z",
+  "generated_at_utc": "2026-11-26T01:10:38Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

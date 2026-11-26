@@ -16417,7 +16417,7 @@
       "label":
         "Code Mode",
       "desc":
-        "Lets the agent use several tools in one step by writing a short script, with every tool use still checked; off, the agent calls each tool directly instead.",
+        "Where a run can use Puppet Master's tools, lets the agent use several in one step by writing a short script, with every tool use still checked; off, the agent calls each tool directly instead.",
       "type": "toggle",
       "default": true,
       "scope": [
