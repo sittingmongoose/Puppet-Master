@@ -72,17 +72,19 @@ rule and stops the landing, because a real new failure whose total has not also 
 branch raises it; one that has been cut is indistinguishable, and reported as unknown rather than
 excused silently.
 
-A subcheck that pm-plans-verify.py killed at --subcheck-timeout-seconds (1800 by default here) has no
-result. Its timeout row is an infrastructure result, printed on its own line with the subcheck, how
-long it ran and the limit; it is never a new failure, growth or a blocker. The run it happened in was
-not fully verified, so it lifts exit 0 to 1 and changes no other exit code. A baseline is never
-recorded from a run that has one.
+A subcheck that pm-plans-verify.py killed at --subcheck-timeout-seconds (1800 by default here), or that
+something outside stopped with a signal, has no result. Its row (a timeout or a kill) is an
+infrastructure result, printed on its own line with the subcheck, how long it ran and the limit; it is
+never a new failure, growth or a blocker. The run it happened in was not fully verified, so it lifts
+exit 0 to 1 and changes no other exit code. A baseline is never recorded from a run that has one.
 
 The readiness audit inputs are gitignored. Both modes select --readiness-audit-root (the shared
 currentness directory when present, otherwise this tree's), and expose it through a temporary
-symlink when this tree has no local copy. The baseline binds the five direct inputs and the receipt's
-artifact dependencies by presence and SHA-256. Missing metadata, different inputs, unreadable inputs,
-or inputs that change during the checks stop comparison with exit 3; no failure is excused by that.
+symlink when this tree has no local copy. Compatible targets read one private read-only snapshot at
+any job count. Historical targets read the live edition serially. The baseline binds the five direct
+inputs and the receipt's artifact dependencies by presence and SHA-256. The checker verifies the live
+bytes and edition identity, and the snapshot when used, before it returns a verdict or writes a
+baseline. A mismatch stops it with exit 3.
 
 It exits 0 only when every subcheck finished and it has nothing to report.
 
@@ -115,8 +117,8 @@ Exit codes:
   0  nothing to report, and every subcheck finished
   1  nothing it reports stops the landing: governance staleness on files the branch edited,
      pre-existing failures whose count has not risen against a current baseline, or failures that
-     are new but name none of the branch's files (push, and report them); or a subcheck timed out,
-     so the run was not fully verified (rerun it on its own before pushing)
+     are new but name none of the branch's files (push, and report them); or a subcheck timed out or
+     was killed, so the run was not fully verified (rerun it on its own before pushing)
   2  it reports something that does stop the landing: a failure on the branch's files that is
      neither staleness nor pre-existing (nor `unknown-pre-existing`, a row in a subcheck the
      baseline only sampled whose total covers this run), a bucket that grew whose error kind is not
@@ -124,19 +126,24 @@ Exit codes:
      cannot see what was added, other than the readiness growth counter; a subcheck keyed from its
      export is not truncated
   3  the script could not run a check or could not read the baseline or the branch paths, or a
-     subcheck timed out while recording a baseline, or readiness audit inputs could not be compared
+     subcheck timed out or was killed while recording a baseline, or readiness audit inputs could
+     not be compared
 """
 from __future__ import annotations
 
 import argparse
-from contextlib import contextmanager
+from concurrent.futures import ThreadPoolExecutor
+from contextlib import ExitStack, contextmanager, nullcontext
 import hashlib
 import importlib.util
 import json
+import math
 import os
 import posixpath
 import re
+import shutil
 import signal
+import stat
 import subprocess
 import sys
 import tempfile
@@ -145,7 +152,20 @@ import time
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable, Iterator
+
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+_saved_bytecode = sys.dont_write_bytecode
+try:
+    sys.dont_write_bytecode = True
+    from pm_evidence_paths import relative_parts
+    from pm_readiness_audit import (
+        AUDIT_REL as READINESS_AUDIT_REL,
+        SNAPSHOT_CAPABILITY, SNAPSHOT_ENV, SNAPSHOT_ENV_NAMES, SNAPSHOT_REPO_ENV, SNAPSHOT_WALK_ENV,
+    )
+finally:
+    sys.dont_write_bytecode = _saved_bytecode
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BASELINE = "reports/landing-checks/baseline.json"
@@ -154,7 +174,6 @@ CURRENT_RUN_POINTER = "Plans/.plan_migration/current_run.json"
 PLAN_UNITS_INDEX = "Plans/.plan_index/plan_units.jsonl"
 # Direct reads in pm_pnc019_currentness.event_authority_audit_failures and its quarantine check.
 # The receipt names the other audit artifacts that validator rehashes.
-READINESS_AUDIT_REL = "Plans/.audits/event-authority-2026-08-13-currentness"
 READINESS_AUDIT_DIRECT_INPUTS = (
     "VALIDATOR_RECEIPT.json",
     "EVENT_FAMILY_DENOMINATOR_STATUS.json",
@@ -261,11 +280,32 @@ NO_EXPORT_COMMANDS = {
 # run the same way.
 AGGREGATE_CHILD_ENV = "PM_PLANS_VERIFY_AGGREGATE_CHILD"
 
+# One worker budget for the whole check (review N-F). --jobs counts every validator running at once
+# across the three checks, not N per aggregate: this script creates that many slot files and passes
+# them to the aggregates and exports, which take one for each validator's lifetime (the same names
+# are read by scripts/pm-plans-verify.py). The memory floor limits concurrency, never progress (deep
+# review 2, D2-1/D2-2): with no validator of the run running, one always starts whatever MemAvailable
+# reads, and a second or later one starts only above the floor plus a headroom per validator already
+# running, after a settle time. --jobs 1 is today's serial run: no budget, no floor, nothing to wait
+# for.
+SLOTS_DIR_ENV = "PM_LANDING_CHECK_SLOTS_DIR"
+SLOTS_COUNT_ENV = "PM_LANDING_CHECK_SLOTS"
+MEMORY_FLOOR_MB_ENV = "PM_LANDING_CHECK_MEMORY_FLOOR_MB"
+MEMORY_HEADROOM_MB_ENV = "PM_LANDING_CHECK_MEMORY_HEADROOM_MB"
+START_SETTLE_SECONDS_ENV = "PM_LANDING_CHECK_START_SETTLE_SECONDS"
+MAX_JOBS = 8
+DEFAULT_MEMORY_FLOOR_GB = 6.0
+DEFAULT_MEMORY_HEADROOM_GB = 2.0
+DEFAULT_START_SETTLE_SECONDS = 10.0
+
 # Failure kinds that say a subcheck did not finish, not that the tree is wrong. pm-plans-verify.py
 # kills a subcheck at --subcheck-timeout-seconds and reports that as the subcheck's only failure:
 # `subprocess_timeout` for the subchecks it runs as processes, `subcheck_timeout` for the one it runs
-# in-process.
-INFRASTRUCTURE_ERRORS = {"subprocess_timeout", "subcheck_timeout"}
+# in-process. `validator_killed_by_signal` is a validator something outside stopped - the kernel's OOM
+# killer, a watchdog - which is the same "reported nothing" (review N-A): treating it as a failure of
+# the tree under-reported the landing and let --record-baseline write the kill down as a finding.
+INFRASTRUCTURE_ERRORS = {"subprocess_timeout", "subcheck_timeout", "validator_killed_by_signal"}
+KILLED_ERROR = "validator_killed_by_signal"
 # The bound handed to the aggregate checks. lint-contractrefs alone takes about 199 s in the shared
 # checkout on the network mount, with 0 failures when run on its own at e44b9186fb; the old 180 s
 # bound killed it in both aggregates at the terminal.workgroup_moved landing of 2026-09-24.
@@ -330,17 +370,21 @@ def readiness_audit_source(root: Path, source: Path):
                 pass
 
 
-def readiness_audit_inputs(root: Path) -> dict[str, Any]:
+def readiness_audit_inputs(root: Path, edition: Path | None = None) -> dict[str, Any]:
     """Identity of the ignored audit bytes actually read, never the live canonical source hashes.
 
     A missing file is recorded as null. Malformed JSON is left for the validator to report;
     unreadable bytes cannot establish identity and stop the landing check instead.
     """
     files: dict[str, str | None] = {}
+    edition = root / READINESS_AUDIT_REL if edition is None else edition
 
     def read(path: str) -> bytes | None:
+        relative_parts(path)
+        if not path.startswith(READINESS_AUDIT_REL + "/"):
+            raise RuntimeError(f"readiness receipt artifact is outside its audit edition: {path}")
         try:
-            data = (root / path).read_bytes()
+            data = (edition / path.removeprefix(READINESS_AUDIT_REL + "/")).read_bytes()
         except FileNotFoundError:
             data = None
         except OSError as exc:
@@ -362,6 +406,104 @@ def readiness_audit_inputs(root: Path) -> dict[str, Any]:
     for path in sorted(paths - {receipt_path}):
         read(path)
     return {"schema_id": READINESS_AUDIT_INPUTS_SCHEMA_ID, "files": dict(sorted(files.items()))}
+
+
+def readiness_edition_paths(edition: Path) -> Iterator[Path]:
+    if edition.is_dir():
+        yield edition
+        yield from edition.rglob("*")
+
+
+def stat_stamp(info: os.stat_result) -> tuple[int, ...]:
+    return info.st_dev, info.st_ino, info.st_mode, info.st_size, info.st_ctime_ns, info.st_mtime_ns
+
+
+def audit_path_stamp(path: Path, *, follow_symlinks: bool = False) -> tuple[int, ...] | None:
+    try:
+        info = path.stat(follow_symlinks=follow_symlinks)
+    except FileNotFoundError:
+        return None
+    return stat_stamp(info)
+
+
+ReadinessSourceIdentity = tuple[Path, dict[Path, tuple[int, ...]], tuple[int, ...] | None]
+
+
+def readiness_source_identity(path: Path, *, allow_missing: bool) -> ReadinessSourceIdentity:
+    """Resolve the supplied path and stamp every link in its chain, including directory links."""
+    resolved = Path(path.drive + os.sep)
+    remaining = list(reversed(path.parts[1:]))
+    links: dict[Path, tuple[int, ...]] = {}
+    followed = 0
+    while remaining:
+        component = remaining.pop()
+        if component == "..":
+            resolved = resolved.parent
+            continue
+        candidate = resolved / component
+        stamp = audit_path_stamp(candidate)
+        if stamp is None or not stat.S_ISLNK(stamp[2]):
+            resolved = candidate
+            continue
+        followed += 1
+        if followed > 40:
+            raise RuntimeError(f"too many symlinks in readiness audit source: {path}")
+        links[candidate] = stamp
+        target = candidate.readlink()
+        if target.root:
+            resolved = Path((target.drive or resolved.drive) + os.sep)
+        remaining.extend(reversed(target.parts[1:] if target.root else target.parts))
+    # The walk records link identities but can step over an unavailable component before "..".
+    # Open the original spelling so the kernel confirms that the same directory can be read.
+    resolved_stamp = audit_path_stamp(resolved)
+    try:
+        fd = os.open(path, os.O_RDONLY | os.O_DIRECTORY)
+    except (FileNotFoundError, NotADirectoryError) as exc:
+        if allow_missing and isinstance(exc, FileNotFoundError) and not links and resolved_stamp is None:
+            return resolved, links, None
+        raise RuntimeError(f"readiness audit source is not a directory: {path} ({exc.strerror})") from exc
+    except OSError as exc:
+        raise RuntimeError(f"cannot read readiness audit source {path}: {exc.strerror}") from exc
+    try:
+        if stat_stamp(os.fstat(fd)) != resolved_stamp:
+            raise RuntimeError(f"the readiness audit source changed while resolving {path}")
+    finally:
+        os.close(fd)
+    return resolved, links, resolved_stamp
+
+
+def readiness_edition_stamp(edition: Path) -> dict[str, Any]:
+    """Notice replaced or rewritten files even when their original bytes were restored."""
+    return {
+        path.relative_to(edition).as_posix(): (
+            audit_path_stamp(path), audit_path_stamp(path, follow_symlinks=True) if path.is_symlink() else None
+        )
+        for path in readiness_edition_paths(edition)
+    }
+
+
+def readiness_edition_hashes(edition: Path) -> dict[str, str | None]:
+    return {
+        path.relative_to(edition).as_posix():
+            hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None
+        for path in readiness_edition_paths(edition)
+    }
+
+
+def copy_readiness_edition(live: Path, snapshot: Path) -> None:
+    directories = []
+    for path in readiness_edition_paths(live):
+        target = snapshot / path.relative_to(live)
+        if path.is_dir() and (path == live or not path.is_symlink()):
+            target.mkdir()
+            directories.append(target)
+        elif path.is_file():
+            shutil.copyfile(path, target)
+            target.chmod(0o400)
+        else:
+            raise RuntimeError(f"cannot snapshot readiness audit input {path}: expected a file or directory")
+    for directory in directories:
+        directory.chmod(0o500)
 
 
 def require_same_readiness_audit_inputs(recorded: Any, current: dict[str, Any], when: str) -> None:
@@ -404,12 +546,84 @@ def current_run_dir(root: Path) -> str:
     return run_path
 
 
-def run_check(name: str, root: Path, run_dir: str, timeout_seconds: int) -> dict[str, Any]:
+def target_environment(base_env: dict[str, str] | None = None) -> dict[str, str]:
+    # Historical target verifiers still read the retired cache controls. A cached report can
+    # describe an entirely different set of inputs.
+    return {name: value for name, value in (os.environ if base_env is None else base_env).items()
+            if not name.startswith("PM_PLANS_VERIFY_DEDUPE")
+            and (base_env is not None or name not in SNAPSHOT_ENV_NAMES)}
+
+
+_TARGET_VERIFIER_HELP: dict[str, str] = {}
+LANDING_BUDGET_CAPABILITY = "landing-budget-v1"
+
+
+def target_verifier_help(root: Path) -> str:
+    key = str(root.resolve())
+    if key not in _TARGET_VERIFIER_HELP:
+        help_text = ""
+        try:
+            proc = subprocess.run(
+                [sys.executable, "-B", "scripts/pm-plans-verify.py", "run-gates", "--help"],
+                cwd=root, capture_output=True, text=True, env=target_environment())
+            if proc.returncode == 0:
+                help_text = proc.stdout
+        except OSError:
+            pass
+        _TARGET_VERIFIER_HELP[key] = help_text
+    return _TARGET_VERIFIER_HELP[key]
+
+
+def target_worker_support(root: Path) -> tuple[bool, bool]:
+    """Discover jobs and the shared budget independently on the target verifier."""
+    help_text = target_verifier_help(root)
+    return "--jobs" in help_text, LANDING_BUDGET_CAPABILITY in help_text
+
+
+def target_readiness_snapshot_support(root: Path) -> bool:
+    return SNAPSHOT_CAPABILITY in target_verifier_help(root)
+
+
+def target_accepts_jobs(root: Path) -> bool:
+    return target_worker_support(root)[0]
+
+
+def check_argv(name: str, report_file: Path | None, timeout_seconds: int, jobs: int,
+               supports_jobs: bool) -> list[str]:
+    """The command line for one aggregate check in the target checkout.
+
+    `--jobs` is only passed to a verifier that lists it, so an older `--root` keeps its legacy
+    invocation; `--quiet-progress` and the bound predate this branch and are always passed.
+    """
+    argv = [sys.executable, "scripts/pm-plans-verify.py", name, "--quiet-progress",
+            "--subcheck-timeout-seconds", str(timeout_seconds)]
+    if supports_jobs:
+        argv += ["--jobs", str(jobs)]
+    if report_file is not None:
+        argv += ["--report", str(report_file)]
+    return argv
+
+
+def stream_check_stderr(stream) -> str:
+    """Forward memory hold messages and retain the diagnostic tail for unreadable reports."""
+    tail = ""
+    for line in stream:
+        if line.startswith("[pm-plans-verify] holding back "):
+            print(line, end="", file=sys.stderr, flush=True)
+        tail = (tail + line)[-400:]
+    return tail
+
+
+def run_check(name: str, root: Path, run_dir: str, timeout_seconds: int,
+              jobs: int = 1, env: dict[str, str] | None = None,
+              supports_jobs: bool | None = None) -> dict[str, Any]:
     """Invoke one check and return its JSON report. Raises RuntimeError when it cannot be read.
 
     `pm-plan-migration.py validate` prints its whole report. `run-gates` and `audit-governance`
     print a trimmed one that drops the per-subcheck failure totals, so they are asked for the full
     report in a scratch file that is deleted again; nothing is written inside the repository.
+    Each call has its own TemporaryDirectory and its own report path, which is what lets the three
+    checks run at once: two of them share no file, and the third writes none.
     """
     with tempfile.TemporaryDirectory(prefix="pm-landing-check-") as scratch:
         if name == "plan-migration-validate":
@@ -417,24 +631,28 @@ def run_check(name: str, root: Path, run_dir: str, timeout_seconds: int) -> dict
             report_file = None
         else:
             report_file = Path(scratch) / f"{name}.json"
-            argv = [
-                sys.executable,
-                "scripts/pm-plans-verify.py",
-                name,
-                "--quiet-progress",
-                "--subcheck-timeout-seconds",
-                str(timeout_seconds),
-                "--report",
-                str(report_file),
-            ]
-        proc = subprocess.run(argv, cwd=root, capture_output=True, text=True)
-        payload = report_file.read_text(encoding="utf-8") if report_file and report_file.exists() else proc.stdout
+            if supports_jobs is None:
+                supports_jobs = target_accepts_jobs(root)
+            argv = check_argv(name, report_file, timeout_seconds, jobs, supports_jobs)
+        with subprocess.Popen(argv, cwd=root, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                              text=True, env=target_environment(env)) as proc:
+            # Drain stderr while reading stdout so a held-back start is visible during the wait.
+            with ThreadPoolExecutor(max_workers=1) as readers:
+                stderr = readers.submit(stream_check_stderr, proc.stderr)
+                try:
+                    stdout = proc.stdout.read()
+                    returncode = proc.wait()
+                    stderr_tail = stderr.result()
+                except BaseException:
+                    proc.kill()
+                    raise
+        payload = report_file.read_text(encoding="utf-8") if report_file and report_file.exists() else stdout
         try:
             report = json.loads(payload)
         except Exception as exc:  # noqa: BLE001 - a check that cannot be parsed stops the landing.
             raise RuntimeError(
                 f"{name}: could not read the check's JSON output ({exc}); "
-                f"returncode={proc.returncode}; stderr tail: {(proc.stderr or '')[-400:]}"
+                f"returncode={returncode}; stderr tail: {stderr_tail}"
             ) from exc
     if not isinstance(report, dict):
         raise RuntimeError(f"{name}: the check's JSON output is not an object")
@@ -442,6 +660,68 @@ def run_check(name: str, root: Path, run_dir: str, timeout_seconds: int) -> dict
 
 
 # ------------------------------------------------------------------------------- normalizing keys
+
+
+def aggregate_reports(runner, jobs: int) -> dict[str, dict[str, Any]]:
+    """Run each of CHECKS through `runner`, concurrently when `jobs` allows, and keep their reports.
+
+    Every check gets its own temp directory and report path (`run_check`), so overlapping them
+    shares no file. The reports are returned under their names, and a check that could not be read
+    is raised in CHECKS order: the first unreadable check is still the one the serial loop named.
+    `jobs == 1` is the serial loop itself.
+    """
+    if jobs <= 1:
+        return {check: runner(check) for check in CHECKS}
+    with ThreadPoolExecutor(max_workers=len(CHECKS), thread_name_prefix="pm-landing-check") as pool:
+        futures = {check: pool.submit(runner, check) for check in CHECKS}
+        reports: dict[str, dict[str, Any]] = {}
+        first_error: BaseException | None = None
+        for check in CHECKS:
+            try:
+                reports[check] = futures[check].result()
+            except BaseException as exc:  # noqa: BLE001 - re-raised below in CHECKS order
+                if first_error is None:
+                    first_error = exc
+        if first_error is not None:
+            raise first_error
+        return reports
+
+
+_SLOT_POOL_CLASS: Any = None
+
+
+def landing_slot_pool(directory, count: int, floor_mb: int, headroom_mb: int, settle_seconds: float):
+    """The verifier's ValidatorSlots, from this checkout's scripts/pm-plans-verify.py.
+
+    The aggregates hold their slots from their own processes; the exports run from this one, so they
+    must share the class, the directory, the start lock and the memory arithmetic with them. Loaded
+    by path and once per process: this script and the verifier ship together, while a target checkout
+    under --root is a different tree whose verifier may predate the budget entirely.
+    """
+    global _SLOT_POOL_CLASS
+    try:
+        import fcntl  # noqa: PLC0415 - POSIX only; elsewhere the exports run unbudgeted, as before.
+    except ImportError:  # pragma: no cover - Windows
+        return None
+    if _SLOT_POOL_CLASS is None:
+        path = Path(__file__).resolve().with_name("pm-plans-verify.py")
+        spec = importlib.util.spec_from_file_location("pm_plans_verify_landing_slots", path)
+        if spec is None or spec.loader is None:
+            raise RuntimeError("scripts/pm-plans-verify.py cannot be loaded")
+        module = importlib.util.module_from_spec(spec)
+        saved_path, saved_bytecode = list(sys.path), sys.dont_write_bytecode
+        sys.dont_write_bytecode = True
+        try:
+            spec.loader.exec_module(module)
+        finally:
+            sys.path[:] = saved_path
+            sys.dont_write_bytecode = saved_bytecode
+        pool_class = getattr(module, "ValidatorSlots", None)
+        if pool_class is None:
+            raise RuntimeError("scripts/pm-plans-verify.py has no ValidatorSlots")
+        _SLOT_POOL_CLASS = pool_class
+    return _SLOT_POOL_CLASS(directory, count, floor_mb, fcntl_module=fcntl, headroom_mb=headroom_mb,
+                            settle_seconds=settle_seconds)
 
 
 def strip_root(text: str, root: Path) -> str:
@@ -700,11 +980,12 @@ def excused_by_kind(on_branch: list[dict[str, Any]]) -> dict[str, int]:
 
 
 def split_infrastructure(items: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
-    """Rule 3: take out the rows that say a subcheck was killed at its time bound.
+    """Rule 3: take out the rows that say a subcheck did not finish.
 
-    Such a subcheck has no result: what it would have reported is unknown, neither zero nor one. Its
-    row is an infrastructure result, printed on its own line with how long the subcheck ran, and is
-    never a new failure, growth or a blocker. Returns (infrastructure results, the other items).
+    It was killed at its time bound, or by a signal from outside (the kernel's OOM killer, a
+    watchdog). Such a subcheck has no result: what it would have reported is unknown, neither zero nor
+    one. Its row is an infrastructure result, printed on its own line, and is never a new failure,
+    growth or a blocker. Returns (infrastructure results, the other items).
     """
     infrastructure = [infrastructure_row(item) for item in items if item["error"] in INFRASTRUCTURE_ERRORS]
     rest = [item for item in items if item["error"] not in INFRASTRUCTURE_ERRORS]
@@ -713,21 +994,32 @@ def split_infrastructure(items: list[dict[str, Any]]) -> tuple[list[dict[str, An
 
 def infrastructure_row(item: dict[str, Any]) -> dict[str, Any]:
     raw = item["_raw"] if isinstance(item["_raw"], dict) else {}
+    killed = item["error"] == KILLED_ERROR
     bound = raw.get("timeout_seconds")
     known = isinstance(bound, (int, float)) and not isinstance(bound, bool)
-    return {
+    row = {
         "check": item["check"],
         "subcheck": item["subcheck"],
         "error": item["error"],
         "command_id": raw.get("command_id"),
-        # The subcheck is killed when its bound runs out, so the bound is how long it ran.
-        "elapsed_seconds": bound if known else None,
+        # A timeout is killed when its bound runs out, so the bound is how long it ran; a validator
+        # killed from outside reported no bound.
+        "elapsed_seconds": None if killed else (bound if known else None),
     }
+    if killed:
+        row["kind"] = "killed"
+        row["signal"] = raw.get("signal")
+        row["signal_name"] = raw.get("signal_name")
+    return row
 
 
 def describe_infrastructure(row: dict[str, Any]) -> str:
-    """The timeout line: the subcheck, how long it ran and the limit (review L-08)."""
+    """One line for a subcheck that did not finish: the bound it ran to, or the signal that killed it."""
     command = f" ({row['command_id']})" if row.get("command_id") else ""
+    if row.get("kind") == "killed":
+        signal_name = row.get("signal_name") or (f"signal {row['signal']}" if row.get("signal") else "a signal")
+        return (f"  [infrastructure] {row['check']}/{row['subcheck'] or '-'}  {row['error']}{command}  "
+                f"killed by {signal_name} (an OOM kill or a watchdog); what it would report is unknown")
     limit = row.get("limit_seconds")
     at = f"at its limit of {limit} s" if limit is not None else "at its time limit"
     ran = (f"killed after {row['elapsed_seconds']} s, {at}" if row["elapsed_seconds"] is not None
@@ -956,9 +1248,10 @@ def exit_code(
 ) -> int:
     """0 only for a complete run with nothing to report (review L-08).
 
-    A subcheck that timed out hides whatever it would have reported, so a run with one was not fully
-    verified. Exit 1 means reported, nothing stops the landing, which is exactly that, so the timeout
-    lifts 0 to 1. It never turns a 1 into a 2 or a 2 into a 1.
+    A subcheck that did not finish - killed at its bound, or by a signal from outside - hides whatever
+    it would have reported, so a run with one was not fully verified. Exit 1 means reported, nothing
+    stops the landing, which is exactly that, so it lifts 0 to 1. It never turns a 1 into a 2 or a 2
+    into a 1: a result nobody read is not evidence either way.
     """
     if not reported and not grown and not subcheck_growth and not infrastructure:
         return 0
@@ -1125,9 +1418,8 @@ def pm7_inventory_stale(paths: list[str], root: Path, runner=None) -> str | None
     return PM7_INVENTORY_MESSAGE
 
 
-def apply_pm7_inventory(code: int, paths: list[str], root: Path, json_mode: bool, runner=None) -> int:
+def apply_pm7_inventory(code: int, message: str | None, json_mode: bool) -> int:
     """Leave `code` as exit_code computed it, unless the inventory check is blocking."""
-    message = pm7_inventory_stale(paths, root, runner=runner)
     if not message:
         return code
     print(message, file=sys.stderr if json_mode else sys.stdout)
@@ -1445,9 +1737,10 @@ def escape_newlines(text: str) -> str:
 def subcheck_totals(
     counts: dict[str, dict[str, dict[str, int]]],
     listed: dict[str, dict[str, int]],
-    timed_out: set[tuple[str, str]],
+    did_not_finish: set[tuple[str, str]],
 ) -> dict[str, int | None]:
-    """Every subcheck's total in this run by `check/subcheck`, passing ones too; None for one that timed out.
+    """Every subcheck's total in this run by `check/subcheck`, passing ones too; None for one that did not finish
+    (timed out or killed).
 
     Reported only, for comparing one run with the next (scripts/pm-land.py does, inside a batch). Nothing here
     judges it, and the baseline does not record it.
@@ -1456,7 +1749,7 @@ def subcheck_totals(
     for check in CHECKS:
         here, others = counts.get(check) or {}, listed.get(check) or {}
         for name in sorted(set(here) | set(others)):
-            total = None if (check, name) in timed_out else here[name]["reported"] if name in here else others[name]
+            total = None if (check, name) in did_not_finish else here[name]["reported"] if name in here else others[name]
             totals[f"{check}/{name or '-'}"] = total
     return totals
 
@@ -1469,10 +1762,11 @@ def write_row_report(
     items: list[dict[str, Any]],
     counts: dict[str, dict[str, dict[str, int]]],
     listed: dict[str, dict[str, int]],
-    timed_out: set[tuple[str, str]],
+    did_not_finish: set[tuple[str, str]],
     partial: set[tuple[str, str]],
     paired: set[tuple[str, str]],
     fingerprints: dict[str, set[str] | None],
+    validate_inputs: Callable[[], None] | None = None,
 ) -> None:
     """--row-report: every row each subcheck gave in this run, for telling what one run added since another.
 
@@ -1512,13 +1806,16 @@ def write_row_report(
              "kind_stale": is_staleness_kind(item["error"]),
              "grown_stale": bool(grown and grown["stale"]), "names": names})
     subchecks = {}
-    for name, total in subcheck_totals(counts, listed, timed_out).items():
+    for name, total in subcheck_totals(counts, listed, did_not_finish).items():
         mine = rows.get(name, [])
         complete = total is not None and len(mine) == total
         subchecks[name] = {"reported": total, "complete": complete, "rows": mine if complete else []}
+    payload = json.dumps({"schema_id": "pm.landing_check.rows.v1", "base": base, "subchecks": subchecks},
+                         sort_keys=True) + "\n"
+    if validate_inputs is not None:
+        validate_inputs()
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps({"schema_id": "pm.landing_check.rows.v1", "base": base, "subchecks": subchecks}, sort_keys=True) + "\n",
-                    encoding="utf-8")
+    path.write_text(payload, encoding="utf-8")
 
 
 def aggregate_subcheck_commands(
@@ -1616,11 +1913,12 @@ def pair_validators(
     counts: dict[str, dict[str, dict[str, int]]],
     listed: dict[str, dict[str, int]],
     baseline_checks: dict[str, Any],
-    timed_out: set[tuple[str, str]],
+    did_not_finish: set[tuple[str, str]],
     items: list[dict[str, Any]],
     commands: dict[tuple[str, str], str] | str,
     changed: str | None,
     keyed: set[tuple[str, str]] | frozenset[tuple[str, str]] = frozenset(),
+    killed_checks: set[tuple[str, str]] | frozenset[tuple[str, str]] = frozenset(),
 ) -> list[dict[str, Any]]:
     """Review L-07: which run-gates copies of a validator are judged by their audit-governance copy.
 
@@ -1628,7 +1926,7 @@ def pair_validators(
     when the baseline was recorded, since those are the copies the baseline cannot key in full. Such
     a copy is paired with the audit-governance subcheck that runs the same command, and judged by its
     rows, only when both ran the same validator at the same version in this run (`changed` is None),
-    neither timed out, their totals agree, the audit-governance copy printed every failure now and at
+    both finished, their totals agree, the audit-governance copy printed every failure now and at
     the baseline, and every row the run-gates copy printed is among its rows, which with the equal
     totals is the evidence that both saw the same inputs. Otherwise the row says why not, and the
     run-gates copy keeps the truncated rule. `commands` is what each subcheck runs, or why that could
@@ -1678,10 +1976,12 @@ def pair_validators(
         other = {**now("audit-governance", twin), **then("audit-governance", twin)}
         row["audit_governance"], row["audit_governance_counts"] = twin, other
         unmatched = 0
-        if ("run-gates", name) in timed_out:
-            row["reason"] = "the run-gates copy timed out"
-        elif ("audit-governance", twin) in timed_out:
-            row["reason"] = "the audit-governance copy timed out"
+        if ("run-gates", name) in did_not_finish:
+            outcome = "was killed by a signal" if ("run-gates", name) in killed_checks else "timed out"
+            row["reason"] = f"the run-gates copy {outcome}"
+        elif ("audit-governance", twin) in did_not_finish:
+            outcome = "was killed by a signal" if ("audit-governance", twin) in killed_checks else "timed out"
+            row["reason"] = f"the audit-governance copy {outcome}"
         elif changed:
             row["reason"] = changed
         elif own["reported"] != other["reported"]:
@@ -1726,7 +2026,9 @@ def describe_pair(row: dict[str, Any]) -> str:
 # ------------------------------------------------------------- subchecks keyed from their export
 
 
-def run_export(root: Path, argv: list[str], timeout_seconds: int) -> dict[str, Any]:
+def run_export(root: Path, argv: list[str], timeout_seconds: int,
+               base_env: dict[str, str] | None = None,
+               slot_pool=None) -> dict[str, Any]:
     """Run one subcheck's command on its own and read the report it writes: its export (the exports brief).
 
     `argv` is the command and its arguments exactly as pm-plans-verify.py builds them for the aggregates
@@ -1736,35 +2038,40 @@ def run_export(root: Path, argv: list[str], timeout_seconds: int) -> dict[str, A
     when `timeout_seconds` runs out. The file is in a scratch directory outside the repository and is
     deleted again; like the aggregates, it reads the command's stdout when the file is empty. Returns
     {"report": the report or None, "timed_out": bool, "error": why it could not be read or None,
-    "elapsed_seconds": how long it ran}.
+    "elapsed_seconds": how long it ran}. `slot_pool` is the run's shared ValidatorSlots: the export
+    holds one slot while it runs, exactly as an aggregate validator does, and the start gate lets it
+    start at once because it runs after the checks, with nothing else of the run alive.
     """
-    started = time.monotonic()
-    with tempfile.TemporaryDirectory(prefix="pm-landing-check-export-") as scratch:
-        report_file = Path(scratch) / "export.json"
-        command = [sys.executable, "scripts/pm-plans-verify.py", argv[0], "--report", str(report_file), *argv[1:]]
-        env = dict(os.environ)
-        env[AGGREGATE_CHILD_ENV] = "1"
-        proc = subprocess.Popen(command, cwd=root, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
-                                start_new_session=True, env=env)
-        try:
-            out, err = proc.communicate(timeout=timeout_seconds if timeout_seconds > 0 else None)
-        except subprocess.TimeoutExpired:
+    held = slot_pool.hold(argv[0] if argv else "an export") if slot_pool is not None else nullcontext()
+    with held:
+        started = time.monotonic()
+        with tempfile.TemporaryDirectory(prefix="pm-landing-check-export-") as scratch:
+            report_file = Path(scratch) / "export.json"
+            command = [sys.executable, "scripts/pm-plans-verify.py", argv[0], "--report", str(report_file),
+                       *argv[1:]]
+            env = target_environment(base_env)
+            env[AGGREGATE_CHILD_ENV] = "1"
+            proc = subprocess.Popen(command, cwd=root, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                    text=True, start_new_session=True, env=env)
             try:
-                os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
-            except OSError:
+                out, err = proc.communicate(timeout=timeout_seconds if timeout_seconds > 0 else None)
+            except subprocess.TimeoutExpired:
                 try:
-                    proc.kill()
+                    os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
                 except OSError:
+                    try:
+                        proc.kill()
+                    except OSError:
+                        pass
+                try:
+                    proc.communicate(timeout=5)
+                except Exception:  # noqa: BLE001 - the group is killed; nothing more to read.
                     pass
-            try:
-                proc.communicate(timeout=5)
-            except Exception:  # noqa: BLE001 - the group is killed; nothing more to read.
-                pass
-            return {"report": None, "timed_out": True, "error": None,
-                    "elapsed_seconds": round(time.monotonic() - started, 1)}
-        elapsed = round(time.monotonic() - started, 1)
-        written = report_file.is_file() and report_file.stat().st_size > 0
-        payload = report_file.read_text(encoding="utf-8") if written else out
+                return {"report": None, "timed_out": True, "error": None,
+                        "elapsed_seconds": round(time.monotonic() - started, 1)}
+            elapsed = round(time.monotonic() - started, 1)
+            written = report_file.is_file() and report_file.stat().st_size > 0
+            payload = report_file.read_text(encoding="utf-8") if written else out
     try:
         report = json.loads(payload)
     except Exception as exc:  # noqa: BLE001 - an unreadable export only means the truncated rule applies.
@@ -1790,12 +2097,14 @@ def key_from_exports(
     root: Path,
     counts: dict[str, dict[str, dict[str, int]]],
     baseline_checks: dict[str, Any] | None,
-    timed_out: set[tuple[str, str]],
+    did_not_finish: set[tuple[str, str]],
     argv_map: dict[tuple[str, str], list[str]] | str,
     timeout_seconds: int,
     keep_dir: Path | None = None,
     items: list[dict[str, Any]] | tuple[dict[str, Any], ...] = (),
     context: RenameContext | None = None,
+    env: dict[str, str] | None = None,
+    slot_pool=None,
 ) -> tuple[dict[tuple[str, str], list[dict[str, Any]]], list[dict[str, Any]]]:
     """The exports brief: key each subcheck that prints only a sample from its complete export.
 
@@ -1814,7 +2123,7 @@ def key_from_exports(
     for check in ("run-gates", "audit-governance"):
         for name in sorted(counts.get(check) or {}):
             counted = counts[check][name]
-            if counted["sampled"] >= counted["reported"] or (check, name) in timed_out:
+            if counted["sampled"] >= counted["reported"] or (check, name) in did_not_finish:
                 continue
             row: dict[str, Any] = {
                 "check": check, "subcheck": name, "command": None, "reported": counted["reported"],
@@ -1856,19 +2165,22 @@ def key_from_exports(
     exported: dict[tuple[str, str], list[dict[str, Any]]] = {}
     commands = Counter(argv[0] for argv in planned)
     for argv in sorted(planned):
-        result = run_export(root, list(argv), timeout_seconds)
+        result = run_export(root, list(argv), timeout_seconds, env, slot_pool)
         if keep_dir is not None:
             unique = commands[argv[0]] == 1
             keep_export(keep_dir, argv[0] if unique else f"{argv[0]}-{hashlib.sha256(' '.join(argv).encode()).hexdigest()[:8]}",
                         list(argv), result)
         report = result.get("report")
         failures = report.get("failures") if isinstance(report, dict) else None
-        # The export's own subcheck killed at a bound: what it would have written is unknown.
-        stalled = isinstance(failures, list) and any(
-            isinstance(failure, dict) and failure.get("error") in INFRASTRUCTURE_ERRORS for failure in failures)
+        # An export interrupted at its bound or by a signal cannot key the aggregate's rows.
+        errors = {failure.get("error") for failure in failures if isinstance(failure, dict)
+                  and isinstance(failure.get("error"), str)} if isinstance(failures, list) else set()
         for row in planned[argv]:
             row["elapsed_seconds"] = result.get("elapsed_seconds")
-            if result.get("timed_out") or stalled:
+            if KILLED_ERROR in errors:
+                row["case"] = "export_killed"
+                row["reason"] = f"its export ({argv[0]}) was killed by a signal"
+            elif result.get("timed_out") or errors & INFRASTRUCTURE_ERRORS:
                 row["case"] = "export_timeout"
                 row["reason"] = f"its export ({argv[0]}) did not finish within {timeout_seconds} s"
             elif not isinstance(failures, list):
@@ -1987,6 +2299,24 @@ def main() -> int:
                         help="passed to the aggregate checks; a subcheck still running at this bound is "
                              f"killed and reported as an infrastructure result (default: "
                              f"{DEFAULT_SUBCHECK_TIMEOUT_SECONDS})")
+    parser.add_argument("--jobs", type=int, default=min(os.cpu_count() or 1, 4),
+                        help="cap concurrent validator subprocesses across both aggregates and allow "
+                             "the three checks to overlap on compatible targets. Results use the original "
+                             f"order. Use 1 for serial scheduling (default: {min(os.cpu_count() or 1, 4)}; "
+                             f"at most {MAX_JOBS}).")
+    parser.add_argument("--memory-floor-gb", type=float, default=DEFAULT_MEMORY_FLOOR_GB,
+                        help="with --jobs above 1, the first validator of the run always starts, and a "
+                             "second or later one only while MemAvailable is at least this many GiB plus "
+                             "the headroom for each validator already running (default: "
+                             f"{DEFAULT_MEMORY_FLOOR_GB:g})")
+    parser.add_argument("--memory-headroom-gb", type=float, default=DEFAULT_MEMORY_HEADROOM_GB,
+                        help="with --jobs above 1, memory reserved for each validator already running when "
+                             "another start is considered; the heaviest validators measure about 1.9 GiB "
+                             f"(default: {DEFAULT_MEMORY_HEADROOM_GB:g})")
+    parser.add_argument("--start-settle-seconds", type=float, default=DEFAULT_START_SETTLE_SECONDS,
+                        help="with --jobs above 1, a start waits this long after the previous start before "
+                             "it reads memory, so the reading includes the process just started (default: "
+                             f"{DEFAULT_START_SETTLE_SECONDS:g})")
     parser.add_argument("--json", action="store_true", help="print the machine-readable report instead of the summary")
     parser.add_argument("--allow-sparse", action="store_true",
                         help="run on a sparse worktree anyway; everything outside the cone reads as missing")
@@ -1997,26 +2327,45 @@ def main() -> int:
                         help="also keep each check's full report, every row it printed, as DIR/<check>.json, "
                              "so the run can be replayed exactly; DIR must be outside the repository")
     args = parser.parse_args()
+    if not 1 <= args.jobs <= MAX_JOBS:
+        parser.error(f"--jobs must be between 1 and {MAX_JOBS}")
+    for option, value in (("--memory-floor-gb", args.memory_floor_gb),
+                          ("--memory-headroom-gb", args.memory_headroom_gb),
+                          ("--start-settle-seconds", args.start_settle_seconds)):
+        if not math.isfinite(value):
+            parser.error(f"{option} must be finite")
+        if value < 0:
+            parser.error(f"{option} must not be negative")
 
     root = Path(args.root).resolve()
-    if args.readiness_audit_root:
-        source = Path(args.readiness_audit_root)
-        source = (source if source.is_absolute() else root / source).resolve()
-        if not source.is_dir():
-            print(f"pm-landing-check: readiness audit source is not a directory: {source}", file=sys.stderr)
-            return 3
-    else:
-        source = (SHARED_READINESS_AUDIT_ROOT if SHARED_READINESS_AUDIT_ROOT.is_dir()
-                  else root / READINESS_AUDIT_REL).resolve()
+    shared_source = not args.readiness_audit_root and SHARED_READINESS_AUDIT_ROOT.is_dir()
+    source_path = (root / args.readiness_audit_root if args.readiness_audit_root else
+                   SHARED_READINESS_AUDIT_ROOT if shared_source else root / READINESS_AUDIT_REL)
+    allow_missing_source = not (args.readiness_audit_root or shared_source)
+    args.slots_root = None
     try:
-        with readiness_audit_source(root, source):
-            return check_main(args, root, source)
+        source_identity = readiness_source_identity(source_path, allow_missing=allow_missing_source)
+        source = source_identity[0]
+        # One scratch directory for the run's worker slots, outside the repository.
+        try:
+            args.slots_root = Path(tempfile.mkdtemp(prefix="pm-landing-check-slots-"))
+        except OSError:
+            pass
+        with ExitStack() as scratch, readiness_audit_source(root, source):
+            return check_main(args, root, source_path, source_identity, scratch,
+                              allow_missing_source=allow_missing_source)
     except (RuntimeError, OSError) as exc:
         print(f"pm-landing-check: {exc}", file=sys.stderr)
         return 3
+    finally:
+        if args.slots_root is not None:
+            shutil.rmtree(args.slots_root, ignore_errors=True)
 
 
-def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
+def check_main(args: argparse.Namespace, root: Path, source_path: Path,
+               source_identity: ReadinessSourceIdentity, scratch: ExitStack, *,
+               allow_missing_source: bool) -> int:
+    audit_source = source_identity[0]
     baseline_path = Path(args.baseline)
     if not baseline_path.is_absolute():
         baseline_path = root / baseline_path
@@ -2060,7 +2409,18 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     baseline: dict[str, Any] = {}
     touched: list[str] = []
     currency: dict[str, Any] = {}
+    live_edition = root / READINESS_AUDIT_REL
+    live_stamp = readiness_edition_stamp(live_edition)
+    live_hashes = readiness_edition_hashes(audit_source)
     audit_inputs = readiness_audit_inputs(root)
+
+    def require_live_edition(when: str) -> None:
+        if (source_identity != readiness_source_identity(source_path, allow_missing=allow_missing_source)
+                or live_hashes != readiness_edition_hashes(audit_source)
+                or live_stamp != readiness_edition_stamp(live_edition)
+                or source_identity != readiness_source_identity(source_path, allow_missing=allow_missing_source)):
+            raise RuntimeError(f"the live readiness audit source or edition changed {when}")
+
     rename_context = None
     if not args.record_baseline:
         try:
@@ -2083,27 +2443,106 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     counts: dict[str, dict[str, dict[str, int]]] = {}
     listed: dict[str, dict[str, int]] = {}
     statuses: dict[str, str] = {}
-    # Review L-07: whether both aggregates ran the same validator code at the same commit.
-    before = None if args.record_baseline else tree_state(root)
+    # Review L-07: whether both aggregates ran the same validator code at the same commit. Read
+    # before any check, in both modes.
+    before = tree_state(root)
     after = None
-    for check in CHECKS:
-        try:
-            report = run_check(check, root, run_dir, args.subcheck_timeout_seconds)
-        except RuntimeError as exc:
-            print(f"pm-landing-check: {exc}", file=sys.stderr)
-            return 3
-        if keep_dir is not None:
-            (keep_dir / f"{check}.json").write_text(
-                json.dumps(report, indent=1, sort_keys=True) + "\n", encoding="utf-8")
+    supports_jobs, supports_budget = target_worker_support(root)
+    supports_snapshot = target_readiness_snapshot_support(root)
+    jobs = args.jobs
+    if args.json and not args.record_baseline and not currency["rule_two_applies"]:
+        # The JSON report carries this notice in baseline_currency. Keep it first on stderr too.
+        for line in stale_baseline_notice(currency):
+            print(line, file=sys.stderr)
+    if not supports_snapshot:
+        print("pm-landing-check: historical target: serial with end-of-run check", file=sys.stderr)
+        jobs = 1
+    else:
+        print("pm-landing-check: readiness pinned", file=sys.stderr)
+    if jobs > 1 and not (supports_jobs and supports_budget):
+        reason = "the current shared validator budget" if supports_jobs else "--jobs"
+        print(f"pm-landing-check: the target verifier lacks {reason}; running serially.", file=sys.stderr)
+        jobs = 1
+
+    # Every child gets an explicit environment built here (review A3).
+    child_env = target_environment()
+    # Only this run sets the worker budget and the aggregate-child flag; inherited copies would let a --jobs 1 run
+    # honour another run's slots or switch off subcheck timeouts (cheap review r2 N2).
+    for name in (SLOTS_DIR_ENV, SLOTS_COUNT_ENV, MEMORY_FLOOR_MB_ENV, MEMORY_HEADROOM_MB_ENV,
+                 START_SETTLE_SECONDS_ENV, AGGREGATE_CHILD_ENV):
+        child_env.pop(name, None)
+
+    snapshot = None
+    if supports_snapshot:
+        snapshot_dir = scratch.enter_context(tempfile.TemporaryDirectory(prefix="pm-landing-readiness-"))
+        snapshot = Path(snapshot_dir).resolve() / "edition"
+        copy_readiness_edition(audit_source, snapshot)
+        snapshot_hashes = readiness_edition_hashes(snapshot)
+        snapshot_stamp = readiness_edition_stamp(snapshot)
+        if snapshot_hashes != live_hashes:
+            raise RuntimeError("readiness audit edition changed while taking its snapshot")
+        snapshot_inputs = readiness_audit_inputs(root, snapshot)
+        require_same_readiness_audit_inputs(audit_inputs, snapshot_inputs, "changed while taking the snapshot")
+        audit_inputs = snapshot_inputs
+        child_env[SNAPSHOT_ENV] = str(snapshot)
+        child_env[SNAPSHOT_REPO_ENV] = str(root)
+        child_env[SNAPSHOT_WALK_ENV] = "1" if live_edition.is_dir() and not live_edition.is_symlink() else "0"
+    require_live_edition("before dispatch")
+
+    export_pool = None
+    if jobs > 1:
+        floor_mb = int(args.memory_floor_gb * 1024)
+        headroom_mb = int(args.memory_headroom_gb * 1024)
+        settle_seconds = args.start_settle_seconds
+        slot_dir = args.slots_root
+        if slot_dir is not None:
+            try:
+                for index in range(jobs):
+                    (slot_dir / f"slot-{index}.lock").touch()
+                export_pool = landing_slot_pool(slot_dir, jobs, floor_mb, headroom_mb, settle_seconds)
+            except (RuntimeError, OSError):
+                pass
+        if export_pool is None:
+            print("pm-landing-check: cannot set up the shared validator budget; running serially.",
+                  file=sys.stderr)
+            jobs = 1
+        else:
+            child_env[SLOTS_DIR_ENV] = str(slot_dir)
+            child_env[SLOTS_COUNT_ENV] = str(jobs)
+            child_env[MEMORY_FLOOR_MB_ENV] = str(floor_mb)
+            child_env[MEMORY_HEADROOM_MB_ENV] = str(headroom_mb)
+            child_env[START_SETTLE_SECONDS_ENV] = f"{settle_seconds:g}"
+
+    def consume(check: str, report: dict[str, Any]) -> None:
+        nonlocal after
         statuses[check] = str(report.get("status", "unknown"))
         check_items, check_counts = extract(check, report, root, rename_context)
         items.extend(check_items)
         counts[check] = check_counts
         listed[check] = listed_totals(check, report)
-        if check == "audit-governance" and before is not None:
+        if check == "audit-governance" and jobs <= 1:
             after = tree_state(root)
+
+    def run_with_readiness_check(check: str) -> dict[str, Any]:
+        report = run_check(check, root, run_dir, args.subcheck_timeout_seconds, jobs, child_env,
+                           supports_jobs)
+        if keep_dir is not None:
+            (keep_dir / f"{check}.json").write_text(
+                json.dumps(report, indent=1, sort_keys=True) + "\n", encoding="utf-8")
         require_same_readiness_audit_inputs(audit_inputs, readiness_audit_inputs(root),
-                                          f"changed during {check}")
+                                            f"changed during {check}")
+        return report
+
+    if jobs <= 1:
+        for check in CHECKS:
+            consume(check, run_with_readiness_check(check))
+    else:
+        reports = aggregate_reports(run_with_readiness_check, jobs)
+        for check in CHECKS:
+            consume(check, reports[check])
+        # The pairing below asks whether both aggregates ran the same validator code; with the three
+        # checks overlapping, that window ends when all of them have finished.
+        after = tree_state(root)
 
     commit = subprocess.run(
         ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True
@@ -2112,7 +2551,8 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     infrastructure, items = split_infrastructure(items)
     for row in infrastructure:
         row["limit_seconds"] = args.subcheck_timeout_seconds
-    timed_out = {(row["check"], row["subcheck"]) for row in infrastructure}
+    did_not_finish = {(row["check"], row["subcheck"]) for row in infrastructure}
+    killed_checks = {(row["check"], row["subcheck"]) for row in infrastructure if row.get("kind") == "killed"}
 
     if args.record_baseline and infrastructure:
         # A baseline describes what each subcheck reports on main; a subcheck that was killed reported
@@ -2121,8 +2561,13 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
               "they report is unknown:", file=sys.stderr)
         for row in infrastructure:
             print(describe_infrastructure(row), file=sys.stderr)
-        print(f"pm-landing-check: rerun with a --subcheck-timeout-seconds above "
-              f"{args.subcheck_timeout_seconds}.", file=sys.stderr)
+        if killed_checks:
+            print("pm-landing-check: a validator killed by a signal was stopped from outside; rerun when it "
+                  "finishes, and raise --subcheck-timeout-seconds for one killed at its bound.",
+                  file=sys.stderr)
+        else:
+            print(f"pm-landing-check: rerun with a --subcheck-timeout-seconds above "
+                  f"{args.subcheck_timeout_seconds}.", file=sys.stderr)
         return 3
 
     # The exports brief: a run-gates or audit-governance subcheck that prints only a sample is keyed from
@@ -2138,17 +2583,25 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         except Exception as exc:  # noqa: BLE001 - an unreadable map only means that nothing is keyed from an export.
             argv_map = f"{type(exc).__name__}: {exc}"
     exported, export_rows = key_from_exports(
-        root, counts, None if args.record_baseline else (baseline.get("checks") or {}), timed_out, argv_map,
-        args.subcheck_timeout_seconds, keep_dir, items, context=rename_context)
+        root, counts, None if args.record_baseline else (baseline.get("checks") or {}), did_not_finish, argv_map,
+        args.subcheck_timeout_seconds, keep_dir, items, context=rename_context, env=child_env,
+        slot_pool=export_pool)
     require_same_readiness_audit_inputs(audit_inputs, readiness_audit_inputs(root),
                                       "changed during the exports")
+    def require_final_edition() -> None:
+        if snapshot is not None and (snapshot_hashes != readiness_edition_hashes(snapshot)
+                                     or snapshot_stamp != readiness_edition_stamp(snapshot)):
+            raise RuntimeError("the readiness audit snapshot changed during the checks")
+        require_live_edition("during the checks")
 
     if args.record_baseline:
         untracked = untracked_check_inputs(root)
         doc = build_baseline(commit, run_dir, items, counts, statuses, args.max_fingerprints, untracked,
                              [item for key in sorted(exported) for item in exported[key]], audit_inputs)
+        payload = json.dumps(doc, indent=1, sort_keys=True) + "\n"
+        require_final_edition()
         baseline_path.parent.mkdir(parents=True, exist_ok=True)
-        baseline_path.write_text(json.dumps(doc, indent=1, sort_keys=True) + "\n", encoding="utf-8")
+        baseline_path.write_text(payload, encoding="utf-8")
         print(f"pm-landing-check: baseline written to {baseline_label} at commit {commit}")
         print(f"  readiness audit source: {audit_source}; {len(audit_inputs['files'])} inputs bound by presence and SHA-256")
         for check in CHECKS:
@@ -2181,14 +2634,14 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         for check, entry in baseline_checks.items()
         for name, counted in ((entry or {}).get("subchecks") or {}).items()
         if int(counted.get("sampled", 0)) < int(counted.get("reported", 0)) <= int(counted.get("exported", 0) or 0)
-    } - current_partial - timed_out
+    } - current_partial - did_not_finish
     known, baseline_counts = baseline_index(baseline, from_export)
     direct, derived = split_touched(touched)
     tokens = path_tokens(direct)
     units = units_of_touched_docs(root, direct)
     # A subcheck that timed out has no total to compare, so it is left out of every comparison.
     compared = {
-        check: {name: counted for name, counted in counts[check].items() if (check, name) not in timed_out}
+        check: {name: counted for name, counted in counts[check].items() if (check, name) not in did_not_finish}
         for check in counts
     }
     # Review L-07: a run-gates copy judged by its complete audit-governance copy is taken out of the
@@ -2204,14 +2657,10 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
             root, names, args.subcheck_timeout_seconds)
     except Exception as exc:  # noqa: BLE001 - an unreadable map only means that no copy is paired.
         commands = f"{type(exc).__name__}: {exc}"
-    pairs = pair_validators(counts, listed, baseline.get("checks") or {}, timed_out, items, commands,
-                            version_change(before, after), keyed_now | from_export)
+    pairs = pair_validators(counts, listed, baseline.get("checks") or {}, did_not_finish, items, commands,
+                            version_change(before, after), keyed_now | from_export, killed_checks)
     paired = {("run-gates", row["run_gates"]) for row in pairs if row["paired"]}
-    if args.row_report:
-        # Rows a sample or a paired copy holds are not counted as renamed by the loop below, so the row report
-        # asks grown_buckets with the same set and its `grown_stale` cannot disagree with the check.
-        write_row_report(Path(args.row_report).resolve(), root, args.base, touched, items, counts, listed, timed_out,
-                         partial_subchecks(compared, baseline.get("checks") or {}), paired, known)
+    all_items = items
     items = [item for item in items if (item["check"], item["subcheck"]) not in paired]
     compared = {
         check: {name: counted for name, counted in compared[check].items() if (check, name) not in paired}
@@ -2288,7 +2737,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                                                       {item["key"] for item in on_branch})
     resolved = sorted(
         name for name in set(baseline_counts) - set(seen_buckets)
-        if bucket_subcheck(name) not in partial and bucket_subcheck(name) not in timed_out
+        if bucket_subcheck(name) not in partial and bucket_subcheck(name) not in did_not_finish
         and bucket_subcheck(name) not in paired
     )
 
@@ -2300,14 +2749,16 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     )
     reported = [item for item in items if item["key"] in reported_keys]
     blocking = blocking_items(on_branch, grown, subcheck_growth)
-    totals = subcheck_totals(counts, listed, timed_out)
+    totals = subcheck_totals(counts, listed, did_not_finish)
+
+    inventory_message = pm7_inventory_stale(touched, root)
+    if args.row_report:
+        write_row_report(Path(args.row_report).resolve(), root, args.base, touched, all_items, counts, listed,
+                         did_not_finish, partial, paired, known, require_final_edition)
+    else:
+        require_final_edition()
 
     if args.json:
-        if not rule_two:
-            # The report itself is the JSON below, whose `baseline_currency` says the same; this is
-            # for the lander reading the terminal.
-            for line in stale_baseline_notice(currency):
-                print(line, file=sys.stderr)
         print(json.dumps(
             {
                 "schema_id": "pm.landing_check.report.v1",
@@ -2497,8 +2948,12 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         for name in resolved:
             print(f"  [gone] {escape_newlines(name)}")
         print(f"Subcheck totals this run: {len(totals)}")
+        killed_totals = {f"{check}/{subcheck or '-'}" for check, subcheck in killed_checks}
         for name, total in totals.items():
-            print(f"  [total] {name}  {'timed out' if total is None else total}")
+            if name in killed_totals:
+                print(f"  [total] {name}  killed by a signal")
+            else:
+                print(f"  [total] {name}  {'timed out' if total is None else total}")
         print(f"Bucket counts this run: {len(seen_buckets)}")
         for name, count in sorted(seen_buckets.items()):
             print(f"  [count] {escape_newlines(name)}  {count}")
@@ -2538,18 +2993,19 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         if infrastructure:
             ran = ", ".join(
                 f"{row['check']}/{row['subcheck'] or '-'} "
-                + (f"killed after {row['elapsed_seconds']} s" if row["elapsed_seconds"] is not None
+                + (("killed by " + (row.get("signal_name") or "a signal")) if row.get("kind") == "killed"
+                   else f"killed after {row['elapsed_seconds']} s" if row["elapsed_seconds"] is not None
                    else "killed at the limit")
                 for row in infrastructure)
-            print(f"{plural(len(infrastructure), 'subcheck')} did not finish within "
-                  f"{args.subcheck_timeout_seconds} s, the limit ({ran}), so what they would report is "
-                  "unknown and this run was not fully verified: it cannot exit 0, and it exits 1 unless "
-                  "something above stops the landing. Rerun each on its own and judge what it reports by "
-                  "the same rules before pushing main.")
+            deadline = "" if killed_checks else f" within {args.subcheck_timeout_seconds} s, the limit"
+            print(f"{plural(len(infrastructure), 'subcheck')} did not finish{deadline} ({ran}), so what they would "
+                  "report is unknown and this run was not fully verified: it cannot exit 0, and it exits 1 "
+                  "unless something above stops the landing. Rerun each on its own and judge what it "
+                  "reports by the same rules before pushing main.")
 
     return apply_pm7_inventory(
         exit_code(reported, grown, subcheck_growth, blocking, infrastructure),
-        touched, root, args.json)
+        inventory_message, args.json)
 
 
 def untracked_check_inputs(root: Path) -> list[str]:

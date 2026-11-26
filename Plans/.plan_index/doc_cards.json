@@ -20513,7 +20513,7 @@
         "future shared Rust interface model and sole owner services; no implementation claimed",
         "future typed Settings owner projections"
       ],
-      "line_count": 5880,
+      "line_count": 5883,
       "path": "Plans/Settings_System.md",
       "plan_unit_count": 62,
       "plan_unit_ids": [
@@ -20638,7 +20638,7 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "1deb67ec0a314763bf5980d835c9729df131eaf16d95cf4209a89c4e1728115c",
+      "sha256": "ec6801f0ab53471c198b6b029ec95ef53c9e7e1024b216e2b7367e4d2487cb9c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 62
@@ -23327,10 +23327,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 121,
-        "True": 69
+        "False": 120,
+        "True": 71
       },
-      "heading_count": 340,
+      "heading_count": 341,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Back_Seat_Driver.md",
@@ -23347,6 +23347,7 @@
         "Plans/Provider_OpenCode.md",
         "Plans/Runtime_Artifacts_Panel.md",
         "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Settings_System.md",
         "Plans/Shared_Integration_Runtime.md",
         "Plans/Skills_System.md",
         "Plans/ToDo_Runtime.md",
@@ -23354,6 +23355,7 @@
         "Plans/Working_Notebook.md",
         "Plans/assistant-chat-design.md",
         "Plans/orchestrator-subagent-integration.md",
+        "Plans/settings_inventory.json",
         "Plans/settings_system_contracts.schema.json",
         "Plans/storage-plan.md",
         "future DiscoveryService",
@@ -23365,9 +23367,9 @@
         "future tool registry and shell/integration command dispatch",
         "future vision_bridge tool"
       ],
-      "line_count": 13583,
+      "line_count": 13833,
       "path": "Plans/Tools.md",
-      "plan_unit_count": 190,
+      "plan_unit_count": 191,
       "plan_unit_ids": [
         "T-002",
         "T-166",
@@ -23558,7 +23560,8 @@
         "T-187",
         "T-188",
         "T-189",
-        "T-190"
+        "T-190",
+        "T-191"
       ],
       "reasoning_tiers": [
         "high",
@@ -23572,6 +23575,7 @@
         "browser_automation_overreach",
         "code_mode_carriage_overclaim",
         "code_mode_policy_bypass",
+        "code_mode_setting_truth_drift",
         "content_search_boundary_drift",
         "crawl_scope_ambiguity",
         "debug_authorization_drift",
@@ -23640,10 +23644,10 @@
         "workflow_local_tool_registry_drift",
         "write_atomicity_drift"
       ],
-      "sha256": "c53e1f511323d2b029b93798ac3080a116f00947920912fe9c933393c4d2d22e",
+      "sha256": "e170ecd83663641560575465fb3e41d5b7881667b8ae0f8a78c0ddb7c4515dde",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 189,
+        "accepted": 190,
         "retired": 1
       },
       "title": "Adding Tool Support -- Research & Plan",
@@ -23651,7 +23655,7 @@
         "compatibility_disposition": 2,
         "constraint": 1,
         "owner_boundary": 1,
-        "requirement": 186
+        "requirement": 187
       },
       "validation_surfaces": [
         "A length finishReason on tool-call deltas blocks/retries under typed policy, not as ordinary no-tool response.",
@@ -23694,6 +23698,7 @@
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py lint-contractrefs",
         "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-settings-layering",
         "python3 scripts/pm-working-notebook-contracts.py validate",
         "retention failure returns ToolFailure/runtime blocker",
         "scripts/pm-projects-refresh-contracts.py",
@@ -25268,7 +25273,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-25T15:31:35Z",
+  "generated_at_utc": "2026-11-26T12:06:28Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -25276,13 +25281,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 5687,
-      "True": 3942
+      "False": 5686,
+      "True": 3944
     },
-    "plan_unit_count": 9629,
+    "plan_unit_count": 9630,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 9349,
+      "accepted": 9350,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -25355,7 +25360,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 6127,
+      "requirement": 6128,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,

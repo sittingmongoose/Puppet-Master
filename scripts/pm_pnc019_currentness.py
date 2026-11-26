@@ -16,10 +16,15 @@ import json
 import math
 import os
 import re
+import sys
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from typing import Any
+
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pm_readiness_audit import AUDIT_REL, audit_input, snapshot_for
 
 
 REQUIRED_PNC019_SOURCE_HASH_PATHS = (
@@ -85,7 +90,7 @@ EVENT_FAMILY_QUARANTINED_ROW_COUNT = 252
 EVENT_FAMILY_DENOMINATOR_STATUS = "UNKNOWN_OPEN"
 EVENT_FAMILY_BULK_REGISTRATION_ALLOWED = False
 EVENT_FAMILY_EVIDENCE_CURRENTNESS = "live_rehashed_fail_closed_currentness_audit"
-EVENT_AUTHORITY_AUDIT_ROOT = "Plans/.audits/event-authority-2026-08-13-currentness"
+EVENT_AUTHORITY_AUDIT_ROOT = AUDIT_REL
 EVENT_AUTHORITY_STATUS_REL_PATH = f"{EVENT_AUTHORITY_AUDIT_ROOT}/EVENT_FAMILY_DENOMINATOR_STATUS.json"
 EVENT_AUTHORITY_RECEIPT_REL_PATH = f"{EVENT_AUTHORITY_AUDIT_ROOT}/VALIDATOR_RECEIPT.json"
 EVENT_AUTHORITY_GROUP_MANIFEST_REL_PATH = f"{EVENT_AUTHORITY_AUDIT_ROOT}/adjudication/GROUP_ARTIFACT_MANIFEST.json"
@@ -652,23 +657,31 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def audit_error_detail(root: Path, exc: Exception) -> str:
+    detail = str(exc)
+    snapshot = snapshot_for(root)
+    if snapshot is not None:
+        detail = detail.replace(str(snapshot), str(root / EVENT_AUTHORITY_AUDIT_ROOT))
+    return detail
+
+
 def event_authority_audit_failures(root: Path) -> list[dict[str, Any]]:
     """Rehash and validate the current in-repo fail-closed audit binding."""
     failures: list[dict[str, Any]] = []
     try:
-        receipt = json.loads((root / EVENT_AUTHORITY_RECEIPT_REL_PATH).read_text(encoding="utf-8"))
-        status = json.loads((root / EVENT_AUTHORITY_STATUS_REL_PATH).read_text(encoding="utf-8"))
-        manifest = json.loads((root / EVENT_AUTHORITY_GROUP_MANIFEST_REL_PATH).read_text(encoding="utf-8"))
-        inventory = json.loads((root / EVENT_AUTHORITY_SOURCE_INVENTORY_REL_PATH).read_text(encoding="utf-8"))
+        receipt = json.loads(audit_input(root, EVENT_AUTHORITY_RECEIPT_REL_PATH).read_text(encoding="utf-8"))
+        status = json.loads(audit_input(root, EVENT_AUTHORITY_STATUS_REL_PATH).read_text(encoding="utf-8"))
+        manifest = json.loads(audit_input(root, EVENT_AUTHORITY_GROUP_MANIFEST_REL_PATH).read_text(encoding="utf-8"))
+        inventory = json.loads(audit_input(root, EVENT_AUTHORITY_SOURCE_INVENTORY_REL_PATH).read_text(encoding="utf-8"))
     except Exception as exc:  # noqa: BLE001 - currentness must fail closed.
-        return [{"error": "event_authority_currentness_audit_unavailable", "detail": str(exc)}]
+        return [{"error": "event_authority_currentness_audit_unavailable", "detail": audit_error_detail(root, exc)}]
 
     artifact_hashes = receipt.get("artifact_hashes")
     if not isinstance(artifact_hashes, dict):
         failures.append({"error": "event_authority_currentness_artifact_hashes_invalid"})
         artifact_hashes = {}
     for artifact_path, expected_sha in artifact_hashes.items():
-        target = root / artifact_path
+        target = audit_input(root, artifact_path)
         if not target.is_file():
             failures.append({"error": "event_authority_currentness_artifact_missing", "artifact_path": artifact_path})
         elif not isinstance(expected_sha, str) or sha256_file(target) != expected_sha:
@@ -721,7 +734,7 @@ def event_authority_audit_failures(root: Path) -> list[dict[str, Any]]:
         ):
             failures.append({"error": "event_authority_currentness_receipt_closure_mismatch"})
         try:
-            occurrences_raw = (root / EVENT_AUTHORITY_OCCURRENCES_REL_PATH).read_bytes()
+            occurrences_raw = audit_input(root, EVENT_AUTHORITY_OCCURRENCES_REL_PATH).read_bytes()
         except OSError:
             occurrences_raw = b""
         failures.extend(event_authority_closed_custody_failures(
@@ -759,7 +772,7 @@ def event_authority_audit_failures(root: Path) -> list[dict[str, Any]]:
         and all(
             json.loads(line).get("audit_disposition")
             == "KEEP_QUARANTINED_NO_REGISTRY_OR_CHECKPOINT_ADVANCE"
-            for line in (root / EVENT_AUTHORITY_QUARANTINE_LEDGER_REL_PATH)
+            for line in audit_input(root, EVENT_AUTHORITY_QUARANTINE_LEDGER_REL_PATH)
             .read_text(encoding="utf-8")
             .splitlines()
             if line.strip()
@@ -793,7 +806,7 @@ def pnc019_source_hash_failures(
         source_hashes = {}
 
     for source_path in REQUIRED_PNC019_SOURCE_HASH_PATHS:
-        target = root / source_path
+        target = audit_input(root, source_path)
         if not target.is_file():
             failures.append(
                 _with_path(
@@ -958,7 +971,7 @@ def event_authority_checkpoint(
     """Clearance read from the installed edition: open unless a CLOSED edition re-verifies."""
     root = HELPER_REPO_ROOT if root is None else Path(root)
     try:
-        status = _strict_json((root / EVENT_AUTHORITY_STATUS_REL_PATH).read_bytes())
+        status = _strict_json(audit_input(root, EVENT_AUTHORITY_STATUS_REL_PATH).read_bytes())
     except Exception:  # noqa: BLE001 - an unreadable edition is an open one.
         return open_event_authority_checkpoint()
     if not isinstance(status, dict) or status.get("status") != EVENT_AUTHORITY_CLOSED_STATUS:
@@ -1879,7 +1892,7 @@ def event_authority_closure_failures(
 ) -> list[dict[str, Any]]:
     """Recompute a CLOSED edition's evidence from the live tree; [] means it still holds."""
     root = Path(root)
-    edition_dir = root / EVENT_AUTHORITY_AUDIT_ROOT if edition_dir is None else Path(edition_dir)
+    edition_dir = (snapshot_for(root) or root / EVENT_AUTHORITY_AUDIT_ROOT) if edition_dir is None else Path(edition_dir)
     try:
         evidence_raw = _edition_path(edition_dir, EVENT_AUTHORITY_CLOSURE_EVIDENCE_REL_PATH).read_bytes()
         evidence = _strict_json(evidence_raw)
@@ -1897,7 +1910,7 @@ def event_authority_closure_failures(
         declared = evidence["depth"]["declared_assessments"]
         continuity_pin = evidence["continuity"]
     except (ClosureInputError, OSError, ValueError, TypeError, KeyError) as exc:
-        return [{"error": "event_authority_closure_evidence_unavailable", "detail": str(exc)}]
+        return [{"error": "event_authority_closure_evidence_unavailable", "detail": audit_error_detail(root, exc)}]
     failures: list[dict[str, Any]] = []
     if (
         not isinstance(frozen_pin, dict)

@@ -74,14 +74,16 @@ Exit codes: 0 nothing to report, and every subcheck finished; 1 nothing it repor
 landing, meaning governance staleness on files the branch edited, pre-existing or
 `unknown-pre-existing` failures whose count has not risen against a current baseline (see "Only
 against a current baseline" and "Pre-existing and improved failures" below), failures
-that are new but name none of the branch's files, or a subcheck that timed out, so that the run was
+that are new but name none of the branch's files, or a subcheck that did not finish (it timed out, or
+a validator was killed by a signal - an OOM kill or a watchdog), so that the run was
 not fully verified; 2 something it reports does stop the landing, meaning a failure on the branch's
 files that is neither staleness nor pre-existing, non-stale bucket growth, or a rise in a subcheck
 whose failures are truncated, other than the readiness growth
 counter; 3 the check could not run, readiness audit input identity could not be established or matched,
-or a subcheck timed out while recording a baseline. A subcheck
-that timed out in a landing run lifts an exit 0 to 1 and changes no other exit code. A subcheck keyed
-from its export is not truncated; one whose export falls back is, and the summary says why.
+or a subcheck timed out or a validator was killed while recording a
+baseline. A subcheck
+that did not finish in a landing run lifts an exit 0 to 1 and changes no other exit code. A subcheck
+keyed from its export is not truncated; one whose export falls back is, and the summary says why.
 
 **It refuses a sparse worktree**, with exit 3, in both modes. The three checks read the whole
 repository, so every file outside a sparse cone reads as missing: a dry run at `ecb77f4e6c` on a
@@ -99,6 +101,32 @@ that recorded it; the rebase at landing left that commit off `main` (it landed a
 against that baseline rule 2 would be off. The baseline recorded at `main` `75bcda93bc` on
 2026-09-23 replaced it.
 
+## Parallel checks and one worker budget
+
+On compatible targets, the three checks can overlap. `--jobs N` caps the aggregate subprocess
+validators at N across both aggregates. Each validator or export holds a slot in one shared scratch
+directory while it runs. The standalone plan-migration check and the in-process Spec Lock check run
+outside this budget. `--jobs` is capped at 8. `--jobs 1` runs the checks and validators serially.
+
+The memory floor limits concurrency. The first slot holder can always start. Each additional slot
+holder needs `MemAvailable` of at least `--memory-floor-gb` (6 GiB by default) plus
+`--memory-headroom-gb` (2 GiB) for each occupied slot. The start lock waits
+`--start-settle-seconds` (10 s by default) after the last start so the reading includes that process.
+A held-back start reports to stderr once a minute. The subcheck timeout starts when the validator
+runs. When `MemAvailable` is unavailable, the slot count still applies.
+
+The checker reads `--jobs`, `landing-budget-v1` and `landing-readiness-snapshot-v1` support from the
+target verifier's help. A target with snapshot support reads one private, read-only readiness
+snapshot for the whole run. A target without it (a historical verifier) runs its aggregates and
+exports serially against the live edition, with the end-of-run check below, and the report says
+`historical target: serial with end-of-run check`. With snapshot support, missing worker options or a
+host that cannot set up the shared slots also cause the aggregates to run serially. A verifier that
+accepts `--jobs` receives `--jobs 1` in that case.
+
+Both copies of a validator that `run-gates` and `audit-governance` share run on their own, once in
+each aggregate, as they always have: the pairing rule below judges them by what they report, not by
+sharing a run.
+
 ## Readiness audit input identity
 
 The tracked checkout alone does not determine `implementation_readiness`. Its PNC-019 helper reads
@@ -110,9 +138,10 @@ though their failure counts describe a regression or an improvement.
 Both modes use one `--readiness-audit-root DIR` option, naming that currentness directory. By default
 they select `/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness` when it is
 present, otherwise the checked tree's directory. A clean worktree temporarily links its missing
-ignored directory to the selected source for the aggregates and exports, then removes its own link
-on success or failure. The source is read, never copied, regenerated or written. Canonical sources
-are still read from the checked worktree. An existing local directory is never replaced: select it
+ignored directory to the selected source and removes its own link on success or failure.
+The aggregates, validators and exports read the selected edition from one private, read-only copy
+under the run's temporary directory, including files examined by the Plan scans. Canonical sources
+are read from the checked worktree. An existing local directory is never replaced: select it
 explicitly with `--readiness-audit-root`, or use a clean worktree. An explicit nonexistent source is
 an error; default local absence is recorded as absence and the validator still reports its failures.
 
@@ -126,16 +155,21 @@ or `null` when missing. It covers these five direct inputs plus every artifact n
 - `adjudication/GROUP_ARTIFACT_MANIFEST.json`
 - `adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl`
 
-Receipt hashes are expectations to validate, not trusted substitutes for hashing the artifact bytes.
+For a snapshot-capable target the report and baseline use SHA-256s computed from the snapshot's own
+bytes; for a historical target they use the live edition's bytes, re-verified at the end of the run. Receipt hashes
+are expectations to validate. The receipt's artifact paths must belong to the currentness edition.
 Canonical sources listed in the inventory and the validator script are deliberately outside this
 binding: edits to those remain readiness findings. Unreferenced audit outputs are outside it too.
 The source's absolute location is printed in the run report, but is not part of the baseline identity,
 so moving the same evidence does not change the comparison.
 
 Comparison refuses with exit 3 before running the checks if the binding is absent or invalid, or
-the path set, file presence or bytes differ. Inputs are rehashed after each aggregate and after
-exports; changes stop the run before failures are classified or a baseline is written. Unreadable
-inputs also stop it. Malformed audit JSON remains a validator finding while its bytes are bound.
+the path set, file presence or bytes differ. The checker verifies the snapshot against the live
+edition at capture and rehashes the snapshot after the readers finish (snapshot-capable targets). It rehashes the bound live
+inputs after each aggregate and after exports. It also checks live file and directory identities
+and change times for a publication or rewrite that was reverted before the final hash.
+A changed edition or unreadable input stops the run before it issues a comparison or writes a
+baseline. Malformed audit JSON remains a validator finding while its bytes are bound.
 There is no staleness exception or pre-existing classification for an input mismatch. Restore the
 recorded input edition; never re-record a baseline to make a pending landing pass.
 

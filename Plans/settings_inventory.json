@@ -16413,6 +16413,47 @@
     },
     {
       "id":
+        "code.execution.code-mode",
+      "label":
+        "Code Mode",
+      "desc":
+        "Lets a run group checked Puppet Master tool calls in a short script when it can use one; turn this off to ask for direct tool calls instead.",
+      "type": "toggle",
+      "default": true,
+      "scope": [
+        "global",
+        "project"
+      ],
+      "tier": "advanced",
+      "recommended": true,
+      "search": [
+        "Code Mode",
+        "tool calls",
+        "tool calling",
+        "script",
+        "direct tool calls",
+        "several tools in one step"
+      ],
+      "related_features": [
+        "models"
+      ],
+      "layering": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere",
+          "project"
+        ],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "computer": "same_for_you",
+          "device": "not_about_the_screen"
+        }
+      }
+    },
+    {
+      "id":
         "code.execution.container-runtime",
       "label":
         "Container engine",
