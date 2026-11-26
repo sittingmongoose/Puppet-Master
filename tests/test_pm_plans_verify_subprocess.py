@@ -1019,3 +1019,135 @@ class SlotWaitAndTimeoutTests(unittest.TestCase):
         self.assertEqual((report["status"], report["failures"]), ("pass", []))
         self.assertGreaterEqual(elapsed, 1.5, "the wait did not happen, so this proves nothing")
         self.assertLess(elapsed, 8.0)
+
+
+class AuditClosureCompleteExportTests(unittest.TestCase):
+    """cmd_validate_audit_closure emits every pm-audit-closure.py error without a 200 cap."""
+
+    def _run_closure_with_raw_report(self, raw_report: dict, registry_rows: list[dict]) -> dict:
+        import argparse
+
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            registry = root / "Plans" / ".audits" / "_semantic_closure_registry.jsonl"
+            registry.parent.mkdir(parents=True)
+            registry.write_text(
+                "".join(json.dumps(row, sort_keys=True) + "\n" for row in registry_rows),
+                encoding="utf-8",
+            )
+            fake_proc = subprocess.CompletedProcess(
+                args=["python3", "scripts/pm-audit-closure.py", "validate"],
+                returncode=1 if raw_report.get("errors") else 0,
+                stdout=json.dumps(raw_report),
+                stderr="",
+            )
+            with (
+                mock.patch.object(pm_plans_verify, "ROOT", root),
+                mock.patch.object(pm_plans_verify, "run_validator_subprocess", return_value=(fake_proc, None)),
+            ):
+                return pm_plans_verify.cmd_validate_audit_closure(
+                    argparse.Namespace(registry=str(registry), subcheck_timeout_seconds=60)
+                )
+
+    def test_cmd_validate_audit_closure_emits_all_errors_past_200_cap(self) -> None:
+        errors = [
+            f"Plans/.audits/_semantic_closure_registry.jsonl:{1000 + n}: "
+            f"owner_evidence_hashes for Plans/Doc_{n:03d}.md#unit=U-{n:03d} is stale "
+            f"(stored {'a' * 64}, current {'b' * 64})"
+            for n in range(290)
+        ]
+        open_rows = [
+            {"line": 1, "closure_id": "closure-reopened-001", "finding_key": "sfk-001", "closure_status": "reopened"}
+        ]
+        registry_rows = [
+            {"closure_id": "closure-reopened-001", "finding_key": "sfk-001", "closure_status": "reopened"}
+        ]
+        raw_report = {
+            "schema_id": "pm.audit_closure.validator_report.v1",
+            "status": "fail",
+            "errors": errors,
+            "warnings": [],
+            "audit_dirs": [],
+            "registry": {
+                "row_count": 1,
+                "status_counts": {"reopened": 1},
+                "open_rows": open_rows,
+            },
+        }
+        report = self._run_closure_with_raw_report(raw_report, registry_rows)
+        self.assertEqual(report["status"], "fail")
+        self.assertEqual(len(report["failures"]), 291)
+        validator_errors = [f for f in report["failures"] if f["error"] == "audit_closure_validator_error"]
+        self.assertEqual(len(validator_errors), 290)
+        self.assertEqual([f["detail"] for f in validator_errors], errors)
+        self.assertTrue(all(f["path"] == "Plans/.audits/_semantic_closure_registry.jsonl" for f in validator_errors))
+        reopened = [f for f in report["failures"] if f["error"] == "audit_closure_reopened_rows_present"]
+        self.assertEqual(len(reopened), 1)
+        self.assertEqual(reopened[0]["row_count"], 1)
+
+    def test_cmd_validate_audit_closure_replays_c_290_error_json_without_truncation(self) -> None:
+        evidence = Path(
+            "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/fix79/landcheck/"
+            "validate-audit-closure-207887b456.json"
+        )
+        if not evidence.is_file():
+            self.skipTest("stream C fix79 evidence JSON is not mounted here")
+        raw_report = json.loads(evidence.read_text(encoding="utf-8"))
+        open_rows = raw_report["registry"]["open_rows"]
+        max_line = max(row["line"] for row in open_rows)
+        by_line = {row["line"]: row for row in open_rows}
+        registry_rows = [
+            by_line.get(line, {"closure_id": f"pad-{line}", "finding_key": f"sfk-{line}", "closure_status": "repaired"})
+            for line in range(1, max_line + 1)
+        ]
+        report = self._run_closure_with_raw_report(raw_report, registry_rows)
+        self.assertEqual(len(raw_report["errors"]), 290)
+        self.assertEqual(len(report["failures"]), 291)
+        validator_errors = [f for f in report["failures"] if f["error"] == "audit_closure_validator_error"]
+        self.assertEqual(len(validator_errors), 290)
+        self.assertEqual(validator_errors[-1]["detail"], raw_report["errors"][-1])
+
+    def test_cmd_validate_audit_closure_preserves_stable_shape_under_200(self) -> None:
+        errors = [
+            f"Plans/.audits/_semantic_closure_registry.jsonl:{10 + n}: "
+            f"owner_evidence_hashes for Plans/Base.md is stale (stored {'a' * 64}, current {'b' * 64})"
+            for n in range(39)
+        ]
+        open_rows = [
+            {"line": 1, "closure_id": "closure-reopened-001", "finding_key": "sfk-001", "closure_status": "reopened"}
+        ]
+        registry_rows = [
+            {"closure_id": "closure-reopened-001", "finding_key": "sfk-001", "closure_status": "reopened"}
+        ]
+        raw_report = {
+            "schema_id": "pm.audit_closure.validator_report.v1",
+            "status": "fail",
+            "errors": errors,
+            "warnings": [],
+            "audit_dirs": [],
+            "registry": {"row_count": 1, "status_counts": {"reopened": 1}, "open_rows": open_rows},
+        }
+        report = self._run_closure_with_raw_report(raw_report, registry_rows)
+        self.assertEqual(len(report["failures"]), 40)
+        self.assertEqual(
+            report["failures"][0],
+            {
+                "path": "Plans/.audits/_semantic_closure_registry.jsonl",
+                "error": "audit_closure_validator_error",
+                "detail": errors[0],
+            },
+        )
+        self.assertEqual(report["failures"][-1]["error"], "audit_closure_reopened_rows_present")
+
+    def test_run_gates_help_advertises_complete_closure_export_capability(self) -> None:
+        for columns in ("60", "80", "120"):
+            with self.subTest(columns=columns):
+                proc = subprocess.run(
+                    [sys.executable, "-B", str(MODULE_PATH), "run-gates", "--help"],
+                    cwd=ROOT,
+                    capture_output=True,
+                    text=True,
+                    env={**os.environ, "COLUMNS": columns},
+                    check=True,
+                )
+                self.assertIn("landing_closure_export_v1", proc.stdout)
