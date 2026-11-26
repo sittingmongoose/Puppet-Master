@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L9729-L10098
+Source lines: L9729-L10100
 
-Source SHA256: `340bf9854a9139cf1e164d0a5b2681767e23b38fcfdf297a4b517497e4120706`
+Source SHA256: `fbf93220c35e88d7921b9ec0bf92e3dffb5c1cd11614db3c51042a60e27785c3`
 
 ---
 
@@ -103,7 +103,8 @@ Fields only MS-135 adds:
 | `capability_snapshot_ref` | string | Ref of the §10.4.3 capability snapshot the resolver read. |
 | `credential_route_epoch_id` | string | The MA-067 credential route epoch the effective account used. |
 | `fallback_used` | boolean | `true` only when `resolved_model_id` came from a `fallback_chain[]` entry instead of the precedence winner. |
-| `clamp_reason?` | string, closed to these members of the `clamp/substitution` reason-code family ("Provider capability and cost gating" above): `effort_unsupported`, `effort_clamped`, `auth_family_capability_clamped`, `capability_unknown`, `instruction_projection_partial`, `skill_projection_partial` | Present only when a requested value was not applied exactly for a reason other than model fallback, with the family's meanings (`effort_clamped` = accepted but narrowed effort; `effort_unsupported` = the effort control is unsupported). The model-level family codes `model_unavailable`, `model_routed_by_provider` and `model_substituted` are never written here: model fallback is `fallback_used = true` with `selection_reason.fallback_reason`. When more than one code applies, the first in this list is recorded and the others stay in the attempt's `EffortSettlementReceipt` and `skipped_persona_controls[]`. Why an effort was narrowed (model maximum, policy ceiling, budget, provider mapping) is the attempt's `EffortSettlementReceipt.clamp_reason`, not this field. |
+| `clamp_reason?` | string, closed to these members of the `clamp/substitution` reason-code family ("Provider capability and cost gating" above): `effort_unsupported`, `effort_clamped`, `auth_family_capability_clamped`, `capability_unknown`, `instruction_projection_partial`, `skill_projection_partial` | Present only when a requested value was not applied exactly for a reason other than model fallback, with the family's meanings (`effort_clamped` = accepted but narrowed effort; `effort_unsupported` = the effort control is unsupported). The model-level family codes `model_unavailable`, `model_routed_by_provider` and `model_substituted` are never written here: a model fallback is `fallback_used = true`, its `model_substituted` code is `substitution_reason`, and `selection_reason.fallback_reason` names the gate the requested model failed. When more than one code applies, the first in this list is recorded and the others stay in the attempt's `EffortSettlementReceipt` and `skipped_persona_controls[]`. Why an effort was narrowed (model maximum, policy ceiling, budget, provider mapping) is the attempt's `EffortSettlementReceipt.clamp_reason`, not this field. |
+| `substitution_reason?` | string, closed: `model_substituted` | Present exactly when `fallback_used = true`. It is the MS-103 `clamp/substitution` code that is explicit evidence of a requested/effective model difference caused by model fallback; `selection_reason.fallback_reason` stays the explanation of the failed gate (for example `model_not_dispatchable`). |
 | `visibility_state` | string, closed: `visible`, `visible_with_notice`, `hidden_from_picker`, `history_only` | Derived from the effective model's `model_lifecycle_state` by the model lifecycle table below. |
 
 Example 1, the run's own pick is honored:
@@ -179,6 +180,7 @@ Example 2, the picked model is sunset, the first fallback runs, and effort is cl
   "capability_snapshot_ref": "capsnap://codex/gpt-5.5-codex/rev-41",
   "credential_route_epoch_id": "cre_19bd",
   "fallback_used": true,
+  "substitution_reason": "model_substituted",
   "clamp_reason": "effort_clamped",
   "visibility_state": "visible"
 }
