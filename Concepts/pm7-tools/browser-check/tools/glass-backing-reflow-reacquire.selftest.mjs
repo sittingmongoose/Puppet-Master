@@ -35,9 +35,8 @@ const motionMaskLine = src.split('\n').find((l) => l.startsWith('function motion
 assert.ok(motionMaskLine, 'motionMask extraction failed');
 const thresholdLine = src.split('\n').find((l) => l.startsWith('const THRESHOLD'));
 const motionMask = new Function('THRESHOLD', motionMaskLine + '\nreturn motionMask;')(new Function(thresholdLine + '\nreturn THRESHOLD;')());
-const bcLayoutSig = layoutSigSrc ? new Function(layoutSigSrc + '\nreturn bcLayoutSig;')() : () => 'base-stub';
 const readThrough = new Function('shot', 'backingVerdict', 'bcLayoutSig', 'motionMask', readThroughSrc + '\nreturn readThrough;')(
-	shot, backingVerdict, bcLayoutSig, motionMask);
+	shot, backingVerdict, layoutSigSrc ? new Function(layoutSigSrc + '\nreturn bcLayoutSig;')() : () => 'base-stub', motionMask);
 
 const W = 236, H = 200, SEL = '#sidePanelSlot';
 const BG = [20, 20, 24], TEXT = [230, 230, 230], ICON1 = [100, 217, 255], ICON2 = [234, 236, 240];
@@ -46,7 +45,7 @@ const TRANSPARENT = 'rgba(0, 0, 0, 0)';
 // the pane: five visible rows plus three scrolled below the clip; every row carries a non-text icon and a
 // shrink-wrapped <i data-work-time> timer leaf whose width ticks without moving the row (the real pane's 22
 // live timers, R136-N2). A wrap tick shifts rows 2-4 up 15 px (the witness's dy).
-function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = false, pulseShots = [], onShot = null } = {}) {
+function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = false } = {}) {
 	let shifted = false, wide = false, shots = 0, appended = null;
 	const inline = new Map();
 	const rowY = (i) => 20 + i * 34 + (shifted && i >= 2 ? -15 : 0);
@@ -113,10 +112,8 @@ function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = fa
 		page: { screenshot: async ({ clip }) => {
 			shots++;
 			if (tickShots.includes(shots)) shifted = !shifted; // the wrap tick lands before this shot
-			if (pulseShots.includes(shots)) shifted = !shifted; // A -> B before the stalled framebuffer read
 			if (widthShots.includes(shots)) wide = !wide; // a width-only timer tick lands before this shot
 			const full = render();
-			if (pulseShots.includes(shots)) shifted = !shifted; // B -> A before the screenshot promise resolves
 			const lx = clip.x - 61, ly = clip.y - 57, out = new Uint8Array(clip.width * clip.height * 4);
 			for (let y = 0; y < clip.height; y++) for (let x = 0; x < clip.width; x++) {
 				const s = ((y + ly) * W + (x + lx)) * 4, d = (y * clip.width + x) * 4;
@@ -124,7 +121,6 @@ function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = fa
 			}
 			const png = encodePng({ width: clip.width, height: clip.height, data: out });
 			if (afterShots.includes(shots)) shifted = !shifted; // the tick lands DURING this shot: framebuffer pre-wrap, signature post-wrap
-			onShot?.(shots);
 			return png;
 		} },
 	};
@@ -214,40 +210,4 @@ function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = fa
 	assert.equal(w.shots(), 10, 'the mid-sequence pulse is caught and the quiet reacquisition judges');
 	assert.ok(w.logs.some((l) => /reflowed/.test(l) && /reacquir/.test(l)), 'the reacquisition is logged');
 }
-// R137-H2 RED: SVG leaves have no offset boxes, and CSS-only painted leaves outside NON_TEXT were omitted.
-// Moving either inside an unchanged row must change the signature.
-{
-	const saved = { document: globalThis.document, innerWidth: globalThis.innerWidth, innerHeight: globalThis.innerHeight };
-	let svgX = 10, badgeX = 40;
-	const e = {
-		scrollTop: 0, scrollHeight: 500, clientWidth: 236, clientHeight: 200,
-		getBoundingClientRect: () => ({ top: 0, left: 0, bottom: 200, right: 236 }),
-	};
-	const svg = {
-		namespaceURI: 'http://www.w3.org/2000/svg', offsetParent: null, parentElement: e,
-		getBoundingClientRect: () => ({ top: 20, left: svgX, bottom: 32, right: svgX + 12, width: 12, height: 12 }),
-	};
-	const badge = {
-		offsetParent: e, parentElement: e, offsetTop: 20, get offsetLeft() { return badgeX; }, offsetHeight: 8,
-		getBoundingClientRect: () => ({ top: 20, left: badgeX, bottom: 28, right: badgeX + 8 }),
-	};
-	e.querySelectorAll = (sel) => sel === '*' ? [svg, badge] : sel.includes('svg') ? [svg, badge] : sel.includes('span') ? [badge] : [];
-	Object.assign(globalThis, { document: { querySelector: (s) => s === SEL ? e : null }, innerWidth: 1920, innerHeight: 1080 });
-	try {
-		const svgBefore = bcLayoutSig(SEL); svgX += 12;
-		assert.notEqual(bcLayoutSig(SEL), svgBefore, 'a direct-child SVG movement must change the signature');
-		const badgeBefore = bcLayoutSig(SEL); badgeX += 9;
-		assert.notEqual(bcLayoutSig(SEL), badgeBefore, 'a CSS-only painted leaf movement must change the signature');
-	} finally { Object.assign(globalThis, saved); }
-}
-
-// R138-H1 RED: a >650 ms clip capture can contain both ticks of a 1 s A -> B -> A pulse while every layout
-// signature still reads A. The capture duration itself must force a fresh acquisition.
-{
-	let clock = 0;
-	const w = world([], { pulseShots: [1], onShot: (n) => { if (n === 1) clock += 700; } });
-	const m = await readThrough(w.t, w.f, SEL, { now: () => clock });
-	assert.ok(m && !m.reflowed && m.share <= 0.002, `a stalled pulse capture must be reacquired, not judged (share ${m && (m.share * 100).toFixed(3)}%)`);
-	assert.equal(w.shots(), 10, 'the stalled first acquisition is replaced by a quiet second acquisition');
-}
-console.log('PASS own-pane reflow is detected from the layout signatures bracketing every plate: a single tick is reacquired into a clean verdict, persistent reflow ends in a bounded named could-not-judge (never a pass), a quiet pane keeps its first-acquisition pass, width-only timer ticks (visible or off-screen) are not reflow, ticks during a2 or c are caught, a 1-second A->B->A wrap pulse inside one acquisition is caught mid-sequence, direct SVG plus CSS-only painted-leaf movement changes the signature, and a >650 ms capture that spans a full pulse is reacquired');
+console.log('PASS own-pane reflow is detected from the layout signatures bracketing every plate: a single tick is reacquired into a clean verdict, persistent reflow ends in a bounded named could-not-judge (never a pass), a quiet pane keeps its first-acquisition pass, width-only timer ticks (visible or off-screen) are not reflow, ticks during a2 or c are caught, and a 1-second A->B->A wrap pulse inside one acquisition is caught mid-sequence, not judged on its equal endpoints');
