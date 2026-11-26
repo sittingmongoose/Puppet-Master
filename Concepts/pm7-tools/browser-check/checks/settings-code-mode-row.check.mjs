@@ -155,7 +155,7 @@ export default async function (t) {
 		await t.check(`${when}: the switch paints: its pixels differ from the same spot with the switch hidden`, !pic.drawn.equals(pic.noSwitch), `${pic.drawn.length} and ${pic.noSwitch.length} bytes`);
 		await t.check(`${when}: the knob paints: the pixels differ from the same spot with only the knob hidden`, row.knobStyled === true && !pic.drawn.equals(pic.noKnob), `knob styled ${row.knobStyled}`);
 		await t.check(`${when}: the switch is drawn ${on ? 'On' : 'Off'}, as aria-checked says (the .on class, and the knob's centre ${on ? 'past' : 'short of'} the middle of the track)`, row.onClass === on && (on ? row.knobCentre > row.trackMid + 2 : row.knobCentre < row.trackMid - 2), `class on ${row.onClass}, knob centre ${row.knobCentre} of a track whose middle is ${row.trackMid}`);
-		await t.check(`${when}: the knob's ink is at the ${on ? 'far' : 'near'} end of the track in the picture (a mirrored or shifted switch fails here)`, pic.knobPainted === (on ? 'end' : 'start'), `hiding the knob changed the picture at: ${pic.knobPainted}`);
+		await t.check(`${when}: the knob's ink is at the ${on ? 'far' : 'near'} end of the track in the picture (a mirrored switch, or a knob at the wrong end, fails here; it does not measure where the switch sits in its row)`, pic.knobPainted === (on ? 'end' : 'start'), `hiding the knob changed the picture at: ${pic.knobPainted}`);
 		return pic.drawn;
 	};
 
