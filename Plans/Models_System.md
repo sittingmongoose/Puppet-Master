@@ -7229,9 +7229,9 @@ canonical_text: Cost gating skips models that exceed the active Persona cost bud
   exceed budget or are unavailable, PM emits a concern and suggests cheaper alternatives or escalation rather than failing
   silently. Only a known cost above the budget skips a model; a model with an unknown price stays pickable, and every place
   that shows the choice shows its price as unknown (DL-2604).
-gui_related: false
-gui_classification_reason: The unit covers model/runtime policy, data contracts, selection semantics, or backend audit behavior
-  rather than direct GUI presentation.
+gui_related: true
+gui_classification_reason: The unit sets cost-gating policy and also requires the model picker to show an unknown price as
+  unknown, which is user-visible GUI presentation (DL-2604).
 split_recommended: false
 depends_on:
 - MS-101
@@ -9742,8 +9742,8 @@ canonical_text: >-
   merge rules, fallback chain limits, resolver examples, lifecycle transitions, effort settlement, model routing,
   entitlement quota settlement, provider policy rules, metadata replay, and provider error envelopes. These contracts
   extend MS-134 without reactivating legacy platform_specs authority.
-gui_related: false
-gui_classification_reason: Provider/model capability schemas and routing defaults are backend contracts; GUI consumers may render them but do not own them.
+gui_related: true
+gui_classification_reason: Mostly backend provider/model contracts, but the unit also assigns model-picker visibility_state per lifecycle state and the unknown-price display, which are user-visible GUI presentation.
 depends_on: [MS-017, MS-031, MS-083, MS-124, MS-127, MS-134, MA-067]
 unblocks: []
 acceptance_criteria:
