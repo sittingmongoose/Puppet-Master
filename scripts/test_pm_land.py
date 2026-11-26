@@ -3404,6 +3404,15 @@ class PublishAllTargetsTests(unittest.TestCase):
         self.assertIn(str(self.origin), output.getvalue())
         self.assertIn(str(nas), output.getvalue())
 
+    def test_publish_uses_commit_id_when_branch_has_the_same_name(self):
+        nas = self.two_push_urls()
+        self.git(self.shared, "update-ref", f"refs/heads/{self.head}", self.base)
+
+        self.assertEqual(land.publish_main(self.shared, self.base, self.head), 0)
+
+        self.assertEqual(self.tip(self.origin), self.head)
+        self.assertEqual(self.tip(nas), self.head)
+
     def test_publish_uses_git_push_urls_after_a_list_reset(self):
         retired = self.bare("retired.git", self.base)
         self.git(self.shared, "config", "--add", "remote.origin.pushurl", str(retired))
@@ -3556,6 +3565,7 @@ class PublishAllTargetsTests(unittest.TestCase):
         nas = self.bare("behind mirror.git", self.base)
         self.git(self.shared, "remote", "add", "truenas-backup", str(nas))
         self.git(self.origin, "update-ref", land.MAIN_REF, self.head, self.base)
+        self.git(self.shared, "update-ref", f"refs/heads/{self.head}", self.base)
         self.git(self.shared, "commit", "--allow-empty", "-m", "next landing")
         landed = land.revision(self.shared, land.MAIN_REF)
 
@@ -3570,7 +3580,7 @@ class PublishAllTargetsTests(unittest.TestCase):
         args = shlex.split(repair)
         self.assertEqual(args, ["git", "-C", str(self.shared), "push", "--no-follow-tags",
                                 f"--force-with-lease={land.MAIN_REF}:{self.base}",
-                                "--", str(nas), f"{self.head}:{land.MAIN_REF}"])
+                                "--", str(nas), f"{self.head}^{{commit}}:{land.MAIN_REF}"])
 
         land.command(args)
         self.assertEqual(self.tip(nas), self.head)
@@ -3612,7 +3622,7 @@ class PublishAllTargetsTests(unittest.TestCase):
         self.assertEqual(len(pushes), 2)
         for args in pushes:
             self.assertIn(f"--force-with-lease={land.MAIN_REF}:{self.base}", args)
-            self.assertIn(f"{self.head}:{land.MAIN_REF}", args)
+            self.assertIn(f"{self.head}^{{commit}}:{land.MAIN_REF}", args)
         self.assertEqual({args[-2] for args in pushes}, {str(self.origin), str(nas)})
 
     def test_publish_lists_deduplicated_targets_before_the_first_push(self):
