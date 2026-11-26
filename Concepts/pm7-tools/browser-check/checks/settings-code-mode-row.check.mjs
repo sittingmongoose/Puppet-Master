@@ -24,7 +24,7 @@ const norm = (s) => String(s || '').replace(/\s+/g, ' ').trim();
    page comparisons below cannot pass on an inventory that itself says "Code mode" (max review). */
 const CANON_LABEL = 'Code Mode';
 /* Code Mode is a fixed phrase (Settings_System §4 keeps those through sentence case), so the page draws the
-   inventory label letter for letter; "Code mode" fails (review 5) */
+   inventory label exactly, case-sensitive, after whitespace is normalized; "Code mode" fails (review 5) */
 const sameLabel = (drawn) => norm(drawn) === norm(INV.label);
 const ROW = ([id, label, desc]) => {
 	const sw = [...document.querySelectorAll(`.toggle[role="switch"][data-setting="${id}"], [data-setting-id="${id}"] .toggle[role="switch"]`)]
