@@ -148,8 +148,11 @@ export default async function (t) {
 		await t.check(`${when}: the setting's own value, read back from Settings, is ${on}`, row.stored === on, `PM51.value: ${JSON.stringify(row.stored)}`);
 		/* the computed accessible name: the switch for this setting is among the switches Chrome names "Code Mode"
 		   (aria-labelledby would win over aria-label, so the attribute alone is not read) */
-		const named = await f.getByRole('switch', { name: CANON_LABEL, exact: true }).evaluateAll((els, id) => els.filter((el) => (el.getAttribute('data-setting') === id || el.closest(`[data-setting-id="${id}"]`)) && el.checkVisibility()).length, ID);
-		await t.check(`${when}: the switch's computed accessible name is the inventory label`, INV.label === CANON_LABEL && named === 1, `switches for ${ID} with the role switch and the name "${CANON_LABEL}": ${named}`);
+		/* the same node, not a namesake: exactly one visible switch for this setting in the frame, and that one is
+		   also the switch found by role and name */
+		const all = await f.locator(SW).count();
+		const named = await f.getByRole('switch', { name: CANON_LABEL, exact: true }).and(f.locator(SW)).count();
+		await t.check(`${when}: the switch's computed accessible name is the inventory label`, INV.label === CANON_LABEL && all === 1 && named === 1, `visible switches for ${ID}: ${all}; of them with the role switch and the name "${CANON_LABEL}": ${named}`);
 		await t.check(`${when}: the switch itself is shown (opacity-aware visibility, box inside the window and every clipping ancestor)`, row.switchShown === true, JSON.stringify(row));
 		const pic = await paint();
 		await t.check(`${when}: the switch paints: its pixels differ from the same spot with the switch hidden`, !pic.drawn.equals(pic.noSwitch), `${pic.drawn.length} and ${pic.noSwitch.length} bytes`);
