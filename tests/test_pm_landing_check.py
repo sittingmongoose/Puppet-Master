@@ -3706,6 +3706,66 @@ print(json.dumps({"status": "pass"}))
 '''
 
 
+class HistoricalTargetEnvironment(LandingRun):
+    def test_retired_cache_environment_cannot_change_a_historical_target_result(self):
+        scripts = self.repo / "scripts"
+        scripts.mkdir()
+        (scripts / "pm-plans-verify.py").write_text(textwrap.dedent("""
+            import json, os, sys
+            from pathlib import Path
+
+            args = sys.argv[1:]
+            check = "help" if "--help" in args else args[0]
+            legacy_env = sorted(name for name in os.environ if name.startswith("PM_PLANS_VERIFY_DEDUPE"))
+            Path(check + ".env.json").write_text(json.dumps(legacy_env))
+            if check == "help":
+                print("usage: pm-plans-verify.py run-gates [--jobs N]")
+                raise SystemExit()
+
+            # This version reuses a stale passing result when both cache inputs are present.
+            cached_pass = os.environ.get("PM_PLANS_VERIFY_DEDUPE_DIR") and os.environ.get(
+                "PM_PLANS_VERIFY_DEDUPE_STAMP")
+            rows = [] if cached_pass else [{"error": "real_failure", "line": n} for n in (1, 2)]
+            if check == "run-gates":
+                report = {
+                    "checks": {"lint_path_refs": {"status": "fail", "failures": len(rows)}},
+                    "failures": [{"check": "lint_path_refs", "failures": rows[:1]}] if rows else [],
+                }
+            else:
+                if check == "audit-governance":
+                    rows = []
+                report = {"failures": rows}
+            report.update(check=check, status="fail" if rows else "pass")
+            Path(args[args.index("--report") + 1]).write_text(json.dumps(report))
+        """), encoding="utf-8")
+        (scripts / "pm-plan-migration.py").write_text(textwrap.dedent("""
+            import json, os
+            from pathlib import Path
+            legacy_env = sorted(name for name in os.environ if name.startswith("PM_PLANS_VERIFY_DEDUPE"))
+            Path("migration.env.json").write_text(json.dumps(legacy_env))
+            print(json.dumps({"status": "pass", "failures": []}))
+        """), encoding="utf-8")
+        self.module.current_run_dir = lambda root: "Plans/.plan_migration/run-017"
+        self.module.aggregate_subcheck_argv = lambda *args: {("run-gates", "lint_path_refs"): ["lint-path-refs"]}
+        inherited = {
+            "PM_PLANS_VERIFY_DEDUPE_DIR": "old-cache",
+            "PM_PLANS_VERIFY_DEDUPE_STAMP": "old-inputs",
+            "PM_PLANS_VERIFY_DEDUPE_OWNER_TOKEN": "old-token",
+            "PM_PLANS_VERIFY_DEDUPE_FUTURE_SETTING": "also-retired",
+        }
+        with patch.dict(os.environ, inherited):
+            self.record()
+            self.assertEqual({key: os.environ[key] for key in inherited}, inherited)
+
+        baseline = json.loads((self.repo / "baseline.json").read_text(encoding="utf-8"))
+        self.assertEqual(baseline["checks"]["run-gates"]["failure_total"], 2)
+        self.assertEqual(sum(row["count"] for row in baseline["export_buckets"]), 2)
+        for check in ("help", "run-gates", "audit-governance", "migration", "lint-path-refs"):
+            with self.subTest(check=check):
+                received = json.loads((self.repo / f"{check}.env.json").read_text(encoding="utf-8"))
+                self.assertEqual(received, [])
+
+
 class TargetJobsNegotiation(unittest.TestCase):
     """Review A2: the checker runs a target checkout's own verifier, which may predate --jobs."""
 

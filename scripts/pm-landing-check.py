@@ -428,6 +428,13 @@ def current_run_dir(root: Path) -> str:
     return run_path
 
 
+def target_environment(base_env: dict[str, str] | None = None) -> dict[str, str]:
+    # Historical target verifiers still read the retired cache controls. A cached report can
+    # describe an entirely different set of inputs.
+    return {name: value for name, value in (os.environ if base_env is None else base_env).items()
+            if not name.startswith("PM_PLANS_VERIFY_DEDUPE")}
+
+
 _TARGET_JOBS_SUPPORT: dict[str, bool] = {}
 
 
@@ -443,7 +450,7 @@ def target_accepts_jobs(root: Path) -> bool:
         try:
             proc = subprocess.run(
                 [sys.executable, "scripts/pm-plans-verify.py", "run-gates", "--help"],
-                cwd=root, capture_output=True, text=True)
+                cwd=root, capture_output=True, text=True, env=target_environment())
             _TARGET_JOBS_SUPPORT[key] = proc.returncode == 0 and "--jobs" in proc.stdout
         except OSError:
             _TARGET_JOBS_SUPPORT[key] = False
@@ -486,7 +493,7 @@ def run_check(name: str, root: Path, run_dir: str, timeout_seconds: int,
             if supports_jobs is None:
                 supports_jobs = target_accepts_jobs(root)
             argv = check_argv(name, report_file, timeout_seconds, jobs, supports_jobs)
-        proc = subprocess.run(argv, cwd=root, capture_output=True, text=True, env=env)
+        proc = subprocess.run(argv, cwd=root, capture_output=True, text=True, env=target_environment(env))
         payload = report_file.read_text(encoding="utf-8") if report_file and report_file.exists() else proc.stdout
         try:
             report = json.loads(payload)
@@ -1884,7 +1891,7 @@ def run_export(root: Path, argv: list[str], timeout_seconds: int,
             report_file = Path(scratch) / "export.json"
             command = [sys.executable, "scripts/pm-plans-verify.py", argv[0], "--report", str(report_file),
                        *argv[1:]]
-            env = dict(base_env if base_env is not None else os.environ)
+            env = target_environment(base_env)
             env[AGGREGATE_CHILD_ENV] = "1"
             proc = subprocess.Popen(command, cwd=root, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                     text=True, start_new_session=True, env=env)
