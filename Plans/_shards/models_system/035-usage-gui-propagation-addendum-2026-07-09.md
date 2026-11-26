@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L10100-L10161
+Source lines: L10100-L10162
 
-Source SHA256: `d434ae4f6d0a83180f01d7b7e23ed87d3dbf142481d9021ef183d45030166c5e`
+Source SHA256: `cacc3e2efa43deeaeea1a96025e0f348aae2b1203a82df10552301c3196ce686`
 
 ---
 
@@ -47,7 +47,8 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Plans/Models_System.md:293-310"
-  - "Plans/Models_System.md:9297-9415"
+  - Plans/Models_System.md#MS-129
+  - Plans/Models_System.md#MS-130
   - "Plans/Multi-Account.md:421-532"
   - "Plans/CLI_Bridged_Providers.md:1429-1510"
   - "uploaded:pi-main/packages/coding-agent/docs/custom-provider.md:164-233"

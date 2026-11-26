@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L2627-L11169
+Source lines: L2627-L11167
 
-Source SHA256: `1383f5cf06386189b604eebe90a53637620c99d08866c4706b883a194379c662`
+Source SHA256: `dc754309b0e950bdc6cfd48c36ca68e77c262d18441d22ebf13af8c260ae955e`
 
 ---
 
@@ -7974,11 +7974,9 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:14
 - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:11
 - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:20
-- Plans/Tools.md:623
-- Plans/Tools.md:669
-- Plans/Tools.md:2160
-- Plans/Tools.md:2163
-- Plans/Tools.md:2164
+- "Plans/Tools.md#section=`question` tool runtime contract"
+- "Plans/Tools.md#section=`todowrite` and `todoread` runtime contract"
+- "Plans/Tools.md#section=Web tool routing algorithm"
 preserved_exact_tokens:
 - 'urls: string[]'
 - 'formats?: string[]'

@@ -4,7 +4,7 @@ Source: `Plans/Models_System.md`
 
 Source lines: L9729-L10098
 
-Source SHA256: `d434ae4f6d0a83180f01d7b7e23ed87d3dbf142481d9021ef183d45030166c5e`
+Source SHA256: `cacc3e2efa43deeaeea1a96025e0f348aae2b1203a82df10552301c3196ce686`
 
 ---
 
@@ -35,13 +35,13 @@ acceptance_criteria:
   - Resolver examples include requested_model_id, requested_provider_id?, account_id?, capability_snapshot_ref, credential_route_epoch_id, resolved_model_id, fallback_used, clamp_reason?, and visibility_state.
   - Provider lifecycle transitions are discovered -> configured -> healthy -> degraded -> disabled -> removed, with degraded -> healthy and disabled -> configured recovery routes and no removed recovery.
   - EffortSettlementReceipt records requested_effort, effective_effort, clamp_reason, model_id, account_id, token_budget, cost_ceiling_microusd?, and settlement_reason.
-  - ModelSelectionRouter scores provider/model candidates by capability_match, account_entitlement, route_health, cost, latency, context_window, and user_preference with deterministic tie-break by configured priority then provider_id/model_id.
+  - ModelSelectionRouter applies account_entitlement as an eligibility gate and scores eligible provider/model candidates by capability_match, route_health, cost, latency, context_window, and user_preference with deterministic tie-break by configured priority then provider_id/model_id.
   - EntitlementQuotaSettlement, ProviderPolicyRuleset, ProviderMetadataReplayPolicy, and ProviderErrorEnvelope carry concrete fields for quota_state, policy_decision, replay_window_ms, HTTP/status/body_class/request_id/retryability, and redaction policy.
   - The two populated resolver record examples below MS-135 carry requested_model_id, resolved_model_id, fallback_used and visibility_state beside the emit-shape fields they equal, and a record whose MS-135 spelling differs from its emit-shape field is rejected with resolver_record_invalid.
   - model_lifecycle_state (active, deprecated, sunset_pending, sunset, removed) changes only along the MS-135 model lifecycle transition table, which is separate from the provider lifecycle above; each state maps to one dispatch rule and one visibility_state shown in the model picker.
   - EffortSettlementReceipt is the typed payload in the MS-135 table, with closed settlement_reason and clamp_reason values, and only settlement_reason honored may display as honored.
   - ModelSelectionRouter applies the MS-135 gates, integer 0-1000 factor scores, policy-adjusted integer weights summing to 100, and the highest total_score, so conflicting cost and latency inputs select the same winner in every implementation.
-  - ModelSelectionRouterInput is the closed typed router input carrying the MS-128 inputs and pinned by selection_reason.router_input_ref, and Example 3 below MS-135 shows every candidate's gate result, factor scores, weights and total_score, with an unknown price kept pickable and shown as unknown.
+  - ModelSelectionRouterInput is the closed typed router input carrying the MS-128 inputs and pinned by selection_reason.router_input_ref. Example 3 below MS-135 shows each candidate's eligibility and weights, the exclusion reason for a failed gate, and factor_scores and total_score only for eligible candidates. An unknown price stays pickable and is shown as unknown.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py lint-contractrefs

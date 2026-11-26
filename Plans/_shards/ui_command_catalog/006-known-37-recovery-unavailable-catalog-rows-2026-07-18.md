@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L133-L1187
 
-Source SHA256: `6c8814657f26e69693903adf407b1a4f6068b5d55c22d3427e74ae7be541b23b`
+Source SHA256: `be2edff746b358e17a59042765a2654f5a34518ac042cfaaeaba875575283d52`
 
 ---
 
@@ -492,7 +492,7 @@ Rules:
 - Actions-to-code commands bridge GitHub Actions to Source Control without moving ownership of hosted runs into Source Control.
 - `open_related_diff` and `open_related_worktree` use receipt-backed run id, commit range, changed files, branch, and worktree refs when available.
 - If exact correlation is unavailable, commands show candidate commit ranges, workflow file diffs, or related worktrees with an uncertainty label instead of auto-opening a guessed target.
-- Legacy underscore commands `cmd.github_actions.show`, `cmd.github_actions.switch_subview`, `cmd.github_actions.rerun_workflow`, `cmd.github_actions.cancel_workflow`, `cmd.github_actions.pin_workflow`, `cmd.github_actions.open_run_log`, and `cmd.github_actions.open_run_diff` are compatibility-only names for the current GitHub Actions command family. They normalize respectively to GitHub Actions route/show state, GitHub Actions `/switch_subview` view-state, `cmd.actions.rerun`, `cmd.actions.cancel`, `cmd.github.actions.pin`, `cmd.github.actions.open_step_logs` or `cmd.actions.view_logs`, and `cmd.github.actions.open_related_diff`; `cmd.github_actions.*` must not become a second primary namespace.
+- Legacy underscore commands `cmd.github_actions.show`, `cmd.github_actions.switch_subview`, `cmd.github_actions.rerun_workflow`, `cmd.github_actions.cancel_workflow`, `cmd.github_actions.pin_workflow`, `cmd.github_actions.open_run_log`, and `cmd.github_actions.open_run_diff` are compatibility-only names for the current GitHub Actions command family. They normalize respectively to `cmd.actions.show`, `cmd.actions.switch_subview`, `cmd.actions.rerun`, `cmd.actions.cancel`, `cmd.github.actions.pin`, `cmd.github.actions.open_step_logs` or `cmd.actions.view_logs`, and run-scoped `cmd.github.actions.open_related_diff`. The `cmd.github_actions.*` namespace is compatibility-only.
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md
 

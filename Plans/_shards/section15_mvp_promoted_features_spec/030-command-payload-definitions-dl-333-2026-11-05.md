@@ -4,7 +4,7 @@ Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
 Source lines: L14095-L19193
 
-Source SHA256: `42a42c2fec916b53a1a642aa3aba43abf0162551e27f5d18bb7af0800c910694`
+Source SHA256: `99353ac63ed50aff8d14e4b7787cf016aa84695c424599552c60c0da79f20d67`
 
 ---
 
@@ -1490,8 +1490,8 @@ command_payload_definitions:
             Canon names "command replay or shell profile hints" (UI_Command_Catalog.md:888) without a field
             shape. JUDGMENT: command_ref, type ref, optional, for the replay hint; the overlay's command_ref?
             identity is the candidate name. The hint is never replayed automatically: a restart records the
-            newly resolved environment without automatic command replay (SMPFS-164 acceptance criterion,
-            Section15_MVP_Promoted_Features_Spec.md:11666-11669).
+            newly resolved environment without automatic command replay (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-164,
+            Environment Provenance And Pending Launch Changes acceptance criteria).
       owner_request: Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json

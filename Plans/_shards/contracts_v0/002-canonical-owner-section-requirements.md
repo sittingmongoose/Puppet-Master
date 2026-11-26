@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L224-L303
 
-Source SHA256: `20b166e3f5825e366fd62bfebf5499ccb5000932011f62ef6e45b31412bb1aa5`
+Source SHA256: `1854490861ef7d0992d37c649f57171e1bc13a9151b877c38d47225b6870712f`
 
 ---
 
@@ -52,7 +52,7 @@ Historical concerns preserve the original `summary`, `source_event_refs[]`, and 
 
 ### Coverage blocker concern lifecycle owner section
 
-Coverage blockers are concerns whose `concern_category = coverage_blocker`. They carry `missing_owner_ref?`, `missing_contract_ref?`, `blocked_validation_surface`, and `reopen_condition`. Closing a coverage blocker requires either a repaired owner section or an explicit source-lineage-only disposition.
+Coverage blockers are concerns whose `concern_category = coverage_blocker`. The record links the validation finding through `evidence_refs[]`. That finding carries `blocked_validation_surface` and `reopen_condition`, with `missing_owner_ref?` and `missing_contract_ref?` when applicable. Closing a coverage blocker requires either a repaired owner section or an explicit source-lineage-only disposition.
 
 ### Concern owner vs creator vs resolver separation
 
@@ -83,8 +83,8 @@ Updates with the same `subject_ref`, `concern_category`, and `owner_ref` amend t
   - Route/open auditing must stay focused on **refinement omissions**, not on re-claiming absence of primitives that already landed.
 ### Recommended minimum concern record shape
 
-The minimum serialized shape is one complete `pm.storage_value.concern_record.v1` record: every key is required, the nullable keys carry `null`, and it validates against `Plans/concern_created_contracts/concern_record.schema.json`:
+The minimum serialized shape is one complete `pm.storage_value.concern_record.v1` record. Each key is required and nullable keys carry `null`. This example validates against `Plans/concern_created_contracts/concern_record.schema.json` and links a coverage finding that names `lint-contractrefs` as its `blocked_validation_surface` and a later failed check of the same owner reference as its `reopen_condition`.
 
 ```json
-{"schema_id":"pm.storage_value.concern_record.v1","schema_version":"1.0.0","record_id":"concern_01","record_kind":"concern","concern_id":"concern_01","project_id":"project_01","revision":1,"concern_category":"coverage_blocker","severity":"error","status":"active","owner_kind":"Runtime","owner_ref":"pmref:owner_doc:Plans/Contracts_V0.md","creator_ref":"pmref:validator:pm-audit-closure","created_by_kind":"Runtime","created_by_ref":"pmref:validator:pm-audit-closure","subject_ref":"pmref:owner_section:Contracts_V0.owner-section","source_event_refs":["pmref:source_event:evt_01"],"evidence_refs":[],"artifact_refs":[],"lineage_refs":[],"summary":"pmref:summary:concern_01","created_at":"2026-07-07T00:00:00Z","updated_at":"2026-07-07T00:00:00Z","visibility_level":"user_visible","attention_level":"needs_action","chatworthy":true,"blocking_effect_ref":null,"resolution_kind":null,"resolver_ref":null,"resolved_at":null,"run_ref":null,"scope_ref":"pmref:project:project_01","redaction_profile":"secret_refs_only"}
+{"schema_id":"pm.storage_value.concern_record.v1","schema_version":"1.0.0","record_id":"concern_01","record_kind":"concern","concern_id":"concern_01","project_id":"project_01","revision":1,"concern_category":"coverage_blocker","severity":"error","status":"active","owner_kind":"Runtime","owner_ref":"pmref:owner_doc:Plans/Contracts_V0.md","creator_ref":"pmref:validator:pm-audit-closure","created_by_kind":"Runtime","created_by_ref":"pmref:validator:pm-audit-closure","subject_ref":"pmref:owner_section:Contracts_V0.owner-section","source_event_refs":["pmref:source_event:evt_01"],"evidence_refs":["pmref:evidence:coverage_01"],"artifact_refs":[],"lineage_refs":[],"summary":"pmref:summary:concern_01","created_at":"2026-07-07T00:00:00Z","updated_at":"2026-07-07T00:00:00Z","visibility_level":"user_visible","attention_level":"needs_action","chatworthy":true,"blocking_effect_ref":null,"resolution_kind":null,"resolver_ref":null,"resolved_at":null,"run_ref":null,"scope_ref":"pmref:project:project_01","redaction_profile":"secret_refs_only"}
 ```

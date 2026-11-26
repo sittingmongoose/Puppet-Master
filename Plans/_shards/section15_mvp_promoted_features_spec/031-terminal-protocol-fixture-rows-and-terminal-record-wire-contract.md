@@ -4,7 +4,7 @@ Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
 Source lines: L19195-L19333
 
-Source SHA256: `42a42c2fec916b53a1a642aa3aba43abf0162551e27f5d18bb7af0800c910694`
+Source SHA256: `99353ac63ed50aff8d14e4b7787cf016aa84695c424599552c60c0da79f20d67`
 
 ---
 
@@ -53,7 +53,7 @@ For `tpf-osc52-oversize`, `tpf-kitty-oversize`, `tpf-sixel-oversize` and `tpf-it
 | `tpf-osc6973-command` | `shell_integration` | `\e]133;A;pmn=<S>\a$ \e]133;B;pmn=<S>\a\e]6973;<S>;E;bHMgLWxh\a\r\n\e]133;C;pmn=<S>\aout\r\n\e]133;D;0;pmn=<S>\a` | false | Exactly one command block: prompt `$ `, output `out`, exit status 0, and command line `ls -la`, which can come only from the `E` record because the stream echoes no command text; the record is consumed and not shown. |
 | `tpf-osc6973-forged` | `shell_integration` | the `tpf-osc6973-command` stream with `\e]6973;bad;E;bHMgLWxh\a` in place of its `E` record | true | The authenticated marks still create one command block with exit status 0. The grid shows the rejected `E` record at its input position under the plain-text oracle. No command line is recorded, including `ls -la`. |
 | `tpf-osc6973-who` | `shell_integration` | `\e]133;A;pmn=<S>\a$ \e]133;B;pmn=<S>\a\e]6973;<S>;W;user\als\r\n\e]133;C;pmn=<S>\aout\r\n\e]133;D;0;pmn=<S>\a` | false | Exactly one command block as in `tpf-osc133-secret`, whose `by` is the user (`#SMPFS-183`: `<who>` is `user` for the user and the agent's name for an agent); the record is consumed and not shown. |
-| `tpf-osc6973-who-forged` | `shell_integration` | the `tpf-osc6973-who` stream with `\e]6973;bad;W;fixture-agent\a` in place of its `W` record. `fixture-agent` is a known agent name in the harness and the actual writer is the user. | true | The authenticated marks still create one command block with exit status 0. The emitted command record contains `by` with the value `null` because no trusted `W` record attributed the command (ATS-076, CV-362). The grid shows the rejected `W` record at its input position under the plain-text oracle. |
+| `tpf-osc6973-who-forged` | `shell_integration` | the `tpf-osc6973-who` stream with `\e]6973;bad;W;fixture-agent\a` in place of its `W` record. `fixture-agent` is a known agent name in the harness and the actual writer is the user. | true | The authenticated marks still create one command block with exit status 0. The emitted command record omits `by` or sets it to `null` because no trusted `W` record attributed the command (CV-362 and SMPFS-182). The grid shows the rejected `W` record at its input position under the plain-text oracle. |
 | `tpf-osc7-cwd` | `cwd_report` | macOS/Linux/WSL: `\e]7;file://pm-fixture.example/home/u/proj\a`. Native Windows: `\e]7;file://pm-fixture.example/C:/pm-fixture/proj\a`. | false | The report matches the session's local host and sets its current folder to exactly `/home/u/proj` on macOS/Linux/WSL or `C:\pm-fixture\proj` on native Windows. |
 | `tpf-osc7-remote` | `cwd_report` | macOS/Linux/WSL: `\e]7;file://otherhost/home/u/proj\a`. Native Windows: `\e]7;file://otherhost/C:/pm-fixture/proj\a`. | true | The local current folder stays `/` on macOS/Linux/WSL and `C:\` on native Windows. |
 | `tpf-bpaste-on` | `bracketed_paste` | stream `\e[?2004h`, then the user pastes `abc` | false | PTY receives `\e[200~abc\e[201~`. |

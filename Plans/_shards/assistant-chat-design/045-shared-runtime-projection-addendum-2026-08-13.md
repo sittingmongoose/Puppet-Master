@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L3752-L23148
 
-Source SHA256: `a30af255a5802fa20584f6a79dd8ef00c13672eb92f61ab5aee341711486a830`
+Source SHA256: `abba158a9dd9a3e735683a21618cdd13e8b10232eab43869d579088560ba391a`
 
 ---
 
@@ -6103,7 +6103,7 @@ depends_on: [ACD-109]
 unblocks: []
 acceptance_criteria:
   - Stale cited-search ownership residue remains retired from reference sections.
-  - Plans/Tools.md sections 11-12 own provider capability and web routing canon.
+  - The Provider capability matrix and Web tool routing algorithm headings in Plans/Tools.md own provider capability and web routing.
   - Plans/newtools.md#8.2.1 remains non-normative consumer guidance.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits

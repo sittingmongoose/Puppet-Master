@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L11183-L11222
+Source lines: L11181-L11220
 
-Source SHA256: `1383f5cf06386189b604eebe90a53637620c99d08866c4706b883a194379c662`
+Source SHA256: `dc754309b0e950bdc6cfd48c36ca68e77c262d18441d22ebf13af8c260ae955e`
 
 ---
 
@@ -26,7 +26,7 @@ gui_classification_reason: Tool schema and section numbering are backend/tooling
 depends_on: [T-055, T-056, T-104]
 unblocks: []
 acceptance_criteria:
-  - Section references such as Tools.md Section 12 resolve unambiguously after cleanup.
+  - References to the second numbered block resolve by heading name, including Provider capability matrix and Web tool routing algorithm.
   - task tool subagent_type validation routes through subagent_registry.
   - Stale count-based subagent lists do not become live registry authority.
 validation_surfaces:
