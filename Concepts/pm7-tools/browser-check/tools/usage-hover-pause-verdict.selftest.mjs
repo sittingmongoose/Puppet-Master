@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
 // node tools/usage-hover-pause-verdict.selftest.mjs [check file]: the argument runs the same assertions against another
 // revision of the check, which is how each item's RED run shows the old verdict misjudging a constructed record.
-const { judge, outerCap, uninterruptedIntent, judgeShortHandoff, r5MountQualified, r5MountProduct, r5BurstGate } = await import(process.argv[2] ? pathToFileURL(resolve(process.argv[2])).href : '../checks/usage-hover-pause.check.mjs');
+const { judge, outerCap, uninterruptedIntent, judgeShortHandoff, r5MountQualified, r5MountProduct, r5BurstGate, installPrePointerWitness } = await import(process.argv[2] ? pathToFileURL(resolve(process.argv[2])).href : '../checks/usage-hover-pause.check.mjs');
 import { burstState } from '../helpers/burst-rest.mjs';
 // R125 #6: the probe's deadline comes from the record's last input, as the recorder arms it (520 + 150). The old
 // fixture injected 650 and so credited 20 ms of lateness in the nominal control though the probe fired at the real
@@ -447,6 +447,30 @@ test('R136-C2: a mounted room that keeps a nonzero scroll position fails the pro
 	r.mountedTop = 120;
 	assert.equal(r5MountQualified(r, r5Args(r)), true, 'the pre-burst calibration and delivered input are still qualified');
 	assert.equal(r5MountProduct(r, { last: r.last, during: r.during }), false, 'the post-mount scroll reset is a product assertion');
+});
+
+test('R137-H3: only trusted pointer moves qualify the pre-burst witness, and pointer leave clears it', () => {
+	assert.equal(typeof installPrePointerWitness, 'function', 'the pre-burst pointer witness needs a testable installer');
+	const listeners = new Map();
+	const doc = {
+		addEventListener: (type, fn) => listeners.set(type, fn),
+		removeEventListener: (type, fn) => { if (listeners.get(type) === fn) listeners.delete(type); },
+	};
+	const win = {};
+	const saved = { window: globalThis.window, document: globalThis.document };
+	Object.assign(globalThis, { window: win, document: doc });
+	try {
+		installPrePointerWitness();
+		const fire = (type, event) => listeners.get(type)?.(event);
+		fire('pointermove', { isTrusted: false, clientX: 10, clientY: 20 });
+		assert.equal(win.__uhpPrePointer, null, 'a synthetic document pointermove cannot qualify the input');
+		fire('pointermove', { isTrusted: true, clientX: 30, clientY: 40 });
+		assert.deepEqual(win.__uhpPrePointer, [30, 40], 'a trusted move records the pre-burst position');
+		fire('pointerleave', { isTrusted: true });
+		assert.equal(win.__uhpPrePointer, null, 'leaving the document clears the witness');
+		win.__uhpPrePointerStop();
+		assert.equal(listeners.size, 0, 'the witness listeners are removed');
+	} finally { Object.assign(globalThis, saved); }
 });
 
 // R132-FOLLOWUPS 6 (R132-REPORT.md): a 4 ms unrelated task between the probe callback and the product's correctly

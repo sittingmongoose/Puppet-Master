@@ -378,6 +378,20 @@ export function r5BurstGate({ qualified, burstBroke }) {
 	return 'judge';
 }
 
+// R136-N1/R137-H3: witness the pointer's pre-burst position from trusted move events only. Leaving the document
+// clears the witness so a final move outside the frame cannot qualify the input.
+export function installPrePointerWitness() {
+	window.__uhpPrePointer = null;
+	const track = (e) => { if (e.isTrusted) window.__uhpPrePointer = [e.clientX, e.clientY]; };
+	const leave = () => { window.__uhpPrePointer = null; };
+	document.addEventListener('pointermove', track, true);
+	document.addEventListener('pointerleave', leave, true);
+	window.__uhpPrePointerStop = () => {
+		document.removeEventListener('pointermove', track, true);
+		document.removeEventListener('pointerleave', leave, true);
+	};
+}
+
 // R5 (R99): a trusted keyboard room activation in an ongoing trusted wheel burst. Calibrate the destination's
 // row/provider at rest, switch away, then leave the pointer at that exact position while Enter/Space mounts it again.
 // Every sample resolves the LIVE board, including Reduce Motion's asynchronous spare-board adoption.
@@ -402,14 +416,9 @@ async function roomMountRace(t, f, label, park, rm) {
 		await choose(source);
 		await nav(room).focus();
 		await f.evaluate(()=>{window.__uhpMountNeutralRows=new WeakMap();document.querySelectorAll('#pmuScroll .pmu-board .pmu-row,#pmuScroll .pmu-board .pmu-irow,#pmuScroll .pmu-board .pmu-accrow').forEach(row=>window.__uhpMountNeutralRows.set(row,getComputedStyle(row).backgroundColor));});
-		// R136-N1: witness the pointer's pre-burst position from the real move events (frame coordinates), so
-		// qualification can require the pointer over the board's hover area without asking the product's outcome.
-		await f.evaluate(() => {
-			window.__uhpPrePointer = null;
-			const track = (e) => { window.__uhpPrePointer = [e.clientX, e.clientY]; };
-			document.addEventListener('pointermove', track, true);
-			window.__uhpPrePointerStop = () => document.removeEventListener('pointermove', track, true);
-		});
+		// R136-N1/R137-H3: witness the pointer's pre-burst position from trusted move events (frame coordinates),
+		// so qualification can require the pointer over the board's hover area without asking the product's outcome.
+		await f.evaluate(installPrePointerWitness);
 		await t.page.mouse.move(at.x, at.y, { steps: 4 });
 		await t.page.waitForTimeout(500);
 		await f.evaluate(({ room, baseline, selector }) => {
