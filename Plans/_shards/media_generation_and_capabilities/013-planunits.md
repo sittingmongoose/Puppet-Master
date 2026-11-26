@@ -2,9 +2,9 @@
 
 Source: `Plans/Media_Generation_and_Capabilities.md`
 
-Source lines: L1164-L6250
+Source lines: L1166-L6252
 
-Source SHA256: `d630c1801fa74fb728019219efade341351e27261dbbcb3c24d3132a1529ba45`
+Source SHA256: `0ec7d411e8c2015b6ddae6746265c1f7438af51dff356ab2b897097dd0bfb3de`
 
 ---
 
@@ -3542,7 +3542,7 @@ plan_unit_id: MGAC-066
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: The six disabled-reason messages are canonical verbatim UI copy for NOT_CONFIGURED, MODEL_UNAVAILABLE, ADMIN_DISABLED, BACKEND_UNSUPPORTED, RATE_LIMITED, and QUOTA_EXCEEDED. BACKEND_UNSUPPORTED has two verbatim variants; the Image-Generation-only message appears only when the active backend has a verified image generated_media_route and the disabled capability is video, TTS or music, and the no-verified-route message appears in every other BACKEND_UNSUPPORTED case.
+canonical_text: The six disabled-reason messages are canonical verbatim UI copy for NOT_CONFIGURED, MODEL_UNAVAILABLE, ADMIN_DISABLED, BACKEND_UNSUPPORTED, RATE_LIMITED, and QUOTA_EXCEEDED. BACKEND_UNSUPPORTED has two verbatim variants; the Image-Generation-only message appears only when the active backend has a verified image generated_media_route (its own unexpired image probe), no verified video or audio route, and the disabled capability is video, TTS or music, and the no-verified-route message appears in every other BACKEND_UNSUPPORTED case.
 gui_related: true
 gui_classification_reason: The unit defines user-visible capability picker, disabled-state presentation, UI copy, or interactive media behavior.
 split_recommended: true

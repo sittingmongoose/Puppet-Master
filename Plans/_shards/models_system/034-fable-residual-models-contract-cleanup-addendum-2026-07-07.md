@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L9724-L10007
+Source lines: L9724-L10010
 
-Source SHA256: `3aa6dd78e17c67193e766e800ce8b980681bc4bfae1c0def2ac7b61503c83200`
+Source SHA256: `42b504fb432b87c710952fd8245a1810836260d7a168cbf9dea24b1bb5f87a77`
 
 ---
 
@@ -222,7 +222,7 @@ Open-string values in the examples (platform, model, account, auth mode, executi
 | `effective_effort` | string or null | The label actually honored; null when the route has no effort control or the request was skipped. |
 | `effective_wire_effort` | string or null | The exact provider-native value sent, such as `high` for `model_reasoning_effort`. |
 | `provider_native_field` | string or null | The provider field it was sent in, such as `model_reasoning_effort` or `thinking`. |
-| `display_label` | string | The label the GUI shows for the effective effort. |
+| `display_label` | string | The label the GUI shows for the effective effort: the effort label, optionally followed by one space and one parenthesized notice such as `(Max not supported)`. |
 | `settlement_reason` | string, closed: `honored`, `not_requested`, `clamped`, `transformed`, `skipped_unsupported`, `ignored_by_provider`, `blocked_by_policy`, `reset_on_continuation` | Outcome of the effort request for this attempt. |
 | `clamp_reason` | string or null, closed: `model_max_effort`, `policy_ceiling`, `budget_limit`, `provider_mapping` | Required when `settlement_reason` is `clamped` or `transformed`; null otherwise. These values are the cause of the narrowing, not `clamp/substitution` family codes: the resolver record for the same attempt carries the family code, `effort_clamped` for `clamped`, and for `transformed` when the transform lowered the effort, and `effort_unsupported` for `skipped_unsupported`. |
 | `fallback_reason` | string or null | When this attempt runs on a fallback model, the same value as the resolver record's `selection_reason.fallback_reason`, and the effort is settled again against the fallback model's capability snapshot; null when no fallback happened. |
@@ -232,7 +232,7 @@ Open-string values in the examples (platform, model, account, auth mode, executi
 | `support_source` | string, closed: `documented`, `empirical`, `inferred` | Same meaning as §10.4.3 `source`. |
 | `transform_version` | string | Version of the PM-owned effort transform used. |
 | `first_response_latency_bucket` | string, closed: `under_1s`, `1s_to_10s`, `10s_to_60s`, `over_60s`, `no_first_response` | Time to the first token or reasoning item; a stall is `no_first_response`, never ordinary thinking time. |
-| `display_mismatch` | boolean | `true` when the provider accepted the request but the GUI label differs from `effective_effort`. |
+| `display_mismatch` | boolean | `true` when the provider accepted the request but the GUI label differs from `effective_effort`. The comparison removes a trailing parenthesized notice from `display_label`, trims spaces and compares the rest with `effective_effort` ignoring ASCII case; `false` when they are equal or the provider did not accept the request. In the example below `High (Max not supported)` compares as `High`, which equals `high`, so `display_mismatch` is `false`. |
 | `created_at_utc` | string (RFC 3339) | When the receipt was written. |
 
 `settlement_reason = honored` requires `requested_effort` and `effective_effort` to be equal and non-null; only `honored` may be shown as honored. `not_requested` requires `requested_effort = null`. The field names follow MS-126's EffortSettlementReceipt list exactly (`requested_effort`, `policy_effort`, `effective_wire_effort`, `provider_native_field`, `display_label`, `support_source`, `transform_version`, `fallback_reason`, `reset_detection`, `first_response_latency_bucket`); `settlement_reason`, `clamp_reason` and the other fields above are added beside them, and none replaces an MS-126 field. The model-switch replay rule is the first sentence of this payload: a model switch writes a fresh receipt, settled against the new model's snapshot.
@@ -275,20 +275,23 @@ Step 1, gates. A candidate that fails any gate is excluded and listed with `elig
 | `route_health` | The provider lifecycle state is `healthy` or `degraded`. | `route_unhealthy` |
 | model lifecycle | `model_lifecycle_state` allows new dispatch by the table above. | `model_not_dispatchable` |
 | `context_window` | `effective_context_window_tokens` is at least the request's estimated input tokens plus its reserved output tokens. | `context_too_small` |
+| `cost_budget` | No active Persona cost budget applies, or the candidate's estimated request cost is unknown, or it is known and at most that budget in microusd ("Provider capability and cost gating", MS-102). A known estimate above the budget fails. | `over_cost_budget` |
 
-Step 2, factor scores. Each eligible candidate gets integer scores from 0 to 1000. `account_entitlement` is a gate only and scores nothing.
+The `cost_budget` gate is the hard "Cost gating" rule: an over-budget candidate is excluded before scoring, and no weight, `cost_policy` or `ignore_cost` setting can readmit it. The same gate is part of eligibility for a concrete pick and for every `fallback_chain[]` entry. An unknown estimate cannot be shown to exceed the budget, so it passes the gate and scores 0 on `cost` below.
+
+Step 2, factor scores. Each eligible candidate gets integer scores from 0 to 1000. `account_entitlement` and `cost_budget` are gates only and score nothing.
 
 | Factor | Score |
 | --- | --- |
 | `capability_match` | `floor(1000 * satisfied / requested)` over the request's optional preferred capabilities; 1000 when none are requested. |
 | `route_health` | 1000 for `healthy`, 500 for `degraded`. |
-| `cost` | `floor(1000 * (max - c) / (max - min))` over the eligible candidates' estimated request cost `c` in microusd; 1000 for all when `max = min`; 0 when the cost is unknown. |
-| `latency` | The same formula over expected first-response latency in milliseconds; 0 when unknown. |
+| `cost` | `floor(1000 * (max - c) / (max - min))` over the estimated request cost `c` in microusd. `min` and `max` are taken only over the eligible candidates whose estimate is known. A candidate whose estimate is unknown scores 0 and takes no part in `min` or `max`. When `max = min` (including exactly one known estimate) every candidate with a known estimate scores 1000. |
+| `latency` | The same formula and the same known-only `min`/`max` domain over expected first-response latency in milliseconds; an unknown latency scores 0. |
 | `context_window` | 1000 when the window is at least twice the required tokens, otherwise 500. |
 | `user_preference` | For the router policy's ordered preference list of length `n`, rank `r` (0-based) scores `floor(1000 * (n - r) / n)`; unlisted candidates and an empty list score 0. |
 
 Step 3, weights. Weights are integer percentages that always sum to 100. The default is `capability_match` 30, `route_health` 20, `user_preference` 20, `cost` 15, `latency` 10, `context_window` 5. `cost_policy = prefer_low_cost` moves 10 points from `user_preference` to `cost`; `cost_policy = ignore_cost` moves all `cost` points to `capability_match`. `latency_policy = prefer_low_latency` moves 10 points from `user_preference` to `latency`; `latency_policy = ignore_latency` moves all `latency` points to `capability_match`. No weight goes below 0.
 
-Step 4, choice. `total_score = sum(weight * factor_score)`, an integer from 0 to 100000. The highest `total_score` wins. A tie is broken by lower configured `priority` (unlisted candidates take 2147483647), then `provider_id`, then `model_id`, both in ascending UTF-8 byte order. When no candidate is eligible the router returns `no_eligible_candidate`, the resolver walks `fallback_chain[]` up to `max_depth`, and exhaustion emits `fallback_exhausted`. Cost, latency, capability and quota inputs are read from refs pinned in the resolver record, so the same inputs always select the same winner.
+Step 4, choice. `total_score = sum(weight * factor_score)`, an integer from 0 to 100000. The highest `total_score` wins. A tie is broken by lower configured `priority` (unlisted candidates take 2147483647), then `provider_id`, then `model_id`, both in ascending UTF-8 byte order. When no candidate is eligible the router returns `no_eligible_candidate`, the resolver walks `fallback_chain[]` up to `max_depth`, and exhaustion emits `fallback_exhausted`. When any candidate or fallback was excluded with `over_cost_budget`, that exhaustion also emits the MS-102 cost-budget concern with cheaper alternatives or escalation. Cost, latency, capability and quota inputs are read from refs pinned in the resolver record, so the same inputs always select the same winner.
 
-Each `selection_reason.alternatives[]` entry from the router has `provider_id` (string), `model_id` (string), `eligible` (boolean), `exclusion_reason?` (one of the gate codes), `factor_scores?` (object with the six integer factor scores), `weights` (object with the six integer weights), `total_score?` (integer) and `priority` (integer).
+Each `selection_reason.alternatives[]` entry from the router has `provider_id` (string), `model_id` (string), `eligible` (boolean), `exclusion_reason?` (one of the six gate codes), `factor_scores?` (object with the six integer factor scores), `weights` (object with the six integer weights), `total_score?` (integer) and `priority` (integer).

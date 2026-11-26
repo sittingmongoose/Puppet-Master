@@ -4,7 +4,7 @@ Source: `Plans/Personas.md`
 
 Source lines: L694-L3232
 
-Source SHA256: `71ed096c4710c5ba0e5458d1bc8f90dd59e64e3bf5bf9986f77fe8c619d7e905`
+Source SHA256: `a98ad4e10f141cea7456fed13aaf252adde67a0a27428fc31af93571babb54bb`
 
 ---
 
@@ -1386,7 +1386,7 @@ unblocks: []
 acceptance_criteria:
   - Auto-resolution precedence remains ordered and deterministic.
   - owner_hint is advisory until resolved by the crew-role map.
-  - Missing exact tag mappings fall back to the current session provider/model with requested Persona behavior, while unavailable mapped provider/model returns capability_unavailable.
+  - Missing exact tag mappings fall back to the current session provider/model with requested Persona behavior, while unavailable mapped provider/model returns capability_unavailable. Retired 2026-11-26 (DL-2602) as tuple-form lineage; a role record has no provider or model to be unavailable, so a missing role match keeps the current session owner with the requested Persona behavior and the only capability_unavailable result is the Persona rule below.
   - From DL-2602, a matched role_id resolves the requested Persona when it is in allowed_persona_ids[], else default_persona_id, else capability_unavailable; no crew.roles entry carries a provider or model.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
