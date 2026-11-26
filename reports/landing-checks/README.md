@@ -103,21 +103,22 @@ against that baseline rule 2 would be off. The baseline recorded at `main` `75bc
 
 ## Parallel checks and one worker budget
 
-The three checks run at once, and each runs its own validators at once. `--jobs N` is one budget for
-the whole run, not one per check: the run makes N slot files in its scratch directory and every
-validator (and every export) holds one for as long as its process runs, so at most N are alive at
-once. `--jobs` is capped at 8, and `--jobs 1` is the serial run, byte for byte. The memory floor
-limits concurrency, never progress: a validator always starts when none of the run is running, and a
-second or later one starts only while `MemAvailable` is at least `--memory-floor-gb` (6 GiB by
-default) plus `--memory-headroom-gb` (2 GiB) for each validator already running, after a
-`--start-settle-seconds` (10 s) settle since the last start so the reading includes the process just
-started. Starts are decided under one cross-process start lock; a held-back start says so once a
-minute and retries, and the subcheck's own timeout starts when it runs, after any wait. A host
-without `/proc` enforces none of it, which changes speed, never a result.
+On compatible targets, the three checks can overlap. `--jobs N` caps the aggregate subprocess
+validators at N across both aggregates. Each validator or export holds a slot in one shared scratch
+directory while it runs. The standalone plan-migration check and the in-process Spec Lock check run
+outside this budget. `--jobs` is capped at 8. `--jobs 1` runs the checks and validators serially.
 
-The checker runs the target checkout's own `scripts/pm-plans-verify.py`. A target older than this
-option does not take `--jobs`, so the checker asks that verifier's `--help` once and omits the option
-when it is absent: an older `--root` keeps its legacy invocation.
+The memory floor limits concurrency. The first slot holder can always start. Each additional slot
+holder needs `MemAvailable` of at least `--memory-floor-gb` (6 GiB by default) plus
+`--memory-headroom-gb` (2 GiB) for each occupied slot. The start lock waits
+`--start-settle-seconds` (10 s by default) after the last start so the reading includes that process.
+A held-back start reports to stderr once a minute. The subcheck timeout starts when the validator
+runs. When `MemAvailable` is unavailable, the slot count still applies.
+
+The checker reads `--jobs` and `landing-budget-v1` support from the target verifier's help. A target
+without both capabilities, or a host that cannot set up the shared slots, runs the aggregates
+serially. A verifier that accepts `--jobs` receives `--jobs 1` in that case. Earlier verifiers receive
+their legacy arguments.
 
 Both copies of a validator that `run-gates` and `audit-governance` share run on their own, once in
 each aggregate, as they always have: the pairing rule below judges them by what they report, not by

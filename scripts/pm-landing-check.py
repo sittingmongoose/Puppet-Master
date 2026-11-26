@@ -2175,10 +2175,10 @@ def main() -> int:
                              f"killed and reported as an infrastructure result (default: "
                              f"{DEFAULT_SUBCHECK_TIMEOUT_SECONDS})")
     parser.add_argument("--jobs", type=int, default=min(os.cpu_count() or 1, 4),
-                        help="run this many validators at once across the three checks (one shared budget, "
-                             "not one per check) and overlap the checks themselves; results and reports are "
-                             "emitted in the original order, and 1 is exactly the serial run (default: "
-                             f"{min(os.cpu_count() or 1, 4)}; at most {MAX_JOBS})")
+                        help="cap concurrent validator subprocesses across both aggregates and allow "
+                             "the three checks to overlap on compatible targets. Results use the original "
+                             f"order. Use 1 for serial scheduling (default: {min(os.cpu_count() or 1, 4)}; "
+                             f"at most {MAX_JOBS}).")
     parser.add_argument("--memory-floor-gb", type=float, default=DEFAULT_MEMORY_FLOOR_GB,
                         help="with --jobs above 1, the first validator of the run always starts, and a "
                              "second or later one only while MemAvailable is at least this many GiB plus "

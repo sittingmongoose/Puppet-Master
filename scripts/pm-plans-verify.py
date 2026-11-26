@@ -174,16 +174,12 @@ class SubcheckTimeout(RuntimeError):
 
 _AGGREGATE_CHILD_ENV = "PM_PLANS_VERIFY_AGGREGATE_CHILD"
 
-# One shared worker budget for a whole landing check: --jobs counts every validator running at once
-# across the three checks, not N per aggregate (review N-F). The landing check creates this many slot
-# files in one directory; each validator holds one slot file for as long as its process runs, so the
-# aggregates and every export never exceed N between them. Without fcntl or /proc the budget is not
-# enforced: the per-aggregate ThreadPool still bounds one aggregate, and a result is never changed
-# either way.
+# One budget covers the subprocess validators from both aggregates and the exports (review N-F).
+# The landing checker creates the slot directory, and each validator holds a slot while it runs.
+# The standalone migration process and in-process Spec Lock check do not acquire these slots.
 #
 # The memory floor limits concurrency, never progress (deep review 2, D2-1/D2-2). A start is decided
-# under ONE cross-process start lock in the same directory, which the three aggregates and the exports
-# all share. With no validator of this run running, a validator always starts, whatever MemAvailable
+# under one cross-process start lock in the same directory, shared by both aggregates and the exports. With no validator of this run running, a validator always starts, whatever MemAvailable
 # reads: base ran one validator at a time, so a low-memory host gets exactly that instead of waiting.
 # A second or later validator starts only while MemAvailable is at least the floor plus
 # MEMORY_HEADROOM_MB for each validator already running, and only after START_SETTLE_SECONDS since the
