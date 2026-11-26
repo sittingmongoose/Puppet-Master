@@ -441,7 +441,7 @@ def _state(hook, arguments, stores):
     """(owner-state digest, visible-store digest): the family hook's digest of the owners' in-memory state (the
     call's receiver and arguments and every owner-module global and class attribute; pm_goal_dg5_owner_state), and
     the manifest of every store reachable from the call."""
-    owner = hook.digest(None, arguments)
+    owner = hook.checkpoint(None, arguments)
     if not owner.get('sha256'):
         raise NotShown('owner-state digest unavailable: ' + str(owner.get('reason'))[:120])
     files = [(str(st.root), bridge.manifest(bridge.file_state(Path(st.root)))) for st in stores]
@@ -567,6 +567,7 @@ def _no_store(family, key, original, receiver, rest, args, kwargs):
         'walk truncated' if truncated else None
     if reason is not None:
         return _counted(family, key, reason, action)
+    owner_state.prepare_checkpoints()
     try:
         child = _probe(hook, arguments, stores, action)
         _left_nothing('child', child)

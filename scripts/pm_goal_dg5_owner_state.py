@@ -58,7 +58,9 @@ with the reason, and the judge gives CANNOT_DECIDE.
 """
 from __future__ import annotations
 
+import array
 import collections
+from collections.abc import Mapping
 import datetime
 import decimal
 import functools
@@ -66,7 +68,10 @@ import hashlib
 import json
 import os
 import re
+import shutil
+import subprocess
 import sys
+import tempfile
 import types
 import weakref
 from pathlib import Path, PurePath
@@ -165,13 +170,16 @@ class Walk:
         for label, value in reversed(roots):
             stack.append(('v', value))
             stack.append(('t', ('root', label)))
+        self._drain(stack)
+        return self.sha.hexdigest()
+
+    def _drain(self, stack):
         while stack:
             kind, item = stack.pop()
             if kind == 't':
                 self.put(*item)
             else:
                 self.visit(item, stack)
-        return self.sha.hexdigest()
 
     def _exclusions(self, value):
         out = {}
@@ -221,8 +229,9 @@ class Walk:
             self.put('dec', str(value))
             return
         ident = id(value)
-        if ident in self.memo:
-            self.put('r', self.memo[ident])
+        known = self.memo.get(ident)
+        if known is not None:
+            self.put('r', known)
             return
         if self.outer is not None and ident in self.outer:
             self.put('R', self.outer[ident])
@@ -374,6 +383,215 @@ class Walk:
         self._push(stack, children)
 
 
+_PLAIN_CONTAINERS = frozenset((dict, list, tuple))
+_PLAIN_LEAVES = frozenset((type(None), bool, int, float, complex, str, bytes))
+
+
+class _CheckpointMemo(Mapping):
+    """The original first-visit indices, with sealed fragment tables shared by walks."""
+
+    def __init__(self):
+        self.local = {}
+        self.fragments = []
+        self.size = 0
+
+    def get(self, ident, default=None):
+        index = self.local.get(ident)
+        if index is not None:
+            return index
+        for base, fragment in self.fragments:
+            index = fragment.memo.get(ident)
+            if index is not None:
+                return base + index
+        return default
+
+    def __getitem__(self, ident):
+        index = self.get(ident)
+        if index is None:
+            raise KeyError(ident)
+        return index
+
+    def __setitem__(self, ident, index):
+        self.local[ident] = index
+        self.size += 1  # Walk adds only its first visits
+
+    def __iter__(self):
+        yield from self.local
+        for _, fragment in self.fragments:
+            yield from fragment.memo
+
+    def __len__(self):
+        return self.size
+
+    def append(self, fragment):
+        # Small fragments do not need separate index tables in the hot walker.
+        if len(fragment.memo) < 256:
+            self.local.update((ident, self.size + index) for ident, index in fragment.memo.items())
+        else:
+            self.fragments.append((self.size, fragment))
+        self.size += len(fragment.memo)
+
+
+class _NotPlain(Exception):
+    """The ordinary walker owns all types outside the fragment guard's closed set."""
+
+
+@functools.lru_cache(maxsize=1)
+def prepare_checkpoints():
+    """Load an optional guard in the parent before it forks a collector probe."""
+    if sys.implementation.name != 'cpython' or not getattr(sys, '_is_gil_enabled', lambda: True)():
+        return None
+    if not sys.platform.startswith('linux'):
+        return None
+    try:
+        import ctypes
+    except ImportError:
+        return None
+    if ctypes.sizeof(ctypes.c_void_p) != 8:
+        return None
+    cc = shutil.which('cc')
+    if cc is None:
+        return None
+    source = Path(__file__).resolve().with_name('pm_goal_dg5_owner_state_guard.c')
+    try:
+        code = source.read_bytes()
+        with tempfile.TemporaryDirectory(prefix='dg5-owner-guard-') as scratch:
+            library = Path(scratch) / 'guard.so'
+            subprocess.run([cc, '-shared', '-fPIC', '-O3', '-x', 'c', '-', '-o', str(library)],
+                           input=code, check=True, capture_output=True, timeout=30)
+            guard = ctypes.PyDLL(str(library)).dg5_owner_state_guard
+    except (OSError, subprocess.SubprocessError):
+        return None
+    from pm_goal_oracle_common import ROOT, SOURCE_BINDINGS
+    relative = str(source.relative_to(ROOT))
+    sha = hashlib.sha256(code).hexdigest()
+    if SOURCE_BINDINGS.setdefault(relative, sha) != sha:
+        raise ValueError('source changed during oracle run: ' + relative)
+    guard.argtypes = (ctypes.c_void_p, ctypes.c_size_t, ctypes.py_object, ctypes.py_object, ctypes.py_object)
+    guard.restype = ctypes.c_int
+    return guard
+
+
+class _PlainWalk(Walk):
+    """Compile ordinary Walk bytes and a guard for one plain container fragment.
+
+    Each first visit records the exact type, order and identities of its immediate
+    edges. Rows are in first-visit order. Therefore every native pointer read is
+    anchored by the live root or an edge already checked under the GIL. Identity
+    reuse of a container is harmless: the replacement must match its entire row.
+    The stamp retains only exact immutable leaves, whose identity pins rule out
+    reusing their addresses for different values. It never retains a live container
+    between snapshots. A fragment stores internal back-references by local index
+    and references to preceding values by first-occurrence index. The checkpoint
+    binds the fragment hash to its live base index and preceding alias indices.
+    """
+
+    def __init__(self, walk):
+        super().__init__(walk.hook)
+        self.prefix = walk.memo
+        self.references = {}
+        self.edges = array.array('Q')
+        self.leaves = {}
+        self.disjoint = weakref.WeakSet()
+
+    def visit(self, value, stack):
+        kind = type(value)
+        if type(kind) is not type:
+            raise _NotPlain
+        if kind in _PLAIN_LEAVES:
+            self.leaves[id(value)] = value
+        elif kind in _PLAIN_CONTAINERS:
+            ident = id(value)
+            if ident in self.prefix:
+                index = self.references.setdefault(ident, len(self.references))
+                self.put('prefix-ref', index)
+                return
+            if ident not in self.memo:
+                self.edges.extend((ident, id(kind), len(value)))
+                if kind is dict:
+                    self.edges.extend(id(item) for pair in value.items() for item in pair)
+                else:
+                    self.edges.extend(map(id, value))
+        else:
+            raise _NotPlain
+        super().visit(value, stack)
+
+    def weight(self):
+        # A conservative cache budget for Python index entries and the native rows.
+        return self.edges.itemsize * len(self.edges) + 128 * (len(self.memo) + len(self.leaves) + 1)
+
+    def matches(self, walk, guard):
+        memo = walk.memo
+        if not memo.local.keys().isdisjoint(self.memo.keys()):
+            return False
+        if any(ident not in memo for ident in self.references):
+            return False
+        for _, preceding in memo.fragments:
+            if preceding not in self.disjoint:
+                if not preceding.memo.keys().isdisjoint(self.memo.keys()):
+                    return False
+                self.disjoint.add(preceding)
+        return guard(self.edges.buffer_info()[0], self.objects, dict, list, walk.pinned) == 1
+
+    def emit(self, walk):
+        indexes = tuple(walk.memo[ident] for ident in self.references)
+        walk.put('plain-fragment', len(walk.memo), indexes, self.sha.hexdigest())
+        self.disjoint.update(preceding for _, preceding in walk.memo.fragments)
+        walk.memo.append(self)
+        walk.objects += self.objects
+
+
+class _CheckpointWalk(Walk):
+    """Reuse validated token fragments for repeated before/after collector walks."""
+
+    CACHE_BYTES = 512 * 1024 * 1024
+
+    def __init__(self, hook, guard):
+        super().__init__(hook)
+        self.guard = guard
+        self.memo = _CheckpointMemo()
+
+    def _drain(self, stack):
+        while stack:
+            kind, item = stack.pop()
+            if kind == 't':
+                self.put(*item)
+            elif not self._try_fragment(item):
+                self.visit(item, stack)
+
+    def _try_fragment(self, root):
+        kind = type(root)
+        if type(kind) is not type or kind not in _PLAIN_CONTAINERS or len(root) < 8:
+            return False
+        ident = id(root)
+        if ident in self.memo:
+            return False
+        cache = self.hook._checkpoints
+        fragment = cache.get(ident)
+        if fragment is not None and fragment.matches(self, self.guard):
+            cache.move_to_end(ident)
+            fragment.emit(self)
+            return True
+        fragment = _PlainWalk(self)
+        try:
+            fragment._drain([('v', root)])
+        except _NotPlain:
+            return False
+        fragment.emit(self)
+        self.pinned.extend(fragment.pinned)
+        fragment.prefix = None
+        fragment.pinned.clear()
+        weight = fragment.weight()
+        if weight <= self.CACHE_BYTES:
+            if ident in cache:
+                self.hook._checkpoint_bytes -= cache.pop(ident).weight()
+            while self.hook._checkpoint_bytes + weight > self.CACHE_BYTES:
+                self.hook._checkpoint_bytes -= cache.popitem(last=False)[1].weight()
+            cache[ident] = fragment
+            self.hook._checkpoint_bytes += weight
+        return True
+
+
 class Hook:
     """One family's owner digest: what it walks and what it leaves out, by name."""
 
@@ -383,6 +601,8 @@ class Hook:
         self.clock = dict(CLOCK_ATTRIBUTES if clock is None else clock)
         self.harness = dict(HARNESS_ATTRIBUTES if harness is None else harness)
         self.note = note
+        self._checkpoints = collections.OrderedDict()
+        self._checkpoint_bytes = 0
 
     def roots(self, world, arguments):
         roots = [('world', world), ('arguments', arguments)]
@@ -409,7 +629,23 @@ class Hook:
         return roots
 
     def digest(self, world, arguments, inventory=None):
-        walk = Walk(self, inventory)
+        return self._digest(Walk(self, inventory), world, arguments)
+
+    def checkpoint(self, world, arguments):
+        """Collector-only equality check over the same tokens as the judge digest.
+
+        A fragment marker commits to its ordinary token stream and the indices
+        needed to rebase its references. A different stream requires a hash
+        collision to compare equal. The judge keeps its original format.
+        """
+        guard = prepare_checkpoints()
+        walk = Walk(self) if guard is None else _CheckpointWalk(self, guard)
+        result = self._digest(walk, world, arguments)
+        if guard is not None:
+            result['schema'] = 'dg5-owner-checkpoint-v1'
+        return result
+
+    def _digest(self, walk, world, arguments):
         try:
             sha = walk.run(self.roots(world, arguments))
         except Unclassified as error:
