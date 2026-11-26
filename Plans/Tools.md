@@ -12435,15 +12435,15 @@ Repairs row `sfk-88d65b2be00892daadd2f0d8`.
 
 Repairs rows `sfk-0649b6a2c860f179ee699f58`, `sfk-e257db159bd84ee85f74371d`, and `sfk-47f640ed50d4ed24f6b34c49`.
 
-`ToolTurnSettlement` fields are `settlement_id`, `tool_call_id`, `settlement_state`, `result_ref?`, `error_ref?`, `truncation_ref?`, `redaction_ref?`, `retention_ref?`, `retry_after_ms?`, `created_at_utc`, and `schema_version`.
+`ToolTurnSettlement` fields are `settlement_id`, `tool_call_id`, `settlement_state`, `result_ref?`, `error_ref?`, `truncation_ref?`, `redaction_ref?`, `retention_ref?`, `retry_after_ms?`, `created_at_utc`, and `schema_version`. Amended 2026-11-26: the list also has `gate_id?`, and `tool_call_id` is absent only for a call that arrived with no provider id, which the admission gate always denies; the `ToolTurnSettlement` typed shape below gives every type and presence rule.
 
 `settlement_state` values are `success`, `partial`, `partial_truncated`, `malformed`, `nullable_content`, `redacted`, `retained`, `retryable`, and `fatal`. `success` is legal only when required result, error, truncation, retention, and redaction metadata are normalized.
 
-`CommandInvocationContract` fields are `invocation_id`, `tool_call_id`, `invocation_kind`, `interpreter`, `argv?`, `shell_string?`, `powershell_script?`, `pty_input_ref?`, `cwd`, `env_policy_ref`, `permission_snapshot_id?`, `configured`, `allowed`, `injected`, `visible_to_model`, `created_at_utc`, and `schema_version`.
+`CommandInvocationContract` fields are `invocation_id`, `tool_call_id`, `invocation_kind`, `interpreter`, `argv?`, `shell_string?`, `powershell_script?`, `pty_input_ref?`, `cwd`, `env_policy_ref`, `permission_snapshot_id?`, `configured`, `allowed`, `injected`, `visible_to_model`, `created_at_utc`, and `schema_version`. Amended 2026-11-26: the list also has `terminal_session_id?`, typed below.
 
 `invocation_kind` values are `shell_string`, `argv`, `powershell_script`, `pty_input`, and `tui_automation`.
 
-`ProviderToolTurnAdmissionGate` fields are `gate_id`, `tool_call_id`, `provider_id`, `model_id`, `allowed`, `denial_reason_code?`, `permission_snapshot_id?`, `capability_snapshot_id?`, and `created_at_utc`.
+`ProviderToolTurnAdmissionGate` fields are `gate_id`, `tool_call_id`, `provider_id`, `model_id`, `allowed`, `denial_reason_code?`, `permission_snapshot_id?`, `capability_snapshot_id?`, and `created_at_utc`. Amended 2026-11-26: the list also has `call_index`, and `tool_call_id` is absent only for a call that arrived with no provider id; the typed contract below gives every type and presence rule.
 
 #### `interpreter` type and the `bash` adapter binding (added 2026-11-25)
 
@@ -12459,6 +12459,7 @@ Every `bash` tool call (§3.5.1) produces exactly one `CommandInvocationContract
 | `interpreter` | With `shellId`: the shell of the bound `terminal_session_id` (DL-181). Without it: the shell the runtime resolves for the frozen Project/worktree or Computer/working-root context (T-187) when it creates the binding. |
 | `shell_string` | `command`, byte for byte: no trimming, re-quoting or splitting. |
 | `argv`, `powershell_script`, `pty_input_ref` | Absent. |
+| `terminal_session_id` | With `shellId`: the bound `terminal_session_id` (DL-181). Without it: absent; the call creates a new binding, whose handle the result returns as `shellId`. |
 | `cwd` | The frozen working root (T-187) for a new binding; for a reused `shellId`, the session's working directory observed at dispatch. |
 | `env_policy_ref` | The environment policy of the shell binding. |
 | `permission_snapshot_id` | The snapshot the pre-dispatch Permissions and FileSafe evaluation used. |
@@ -12466,7 +12467,7 @@ Every `bash` tool call (§3.5.1) produces exactly one `CommandInvocationContract
 | `created_at_utc` | Stamped by the runtime when it builds the contract, before dispatch (RFC 3339 UTC). |
 | `schema_version` | `1.0.0`. |
 
-`mode`, `initial_wait`, `detach`, and `shellId` are execution controls of §3.5.1 and are not contract fields. A new binding runs `shell_string` as one argument to the interpreter (`-c` for `bash`, `zsh`, `sh`, and `fish`; `-NoProfile -Command` for `pwsh` and `powershell`; `/d /s /c` for `cmd`); a reused binding receives it as one complete command line under the DL-181 and SMPFS-182 write rules. `command` is never executed as `argv[0]`, and a non-string `command` is `validation_error`. `powershell_script` stays reserved for inspected PowerShell wrapper scripts (T-171) and `pty_input` for raw input to an interactive program; neither is produced by `bash`. Approval UI shows `shell_string` verbatim beside `interpreter_kind` and `executable_path`.
+`mode`, `initial_wait`, `detach`, and `shellId` are execution controls of §3.5.1 and are not contract fields. The contract's `terminal_session_id` decides which of two dispatch forms runs, and no other form exists. Without it (a new binding), the runtime starts `executable_path` with `shell_string` as one argument (`-c` for `bash`, `zsh`, `sh`, and `fish`; `-NoProfile -Command` for `pwsh` and `powershell`; `/d /s /c` for `cmd`). With it (a reused `shellId`), no new interpreter starts: `shell_string` is written to that session's input as one complete command line, byte for byte and followed by one Enter, under the DL-181 and SMPFS-182 write rules, and the session's own shell (the contract's `interpreter`) parses it as if typed there. `command` is never executed as `argv[0]`, and a non-string `command` is `validation_error`. `powershell_script` stays reserved for inspected PowerShell wrapper scripts (T-171) and `pty_input` for raw input to an interactive program; neither is produced by `bash`. Approval UI shows `shell_string` verbatim beside `interpreter_kind` and `executable_path` and names the form: a new shell, or the existing terminal (by its tab) it will be typed into.
 
 #### `CommandInvocationContract` typed shape and variants (added 2026-11-26)
 
@@ -12479,9 +12480,10 @@ Field types, for every tool that builds the contract (the `bash` mapping above i
 | `invocation_kind` | closed enum | One of the five values above; selects exactly one content field (variant table below). |
 | `interpreter` | object `{ interpreter_kind, executable_path, version? }` | As defined in the `interpreter` subsection above. |
 | `argv` | array of strings, at least 1 entry | `argv[0]` is the program, resolved to an absolute path before dispatch; each entry is passed as one argument with no shell. |
-| `shell_string` | string, at least 1 byte | Passed to the interpreter as one argument, byte for byte. |
+| `shell_string` | string, at least 1 byte | Byte for byte, never trimmed, re-quoted or split: one argument to a newly started interpreter when `terminal_session_id` is absent, or one complete command line written to that session when it is present (variant table below). |
 | `powershell_script` | string, at least 1 byte | The text of an inspected PowerShell wrapper script. |
 | `pty_input_ref` | string | Reference to the exact bytes written to the PTY of a bound terminal session. |
+| `terminal_session_id` | string, optional | The canonical terminal session (DL-181) the contract writes into. Required for `pty_input`; for `shell_string`, present exactly when the call reuses a bound session; absent for `argv` and `powershell_script`. |
 | `cwd` | string | Absolute path. |
 | `env_policy_ref` | string | The environment policy applied to the process. |
 | `permission_snapshot_id` | string, optional | Present on every contract that is dispatched: the snapshot the pre-dispatch Permissions and FileSafe evaluation used. Absent only on a contract refused before that evaluation ran. |
@@ -12493,13 +12495,13 @@ Variants are exclusive. Exactly the content field the kind names is present; the
 
 | `invocation_kind` | Required content field | `interpreter_kind` | Dispatch |
 |---|---|---|---|
-| `shell_string` | `shell_string` | any value except `none` | The interpreter runs `shell_string` as one argument (flags in the `bash` adapter paragraph above). |
+| `shell_string` | `shell_string` | any value except `none`; with `terminal_session_id`, the shell of that session | Without `terminal_session_id`: a new interpreter process runs `shell_string` as one argument (flags in the `bash` adapter paragraph above). With it: `shell_string` is written to that session as one complete command line followed by one Enter, under the DL-181 and SMPFS-182 write rules, and no new interpreter starts. |
 | `argv` | `argv` | `none` | Direct exec of `argv`; never routed through a shell (T-171). |
 | `powershell_script` | `powershell_script` | `pwsh` or `powershell` | Needs the inspected-wrapper receipt and, when configured, one-shot approval (T-171). |
-| `pty_input` | `pty_input_ref` | the shell of the bound terminal session; not `none` | The referenced bytes are written to that session under the DL-181 and SMPFS-182 write rules. |
+| `pty_input` | `pty_input_ref` | the shell of the bound terminal session; not `none` | The referenced bytes are written to the `terminal_session_id` session, exactly and with nothing appended, under the DL-181 and SMPFS-182 write rules. |
 | `tui_automation` | none defined | none defined | Reserved, not admitted: no registered tool produces this kind and no body field exists for it. A contract carrying it is refused with `validation_error` before dispatch until an owner registers a TUI-automation tool and adds its body field to this table. |
 
-A contract that breaks a presence, type or variant rule is refused with `validation_error` before dispatch and nothing runs. Approval UI shows the one content field verbatim beside `invocation_kind`, `interpreter_kind` and `executable_path` (T-171 criterion 2).
+A contract that breaks a presence, type or variant rule is refused with `validation_error` before dispatch and nothing runs. Approval UI shows the one content field verbatim beside `invocation_kind`, `interpreter_kind` and `executable_path`, and, when `terminal_session_id` is present, names the existing terminal (by its tab) the text goes to (T-171 criterion 2).
 
 #### `ActiveToolNamespaceReceipt` typed contract (added 2026-11-25)
 
@@ -12554,8 +12556,9 @@ One gate record is written for every provider tool call before the turn that car
 
 | Field | Type | Rule |
 |---|---|---|
-| `gate_id` | string | Opaque and unique. |
-| `tool_call_id` | string | The provider tool call judged. |
+| `gate_id` | string | Opaque and unique; minted by PM, never taken from the provider. It is the call's PM identity in every record that names the call. |
+| `tool_call_id` | string, optional | The provider's own id for the call judged. Absent exactly when the call arrived with no id, which is always denied: as `tool_call_id_missing`, or as `length_truncated` when that check fired first. PM never invents a value for it. |
+| `call_index` | integer, at least 0 | The call's position among the tool calls of its provider turn, in stream order. With `gate_id` it identifies a call that has no provider id. |
 | `provider_id`, `model_id` | string | The route that produced the call. |
 | `allowed` | boolean | True only when every check below passes. |
 | `denial_reason_code` | closed enum, optional | Required when `allowed` is false, absent when it is true. |
@@ -12563,9 +12566,30 @@ One gate record is written for every provider tool call before the turn that car
 | `capability_snapshot_id` | string, optional | The `Plans/Models_System.md` capability snapshot of the route; present whenever the route has one. |
 | `created_at_utc` | RFC 3339 UTC string | |
 
-Checks, in this order; the first that fails gives the code: `tool_call_id_missing` (the call has no id), `tool_call_id_duplicate` (the id was already admitted in this session), `empty_tool_call` (no tool name), `args_unparseable` (streamed JSON or tool XML is partial, or the arguments are not one complete JSON value), `length_truncated` (the provider ended the tool-call deltas with a length finish reason), `tool_not_in_namespace` (the `ActiveToolNamespaceReceipt` current for the turn has no entry for the tool), then the namespace dispatch rule above (an entry that does not permit dispatch denies with its own `denial_reason_code`), `schema_invalid` (the arguments fail that entry's `schema_ref` schema), and `provider_metadata_missing` (provider-native metadata the route requires is absent). `denial_reason_code` is closed to these eight codes plus the `ToolNamespaceEntry.denial_reason_code` values.
+Checks, in this order; the first that fails gives the code: `length_truncated` (the provider ended the tool-call deltas with a length finish reason; checked first, so a length-ended call keeps this code even when its id, name or arguments are also incomplete, which is the Truncation gate case of §3.5 and T-167's `partial_truncated` rule), `tool_call_id_missing` (the call has no id), `tool_call_id_duplicate` (the id was already admitted in this session), `empty_tool_call` (no tool name), `args_unparseable` (streamed JSON or tool XML is partial, or the arguments are not one complete JSON value, in a call that did not end on length), `tool_not_in_namespace` (the `ActiveToolNamespaceReceipt` current for the turn has no entry for the tool), then the namespace dispatch rule above (an entry that does not permit dispatch denies with its own `denial_reason_code`), `schema_invalid` (the arguments fail that entry's `schema_ref` schema), and `provider_metadata_missing` (provider-native metadata the route requires is absent). `denial_reason_code` is closed to these eight codes plus the `ToolNamespaceEntry.denial_reason_code` values.
 
-A denied call never enters replayable history and is never dispatched. It becomes a `provider_turn_malformed` record holding a raw-redacted reference to the provider output (T-169). The eight gate codes normalize to `failure_class = structured_output_invalid` and follow its `Plans/Executor_Protocol.md` §7.1 row (Max retries 2, no backoff): while a retry remains, the tool turn settles `retryable` and the provider turn is requested again; when the retries are spent it settles `malformed` and the run takes that classifier's escalation. The one exception is `length_truncated`: it follows the same retry row, but the tool turn settles `partial_truncated` on every attempt, as T-167 requires for a length finish reason on tool-call deltas and as the precedence above orders it (`partial_truncated` outranks `retryable`); when the retries are spent the run takes the same escalation with the turn still `partial_truncated`. A namespace denial is not retried: the tool turn settles `fatal` with the entry's code, the same denial the receipt section gives. Persistence of gate and `provider_turn_malformed` records waits on the same Storage registration as the receipt above.
+A denied call never enters replayable history and is never dispatched. It becomes a `provider_turn_malformed` record holding a raw-redacted reference to the provider output (T-169). The eight gate codes normalize to `failure_class = structured_output_invalid` and follow its `Plans/Executor_Protocol.md` §7.1 row (Max retries 2, no backoff): while a retry remains, the tool turn settles `retryable` and the provider turn is requested again; when the retries are spent it settles `malformed` and the run takes that classifier's escalation. The one exception is `length_truncated`: it follows the same retry row, but the tool turn settles `partial_truncated` on every attempt, as T-167 requires for a length finish reason on tool-call deltas and as the precedence above orders it (`partial_truncated` outranks `retryable`); when the retries are spent the run takes the same escalation with the turn still `partial_truncated`. A namespace denial is not retried: the tool turn settles `fatal` with the entry's code, the same denial the receipt section gives. A gate retry asks the provider for a new turn; it never re-dispatches or repairs the denied call, which was never dispatched, so the rules of §3.5.0A and "Retry classification and bounded recovery" that a schema-mismatch or validation-failed invocation is terminal and never retried automatically still hold. A `length_truncated` denial is the Truncation gate's structured truncation error (`truncated_by_length`, §3.5): nothing is dispatched and no argument is synthesized. For a call that arrived with no provider id, every record that names the call (the gate record, the `provider_turn_malformed` record, the `ToolTurnSettlement` and its `ToolRecoveryEnvelope`) carries `gate_id` and leaves the provider id absent, with `original_tool_call_id` in its typed empty state. Persistence of gate and `provider_turn_malformed` records waits on the same Storage registration as the receipt above.
+
+#### `ToolTurnSettlement` typed shape (T-167, added 2026-11-26)
+
+One immutable settlement is written per tool call attempt, including a call the admission gate denied. It carries one `settlement_state`; when several conditions hold at once, the §3.5 precedence (`fatal` > `malformed` > `partial_truncated` > `redacted` > `nullable_content` > `partial` > `retryable` > `retained` > `success`) picks that one value, and the refs of the other conditions that hold are still present.
+
+| Field | Type | Rule |
+|---|---|---|
+| `settlement_id` | string | Opaque and unique. |
+| `tool_call_id` | string, optional | The provider's id for the call. Absent exactly when the call arrived with no id, which the gate always denies. |
+| `gate_id` | string, optional | The `ProviderToolTurnAdmissionGate` record of the call. Present for every provider tool call; required when `tool_call_id` is absent. |
+| `settlement_state` | closed enum | One of the nine values above. |
+| `result_ref` | string, optional | Reference to the normalized tool result, a payload reference when spilled (DL-270, §3.5.0A). Present for every dispatched call that returned a result, so for `success` unless the tool's own contract omits it; absent for a call the gate denied. |
+| `error_ref` | string, optional | Reference to the structured error (its code, such as a gate code or `heartbeat_lost`, and the `ToolRecoveryEnvelope`). Required for `malformed`, `retryable` and `fatal` and for every gate denial; absent for `success`. |
+| `truncation_ref` | string, optional | Reference to the truncation facts: the bounded head/tail, exact original size and artifact ref of §3.5.0A, or the `provider_turn_malformed` record of a `length_truncated` denial. Required whenever output or arguments were truncated, so always for `partial_truncated`; absent for `success`. |
+| `redaction_ref` | string, optional | Reference to the redaction applied. Required whenever any result or output content was redacted, so always for `redacted`. |
+| `retention_ref` | string, optional | Reference to the managed output retention (`ToolManagedOutputRef`, T-177). Required whenever output was spilled or retained, so always for `retained`. |
+| `retry_after_ms` | integer, at least 0, optional | Present only with `retryable`, when the retry row or a provider minimum delay sets one. |
+| `created_at_utc` | RFC 3339 UTC string | |
+| `schema_version` | string | `1.0.0`. |
+
+`success` is legal only under the §3.5 rule (required result, error, truncation, retention and redaction metadata normalized and persisted, or intentionally omitted by the tool's own contract); a settlement that would break a presence rule above is never written as `success`: it takes the state the missing metadata gives (for failed retention, `fatal` or `partial_truncated`, §3.5.0A). Persistence of settlements waits on the same Storage registration as the receipt above.
 
 #### `ToolProgressHeartbeat` contract (T-175, added 2026-11-26)
 
