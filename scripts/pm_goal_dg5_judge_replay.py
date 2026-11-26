@@ -7,7 +7,7 @@ import select
 import signal
 import time
 
-WALL_SECONDS = 60
+WALL_SECONDS = 600
 JUDGING = ContextVar('dg5_judging', default=False)
 OUTCOME = 'JUDGE_BOUND'
 
