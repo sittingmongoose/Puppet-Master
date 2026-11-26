@@ -230,7 +230,12 @@ STALENESS_ERROR_PREFIXES = ("current_snapshot_",)
 # event_record_, execution_unit_context_, non_executable_closure_ and storage_value_registry_ so far.
 # An edited Spec-Locked file reads stale in each of them until the reseal, like `stale_hash` itself.
 STALENESS_ERROR_SUFFIXES = ("_spec_lock_hash_stale",)
-STALENESS_DETAIL_MARKER = "is stale"
+# pm-audit-closure.py emits stale hash mismatches as:
+#   `<path_label>: <group_name> for <ref> is stale (stored <64-hex>, current <64-hex>)`
+# Restrict detail-based staleness to that exact end-anchored form so broken evidence quotes that
+# happen to mention "is stale" are never excused as governance staleness.
+CLOSURE_STALE_DETAIL_RE = re.compile(r" is stale \(stored [0-9a-f]{64}, current [0-9a-f]{64}\)\Z")
+CLOSURE_STALE_SCRUBBED_DETAIL_RE = re.compile(r" is stale \(stored <hash>, current <hash>\)\Z")
 
 # The readiness validator, as each aggregate names it. Its total is the growth counter of the stale
 # readiness rows above: where the gitignored currentness audit inputs are present, as in the shared
@@ -814,7 +819,7 @@ def normalize(check: str, subcheck: str, failure: Any, root: Path, context: "Ren
         "error": error,
         "path": path,
         "fields": rest,
-        "stale": is_staleness(error, scrubbed) or renamed_shard_ref(error, raw, root, context),
+        "stale": is_staleness(error, scrubbed, raw) or renamed_shard_ref(error, raw, root, context),
         # The unscrubbed failure, for the branch-path match only. Scrubbing replaces the measured
         # `actual`/`expected` with a type tag, and some failures name a document only inside those
         # lists, so matching against the scrubbed fields would miss them. Keys starting with an
@@ -832,11 +837,16 @@ def is_staleness_kind(error: str) -> bool:
     )
 
 
-def is_staleness(error: str, scrubbed: dict[str, Any]) -> bool:
+def is_staleness(error: str, scrubbed: dict[str, Any], raw: dict[str, Any] | None = None) -> bool:
     if is_staleness_kind(error):
         return True
+    if error != "audit_closure_validator_error":
+        return False
+    if raw is not None:
+        detail = raw.get("detail")
+        return isinstance(detail, str) and bool(CLOSURE_STALE_DETAIL_RE.search(detail))
     detail = scrubbed.get("detail")
-    return isinstance(detail, str) and STALENESS_DETAIL_MARKER in detail
+    return isinstance(detail, str) and bool(CLOSURE_STALE_SCRUBBED_DETAIL_RE.search(detail))
 
 
 # A line-range shard name: the document's shard ordinal and the source lines it holds. JSON and other

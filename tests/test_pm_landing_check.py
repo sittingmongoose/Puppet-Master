@@ -191,8 +191,50 @@ class StalenessClassification(unittest.TestCase):
         self.assertFalse(M.normalize("c", "s", PATH_REF, CHECKOUT)["stale"])
 
     def test_a_stale_detail_string_is_recognised(self):
-        failure = {"path": "p", "error": "audit_closure_validator_error", "detail": "owner hashes is stale (a, b)"}
+        failure = {
+            "path": "Plans/.audits/_semantic_closure_registry.jsonl",
+            "error": "audit_closure_validator_error",
+            "detail": (
+                "Plans/.audits/_semantic_closure_registry.jsonl:87: owner_evidence_hashes for "
+                f"Plans/A.md is stale (stored {'a' * 64}, current {'b' * 64})"
+            ),
+        }
         self.assertTrue(M.normalize("c", "s", failure, CHECKOUT)["stale"])
+
+    def test_closure_staleness_rejects_bare_is_stale_and_mutated_quote(self):
+        """N1: only the validator's actual `is stale (stored <hex>, current <hex>)` form is staleness."""
+        mutated_quote = (
+            "Plans/.audits/_semantic_closure_registry.jsonl:87: evidence quote is not in "
+            "scripts/pm-audit-closure.py#pydef=validate_hash_group at recheck_commit: "
+            '\'f"{path_label}: {group_name} for {ref} is stale "TYPO\''
+        )
+        non_stale_cases = [
+            ("mutated_quote", "audit_closure_validator_error", mutated_quote),
+            ("bare_is_stale", "audit_closure_validator_error", "owner hashes is stale (a, b)"),
+            ("literal_hash_placeholder", "audit_closure_validator_error",
+             "Plans/.audits/_semantic_closure_registry.jsonl:87: owner_evidence_hashes for Plans/A.md "
+             "is stale (stored <hash>, current <hash>)"),
+            ("trailing_quote_after_hashes", "audit_closure_validator_error",
+             f"evidence quote: 'x is stale (stored {'a' * 64}, current {'b' * 64})'"),
+            ("non_hex_stored_hash", "audit_closure_validator_error",
+             f"owner_evidence_hashes for Plans/A.md is stale (stored CORRUPT, current {'b' * 64})"),
+            ("non_closure_error_kind", "registry_entry_mismatch",
+             f"owner_evidence_hashes for Plans/A.md is stale (stored {'a' * 64}, current {'b' * 64})"),
+        ]
+        for label, error, detail in non_stale_cases:
+            with self.subTest(case=label):
+                failure = {"path": "Plans/.audits/_semantic_closure_registry.jsonl", "error": error, "detail": detail}
+                self.assertFalse(M.normalize("c", "s", failure, CHECKOUT)["stale"], label)
+
+        evidence = AuditClosureCompleteExport.C_EVIDENCE
+        if evidence.is_file():
+            raw_bytes = evidence.read_bytes()
+            self.assertEqual(hashlib.sha256(raw_bytes).hexdigest(), AuditClosureCompleteExport.C_EVIDENCE_SHA256)
+            errors = json.loads(raw_bytes.decode("utf-8"))["errors"]
+            self.assertEqual(len(errors), 290)
+            for idx, detail in enumerate(errors):
+                failure = {"path": CLOSURE_REGISTRY, "error": "audit_closure_validator_error", "detail": detail}
+                self.assertTrue(M.normalize("c", "s", failure, CHECKOUT)["stale"], f"C error #{idx}: {detail}")
 
 
 RUN_GATES_REPORT = {
@@ -3414,6 +3456,32 @@ class AuditClosureCompleteExport(LandingRun):
             mx_report["grown_buckets"],
         )
 
+    def test_mutated_is_stale_quote_past_print_cap_is_not_staleness_and_exits_two(self):
+        """N1 end-to-end: reviewer's mutated quote containing bare 'is stale' at row #250 must block."""
+        self.baseline_40()
+        self.touch("Plans/Tools.md")
+        self.touch(self.REGISTRY)
+        rows = self.stale_291()
+        rows[250] = {
+            "path": self.REGISTRY,
+            "error": "audit_closure_validator_error",
+            "detail": (
+                f"{self.REGISTRY}:87: evidence quote is not in "
+                "scripts/pm-audit-closure.py#pydef=validate_hash_group at recheck_commit: "
+                '\'f"{path_label}: {group_name} for {ref} is stale "TYPO\''
+            ),
+        }
+        self.stub(gates={self.RG: rows}, audit={self.AG: rows})
+        self.exports[self.CMD] = rows
+        code, out = self.compare("--json")
+        report = json.loads(out)
+        self.assertEqual(code, 2, out)
+        self.assertEqual(report["blocking"], 4)
+        self.assertTrue(all(not r["stale"] for r in report["grown_buckets"]))
+        blocking_on_branch = [i for i in report["on_branch"] if not i["stale"] and not i.get("standing")]
+        self.assertEqual(len(blocking_on_branch), 2)
+        self.assertTrue(all(i["error"] == "audit_closure_validator_error" for i in blocking_on_branch))
+
 
 class RunExport(unittest.TestCase):
     """run_export against a stand-in scripts/pm-plans-verify.py, not a stub: the report it writes with
@@ -3749,7 +3817,14 @@ class WhatEachRunAlsoReports(LandingRun):
         """A2-5: `kind_stale` is the check's own classification by error kind, which a sampled baseline cannot make
         false; `grown_stale` is the whole-bucket classification that needs a complete baseline."""
         by_kind = {"path": "Plans/A.md", "error": "stale_hash"}
-        by_detail = {"path": "Plans/A.md", "error": "registry_entry_mismatch", "detail": "entry for Plans/A.md is stale"}
+        by_detail = {
+            "path": "Plans/A.md",
+            "error": "audit_closure_validator_error",
+            "detail": (
+                "Plans/.audits/_semantic_closure_registry.jsonl:1: owner_evidence_hashes for "
+                f"Plans/A.md is stale (stored {'a' * 64}, current {'b' * 64})"
+            ),
+        }
         plain = {"path": "Plans/A.md", "error": "missing_ref", "ref": "#1"}
         self.stub(gates={"verify_spec_lock": [by_kind, by_detail, plain]})
         self.record()
@@ -3757,22 +3832,30 @@ class WhatEachRunAlsoReports(LandingRun):
         _code, _out, doc = self.row_report()
         rows = {row["key"].split("|")[2]: row for row in doc["subchecks"]["run-gates/verify_spec_lock"]["rows"]}
         self.assertEqual((rows["stale_hash"]["stale"], rows["stale_hash"]["kind_stale"]), (True, True))
-        self.assertEqual((rows["registry_entry_mismatch"]["stale"], rows["registry_entry_mismatch"]["kind_stale"]),
+        self.assertEqual((rows["audit_closure_validator_error"]["stale"], rows["audit_closure_validator_error"]["kind_stale"]),
                          (True, False))
         self.assertEqual((rows["missing_ref"]["stale"], rows["missing_ref"]["kind_stale"]), (False, False))
 
     def test_the_row_report_says_what_the_check_calls_that_rows_bucket_growing(self):
         """Review F1: a row can be stale by its detail text, and a rise in its bucket still blocks."""
         by_kind = {"path": "Plans/A.md", "error": "stale_hash"}
-        by_detail = {"path": "Plans/A.md", "error": "registry_entry_mismatch", "detail": "entry for Plans/A.md is stale"}
+        by_detail = {
+            "path": "Plans/A.md",
+            "error": "audit_closure_validator_error",
+            "detail": (
+                "Plans/.audits/_semantic_closure_registry.jsonl:1: owner_evidence_hashes for "
+                f"Plans/A.md is stale (stored {'a' * 64}, current {'b' * 64})"
+            ),
+        }
         plain = {"path": "Plans/A.md", "error": "missing_ref", "ref": "#1"}
-        self.stub(gates={"verify_spec_lock": [by_kind, by_detail, plain]})
+        self.stub(gates={"verify_spec_lock": [by_kind, plain]})
         self.record()
         self.touch("Plans/Touched.md")
+        self.stub(gates={"verify_spec_lock": [by_kind, by_detail, plain]})
         _code, _out, doc = self.row_report()
         rows = {row["key"].split("|")[2]: row for row in doc["subchecks"]["run-gates/verify_spec_lock"]["rows"]}
         self.assertEqual((rows["stale_hash"]["stale"], rows["stale_hash"]["grown_stale"]), (True, True))
-        self.assertEqual((rows["registry_entry_mismatch"]["stale"], rows["registry_entry_mismatch"]["grown_stale"]), (True, False))
+        self.assertEqual((rows["audit_closure_validator_error"]["stale"], rows["audit_closure_validator_error"]["grown_stale"]), (True, False))
         self.assertEqual((rows["missing_ref"]["stale"], rows["missing_ref"]["grown_stale"]), (False, False))
         for name in rows:
             bucket = f"run-gates|verify_spec_lock|{name}|Plans/A.md"
