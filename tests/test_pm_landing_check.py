@@ -3825,6 +3825,36 @@ class TargetJobsNegotiation(unittest.TestCase):
         self.assertEqual(argv[argv.index("--jobs") + 1], "4")
         self.assertEqual(M.check_argv("run-gates", Path("/tmp/report.json"), 1800, 4, False).count("--jobs"), 0)
 
+    def test_slot_hold_diagnostics_reach_stderr_before_the_aggregate_finishes(self):
+        import contextlib
+        import io
+
+        root = self.make_root({"pm-plans-verify.py": textwrap.dedent("""
+            import json, sys, time
+            from pathlib import Path
+
+            print("other diagnostic", file=sys.stderr, flush=True)
+            print("[pm-plans-verify] holding back validate-evidence", file=sys.stderr, flush=True)
+            acknowledgement = Path("hold-forwarded")
+            deadline = time.monotonic() + 2
+            while not acknowledgement.exists() and time.monotonic() < deadline:
+                time.sleep(0.01)
+            print(json.dumps({"forwarded": acknowledgement.exists()}))
+        """)})
+
+        class AcknowledgeHold(io.StringIO):
+            def write(self, value):
+                if "holding back" in value:
+                    (root / "hold-forwarded").touch()
+                return super().write(value)
+
+        stderr = AcknowledgeHold()
+        with contextlib.redirect_stderr(stderr):
+            report = M.run_check("run-gates", root, "run", 1800, supports_jobs=True)
+
+        self.assertTrue(report["forwarded"])
+        self.assertEqual(stderr.getvalue(), "[pm-plans-verify] holding back validate-evidence\n")
+
     def test_the_base_verifier_really_predates_the_option(self):
         """Two real versions of the same path: the base commit's verifier and this tree's."""
         def show(path):

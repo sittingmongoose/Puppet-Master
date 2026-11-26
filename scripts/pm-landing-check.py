@@ -481,6 +481,16 @@ def check_argv(name: str, report_file: Path | None, timeout_seconds: int, jobs: 
     return argv
 
 
+def stream_check_stderr(stream) -> str:
+    """Forward memory hold messages and retain the diagnostic tail for unreadable reports."""
+    tail = ""
+    for line in stream:
+        if line.startswith("[pm-plans-verify] holding back "):
+            print(line, end="", file=sys.stderr, flush=True)
+        tail = (tail + line)[-400:]
+    return tail
+
+
 def run_check(name: str, root: Path, run_dir: str, timeout_seconds: int,
               jobs: int = 1, env: dict[str, str] | None = None,
               supports_jobs: bool | None = None) -> dict[str, Any]:
@@ -501,14 +511,25 @@ def run_check(name: str, root: Path, run_dir: str, timeout_seconds: int,
             if supports_jobs is None:
                 supports_jobs = target_accepts_jobs(root)
             argv = check_argv(name, report_file, timeout_seconds, jobs, supports_jobs)
-        proc = subprocess.run(argv, cwd=root, capture_output=True, text=True, env=target_environment(env))
-        payload = report_file.read_text(encoding="utf-8") if report_file and report_file.exists() else proc.stdout
+        with subprocess.Popen(argv, cwd=root, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                              text=True, env=target_environment(env)) as proc:
+            # Drain stderr while reading stdout so a held-back start is visible during the wait.
+            with ThreadPoolExecutor(max_workers=1) as readers:
+                stderr = readers.submit(stream_check_stderr, proc.stderr)
+                try:
+                    stdout = proc.stdout.read()
+                    returncode = proc.wait()
+                    stderr_tail = stderr.result()
+                except BaseException:
+                    proc.kill()
+                    raise
+        payload = report_file.read_text(encoding="utf-8") if report_file and report_file.exists() else stdout
         try:
             report = json.loads(payload)
         except Exception as exc:  # noqa: BLE001 - a check that cannot be parsed stops the landing.
             raise RuntimeError(
                 f"{name}: could not read the check's JSON output ({exc}); "
-                f"returncode={proc.returncode}; stderr tail: {(proc.stderr or '')[-400:]}"
+                f"returncode={returncode}; stderr tail: {stderr_tail}"
             ) from exc
     if not isinstance(report, dict):
         raise RuntimeError(f"{name}: the check's JSON output is not an object")
