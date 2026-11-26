@@ -3551,6 +3551,7 @@ class AggregateReadinessInputs(LandingRun):
         from concurrent.futures import ThreadPoolExecutor
 
         self.stub()
+        self.module.target_worker_support = lambda root: (True, True)
         readiness = self.repo / M.READINESS_AUDIT_REL
         readiness.mkdir(parents=True)
         inventory = readiness / "CURRENT_EVENT_SOURCE_INVENTORY.json"
@@ -3601,6 +3602,7 @@ class SharedWorkerBudget(LandingRun):
     """Review N-F: --jobs is one budget for the whole check, capped, and gated on free memory."""
 
     def capture(self):
+        self.module.target_worker_support = lambda root: (True, True)
         seen = []
 
         def run_check(name, root, run_dir, timeout, jobs=1, env=None, supports_jobs=True):
@@ -3766,6 +3768,35 @@ class HistoricalTargetEnvironment(LandingRun):
                 self.assertEqual(received, [])
 
 
+class TargetBudgetNegotiation(LandingRun):
+    def test_targets_without_the_budget_run_whole_aggregates_serially(self):
+        import threading
+
+        scripts = self.repo / "scripts"
+        scripts.mkdir()
+        (scripts / "pm-plan-migration.py").write_text(
+            """print('{"status": "pass", "failures": []}')""", encoding="utf-8")
+        caller = threading.get_ident()
+        real_run_check = self.module.run_check
+        for source, cli_jobs in ((OLD_TARGET_VERIFIER, False), (NEW_TARGET_VERIFIER, True)):
+            with self.subTest(cli_jobs=cli_jobs):
+                # Probe each target once using the real subprocess path.
+                self.module = load_module()
+                self.module.current_run_dir = lambda root: "Plans/.plan_migration/run-017"
+                (scripts / "pm-plans-verify.py").write_text(source, encoding="utf-8")
+                calls = []
+
+                def run_check(name, root, run_dir, timeout, jobs, env, supports_jobs):
+                    calls.append((name, threading.get_ident(), jobs, supports_jobs, M.SLOTS_DIR_ENV in env))
+                    return real_run_check(name, root, run_dir, timeout, jobs, env, supports_jobs)
+
+                with patch.object(self.module, "run_check", run_check):
+                    code, out = self.run_main("--jobs", "4", "--record-baseline", "--baseline", "baseline.json")
+                self.assertEqual(code, 0, out + self.stderr)
+                self.assertEqual(calls, [(name, caller, 1, cli_jobs, False) for name in M.CHECKS])
+                self.assertIn("running serially", self.stderr)
+
+
 class TargetJobsNegotiation(unittest.TestCase):
     """Review A2: the checker runs a target checkout's own verifier, which may predate --jobs."""
 
@@ -3805,4 +3836,4 @@ class TargetJobsNegotiation(unittest.TestCase):
         old = self.make_root({"pm-plans-verify.py": script.stdout,
                               "pm_wiring_inventory.py": wiring.stdout})
         self.assertFalse(M.target_accepts_jobs(old))
-        self.assertTrue(M.target_accepts_jobs(ROOT))
+        self.assertEqual(M.target_worker_support(ROOT), (True, True))

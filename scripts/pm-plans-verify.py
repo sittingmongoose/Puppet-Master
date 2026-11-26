@@ -7707,7 +7707,7 @@ def main() -> int:
                 help="Run this many independent subchecks at once, each still in its own process with its own "
                      f"temp and report paths; results are emitted in the original order (default: {default_jobs()}; "
                      f"1 is the serial run; at most {MAX_JOBS}, and a landing check shares one such budget "
-                     "across its three checks).",
+                     "across aggregates (landing-budget-v1).",
             )
     args = parser.parse_args()
     if hasattr(args, "jobs") and not 1 <= int(args.jobs) <= MAX_JOBS:

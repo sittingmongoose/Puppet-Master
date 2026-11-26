@@ -435,26 +435,34 @@ def target_environment(base_env: dict[str, str] | None = None) -> dict[str, str]
             if not name.startswith("PM_PLANS_VERIFY_DEDUPE")}
 
 
-_TARGET_JOBS_SUPPORT: dict[str, bool] = {}
+_TARGET_WORKER_SUPPORT: dict[str, tuple[bool, bool]] = {}
+LANDING_BUDGET_CAPABILITY = "landing-budget-v1"
 
 
-def target_accepts_jobs(root: Path) -> bool:
-    """Does the target checkout's verifier take --jobs? Read from its own --help, once per checkout.
+def target_worker_support(root: Path) -> tuple[bool, bool]:
+    """Read the target verifier's --jobs and shared budget support from its own help.
 
-    scripts/pm-landing-check.py runs the verifier of the tree it checks, and a tree older than this
-    branch does not know the option: passing it there is "unrecognized arguments" and exit 3 (review
-    A2). The answer is cached for the process; an unreadable help means no and the legacy invocation.
+    A verifier can accept --jobs while predating the shared budget or enforcing an older floor
+    that can stall even when idle. The capability marker advertises the floor that permits the
+    first validator to start. Both aggregate commands share these CLI options.
     """
     key = str(root.resolve())
-    if key not in _TARGET_JOBS_SUPPORT:
+    if key not in _TARGET_WORKER_SUPPORT:
+        help_text = ""
         try:
             proc = subprocess.run(
                 [sys.executable, "scripts/pm-plans-verify.py", "run-gates", "--help"],
                 cwd=root, capture_output=True, text=True, env=target_environment())
-            _TARGET_JOBS_SUPPORT[key] = proc.returncode == 0 and "--jobs" in proc.stdout
+            if proc.returncode == 0:
+                help_text = proc.stdout
         except OSError:
-            _TARGET_JOBS_SUPPORT[key] = False
-    return _TARGET_JOBS_SUPPORT[key]
+            pass
+        _TARGET_WORKER_SUPPORT[key] = "--jobs" in help_text, LANDING_BUDGET_CAPABILITY in help_text
+    return _TARGET_WORKER_SUPPORT[key]
+
+
+def target_accepts_jobs(root: Path) -> bool:
+    return target_worker_support(root)[0]
 
 
 def check_argv(name: str, report_file: Path | None, timeout_seconds: int, jobs: int,
@@ -2273,10 +2281,12 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     # before any check, in both modes.
     before = tree_state(root)
     after = None
-    jobs = max(1, args.jobs)
-    floor_mb = int(args.memory_floor_gb * 1024) if jobs > 1 else 0
-    headroom_mb = int(args.memory_headroom_gb * 1024) if jobs > 1 else 0
-    settle_seconds = args.start_settle_seconds if jobs > 1 else 0.0
+    supports_jobs, supports_budget = target_worker_support(root)
+    jobs = args.jobs
+    if jobs > 1 and not (supports_jobs and supports_budget):
+        reason = "--jobs" if not supports_jobs else "the current shared validator budget"
+        print(f"pm-landing-check: the target verifier lacks {reason}; running serially.", file=sys.stderr)
+        jobs = 1
 
     # Every child gets an explicit environment built here (review A3).
     child_env: dict[str, str] = dict(os.environ)
@@ -2285,32 +2295,30 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     for name in (SLOTS_DIR_ENV, SLOTS_COUNT_ENV, MEMORY_FLOOR_MB_ENV, MEMORY_HEADROOM_MB_ENV,
                  START_SETTLE_SECONDS_ENV, AGGREGATE_CHILD_ENV):
         child_env.pop(name, None)
-    slot_dir = None
+
+    export_pool = None
     if jobs > 1:
-        # The slot files are the whole run's worker budget: both aggregates and every export take one
-        # for each validator they run, so --jobs is a total rather than one pool per check.
-        if args.slots_root is not None:
-            try:
-                args.slots_root.mkdir(parents=True, exist_ok=True)
-                for index in range(jobs):
-                    (args.slots_root / f"slot-{index}.lock").touch(exist_ok=True)
-                slot_dir = args.slots_root
-            except OSError:
-                slot_dir = None
+        floor_mb = int(args.memory_floor_gb * 1024)
+        headroom_mb = int(args.memory_headroom_gb * 1024)
+        settle_seconds = args.start_settle_seconds
+        slot_dir = args.slots_root
         if slot_dir is not None:
+            try:
+                for index in range(jobs):
+                    (slot_dir / f"slot-{index}.lock").touch()
+                export_pool = landing_slot_pool(slot_dir, jobs, floor_mb, headroom_mb, settle_seconds)
+            except (RuntimeError, OSError):
+                pass
+        if export_pool is None:
+            print("pm-landing-check: cannot set up the shared validator budget; running serially.",
+                  file=sys.stderr)
+            jobs = 1
+        else:
             child_env[SLOTS_DIR_ENV] = str(slot_dir)
             child_env[SLOTS_COUNT_ENV] = str(jobs)
             child_env[MEMORY_FLOOR_MB_ENV] = str(floor_mb)
             child_env[MEMORY_HEADROOM_MB_ENV] = str(headroom_mb)
             child_env[START_SETTLE_SECONDS_ENV] = f"{settle_seconds:g}"
-    # The exports run in this process, and share the run's start lock and memory arithmetic with the
-    # aggregates through the same slot directory; without a directory they run unbudgeted, as base did.
-    export_pool = None
-    if slot_dir is not None:
-        try:
-            export_pool = landing_slot_pool(slot_dir, jobs, floor_mb, headroom_mb, settle_seconds)
-        except (RuntimeError, OSError):
-            export_pool = None
 
     def consume(check: str, report: dict[str, Any]) -> None:
         nonlocal after
@@ -2333,12 +2341,6 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         require_same_readiness_audit_inputs(audit_inputs, readiness_audit_inputs(root),
                                             f"changed during {check}")
         return report
-
-    # Review A2: the target checkout's verifier may predate --jobs; negotiate once, before any check.
-    supports_jobs = target_accepts_jobs(root)
-    if jobs > 1 and not supports_jobs:
-        print("pm-landing-check: this checkout's scripts/pm-plans-verify.py does not take --jobs; its "
-              "aggregates run one validator at a time.", file=sys.stderr)
 
     if jobs <= 1:
         for check in CHECKS:
