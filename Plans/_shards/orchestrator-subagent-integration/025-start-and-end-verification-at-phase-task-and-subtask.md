@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L1547-L3541
+Source lines: L1547-L3537
 
-Source SHA256: `8493b4377d6193a867484501815c4afb59f000d66cceab00e61aa253e36a21c5`
+Source SHA256: `38d34db26da80964565005d04d798ccca333c92ae9dcdc5a3ea1c2045bd7f3b7`
 
 ---
 
@@ -757,11 +757,7 @@ Interview phases use the same start/end pattern:
 ContractRef: ContractName:Plans/interview-subagent-integration.md
 
 ### Unrelated-failure escalation
-When a tier fails because of issues outside its intended scope:
-1. retry once automatically using the same config
-2. if retry also fails, raise an Assistant chat CTA with review, skip, retry, and abort options
-3. use a modal instead only for P0 risk such as possible data loss or workspace corruption
-4. do not silently bypass unrelated failures
+When a tier fails because of issues outside its intended scope, apply the Executor's classified retry, remediation and review policy and use the single CTA-entry transition in Parser-Failure And Unrelated-Failure Recovery Actions. The Assistant chat CTA offers review, skip, retry, and abort options according to the recovery point's ordered `allowed_action_ids[]`. Use a modal instead only for P0 risk such as possible data loss or workspace corruption. Do not silently bypass unrelated failures.
 
 ### Feedback loop
 Verification failures MUST produce structured feedback identifying the failing criterion, affected artifact or file when known, and the expected next action. Rework loops reuse the existing incomplete-task / remediation flow rather than inventing a separate ad hoc channel.

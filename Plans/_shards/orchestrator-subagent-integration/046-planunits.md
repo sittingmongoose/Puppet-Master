@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L6636-L31384
+Source lines: L6632-L31389
 
-Source SHA256: `8493b4377d6193a867484501815c4afb59f000d66cceab00e61aa253e36a21c5`
+Source SHA256: `38d34db26da80964565005d04d798ccca333c92ae9dcdc5a3ea1c2045bd7f3b7`
 
 ---
 
@@ -7755,9 +7755,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  When a tier fails because of issues outside its intended scope, the orchestrator retries once with the same config, then
-  raises an Assistant chat CTA with review, skip, retry, and abort options; modal escalation is reserved for P0 risk such
-  as possible data loss or workspace corruption, and unrelated failures must not be silently bypassed.
+  When a tier fails because of issues outside its intended scope, the orchestrator applies the Executor's classified
+  retry, remediation and review policy. Use the single CTA-entry transition in Parser-Failure And Unrelated-Failure
+  Recovery Actions at the operator recovery boundary, whether policy admits zero retries or its admitted retries are
+  exhausted. An Assistant chat CTA presents review, skip, retry, and abort options from the recovery point's ordered
+  allowed_action_ids[]. Reserve modal escalation for P0 risk such as possible data loss or workspace corruption.
+  Do not silently bypass unrelated failures.
 gui_related: true
 gui_classification_reason: This unit defines user-visible Assistant chat CTA and modal escalation behavior.
 split_recommended: false
@@ -7767,6 +7770,11 @@ depends_on:
 - OSI-127
 unblocks: []
 acceptance_criteria:
+- A zero-retry failure can enter operator recovery from the initial failed attempt when its classifier path reaches
+  that boundary. A failure with admitted automatic retries can enter only after the last admitted retry fails and the
+  classifier path reaches that same boundary.
+- The recovery point identifies the failed attempt and keeps its emitted classifier. A restore-required episode offers
+  Restore and retry only when the Executor admits it.
 - Covered source spans remain losslessly available for exact-text audit.
 - >-
   The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
@@ -7803,7 +7811,8 @@ preserved_exact_tokens:
 negative_constraints:
 - Do not silently bypass unrelated failures.
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- The source instruction "retry once automatically using the same config" is superseded by classified retry admission.
 owner_boundary_notes: []
 owner_hints:
 - Plans/orchestrator-subagent-integration.md

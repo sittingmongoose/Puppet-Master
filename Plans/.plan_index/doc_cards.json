@@ -9779,7 +9779,7 @@
         "future image source resolver",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 15379,
+      "line_count": 15381,
       "path": "Plans/FileSafe.md",
       "plan_unit_count": 213,
       "plan_unit_ids": [
@@ -10032,7 +10032,7 @@
         "unrecoverable_mutation",
         "unsafe_host_side_effect"
       ],
-      "sha256": "ad899d70b09145d16caca8f16122a499904534c94336cbfdd7cf42bcdf36fd6b",
+      "sha256": "438f1c21bca916df9c332069c5eb0b5b7fb47f2010570bfd6d2eb43a9f009526",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 213
@@ -13236,7 +13236,7 @@
         "Plans/usage-feature.md",
         "future provider/model capability matrix"
       ],
-      "line_count": 6855,
+      "line_count": 6872,
       "path": "Plans/Media_Generation_and_Capabilities.md",
       "plan_unit_count": 101,
       "plan_unit_ids": [
@@ -13369,7 +13369,7 @@
         "p1_security_release_supply_chain_hardening",
         "retired_gemini_cli_nanobanana_resurrection"
       ],
-      "sha256": "c4eb6e57cc5028daa677f3ffeb909138b25b848da1d4adad136da0d4832aa334",
+      "sha256": "8804feeaf24019974e418fc625ca17245b548214d352bce832ed0e8bce4e5a1e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 101
@@ -13382,7 +13382,7 @@
       "validation_surfaces": [
         "GUI can show original artifact and caption/fallback provenance.",
         "Non-vision model with image shows “caption fallback used,” with caption artifact and cost.",
-        "Provider request receipt says selected model saw text caption only.",
+        "Replay confirmed caption delivery, pre-model refusal and timeout without delivery evidence. Check the per-input disclosure against the delivery evidence in both the response and the durable result record.",
         "Text-only model + image file yields denied_or_captioned, never hidden prompt bloat.",
         "User can disable fallback.",
         "Vision-capable custom provider must prove modality support or fall back.",
@@ -15174,7 +15174,7 @@
         "future Orchestrator prompt routes",
         "future subagent handoff and child-run receipt records"
       ],
-      "line_count": 35248,
+      "line_count": 35254,
       "path": "Plans/orchestrator-subagent-integration.md",
       "plan_unit_count": 472,
       "plan_unit_ids": [
@@ -16099,7 +16099,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "8493b4377d6193a867484501815c4afb59f000d66cceab00e61aa253e36a21c5",
+      "sha256": "38d34db26da80964565005d04d798ccca333c92ae9dcdc5a3ea1c2045bd7f3b7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 470,
@@ -19831,7 +19831,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm_browser_program_semantics.py"
       ],
-      "line_count": 19318,
+      "line_count": 19327,
       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
       "plan_unit_count": 199,
       "plan_unit_ids": [
@@ -20177,7 +20177,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "a695bd95dc8610786bef8d7935ca90e5e3e2565b071a90bcc9755838c37c7a9c",
+      "sha256": "e49e3228bc62523aba2888eea83a5179816144c44614d6aa8a83af7b40b46a8f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 195,
@@ -23376,7 +23376,7 @@
         "future tool registry and shell/integration command dispatch",
         "future vision_bridge tool"
       ],
-      "line_count": 13808,
+      "line_count": 13821,
       "path": "Plans/Tools.md",
       "plan_unit_count": 190,
       "plan_unit_ids": [
@@ -23651,7 +23651,7 @@
         "workflow_local_tool_registry_drift",
         "write_atomicity_drift"
       ],
-      "sha256": "93fe427a7804cd49af3b6027f3181c4126a5f7c9b3bc64979c4559013705b562",
+      "sha256": "a1083255c7e8cb94f9b8203ce6191eff148d66620b449bb1828d7007c1e9cb45",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 189,
@@ -23676,7 +23676,7 @@
         "Future Assistant Chat and GUI degraded-state tests.",
         "Future scheduler tests for dedupe, cancellation, fairness, concurrency, and backpressure.",
         "Large output fixtures",
-        "Large stable outputs use refs with TTL/redaction",
+        "Large stable outputs use refs with TTL/redaction once cache reuse is defined above. Until then a later call cannot use a T-168 cache hit even if a previous call retained an identical payload.",
         "Long-running MCP/subagent/browser/device tests",
         "Malformed JSON records parse error and raw captured bytes",
         "Missing image does not become fake caption",
@@ -25279,7 +25279,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-26T04:46:54Z",
+  "generated_at_utc": "2026-11-26T05:26:57Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

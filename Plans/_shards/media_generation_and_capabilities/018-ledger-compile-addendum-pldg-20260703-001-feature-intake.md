@@ -4,7 +4,7 @@ Source: `Plans/Media_Generation_and_Capabilities.md`
 
 Source lines: L6498-L6668
 
-Source SHA256: `c4eb6e57cc5028daa677f3ffeb909138b25b848da1d4adad136da0d4832aa334`
+Source SHA256: `8804feeaf24019974e418fc625ca17245b548214d352bce832ed0e8bce4e5a1e`
 
 ---
 
@@ -119,14 +119,14 @@ unblocks: []
 acceptance_criteria:
 - "Non-vision model with image shows \u201Ccaption fallback used,\u201D with caption artifact and cost."
 - User can disable fallback.
-- Provider request receipt says selected model saw text caption only.
+- The receipt says the selected model received only the caption for that input when delivery evidence confirms it. A proven refusal says the input did not reach the model. A timeout without delivery evidence says delivery is unknown.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
 - "Non-vision model with image shows \u201Ccaption fallback used,\u201D with caption artifact and cost."
 - User can disable fallback.
-- Provider request receipt says selected model saw text caption only.
+- Replay confirmed caption delivery, pre-model refusal and timeout without delivery evidence. Check the per-input disclosure against the delivery evidence in both the response and the durable result record.
 risk_class: p1_security_release_supply_chain_hardening
 reasoning_tier: standard
 context_scope: security_release_supply_chain

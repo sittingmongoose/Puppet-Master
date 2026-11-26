@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L2626-L11166
+Source lines: L2626-L11168
 
-Source SHA256: `93fe427a7804cd49af3b6027f3181c4126a5f7c9b3bc64979c4559013705b562`
+Source SHA256: `a1083255c7e8cb94f9b8203ce6191eff148d66620b449bb1828d7007c1e9cb45`
 
 ---
 
@@ -4323,7 +4323,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: Shell dispatch validates the full rendered command string, prefers structured parsing where practical, uses
-  exactly one shell interpretation layer, prohibits `eval`, and requires platform-correct path escaping.
+  exactly one shell interpretation layer, and prohibits `eval`. Platform-correct escaping applies to inputs PM
+  interpolates before validation and approval. Standalone Unix dispatch passes the approved shell string unchanged as
+  one command argument. Session-bound dispatch submits it unchanged to the persistent interpreter (T-018).
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -4332,7 +4334,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Banned-command checks scan the full rendered command string.
-- Unix shell dispatch uses one shell interpretation layer.
+- The standalone Unix runner receives the exact approved shell string as one command argument. The session-bound runner submits the exact approved buffer once to the persistent interpreter.
 - Individual tools do not implement competing escaping layers.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits

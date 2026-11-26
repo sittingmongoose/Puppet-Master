@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-11-26T04:46:00Z",
+  "generated_at_utc": "2026-11-26T05:26:08Z",
   "index_path": "Plans/_shards/media_generation_and_capabilities/00-index.md",
-  "index_sha256": "eb068273984837505970df38b4b4d75a1b936124479705e1d7b270cd74f7da5c",
+  "index_sha256": "1555490228eedab4b9b2414f4f019774636a186d648d0d70766c15c3cd860069",
   "manifest_path": "Plans/_shards/media_generation_and_capabilities/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/media_generation_and_capabilities/001-preamble.md",
-      "sha256": "4487d0a3e8ccd2c804d91fd629096c286b94b48d9410579f236f3d03f690bf4b",
+      "sha256": "af160810a0dde3efe150bd4a3be990c0c041f4896a283958bfd973720a568bb6",
       "shard_id": "001",
       "source_line_end": 18,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope and SSOT status",
       "path": "Plans/_shards/media_generation_and_capabilities/002-0.-scope-and-ssot-status.md",
-      "sha256": "6e36bf92ec0d21e9db42338d727d5f88b360ef8eb76ab3cf4121617b00509ed2",
+      "sha256": "644380cc1de2c469d0232ca49fdfc4a7af7c4cfe755c713eab774b2633633c61",
       "shard_id": "002",
       "source_line_end": 51,
       "source_line_start": 20,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Capability system",
       "path": "Plans/_shards/media_generation_and_capabilities/003-1.-capability-system.md",
-      "sha256": "a731a032fb8e55937f8303367b1f24dacf7f29fdc93b1615b15f9820693b1609",
+      "sha256": "38eff1afc7e48e10b7108d3b1d3be6e7fc876e90ce867e3983e8bc0aaa14a70d",
       "shard_id": "003",
       "source_line_end": 81,
       "source_line_start": 52,
@@ -35,7 +35,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260624-001-provider-updates",
       "path": "Plans/_shards/media_generation_and_capabilities/004-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
-      "sha256": "97d121fdb8d06f4d0497b7ac3f707597583966b766145c3f256708b771dfa3b9",
+      "sha256": "5f487b5df12a6fec804d957956030480b992ce602674c19912bc81bba7364fc2",
       "shard_id": "004",
       "source_line_end": 376,
       "source_line_start": 83,
@@ -44,7 +44,7 @@
     {
       "heading": "2. Media generation contract",
       "path": "Plans/_shards/media_generation_and_capabilities/005-2.-media-generation-contract.md",
-      "sha256": "d0592ef0ffed3c4115f5fd62ace0e397e93f8d8342f6c403d40b5152e5bcb7c7",
+      "sha256": "84ada4aa4e748b77d8d917f03ec6e3a86e816804a32d455cd48a88808ea21897",
       "shard_id": "005",
       "source_line_end": 659,
       "source_line_start": 377,
@@ -53,7 +53,7 @@
     {
       "heading": "3. Natural-language slot extraction grammar",
       "path": "Plans/_shards/media_generation_and_capabilities/006-3.-natural-language-slot-extraction-grammar.md",
-      "sha256": "eb84a6f6d71d73048b956d2c84e380cab591cedb3d874f61449524a1f9dcb075",
+      "sha256": "a1f6e623fac62d98c7143123672a8fc4f5196a0f04ec4d135aeac05e894b5fe6",
       "shard_id": "006",
       "source_line_end": 867,
       "source_line_start": 660,
@@ -62,7 +62,7 @@
     {
       "heading": "4. UI/UX behavior: capability picker dropdown",
       "path": "Plans/_shards/media_generation_and_capabilities/007-4.-ui-ux-behavior-capability-picker-dropdown.md",
-      "sha256": "6a2021e93591b0b8107d628f3d31a0ab735e2f7d51a73a7965104416eb2ae503",
+      "sha256": "8ebfdbcade419926a0be03cb983d8e9eca9dba08fae6dc2c5e2bd9dacd334244",
       "shard_id": "007",
       "source_line_end": 935,
       "source_line_start": 868,
@@ -71,7 +71,7 @@
     {
       "heading": "5. UI copy strings",
       "path": "Plans/_shards/media_generation_and_capabilities/008-5.-ui-copy-strings.md",
-      "sha256": "7eb44eab8dd4896500bb4389d6145a85e34a2d96bb4da246e6a7d13a04e10b7c",
+      "sha256": "608fdd1d4daedb21a6fd49c60a3f55bdd9a6974a6376f2d7346a8bab92be39c4",
       "shard_id": "008",
       "source_line_end": 993,
       "source_line_start": 936,
@@ -80,7 +80,7 @@
     {
       "heading": "6. Acceptance criteria",
       "path": "Plans/_shards/media_generation_and_capabilities/009-6.-acceptance-criteria.md",
-      "sha256": "807421a6346f9ecdf8defafd12e368f6e36ea7da9fe241d85a18dcfd967102d8",
+      "sha256": "fa8667d791eb94b293caf7a80406bb2be245d09e1f844026284415b3edc06b6d",
       "shard_id": "009",
       "source_line_end": 1096,
       "source_line_start": 994,
@@ -89,7 +89,7 @@
     {
       "heading": "Appendix A. Slot extraction rules (regex-ish, deterministic)",
       "path": "Plans/_shards/media_generation_and_capabilities/010-appendix-a.-slot-extraction-rules-regex-ish-deterministic.md",
-      "sha256": "8c2bb347b28555efae2c2bb88ce7fa75382b6395e15820adfac51f5455cb5b8c",
+      "sha256": "dd969df348578daf6ac7951a956aea2efff288245575072efdae87289496c72c",
       "shard_id": "010",
       "source_line_end": 1154,
       "source_line_start": 1097,
@@ -98,7 +98,7 @@
     {
       "heading": "References",
       "path": "Plans/_shards/media_generation_and_capabilities/011-references.md",
-      "sha256": "3f8fc5cd55ddff9d17f79dceb407085d248a3c5bb04deae507d7e2bf1f71c950",
+      "sha256": "4e413646adc017b6a605024ce6d21f3560910ffd060602821260cc3c64e633e3",
       "shard_id": "011",
       "source_line_end": 1170,
       "source_line_start": 1156,
@@ -107,7 +107,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/media_generation_and_capabilities/012-owner-consumer-map.md",
-      "sha256": "c239f9587b6ca837a2aa537706103a3020b9d0baca8c8978960ab3ba66b3b557",
+      "sha256": "88b5470a8e82955c31684ed776b9ebf08c4e96f6fb6f4cf7c3fe7d4d426ce0fe",
       "shard_id": "012",
       "source_line_end": 1176,
       "source_line_start": 1172,
@@ -116,7 +116,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/media_generation_and_capabilities/013-planunits.md",
-      "sha256": "56dc3e13b01ae4acaeba5195a1b6b4d2ecc3f1f783c9aa7b88749f9bf8c6e254",
+      "sha256": "ae52031bf2554b9b65df502718eff71d91c15f22aef790220d14a69e5de60452",
       "shard_id": "013",
       "source_line_end": 6265,
       "source_line_start": 1178,
@@ -125,7 +125,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/media_generation_and_capabilities/014-migration-coverage.md",
-      "sha256": "a4ea30a967fee8cd9ace88e848abf61e1e7ee71d04db81c6c3c2ee1ea3ae9cf8",
+      "sha256": "234f197c8922f31b602bbd53e0a73b522899c1f97d6b8043eebc9ba2972669c2",
       "shard_id": "014",
       "source_line_end": 6276,
       "source_line_start": 6266,
@@ -134,7 +134,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260614-002",
       "path": "Plans/_shards/media_generation_and_capabilities/015-ledger-compile-addendum-pldg-20260614-002.md",
-      "sha256": "36b90897e6dda33f3efb6c1c3bb5cd0f71f738cc7306716dbdcda7ccbbdb90cb",
+      "sha256": "2ddb529d258d33243c0ec7382f28c998b329976e403cee4c068068dc52db6f33",
       "shard_id": "015",
       "source_line_end": 6319,
       "source_line_start": 6278,
@@ -143,7 +143,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/media_generation_and_capabilities/016-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "0cbff2c015a0dc62a3b09362f45e37d489e71349f4dac16af7f8a266d2735a72",
+      "sha256": "2235a9ae26ad9ecf1ad8e56953588bfe0985c8648ebe82eeaa1a35a1892add02",
       "shard_id": "016",
       "source_line_end": 6371,
       "source_line_start": 6322,
@@ -152,7 +152,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260626-001-feature-name",
       "path": "Plans/_shards/media_generation_and_capabilities/017-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
-      "sha256": "e484b4095d78dfd62d94dfcc4b06f40b9bfc419fbb34689d07955c09db078d60",
+      "sha256": "3d21bfe56920aa9676c6fdaac225554e1ba7c8e14c94e75a4574283f0633ab4d",
       "shard_id": "017",
       "source_line_end": 6496,
       "source_line_start": 6374,
@@ -161,7 +161,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260703-001-feature-intake",
       "path": "Plans/_shards/media_generation_and_capabilities/018-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
-      "sha256": "5d44be504e1090300d602fc04d69a9d5e08b51e71624d2519e308d1c34a2ec45",
+      "sha256": "c15718c0bb363b04106ed8e77136cce13afe5ad546a3a9518acf60f8e9d9cbe7",
       "shard_id": "018",
       "source_line_end": 6668,
       "source_line_start": 6498,
@@ -170,25 +170,25 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/media_generation_and_capabilities/019-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "f9989f09598d3bb8e8f12e31c2eaf5d259100fe0c6750080898632ff93813a76",
+      "sha256": "8183213d222b27e9acd593890e727c1da599421db937053d4698999c1b3f3c00",
       "shard_id": "019",
-      "source_line_end": 6847,
+      "source_line_end": 6864,
       "source_line_start": 6670,
       "split_rule": "heading-##"
     },
     {
       "heading": "FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)",
       "path": "Plans/_shards/media_generation_and_capabilities/020-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md",
-      "sha256": "87279c6ecfdc6e7de38d9ee2b67c0cb7e3d199936bb84f5e7ae67dd8c3cffc63",
+      "sha256": "097d92fb4c6f29ac6a67054eefabbbad43959198dc03b373e121c603d326a7c6",
       "shard_id": "020",
-      "source_line_end": 6855,
-      "source_line_start": 6848,
+      "source_line_end": 6872,
+      "source_line_start": 6865,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 6855,
+    "line_count": 6872,
     "path": "Plans/Media_Generation_and_Capabilities.md",
-    "sha256": "c4eb6e57cc5028daa677f3ffeb909138b25b848da1d4adad136da0d4832aa334"
+    "sha256": "8804feeaf24019974e418fc625ca17245b548214d352bce832ed0e8bce4e5a1e"
   }
 }

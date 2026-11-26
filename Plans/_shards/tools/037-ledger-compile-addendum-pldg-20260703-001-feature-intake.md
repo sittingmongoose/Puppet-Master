@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L11730-L12431
+Source lines: L11732-L12439
 
-Source SHA256: `93fe427a7804cd49af3b6027f3181c4126a5f7c9b3bc64979c4559013705b562`
+Source SHA256: `a1083255c7e8cb94f9b8203ce6191eff148d66620b449bb1828d7007c1e9cb45`
 
 ---
 
@@ -105,7 +105,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  P2-CACHEABLE-TOOL-OUTPUT-REFS (P2) is compiled as canonical Puppet Master intent for Hash-addressed cache refs for stable large tool outputs: Large stable outputs use refs with TTL/redaction; secrets are never cached; model-visible preview references complete retained output. Amended 2026-10-31 (DL-270): hash-addressed refs for large stable outputs resolve to payload-store entries (SP-337). Dedupe, reference counts and garbage collection holds live in the payload store; the TTL here is a cache-eligibility rule, not a separate storage owner.
+  P2-CACHEABLE-TOOL-OUTPUT-REFS (P2) records the intent for Hash-addressed cache refs for stable large tool outputs.
+  Hash-addressed refs resolve to SP-337 payload-store entries under DL-270. Model-visible previews reference the
+  complete retained redacted output. Secrets are never cached. Cache eligibility TTL and reuse across calls are
+  deferred until Tools defines the cache key, TTL start, duration and expiry rule. Until then T-168 admits no cache
+  hits across calls. Authorized reads of retained output, deduplication, reference counts and garbage collection
+  holds still follow SP-337.
 gui_related: false
 gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
 depends_on:
@@ -113,14 +118,14 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- Large stable outputs use refs with TTL/redaction
+- Large stable outputs use refs with TTL/redaction once cache reuse is defined above. Until then a later call cannot use a T-168 cache hit even if a previous call retained an identical payload.
 - secrets are never cached
 - model-visible preview references complete retained output.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- Large stable outputs use refs with TTL/redaction
+- Large stable outputs use refs with TTL/redaction once cache reuse is defined above. Until then a later call cannot use a T-168 cache hit even if a previous call retained an identical payload.
 - secrets are never cached
 - model-visible preview references complete retained output.
 risk_class: p2_context_cache_coverage
@@ -579,6 +584,7 @@ status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
   tool_output_retention (P0) is compiled as canonical Puppet Master intent for tool_output_retention: Add ToolManagedOutputRef and retention-failure semantics The preserved PM gap/delta is: No hard no-lossy-success rule for managed tool output retention The observed external-repo signal remains source-lineage evidence: OpenCode v2 Tool output bounding/managed storage; large body issues
+  T-177 defines ToolManagedOutputRef as the content ID of the retained redacted output in the SP-337 payload store.
 gui_related: false
 gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
 depends_on:

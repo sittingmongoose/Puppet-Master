@@ -2,9 +2,9 @@
 
 Source: `Plans/Media_Generation_and_Capabilities.md`
 
-Source lines: L6848-L6855
+Source lines: L6865-L6872
 
-Source SHA256: `c4eb6e57cc5028daa677f3ffeb909138b25b848da1d4adad136da0d4832aa334`
+Source SHA256: `8804feeaf24019974e418fc625ca17245b548214d352bce832ed0e8bce4e5a1e`
 
 ---
 

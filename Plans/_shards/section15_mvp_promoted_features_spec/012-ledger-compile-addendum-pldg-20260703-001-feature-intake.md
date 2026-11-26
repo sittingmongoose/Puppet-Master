@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L8910-L9013
+Source lines: L8910-L9014
 
-Source SHA256: `a695bd95dc8610786bef8d7935ca90e5e3e2565b071a90bcc9755838c37c7a9c`
+Source SHA256: `e49e3228bc62523aba2888eea83a5179816144c44614d6aa8a83af7b40b46a8f`
 
 ---
 
@@ -33,7 +33,8 @@ canonical_text: >-
   transmission medium and every delete selector), DCS sixel, OSC 1337 iTerm2 images (single and multipart), the kitty
   keyboard protocol's CSI u (SMPFS-158), OSC 7, OSC 9, OSC 777, OSC 99, BEL and Puppet Master's secret-carrying
   shell-integration records, each split at every byte boundary (SMPFS-130), with forged marks that lack the terminal's
-  secret as negative cases (SMPFS-181, SMPFS-183).
+  secret as negative cases (SMPFS-181, SMPFS-183). The oversized negative fixtures cover every byte boundary in a
+  single byte-at-a-time replay alongside whole and selected two-read replays, as specified in Terminal protocol fixture rows.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:

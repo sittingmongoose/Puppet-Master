@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L12433-L12691
+Source lines: L12441-L12699
 
-Source SHA256: `93fe427a7804cd49af3b6027f3181c4126a5f7c9b3bc64979c4559013705b562`
+Source SHA256: `a1083255c7e8cb94f9b8203ce6191eff148d66620b449bb1828d7007c1e9cb45`
 
 ---
 
@@ -215,7 +215,7 @@ One immutable settlement is written per tool call attempt, including a call the 
 | `error_ref` | string, optional | Reference to the structured error (its code, such as a gate code or `heartbeat_lost`, and the `ToolRecoveryEnvelope`). Required for `malformed`, `retryable` and `fatal` and for every gate denial; absent for `success`. |
 | `truncation_ref` | string, optional | Reference to the truncation facts: the bounded head/tail, exact original size and artifact ref of §3.5.0A, or the `provider_turn_malformed` record of a `length_truncated` denial. Required whenever output or arguments were truncated, so always for `partial_truncated`; absent for `success`. |
 | `redaction_ref` | string, optional | Reference to the redaction applied. Required whenever any result or output content was redacted, so always for `redacted`. |
-| `retention_ref` | string, optional | Reference to the managed output retention (`ToolManagedOutputRef`, T-177). Required whenever output was spilled or retained, so always for `retained`. |
+| `retention_ref` | `ToolManagedOutputRef` string, optional | The SP-337 content ID of this attempt's retained output, defined by T-177. Present whenever output was successfully spilled or retained, so always for `retained`. |
 | `retry_after_ms` | integer, at least 0, optional | Present only with `retryable`, when the retry row or a provider minimum delay sets one. |
 | `created_at_utc` | RFC 3339 UTC string | |
 | `schema_version` | string | `1.0.0`. |

@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L12701-L12880
+Source lines: L12709-L12893
 
-Source SHA256: `93fe427a7804cd49af3b6027f3181c4126a5f7c9b3bc64979c4559013705b562`
+Source SHA256: `a1083255c7e8cb94f9b8203ce6191eff148d66620b449bb1828d7007c1e9cb45`
 
 ---
 
@@ -90,12 +90,17 @@ canonical_text: >-
   artifact with bounded head/tail and exact size; blind retry and loss-shaped success are prohibited. Amended 2026-10-31
   (DL-270): the canonical artifact is a payload-store entry (SP-337) referenced by content hash; no separate artifact store
   exists for large output.
+  ToolManagedOutputRef is the BLAKE3 content ID (a 64-character lowercase hexadecimal string) of the SP-337 entry
+  containing the attempt's complete redacted output. ToolTurnSettlement.retention_ref carries that ID directly. When
+  ToolRecoveryEnvelope.artifact_or_spill_ref is present for the same attempt, its BLAKE3 content ID must equal
+  retention_ref. An authorized read resolves the ID in the attempt's SP-337 store to the complete redacted output bytes.
 gui_related: false
 gui_classification_reason: Backend result, retry, artifact, and verification contract; UI consumers only project its evidence.
 depends_on: [T-007, T-077, T-079, T-167, T-173, T-174]
 unblocks: []
 acceptance_criteria:
   - Truncated terminal output retains complete redacted artifact evidence, bounded head/tail, original size, and cwd changes.
+  - The settlement and recovery envelope identify the same payload, and an authorized read by that ID returns the full redacted output, including bytes omitted from the preview.
   - Already-applied patch is success/no-op only with post-read proof; ambiguous or whitespace-mismatched patch does not mutate.
   - Retention failure cannot settle as success, and policy/FileSafe/secret/schema denials cannot become transient retries.
   - Every retry is a separate attempt under one logical operation and requires a typed changed recovery condition.

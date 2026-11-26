@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L9942-L11031
+Source lines: L9943-L11033
 
-Source SHA256: `a695bd95dc8610786bef8d7935ca90e5e3e2565b071a90bcc9755838c37c7a9c`
+Source SHA256: `e49e3228bc62523aba2888eea83a5179816144c44614d6aa8a83af7b40b46a8f`
 
 ---
 
@@ -539,6 +539,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - No control sequence bytes leak to visible grid when split across reads
+- Cover all byte boundaries of the oversized negative fixtures in one byte-at-a-time replay per fixture alongside the whole and selected two-read replays in Terminal protocol fixture rows.
 - The intentional plain-text rendering in SMPFS-183 occurs only after the complete unauthenticated sequence is recognized and matches the unsplit replay.
 - Synchronized update state closes correctly after arbitrary chunking
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
