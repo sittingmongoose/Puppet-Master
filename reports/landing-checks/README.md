@@ -190,9 +190,11 @@ that document is edited, and a line that shifted is still the same finding.
 
 Failures are grouped into buckets of `check | subcheck | error | path`. A bucket up to
 `max_fingerprints_per_bucket` entries lists every fingerprint, so a genuinely new failure inside it
-is named. A larger bucket lists none and is matched by its count instead, because the three largest
-buckets hold 27,700 of the 28,128 plan-migration findings and writing them all out would make a file
+is named. A larger bucket in `buckets` lists none and is matched by its count instead, because the three largest
+plan-migration buckets hold 27,700 of the 28,128 plan-migration findings and writing them all out would make a file
 that is refreshed after Plans landings megabytes long. `fingerprints: null` in a bucket means count-only.
+Complete-export buckets in `export_buckets` record fingerprints for every row regardless of
+`max_fingerprints_per_bucket`, so exported subchecks over 200 rows (such as audit closure) stay keyed row by row.
 
 ## What the match can and cannot see
 
@@ -278,17 +280,18 @@ So when the landing check runs a subcheck's command line again, with the argumen
 `_aggregate_subcheck_cli_args`), the report that run writes is the complete list of what the subcheck
 counted: its export (the exports brief of 2026-09-24).
 
-**Which subchecks have one.** It was read in `scripts/pm-plans-verify.py` at `bc1d99c11e`, and in
-every validator it calls. The two aggregates run 36 commands: 36 subchecks in `run-gates` and 33 in
-`audit-governance`, with both copies of a validator running one command line. None of the commands
-drops rows before it reports them, but one: `validate-audit-closure`, whose
-`cmd_validate_audit_closure` keeps only the first 200 of `pm-audit-closure.py`'s errors, so its own
-report is a sample whenever there are more. That pair, `validate_audit_closure` and `audit_closure`,
-has no complete export and keeps the truncated rule. Two commands keep 50 entries of a list nested
-inside one row (`gui_asset_policy_failed.failures` and `audit_closure_reopened_rows_present.rows`).
+**Which subchecks have one.** It was read in `scripts/pm-plans-verify.py` (originally at `bc1d99c11e`,
+and updated as new commands landed), and in every validator it calls. None of the aggregate commands
+drops rows before it reports them on capable targets (verifiers advertising `landing_closure_export_v1`
+in `run-gates`/`audit-governance` `--help`): `cmd_validate_audit_closure` no longer truncates
+`pm-audit-closure.py`'s errors at 200, so `validate-audit-closure` (`validate_audit_closure` and
+`audit_closure`) now writes a complete export and is keyed from it. Historical targets without
+`landing_closure_export_v1` still slice at 200 errors, keep `validate-audit-closure` in
+`no_complete_export`, and fall back to the truncated total-only rule. Two commands keep 50 entries of a
+list nested inside one row (`gui_asset_policy_failed.failures` and `audit_closure_reopened_rows_present.rows`).
 That changes what the row says, not how many rows there are. The list is `EXPORT_COMMANDS` in the
 script, and the run header prints it. A command added to the aggregates later has no export until
-someone reads it, and `test_the_real_map_reads_every_aggregate_command_as_a_complete_export_but_audit_closure`
+someone reads it, and `test_the_real_map_reads_every_aggregate_command_as_a_complete_export`
 fails until then.
 
 | Command | `run-gates` subcheck | `audit-governance` subcheck |
@@ -299,7 +302,7 @@ fails until then.
 | `lint-banned-phrases` | `lint_banned_phrases` | (not run) |
 | `lint-contractrefs` | `lint_contractrefs` | `support_refs` |
 | `lint-path-refs` | `lint_path_refs` | `path_refs` |
-| `validate-audit-closure` (no complete export) | `validate_audit_closure` | `audit_closure` |
+| `validate-audit-closure` (complete export on capable targets; total-only on historical targets without `landing_closure_export_v1`) | `validate_audit_closure` | `audit_closure` |
 | `validate-audit-status-index` | `validate_audit_status_index` | `audit_status_index` |
 | `validate-auto-decisions` | `validate_auto_decisions` | `auto_decisions` |
 | `validate-browser-event-admission` | `validate_browser_event_admission` | `browser_event_admission` |
@@ -351,7 +354,8 @@ all 133 rows, the printed total: 132 staleness, 1 pre-existing`.
 **When it falls back.** Otherwise the truncated rule applies as before, and the summary says which case
 and why, ending "the truncated rule applies":
 
-- *no complete export*: the audit-closure pair, a command the list does not name, or a
+- *no complete export*: a command in `no_complete_export` (such as `validate-audit-closure` on a
+  historical target without `landing_closure_export_v1`), a command the list does not name, or a
   `pm-plans-verify.py` whose map of subchecks to commands cannot be read;
 - *baseline sample*: the baseline printed only part of the subcheck's rows and recorded no export.
   Complete rows now against a sample then cannot be judged by the kind rules: a pre-existing failure
@@ -380,10 +384,12 @@ records `exported` beside `reported` and `sampled`, and the complete rows as `ex
 `buckets`, which still holds the printed rows of every subcheck. A landing that keys the subcheck from
 its own export, or in which it prints every failure, compares with `export_buckets`. A landing whose
 export falls back compares its printed sample with the printed `buckets`, sample with sample, exactly
-as before. The baseline recorded at `792d2fb8b1` has no exports. Until the next refresh after a Plans landing, the
-PRD contracts (1,240), which it holds only a sample of, keep the truncated rule as a baseline sample;
-audit-closure (201) keeps it after the refresh too, because it has no complete export. The refresh
-records the PRD contracts from their export.
+as before. The baseline recorded at `792d2fb8b1` has no exports. Until a refresh after a Plans landing,
+any subcheck the baseline holds only as a sample keeps the truncated rule as a baseline sample; on
+capable targets (`landing_closure_export_v1`), `validate-audit-closure` now writes a complete export and
+a refresh records all of its rows in `export_buckets` with full fingerprints, while historical targets
+without `landing_closure_export_v1` keep `validate-audit-closure` total-only. The refresh also records
+the PRD contracts from their export.
 Evidence and plan-graph are complete in that baseline (0 each), so a landing keys them already.
 
 In `--json`, `exports` carries `complete_export_commands` and `no_complete_export`, and under
@@ -401,9 +407,10 @@ evidence bundle, plus `main`'s one `missing_ref`. That was a truncated rise past
 so the check exited 2 on staleness the rule says never stops a landing. Keyed from its export, the
 same run exits 1: the 132 rows are staleness and the `missing_ref` is pre-existing.
 
-What this leaves open: audit-closure stays sampled, and its validator's errors past the first 200
-are seen by nothing. The export is a second run of the same validator. The equal total and every printed row
-being among its rows are the evidence that it saw what the aggregate saw.
+What this leaves open: historical targets without `landing_closure_export_v1` keep the 200-error cap and
+total-only rule for audit-closure. On capable targets, the export is a second run of the same validator.
+The equal total and every printed row being among its rows are the evidence that it saw what the
+aggregate saw.
 
 ## What counts as governance staleness
 
@@ -416,18 +423,23 @@ them by error kind.
 | What AGENTS.md names | Error kinds |
 |---|---|
 | Spec Lock `stale_hash` | `stale_hash`, and every kind ending `_spec_lock_hash_stale`: the readiness validator's Spec Lock check for each family it certifies, today `event_record_`, `execution_unit_context_`, `non_executable_closure_` and `storage_value_registry_spec_lock_hash_stale` |
-| stale owner or artifact evidence hashes | `artifact_hash_stale`, `stale_audit_status_index`, `event_authority_currentness_source_drift` (the Event Authority currentness inventory's stored hash of an edited source), `event_authority_currentness_validator_drift` (the currentness receipt's stored hash of `scripts/pm-event-authority-currentness.py`: a canon edit cannot cause it, an edit of that script does, and its reseal is a currentness edition that refreshes the gitignored receipt), and an audit-closure failure whose detail says a stored hash "is stale" |
+| stale owner or artifact evidence hashes | `artifact_hash_stale`, `stale_audit_status_index`, `event_authority_currentness_source_drift` (the Event Authority currentness inventory's stored hash of an edited source), `event_authority_currentness_validator_drift` (the currentness receipt's stored hash of `scripts/pm-event-authority-currentness.py`: a canon edit cannot cause it, an edit of that script does, and its reseal is a currentness edition that refreshes the gitignored receipt), and an `audit_closure_validator_error` whose detail ends with ` is stale (stored <64-hex>, current <64-hex>)` |
 | a stale readiness report | `pnc019_source_hash_stale`, `buildability_gate_report_stale_or_not_canonical`, `buildability_passed_with_stale_source_hashes`, the `_spec_lock_hash_stale` kinds above, and the readiness growth counter below |
 | the stale plan-migration snapshot | every `current_snapshot_*` kind, `stale_batch_report_sha256_after`, `complete_final_summary_live_plan_unit_count_stale`, `doc_count_mismatch`, `inventory_doc_set_mismatch`, `superseded_run_final_summary_missing` |
 
 A bucket of one of these kinds that grew is staleness too, so it does not stop the landing either.
 
 Audit closure reports stale hashes and other findings under `audit_closure_validator_error`.
-When both sides of the subcheck are complete and the bucket's baseline fingerprints are available,
-its growth is staleness if each current non-stale row matches a distinct recorded fingerprint.
-Each recorded fingerprint proves one occurrence. A new non-stale fingerprint, an unaccounted repeat
-of one, or a count-only baseline bucket leaves the growth blocking. The bucket key and fingerprints
-stay as recorded. Sampled audit-closure subchecks still use total-only growth.
+On capable targets (`landing_closure_export_v1`), `validate-audit-closure` writes a complete export and
+is keyed from it; baseline recording stores all export fingerprints plus `nonstale_count` and
+`nonstale_fingerprints` on closure buckets. When both sides of the subcheck are complete and the
+bucket's baseline fingerprints are available, its growth is staleness if no new non-stale row was
+introduced and each current non-stale row matches a distinct recorded non-stale fingerprint (falling
+back to `fingerprints` on older baselines). Each recorded fingerprint proves one occurrence. A new
+non-stale fingerprint, an unaccounted repeat of one, a stale-for-non-stale swap that raises
+`nonstale_count`, or a count-only baseline bucket leaves the growth blocking. The bucket key and
+fingerprints stay as recorded. Historical targets without `landing_closure_export_v1` and sampled
+audit-closure subchecks still use total-only growth.
 
 **A renamed line-range shard (T32).** A `missing_ref` is a stale artifact evidence hash in another form,
 and counts as staleness, when all of these hold, read from the checkout: the reference comes from sealed

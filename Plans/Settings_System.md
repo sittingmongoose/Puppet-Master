@@ -1584,6 +1584,8 @@ canonical_text: |-
   DL-474 remains historical admission intent. DL-475 closes its Q2 owner questions: quiet Memory removes the proposed pin/conflict/helper/source settings, and Goals have no own Crew, named test profiles or completion-confirmation switch. Ordinary chat Persona/model and existing testing/pausing owners apply. No Q2 row is added; current census comes from settings_inventory.settings.
 
   MD1 A and MD2 NEITHER declare a model-list exception: all Default models rows offer Everywhere and optional Project only, not Computer/Device. Keep the model and its optional effort as one atomic value from one level; inherit follows the named source pair, never a cross-level merge. Manually chosen account defaults remain thing-owned under Multi-Account, and helper/Persona/command saved model/depth settings retire. Computer capacity and authority ceilings still constrain actual execution. Census is the active unique inventory IDs after all accepted additions/removals, never the historical 1024 figure.
+
+  Tools T-191 declares one more reviewed exception: code.execution.code-mode offers Everywhere and optional Project only, with most_specific, and omits Computer as same_for_you and Device as not_about_the_screen. It is a person's preference for how tools are called; whether a Computer can run a script is the separately checked JavaScript EvalSession availability of Tools T-188, not a Computer value of this row.
 gui_related: true
 gui_classification_reason: Defines user-visible Settings, Computer, panel or work-state behavior.
 depends_on:
@@ -3765,7 +3767,7 @@ Amended 2026-10-31 (DL-270): in the Usage & budgets page above, `ai.usage.usage-
 
 ### 2. Canonical-id moves between pages
 
-These ids change the view that draws them. Nothing else about them changes.
+These ids change the view that draws them. Nothing else about them changes. A new row that is placed away from its subgroup's default page is listed too, with From saying so.
 
 | Canonical ids | From | To |
 |---|---|---|
@@ -3776,6 +3778,7 @@ These ids change the view that draws them. Nothing else about them changes.
 | `planning.testing.browser-capture-full-default`, `browser-component-action`, `browser-component-crop`, `browser-devtools-policy` | Testing & Debug | Built-in browser › Screenshots and developer tools |
 | `code.execution.execution-strategy`, `strategy-override` | Server & Project Location | Permissions › Profiles › Who runs the tools |
 | `code.execution.mode-overlay` | Containers | Permissions › Profiles › New runs and chats, next to the run mode it narrows |
+| `code.execution.code-mode` | New row (Tools T-191), never drawn elsewhere; without this entry its subgroup's default page would be Containers | AI & Providers › Providers & Accounts › Models › More options › How models answer, after Think between tool steps |
 | `memory.limits.run-token-budget`, `goal-token-budget` | Context & Memory | Permissions › Limits › Limits for one run |
 | `general.startup.onboarding`; `planning.interview.wizard-first-run`, `provider-setup-skip` | App & Input; Planning & Interviews | Readiness & Doctor › Setup and tour |
 | `system.advanced.config-format`, `legacy-config-names` | Advanced Settings | Settings Transfer › File format and older versions |

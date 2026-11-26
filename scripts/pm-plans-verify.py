@@ -199,6 +199,7 @@ MEMORY_FLOOR_MB_ENV = "PM_LANDING_CHECK_MEMORY_FLOOR_MB"
 MEMORY_HEADROOM_MB_ENV = "PM_LANDING_CHECK_MEMORY_HEADROOM_MB"
 START_SETTLE_SECONDS_ENV = "PM_LANDING_CHECK_START_SETTLE_SECONDS"
 MAX_JOBS = 8
+CLOSURE_EXPORT_CAPABILITY = "landing_closure_export_v1"
 DEFAULT_MEMORY_HEADROOM_MB = 2048
 DEFAULT_START_SETTLE_SECONDS = 10.0
 START_LOCK_NAME = "start.lock"
@@ -7316,7 +7317,7 @@ def cmd_validate_audit_closure(args: argparse.Namespace) -> dict[str, Any]:
         )
 
     failures: list[dict[str, Any]] = []
-    for detail in raw_report.get("errors", [])[:200]:
+    for detail in raw_report.get("errors", []):
         failures.append(
             {
                 "path": rel(registry),
@@ -7666,7 +7667,7 @@ def main() -> int:
                      f"temp and report paths; results are emitted in the original order (default: {default_jobs()}; "
                      f"1 is the serial run; at most {MAX_JOBS}, and a landing check shares one such budget "
                      "across aggregates (landing-budget-v1); supports a run-owned readiness snapshot "
-                     f"({SNAPSHOT_CAPABILITY}).",
+                     f"({SNAPSHOT_CAPABILITY}); writes complete audit-closure exports ({CLOSURE_EXPORT_CAPABILITY}).",
             )
     args = parser.parse_args()
     if hasattr(args, "jobs") and not 1 <= int(args.jobs) <= MAX_JOBS:
