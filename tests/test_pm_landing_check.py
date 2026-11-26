@@ -3451,6 +3451,19 @@ class WhatEachRunAlsoReports(LandingRun):
         self.assertIn("--root ROOT", run.stdout)
         self.assertIn("--row-report FILE", run.stdout)
 
+    def test_help_creates_no_files_with_bytecode_enabled(self):
+        scripts = self.repo / "scripts"
+        scripts.mkdir()
+        for name in ("pm-landing-check.py", "pm_evidence_paths.py", "pm_readiness_audit.py"):
+            shutil.copyfile(ROOT / "scripts" / name, scripts / name)
+        before = set(scripts.rglob("*"))
+        # Ignore a developer shell's PYTHONDONTWRITEBYTECODE and PYTHONPYCACHEPREFIX.
+        run = subprocess.run([sys.executable, "-E", str(scripts / "pm-landing-check.py"), "--help"],
+                             cwd=self.repo, capture_output=True, text=True)
+        self.assertEqual(run.returncode, 0, run.stderr)
+        self.assertIn("--readiness-audit-root", run.stdout)
+        self.assertEqual(set(scripts.rglob("*")), before)
+
     def test_the_row_report_must_be_outside_the_repository(self):
         self.stub(gates={"lint_path_refs": [self.row("#1")]})
         self.record()

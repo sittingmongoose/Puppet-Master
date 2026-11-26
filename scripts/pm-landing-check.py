@@ -155,11 +155,16 @@ from typing import Any, Callable, Iterator
 
 if str(Path(__file__).resolve().parent) not in sys.path:
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-from pm_evidence_paths import relative_parts
-from pm_readiness_audit import (
-    AUDIT_REL as READINESS_AUDIT_REL,
-    SNAPSHOT_CAPABILITY, SNAPSHOT_ENV, SNAPSHOT_ENV_NAMES, SNAPSHOT_REPO_ENV, SNAPSHOT_WALK_ENV,
-)
+_saved_bytecode = sys.dont_write_bytecode
+try:
+    sys.dont_write_bytecode = True
+    from pm_evidence_paths import relative_parts
+    from pm_readiness_audit import (
+        AUDIT_REL as READINESS_AUDIT_REL,
+        SNAPSHOT_CAPABILITY, SNAPSHOT_ENV, SNAPSHOT_ENV_NAMES, SNAPSHOT_REPO_ENV, SNAPSHOT_WALK_ENV,
+    )
+finally:
+    sys.dont_write_bytecode = _saved_bytecode
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BASELINE = "reports/landing-checks/baseline.json"
