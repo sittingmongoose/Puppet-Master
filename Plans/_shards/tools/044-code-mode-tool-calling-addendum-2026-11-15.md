@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L13615-L13845
+Source lines: L13617-L13848
 
-Source SHA256: `b1bece01b0d5417f66804fce16f4201c0f92f8f579fbedaceeb72e27cb276928`
+Source SHA256: `3f8e676381fbd02697560aa6db9be8f2131bc6ce7f750cf760e3cc788de7fb61`
 
 ---
 
@@ -105,7 +105,8 @@ canonical_text: >-
   supported, otherwise as in-band tool calls, never as a provider tool_use; under
   the DAE strategy, where the CLI accepts Puppet Master tools through provider-native feature projection, it is a projected Puppet Master tool beside the CLI's own tools, so the run is mixed with the provider-kept native tools reason. When the script tool is offered, the request-selected registry tools other than the directly
   callable tools named in T-190 are described to the model as the
-  script's callable catalog under T-176 materialization, rather than as one provider tool schema each. Wherever tool calls are carried
+  script's callable catalog under T-176 materialization, rather than as one provider tool schema each. The host uses the selected
+  tool's L2 schema for nested dispatch under §4.4 and T-190. Wherever tool calls are carried
   in-band, including where the selected model's Models_System tool_use capability is false, the script tool and the
   directly callable tools named in T-190 are carried as in-band tool calls in an owned dialect that Tools selects for the model family and records on the run.
   The host mints a call ID for each recognized in-band call before the T-169 admission gate. Hosted structured intents also use IDs minted
@@ -199,10 +200,10 @@ gui_classification_reason: Backend authority, limit and evidence rules for neste
 depends_on: [T-176, T-177, T-178, T-188]
 unblocks: []
 acceptance_criteria:
-  - A script cannot make a tool call that the same request could not make as a direct call, including when the argument values are computed while the script runs.
+  - A script can invoke only request-selected tools in its callable catalog. Each invocation passes the same per-tool policy and argument validation as a direct call, including for argument values computed while the script runs.
   - An approval asked for inside a script suspends that script and is answered through the ordinary approval path; a denial, including the immediate one when no person is available, reaches the script as a typed result.
   - Every nested call appears in the event log, receipts and usage rollups exactly as a direct call would, plus the script's operation identity.
-  - Two catalog searches within one script can settle successfully with distinct host-issued child IDs and the same parent_operation_id. A failed nested call repeats its child ID and parent_operation_id in the recovery envelope. The enclosing script retains its own call ID.
+  - With the catalog search L2 schema materialized only on the host, two searches within one script can settle successfully with distinct host-issued child IDs and the same parent_operation_id. A failed nested call repeats its child ID and parent_operation_id in the recovery envelope. The enclosing script retains its own call ID.
   - A script that passes its deadline or the EvalSession hard output-byte ceiling ends with typed recovery evidence, not a success-shaped result.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py lint-contractrefs

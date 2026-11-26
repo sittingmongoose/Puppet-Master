@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L6632-L31389
+Source lines: L6632-L31391
 
-Source SHA256: `519bdd0b9ae3c88e7b7e26fcb1d03e8dd8ef564b674dc00503d066e9a46ae072`
+Source SHA256: `4e066c2be7d201715a0bfba3d14c9282e68039841898bdb4084bfeb33b6d8827`
 
 ---
 
@@ -7758,8 +7758,8 @@ canonical_text: >-
   When a tier fails because of issues outside its intended scope, the orchestrator applies the Executor's classified
   retry, remediation and review policy. Use the single CTA-entry transition in Parser-Failure And Unrelated-Failure
   Recovery Actions at the operator recovery boundary, whether policy admits zero retries or its admitted retries are
-  exhausted. An Assistant chat CTA presents review, skip, retry, and abort options from the recovery point's ordered
-  allowed_action_ids[]. Reserve modal escalation for P0 risk such as possible data loss or workspace corruption.
+  exhausted. An Assistant chat CTA presents the recovery point's ordered allowed_action_ids[], including review, skip, retry, and abort options
+  for ordinary recovery. Reserve modal escalation for P0 risk such as possible data loss or workspace corruption.
   Do not silently bypass unrelated failures.
 gui_related: true
 gui_classification_reason: This unit defines user-visible Assistant chat CTA and modal escalation behavior.
@@ -7775,6 +7775,8 @@ acceptance_criteria:
   classifier path reaches that same boundary.
 - The recovery point identifies the failed attempt and keeps its emitted classifier. A restore-required episode offers
   Restore and retry only when the Executor admits it.
+- If a required safe point is found missing or corrupt, the same blocked sequence shows the Executor's ordered
+  recovery_unavailable actions and exact owner reason.
 - Covered source spans remain losslessly available for exact-text audit.
 - >-
   The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving

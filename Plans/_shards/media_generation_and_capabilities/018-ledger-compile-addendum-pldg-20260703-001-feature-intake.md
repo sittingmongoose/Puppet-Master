@@ -2,9 +2,9 @@
 
 Source: `Plans/Media_Generation_and_Capabilities.md`
 
-Source lines: L6498-L6669
+Source lines: L6494-L6666
 
-Source SHA256: `42a50161304de11d5a3ca97a2ddd28cdacb6e11e07721b6463054a54834de00f`
+Source SHA256: `01feeeb83000a38e1bbd1efa354e22a50848e653d2066bfd60798da94a471922`
 
 ---
 
@@ -127,7 +127,8 @@ validation_surfaces:
 - "Non-vision model with image shows \u201Ccaption fallback used,\u201D with caption artifact and cost."
 - User can disable fallback.
 - Replay confirmed caption delivery, pre-model refusal and timeout without delivery evidence. Check the per-input disclosure against the delivery evidence in both the response and the durable result record.
-- Replay an unresolved policy ID and a caption budget stop with two candidates. Check that policy rejection occurs before route selection, that each input has a terminal disposition, and that the receipt resolves billed or unknown caption cost from the caption call's UsageRecord on success and failure.
+- Replay an unresolved policy ID with valid inputs and no requested or effective route. Both the failure response and the durable result record carry a null engine and the same failed input_settlement with null route IDs and a not_evaluated disposition for each input. For a pre-route failure with a resolved requested route, check that requested_route_id records that route while selected_route_id and engine remain null. With absent or empty inputs or a structurally invalid input list or source surfaces, both objects carry null input_settlement.
+- Replay a caption budget stop with two candidates. Check that each input has a terminal disposition and that the receipt resolves billed or unknown caption cost from the caption call's UsageRecord on success and failure.
 risk_class: p1_security_release_supply_chain_hardening
 reasoning_tier: standard
 context_scope: security_release_supply_chain

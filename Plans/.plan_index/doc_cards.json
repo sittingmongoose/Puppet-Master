@@ -13236,7 +13236,7 @@
         "Plans/usage-feature.md",
         "future provider/model capability matrix"
       ],
-      "line_count": 6877,
+      "line_count": 6874,
       "path": "Plans/Media_Generation_and_Capabilities.md",
       "plan_unit_count": 101,
       "plan_unit_ids": [
@@ -13369,7 +13369,7 @@
         "p1_security_release_supply_chain_hardening",
         "retired_gemini_cli_nanobanana_resurrection"
       ],
-      "sha256": "42a50161304de11d5a3ca97a2ddd28cdacb6e11e07721b6463054a54834de00f",
+      "sha256": "01feeeb83000a38e1bbd1efa354e22a50848e653d2066bfd60798da94a471922",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 101
@@ -13382,7 +13382,8 @@
       "validation_surfaces": [
         "GUI can show original artifact and caption/fallback provenance.",
         "Non-vision model with image shows “caption fallback used,” with caption artifact and cost.",
-        "Replay an unresolved policy ID and a caption budget stop with two candidates. Check that policy rejection occurs before route selection, that each input has a terminal disposition, and that the receipt resolves billed or unknown caption cost from the caption call's UsageRecord on success and failure.",
+        "Replay a caption budget stop with two candidates. Check that each input has a terminal disposition and that the receipt resolves billed or unknown caption cost from the caption call's UsageRecord on success and failure.",
+        "Replay an unresolved policy ID with valid inputs and no requested or effective route. Both the failure response and the durable result record carry a null engine and the same failed input_settlement with null route IDs and a not_evaluated disposition for each input. For a pre-route failure with a resolved requested route, check that requested_route_id records that route while selected_route_id and engine remain null. With absent or empty inputs or a structurally invalid input list or source surfaces, both objects carry null input_settlement.",
         "Replay confirmed caption delivery, pre-model refusal and timeout without delivery evidence. Check the per-input disclosure against the delivery evidence in both the response and the durable result record.",
         "Text-only model + image file yields denied_or_captioned, never hidden prompt bloat.",
         "User can disable fallback.",
@@ -15175,7 +15176,7 @@
         "future Orchestrator prompt routes",
         "future subagent handoff and child-run receipt records"
       ],
-      "line_count": 35255,
+      "line_count": 35258,
       "path": "Plans/orchestrator-subagent-integration.md",
       "plan_unit_count": 472,
       "plan_unit_ids": [
@@ -16100,7 +16101,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "519bdd0b9ae3c88e7b7e26fcb1d03e8dd8ef564b674dc00503d066e9a46ae072",
+      "sha256": "4e066c2be7d201715a0bfba3d14c9282e68039841898bdb4084bfeb33b6d8827",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 470,
@@ -20178,7 +20179,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "d00d5538b214456bca124f0cead8ad6ca39f627e1d13472c765c8f3388293fc7",
+      "sha256": "9a1a7fde83e5c4a24bae1a1d2c87f22bc7b7c36d07277577612aca7224d4404b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 195,
@@ -23377,7 +23378,7 @@
         "future tool registry and shell/integration command dispatch",
         "future vision_bridge tool"
       ],
-      "line_count": 13845,
+      "line_count": 13848,
       "path": "Plans/Tools.md",
       "plan_unit_count": 190,
       "plan_unit_ids": [
@@ -23652,7 +23653,7 @@
         "workflow_local_tool_registry_drift",
         "write_atomicity_drift"
       ],
-      "sha256": "b1bece01b0d5417f66804fce16f4201c0f92f8f579fbedaceeb72e27cb276928",
+      "sha256": "3f8e676381fbd02697560aa6db9be8f2131bc6ce7f750cf760e3cc788de7fb61",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 189,
@@ -25280,7 +25281,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-26T06:06:43Z",
+  "generated_at_utc": "2026-11-26T06:43:09Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
