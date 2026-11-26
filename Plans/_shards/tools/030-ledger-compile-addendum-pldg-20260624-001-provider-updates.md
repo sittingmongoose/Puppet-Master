@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L2627-L11167
+Source lines: L2627-L11165
 
-Source SHA256: `dc754309b0e950bdc6cfd48c36ca68e77c262d18441d22ebf13af8c260ae955e`
+Source SHA256: `c4294666817e5d30c5e77b88de5ae5cc65d9e6f938942af53547df076f9a19a5`
 
 ---
 
@@ -7974,9 +7974,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:14
 - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:11
 - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:20
-- "Plans/Tools.md#section=`question` tool runtime contract"
-- "Plans/Tools.md#section=`todowrite` and `todoread` runtime contract"
-- "Plans/Tools.md#section=Web tool routing algorithm"
+- "Plans/Tools.md#section=13. Batch operations"
 preserved_exact_tokens:
 - 'urls: string[]'
 - 'formats?: string[]'

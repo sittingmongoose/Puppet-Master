@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L11251-L12585
 
-Source SHA256: `be2edff746b358e17a59042765a2654f5a34518ac042cfaaeaba875575283d52`
+Source SHA256: `32e8fa9eee045837318f5fdf01b94605a92358f6ba36b7bf4217ce8fdc031945`
 
 ---
 
@@ -511,7 +511,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Plans/Multi-Account.md:5088"
-  - "Plans/FinalGUISpec.md:27266"
+  - "Plans/FinalGUISpec.md:27299"
   - "Plans/usage-feature.md:69-70"
   - "Plans/usage-feature.md:137"
   - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"

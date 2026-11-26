@@ -1530,7 +1530,7 @@
         "wrong_chat_owner_or_unproved_dispatch",
         "xss_ssrf_url_smuggling_or_math_dos"
       ],
-      "sha256": "abba158a9dd9a3e735683a21618cdd13e8b10232eab43869d579088560ba391a",
+      "sha256": "437b0a3f1aed776f03e60cd6f9cf1695fda313a8765aca5058b7d1a918d3e710",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 521,
@@ -1790,7 +1790,7 @@
         "storage_boundary",
         "storage_layout"
       ],
-      "sha256": "bd576d4cf560c1353410920e8a6d3eb9c1c1ad09c9354a0e7a8719ffd76b89e2",
+      "sha256": "d9a9666bf61abeb6be246645bc0a02d2972ba855cd11985bd345a638e6e357bd",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 64
@@ -16101,7 +16101,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "6d9852212fd4e1eec6826a4a5a483441ceae2561c211add4f2ad7f2928aae46a",
+      "sha256": "41cead1dd57e3bc73f7ccdad0ac7c2b9253f897209e55efbc277f4d8807cad54",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 470,
@@ -23378,7 +23378,7 @@
         "future tool registry and shell/integration command dispatch",
         "future vision_bridge tool"
       ],
-      "line_count": 13846,
+      "line_count": 13844,
       "path": "Plans/Tools.md",
       "plan_unit_count": 190,
       "plan_unit_ids": [
@@ -23653,7 +23653,7 @@
         "workflow_local_tool_registry_drift",
         "write_atomicity_drift"
       ],
-      "sha256": "dc754309b0e950bdc6cfd48c36ca68e77c262d18441d22ebf13af8c260ae955e",
+      "sha256": "c4294666817e5d30c5e77b88de5ae5cc65d9e6f938942af53547df076f9a19a5",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 189,
@@ -24063,7 +24063,7 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "be2edff746b358e17a59042765a2654f5a34518ac042cfaaeaba875575283d52",
+      "sha256": "32e8fa9eee045837318f5fdf01b94605a92358f6ba36b7bf4217ce8fdc031945",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 197,
@@ -24719,7 +24719,7 @@
         "widget_preview_leaks_or_multi_commit",
         "widget_system_drift"
       ],
-      "sha256": "7d291dba46b53f3751c546e112b3eb7af72dcca28e9f6c0e742ca1adfbfa6d18",
+      "sha256": "474a083426727e87592cd4a30ecb0611252f32336d5675ff951be2e279bf3c07",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 23
@@ -25246,7 +25246,7 @@
         "worktree_panel_filter_drift",
         "worktree_row_presentation_drift"
       ],
-      "sha256": "c2ddab928a242660ba6faa69d6e17ad63fd87a678f5114d0f0d903019c2a5798",
+      "sha256": "3a68d1e2f7e9ca7763c07cbe1c579a8937db5fc34d8f40d5e71a68d7fabbce71",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 85
@@ -25281,7 +25281,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-26T10:31:18Z",
+  "generated_at_utc": "2026-11-26T10:54:51Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
