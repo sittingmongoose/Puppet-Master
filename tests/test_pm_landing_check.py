@@ -3653,6 +3653,52 @@ class AggregateReadinessInputs(LandingRun):
                         self.assertFalse(refused.exists())
                         self.assertFalse(row_report.exists())
 
+    def test_the_supplied_path_must_still_open_before_comparison_or_recording(self):
+        self.stub()
+        self.module.target_worker_support = lambda root: (True, True)
+        edition = self.repo / "edition"
+        edition.mkdir()
+        (edition / "CURRENT_EVENT_SOURCE_INVENTORY.json").write_text("{}", encoding="utf-8")
+        intermediate = self.repo / "intermediate"
+        intermediate.mkdir()
+        moved = intermediate.with_name("moved")
+        selected = self.repo / "selected"
+        selected.symlink_to("intermediate/../edition", target_is_directory=True)
+        source = ("--readiness-audit-root", str(selected))
+        baseline = self.repo / "baseline.json"
+        recorded = self.repo / "recorded.json"
+        rows = Path(self.enterContext(tempfile.TemporaryDirectory())) / "rows.json"
+        code, out = self.run_main(*source, "--record-baseline", "--baseline", str(baseline))
+        self.assertEqual(code, 0, out + self.stderr)
+        original_bytes = baseline.read_bytes()
+        original_check = self.module.run_check
+
+        def disconnect(check, *args):
+            if check == "run-gates":
+                intermediate.rename(moved)
+                with self.assertRaises(FileNotFoundError):
+                    selected.stat()
+                self.assertTrue(edition.is_dir())
+            return original_check(check, *args)
+
+        for jobs in (1, 4):
+            for record in (False, True):
+                with self.subTest(jobs=jobs, record=record):
+                    mode = (("--record-baseline", "--baseline", str(recorded)) if record else
+                            ("--base", self.base, "--baseline", str(baseline), "--row-report", str(rows)))
+                    try:
+                        with patch.object(self.module, "run_check", disconnect):
+                            code, out = self.run_main(*source, "--jobs", str(jobs), *mode)
+                        self.assertEqual(code, 3, out + self.stderr)
+                        self.assertIn("readiness audit source is not a directory", self.stderr)
+                        self.assertIn(str(selected), self.stderr)
+                        self.assertEqual(out, "")
+                        self.assertEqual(baseline.read_bytes(), original_bytes)
+                        self.assertFalse(recorded.exists())
+                        self.assertFalse(rows.exists())
+                    finally:
+                        moved.rename(intermediate)
+
     def test_readers_share_a_snapshot_when_the_live_edition_is_restored_before_aggregate_returns(self):
         import threading
 

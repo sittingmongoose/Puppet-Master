@@ -413,18 +413,22 @@ def readiness_edition_paths(edition: Path) -> Iterator[Path]:
         yield from edition.rglob("*")
 
 
+def stat_stamp(info: os.stat_result) -> tuple[int, ...]:
+    return info.st_dev, info.st_ino, info.st_mode, info.st_size, info.st_ctime_ns, info.st_mtime_ns
+
+
 def audit_path_stamp(path: Path, *, follow_symlinks: bool = False) -> tuple[int, ...] | None:
     try:
         info = path.stat(follow_symlinks=follow_symlinks)
     except FileNotFoundError:
         return None
-    return info.st_dev, info.st_ino, info.st_mode, info.st_size, info.st_ctime_ns, info.st_mtime_ns
+    return stat_stamp(info)
 
 
 ReadinessSourceIdentity = tuple[Path, dict[Path, tuple[int, ...]], tuple[int, ...] | None]
 
 
-def readiness_source_identity(path: Path) -> ReadinessSourceIdentity:
+def readiness_source_identity(path: Path, *, allow_missing: bool) -> ReadinessSourceIdentity:
     """Resolve the supplied path and stamp every link in its chain, including directory links."""
     resolved = Path(path.drive + os.sep)
     remaining = list(reversed(path.parts[1:]))
@@ -448,7 +452,23 @@ def readiness_source_identity(path: Path) -> ReadinessSourceIdentity:
         if target.root:
             resolved = Path((target.drive or resolved.drive) + os.sep)
         remaining.extend(reversed(target.parts[1:] if target.root else target.parts))
-    return resolved, links, audit_path_stamp(resolved)
+    # The walk records link identities but can step over an unavailable component before "..".
+    # Open the original spelling so the kernel confirms that the same directory can be read.
+    resolved_stamp = audit_path_stamp(resolved)
+    try:
+        fd = os.open(path, os.O_RDONLY | os.O_DIRECTORY)
+    except (FileNotFoundError, NotADirectoryError) as exc:
+        if allow_missing and isinstance(exc, FileNotFoundError) and not links and resolved_stamp is None:
+            return resolved, links, None
+        raise RuntimeError(f"readiness audit source is not a directory: {path} ({exc.strerror})") from exc
+    except OSError as exc:
+        raise RuntimeError(f"cannot read readiness audit source {path}: {exc.strerror}") from exc
+    try:
+        if stat_stamp(os.fstat(fd)) != resolved_stamp:
+            raise RuntimeError(f"the readiness audit source changed while resolving {path}")
+    finally:
+        os.close(fd)
+    return resolved, links, resolved_stamp
 
 
 def readiness_edition_stamp(edition: Path) -> dict[str, Any]:
@@ -2317,15 +2337,14 @@ def main() -> int:
             parser.error(f"{option} must not be negative")
 
     root = Path(args.root).resolve()
+    shared_source = not args.readiness_audit_root and SHARED_READINESS_AUDIT_ROOT.is_dir()
     source_path = (root / args.readiness_audit_root if args.readiness_audit_root else
-                   SHARED_READINESS_AUDIT_ROOT if SHARED_READINESS_AUDIT_ROOT.is_dir() else
-                   root / READINESS_AUDIT_REL)
+                   SHARED_READINESS_AUDIT_ROOT if shared_source else root / READINESS_AUDIT_REL)
+    allow_missing_source = not (args.readiness_audit_root or shared_source)
     args.slots_root = None
     try:
-        source_identity = readiness_source_identity(source_path)
+        source_identity = readiness_source_identity(source_path, allow_missing=allow_missing_source)
         source = source_identity[0]
-        if args.readiness_audit_root and not source.is_dir():
-            raise RuntimeError(f"readiness audit source is not a directory: {source}")
         if not target_readiness_snapshot_support(root):
             raise RuntimeError(f"cannot pin readiness edition for this target: the verifier in {root} "
                                f"does not advertise {SNAPSHOT_CAPABILITY}")
@@ -2335,7 +2354,8 @@ def main() -> int:
         except OSError:
             pass
         with ExitStack() as scratch, readiness_audit_source(root, source):
-            return check_main(args, root, source_path, source_identity, scratch)
+            return check_main(args, root, source_path, source_identity, scratch,
+                              allow_missing_source=allow_missing_source)
     except (RuntimeError, OSError) as exc:
         print(f"pm-landing-check: {exc}", file=sys.stderr)
         return 3
@@ -2345,7 +2365,8 @@ def main() -> int:
 
 
 def check_main(args: argparse.Namespace, root: Path, source_path: Path,
-               source_identity: ReadinessSourceIdentity, scratch: ExitStack) -> int:
+               source_identity: ReadinessSourceIdentity, scratch: ExitStack, *,
+               allow_missing_source: bool) -> int:
     audit_source = source_identity[0]
     baseline_path = Path(args.baseline)
     if not baseline_path.is_absolute():
@@ -2396,10 +2417,10 @@ def check_main(args: argparse.Namespace, root: Path, source_path: Path,
     audit_inputs = readiness_audit_inputs(root)
 
     def require_live_edition(when: str) -> None:
-        if (source_identity != readiness_source_identity(source_path)
+        if (source_identity != readiness_source_identity(source_path, allow_missing=allow_missing_source)
                 or live_hashes != readiness_edition_hashes(audit_source)
                 or live_stamp != readiness_edition_stamp(live_edition)
-                or source_identity != readiness_source_identity(source_path)):
+                or source_identity != readiness_source_identity(source_path, allow_missing=allow_missing_source)):
             raise RuntimeError(f"the live readiness audit source or edition changed {when}")
 
     rename_context = None
