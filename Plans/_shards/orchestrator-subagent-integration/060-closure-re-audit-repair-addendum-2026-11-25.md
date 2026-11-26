@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L35220-L35258
+Source lines: L35226-L35264
 
-Source SHA256: `4e066c2be7d201715a0bfba3d14c9282e68039841898bdb4084bfeb33b6d8827`
+Source SHA256: `8818b20e32be6ed5a2732e83e3ac8bc3dbb313f211db79aeecb606ef3acb6a3b`
 
 ---
 
@@ -17,7 +17,7 @@ Stream C closure re-audit repairs (cluster K2). This addendum adds no WorkNodes,
 Repairs `sfk-52b55259003ddf5c68bd4d44` (registry lines 1501 and 1588).
 
 - Path: `<project root>/.puppet-master/PAUSE.md`, one file per project. This is the Pause File Location above and the project-root file named in `Plans/human-in-the-loop.md` PAUSE.md Gate And Precedence; no other path is read.
-- Watcher: the Orchestrator reads the file at two points only: before dispatching each new execution-unit attempt (each loop iteration, OSI-387) and before admitting `cmd.orchestrator.resume` for a run the gate halted. No file-system notification is needed. An attempt already running is not interrupted; its result is recorded, and no new mutating attempt is dispatched in scope while the gate is active. Read-only work (`ask`, `plan`) is not blocked.
+- Watcher: the Orchestrator reads the file at two points only: before dispatching each new execution-unit attempt (each loop iteration, OSI-387) and before admitting `cmd.orchestrator.resume` for a run the gate halted. No file-system notification is needed. An attempt already running is not interrupted and its result is recorded. Before an in-scope mutating dispatch, the watcher allows passage through the PAUSE check only when the gate's `allowed_action_ids[]` contains the exact requested action's canonical ID. It then evaluates applicable HITL approval. Read-only work (`ask`, `plan`) is not blocked.
 - Fields and order: the frontmatter fields and the PAUSE-before-HITL precedence are the human-in-the-loop.md contract. `scope` is closed: `project` (every run in this project) or `run:<run_id>` (that run only). `allowed_action_ids[]` holds canonical `allowed_action_id` values from the `Plans/UI_Command_Catalog.md` recovery table.
 - Fail-closed parsing: a file that exists with no frontmatter, unparseable frontmatter, an unknown `scope` value or a missing `pause_id` still pauses, read as `scope: project` with `allowed_action_ids[] = []`, and the run's pause notice says the gate file is invalid. A file whose `expires_at_utc` is in the past is inactive.
 - Halt: at a blocked dispatch the run logs the `pause_id` and reason, returns a halted result and waits (OSI-387).

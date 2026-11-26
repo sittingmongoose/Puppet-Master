@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L3585-L3642
+Source lines: L3586-L3643
 
-Source SHA256: `4e066c2be7d201715a0bfba3d14c9282e68039841898bdb4084bfeb33b6d8827`
+Source SHA256: `8818b20e32be6ed5a2732e83e3ac8bc3dbb313f211db79aeecb606ef3acb6a3b`
 
 ---
 
@@ -47,7 +47,7 @@ Short notes so implementers know where to put code and what the orchestrator alr
 - **Where:** Same verification module as config-wiring (e.g. `src/verification/` or `src/core/`) or a dedicated `tier_verification.rs`. The main orchestrator calls `VerifyUnitStart` (legacy function name `verify_tier_start`, Execution-Unit Hook Naming) when entering a Phase/Task/Subtask (after or as part of config-wiring) and `VerifyUnitEnd` (legacy `verify_tier_end`) when completing a Phase/Task/Subtask (after acceptance gate; quality step can be part of gate or separate).
 - **What:** Start: config-wiring (existing) + wiring/readiness checklist (GUI updated? backend updated? steps make sense? known gaps?). End: wiring re-check + existing acceptance gate + quality verification. Quality verification is **both** (1) required reviewer subagent (code-reviewer) at end-of-tier, on retry, and when gate fails; (2) gate criteria (clippy, tests, etc.). Parent-tier orchestrator addresses unrelated failures. See **"Start and End Verification at Phase, Task, and Subtask"** for the table and gaps. Define per-tier quality checklist (e.g. Phase: docs; Task: design; Subtask: code + tests + clippy) in code or config.
 - **When called:** Start at Phase/Task/Subtask entry; end at Phase/Task/Subtask completion (before marking tier complete). Iteration can use tier-level checks only (no separate iteration start/end verification unless needed).
-- **Integration with hooks:** BeforeUnit hook runs **before** `VerifyUnitStart` (legacy `verify_tier_start`; tracks active subagent, injects context, prunes stale state). AfterUnit hook runs **after** `VerifyUnitEnd` (legacy `verify_tier_end`) (validates handoff format, tracks completion). See **"Lifecycle and Quality Features"** for hook implementation.
+- **Integration with hooks:** BeforeUnit hook runs **before** `VerifyUnitStart` (legacy `verify_tier_start`; tracks active subagent, injects context, prunes stale state). AfterUnit hook validates the handoff **before** `VerifyUnitEnd` (legacy `verify_tier_end`). For work requiring a handoff, only a validated handoff reaches end verification. See **"Lifecycle and Quality Features"** for hook implementation.
 
 ### Agent coordination
 
@@ -59,7 +59,7 @@ Short notes so implementers know where to put code and what the orchestrator alr
 
 - **Where:** New module `src/core/hooks.rs` or `src/verification/hooks.rs` for hook system; canonical persistence and recovery projections in seglog/redb for continuity; extend `SubagentOutput` in `src/types/` for structured handoff format; remediation loop in orchestrator completion logic (`src/core/orchestrator.rs`).
 - **What:** (1) **BeforeUnit/AfterUnit hooks:** Implement hook traits, register hooks per unit type, call automatically at unit boundaries. For the CliBridge providers with native hooks (Cursor, Claude Code), register Puppet Master hooks that delegate where possible; for the DirectApi providers (Codex, Copilot, Gemini), use orchestrator-level middleware and canonical coordination projection (OSI-004, OSI-139). (2) **Structured handoff validation:** `validate_subagent_output()` with transport-scoped parsers per OSI-093 (JSON over CliBridge CLI output for Cursor/Claude Code; JSON over the final assistant content for Codex, Copilot and Gemini; the CLI-era JSONL for Codex and text parsing for Copilot are historical context only). (3) **Remediation loop:** Parse findings from reviewer subagent output; filter Critical/Major; block completion and re-run until resolved or max retries; escalate to parent-tier on max retries. (4) **Cross-run continuity:** Persist architectural decisions, patterns, and tech choices as canonical outputs and projections at Phase completion; reload them at run start through handoff/context assembly rather than child-memory files. (5) **Active agent tracking:** `active_subagent: Option<String>` in `ExecutionUnitContext`; update in BeforeUnit/AfterUnit hooks; persist through canonical runtime storage and projections. (6) **Safe error handling:** Wrap hooks and verification in `safe_hook_main()` that guarantees structured output even on failure. (7) **Lazy lifecycle:** Create verification state on first write; prune stale state (>2 hours) in BeforeUnit hook. (8) **Contract enforcement:** AfterUnit hook validates handoff format; use the retry or exhaustion path in Handoff Retry Ceiling for output still invalid after fallback.
-- **When called:** Hooks run automatically at unit boundaries (before `VerifyUnitStart`, after `VerifyUnitEnd`; legacy `verify_tier_start` / `verify_tier_end`). Cross-run continuity persists at Phase completion and loads through run-start context assembly. Remediation loop runs when Critical/Major findings detected. See **"Lifecycle and Quality Features"** for full details and platform-specific implementation notes.
+- **When called:** Hooks run automatically at unit boundaries (`BeforeUnit` before `VerifyUnitStart` and `AfterUnit` before `VerifyUnitEnd`, legacy `verify_tier_start` / `verify_tier_end`). Cross-run continuity persists at Phase completion and loads through run-start context assembly. Remediation loop runs when Critical/Major findings detected. See **"Lifecycle and Quality Features"** for full details and platform-specific implementation notes.
 
 ### Considerations #6 (Subagent availability / files)
 

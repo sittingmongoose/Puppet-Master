@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L13367-L14092
+Source lines: L13367-L14093
 
-Source SHA256: `9a1a7fde83e5c4a24bae1a1d2c87f22bc7b7c36d07277577612aca7224d4404b`
+Source SHA256: `5b86c98ec488a07c7fa1b7adb171061cf2116f8c2ab9ea435f19ea536ed05b79`
 
 ---
 
@@ -392,9 +392,10 @@ canonical_text: >-
   prompt; <agent> is waiting." with Type it, which focuses the terminal. While an agent drives, the row says
   "<agent> is driving this terminal · step N of M · <label>" with Take over (the human takes the lease), Interrupt
   (SIGINT to the foreground job) and Stop (ends the agent's run and returns the lease to the human); after a
-  take-over it says "You took over. <agent> is paused and has been told." with Hand back and Stop <agent>. Every
-  command record carries `by`, the user or the agent by name when authenticated, and absent or null without trusted
-  attribution (CV-362). Only a shell-integration record with that terminal's secret sets it (SMPFS-183).
+  take-over it says "You took over. <agent> is paused and has been told." with Hand back and Stop <agent>. A
+  command record carries `by` as `user` or `agent:<name>` when authenticated, and may omit it or use null without
+  trusted attribution (CV-362). Only a shell-integration record with that terminal's secret sets attribution (SMPFS-183).
+  After the seal, amend Plans/Automated_Testing_System.md#ATS-076 to test the attributed, absent and null cases under CV-362.
   An unauthenticated mark is plain output. Agent reads return rendered text with a read state (`final` for a
   finished command, and the known-empty, complete-so-far, partial and unavailable states of this document's
   terminal output read semantics), never raw bytes and never images (SMPFS-181). Input protection (SMPFS-165, DL-037, DL-038) outranks

@@ -4,7 +4,7 @@ Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
 Source lines: L12417-L13286
 
-Source SHA256: `9a1a7fde83e5c4a24bae1a1d2c87f22bc7b7c36d07277577612aca7224d4404b`
+Source SHA256: `5b86c98ec488a07c7fa1b7adb171061cf2116f8c2ab9ea435f19ea536ed05b79`
 
 ---
 

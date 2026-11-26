@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L6632-L31391
+Source lines: L6633-L31397
 
-Source SHA256: `4e066c2be7d201715a0bfba3d14c9282e68039841898bdb4084bfeb33b6d8827`
+Source SHA256: `8818b20e32be6ed5a2732e83e3ac8bc3dbb313f211db79aeecb606ef3acb6a3b`
 
 ---
 
@@ -4476,7 +4476,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  GuiConfig owns subagent configuration through a top-level subagent SubagentGuiConfig serialized as subagentConfig or equivalent, including enable_tier_subagents, tier_overrides, disabled_subagents, and required_subagents as compatibility import/export fields (OSI-425); runtime admission reads only the normalized SubagentPolicy. When those legacy fields are imported, v1 overrides are per tier type, required wins over disabled, and missing or empty override lists use auto-selection; these rules govern how the import normalizes into SubagentPolicy and are not a live per-tier runtime behavior.
+  GuiConfig owns subagent configuration through a top-level subagent SubagentGuiConfig serialized as subagentConfig or equivalent, including enable_tier_subagents, tier_overrides, disabled_subagents, and required_subagents as compatibility import/export fields (OSI-425). Import normalizes v1 overrides per tier type using missing or empty override = use auto-selection. Runtime admission reads only the normalized SubagentPolicy. Runtime selection applies the resulting policy per execution unit, where required wins over disabled (OSI-214).
 gui_related: false
 gui_classification_reason: This unit covers backend/config schema and override semantics, not GUI presentation.
 split_recommended: false
@@ -4954,7 +4954,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Interview question limits replace the single max setting with min_questions_per_phase and max_questions_per_phase Option<u32>, accept phase completion only after the minimum, support None as unlimited, enforce a soft cap with max + 1 grace, force-complete runaway phases with phase.force_completed and max_questions_exceeded, and never reject a phase that already collected valid answers.
+  Interview question limits replace the single max setting with min_questions_per_phase and max_questions_per_phase Option<u32>, accept phase completion only after the minimum, support None as unlimited, enforce a soft cap with max + 1 grace, and never reject a phase that already collected valid answers. When the cap forces ordinary phase completion, emit phase.force_completed with max_questions_exceeded. When OSI-099 applies, the cap ends that round of agent questions and presents the required card. Only the user's Confirm completes that phase.
 gui_related: false
 gui_classification_reason: This unit covers interview runtime behavior, not GUI controls.
 split_recommended: false
@@ -5540,7 +5540,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Interview execution must wire require_architecture_confirmation into InterviewOrchestratorConfig from gui_config.interview in app.rs and, when enabled, require explicit architecture/tech-stack confirmation through a phase gate before phase completion. The phase gate is the one mechanism; a dedicated phase and a prompt line are rejected alternatives. Trigger: the phase-complete transition of the `architecture_technology` phase (chain-wizard-flexibility canonical phase registry) when its phase-plan depth is Full or Short. The gate asks one required shared question card (`QuestionItem`, options Confirm and Change, `allow_freeform` true) that summarizes the phase's architecture and tech-stack decisions. Completion: the phase completes only after the user answers Confirm, recorded as explicit confirmation in the phase's validation artifacts; Change keeps the phase open with the user's note as new phase input and asks again at the next phase-complete attempt. There is no timeout and no agent self-confirmation. When the setting is false, or the phase plan sets `architecture_technology` to Skip, the gate does not run.
+  Interview execution must wire require_architecture_confirmation into InterviewOrchestratorConfig from gui_config.interview in app.rs and, when enabled, require explicit architecture/tech-stack confirmation through a phase gate before phase completion. The phase gate is the one mechanism; a dedicated phase and a prompt line are rejected alternatives. Trigger: the phase-complete transition of the `architecture_technology` phase (chain-wizard-flexibility canonical phase registry) when its phase-plan depth is Full or Short. The gate asks one required shared question card (`QuestionItem`, options Confirm and Change, `allow_freeform` true) that summarizes the phase's architecture and tech-stack decisions. Completion: the phase completes only after the user answers Confirm, recorded as explicit confirmation in the phase's validation artifacts; Change keeps the phase open with the user's note as new phase input and asks again at the next phase-complete attempt. There is no timeout and no agent self-confirmation. The soft cap in OSI-089 also enters this gate and cannot complete the phase. DL-2602 records the user confirmation as the kept choice. When the setting is false, or the phase plan sets `architecture_technology` to Skip, the gate does not run.
 gui_related: true
 gui_classification_reason: This unit covers interview flow UX and confirmation behavior.
 split_recommended: false
@@ -8801,8 +8801,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  CursorOutputParser structured handoff parsing reads JSON output according to platform_specs, extracts task_report, downstream_context,
-  and findings, and must not hardcode the output-format behavior.
+  CursorOutputParser follows platform_specs for single-document JSON or stream-json. For stream-json it extracts the handoff
+  from final assistant content assembled from the CliBridge NDJSON events. It extracts task_report, downstream_context and
+  findings without hardcoding the output format.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -9285,8 +9286,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  ClaudeOutputParser parses Claude structured output according to platform_specs, reads result.content or direct fields, attempts
-  direct SubagentOutput parsing, and manually extracts task_report, downstream_context, and findings when needed.
+  ClaudeOutputParser follows platform_specs for single-document JSON or stream-json. For stream-json it uses final assistant
+  content assembled from the CliBridge NDJSON events. It reads result.content or direct fields, attempts direct SubagentOutput
+  parsing, and extracts task_report, downstream_context and findings when needed.
 gui_related: false
 gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
 split_recommended: false
@@ -9708,8 +9710,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Existing ParsedOutput integration populates output.subagent_output by attempting parse_subagent_output during platform output
-  parsing, but the .ok() example must not silently drop parser failures contrary to structured handoff failure policy.
+  ParsedOutput populates output.subagent_output from the validated transport-scoped handoff, including the JSONL pass for
+  CliBridge stream-json when required. Unresolved failures go through structured handoff failure handling. The .ok() example
+  is source evidence only.
 gui_related: false
 gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
 split_recommended: false
@@ -10984,8 +10987,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Lifecycle and quality features complement start/end verification: BeforeUnit runs before VerifyUnitStart, AfterUnit runs
-  after VerifyUnitEnd (BeforeTier hook, verify_tier_start, AfterTier hook and verify_tier_end are import-only aliases,
-  normalized per Execution-Unit Hook Naming), remediation extends the required reviewer subagent, cross-session continuity enhances Phase 1 context,
+  after execution and before VerifyUnitEnd. A required handoff must pass AfterUnit validation to enter VerifyUnitEnd.
+  BeforeTier hook, verify_tier_start, AfterTier hook and verify_tier_end are import-only aliases under Execution-Unit
+  Hook Naming. Remediation extends the required reviewer subagent, cross-session continuity enhances Phase 1 context,
   and active tracking enhances logging/debugging.
 gui_related: false
 gui_classification_reason: >-
@@ -12959,11 +12963,11 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Orchestrator integration uses src/core/orchestrator.rs and tier_config_for(tier_type) -> &TierConfig as the source for
-  platform, model, and plan_mode, then reads enable_tier_subagents and subagent config, applies tier_overrides, filters
-  disabled_subagents, and adds required_subagents. Under OSI-425 those steps run once, when the legacy keys are imported
-  and normalized into SubagentPolicy (`schema_id: pm.subagent_policy.v1`); at runtime the orchestrator reads only the
-  normalized SubagentPolicy for admission, selection, disabled and required subagents, and never reads enable_tier_subagents
-  or tier_overrides as the runtime gate or merge path.
+  platform, model, and plan_mode. OSI-425 normalizes the legacy enable_tier_subagents, tier_overrides, disabled_subagents
+  and required_subagents into SubagentPolicy (`schema_id: pm.subagent_policy.v1`) at import. For each execution unit admitted
+  by that policy, the orchestrator runs the selector, replaces its list with the normalized scope override if one exists,
+  filters disabled entries and adds required entries. Required entries win. Runtime admission and selection read only the
+  normalized policy.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration configuration merge behavior rather than GUI presentation.
@@ -13529,9 +13533,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Hook integration preserves the ordering that BeforeUnit runs before VerifyUnitStart and AfterUnit runs after
-  VerifyUnitEnd (verify_tier_start and verify_tier_end are import-only aliases per Execution-Unit Hook Naming), with active-subagent tracking, context injection, stale-state pruning, handoff-format validation, and
-  completion tracking treated as compatibility/source summary for the hook owner path.
+  BeforeUnit runs before VerifyUnitStart. AfterUnit runs after execution and validates any required handoff before
+  VerifyUnitEnd may update completion status. Active-subagent tracking, context injection, stale-state pruning, handoff
+  validation and completion tracking follow the hook owner path. verify_tier_start and verify_tier_end are import-only
+  aliases per Execution-Unit Hook Naming.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend hook and verification ordering rather than GUI presentation.

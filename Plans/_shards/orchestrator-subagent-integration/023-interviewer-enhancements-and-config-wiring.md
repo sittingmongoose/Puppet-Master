@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L1406-L1476
 
-Source SHA256: `4e066c2be7d201715a0bfba3d14c9282e68039841898bdb4084bfeb33b6d8827`
+Source SHA256: `8818b20e32be6ed5a2732e83e3ac8bc3dbb313f211db79aeecb606ef3acb6a3b`
 
 ---
 
@@ -45,8 +45,8 @@ So three interview settings are currently **built but not wired**. Users who cha
 
 **Max Questions Per Phase — Soft Cap (Resolved):**
 When `max_questions_per_phase` is configured:
-- **Soft cap with grace:** Accept phase completion when the agent signals complete and question count ≤ `max + 1` (one grace question for wrap-up).
-- **Force-complete:** If question count exceeds `max + 1` without the agent signaling complete, force-complete the phase:
+- **Soft cap with grace:** When the agent signals complete and the question count is between the minimum and `max + 1`, attempt phase completion. Run OSI-099 first when architecture confirmation is required.
+- **Force-complete:** If question count exceeds `max + 1` without the agent signaling complete, end that round of agent questions and preserve the answers. When OSI-099 applies, present the required confirmation card and wait. Only the user's Confirm completes that phase, and no `phase.force_completed` is emitted. For phases without that gate, force-complete the phase:
   - Emit a `phase.force_completed` seglog event with `reason: "max_questions_exceeded"`.
   - Use the answers collected so far as the phase output.
   - Log a warning: "Phase [X] force-completed after [N] questions (max: [max])."
@@ -58,7 +58,7 @@ When `max_questions_per_phase` is configured:
    - **Execution config:** Add the same two fields to `InterviewOrchestratorConfig` (`interview/orchestrator.rs`).
    - **Construction:** In `app.rs`, when building `InterviewOrchestratorConfig` from `gui_config.interview`, set `min_questions_per_phase` and `max_questions_per_phase` from `gui_config.interview`.
    - **Phase manager:** Pass these into phase definitions or into `PhaseManager` (e.g. in `default_phases()` / `add_dynamic_phase()`), so each phase has min/max available.
-   - **Orchestrator logic:** In `process_ai_turn` (or equivalent), when `parsed.is_phase_complete`, compute current phase question count; if count < min, reject (e.g. send back "Ask at least N questions"); if max is `Some(m)` and count > m, either reject or accept depending on product rule; otherwise accept.
+   - **Orchestrator logic:** In `process_ai_turn` (or equivalent), when `parsed.is_phase_complete`, compute current phase question count; if count < min, reject (e.g. send back "Ask at least N questions"); apply the soft cap above and route every completion attempt through the required OSI-099 gate when it applies.
    - **Prompts:** In `prompt_templates.rs` (or equivalent), inject the configured min (and max if set) into the instructions, e.g. "Ask at least {min} questions..." and "Do not exceed {max} questions..." when max is set.
    - **GUI:** Interview tab: replace single max control with Min (number input) and Max (number input + "Unlimited" option). Use existing DRY widgets and tooltips.
    - **Docs:** AGENTS.md or interview doc: document min/max and Unlimited; tooltips in Config.
@@ -67,8 +67,8 @@ When `max_questions_per_phase` is configured:
 ### Other unwired interview settings -- resolution
 
 - **`require_architecture_confirmation`**
-  **Intended behavior:** Before leaving certain phases (e.g. architecture/tech stack), the interview requires explicit user or agent confirmation of architecture/tech choices.
-  **Wiring:** Add `require_architecture_confirmation: bool` to `InterviewOrchestratorConfig`; set from `gui_config.interview` in `app.rs`. In the interview flow, add a step or phase gate that, when this is true, waits for or prompts for explicit confirmation (e.g. a dedicated phase or a prompt line) before allowing phase complete. Document in interview prompts and in AGENTS.md. **Decided (2026-11-25, OSI-099):** the mechanism is the phase gate on the `architecture_technology` phase-complete transition, completed only by the user's explicit Confirm on a required question card; the dedicated-phase and prompt-line options are not used.
+  **Intended behavior:** With this setting enabled, the Full or Short `architecture_technology` phase completes only after the user's explicit Confirm (DL-2602, OSI-099).
+  **Wiring:** Add `require_architecture_confirmation: bool` to `InterviewOrchestratorConfig` and set it from `gui_config.interview` in `app.rs`. On the `architecture_technology` phase-complete transition, use the OSI-099 phase gate with its required question card. Document the gate in interview prompts and in AGENTS.md.
 
 - **`vision_provider`**
   **Intended behavior:** When the interview or follow-up uses image/vision (e.g. screenshots, diagrams), this setting selects the preferred platform for vision-capable requests.

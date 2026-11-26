@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L1547-L3537
+Source lines: L1547-L3538
 
-Source SHA256: `4e066c2be7d201715a0bfba3d14c9282e68039841898bdb4084bfeb33b6d8827`
+Source SHA256: `8818b20e32be6ed5a2732e83e3ac8bc3dbb313f211db79aeecb606ef3acb6a3b`
 
 ---
 
@@ -355,7 +355,7 @@ Config: `quality.gate.{check_name}.action` — override per check (`"fail"` or `
 
 **Integration with orchestrator:**
 
-In `src/core/orchestrator.rs`, extend tier completion logic:
+In `src/core/orchestrator.rs`, extend tier completion logic. For a unit requiring a handoff, enter this completion path only after the AfterUnit hook validates that handoff:
 
 ```rust
 use crate::verification::tier_end::{verify_tier_end, EndVerificationError, EndVerificationResult, TierStatus};
@@ -996,7 +996,7 @@ pub enum ValidationError {
 
 Extend `src/platforms/output_parser.rs` with new parser methods:
 
-Transport scope of the parser code below (2026-11-25, OSI-004, OSI-093): `CursorOutputParser` and `ClaudeOutputParser` are live CliBridge parsers over CLI output, and `GeminiOutputParser` is the live DirectApi parser over the response body (`candidates[0].content.parts[0].text`; its `--output-format json` comment and `stdout` parameter name are CLI-era wording). The `CodexOutputParser` (JSONL) and `CopilotOutputParser` (text and regex over `stdout`/`stderr`) blocks are CLI-era code examples kept as historical context only (OSI-158, OSI-161): Codex and Copilot are DirectApi, have no CLI output, and are parsed as JSON from the final assistant content like Gemini.
+Transport scope of the parser code below (OSI-004, OSI-093): live `CursorOutputParser` and `ClaudeOutputParser` use the CliBridge JSON and stream-json passes in Subagent Output Parser Fallback (Resolved). Their `serde_json::from_str(stdout)` examples illustrate single-document JSON only. A stream-json attempt uses the bridge's complete NDJSON events to obtain the final assistant content before handing it to structured field extraction. `GeminiOutputParser` is the live DirectApi parser over the response body (`candidates[0].content.parts[0].text`; its `--output-format json` comment and `stdout` parameter name are CLI-era wording). The `CodexOutputParser` (JSONL) and `CopilotOutputParser` (text and regex over `stdout`/`stderr`) blocks are CLI-era code examples kept as historical context only (OSI-158, OSI-161): Codex and Copilot are DirectApi, have no CLI output, and are parsed as JSON from the final assistant content like Gemini.
 
 ```rust
 // Add to ParsedOutput struct:
@@ -1017,7 +1017,7 @@ pub trait OutputParser: Send + Sync {
     fn extract_subagent_output_from_text(&self, stdout: &str, stderr: &str) -> Result<SubagentOutput, ValidationError>;
 }
 
-// Implementation for each platform parser:
+// Single-document JSON example. The live stream-json path uses CliBridge framing.
 
 impl OutputParser for CursorOutputParser {
     // DRY REQUIREMENT: Tag with // DRY:FN:parse_subagent_output_cursor
@@ -1311,6 +1311,7 @@ impl OutputParser for CodexOutputParser {
     }
 }
 
+// Single-document JSON example. The live stream-json path uses CliBridge framing.
 impl OutputParser for ClaudeOutputParser {
     // DRY:FN:parse_subagent_output_claude -- Parse Claude Code subagent output
     // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "--output-format json"
@@ -1452,7 +1453,7 @@ impl OutputParser for CopilotOutputParser {
 
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
-**Validation function:**
+**Validation function:** The example shows parser delegation. Live `validate_subagent_output` runs the transport-scoped passes and generic fallback in Subagent Output Parser Fallback (Resolved), checks the required fields and returns any remaining failure to the execution loop.
 
 ```rust
 // src/core/hooks/handoff_validator.rs
@@ -1478,7 +1479,7 @@ pub fn validate_subagent_output(
 
 **Integration with existing ParsedOutput:**
 
-Modify `src/platforms/output_parser.rs` to populate `subagent_output` field:
+The live path in `src/platforms/output_parser.rs` populates `subagent_output` only from the validated result of the transport-scoped pipeline. An invalid result goes to the handoff failure path, including `parser.error`, fallback and retry handling. The older single-pass `.ok()` call below is retained as source evidence for OSI-165.
 
 ```rust
 impl OutputParser for CursorOutputParser {
@@ -1823,7 +1824,7 @@ Transport scope (2026-11-25, OSI-004 and OSI-093): earlier versions of this tabl
 These lifecycle and quality features **complement** the existing start/end verification:
 
 - **BeforeUnit hook** runs **before** `VerifyUnitStart` (tracks active subagent, injects context, prunes state).
-- **AfterUnit hook** runs **after** `VerifyUnitEnd` (validates handoff format, tracks completion, safe error handling).
+- **AfterUnit hook** runs after subagent execution and **before** `VerifyUnitEnd`. It validates the handoff and tracks the attempt. A unit requiring a handoff enters end verification only after validation passes (Handoff failure boundary).
 - BeforeTier hook, AfterTier hook, `verify_tier_start` and `verify_tier_end` are the legacy aliases of these four names (Execution-Unit Hook Naming).
 - **Remediation loop** extends the existing "required reviewer subagent" -- reviewer outputs structured findings; orchestrator enforces remediation.
 - **Cross-session memory** enhances Phase 1 context (loads prior decisions before planning).
@@ -1866,7 +1867,7 @@ These lifecycle and quality features **complement** the existing start/end verif
 **Issue:** Platform output formats may vary (JSON vs JSONL vs text), scoped by transport (OSI-004, OSI-093): CliBridge providers (Cursor, Claude Code) emit JSON or stream-json NDJSON on the CLI, DirectApi providers (Codex, Copilot, Gemini) return final assistant content parsed as JSON, and the Codex JSONL stream and Copilot text output are CLI-era history. Parsers may fail on edge cases (malformed JSON, partial output, streaming output). How do we handle parsing failures gracefully?
 
 **Mitigation:**
-- **Multi-pass parsing:** Try JSON parse first, then JSONL (CliBridge stream-json NDJSON events only), then text extraction (the generic fallback every transport keeps, OSI-093). Use best-effort parsing with fallbacks.
+- **Multi-pass parsing:** Try single-document JSON, then the JSONL pass for CliBridge stream-json only, then the generic text extraction of OSI-093. The JSONL pass takes each complete event through the CliBridge parser and parses the final assistant content as the handoff. A framing error or missing required handoff content goes through the same fallback and validation path.
 - **Partial output handling:** If parsing fails, extract what we can (e.g., `task_report` from text even if `findings` missing) and keep it on the attempt for review; if the output is still invalid after fallback when the Handoff Retry Ceiling budget is exhausted, the node takes the `needs_review` recovery point (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)). The earlier "Mark tier as "complete with warnings."" is superseded source lineage.
 - **Parser testing:** Comprehensive test suite for each platform parser with edge cases (malformed JSON, unicode, large outputs, streaming).
 - **Parser versioning:** Track parser version and platform CLI version for the CliBridge providers (Cursor, Claude Code), and the provider API and model version for the DirectApi providers (Codex, Copilot, Gemini). Update parsers when either changes.

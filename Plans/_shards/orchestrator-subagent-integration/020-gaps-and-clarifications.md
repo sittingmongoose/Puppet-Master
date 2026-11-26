@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L1131-L1240
 
-Source SHA256: `4e066c2be7d201715a0bfba3d14c9282e68039841898bdb4084bfeb33b6d8827`
+Source SHA256: `8818b20e32be6ed5a2732e83e3ac8bc3dbb313f211db79aeecb606ef3acb6a3b`
 
 ---
 
@@ -72,7 +72,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 
 
 - **Gap:** The plan references `execute_tier_with_subagents`, `build_subagent_invocation`, `execute_with_subagent`, and `SubagentSelector`. These do not exist in the codebase yet; they are specified in the plan's "Integration with Orchestrator" and Phase 3.
-- **Clarify:** Phase 3 (and any subagent execution path) must: (1) Read `enable_tier_subagents` from config; if false, skip subagent invocation (or use a single non-subagent path). (2) When building the list of subagents for a tier, apply `tier_overrides` (replace or merge with selected list), then filter by `disabled_subagents` and ensure `required_subagents` are included. Steps (1) and (2) are now the import normalization of OSI-425, not the runtime path: `enable_tier_subagents` and `tier_overrides` are compatibility import/export keys normalized into SubagentPolicy (`schema_id: pm.subagent_policy.v1`), and runtime admission and selection read only that SubagentPolicy (OSI-078, OSI-081, OSI-214). (3) When building `ExecutionRequest` for each subagent run, set `request.plan_mode = tier_config.plan_mode`. Ensure the checklist item "Ensure subagent/invocation path receives tier plan_mode" is done in that code path.
+- **Clarify:** Phase 3 reads only normalized SubagentPolicy (`schema_id: pm.subagent_policy.v1`). OSI-425 imports the legacy `enable_tier_subagents`, `tier_overrides`, `disabled_subagents` and `required_subagents` values into that policy. For each admitted execution unit, run the selector, replace its list with an applicable scope override, filter disabled entries, and add required entries (OSI-214). When building the `ExecutionRequest` for each subagent run, set `request.plan_mode = tier_config.plan_mode`.
 
 ### 7. Message enum and app.rs handlers
 
@@ -97,7 +97,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 **Subagent Output Parser Fallback (Resolved):**
 
 Platform-specific parsers handle output from each Provider:
-- **Cursor/Claude Code (CliBridge):** JSON parser over CLI output (stream-json NDJSON events)
+- **Cursor/Claude Code (CliBridge):** Parse single-document JSON or stream-json NDJSON from the CLI according to `platform_specs`. For stream-json, read each newline-delimited event using the existing CliBridge framing and assemble the final assistant content for the attempt in stream order. Parse the handoff from that content. Status, tool and usage events remain transport evidence.
 - **Codex, Copilot, Gemini (DirectApi):** JSON parser over the direct-provider response's final assistant content
 - **OpenCode (ServerBridge):** parser over its server event stream
 - **Transport scope (2026-11-25, OSI-004 and OSI-093):** earlier versions of this list read "Cursor/Claude/Gemini: JSON parser (stream-json NDJSON events)", "Codex: JSONL parser (newline-delimited JSON events)" and "Copilot: Text parser (plain text output, regex-based signal extraction)". Those describe CLI-era output: the Codex JSONL parser, the Copilot text parser, a Gemini stream-json parser, the `--json` / `--experimental-json` flags in the Clarify item above and the CodexOutputParser and CopilotOutputParser snippets (OSI-158, OSI-161) are historical context only, not implementation targets. The GeminiOutputParser snippet (OSI-160) is the live DirectApi parser: it reads `candidates[0].content.parts[0].text` from the direct-provider response body, and only its `--output-format json` comment and `stdout` parameter name are CLI-era wording. Steps 1-5 below apply to every transport.
