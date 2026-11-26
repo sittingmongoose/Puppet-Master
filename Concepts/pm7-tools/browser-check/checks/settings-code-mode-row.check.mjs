@@ -117,11 +117,15 @@ export default async function (t) {
 		const drawnStart = await t.page.screenshot({ clip: startClip });
 		const drawnEnd = await t.page.screenshot({ clip: endClip });
 		let noSwitch, noKnob, noKnobStart, noKnobEnd;
+		/* let each style change reach the screen before it is photographed: two frames, then a short rest (a picture
+		   taken in the same frame as the change once showed the switch still hidden, a false stop) */
+		const painted = async () => { await el.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))); await t.page.waitForTimeout(120); };
 		/* remember the switch's own inline visibility exactly, and keep a handle to the one style node added */
 		const before = await el.evaluate((node) => [node.style.getPropertyValue('visibility'), node.style.getPropertyPriority('visibility')]);
 		let knobOff = null;
 		try {
 			await el.evaluate((node) => node.style.setProperty('visibility', 'hidden', 'important'));
+			await painted();
 			noSwitch = await t.page.screenshot({ clip });
 			await el.evaluate((node, [v, pr]) => { if (v) node.style.setProperty('visibility', v, pr); else node.style.removeProperty('visibility'); }, before);
 			/* mark the very switch being read, whichever attribute found it, and hide the knob of the marked one */
@@ -132,6 +136,7 @@ export default async function (t) {
 				document.head.appendChild(st);
 				return st;
 			});
+			await painted();
 			noKnob = await t.page.screenshot({ clip });
 			noKnobStart = await t.page.screenshot({ clip: startClip });
 			noKnobEnd = await t.page.screenshot({ clip: endClip });
