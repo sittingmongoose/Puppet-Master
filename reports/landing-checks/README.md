@@ -115,8 +115,8 @@ holder needs `MemAvailable` of at least `--memory-floor-gb` (6 GiB by default) p
 A held-back start reports to stderr once a minute. The subcheck timeout starts when the validator
 runs. When `MemAvailable` is unavailable, the slot count still applies.
 
-The checker reads `--jobs` and `landing-budget-v1` support from the target verifier's help. A target
-without both capabilities, or a host that cannot set up the shared slots, runs the aggregates
+The checker reads `--jobs`, `landing-budget-v1` and `landing-readiness-snapshot-v1` support from the
+target verifier's help. A target missing any of these, or a host that cannot set up the shared slots, runs the aggregates
 serially. A verifier that accepts `--jobs` receives `--jobs 1` in that case. Earlier verifiers receive
 their legacy arguments.
 
@@ -135,9 +135,11 @@ though their failure counts describe a regression or an improvement.
 Both modes use one `--readiness-audit-root DIR` option, naming that currentness directory. By default
 they select `/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness` when it is
 present, otherwise the checked tree's directory. A clean worktree temporarily links its missing
-ignored directory to the selected source for the aggregates and exports, then removes its own link
-on success or failure. The source is read, never copied, regenerated or written. Canonical sources
-are still read from the checked worktree. An existing local directory is never replaced: select it
+ignored directory to the selected source and removes its own link on success or failure.
+A compatible target's aggregates, validators and exports read the selected edition from one
+private, read-only copy under the run's temporary directory, including files examined by the Plan
+scans. Older targets read the selected live edition serially. Canonical sources are still
+read from the checked worktree. An existing local directory is never replaced: select it
 explicitly with `--readiness-audit-root`, or use a clean worktree. An explicit nonexistent source is
 an error; default local absence is recorded as absence and the validator still reports its failures.
 
@@ -151,16 +153,20 @@ or `null` when missing. It covers these five direct inputs plus every artifact n
 - `adjudication/GROUP_ARTIFACT_MANIFEST.json`
 - `adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl`
 
-Receipt hashes are expectations to validate, not trusted substitutes for hashing the artifact bytes.
+The report and baseline use SHA-256s computed from the snapshot's own bytes. Receipt hashes
+are expectations to validate. The receipt's artifact paths must belong to the currentness edition.
 Canonical sources listed in the inventory and the validator script are deliberately outside this
 binding: edits to those remain readiness findings. Unreferenced audit outputs are outside it too.
 The source's absolute location is printed in the run report, but is not part of the baseline identity,
 so moving the same evidence does not change the comparison.
 
 Comparison refuses with exit 3 before running the checks if the binding is absent or invalid, or
-the path set, file presence or bytes differ. Inputs are rehashed after each aggregate and after
-exports; changes stop the run before failures are classified or a baseline is written. Unreadable
-inputs also stop it. Malformed audit JSON remains a validator finding while its bytes are bound.
+the path set, file presence or bytes differ. The checker verifies the snapshot against the live
+edition at capture and rehashes the snapshot after the readers finish. It rehashes the bound live
+inputs after each aggregate and after exports. It also checks live file and directory identities
+and change times for a publication or rewrite that was reverted before the final hash.
+A changed edition or unreadable input stops the run before it issues a comparison or writes a
+baseline. Malformed audit JSON remains a validator finding while its bytes are bound.
 There is no staleness exception or pre-existing classification for an input mismatch. Restore the
 recorded input edition; never re-record a baseline to make a pending landing pass.
 

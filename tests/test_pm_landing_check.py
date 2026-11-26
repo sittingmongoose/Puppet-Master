@@ -3561,12 +3561,103 @@ class AggregateReportsTests(unittest.TestCase):
 
 
 class AggregateReadinessInputs(LandingRun):
+    def test_readers_share_a_snapshot_when_the_live_edition_is_restored_before_aggregate_returns(self):
+        import threading
+
+        self.stub()
+        readiness = self.repo / M.READINESS_AUDIT_REL
+        readiness.mkdir(parents=True)
+        inventory = readiness / "CURRENT_EVENT_SOURCE_INVENTORY.json"
+        inventory.write_text('{"edition": 1}', encoding="utf-8")
+        common = ("--readiness-audit-root", str(readiness))
+        code, out = self.run_main(*common, "--record-baseline", "--baseline", "baseline.json")
+        self.assertEqual(code, 0, out + self.stderr)
+        compare_baseline = self.repo / "baseline.json"
+        new_baseline = self.repo / "mixed.json"
+        baseline_bytes = compare_baseline.read_bytes()
+        original_check = self.module.run_check
+
+        for jobs in (1, 4):
+            for record in (False, True):
+                with self.subTest(jobs=jobs, record=record):
+                    inventory.write_text('{"edition": 1}', encoding="utf-8")
+                    self.module.target_worker_support = lambda root: (True, True)
+                    self.module.target_readiness_snapshot_support = lambda root: True
+                    first_read, restored = threading.Event(), threading.Event()
+                    seen = {}
+
+                    def read_edition(check, root, run_dir, timeout, workers, env, supports_jobs):
+                        snapshot = Path(env.get(M.SNAPSHOT_ENV, readiness))
+                        if check == "run-gates":
+                            inventory.write_text('{"edition": 2}', encoding="utf-8")
+                            seen[check] = json.loads((snapshot / inventory.name).read_bytes())["edition"]
+                            first_read.set()
+                            if jobs > 1:
+                                self.assertTrue(restored.wait(timeout=5))
+                        if check == "audit-governance":
+                            self.assertTrue(first_read.wait(timeout=5))
+                            inventory.write_text('{"edition": 1}', encoding="utf-8")
+                            seen[check] = json.loads((snapshot / inventory.name).read_bytes())["edition"]
+                            restored.set()
+                        if check == "plan-migration-validate" and jobs > 1:
+                            self.assertTrue(restored.wait(timeout=5))
+                        return original_check(check, root, run_dir, timeout, workers, env, supports_jobs)
+
+                    mode = (("--record-baseline", "--baseline", str(new_baseline)) if record else
+                            ("--base", self.base, "--baseline", str(compare_baseline)))
+                    with patch.object(self.module, "run_check", read_edition):
+                        code, out = self.run_main(*common, "--jobs", str(jobs), *mode)
+                    self.assertEqual(code, 3, out + self.stderr)
+                    self.assertIn("readiness audit", self.stderr)
+                    if jobs > 1:
+                        self.assertEqual(seen, {"run-gates": 1, "audit-governance": 1})
+                        self.assertEqual(inventory.read_text(encoding="utf-8"), '{"edition": 1}')
+                    self.assertEqual(compare_baseline.read_bytes(), baseline_bytes)
+                    self.assertFalse(new_baseline.exists())
+
+    def test_exports_receive_the_aggregate_snapshot_and_its_tampering_refuses_the_baseline(self):
+        self.stub()
+        self.module.target_readiness_snapshot_support = lambda root: True
+        live = self.repo / M.READINESS_AUDIT_REL
+        live.mkdir(parents=True)
+        inventory = live / "CURRENT_EVENT_SOURCE_INVENTORY.json"
+        inventory.write_bytes(b'{"edition": 1}')
+        read_paths = []
+        original_check = self.module.run_check
+
+        def capture_snapshot(check, root, run_dir, timeout, jobs, env, supports_jobs):
+            snapshot = Path(env[M.SNAPSHOT_ENV])
+            read_paths.append(snapshot)
+            self.assertEqual((snapshot / inventory.name).read_bytes(), inventory.read_bytes())
+            self.assertEqual(snapshot.stat().st_mode & 0o222, 0)
+            self.assertEqual((snapshot / inventory.name).stat().st_mode & 0o222, 0)
+            return original_check(check, root, run_dir, timeout, jobs, env, supports_jobs)
+
+        def tamper_with_snapshot(*args, env, **kwargs):
+            snapshot = Path(env[M.SNAPSHOT_ENV])
+            self.assertEqual(read_paths, [snapshot] * len(M.CHECKS))
+            copy = snapshot / inventory.name
+            copy.chmod(0o600)
+            copy.write_bytes(b'{"edition": 2}')
+            return {}, []
+
+        with patch.object(self.module, "run_check", capture_snapshot), \
+                patch.object(self.module, "key_from_exports", tamper_with_snapshot):
+            code, out = self.run_main("--record-baseline", "--baseline", "baseline.json",
+                                      "--readiness-audit-root", str(live))
+        self.assertEqual(code, 3, out + self.stderr)
+        self.assertIn("readiness audit snapshot changed", self.stderr)
+        self.assertEqual(inventory.read_bytes(), b'{"edition": 1}')
+        self.assertFalse(read_paths[0].parent.exists())
+        self.assertFalse((self.repo / "baseline.json").exists())
+
     def test_a_changed_edition_is_rejected_even_if_the_next_worker_restores_it(self):
         import threading
         from concurrent.futures import ThreadPoolExecutor
 
         self.stub()
         self.module.target_worker_support = lambda root: (True, True)
+        self.module.target_readiness_snapshot_support = lambda root: True
         readiness = self.repo / M.READINESS_AUDIT_REL
         readiness.mkdir(parents=True)
         inventory = readiness / "CURRENT_EVENT_SOURCE_INVENTORY.json"
@@ -3602,9 +3693,14 @@ class AggregateReadinessInputs(LandingRun):
 
                     mode = (("--record-baseline", "--baseline", str(new_baseline)) if record else
                             ("--base", self.base, "--baseline", str(compare_baseline)))
-                    with patch.object(self.module, "ThreadPoolExecutor", SignalAuditCompletion), \
+                    with tempfile.TemporaryDirectory() as keep, \
+                            patch.object(self.module, "ThreadPoolExecutor", SignalAuditCompletion), \
                             patch.object(self.module, "run_check", change_edition):
-                        code, out = self.run_main(*common_args, "--jobs", str(jobs), *mode)
+                        code, out = self.run_main(*common_args, "--jobs", str(jobs), *mode,
+                                                  "--keep-check-reports", keep)
+                        kept = {path.stem for path in Path(keep).glob("*.json")}
+                        expected = set(M.CHECKS) if jobs > 1 else {"run-gates", "audit-governance"}
+                        self.assertEqual(kept, expected)
                     if jobs > 1:
                         self.assertEqual(inventory.read_text(encoding="utf-8"), '{"edition": 1}')
                     self.assertEqual(code, 3, out + self.stderr)
@@ -3618,6 +3714,7 @@ class SharedWorkerBudget(LandingRun):
 
     def capture(self):
         self.module.target_worker_support = lambda root: (True, True)
+        self.module.target_readiness_snapshot_support = lambda root: True
         seen = []
 
         def run_check(name, root, run_dir, timeout, jobs=1, env=None, supports_jobs=True):
@@ -3693,12 +3790,20 @@ class SharedWorkerBudget(LandingRun):
                     self.assertIn(f"{option} must be finite", self.refused("--jobs", "4", f"{option}={value}"))
 
     def test_inherited_budget_and_child_flag_never_reach_children(self):
-        source = (ROOT / "scripts" / "pm-landing-check.py").read_text(encoding="utf-8")
-        start = source.index("child_env: dict[str, str] = dict(os.environ)")
-        window = source[start:start + 600]
-        for name in ("SLOTS_DIR_ENV", "SLOTS_COUNT_ENV", "MEMORY_FLOOR_MB_ENV", "AGGREGATE_CHILD_ENV"):
-            self.assertIn(name, window)
-        self.assertIn("child_env.pop(name, None)", window)
+        seen = self.capture()
+        inherited = {name: "inherited" for name in (
+            M.SLOTS_DIR_ENV, M.SLOTS_COUNT_ENV, M.MEMORY_FLOOR_MB_ENV, M.MEMORY_HEADROOM_MB_ENV,
+            M.START_SETTLE_SECONDS_ENV, M.AGGREGATE_CHILD_ENV,
+        )}
+        check = self.module.run_check
+
+        def capture_env(name, root, run_dir, timeout, jobs, env, supports_jobs):
+            self.assertTrue(inherited.keys().isdisjoint(env))
+            return check(name, root, run_dir, timeout, jobs, env, supports_jobs)
+
+        with patch.dict(os.environ, inherited), patch.object(self.module, "run_check", capture_env):
+            self.record()
+        self.assertEqual(len(seen), len(M.CHECKS))
 
 
 
@@ -3790,7 +3895,7 @@ class HistoricalTargetEnvironment(LandingRun):
 
 
 class TargetBudgetNegotiation(LandingRun):
-    def test_targets_without_the_budget_run_whole_aggregates_serially(self):
+    def test_targets_without_the_budget_or_snapshot_run_whole_aggregates_serially(self):
         import threading
 
         scripts = self.repo / "scripts"
@@ -3799,8 +3904,11 @@ class TargetBudgetNegotiation(LandingRun):
             """print('{"status": "pass", "failures": []}')""", encoding="utf-8")
         caller = threading.get_ident()
         real_run_check = self.module.run_check
-        for source, cli_jobs in ((OLD_TARGET_VERIFIER, False), (NEW_TARGET_VERIFIER, True)):
-            with self.subTest(cli_jobs=cli_jobs):
+        budget_target = NEW_TARGET_VERIFIER.replace("[--jobs N]", "[--jobs N] landing-budget-v1")
+        for source, cli_jobs, reason in ((OLD_TARGET_VERIFIER, False, "--jobs"),
+                                         (NEW_TARGET_VERIFIER, True, "shared validator budget"),
+                                         (budget_target, True, "readiness snapshot support")):
+            with self.subTest(reason=reason):
                 # Probe each target once using the real subprocess path.
                 self.module = load_module()
                 self.module.current_run_dir = lambda root: "Plans/.plan_migration/run-017"
@@ -3809,13 +3917,16 @@ class TargetBudgetNegotiation(LandingRun):
 
                 def run_check(name, root, run_dir, timeout, jobs, env, supports_jobs):
                     calls.append((name, threading.get_ident(), jobs, supports_jobs, M.SLOTS_DIR_ENV in env))
+                    self.assertTrue(set(M.SNAPSHOT_ENV_NAMES).isdisjoint(env))
                     return real_run_check(name, root, run_dir, timeout, jobs, env, supports_jobs)
 
-                with patch.object(self.module, "run_check", run_check):
+                inherited = {key: str(self.repo / "elsewhere") for key in M.SNAPSHOT_ENV_NAMES}
+                with patch.dict(os.environ, inherited), patch.object(self.module, "run_check", run_check):
                     code, out = self.run_main("--jobs", "4", "--record-baseline", "--baseline", "baseline.json")
                 self.assertEqual(code, 0, out + self.stderr)
                 self.assertEqual(calls, [(name, caller, 1, cli_jobs, False) for name in M.CHECKS])
                 self.assertIn("running serially", self.stderr)
+                self.assertIn(reason, self.stderr)
 
 
 class TargetJobsNegotiation(unittest.TestCase):
@@ -3888,3 +3999,4 @@ class TargetJobsNegotiation(unittest.TestCase):
                               "pm_wiring_inventory.py": wiring.stdout})
         self.assertFalse(M.target_accepts_jobs(old))
         self.assertEqual(M.target_worker_support(ROOT), (True, True))
+        self.assertTrue(M.target_readiness_snapshot_support(ROOT))

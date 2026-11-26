@@ -80,9 +80,10 @@ exit 0 to 1 and changes no other exit code. A baseline is never recorded from a 
 
 The readiness audit inputs are gitignored. Both modes select --readiness-audit-root (the shared
 currentness directory when present, otherwise this tree's), and expose it through a temporary
-symlink when this tree has no local copy. The baseline binds the five direct inputs and the receipt's
-artifact dependencies by presence and SHA-256. Missing metadata, different inputs, unreadable inputs,
-or inputs that change during the checks stop comparison with exit 3; no failure is excused by that.
+symlink when this tree has no local copy. Compatible targets read one private read-only snapshot at
+any job count. Older targets run serially. The baseline binds the five direct inputs and the receipt's
+artifact dependencies by presence and SHA-256. The checker verifies snapshot and live bytes and the
+live edition's identity before it returns a verdict or writes a baseline. A mismatch stops it with exit 3.
 
 It exits 0 only when every subcheck finished and it has nothing to report.
 
@@ -131,7 +132,7 @@ from __future__ import annotations
 
 import argparse
 from concurrent.futures import ThreadPoolExecutor
-from contextlib import contextmanager, nullcontext
+from contextlib import ExitStack, contextmanager, nullcontext
 import hashlib
 import importlib.util
 import json
@@ -149,7 +150,15 @@ import time
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterator
+
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pm_evidence_paths import relative_parts
+from pm_readiness_audit import (
+    AUDIT_REL as READINESS_AUDIT_REL,
+    SNAPSHOT_CAPABILITY, SNAPSHOT_ENV, SNAPSHOT_ENV_NAMES, SNAPSHOT_REPO_ENV, SNAPSHOT_WALK_ENV,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BASELINE = "reports/landing-checks/baseline.json"
@@ -158,7 +167,6 @@ CURRENT_RUN_POINTER = "Plans/.plan_migration/current_run.json"
 PLAN_UNITS_INDEX = "Plans/.plan_index/plan_units.jsonl"
 # Direct reads in pm_pnc019_currentness.event_authority_audit_failures and its quarantine check.
 # The receipt names the other audit artifacts that validator rehashes.
-READINESS_AUDIT_REL = "Plans/.audits/event-authority-2026-08-13-currentness"
 READINESS_AUDIT_DIRECT_INPUTS = (
     "VALIDATOR_RECEIPT.json",
     "EVENT_FAMILY_DENOMINATOR_STATUS.json",
@@ -355,17 +363,21 @@ def readiness_audit_source(root: Path, source: Path):
                 pass
 
 
-def readiness_audit_inputs(root: Path) -> dict[str, Any]:
+def readiness_audit_inputs(root: Path, edition: Path | None = None) -> dict[str, Any]:
     """Identity of the ignored audit bytes actually read, never the live canonical source hashes.
 
     A missing file is recorded as null. Malformed JSON is left for the validator to report;
     unreadable bytes cannot establish identity and stop the landing check instead.
     """
     files: dict[str, str | None] = {}
+    edition = root / READINESS_AUDIT_REL if edition is None else edition
 
     def read(path: str) -> bytes | None:
+        relative_parts(path)
+        if not path.startswith(READINESS_AUDIT_REL + "/"):
+            raise RuntimeError(f"readiness receipt artifact is outside its audit edition: {path}")
         try:
-            data = (root / path).read_bytes()
+            data = (edition / path.removeprefix(READINESS_AUDIT_REL + "/")).read_bytes()
         except FileNotFoundError:
             data = None
         except OSError as exc:
@@ -387,6 +399,54 @@ def readiness_audit_inputs(root: Path) -> dict[str, Any]:
     for path in sorted(paths - {receipt_path}):
         read(path)
     return {"schema_id": READINESS_AUDIT_INPUTS_SCHEMA_ID, "files": dict(sorted(files.items()))}
+
+
+def readiness_edition_paths(edition: Path) -> Iterator[Path]:
+    if edition.is_dir():
+        yield edition
+        yield from edition.rglob("*")
+
+
+def audit_path_stamp(path: Path, *, follow_symlinks: bool = False) -> tuple[int, ...] | None:
+    try:
+        info = path.stat(follow_symlinks=follow_symlinks)
+    except FileNotFoundError:
+        return None
+    return info.st_dev, info.st_ino, info.st_mode, info.st_size, info.st_ctime_ns, info.st_mtime_ns
+
+
+def readiness_edition_stamp(edition: Path) -> dict[str, Any]:
+    """Notice replaced or rewritten files even when their original bytes were restored."""
+    return {
+        path.relative_to(edition).as_posix(): (
+            audit_path_stamp(path), audit_path_stamp(path, follow_symlinks=True) if path.is_symlink() else None
+        )
+        for path in readiness_edition_paths(edition)
+    }
+
+
+def readiness_edition_hashes(edition: Path) -> dict[str, str | None]:
+    return {
+        path.relative_to(edition).as_posix():
+            hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None
+        for path in readiness_edition_paths(edition)
+    }
+
+
+def copy_readiness_edition(live: Path, snapshot: Path) -> None:
+    directories = []
+    for path in readiness_edition_paths(live):
+        target = snapshot / path.relative_to(live)
+        if path.is_dir() and (path == live or not path.is_symlink()):
+            target.mkdir()
+            directories.append(target)
+        elif path.is_file():
+            shutil.copyfile(path, target)
+            target.chmod(0o400)
+        else:
+            raise RuntimeError(f"cannot snapshot readiness audit input {path}: expected a file or directory")
+    for directory in directories:
+        directory.chmod(0o500)
 
 
 def require_same_readiness_audit_inputs(recorded: Any, current: dict[str, Any], when: str) -> None:
@@ -433,22 +493,17 @@ def target_environment(base_env: dict[str, str] | None = None) -> dict[str, str]
     # Historical target verifiers still read the retired cache controls. A cached report can
     # describe an entirely different set of inputs.
     return {name: value for name, value in (os.environ if base_env is None else base_env).items()
-            if not name.startswith("PM_PLANS_VERIFY_DEDUPE")}
+            if not name.startswith("PM_PLANS_VERIFY_DEDUPE")
+            and (base_env is not None or name not in SNAPSHOT_ENV_NAMES)}
 
 
-_TARGET_WORKER_SUPPORT: dict[str, tuple[bool, bool]] = {}
+_TARGET_VERIFIER_HELP: dict[str, str] = {}
 LANDING_BUDGET_CAPABILITY = "landing-budget-v1"
 
 
-def target_worker_support(root: Path) -> tuple[bool, bool]:
-    """Read the target verifier's --jobs and shared budget support from its own help.
-
-    A verifier can accept --jobs while predating the shared budget or enforcing an older floor
-    that can stall even when idle. The capability marker advertises the floor that permits the
-    first validator to start. Both aggregate commands share these CLI options.
-    """
+def target_verifier_help(root: Path) -> str:
     key = str(root.resolve())
-    if key not in _TARGET_WORKER_SUPPORT:
+    if key not in _TARGET_VERIFIER_HELP:
         help_text = ""
         try:
             proc = subprocess.run(
@@ -458,8 +513,18 @@ def target_worker_support(root: Path) -> tuple[bool, bool]:
                 help_text = proc.stdout
         except OSError:
             pass
-        _TARGET_WORKER_SUPPORT[key] = "--jobs" in help_text, LANDING_BUDGET_CAPABILITY in help_text
-    return _TARGET_WORKER_SUPPORT[key]
+        _TARGET_VERIFIER_HELP[key] = help_text
+    return _TARGET_VERIFIER_HELP[key]
+
+
+def target_worker_support(root: Path) -> tuple[bool, bool]:
+    """Discover jobs and the shared budget independently on the target verifier."""
+    help_text = target_verifier_help(root)
+    return "--jobs" in help_text, LANDING_BUDGET_CAPABILITY in help_text
+
+
+def target_readiness_snapshot_support(root: Path) -> bool:
+    return SNAPSHOT_CAPABILITY in target_verifier_help(root)
 
 
 def target_accepts_jobs(root: Path) -> bool:
@@ -2214,14 +2279,15 @@ def main() -> int:
 
     root = Path(args.root).resolve()
     if args.readiness_audit_root:
-        source = Path(args.readiness_audit_root)
-        source = (source if source.is_absolute() else root / source).resolve()
+        source_path = root / args.readiness_audit_root
+        source = source_path.resolve()
         if not source.is_dir():
             print(f"pm-landing-check: readiness audit source is not a directory: {source}", file=sys.stderr)
             return 3
     else:
-        source = (SHARED_READINESS_AUDIT_ROOT if SHARED_READINESS_AUDIT_ROOT.is_dir()
-                  else root / READINESS_AUDIT_REL).resolve()
+        source_path = (SHARED_READINESS_AUDIT_ROOT if SHARED_READINESS_AUDIT_ROOT.is_dir()
+                       else root / READINESS_AUDIT_REL)
+        source = source_path.resolve()
     # One scratch directory for the run's worker slots, outside the repository. It is removed when
     # the run ends, however it ends; check_main only points the aggregates at it.
     try:
@@ -2229,8 +2295,9 @@ def main() -> int:
     except OSError:
         args.slots_root = None
     try:
-        with readiness_audit_source(root, source):
-            return check_main(args, root, source)
+        source_stamp = audit_path_stamp(source_path)
+        with ExitStack() as scratch, readiness_audit_source(root, source):
+            return check_main(args, root, source, source_path, source_stamp, scratch)
     except (RuntimeError, OSError) as exc:
         print(f"pm-landing-check: {exc}", file=sys.stderr)
         return 3
@@ -2239,7 +2306,8 @@ def main() -> int:
             shutil.rmtree(args.slots_root, ignore_errors=True)
 
 
-def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
+def check_main(args: argparse.Namespace, root: Path, audit_source: Path, source_path: Path,
+               source_stamp: tuple[int, ...] | None, scratch: ExitStack) -> int:
     baseline_path = Path(args.baseline)
     if not baseline_path.is_absolute():
         baseline_path = root / baseline_path
@@ -2283,6 +2351,8 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     baseline: dict[str, Any] = {}
     touched: list[str] = []
     currency: dict[str, Any] = {}
+    live_edition = root / READINESS_AUDIT_REL
+    live_stamp = readiness_edition_stamp(live_edition)
     audit_inputs = readiness_audit_inputs(root)
     rename_context = None
     if not args.record_baseline:
@@ -2311,19 +2381,45 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     before = tree_state(root)
     after = None
     supports_jobs, supports_budget = target_worker_support(root)
+    supports_snapshot = target_readiness_snapshot_support(root)
     jobs = args.jobs
-    if jobs > 1 and not (supports_jobs and supports_budget):
-        reason = "--jobs" if not supports_jobs else "the current shared validator budget"
+    if jobs > 1 and not (supports_jobs and supports_budget and supports_snapshot):
+        if not supports_jobs:
+            reason = "--jobs"
+        elif not supports_budget:
+            reason = "the current shared validator budget"
+        else:
+            reason = "readiness snapshot support"
         print(f"pm-landing-check: the target verifier lacks {reason}; running serially.", file=sys.stderr)
         jobs = 1
 
     # Every child gets an explicit environment built here (review A3).
-    child_env: dict[str, str] = dict(os.environ)
+    child_env = target_environment()
     # Only this run sets the worker budget and the aggregate-child flag; inherited copies would let a --jobs 1 run
     # honour another run's slots or switch off subcheck timeouts (cheap review r2 N2).
     for name in (SLOTS_DIR_ENV, SLOTS_COUNT_ENV, MEMORY_FLOOR_MB_ENV, MEMORY_HEADROOM_MB_ENV,
                  START_SETTLE_SECONDS_ENV, AGGREGATE_CHILD_ENV):
         child_env.pop(name, None)
+
+    snapshot = None
+    snapshot_hashes = None
+    snapshot_stamp = None
+    if supports_snapshot:
+        snapshot_dir = scratch.enter_context(tempfile.TemporaryDirectory(prefix="pm-landing-readiness-"))
+        snapshot = Path(snapshot_dir).resolve() / "edition"
+        copy_readiness_edition(live_edition, snapshot)
+        snapshot_hashes = readiness_edition_hashes(snapshot)
+        snapshot_stamp = readiness_edition_stamp(snapshot)
+        if (snapshot_hashes != readiness_edition_hashes(live_edition)
+                or live_stamp != readiness_edition_stamp(live_edition)
+                or source_stamp != audit_path_stamp(source_path)):
+            raise RuntimeError("readiness audit edition changed while taking its snapshot")
+        snapshot_inputs = readiness_audit_inputs(root, snapshot)
+        require_same_readiness_audit_inputs(audit_inputs, snapshot_inputs, "changed while taking the snapshot")
+        audit_inputs = snapshot_inputs
+        child_env[SNAPSHOT_ENV] = str(snapshot)
+        child_env[SNAPSHOT_REPO_ENV] = str(root)
+        child_env[SNAPSHOT_WALK_ENV] = "1" if live_edition.is_dir() and not live_edition.is_symlink() else "0"
 
     export_pool = None
     if jobs > 1:
@@ -2351,9 +2447,6 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
 
     def consume(check: str, report: dict[str, Any]) -> None:
         nonlocal after
-        if keep_dir is not None:
-            (keep_dir / f"{check}.json").write_text(
-                json.dumps(report, indent=1, sort_keys=True) + "\n", encoding="utf-8")
         statuses[check] = str(report.get("status", "unknown"))
         check_items, check_counts = extract(check, report, root, rename_context)
         items.extend(check_items)
@@ -2365,8 +2458,9 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     def run_with_readiness_check(check: str) -> dict[str, Any]:
         report = run_check(check, root, run_dir, args.subcheck_timeout_seconds, jobs, child_env,
                            supports_jobs)
-        # Check before this worker returns. A later aggregate may finish after the input edition
-        # has been restored, so checking only when consuming the reports can miss a change.
+        if keep_dir is not None:
+            (keep_dir / f"{check}.json").write_text(
+                json.dumps(report, indent=1, sort_keys=True) + "\n", encoding="utf-8")
         require_same_readiness_audit_inputs(audit_inputs, readiness_audit_inputs(root),
                                             f"changed during {check}")
         return report
@@ -2426,6 +2520,15 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         slot_pool=export_pool)
     require_same_readiness_audit_inputs(audit_inputs, readiness_audit_inputs(root),
                                       "changed during the exports")
+    if snapshot is not None:
+        if (snapshot_hashes != readiness_edition_hashes(snapshot)
+                or snapshot_stamp != readiness_edition_stamp(snapshot)):
+            raise RuntimeError("the readiness audit snapshot changed during the checks")
+        if snapshot_hashes != readiness_edition_hashes(live_edition):
+            raise RuntimeError("the live readiness audit edition differs from its snapshot after the checks")
+    if live_stamp != readiness_edition_stamp(live_edition) or source_stamp != audit_path_stamp(source_path):
+        raise RuntimeError("the live readiness audit edition changed during the checks, "
+                           "even if its original bytes were restored")
 
     if args.record_baseline:
         untracked = untracked_check_inputs(root)

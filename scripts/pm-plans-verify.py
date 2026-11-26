@@ -27,6 +27,7 @@ from urllib.parse import urlparse
 
 if str(Path(__file__).resolve().parent) not in sys.path:
     sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pm_readiness_audit import AUDIT_REL, SNAPSHOT_CAPABILITY, audit_input, logical_path, snapshot_for, tree_paths
 from pm_wiring_inventory import command_handler_bindings, wiring_command_excluded
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -71,7 +72,7 @@ def utc_now() -> str:
 
 
 def rel(path: Path) -> str:
-    return path.resolve().relative_to(ROOT).as_posix()
+    return logical_path(ROOT, path.resolve()).relative_to(ROOT).as_posix()
 
 
 def exact_path(ref: str) -> tuple[Path | None, dict[str, Any] | None]:
@@ -83,6 +84,8 @@ def exact_path(ref: str) -> tuple[Path | None, dict[str, Any] | None]:
         return None, {"path": ref, "error": "absolute_ref_not_allowed"}
 
     current = ROOT
+    snapshot = snapshot_for(ROOT)
+    audit_dir = ROOT / AUDIT_REL
     resolved_parts: list[str] = []
     for part in posix.parts:
         if part in {"", "."}:
@@ -95,6 +98,10 @@ def exact_path(ref: str) -> tuple[Path | None, dict[str, Any] | None]:
             children = {child.name: child for child in current.iterdir()}
         except NotADirectoryError:
             return None, {"path": ref, "error": "parent_not_directory", "parent": "/".join(resolved_parts)}
+        if snapshot is not None and current == audit_dir.parent:
+            children.pop(audit_dir.name, None)
+            if snapshot.is_dir():
+                children[audit_dir.name] = snapshot
         if part not in children:
             case_matches = [child.name for child in children.values() if child.name.lower() == part.lower()]
             if case_matches:
@@ -1151,20 +1158,20 @@ def iter_repo_files(capture_paths: Iterable[str] | None = None) -> list[Path]:
         for raw in proc.stdout.split(b"\0"):
             if not raw:
                 continue
-            path = ROOT / raw.decode("utf-8")
+            path = audit_input(ROOT, raw.decode("utf-8"))
             try:
                 if not path.is_symlink() and path.is_file():
                     files.append(path)
             except OSError:
                 continue
     else:
-        for path in ROOT.rglob("*"):
+        for path in tree_paths(ROOT, ROOT):
             try:
                 if path.is_symlink() or not path.is_file():
                     continue
             except OSError:
                 continue
-            parts = path.relative_to(ROOT).parts
+            parts = logical_path(ROOT, path).relative_to(ROOT).parts
             if ".git" not in parts:
                 files.append(path)
 
@@ -1311,7 +1318,7 @@ def cmd_json_syntax(args: argparse.Namespace) -> dict[str, Any]:
         if path.suffix not in {".json", ".jsonl"}:
             continue
         files_checked += 1
-        path_ref = path.relative_to(ROOT).as_posix()
+        path_ref = logical_path(ROOT, path).relative_to(ROOT).as_posix()
         capture = capture_modes.get(path_ref)
         if capture is not None:
             consumed_capture_paths.add(path_ref)
@@ -1938,10 +1945,10 @@ def cmd_validate_plan_graph(args: argparse.Namespace) -> dict[str, Any]:
 
 def plan_text_files() -> list[Path]:
     files: list[Path] = []
-    for path in PLANS.rglob("*"):
+    for path in tree_paths(ROOT, PLANS):
         if not path.is_file():
             continue
-        parts = path.relative_to(PLANS).parts
+        parts = logical_path(ROOT, path).relative_to(PLANS).parts
         if parts and parts[0] in {".pipeline", "_shards", ".evidence", "ledgers"}:
             continue
         if path.suffix.lower() in {".md", ".json"}:
@@ -6640,7 +6647,7 @@ def cmd_validate_web_capability_contracts(args: argparse.Namespace) -> dict[str,
             if token not in text:
                 failures.append({"path": rel(path), "token": token, "error": "missing_web_capability_doc_token"})
 
-    for path in PLANS.rglob("*"):
+    for path in tree_paths(ROOT, PLANS):
         if not path.is_file():
             continue
         path_rel = rel(path)
@@ -7658,7 +7665,8 @@ def main() -> int:
                 help="Run this many independent subchecks at once, each still in its own process with its own "
                      f"temp and report paths; results are emitted in the original order (default: {default_jobs()}; "
                      f"1 is the serial run; at most {MAX_JOBS}, and a landing check shares one such budget "
-                     "across aggregates (landing-budget-v1).",
+                     "across aggregates (landing-budget-v1); supports a run-owned readiness snapshot "
+                     f"({SNAPSHOT_CAPABILITY}).",
             )
     args = parser.parse_args()
     if hasattr(args, "jobs") and not 1 <= int(args.jobs) <= MAX_JOBS:
