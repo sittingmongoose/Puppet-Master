@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L13358-L13823
+Source lines: L13358-L13825
 
-Source SHA256: `18e96c27446e4d0b23575a287ade073ce7190abf9c4088977722cfaff7b78a79`
+Source SHA256: `f97af5307c2f351e732c68b3ff4fb848894a02cca3277936e68429cb9459974d`
 
 ---
 
@@ -77,10 +77,11 @@ canonical_text: >-
   sent or produced a turn, so the disclosure never depends on a particular request. Every other surface that shows the run's tool-calling mode shows
   them with it, while a run that did not request Code Mode is shown, where its tool-calling mode is shown at all, neutrally as T-191 says.
   Code Mode is never reported as effective for a run in which any tool other than the
-  directly callable tools named in T-190 was dispatched another way. A new run in a resumed
-  session or conversation reads T-191's row when it starts, like any other run; a run that continues under the same
-  run ID after a pause, a prerequisite resume or a new attempt keeps the value it read when it started, and a child
-  or subagent run and a follow-up run spawned by context rotation take their value as T-191 says. An effective mode that differs from the session's earlier
+  directly callable tools named in T-190 was dispatched another way. Where a run's requested
+  mode comes from is T-191's alone: a new run that inherits no value and has none frozen for it, including such a
+  run in a resumed session or conversation, reads T-191's row when it starts, and every other run, whether it
+  continues under the same run ID, is a child or subagent run, follows a context rotation, or is dispatched from
+  scheduled, delayed or earlier-frozen work, takes its value as T-191 says. An effective mode that differs from the session's earlier
   runs is recorded, with its typed reason when it is mixed or ordinary tool calls; a not applicable record carries no reason.
 gui_related: true
 gui_classification_reason: Mixed unit. It defines the runtime tool-dispatch mode and its record, and it also requires the run's transcript status or stop entry, and every other surface that shows the tool-calling mode, to show a fallback's effective mode and typed reason. Split recommended when a GUI owner unit for the transcript takes the presentation rule; kept together here so the record and its one required disclosure cannot drift apart.
@@ -243,7 +244,7 @@ acceptance_criteria:
   - Under Host Tool Execution a request on which the script tool is offered carries it and does not also carry one provider tool schema per registry tool the script can call; a request on which it is not offered keeps the ordinary tool-call path.
   - A model whose Models_System tool_use is false can use Code Mode through an owned in-band dialect on an in-band route, and a tool result the model wrote itself never reaches replayable history.
   - On a direct API in-band route, the result of an accepted in-band call, from a script or from an ordinary tool, is returned in the next request, if one is admitted and sent with the same model family, carriage and owned dialect, as a Puppet Master-authored result in the owned dialect carrying the Puppet Master-minted call ID, holding whatever content Prompt_Pipeline's tool-result rules admit for the model; where those rules keep the content from the model, what the model is shown for that call is what those rules say, and the settled call and result stay in history under their owners. When no later request is sent, the result and the stop keep their existing owners' handling; when the next request differs in model family, carriage or dialect, the settled call and result pair goes through Prompt_Pipeline's replay and compatibility rules instead.
-  - On a server bridge every request is sent with a projection that matches its own offer and bounded selection and is shown to no other run, so two runs on one profile, one with the row On and one with it Off, never see each other's tools, and a run whose offer changes between requests is never sent a stale projection. Where the bridge still cannot present the script tool to a request in that way after any fresh provider session its owner permits, for example because the projection is shared by the whole profile, no request is offered the script tool through it; for an otherwise eligible request of a run with the row On, one with a positive report of an approved JavaScript EvalSession and policy admission, the omission reason is not materialized, and the request uses the ordinary projection where the bridge can present its bounded ordinary selection. Where the bridge cannot present that either, the request, of either run, takes the fallback shape, delegated or reasoning-only, that CLI_Bridged_Providers admits, or is stopped before its offer is decided; a run with the row On then counts that execution-shape reason. A run with the row Off records setting in every one of these cases, and T-188 derives every run's record.
+  - On a server bridge every request is sent with a projection that matches its own offer and bounded selection and is shown to no other run, so two runs on one profile, one with the row On and one with it Off, never see each other's tools, and a run whose offer changes between requests is never sent a stale projection. Where the bridge still cannot present the script tool to a request in that way after any fresh provider session its owner permits, for example because the projection is shared by the whole profile, no request is offered the script tool through it; for an otherwise eligible request of a run with the row On, one with a positive report of an approved JavaScript EvalSession and policy admission, the omission reason is not materialized, and the request uses the ordinary projection where the bridge can present its bounded ordinary selection. Where the bridge cannot present that either, the request, of either run, takes the fallback shape, delegated or reasoning-only, that CLI_Bridged_Providers admits, or is stopped before its offer is decided. A request that takes the fallback shape has that execution-shape reason as its own, and what it contributes to its run's record is T-188's to decide; a request stopped before its offer is decided contributes no request and no reason. A run with the row Off records setting in every one of these cases, and T-188 derives every run's record.
   - On a request on which the script tool is not offered, for any reason, on an in-band route (a direct API route under Host Tool Execution whose model's tool_use capability is false, or a bridged CLI under the HTE strategy without supported structured tool intents), every Puppet Master tool call made on that request is an in-band tool call in the owned dialect, under the same admission gate; on a bridged CLI under HTE with supported structured tool intents the same calls are structured tool intents, never in-band.
   - Under the DAE strategy, on a request on which the script tool is not offered, for any reason, a CLI that accepts projected Puppet Master tools is offered each request-selected Puppet Master tool that the ordinary form materializes as its own projected tool, and Puppet Master dispatches each call with the checks a script's call to that tool gets.
   - A run offered the script tool on some requests and not on others carries, on every request that is sent and whose route can carry Puppet Master tools, that request's selected tool calls by the one channel this unit gives it. A request stopped before it is sent carries nothing and is recorded as T-188 says; a request on a route that accepts no Puppet Master tools carries none.
@@ -377,7 +378,7 @@ canonical_text: >-
   Code Mode can be turned off in Settings. The ordinary setting row code.execution.code-mode in
   Plans/settings_inventory.json is a toggle labelled Code Mode, On by default, that can be set Everywhere and
   differ by Project, and Settings layering under Settings_System resolves it like any other inventory row. Its
-  value is read once, when a run starts, and that run keeps it until it ends: changing the row applies from the next
+  value is read once, when a run that inherits no value and has none frozen for it starts, and that run keeps it until it ends: changing the row applies from the next
   run that reads the row and never changes a run in progress, and a run that is paused and resumed under the same run ID, or given a
   new attempt, is still that run. Scheduled or delayed work takes the row's value in the same snapshot, at the same
   moment, as the rest of its requested configuration under its delayed-work owners (Run_Modes RM-053, Permissions
@@ -423,7 +424,8 @@ canonical_text: >-
   the execution tier and its limits, a delegated or reasoning-only fallback, model substitution and capability
   notices, and permission and safety notices.
 gui_related: true
-gui_classification_reason: Adds a visible, searchable Settings toggle and governs how its Off state is presented, as well as its runtime meaning.
+gui_classification_reason: Mixed unit. It adds a visible, searchable Settings toggle and governs how its Off state is presented, and it also defines the runtime meaning of the row, where a run's value comes from and what stays equal between the two modes. Split recommended into the Settings row and Off presentation on one side and the runtime preference and dispatch meaning on the other; kept together here so the switch and what it means land as one decision.
+split_recommended: true
 depends_on: [T-188, T-189]
 unblocks: []
 acceptance_criteria:
