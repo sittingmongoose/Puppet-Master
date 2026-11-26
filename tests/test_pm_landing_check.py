@@ -1036,6 +1036,7 @@ class EndToEnd(unittest.TestCase):
         self.module.run_check = run_check
         self.module.current_run_dir = lambda root: "Plans/.plan_migration/run-017"
         self.module.target_readiness_snapshot_support = lambda root: True
+        self.module.target_closure_export_support = lambda root: True
 
     def run_main(self, *argv):
         import io, contextlib
@@ -1509,6 +1510,7 @@ class LandingRun(unittest.TestCase):
         self.module.run_check = run_check
         self.module.current_run_dir = lambda root: "Plans/.plan_migration/run-017"
         self.module.target_readiness_snapshot_support = lambda root: True
+        self.module.target_closure_export_support = lambda root: True
 
     def run_main(self, *argv):
         import io, contextlib
@@ -2813,9 +2815,11 @@ class ExportKeyedSubchecks(LandingRun):
         closure = [{"path": "Plans/.audits/_semantic_closure_registry.jsonl", "error": "audit_closure_validator_error",
                     "detail": f"closure row {n} lacks its evidence"} for n in range(201)]
         self.stub(gates={"validate_audit_closure": (closure, 200)}, audit={"audit_closure": (closure, 200)})
+        self.module.target_closure_export_support = lambda root: False
         self.record()
         self.touch("Plans/Touched.md")
         self.stub(gates={"validate_audit_closure": (closure, 201)}, audit={"audit_closure": (closure, 201)})
+        self.module.target_closure_export_support = lambda root: False
         code, out = self.compare()
         self.assertEqual(code, 2, out)
         self.assertIn("[not keyed] run-gates/validate_audit_closure (50 of 201 printed): validate-audit-closure writes no "
@@ -2946,17 +2950,28 @@ class ExportKeyedSubchecks(LandingRun):
         code, out = self.compare()
         self.assertEqual(code, 0, out)
         header = flat(out.split("\n\n", 1)[0])
-        self.assertIn("complete exports, read in scripts/pm-plans-verify.py: the report each of these 37 commands writes "
+        self.assertIn("complete exports, read in scripts/pm-plans-verify.py: the report each of these 38 commands writes "
                       "with --report holds every row it counts, so a subcheck that runs one and prints only a sample is "
                       "keyed from it when its total equals the printed total:", header)
         for command in sorted(M.EXPORT_COMMANDS):
             self.assertIn(f" {command}", header)
-        self.assertIn("no complete export: validate-audit-closure, because cmd_validate_audit_closure keeps only the "
-                      "first 200 of pm-audit-closure.py's errors", header)
+        self.assertNotIn("no complete export:", header)
         self.assertEqual(self.export_calls, [])
         report = json.loads(self.compare("--json")[1])
-        self.assertEqual((len(report["exports"]["complete_export_commands"]), report["exports"]["subchecks"]), (37, []))
-        self.assertEqual(sorted(report["exports"]["no_complete_export"]), ["validate-audit-closure"])
+        self.assertEqual((len(report["exports"]["complete_export_commands"]), report["exports"]["subchecks"]), (38, []))
+        self.assertEqual(sorted(report["exports"]["no_complete_export"]), [])
+
+        # Historical targets without landing_closure_export_v1 still list validate-audit-closure under no_complete_export.
+        self.module.target_closure_export_support = lambda root: False
+        legacy_code, legacy_out = self.compare()
+        self.assertEqual(legacy_code, 0, legacy_out)
+        legacy_header = flat(legacy_out.split("\n\n", 1)[0])
+        self.assertIn("these 37 commands writes", legacy_header)
+        self.assertIn("no complete export: validate-audit-closure, because cmd_validate_audit_closure keeps only the "
+                      "first 200 of pm-audit-closure.py's errors", legacy_header)
+        legacy_report = json.loads(self.compare("--json")[1])
+        self.assertEqual(len(legacy_report["exports"]["complete_export_commands"]), 37)
+        self.assertEqual(sorted(legacy_report["exports"]["no_complete_export"]), ["validate-audit-closure"])
 
     def test_kept_check_reports_keep_each_export(self):
         with tempfile.TemporaryDirectory() as keep:
@@ -2966,10 +2981,10 @@ class ExportKeyedSubchecks(LandingRun):
             self.assertEqual((kept["argv"], kept["timed_out"], len(kept["report"]["failures"])),
                              (["validate-plan-graph"], False, 133))
 
-    def test_the_real_map_reads_every_aggregate_command_as_a_complete_export_but_audit_closure(self):
+    def test_the_real_map_reads_every_aggregate_command_as_a_complete_export(self):
         """The enumeration against scripts/pm-plans-verify.py as it stands: every subcheck the two aggregates
-        run maps to a command in EXPORT_COMMANDS, except the audit-closure pair, and both copies of a validator
-        run one command line. A command added to the aggregates later fails here until someone reads it."""
+        run maps to a command in EXPORT_COMMANDS, and both copies of a validator run one command line. A
+        command added to the aggregates later fails here until someone reads it."""
         import ast
         tree = ast.parse((ROOT / "scripts" / "pm-plans-verify.py").read_text(encoding="utf-8"))
         names = {}
@@ -2987,16 +3002,288 @@ class ExportKeyedSubchecks(LandingRun):
         commands = {line[0] for line in argv.values()}
         self.assertEqual(commands - M.EXPORT_COMMANDS, set(M.NO_EXPORT_COMMANDS))
         self.assertEqual(M.EXPORT_COMMANDS - commands, set())
-        self.assertEqual({key for key, line in argv.items() if line[0] in M.NO_EXPORT_COMMANDS},
-                         {("run-gates", "validate_audit_closure"), ("audit-governance", "audit_closure")})
+        self.assertEqual(M.NO_EXPORT_COMMANDS, {})
         for rg, ag in (("validate_plan_graph", "plan_graph"), ("validate_evidence", "evidence"),
                        ("validate_prd_planning_runtime_contracts", "prd_planning_runtime_contracts"),
-                       ("validate_implementation_readiness", "implementation_readiness")):
+                       ("validate_implementation_readiness", "implementation_readiness"),
+                       ("validate_audit_closure", "audit_closure")):
             self.assertEqual(argv[("run-gates", rg)], argv[("audit-governance", ag)], rg)
         self.assertEqual(argv[("run-gates", "validate_plan_graph")], ["validate-plan-graph"])
         self.assertEqual(M.aggregate_subcheck_commands(ROOT, {"run-gates": {"validate_implementation_readiness"}}, 600),
                          {("run-gates", "validate_implementation_readiness"):
                           "validate-implementation-readiness --subcheck-timeout-seconds 600"})
+
+
+class AuditClosureCompleteExport(LandingRun):
+    """Stream C fix79: validate-audit-closure writes a complete export, keyed in both aggregates so
+    stale closure hashes over the print cap (and over the old 200 cap) are classified individually."""
+
+    RG = "validate_audit_closure"
+    AG = "audit_closure"
+    CMD = "validate-audit-closure"
+    REGISTRY = CLOSURE_REGISTRY
+    C_EVIDENCE = Path(
+        "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/fix79/landcheck/"
+        "validate-audit-closure-207887b456.json"
+    )
+    C_EVIDENCE_SHA256 = "94850e55407423e5a66b7dfb46ddca9fa61741042ec9e3095ddb00d008de79d3"
+
+    def setUp(self):
+        super().setUp()
+        self.module.aggregate_subcheck_argv = same_validator_argv
+        self.exports = {}
+        self.export_calls = []
+
+        def run_export(root, argv, timeout_seconds, env=None, slot_pool=None):
+            self.export_calls.append(list(argv))
+            rows = self.exports.get(argv[0], "unreadable")
+            if rows == "timeout":
+                return {"report": None, "timed_out": True, "error": None, "elapsed_seconds": timeout_seconds}
+            if rows == "unreadable":
+                return {"report": None, "timed_out": False, "error": "its report is not JSON (stand-in)",
+                        "elapsed_seconds": 0.1}
+            return {"report": {"check": argv[0], "status": "fail" if rows else "pass",
+                               "failures": [dict(row) for row in rows]},
+                    "timed_out": False, "error": None, "elapsed_seconds": 0.1}
+
+        self.module.run_export = run_export
+
+    def stale_closure_row(self, line: int, target: str) -> dict:
+        return {
+            "path": self.REGISTRY,
+            "error": "audit_closure_validator_error",
+            "detail": (
+                f"{self.REGISTRY}:{line}: owner_evidence_hashes for {target} is stale "
+                f"(stored {'a' * 64}, current {'b' * 64})"
+            ),
+        }
+
+    def nonstale_closure_row(self, line: int, target: str) -> dict:
+        return {
+            "path": self.REGISTRY,
+            "error": "audit_closure_validator_error",
+            "detail": f"{self.REGISTRY}:{line}: owner_evidence_hashes anchor {target} no longer resolves: missing",
+        }
+
+    def baseline_40(self) -> list[dict]:
+        rows = [self.stale_closure_row(400 + n, f"Plans/Base_{n:02d}.md") for n in range(39)]
+        rows.append(reopened_rows(93))
+        self.stub(gates={self.RG: rows}, audit={self.AG: rows})
+        self.record()
+        return rows
+
+    def stale_291(self) -> list[dict]:
+        rows = [
+            self.stale_closure_row(
+                1000 + n,
+                f"Plans/Media_Generation_and_Capabilities.md#unit=MGAC-{n:03d}" if n % 2 == 0
+                else f"Plans/Tools.md#unit=T-{n:03d}",
+            )
+            for n in range(290)
+        ]
+        rows.append(reopened_rows(93))
+        return rows
+
+    def test_closure_over_print_cap_with_only_stale_errors_is_keyed_and_exits_one(self):
+        self.baseline_40()
+        self.touch("Plans/Media_Generation_and_Capabilities.md")
+        self.touch("Plans/Tools.md")
+        rows = self.stale_291()
+        self.stub(gates={self.RG: rows}, audit={self.AG: rows})
+        self.exports[self.CMD] = rows
+        code, out = self.compare("--json")
+        report = json.loads(out)
+        self.assertEqual(code, 1, out)
+        self.assertEqual(report["blocking"], 0)
+        self.assertEqual(self.export_calls, [[self.CMD]])
+        self.assertEqual(report["subchecks_compared_by_total_only"], [])
+        self.assertEqual(
+            [(r["check"], r["subcheck"], r["case"], r["keyed"], r["exported"]) for r in report["exports"]["subchecks"]],
+            [
+                ("run-gates", self.RG, "keyed", True, 291),
+                ("audit-governance", self.AG, "keyed", True, 291),
+            ],
+        )
+        self.assertEqual(
+            [(r["check"], r["subcheck"], r["truncated"], r.get("keyed_from_export")) for r in report["grown_subchecks"]],
+            [
+                ("audit-governance", self.AG, False, True),
+                ("run-gates", self.RG, False, True),
+            ],
+        )
+        self.assertEqual(len(report["grown_buckets"]), 2)
+        self.assertTrue(all(r["stale"] and r["baseline_count"] == 39 and r["count"] == 290 for r in report["grown_buckets"]))
+        self.assertTrue(report["on_branch"])
+        self.assertTrue(all(item["stale"] for item in report["on_branch"]))
+        self.assertEqual(report["excused_by_kind"], {"audit_closure_validator_error": 580})
+
+    def test_one_nonstale_closure_error_above_caps_still_stops_with_exit_two(self):
+        for label, target in (("off_branch", "Plans/Other.md#unit=O-250"), ("on_branch", "Plans/Tools.md#unit=T-250")):
+            with self.subTest(target=label):
+                self.setUp()
+                self.baseline_40()
+                self.touch("Plans/Media_Generation_and_Capabilities.md")
+                self.touch("Plans/Tools.md")
+                rows = self.stale_291()
+                # Position 250 sits above both aggregate print caps (50/100) and the old 200 cap.
+                rows[250] = self.nonstale_closure_row(1250, target)
+                self.stub(gates={self.RG: rows}, audit={self.AG: rows})
+                self.exports[self.CMD] = rows
+                code, out = self.compare("--json")
+                report = json.loads(out)
+                self.assertEqual(code, 2, out)
+                self.assertEqual(
+                    [(r["case"], r["keyed"], r["exported"]) for r in report["exports"]["subchecks"]],
+                    [("keyed", True, 291), ("keyed", True, 291)],
+                )
+                self.assertEqual(len(report["grown_buckets"]), 2)
+                self.assertTrue(all(not r["stale"] for r in report["grown_buckets"]))
+                if label == "on_branch":
+                    nonstale_on_branch = [item for item in report["on_branch"] if not item["stale"]]
+                    self.assertEqual(len(nonstale_on_branch), 2)
+                    self.assertEqual(report["blocking"], 4)
+                else:
+                    self.assertEqual(report["blocking"], 2)
+
+    def test_closure_export_total_mismatch_falls_back_to_total_only_rule(self):
+        for export_count in (290, 201):
+            with self.subTest(export_count=export_count):
+                self.setUp()
+                self.baseline_40()
+                self.touch("Plans/Media_Generation_and_Capabilities.md")
+                rows = self.stale_291()
+                self.stub(gates={self.RG: rows}, audit={self.AG: rows})
+                self.exports[self.CMD] = rows[:export_count]
+                code, out = self.compare("--json")
+                report = json.loads(out)
+                self.assertEqual(code, 2, out)
+                self.assertEqual(
+                    [(r["case"], r["keyed"], r["exported"]) for r in report["exports"]["subchecks"]],
+                    [("total_mismatch", False, export_count)] * 2,
+                )
+                self.assertEqual(
+                    report["subchecks_compared_by_total_only"],
+                    [f"audit-governance/{self.AG}", f"run-gates/{self.RG}"],
+                )
+                self.assertTrue(all(r["truncated"] and not r["stale"] for r in report["grown_subchecks"]))
+                self.assertEqual(report["blocking"], 2)
+
+    def test_closure_export_rows_mismatch_at_equal_total_falls_back(self):
+        self.baseline_40()
+        self.touch("Plans/Media_Generation_and_Capabilities.md")
+        rows = self.stale_291()
+        mismatched = list(rows)
+        mismatched[5] = self.stale_closure_row(9999, "Plans/Media_Generation_and_Capabilities.md#unit=MGAC-999")
+        self.stub(gates={self.RG: rows}, audit={self.AG: rows})
+        self.exports[self.CMD] = mismatched
+        code, out = self.compare("--json")
+        report = json.loads(out)
+        self.assertEqual(code, 2, out)
+        self.assertEqual(
+            [(r["case"], r["keyed"], r["exported"]) for r in report["exports"]["subchecks"]],
+            [("rows_mismatch", False, 291)] * 2,
+        )
+        self.assertEqual(report["blocking"], 2)
+
+    def test_replay_stream_c_real_290_error_json_exits_one_with_only_staleness(self):
+        if not self.C_EVIDENCE.is_file():
+            self.skipTest("stream C fix79 evidence JSON is not mounted here")
+        raw_bytes = self.C_EVIDENCE.read_bytes()
+        self.assertEqual(hashlib.sha256(raw_bytes).hexdigest(), self.C_EVIDENCE_SHA256)
+        raw_report = json.loads(raw_bytes.decode("utf-8"))
+        self.assertEqual(len(raw_report["errors"]), 290)
+
+        spec = importlib.util.spec_from_file_location("pm_plans_verify_c_replay", ROOT / "scripts/pm-plans-verify.py")
+        verify = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(verify)
+
+        open_rows = raw_report["registry"]["open_rows"]
+        max_line = max(row["line"] for row in open_rows)
+        by_line = {row["line"]: row for row in open_rows}
+        registry_file = self.repo / self.REGISTRY
+        registry_file.parent.mkdir(parents=True, exist_ok=True)
+        registry_file.write_text(
+            "".join(
+                json.dumps(
+                    by_line.get(line, {"closure_id": f"pad-{line}", "finding_key": f"sfk-{line}", "closure_status": "repaired"}),
+                    sort_keys=True,
+                ) + "\n"
+                for line in range(1, max_line + 1)
+            ),
+            encoding="utf-8",
+        )
+        fake_proc = subprocess.CompletedProcess(
+            args=["python3", "scripts/pm-audit-closure.py", "validate"],
+            returncode=1,
+            stdout=raw_bytes.decode("utf-8"),
+            stderr="",
+        )
+        import argparse
+        with (
+            patch.object(verify, "ROOT", self.repo),
+            patch.object(verify, "run_validator_subprocess", return_value=(fake_proc, None)),
+        ):
+            closure_report = verify.cmd_validate_audit_closure(
+                argparse.Namespace(registry=str(registry_file), subcheck_timeout_seconds=60)
+            )
+        rows = closure_report["failures"]
+        self.assertEqual(len(rows), 291)
+        reopened_row = rows[-1]
+        self.assertEqual(reopened_row["error"], "audit_closure_reopened_rows_present")
+
+        # Baseline holds 39 errors + the same reopened row (matching reports/landing-checks/baseline.json's 40).
+        base_rows = [self.stale_closure_row(100 + n, f"Plans/Unchanged_{n:02d}.md") for n in range(39)] + [reopened_row]
+        self.stub(gates={self.RG: base_rows}, audit={self.AG: base_rows})
+        self.record()
+        for doc in ("Plans/Media_Generation_and_Capabilities.md", "Plans/Tools.md", "Plans/storage-plan.md"):
+            self.touch(doc)
+        self.stub(gates={self.RG: rows}, audit={self.AG: rows})
+        self.exports[self.CMD] = rows
+        code, out = self.compare("--json")
+        report = json.loads(out)
+        self.assertEqual(code, 1, out)
+        self.assertEqual(report["blocking"], 0)
+        self.assertEqual(self.export_calls, [[self.CMD]])
+        self.assertEqual(
+            [(r["check"], r["subcheck"], r["case"], r["exported"]) for r in report["exports"]["subchecks"]],
+            [("run-gates", self.RG, "keyed", 291), ("audit-governance", self.AG, "keyed", 291)],
+        )
+        self.assertEqual(report["subchecks_compared_by_total_only"], [])
+        self.assertTrue(all(item["stale"] for item in report["new"]))
+        self.assertTrue(report["on_branch"])
+        self.assertTrue(all(item["stale"] for item in report["on_branch"]))
+        self.assertEqual(len(report["grown_buckets"]), 2)
+        self.assertTrue(all(r["stale"] and r["baseline_count"] == 39 and r["count"] == 290 for r in report["grown_buckets"]))
+
+        # Negative control on the exact C replay: one non-stale error at #250 still stops the landing.
+        mutated = list(rows)
+        mutated[250] = self.nonstale_closure_row(1500, "Plans/Tools.md#unit=T-158")
+        self.stub(gates={self.RG: mutated}, audit={self.AG: mutated})
+        self.exports[self.CMD] = mutated
+        bad_code, bad_out = self.compare("--json")
+        bad_report = json.loads(bad_out)
+        self.assertEqual(bad_code, 2, bad_out)
+        self.assertGreaterEqual(bad_report["blocking"], 2)
+        self.assertTrue(all(not r["stale"] for r in bad_report["grown_buckets"]))
+
+    def test_historical_target_without_closure_export_capability_keeps_no_export_rule(self):
+        self.baseline_40()
+        self.touch("Plans/Tools.md")
+        rows = self.stale_291()
+        self.stub(gates={self.RG: (rows, 201)}, audit={self.AG: (rows, 201)})
+        self.module.target_closure_export_support = lambda root: False
+        self.exports[self.CMD] = rows[:201]
+        code, out = self.compare("--json")
+        report = json.loads(out)
+        self.assertEqual(code, 2, out)
+        self.assertEqual(self.export_calls, [])
+        self.assertIn(self.CMD, report["exports"]["no_complete_export"])
+        self.assertNotIn(self.CMD, report["exports"]["complete_export_commands"])
+        self.assertEqual(
+            [(r["case"], r["command"], r["keyed"]) for r in report["exports"]["subchecks"]],
+            [("no_export", self.CMD, False)] * 2,
+        )
+        self.assertEqual(report["blocking"], 2)
 
 
 class RunExport(unittest.TestCase):
@@ -3297,9 +3584,13 @@ class WhatEachRunAlsoReports(LandingRun):
         self.assertEqual(decisions[0]["case"], "mapping_unreadable")
         self.assertIn("names no command", decisions[0]["reason"])
         # A named validator that writes no complete export is the permanent sample the reader may accept.
+        legacy_exports, legacy_no_exports = M.target_export_commands(False)
         counts = {"run-gates": {"validate_audit_closure": {"reported": 54, "sampled": 50}}}
-        decisions = M.key_from_exports(self.repo, counts, {}, set(),
-                                       {("run-gates", "validate_audit_closure"): ["validate-audit-closure"]}, 600)[1]
+        decisions = M.key_from_exports(
+            self.repo, counts, {}, set(),
+            {("run-gates", "validate_audit_closure"): ["validate-audit-closure"]}, 600,
+            export_commands=legacy_exports, no_export_commands=legacy_no_exports,
+        )[1]
         self.assertEqual(decisions[0]["case"], "no_export")
         self.assertEqual(decisions[0]["command"], "validate-audit-closure")
 
@@ -3316,8 +3607,12 @@ class WhatEachRunAlsoReports(LandingRun):
         self.assertEqual(decisions[0]["command"], "validate-new-gate")
         self.assertIn("not among the commands read", decisions[0]["reason"])
         # The positive case is still `no_export`, and it still names the command.
-        decisions = M.key_from_exports(self.repo, counts, {}, set(),
-                                       {("run-gates", "validate_new_gate"): ["validate-audit-closure"]}, 600)[1]
+        legacy_exports, legacy_no_exports = M.target_export_commands(False)
+        decisions = M.key_from_exports(
+            self.repo, counts, {}, set(),
+            {("run-gates", "validate_new_gate"): ["validate-audit-closure"]}, 600,
+            export_commands=legacy_exports, no_export_commands=legacy_no_exports,
+        )[1]
         self.assertEqual(decisions[0]["case"], "no_export")
         self.assertEqual(decisions[0]["command"], "validate-audit-closure")
 
@@ -4222,5 +4517,7 @@ class TargetJobsNegotiation(unittest.TestCase):
         old = self.make_root({"pm-plans-verify.py": script.stdout,
                               "pm_wiring_inventory.py": wiring.stdout})
         self.assertFalse(M.target_accepts_jobs(old))
+        self.assertFalse(M.target_closure_export_support(old))
         self.assertEqual(M.target_worker_support(ROOT), (True, True))
         self.assertTrue(M.target_readiness_snapshot_support(ROOT))
+        self.assertTrue(M.target_closure_export_support(ROOT))

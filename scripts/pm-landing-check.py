@@ -32,9 +32,11 @@ A subcheck that prints only a sample is keyed from its export instead, where it 
 brief of 2026-09-24). Both aggregates re-invoke every subcheck as `pm-plans-verify.py <command> --report
 <tmp> <arguments>`, count the rows of that report and print the first 50 or 100 of them, so the report
 the same command line writes when this script runs it again is the complete list of what the subcheck
-counts: its export. Read in pm-plans-verify.py and in every validator it calls, each command the
-aggregates run writes a complete one except `validate-audit-closure`, which keeps only the first 200 of
-its validator's errors (EXPORT_COMMANDS, NO_EXPORT_COMMANDS). When the export's total equals the printed
+counts: its export. Read in pm-plans-verify.py and in every validator it calls, every command the
+aggregates run writes a complete export (EXPORT_COMMANDS), including `validate-audit-closure` on target
+verifiers that advertise `landing_closure_export_v1`; historical targets without that capability still
+keep only the first 200 of pm-audit-closure.py's errors, so `validate-audit-closure` stays in
+`no_complete_export` there. When the export's total equals the printed
 total, every row the aggregate printed is among the export's rows, and the baseline holds that
 subcheck's rows in full, printed or recorded from an export, every row is keyed from the export and the
 subcheck is not truncated: the kind rules judge every row, and a rise in its total stops nothing by
@@ -256,25 +258,30 @@ CHECKS = ("run-gates", "audit-governance", "plan-migration-validate")
 # validate-projects-refresh-contracts run like validate-new-contracts (`_projects_refresh_subcheck`:
 # run_validator_subprocess, then parse_validator_json of the validator's whole JSON report), and neither
 # pm-settings-layering-check.py nor pm-projects-refresh-contracts.py truncates its failure list.
+# Read 2026-11-26: cmd_validate_audit_closure no longer truncates pm-audit-closure.py's errors at 200, so
+# validate-audit-closure writes a complete export on target verifiers advertising CLOSURE_EXPORT_CAPABILITY.
+# Historical targets without that capability still slice [:200] and keep it in no_complete_export.
 EXPORT_COMMANDS = frozenset({
     "check-project-artifacts", "check-shards", "json-syntax", "lint-banned-phrases", "lint-contractrefs",
-    "lint-path-refs", "validate-audit-status-index", "validate-auto-decisions", "validate-browser-event-admission",
-    "validate-case-l-non-event-materialization", "validate-evidence", "validate-filesafe-security-policy",
-    "validate-forge-backup-acceptance", "validate-github-project-integration", "validate-goal-runtime-event-fixtures",
-    "validate-gui-asset-policy", "validate-implementation-readiness", "validate-new-contracts",
-    "validate-plan-graph", "validate-plan-migration", "validate-plans-to-code-handoff-schema",
-    "validate-pm7-gui-fixtures", "validate-prd-planning-runtime-contracts", "validate-project-output-fixtures",
+    "lint-path-refs", "validate-audit-closure", "validate-audit-status-index", "validate-auto-decisions",
+    "validate-browser-event-admission", "validate-case-l-non-event-materialization", "validate-evidence",
+    "validate-filesafe-security-policy", "validate-forge-backup-acceptance",
+    "validate-github-project-integration", "validate-goal-runtime-event-fixtures", "validate-gui-asset-policy",
+    "validate-implementation-readiness", "validate-new-contracts", "validate-plan-graph",
+    "validate-plan-migration", "validate-plans-to-code-handoff-schema", "validate-pm7-gui-fixtures",
+    "validate-prd-planning-runtime-contracts", "validate-project-output-fixtures",
     "validate-projects-refresh-contracts", "validate-runtime-artifact-schemas", "validate-server-command-gap",
-    "validate-settings-layering", "validate-testing-session-event-admission",
-    "validate-touch-closure", "validate-ui-command-response", "validate-usage-contract-drift",
-    "validate-usage-gui-fixtures", "validate-web-capability-contracts", "validate-wiring-matrix",
-    "validate-working-notebook-contracts", "verify-spec-lock",
+    "validate-settings-layering", "validate-testing-session-event-admission", "validate-touch-closure",
+    "validate-ui-command-response", "validate-usage-contract-drift", "validate-usage-gui-fixtures",
+    "validate-web-capability-contracts", "validate-wiring-matrix", "validate-working-notebook-contracts",
+    "verify-spec-lock",
 })
 # Commands the aggregates run whose own report is not a complete list, and why.
-NO_EXPORT_COMMANDS = {
-    "validate-audit-closure": "cmd_validate_audit_closure keeps only the first 200 of pm-audit-closure.py's "
-                              "errors, so its own report is a sample whenever there are more",
-}
+NO_EXPORT_COMMANDS: dict[str, str] = {}
+LEGACY_AUDIT_CLOSURE_NO_EXPORT = (
+    "cmd_validate_audit_closure keeps only the first 200 of pm-audit-closure.py's "
+    "errors, so its own report is a sample whenever there are more"
+)
 # pm-plans-verify.py marks an aggregate's child with this variable, so that a validator the child starts
 # stays in the child's process group and dies with it when the aggregate's bound runs out. An export is
 # run the same way.
@@ -556,6 +563,7 @@ def target_environment(base_env: dict[str, str] | None = None) -> dict[str, str]
 
 _TARGET_VERIFIER_HELP: dict[str, str] = {}
 LANDING_BUDGET_CAPABILITY = "landing-budget-v1"
+CLOSURE_EXPORT_CAPABILITY = "landing_closure_export_v1"
 
 
 def target_verifier_help(root: Path) -> str:
@@ -582,6 +590,24 @@ def target_worker_support(root: Path) -> tuple[bool, bool]:
 
 def target_readiness_snapshot_support(root: Path) -> bool:
     return SNAPSHOT_CAPABILITY in target_verifier_help(root)
+
+
+def target_closure_export_support(root: Path) -> bool:
+    return CLOSURE_EXPORT_CAPABILITY in target_verifier_help(root)
+
+
+def target_export_commands(supports_closure_export: bool) -> tuple[frozenset[str], dict[str, str]]:
+    """The complete-export and no-complete-export command sets for this target checkout.
+
+    A historical target whose scripts/pm-plans-verify.py lacks CLOSURE_EXPORT_CAPABILITY still keeps only
+    the first 200 of pm-audit-closure.py's errors, so treating its capped report as complete would match
+    201 == 201 and miss errors past 200; keep it in no_complete_export on those targets.
+    """
+    if supports_closure_export:
+        return EXPORT_COMMANDS, dict(NO_EXPORT_COMMANDS)
+    no_export = dict(NO_EXPORT_COMMANDS)
+    no_export["validate-audit-closure"] = LEGACY_AUDIT_CLOSURE_NO_EXPORT
+    return EXPORT_COMMANDS - {"validate-audit-closure"}, no_export
 
 
 def target_accepts_jobs(root: Path) -> bool:
@@ -2105,6 +2131,9 @@ def key_from_exports(
     context: RenameContext | None = None,
     env: dict[str, str] | None = None,
     slot_pool=None,
+    *,
+    export_commands: frozenset[str] | None = None,
+    no_export_commands: dict[str, str] | None = None,
 ) -> tuple[dict[tuple[str, str], list[dict[str, Any]]], list[dict[str, Any]]]:
     """The exports brief: key each subcheck that prints only a sample from its complete export.
 
@@ -2118,6 +2147,8 @@ def key_from_exports(
     command line is run once, for every subcheck that runs it. Sets `exported` on the count of every
     keyed subcheck and returns ({(check, subcheck): the export's rows, normalized}, the rows).
     """
+    allowed_exports = EXPORT_COMMANDS if export_commands is None else export_commands
+    disallowed_exports = NO_EXPORT_COMMANDS if no_export_commands is None else no_export_commands
     rows: list[dict[str, Any]] = []
     planned: dict[tuple[str, ...], list[dict[str, Any]]] = {}
     for check in ("run-gates", "audit-governance"):
@@ -2142,9 +2173,9 @@ def key_from_exports(
                 row["reason"] = "scripts/pm-plans-verify.py names no command for it"
                 continue
             row["command"] = argv[0]
-            if argv[0] not in EXPORT_COMMANDS:
-                if argv[0] in NO_EXPORT_COMMANDS:
-                    row["reason"] = f"{argv[0]} writes no complete export: {NO_EXPORT_COMMANDS[argv[0]]}"
+            if argv[0] not in allowed_exports:
+                if argv[0] in disallowed_exports:
+                    row["reason"] = f"{argv[0]} writes no complete export: {disallowed_exports[argv[0]]}"
                 else:
                     # Not `no_export`: only a validator the producer positively names as writing no complete export
                     # is a permanent sample. A command in neither list is unaudited, so its counts are unknown
@@ -2228,16 +2259,23 @@ def replace_rows(
     return out
 
 
-def describe_export_commands(width: int = 150) -> list[str]:
+def describe_export_commands(
+    width: int = 150,
+    *,
+    export_commands: frozenset[str] | None = None,
+    no_export_commands: dict[str, str] | None = None,
+) -> list[str]:
     """The run header's list of the commands whose report is a complete export, and of those whose report
     is not (the exports brief)."""
+    allowed = EXPORT_COMMANDS if export_commands is None else export_commands
+    disallowed = NO_EXPORT_COMMANDS if no_export_commands is None else no_export_commands
     wrap = dict(width=width, subsequent_indent="      ", break_on_hyphens=False, break_long_words=False)
     lines = textwrap.wrap(
-        f"  complete exports, read in scripts/pm-plans-verify.py: the report each of these {len(EXPORT_COMMANDS)} "
+        f"  complete exports, read in scripts/pm-plans-verify.py: the report each of these {len(allowed)} "
         "commands writes with --report holds every row it counts, so a subcheck that runs one and prints only a "
-        "sample is keyed from it when its total equals the printed total: " + ", ".join(sorted(EXPORT_COMMANDS)),
+        "sample is keyed from it when its total equals the printed total: " + ", ".join(sorted(allowed)),
         **wrap)
-    for command, why in sorted(NO_EXPORT_COMMANDS.items()):
+    for command, why in sorted(disallowed.items()):
         lines += textwrap.wrap(f"    no complete export: {command}, because {why}", **wrap)
     return lines
 
@@ -2449,6 +2487,8 @@ def check_main(args: argparse.Namespace, root: Path, source_path: Path,
     after = None
     supports_jobs, supports_budget = target_worker_support(root)
     supports_snapshot = target_readiness_snapshot_support(root)
+    supports_closure_export = target_closure_export_support(root)
+    export_commands, no_export_commands = target_export_commands(supports_closure_export)
     jobs = args.jobs
     if args.json and not args.record_baseline and not currency["rule_two_applies"]:
         # The JSON report carries this notice in baseline_currency. Keep it first on stderr too.
@@ -2585,7 +2625,7 @@ def check_main(args: argparse.Namespace, root: Path, source_path: Path,
     exported, export_rows = key_from_exports(
         root, counts, None if args.record_baseline else (baseline.get("checks") or {}), did_not_finish, argv_map,
         args.subcheck_timeout_seconds, keep_dir, items, context=rename_context, env=child_env,
-        slot_pool=export_pool)
+        slot_pool=export_pool, export_commands=export_commands, no_export_commands=no_export_commands)
     require_same_readiness_audit_inputs(audit_inputs, readiness_audit_inputs(root),
                                       "changed during the exports")
     def require_final_edition() -> None:
@@ -2610,7 +2650,7 @@ def check_main(args: argparse.Namespace, root: Path, source_path: Path,
                   f"in {plural(len(entry['subchecks']), 'check')}")
         print(f"  buckets: {len(doc['buckets'])}, "
               f"of which {sum(1 for row in doc['buckets'] if row['fingerprints'] is None)} matched by count only")
-        for line in describe_export_commands():
+        for line in describe_export_commands(export_commands=export_commands, no_export_commands=no_export_commands):
             print(line)
         print(f"  export buckets: {len(doc['export_buckets'])}, the complete rows of "
               f"{plural(len(exported), 'subcheck')} keyed from their export")
@@ -2770,8 +2810,8 @@ def check_main(args: argparse.Namespace, root: Path, source_path: Path,
                 "subchecks_compared_by_total_only": sorted(f"{c}/{s}" for c, s in partial - paired),
                 "validator_pairs": pairs,
                 "exports": {
-                    "complete_export_commands": sorted(EXPORT_COMMANDS),
-                    "no_complete_export": dict(sorted(NO_EXPORT_COMMANDS.items())),
+                    "complete_export_commands": sorted(export_commands),
+                    "no_complete_export": dict(sorted(no_export_commands.items())),
                     "subchecks": export_rows,
                     "compared_with_baseline_exports": sorted(f"{c}/{s}" for c, s in from_export - keyed_now),
                 },
@@ -2834,7 +2874,7 @@ def check_main(args: argparse.Namespace, root: Path, source_path: Path,
                 print(f"    {where}: {why}")
         if keep_dir is not None:
             print(f"  full check reports kept in {keep_dir}")
-        for line in describe_export_commands():
+        for line in describe_export_commands(export_commands=export_commands, no_export_commands=no_export_commands):
             print(line)
         if export_rows:
             keyed_count = sum(1 for row in export_rows if row["keyed"])
