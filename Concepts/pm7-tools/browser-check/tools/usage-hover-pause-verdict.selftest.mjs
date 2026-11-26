@@ -347,7 +347,7 @@ const r5Record = (delivered, gapMs, idleReturnMs) => {
 	for (let i = 0; i < delivered; i++) { ts.push(t); t += i === 40 ? gapMs : 30; }
 	const last = ts.at(-1);
 	return {
-		room: 'overview', liveRoom: 'overview', oldPaused: true, moves: 0, swaps: 2, targetHovered: true, pointerOnBoard: true,
+		room: 'overview', liveRoom: 'overview', oldPaused: true, moves: 0, swaps: 2, targetHovered: true, pointerOnBoard: true, mountedTop: 0,
 		wheels: ts.map((t) => ({ t, trusted: true })),
 		ends: [{ t: ts[40] + idleReturnMs, live: true, room: 'overview' }, { t: last + 160, live: true, room: 'overview' }],
 		last, during: Array.from({ length: 100 }, (_, i) => ({ t: 1000 + i * 60 }))
@@ -439,6 +439,14 @@ test('R136-N1: a mounted room with too few burst samples fails the product row',
 	r.during = r.during.slice(0, 5);
 	assert.equal(r5MountQualified(r, r5Args(r)), true);
 	assert.equal(r5MountProduct(r, { last: r.last, during: r.during }), false);
+});
+
+test('R136-C2: a mounted room that keeps a nonzero scroll position fails the product row, not input qualification', () => {
+	const r = r5Record(203, 30, 0);
+	r.ends = [{ t: r.last + 160, live: true, room: 'overview' }];
+	r.mountedTop = 120;
+	assert.equal(r5MountQualified(r, r5Args(r)), true, 'the pre-burst calibration and delivered input are still qualified');
+	assert.equal(r5MountProduct(r, { last: r.last, during: r.during }), false, 'the post-mount scroll reset is a product assertion');
 });
 
 // R132-FOLLOWUPS 6 (R132-REPORT.md): a 4 ms unrelated task between the probe callback and the product's correctly

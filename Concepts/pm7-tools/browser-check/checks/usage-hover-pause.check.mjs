@@ -360,11 +360,12 @@ export function r5MountQualified(rec, { inputs = 203, activated, burstBroke, des
 	return activated && rec.wheels.length >= inputs * 0.8 && rec.wheels.every((w) => w.trusted) && !burstBroke && !rec.moves && destinationTop === 0 && rec.pointerOnBoard;
 }
 
-// R5's product assertions on qualified input (R135-F2, R136-N1): the old board enters the wheel hold, the pause
-// ends only after the last wheel, and the board swaps to the live room — a mounted room the pointer is over,
-// sampled during the burst. A fault here FAILS the run, never could-not-judge.
+// R5's product assertions on qualified input (R135-F2, R136-N1, R136-C2): the old board enters the wheel hold,
+// the mounted room resets its scroll position, the pause ends only after the last wheel, and the board swaps to
+// the live room — a mounted room the pointer is over, sampled during the burst. A fault here FAILS the run, never
+// could-not-judge.
 export function r5MountProduct(rec, { last, during }) {
-	return rec.oldPaused && rec.ends.every((e) => e.t > last) && rec.swaps > 0 && rec.liveRoom === rec.room && during.length > 10 && rec.targetHovered;
+	return rec.oldPaused && rec.mountedTop === 0 && rec.ends.every((e) => e.t > last) && rec.swaps > 0 && rec.liveRoom === rec.room && during.length > 10 && rec.targetHovered;
 }
 
 // What the single-burst assertions do with the record (PM7PERF-R5-UNQUALIFIED-RETURNS-COUNTED): once R5 rejects the
@@ -416,10 +417,15 @@ async function roomMountRace(t, f, label, park, rm) {
 			const pre = window.__uhpPrePointer;
 			if (window.__uhpPrePointerStop) { window.__uhpPrePointerStop(); delete window.__uhpPrePointerStop; }
 			const preHit = pre && document.elementFromPoint(pre[0], pre[1]);
-			const r = window.__uhpMount = { room, wheels: [], scrolls: [], keys: [], samples: [], ends: [], moves: 0, oldPaused: false, swaps: 0,
+			const r = window.__uhpMount = { room, wheels: [], scrolls: [], keys: [], samples: [], ends: [], moves: 0, oldPaused: false, swaps: 0, mountedTop: null,
 				pointerOnBoard: !!(preHit && sc.contains(preHit) && preHit.closest('.pmu-board')) };
 			let running = true, last = old, position = null;
 			const live = () => document.getElementById('pmuBoard');
+			const mountObserver = new MutationObserver(() => queueMicrotask(() => {
+				const b = live();
+				if (r.mountedTop == null && b?.dataset.room === room) r.mountedTop = sc.scrollTop;
+			}));
+			mountObserver.observe(sc, { childList: true, subtree: true, attributes: true, attributeFilter: ['data-room'] });
 			const wheel = (e) => { r.wheels.push({ t: performance.now(), trusted: e.isTrusted }); position = [e.clientX, e.clientY]; };
 			// Native input can mount the room before the next paint; witness the initial hold after its wheel handler.
 			const scroll = () => r.scrolls.push(performance.now());
@@ -452,7 +458,7 @@ async function roomMountRace(t, f, label, park, rm) {
 			document.addEventListener('keydown', keydown, true); sc.addEventListener('pointermove', move, true);
 			document.addEventListener('pmu-op-end', end); requestAnimationFrame(sample);
 			r.stop = () => {
-				running = false; sc.removeEventListener('wheel', wheel, true); sc.removeEventListener('wheel', held); sc.removeEventListener('scroll', scroll); document.removeEventListener('keydown', keydown, true);
+				running = false; mountObserver.disconnect(); sc.removeEventListener('wheel', wheel, true); sc.removeEventListener('wheel', held); sc.removeEventListener('scroll', scroll); document.removeEventListener('keydown', keydown, true);
 				sc.removeEventListener('pointermove', move, true); document.removeEventListener('pmu-op-end', end);
 				const b = live(), card = b?.querySelector(':scope > .pmu-card:hover'), tools = card?.querySelector('.pmu-cardtools');
 				const hot = b?.querySelector(selector + ':hover'), id = hot?.dataset.prov;
@@ -482,7 +488,7 @@ async function roomMountRace(t, f, label, park, rm) {
 		const burst = burstState(holdInputs(rec.wheels, rec.scrolls)), burstBroke = burst.broke, burstDetail = burstBroke ? burstWhy(burst) : null;
 		const activated = rec.keys.some((k) => k.trusted && k.room === room && k.t > first && k.t < last);
 		const S = label + `R5 ${room} (${rm ? 'Reduced Motion spare' : 'motion on'}, ${key}): `;
-		const detail = `wheels ${rec.wheels.length}, max gap ${burst.maxGap} ms (wheel delivery ${maxGap} ms, driver ${driverGap} ms), samples ${during.length}, swaps ${rec.swaps}, moves ${rec.moves}, target ${rec.targetHovered}, calibration scroll ${destinationTop}`;
+		const detail = `wheels ${rec.wheels.length}, max gap ${burst.maxGap} ms (wheel delivery ${maxGap} ms, driver ${driverGap} ms), samples ${during.length}, swaps ${rec.swaps}, moves ${rec.moves}, target ${rec.targetHovered}, calibration scroll ${destinationTop}, mounted scroll ${rec.mountedTop ?? 'unread'}`;
 		t.log(S + detail + ' | return ' + JSON.stringify({ ends: rec.ends, op: rec.op, cardLit: rec.cardLit, tools: rec.tools, provider: rec.provider }));
 		records.push({ room, attempt: attempt + 1, at, destinationTop, maxGap, driverGap, burst, rec });
 		const qualified = r5MountQualified(rec, { inputs: INPUTS, activated, burstBroke, during, destinationTop });
@@ -505,7 +511,7 @@ async function roomMountRace(t, f, label, park, rm) {
 		// depend on the pause surviving the burst are skipped with the gap, not failed (PM7PERF-HOVERPAUSE-R5-CASCADE).
 		if (gate === 'skip') { t.log(S + 'SKIP R5 suppression/restoration: ' + burstDetail); break; }
 		// R135-F2: the product assertions judge on qualified input; a fault fails, never could-not-judge.
-		await t.check(S + 'R5 mount keeps the wheel hold, swaps to the live room and ends after the last wheel', r5MountProduct(rec, { last, during }), JSON.stringify({ oldPaused: rec.oldPaused, swaps: rec.swaps, liveRoom: rec.liveRoom, room: rec.room, ends: rec.ends, last, during: during.length, targetHovered: rec.targetHovered }));
+		await t.check(S + 'R5 mount keeps the wheel hold, resets scroll, swaps to the live room and ends after the last wheel', r5MountProduct(rec, { last, during }), JSON.stringify({ oldPaused: rec.oldPaused, mountedTop: rec.mountedTop, swaps: rec.swaps, liveRoom: rec.liveRoom, room: rec.room, ends: rec.ends, last, during: during.length, targetHovered: rec.targetHovered }));
 		await t.check(S + 'live board keeps its wheel marker after the mount', !burstBroke && rec.oldPaused && during.length > 0 && during.every((s) => s.op === 'wheel'), burstDetail || `${during.filter((s) => s.op !== 'wheel').length}/${during.length} live samples lost marker`);
 		// Allow the first 100 ms for an already-lit reused card's outgoing fade; nothing arriving may light thereafter.
 		const settled = during.length ? during.filter((s) => s.t >= during[0].t + 100) : [];
