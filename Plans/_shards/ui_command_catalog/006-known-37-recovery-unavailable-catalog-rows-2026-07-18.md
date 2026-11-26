@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L133-L1187
 
-Source SHA256: `7a505fc3c933b16467a15b2a14377865e4299397a84d32ea23b309f91e53a212`
+Source SHA256: `a7ef2f16d5d4a9b478652b79e95d1bbb5c23aaeebfc35cec86b3c17d4724c8f1`
 
 ---
 
@@ -454,9 +454,9 @@ Broad-pass command and wiring reconciliation spans the command catalog plus its 
 
 | `cmd.source_control.stash` | Open Stash Controls | Opens Source Control `Branches / Stash` controls for the current repo/worktree; Git only, Jujutsu has no stash (JJI-006, DL-163) | `git_available` |
 | `cmd.source_control.stash.*` | Stash Command Family | Compatibility family for stash list/create/apply/drop flows | `git_available` |
-| `cmd.source_control.suggest_commit_batches` | Suggest Commit Batches | Generates advisory commit groupings and draft messages from staged/unstaged diff clusters | `git_available && changes_present` |
-| `cmd.source_control.suggest_commit_groups` | Suggest Commit Groups | Compatibility alias for advisory AI commit batching over staged and unstaged diff clusters | `git_available && changes_present` |
-| `cmd.source_control.accept_commit_group` | Accept Commit Group | Accepts one suggested commit group for reviewable staging/message preparation without making it canonical history until the user commits | `git_available && suggested_commit_group_selected` |
+| `cmd.source_control.suggest_commit_batches` | Suggest Commit Batches | Generates advisory commit groupings and draft messages from staged/unstaged diff clusters; disabled with `head_unborn` while `HEAD` has no commit (`Plans/WorktreeGitImprovement.md`, "Unborn HEAD" in the 2026-11-25 batching payloads section) | `git_available && changes_present && head_commit_present` |
+| `cmd.source_control.suggest_commit_groups` | Suggest Commit Groups | Compatibility alias for advisory AI commit batching over staged and unstaged diff clusters | `git_available && changes_present && head_commit_present` |
+| `cmd.source_control.accept_commit_group` | Accept Commit Group | Accepts one suggested commit group for reviewable staging/message preparation without making it canonical history until the user commits; disabled with `head_unborn` while `HEAD` has no commit | `git_available && suggested_commit_group_selected && head_commit_present` |
 | `cmd.source_control.generate_commit_message` | Generate Commit Message | Generates a draft commit message for the selected commit group or current staged diff | `git_available && diff_context_available` |
 
 Compare-open command identity is repository-scoped rather than UI-local. The compatibility token `compare_open` maps to `cmd.source_control.open_review` or `cmd.git.diff_open` with `project_id`, `repo_id`, optional `repo_relative_path`, left/right selectors that can bind to `worktree_id`, branch, commit, or revision, and presentation hints such as `side_by_side` versus `unified`. Path-level stage/unstage/discard commands remain separate from hunk-level aliases (`stage_hunk`, `unstage_hunk`, `discard_hunk`) and their plural command rows above. Conflict-review and `/open-resolution` actions must flow through Source Control conflict commands or `cmd.git.conflict_apply_resolution`; no consumer surface may create ad hoc compare, /diff, /compare, or /compare/stage state from path strings alone.

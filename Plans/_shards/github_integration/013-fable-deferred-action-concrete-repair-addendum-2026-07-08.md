@@ -2,9 +2,9 @@
 
 Source: `Plans/GitHub_Integration.md`
 
-Source lines: L2075-L2215
+Source lines: L2075-L2219
 
-Source SHA256: `a53cd6373e43753e0528793f1b6464c64f52486b38c347c218c7bcafab2ca5d4`
+Source SHA256: `519547dabae0f94bb05309b14807c737a5fb5212974a1423a2070923635993e2`
 
 ---
 
@@ -29,7 +29,11 @@ Typed field tables (amended 2026-11-25; they replace the untyped field lists fir
 | Field | Type | Rule |
 | --- | --- | --- |
 | `compare_origin` | enum `changes.unstaged` \| `changes.staged` \| `history.commit_parent` \| `conflict.review` \| `worktree.branch_compare` \| `actions.run_commit_range` \| `blocked.dirty_worktree` \| `recovery.safe_point_retry` | required |
-| `project_id`, `repo_id` | `identity_id` | `repo_id` is required; `project_id` is required for Project scope and absent for an admitted application or pre-registration partition. The latter carries its exact scope/target as required by the identity rules above. |
+| `scope` | `WorkflowScopeV2` (`Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2`) | required. Project scope is `scope_kind: "project"` with the Project's immutable `project_id`. An admitted application or pre-registration pivot is `scope_kind: "application"`, `scope_partition: "app"`, `project_id: null`, and its `server_id` is the actual Server. Focus, an empty id, a sentinel Project, HOME or CWD never fills it. |
+| `project_id`, `repo_id` | `identity_id` | `repo_id` is required and names the repository Source Control verified for this scope and host, never a focused or remembered selection; `project_id` is required for Project scope and equals `scope.project_id`, and is absent for application scope. |
+| `execution_host_id` | string, 1..256 chars (`WorkflowCommandContextV1.execution_host_id`) | required for application scope: the actual Computer whose repository and worktree the operands read; optional for Project scope, where the Project binding supplies it |
+| `source_context` | object `{ kind: "thread" \| "session" \| "source_context", ref: string` (1..256 chars) `}` | required for application scope: the thread, session or source context (for a pre-registration pivot opened before any message, its draft or onboarding source) that owns the pivot; optional for Project scope |
+| `verified_account_id` | string, 1..256 chars | required whenever the pivot reads GitHub data (a `comparison_url`, `actions.run_commit_range`, or any remote ref or API read); absent only when every operand is local to the bound repository and no GitHub read happens. It is the GitHub account the pivot reads with: Project scope uses the Project's exact account key; application scope uses the account the account owner verified independently for this Server and host (MA-074, the `verified_account_id` of `Plans/multi_account_contracts.schema.json`). It is never taken from another Project, a shared cross-account cache or the current focus. |
 | `worktree_id` | `identity_id` | required for `changes.*`, `conflict.review`, `worktree.branch_compare`, `blocked.dirty_worktree`, `recovery.safe_point_retry` |
 | `path` | `relative_repo_path` per the Git adapter schema (`Plans/git_adapter_command_contracts.schema.json#/$defs/relative_repo_path`) | required for `changes.*` and `conflict.review`; optional for file-scoped pivots of other origins |
 | `operands` | closed tagged union `{kind: "two_way", base: endpoint, head: endpoint}` or `{kind: "three_way", base: endpoint, ours: endpoint, theirs: endpoint, result: endpoint}` | required; the origin determines the shape and endpoint kinds below |
@@ -90,7 +94,7 @@ A local snapshot mismatch, an untracked path becoming tracked, or a conflict sta
 | `result_ref` | string | optional |
 | `created_at_utc` | `timestamp` | required |
 
-GitHub Integration exposes the review action only while a `graph_patch_request` with every required field exists and its patch is `requested` or `validated`, and the apply action only when the result `state` is `validated` and `affected_generation_id` is still current; otherwise apply settles `rejected` with `generation_stale` and no generation changes. No error code is retried automatically; a new request with a new `request_id` against the current generation is the only retry. The 2026-07-08 list's `base_ref`, `patch_ref`, `target_paths[]`, `changed_paths[]` and `conflict_paths[]` are retired because a graph patch does not move a git ref; `requested_by` is now `requester_identity`.
+GitHub Integration exposes the review action only while a `graph_patch_request` with every required field exists and its patch is `requested` or `validated`, and the apply action only when the result `state` is `validated` and `affected_generation_id` is still current. An apply that reaches the owner while the patch is still `validated` but its generation is no longer current moves the patch `validated -> rejected` with `generation_stale`, and no generation changes. An apply that reaches the owner after the patch has already left `validated` (it is `applied`, `rejected`, `rolled_back` or `superseded`) is refused as a request: the owner returns the patch's existing result unchanged and writes no transition, so an `applied` patch never becomes `rejected` and leaves `applied` only for `rolled_back` or `superseded` (Contracts_V0 CV-315). No error code is retried automatically; a new request with a new `request_id` against the current generation is the only retry. The 2026-07-08 list's `base_ref`, `patch_ref`, `target_paths[]`, `changed_paths[]` and `conflict_paths[]` are retired because a graph patch does not move a git ref; `requested_by` is now `requester_identity`.
 
 **`pinned_workflow_record`.** Created by `cmd.github.actions.pin`, deleted by `cmd.github.actions.unpin`; historical receipts survive unpin.
 
@@ -102,16 +106,16 @@ GitHub Integration exposes the review action only while a `graph_patch_request` 
 | `repo_id` | `identity_id` | required |
 | `branch`, `worktree_id` | string, `identity_id` | optional; present when the pin is branch- or worktree-scoped |
 | `pinned_ref` | string | required |
-| `pinned_sha` | `full_oid` | required; the workflow file's commit when last verified |
+| `pinned_sha` | `full_oid` or null | required; null exactly while no verification has ever succeeded, when the pin can only be `unverified`, `renamed`, `missing` or `unverifiable` (never `verified` or `stale`). The first `verified` observation sets it to the workflow file's commit at `pinned_ref`; from then on it is non-null and is replaced only by a later `verified` observation, so it always names the commit of the last successful verification. |
 | `health_badge_window_runs` | integer 1..100, default 10 | required; how many most recent runs the health badge summarizes |
 | `suppress_noisy` | boolean, default false | required |
 | `notify_on_failure` | boolean, default false | required |
-| `verification_state` | enum `verified` \| `stale` \| `renamed` \| `missing` \| `unverifiable` | required |
-| `last_verified_at_utc` | `timestamp` or null | required; null until first verification |
+| `verification_state` | enum `unverified` \| `verified` \| `stale` \| `renamed` \| `missing` \| `unverifiable` | required; `unverified` is the state `cmd.github.actions.pin` creates, before the first Actions observation |
+| `last_verified_at_utc` | `timestamp` or null | required; null until first verification, and null exactly when `pinned_sha` is null |
 | `reason_code` | a canonical Actions blocked reason (GI-037 enum and the table below) | required when `verification_state` is `unverifiable`, absent otherwise |
 | `provenance` | object `{ command_id: "cmd.github.actions.pin", receipt_ref: string, created_at_utc: timestamp }` | required; `receipt_ref` names the no-persist command receipt `cmd.github.actions.pin.dispatch_receipt` (`Plans/Wiring_Matrix.production.json` row `catalog.github_actions_pin`, `expected_event_types: []`). There is no persisted pin event, so the record carries no `event_ref`. |
 
-`verification_state` moves on each Actions observation ("Actions Observation Transport" above): `verified` when `workflow_id` resolves at `workflow_file_path`; `stale` when the staleness rule there fires; `renamed` when `workflow_id` resolves at a different path (the badge shows the rename and `workflow_file_path` updates only after the user confirms); `missing` when `workflow_id` no longer exists; `unverifiable` when an Actions blocked reason prevents the read. Every non-`verified` state shows on the badge and keeps unpin available.
+`verification_state` starts at `unverified` and moves on each Actions observation ("Actions Observation Transport" above): `verified` when `workflow_id` resolves at `workflow_file_path` and the file's commit at `pinned_ref` is read, which sets `pinned_sha` and `last_verified_at_utc`; `stale` when the staleness rule there fires after at least one verification (before the first one, a missed observation leaves the pin `unverified`); `renamed` when `workflow_id` resolves at a different path (the badge shows the rename and `workflow_file_path` updates only after the user confirms); `missing` when `workflow_id` no longer exists; `unverifiable` when an Actions blocked reason prevents the read. Every non-`verified` state shows on the badge and keeps unpin available.
 
 ### Actions Blocked Reason Table
 

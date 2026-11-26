@@ -4,7 +4,7 @@ Source: `Plans/WorktreeGitImprovement.md`
 
 Source lines: L939-L4930
 
-Source SHA256: `3312b3df85bb8bcda384c2903870fba7081fc8467e0e7bc9b1e8b00e37349ead`
+Source SHA256: `5e534e1438b9a3dad605d249ddfc065a98f21533b048daf85166442b232a8f0f`
 
 ---
 
@@ -365,7 +365,7 @@ plan_unit_id: W-008
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: After restart, worktree resolution and PR head branch resolution recover from durable or listed worktrees instead of falling back to the main repo path or main repo branch.
+canonical_text: After restart, worktree resolution and PR head branch resolution recover from durable or listed worktrees that the section 2.7 worktree_exists check returns exists_valid for, with the node's recorded branch as expected_branch, instead of falling back to the main repo path or main repo branch.
 gui_related: false
 gui_classification_reason: This unit defines backend/runtime, storage, governance, or command policy rather than visual presentation.
 split_recommended: false
@@ -2828,7 +2828,7 @@ plan_unit_id: W-052
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: "active_worktrees is repopulated from listed worktree paths by extracting node identity and inserting canonical entries rather than relying on stale in-memory state."
+canonical_text: "active_worktrees is repopulated from listed worktree paths by extracting node identity and inserting canonical entries only for worktrees whose section 2.7 worktree_exists check, with the recorded expected branch when known, returns exists_valid, rather than relying on stale in-memory state."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
 split_recommended: false

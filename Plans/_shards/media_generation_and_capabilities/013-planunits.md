@@ -2,9 +2,9 @@
 
 Source: `Plans/Media_Generation_and_Capabilities.md`
 
-Source lines: L1166-L6252
+Source lines: L1169-L6256
 
-Source SHA256: `0ec7d411e8c2015b6ddae6746265c1f7438af51dff356ab2b897097dd0bfb3de`
+Source SHA256: `d3743eb6a14a9662454b145d2d4544a8c8c2233e227fa289c1662a58dd6aacf3`
 
 ---
 
@@ -3542,7 +3542,7 @@ plan_unit_id: MGAC-066
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: The six disabled-reason messages are canonical verbatim UI copy for NOT_CONFIGURED, MODEL_UNAVAILABLE, ADMIN_DISABLED, BACKEND_UNSUPPORTED, RATE_LIMITED, and QUOTA_EXCEEDED. BACKEND_UNSUPPORTED has two verbatim variants; the Image-Generation-only message appears only when the active backend has a verified image generated_media_route (its own unexpired image probe), no verified video or audio route, and the disabled capability is video, TTS or music, and the no-verified-route message appears in every other BACKEND_UNSUPPORTED case.
+canonical_text: The six disabled-reason messages are canonical verbatim UI copy for NOT_CONFIGURED, MODEL_UNAVAILABLE, ADMIN_DISABLED, BACKEND_UNSUPPORTED, RATE_LIMITED, and QUOTA_EXCEEDED. BACKEND_UNSUPPORTED has three verbatim variants; the Image-Generation-only message appears only when the active backend has a verified image generated_media_route (its own unexpired image probe), no verified video or audio route, and the disabled capability is video, TTS or music. In every other BACKEND_UNSUPPORTED case a no-verified-route message appears, namely the variant that offers to verify this backend's route in Settings -> Providers only when the active backend has a route row for that output mode in support_state unverified (the probe admits it), and the variant without the verify action when it has no such row or its row is disabled, unsupported or capability_gated.
 gui_related: true
 gui_classification_reason: The unit defines user-visible capability picker, disabled-state presentation, UI copy, or interactive media behavior.
 split_recommended: true
@@ -3574,6 +3574,7 @@ preserved_exact_tokens:
 - This feature is disabled in Settings. Enable it under Media settings, then try again.
 - The current backend supports Image Generation only. To use Video/TTS/Music, use a provider route with verified generated-media support for that kind.
 - The current backend has no verified generated-media route for this kind. Use a provider route with verified generated-media support, or verify this backend's route in Settings -> Providers.
+- The current backend has no verified generated-media route for this kind. Use a provider route with verified generated-media support.
 - This feature is temporarily rate-limited. Wait a moment and try again.
 - API quota for this feature has been exhausted. Check your provider usage dashboard or wait for quota to reset.
 - NOT_CONFIGURED

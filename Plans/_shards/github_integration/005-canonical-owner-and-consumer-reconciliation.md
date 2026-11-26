@@ -4,7 +4,7 @@ Source: `Plans/GitHub_Integration.md`
 
 Source lines: L80-L227
 
-Source SHA256: `a53cd6373e43753e0528793f1b6464c64f52486b38c347c218c7bcafab2ca5d4`
+Source SHA256: `519547dabae0f94bb05309b14807c737a5fb5212974a1423a2070923635993e2`
 
 ---
 
@@ -24,7 +24,7 @@ Source Control accordion section headers are interactive controls with `accessib
 
 Source Control compare-target defaults are deterministic: opening a file diff from the unstaged list defaults to `index <-> working tree`; opening from the staged list defaults to `HEAD <-> index`; opening an untracked file defaults to `empty <-> working tree`; opening from commit history defaults to `selected commit <-> first parent`; and opening a conflicted file defaults to three-way conflict review with `base`, `ours`, `theirs`, and `result`.
 
-Compare/open identity consumption and run-aware compare-origin forwarding: GitHub compare/open pivots carry canonical compare identity instead of reconstructing targets from local UI state. The `compare_origin` value is closed to `changes.unstaged`, `changes.staged`, `history.commit_parent`, `conflict.review`, `worktree.branch_compare`, `actions.run_commit_range`, `blocked.dirty_worktree`, and `recovery.safe_point_retry` for GitHub Integration consumers. Each origin records the relevant `project_id`, `repo_id`, `worktree_id`, branch/head/baseline or run commit-range refs, and owner run/node/attempt refs when available; if an origin cannot be revalidated, the UI opens review in a degraded historical mode or blocks mutation rather than silently substituting the current branch.
+Compare/open identity consumption and run-aware compare-origin forwarding: GitHub compare/open pivots carry canonical compare identity instead of reconstructing targets from local UI state. The `compare_origin` value is closed to `changes.unstaged`, `changes.staged`, `history.commit_parent`, `conflict.review`, `worktree.branch_compare`, `actions.run_commit_range`, `blocked.dirty_worktree`, and `recovery.safe_point_retry` for GitHub Integration consumers. Each origin records its scope, the relevant `project_id` (Project scope only), `repo_id`, `worktree_id`, branch/head/baseline or run commit-range refs, and owner run/node/attempt refs when available; an application or pre-registration pivot also records its actual Server/Computer, source context and verified account (the `compare_origin` record in "Compare, Graph Patch, And Pinned Workflow Schemas" below types every field); if an origin cannot be revalidated, the UI opens review in a degraded historical mode or blocks mutation rather than silently substituting the current branch.
 
 Scope/repository/account identity is explicit. Project contexts retain their exact Project/repository/account keys; admitted application or pre-registration contexts use the tagged application partition plus actual Server/Computer, thread/session or source-context and independently verified repository/account identities. A null Project never becomes an empty Project key, focus fallback or shared cross-account cache. `selected_repo_id` remains exact target state; `provider_accounts` and `provider_accounts.*` consume owner-held shared account identities and explicit per-context selection under the Settings resolver and MA-074, omitting Project when absent; wizard-blocked recovery stores blocked-episode `detail_ref` attachments rather than a standalone integration object.
 

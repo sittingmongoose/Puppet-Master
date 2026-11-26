@@ -356,7 +356,7 @@
         "two_durable_rule_scopes",
         "visibility_rules"
       ],
-      "sha256": "f5e93509549ad684f2602fdc9132b4d307c0548e1afb4a303410eaab3d0b00b5",
+      "sha256": "5fb81425507647a77ace998f0db987a831d18dd3550756c68db9e59eea37fae6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 37
@@ -9779,7 +9779,7 @@
         "future image source resolver",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 15374,
+      "line_count": 15379,
       "path": "Plans/FileSafe.md",
       "plan_unit_count": 213,
       "plan_unit_ids": [
@@ -10032,7 +10032,7 @@
         "unrecoverable_mutation",
         "unsafe_host_side_effect"
       ],
-      "sha256": "3e882a0378b7f303bea75237ccea052aa845f958b7e7291a76b24feeefae7a95",
+      "sha256": "602c43e64e6cb3c64a86cb0cc5d2b7ab33b1915d73c001845396c87f6204a040",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 213
@@ -11694,7 +11694,7 @@
         "Plans/event_family_registry.json",
         "future remote Git cache adapter"
       ],
-      "line_count": 2749,
+      "line_count": 2753,
       "path": "Plans/GitHub_Integration.md",
       "plan_unit_count": 42,
       "plan_unit_ids": [
@@ -11754,7 +11754,7 @@
         "p1_security_release_supply_chain_hardening",
         "remote_cache_consumer_drift"
       ],
-      "sha256": "a53cd6373e43753e0528793f1b6464c64f52486b38c347c218c7bcafab2ca5d4",
+      "sha256": "519547dabae0f94bb05309b14807c737a5fb5212974a1423a2070923635993e2",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 42
@@ -13048,7 +13048,7 @@
         "lsp_write_transaction_order_or_identity_drift",
         "migration_lineage"
       ],
-      "sha256": "de1f7abea0d557019f069b32ad43fb0b1ea7b4ac282b27ad40e82c103ae36c4b",
+      "sha256": "6ddc60e20121a243faad75e2db081809042e758f6719f1f9a8032043c39a205c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 114
@@ -13236,7 +13236,7 @@
         "Plans/usage-feature.md",
         "future provider/model capability matrix"
       ],
-      "line_count": 6826,
+      "line_count": 6838,
       "path": "Plans/Media_Generation_and_Capabilities.md",
       "plan_unit_count": 101,
       "plan_unit_ids": [
@@ -13369,7 +13369,7 @@
         "p1_security_release_supply_chain_hardening",
         "retired_gemini_cli_nanobanana_resurrection"
       ],
-      "sha256": "0ec7d411e8c2015b6ddae6746265c1f7438af51dff356ab2b897097dd0bfb3de",
+      "sha256": "d3743eb6a14a9662454b145d2d4544a8c8c2233e227fa289c1662a58dd6aacf3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 101
@@ -13652,7 +13652,7 @@
         "future Teacher thread model chips",
         "future model route resolver"
       ],
-      "line_count": 10458,
+      "line_count": 10542,
       "path": "Plans/Models_System.md",
       "plan_unit_count": 140,
       "plan_unit_ids": [
@@ -13935,7 +13935,7 @@
         "webresearch_tiering_automation_session_boundary",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "7a2e916437d974a56da7a15b4dea7561bae5ee5b5de59a6e5b9a436fadbe4d21",
+      "sha256": "1bce879184c9d913b465ff3a5c80748555550ed3d5a2a08f42242e747557adad",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 140
@@ -15174,7 +15174,7 @@
         "future Orchestrator prompt routes",
         "future subagent handoff and child-run receipt records"
       ],
-      "line_count": 35229,
+      "line_count": 35230,
       "path": "Plans/orchestrator-subagent-integration.md",
       "plan_unit_count": 472,
       "plan_unit_ids": [
@@ -16099,7 +16099,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "fc1d16eb0b97f2c3c29472b847b9c3a022dffff1beea720b645391e162d5a356",
+      "sha256": "3a96bb84494cc5f21507147c7745623be9b91532eda1bae5c9066517b4ee41ee",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 470,
@@ -19831,7 +19831,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm_browser_program_semantics.py"
       ],
-      "line_count": 19298,
+      "line_count": 19302,
       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
       "plan_unit_count": 199,
       "plan_unit_ids": [
@@ -20177,7 +20177,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "f369d1a2aee3ea0d1cb2454134dcbc470d4d80565011af67668f2679c905c80d",
+      "sha256": "21a36fed60dde4e0124a560fedcd4155db83186b04f318f642cb232ef46d44e6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 195,
@@ -23340,7 +23340,7 @@
         "False": 121,
         "True": 69
       },
-      "heading_count": 345,
+      "heading_count": 346,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Back_Seat_Driver.md",
@@ -23375,7 +23375,7 @@
         "future tool registry and shell/integration command dispatch",
         "future vision_bridge tool"
       ],
-      "line_count": 13731,
+      "line_count": 13755,
       "path": "Plans/Tools.md",
       "plan_unit_count": 190,
       "plan_unit_ids": [
@@ -23650,7 +23650,7 @@
         "workflow_local_tool_registry_drift",
         "write_atomicity_drift"
       ],
-      "sha256": "beab0352a973b5b875909e099a8ba7b4dcc4db68e6a87b52a647b64db09f5f78",
+      "sha256": "9ecb6276c5c9258753abfd9038d00320a09e4ddbb52ff1eea67ff0c84847a303",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 189,
@@ -24060,7 +24060,7 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "7a505fc3c933b16467a15b2a14377865e4299397a84d32ea23b309f91e53a212",
+      "sha256": "a7ef2f16d5d4a9b478652b79e95d1bbb5c23aaeebfc35cec86b3c17d4724c8f1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 197,
@@ -25129,7 +25129,7 @@
         "future Source Control worktree manager",
         "future worktree lock manager"
       ],
-      "line_count": 7800,
+      "line_count": 7802,
       "path": "Plans/WorktreeGitImprovement.md",
       "plan_unit_count": 85,
       "plan_unit_ids": [
@@ -25243,7 +25243,7 @@
         "worktree_panel_filter_drift",
         "worktree_row_presentation_drift"
       ],
-      "sha256": "3312b3df85bb8bcda384c2903870fba7081fc8467e0e7bc9b1e8b00e37349ead",
+      "sha256": "5e534e1438b9a3dad605d249ddfc065a98f21533b048daf85166442b232a8f0f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 85
@@ -25278,7 +25278,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-26T02:51:40Z",
+  "generated_at_utc": "2026-11-26T03:20:04Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

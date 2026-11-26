@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L1327-L1392
+Source lines: L1327-L1393
 
-Source SHA256: `7a2e916437d974a56da7a15b4dea7561bae5ee5b5de59a6e5b9a436fadbe4d21`
+Source SHA256: `1bce879184c9d913b465ff3a5c80748555550ed3d5a2a08f42242e747557adad`
 
 ---
 
@@ -65,9 +65,10 @@ selection_reason {
   selected_model: string,              // e.g., 'gpt-4', 'claude-3-opus'
   precedence_tier: number,             // 1–6, using the versioned MS-005/099 source order
   fallback_reason?: string,            // If a fallback was triggered (capability, cost, unavailability)
-  alternatives: Array,                 // Other models that were considered and why they were skipped
+  alternatives: Array,                 // Other models that were considered and why they were skipped; a ModelSelectionRouter result lists every candidate, the winner included (MS-135)
   selection_time_utc: string,          // When the decision was made
   execution_unit_id: string,           // Tied to the unit making the selection
+  router_input_ref?: string,           // MS-135: present exactly when resolver_matrix_entry is "model_selection_router"
 }
 ```
 

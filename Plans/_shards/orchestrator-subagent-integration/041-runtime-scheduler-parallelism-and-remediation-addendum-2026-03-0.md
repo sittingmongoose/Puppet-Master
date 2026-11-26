@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L6393-L6548
 
-Source SHA256: `fc1d16eb0b97f2c3c29472b847b9c3a022dffff1beea720b645391e162d5a356`
+Source SHA256: `3a96bb84494cc5f21507147c7745623be9b91532eda1bae5c9066517b4ee41ee`
 
 ---
 
