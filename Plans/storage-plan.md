@@ -26997,6 +26997,7 @@ unblocks: []
 acceptance_criteria:
   - "An ordinary group is issued when its commit frame is durable after one segment sync; no receipt or dependent terminal write escapes earlier, and its custody rows follow without their own sync and are rebuilt identically from the frame after a crash (SP-336, SP-347)."
   - "Original eleven receipt fields and four-field result remain immutable across retries, source relocation and lost delivery."
+  - "An already-appended retry authenticates the complete caller-supplied event set against the durable group before returning the original event IDs; exact producer semantics replay, while any changed, missing, additional or reordered event refuses without a second append."
   - "Subset custody, rows that differ from or lack a durable commit frame, repaired held mappings/dedupe, contradictory identities or late owner/session changes fence; a group missing within its durability class resolves as lost, not corrupt."
   - "Settled older restore preserves covered receipts but cannot mint a replacement for missing delivered work."
   - "Actual new owner acceptance is distinct from retry input; an in-place restart finds each group's issuance recoverable from its commit frame or absent, invents no prior acknowledgement and keeps the loss and restore fences."

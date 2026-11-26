@@ -1432,6 +1432,12 @@ class TestOwnerStorage:
         r = self.reservations[op]
         require('append/released', r['state'] != 'released')
         if r['state'] != 'reserved':
+            require('append/replay_event_ids', type(candidates) is list and
+                    [c.get('event_id') if type(c) is dict else None for c in candidates] == r['event_ids'])
+            for candidate, event_id in zip(candidates, r['event_ids']):
+                self._candidate(candidate, 'append/candidate')
+                require('append/replay_event', canonical(producer25(candidate)) ==
+                        canonical(producer25(self.read_event(event_id))))
             return dict(status='already_appended', event_ids=list(r['event_ids']))
         fenced = self.append_reservations.get(op)
         if fenced is None:
