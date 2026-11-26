@@ -16,6 +16,7 @@ Every row a family's complete calls evaluate is classified by its best evidence 
   CANNOT_DECIDE     a later refusal that is neither: a different-code refusal missing a KILLED_CODE
                     condition, or a same-code one whose after-state differs or cannot be compared
                     (no owner-state hook, a missing digest, a non-repeating intact trial): no credit
+  JUDGE_BOUND       a judge replay reached its deadline: no credit
   NEEDS_NEGATIVE    no declared negative targets the site: needs a new authored negative
   SCHEMA_ROOT       a whole-root schema row: closes by clause closure (GC) plus its gated row
 
@@ -31,9 +32,11 @@ import hashlib
 import json
 from pathlib import Path
 
+from pm_goal_dg5_judge_replay import OUTCOME as BOUND_OUTCOME
+
 ROOT = Path(__file__).resolve().parents[1]
 RANK = {'KILLED': 0, 'DUP_KILLED': 1, 'KILLED_CODE': 1, 'PRESENCE_CANDIDATE': 3, 'DUP_CANDIDATE': 2,
-        'COVERED_LATER': 4, 'CANNOT_DECIDE': 5, 'NEEDS_NEGATIVE': 6}
+        'COVERED_LATER': 4, 'CANNOT_DECIDE': 5, BOUND_OUTCOME: 6, 'NEEDS_NEGATIVE': 7}
 
 
 def source_line(path, line):
@@ -72,7 +75,7 @@ def main():
                 cls = 'DUP_KILLED'
             elif kill == 'COVERED_LATER':
                 cls = 'DUP_CANDIDATE' if (record.get('dg5_chain') or {}).get('result') == 'accepts' else 'COVERED_LATER'
-            elif kill in ('KILLED_CODE', 'CANNOT_DECIDE'):
+            elif kill in ('KILLED_CODE', 'CANNOT_DECIDE', BOUND_OUTCOME):
                 cls = kill
             elif kill == 'CUT_EXCEPTION':
                 cls = 'PRESENCE_CANDIDATE'
@@ -83,9 +86,12 @@ def main():
             if name not in best or RANK[cls] < RANK[best[name]]:
                 best[name] = cls
             if len(evidence[name]) < 3:
-                evidence[name].append(dict(label=record['label'], kill=kill, outcome=record.get('outcome'),
-                                           chain=record.get('dg5_chain'), cut_errors=record.get('cut_errors'),
-                                           exception=(record.get('cut_exception_site') or {}).get('detail')))
+                item = dict(label=record['label'], kill=kill, outcome=record.get('outcome'),
+                            chain=record.get('dg5_chain'), cut_errors=record.get('cut_errors'),
+                            exception=(record.get('cut_exception_site') or {}).get('detail'))
+                if kill == BOUND_OUTCOME:
+                    item['judge_bound'] = record['judge_bound']
+                evidence[name].append(item)
     def member_lines(row):
         slot = collection['rows'].get(row, {})
         return [dict(path=p, line=l, source=source_line(p, l)) for p, l in slot.get('sites', [])[:3]]

@@ -472,6 +472,58 @@ def check_passive_refusal_rule():
     print('passive rule outcomes', outcomes)
 
 
+def check_judge_replay_bound():
+    import tempfile
+    import time
+    from unittest.mock import patch
+
+    import pm_goal_dg5_boundaries as bridge
+    import pm_goal_dg5_judge_replay as judge_replay
+
+    class Refusal(Exception):
+        pass
+
+    def require(code, condition):
+        if not condition:
+            raise Refusal(code)
+
+    routed = bridge.guard_wrapper(require)
+    dg5.install(prove=False)
+    collector = sweep.Collector(judge=True)
+    with tempfile.TemporaryDirectory(prefix='dg5-judge-bound-') as tmp:
+        work = Path(tmp) / 'store'
+        work.mkdir()
+        (work / 'original').write_text('intact')
+        marker = work.parent / 'replay-pid'
+
+        def action():
+            routed('selftest/judge-bound', False)
+            (work / 'original').write_text('cut')
+            marker.write_text(str(os.getpid()))
+            time.sleep(4)
+
+        row = bridge.site_name(__file__, action.__code__.co_firstlineno + 1)
+        with patch.object(tables, 'COLLECTOR', collector), patch.object(tables, 'DISCOVERY', True), \
+                patch.object(judge_replay, 'WALL_SECONDS', 1):
+            result, _ = bridge.invoke('selftest/judge-bound', 'goal.cancelled', action, work,
+                                      arguments={}, valid=False, target=row)
+        record = collector.ledger[-1]
+        assert result['errors'] == [row] and record['outcome'] == 'exact_expected', record
+        assert record['kill'] == 'JUDGE_BOUND' and not collector.replays, record
+        bound = record['judge_bound']
+        assert bound['cut'] == [row] and bound['wall_limit_seconds'] == 1, bound
+        assert bound['elapsed_seconds'] >= 1 and 'rss_growth_kib_per_second' in bound, bound
+        assert (work / 'original').read_text() == 'intact'
+        assert not list(work.parent.glob('fork-*.pkl'))
+        pid = int(marker.read_text())
+        try:
+            os.waitpid(pid, os.WNOHANG)
+        except ChildProcessError:
+            pass
+        else:
+            raise AssertionError(f'replay child {pid} was not reaped')
+
+
 def main():
     check_named_context_sentinel()
     check_frame_error_target_mapping()
@@ -487,6 +539,7 @@ def main():
     check_boundaries_schema_row_guard()
     check_u_bank_validate_routing_guard()
     check_passive_refusal_rule()
+    check_judge_replay_bound()
     print('pm_goal_dg5_collector_selftest: PASS')
     return 0
 

@@ -31,6 +31,7 @@ import subprocess
 import sys
 import time
 
+import pm_goal_dg5_judge_replay as judge_replay
 import pm_goal_guard_tables as tables
 import pm_goal_guard_sweep as sweep
 
@@ -143,12 +144,25 @@ def install(prove):
         judge = sweep.Collector._judge
 
         def judged(self, record, evaluate, value):
-            judge(self, record, evaluate, value)
-            if record.get('kill') == 'CUT_EXCEPTION' and evaluate is not None:
-                record['cut_exception_site'] = cut_site(self, evaluate, value, record['target'])
-            if record.get('kill') in sweep.LATER_REFUSAL_CLASSES and evaluate is not None:
-                # Evidence only, for every non-credit later-refusal class (COVERED_LATER, CANNOT_DECIDE).
-                record['dg5_chain'] = chain(self, evaluate, value, record['target'])
+            token = judge_replay.JUDGING.set(True)
+            try:
+                judge(self, record, evaluate, value)
+                if record.get('kill') == 'CUT_EXCEPTION' and evaluate is not None:
+                    record['cut_exception_site'] = cut_site(self, evaluate, value, record['target'])
+                if record.get('kill') in sweep.LATER_REFUSAL_CLASSES and evaluate is not None:
+                    # Evidence only, for every non-credit later-refusal class (COVERED_LATER, CANNOT_DECIDE).
+                    record['dg5_chain'] = chain(self, evaluate, value, record['target'])
+            except judge_replay.ReplayBound as bound:
+                if record.get('kill') in sweep.KILL_CLASSES:
+                    # A bound during the auxiliary joint cut can follow a credited single cut.
+                    target = record['target']
+                    targets = (target,) if isinstance(target, str) else tuple(sorted(target))
+                    self.replays[targets, record['family']] -= 1
+                    record.pop('killed_code_check', None)
+                record['kill'] = judge_replay.OUTCOME
+                record['judge_bound'] = bound.evidence
+            finally:
+                judge_replay.JUDGING.reset(token)
         sweep.Collector._judge = judged
         sweep.Collector._go_cut_sites = True
 

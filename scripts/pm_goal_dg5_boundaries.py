@@ -21,11 +21,13 @@ import re
 import shutil
 import sys
 import tempfile
+import time
 import traceback
 from types import SimpleNamespace
 import types
 import weakref
 
+import pm_goal_dg5_judge_replay as judge_replay
 import pm_goal_guard_tables as tables
 import pm_goal_guard_sweep as sweep
 
@@ -853,6 +855,8 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
         fd, output = tempfile.mkstemp(prefix='fork-', suffix='.pkl', dir=work.parent)
         os.close(fd)
         parent_collector = tables.COLLECTOR
+        judging = parent_collector.replaying and judge_replay.JUDGING.get()
+        started = time.monotonic() if judging else None
         pid = os.fork()
         if pid == 0:
             entries = []
@@ -908,7 +912,10 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
             Path(output).write_bytes(pickle.dumps(result, protocol=5))
             os._exit(0)
         try:
-            _, status = os.waitpid(pid, 0)
+            if judging:
+                status = judge_replay.wait(pid, tables.CUT, started)
+            else:
+                _, status = os.waitpid(pid, 0)
             if os.waitstatus_to_exitcode(status) != 0 or not Path(output).stat().st_size:
                 raise RuntimeError('complete-call child did not return a result')
             result = pickle.loads(Path(output).read_bytes())
