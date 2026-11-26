@@ -275,7 +275,7 @@ ContractRef: Plans/Tools.md#11.1 Provider classes, defaults, and fallback disclo
 
 Core rules:
 - Legacy `#8.2 GUI/settings alignment` references normalize to this section, with owner-routing back to `Plans/Tools.md` for provider stack, Firecrawl, and web-routing canon.
-- This section is the consumer-only GUI/settings alignment landing for `Plans/newtools.md` §8; provider-capability canon lives in Plans/Tools.md sections 11 and 12, while MCP canon lives in `Plans/MCP_Integration.md`.
+- This section supplies GUI and Settings consumer guidance for `Plans/newtools.md` §8. The **Provider capability matrix** and **Web tool routing algorithm** headings in `Plans/Tools.md` own provider capability and web routing. `Plans/MCP_Integration.md` owns MCP.
 - global provider stack is user-changeable in Settings.
 - per-operation priority reordering is NOT MVP.
 - global MVP provider priority is not immutable product policy.

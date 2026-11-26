@@ -15574,8 +15574,8 @@ command_payload_definitions:
             Canon names "command replay or shell profile hints" (UI_Command_Catalog.md:888) without a field
             shape. JUDGMENT: command_ref, type ref, optional, for the replay hint; the overlay's command_ref?
             identity is the candidate name. The hint is never replayed automatically: a restart records the
-            newly resolved environment without automatic command replay (SMPFS-164 acceptance criterion,
-            Section15_MVP_Promoted_Features_Spec.md:11666-11669).
+            newly resolved environment without automatic command replay (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-164,
+            Environment Provenance And Pending Launch Changes acceptance criteria).
       owner_request: Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -19237,7 +19237,7 @@ For `tpf-osc52-oversize`, `tpf-kitty-oversize`, `tpf-sixel-oversize` and `tpf-it
 | `tpf-osc6973-command` | `shell_integration` | `\e]133;A;pmn=<S>\a$ \e]133;B;pmn=<S>\a\e]6973;<S>;E;bHMgLWxh\a\r\n\e]133;C;pmn=<S>\aout\r\n\e]133;D;0;pmn=<S>\a` | false | Exactly one command block: prompt `$ `, output `out`, exit status 0, and command line `ls -la`, which can come only from the `E` record because the stream echoes no command text; the record is consumed and not shown. |
 | `tpf-osc6973-forged` | `shell_integration` | the `tpf-osc6973-command` stream with `\e]6973;bad;E;bHMgLWxh\a` in place of its `E` record | true | The authenticated marks still create one command block with exit status 0. The grid shows the rejected `E` record at its input position under the plain-text oracle. No command line is recorded, including `ls -la`. |
 | `tpf-osc6973-who` | `shell_integration` | `\e]133;A;pmn=<S>\a$ \e]133;B;pmn=<S>\a\e]6973;<S>;W;user\als\r\n\e]133;C;pmn=<S>\aout\r\n\e]133;D;0;pmn=<S>\a` | false | Exactly one command block as in `tpf-osc133-secret`, whose `by` is the user (`#SMPFS-183`: `<who>` is `user` for the user and the agent's name for an agent); the record is consumed and not shown. |
-| `tpf-osc6973-who-forged` | `shell_integration` | the `tpf-osc6973-who` stream with `\e]6973;bad;W;fixture-agent\a` in place of its `W` record. `fixture-agent` is a known agent name in the harness and the actual writer is the user. | true | The authenticated marks still create one command block with exit status 0. The emitted command record contains `by` with the value `null` because no trusted `W` record attributed the command (ATS-076, CV-362). The grid shows the rejected `W` record at its input position under the plain-text oracle. |
+| `tpf-osc6973-who-forged` | `shell_integration` | the `tpf-osc6973-who` stream with `\e]6973;bad;W;fixture-agent\a` in place of its `W` record. `fixture-agent` is a known agent name in the harness and the actual writer is the user. | true | The authenticated marks still create one command block with exit status 0. The emitted command record omits `by` or sets it to `null` because no trusted `W` record attributed the command (CV-362 and SMPFS-182). The grid shows the rejected `W` record at its input position under the plain-text oracle. |
 | `tpf-osc7-cwd` | `cwd_report` | macOS/Linux/WSL: `\e]7;file://pm-fixture.example/home/u/proj\a`. Native Windows: `\e]7;file://pm-fixture.example/C:/pm-fixture/proj\a`. | false | The report matches the session's local host and sets its current folder to exactly `/home/u/proj` on macOS/Linux/WSL or `C:\pm-fixture\proj` on native Windows. |
 | `tpf-osc7-remote` | `cwd_report` | macOS/Linux/WSL: `\e]7;file://otherhost/home/u/proj\a`. Native Windows: `\e]7;file://otherhost/C:/pm-fixture/proj\a`. | true | The local current folder stays `/` on macOS/Linux/WSL and `C:\` on native Windows. |
 | `tpf-bpaste-on` | `bracketed_paste` | stream `\e[?2004h`, then the user pastes `abc` | false | PTY receives `\e[200~abc\e[201~`. |

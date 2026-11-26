@@ -6485,7 +6485,7 @@ This addendum records the central command-contract registration for the approved
 | `cmd.browser.component.mode.set_default` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::component_mode_set_default` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserComponentModeRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/SettingsTransactionResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
 | `cmd.browser.devtools.open` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::devtools_open` | `Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenRequest` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenResultV1` (navigation wrapper; the typed route result; C-FIX79 decision 2026-11-24) | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
 
-All owner-authored contract schema documents referenced in the table must exist and validate before any row leaves `handler_unavailable`. Registration records the schema references. Schema creation, storage key admission and EventRecord admission remain with their respective owners.
+All owner-authored contract schema documents referenced in the table must exist and validate before any row leaves `handler_unavailable`. Naming them here does not create them. Registration records the schema references. Schema creation, storage key admission and EventRecord admission remain with their respective owners.
 
 ### Typed error vocabulary
 

@@ -8417,7 +8417,7 @@
         {
           "test_id": "wiring.catalog.actions_show.dispatcher",
           "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.actions.show reaches handlers::actions::show with typed args/result contract."
+          "requirement": "Dispatch cmd.actions.show and its legacy cmd.github_actions.show spelling through the typed command contract. Both reach handlers::actions::show and open the GitHub Actions side panel."
         },
         {
           "test_id": "wiring.catalog.actions_show.state_projection",
@@ -8472,7 +8472,7 @@
         {
           "test_id": "wiring.catalog.actions_switch_subview.dispatcher",
           "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.actions.switch_subview reaches handlers::actions::switch_subview with typed args/result contract."
+          "requirement": "Dispatch cmd.actions.switch_subview and its legacy cmd.github_actions.switch_subview spelling for each typed subview value: current_branch, workflows, and settings. Every case reaches handlers::actions::switch_subview and opens the corresponding subview."
         },
         {
           "test_id": "wiring.catalog.actions_switch_subview.state_projection",
@@ -41242,46 +41242,46 @@
     "catalog.github_actions_open_run_diff_canonical": {
       "ui_element_id": "catalog.github_actions_open_run_diff_canonical",
       "ui_location": "GitHub Actions run detail and Source Control review route",
-      "ui_command_id": "cmd.github.actions.open_run_diff",
-      "handler_location": "handlers::github::actions_open_run_diff",
+      "ui_command_id": "cmd.github.actions.open_related_diff",
+      "handler_location": "handlers::github::actions_open_related_diff",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.github.actions.open_run_diff must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.github.actions.open_run_diff exposes projected state selector and disabled reason before dispatch",
-        "cmd.github.actions.open_run_diff dispatch evidence preserves command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.github.actions.open_run_diff has regression and accessibility evidence before production certification"
+        "cmd.github.actions.open_related_diff uses the canonical typed args and result contract with the selected run as the correlation subject",
+        "cmd.github.actions.open_related_diff exposes its projected state selector and disabled reason before dispatch",
+        "Dispatch evidence preserves the canonical command_id, any invoked alias, origin, correlation_id, handler target, result, and receipt or route effect",
+        "The run-detail control has regression and accessibility evidence before production certification"
       ],
-      "evidence_required": "Production wiring contract for cmd.github.actions.open_run_diff; Canonical alias normalizes to cmd.github.actions.open_related_diff when the related-diff object is run-scoped.  Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
-      "state_selector": "state.commands.github_actions_open_run_diff.availability",
-      "disabled_reason_projection": "state.commands.github_actions_open_run_diff.disabled_reason",
+      "evidence_required": "Production wiring contract for run-scoped cmd.github.actions.open_related_diff. Both run-diff aliases normalize before permission and dispatch. Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.github_actions_open_related_diff.availability",
+      "disabled_reason_projection": "state.commands.github_actions_open_related_diff.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.github.actions.open_run_diff records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "description": "cmd.github.actions.open_related_diff records a canonical no-persist command receipt or route/open disposition for the selected run. Dispatch provenance retains any invoked alias.",
         "receipt_or_event_refs": [
-          "cmd.github.actions.open_run_diff.dispatch_receipt"
+          "cmd.github.actions.open_related_diff.dispatch_receipt"
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "catalog.github_actions_open_run_diff_canonical exposes a stable role/name/description matching cmd.github.actions.open_run_diff.",
+        "role_or_semantics": "catalog.github_actions_open_run_diff_canonical exposes a stable role/name/description for opening the selected run's related diff.",
         "keyboard_access": "catalog.github_actions_open_run_diff_canonical is reachable and activatable by keyboard where the control is visible.",
         "focus_management": "catalog.github_actions_open_run_diff_canonical preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.github_actions_open_run_diff_canonical surfaces state.commands.github_actions_open_run_diff.disabled_reason to assistive technology when unavailable."
+        "disabled_announcement": "catalog.github_actions_open_run_diff_canonical surfaces state.commands.github_actions_open_related_diff.disabled_reason to assistive technology when unavailable."
       },
       "test_evidence": [
         {
           "test_id": "wiring.catalog.github_actions_open_run_diff_canonical.dispatcher",
           "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.github.actions.open_run_diff reaches handlers::github::actions_open_run_diff with typed args/result contract."
+          "requirement": "Invoke cmd.github.actions.open_run_diff and cmd.github_actions.open_run_diff with a run-scoped subject. Both normalize to cmd.github.actions.open_related_diff and reach handlers::github::actions_open_related_diff with the canonical typed args and result. Provenance retains the exact invoked spelling."
         },
         {
           "test_id": "wiring.catalog.github_actions_open_run_diff_canonical.state_projection",
           "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.github_actions_open_run_diff.availability and disabled copy reads state.commands.github_actions_open_run_diff.disabled_reason."
+          "requirement": "Availability reads state.commands.github_actions_open_related_diff.availability and disabled copy reads state.commands.github_actions_open_related_diff.disabled_reason."
         },
         {
           "test_id": "wiring.catalog.github_actions_open_run_diff_canonical.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.github.actions.open_run_diff records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+          "requirement": "For each alias, assert the canonical no-persist receipt or route/open disposition preserves the run and invoked spelling in dispatch evidence."
         },
         {
           "test_id": "wiring.catalog.github_actions_open_run_diff_canonical.accessibility",
@@ -41290,7 +41290,7 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.github.actions.open_run_diff records dispatch receipt cmd.github.actions.open_run_diff.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+        "Assert the run-scoped route records cmd.github.actions.open_related_diff.dispatch_receipt or an explicit route/open disposition and emits no persisted domain event."
       ]
     },
     "catalog.github_actions_open_run_in_browser": {

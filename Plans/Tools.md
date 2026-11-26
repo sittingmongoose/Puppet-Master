@@ -2039,7 +2039,7 @@ Core rules:
 - DuckDuckGo capability rows must preserve native-ish search, PM-composed research/fetch/extract, and partial crawl behavior instead of flattening those cells to unsupported.
 - Google must remain a pluggable adapter slot with display label Google, and its ledger support semantics must not be collapsed away.
 - GUI/help canon must preserve row-level health/error disclosure, last-failure messaging, inline contextual help, and availability/support-tier visibility in Settings and /web help/autocomplete. Help appears inline as a tooltip or below-field text, not as a separate help page; Settings UI, `/web` help, and autocomplete show both provider availability and support tier per provider × operation as a capability matrix or per-provider badge rows.
-- Retire stale cited-search ownership residue from reference sections; provider-capability and web-routing canon is owned by Plans/Tools.md sections 11-12, while Plans/newtools.md#8.2.1 is non-normative consumer guidance only.
+- The **Provider capability matrix** and **Web tool routing algorithm** headings in `Plans/Tools.md` own provider capability and web routing. Stale cited-search ownership in reference sections is retired. `Plans/newtools.md#8.2.1` is consumer guidance only.
 - Firecrawl provider identity canon includes exact provider ID firecrawl, display name Firecrawl, default lower-priority position below Exa and Tavily and above DuckDuckGo, user-adjustable ordering, default-disabled state until API key or self-hosted URL is configured, and retirement of exact stale residue "stale cited-search framing and older `newtools` wording" from owner/provider canon.
 - Firecrawl gap coverage is MVP scope across high/medium/lower source findings; lower-priority provider placement controls default ordering only and remains user-changeable.
 - Support-tier stored canon uses `pm_composed` for PM-assembled behavior; `pm-composed` is only a display/source-lineage alias and must normalize to `pm_composed`.
@@ -2158,7 +2158,7 @@ Core rules:
 - Site Reader canon must require real browser interaction, reserve `Reading Site` for the PM-native Site Reader path, and prevent provider-routed fetch from reusing that reserved identity.
 - Answer construction must preserve search-then-read behavior, final citations must come from the actual read path rather than raw search snippets alone, and web activity/provenance docs must use the exact storage/contracts/browser ContractRef targets instead of malformed generic anchors.
 - Routing must remain cost-aware when multiple providers offer similar capability; static priority alone is insufficient, and the >100 credits warning plus 500 credits cap must remain aligned with routing.
-- Retire stale cited-search ownership residue from reference sections; provider-capability and web-routing canon is owned by Plans/Tools.md sections 11-12, while Plans/newtools.md#8.2.1 is non-normative consumer guidance only.
+- The **Provider capability matrix** and **Web tool routing algorithm** headings in `Plans/Tools.md` own provider capability and web routing. Stale cited-search ownership in reference sections is retired. `Plans/newtools.md#8.2.1` is consumer guidance only.
 - Natural-language web intents must hit the same dispatcher as slash commands, and site or page reading intents must resolve to webfetch rather than websearch or provider extract.
 - `search_provider` override is NOT exposed as a tool parameter; provider selection is handled by the capability-based routing algorithm and configured provider stack.
 - Adapter-agnostic routing follows the ordered sequence: Step 1: NORMALIZE OPERATION - normalize the requested operation/input; resolve the canonical runtime snapshot; resolve permission for the canonical web tool key; Step 5: QUERY CAPABILITY MATRIX by querying the provider capability registry / adapter contract; filter eligible adapters by runtime identity constraints, support tier, execution role, account/auth viability, and freshness/health constraints; choose the effective adapter through the shared runtime/provider resolver; fallback only to the next eligible adapter for the same operation; and persist both canonical runtime snapshot + web-operation payload.
@@ -10590,11 +10590,9 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:14
 - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:11
 - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:20
-- Plans/Tools.md:623
-- Plans/Tools.md:669
-- Plans/Tools.md:2160
-- Plans/Tools.md:2163
-- Plans/Tools.md:2164
+- "Plans/Tools.md#section=`question` tool runtime contract"
+- "Plans/Tools.md#section=`todowrite` and `todoread` runtime contract"
+- "Plans/Tools.md#section=Web tool routing algorithm"
 preserved_exact_tokens:
 - 'urls: string[]'
 - 'formats?: string[]'
@@ -11198,7 +11196,7 @@ gui_classification_reason: Tool schema and section numbering are backend/tooling
 depends_on: [T-055, T-056, T-104]
 unblocks: []
 acceptance_criteria:
-  - Section references such as Tools.md Section 12 resolve unambiguously after cleanup.
+  - References to the second numbered block resolve by heading name, including Provider capability matrix and Web tool routing algorithm.
   - task tool subagent_type validation routes through subagent_registry.
   - Stale count-based subagent lists do not become live registry authority.
 validation_surfaces:
@@ -11273,9 +11271,9 @@ source_lineage:
   - pldg-20260615-001-part-4-fable-cleanup:atom-0010
   - pldg-20260615-001-part-4-fable-cleanup:atom-0011
   - pldg-20260615-001-part-4-fable-cleanup:atom-0012
-  - local:Plans/Tools.md:2039
-  - local:Plans/Tools.md:2113
-  - local:Plans/Tools.md:2169
+  - "local:Plans/Tools.md#section=Provider classes, defaults, and fallback disclosure"
+  - "local:Plans/Tools.md#section=Support-tier vocabulary"
+  - "local:Plans/Tools.md#section=Web tool routing algorithm"
 preserved_exact_tokens:
   - "Fields:"
   - "Rules:"
