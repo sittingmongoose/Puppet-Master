@@ -187,64 +187,65 @@ export async function measureScroll(cdp, f, t, { ms, url, keep, label, trace = t
 	const best = pickScroller(cands);
 	let liveTop = 0, onBinding = null, settled = true;
 	let frameCdp = cdp, frameSessionFailed = false;
-	if (best) {
-		// R136-N5: under --set sandbox=1 the app is an opaque-origin OOPIF; Runtime.addBinding on the page's
-		// session never injects __fcTop into the frame, liveTop stayed 0 and the wheel pinned at the bottom
-		// bound while travel still passed. The binding lives on the frame's own CDP session (kit convention);
-		// Tracing stays on cdp. Without a frame session the window says could-not-judge, never a silent pass.
-		// R137-F2: an in-process child frame (--record's framed viewport, any shared-target sandbox) has no
-		// session of its own — Playwright throws "part of the parent frame" — but it IS part of cdp's target,
-		// so the binding rides cdp there (sound-prime/cold-bell/activity-bar-focus-film convention); the
-		// frameCdp !== cdp guard below keeps cdp from being detached. Any other error stays could-not-judge.
-		if (f !== t.page.mainFrame()) frameCdp = await t.page.context().newCDPSession(f).catch((e) => (String(e?.message || '').includes('part of the parent frame') ? cdp : null));
-		if (!frameCdp) frameSessionFailed = true;
-		else {
-			await frameCdp.send('Runtime.enable');
-			await frameCdp.send('Runtime.addBinding', { name: '__fcTop' });
-			onBinding = (e) => { if (e.name === '__fcTop') liveTop = Number(e.payload) || 0; };
-			frameCdp.on('Runtime.bindingCalled', onBinding);
-			await f.evaluate((i) => {
-				const el = document.querySelector(`[data-fc-cand="${i}"]`);
-				el.setAttribute('data-fc-scroller', '1');
-				el.__fcBehavior = el.style.getPropertyValue('scroll-behavior');
-				el.style.setProperty('scroll-behavior', 'auto');
-				el.scrollTop = 0;
-			}, best.i);
-			settled = await f.evaluate(() => new Promise((resolve) => {
-				const el = document.querySelector('[data-fc-scroller]');
-				const deadline = performance.now() + 2000;
-				let stable = 0;
-				const check = () => {
-					if (el.scrollTop === 0) { if (++stable >= 2) return resolve(true); }
-					else stable = 0;
-					if (performance.now() >= deadline) return resolve(false);
-					requestAnimationFrame(check);
-				};
-				requestAnimationFrame(check);
-			}));
-			await f.evaluate(() => {
-				const el = document.querySelector('[data-fc-scroller]');
-				const watch = { travel: 0, last: el.scrollTop };
-				watch.fn = () => { const top = el.scrollTop; watch.travel += Math.abs(top - watch.last); watch.last = top; if (window.__fcTop) window.__fcTop(String(top)); };
-				el.__fcWatch = watch;
-				el.addEventListener('scroll', watch.fn, { passive: true });
-			});
-			await t.page.mouse.move(Math.round(best.x), Math.round(best.y));
-		}
-	}
-	const during = best && !frameSessionFailed ? async (until) => {
-		let dir = 1;
-		while (now() < until) {
-			await t.page.mouse.wheel(0, dir * 40);
-			await wait(14);
-			dir = scrollStep({ top: liveTop, max: best.range, dir });
-		}
-	} : undefined;
 	let result, travel = 0;
 	try {
+		if (best) {
+			// R136-N5: under --set sandbox=1 the app is an opaque-origin OOPIF; Runtime.addBinding on the page's
+			// session never injects __fcTop into the frame, liveTop stayed 0 and the wheel pinned at the bottom
+			// bound while travel still passed. The binding lives on the frame's own CDP session (kit convention);
+			// Tracing stays on cdp. Without a frame session the window says could-not-judge, never a silent pass.
+			// R137-F2: an in-process child frame (--record's framed viewport, any shared-target sandbox) has no
+			// session of its own — Playwright throws "part of the parent frame" — but it IS part of cdp's target,
+			// so the binding rides cdp there (sound-prime/cold-bell/activity-bar-focus-film convention); the
+			// frameCdp !== cdp guard below keeps cdp from being detached. Any other error stays could-not-judge.
+			if (f !== t.page.mainFrame()) frameCdp = await t.page.context().newCDPSession(f).catch((e) => (String(e?.message || '').includes('part of the parent frame') ? cdp : null));
+			if (!frameCdp) frameSessionFailed = true;
+			else {
+				await frameCdp.send('Runtime.enable');
+				await frameCdp.send('Runtime.addBinding', { name: '__fcTop' });
+				onBinding = (e) => { if (e.name === '__fcTop') liveTop = Number(e.payload) || 0; };
+				frameCdp.on('Runtime.bindingCalled', onBinding);
+				await f.evaluate((i) => {
+					const el = document.querySelector(`[data-fc-cand="${i}"]`);
+					el.setAttribute('data-fc-scroller', '1');
+					el.__fcBehavior = el.style.getPropertyValue('scroll-behavior');
+					el.style.setProperty('scroll-behavior', 'auto');
+					el.scrollTop = 0;
+				}, best.i);
+				settled = await f.evaluate(() => new Promise((resolve) => {
+					const el = document.querySelector('[data-fc-scroller]');
+					const deadline = performance.now() + 2000;
+					let stable = 0;
+					const check = () => {
+						if (el.scrollTop === 0) { if (++stable >= 2) return resolve(true); }
+						else stable = 0;
+						if (performance.now() >= deadline) return resolve(false);
+						requestAnimationFrame(check);
+					};
+					requestAnimationFrame(check);
+				}));
+				await f.evaluate(() => {
+					const el = document.querySelector('[data-fc-scroller]');
+					const watch = { travel: 0, last: el.scrollTop };
+					watch.fn = () => { const top = el.scrollTop; watch.travel += Math.abs(top - watch.last); watch.last = top; if (window.__fcTop) window.__fcTop(String(top)); };
+					el.__fcWatch = watch;
+					el.addEventListener('scroll', watch.fn, { passive: true });
+				});
+				await t.page.mouse.move(Math.round(best.x), Math.round(best.y));
+			}
+		}
+		const during = best && !frameSessionFailed ? async (until) => {
+			let dir = 1;
+			while (now() < until) {
+				await t.page.mouse.wheel(0, dir * 40);
+				await wait(14);
+				dir = scrollStep({ top: liveTop, max: best.range, dir });
+			}
+		} : undefined;
 		result = await trace(cdp, { ms, during, url, keep });
 	} finally {
-		// R136-C1: teardown runs even when the trace throws — no leaked listener, marks or binding into the next look.
+		// R136-C1/R137-H1: teardown covers both pre-trace setup and a throwing trace — no leaked listener, marks,
+		// binding or frame session into the next look.
 		if (best) {
 			travel = await f.evaluate(() => {
 				const el = document.querySelector('[data-fc-scroller]');

@@ -420,4 +420,20 @@ function sandboxWorld({ sessionFails = false, sharedTarget = false } = {}) {
 	assert.ok(!w.styleMap.has('scroll-behavior'), 'the inline scroll-behavior is restored even when the trace throws');
 	assert.ok(w.events.some((e) => e[1] === 'frameCdp' && e[2] === 'detach'), 'the frame session is detached even when the trace throws');
 }
-console.log('PASS frame-cost trace hygiene (deterministic virtual clock, R137-F3): discovery, marking, scrollTop=0 and the pointer aim run before the trace, only the wheel runs inside (turning from the passive listener\'s pushed top), and cleanup plus the moved verdict run after; a view with no scroller fails its window; a smooth-behavior scroller resets instantly and settles before the watch starts; the sandbox binding lives on the frame session (or the window says could-not-judge), a shared-target in-process frame measures on the page session it is part of (never could-not-judge, never detached), and a throwing trace still tears everything down');
+// R137-H1 RED: setup after the binding and DOM mark can throw before trace() starts. The same teardown must run.
+{
+	const w = sandboxWorld();
+	const evaluate = w.f.evaluate;
+	w.f.evaluate = async (fn, arg) => {
+		const out = await evaluate(fn, arg);
+		if (String(fn).includes("el.setAttribute('data-fc-scroller', '1')")) throw new Error('setup failed after marking');
+		return out;
+	};
+	await assert.rejects(measureScroll(w.cdp, w.f, w.t, { ms: 50, url: 'file://page', keep: null, label: 'basic-dark usage', trace: async () => ({}) }), /setup failed after marking/);
+	assert.equal(w.scroller.listeners.length, 0, 'no scroll listener is left when setup throws');
+	assert.equal(w.scroller.attrs.size, 0, 'candidate and scroller marks are removed when setup throws');
+	assert.equal(w.frameHandlers.length, 0, 'the binding handler is detached when setup throws');
+	assert.ok(!w.styleMap.has('scroll-behavior'), 'the inline scroll-behavior is restored when setup throws');
+	assert.ok(w.events.some((e) => e[1] === 'frameCdp' && e[2] === 'detach'), 'the frame session is detached when setup throws');
+}
+console.log('PASS frame-cost trace hygiene (deterministic virtual clock, R137-F3): discovery, marking, scrollTop=0 and the pointer aim run before the trace, only the wheel runs inside (turning from the passive listener\'s pushed top), and cleanup plus the moved verdict run after; a view with no scroller fails its window; a smooth-behavior scroller resets instantly and settles before the watch starts; the sandbox binding lives on the frame session (or the window says could-not-judge), a shared-target in-process frame measures on the page session it is part of (never could-not-judge, never detached), and both a throwing trace and a throwing pre-trace setup tear everything down');
