@@ -2846,6 +2846,8 @@ acceptance_criteria:
 - Actual accepted dispatch and original user acceptance precede source capture; caller-built valid request
   or source ref is insufficient.
 - Original acknowledged source commits before the exclusive append reservation.
+- A SIR owner restart durably advances and persists its fencing epoch before reopen; pre-restart acceptances
+  remain fenced after reopen.
 - Private TerminalInput/TerminalPrepared remain complete and unpublished until the actual result/outcome/response/Terminal
   atomic release.
 - Known or unknown genuine Stop/receipt/owner/event/control effects cannot return zero effects or success by

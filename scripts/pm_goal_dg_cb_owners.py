@@ -1404,6 +1404,11 @@ class LegacySIROwner(SourceOwnerMixin, O.SIROwner):
     def constants(self):
         return dict(server_id=self.server_id, host_id=self.host_id, environment_id=self.environment_id)
 
+    def restart(self):
+        """Advance the SIR fencing epoch and persist it for reopen."""
+        super().restart()
+        self.world.save_roster()
+
     def accept(self, request, *, command_id='cmd.chat.goal.cancel'):
         """Accept one dispatch with issuance origins; identical replay returns the original, altered conflicts."""
         w = self.world

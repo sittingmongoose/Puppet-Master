@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2725-L3418
+Source lines: L2725-L3420
 
-Source SHA256: `9a52ef8e2a419be518431c82e2795ba07d3759f4950194e5cd485eed1f92eaae`
+Source SHA256: `b6927dc980eb2331c959f82b7f379657339f121627c3dc9dc5144664999f869b`
 
 ---
 
@@ -132,6 +132,8 @@ acceptance_criteria:
 - Actual accepted dispatch and original user acceptance precede source capture; caller-built valid request
   or source ref is insufficient.
 - Original acknowledged source commits before the exclusive append reservation.
+- A SIR owner restart durably advances and persists its fencing epoch before reopen; pre-restart acceptances
+  remain fenced after reopen.
 - Private TerminalInput/TerminalPrepared remain complete and unpublished until the actual result/outcome/response/Terminal
   atomic release.
 - Known or unknown genuine Stop/receipt/owner/event/control effects cannot return zero effects or success by
