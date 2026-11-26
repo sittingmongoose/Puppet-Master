@@ -154,6 +154,7 @@ export default async function (t) {
 	const judge = async (when, row, on) => {
 		await t.check(`${when}: aria-checked says ${on ? 'On' : 'Off'}`, row.drawn === true && row.checked === String(on), JSON.stringify(row));
 		if (!row.drawn) return;
+		await t.check(`${when}: the row still has exactly one switch`, row.switches === 1, String(row.switches));
 		await t.check(`${when}: the setting's own value, read back from Settings, is ${on}`, row.stored === on, `PM51.value: ${JSON.stringify(row.stored)}`);
 		/* the computed accessible name: the switch for this setting is among the switches Chrome names "Code Mode"
 		   (aria-labelledby would win over aria-label, so the attribute alone is not read) */

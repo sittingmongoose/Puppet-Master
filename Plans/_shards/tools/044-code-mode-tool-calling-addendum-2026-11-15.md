@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L13358-L13802
+Source lines: L13358-L13805
 
-Source SHA256: `e80db457467a4d0a18377d540c9c7c11c774466feb6165e37daa6f00708e0779`
+Source SHA256: `3be45dc758c6862dba39e44d9fd1bba1126cd200975d91309cc9d61270299a09`
 
 ---
 
@@ -38,7 +38,8 @@ canonical_text: >-
   The offer of the script tool is decided for each request: it is offered on a request only when the run requests
   Code Mode, Shared Integration Runtime reports a product-approved JavaScript EvalSession for the exact
   Host/Environment, the request's policy admits the script tool, the request's route can carry Puppet Master
-  tools, and the script tool itself is materialized for the request under T-176's bounded materialization, so the
+  tools, and the script tool itself, together with the essential catalog search that T-190 puts in its callable
+  catalog where that search is policy-available, is materialized for the request under T-176's bounded materialization, so the
   offer is decided only when the request's tool materialization is final; under the DAE strategy a request is one prepared launch of the CLI process, as T-189 says. On a request on which it is not offered, for any reason, the request-selected tools travel by the route's
   ordinary tool-call path under T-189. A request counts for the record once Puppet Master has decided the offer for
   it, whether or not it is then sent to the provider. Every run records its requested and effective tool-calling mode. This unit
@@ -61,7 +62,7 @@ canonical_text: >-
   EvalSession when Shared Integration Runtime gives no positive report of a product-approved one for the exact
   Host/Environment, which covers a negative report, an unavailable owner and missing or stale approval evidence,
   with the owner's own diagnostics kept, policy when the request's policy does not admit the
-  script tool, and not materialized when the script tool is finally left out of the request by selection or materialization
+  script tool, and not materialized when the script tool, or the essential catalog search its catalog must hold, is finally left out of the request by selection or materialization
   under section 1.0A and T-176 for any cause the earlier reasons do not explain, whatever that owner calls the
   omission (not_selected, budget_deferred, schema_unavailable); the detailed omission stays with T-176. For a run with ordinary tool calls, every reason that kept the script tool off any of its
   requests counts. For a mixed run, a reason that kept the script tool off a request counts only when a Puppet
@@ -164,7 +165,8 @@ canonical_text: >-
   in-band call, of the script tool or of an ordinary tool, goes back to the model in the next request, if one is
   admitted and sent with the same model family, carriage and owned dialect, as a Puppet
   Master-authored result in the owned dialect, tied to the Puppet Master-minted call ID, through the prompt
-  transport that route permits, with its content shaped and replayed as Prompt_Pipeline's tool-result rules say, and when no later request is
+  transport that route permits, with its content shaped and replayed as Prompt_Pipeline's tool-result rules say, including where those rules
+  keep a result's content from the model, and when no later request is
   sent the result and the stop keep their existing owners' handling, while any other later request, one whose model
   family, carriage or dialect differs, takes the settled call and result pair through Prompt_Pipeline's replay and compatibility
   rules, by the call's existing receipt, rather than in the old dialect; on
@@ -230,7 +232,7 @@ unblocks: [T-191]
 acceptance_criteria:
   - Under Host Tool Execution a request on which the script tool is offered carries it and does not also carry one provider tool schema per registry tool the script can call; a request on which it is not offered keeps the ordinary tool-call path.
   - A model whose Models_System tool_use is false can use Code Mode through an owned in-band dialect on an in-band route, and a tool result the model wrote itself never reaches replayable history.
-  - On a direct API in-band route, the result of an accepted in-band call, from a script or from an ordinary tool, reaches the model in the next request, if one is admitted and sent with the same model family, carriage and owned dialect, as a Puppet Master-authored result in the owned dialect carrying the Puppet Master-minted call ID; when no later request is sent, the result and the stop keep their existing owners' handling; when the next request differs in model family, carriage or dialect, the settled call and result pair goes through Prompt_Pipeline's replay and compatibility rules instead.
+  - On a direct API in-band route, the result of an accepted in-band call, from a script or from an ordinary tool, is returned in the next request, if one is admitted and sent with the same model family, carriage and owned dialect, as a Puppet Master-authored result in the owned dialect carrying the Puppet Master-minted call ID, holding whatever content Prompt_Pipeline's tool-result rules admit for the model; where those rules keep the content from the model, what the model is shown for that call is what those rules say, and the settled call and result stay in history under their owners. When no later request is sent, the result and the stop keep their existing owners' handling; when the next request differs in model family, carriage or dialect, the settled call and result pair goes through Prompt_Pipeline's replay and compatibility rules instead.
   - Two runs on the same server-bridge profile, one with the row On and one with it Off, are each shown only their own projection. On a bridge that cannot keep them apart, neither is offered the script tool. Where that bridge can still present or filter each request's bounded selection, both runs use its ordinary projection, and with one counted request each, a positive report of an approved JavaScript EvalSession and policy admission, T-188 gives the run with the row Off ordinary tool calls with the reason setting and the run with the row On ordinary tool calls with the reason not materialized. Where the bridge cannot do that either, it carries no Puppet Master tools for that request and its tier disclosure is shown for both runs, and with one counted request each T-188 gives the run with the row Off ordinary tool calls with the reason setting and the run with the row On ordinary tool calls with the execution-shape reason. Runs with more requests follow T-188.
   - On a request on which the script tool is not offered, for any reason, on an in-band route (a direct API route under Host Tool Execution whose model's tool_use capability is false, or a bridged CLI under the HTE strategy without supported structured tool intents), every Puppet Master tool call made on that request is an in-band tool call in the owned dialect, under the same admission gate; on a bridged CLI under HTE with supported structured tool intents the same calls are structured tool intents, never in-band.
   - Under the DAE strategy, on a request on which the script tool is not offered, for any reason, a CLI that accepts projected Puppet Master tools is offered each request-selected Puppet Master tool that the ordinary form materializes as its own projected tool, and Puppet Master dispatches each call with the checks a script's call to that tool gets.
@@ -239,7 +241,8 @@ acceptance_criteria:
   - Under the DAE strategy the tools a CLI process is shown are exactly those decided when its launch was prepared and are never replaced while it runs; when the offer or the selected tools change during a run, the next launch shows the new set, in both directions (script tool to one-by-one projection and back). T-188 counts each prepared launch as one request from the moment its offer is decided, including a launch whose spawn was then stopped or failed; a stop before that decision counts nothing.
   - Under the DAE strategy, a script call in a process whose approved JavaScript EvalSession is gone fails with the evaluator-unavailable result that Tools section 4.4 and Shared Integration Runtime own, and no ordinary tool is added to that process.
   - Where the essential catalog search of T-176 is policy-available, a request that can carry Puppet Master tools has it selected by T-176's bounded bootstrap path, with that owner's omissions and stop outcomes, in all three cases: the row On with the script tool offered (in the callable catalog), the row On with the script tool not offered (carried directly), and the row Off (carried directly).
-  - On a bridged CLI under the HTE strategy, a request on which the script tool is offered carries it through the hosted action loop with no provider tool_use, whether or not that CLI has a code mode of its own, and RM-021 still terminates the run on a provider-originated tool_use; under the DAE strategy the script tool is a projected Puppet Master tool beside the CLI's own tools.
+  - A request that otherwise meets every condition for the script tool, whose policy-available essential catalog search cannot be materialized in the script's callable catalog, is not offered the script tool; it uses the ordinary form with that form's own omission or stop outcomes, and T-188 counts the reason not materialized for it.
+  - On a bridged CLI under the HTE strategy, a request on which the script tool is offered carries it through the hosted action loop with no provider tool_use, whether or not that CLI has a code mode of its own, and RM-021 still terminates the run on a provider-originated tool_use; under the DAE strategy, on a launch that is offered the script tool, it is a projected Puppet Master tool beside the CLI's own tools.
   - On a route that keeps native tools Puppet Master cannot disable, including a CLI's own tools under the DAE strategy, a request on which T-188 offers the script tool still carries it, a request on which T-188 does not offer it does not, and the provider's own tool calls stay outside Code Mode.
   - Every effective mode and typed reason on these routes is the one T-188 derives from the run's requests; this unit adds no rule for either.
 validation_surfaces:
