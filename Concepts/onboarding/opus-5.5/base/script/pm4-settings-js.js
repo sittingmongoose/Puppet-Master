@@ -3818,6 +3818,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
 
   function onDetailEsc(e) {
     if (e.key !== 'Escape' || !window.PM7_SETTINGS_TOME.ownsEvent(e.target)) return;
+    if (state.railOpen && visibleChapterMenu()) return;
     e.stopPropagation();
     closeDetailSetting();
   }

@@ -180,6 +180,20 @@ async function exercise(t, surface, look) {
 			&& wideFirst.inRail && wideFirst.domain === 'ai'
 			&& wideSecond.inRail && wideSecond.domain !== wideFirst.domain,
 		JSON.stringify({ inline, wideStart, wideFirst, wideSecond }));
+
+	if (look === 'basic-dark') {
+		await t.viewport(740, 900);
+		const about = f.locator('#panel-settings [data-continuous-workspace-body="app-input"] [data-action="setting-details"]').first();
+		const detail = f.locator('#panel-settings .detail-inspector.is-open');
+		await about.scrollIntoViewIfNeeded();
+		await click(t, about);
+		await detail.waitFor({ timeout: 5000 });
+		await open(false);
+		await t.page.keyboard.press('Escape');
+		const afterDetailEscape = await read();
+		await t.check('Escape closes the chapter drawer before the underlying Details inspector',
+			await closed() && afterDetailEscape.menu && await detail.isVisible(), JSON.stringify(afterDetailEscape));
+	}
 }
 
 export const tests = {};
