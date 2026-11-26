@@ -2146,6 +2146,8 @@ class RuleThreeTimeouts(LandingRun):
                       "report is unknown", out)
         self.assertIn("2 subchecks did not finish (run-gates/lint_contractrefs killed by SIGKILL, "
                       "audit-governance/support_refs killed by SIGKILL)", out)
+        self.assertIn("[total] run-gates/lint_contractrefs  killed by a signal", out)
+        self.assertIn("[total] audit-governance/support_refs  killed by a signal", out)
         report = json.loads(self.compare("--json")[1])
         self.assertEqual([(row["check"], row["subcheck"], row["kind"], row["signal_name"],
                            row["elapsed_seconds"], row["limit_seconds"]) for row in report["infrastructure"]],
@@ -2898,6 +2900,17 @@ class ExportKeyedSubchecks(LandingRun):
                       "Plans/home_layout_event_contracts.schema.json  50 -> 50", out)
         self.assertNotIn("[improved", out)
         self.assertIn("Checks whose failure count rose: 0", out)
+
+    def test_a_killed_export_falls_back_with_signal_wording(self):
+        self.record_contracts(contract_rows(120))
+        self.exports[self.PRD] = [killed_row()]
+        code, out = self.compare("--json")
+        self.assertEqual(code, 0, out)
+        rows = json.loads(out)["exports"]["subchecks"]
+        self.assertTrue(rows)
+        for row in rows:
+            self.assertEqual(row["case"], "export_killed")
+            self.assertIn("was killed by a signal", row["reason"])
 
     def test_a_readiness_copy_recorded_from_its_export_is_judged_on_its_own_rows(self):
         """Review L-07 judges a sampled run-gates copy by its complete audit-governance copy. The storage
@@ -3672,6 +3685,12 @@ class SharedWorkerBudget(LandingRun):
     def test_a_negative_settle_is_refused(self):
         self.assertIn("--start-settle-seconds must not be negative",
                       self.refused("--start-settle-seconds", "-1"))
+
+    def test_worker_limits_must_be_finite(self):
+        for option in ("--memory-floor-gb", "--memory-headroom-gb", "--start-settle-seconds"):
+            for value in ("nan", "inf", "-inf"):
+                with self.subTest(option=option, value=value):
+                    self.assertIn(f"{option} must be finite", self.refused("--jobs", "4", f"{option}={value}"))
 
     def test_inherited_budget_and_child_flag_never_reach_children(self):
         source = (ROOT / "scripts" / "pm-landing-check.py").read_text(encoding="utf-8")

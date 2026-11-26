@@ -135,6 +135,7 @@ from contextlib import contextmanager, nullcontext
 import hashlib
 import importlib.util
 import json
+import math
 import os
 import posixpath
 import re
@@ -2046,12 +2047,15 @@ def key_from_exports(
                         list(argv), result)
         report = result.get("report")
         failures = report.get("failures") if isinstance(report, dict) else None
-        # The export's own subcheck killed at a bound: what it would have written is unknown.
-        stalled = isinstance(failures, list) and any(
-            isinstance(failure, dict) and failure.get("error") in INFRASTRUCTURE_ERRORS for failure in failures)
+        # An export interrupted at its bound or by a signal cannot key the aggregate's rows.
+        errors = {failure.get("error") for failure in failures if isinstance(failure, dict)
+                  and isinstance(failure.get("error"), str)} if isinstance(failures, list) else set()
         for row in planned[argv]:
             row["elapsed_seconds"] = result.get("elapsed_seconds")
-            if result.get("timed_out") or stalled:
+            if KILLED_ERROR in errors:
+                row["case"] = "export_killed"
+                row["reason"] = f"its export ({argv[0]}) was killed by a signal"
+            elif result.get("timed_out") or errors & INFRASTRUCTURE_ERRORS:
                 row["case"] = "export_timeout"
                 row["reason"] = f"its export ({argv[0]}) did not finish within {timeout_seconds} s"
             elif not isinstance(failures, list):
@@ -2200,12 +2204,13 @@ def main() -> int:
     args = parser.parse_args()
     if not 1 <= args.jobs <= MAX_JOBS:
         parser.error(f"--jobs must be between 1 and {MAX_JOBS}")
-    if args.memory_floor_gb < 0:
-        parser.error("--memory-floor-gb must not be negative")
-    if args.memory_headroom_gb < 0:
-        parser.error("--memory-headroom-gb must not be negative")
-    if args.start_settle_seconds < 0:
-        parser.error("--start-settle-seconds must not be negative")
+    for option, value in (("--memory-floor-gb", args.memory_floor_gb),
+                          ("--memory-headroom-gb", args.memory_headroom_gb),
+                          ("--start-settle-seconds", args.start_settle_seconds)):
+        if not math.isfinite(value):
+            parser.error(f"{option} must be finite")
+        if value < 0:
+            parser.error(f"{option} must not be negative")
 
     root = Path(args.root).resolve()
     if args.readiness_audit_root:
@@ -2776,8 +2781,11 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         for name in resolved:
             print(f"  [gone] {escape_newlines(name)}")
         print(f"Subcheck totals this run: {len(totals)}")
+        killed_totals = {f"{check}/{subcheck or '-'}" for check, subcheck in killed_checks}
         for name, total in totals.items():
-            print(f"  [total] {name}  {'timed out' if total is None else total}")
+            if total is None:
+                total = "killed by a signal" if name in killed_totals else "timed out"
+            print(f"  [total] {name}  {total}")
         print(f"Bucket counts this run: {len(seen_buckets)}")
         for name, count in sorted(seen_buckets.items()):
             print(f"  [count] {escape_newlines(name)}  {count}")

@@ -2292,7 +2292,8 @@ def judge_batch_member(shared: Path, start: str, code: int, report: Optional[dic
         return 1, lines, ("batch_exit", f"the landing check exited {code}")
     owed = []
     if code == 1 and report["infrastructure"]:
-        owed.append(f"{report['infrastructure']} subcheck(s) timed out: rerun each on its own and judge what it reports")
+        owed.append(f"{report['infrastructure']} subcheck(s) did not finish (timed out or were killed). "
+                    "Rerun each on its own and judge what it reports")
     if code == 1 and report["compare"]:
         owed.append(f"{report['compare']} pre-existing failure(s) changed content on files this branch touched: compare those "
                     "with the baseline's rows")

@@ -2104,6 +2104,20 @@ class BatchCheckTests(BatchFixture):
             argv += ["--check-source", self.source_file(marked=bool(source))]
         return self.batch_check(*argv)
 
+    def test_batch_advice_covers_validators_killed_by_a_signal(self):
+        self.set_main(self.base)
+        self.holder(start=self.base)
+        doc = json.loads(json_report(totals={"run-gates/lint-x": None}, counts={},
+                                     commit=self.head, base=self.base))
+        doc["infrastructure"] = [
+            {"check": "run-gates", "subcheck": "lint-x",
+             "error": "validator_killed_by_signal", "kind": "killed"},
+        ]
+        report = self.report_file("killed.json", json.dumps(doc))
+        code, out = self.check(report, code=1)
+        self.assertEqual(code, 1, out)
+        self.assertIn("judge first: 1 subcheck(s) did not finish (timed out or were killed)", out)
+
     def test_the_first_member_may_stay_and_says_why(self):
         self.set_main(self.base)
         self.holder(start=self.base)
