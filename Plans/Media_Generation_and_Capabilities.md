@@ -577,7 +577,7 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipe
 
 Response fields:
 - `request_id` (string, required): unique opaque ID for this generation request.
-- `engine` (object, required): media route identity for the effective provider/model route. It includes `provider_entry_id`, `media_route_id`, and, on generated output, the matched `generated_media_route_id`; values are validated against the provider/model row's `generated_media_routes[]` and the shared requested/effective runtime snapshot rather than a fixed `gemini_api`/`cursor_native` enum.
+- `engine` (object | null, required on success and failure): media route identity for the effective provider/model route. When no effective generation route was selected, `engine` is `null` even if a requested route resolved. When an effective route was selected, the object contains `provider_entry_id`, `media_route_id`, and the matched `generated_media_route_id` when output matched, with `generated_media_route_id` allowed to be `null` when no output matched. The IDs are validated against the provider/model row's `generated_media_routes[]` and the shared requested/effective runtime snapshot rather than a fixed `gemini_api`/`cursor_native` enum.
 - `artifacts[]` (array, required on success): each item contains:
   - `artifact_id` (string): unique artifact identifier.
   - `kind` (string): media kind that was generated.
@@ -591,14 +591,14 @@ Response fields:
   - `counting_semantics` states whether cache buckets are subsets of input totals, whether reasoning/thoughts are subsets of output totals, and whether `provider_total` is provider authoritative or derived; media rollups must not double-count inclusive provider totals.
   - `media_units` is a media-specific quantity list such as generated image count, seconds of audio/video, frames, or provider media credits; it is not a token total, cost total, usage authority, or replacement for UF-085 buckets.
   - Legacy import names such as `cost_is_estimate`, `input_tokens`, and `output_tokens` may appear only at provider/import boundaries or in source-lineage fixtures. They normalize to `cost_status`, `input_total`, `output_total`, canonical source/settlement fields, and UsageRecord identity before manifest persistence, GUI display, rollups, or accounting checks.
-- `input_settlement` (object | null, required on success and failure): the terminal `MultimodalInputSettlement` for a valid, nonempty input list with valid or omitted source surfaces. It records the prepared payload, evidence-backed delivery disposition and any caption usage record ID for each input. It is `null` when inputs are absent or empty or when the input list or its source surfaces fail validation. The seglog result record carries the same value.
+- `input_settlement` (object | null, required on success and failure): the terminal `MultimodalInputSettlement` for a valid, nonempty input list with valid or omitted source surfaces. It records the prepared payload, evidence-backed delivery disposition and any caption usage record ID for each input. With no effective route, it carries the pre-route `failed` state with `selected_route_id = null` and `not_evaluated` for each input. It is `null` when inputs are absent or empty or when the input list or its source surfaces fail validation, regardless of whether a route was selected. The seglog result record carries the same value.
 - `error` (object | null): present on failure (see §2.6).
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Architecture_Invariants.md
 
 **Deterministic artifact layout:** Each generated output is stored once as a BLAKE3-addressed payload in the append-only payload store, bytes unchanged. Outputs are numbered by index (`output_000`, `output_001`, ...) in the `artifacts[]` array of the seglog result record, and `artifact://` URIs resolve to payload refs, which lets the record be re-verified offline from its refs and hashes. No per-request directory or per-output file is created. Outputs over the 16 KiB inline limit are never embedded, base64 provider responses are decoded to binary at ingest, and no inline `data_uri` is returned. Amended 2026-10-31 (DL-270): SP-337 retires the former layout of `.puppet-master/artifacts/media/<request_id>/output_000.<ext>` files with a co-located `manifest.json`.
 
-**Manifest contract and write ordering:** The durable, self-sufficient index for a request is the media result record in the seglog (SP-336), with at minimum: `schema_version`, `request_id`, `kind`, `engine`, `generated_at_utc`, `artifacts[]` (each with its payload ref), `input_settlement`, and the canonical UsageRecord bridge `usage` (when available). No `manifest.json` is written per request; `pm export` can write one as JSON on request. Implementations MUST make the payload pack bytes durable first, compute hashes/bytes from the final bytes, normalize any legacy provider usage aliases to UF-085 fields, and only then acknowledge the result record that references them. If the provider returns partial output and final payload persistence fails, the call returns failure and MUST NOT leave a result record claiming success for missing payloads. Amended 2026-10-31 (DL-270): SP-336 and SP-337 replace the former sequence ("write artifact files first", "compute hashes/bytes from the final bytes on disk", "only then write `manifest.json`", and "MUST NOT leave a manifest claiming success").
+**Manifest contract and write ordering:** The durable, self-sufficient index for a request is the media result record in the seglog (SP-336), with at minimum: `schema_version`, `request_id`, `kind`, `engine`, `generated_at_utc`, `artifacts[]` (each with its payload ref), `input_settlement`, and the canonical UsageRecord bridge `usage` (when available). On success and failure, the record carries the response's `engine` and `input_settlement` values, including explicit nulls. No `manifest.json` is written per request; `pm export` can write one as JSON on request. Implementations MUST make the payload pack bytes durable first, compute hashes/bytes from the final bytes, normalize any legacy provider usage aliases to UF-085 fields, and only then acknowledge the result record that references them. If the provider returns partial output and final payload persistence fails, the call returns failure and MUST NOT leave a result record claiming success for missing payloads. Amended 2026-10-31 (DL-270): SP-336 and SP-337 replace the former sequence ("write artifact files first", "compute hashes/bytes from the final bytes on disk", "only then write `manifest.json`", and "MUST NOT leave a manifest claiming success").
 
 **Generation supersession record:** When remediation or graph generation supersedes a media attempt, the result carries old generation, new generation, invalidated path refs, new path refs, surviving `/rejoined` path refs, and resulting concern, `/promotion/recovery`, or recovery implications so overlays and blocked actions disclose the final state without diffing addenda.
 
@@ -610,17 +610,13 @@ ContractRef: ToolID:media.generate, Primitive:ArtifactStore
 
 **Route-specific backend behavior:** When the response `engine` identity resolves through the shared requested/effective runtime snapshot to a concrete `provider_entry_id` and `media_route_id`, PM checks that route's `generated_media_routes[]` for the requested `kind`. Cursor image generation is not assumed from image-input/API-key proof; it requires a verified generated-media route, except that a request carrying `route_verification_probe` is admitted to the exact unverified row it names and to no other route (§2.1, "Route verification probe"). For unsupported kinds, the backend returns `error.code = "BACKEND_UNSUPPORTED"` or the more specific provider status/error state.
 
-On failure:
+On failure before route selection, with no input refs:
 ```json
 {
   "success": false,
   "request_id": "req_20260301_a1b2c3d4",
   "kind": "image",
-  "engine": {
-    "provider_entry_id": "resolved_provider_entry_id",
-    "media_route_id": "resolved_media_route_id",
-    "generated_media_route_id": null
-  },
+  "engine": null,
   "artifacts": [],
   "usage": null,
   "input_settlement": null,
@@ -639,7 +635,7 @@ ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2, ContractNa
 
 | Code | When |
 |------|------|
-| `NOT_CONFIGURED` | Required provider configuration is missing for the resolved provider media route (for example, no eligible provider account, profile, credential, or API key). |
+| `NOT_CONFIGURED` | No eligible provider media route is configured, or required provider configuration is missing for the resolved route (for example, no eligible provider account, profile, credential, or API key). |
 | `MODEL_UNAVAILABLE` | Requested `model_override` could not be resolved or model is offline. |
 | `RATE_LIMITED` | Provider returned a rate-limit / 429. |
 | `QUOTA_EXCEEDED` | Provider quota exhausted. |
@@ -2806,7 +2802,7 @@ plan_unit_id: MGAC-030
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: Failure responses return success false with empty artifacts, null usage, and error code/message. Cursor generated-media output requires a verified generated-media route; Cursor image-input proof or other provider credentials do not make Cursor image generation available. Unsupported Cursor video, tts, and music return BACKEND_UNSUPPORTED or route-specific unavailable states. Every failure also carries input_settlement as specified in section 2.5.
+canonical_text: Failure responses return success false with empty artifacts, null usage, and error code/message. Cursor generated-media output requires a verified generated-media route; Cursor image-input proof or other provider credentials do not make Cursor image generation available. Unsupported Cursor video, tts, and music return BACKEND_UNSUPPORTED or route-specific unavailable states. Every failure carries engine and input_settlement as specified in section 2.5, with engine null when no effective route was selected.
 gui_related: true
 gui_classification_reason: The unit defines user-visible media, capability picker, GUI copy, artifact display, or interaction behavior.
 split_recommended: true
@@ -6614,7 +6610,8 @@ validation_surfaces:
 - "Non-vision model with image shows \u201Ccaption fallback used,\u201D with caption artifact and cost."
 - User can disable fallback.
 - Replay confirmed caption delivery, pre-model refusal and timeout without delivery evidence. Check the per-input disclosure against the delivery evidence in both the response and the durable result record.
-- Replay an unresolved policy ID and a caption budget stop with two candidates. Check that policy rejection occurs before route selection, that each input has a terminal disposition, and that the receipt resolves billed or unknown caption cost from the caption call's UsageRecord on success and failure.
+- Replay an unresolved policy ID with valid inputs and no requested or effective route. Both the failure response and the durable result record carry a null engine and the same failed input_settlement with null route IDs and a not_evaluated disposition for each input. For a pre-route failure with a resolved requested route, check that requested_route_id records that route while selected_route_id and engine remain null. With absent or empty inputs or a structurally invalid input list or source surfaces, both objects carry null input_settlement.
+- Replay a caption budget stop with two candidates. Check that each input has a terminal disposition and that the receipt resolves billed or unknown caption cost from the caption call's UsageRecord on success and failure.
 risk_class: p1_security_release_supply_chain_hardening
 reasoning_tier: standard
 context_scope: security_release_supply_chain
@@ -6864,7 +6861,7 @@ Settlement starts at `pending`. Record the input checks in the settlement before
 
 A caption call is not retried automatically; a retry is a new `media.generate` request with a new `request_id` (§2.5). A `failed` settlement ends the request with `success = false` and empty `artifacts`. Admission failures for `input_mode_unsupported`, `mime_unsupported`, `input_too_large`, `artifact_missing`, `redaction_blocked` or `caption_permission_denied` return `INVALID_REQUEST`. A failure in `captioning` returns `PROVIDER_ERROR` as in the transition table. After dispatch, the generation result and the input delivery dispositions settle independently. For example, output persistence may fail after input delivery was confirmed. A late reply does not rewrite a published result for that `request_id`.
 
-Wire binding to `media.generate`. The request envelope (§2.2) has three optional fields: `input_artifact_refs` (array of `artifact://` string refs, default empty), `input_source_surfaces` (array of string, same length and order as `input_artifact_refs`, each closed `file_attachment`, `clipboard_paste`, `screenshot_capture` or `existing_artifact`, set by the PM surface that added the input; when absent every entry is `existing_artifact`) and `fallback_caption_policy_id` (nonempty string or null, default null, resolved by the media owner as above). The response (§2.5) carries `input_settlement` as specified there, including the full terminal object for pre-route failure with valid inputs. Invalid input refs or source surfaces produce `INVALID_REQUEST` and `input_settlement = null`. Both on success and on failure, the media result record in the seglog carries the same `input_settlement`. Each passing caption is its own artifact in the payload store and is listed only through `input_dispositions[].caption_artifact_ref`, never in `artifacts[]`. The original-retention rule above applies to resolved originals. An `artifact_missing` disposition carries the attempted ref as a rejection identifier. The receipt uses each input's final `disposition` to disclose confirmed receipt of media or caption, proven non-delivery, unknown delivery, or no dispatch as defined above. Neither `provider_payload_shape` nor `gui_disclosure_copy` can supply a delivery claim.
+Wire binding to `media.generate`. The request envelope (§2.2) has three optional fields: `input_artifact_refs` (array of `artifact://` string refs, default empty), `input_source_surfaces` (array of string, same length and order as `input_artifact_refs`, each closed `file_attachment`, `clipboard_paste`, `screenshot_capture` or `existing_artifact`, set by the PM surface that added the input; when absent every entry is `existing_artifact`) and `fallback_caption_policy_id` (nonempty string or null, default null, resolved by the media owner as above). The response and the seglog result record carry the same `engine` and `input_settlement` (§2.5). On pre-route failure, `engine` is `null`. A valid, nonempty input list with valid or omitted source surfaces still produces the full terminal settlement above. An absent or empty input list yields `input_settlement = null`. If the input list or its source surfaces fail envelope validation, return `INVALID_REQUEST` and `input_settlement = null`. Each passing caption is its own artifact in the payload store and is listed only through `input_dispositions[].caption_artifact_ref`, never in `artifacts[]`. The original-retention rule above applies to resolved originals. An `artifact_missing` disposition carries the attempted ref as a rejection identifier. The receipt uses each input's final `disposition` to disclose confirmed receipt of media or caption, proven non-delivery, unknown delivery, or no dispatch as defined above. Neither `provider_payload_shape` nor `gui_disclosure_copy` can supply a delivery claim.
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
 ## FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)

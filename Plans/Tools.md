@@ -12554,7 +12554,9 @@ T-172's receipt is one immutable record per session namespace generation:
 
 `configured` is true when the capability's `installed` and `project_enabled` stages are true; `allowed` when `policy_available` is also true; `injected` when its L2 schema was materialized into this provider request. `injected` requires `allowed`, `allowed` requires `configured`, `visible_to_model` requires `injected`, and `visible_to_ui` requires `configured`. `denial_reason_code` is required whenever any of the five booleans is false or `startup_status` is `pending`, `failed`, or `timed_out`; its values are the §1.0A omission codes (`not_installed`, `project_disabled`, `policy_denied`, `incompatible_runtime`, `unavailable`, `not_selected`, `budget_deferred`, `schema_unavailable`, `collision_suppressed`) plus `provider_not_receiving`, `startup_pending`, and `startup_failed`. When all five booleans are true, `startup_status` decides the code: `pending` gives `startup_pending`, and `failed` or `timed_out` gives `startup_failed`; `ready` and `not_required` carry no code. A `startup_pending` denial is not final: the startup settling is an entry change, so it writes the next receipt generation with `startup_status` `ready` (no code) or `failed`/`timed_out` (`startup_failed`).
 
-A tool may be dispatched only when its entry has all five booleans true and `startup_status` is `ready` or `not_required`. Any other entry denies the call with that entry's `denial_reason_code` before dispatch (T-172 criterion 2). Tool mentions, UI chips, and model-visible schemas read one receipt at one `namespace_generation` (T-172 criterion 3).
+For a direct tool call, dispatch requires all five entry booleans to be true and `startup_status` to be `ready` or `not_required`. For direct dispatch, any other entry denies the call with that entry's `denial_reason_code` before dispatch (T-172 criterion 2). Tool mentions, UI chips, and model-visible schemas read one receipt at one `namespace_generation` (T-172 criterion 3).
+
+For a nested EvalSession call, the host admits the request-selected tool and validates its L2 schema under §4.4. In Code Mode this requires membership in T-189's callable catalog and T-190's checks on each call. The `injected`, `visible_to_model`, and `visible_to_ui` flags and their direct-exposure denials do not gate nested dispatch. The tool's own capability, policy, and readiness checks still apply.
 
 Example:
 
@@ -12581,7 +12583,7 @@ Persistence of this receipt is not settled here: it needs a storage registration
 
 #### `ProviderToolTurnAdmissionGate` typed contract (T-169, added 2026-11-26)
 
-One gate record is written for every provider-native tool call subject to PM admission and every T-189 in-band tool call before the turn that carries it may enter replayable history or be dispatched. An EvalSession nested call enters the per-tool dispatch checks of §4.4 and T-190 using its host-issued identity, outside this provider-turn gate.
+One gate record is written for every provider-native tool call subject to PM admission and every T-189 in-band tool call before the turn that carries it may enter replayable history or be dispatched. An EvalSession nested call enters the host admission path above and the per-tool dispatch checks of §4.4 and T-190 using its host-issued identity, outside this provider-turn gate.
 
 | Field | Type | Rule |
 |---|---|---|
@@ -13709,7 +13711,8 @@ canonical_text: >-
   supported, otherwise as in-band tool calls, never as a provider tool_use; under
   the DAE strategy, where the CLI accepts Puppet Master tools through provider-native feature projection, it is a projected Puppet Master tool beside the CLI's own tools, so the run is mixed with the provider-kept native tools reason. When the script tool is offered, the request-selected registry tools other than the directly
   callable tools named in T-190 are described to the model as the
-  script's callable catalog under T-176 materialization, rather than as one provider tool schema each. Wherever tool calls are carried
+  script's callable catalog under T-176 materialization, rather than as one provider tool schema each. The host uses the selected
+  tool's L2 schema for nested dispatch under §4.4 and T-190. Wherever tool calls are carried
   in-band, including where the selected model's Models_System tool_use capability is false, the script tool and the
   directly callable tools named in T-190 are carried as in-band tool calls in an owned dialect that Tools selects for the model family and records on the run.
   The host mints a call ID for each recognized in-band call before the T-169 admission gate. Hosted structured intents also use IDs minted
@@ -13803,10 +13806,10 @@ gui_classification_reason: Backend authority, limit and evidence rules for neste
 depends_on: [T-176, T-177, T-178, T-188]
 unblocks: []
 acceptance_criteria:
-  - A script cannot make a tool call that the same request could not make as a direct call, including when the argument values are computed while the script runs.
+  - A script can invoke only request-selected tools in its callable catalog. Each invocation passes the same per-tool policy and argument validation as a direct call, including for argument values computed while the script runs.
   - An approval asked for inside a script suspends that script and is answered through the ordinary approval path; a denial, including the immediate one when no person is available, reaches the script as a typed result.
   - Every nested call appears in the event log, receipts and usage rollups exactly as a direct call would, plus the script's operation identity.
-  - Two catalog searches within one script can settle successfully with distinct host-issued child IDs and the same parent_operation_id. A failed nested call repeats its child ID and parent_operation_id in the recovery envelope. The enclosing script retains its own call ID.
+  - With the catalog search L2 schema materialized only on the host, two searches within one script can settle successfully with distinct host-issued child IDs and the same parent_operation_id. A failed nested call repeats its child ID and parent_operation_id in the recovery envelope. The enclosing script retains its own call ID.
   - A script that passes its deadline or the EvalSession hard output-byte ceiling ends with typed recovery evidence, not a success-shaped result.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py lint-contractrefs
