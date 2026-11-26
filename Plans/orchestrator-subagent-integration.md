@@ -1192,7 +1192,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 
 
 - **Gap:** The plan references `execute_tier_with_subagents`, `build_subagent_invocation`, `execute_with_subagent`, and `SubagentSelector`. These do not exist in the codebase yet; they are specified in the plan's "Integration with Orchestrator" and Phase 3.
-- **Clarify:** Phase 3 (and any subagent execution path) must: (1) Read `enable_tier_subagents` from config; if false, skip subagent invocation (or use a single non-subagent path). (2) When building the list of subagents for a tier, apply `tier_overrides` (replace or merge with selected list), then filter by `disabled_subagents` and ensure `required_subagents` are included. Steps (1) and (2) are now the import normalization of OSI-425, not the runtime path: `enable_tier_subagents` and `tier_overrides` are compatibility import/export keys normalized into SubagentPolicy (`schema_id: pm.subagent_policy.v1`), and runtime admission and selection read only that SubagentPolicy (OSI-078, OSI-081, OSI-214). (3) When building `ExecutionRequest` for each subagent run, set `request.plan_mode = tier_config.plan_mode`. Ensure the checklist item "Ensure subagent/invocation path receives tier plan_mode" is done in that code path.
+- **Clarify:** Phase 3 reads only normalized SubagentPolicy (`schema_id: pm.subagent_policy.v1`). OSI-425 imports the legacy `enable_tier_subagents`, `tier_overrides`, `disabled_subagents` and `required_subagents` values into that policy. For each admitted execution unit, run the selector, replace its list with an applicable scope override, filter disabled entries, and add required entries (OSI-214). When building the `ExecutionRequest` for each subagent run, set `request.plan_mode = tier_config.plan_mode`.
 
 ### 7. Message enum and app.rs handlers
 
@@ -1217,7 +1217,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 **Subagent Output Parser Fallback (Resolved):**
 
 Platform-specific parsers handle output from each Provider:
-- **Cursor/Claude Code (CliBridge):** JSON parser over CLI output (stream-json NDJSON events)
+- **Cursor/Claude Code (CliBridge):** Parse single-document JSON or stream-json NDJSON from the CLI according to `platform_specs`. For stream-json, read each newline-delimited event using the existing CliBridge framing and assemble the final assistant content for the attempt in stream order. Parse the handoff from that content. Status, tool and usage events remain transport evidence.
 - **Codex, Copilot, Gemini (DirectApi):** JSON parser over the direct-provider response's final assistant content
 - **OpenCode (ServerBridge):** parser over its server event stream
 - **Transport scope (2026-11-25, OSI-004 and OSI-093):** earlier versions of this list read "Cursor/Claude/Gemini: JSON parser (stream-json NDJSON events)", "Codex: JSONL parser (newline-delimited JSON events)" and "Copilot: Text parser (plain text output, regex-based signal extraction)". Those describe CLI-era output: the Codex JSONL parser, the Copilot text parser, a Gemini stream-json parser, the `--json` / `--experimental-json` flags in the Clarify item above and the CodexOutputParser and CopilotOutputParser snippets (OSI-158, OSI-161) are historical context only, not implementation targets. The GeminiOutputParser snippet (OSI-160) is the live DirectApi parser: it reads `candidates[0].content.parts[0].text` from the direct-provider response body, and only its `--output-format json` comment and `stdout` parameter name are CLI-era wording. Steps 1-5 below apply to every transport.
@@ -1440,8 +1440,8 @@ So three interview settings are currently **built but not wired**. Users who cha
 
 **Max Questions Per Phase — Soft Cap (Resolved):**
 When `max_questions_per_phase` is configured:
-- **Soft cap with grace:** Accept phase completion when the agent signals complete and question count ≤ `max + 1` (one grace question for wrap-up).
-- **Force-complete:** If question count exceeds `max + 1` without the agent signaling complete, force-complete the phase:
+- **Soft cap with grace:** When the agent signals complete and the question count is between the minimum and `max + 1`, attempt phase completion. Run OSI-099 first when architecture confirmation is required.
+- **Force-complete:** If question count exceeds `max + 1` without the agent signaling complete, end that round of agent questions and preserve the answers. When OSI-099 applies, present the required confirmation card and wait. Only the user's Confirm completes that phase, and no `phase.force_completed` is emitted. For phases without that gate, force-complete the phase:
   - Emit a `phase.force_completed` seglog event with `reason: "max_questions_exceeded"`.
   - Use the answers collected so far as the phase output.
   - Log a warning: "Phase [X] force-completed after [N] questions (max: [max])."
@@ -1453,7 +1453,7 @@ When `max_questions_per_phase` is configured:
    - **Execution config:** Add the same two fields to `InterviewOrchestratorConfig` (`interview/orchestrator.rs`).
    - **Construction:** In `app.rs`, when building `InterviewOrchestratorConfig` from `gui_config.interview`, set `min_questions_per_phase` and `max_questions_per_phase` from `gui_config.interview`.
    - **Phase manager:** Pass these into phase definitions or into `PhaseManager` (e.g. in `default_phases()` / `add_dynamic_phase()`), so each phase has min/max available.
-   - **Orchestrator logic:** In `process_ai_turn` (or equivalent), when `parsed.is_phase_complete`, compute current phase question count; if count < min, reject (e.g. send back "Ask at least N questions"); if max is `Some(m)` and count > m, either reject or accept depending on product rule; otherwise accept.
+   - **Orchestrator logic:** In `process_ai_turn` (or equivalent), when `parsed.is_phase_complete`, compute current phase question count; if count < min, reject (e.g. send back "Ask at least N questions"); apply the soft cap above and route every completion attempt through the required OSI-099 gate when it applies.
    - **Prompts:** In `prompt_templates.rs` (or equivalent), inject the configured min (and max if set) into the instructions, e.g. "Ask at least {min} questions..." and "Do not exceed {max} questions..." when max is set.
    - **GUI:** Interview tab: replace single max control with Min (number input) and Max (number input + "Unlimited" option). Use existing DRY widgets and tooltips.
    - **Docs:** AGENTS.md or interview doc: document min/max and Unlimited; tooltips in Config.
@@ -1462,8 +1462,8 @@ When `max_questions_per_phase` is configured:
 ### Other unwired interview settings -- resolution
 
 - **`require_architecture_confirmation`**
-  **Intended behavior:** Before leaving certain phases (e.g. architecture/tech stack), the interview requires explicit user or agent confirmation of architecture/tech choices.
-  **Wiring:** Add `require_architecture_confirmation: bool` to `InterviewOrchestratorConfig`; set from `gui_config.interview` in `app.rs`. In the interview flow, add a step or phase gate that, when this is true, waits for or prompts for explicit confirmation (e.g. a dedicated phase or a prompt line) before allowing phase complete. Document in interview prompts and in AGENTS.md. **Decided (2026-11-25, OSI-099):** the mechanism is the phase gate on the `architecture_technology` phase-complete transition, completed only by the user's explicit Confirm on a required question card; the dedicated-phase and prompt-line options are not used.
+  **Intended behavior:** With this setting enabled, the Full or Short `architecture_technology` phase completes only after the user's explicit Confirm (DL-2602, OSI-099).
+  **Wiring:** Add `require_architecture_confirmation: bool` to `InterviewOrchestratorConfig` and set it from `gui_config.interview` in `app.rs`. On the `architecture_technology` phase-complete transition, use the OSI-099 phase gate with its required question card. Document the gate in interview prompts and in AGENTS.md.
 
 - **`vision_provider`**
   **Intended behavior:** When the interview or follow-up uses image/vision (e.g. screenshots, diagrams), this setting selects the preferred platform for vision-capable requests.
@@ -1891,7 +1891,7 @@ Config: `quality.gate.{check_name}.action` — override per check (`"fail"` or `
 
 **Integration with orchestrator:**
 
-In `src/core/orchestrator.rs`, extend tier completion logic:
+In `src/core/orchestrator.rs`, extend tier completion logic. For a unit requiring a handoff, enter this completion path only after the AfterUnit hook validates that handoff:
 
 ```rust
 use crate::verification::tier_end::{verify_tier_end, EndVerificationError, EndVerificationResult, TierStatus};
@@ -2532,7 +2532,7 @@ pub enum ValidationError {
 
 Extend `src/platforms/output_parser.rs` with new parser methods:
 
-Transport scope of the parser code below (2026-11-25, OSI-004, OSI-093): `CursorOutputParser` and `ClaudeOutputParser` are live CliBridge parsers over CLI output, and `GeminiOutputParser` is the live DirectApi parser over the response body (`candidates[0].content.parts[0].text`; its `--output-format json` comment and `stdout` parameter name are CLI-era wording). The `CodexOutputParser` (JSONL) and `CopilotOutputParser` (text and regex over `stdout`/`stderr`) blocks are CLI-era code examples kept as historical context only (OSI-158, OSI-161): Codex and Copilot are DirectApi, have no CLI output, and are parsed as JSON from the final assistant content like Gemini.
+Transport scope of the parser code below (OSI-004, OSI-093): live `CursorOutputParser` and `ClaudeOutputParser` use the CliBridge JSON and stream-json passes in Subagent Output Parser Fallback (Resolved). Their `serde_json::from_str(stdout)` examples illustrate single-document JSON only. A stream-json attempt uses the bridge's complete NDJSON events to obtain the final assistant content before handing it to structured field extraction. `GeminiOutputParser` is the live DirectApi parser over the response body (`candidates[0].content.parts[0].text`; its `--output-format json` comment and `stdout` parameter name are CLI-era wording). The `CodexOutputParser` (JSONL) and `CopilotOutputParser` (text and regex over `stdout`/`stderr`) blocks are CLI-era code examples kept as historical context only (OSI-158, OSI-161): Codex and Copilot are DirectApi, have no CLI output, and are parsed as JSON from the final assistant content like Gemini.
 
 ```rust
 // Add to ParsedOutput struct:
@@ -2553,7 +2553,7 @@ pub trait OutputParser: Send + Sync {
     fn extract_subagent_output_from_text(&self, stdout: &str, stderr: &str) -> Result<SubagentOutput, ValidationError>;
 }
 
-// Implementation for each platform parser:
+// Single-document JSON example. The live stream-json path uses CliBridge framing.
 
 impl OutputParser for CursorOutputParser {
     // DRY REQUIREMENT: Tag with // DRY:FN:parse_subagent_output_cursor
@@ -2847,6 +2847,7 @@ impl OutputParser for CodexOutputParser {
     }
 }
 
+// Single-document JSON example. The live stream-json path uses CliBridge framing.
 impl OutputParser for ClaudeOutputParser {
     // DRY:FN:parse_subagent_output_claude -- Parse Claude Code subagent output
     // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "--output-format json"
@@ -2988,7 +2989,7 @@ impl OutputParser for CopilotOutputParser {
 
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
-**Validation function:**
+**Validation function:** The example shows parser delegation. Live `validate_subagent_output` runs the transport-scoped passes and generic fallback in Subagent Output Parser Fallback (Resolved), checks the required fields and returns any remaining failure to the execution loop.
 
 ```rust
 // src/core/hooks/handoff_validator.rs
@@ -3014,7 +3015,7 @@ pub fn validate_subagent_output(
 
 **Integration with existing ParsedOutput:**
 
-Modify `src/platforms/output_parser.rs` to populate `subagent_output` field:
+The live path in `src/platforms/output_parser.rs` populates `subagent_output` only from the validated result of the transport-scoped pipeline. An invalid result goes to the handoff failure path, including `parser.error`, fallback and retry handling. The older single-pass `.ok()` call below is retained as source evidence for OSI-165.
 
 ```rust
 impl OutputParser for CursorOutputParser {
@@ -3359,7 +3360,7 @@ Transport scope (2026-11-25, OSI-004 and OSI-093): earlier versions of this tabl
 These lifecycle and quality features **complement** the existing start/end verification:
 
 - **BeforeUnit hook** runs **before** `VerifyUnitStart` (tracks active subagent, injects context, prunes state).
-- **AfterUnit hook** runs **after** `VerifyUnitEnd` (validates handoff format, tracks completion, safe error handling).
+- **AfterUnit hook** runs after subagent execution and **before** `VerifyUnitEnd`. It validates the handoff and tracks the attempt. A unit requiring a handoff enters end verification only after validation passes (Handoff failure boundary).
 - BeforeTier hook, AfterTier hook, `verify_tier_start` and `verify_tier_end` are the legacy aliases of these four names (Execution-Unit Hook Naming).
 - **Remediation loop** extends the existing "required reviewer subagent" -- reviewer outputs structured findings; orchestrator enforces remediation.
 - **Cross-session memory** enhances Phase 1 context (loads prior decisions before planning).
@@ -3402,7 +3403,7 @@ These lifecycle and quality features **complement** the existing start/end verif
 **Issue:** Platform output formats may vary (JSON vs JSONL vs text), scoped by transport (OSI-004, OSI-093): CliBridge providers (Cursor, Claude Code) emit JSON or stream-json NDJSON on the CLI, DirectApi providers (Codex, Copilot, Gemini) return final assistant content parsed as JSON, and the Codex JSONL stream and Copilot text output are CLI-era history. Parsers may fail on edge cases (malformed JSON, partial output, streaming output). How do we handle parsing failures gracefully?
 
 **Mitigation:**
-- **Multi-pass parsing:** Try JSON parse first, then JSONL (CliBridge stream-json NDJSON events only), then text extraction (the generic fallback every transport keeps, OSI-093). Use best-effort parsing with fallbacks.
+- **Multi-pass parsing:** Try single-document JSON, then the JSONL pass for CliBridge stream-json only, then the generic text extraction of OSI-093. The JSONL pass takes each complete event through the CliBridge parser and parses the final assistant content as the handoff. A framing error or missing required handoff content goes through the same fallback and validation path.
 - **Partial output handling:** If parsing fails, extract what we can (e.g., `task_report` from text even if `findings` missing) and keep it on the attempt for review; if the output is still invalid after fallback when the Handoff Retry Ceiling budget is exhausted, the node takes the `needs_review` recovery point (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)). The earlier "Mark tier as "complete with warnings."" is superseded source lineage.
 - **Parser testing:** Comprehensive test suite for each platform parser with edge cases (malformed JSON, unicode, large outputs, streaming).
 - **Parser versioning:** Track parser version and platform CLI version for the CliBridge providers (Cursor, Claude Code), and the provider API and model version for the DirectApi providers (Codex, Copilot, Gemini). Update parsers when either changes.
@@ -3621,7 +3622,7 @@ Short notes so implementers know where to put code and what the orchestrator alr
 - **Where:** Same verification module as config-wiring (e.g. `src/verification/` or `src/core/`) or a dedicated `tier_verification.rs`. The main orchestrator calls `VerifyUnitStart` (legacy function name `verify_tier_start`, Execution-Unit Hook Naming) when entering a Phase/Task/Subtask (after or as part of config-wiring) and `VerifyUnitEnd` (legacy `verify_tier_end`) when completing a Phase/Task/Subtask (after acceptance gate; quality step can be part of gate or separate).
 - **What:** Start: config-wiring (existing) + wiring/readiness checklist (GUI updated? backend updated? steps make sense? known gaps?). End: wiring re-check + existing acceptance gate + quality verification. Quality verification is **both** (1) required reviewer subagent (code-reviewer) at end-of-tier, on retry, and when gate fails; (2) gate criteria (clippy, tests, etc.). Parent-tier orchestrator addresses unrelated failures. See **"Start and End Verification at Phase, Task, and Subtask"** for the table and gaps. Define per-tier quality checklist (e.g. Phase: docs; Task: design; Subtask: code + tests + clippy) in code or config.
 - **When called:** Start at Phase/Task/Subtask entry; end at Phase/Task/Subtask completion (before marking tier complete). Iteration can use tier-level checks only (no separate iteration start/end verification unless needed).
-- **Integration with hooks:** BeforeUnit hook runs **before** `VerifyUnitStart` (legacy `verify_tier_start`; tracks active subagent, injects context, prunes stale state). AfterUnit hook runs **after** `VerifyUnitEnd` (legacy `verify_tier_end`) (validates handoff format, tracks completion). See **"Lifecycle and Quality Features"** for hook implementation.
+- **Integration with hooks:** BeforeUnit hook runs **before** `VerifyUnitStart` (legacy `verify_tier_start`; tracks active subagent, injects context, prunes stale state). AfterUnit hook validates the handoff **before** `VerifyUnitEnd` (legacy `verify_tier_end`). For work requiring a handoff, only a validated handoff reaches end verification. See **"Lifecycle and Quality Features"** for hook implementation.
 
 ### Agent coordination
 
@@ -3633,7 +3634,7 @@ Short notes so implementers know where to put code and what the orchestrator alr
 
 - **Where:** New module `src/core/hooks.rs` or `src/verification/hooks.rs` for hook system; canonical persistence and recovery projections in seglog/redb for continuity; extend `SubagentOutput` in `src/types/` for structured handoff format; remediation loop in orchestrator completion logic (`src/core/orchestrator.rs`).
 - **What:** (1) **BeforeUnit/AfterUnit hooks:** Implement hook traits, register hooks per unit type, call automatically at unit boundaries. For the CliBridge providers with native hooks (Cursor, Claude Code), register Puppet Master hooks that delegate where possible; for the DirectApi providers (Codex, Copilot, Gemini), use orchestrator-level middleware and canonical coordination projection (OSI-004, OSI-139). (2) **Structured handoff validation:** `validate_subagent_output()` with transport-scoped parsers per OSI-093 (JSON over CliBridge CLI output for Cursor/Claude Code; JSON over the final assistant content for Codex, Copilot and Gemini; the CLI-era JSONL for Codex and text parsing for Copilot are historical context only). (3) **Remediation loop:** Parse findings from reviewer subagent output; filter Critical/Major; block completion and re-run until resolved or max retries; escalate to parent-tier on max retries. (4) **Cross-run continuity:** Persist architectural decisions, patterns, and tech choices as canonical outputs and projections at Phase completion; reload them at run start through handoff/context assembly rather than child-memory files. (5) **Active agent tracking:** `active_subagent: Option<String>` in `ExecutionUnitContext`; update in BeforeUnit/AfterUnit hooks; persist through canonical runtime storage and projections. (6) **Safe error handling:** Wrap hooks and verification in `safe_hook_main()` that guarantees structured output even on failure. (7) **Lazy lifecycle:** Create verification state on first write; prune stale state (>2 hours) in BeforeUnit hook. (8) **Contract enforcement:** AfterUnit hook validates handoff format; use the retry or exhaustion path in Handoff Retry Ceiling for output still invalid after fallback.
-- **When called:** Hooks run automatically at unit boundaries (before `VerifyUnitStart`, after `VerifyUnitEnd`; legacy `verify_tier_start` / `verify_tier_end`). Cross-run continuity persists at Phase completion and loads through run-start context assembly. Remediation loop runs when Critical/Major findings detected. See **"Lifecycle and Quality Features"** for full details and platform-specific implementation notes.
+- **When called:** Hooks run automatically at unit boundaries (`BeforeUnit` before `VerifyUnitStart` and `AfterUnit` before `VerifyUnitEnd`, legacy `verify_tier_start` / `verify_tier_end`). Cross-run continuity persists at Phase completion and loads through run-start context assembly. Remediation loop runs when Critical/Major findings detected. See **"Lifecycle and Quality Features"** for full details and platform-specific implementation notes.
 
 ### Considerations #6 (Subagent availability / files)
 
@@ -11097,7 +11098,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  GuiConfig owns subagent configuration through a top-level subagent SubagentGuiConfig serialized as subagentConfig or equivalent, including enable_tier_subagents, tier_overrides, disabled_subagents, and required_subagents as compatibility import/export fields (OSI-425); runtime admission reads only the normalized SubagentPolicy. When those legacy fields are imported, v1 overrides are per tier type, required wins over disabled, and missing or empty override lists use auto-selection; these rules govern how the import normalizes into SubagentPolicy and are not a live per-tier runtime behavior.
+  GuiConfig owns subagent configuration through a top-level subagent SubagentGuiConfig serialized as subagentConfig or equivalent, including enable_tier_subagents, tier_overrides, disabled_subagents, and required_subagents as compatibility import/export fields (OSI-425). Import normalizes v1 overrides per tier type using missing or empty override = use auto-selection. Runtime admission reads only the normalized SubagentPolicy. Runtime selection applies the resulting policy per execution unit, where required wins over disabled (OSI-214).
 gui_related: false
 gui_classification_reason: This unit covers backend/config schema and override semantics, not GUI presentation.
 split_recommended: false
@@ -11575,7 +11576,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Interview question limits replace the single max setting with min_questions_per_phase and max_questions_per_phase Option<u32>, accept phase completion only after the minimum, support None as unlimited, enforce a soft cap with max + 1 grace, force-complete runaway phases with phase.force_completed and max_questions_exceeded, and never reject a phase that already collected valid answers.
+  Interview question limits replace the single max setting with min_questions_per_phase and max_questions_per_phase Option<u32>, accept phase completion only after the minimum, support None as unlimited, enforce a soft cap with max + 1 grace, and never reject a phase that already collected valid answers. When the cap forces ordinary phase completion, emit phase.force_completed with max_questions_exceeded. When OSI-099 applies, the cap ends that round of agent questions and presents the required card. Only the user's Confirm completes that phase.
 gui_related: false
 gui_classification_reason: This unit covers interview runtime behavior, not GUI controls.
 split_recommended: false
@@ -12161,7 +12162,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Interview execution must wire require_architecture_confirmation into InterviewOrchestratorConfig from gui_config.interview in app.rs and, when enabled, require explicit architecture/tech-stack confirmation through a phase gate before phase completion. The phase gate is the one mechanism; a dedicated phase and a prompt line are rejected alternatives. Trigger: the phase-complete transition of the `architecture_technology` phase (chain-wizard-flexibility canonical phase registry) when its phase-plan depth is Full or Short. The gate asks one required shared question card (`QuestionItem`, options Confirm and Change, `allow_freeform` true) that summarizes the phase's architecture and tech-stack decisions. Completion: the phase completes only after the user answers Confirm, recorded as explicit confirmation in the phase's validation artifacts; Change keeps the phase open with the user's note as new phase input and asks again at the next phase-complete attempt. There is no timeout and no agent self-confirmation. When the setting is false, or the phase plan sets `architecture_technology` to Skip, the gate does not run.
+  Interview execution must wire require_architecture_confirmation into InterviewOrchestratorConfig from gui_config.interview in app.rs and, when enabled, require explicit architecture/tech-stack confirmation through a phase gate before phase completion. The phase gate is the one mechanism; a dedicated phase and a prompt line are rejected alternatives. Trigger: the phase-complete transition of the `architecture_technology` phase (chain-wizard-flexibility canonical phase registry) when its phase-plan depth is Full or Short. The gate asks one required shared question card (`QuestionItem`, options Confirm and Change, `allow_freeform` true) that summarizes the phase's architecture and tech-stack decisions. Completion: the phase completes only after the user answers Confirm, recorded as explicit confirmation in the phase's validation artifacts; Change keeps the phase open with the user's note as new phase input and asks again at the next phase-complete attempt. There is no timeout and no agent self-confirmation. The soft cap in OSI-089 also enters this gate and cannot complete the phase. DL-2602 records the user confirmation as the kept choice. When the setting is false, or the phase plan sets `architecture_technology` to Skip, the gate does not run.
 gui_related: true
 gui_classification_reason: This unit covers interview flow UX and confirmation behavior.
 split_recommended: false
@@ -15422,8 +15423,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  CursorOutputParser structured handoff parsing reads JSON output according to platform_specs, extracts task_report, downstream_context,
-  and findings, and must not hardcode the output-format behavior.
+  CursorOutputParser follows platform_specs for single-document JSON or stream-json. For stream-json it extracts the handoff
+  from final assistant content assembled from the CliBridge NDJSON events. It extracts task_report, downstream_context and
+  findings without hardcoding the output format.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -15906,8 +15908,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  ClaudeOutputParser parses Claude structured output according to platform_specs, reads result.content or direct fields, attempts
-  direct SubagentOutput parsing, and manually extracts task_report, downstream_context, and findings when needed.
+  ClaudeOutputParser follows platform_specs for single-document JSON or stream-json. For stream-json it uses final assistant
+  content assembled from the CliBridge NDJSON events. It reads result.content or direct fields, attempts direct SubagentOutput
+  parsing, and extracts task_report, downstream_context and findings when needed.
 gui_related: false
 gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
 split_recommended: false
@@ -16329,8 +16332,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Existing ParsedOutput integration populates output.subagent_output by attempting parse_subagent_output during platform output
-  parsing, but the .ok() example must not silently drop parser failures contrary to structured handoff failure policy.
+  ParsedOutput populates output.subagent_output from the validated transport-scoped handoff, including the JSONL pass for
+  CliBridge stream-json when required. Unresolved failures go through structured handoff failure handling. The .ok() example
+  is source evidence only.
 gui_related: false
 gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
 split_recommended: false
@@ -17605,8 +17609,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Lifecycle and quality features complement start/end verification: BeforeUnit runs before VerifyUnitStart, AfterUnit runs
-  after VerifyUnitEnd (BeforeTier hook, verify_tier_start, AfterTier hook and verify_tier_end are import-only aliases,
-  normalized per Execution-Unit Hook Naming), remediation extends the required reviewer subagent, cross-session continuity enhances Phase 1 context,
+  after execution and before VerifyUnitEnd. A required handoff must pass AfterUnit validation to enter VerifyUnitEnd.
+  BeforeTier hook, verify_tier_start, AfterTier hook and verify_tier_end are import-only aliases under Execution-Unit
+  Hook Naming. Remediation extends the required reviewer subagent, cross-session continuity enhances Phase 1 context,
   and active tracking enhances logging/debugging.
 gui_related: false
 gui_classification_reason: >-
@@ -19580,11 +19585,11 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Orchestrator integration uses src/core/orchestrator.rs and tier_config_for(tier_type) -> &TierConfig as the source for
-  platform, model, and plan_mode, then reads enable_tier_subagents and subagent config, applies tier_overrides, filters
-  disabled_subagents, and adds required_subagents. Under OSI-425 those steps run once, when the legacy keys are imported
-  and normalized into SubagentPolicy (`schema_id: pm.subagent_policy.v1`); at runtime the orchestrator reads only the
-  normalized SubagentPolicy for admission, selection, disabled and required subagents, and never reads enable_tier_subagents
-  or tier_overrides as the runtime gate or merge path.
+  platform, model, and plan_mode. OSI-425 normalizes the legacy enable_tier_subagents, tier_overrides, disabled_subagents
+  and required_subagents into SubagentPolicy (`schema_id: pm.subagent_policy.v1`) at import. For each execution unit admitted
+  by that policy, the orchestrator runs the selector, replaces its list with the normalized scope override if one exists,
+  filters disabled entries and adds required entries. Required entries win. Runtime admission and selection read only the
+  normalized policy.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration configuration merge behavior rather than GUI presentation.
@@ -20150,9 +20155,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Hook integration preserves the ordering that BeforeUnit runs before VerifyUnitStart and AfterUnit runs after
-  VerifyUnitEnd (verify_tier_start and verify_tier_end are import-only aliases per Execution-Unit Hook Naming), with active-subagent tracking, context injection, stale-state pruning, handoff-format validation, and
-  completion tracking treated as compatibility/source summary for the hook owner path.
+  BeforeUnit runs before VerifyUnitStart. AfterUnit runs after execution and validates any required handoff before
+  VerifyUnitEnd may update completion status. Active-subagent tracking, context injection, stale-state pruning, handoff
+  validation and completion tracking follow the hook owner path. verify_tier_start and verify_tier_end are import-only
+  aliases per Execution-Unit Hook Naming.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend hook and verification ordering rather than GUI presentation.
@@ -33061,7 +33067,7 @@ This paragraph supersedes earlier pending statements only for the exact assigned
 
 **Payload and scope.** `Plans/orchestrator_event_payloads.schema.json#/$defs/phase_force_completed` (`pm.event_payload.phase_force_completed.v1@1.0.0`) is the closed payload. Project scope only; use the actual Orchestrator/interview Project. Envelope scope, project_id, run_id, thread_id and occurred_at_utc equal payload values; actor_ref identifies the actual producer. No invented Project/root, null partition or focus-derived scope. Parent/child/crew identities join their original admitted canonical records, not text labels. Requested/effective runtime references resolve retained immutable snapshots when different.
 
-**Producer and ordering.** `Interview PhaseManager / enforce soft cap` owns the occurrence. Predicate: active phase -> force completed only when configured maximum is finite and question_count > max_questions + 1 without completion signal; preserve all collected answers. Allocate operation_id once at the actual operation boundary and occurrence once per distinct observation in that operation; retries retain both. The existing operation owner commits or settles its canonical result first under its permission/stop/scope fence; this event records that fact and never authorizes another effect. Admit scope/schema/retention/permission and validate payload, durably commit referenced body bytes using SP-337, then append through Case L-5. Explicitly adopt SP-286/CV-339 first-AppendReceipt custody and `storage.first_append_receipt.resolve.v2` with its full-value successor. Retain the prepared full EventRecord and first receipt in the original operation custody; publish this history fact only after the durable receipt. On uncertain append resolve that exact full value before retry or publication; fail closed while unresolved. A body/operation already committed is not repeated to repair a missing history event.
+**Producer and ordering.** `Interview PhaseManager / enforce soft cap` owns the occurrence. Predicate: active phase -> force completed only when configured maximum is finite and question_count > max_questions + 1 without completion signal; preserve all collected answers. This transition applies only to a phase without the OSI-099 architecture confirmation gate. Emit only for an actual force-complete transition. Allocate operation_id once at the actual operation boundary and occurrence once per distinct observation in that operation; retries retain both. The existing operation owner commits or settles its canonical result first under its permission/stop/scope fence; this event records that fact and never authorizes another effect. Admit scope/schema/retention/permission and validate payload, durably commit referenced body bytes using SP-337, then append through Case L-5. Explicitly adopt SP-286/CV-339 first-AppendReceipt custody and `storage.first_append_receipt.resolve.v2` with its full-value successor. Retain the prepared full EventRecord and first receipt in the original operation custody; publish this history fact only after the durable receipt. On uncertain append resolve that exact full value before retry or publication; fail closed while unresolved. A body/operation already committed is not repeated to repair a missing history event.
 
 **Identity and replay.** scope_partition is `app` or the exact EventRecord project~ encoding. Identity preimage is `JCS(["ea-do-v1",scope_partition,server_id,thread_id,run_id,"phase.force_completed",operation_id,occurrence])`; UTF-8 RFC8785 JCS bytes hashed with SHA-256 give `idempotency_key = "do1:" + lowercase_hex(hash)` and `event_id = "evt_do_" + lowercase_hex(hash)`. The actual canonical operation allocates operation_id with fresh entropy, never recycles it after restore; occurrence is positive and monotonically allocated within it. The first prepared event fixes timestamps, all lineage and semantic digest. Same event/key and full producer-semantic digest returns the original receipt; any changed semantic field is idempotency_conflict. Unreadable dedupe is unavailable. Replay reads history only: no child spawn, provider/tool call, message delivery, phase completion, model switch, budget change, warning notification or usage charge. Numbers, history and timestamps follow the shared rules CV-1100 (current tokens and qualified semantic recipes), SP-1100 (physical and metadata profiles), SP-1101 (authenticated original selection) and CV-1101 (EventRecord date-time profiles), beside this family's existing owners CV-317, CV-339, CV-366, SP-236, SP-278, SP-286 and SP-337. Current raw input is parsed by the shared `loads_current_json`, which refuses `-0`, invalid JSON `01`, non-finite tokens, duplicate keys and lone surrogates. Every schema integer slot (occurrence, which stays a positive integer, and every count, length, duration, index and attempt number) is admitted by the shared `current_integer` with that slot's own bounds, so `1.0` and `1e0` refuse there; there is no lane-wide safe-integer cap, and fractional values keep the schema's `number` type. Before any effect the CV-317 producer projection, the identity preimage and the CV-366 observation component are qualified by the shared `qualified_jcs`; a value it cannot encode exactly refuses as `number_domain`, and semantic and typed-source digests use the same qualified serializer. EventRecord value bytes, inline payload sizes and SP-337 `application/msgpack` pack bytes use SP-1100's EVENT_VALUE profile, application wrapper bytes use APP_PHYSICAL, and Storage sequence, offset, count and generation metadata are exact uint64 (`storage_uint64`), refused at the record's schema boundary before any SP-278 binding digest; physical digests cover those exact bytes. Payload `occurred_at_utc`, and `read_at_utc` or `archived_before_utc` where the family has one, take the shared EventRecord date-time profile (`pm_event_datetime.date_time`: RFC 3339, including offsets, lowercase separators and real leap seconds); Storage-assigned `observed_at_utc` and `persisted_at_utc` take CV-253's `storage_utc_z`. No representation can allocate a second identity or turn an equal-semantic retry into a second effect. The current writing recipe is `ea-do-rfc8785-v2`; only new writes use it. Historical reads and uncertain-result recovery resolve the original through the SP-1101 `RetainedDispatcher`: Storage's sealed custody for the original's seglog ref authenticates its exact bytes and supplies the recipe tuple recorded when they were written, and that recipe's frozen verifier recomputes identity, payload join and source commitment: `ea-do-json-v1` uses the original UTF-8 `json.dumps` recipe with `separators=(",", ":")`, `ensure_ascii=False`, and its original numeric types for both identity and observation arrays; `ea-do-rfc8785-v2` uses RFC8785 for both. Neither changes the array members or domain labels above. Verify event/key against that one selected recipe, never try arbitrary fallbacks or remint a valid old identity. The closed historical witness's `original_identity_recipe` and verified `original_recipe_evidence` (exact event/key/family/schema/Storage/partition and original receipt-byte SHA-256) are disclosed copies joined against that custody; they select nothing. A custody refusal, or missing, unverified, contradictory, unsupported or foreign recipe evidence, refuses. Current token/value restrictions apply only to incoming current inputs, not retained EventRecords, first receipts or typed source/wrapper material. Decode a supported historical original under the recipe/codec valid when written, preserving exact bytes and number types, including originally valid `1.0`, `1e0` and `1e20` values. Frozen typed-source hash and physical codec domains remain exact. Recovery verifies the original and returns its exact complete receipt before any retry; an equal-semantic current retry keeps that original lifetime key/ID and returns its original receipt bytes. Forged identities and current reader withdrawal/publication/access/deletion/hold fences still refuse.
 
@@ -35226,7 +35232,7 @@ Stream C closure re-audit repairs (cluster K2). This addendum adds no WorkNodes,
 Repairs `sfk-52b55259003ddf5c68bd4d44` (registry lines 1501 and 1588).
 
 - Path: `<project root>/.puppet-master/PAUSE.md`, one file per project. This is the Pause File Location above and the project-root file named in `Plans/human-in-the-loop.md` PAUSE.md Gate And Precedence; no other path is read.
-- Watcher: the Orchestrator reads the file at two points only: before dispatching each new execution-unit attempt (each loop iteration, OSI-387) and before admitting `cmd.orchestrator.resume` for a run the gate halted. No file-system notification is needed. An attempt already running is not interrupted; its result is recorded, and no new mutating attempt is dispatched in scope while the gate is active. Read-only work (`ask`, `plan`) is not blocked.
+- Watcher: the Orchestrator reads the file at two points only: before dispatching each new execution-unit attempt (each loop iteration, OSI-387) and before admitting `cmd.orchestrator.resume` for a run the gate halted. No file-system notification is needed. An attempt already running is not interrupted and its result is recorded. Before an in-scope mutating dispatch, the watcher allows passage through the PAUSE check only when the gate's `allowed_action_ids[]` contains the exact requested action's canonical ID. It then evaluates applicable HITL approval. Read-only work (`ask`, `plan`) is not blocked.
 - Fields and order: the frontmatter fields and the PAUSE-before-HITL precedence are the human-in-the-loop.md contract. `scope` is closed: `project` (every run in this project) or `run:<run_id>` (that run only). `allowed_action_ids[]` holds canonical `allowed_action_id` values from the `Plans/UI_Command_Catalog.md` recovery table.
 - Fail-closed parsing: a file that exists with no frontmatter, unparseable frontmatter, an unknown `scope` value or a missing `pause_id` still pauses, read as `scope: project` with `allowed_action_ids[] = []`, and the run's pause notice says the gate file is invalid. A file whose `expires_at_utc` is in the past is inactive.
 - Halt: at a blocked dispatch the run logs the `pause_id` and reason, returns a halted result and waits (OSI-387).
