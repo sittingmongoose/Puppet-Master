@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-11-26T02:26:06Z",
+  "generated_at_utc": "2026-11-26T02:42:38Z",
   "index_path": "Plans/_shards/tools/00-index.md",
-  "index_sha256": "9cde85ae2a6722dfe51b9a9c526a77a3e32cf965622f47fafca5aed318f27b75",
+  "index_sha256": "85fe05c7900ccd6abe98271ee3d2c7461ea76c5dcee5f1699d814e9ceba58773",
   "manifest_path": "Plans/_shards/tools/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/tools/001-preamble.md",
-      "sha256": "3f7c83d818577b4accdecc3cc55b1f0583492791f651b4ce3e8c9f700b7e0e22",
+      "sha256": "bc8a3777133f3784c7f7a4b89412c239b7802cec2b657b94501153eedc960942",
       "shard_id": "001",
       "source_line_end": 6,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "SSOT references (DRY)",
       "path": "Plans/_shards/tools/002-ssot-references-dry.md",
-      "sha256": "ac8e82d0720b3c938cec980be42372d04ceace3919b0893f76f948598d9ef10f",
+      "sha256": "a9425cd390f1fa08c6fce4057778a6020a61c647fb7fff2e81f64a70f173c13a",
       "shard_id": "002",
       "source_line_end": 17,
       "source_line_start": 8,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Purpose and scope",
       "path": "Plans/_shards/tools/003-1.-purpose-and-scope.md",
-      "sha256": "7c32ad4349570c6f720b252904d382855f201a5d35e1adb8d0d9c77b36cde537",
+      "sha256": "6e086dba34cee41d12bbf3872716acf7cd86ed39cd8bffe5e2cdd559c43b074b",
       "shard_id": "003",
       "source_line_end": 70,
       "source_line_start": 19,
@@ -35,7 +35,7 @@
     {
       "heading": "2. Permission model",
       "path": "Plans/_shards/tools/004-2.-permission-model.md",
-      "sha256": "9d102ac4f458f2114f52f7165cb7bfd64f45afcab60258929bf690787bf6c82d",
+      "sha256": "f2f2ea7315bf89f06ebb4e7798aa546fccdbd96d6fe158978340e5e8ea185132",
       "shard_id": "004",
       "source_line_end": 200,
       "source_line_start": 72,
@@ -44,7 +44,7 @@
     {
       "heading": "3. Built-in tools (target set)",
       "path": "Plans/_shards/tools/005-3.-built-in-tools-target-set.md",
-      "sha256": "da458d8024f94cb87592e59a221a050f2fb8848e09acc5cb45761e1c7dd6f2c5",
+      "sha256": "76e3a1241c78d5b5e143e32c52f037ac83d2fd4c9f446c3388442dd6ac0e74b3",
       "shard_id": "005",
       "source_line_end": 1069,
       "source_line_start": 202,
@@ -53,7 +53,7 @@
     {
       "heading": "4. Custom tools",
       "path": "Plans/_shards/tools/006-4.-custom-tools.md",
-      "sha256": "47ac4b4417fd69dd75e671045e2e2586c3b9a4d80ca3aa3f4a4eda905d603be7",
+      "sha256": "bd6891541e488b26a71959a6850f8527c3849091b19fffdd2d357f2601352b5e",
       "shard_id": "006",
       "source_line_end": 1109,
       "source_line_start": 1071,
@@ -62,7 +62,7 @@
     {
       "heading": "5. MCP integration (in scope)",
       "path": "Plans/_shards/tools/007-5.-mcp-integration-in-scope.md",
-      "sha256": "67601b80c2e4a496cf544b240e05a0e9e6c85b0d6e324c95ce534e7540958310",
+      "sha256": "60d6581c1ec976028ccb85615d1522e622eae5c730d86cf120c03d6adca18bb0",
       "shard_id": "007",
       "source_line_end": 1123,
       "source_line_start": 1111,
@@ -71,7 +71,7 @@
     {
       "heading": "6. Ways to add tools (implementation angles)",
       "path": "Plans/_shards/tools/008-6.-ways-to-add-tools-implementation-angles.md",
-      "sha256": "c93a7a2d5f59ddd812a726df9e151ec7c4f9948d73600e189f964ccb6997d1f9",
+      "sha256": "134b3699e6bd6a21aa14bac5be6672c374616022ab6a1090ca2c651328d57dad",
       "shard_id": "008",
       "source_line_end": 1141,
       "source_line_start": 1124,
@@ -80,7 +80,7 @@
     {
       "heading": "7. Per-platform MCP and tool config (reference)",
       "path": "Plans/_shards/tools/009-7.-per-platform-mcp-and-tool-config-reference.md",
-      "sha256": "267079651e3425fbfeb7dfb9bac2378e7dd2dda9cad28049f3edc9ec3b3a558d",
+      "sha256": "e2acbe3146a862ef2f30b640bb0e0c8ba70b8e9bd5a7f36c9f4b60ef65ce517f",
       "shard_id": "009",
       "source_line_end": 1159,
       "source_line_start": 1143,
@@ -89,7 +89,7 @@
     {
       "heading": "8. Implementation details and technical notes",
       "path": "Plans/_shards/tools/010-8.-implementation-details-and-technical-notes.md",
-      "sha256": "97f18a7ef080e6693b2018587a333411e075cffe173d4b4f17f4fc1f97d4f5df",
+      "sha256": "874a7e960e9be80200678c7c1aa2fdb9b23728530fe8cf8c79ae24c02a8297ae",
       "shard_id": "010",
       "source_line_end": 1373,
       "source_line_start": 1161,
@@ -98,7 +98,7 @@
     {
       "heading": "10. Implementation plan: permissions (spec for implementers)",
       "path": "Plans/_shards/tools/011-10.-implementation-plan-permissions-spec-for-implementers.md",
-      "sha256": "2edc38bc10efc284b48cbf1cd9f231ab231015e84b39fc8bdc0c4f3f5592ba53",
+      "sha256": "1c0f7792af756405e354f199af17644228a90bd42096a000fcc616ab0674a0ff",
       "shard_id": "011",
       "source_line_end": 1470,
       "source_line_start": 1375,
@@ -107,7 +107,7 @@
     {
       "heading": "11. Relationship to other plans",
       "path": "Plans/_shards/tools/012-11.-relationship-to-other-plans.md",
-      "sha256": "20893d9e7711d9056335b91a81e5c5a1ceeaed760ce0d267acfae6947349c9f6",
+      "sha256": "aff3aa305383ac8ef7bf97126b37ac9862a1de5fdbb60c5acf6cd8c8ddfdac09",
       "shard_id": "012",
       "source_line_end": 1487,
       "source_line_start": 1471,
@@ -116,7 +116,7 @@
     {
       "heading": "12. Implementation checklist (ordered for implementation plan)",
       "path": "Plans/_shards/tools/013-12.-implementation-checklist-ordered-for-implementation-plan.md",
-      "sha256": "15449d7b5e2b162858f6ae5ccf87387732eb38d1114bffb79653ed9c9e2724ae",
+      "sha256": "531902f870ebb3ed116bd77d644e366a4e450045cd1472472937b67632cc9b80",
       "shard_id": "013",
       "source_line_end": 1511,
       "source_line_start": 1489,
@@ -125,7 +125,7 @@
     {
       "heading": "13. References",
       "path": "Plans/_shards/tools/014-13.-references.md",
-      "sha256": "8809131c534e3e0bdcd073bdb340304a6b0e47648d45be95e06373658e21110b",
+      "sha256": "5db0ce8482166c9e0fc55de73be222187dbaecbc0810b5b964eeaf350d790724",
       "shard_id": "014",
       "source_line_end": 1529,
       "source_line_start": 1513,
@@ -134,7 +134,7 @@
     {
       "heading": "Tool Policy Outcome Taxonomy Addendum (2026-03-08)",
       "path": "Plans/_shards/tools/015-tool-policy-outcome-taxonomy-addendum-2026-03-08.md",
-      "sha256": "2366b76768dcde9f81e076b61ef3fa34a989822efd4c4cf047136c04b68cba65",
+      "sha256": "0ad9e875c1240da49f7c2a8bf6466956f311c91becd6167105e4ddfea1920356",
       "shard_id": "015",
       "source_line_end": 1561,
       "source_line_start": 1531,
@@ -143,7 +143,7 @@
     {
       "heading": "Tool Denial / Runtime Taxonomy Alignment Addendum (2026-03-09)",
       "path": "Plans/_shards/tools/016-tool-denial-runtime-taxonomy-alignment-addendum-2026-03-09.md",
-      "sha256": "440b504d44530d150952cf382dd4b20b117ea3fb89dfd3c9443856d9e72a1fb3",
+      "sha256": "d91eb9e50cad4d5fc4d43a4600279b8d90dfad608f5ca62eab4c9a291efd6b02",
       "shard_id": "016",
       "source_line_end": 1576,
       "source_line_start": 1562,
@@ -152,7 +152,7 @@
     {
       "heading": "Tool Denial and Runtime Action Canonical Alignment (2026-03-09)",
       "path": "Plans/_shards/tools/017-tool-denial-and-runtime-action-canonical-alignment-2026-03-09.md",
-      "sha256": "6221f879e4240db2cf289d55c93e1855c879416ecdbdb6b8618ab2879f9ac451",
+      "sha256": "77f5002a6c41a0759ce2cf673fc2deb913afc42bde912b376283d6d1be18aea7",
       "shard_id": "017",
       "source_line_end": 1588,
       "source_line_start": 1577,
@@ -161,7 +161,7 @@
     {
       "heading": "Tool Denial Runtime Blocked Payload Consolidation Addendum (2026-03-09)",
       "path": "Plans/_shards/tools/018-tool-denial-runtime-blocked-payload-consolidation-addendum-2026-.md",
-      "sha256": "61e0ef5962b037a411e4d1373b5dbe33c60eda8723a5899eead9abb73b569400",
+      "sha256": "718d7190ff648c2beb8fa17a4230c7cda0bac4f8e613e6c268edf0c3b77b0c1e",
       "shard_id": "018",
       "source_line_end": 1610,
       "source_line_start": 1589,
@@ -170,7 +170,7 @@
     {
       "heading": "Tool Field Name and Taxonomy Alignment",
       "path": "Plans/_shards/tools/019-tool-field-name-and-taxonomy-alignment.md",
-      "sha256": "17ae05d10e63aeb28e89767c68e247c92a1f2f2b65e527d7bb2faec0c82890d8",
+      "sha256": "9256b0317ee44e612255f83e5832158ffae2e96126fe58d2af83464a44708021",
       "shard_id": "019",
       "source_line_end": 1632,
       "source_line_start": 1612,
@@ -179,7 +179,7 @@
     {
       "heading": "10. Firecrawl provider integration",
       "path": "Plans/_shards/tools/020-10.-firecrawl-provider-integration.md",
-      "sha256": "a4bfe4810aba1c33f769854ab7deb49386e909dd274a9b6d6538e21fe50c9e2d",
+      "sha256": "9813c61f2d707d9bc3c2665c1ea1d9d1d9a458028bfeea5aaa2fb47d32282a2d",
       "shard_id": "020",
       "source_line_end": 2020,
       "source_line_start": 1634,
@@ -188,7 +188,7 @@
     {
       "heading": "11. Provider capability matrix",
       "path": "Plans/_shards/tools/021-11.-provider-capability-matrix.md",
-      "sha256": "9dc4fbcab492d28e8db2da4b8c3dd38a08882b937c61cf0be185417b27563641",
+      "sha256": "dc2a84fb947196acd31f26433d5d48a60446f5a2f1e9df2e452861c1ef852314",
       "shard_id": "021",
       "source_line_end": 2142,
       "source_line_start": 2021,
@@ -197,7 +197,7 @@
     {
       "heading": "12. Web tool routing algorithm",
       "path": "Plans/_shards/tools/022-12.-web-tool-routing-algorithm.md",
-      "sha256": "b93143e3733cf19889df9d66a05c1c9334fba60f6c5b0f9f231ebdd61e3fcf34",
+      "sha256": "32ba9bfd8e21ed186d8e9ca07246c421b03aecd40772fbe404f0f4fb0d56d595",
       "shard_id": "022",
       "source_line_end": 2218,
       "source_line_start": 2143,
@@ -206,7 +206,7 @@
     {
       "heading": "13. Batch operations",
       "path": "Plans/_shards/tools/023-13.-batch-operations.md",
-      "sha256": "162f8da2e1495902584baca1b27824ecec7a8be36cc3723f1d5293309b9afad9",
+      "sha256": "bb6d70d0c26b65a0630c651857bded42af36bfb682617c5395a2d53094b46c72",
       "shard_id": "023",
       "source_line_end": 2276,
       "source_line_start": 2219,
@@ -215,7 +215,7 @@
     {
       "heading": "14. Web content caching layer",
       "path": "Plans/_shards/tools/024-14.-web-content-caching-layer.md",
-      "sha256": "8b6391c0409ecacb203b71a63b12bf2fa9ad1e34badb1e2d3b2adfeac57e72ee",
+      "sha256": "b767880adb06d4c1319e7f942cf2e9c44e1731baf076bd09951da59a3bdf6340",
       "shard_id": "024",
       "source_line_end": 2324,
       "source_line_start": 2277,
@@ -224,7 +224,7 @@
     {
       "heading": "15. Assistant collaboration, To-Do proposal, and read-only advisor tool boundaries",
       "path": "Plans/_shards/tools/025-15.-assistant-collaboration-to-do-proposal-and-read-only-advisor.md",
-      "sha256": "8dc6f35018b07f2149bb57d523284b0ef43c780e198692f9d08ab0fe6d9fbfbb",
+      "sha256": "26a878f47de45100929f2789c6dbab888bf821055b27441a8bf3d8e60d2d79e9",
       "shard_id": "025",
       "source_line_end": 2437,
       "source_line_start": 2325,
@@ -233,7 +233,7 @@
     {
       "heading": "Canonical owner and consumer reconciliation",
       "path": "Plans/_shards/tools/026-canonical-owner-and-consumer-reconciliation.md",
-      "sha256": "7690589305739882504b0d4c84dd7d5b94d49189b25615d0246717a2162fedc3",
+      "sha256": "bda1e9ff3c9e5088b990bd87560cbc9a0616aa3f7204a73e81e3fae44d8dabf5",
       "shard_id": "026",
       "source_line_end": 2470,
       "source_line_start": 2440,
@@ -242,7 +242,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/tools/027-owner-consumer-map.md",
-      "sha256": "f53dd1b28a3dcd654dae1b8aab92ba6440167267835f26ba53d3be5ee3977a2c",
+      "sha256": "46ae60318161d705e43acaeb78282f2ef4516fba4a8b4f02c071bcab0c041912",
       "shard_id": "027",
       "source_line_end": 2476,
       "source_line_start": 2472,
@@ -251,7 +251,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/tools/028-planunits.md",
-      "sha256": "151feeea36071162d3a5191d6d3ac9d91f96f0581f975e7c20f207a02c5e3b20",
+      "sha256": "cb0c07b1d01f1c5a9b23d648a5662a91f9daaec78c82cf00969f84d09bbc1e36",
       "shard_id": "028",
       "source_line_end": 2537,
       "source_line_start": 2478,
@@ -260,7 +260,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260630-001-feature-intake",
       "path": "Plans/_shards/tools/029-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
-      "sha256": "36431e3229087fe68ddfa119a5eaa3e51f62a7eb26d53ebe5b56c49c70bc7147",
+      "sha256": "8a1526a7dba8027429de8054fff578a8bbf48db0595382b0a24550e189a5b4d5",
       "shard_id": "029",
       "source_line_end": 2618,
       "source_line_start": 2539,
@@ -269,7 +269,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260624-001-provider-updates",
       "path": "Plans/_shards/tools/030-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
-      "sha256": "4999c8b1fb595e8b2caec1a4b80ba76fe34dd83d4162bf4c37322b929b45fc26",
+      "sha256": "ed7d9fec9b31126ce9dc7a01c5520b9c69ff616302ac6b1e8a586274908f6755",
       "shard_id": "030",
       "source_line_end": 11156,
       "source_line_start": 2620,
@@ -278,7 +278,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/tools/031-migration-coverage.md",
-      "sha256": "ffe7bc26a775d16f5f00bb7119aa47623d0f1f57eb013102ed72204b945e8839",
+      "sha256": "be7c157d257ea34a0e06264e9ebd401cfeff8c124d4cf19604136b2cc7c6dfc1",
       "shard_id": "031",
       "source_line_end": 11168,
       "source_line_start": 11158,
@@ -287,7 +287,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260614-001",
       "path": "Plans/_shards/tools/032-ledger-compile-addendum-pldg-20260614-001.md",
-      "sha256": "772893fe24d8f6c63f52c97c46133d0d39457e28b3909efb74b907d1ccd83bb4",
+      "sha256": "67b999766c600e4d172079702e730be33352d5fbb84efd246647a9173cd1a2c7",
       "shard_id": "032",
       "source_line_end": 11209,
       "source_line_start": 11170,
@@ -296,7 +296,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260615-001",
       "path": "Plans/_shards/tools/033-ledger-compile-addendum-pldg-20260615-001.md",
-      "sha256": "f8b4bbcd9e4420bf634d57e2d8c0f2b2b4c85be3e6c83fc4cee32470a833464b",
+      "sha256": "295426c888f1be87e3c25d2989c0925d838e096aae8b3421b302ef0340918802",
       "shard_id": "033",
       "source_line_end": 11296,
       "source_line_start": 11211,
@@ -305,7 +305,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff",
       "path": "Plans/_shards/tools/034-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
-      "sha256": "59215167f36cbcc8b091a26612647dd931b39deb636972a6e33c69e16d381611",
+      "sha256": "1ee262f1af4f2811b7cd75ac607667ed40db27c6974f7bff65d41af6c790f275",
       "shard_id": "034",
       "source_line_end": 11351,
       "source_line_start": 11298,
@@ -314,7 +314,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260622-001-fff",
       "path": "Plans/_shards/tools/035-ledger-compile-addendum-pldg-20260622-001-fff.md",
-      "sha256": "538ee3578cbce7373cd4276b32e91111a0a538329a00e9220bd82da6bd3bb059",
+      "sha256": "e506e474d9a92232f893e1aed535d5a82ee690cc7754ca86ab6762cee8baa46e",
       "shard_id": "035",
       "source_line_end": 11546,
       "source_line_start": 11353,
@@ -323,7 +323,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260626-001-feature-name",
       "path": "Plans/_shards/tools/036-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
-      "sha256": "211ae2f15d0909d4ffd28dd3cd995f3da008bd32d11b742c81c7cae77894feef",
+      "sha256": "1b5f37b65b1784c6f7b3797e269d4a7a2ef2997a712c64572c1082d6b1104193",
       "shard_id": "036",
       "source_line_end": 11718,
       "source_line_start": 11549,
@@ -332,7 +332,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260703-001-feature-intake",
       "path": "Plans/_shards/tools/037-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
-      "sha256": "9d39f8d5faff7772b84a3a3f83e5a45e6063e19f7776d919d2e21c112af2cc4c",
+      "sha256": "e13abfecf5351b4e92683eff89f5d7226a918bd237c2fbc82a51db683c430916",
       "shard_id": "037",
       "source_line_end": 12419,
       "source_line_start": 11720,
@@ -341,7 +341,7 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/tools/038-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "c595fec1d3c0f657b3d62b8079702891db951bb017f40b485b528c7d166be011",
+      "sha256": "44006181c4afc8e5dddb4f2a4c5c5baacf3ed503af08a72dc36f9c82369cac6f",
       "shard_id": "038",
       "source_line_end": 12466,
       "source_line_start": 12421,
@@ -350,7 +350,7 @@
     {
       "heading": "FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)",
       "path": "Plans/_shards/tools/039-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md",
-      "sha256": "12ffe54cf22d1fc9f4888c68bf7ab797638ce99c9c842bf26b6adf48cbb23f7a",
+      "sha256": "6001cca737e386275be581224131e7d869df4d495eb52bb4c79a0e090a013765",
       "shard_id": "039",
       "source_line_end": 12474,
       "source_line_start": 12467,
@@ -359,7 +359,7 @@
     {
       "heading": "Remaining Runtime Integration Addendum - 2026-08-13",
       "path": "Plans/_shards/tools/040-remaining-runtime-integration-addendum-2026-08-13.md",
-      "sha256": "45276ae77efbb4fe3a079fb3ae6fabc55bd7fe52756a940acac48924d1e1e4d1",
+      "sha256": "af4e96eb6c3f5cb2e65ab85e21debe775883ef47b7a6f49feac0d1b25cdf2046",
       "shard_id": "040",
       "source_line_end": 12655,
       "source_line_start": 12476,
@@ -368,7 +368,7 @@
     {
       "heading": "Assistant Redesign Consumer Addendum - 2026-09-03",
       "path": "Plans/_shards/tools/041-assistant-redesign-consumer-addendum-2026-09-03.md",
-      "sha256": "86c8e1e31089448f9d047b830824deab751538318e7951b67c822a2d15facd95",
+      "sha256": "7820c10462f188f5a7cc63865bf324e83d6d057436c74707c74bb996bd2b73c3",
       "shard_id": "041",
       "source_line_end": 12891,
       "source_line_start": 12657,
@@ -377,7 +377,7 @@
     {
       "heading": "Working Notebook And Exact History Read Tool Addendum (2026-09-05)",
       "path": "Plans/_shards/tools/042-working-notebook-and-exact-history-read-tool-addendum-2026-09-05.md",
-      "sha256": "75d34d94e9e429a1c2b963f46991bbffe91fe6330503a798ee4d7b87b80d5f70",
+      "sha256": "c824b3865bbc5f86f71b0bd87be752b0ba232fcf83784e2ed8ca7486bb8a8a80",
       "shard_id": "042",
       "source_line_end": 12982,
       "source_line_start": 12893,
@@ -386,7 +386,7 @@
     {
       "heading": "DL-042 \u2014 Historical TODO Event Migration Consumer Boundary (2026-09-11)",
       "path": "Plans/_shards/tools/043-dl-042-historical-todo-event-migration-consumer-boundary-2026-09.md",
-      "sha256": "7defddc54c0029ec70091cff61291de63e265aac9b44da93a88418a536981d6c",
+      "sha256": "1a6f1c37678fb3ce661b4d266022d32898dc2709abe192b277049f9e61edddf6",
       "shard_id": "043",
       "source_line_end": 13356,
       "source_line_start": 12985,
@@ -395,16 +395,16 @@
     {
       "heading": "Code Mode Tool Calling Addendum - 2026-11-15",
       "path": "Plans/_shards/tools/044-code-mode-tool-calling-addendum-2026-11-15.md",
-      "sha256": "1319be870da5b04bdbd6cb39541d1a316af972cfe2957e8b87708db4d2422925",
+      "sha256": "1fbf428143ab8f96d57085b0508dcd1fd728d37d1779d9254c8d42d1d1ddcf47",
       "shard_id": "044",
-      "source_line_end": 13709,
+      "source_line_end": 13710,
       "source_line_start": 13358,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 13709,
+    "line_count": 13710,
     "path": "Plans/Tools.md",
-    "sha256": "44431894502283ec07f0eaec355c821e4f3653d204cb5d4af23c1c0c047b79a5"
+    "sha256": "753f7fa2bd5bcae156a502e7b823ed023496241478a9ea594231f4dc9417d04e"
   }
 }
