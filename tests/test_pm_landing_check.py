@@ -4128,6 +4128,18 @@ class TargetJobsNegotiation(unittest.TestCase):
             (root / "scripts" / name).write_text(body, encoding="utf-8")
         return root
 
+    def test_capability_probe_leaves_a_cold_target_unchanged(self):
+        root = self.make_root({
+            "pm-plans-verify.py": "from probe_helper import capability\nprint(capability)\n",
+            "probe_helper.py": f"capability = {M.SNAPSHOT_CAPABILITY!r}\n",
+        })
+        before = sorted(root.rglob("*"))
+        with patch.dict(os.environ):
+            os.environ.pop("PYTHONDONTWRITEBYTECODE", None)
+            os.environ.pop("PYTHONPYCACHEPREFIX", None)
+            self.assertTrue(M.target_readiness_snapshot_support(root))
+        self.assertEqual(sorted(root.rglob("*")), before)
+
     def test_an_older_target_is_run_without_the_option(self):
         root = self.make_root({"pm-plans-verify.py": OLD_TARGET_VERIFIER})
         self.assertFalse(M.target_accepts_jobs(root))

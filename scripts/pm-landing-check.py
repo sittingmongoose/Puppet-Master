@@ -564,7 +564,7 @@ def target_verifier_help(root: Path) -> str:
         help_text = ""
         try:
             proc = subprocess.run(
-                [sys.executable, "scripts/pm-plans-verify.py", "run-gates", "--help"],
+                [sys.executable, "-B", "scripts/pm-plans-verify.py", "run-gates", "--help"],
                 cwd=root, capture_output=True, text=True, env=target_environment())
             if proc.returncode == 0:
                 help_text = proc.stdout
