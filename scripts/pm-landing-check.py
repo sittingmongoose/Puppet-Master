@@ -2783,9 +2783,10 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         print(f"Subcheck totals this run: {len(totals)}")
         killed_totals = {f"{check}/{subcheck or '-'}" for check, subcheck in killed_checks}
         for name, total in totals.items():
-            if total is None:
-                total = "killed by a signal" if name in killed_totals else "timed out"
-            print(f"  [total] {name}  {total}")
+            if name in killed_totals:
+                print(f"  [total] {name}  killed by a signal")
+            else:
+                print(f"  [total] {name}  {'timed out' if total is None else total}")
         print(f"Bucket counts this run: {len(seen_buckets)}")
         for name, count in sorted(seen_buckets.items()):
             print(f"  [count] {escape_newlines(name)}  {count}")
