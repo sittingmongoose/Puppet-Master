@@ -1119,7 +1119,7 @@ source_lineage:
   - "Plans/Widget_System.md:65-70"
   - "Plans/Widget_System.md:830-889"
   - "Plans/FinalGUISpec.md:1265-1293"
-  - "Plans/FinalGUISpec.md:18607-18702"
+  - "Plans/FinalGUISpec.md:18596-18691"
   - "Plans/usage-feature.md:5412-5605"
 preserved_exact_tokens:
   - Dashboard
