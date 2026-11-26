@@ -241,11 +241,11 @@ Shared governance/runtime records carry `record_id`, `record_kind`, `schema_vers
 
 ### Concern record family definition
 
-`ConcernRecord` is the cross-surface record for user-visible or governance-visible concerns. Required fields are `concern_id`, `schema_version`, `concern_category`, `severity`, `visibility_level`, `attention_level`, `status`, `owner_ref`, `creator_ref`, `subject_ref`, `source_event_refs[]`, `summary`, `created_at`, and `updated_at`. Optional fields are `blocking_effect`, `resolution_kind`, `accepted_risk`, `resolver_ref`, `resolved_at`, `linked_record_refs[]`, `suggested_action_ids[]`, and `evidence_refs[]`. Closed value sets (C-FIX79 decision, 2026-11-24): `concern_category` is `coverage_blocker | projection_trust | risk | weak_integration`; `severity` is `info | warning | error | critical`; `visibility_level` is `user_visible | project | restricted`; `attention_level` is `info | warning | needs_action`. `Plans/concern_created_contracts/concern_record.schema.json` carries all four enums on the record. In `concern_created_operation.schema.json` they are carried by the command and record fields only: `original_command` (`category`, `severity`, `visibility_level`, `attention_level`) and `candidate_record` (`concern_category`, `severity`, `visibility_level`, `attention_level`). The `concern.created` event payload schemas are not yet closed: `concern_created_operation.schema.json#/properties/payload/properties/category`, `Plans/event_payloads/concern/concern_created.schema.json#/properties/category` and their `Plans/storage_value_registry.json` copies still accept any snake_case reason-code string. Those payload schemas belong to Event Authority and their hashes are pinned by fixtures outside Plans, so closing them to the same `concern_category` set is a follow-up for Event Authority; until then the closed set binds the command and the record, and a `concern.created` payload validated on its own does not enforce it.
+`ConcernRecord` is the cross-surface record for user-visible or governance-visible concerns. Its durable serialized form is `Plans/concern_created_contracts/concern_record.schema.json` (`pm.storage_value.concern_record.v1`, `additionalProperties: false`), and that schema is the authority for field names, types and presence. Every record carries all 33 keys: `schema_id`, `schema_version`, `record_id`, `record_kind`, `concern_id`, `project_id`, `revision`, `concern_category`, `severity`, `status`, `owner_kind`, `owner_ref`, `creator_ref`, `created_by_kind`, `created_by_ref`, `subject_ref`, `source_event_refs[]` (at least one), `evidence_refs[]`, `artifact_refs[]`, `lineage_refs[]`, `summary`, `created_at`, `updated_at`, `visibility_level`, `attention_level`, `chatworthy`, `blocking_effect_ref`, `resolution_kind`, `resolver_ref`, `resolved_at`, `run_ref`, `scope_ref` and `redaction_profile`. Six of them are nullable (`blocking_effect_ref`, `resolution_kind`, `resolver_ref`, `resolved_at`, `run_ref`, `scope_ref`) and carry `null`, never an omitted key, when they do not apply. Every ref, `summary` included, is a `pmref:<kind>:<id>` string (`redaction_profile` is always `secret_refs_only`, so summary text lives behind its ref). Earlier names in this document map onto those keys: `blocking_effect` is `blocking_effect_ref`; `linked_record_refs[]` are `lineage_refs[]` or `evidence_refs[]` entries whose pmref kind names the linked family; `accepted_risk` is `resolution_kind = accepted_risk`; `suggested_action_ids[]` are not stored on the record and come from the concern action policy below. Closed value sets (C-FIX79 decision, 2026-11-24): `concern_category` is `coverage_blocker | projection_trust | risk | weak_integration`; `severity` is `info | warning | error | critical`; `visibility_level` is `user_visible | project | restricted`; `attention_level` is `info | warning | needs_action`. `Plans/concern_created_contracts/concern_record.schema.json` carries all four enums on the record. In `concern_created_operation.schema.json` they are carried by the command and record fields only: `original_command` (`category`, `severity`, `visibility_level`, `attention_level`) and `candidate_record` (`concern_category`, `severity`, `visibility_level`, `attention_level`). The `concern.created` event payload schemas are not yet closed: `concern_created_operation.schema.json#/properties/payload/properties/category`, `Plans/event_payloads/concern/concern_created.schema.json#/properties/category` and their `Plans/storage_value_registry.json` copies still accept any snake_case reason-code string. Those payload schemas belong to Event Authority and their hashes are pinned by fixtures outside Plans, so closing them to the same `concern_category` set is a follow-up for Event Authority; until then the closed set binds the command and the record, and a `concern.created` payload validated on its own does not enforce it.
 
 ### Concern lifecycle and resolution kinds
 
-Allowed `ConcernRecord.status` values are `active`, `acknowledged`, `resolved`, `dismissed`, and `superseded`. Allowed `resolution_kind` values are `fixed`, `accepted_risk`, `not_reproducible`, `duplicate`, `replaced_by_new_record`, and `not_applicable`. `dismissed` requires a non-empty reason and resolver; `accepted_risk` requires `accepted_risk = true` plus an evidence ref.
+Allowed `ConcernRecord.status` values are `active`, `acknowledged`, `resolved`, and `dismissed` (CV-063 and the record schema). Allowed `resolution_kind` values are `fixed`, `accepted_risk`, `superseded`, `merged`, `split`, `invalidated`, `obsoleted_by_patch`, and `obsoleted_by_recovery`, or `null` while the concern is `active` or `acknowledged`. Supersession is a `resolution_kind`, not a status. The older names `not_reproducible`, `duplicate`, `replaced_by_new_record` and `not_applicable` are retired lineage and never appear on a record: a duplicate resolves as `merged`, a replaced concern as `superseded`, and a concern found not reproducible or not applicable as `invalidated`. `dismissed` requires a non-null `resolver_ref` and an `evidence_refs[]` entry citing the dismiss command response that holds the non-empty reason; `resolution_kind = accepted_risk` requires at least one `evidence_refs[]` entry.
 
 ### Concern action policy and authority model
 
@@ -296,10 +296,10 @@ Updates with the same `subject_ref`, `concern_category`, and `owner_ref` amend t
   - Route/open auditing must stay focused on **refinement omissions**, not on re-claiming absence of primitives that already landed.
 ### Recommended minimum concern record shape
 
-The minimum serialized shape is:
+The minimum serialized shape is one complete `pm.storage_value.concern_record.v1` record: every key is required, the nullable keys carry `null`, and it validates against `Plans/concern_created_contracts/concern_record.schema.json`:
 
 ```json
-{"concern_id":"concern_01","schema_version":"1.0.0","concern_category":"coverage_blocker","severity":"error","visibility_level":"user_visible","attention_level":"needs_action","status":"active","owner_ref":"Plans/Contracts_V0.md","creator_ref":"validator:pm-audit-closure","subject_ref":"Plans/Contracts_V0.md::owner-section","source_event_refs":[],"summary":"Owner section lacks typed fields.","created_at":"2026-07-07T00:00:00Z","updated_at":"2026-07-07T00:00:00Z","evidence_refs":[]}
+{"schema_id":"pm.storage_value.concern_record.v1","schema_version":"1.0.0","record_id":"concern_01","record_kind":"concern","concern_id":"concern_01","project_id":"project_01","revision":1,"concern_category":"coverage_blocker","severity":"error","status":"active","owner_kind":"Runtime","owner_ref":"pmref:owner_doc:Plans/Contracts_V0.md","creator_ref":"pmref:validator:pm-audit-closure","created_by_kind":"Runtime","created_by_ref":"pmref:validator:pm-audit-closure","subject_ref":"pmref:owner_section:Contracts_V0.owner-section","source_event_refs":["pmref:source_event:evt_01"],"evidence_refs":[],"artifact_refs":[],"lineage_refs":[],"summary":"pmref:summary:concern_01","created_at":"2026-07-07T00:00:00Z","updated_at":"2026-07-07T00:00:00Z","visibility_level":"user_visible","attention_level":"needs_action","chatworthy":true,"blocking_effect_ref":null,"resolution_kind":null,"resolver_ref":null,"resolved_at":null,"run_ref":null,"scope_ref":"pmref:project:project_01","redaction_profile":"secret_refs_only"}
 ```
 
 ## PMConcept7 Home Workspace OpenFile placement addendum (2026-08-04)
@@ -848,28 +848,37 @@ Runtime identity, handoff, and stewardship records preserve their concrete keys.
 - Treat `concern resolver` as distinct from owner/source roles.
 - Allow concern ownership reassignment without changing concern identity.
 
-`ConcernRecord` is the canonical typed concern object. Minimum fields are:
+`ConcernRecord` is the canonical typed concern object. Its fields are exactly those of `Plans/concern_created_contracts/concern_record.schema.json` (`additionalProperties: false`): every row below is a required key, a nullable key carries `null` rather than being omitted, and the record has no other field. Concern-action `rationale`, `confirmation_ref` and `audit_refs` belong to the action's typed command response (concern action policy above) and reach the record only as `evidence_refs[]` or `lineage_refs[]` entries; they are required for acknowledged, dismissed, resolved, and structural lineage edits.
 
 | Field | Requirement |
 | --- | --- |
-| `schema_version` | Payload schema version for the concern record. |
-| `concern_id` | Stable concern identity that survives ownership reassignment. |
-| `project_id` | Project scope for the concern. |
-| `run_id?` | Runtime lineage when the concern is attached to a run. |
-| `scope_refs[]` | Node, package, seam, route/open, artifact, or external-resource refs affected by the concern. |
-| `owner_kind` / `owner_ref` | Current owner surface; distinct from creator and resolver. |
-| `created_by_kind` / `created_by_ref` | Actor or system that created the concern. |
-| `status` | Closed enum `active | acknowledged | resolved | dismissed`. |
-| `severity` | Impact severity, independent from `blocking_effect`. Closed enum `info | warning | error | critical`. |
-| `category` | Stable concern category for dedupe and routing. Closed enum `coverage_blocker | projection_trust | risk | weak_integration`, stored as `ConcernRecord.concern_category` (C-FIX79 decision, 2026-11-24, recorded in Decision_Log; Orchestrator_Page OP-004 stays the semantic owner of the concern family). |
-| `evidence_refs[]` / `source_refs[]` | Evidence and source-lineage refs supporting the concern. |
-| `lineage_refs[]` | Reopen, split, merge, supersession, or graph-patch lineage refs. |
-| `visibility_level` / `attention_level` / `chatworthy` | Projection controls for user attention without changing lifecycle state. `visibility_level` is the closed enum `user_visible | project | restricted`; `attention_level` is the closed enum `info | warning | needs_action`; `chatworthy` is a boolean (C-FIX79 decision, 2026-11-24). |
-| `blocking_effect?` | Runtime/blocking impact, explicitly separate from severity. |
-| `resolution_kind?` | Closed enum `fixed | accepted_risk | superseded | merged | split | invalidated | obsoleted_by_patch | obsoleted_by_recovery`. |
-| `resolved_by_kind?` / `resolved_by_ref?` | Resolver identity when status is `resolved` or `dismissed`. |
-| `rationale?` / `confirmation_ref?` / `audit_refs[]?` | Required for acknowledged, dismissed, resolved, and structural lineage edits. |
-| `review_refs[]?` / `corroboration_refs[]?` / `graph_patch_refs[]?` / `recovery_refs[]?` / `blocked_episode_refs[]?` / `promotion_refs[]?` | Adjacent runtime and governance joins. |
+| `schema_id` | Required; const `pm.storage_value.concern_record.v1`. |
+| `schema_version` | Required; const `1.0.0`. Payload schema version for the concern record. |
+| `record_id` | Required; non-empty string. Storage record identity. |
+| `record_kind` | Required; const `concern`. |
+| `concern_id` | Required; non-empty string. Stable concern identity that survives ownership reassignment. |
+| `project_id` | Required; non-empty string. Project scope for the concern. |
+| `revision` | Required; integer, at least 1; the first record is revision 1. |
+| `concern_category` | Required. Stable concern category for dedupe and routing. Closed enum `coverage_blocker | projection_trust | risk | weak_integration` (C-FIX79 decision, 2026-11-24, recorded in Decision_Log; Orchestrator_Page OP-004 stays the semantic owner of the concern family). Earlier wording called this field `category`; the stored key is `concern_category`. |
+| `severity` | Required. Impact severity, independent from `blocking_effect_ref`. Closed enum `info | warning | error | critical`. |
+| `status` | Required. Closed enum `active | acknowledged | resolved | dismissed`. |
+| `owner_kind` / `owner_ref` | Required. Current owner surface; distinct from creator and resolver. `owner_kind` is the closed enum `Runtime | Package Overseer | Seam Overseer | Corroboration | Graph Patch | Recovery | User | External Resource`; `owner_ref` is a `pmref:<kind>:<id>` string (8-320 chars). |
+| `creator_ref` | Required; `pmref:<kind>:<id>` string (8-320 chars). The actor or validator that raised the concern. |
+| `created_by_kind` / `created_by_ref` | Required. Actor or system that created the concern. `created_by_kind` is the closed enum `Runtime | Package Overseer | Seam Overseer | Corroboration | Graph Patch`; `created_by_ref` is a `pmref:<kind>:<id>` string (8-320 chars). |
+| `subject_ref` | Required; `pmref:<kind>:<id>` string (8-320 chars). |
+| `source_event_refs[]` | Required; 1-64 unique `pmref:<kind>:<id>` string (8-320 chars)s. Source-lineage refs: the events that caused or justified the concern. Earlier wording called these `source_refs[]`. |
+| `evidence_refs[]` | Required; 0-64 unique `pmref:<kind>:<id>` string (8-320 chars)s. Evidence supporting the concern, including the confirmation, rationale and audit refs of the concern actions applied to it. |
+| `artifact_refs[]` | Required; 0-64 unique `pmref:<kind>:<id>` string (8-320 chars)s. Runtime artifacts, nodes, packages, seams, route/open subjects or external resources affected beyond the primary `scope_ref`. |
+| `lineage_refs[]` | Required; 0-64 unique `pmref:<kind>:<id>` string (8-320 chars)s. Reopen, split, merge, supersession and graph-patch lineage, and the adjacent runtime and governance joins: review, corroboration, graph patch, recovery, blocked episode and promotion refs, each told apart by its pmref kind (`pmref:review:...`, `pmref:corroboration:...`, `pmref:graph_patch:...`, `pmref:recovery:...`, `pmref:blocked_episode:...`, `pmref:promotion:...`). |
+| `summary` | Required; `pmref:<kind>:<id>` string (8-320 chars). The summary text is held behind the ref, because the record is `secret_refs_only`. |
+| `created_at` / `updated_at` | Required; RFC 3339 date-time strings. |
+| `visibility_level` / `attention_level` / `chatworthy` | Required. Projection controls for user attention without changing lifecycle state. `visibility_level` is the closed enum `user_visible | project | restricted`; `attention_level` is the closed enum `info | warning | needs_action`; `chatworthy` is a boolean (C-FIX79 decision, 2026-11-24). |
+| `blocking_effect_ref` | Required, nullable; `pmref:<kind>:<id>` string (8-320 chars) or `null`. Runtime/blocking impact, explicitly separate from severity; earlier wording called it `blocking_effect?`. |
+| `resolution_kind` | Required, nullable. Closed enum `fixed | accepted_risk | superseded | merged | split | invalidated | obsoleted_by_patch | obsoleted_by_recovery`, or `null` while the concern is `active` or `acknowledged`. |
+| `resolver_ref` / `resolved_at` | Required, nullable. Resolver identity (`pmref:<kind>:<id>` string (8-320 chars)) and RFC 3339 time, set when status is `resolved` or `dismissed`, otherwise `null`. Earlier wording called these `resolved_by_kind?` / `resolved_by_ref?`; the resolver's kind is the pmref kind. |
+| `run_ref` | Required, nullable; `pmref:<kind>:<id>` string (8-320 chars) or `null`. Runtime lineage when the concern is attached to a run; earlier wording called it `run_id?`. |
+| `scope_ref` | Required, nullable; `pmref:<kind>:<id>` string (8-320 chars) or `null`. The primary node, package, seam, route/open, artifact or external-resource scope; further affected refs go in `artifact_refs[]`. Earlier wording called this `scope_refs[]`. |
+| `redaction_profile` | Required; const `secret_refs_only`. |
 
 ### route_target, OpenSubject, and command normalization
 
