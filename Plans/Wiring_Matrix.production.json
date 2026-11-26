@@ -45846,6 +45846,62 @@
         "Assert cmd.mcp.server.reconnect returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
       ]
     },
+    "catalog.media_route_verify": {
+      "ui_element_id": "catalog.media_route_verify",
+      "ui_location": "Settings > Providers > generated-media route row > Verify",
+      "ui_command_id": "cmd.media.route.verify",
+      "handler_location": "handlers::media::verify_route",
+      "request_schema_ref": "Plans/media_route_verification_contracts.schema.json#/$defs/MediaRouteVerifyRequest",
+      "result_schema_ref": "Plans/media_route_verification_contracts.schema.json#/$defs/MediaRouteVerifyResult",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Resolve the route ID, output mode and capability snapshot from the same current generated-media row. Admit only explicit human Settings activation through the media owner.",
+        "Check currentness and permission before provider dispatch. A mismatched selector, a replayed activation or an ineligible row starts no new probe.",
+        "Opening Settings from recovery, verifying a connection or installation, refreshing the catalog and automatic refresh never start this probe.",
+        "Read availability and disabled reason for the exact row. Remain handler_unavailable until native dispatcher and handler proof exists."
+      ],
+      "evidence_required": "Source-hashed native dispatcher and sole handler, typed payload/result validation, exact-row availability and permission, correlated receipt, explicit activation and refresh negatives, and accessible exact-row return are required before certification.",
+      "state_selector": "state.commands.media_route_verify.availability",
+      "disabled_reason_projection": "state.commands.media_route_verify.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "Return the media owner's typed verification result and proof references in the command receipt. This binding admits no new command EventRecord.",
+        "receipt_or_event_refs": [
+          "Plans/media_route_verification_contracts.schema.json#/$defs/MediaRouteVerifyResult"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "Expose Verify as a button named in the context of the exact provider, account, model and output-mode row.",
+        "keyboard_access": "Keyboard and pointer activate the same typed request only when the row is available.",
+        "focus_management": "Preserve the initiating Client and return focus to the invoking route row after the result or refusal.",
+        "disabled_announcement": "Announce the exact row's current disabled reason, including handler_unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.media_route_verify.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "The exact Settings activation reaches only handlers::media::verify_route and produces the selected route and mode for media.generate. Refuse stale or mismatched selectors and non-Settings callers."
+        },
+        {
+          "test_id": "wiring.catalog.media_route_verify.state",
+          "evidence_kind": "state_projection",
+          "requirement": "Project the exact row's probe availability and disabled reason, including handler_unavailable before native proof."
+        },
+        {
+          "test_id": "wiring.catalog.media_route_verify.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "The owner receipt correlates the same route and output mode with its probe records. Duplicate activation and catalog refresh start no new probe."
+        },
+        {
+          "test_id": "wiring.catalog.media_route_verify.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove accessible Verify and disabled reason, keyboard and pointer parity, and return focus to the original row."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert the Verify command adds no fabricated command EventRecord and returns the typed result receipt."
+      ]
+    },
     "catalog.model_list": {
       "ui_element_id": "catalog.model_list",
       "ui_location": "Settings > Models / Providers > List",

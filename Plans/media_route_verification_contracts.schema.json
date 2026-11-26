@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/media_route_verification/1.0.0/media_route_verification_contracts.schema.json",
+  "title": "Generated media route verification command contracts",
+  "$defs": {
+    "NonemptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ProbeableOutputMode": {
+      "enum": ["image", "video", "audio"]
+    },
+    "MediaRouteVerifyRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["route_id", "media_output_mode", "expected_capability_snapshot_ref", "idempotency_key"],
+      "properties": {
+        "route_id": {"$ref": "#/$defs/NonemptyString"},
+        "media_output_mode": {"$ref": "#/$defs/ProbeableOutputMode"},
+        "expected_capability_snapshot_ref": {"$ref": "#/$defs/NonemptyString"},
+        "idempotency_key": {"$ref": "#/$defs/NonemptyString"}
+      }
+    },
+    "MediaRouteVerifyResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["route_id", "media_output_mode", "result", "probe_result_refs"],
+      "properties": {
+        "route_id": {"$ref": "#/$defs/NonemptyString"},
+        "media_output_mode": {"$ref": "#/$defs/ProbeableOutputMode"},
+        "result": {"enum": ["passed", "failed", "inconclusive"]},
+        "probe_result_refs": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/NonemptyString"},
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true
+        }
+      },
+      "if": {
+        "properties": {"media_output_mode": {"enum": ["image", "video"]}}
+      },
+      "then": {
+        "properties": {"probe_result_refs": {"maxItems": 1}}
+      }
+    }
+  }
+}

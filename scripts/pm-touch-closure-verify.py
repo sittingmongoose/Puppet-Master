@@ -2001,7 +2001,9 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         # (1336 -> 1337): catalog.chat_open_investigation_target for the minted
         # cmd.chat.open_investigation_target (Investigation Context Open target, ACD-100). No Touch
         # row, profile, alias, exclusion, native handler or proof is added.
-        "production_wiring_entry_count": 1337,
+        # C-FIX79 round 4 (registry line 1345): +1 production-intent row
+        # (1337 -> 1338) for the exact Settings generated-media route Verify action.
+        "production_wiring_entry_count": 1338,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),
