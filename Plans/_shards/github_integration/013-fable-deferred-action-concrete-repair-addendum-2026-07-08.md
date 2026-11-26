@@ -4,7 +4,7 @@ Source: `Plans/GitHub_Integration.md`
 
 Source lines: L2075-L2215
 
-Source SHA256: `6b9df4af93605f51a943490830ba1513b619a4f599d676d8e6f02b79a18a704b`
+Source SHA256: `a53cd6373e43753e0528793f1b6464c64f52486b38c347c218c7bcafab2ca5d4`
 
 ---
 
@@ -31,7 +31,7 @@ Typed field tables (amended 2026-11-25; they replace the untyped field lists fir
 | `compare_origin` | enum `changes.unstaged` \| `changes.staged` \| `history.commit_parent` \| `conflict.review` \| `worktree.branch_compare` \| `actions.run_commit_range` \| `blocked.dirty_worktree` \| `recovery.safe_point_retry` | required |
 | `project_id`, `repo_id` | `identity_id` | `repo_id` is required; `project_id` is required for Project scope and absent for an admitted application or pre-registration partition. The latter carries its exact scope/target as required by the identity rules above. |
 | `worktree_id` | `identity_id` | required for `changes.*`, `conflict.review`, `worktree.branch_compare`, `blocked.dirty_worktree`, `recovery.safe_point_retry` |
-| `path` | `repo_relative_path` per the Git adapter schema | required for `changes.*` and `conflict.review`; optional for file-scoped pivots of other origins |
+| `path` | `relative_repo_path` per the Git adapter schema (`Plans/git_adapter_command_contracts.schema.json#/$defs/relative_repo_path`) | required for `changes.*` and `conflict.review`; optional for file-scoped pivots of other origins |
 | `operands` | closed tagged union `{kind: "two_way", base: endpoint, head: endpoint}` or `{kind: "three_way", base: endpoint, ours: endpoint, theirs: endpoint, result: endpoint}` | required; the origin determines the shape and endpoint kinds below |
 | `merge_base_sha` | `full_oid` | optional; records a resolved merge base for a commit pair |
 | `comparison_url` | string, absolute `https://` URL on the bound forge host | optional |
