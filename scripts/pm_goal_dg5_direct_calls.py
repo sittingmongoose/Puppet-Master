@@ -39,6 +39,18 @@ returned by a factory-named generator records (C4); and a recorded direct call's
 execution, so registered entries nested in it still record as entries (C5, bridge DIRECT_PARENT) — wrapping a
 composite listed method must not swallow the entries (and corpus slots) inside it.
 
+Round C8 (lead ruling 1126000814-88f1; regression pm_goal_dg5_direct_calls_c8_selftest.py): recording a direct
+call never writes through to the bridge's descriptor memos (FROZEN/MEMBERS/CASE_BANKS — the state the
+load_once_singleton_changed and schema_bank_changed_within_case gates verify). entry_call's descriptor walks
+memoize whatever mutable per-case objects they reach: an instance held as a class attribute (a per-case world,
+RW.World.CURRENT = self) freezes as a load-once singleton and then drifts with the case's own continued
+execution, and a schema bank bound before that freeze digests differently at the settle recompute once MEMBERS
+holds the bank's internals — under ON both gates failed R5/positive/off_run_rows_validated_then_noop for a
+reason that cannot occur with the collector off, where no walk ever reaches those graphs. Every recorded call
+now runs entry_call under a snapshot of the memos, restored at the start of the parent run (the corpus's own
+execution and the registered entries nested in it bind against the same clean memos as OFF) and after
+entry_call when no parent run was reached; the descriptor itself is still computed and sealed in full.
+
 The complete call needs a store to seal: the receiver's world or Storage, found as a census entry finds it, or
 (for a module function or a receiver without one) the first argument that is a TestOwnerStorage or holds one. The
 bridge runs every recorded call twice (a sealed child, then the parent) and restores only that root between them, so:
@@ -368,6 +380,59 @@ def _filled(cell):
         return False
 
 
+# Round C8 (lead ruling 1126000814-88f1): the descriptor-memo isolation for recorded direct calls (module
+# docstring). The memos are the bridge's FROZEN/FROZEN_PARTS/MEMBERS/CASE_BANKS plus the bank memo's case;
+# FAILURES is snapshotted by length because entry_call's opening settle_case_banks writes its drift records
+# there between the snapshot and the parent run (rolling the memos back re-defers that verification to the
+# next settle, exactly as with the collector off, so its record must roll back with them).
+DESCRIPTOR_MEMOS = ('FROZEN', 'FROZEN_PARTS', 'MEMBERS', 'CASE_BANKS')
+
+
+def _memo_state():
+    return tuple(dict(getattr(bridge, name)) for name in DESCRIPTOR_MEMOS) + \
+        (bridge.CASE_BANK_STATE[0], len(bridge.FAILURES))
+
+
+def _memo_restore(state):
+    for name, saved in zip(DESCRIPTOR_MEMOS, state[:4]):
+        table = getattr(bridge, name)
+        table.clear()
+        table.update(saved)
+    bridge.CASE_BANK_STATE[0] = state[4]
+    del bridge.FAILURES[state[5]:]
+
+
+def _entry_call(case, label, family, action, work, **kwargs):
+    """bridge.entry_call under the C8 no-write-through rule.
+
+    entry_call's descriptor walks (invoke's descriptor_sha256 over the live argument/world graph) memoize
+    whatever mutable per-case objects they reach — an instance held as a class attribute (the case's world)
+    freezes as a load-once singleton, a schema bank binds as a case bank — and those memos outlive the
+    recording: the case's own continued execution drifts the frozen singleton, and the MEMBERS a freeze
+    fills change the digest of every bank bound before it, so the two state gates report mutations the
+    recording only observed. The snapshot is restored at the start of the parent run — inside the
+    collector's own action, so the corpus execution and every registered entry nested in it bind against
+    the same memos they would see with the collector off — and in the finally when no parent run was
+    reached (a refused or failed sealed child). The sealed child's and the probe fork's own memo writes
+    already die with the child."""
+    outer = _memo_state()
+    done = []
+
+    def scrub():
+        if not done:
+            done.append(True)
+            _memo_restore(outer)
+
+    def run():
+        scrub()
+        return action()
+
+    try:
+        return bridge.entry_call(case, label, family, run, work, **kwargs)
+    finally:
+        scrub()
+
+
 class NotShown(Exception):
     """The call is not shown to leave nothing behind; it runs unrecorded and is counted."""
 
@@ -558,9 +623,9 @@ def _record_pure(family, key, original, hook, arguments, stores, action, outcome
     REPORTS[family]['recorded_calls'] = REPORTS[family].get('recorded_calls', 0) + 1
     _count(family, 'no_store_recorded', key)
     try:
-        return bridge.entry_call(case, label, family, checked, _empty_work(), world=None, arguments=arguments,
-                                 original=original, target=target(case, bridge.target_rows(case.get('expected')), label),
-                                 direct=True)   # C5: nested registered entries still record in the parent run
+        return _entry_call(case, label, family, checked, _empty_work(), world=None, arguments=arguments,
+                           original=original, target=target(case, bridge.target_rows(case.get('expected')), label),
+                           direct=True)   # C5: nested registered entries still record in the parent run
     finally:
         files = sorted(side.iterdir(), key=lambda f: int(f.name.split('-')[0]))
         child = pickle.loads(files[0].read_bytes()) if files else None
@@ -631,10 +696,10 @@ def _wrap(family, key, owner, name, raw):
         from pm_goal_dg5_declarations import target
         label = case['id'] + '/direct/' + key
         REPORTS[family]['recorded_calls'] = REPORTS[family].get('recorded_calls', 0) + 1
-        return bridge.entry_call(case, label, family, lambda: original(*args, **kwargs), root, world=world,
-                                 arguments=dict(receiver=receiver, args=rest, kwargs=kwargs), original=original,
-                                 target=target(case, bridge.target_rows(case.get('expected')), label),
-                                 direct=True)   # C5: nested registered entries still record in the parent run
+        return _entry_call(case, label, family, lambda: original(*args, **kwargs), root, world=world,
+                           arguments=dict(receiver=receiver, args=rest, kwargs=kwargs), original=original,
+                           target=target(case, bridge.target_rows(case.get('expected')), label),
+                           direct=True)   # C5: nested registered entries still record in the parent run
     call._dg5_direct = True
     call._dg5_direct_key = key
     call._dg5_direct_family = family
