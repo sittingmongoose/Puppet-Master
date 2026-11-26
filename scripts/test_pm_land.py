@@ -3458,6 +3458,23 @@ class PublishAllTargetsTests(unittest.TestCase):
         self.assertEqual(self.tip(self.origin), self.head)
         self.assertEqual(self.tip(nas), diverged)
 
+    def test_failed_push_counts_as_landed_when_main_reads_back_at_commit(self):
+        nas = self.two_push_urls()
+        self.git(self.origin, "update-ref", land.MAIN_REF, self.head, self.base)
+        self.git(self.origin, "config", "receive.hideRefs", land.MAIN_REF)
+        self.git(self.shared, "remote", "add", "backup", str(nas))
+        output, errors = io.StringIO(), io.StringIO()
+
+        with redirect_stdout(output), redirect_stderr(errors):
+            self.assertEqual(land.publish_main(self.shared, self.base, self.head), 0)
+
+        self.assertIn(f"Published {self.head} to remote origin ({self.origin}): main verified",
+                      output.getvalue())
+        self.assertIn("failed to push some refs", errors.getvalue())
+        self.assertEqual(self.tip(nas), self.head)
+        for name in ("origin", "backup"):
+            self.assertEqual(land.revision(self.shared, f"refs/remotes/{name}/main"), self.head)
+
     def test_partial_publish_refusal_lists_verified_and_failed_targets(self):
         nas = self.two_push_urls()
         rejected = self.bare("rejected.git", self.base)

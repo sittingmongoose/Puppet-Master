@@ -635,14 +635,13 @@ def update_publish_tracking_refs(root: Path, names: Collection[str], commit: str
         git(root, "update-ref", "--no-deref", ref, commit, previous or "0" * len(commit))
 
 
-def behind_publish_target(root: Path, url: str, lease: str) -> Optional[str]:
+def behind_publish_target(root: Path, url: str, tip: Optional[str], lease: str) -> Optional[str]:
     """Suggest a manual fast-forward only when the failed target is provably behind the lease."""
     try:
-        tip = pushed_main(root, url)
         if tip is None or tip == lease or not is_ancestor(root, tip, lease):
             return None
     except Refusal:
-        # An unreachable target or an unknown tip cannot be classified as behind.
+        # A tip whose commit is unknown locally cannot be classified as behind.
         return None
     repair = shlex.join(["git", "-C", str(root.resolve()), "push", f"--force-with-lease={MAIN_REF}:{tip}",
                          "--", url, f"{lease}:{MAIN_REF}"])
@@ -671,41 +670,50 @@ def publish_main(root: Path, lease: str, commit: str) -> int:
         raise Refusal(f"no push targets are configured for {root}: add a remote before publishing")
     destinations = [(f"remote {', '.join(names)} ({url})", url) for names, url in targets]
     say("Push targets:\n" + "\n".join(f"  {label}" for label, _ in destinations))
-    failures: list[str] = []
-    pushed: list[tuple[str, str]] = []
+    push_errors: dict[str, str] = {}
     for label, url in destinations:
         result = git(root, "push", f"--force-with-lease={MAIN_REF}:{lease}", url, f"{commit}:{MAIN_REF}",
                      check=False)
         if result.returncode:
-            failures.append(f"{label}: push exited {result.returncode}"
-                            + (f": {result.stderr.strip()}" if result.stderr.strip() else ""))
-            if repair := behind_publish_target(root, url, lease):
-                failures.append(f"{label}: {repair}")
-        else:
-            pushed.append((label, url))
+            push_errors[url] = (f"{label}: push exited {result.returncode}"
+                                + (f": {result.stderr.strip()}" if result.stderr.strip() else ""))
+
+    failures: list[str] = []
+    warnings: list[str] = []
     verified: list[str] = []
-    for label, url in pushed:
+    for label, url in destinations:
+        push_error = push_errors.get(url)
         try:
             tip = pushed_main(root, url)
         except Refusal as exc:
+            if push_error:
+                failures.append(push_error)
             failures.append(f"{label}: could not verify main: {exc}")
             continue
-        if tip != commit:
-            failures.append(f"{label}: main is {tip or 'missing'}; expected {commit}")
-        else:
+        if tip == commit:
             verified.append(f"Published {tip} to {label}: main verified")
+            if push_error:
+                warnings.append(f"Warning, main verified despite a push error: {push_error}")
+            continue
+        if push_error:
+            failures.append(push_error)
+        failures.append(f"{label}: main is {tip or 'missing'}; expected {commit}")
+        if push_error and (repair := behind_publish_target(root, url, tip, lease)):
+            failures.append(f"{label}: {repair}")
     if not failures:
         try:
             update_publish_tracking_refs(root, {name for names, _ in targets for name in names}, commit)
         except Refusal as exc:
             failures.append(f"could not update local tracking refs: {exc}")
     if failures:
-        report = ["publishing the landed commit to every push target failed:", *failures]
+        report = ["publishing the landed commit to every push target failed:", *failures, *warnings]
         if verified:
             report.extend(["Verified targets:", *verified,
                            "the landed targets are published; fix the failing one and rerun publish "
                            "with the same arguments (landed targets report up to date)"])
         raise Refusal("\n".join(report))
+    for warning in warnings:
+        print(warning, file=sys.stderr)
     for line in verified:
         say(line)
     return 0
