@@ -2,9 +2,9 @@
 
 Source: `Plans/WorktreeGitImprovement.md`
 
-Source lines: L939-L4930
+Source lines: L940-L4932
 
-Source SHA256: `5e534e1438b9a3dad605d249ddfc065a98f21533b048daf85166442b232a8f0f`
+Source SHA256: `a6abf92afae7c3f89aae019ab53178944bdbd0038dbb5d81cef85570dcc5d2b8`
 
 ---
 
@@ -378,6 +378,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - W-008 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage.
+- A non-valid exact binding blocks both iteration and PR creation with the section 2.7 state, including when a cache entry is evicted by section 2.12. The durable binding, unresolved-conflict fence, path and refs remain intact.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
@@ -1028,7 +1029,7 @@ plan_unit_id: W-020
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: Worktree state files are documented, Doctor adds worktree checks and orphan detection, and optional path/list revalidation can remove stale active_worktrees before use.
+canonical_text: Worktree state files are documented, Doctor adds worktree checks and orphan detection, and optional path/list revalidation can evict a stale active_worktrees projection entry before use. Section 2.7 governs the resulting block on the exact durable binding.
 gui_related: false
 gui_classification_reason: This unit defines backend/runtime, storage, governance, or command policy rather than visual presentation.
 split_recommended: false

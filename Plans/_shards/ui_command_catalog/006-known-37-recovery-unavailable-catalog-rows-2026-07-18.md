@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L133-L1187
+Source lines: L133-L1193
 
-Source SHA256: `a7ef2f16d5d4a9b478652b79e95d1bbb5c23aaeebfc35cec86b3c17d4724c8f1`
+Source SHA256: `b0f2d9523b7f28a99d517a8e042f670024d90d93b95d09c2e9dbb3952863617f`
 
 ---
 
@@ -431,10 +431,10 @@ Broad-pass command and wiring reconciliation spans the command catalog plus its 
 | `cmd.source_control.review.filter` | Filter Review Files | Applies file filters, ignore-whitespace, or collapse-unchanged state in Review mode | `review_mode_open` |
 | `cmd.source_control.set_compare_target` | Set Compare Target | Changes the left/right review baseline or target for Review mode | `review_mode_open && compare_target_resolvable` |
 | `cmd.source_control.toggle_generated_filter` | Toggle Generated Filter | Shows or hides generated files in Review mode and related Source Control diffs | `source_control_visible` |
-| `cmd.source_control.open_conflict` | Open Conflict Assistant | Opens the Conflict assistant for the selected conflict group or file | `git_available && conflict_present` |
-| `cmd.source_control.open_merge_editor` | Open Merge Editor | Opens the structured merge editor for a selected conflicted file | `conflict_file_selected && merge_editor_available` |
-| `cmd.source_control.resolve_conflict_side` | Resolve Conflict Side | Applies the chosen ours/theirs/base/manual side for a selected conflict hunk or file after user confirmation | `conflict_file_selected && resolution_side_selected` |
-| `cmd.source_control.mark_conflict_resolved` | Mark Conflict Resolved | Marks a conflicted file as resolved after validation confirms no conflict markers remain | `conflict_file_selected && no_conflict_markers` |
+| `cmd.source_control.open_conflict` | Open Conflict Assistant | Opens the Conflict assistant for the selected conflict group or file. Returns `opened` with the exact `route_ref`. | Current conflict group or file and backend-admitted view. |
+| `cmd.source_control.open_merge_editor` | Open Merge Editor | Opens the structured merge editor for a selected conflicted file with CV-360 placement (`where`, `mode`, `by`, `background`). Returns `opened` with the built-in editor's `route_ref`. | Current conflict file and backend-admitted editor. |
+| `cmd.source_control.resolve_conflict_side` | Resolve Conflict Side | Applies the chosen ours/theirs/base/manual side for a selected conflict hunk or file after user confirmation. Returns `side_applied` with `effect_receipt_ref` after verifying the content write. The index and resolution status stay as they were. | Current exact Git file or hunk, confirmation, and writer lease. `manual` requires the exact `manual_result_ref`. |
+| `cmd.source_control.mark_conflict_resolved` | Mark Conflict Resolved | Marks a conflicted file as resolved after validation confirms no conflict markers remain. Returns `marked_resolved` with `effect_receipt_ref` after verifying removal of the file's unmerged index entries. | Current exact saved Git file and writer lease. The owner checks the saved content for markers again before marking. |
 | `cmd.git.diff_open` | Open Git Diff | Payload `cmd.git.diff_open { project_id, repo_id, repo_relative_path?, compare_target? }`; opens a path-level or repo-level diff through Source Control review, not a chat-local diff | `git_available && compare_target_resolvable` |
 | `cmd.git.diff_toggle_mode` | Toggle Diff Mode | Payload `cmd.git.diff_toggle_mode { mode: "side_by_side"|"unified" }`; switches the in-buffer or review diff presentation without changing the compare identity | `diff_view_open` |
 | `cmd.git.diff_set_compare_target` | Set Git Compare Target | Payload `cmd.git.diff_set_compare_target { target_kind: "head"|"index"|"merge_base"|"branch"|"commit"|"parent", ref? }`; changes the low-level diff baseline without replacing Source Control Review mode | `git_available && compare_target_resolvable` |
@@ -455,17 +455,23 @@ Broad-pass command and wiring reconciliation spans the command catalog plus its 
 | `cmd.source_control.stash` | Open Stash Controls | Opens Source Control `Branches / Stash` controls for the current repo/worktree; Git only, Jujutsu has no stash (JJI-006, DL-163) | `git_available` |
 | `cmd.source_control.stash.*` | Stash Command Family | Compatibility family for stash list/create/apply/drop flows | `git_available` |
 | `cmd.source_control.suggest_commit_batches` | Suggest Commit Batches | Generates advisory commit groupings and draft messages from staged/unstaged diff clusters; disabled with `head_unborn` while `HEAD` has no commit (`Plans/WorktreeGitImprovement.md`, "Unborn HEAD" in the 2026-11-25 batching payloads section) | `git_available && changes_present && head_commit_present` |
-| `cmd.source_control.suggest_commit_groups` | Suggest Commit Groups | Compatibility alias for advisory AI commit batching over staged and unstaged diff clusters | `git_available && changes_present && head_commit_present` |
+| `cmd.source_control.suggest_commit_groups` | Suggest Commit Groups | Compatibility alias for advisory AI commit batching over staged and unstaged diff clusters. Normalizes to `cmd.source_control.suggest_commit_batches` before permission, schema validation and dedupe. Uses that command's owner result, status checks and scope rules. | `git_available && changes_present && head_commit_present` |
 | `cmd.source_control.accept_commit_group` | Accept Commit Group | Accepts one suggested commit group for reviewable staging/message preparation without making it canonical history until the user commits; disabled with `head_unborn` while `HEAD` has no commit | `git_available && suggested_commit_group_selected && head_commit_present` |
 | `cmd.source_control.generate_commit_message` | Generate Commit Message | Generates a draft commit message for the selected commit group or current staged diff | `git_available && diff_context_available` |
 
 Compare-open command identity is repository-scoped rather than UI-local. The compatibility token `compare_open` maps to `cmd.source_control.open_review` or `cmd.git.diff_open` with `project_id`, `repo_id`, optional `repo_relative_path`, left/right selectors that can bind to `worktree_id`, branch, commit, or revision, and presentation hints such as `side_by_side` versus `unified`. Path-level stage/unstage/discard commands remain separate from hunk-level aliases (`stage_hunk`, `unstage_hunk`, `discard_hunk`) and their plural command rows above. Conflict-review and `/open-resolution` actions must flow through Source Control conflict commands or `cmd.git.conflict_apply_resolution`; no consumer surface may create ad hoc compare, /diff, /compare, or /compare/stage state from path strings alone.
 
+The four Conflict Assistant rows select `Plans/source_control_contracts.schema.json#/$defs/conflict_assistant_request_v2` and carry `Plans/source_control_contracts.schema.json#/$defs/conflict_assistant_owner_result_v1` through `source_control_command_result_v2.owner_result_ref`. They carry the exact Project, repository, worktree, status generation and `conflict_selection_ref`. A file selection supplies its repo-relative `path` and `conflict_id`. Resolve Side adds `resolution_side`, `confirmation_ref`, optional `hunk_id`, and `manual_result_ref` for `manual` only. `Plans/WorktreeGitImprovement.md`, "Conflict Assistant command payloads and results", owns currentness, the Git writer lease, closed failures, exact return and effect receipts. DL-056 governs the Git-only mutations and Jujutsu view paths. The low-level `cmd.git.conflict_apply_resolution` keeps its separate request and choice set.
+
 Rules:
 - Review mode state is a Source Control view state with per-project persistence for compare target and filters; it is not canonical repository history.
-- Conflict assistant commands record resolution events and blocked-state handoff outcomes through `/event/storage`; they do not persist conflicted file content.
+- Conflict Assistant open commands return typed routes. Open Merge Editor uses the shared opening module and emits the existing CV-361 `workspace.layout_changed` only when layout changes. Conflict mutations return owner effect receipts and admit no EventRecord through this binding. Blocked-state handoff stays with its existing event owner. Command receipts carry no conflicted file content.
 - `cmd.source_control.open_conflict` is the command-backed action behind the `Open Conflict Assistant` GUI entrypoint from `Source Control > Changes` and Orchestrator blocked worktree cards.
 - `/disabled` states must explain missing git, missing compare target, `stale-target`, absent conflict files, unavailable merge editor, or policy-restricted mutation rather than silently hiding the command.
+
+Retired audit wording is preserved below.
+
+> Conflict assistant commands record resolution events and blocked-state handoff outcomes through `/event/storage`; they do not persist conflicted file content.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 

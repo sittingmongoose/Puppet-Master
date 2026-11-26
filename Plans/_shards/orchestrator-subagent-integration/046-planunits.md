@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L6634-L31368
+Source lines: L6636-L31384
 
-Source SHA256: `3a96bb84494cc5f21507147c7745623be9b91532eda1bae5c9066517b4ee41ee`
+Source SHA256: `8493b4377d6193a867484501815c4afb59f000d66cceab00e61aa253e36a21c5`
 
 ---
 
@@ -5190,7 +5190,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Structured subagent handoff validation needs transport-scoped parser and hook reliability under the OSI-004 ProviderTransport taxonomy: CliBridge providers (Cursor, Claude Code) use JSON parsers over their CLI structured output (stream-json NDJSON events); DirectApi providers (Codex, Copilot, Gemini) build SubagentOutput with serde_json from the direct-provider response's final assistant content and have no CLI output to parse; the ServerBridge provider (OpenCode) parses its server event stream. JSONL/NDJSON aggregation for Codex and regex/text extraction for Copilot (the text parser) describe CLI-era output and are historical context only, not implementation targets. Every transport keeps parser.error seglog records with raw-output excerpts, generic fallback extraction, parser_fallback_used metadata, retry behavior, raw output preservation, and malformed/missing-field/edge-case integration tests.
+  Structured subagent handoff validation needs transport-scoped parser and hook reliability under the OSI-004 ProviderTransport taxonomy: CliBridge providers (Cursor, Claude Code) use JSON parsers over their CLI structured output (stream-json NDJSON events); DirectApi providers (Codex, Copilot, Gemini) build SubagentOutput with serde_json from the direct-provider response's final assistant content and have no CLI output to parse; the ServerBridge provider (OpenCode) parses its server event stream. JSONL/NDJSON aggregation for Codex and regex/text extraction for Copilot (the text parser) describe CLI-era output and are historical context only, not implementation targets. Every transport keeps parser.error seglog records with raw-output excerpts, generic fallback extraction, parser_fallback_used metadata, Handoff Retry Ceiling, raw output preservation, and malformed/missing-field/edge-case integration tests.
 gui_related: false
 gui_classification_reason: This unit covers parser and hook backend reliability, not GUI behavior.
 split_recommended: false
@@ -5250,7 +5250,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  If platform-specific and generic parser fallback both fail after retry, the provider error is surfaced to the user with retry, skip, and raw-output viewing options rather than silently dropping output.
+  When the handoff is still invalid after platform parsing and generic fallback and the Handoff Retry Ceiling budget
+  is exhausted, surface the provider error through the needs_review recovery point. Its Retry, Skip and View raw
+  output controls follow the Executor's live allowed_action_ids in Parser-Failure And Unrelated-Failure Recovery Actions.
 gui_related: true
 gui_classification_reason: This unit covers user-visible parser failure recovery affordances.
 split_recommended: false
@@ -8522,8 +8524,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Every subagent invocation must produce a structured handoff report with required fields; malformed output blocks completion
-  and requests one retry, with a fail-safe path after retry.
+  Every subagent invocation must produce a structured handoff report with required fields. Malformed output blocks
+  completion and takes the format retry or exhaustion path defined by Handoff Retry Ceiling.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -8566,7 +8568,8 @@ preserved_exact_tokens:
 - block and request one retry
 - fail-safe after retry
 negative_constraints: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- The source wording about one retry describes the default budget.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -8584,11 +8587,11 @@ owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   BeforeHandoffValidation detects output format, loads the SubagentOutput schema, and prepares validation context;
   DuringHandoffValidation parses, validates required fields, types, and findings, extracts from text fallback, and
-  requests one malformed-output retry; AfterHandoffValidation persists validation results and updates the execution-unit
-  context with validated SubagentOutput only. A post-retry failure keeps the extracted partial output on the failed
-  attempt for review only and settles as a needs_review recovery point (Handoff failure boundary in Parser-Failure And
-  Unrelated-Failure Recovery Actions); the earlier partial output with complete with warnings source disposition is
-  retired source lineage.
+  requests a format retry only while the Handoff Retry Ceiling budget remains. AfterHandoffValidation persists validation
+  results and updates the execution-unit context with validated SubagentOutput only. At exhaustion, partial output from a
+  still-invalid handoff stays on the failed attempt for review only and the node takes the needs_review recovery point
+  (Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions). The complete with warnings
+  disposition is retired source lineage.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -8917,8 +8920,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  HandoffValidator validates subagent output by using platform_specs-driven parser selection, trying structured parsing first,
-  requesting retry for malformed output before max retries, and falling back to text extraction after retry exhaustion.
+  HandoffValidator selects the parser through platform_specs, tries structured parsing and validation first, and validates
+  generic text extraction on the same attempt if needed. Output still invalid after fallback goes to the execution
+  loop for the retry or exhaustion decision under Handoff Retry Ceiling.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -8970,7 +8974,7 @@ negative_constraints:
 - Never hardcode parser selection by platform.
 - Do not use match platform statements.
 compatibility_only_notes:
-- The Rust validator snippet is plan evidence only, not an executable node output.
+- The Rust validator snippet is source lineage. Its placement of text extraction after retry exhaustion is retired.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -9051,8 +9055,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   The orchestrator subagent execution loop obtains the platform runner, executes the subagent, validates stdout/stderr
-  through HandoffValidator, returns validated SubagentOutput on success, and requests retry with SubagentOutput::example
-  format instructions on malformed output. After max retries it warns, keeps the extracted partial output
+  through HandoffValidator and returns validated SubagentOutput on success. On output still invalid after fallback,
+  it checks the Handoff Retry Ceiling before scheduling and counts only dispatched automatic retries. If budget
+  remains it retries with SubagentOutput::example format instructions. At exhaustion it keeps the extracted partial output
   (extract_partial_output) on the failed attempt for review only, and returns an error: the attempt settles with
   failure_class = structured_output_invalid and the node takes the needs_review recovery point (Handoff failure boundary
   in Parser-Failure And Unrelated-Failure Recovery Actions). The earlier return of extracted partial output as the
@@ -9108,7 +9113,7 @@ preserved_exact_tokens:
 - tracing::warn!
 negative_constraints: []
 compatibility_only_notes:
-- The Rust orchestrator integration snippet is plan evidence only, not an executable node output.
+- The Rust orchestrator integration snippet is source lineage. Its pre-dispatch retry increment and prompt handling are retired.
 - >-
   Adjacent orphaned parser-tail lines 2573-2585 are preserved as non-standalone example coverage and not as a separate product
   requirement.
@@ -9127,9 +9132,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Handoff validation failure handling requests retry for JSON parse, missing field, and invalid severity failures. When
-  Max retries reached, the node does not proceed: the partial output is kept for review only and the node takes the
-  needs_review recovery point with Retry, Skip and View raw output (Handoff failure boundary in Parser-Failure And
+  Handoff validation failure handling requests another format retry for JSON parse, missing field, and invalid severity
+  failures only if output is still invalid after fallback and the Handoff Retry Ceiling budget remains. At exhaustion,
+  partial output stays on the failed attempt for review only and the node takes the needs_review recovery point with
+  the allowed Retry, Skip and View raw output controls (Handoff failure boundary in Parser-Failure And
   Unrelated-Failure Recovery Actions). The earlier proceed with partial output and complete with warnings wording is
   preserved only as retired source lineage.
 gui_related: false
@@ -9618,10 +9624,10 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   AfterUnit handoff validation (the AfterTier hook name is an import-only alias stored as hook_name_normalized =
-  AfterUnit per Execution-Unit Hook Naming) logs platform, error type, and partial output snippet details and requests
-  one retry with structured JSON output instruction. After retry failure it does not update ExecutionUnitContext from
-  the output: the partial output is kept on the failed attempt for review only and the node takes the needs_review
-  recovery point (Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions). The earlier
+  AfterUnit per Execution-Unit Hook Naming) logs platform, error type, and partial output snippet details. Output still
+  invalid after fallback qualifies for another structured JSON format retry only within Handoff Retry Ceiling. At
+  exhaustion ExecutionUnitContext stays unchanged, partial output stays on the failed attempt for review only and the
+  node takes the needs_review recovery point (Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions). The earlier
   partial output (fail-safe) with complete with warnings wording is retired source lineage.
 gui_related: false
 gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
@@ -9674,8 +9680,8 @@ preserved_exact_tokens:
 negative_constraints: []
 compatibility_only_notes:
 - >-
-  The complete with warnings wording is preserved as source text and does not override OSI-093/OSI-157 resolved parser failure
-  behavior.
+  The source wording about one retry describes the default budget. The complete with warnings wording is retired by
+  OSI-093/OSI-157.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -10674,9 +10680,10 @@ owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Runtime handoff contract enforcement validates Task Report, Downstream Context, and Findings through AfterUnit
   validation (the AfterTier hook name is an import-only alias stored as hook_name_normalized = AfterUnit per
-  Execution-Unit Hook Naming), blocks malformed responses, and requests one retry with format instruction. If still
-  malformed, the node takes the needs_review recovery point and the partial output is kept for review only (Handoff
-  failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions); the earlier partial output with complete
+  Execution-Unit Hook Naming), blocks malformed responses, and requests a format retry if the output remains invalid
+  after fallback and the Handoff Retry Ceiling budget remains. At exhaustion the node takes the needs_review recovery
+  point and partial output stays on the failed attempt for review only (Handoff failure boundary in Parser-Failure And
+  Unrelated-Failure Recovery Actions); the earlier partial output with complete
   with warnings source disposition is retired source lineage.
 gui_related: false
 gui_classification_reason: >-
@@ -10727,7 +10734,8 @@ preserved_exact_tokens:
 negative_constraints: []
 compatibility_only_notes:
 - >-
-  complete with warnings is preserved source wording and must remain aligned with OSI-093/OSI-157 parser failure policy.
+  The source wording about one retry describes the default budget. The complete with warnings wording is retired by
+  OSI-093/OSI-157.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -11171,7 +11179,7 @@ canonical_text: >-
   (OSI-004, OSI-093): the JSONL pass reads the CliBridge stream-json NDJSON events (Cursor, Claude Code); DirectApi
   final assistant content (Codex, Copilot, Gemini) is parsed as JSON with generic text extraction as the fallback; a
   Codex JSONL stream or Copilot text output is CLI-era history, not an implementation target. It keeps best-effort
-  partial output on the attempt for review (never forwarded after the automatic retries fail, and never marked complete
+  partial output on the attempt for review (never forwarded on exhaustion under Handoff Retry Ceiling, and never marked complete
   with warnings; Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions), parser edge-case
   tests, parser version tracking, and platform CLI version tracking for the CliBridge providers, with the provider API
   and model version tracked in its place for the DirectApi providers.
@@ -11638,8 +11646,8 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Structured handoff prompt enforcement includes an explicit JSON schema example for every provider and validation-error
-  feedback in retry prompts. After retry failure the best-effort partial output is kept for review only and the node
-  takes the needs_review recovery point instead of proceeding with warnings (Handoff failure boundary in Parser-Failure
+  feedback in retry prompts while the Handoff Retry Ceiling budget remains. At exhaustion the best-effort partial
+  output is kept for review only and the node takes the needs_review recovery point (Handoff failure boundary in Parser-Failure
   And Unrelated-Failure Recovery Actions). Copilot is DirectApi (OSI-004, OSI-093) and gets the same JSON schema
   example; the Gap #22 instruction to give Copilot (text-only) a markdown example instead of JSON is CLI-era history,
   not an implementation target.
@@ -13855,8 +13863,9 @@ owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Structured handoff validation extends validate_subagent_output() with transport-scoped parsers (OSI-004, OSI-093):
   JSON over CLI output for the CliBridge providers (Cursor, Claude Code) and JSON over the direct-provider response's
-  final assistant content for the DirectApi providers (Codex, Copilot, Gemini); contract enforcement retries malformed
-  output before failing safe. The source's parser list (JSON for Cursor/Claude/Gemini, JSONL for Codex, and
+  final assistant content for the DirectApi providers (Codex, Copilot, Gemini). Contract enforcement applies the
+  retry or exhaustion path in Handoff Retry Ceiling to output still invalid after generic fallback. The source's parser
+  list (JSON for Cursor/Claude/Gemini, JSONL for Codex, and
   text parsing for Copilot) describes CLI-era output and is historical context only, not an implementation target.
 gui_related: false
 gui_classification_reason: >-
@@ -13873,7 +13882,10 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
-- Malformed handoff output retries once before fail-safe handling.
+- With a budget of 0, invalid output after fallback takes the recovery path on the initial attempt. With the default
+  budget of 1 it takes that path on the first invalid retry. With a budget of 2 it takes that path on the second
+  invalid retry. A valid handoff from the transport parser or generic fallback takes the validated-output path at
+  any count. A configured value of 3 still observes the Executor ceiling.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - >-
@@ -24157,7 +24169,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Retry/backoff classifier behavior preserves executor classifier families, auto-retry/backoff/safe-point/remediation
-  matrix entries, and the rule that blocked reasons must not be coerced into failure_class.
+  matrix entries, and the rule that blocked reasons must not be coerced into failure_class. The structured_output_invalid
+  row uses Handoff Retry Ceiling under the Executor's classified outcome ceiling. Exhaustion of a still-invalid handoff
+  takes the needs_review recovery point.
 gui_related: false
 gui_classification_reason: This unit covers backend retry/backoff classification, not GUI presentation.
 split_recommended: false

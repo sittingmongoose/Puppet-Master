@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L6393-L6548
+Source lines: L6395-L6550
 
-Source SHA256: `3a96bb84494cc5f21507147c7745623be9b91532eda1bae5c9066517b4ee41ee`
+Source SHA256: `8493b4377d6193a867484501815c4afb59f000d66cceab00e61aa253e36a21c5`
 
 ---
 
@@ -125,7 +125,7 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Decisio
 | classifier family | classifier | auto retry | backoff | safe-point rollback | remediation child | terminal / escalation |
 |---|---|---|---|---|---|---|
 | `failure_class` | `provider_transient` | yes | `1s, 2s, 4s` | no | no | fail after 3 retries: the initial attempt plus at most 3 retries (4 attempts in all), one backoff wait before each retry, matching Max retries 3 in `Plans/Executor_Protocol.md` §7.1 |
-| `failure_class` | `structured_output_invalid` | one format retry | none | no | optional after failed retry | escalate to remediation or `needs_review` |
+| `failure_class` | `structured_output_invalid` | format retries within Handoff Retry Ceiling (default one format retry) | none | no | no for exhausted handoffs | exhausted handoffs take the `needs_review` recovery point |
 | `failure_class` | `verification_failed` | no direct blind retry | none | yes | yes | pause after remediation ceiling |
 | `failure_class` | `reviewer_findings` | no direct blind retry | none | yes | yes | pause after remediation ceiling |
 | `blocked_reason_code` | `permission_denied` | no | none | no | no | blocked with exact recovery CTA |

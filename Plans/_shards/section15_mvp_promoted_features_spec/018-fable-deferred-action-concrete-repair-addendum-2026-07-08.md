@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L9942-L11028
+Source lines: L9942-L11031
 
-Source SHA256: `21a36fed60dde4e0124a560fedcd4155db83186b04f318f642cb232ef46d44e6`
+Source SHA256: `a695bd95dc8610786bef8d7935ca90e5e3e2565b071a90bcc9755838c37c7a9c`
 
 ---
 
@@ -148,6 +148,7 @@ unblocks: []
 acceptance_criteria:
 - A fast-output fixture records byte counts and no silent loss.
 - If retention cap prunes, transcript chunk references prove what remains and what was pruned.
+- The save's authoritative chunk inventory proves what remains, and prune receipts name what that operation removed. Diagnostic history eviction follows the terminal record wire contract below and keeps loss accounting available in bounded counters.
 - UI thread never blocks on raw PTY ingestion.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
@@ -538,12 +539,14 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - No control sequence bytes leak to visible grid when split across reads
+- The intentional plain-text rendering in SMPFS-183 occurs only after the complete unauthenticated sequence is recognized and matches the unsplit replay.
 - Synchronized update state closes correctly after arbitrary chunking
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
 - No control sequence bytes leak to visible grid when split across reads
+- The intentional plain-text rendering in SMPFS-183 occurs only after the complete unauthenticated sequence is recognized and matches the unsplit replay.
 - Synchronized update state closes correctly after arbitrary chunking
 risk_class: p1_terminal_runtime_hardening
 reasoning_tier: standard

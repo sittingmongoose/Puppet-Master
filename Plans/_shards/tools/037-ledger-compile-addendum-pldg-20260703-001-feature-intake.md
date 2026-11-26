@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L11720-L12419
+Source lines: L11730-L12431
 
-Source SHA256: `9ecb6276c5c9258753abfd9038d00320a09e4ddbb52ff1eea67ff0c84847a303`
+Source SHA256: `93fe427a7804cd49af3b6027f3181c4126a5f7c9b3bc64979c4559013705b562`
 
 ---
 
@@ -175,6 +175,7 @@ status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
   P0-TOOL-CALL-MALFORMATION-GATE (P0) is compiled as canonical Puppet Master intent for Malformed/truncated/partial tool-turn admission: Add ProviderToolTurnAdmissionGate. Only settled tool calls with valid schema, args, IDs, provider-native metadata, and truncation state can enter replayable history. Rejected turns become provider_turn_malformed records with raw-redacted reference and loop policy. The preserved PM gap/delta is: Malformed provider output must be stopped before durable history admission, not only before actual tool execution. The observed external-repo signal remains source-lineage evidence: OpenCode, Cline, Agent Zero, and Pi all show broken tool-call deltas, XML/JSON fragments, nullable reasoning/content, stringified MCP params, truncation, empty tool calls, and loops when malformed turns reach history or repair logic.
+  The typed payload in Tool Turn Contract Minima uses the PM gate_id to correlate a denial and discloses when redacted evidence is unavailable.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -185,6 +186,7 @@ acceptance_criteria:
 - Partial streamed JSON/tool XML never becomes replayable assistant history.
 - A length finishReason on tool-call deltas blocks/retries under typed policy, not as ordinary no-tool response.
 - Replayed history never includes malformed or duplicate tool_call IDs.
+- A length-ended call without a provider id carries the same gate_id on the gate, malformed record, settlement and recovery envelope. The provider id members are absent, and settlement is partial_truncated.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate

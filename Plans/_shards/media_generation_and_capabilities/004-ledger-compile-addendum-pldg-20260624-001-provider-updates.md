@@ -4,7 +4,7 @@ Source: `Plans/Media_Generation_and_Capabilities.md`
 
 Source lines: L83-L376
 
-Source SHA256: `fcf4383db2fb075bce9492fb74c17989e834c12e9f0b6053b62a72e4d38a250a`
+Source SHA256: `c4eb6e57cc5028daa677f3ffeb909138b25b848da1d4adad136da0d4832aa334`
 
 ---
 

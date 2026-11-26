@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L2620-L11156
+Source lines: L2626-L11166
 
-Source SHA256: `9ecb6276c5c9258753abfd9038d00320a09e4ddbb52ff1eea67ff0c84847a303`
+Source SHA256: `93fe427a7804cd49af3b6027f3181c4126a5f7c9b3bc64979c4559013705b562`
 
 ---
 
@@ -867,6 +867,8 @@ canonical_text: >-
   process detachment, never tab placement or pop-out; a write through a `shellId` into a terminal a human opened
   follows Section 15's SMPFS-182 and is refused without the human's grant, as `preempted` after a take-over and as
   `secret_input` during a secret prompt.
+  In §3.5.1 and Tool Turn Contract Minima, the first and subsequent calls execute in the same persistent shell.
+  Completion and exit status belong to the invocation. The shell can remain live after the command completes.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -879,6 +881,8 @@ acceptance_criteria:
 - Parameters `command`, `mode`, `initial_wait`, `shellId`, and `detach` remain preserved.
 - Output shapes for completed sync, still-running sync, and async launch remain preserved.
 - All error codes and timeout behavior remain preserved.
+- A first command changes directory and exports a variable, then completes. A second call using its shellId observes both changes. A further call can exit nonzero while the shell remains live.
+- Output or elapsed time alone cannot complete a command. A fresh or reused session that ends without authoritative command completion retains available output and gives no exit code for the command.
 - "Amended 2026-10-09 (DL-181): every shellId resolves to exactly one terminal_session_id that Open in Terminal and Show Terminal can reveal as its terminal tab; detach never opens, moves or closes a tab; writes into a human-opened terminal follow SMPFS-182 with explicit preempted and secret_input refusals."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits

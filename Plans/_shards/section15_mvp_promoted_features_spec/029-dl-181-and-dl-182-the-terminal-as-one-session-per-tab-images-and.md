@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L13362-L14079
+Source lines: L13365-L14089
 
-Source SHA256: `21a36fed60dde4e0124a560fedcd4155db83186b04f318f642cb232ef46d44e6`
+Source SHA256: `a695bd95dc8610786bef8d7935ca90e5e3e2565b071a90bcc9755838c37c7a9c`
 
 ---
 
@@ -392,11 +392,11 @@ canonical_text: >-
   "<agent> is driving this terminal · step N of M · <label>" with Take over (the human takes the lease), Interrupt
   (SIGINT to the foreground job) and Stop (ends the agent's run and returns the lease to the human); after a
   take-over it says "You took over. <agent> is paused and has been told." with Hand back and Stop <agent>. Every
-  command record carries `by`, the user or the agent by name, written through shell-integration records that only
-  carry weight with that terminal's secret (SMPFS-183); a mark without the secret is plain output and never
-  attributes a command. Agent reads return rendered text with a read state (`final` for a finished command, and the
-  known-empty, complete-so-far, partial and unavailable states of this document's terminal output read
-  semantics), never raw bytes and never images (SMPFS-181). Input protection (SMPFS-165, DL-037, DL-038) outranks
+  command record carries `by`, the user or the agent by name when authenticated, and absent or null without trusted
+  attribution (CV-362). Only a shell-integration record with that terminal's secret sets it (SMPFS-183).
+  An unauthenticated mark is plain output. Agent reads return rendered text with a read state (`final` for a
+  finished command, and the known-empty, complete-so-far, partial and unavailable states of this document's
+  terminal output read semantics), never raw bytes and never images (SMPFS-181). Input protection (SMPFS-165, DL-037, DL-038) outranks
   every grant: while it is on, user and agent input are both blocked and the agent receives an explicit blocked
   result. Back Seat Driver never drives a terminal, reads a terminal's screen or saved scrollback, or holds a grant
   (`Plans/Back_Seat_Driver.md#BSD-011`).
@@ -429,7 +429,7 @@ acceptance_criteria:
 - "Every command an agent types under any grant still gets its own Tools policy decision and approval over that exact invocation."
 - "No text in the permission row, its hover tags or the Agent input menu says or implies that commands are pre-approved."
 - "During a secret prompt every agent write is refused as secret_input with zero bytes reaching the PTY; the padlock cursor and the Password needed row show."
-- "Every command record carries by; a shell-integration mark or record without the terminal's secret creates no command boundary and no attribution."
+- "Every command record uses CV-362's by field, absent or null without trusted attribution; a shell-integration mark or record without the terminal's secret creates no command boundary and no attribution."
 - "Agent reads return rendered text with a read state, never raw bytes or image data."
 - "Interrupt sends SIGINT to the foreground job; Stop ends the agent's run and returns the writer lease to the human."
 - "Input protection blocks agent input whatever grant is held, with an explicit blocked result."
@@ -511,8 +511,15 @@ canonical_text: >-
   (concept lineage: `OSC 133;...;pmn=<secret>`, `OSC 6973;<secret>;E;<base64 command line>` and
   `OSC 6973;<secret>;W;<who>`; the native sequences are the engine's choice). A mark or record without the right secret is plain output, never a
   command boundary and never attribution; the confidence tiers stay SMPFS-021 and SMPFS-129. Each command record
-  (the command block of SMPFS-022) holds `by` (the user or the agent by name), the exit status, the folder it ran
-  in, and its start and end times, and records persist with saved scrollback (`Plans/storage-plan.md#SP-332`).
+  (the command block of SMPFS-022) holds `by` (the user or the agent by name when attributed by an authenticated
+  record, absent or null otherwise under CV-362), the exit status, the folder it ran in, and its start and end
+  times, and records persist with saved scrollback (`Plans/storage-plan.md#SP-332`).
+  Draw a complete unauthenticated shell-integration mark (including an unverified OSC 633 mark) or private record
+  as inert text once the parser recognizes it. Preserve printable ASCII bytes, double literal backslashes and
+  represent each other byte as a literal backslash, lowercase x and two uppercase hexadecimal digits. Append
+  that text through the ordinary text writer
+  without interpreting its contents as controls, bell, command line or attribution. A valid mark or record remains
+  metadata. SMPFS-130 still forbids exposing incomplete controls at read boundaries.
   Links: OSC 8 hyperlinks are program output, so link text is never trusted as the target. The hover tag shows the
   real target before any open; Ctrl+click (Cmd+click) opens and a plain click selects text. `file://` targets and
   detected `path:line:col` references pass FileSafe's path checks and open through the one opening module
@@ -578,7 +585,7 @@ unblocks:
 - ATS-076
 acceptance_criteria:
 - "OSC 133 marks and the PM-private command-line and who-typed records count only with the terminal session's secret; the same sequences without it are drawn as output and change no command block."
-- "Every command record holds by, exit status, folder, start and end, and survives a restore with saved scrollback."
+- "Every command record holds exit status, folder, start, end and CV-362's by when authenticated, and survives a restore with saved scrollback."
 - "OSC 8 link text never replaces the target: the hover tag shows the target, only Ctrl+click (Cmd+click) or a menu action opens it, file:// targets and detected paths pass FileSafe's path checks and open through the opening module, and a file:// link naming another host never opens as a local path."
 - "A detected path:line:col link passes FileSafe's path checks before it opens; Ctrl+click, Ctrl+double-click and Ctrl+Alt+click open the preview tab, a kept tab and a new panel, and a plain click selects text."
 - "A bell or an OSC 9, OSC 777 or OSC 99 notification in an unseen terminal tab sets its attention mark and a polite announcement, creates no new notification family, and never also counts as OSC 9;4 progress."

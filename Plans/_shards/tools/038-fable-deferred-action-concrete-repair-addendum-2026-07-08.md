@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L12421-L12638
+Source lines: L12433-L12691
 
-Source SHA256: `9ecb6276c5c9258753abfd9038d00320a09e4ddbb52ff1eea67ff0c84847a303`
+Source SHA256: `93fe427a7804cd49af3b6027f3181c4126a5f7c9b3bc64979c4559013705b562`
 
 ---
 
@@ -39,7 +39,7 @@ Repairs rows `sfk-0649b6a2c860f179ee699f58`, `sfk-e257db159bd84ee85f74371d`, and
 
 `CommandInvocationContract.interpreter` is an object `{ interpreter_kind, executable_path, version? }`. `interpreter_kind` is the closed enum `bash`, `zsh`, `sh`, `fish`, `pwsh`, `powershell`, `cmd`, and `none`; `executable_path` is the absolute path the runtime resolved, never a bare name; `version` is an optional string. `none` is legal only with `invocation_kind = argv` (direct exec with no shell). A call whose interpreter cannot be resolved is refused with `spawn_failed` before dispatch.
 
-Every `bash` tool call (§3.5.1) produces exactly one `CommandInvocationContract` before dispatch, mapped field by field:
+Every `bash` tool call (§3.5.1) that reaches command normalization produces exactly one `CommandInvocationContract` before invocation approval and dispatch, mapped field by field. A call denied by T-169 has no invocation contract.
 
 | Contract field | Value for a `bash` call |
 |---|---|
@@ -49,7 +49,7 @@ Every `bash` tool call (§3.5.1) produces exactly one `CommandInvocationContract
 | `interpreter` | With `shellId`: the shell of the bound `terminal_session_id` (DL-181). Without it: the shell the runtime resolves for the frozen Project/worktree or Computer/working-root context (T-187) when it creates the binding. |
 | `shell_string` | `command`, byte for byte: no trimming, re-quoting or splitting. |
 | `argv`, `powershell_script`, `pty_input_ref` | Absent. |
-| `terminal_session_id` | With `shellId`: the bound `terminal_session_id` (DL-181). Without it: absent; the call creates a new binding, whose handle the result returns as `shellId`. |
+| `terminal_session_id` | With `shellId`, use the bound session's id (DL-181). Without it, reserve the canonical id of the new session before building the contract. No terminal starts on reservation. On admission and startup the result's `shellId` binds to that id. Release an unused reservation if approval or startup fails. |
 | `cwd` | The frozen working root (T-187) for a new binding; for a reused `shellId`, the session's working directory observed at dispatch. |
 | `env_policy_ref` | The environment policy of the shell binding. |
 | `permission_snapshot_id` | The snapshot the pre-dispatch Permissions and FileSafe evaluation used. |
@@ -57,7 +57,13 @@ Every `bash` tool call (§3.5.1) produces exactly one `CommandInvocationContract
 | `created_at_utc` | Stamped by the runtime when it builds the contract, before dispatch (RFC 3339 UTC). |
 | `schema_version` | `1.0.0`. |
 
-`mode`, `initial_wait`, `detach`, and `shellId` are execution controls of §3.5.1 and are not contract fields. The contract's `terminal_session_id` decides which of two dispatch forms runs, and no other form exists. Without it (a new binding), the runtime starts `executable_path` with `shell_string` as one argument (`-c` for `bash`, `zsh`, `sh`, and `fish`; `-NoProfile -Command` for `pwsh` and `powershell`; `/d /s /c` for `cmd`). With it (a reused `shellId`), no new interpreter starts: `shell_string` is written to that session's input as one complete command line, byte for byte and followed by one Enter, under the DL-181 and SMPFS-182 write rules, and the session's own shell (the contract's `interpreter`) parses it as if typed there. `command` is never executed as `argv[0]`, and a non-string `command` is `validation_error`. `powershell_script` stays reserved for inspected PowerShell wrapper scripts (T-171) and `pty_input` for raw input to an interactive program; neither is produced by `bash`. Approval UI shows `shell_string` verbatim beside `interpreter_kind` and `executable_path` and names the form: a new shell, or the existing terminal (by its tab) it will be typed into.
+`mode`, `initial_wait`, `detach`, and `shellId` are execution controls of §3.5.1 and are not contract fields. After admission and per-invocation approval, a new binding starts `executable_path` as a persistent interactive shell on the reserved terminal session, using the contract's `cwd` and `env_policy_ref`. Startup must establish shell readiness and authoritative command tracking before command submission or returns `spawn_failed`. A reused binding submits to the existing interpreter. Every admitted `bash` dispatch with either binding uses the session-bound `shell_string` variant below.
+
+For both bindings, check terminal input ownership under DL-181 and SMPFS-182, including the human-write grant, take-over, secret-input and input-protection checks of CV-362. Recheck the approved target and observed `cwd` at the verified idle shell boundary before writing. A changed target or directory requires fresh admission before any bytes are written. Each shell accepts one `bash` invocation at a time. The terminal adapter supplies the exact bytes as one shell input buffer, using the profile's literal command-entry path, then submits that buffer once. Transport framing and the separate submit action are outside the approved command text. Preserve newlines and quoting in the buffer. If the profile cannot submit the full text unchanged, refuse with `validation_error` before writing. The shell evaluates the buffer in its current interpreter context. It does not run the command in a separate interpreter or subshell unless the approved command itself asks for one.
+
+At submission, bind the invocation to its session and command boundary. Settle command completion once, from shell integration authenticated under SMPFS-183 or authoritative runtime evidence for that exact invocation and its integer exit status. A prompt-like string, unmatched mark, quiet interval or session disconnect supplies no exit code (SMPFS-021, SMPFS-022, SMPFS-129). Attribute only the invocation's output to its result and apply SMPFS-023 and CV-362 backing and loss rules to terminal reads. If the session ends without authoritative command completion, return the available output with `status: "failed"`, `exit_code: null` and `error.code: "shell_not_found"`. Completion of a command does not retire a live binding. Sync waits up to `initial_wait`, and async returns on dispatch. The hard ceiling applies to the command under §3.5.1.
+
+`command` is never executed as `argv[0]`, and a non-string `command` is `validation_error`. `powershell_script` stays reserved for inspected PowerShell wrapper scripts (T-171) and `pty_input` for raw input to an interactive program. Approval UI shows `shell_string` verbatim beside `interpreter_kind` and `executable_path` and identifies the new shell or the existing terminal by its tab.
 
 #### `CommandInvocationContract` typed shape and variants (added 2026-11-26)
 
@@ -70,10 +76,10 @@ Field types, for every tool that builds the contract (the `bash` mapping above i
 | `invocation_kind` | closed enum | One of the five values above; selects exactly one content field (variant table below). |
 | `interpreter` | object `{ interpreter_kind, executable_path, version? }` | As defined in the `interpreter` subsection above. |
 | `argv` | array of strings, at least 1 entry | `argv[0]` is the program, resolved to an absolute path before dispatch; each entry is passed as one argument with no shell. |
-| `shell_string` | string, at least 1 byte | Byte for byte, never trimmed, re-quoted or split: one argument to a newly started interpreter when `terminal_session_id` is absent, or one complete command line written to that session when it is present (variant table below). |
+| `shell_string` | string, at least 1 byte | Byte for byte, never trimmed, re-quoted or split. The session-bound form submits one shell input buffer under the rules above. The standalone form passes one command argument. |
 | `powershell_script` | string, at least 1 byte | The text of an inspected PowerShell wrapper script. |
 | `pty_input_ref` | string | Reference to the exact bytes written to the PTY of a bound terminal session. |
-| `terminal_session_id` | string, optional | The canonical terminal session (DL-181) the contract writes into. Required for `pty_input`; for `shell_string`, present exactly when the call reuses a bound session; absent for `argv` and `powershell_script`. |
+| `terminal_session_id` | string, optional | The canonical terminal session (DL-181) the contract writes into. Required for `pty_input` and the session-bound `shell_string` form, including the new session of a first `bash` call. Absent for standalone `shell_string`, `argv` and `powershell_script`. |
 | `cwd` | string | Absolute path. |
 | `env_policy_ref` | string | The environment policy applied to the process. |
 | `permission_snapshot_id` | string, optional | Present on every contract that is dispatched: the snapshot the pre-dispatch Permissions and FileSafe evaluation used. Absent only on a contract refused before that evaluation ran. |
@@ -85,13 +91,13 @@ Variants are exclusive. Exactly the content field the kind names is present; the
 
 | `invocation_kind` | Required content field | `interpreter_kind` | Dispatch |
 |---|---|---|---|
-| `shell_string` | `shell_string` | any value except `none`; with `terminal_session_id`, the shell of that session | Without `terminal_session_id`: a new interpreter process runs `shell_string` as one argument (flags in the `bash` adapter paragraph above). With it: `shell_string` is written to that session as one complete command line followed by one Enter, under the DL-181 and SMPFS-182 write rules, and no new interpreter starts. |
+| `shell_string` | `shell_string` | any value except `none`; with `terminal_session_id`, the shell of that session | Session-bound: submit to the new or reused live shell using the terminal write and completion rules above. Standalone (no `terminal_session_id`, never produced by `bash`): run the text as one command argument for a one-shot process with `-c` (`bash`, `zsh`, `sh`, `fish`), `-NoProfile -Command` (`pwsh`, `powershell`) or `/d /s /c` (`cmd`). |
 | `argv` | `argv` | `none` | Direct exec of `argv`; never routed through a shell (T-171). |
 | `powershell_script` | `powershell_script` | `pwsh` or `powershell` | Needs the inspected-wrapper receipt and, when configured, one-shot approval (T-171). |
 | `pty_input` | `pty_input_ref` | the shell of the bound terminal session; not `none` | The referenced bytes are written to the `terminal_session_id` session, exactly and with nothing appended, under the DL-181 and SMPFS-182 write rules. |
 | `tui_automation` | none defined | none defined | Reserved, not admitted: no registered tool produces this kind and no body field exists for it. A contract carrying it is refused with `validation_error` before dispatch until an owner registers a TUI-automation tool and adds its body field to this table. |
 
-A contract that breaks a presence, type or variant rule is refused with `validation_error` before dispatch and nothing runs. Approval UI shows the one content field verbatim beside `invocation_kind`, `interpreter_kind` and `executable_path`, and, when `terminal_session_id` is present, names the existing terminal (by its tab) the text goes to (T-171 criterion 2).
+A contract that breaks a presence, type or variant rule is refused with `validation_error` before dispatch and nothing runs. Approval UI shows the one content field verbatim beside `invocation_kind`, `interpreter_kind` and `executable_path`. For a terminal target it identifies the new shell or the existing terminal by its tab. For a standalone target it shows the one-shot interpreter form and flags (T-171 criterion 2).
 
 #### `ActiveToolNamespaceReceipt` typed contract (added 2026-11-25)
 
@@ -147,7 +153,7 @@ One gate record is written for every provider tool call before the turn that car
 | Field | Type | Rule |
 |---|---|---|
 | `gate_id` | string | Opaque and unique; minted by PM, never taken from the provider. It is the call's PM identity in every record that names the call. |
-| `tool_call_id` | string, optional | The provider's own id for the call judged. Absent exactly when the call arrived with no id, which is always denied: as `tool_call_id_missing`, or as `length_truncated` when that check fired first. PM never invents a value for it. |
+| `tool_call_id` | nonempty string, optional | The provider's own id for the call judged. An omitted or empty provider id is absent here and always denied: as `tool_call_id_missing`, or as `length_truncated` when that check fired first. PM never invents a value for it. |
 | `call_index` | integer, at least 0 | The call's position among the tool calls of its provider turn, in stream order. With `gate_id` it identifies a call that has no provider id. |
 | `provider_id`, `model_id` | string | The route that produced the call. |
 | `allowed` | boolean | True only when every check below passes. |
@@ -158,7 +164,42 @@ One gate record is written for every provider tool call before the turn that car
 
 Checks, in this order; the first that fails gives the code: `length_truncated` (the provider ended the tool-call deltas with a length finish reason; checked first, so a length-ended call keeps this code even when its id, name or arguments are also incomplete, which is the Truncation gate case of §3.5 and T-167's `partial_truncated` rule), `tool_call_id_missing` (the call has no id), `tool_call_id_duplicate` (the id was already admitted in this session), `empty_tool_call` (no tool name), `args_unparseable` (streamed JSON or tool XML is partial, or the arguments are not one complete JSON value, in a call that did not end on length), `tool_not_in_namespace` (the `ActiveToolNamespaceReceipt` current for the turn has no entry for the tool), then the namespace dispatch rule above (an entry that does not permit dispatch denies with its own `denial_reason_code`), `schema_invalid` (the arguments fail that entry's `schema_ref` schema), and `provider_metadata_missing` (provider-native metadata the route requires is absent). `denial_reason_code` is closed to these eight codes plus the `ToolNamespaceEntry.denial_reason_code` values.
 
-A denied call never enters replayable history and is never dispatched. It becomes a `provider_turn_malformed` record holding a raw-redacted reference to the provider output (T-169). The eight gate codes normalize to `failure_class = structured_output_invalid` and follow its `Plans/Executor_Protocol.md` §7.1 row (Max retries 2, no backoff): while a retry remains, the tool turn settles `retryable` and the provider turn is requested again; when the retries are spent it settles `malformed` and the run takes that classifier's escalation. The one exception is `length_truncated`: it follows the same retry row, but the tool turn settles `partial_truncated` on every attempt, as T-167 requires for a length finish reason on tool-call deltas and as the precedence above orders it (`partial_truncated` outranks `retryable`); when the retries are spent the run takes the same escalation with the turn still `partial_truncated`. A namespace denial is not retried: the tool turn settles `fatal` with the entry's code, the same denial the receipt section gives. A gate retry asks the provider for a new turn; it never re-dispatches or repairs the denied call, which was never dispatched, so the rules of §3.5.0A and "Retry classification and bounded recovery" that a schema-mismatch or validation-failed invocation is terminal and never retried automatically still hold. A `length_truncated` denial is the Truncation gate's structured truncation error (`truncated_by_length`, §3.5): nothing is dispatched and no argument is synthesized. For a call that arrived with no provider id, every record that names the call (the gate record, the `provider_turn_malformed` record, the `ToolTurnSettlement` and its `ToolRecoveryEnvelope`) carries `gate_id` and leaves the provider id absent, with `original_tool_call_id` in its typed empty state. Persistence of gate and `provider_turn_malformed` records waits on the same Storage registration as the receipt above.
+A denied call never enters replayable history and is never dispatched. The gate emits one `provider_turn_malformed` record per denied call, using the payload below (T-169). The eight gate codes normalize to `failure_class = structured_output_invalid` and follow its `Plans/Executor_Protocol.md` §7.1 row (max retries 2, no backoff). If another provider-turn retry is admitted under that row and the existing retry budget and loop rules, the tool turn settles `retryable`. Otherwise it settles `malformed` and the run takes that classifier's escalation. The one exception is `length_truncated`: it follows the same retry row and settles `partial_truncated` on every attempt, as T-167 requires. Its structured error is `truncated_by_length` (Truncation gate), and no argument is synthesized. A namespace denial settles `fatal` with the receipt entry's own code and does not retry. An admitted provider retry requests one replacement for the failed turn, even when several calls were denied. It performs no invocation retry under §3.5.0A or "Retry classification and bounded recovery".
+
+All four records for a denied call carry the same `gate_id`: the gate record, the `provider_turn_malformed` record, the `ToolTurnSettlement` and the `ToolRecoveryEnvelope`. Copy the original provider id to each record when available. If it is absent, omit `tool_call_id` from the gate, malformed record and settlement, and omit `original_tool_call_id` from the recovery envelope. The envelope has `retryable: false` because the denied call itself cannot be dispatched again. Its `status` is `truncated` for `length_truncated`, `blocked` for a namespace denial and `failed` for other gate denials. Persistence of gate and `provider_turn_malformed` records waits on the same Storage registration as the receipt above.
+
+#### `provider_turn_malformed` payload (T-169)
+
+The payload is one UTF-8 JSON object containing only the following members. Optional members are omitted when absent. Use `gate_id` as its record identity and to resolve the gate's provider/model route. The payload is per-call recovery evidence outside replayable assistant history. The turn-level history admission and quarantine contract remains owned by `Plans/Prompt_Pipeline.md#PP-060`.
+
+| Field | Type | Rule |
+|---|---|---|
+| `record_type` | string constant | `provider_turn_malformed`. |
+| `schema_version` | string constant | `1.0.0`. |
+| `gate_id` | nonempty string | Matches the denied gate record. |
+| `call_index` | integer, at least 0 | Copy the gate's position in the provider turn. |
+| `tool_call_id` | nonempty string, optional | Copy the gate's original provider id when present. |
+| `denial_reason_code` | closed enum | Copy the gate's reason, including the receipt's namespace reason when that check denied admission. |
+| `raw_redacted_state` | closed enum | `available` if redacted provider evidence could be captured and referenced, otherwise `unavailable`. |
+| `raw_redacted_ref` | nonempty string, optional | Required when `raw_redacted_state` is `available`, otherwise absent. Resolves to evidence from the same provider turn containing the rejected call's source as received, after secret redaction. |
+| `created_at_utc` | RFC 3339 UTC string | Copy the gate's timestamp. |
+
+Capture evidence with the bounded redaction and access controls of §3.5.0A. The reference is opaque to the provider. The payload carries no inline provider bytes or hashes of unredacted material. If capture or redaction fails, use `unavailable` and preserve the denial, settlement and retry decision. A `length_truncated` settlement's `truncation_ref` still resolves to this record even when its source evidence is unavailable.
+
+Example of a length-ended call cut off before its provider id arrived, with redacted source evidence available:
+
+```json
+{
+  "record_type": "provider_turn_malformed",
+  "schema_version": "1.0.0",
+  "gate_id": "gate_42",
+  "call_index": 0,
+  "denial_reason_code": "length_truncated",
+  "raw_redacted_state": "available",
+  "raw_redacted_ref": "redacted_42",
+  "created_at_utc": "2026-11-26T12:00:00Z"
+}
+```
 
 #### `ToolTurnSettlement` typed shape (T-167, added 2026-11-26)
 
@@ -167,7 +208,7 @@ One immutable settlement is written per tool call attempt, including a call the 
 | Field | Type | Rule |
 |---|---|---|
 | `settlement_id` | string | Opaque and unique. |
-| `tool_call_id` | string, optional | The provider's id for the call. Absent exactly when the call arrived with no id, which the gate always denies. |
+| `tool_call_id` | nonempty string, optional | The provider's id for the call. Absent exactly when the gate received no id or an empty id, which it always denies. |
 | `gate_id` | string, optional | The `ProviderToolTurnAdmissionGate` record of the call. Present for every provider tool call; required when `tool_call_id` is absent. |
 | `settlement_state` | closed enum | One of the nine values above. |
 | `result_ref` | string, optional | Reference to the normalized tool result, a payload reference when spilled (DL-270, §3.5.0A). Present for every dispatched call that returned a result, so for `success` unless the tool's own contract omits it; absent for a call the gate denied. |
@@ -183,7 +224,7 @@ One immutable settlement is written per tool call attempt, including a call the 
 
 #### `ToolProgressHeartbeat` contract (T-175, added 2026-11-26)
 
-Every long-running tool call of the families `mcp`, `subagent`, `browser` and `device` emits heartbeats while it runs. The PM-side adapter that supervises the call emits them while the server, child session, browser session or device session behind it is alive and responsive, so silence means liveness was lost, not that the work is slow. A heartbeat is a live progress signal on the tool call; it is not a durable record. Command tools (`bash`) are outside this contract: their liveness is the terminal session's (§3.5.1).
+Every long-running tool call of the families `mcp`, `subagent`, `browser` and `device` emits heartbeats while it runs. The PM-side adapter that supervises the call emits them while the server, child session, browser session or device session behind it is alive and responsive, so silence means liveness was lost, not that the work is slow. A heartbeat is a live progress signal on the tool call; it is not a durable record. Command tools (`bash`) follow §3.5.1 for terminal liveness and per-invocation completion.
 
 | Field | Type | Rule |
 |---|---|---|

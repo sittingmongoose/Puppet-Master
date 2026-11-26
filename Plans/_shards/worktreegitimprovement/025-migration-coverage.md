@@ -2,9 +2,9 @@
 
 Source: `Plans/WorktreeGitImprovement.md`
 
-Source lines: L4931-L4945
+Source lines: L4933-L4947
 
-Source SHA256: `5e534e1438b9a3dad605d249ddfc065a98f21533b048daf85166442b232a8f0f`
+Source SHA256: `a6abf92afae7c3f89aae019ab53178944bdbd0038dbb5d81cef85570dcc5d2b8`
 
 ---
 

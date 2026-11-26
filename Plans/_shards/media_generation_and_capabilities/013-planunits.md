@@ -2,9 +2,9 @@
 
 Source: `Plans/Media_Generation_and_Capabilities.md`
 
-Source lines: L1169-L6256
+Source lines: L1178-L6265
 
-Source SHA256: `fcf4383db2fb075bce9492fb74c17989e834c12e9f0b6053b62a72e4d38a250a`
+Source SHA256: `c4eb6e57cc5028daa677f3ffeb909138b25b848da1d4adad136da0d4832aa334`
 
 ---
 
@@ -763,7 +763,7 @@ plan_unit_id: MGAC-016
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: The media.generate request envelope includes kind, prompt, model_override, count, aspect_ratio, size, resolution, duration, format, voice, bpm, seed, negative_prompt, and quality with required fields, media kind values, and safe defaults.
+canonical_text: The media.generate request envelope includes kind, prompt, model_override, count, aspect_ratio, size, resolution, duration, format, voice, bpm, seed, negative_prompt, and quality with required fields, media kind values, and safe defaults. Section 2.2 also lists the optional multimodal inputs and the internal-only route_verification_probe.
 gui_related: true
 gui_classification_reason: The unit defines user-visible media, capability picker, GUI copy, artifact display, or interaction behavior.
 split_recommended: true
@@ -1382,7 +1382,7 @@ plan_unit_id: MGAC-026
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: Successful media.generate responses include success, request_id, kind, an engine route identity object with provider_entry_id, media_route_id, and generated_media_route_id when output is matched, artifacts, canonical UsageRecord bridge usage, and error fields with artifact metadata, usage_event_ref, UsageRecord identity, source_class/source_confidence/source_authority, settlement and cost status, UF-085 token buckets, counting_semantics, cost_microdollars or provider minor-unit costs, and media-specific media_units that are not token totals.
+canonical_text: Successful media.generate responses include success, request_id, kind, an engine route identity object with provider_entry_id, media_route_id, and generated_media_route_id when output is matched, artifacts, canonical UsageRecord bridge usage, and error fields with artifact metadata, usage_event_ref, UsageRecord identity, source_class/source_confidence/source_authority, settlement and cost status, UF-085 token buckets, counting_semantics, cost_microdollars or provider minor-unit costs, and media-specific media_units that are not token totals. Every success also carries input_settlement, null for a request with no input refs.
 gui_related: true
 gui_classification_reason: The unit defines user-visible media, capability picker, GUI copy, artifact display, or interaction behavior.
 split_recommended: true
@@ -1473,7 +1473,7 @@ plan_unit_id: MGAC-027
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: Generated media outputs are stored as BLAKE3-addressed payloads in append-only pack files and referenced from the seglog result record, which includes schema_version, request_id, kind, engine, generated_at_utc, artifacts, and usage (SP-337, SP-336); payload bytes are made durable before the referencing record is acknowledged, hashes come from the final bytes, and no per-request directory, manifest.json file or inline data_uri is required or returned.
+canonical_text: Generated media outputs are stored as BLAKE3-addressed payloads in append-only pack files and referenced from the seglog result record, which includes schema_version, request_id, kind, engine, generated_at_utc, artifacts, input_settlement, and usage (SP-337, SP-336); payload bytes are made durable before the referencing record is acknowledged, hashes come from the final bytes, and no per-request directory, manifest.json file or inline data_uri is required or returned.
 gui_related: false
 gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
 split_recommended: true
@@ -1639,7 +1639,7 @@ plan_unit_id: MGAC-030
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: Failure responses return success false with empty artifacts, null usage, and error code/message. Cursor generated-media output requires a verified generated-media route; Cursor image-input proof or other provider credentials do not make Cursor image generation available. Unsupported Cursor video, tts, and music return BACKEND_UNSUPPORTED or route-specific unavailable states.
+canonical_text: Failure responses return success false with empty artifacts, null usage, and error code/message. Cursor generated-media output requires a verified generated-media route; Cursor image-input proof or other provider credentials do not make Cursor image generation available. Unsupported Cursor video, tts, and music return BACKEND_UNSUPPORTED or route-specific unavailable states. Every failure also carries input_settlement as specified in section 2.5.
 gui_related: true
 gui_classification_reason: The unit defines user-visible media, capability picker, GUI copy, artifact display, or interaction behavior.
 split_recommended: true
@@ -4579,7 +4579,7 @@ plan_unit_id: MGAC-085
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: AC-MED17 requires successful media.generate calls to make payload bytes durable no later than the seglog result record that references them (SP-336, SP-337), include the required record fields and usage when available, and never leave a record referencing an unwritten payload after a failed or partial request.
+canonical_text: AC-MED17 requires successful media.generate calls to make payload bytes durable no later than the seglog result record that references them (SP-336, SP-337), include the required record fields including input_settlement and usage when available, and never leave a record referencing an unwritten payload after a failed or partial request. An artifact_missing rejection stores the attempted input ID as a rejection identifier.
 gui_related: false
 gui_classification_reason: The unit defines a testable acceptance criterion or contract assertion rather than direct GUI presentation.
 split_recommended: true

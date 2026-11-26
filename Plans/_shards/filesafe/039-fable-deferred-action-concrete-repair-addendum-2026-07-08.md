@@ -4,7 +4,7 @@ Source: `Plans/FileSafe.md`
 
 Source lines: L14709-L14769
 
-Source SHA256: `602c43e64e6cb3c64a86cb0cc5d2b7ab33b1915d73c001845396c87f6204a040`
+Source SHA256: `ad899d70b09145d16caca8f16122a499904534c94336cbfdd7cf42bcdf36fd6b`
 
 ---
 
@@ -33,8 +33,8 @@ This completes `sfk-e8baa3796f5c29cdb66f46eb` for the "bounded per-run log quota
 | `ObservabilityEnvelope` field | Type and presence rule |
 | --- | --- |
 | `envelope_id`, `trace_id` | `identity_id`; exact envelope and trace |
-| `run_id` | `identity_id` or null; the owning run. Null only for events that belong to no run: a terminal session opened outside any run, or a user-requested terminal diagnostic bundle built outside any run (`Plans/Section15_MVP_Promoted_Features_Spec.md` SMPFS-076) |
-| `quota_owner_kind` | Closed enum `run`, `terminal_session`, `diagnostic_bundle`; `run` exactly when `run_id` is present |
+| `run_id` | Required `identity_id` or `null`. The value is the owning run id for run-owned events and `null` for terminal diagnostic logs or user-requested terminal diagnostic bundles that belong to no run (`Plans/Section15_MVP_Promoted_Features_Spec.md` SMPFS-076) |
+| `quota_owner_kind` | Closed enum `run`, `terminal_session`, `diagnostic_bundle`. A non-null `run_id` requires `run`. A null `run_id` requires `terminal_session` for a session's diagnostic logs or `diagnostic_bundle` for a user-requested terminal diagnostic bundle |
 | `quota_owner_id` | `identity_id`; equals `run_id` for `run`, `terminal_session_id` for `terminal_session`, and the bundle request id for `diagnostic_bundle` |
 | `event_refs[]` | Non-empty ordered array of unique `non_secret_ref`; references only events covered by this settlement and admitted by filtering and quotas, never discarded content |
 | `sampling_policy_id` | `identity_id`; identifies the `TracePersistencePolicy.policy_id` in force when the envelope was created |
@@ -44,7 +44,7 @@ This completes `sfk-e8baa3796f5c29cdb66f46eb` for the "bounded per-run log quota
 
 **Quota owner.** Per-run accounting is kept per quota owner. Wherever the quota class, limits, overflow, quota marker and acceptance rules of this section say "run" or "per-run", they mean the envelope's quota owner: its run, or for a runless envelope its terminal session or diagnostic bundle request. `max_bytes_per_run` caps each quota owner. A `terminal_session` owner's quota and diagnostic summary settle when the session closes, and a `diagnostic_bundle` owner's when the bundle is written. The "run's log view" for a runless owner is that terminal tab's diagnostics (SMPFS-076).
 
-**`TracePersistencePolicy` fields and limits.**
+**`TracePersistencePolicy` fields and limits.** DL-2602 confirms the defaults of 8 MiB per trace and 256 MiB per run.
 
 | Field | Type | Allowed values | Default |
 | --- | --- | --- | --- |
@@ -66,6 +66,6 @@ This completes `sfk-e8baa3796f5c29cdb66f46eb` for the "bounded per-run log quota
 
 **Quota marker.** The trace writer owns one bounded diagnostic summary per exact quota owner (`quota_owner_kind`, `quota_owner_id`). On the first quota refusal it sets one `quota_exceeded` marker on that summary, with `scope: trace | run`, `limit_bytes` and `trace_id` only when `scope=trace`. If both limits refuse the same write, record the run limit. The writer maintains `dropped_events` and `dropped_bytes` as monotonic, saturating unsigned 64-bit totals and publishes the final totals at run settlement. The marker and totals occupy one mutable redacted projection value, at most 1 KiB per run, accounted separately from the trace-event budget. Storage-plan §2.3.1 registration for that diagnostic value is required before durable publication. The projection is not an `EventRecord`; it never rewrites seglog or persists one event per drop. Live accounting stays with the trace writer, and overflow never pauses, fails or slows the run. The run's log view shows "Log limit reached; N events not saved" while the counts are available and shows the limit without a number if the summary cannot be verified.
 
-**Acceptance.** (1) With defaults, a run whose events exceed 256 MiB after redaction writes at most 256 MiB plus the 10% reserve, the reserve holds only `error`, `warn` and usage join events, and exactly one `quota_exceeded` marker exists with correct dropped counts. (2) The same `trace_id` and `sample_rate` give the same keep or drop decision on every run and machine. (3) At level `errors`, no `info`, `debug` or `trace` event is on disk, and every admitted usage record still joins by `attempt_id`. (4) A terminal emitting one character per millisecond for 10 s writes at most 10 s / `terminal_coalesce_ms` + 1 chunks. (5) An event whose settlement is `blocked` is never on disk and appears in the dropped count. (6) Events of a terminal session opened outside any run are written under envelopes with `run_id = null`, `quota_owner_kind = terminal_session` and `quota_owner_id` equal to its `terminal_session_id`, and the same caps, reserve and single marker apply to that session.
+**Acceptance.** (1) With defaults, a run whose events exceed 256 MiB after redaction writes at most 256 MiB plus the 10% reserve, the reserve holds only `error`, `warn` and usage join events, and exactly one `quota_exceeded` marker exists with correct dropped counts. (2) The same `trace_id` and `sample_rate` give the same keep or drop decision on every run and machine. (3) At level `errors`, no `info`, `debug` or `trace` event is on disk, and every admitted usage record still joins by `attempt_id`. (4) A terminal emitting one character per millisecond for 10 s writes at most 10 s / `terminal_coalesce_ms` + 1 chunks. (5) An event whose settlement is `blocked` is never on disk and appears in the dropped count. (6) A terminal session and a user-requested diagnostic bundle outside any run both write envelopes with `run_id = null`. Session diagnostics use `quota_owner_kind = terminal_session` and the `terminal_session_id` as `quota_owner_id`. Bundle writes use `quota_owner_kind = diagnostic_bundle` and the bundle request id as `quota_owner_id`. The same caps, reserve and single marker apply independently to each owner. (7) A run-owned envelope carries a non-null `run_id`, `quota_owner_kind = run` and `quota_owner_id = run_id`. An envelope with a missing `run_id` or a mismatched quota owner fails validation.
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

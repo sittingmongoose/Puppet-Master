@@ -10032,7 +10032,7 @@
         "unrecoverable_mutation",
         "unsafe_host_side_effect"
       ],
-      "sha256": "602c43e64e6cb3c64a86cb0cc5d2b7ab33b1915d73c001845396c87f6204a040",
+      "sha256": "ad899d70b09145d16caca8f16122a499904534c94336cbfdd7cf42bcdf36fd6b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 213
@@ -13236,7 +13236,7 @@
         "Plans/usage-feature.md",
         "future provider/model capability matrix"
       ],
-      "line_count": 6838,
+      "line_count": 6855,
       "path": "Plans/Media_Generation_and_Capabilities.md",
       "plan_unit_count": 101,
       "plan_unit_ids": [
@@ -13369,7 +13369,7 @@
         "p1_security_release_supply_chain_hardening",
         "retired_gemini_cli_nanobanana_resurrection"
       ],
-      "sha256": "fcf4383db2fb075bce9492fb74c17989e834c12e9f0b6053b62a72e4d38a250a",
+      "sha256": "c4eb6e57cc5028daa677f3ffeb909138b25b848da1d4adad136da0d4832aa334",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 101
@@ -15174,7 +15174,7 @@
         "future Orchestrator prompt routes",
         "future subagent handoff and child-run receipt records"
       ],
-      "line_count": 35230,
+      "line_count": 35248,
       "path": "Plans/orchestrator-subagent-integration.md",
       "plan_unit_count": 472,
       "plan_unit_ids": [
@@ -16099,7 +16099,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "3a96bb84494cc5f21507147c7745623be9b91532eda1bae5c9066517b4ee41ee",
+      "sha256": "8493b4377d6193a867484501815c4afb59f000d66cceab00e61aa253e36a21c5",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 470,
@@ -19831,7 +19831,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm_browser_program_semantics.py"
       ],
-      "line_count": 19302,
+      "line_count": 19318,
       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
       "plan_unit_count": 199,
       "plan_unit_ids": [
@@ -20177,7 +20177,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "21a36fed60dde4e0124a560fedcd4155db83186b04f318f642cb232ef46d44e6",
+      "sha256": "a695bd95dc8610786bef8d7935ca90e5e3e2565b071a90bcc9755838c37c7a9c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 195,
@@ -20268,6 +20268,7 @@
         "Synchronized update state closes correctly after arbitrary chunking",
         "Terminal byte stream preserves parser state across chunks",
         "Terminal paste/drop/autofill inputs pass through TerminalInputSanitizer with control-code stripping/escaping policy and user-visible preview for dangerous content.",
+        "The intentional plain-text rendering in SMPFS-183 occurs only after the complete unauthenticated sequence is recognized and matches the unsplit replay.",
         "UI thread never blocks on raw PTY ingestion.",
         "VT replay corpus includes OSC 52/8/9;4/133/633, bracketed paste, focus, mouse, alternate screen, synchronized update sequences.",
         "Weak/unknown protocol support downgrades requested-vs-effective state rather than fabricating command blocks.",
@@ -23340,7 +23341,7 @@
         "False": 121,
         "True": 69
       },
-      "heading_count": 346,
+      "heading_count": 347,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Back_Seat_Driver.md",
@@ -23375,7 +23376,7 @@
         "future tool registry and shell/integration command dispatch",
         "future vision_bridge tool"
       ],
-      "line_count": 13755,
+      "line_count": 13808,
       "path": "Plans/Tools.md",
       "plan_unit_count": 190,
       "plan_unit_ids": [
@@ -23650,7 +23651,7 @@
         "workflow_local_tool_registry_drift",
         "write_atomicity_drift"
       ],
-      "sha256": "9ecb6276c5c9258753abfd9038d00320a09e4ddbb52ff1eea67ff0c84847a303",
+      "sha256": "93fe427a7804cd49af3b6027f3181c4126a5f7c9b3bc64979c4559013705b562",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 189,
@@ -23716,7 +23717,7 @@
         "False": 22,
         "True": 177
       },
-      "heading_count": 407,
+      "heading_count": 408,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Plans/Assistant_Plan_Runtime.md",
@@ -23773,7 +23774,7 @@
         "scripts/pm-command-payload-defs-check.py",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 22080,
+      "line_count": 22094,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 199,
       "plan_unit_ids": [
@@ -24060,7 +24061,7 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "a7ef2f16d5d4a9b478652b79e95d1bbb5c23aaeebfc35cec86b3c17d4724c8f1",
+      "sha256": "b0f2d9523b7f28a99d517a8e042f670024d90d93b95d09c2e9dbb3952863617f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 197,
@@ -25107,7 +25108,7 @@
         "False": 49,
         "True": 36
       },
-      "heading_count": 208,
+      "heading_count": 209,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Executor_Protocol.md",
@@ -25129,7 +25130,7 @@
         "future Source Control worktree manager",
         "future worktree lock manager"
       ],
-      "line_count": 7802,
+      "line_count": 7839,
       "path": "Plans/WorktreeGitImprovement.md",
       "plan_unit_count": 85,
       "plan_unit_ids": [
@@ -25243,7 +25244,7 @@
         "worktree_panel_filter_drift",
         "worktree_row_presentation_drift"
       ],
-      "sha256": "5e534e1438b9a3dad605d249ddfc065a98f21533b048daf85166442b232a8f0f",
+      "sha256": "a6abf92afae7c3f89aae019ab53178944bdbd0038dbb5d81cef85570dcc5d2b8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 85
@@ -25278,7 +25279,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-26T04:09:58Z",
+  "generated_at_utc": "2026-11-26T04:46:54Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

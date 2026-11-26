@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L31825-L32138
+Source lines: L31841-L32155
 
-Source SHA256: `3a96bb84494cc5f21507147c7745623be9b91532eda1bae5c9066517b4ee41ee`
+Source SHA256: `8493b4377d6193a867484501815c4afb59f000d66cceab00e61aa253e36a21c5`
 
 ---
 
@@ -73,8 +73,9 @@ Repairs row `sfk-f0bb4b941956a19bb7f62357`.
 
 - The canonical config key is `subagent.handoff.max_retries`.
 - Default `subagent.handoff.max_retries = 1`; the initial handoff attempt is not counted as a retry.
-- Effective range is `0..=3`. Values above 3 are invalid in product spec and must be rejected before dispatch.
-- On exhaustion, the handoff records `handoff_retry_exhausted` with `attempt_count`, `max_retries`, `last_error_class`, and `next_allowed_actions[] = [retry, skip_with_operator_acceptance, view_raw_output]`.
+- Accepted config values are integers in `0..=3`. Reject out-of-range values before dispatch. The effective automatic budget is the lower of this value and the Executor §7.1 `structured_output_invalid` maximum (2). Both owners use the same retry count. A configured 3 is valid and allows at most two automatic retries.
+- On each attempt, validate the transport parser result and try and validate generic fallback if it fails. If the output remains invalid, compare the automatic same-Provider format retries already dispatched for that handoff with the effective budget. While the count is below the budget, use the existing classified retry admission for the next format retry and keep the parser recovery prompt closed. When the count reaches the budget and that attempt's output is still invalid after fallback, the budget is exhausted. With a budget of 0 this can happen on the initial attempt. Fallback, event append/replay and operator recovery actions do not increment this count.
+- Only on exhaustion, the handoff records `handoff_retry_exhausted` with `attempt_count`, `max_retries` (the effective budget), `last_error_class`, and `next_allowed_actions[] = [retry, skip_with_operator_acceptance, view_raw_output]`. `attempt_count` includes the initial attempt and its dispatched automatic format retries. The live action list comes from the blocked episode in Parser-Failure And Unrelated-Failure Recovery Actions.
 
 ### Execution-Unit Hook Naming
 
