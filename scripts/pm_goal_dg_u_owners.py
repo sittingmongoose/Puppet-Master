@@ -1068,9 +1068,28 @@ class GoalBodyOwner(PhysicalMixin, DurableOwner):
            T_ORIGIN: 'pm.storage_value.goal_objective_origin.v1', T_CONTROL: 'pm.storage_value.goal_body_control.v2',
            T_RECEIPT: 'pm.storage_value.goal_body_mutation_receipt.v1'}
 
+    EPOCH_TABLE = 'dgu_goal_body_owner'
+    EPOCH_KEY = 'owner_epoch'
+
+    def __init__(self, world, **kwargs):
+        super().__init__(world, **kwargs)
+        cell = self.storage.cell(self.EPOCH_TABLE, self.EPOCH_KEY)
+        if cell is None:
+            self.world.transact([dict(table=self.EPOCH_TABLE, key=self.EPOCH_KEY, expected=None,
+                                      value=dict(owner_epoch=self.owner_epoch))])
+        else:
+            self.owner_epoch = NR.integer(cell['value']['owner_epoch'], 'dgu/body/owner_epoch', minimum=0)
+
+    def _save_owner_epoch(self, epoch):
+        cell = self.storage.cell(self.EPOCH_TABLE, self.EPOCH_KEY)
+        self.world.transact([dict(table=self.EPOCH_TABLE, key=self.EPOCH_KEY,
+                                  expected=None if cell is None else cell['version'], value=dict(owner_epoch=epoch))])
+
     def advance_owner_epoch(self):
-        """TEST_ONLY owner-epoch change (owner transfer); in-process only."""
-        self.owner_epoch = NR.integer(self.owner_epoch + 1, 'dgu/body/owner_epoch', minimum=0)
+        """Durably advance the body owner's fencing epoch."""
+        next_epoch = NR.integer(self.owner_epoch + 1, 'dgu/body/owner_epoch', minimum=0)
+        self._save_owner_epoch(next_epoch)
+        self.owner_epoch = next_epoch
 
     def wrap(self, family, record):
         return dict(schema_id=self.IDS[family], schema_version='2.0.0' if family == T_CONTROL else '1.0.0',

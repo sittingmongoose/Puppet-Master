@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L6292-L6410
+Source lines: L6292-L6412
 
-Source SHA256: `459390e9235103074acbe528858e3ebb3aed895608f13756678ceb34bfb71f47`
+Source SHA256: `828fae2e8d97ac26de741feb064e70475c62350b769071666b9e5a52fbc7a128`
 
 ---
 
@@ -80,6 +80,8 @@ acceptance_criteria:
   owner/approval/lineage.
 - Pending recovery preserves original accepted intent without raw-source reconstruction and never waives current
   approval/stop/external/access fences.
+- The body owner's fencing epoch is durable and restored on reopen; a commit captured at an earlier epoch
+  refuses after owner transfer or restart.
 - Stop defeats continuation immediately despite reservation; pure body receipt grants no event, SIR or completion
   success.
 - Current and audit readers authenticate canonical origin and final current facts; deleted text is never recreated
