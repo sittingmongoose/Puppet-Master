@@ -18,6 +18,7 @@ import pm_goal_test_storage as S
 import pm_goal_test_reopen as R
 import pm_goal_dg_u_owners as U
 import pm_goal_dg_cb_migration as M
+import pm_goal_dg_cb_owners as B
 import pm_goal_dg_cb_c5_cases as C5
 
 
@@ -142,7 +143,10 @@ def pf5(root):
     C5.run(w, scope)
     route, request = C5.cancel_request(w, scope)
     route.dispatch(request)
+    coordinator = dict(owner_id=w.coordinator.owner_id, owner_epoch=w.coordinator.owner_epoch)
     w.sir.restart()
+    check('coordinator' in w.value(B.ROSTER, 'roster')['owners'],
+          'SIR restart dropped the migration coordinator from the roster')
     try:
         route.capture_source()
         before = 'accepted'
@@ -159,7 +163,11 @@ def pf5(root):
         after = code_of(error)
     check(after == 'C1/capture_source/sir_epoch', 'stale pre-restart acceptance captured after reopen: ' + after)
     check(reopened.sir.owner_epoch == 2, 'reopen did not restore the advanced SIR owner epoch')
-    return dict(before=before, after=after, reopened_epoch=reopened.sir.owner_epoch)
+    check(reopened.coordinator.owner_id == coordinator['owner_id'] and
+          reopened.coordinator.owner_epoch == coordinator['owner_epoch'],
+          'SIR restart replaced the migration coordinator on reopen')
+    return dict(before=before, after=after, reopened_epoch=reopened.sir.owner_epoch,
+                coordinator_survived=True)
 
 
 CASES = {'PF-1': pf1, 'PF-2': pf2, 'PF-3': pf3, 'PF-5': pf5}

@@ -1405,9 +1405,14 @@ class LegacySIROwner(SourceOwnerMixin, O.SIROwner):
         return dict(server_id=self.server_id, host_id=self.host_id, environment_id=self.environment_id)
 
     def restart(self):
-        """Advance the SIR fencing epoch and persist it for reopen."""
+        """Advance the SIR fencing epoch and persist only its roster entry."""
         super().restart()
-        self.world.save_roster()
+        w = self.world
+        cell = w.cell(ROSTER, 'roster')
+        value = copy.deepcopy(cell['value'])
+        value['owners']['sir'] = dict(owner_id=self.owner_id, owner_epoch=self.owner_epoch)
+        lane_bank().validate(TOS + 'WorldRoster', value, 'world/roster')
+        w.write([w.put(ROSTER, 'roster', value, expected=cell['version'])])
 
     def accept(self, request, *, command_id='cmd.chat.goal.cancel'):
         """Accept one dispatch with issuance origins; identical replay returns the original, altered conflicts."""
