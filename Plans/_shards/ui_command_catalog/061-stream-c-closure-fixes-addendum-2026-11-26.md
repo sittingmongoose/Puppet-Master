@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L22055-L22100
 
-Source SHA256: `be2edff746b358e17a59042765a2654f5a34518ac042cfaaeaba875575283d52`
+Source SHA256: `9c34de2ef93562e8eb995cd913772a076b1d81c9574dec216dd3b6a4e5262a3d`
 
 ---
 
@@ -26,7 +26,7 @@ Amended 2026-11-24 (DL-2602, C-FIX79): `cmd.prd_builder.revision.resubmit`, the 
 
 | PMConcept token | Disposition |
 |---|---|
-| `cmd.chat.open_investigation_target` | Cataloged 2026-11-25 (C-FIX79): the Investigation Context `Open target` action (`Plans/assistant-chat-design.md` ACD-100). A no-persist `navigation_wrapper`: payload `thread_id` and `investigation_id`; it opens the investigation's `effective_target` (else `target`, by `debug_target_kind`) in the surface that owns that target through that surface's existing route, and never opens a raw payload (ACD-092). Disabled reasons: `stale_projection` when the target no longer resolves (the user runs `Revalidate target` first) and `unreachable` when the owning surface cannot open it. It records a no-persist route/open disposition and emits no event. The chat document's older Open target spelling is retired there, not aliased. |
+| `cmd.chat.open_investigation_target` | Cataloged 2026-11-25 (C-FIX79): the Investigation Context `Open target` action (`Plans/assistant-chat-design.md` ACD-100). A no-persist `navigation_wrapper`: payload `thread_id` and `investigation_id`; it opens the investigation's `effective_target` (else `target`, by `debug_target_kind`) in the surface that owns that target through that surface's existing route, and never opens a raw payload (ACD-092). Disabled reasons: `stale_projection` when the target no longer resolves (the user rebinds it through the Debug target picker, `cmd.chat.open_debug_target_picker`; `Revalidate target` is offered only where supported, as ACD-100 says) and `unreachable` when the owning surface cannot open it. It records a no-persist route/open disposition and emits no event. The chat document's older Open target spelling is retired there, not aliased. |
 
 ### Persona update operations
 

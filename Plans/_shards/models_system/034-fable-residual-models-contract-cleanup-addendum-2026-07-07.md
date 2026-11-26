@@ -4,7 +4,7 @@ Source: `Plans/Models_System.md`
 
 Source lines: L9729-L10100
 
-Source SHA256: `fbf93220c35e88d7921b9ec0bf92e3dffb5c1cd11614db3c51042a60e27785c3`
+Source SHA256: `4398dfc2990b4f773f5cefd5f57811558fd245c493619b182f886931bdc0c621`
 
 ---
 
@@ -104,7 +104,7 @@ Fields only MS-135 adds:
 | `credential_route_epoch_id` | string | The MA-067 credential route epoch the effective account used. |
 | `fallback_used` | boolean | `true` only when `resolved_model_id` came from a `fallback_chain[]` entry instead of the precedence winner. |
 | `clamp_reason?` | string, closed to these members of the `clamp/substitution` reason-code family ("Provider capability and cost gating" above): `effort_unsupported`, `effort_clamped`, `auth_family_capability_clamped`, `capability_unknown`, `instruction_projection_partial`, `skill_projection_partial` | Present only when a requested value was not applied exactly for a reason other than model fallback, with the family's meanings (`effort_clamped` = accepted but narrowed effort; `effort_unsupported` = the effort control is unsupported). The model-level family codes `model_unavailable`, `model_routed_by_provider` and `model_substituted` are never written here: a model fallback is `fallback_used = true`, its `model_substituted` code is `substitution_reason`, and `selection_reason.fallback_reason` names the gate the requested model failed. When more than one code applies, the first in this list is recorded and the others stay in the attempt's `EffortSettlementReceipt` and `skipped_persona_controls[]`. Why an effort was narrowed (model maximum, policy ceiling, budget, provider mapping) is the attempt's `EffortSettlementReceipt.clamp_reason`, not this field. |
-| `substitution_reason?` | string, closed: `model_substituted` | Present exactly when `fallback_used = true`. It is the MS-103 `clamp/substitution` code that is explicit evidence of a requested/effective model difference caused by model fallback; `selection_reason.fallback_reason` stays the explanation of the failed gate (for example `model_not_dispatchable`). |
+| `substitution_reason?` | string, closed: `model_substituted` | Present exactly when `fallback_used = true` replaced a requested model (a named model or the router's winner); omitted when the fallback follows the router's `no_eligible_candidate` result, since no router winner was replaced. It is the MS-103 `clamp/substitution` code that is explicit evidence of a requested/effective model difference caused by model fallback; `selection_reason.fallback_reason` stays the explanation of the failed gate (for example `model_not_dispatchable`). |
 | `visibility_state` | string, closed: `visible`, `visible_with_notice`, `hidden_from_picker`, `history_only` | Derived from the effective model's `model_lifecycle_state` by the model lifecycle table below. |
 
 Example 1, the run's own pick is honored:
@@ -113,8 +113,8 @@ Example 1, the run's own pick is honored:
 {
   "requested_platform": "claude-code",
   "effective_platform": "claude-code",
-  "requested_model": "claude-opus-4-6",
-  "effective_model": "claude-opus-4-6",
+  "requested_model": "anthropic/claude-opus-4-6",
+  "effective_model": "anthropic/claude-opus-4-6",
   "requested_variant": null,
   "effective_variant": null,
   "requested_auth_mode": "subscription",
@@ -124,7 +124,7 @@ Example 1, the run's own pick is honored:
   "execution_role": "node_worker",
   "selection_reason": {
     "selected_provider": "claude-code",
-    "selected_model": "claude-opus-4-6",
+    "selected_model": "anthropic/claude-opus-4-6",
     "precedence_tier": 1,
     "alternatives": [],
     "selection_time_utc": "2026-11-25T15:04:05Z",
@@ -133,10 +133,10 @@ Example 1, the run's own pick is honored:
   "resolver_matrix_entry": "run_envelope_override",
   "worker_policy_display": "Opus 4.6, picked for this run",
   "skipped_persona_controls": [],
-  "requested_model_id": "claude-opus-4-6",
+  "requested_model_id": "anthropic/claude-opus-4-6",
   "requested_provider_id": "claude-code",
   "account_id": "acct_work",
-  "resolved_model_id": "claude-opus-4-6",
+  "resolved_model_id": "anthropic/claude-opus-4-6",
   "capability_snapshot_ref": "capsnap://claude-code/claude-opus-4-6/rev-118",
   "credential_route_epoch_id": "cre_7f3a",
   "fallback_used": false,
@@ -150,8 +150,8 @@ Example 2, the picked model is sunset, the first fallback runs, and effort is cl
 {
   "requested_platform": "codex",
   "effective_platform": "codex",
-  "requested_model": "gpt-5.2-codex",
-  "effective_model": "gpt-5.5-codex",
+  "requested_model": "openai/gpt-5.2-codex",
+  "effective_model": "openai/gpt-5.5-codex",
   "requested_variant": null,
   "effective_variant": null,
   "requested_auth_mode": "subscription",
@@ -161,7 +161,7 @@ Example 2, the picked model is sunset, the first fallback runs, and effort is cl
   "execution_role": "overseer",
   "selection_reason": {
     "selected_provider": "codex",
-    "selected_model": "gpt-5.5-codex",
+    "selected_model": "openai/gpt-5.5-codex",
     "precedence_tier": 5,
     "fallback_reason": "model_not_dispatchable",
     "alternatives": [
@@ -173,10 +173,10 @@ Example 2, the picked model is sunset, the first fallback runs, and effort is cl
   "resolver_matrix_entry": "project_defaults_list",
   "worker_policy_display": "GPT-5.5 Codex (GPT-5.2 Codex has ended)",
   "skipped_persona_controls": [],
-  "requested_model_id": "gpt-5.2-codex",
+  "requested_model_id": "openai/gpt-5.2-codex",
   "requested_provider_id": "codex",
   "account_id": "acct_team",
-  "resolved_model_id": "gpt-5.5-codex",
+  "resolved_model_id": "openai/gpt-5.5-codex",
   "capability_snapshot_ref": "capsnap://codex/gpt-5.5-codex/rev-41",
   "credential_route_epoch_id": "cre_19bd",
   "fallback_used": true,
