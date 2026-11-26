@@ -753,14 +753,24 @@
   }
   function pauseNote() { if (notePaused || !noteEl) return; notePaused = true; clearTimeout(noteTimer); noteLeft = Math.max(1500, noteLeft - (Date.now() - noteStart)); }
   function resumeNote() { if (!notePaused || !noteEl) return; notePaused = false; noteStart = Date.now(); noteTimer = setTimeout(hideNote, noteLeft); }
-  function hideNote() {
-    clearTimeout(noteTimer);
+  function hideNote(o) {
+    o = o || {};
+    if (o.immediate) {
+      const host = portal();
+      if (host) {
+        const sel = o.kind ? `:scope > .psx-note[data-leaving][data-kind="${CSS.escape(o.kind)}"]` : ':scope > .psx-note[data-leaving]';
+        host.querySelectorAll(sel).forEach((n) => n.remove());
+      }
+    }
     if (!noteEl || !noteEl.isConnected) return;
+    if (o.kind && noteEl.dataset.kind !== o.kind) return;
+    clearTimeout(noteTimer);
+    W.cancelAnimationFrame(notePlacement);
     const el = noteEl;
     const hadFocus = el.contains(D.activeElement);
-    if (reduced()) el.remove(); else { el.setAttribute('data-leaving', ''); setTimeout(() => el.remove(), 180); }
+    if (o.immediate || reduced()) el.remove(); else { el.setAttribute('data-leaving', ''); setTimeout(() => el.remove(), 180); }
     noteEl = null; noteActs = null;
-    if (hadFocus && PSX.lastFocus && PSX.lastFocus.isConnected) try { PSX.lastFocus.focus({ preventScroll: true }); } catch (e) { /* gone */ }
+    if (!o.immediate && hadFocus && PSX.lastFocus && PSX.lastFocus.isConnected) try { PSX.lastFocus.focus({ preventScroll: true }); } catch (e) { /* gone */ }
   }
 
   /* Undo is reachable by keyboard while the note shows (SETTINGS-PROPOSAL 3.5): Control or Command Z runs it outside a

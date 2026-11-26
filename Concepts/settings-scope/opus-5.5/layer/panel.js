@@ -24,7 +24,13 @@
   const MODEL_PICKER = '[data-action="o55-insp-pick"]';
   let editing = null;      // { id, level, key, isNew }
   let lastOpen = null;     // the setting whose panel is open, for focus on close
+  let openSetting = null;  // the setting currently shown in an open Details panel
   let pickerOpening = null;
+  function dismissSavedOnOpen(id) {
+    if (!id || openSetting === id) return;
+    openSetting = id;
+    PSX.hideNote && PSX.hideNote({ kind: 'saved', immediate: true });
+  }
 
   /* ------------------------------------------------------------------ writing one level, with its note
      Every write here goes through the one write path (guard.js): first start, the device in use, the level, the value,
@@ -228,6 +234,7 @@
     o = o || {};
     const cur = current(); if (!cur || !cur.id) return;
     const { page, body, head, id } = cur;
+    dismissSavedOnOpen(id);
     if (lastOpen && lastOpen !== id) pickerOpening = null;
     lastOpen = id;
     PSX.adopt && PSX.adopt(id);
@@ -1148,7 +1155,7 @@
       undoId: id,
       ok: (y) => {
         const tx = PSX.write(writes, { batch: 'promote', yolo: !!(y && y.yolo), text: `${label(id)}: ${placeName(v.level, v.key)}’s ${vt(id, v.value)} made the everywhere value` });
-        if (tx && !(y && y.yolo)) PSX.note({ title: 'Saved for everywhere.', body: `${n} project${n === 1 ? '' : 's'} now use ${vt(id, v.value)}.${kept ? ` ${placeName(v.level, v.key)} keeps its own.` : ''}`, actions: [{ label: 'Undo', run: () => PSX.undoTx(tx.id, id) }] });
+        if (tx && !(y && y.yolo)) PSX.note({ title: 'Saved for everywhere.', body: `${n} project${n === 1 ? '' : 's'} now use ${vt(id, v.value)}.${kept ? ` ${placeName(v.level, v.key)} keeps its own.` : ''}`, actions: [{ label: 'Undo', run: () => PSX.undoTx(tx.id, id) }], kind: 'saved' });
         return tx;
       }
     });
@@ -1176,7 +1183,7 @@
       report: { title: 'Saved for everywhere.', body: `${own.length - a.missed.length} own value${own.length - a.missed.length === 1 ? ' was' : 's were'} taken away.${a.missed.length ? ' Not changed: ' + a.missed.map(missedTxt).join('; ') + '. Nothing was queued.' : ''}` },
       ok: (y) => {
         const tx = PSX.write(writes, { batch: 'use-everywhere', yolo: !!(y && y.yolo), text: `${label(id)}: ${vt(id, value)} everywhere, ${own.length - a.missed.length} own value${own.length - a.missed.length === 1 ? '' : 's'} taken away` }, { atomic: false });
-        if (tx && !(y && y.yolo)) PSX.note({ title: 'Saved for everywhere.', body: `${own.length - tx.missed.length} own value${own.length - tx.missed.length === 1 ? ' was' : 's were'} taken away.${tx.missed.length ? ' Not changed: ' + tx.missed.map(missedTxt).join('; ') + '. Nothing was queued.' : ''}`, actions: [{ label: 'Undo', run: () => PSX.undoTx(tx.id, id) }] });
+        if (tx && !(y && y.yolo)) PSX.note({ title: 'Saved for everywhere.', body: `${own.length - tx.missed.length} own value${own.length - tx.missed.length === 1 ? ' was' : 's were'} taken away.${tx.missed.length ? ' Not changed: ' + tx.missed.map(missedTxt).join('; ') + '. Nothing was queued.' : ''}`, actions: [{ label: 'Undo', run: () => PSX.undoTx(tx.id, id) }], kind: 'saved' });
         return tx;
       }
     });
@@ -1264,6 +1271,7 @@
      the Settings side sheet (PM51.panel) holding the same Where it applies block */
   function openOwn(id, opener) {
     if (!(W.PM51 && W.PM51.panel)) return;
+    PSX.hideNote && PSX.hideNote({ kind: 'saved', immediate: true });
     const wrap = W.PM51.panel({ title: label(id), eyebrow: 'Computers › Home & Location', subtitle: 'Where a new project’s folder is made', icon: 'folder', body: `<div class="psx-own" data-psx-own="${esc(id)}"></div>` });
     PSX.panel.own = wrap && wrap.querySelector('[data-psx-own]');
     PSX.panel.ownId = id;
@@ -1298,12 +1306,21 @@
     }
     const insp = D.querySelector('#pm-settings-root .detail-inspector');
     if (insp && !insp.__psxObs) {
-      let wasOpen = insp.getAttribute('aria-hidden') === 'false';
+      let wasOpen = insp.getAttribute('aria-hidden') === 'false' && insp.style.display !== 'none';
+      openSetting = wasOpen ? (current()?.id || null) : null;
       insp.__psxObs = new MutationObserver(() => {
         const open = insp.getAttribute('aria-hidden') === 'false' && insp.style.display !== 'none';
-        if (open) soon();
+        if (open) {
+          if (!wasOpen) {
+            openSetting = null;
+            PSX.hideNote && PSX.hideNote({ kind: 'saved', immediate: true });
+          }
+          const cur = current();
+          if (cur && cur.id) dismissSavedOnOpen(cur.id);
+          soon();
+        }
         if (wasOpen && !open) {
-          editing = null; pickerOpening = null; S.targets = {};
+          editing = null; pickerOpening = null; openSetting = null; S.targets = {};
           if (insp.dataset) delete insp.dataset.psxDone;
           // Esc closes the panel; focus returns to the row's end word
           const id = lastOpen;

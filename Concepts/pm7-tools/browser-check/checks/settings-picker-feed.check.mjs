@@ -6,6 +6,7 @@ export default async function (t) {
 	const detailsPicker = '.detail-inspector[aria-hidden="false"] [data-action="o55-insp-pick"]';
 	const closeDetails = '.detail-inspector[aria-hidden="false"] [data-action="close-details"]';
 	const onlyOpen = t.args.only === 'open-position';
+	const onlyReceiptClose = t.args.only === 'receipt-close';
 
 	async function closeDetailsIfOpen(frame) {
 		const isOpen = await frame.evaluate(() => {
@@ -153,6 +154,10 @@ export default async function (t) {
 
 	if (onlyOpen) {
 		await runOpenPosition();
+		return;
+	}
+	if (onlyReceiptClose) {
+		await runReceiptClose();
 		return;
 	}
 
@@ -713,5 +718,224 @@ export default async function (t) {
 		}
 		await sweepDetailsEdges(look, width, height);
 	}
+	// FO-158 r6f: opening a different setting's Details (or switching Details) dismisses any saved receipt so Close is
+	// never covered; saving inside Details keeps the receipt and its Undo working.
+	async function clickRealCenter(locator) {
+		await locator.scrollIntoViewIfNeeded({ timeout: 8000 });
+		const box = await locator.boundingBox();
+		if (!box || box.width <= 0 || box.height <= 0) throw new Error('Target has no bounding box');
+		const x = box.x + box.width / 2, y = box.y + box.height / 2;
+		await t.page.mouse.click(x, y);
+		return { x, y, box };
+	}
+
+	async function waitForAnySavedReceipt(frame) {
+		const sel = `${noteSelector}[data-kind="saved"]`;
+		const note = frame.locator(sel);
+		await note.waitFor({ state: 'visible', timeout: 8000 });
+		await frame.waitForFunction((s) => {
+			const el = document.querySelector(s);
+			return !!el && Number(getComputedStyle(el).opacity) > 0.9;
+		}, sel, { timeout: 2000 });
+		return note;
+	}
+
+	function readCloseState(frame) {
+		return frame.evaluate(() => {
+			const insp = document.querySelector('#pm-settings-root .detail-inspector[aria-hidden="false"]');
+			const close = insp?.querySelector('[data-action="close-details"]');
+			const note = document.querySelector('#pm-settings-portals > .psx-note');
+			const closeRect = close?.getBoundingClientRect() || null;
+			const noteRect = note?.getBoundingClientRect() || null;
+			let closeHit = null;
+			if (closeRect && closeRect.width > 0 && closeRect.height > 0) {
+				const cx = closeRect.left + closeRect.width / 2;
+				const cy = closeRect.top + closeRect.height / 2;
+				const top = document.elementFromPoint(cx, cy);
+				closeHit = {
+					x: cx, y: cy,
+					reachesClose: !!top && (top === close || close.contains(top)),
+					inReceipt: !!top && !!top.closest?.('.psx-note'),
+					top: top ? top.outerHTML.split('>')[0] : null,
+				};
+			}
+			const page = insp?.querySelector(':scope > .o55-insp-page:not(.o55-leaving)') || insp;
+			return {
+				detailsOpen: !!insp && insp.style.display !== 'none',
+				settingId: page?.querySelector('.o55-insp-tech code')?.textContent.trim() || null,
+				receiptPresent: !!note,
+				receiptVisible: !!note && !note.hasAttribute('data-leaving') && Number(getComputedStyle(note).opacity) > 0.1,
+				receiptKind: note?.dataset.kind || null,
+				receiptRect: noteRect ? noteRect.toJSON() : null,
+				closeRect: closeRect ? closeRect.toJSON() : null,
+				closeHit,
+			};
+		});
+	}
+
+	async function openReceiptCloseFrame(look, width, height) {
+		await t.viewport(width, height);
+		const frame = await t.app.open();
+		if (!await frame.evaluate(() => document.documentElement.hasAttribute('data-psx-layer'))) {
+			await t.check('settings-picker-feed: not a settings-scope build, skipped (build it with tools/build_standalone.py)', true);
+			return null;
+		}
+		await frame.waitForFunction(() => !!window.PSX?.lastReport, null, { timeout: 60000 });
+		await frame.evaluate((l) => {
+			try { localStorage.removeItem('psx.settings-scope.v1'); } catch (e) { /* opaque sandbox */ }
+			if (window.PSX?.S) window.PSX.S.tipShown = false;
+			return PSX.setLook(l);
+		}, look);
+		return frame;
+	}
+
+	async function assertCloseWorksAtOnce(frame, expectedId, who, shotName = null) {
+		await waitForDetailsOpen(frame, expectedId);
+		const before = await readCloseState(frame);
+		if (shotName) await t.shot(shotName, who);
+		const closeLoc = frame.locator(closeDetails);
+		const box = await closeLoc.boundingBox();
+		let closed = false;
+		if (box && box.width > 0 && box.height > 0) {
+			await t.page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+			closed = await frame.waitForFunction(() => {
+				const insp = document.querySelector('#pm-settings-root .detail-inspector');
+				return !insp || insp.getAttribute('aria-hidden') === 'true' || insp.style.display === 'none';
+			}, null, { timeout: 1500 }).then(() => true, () => false);
+		}
+		const after = await readCloseState(frame);
+		const witness = JSON.stringify({ before, box, closed, after });
+		t.log(`${who} ${witness}`);
+		await t.check(`${who}: saved receipt is dismissed when Details opens or switches`, !before.receiptPresent, witness);
+		await t.check(
+			`${who}: hit test at Close centre finds Close (not receipt) and real mouse click closes Details`,
+			Boolean(before.closeHit?.reachesClose && !before.closeHit?.inReceipt && closed),
+			witness
+		);
+	}
+
+	async function runReceiptClose() {
+		const matrix = [['basic-dark', 1920, 1080], ['glass-dark', 740, 900]];
+		for (const [look, width, height] of matrix) {
+			// 1. Model setting save -> open a DIFFERENT setting's Details -> Close at once
+			await t.step(`receipt-close ${look} ${width}x${height} model`, async () => {
+				const who = `receipt-close ${look} ${width}x${height} model`;
+				const frame = await openReceiptCloseFrame(look, width, height);
+				if (!frame) return;
+				await clickRealCenter(frame.locator(rowPicker('ai.models.default-model')).first());
+				await frame.locator('.o55-pick-pop.is-open .o55-pick-list [role="option"]').first().waitFor({ state: 'visible', timeout: 8000 });
+				const modelOpt = frame.locator('.o55-pick-pop.is-open .o55-pick-list [role="option"]:not([aria-selected="true"]):not([aria-disabled="true"]):not([data-pre="1"])').first();
+				await clickRealCenter(modelOpt);
+				await t.page.waitForTimeout(300);
+				const depthDef = frame.locator('.o55-pick-pop.is-open [role="listbox"][aria-label^="Thinking depth"] [role="option"][data-effort=""]').first();
+				if (await depthDef.count()) await clickRealCenter(depthDef);
+				await waitForAnySavedReceipt(frame);
+				const otherAbout = await revealRow(frame, 'ai.models.worker-model');
+				await clickRealCenter(otherAbout);
+				await assertCloseWorksAtOnce(frame, 'ai.models.worker-model', who);
+			});
+
+			// 2. Effort/depth save (exact Astra repro: Everyday building High -> Varies on Everyday model) -> Close at once
+			await t.step(`receipt-close ${look} ${width}x${height} effort/depth`, async () => {
+				const who = `receipt-close ${look} ${width}x${height} effort/depth`;
+				const frame = await openReceiptCloseFrame(look, width, height);
+				if (!frame) return;
+				await clickRealCenter(frame.locator(rowPicker('ai.models.worker-model')).first());
+				await t.page.waitForTimeout(350);
+				const depthOpt = frame.locator('.o55-pick-pop.is-open [role="listbox"][aria-label^="Thinking depth"] [role="option"][data-effort="High"]').first();
+				await depthOpt.waitFor({ state: 'visible', timeout: 8000 });
+				await clickRealCenter(depthOpt);
+				await waitForAnySavedReceipt(frame);
+				const otherAbout = await revealRow(frame, 'ai.models.default-model');
+				await clickRealCenter(otherAbout);
+				const shot = look === 'basic-dark' && width === 1920 ? 'fo158-r6f-effort-close-basic-1920'
+					: look === 'glass-dark' && width === 740 ? 'fo158-r6f-effort-close-glass-740' : null;
+				await assertCloseWorksAtOnce(frame, 'ai.models.default-model', who, shot);
+			});
+
+			// 3. Toggle save -> open a DIFFERENT setting's Details -> Close at once
+			await t.step(`receipt-close ${look} ${width}x${height} toggle`, async () => {
+				const who = `receipt-close ${look} ${width}x${height} toggle`;
+				const frame = await openReceiptCloseFrame(look, width, height);
+				if (!frame) return;
+				await revealRow(frame, 'general.interaction.provider-disclosure');
+				const sw = frame.locator('#pm-settings-root [id="setting-general.interaction.provider-disclosure"] [role="switch"]').first();
+				await clickRealCenter(sw);
+				await waitForAnySavedReceipt(frame);
+				const otherAbout = await revealRow(frame, 'ai.models.default-model');
+				await clickRealCenter(otherAbout);
+				await assertCloseWorksAtOnce(frame, 'ai.models.default-model', who);
+			});
+
+			// 4. List/choice save -> open a DIFFERENT setting's Details -> Close at once
+			await t.step(`receipt-close ${look} ${width}x${height} list/choice`, async () => {
+				const who = `receipt-close ${look} ${width}x${height} list/choice`;
+				const frame = await openReceiptCloseFrame(look, width, height);
+				if (!frame) return;
+				await revealRow(frame, 'ai.models.default-provider');
+				const dd = frame.locator('#pm-settings-root [id="setting-ai.models.default-provider"] .pm51-dd-trigger').first();
+				await clickRealCenter(dd);
+				const opt = frame.locator('.pm51-popout.pm51-dd-list.is-open [role="option"][aria-selected="false"]:not([aria-disabled="true"])').first();
+				await opt.waitFor({ state: 'visible', timeout: 8000 });
+				await clickRealCenter(opt);
+				await waitForAnySavedReceipt(frame);
+				const otherAbout = await revealRow(frame, 'ai.models.default-model');
+				await clickRealCenter(otherAbout);
+				await assertCloseWorksAtOnce(frame, 'ai.models.default-model', who);
+			});
+
+			// 5. Save inside Details -> switch Details to another setting via Next to it -> receipt dismissed & Close works
+			await t.step(`receipt-close ${look} ${width}x${height} switch inside Details`, async () => {
+				const who = `receipt-close ${look} ${width}x${height} switch inside Details`;
+				const frame = await openReceiptFrame(look, width, height, 'ai.models.default-model', true);
+				await frame.evaluate(() => {
+					try { localStorage.removeItem('psx.settings-scope.v1'); } catch (e) { /* opaque sandbox */ }
+					if (window.PSX?.S) window.PSX.S.tipShown = false;
+				});
+				await clickRealCenter(frame.locator(detailsPicker).first());
+				await t.page.waitForTimeout(350);
+				const depthOpt = frame.locator('.o55-pick-pop.is-open [role="listbox"][aria-label^="Thinking depth"] [role="option"][data-effort="High"]').first();
+				await depthOpt.waitFor({ state: 'visible', timeout: 8000 });
+				await clickRealCenter(depthOpt);
+				await waitForSaveReceipt(frame);
+				const nextBtn = frame.locator('.detail-inspector[aria-hidden="false"] .o55-insp-near [data-action="setting-details"]').first();
+				const nextId = await nextBtn.getAttribute('data-setting');
+				await clickRealCenter(nextBtn);
+				await assertCloseWorksAtOnce(frame, nextId, who);
+			});
+
+			// 6. Save inside Details -> receipt and Undo stay visible and Undo works
+			await t.step(`receipt-close ${look} ${width}x${height} save inside Details keeps Undo`, async () => {
+				const who = `receipt-close ${look} ${width}x${height} save inside Details keeps Undo`;
+				const frame = await openReceiptFrame(look, width, height, 'ai.models.default-model', true);
+				await clickRealCenter(frame.locator(detailsPicker).first());
+				await t.page.waitForTimeout(350);
+				const depthOpt = frame.locator('.o55-pick-pop.is-open [role="listbox"][aria-label^="Thinking depth"] [role="option"][data-effort="High"]').first();
+				await depthOpt.waitFor({ state: 'visible', timeout: 8000 });
+				await clickRealCenter(depthOpt);
+				const note = await waitForSaveReceipt(frame);
+				const hits = await readReceiptHits(frame, detailsPicker);
+				const stillOpen = await frame.evaluate(() => {
+					const insp = document.querySelector('#pm-settings-root .detail-inspector[aria-hidden="false"]');
+					const code = insp?.querySelector('.o55-insp-tech code');
+					return !!insp && insp.style.display !== 'none' && code?.textContent.trim() === 'ai.models.default-model';
+				});
+				const savedHigh = await frame.evaluate(() => PSX.effortOf(PSX.getAt(PSX.W, 'project', 'tastebook', 'ai.models.default-model')));
+				await t.check(
+					`${who}: Details save keeps the saved receipt and Undo reachable`,
+					Boolean(stillOpen && savedHigh === 'High' && hits.visible && hits.undo?.reaches),
+					JSON.stringify({ stillOpen, savedHigh, hits })
+				);
+				const undoBtn = note.getByRole('button', { name: 'Undo', exact: true });
+				await clickRealCenter(undoBtn);
+				const undone = await frame.waitForFunction(() =>
+					PSX.effortOf(PSX.getAt(PSX.W, 'project', 'tastebook', 'ai.models.default-model')) !== 'High',
+				null, { timeout: 3000 }).then(() => true, () => false);
+				await t.check(`${who}: Undo inside Details restores the previous value`, undone);
+			});
+		}
+	}
+
 	await runOpenPosition();
+	await runReceiptClose();
 }

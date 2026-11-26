@@ -573,6 +573,9 @@
   /* the note's words (SETTINGS-PROPOSAL 3.2) */
   function sayWhere(id, tg, tx, o) {
     o = o || {};
+    const cur = PSX.panel && PSX.panel.current ? PSX.panel.current() : null;
+    const rowEditor = PSX.places && PSX.places.editing && PSX.places.editing.id === id;
+    if (cur && (cur.id !== id || (o.src === 'row' && !rowEditor))) return;
     const c = PSX.ctxFull(S.ctx), def = DEF[id];
     const after = PSX.resolve(id, S.ctx);
     const undoAct = { label: 'Undo', run: () => undoTx(tx.id, id) };
