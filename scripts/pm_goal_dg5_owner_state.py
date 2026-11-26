@@ -493,13 +493,17 @@ class _PlainWalk(Walk):
         self.edges = array.array('Q')
         self.leaves = {}
         self.disjoint = weakref.WeakSet()
+        self.cache_weight = 0
 
     def visit(self, value, stack):
         kind = type(value)
         if type(kind) is not type:
             raise _NotPlain
         if kind in _PLAIN_LEAVES:
-            self.leaves[id(value)] = value
+            ident = id(value)
+            if ident not in self.leaves:
+                self.leaves[ident] = value
+                self.cache_weight += 128 + sys.getsizeof(value)
         elif kind in _PLAIN_CONTAINERS:
             ident = id(value)
             if ident in self.prefix:
@@ -507,18 +511,16 @@ class _PlainWalk(Walk):
                 self.put('prefix-ref', index)
                 return
             if ident not in self.memo:
+                start = len(self.edges)
                 self.edges.extend((ident, id(kind), len(value)))
                 if kind is dict:
                     self.edges.extend(id(item) for pair in value.items() for item in pair)
                 else:
                     self.edges.extend(map(id, value))
+                self.cache_weight += 128 + self.edges.itemsize * (len(self.edges) - start)
         else:
             raise _NotPlain
         super().visit(value, stack)
-
-    def weight(self):
-        # A conservative cache budget for Python index entries and the native rows.
-        return self.edges.itemsize * len(self.edges) + 128 * (len(self.memo) + len(self.leaves) + 1)
 
     def matches(self, walk, guard):
         memo = walk.memo
@@ -581,12 +583,12 @@ class _CheckpointWalk(Walk):
         self.pinned.extend(fragment.pinned)
         fragment.prefix = None
         fragment.pinned.clear()
-        weight = fragment.weight()
+        weight = fragment.cache_weight
         if weight <= self.CACHE_BYTES:
             if ident in cache:
-                self.hook._checkpoint_bytes -= cache.pop(ident).weight()
+                self.hook._checkpoint_bytes -= cache.pop(ident).cache_weight
             while self.hook._checkpoint_bytes + weight > self.CACHE_BYTES:
-                self.hook._checkpoint_bytes -= cache.popitem(last=False)[1].weight()
+                self.hook._checkpoint_bytes -= cache.popitem(last=False)[1].cache_weight
             cache[ident] = fragment
             self.hook._checkpoint_bytes += weight
         return True
