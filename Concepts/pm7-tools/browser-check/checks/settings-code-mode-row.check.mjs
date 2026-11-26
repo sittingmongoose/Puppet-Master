@@ -92,12 +92,14 @@ export default async function (t) {
 		const titles = await results.evaluateAll((els) => els.map((el) => ((el.innerText || '').split('\n').map((s) => s.replace(/\s+/g, ' ').trim()).filter(Boolean)[0] || '')));
 		const at = titles.findIndex(sameLabel);
 		if (at < 0) return { at, titles };
+		/* the match itself can be seen, not only found by its text */
+		const seen = await results.nth(at).evaluate((el) => el.checkVisibility({ opacityProperty: true, visibilityProperty: true, contentVisibilityAuto: true }) && Number(getComputedStyle(el).opacity) > 0.5);
 		await results.nth(at).click();
 		await t.settle();
 		await t.page.waitForTimeout(900);
 		await f.locator(SW).first().evaluate((el) => el.scrollIntoView({ block: 'center', behavior: 'instant' })).catch(() => {});
 		await t.page.waitForTimeout(400);
-		return { at, titles };
+		return { at, titles, seen };
 	};
 	const read = () => f.evaluate(ROW, [ID, norm(INV.label), norm(INV.desc)]);
 	/* three pictures of the switch's own box, pointer parked away and motion settled: as drawn, with the switch hidden,
@@ -178,6 +180,7 @@ export default async function (t) {
 	t.log(`Settings Search "Code Mode" lists results named: ${found.titles.slice(0, 8).join(' | ')}`);
 	await t.check('Settings Search for "Code Mode" lists a result whose name is the inventory label', found.at >= 0, found.titles.slice(0, 8).join(' | '));
 	if (found.at < 0) return;
+	await t.check('that Search result passes the opacity-aware visibility check', found.seen === true, String(found.seen));
 
 	let row = await read();
 	t.log(`after the search: ${JSON.stringify(row)}`);

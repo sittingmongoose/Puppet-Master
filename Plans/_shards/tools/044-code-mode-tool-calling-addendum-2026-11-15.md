@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L13358-L13805
+Source lines: L13358-L13812
 
-Source SHA256: `3be45dc758c6862dba39e44d9fd1bba1126cd200975d91309cc9d61270299a09`
+Source SHA256: `ae71e2442f0e521e9c333d58283fe0bd303c958fe09e0d919248952c07b7af5f`
 
 ---
 
@@ -73,7 +73,7 @@ canonical_text: >-
   ordinary tool calls is never a silent fallback: the run's own status or stop entry in its transcript shows the effective mode and
   typed reason that this unit records for the run, whatever its requests did and whether or not any of them was
   sent or produced a turn, so the disclosure never depends on a particular request. Every other surface that shows the run's tool-calling mode shows
-  them with it, while a run that did not request Code Mode is shown neutrally as T-191 says.
+  them with it, while a run that did not request Code Mode is shown, where its tool-calling mode is shown at all, neutrally as T-191 says.
   Code Mode is never reported as effective for a run in which any tool other than the
   directly callable tools named in T-190 was dispatched another way. A new run in a resumed
   session or conversation reads T-191's row when it starts, like any other run; a run that continues under the same
@@ -180,9 +180,11 @@ canonical_text: >-
   profile, the script tool is not offered through it to any run, and for a run that requested Code Mode that is T-188's not
   materialized reason unless an earlier reason counts. Every run on such a bridge uses the bridge's ordinary
   projection where the adapter can still present or filter the bounded ordinary selection for each request; where
-  it cannot, that request is one on a route that cannot carry Puppet Master tools: T-188 derives each run's record
-  from it by its own rules, so a run that did not request Code Mode still records setting, and the bridge's
-  existing tier disclosure applies to every run on it. A DAE route follows the DAE sentences below,
+  it cannot, that request is one on a route that cannot carry Puppet Master tools: it takes whichever fallback
+  shape, delegated or reasoning-only, CLI_Bridged_Providers' fallback rules admit for it, that shape is its
+  execution-shape reason, and where those rules admit neither the request is stopped before its offer is decided
+  and counts nothing. T-188 derives each run's record from such a request by its own rules, so a run that did not
+  request Code Mode still records setting, and the bridge's existing tier disclosure applies to every run on it. A DAE route follows the DAE sentences below,
   and a route that accepts no Puppet Master tools carries none. Each call travels by exactly one channel. Wherever
   this unit says the request-selected tools are carried or projected on an ordinary request, it means those the
   ordinary form materializes under T-176; a tool that owner defers or cannot materialize keeps its explicit
@@ -233,7 +235,7 @@ acceptance_criteria:
   - Under Host Tool Execution a request on which the script tool is offered carries it and does not also carry one provider tool schema per registry tool the script can call; a request on which it is not offered keeps the ordinary tool-call path.
   - A model whose Models_System tool_use is false can use Code Mode through an owned in-band dialect on an in-band route, and a tool result the model wrote itself never reaches replayable history.
   - On a direct API in-band route, the result of an accepted in-band call, from a script or from an ordinary tool, is returned in the next request, if one is admitted and sent with the same model family, carriage and owned dialect, as a Puppet Master-authored result in the owned dialect carrying the Puppet Master-minted call ID, holding whatever content Prompt_Pipeline's tool-result rules admit for the model; where those rules keep the content from the model, what the model is shown for that call is what those rules say, and the settled call and result stay in history under their owners. When no later request is sent, the result and the stop keep their existing owners' handling; when the next request differs in model family, carriage or dialect, the settled call and result pair goes through Prompt_Pipeline's replay and compatibility rules instead.
-  - Two runs on the same server-bridge profile, one with the row On and one with it Off, are each shown only their own projection. On a bridge that cannot keep them apart, neither is offered the script tool. Where that bridge can still present or filter each request's bounded selection, both runs use its ordinary projection, and with one counted request each, a positive report of an approved JavaScript EvalSession and policy admission, T-188 gives the run with the row Off ordinary tool calls with the reason setting and the run with the row On ordinary tool calls with the reason not materialized. Where the bridge cannot do that either, it carries no Puppet Master tools for that request and its tier disclosure is shown for both runs, and with one counted request each T-188 gives the run with the row Off ordinary tool calls with the reason setting and the run with the row On ordinary tool calls with the execution-shape reason. Runs with more requests follow T-188.
+  - Two runs on the same server-bridge profile, one with the row On and one with it Off, are each shown only their own projection. On a bridge that cannot keep them apart, neither is offered the script tool. Where that bridge can still present or filter each request's bounded selection, both runs use its ordinary projection, and with one counted request each, a positive report of an approved JavaScript EvalSession and policy admission, T-188 gives the run with the row Off ordinary tool calls with the reason setting and the run with the row On ordinary tool calls with the reason not materialized. Where the bridge cannot do that either, it carries no Puppet Master tools for that request and its tier disclosure is shown for both runs, and with one counted request each T-188 gives the run with the row Off ordinary tool calls with the reason setting and the run with the row On ordinary tool calls with the execution-shape reason of the fallback shape, delegated or reasoning-only, that CLI_Bridged_Providers admits for that request. Runs with more requests follow T-188.
   - On a request on which the script tool is not offered, for any reason, on an in-band route (a direct API route under Host Tool Execution whose model's tool_use capability is false, or a bridged CLI under the HTE strategy without supported structured tool intents), every Puppet Master tool call made on that request is an in-band tool call in the owned dialect, under the same admission gate; on a bridged CLI under HTE with supported structured tool intents the same calls are structured tool intents, never in-band.
   - Under the DAE strategy, on a request on which the script tool is not offered, for any reason, a CLI that accepts projected Puppet Master tools is offered each request-selected Puppet Master tool that the ordinary form materializes as its own projected tool, and Puppet Master dispatches each call with the checks a script's call to that tool gets.
   - A run offered the script tool on some requests and not on others carries, on every request that is sent and whose route can carry Puppet Master tools, that request's selected tool calls by the one channel this unit gives it. A request stopped before it is sent carries nothing and is recorded as T-188 says; a request on a route that accepts no Puppet Master tools carries none.
@@ -241,7 +243,7 @@ acceptance_criteria:
   - Under the DAE strategy the tools a CLI process is shown are exactly those decided when its launch was prepared and are never replaced while it runs; when the offer or the selected tools change during a run, the next launch shows the new set, in both directions (script tool to one-by-one projection and back). T-188 counts each prepared launch as one request from the moment its offer is decided, including a launch whose spawn was then stopped or failed; a stop before that decision counts nothing.
   - Under the DAE strategy, a script call in a process whose approved JavaScript EvalSession is gone fails with the evaluator-unavailable result that Tools section 4.4 and Shared Integration Runtime own, and no ordinary tool is added to that process.
   - Where the essential catalog search of T-176 is policy-available, a request that can carry Puppet Master tools has it selected by T-176's bounded bootstrap path, with that owner's omissions and stop outcomes, in all three cases: the row On with the script tool offered (in the callable catalog), the row On with the script tool not offered (carried directly), and the row Off (carried directly).
-  - A request that otherwise meets every condition for the script tool, whose policy-available essential catalog search cannot be materialized in the script's callable catalog, is not offered the script tool; it uses the ordinary form with that form's own omission or stop outcomes, and T-188 counts the reason not materialized for it.
+  - A request that otherwise meets every condition for the script tool, whose policy-available essential catalog search cannot be materialized in the script's callable catalog, is not offered the script tool; it uses the ordinary form with that form's own omission or stop outcomes, the request's own omission reason is not materialized, and what that contributes to the run's record is T-188's to decide.
   - On a bridged CLI under the HTE strategy, a request on which the script tool is offered carries it through the hosted action loop with no provider tool_use, whether or not that CLI has a code mode of its own, and RM-021 still terminates the run on a provider-originated tool_use; under the DAE strategy, on a launch that is offered the script tool, it is a projected Puppet Master tool beside the CLI's own tools.
   - On a route that keeps native tools Puppet Master cannot disable, including a CLI's own tools under the DAE strategy, a request on which T-188 offers the script tool still carries it, a request on which T-188 does not offer it does not, and the provider's own tool calls stay outside Code Mode.
   - Every effective mode and typed reason on these routes is the one T-188 derives from the run's requests; this unit adds no rule for either.
@@ -391,7 +393,10 @@ canonical_text: >-
   differences listed below. The tools selected for
   the request, and each tool's own permission, approval, FileSafe, network and schema checks, deadline, events,
   receipt and usage rules, apply the same way in both modes, so the row changes no tool authority: in both modes
-  the tools a run may call are the request's selection under its policy snapshot, and each call gets the same checks.
+  the tools a run may call are bounded by what the request's policy snapshot allows, and each call gets the same checks.
+  Within that ceiling each form selects and materializes under its own limits, as T-189 says, and the two ordinary
+  paths, a request with the row Off and a request with the row On that lacks the script tool, get identical
+  selections and omissions for identical inputs.
   With the row On, a request on which T-188 does not offer the script tool, for any reason, uses the same ordinary
   paths as a request of a run with the row Off, with the same bounded tool selection for the same inputs; the
   limits on what each form can materialize are T-189's. Tool execution records
@@ -402,7 +407,9 @@ canonical_text: >-
   script made can be repeated as one ordinary call. The row governs Puppet Master's Code
   Mode only; a provider's own code mode stays a provider-native feature under the provider-native feature policy.
   Off is a choice, not a fault: no surface presents the Off preference, or the typed reason setting, as a fallback, a
-  warning or a degraded run. Every other disclosure a run owes stays as its owner says, whatever the row's value:
+  warning or a degraded run. No surface is required to show it: a surface that shows a run's tool-calling mode shows
+  ordinary tool calls for such a run, with the reason setting where that surface shows reasons, and the run's
+  status or stop entry need not mention it. Every other disclosure a run owes stays as its owner says, whatever the row's value:
   the execution tier and its limits, a delegated or reasoning-only fallback, model substitution and capability
   notices, and permission and safety notices.
 gui_related: true
@@ -447,7 +454,7 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not make the switch a hidden, debug-only, environment-variable or per-provider control; it is one ordinary Settings row.
   - Do not present the Off preference or the setting reason as an error, a fallback or a degraded state, and do not suppress any other disclosure a run owes because the row is Off.
-  - Do not let the row change tool authority, which is the request's selection under its policy snapshot, any permission, approval, FileSafe, network or schema decision, or the ordinary carriage and bounded tool selection that a request without the script tool gets.
+  - Do not let the row change tool authority, which is the ceiling the request's policy snapshot allows, any permission, approval, FileSafe, network or schema decision, or the ordinary carriage and bounded tool selection that a request without the script tool gets; the script form and the ordinary form may select and materialize differently inside that ceiling under T-189.
   - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, generated governance artifacts, or governance seal outputs.
 owner_hints:
   - Plans/Tools.md
