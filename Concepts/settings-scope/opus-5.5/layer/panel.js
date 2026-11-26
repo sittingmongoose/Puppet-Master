@@ -21,8 +21,10 @@
   const S = PSX.S;
   const CHEV = '<svg class="psx-chev" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" focusable="false"><path d="M4.5 2.5 8 6l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const MAX_LINES = 6;
+  const MODEL_PICKER = '[data-action="o55-insp-pick"]';
   let editing = null;      // { id, level, key, isNew }
   let lastOpen = null;     // the setting whose panel is open, for focus on close
+  let pickerOpening = null;
 
   /* ------------------------------------------------------------------ writing one level, with its note
      Every write here goes through the one write path (guard.js): first start, the device in use, the level, the value,
@@ -183,13 +185,36 @@
     return { focusKey: key && key.psxKey };
   }
 
+  D.addEventListener('click', (e) => {
+    const trigger = e.target.closest?.(MODEL_PICKER);
+    if (!trigger) {
+      if (!e.target.closest?.('.o55-pick-pop')) pickerOpening = null;
+      return;
+    }
+    const cur = current();
+    pickerOpening = null;
+    if (e.isTrusted && e.detail && cur?.body.contains(trigger) && PSX.isModel(cur.id) &&
+        trigger.getAttribute('aria-expanded') === 'false') {
+      pickerOpening = {
+        trigger, scrollTop: cur.body.scrollTop, rect: trigger.getBoundingClientRect(),
+      };
+    }
+  }, true);
+
   function modelPickerAnchor(cur) {
     if (!cur || !PSX.isModel(cur.id)) return null;
-    const picker = cur.body.querySelector('[data-action="o55-insp-pick"]')?.getBoundingClientRect();
+    const trigger = cur.body.querySelector(MODEL_PICKER);
+    const picker = trigger?.getBoundingClientRect();
     if (!picker?.height) return null;
     const body = cur.body.getBoundingClientRect();
-    const centre = picker.top + picker.height / 2;
-    return centre >= body.top && centre < body.bottom ? picker.top : null;
+    // A popup save returns focus to its trigger before refreshing Details. Keep its opening position while the pane
+    // still has the same scroll. Other refreshes can anchor any part of the picker that intersects the pane.
+    if (pickerOpening?.trigger === trigger && D.activeElement === trigger && trigger.getAttribute('aria-expanded') === 'false') {
+      const opening = pickerOpening;
+      pickerOpening = null;
+      if (opening.scrollTop === cur.body.scrollTop) return opening.rect.top;
+    }
+    return picker.bottom > body.top && picker.top < body.bottom ? picker.top : null;
   }
 
   function decorate(o) {
@@ -228,7 +253,7 @@
     if (pendingEdit && pendingEdit.id === id) { const pe = pendingEdit; pendingEdit = null; setTimeout(() => startAt(id, pe.level, pe.key), 0); }
     if (editing && editing.id === id) { const ctl = where.querySelector('[data-psx-edit-control]'); if (ctl && !page.contains(D.activeElement && D.activeElement.closest('[data-psx-edit-control]'))) try { ctl.focus({ preventScroll: true }); } catch (e) { /* gone */ } }
     // Replacing Where it applies above Your choices can clamp the inspector's scroll position during the refresh.
-    const picker = pickerTop === null ? null : body.querySelector('[data-action="o55-insp-pick"]');
+    const picker = pickerTop === null ? null : body.querySelector(MODEL_PICKER);
     if (picker) body.scrollTop += picker.getBoundingClientRect().top - pickerTop;
   }
   function closeWord(head) {
@@ -1264,7 +1289,7 @@
         const open = insp.getAttribute('aria-hidden') === 'false' && insp.style.display !== 'none';
         if (open) soon();
         if (wasOpen && !open) {
-          editing = null; S.targets = {};
+          editing = null; pickerOpening = null; S.targets = {};
           // Esc closes the panel; focus returns to the row's end word
           const id = lastOpen;
           setTimeout(() => {
