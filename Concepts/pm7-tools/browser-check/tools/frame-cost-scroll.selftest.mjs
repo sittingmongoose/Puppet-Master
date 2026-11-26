@@ -58,7 +58,24 @@ assert.equal(typeof measureScroll, 'function', 'the scroll window needs a trace-
 // against the same deadline instead of reading 0 ticks and falsely passing the N4 case.
 function virtualClock() {
 	let now = Date.now();
-	return { now: () => now, wait: async (ms) => { now += ms; } };
+	return {
+		now: () => now,
+		wait: async (ms) => { now += ms; },
+		frame: (cb) => new Promise((resolve) => setTimeout(() => { now += 16; cb(now); resolve(); }, 0)),
+	};
+}
+
+// R138-H2 RED: mock animation frames must yield instead of draining a broken settle poll in one microtask spin.
+{
+	const clock = virtualClock();
+	let frames = 0;
+	const first = clock.frame(() => { frames++; });
+	await Promise.resolve();
+	assert.equal(frames, 0, 'an animation-frame callback does not run in the same microtask drain');
+	await first;
+	assert.equal(frames, 1, 'the virtual clock delivers the queued frame');
+	await new Promise((resolve) => clock.frame(() => { frames++; resolve(); }));
+	assert.equal(frames, 2, 'successive frames advance the virtual clock without a microtask spin');
 }
 {
 	const clock = virtualClock();
@@ -97,11 +114,11 @@ function virtualClock() {
 	const f = {
 		evaluate: async (fn, arg) => {
 			events.push([phase, 'evaluate']);
-			const saved = { document: globalThis.document, window: globalThis.window, getComputedStyle: globalThis.getComputedStyle };
-			// rAF stays installed like a real page global: the settle promise's later frames call it after evaluate
-			// returns; microtask-scheduled so the settle is deterministic, never a wall-clock race (R137-F3)
-			Object.assign(globalThis, { document: doc, window: win, getComputedStyle: (x) => ({ overflowY: x === scroller ? 'auto' : 'visible' }), requestAnimationFrame: (cb) => queueMicrotask(cb) });
-			try { return fn(arg); } finally { Object.assign(globalThis, saved); }
+			const saved = { document: globalThis.document, window: globalThis.window, getComputedStyle: globalThis.getComputedStyle, performance: globalThis.performance };
+			// rAF stays installed like a real page global until an async evaluate settles. Frames yield on the virtual
+			// clock instead of draining a broken settle poll in one microtask spin (R137-F3, R138-H2).
+			Object.assign(globalThis, { document: doc, window: win, getComputedStyle: (x) => ({ overflowY: x === scroller ? 'auto' : 'visible' }), performance: { now: clock.now }, requestAnimationFrame: clock.frame });
+			try { return await fn(arg); } finally { Object.assign(globalThis, saved); }
 		},
 	};
 	const wheels = [];
@@ -214,9 +231,9 @@ function virtualClock() {
 	const f = {
 		evaluate: async (fn, arg) => {
 			events.push([phase, 'evaluate']);
-			const saved = { document: globalThis.document, window: globalThis.window, getComputedStyle: globalThis.getComputedStyle };
-			Object.assign(globalThis, { document: doc, window: win, getComputedStyle: (x) => ({ overflowY: x === scroller ? 'auto' : 'visible' }), requestAnimationFrame: (cb) => queueMicrotask(cb) });
-			try { return fn(arg); } finally { Object.assign(globalThis, saved); }
+			const saved = { document: globalThis.document, window: globalThis.window, getComputedStyle: globalThis.getComputedStyle, performance: globalThis.performance };
+			Object.assign(globalThis, { document: doc, window: win, getComputedStyle: (x) => ({ overflowY: x === scroller ? 'auto' : 'visible' }), performance: { now: clock.now }, requestAnimationFrame: clock.frame });
+			try { return await fn(arg); } finally { Object.assign(globalThis, saved); }
 		},
 	};
 	const checks = [];
@@ -314,9 +331,9 @@ function sandboxWorld({ sessionFails = false, sharedTarget = false } = {}) {
 	const f = {
 		evaluate: async (fn, arg) => {
 			events.push([state.phase, 'evaluate']);
-			const saved = { document: globalThis.document, window: globalThis.window, getComputedStyle: globalThis.getComputedStyle };
-			Object.assign(globalThis, { document: doc, window: win, getComputedStyle: (x) => ({ overflowY: x === scroller ? 'auto' : 'visible' }), requestAnimationFrame: (cb) => queueMicrotask(cb) });
-			try { return fn(arg); } finally { Object.assign(globalThis, saved); }
+			const saved = { document: globalThis.document, window: globalThis.window, getComputedStyle: globalThis.getComputedStyle, performance: globalThis.performance };
+			Object.assign(globalThis, { document: doc, window: win, getComputedStyle: (x) => ({ overflowY: x === scroller ? 'auto' : 'visible' }), performance: { now: clock.now }, requestAnimationFrame: clock.frame });
+			try { return await fn(arg); } finally { Object.assign(globalThis, saved); }
 		},
 	};
 	const wheels = [], checks = [];
