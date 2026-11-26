@@ -659,7 +659,8 @@ def behind_publish_target(root: Path, url: str, tip: Optional[str], lease: str) 
     except Refusal:
         # A tip whose commit is unknown locally cannot be classified as behind.
         return None
-    repair = shlex.join(["git", "-C", str(root.resolve()), "push", f"--force-with-lease={MAIN_REF}:{tip}",
+    repair = shlex.join(["git", "-C", str(root.resolve()), "push", "--no-follow-tags",
+                         f"--force-with-lease={MAIN_REF}:{tip}",
                          "--", url, f"{lease}:{MAIN_REF}"])
     return f"main at {tip} is behind publication lease {lease}. One-time catch-up:\n{repair}"
 
@@ -690,8 +691,8 @@ def publish_main(root: Path, lease: str, commit: str) -> int:
     say("Push targets:\n" + "\n".join(f"  {label}" for label, _ in destinations))
     push_errors: dict[str, str] = {}
     for label, url in destinations:
-        result = git(root, "push", f"--force-with-lease={MAIN_REF}:{lease}", "--", url, f"{commit}:{MAIN_REF}",
-                     check=False)
+        result = git(root, "push", "--no-follow-tags", f"--force-with-lease={MAIN_REF}:{lease}",
+                     "--", url, f"{commit}:{MAIN_REF}", check=False)
         if result.returncode:
             push_errors[url] = (f"{label}: push exited {result.returncode}"
                                 + (f": {result.stderr.strip()}" if result.stderr.strip() else ""))

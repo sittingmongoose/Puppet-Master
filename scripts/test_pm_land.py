@@ -3567,7 +3567,7 @@ class PublishAllTargetsTests(unittest.TestCase):
                       f"publication lease {self.head}", str(refusal.exception))
         repair = next(line for line in str(refusal.exception).splitlines() if line.startswith("git -C "))
         args = shlex.split(repair)
-        self.assertEqual(args, ["git", "-C", str(self.shared), "push",
+        self.assertEqual(args, ["git", "-C", str(self.shared), "push", "--no-follow-tags",
                                 f"--force-with-lease={land.MAIN_REF}:{self.base}",
                                 "--", str(nas), f"{self.head}:{land.MAIN_REF}"])
 
@@ -3575,6 +3575,26 @@ class PublishAllTargetsTests(unittest.TestCase):
         self.assertEqual(self.tip(nas), self.head)
         self.assertEqual(land.publish_main(self.shared, self.head, landed), 0)
         self.assertEqual(self.tip(nas), landed)
+
+    def test_publish_and_catch_up_do_not_follow_annotated_tags(self):
+        nas = self.two_push_urls()
+        self.git(self.origin, "update-ref", land.MAIN_REF, self.head, self.base)
+        self.git(self.shared, "tag", "-a", "local-tag", self.head, "-m", "do not publish")
+        self.git(self.shared, "config", "push.followTags", "true")
+        self.git(self.shared, "commit", "--allow-empty", "-m", "next landing")
+        landed = land.revision(self.shared, land.MAIN_REF)
+
+        with self.assertRaises(land.Refusal) as refusal:
+            land.publish_main(self.shared, self.head, landed)
+
+        repair = next(line for line in str(refusal.exception).splitlines() if line.startswith("git -C "))
+        land.command(shlex.split(repair))
+        self.assertEqual(self.tip(self.origin), landed)
+        self.assertEqual(self.tip(nas), self.head)
+        for target in (self.origin, nas):
+            with self.subTest(target=target):
+                result = self.git(target, "show-ref", "--verify", "--quiet", "refs/tags/local-tag", check=False)
+                self.assertEqual(result.returncode, 1)
 
     def test_every_push_carries_the_same_safety_lease(self):
         nas = self.two_push_urls()
