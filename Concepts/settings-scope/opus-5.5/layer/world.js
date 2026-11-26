@@ -681,15 +681,18 @@
     const maxY = bounds.bottom - height - gap;
     const x = Math.max(minX, Math.min(maxX, (stage?.width ? stage.right : bounds.right) - width));
     const y = Math.min(maxY, Math.max(bounds.top + gap, stage?.width ? stage.top : bounds.top));
-    // Protect the row as well as its Details picker. Either can move while the receipt is up.
-    const controls = [...D.querySelectorAll(`#pm-settings-root .o55-pick-trigger[data-setting="${CSS.escape(id)}"]`)]
-      .map((b) => b.getBoundingClientRect()).filter((r) => r.width && r.height);
-    const xs = [x, ...controls.flatMap((r) => [r.left - width - gap, r.right + gap])];
+    // Keep both pickers clear, including the button that returns from Details to the row.
+    const controls = [...D.querySelectorAll(`#pm-settings-root .o55-pick-trigger[data-setting="${CSS.escape(id)}"]`)];
+    const inspector = controls.find((b) => b.dataset.action === 'o55-insp-pick')?.closest('.detail-inspector[aria-hidden="false"]');
+    const close = inspector?.querySelector('[data-action="close-details"]');
+    if (close) controls.push(close);
+    const rects = controls.map((b) => b.getBoundingClientRect()).filter((r) => r.width && r.height);
+    const xs = [x, ...rects.flatMap((r) => [r.left - width - gap, r.right + gap])];
     xs.sort((a, b) => Math.abs(a - x) - Math.abs(b - x));
-    const ys = [y, ...controls.map((r) => r.bottom + gap)].sort((a, b) => a - b);
+    const ys = [y, ...rects.map((r) => r.bottom + gap)].sort((a, b) => a - b);
     for (const top of ys) {
       if (top < y || top > maxY) continue;
-      const left = xs.find((left) => left >= minX && left <= maxX && controls.every((r) =>
+      const left = xs.find((left) => left >= minX && left <= maxX && rects.every((r) =>
         left + width + gap <= r.left || left >= r.right + gap || top + height + gap <= r.top || top >= r.bottom + gap));
       if (left === undefined) continue;
       const localTop = `${top - bounds.top}px`, localLeft = `${left - bounds.left}px`;
