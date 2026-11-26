@@ -334,7 +334,7 @@ export function flingVerdict(r) {
    (wheelTop), not from the commit's start: a programmatic pre-wheel scroll is not the wheel's travel. The R93 #4
    page recorder mirrors this gate inline (it is serialized into the page). */
 export function flingScrollGate(R, top) {
-	return { arms: !!R.committed && !!R.wheel && R.wheelTop != null && !R.sampled && !R.armed && Math.abs(top - R.wheelTop) >= R.height,
+	return { arms: !!R.committed && !!R.wheel && !R.sampled && !R.armed && Math.abs(top - R.start) >= R.height,
 		moved: R.wheelTop == null ? null : top - R.wheelTop };
 }
 /* SETCHAPTER-RESTORE-PENDING-AT-TRANSACTION (exported for tools/settings-chapter.selftest.mjs): the restore-all row
@@ -793,7 +793,7 @@ for (const surface of ['normal', 'sandbox']) {
 				const scroll=e=>{
 					const sc=e.target;
 					/* R132-FOLLOWUPS 3: only a scroll after the delivered wheel arms (flingScrollGate mirrors this in node) */
-					if(sc.id!=='settings-document'||!R.committed||!R.wheel||R.wheelTop==null||R.sampled||R.armed||Math.abs(sc.scrollTop-R.wheelTop)<R.height)return;
+					if(sc.id!=='settings-document'||!R.committed||!R.wheel||R.sampled||R.armed||Math.abs(sc.scrollTop-R.start)<R.height)return;
 					R.armed=true;
 					requestAnimationFrame(()=>{
 						const v=sc.getBoundingClientRect();
