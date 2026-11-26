@@ -3484,6 +3484,24 @@ class PublishAllTargetsTests(unittest.TestCase):
         self.assertEqual(land.full_main(self.shared), landed)
         self.assertEqual(land.revision(self.shared, "refs/remotes/truenas-backup/main"), landed)
 
+    def test_publish_only_updates_tracking_refs_for_verified_fetch_endpoints(self):
+        nas = self.two_push_urls()
+        fetch_only = self.bare("fetch-only.git", self.base)
+        self.git(self.shared, "remote", "set-url", "origin", str(fetch_only))
+        self.git(self.shared, "remote", "add", "backup", "backup-alias")
+        self.git(self.shared, "config", f"url.{nas}.insteadOf", "backup-alias")
+        output = io.StringIO()
+
+        with redirect_stdout(output):
+            self.assertEqual(land.publish_main(self.shared, self.base, self.head), 0)
+
+        self.assertEqual(self.tip(self.origin), self.head)
+        self.assertEqual(self.tip(nas), self.head)
+        self.assertEqual(self.tip(fetch_only), self.base)
+        self.assertEqual(land.revision(self.shared, "refs/remotes/origin/main"), self.base)
+        self.assertEqual(land.revision(self.shared, "refs/remotes/backup/main"), self.head)
+        self.assertIn("fetch origin before the next verify", output.getvalue())
+
     def test_a_rejected_push_fails_loudly_naming_that_remote(self):
         diverged = self.git(self.shared, "commit-tree", self.tree, "-p", self.base,
                             "-m", "someone else's landing").stdout.strip()

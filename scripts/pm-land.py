@@ -634,9 +634,14 @@ def pushed_main(root: Path, url: str) -> Optional[str]:
     return None
 
 
-def update_publish_tracking_refs(root: Path, names: Collection[str], commit: str) -> None:
-    """Advance each verified remote's local main without overwriting a concurrent update."""
+def update_publish_tracking_refs(root: Path, names: Collection[str], verified_urls: Collection[str],
+                                 commit: str) -> None:
+    """Advance tracking refs for verified fetch endpoints without overwriting concurrent updates."""
     for name in sorted(names):
+        fetch = git(root, "remote", "get-url", "--", name, check=False)
+        if fetch.returncode or fetch.stdout.rstrip("\n") not in verified_urls:
+            say(f"fetch {name} before the next verify")
+            continue
         ref = f"refs/remotes/{name}/main"
         previous = git(root, "rev-parse", "--verify", "--quiet", ref, check=False).stdout.strip()
         if previous == commit:
@@ -693,7 +698,7 @@ def publish_main(root: Path, lease: str, commit: str) -> int:
 
     failures: list[str] = []
     warnings: list[str] = []
-    verified: list[str] = []
+    verified: dict[str, str] = {}
     for label, url in destinations:
         push_error = push_errors.get(url)
         try:
@@ -704,7 +709,7 @@ def publish_main(root: Path, lease: str, commit: str) -> int:
             failures.append(f"{label}: could not verify main: {exc}")
             continue
         if tip == commit:
-            verified.append(f"Published {tip} to {label}: main verified")
+            verified[url] = f"Published {tip} to {label}: main verified"
             if push_error:
                 warnings.append(f"Warning, main verified despite a push error: {push_error}")
             continue
@@ -715,19 +720,19 @@ def publish_main(root: Path, lease: str, commit: str) -> int:
             failures.append(f"{label}: {repair}")
     if not failures:
         try:
-            update_publish_tracking_refs(root, {name for names, _ in targets for name in names}, commit)
+            update_publish_tracking_refs(root, {name for names, _ in targets for name in names}, verified, commit)
         except Refusal as exc:
             failures.append(f"could not update local tracking refs: {exc}")
     if failures:
         report = ["publishing the landed commit to every push target failed:", *failures, *warnings]
         if verified:
-            report.extend(["Verified targets:", *verified,
+            report.extend(["Verified targets:", *verified.values(),
                            "the landed targets are published; fix the failing one and rerun publish "
                            "with the same arguments (landed targets report up to date)"])
         raise Refusal("\n".join(report))
     for warning in warnings:
         print(warning, file=sys.stderr)
-    for line in verified:
+    for line in verified.values():
         say(line)
     return 0
 
