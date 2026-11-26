@@ -14,18 +14,6 @@
     {
       "audit_ids": [
         "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0133-f7036d2e36",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Stage 1 final adjudication at df303e4707c1036bc30e56838c1502eaa9cee585 from max_pair (B04/review-sol-max-s1b04.jsonl, B04/review-astra-max-s1b04.jsonl). B04/review-sol-max-s1b04.jsonl: F2-195 locates the redaction hook, but F2-197 promises \"bounded per-run log quotas, log sampling levels\" without defining them. The addendum only names fields such as sample_rate and max_bytes_per_trace and gives no types, values or selection/overflow rules for them. B04/review-astra-max-s1b04.jsonl: The pre-write hook and record fields exist, but \u201csample_rate\u201d and \u201cmax_bytes_per_trace\u201d only name configurable quantities. The trace owner gives neither operative limits nor a sampling rule or an explicit design deferral, leaving the quota and sampling part open.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-0ca8b2b67c43a97cded7e2fd",
-      "line": 1330
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
         "closure-reaudit-20261104"
       ],
       "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0358-7c618e0928",
@@ -33,17 +21,6 @@
       "closure_status": "reopened",
       "finding_key": "sfk-11f205ee23abc3f24bb103af",
       "line": 1406
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0066-7caebd10b8",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at 10ba97e699: The Orchestrator unit still leaves a dedicated phase and a prompt line as alternatives, without choosing the exclusive gate its closure describes.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-12ffef1b0946cbee525652e2",
-      "line": 1521
     },
     {
       "audit_ids": [
@@ -73,29 +50,6 @@
     {
       "audit_ids": [
         "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0062-69b8fb0d2b",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Settled by max_pair at 10ba97e699d51287673d6f1db4d994f54c59b4ed using review-sol-max-s2b10.jsonl, review-astra-max-s2b10.jsonl. gpt-6.2-sol (max): The naming addendum gives a complete import map, but the original conflict remains in accepted runtime prose. OSI-180 still specifies AfterTier validation as the active handoff mechanism without applying the normalization fence there. gpt-6.2-astra (max): The alias table and normalized output are present, but the finding also required the accepted units' canonical_text to use the new names. OSI-184 still says \u201cBeforeTier runs before verify_tier_start\u201d and OSI-177 still prescribes \u201cBeforeTier/AfterTier hooks\u201d.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-1bec1a20ed08f9e31908b59c",
-      "line": 1519
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-registry-l0086-repaired-superseded-977c5ac8fa",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Settled by max_pair at 10ba97e699d51287673d6f1db4d994f54c59b4ed using review-sol-max-s2b06.jsonl, review-astra-max-s2b06.jsonl. gpt-6.2-sol (max): The catalog closes manual model refresh and read/list identity. F3-408 still exposes Retry check and View details and F3-409 still specifies the top-10 editor, while the old Free Models retry row is explicitly source lineage and the cited family does not bind these controls. gpt-6.2-astra (max): The catalog closes model refresh and list, while the current GUI still specifies global and scoped top-10 editing. The retained onboarding retry spelling is \u201cSource lineage only\u201d and the repair does not establish a current binding for the whole set of controls in the finding.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-21e738494edd9a31e779711d",
-      "line": 1469
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
         "closure-reaudit-20261104"
       ],
       "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0019-a872e3eedc",
@@ -103,30 +57,6 @@
       "closure_status": "reopened",
       "finding_key": "sfk-22dc78d1dd563f9d4e6b3e9b",
       "line": 1329
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0099-814db499a3",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Settled by split_round at 10ba97e699d51287673d6f1db4d994f54c59b4ed using review-sol-max-split-s2.jsonl, review-astra-max-split-s2.jsonl. gpt-6.2-sol (max): Chat defines the operation-card transition table and a terminal command. It still supplies different investigation export and revoke command IDs from the active catalog, with no alias or retirement to reconcile the two bindings. gpt-6.2-astra (max): C identifies a mismatch on an actual Investigation Context control. The transition table is present, but Chat assigns Export and Revoke to cmd.investigation_context names while both the catalog and the wiring for those controls select cmd.chat names, with no mapping between them.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-27e1aaa4aab173a18bd95557",
-      "line": 1536
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0211-041dbe7cde",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: The repair correctly defines the intended project-root scope, but the live verification gate contract still offers open documents as an alternative project scope and the config calls the open-documents scope open rather than open_documents.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-29a2a142bff79df42b07c209",
-      "line": 1342
     },
     {
       "audit_ids": [
@@ -145,47 +75,11 @@
         "fable-20260706-deferred-action-repair",
         "closure-reaudit-20261104"
       ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0237-73bdfceb27",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: M-083 treats platform_specs as a required versioned runner contract and allows list_skills_for_agent after validation. The canonical repair addendum calls platform_specs retired and the command a future alias. The replacement catalog fields do not settle that contradiction or supply a typed runner binding.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-2c37f169db25922d701c01ed",
-      "line": 1356
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0247-082b1e3e05",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: The addendum requires worktree_conflict_state.v1 and calls memory a projection. W-050 still allows in-memory state for the initial release, and section 7.4 retains the options framing. The canonical durable-vs-initial authority remains ambiguous.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-2fa8450258bd1060e6cdee0e",
-      "line": 1365
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
       "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0339-59d7c52912",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at 10ba97e699: The old addendum names states and command-era suggestions; the current runtime packet has concrete scoped topic operations. Neither supplies the original requested state-to-trigger-to-next-state table for all eleven states.",
       "closure_status": "reopened",
       "finding_key": "sfk-32ef50717ffba6844b8fd1b1",
       "line": 1603
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0191-6f4d7a8022",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at 10ba97e699: newtools enumerates the families, but it still requires a correspondence to Permissions or preflight reasons without defining that mapping. The Permissions snapshot list is a separate vocabulary.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-3955371de4d0ad946607f7bf",
-      "line": 1572
     },
     {
       "audit_ids": [
@@ -263,65 +157,6 @@
         "fable-20260706-deferred-action-repair",
         "closure-reaudit-20261104"
       ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0194-9269b8abbc",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at 10ba97e699: The addendum imposes a concrete deferral bar but multiple units in the audited range remain split-recommended without the required row-level reason and reopen condition.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-4b3be2e795f3e0ad27caf155",
-      "line": 1574
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0164-479456fa17",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Settled by split_round at 10ba97e699d51287673d6f1db4d994f54c59b4ed using review-sol-max-split-s2.jsonl, review-astra-max-split-s2.jsonl. gpt-6.2-sol (max): The Browser action table supplies action identity, bucket, timeout and outputs. SMPFS-100 still requires each action\u2019s tier, and the table never supplies that column or an equivalent per-action classification. gpt-6.2-astra (max): D compares the table against its owner\u2019s minimum columns. The published rows give a command, bucket, timeout and outputs but assign neither guaranteed_everyday nor advanced_debug_testing to each action, including the share action.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-4c741479855e197490fb0aac",
-      "line": 1549
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0284-5b74b02716",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: The addendum defines a role record with fields such as required_capabilities and an eight-tag vocabulary. The live resolver still reads crew.roles as provider/model/persona tuples keyed by code-review, test-writer or researcher. The shapes and vocabularies need a discriminator or explicit supersession.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-4d7bcd97d884b17305b8a8e2",
-      "line": 1382
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0246-97ded321f7",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: The repair adds concrete checks and result states, but the phase-order entry still points to nonexistent section 2.7 and the body skips from 2.6 to 2.8.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-4eb004bc61207763df26205d",
-      "line": 1364
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-registry-l0085-repaired-superseded-4fd1252656",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at 10ba97e699: The GUI says disclosure appears inline and in history and names the mapping editor scopes. Those passages do not bind a delivery contract or give the four editors a save/validation route.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-4f0de22c0703b42200176dac",
-      "line": 1468
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
       "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0223-1f5128bc89",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: The canonical addendum still gives two field lists and the receipt disclosure rule. It does not provide field types, a settlement state machine, or a wire binding to the existing media.generate request and response.",
       "closure_status": "reopened",
@@ -338,42 +173,6 @@
       "closure_status": "reopened",
       "finding_key": "sfk-5268d288042d98aeb824d263",
       "line": 1511
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0323-fe05da8482",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Stage 1 final adjudication at df303e4707c1036bc30e56838c1502eaa9cee585 from split_round (SPLIT/review-sol-max-split-s1.jsonl, SPLIT/review-astra-max-split-s1.jsonl). SPLIT/review-sol-max-split-s1.jsonl: The addendum defines valid audit evidence and explicitly withholds PASS from unchecked rows. The required Verification Table still has only status rules and no recorded per-row statuses or evidence, while Completion Criteria still requires that table to be all PASS. The live checklist therefore cannot supply the auditable completion result described by the finding. SPLIT/review-astra-max-split-s1.jsonl: The addendum gives a rule for recording a status and an evidence reference, but completion still depends on every row of the named Verification Table. That table records how each check would fail and supplies neither its result nor a link to its evidence, so it cannot serve as the claimed auditable summary at R.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-532b50a91c911a908ee7e33d",
-      "line": 1396
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0317-f362821405",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Stage 1 final adjudication at df303e4707c1036bc30e56838c1502eaa9cee585 from max_pair (B04/review-sol-max-s1b04.jsonl, B04/review-astra-max-s1b04.jsonl). B04/review-sol-max-s1b04.jsonl: GI-025 requires \"patch point, concern refs, structural change summary, affected generation, and requester identity\". The addendum publishes a different graph_patch_request field list and gives no types or explicit owner binding for those required joins, while compare and pinned-workflow records remain untyped lists. B04/review-astra-max-s1b04.jsonl: The addendum lists fields such as \u201cverification_state\u201d and \u201cpinned_ref\u201d, but gives them no wire types or allowed values. Graph patch request/result and pinned workflow remain field inventories, so the typed payload finding is only partly addressed.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-5467cea0ac748953795213ff",
-      "line": 1390
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0341-ba3f13d350",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at 10ba97e699: The addendum supplies DecisionRecord fields, but GUI visibility is conditional on FinalGUISpec adoption and the named Decisions route is not bound there.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-594cb543b22bec169aa6e6ef",
-      "line": 1605
     },
     {
       "audit_ids": [
@@ -444,29 +243,6 @@
     },
     {
       "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0242-02d990a61f",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: The Widget owner declares old numeric citations superseded, but live Usage config still points to nonexistent section 7 for persistence and the owner\u2019s proposed Progress catalog heading is not a matching heading or the config persistence owner.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-7dbdf4846f3dcac81f938060",
-      "line": 1360
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-registry-l0147-source-lineage-only-a9850556f9",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Stage 1 final adjudication at df303e4707c1036bc30e56838c1502eaa9cee585 from split_round (SPLIT/review-sol-max-split-s1.jsonl, SPLIT/review-astra-max-split-s1.jsonl). SPLIT/review-sol-max-split-s1.jsonl: The original Chain Wizard document is retired, but DL-472 moved its annotation contract into active PRDB-014. The live unit enumerates four object shapes in prose and still supplies no per-operation JSON schema, a specific gap in the original finding. The moved portion therefore still needs the audit\u2019s repair. SPLIT/review-astra-max-split-s1.jsonl: DL-472 moved the Chain Wizard\u2019s targeted-revision contract as-is into PRDB-014, which now requires the four annotation payload shapes. The generation-suggestion text can remain historical, but these live input shapes are still written as field lists and lack the per-operation JSON schemas the finding identified.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-7f91344a103e96b9bc2b045f",
-      "line": 1311
-    },
-    {
-      "audit_ids": [
         "audit-20260617-012-plans-to-code-handoff-deep-fidelity",
         "closure-reaudit-20261104"
       ],
@@ -475,18 +251,6 @@
       "closure_status": "reopened",
       "finding_key": "sfk-82517a9255593eef1eeb042b",
       "line": 1700
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0262-637c79ef75",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: FileManager defines a concrete watcher and eviction policy in an addendum, but the two live references still point to nonexistent section 10.7 and the promised File watcher and LRU eviction heading is absent.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-8282b5705997e91f48cde87c",
-      "line": 1371
     },
     {
       "audit_ids": [
@@ -513,18 +277,6 @@
     },
     {
       "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0138-c8855be715",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: The addendum names invocation kinds and the separate shell_string/argv/script fields. The bash contract still takes command text and a terminal handle without specifying how that call maps into CommandInvocationContract.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-8edca9229715226a36196dfa",
-      "line": 1333
-    },
-    {
-      "audit_ids": [
         "audit-20260626-001-provider-updates-closed-world-semantic-fidelity",
         "closure-reaudit-20261104"
       ],
@@ -533,18 +285,6 @@
       "closure_status": "reopened",
       "finding_key": "sfk-929f4dfbd5cc1201eff2a369",
       "line": 1250
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0135-b09a524329",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at 10ba97e699: A supersession directs authors to named headings, but the physical headings remain and the live Permissions prose still points at Tools \u00a710.1 without a heading name.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-92b8d592e589ae39820e7a90",
-      "line": 1546
     },
     {
       "audit_ids": [
@@ -572,18 +312,6 @@
     {
       "audit_ids": [
         "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0224-68700c26ce",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: The addendum prohibits lookaround and provides a Rust-compatible boundary example. The live model override matcher still contains negative lookbehind and lookahead in a code block, so there are incompatible normative instructions.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-9524e288cc5e5ca35a4ca192",
-      "line": 1347
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
         "closure-reaudit-20261104"
       ],
       "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-registry-l0081-repaired-superseded-5853eec11a",
@@ -591,66 +319,6 @@
       "closure_status": "reopened",
       "finding_key": "sfk-95b0e93f4dea19e7442ee779",
       "line": 1467
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0212-1cc62561f2",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Stage 1 final adjudication at df303e4707c1036bc30e56838c1502eaa9cee585 from max_pair (B04/review-sol-max-s1b04.jsonl, B04/review-astra-max-s1b04.jsonl). B04/review-sol-max-s1b04.jsonl: The addendum names async-lsp, but the implementation prerequisites still say \"Choose Rust LSP client crate\" and list lsp-client and async_lsp_client. The architecture allows async-lsp only as a conditional internal wire helper, so the prerequisite still lacks a single binding decision. B04/review-astra-max-s1b04.jsonl: The FABLE rule makes async-lsp the Phase 1 choice, while the architecture permits it \u201conly as an internal `/wire` helper\u201d and LSPS-075 still requires choosing a stdio-capable client. The documents do not settle the client foundation consistently.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-9623f01a73f92dab32b14986",
-      "line": 1343
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0186-f65c510527",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at 10ba97e699: The legacy addendum adds exact field names and hints at optionality or arrays, but has no complete field-type schema or reference to one.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-9a19460a2ee7258ca1973ab4",
-      "line": 1567
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0228-8d8c3c338f",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Stage 1 final adjudication at df303e4707c1036bc30e56838c1502eaa9cee585 from split_round (SPLIT/review-sol-max-split-s1.jsonl, SPLIT/review-astra-max-split-s1.jsonl). SPLIT/review-sol-max-split-s1.jsonl: Cursor image output now depends on verified route evidence. The live BACKEND_UNSUPPORTED message still promises image generation whenever that reason is shown, including when Cursor lacks a verified image route. The capability rule and user-facing copy therefore still disagree in a documented product state. SPLIT/review-astra-max-split-s1.jsonl: The Cursor admission rule correctly requires verification for image output, and AC-MED03 permits BACKEND_UNSUPPORTED when no image route is verified. The canonical message for that very reason still tells the person the backend supports Image Generation, preserving the user-visible contradiction in the finding.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-a0a53248c7aff7379c3b7963",
-      "line": 1350
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0261-49532da1ac",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at 10ba97e699: The File Manager addendum still calls create and move canonical commands. The command owner registers new-file/new-folder and cut/paste for those operations, and the two asserted IDs have no live registration.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-a4520be06d454fe73cd0fb2d",
-      "line": 1779
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0367-e1d89345a4",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Stage 1 final adjudication at df303e4707c1036bc30e56838c1502eaa9cee585 from max_pair (B06/review-sol-max-s1b06.jsonl, B06/review-astra-max-s1b06.jsonl). B06/review-sol-max-s1b06.jsonl: The addendum adds \"`InterviewRequest` fields are\" and a response list with five error codes. It still lacks typed/closed request and response examples and does not say which errors retry, with what limit, or how failure settles. B06/review-astra-max-s1b06.jsonl: The owner gives InterviewRequest and InterviewResponse field names and enumerates errors such as \u201cbudget_exhausted\u201d. It supplies neither a concrete request/response example nor retry limits or backoff values. The maximum number of questions and helper agents does not specify retries.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-a690aaa61254865b199f8d43",
-      "line": 1411
     },
     {
       "audit_ids": [
@@ -681,46 +349,11 @@
         "fable-20260706",
         "closure-reaudit-20261104"
       ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-registry-l0204-repaired-superseded-278136aaed",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at 10ba97e699: Docker image build now has an exact command and alias. UCC-047 still preserves cmd.github.actions.settings.open without a matching live command or an explicit individual disposition.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-aebefa4d6b3166fd14e176aa",
-      "line": 1489
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0283-dbe08b2eaa",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: The repaired owner list includes edit, disable, restore and validate_schema as command IDs. Current catalog and owner use cmd.persona.update for validated edits, and the listed edit, disable, restore and validate_schema spellings have no active catalog rows.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-afa7ba76c4768241fac569c1",
-      "line": 1381
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "closure-reaudit-20261104"
-      ],
       "closure_id": "closure-reaudit-20261104--closure-fable-20260706-residual-feature-contract-l1173",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Stage 1 final adjudication at df303e4707c1036bc30e56838c1502eaa9cee585 from max_pair (B03/review-sol-max-s1b03.jsonl, B03/review-astra-max-s1b03.jsonl). B03/review-sol-max-s1b03.jsonl: PNC-023 names failed_plan_unit_ids[], reason_code and related properties, but the authoritative compile_wave_retry_route schema closes the object around route_kind, target_stage, reason and optional resume_ref. The enum is present, but the row's claimed payload and schema no longer agree. B03/review-astra-max-s1b03.jsonl: The enum exists, but PNC-023 says the route records \u201creason_code, failed_plan_unit_ids[], retry_after_ms?, and owner_doc_refs[]\u201d. The authoritative schema requires route_kind, target_stage and reason, allows resume_ref, and forbids additional properties. A route carrying the promised fields fails validation.",
       "closure_status": "reopened",
       "finding_key": "sfk-b3ec7b5e5bd3a8899d18d858",
       "line": 1296
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0371-a870068614",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: Usage still cites section 7 for widget configuration persistence. The addendum claims a heading named Progress catalog and hostability which does not exist as a heading and describes a different area than configuration persistence.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-b80f72a90646c121a1c75a91",
-      "line": 1415
     },
     {
       "audit_ids": [
@@ -747,18 +380,6 @@
     {
       "audit_ids": [
         "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0190-02f6a3f83f",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at 10ba97e699: N2-080 describes a run-output manifest, while the purported fixing section lists a manifest of tool and framework IDs. It gives render-hint names but does not govern the evidence-manifest schema the original finding asked for.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-ca1f6c2848ae515eb07f7b48",
-      "line": 1571
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
         "closure-reaudit-20261104"
       ],
       "closure_id": "closure-reaudit-20261104--closure-fable-20260706-residual-feature-contract-l0645",
@@ -772,115 +393,11 @@
         "fable-20260706",
         "closure-reaudit-20261104"
       ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-registry-l0115-repaired-superseded-cf51bb55ca",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Settled by split_round at 10ba97e699d51287673d6f1db4d994f54c59b4ed using review-sol-max-split-s2.jsonl, review-astra-max-split-s2.jsonl. gpt-6.2-sol (max): The attribution owner and CV-097 specify package_id on current persisted records. CV-038 still puts work_package_id and feature_seam_id in its accepted contract for those same tool records, which preserves the precise cross-unit conflict the audit flagged. gpt-6.2-astra (max): C tests the two units named in the finding against each other. CV-038 still specifies work_package_id and feature_seam_id for tool.invoked and tool.denied runtime attribution, whereas the persisted payload takes package_id and the owner limits the former package spelling to import/export.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-cac98b21e967833b4b0751a4",
-      "line": 1476
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0163-4a47fb491b",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at 10ba97e699: The later prose specifies field minima but does not assign a concrete wire format and location or ephemeral policy to the whole eleven-record set.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-cb4021426efb8510ec9e1228",
-      "line": 1548
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0248-1edfe0cb8c",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: The owner adds shared activation and disabled reasons, and the catalog specifies specific activation predicates. The graph and advisory batch rows still do not define payload fields or failure results. Conflict operations have more specific contracts, which do not close the other two surfaces.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-cca2e27f32467febe2cb9d78",
-      "line": 1366
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0177-0179900b28",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at 10ba97e699: Permissions now requires stable rule_id under owner CAS, but that passage and the revocation unit do not establish UUID format.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-cdbc34e9f015ecf8e42bdff2",
-      "line": 1559
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "closure-reaudit-20261104"
-      ],
       "closure_id": "closure-reaudit-20261104--closure-fable-20260706-residual-feature-contract-l0644",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Stage 1 final adjudication at df303e4707c1036bc30e56838c1502eaa9cee585 from max_pair (B02/review-sol-max-s1b02.jsonl, B02/review-astra-max-s1b02.jsonl). B02/review-sol-max-s1b02.jsonl: MS-135 says \u201cResolver examples include\u201d and lists fields, but the originally missing example payload is still absent. A list of required or optional keys does not give the audit's requested concrete requested/effective JSON example. B02/review-astra-max-s1b02.jsonl: MS-135 says \u201cResolver examples include\u201d and then lists nine field names. The audit finding specifically identified the absence of a JSON example. The owner doc still has no populated requested_model_id/resolved_model_id resolver example. The JSON in \u00a710.4.3 is a capability snapshot.",
       "closure_status": "reopened",
       "finding_key": "sfk-d2a1ef98f92985fa109fa891",
       "line": 1279
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-registry-l0294-explicitly-deferred-83741bd5a0",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at 10ba97e699: HITL defines file fields and precedence. The only Orchestrator check is an old per-iteration QA example with a different path, so the active watcher and exact scope remain unclear.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-d5959a522cc7eec61dd79ab3",
-      "line": 1501
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-registry-l0116-repaired-superseded-aeb2bdeb1c",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at 10ba97e699: The lifecycle table closes stop_reason_code and budget_kind. The concern operation schema types chatworthy and the blocking reference, but accepts any nonempty visibility_level and attention_level strings.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-d5e922a7a5e8a59632917871",
-      "line": 1477
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0362-38f2f6f4f3",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Stage 1 final adjudication at df303e4707c1036bc30e56838c1502eaa9cee585 from max_pair (B05/review-sol-max-s1b05.jsonl, B05/review-astra-max-s1b05.jsonl). B05/review-sol-max-s1b05.jsonl: The addendum says these issues are \"tracked as owner-routed blockers\" and lists record fields, but the original P5 section still describes unresolved Contribute/PR versus DAE isolation and account-switch invalidation in prose. RM-053 resolves the ordinary YOLO approval issue and does not supply issue-specific tracking for those other gaps. B05/review-astra-max-s1b05.jsonl: RM-013 still calls the recovery and isolation obligations \u201cindependently unresolved\u201d. The addendum names blocker fields but supplies no individual dated blocker or owner assignment for the remaining Contribute/DAE or account-switch issues. The separate YOLO publication decision closes only that part.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-d7c3b765cac80a526a3b3e3a",
-      "line": 1408
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0273-18b79e54e9",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: The repair addendum lists a richer object with type, description and ui_editor. The command-file table instead specifies optional name, hint and required, while the New Command form omits an argument editor. The two live shapes and the missing authoring control leave the finding open.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-d8734b1bafc2e861d7785326",
-      "line": 1377
-    },
-    {
-      "audit_ids": [
-        "audit-20260617-005-orchestrator-goal-runtime-flow-semantic-fidelity",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-supplemental-20261111-audit-20260617-005-orchestrator-goal-runtime-flow-semantic-fidelity-semantic-risks-jsonl-10",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Settled by split_round at 10ba97e699d51287673d6f1db4d994f54c59b4ed using review-sol-max-split-s2.jsonl, review-astra-max-split-s2.jsonl. gpt-6.2-sol (max): OSI-425 routes imported tier settings through SubagentPolicy, but accepted OSI-078 still uses enable_tier_subagents as an execution gate and OSI-081 defines per-tier override behavior. Those accepted requirements leave the legacy keys active in the same owner document. gpt-6.2-astra (max): C identifies a current invocation path that conflicts with the normalization rule. OSI-425 confines the flag to compatibility input, yet accepted OSI-078 still conditions ExecutionRequest propagation on that flag being active.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-d87846234621743dd0983ee6",
-      "line": 1774
     },
     {
       "audit_ids": [
@@ -911,18 +428,6 @@
         "fable-20260706-deferred-action-repair",
         "closure-reaudit-20261104"
       ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0222-3bed484f69",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: The route row records a verification reference, verification time and optional cache expiry. Cursor admission requires a verified route, but the owner still does not define which generated-image probe establishes verification, its required result fields, or the cache refresh rule.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-db57c1cc2e037bcbcb52266d",
-      "line": 1345
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
       "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0162-cf8ae69ed6",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at 10ba97e699: The counterpart FABLE closure points at the same format-only section. Format is present, but the promised fixture rows and replay artifacts are not.",
       "closure_status": "reopened",
@@ -939,102 +444,6 @@
       "closure_status": "reopened",
       "finding_key": "sfk-e1fcd45c960c7c2508038375",
       "line": 1797
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0372-790886e47c",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Stage 1 final adjudication at df303e4707c1036bc30e56838c1502eaa9cee585 from max_pair (B05/review-sol-max-s1b05.jsonl, B05/review-astra-max-s1b05.jsonl). B05/review-sol-max-s1b05.jsonl: The July sample identifies \"widget.orchestrator_status\" and host_surface dashboard. The actual Progress catalog lists progress.run-overview through its named entries and has no complete shell payload example for one of those entries. B05/review-astra-max-s1b05.jsonl: The supplied example uses \u201cwidget.orchestrator_status\u201d on \u201cdashboard\u201d. None of the thirteen listed Progress IDs has that identifier, so the example does not instantiate the catalog the finding named.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-e3b56d7ed334127e363a00ed",
-      "line": 1416
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0170-3ec5b419b7",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Owner card vm.pm-closure-lead--C-FP2-SPLIT, choice B, applied split_majority_of_three. No majority. Reopen the closure. worker [SU]: Final pass at 10ba97e699: The browser owner gives exact alias targets and a restricted source form; the old bare inputs are not separate tool authorities. sol [RE/stale_retired]: The catalog explicitly settles the command roles in this finding. The share command remains active under Browser ownership, and the two bare tool spellings survive as limited compatibility inputs. Their former production role is stale_retired, which accounts for their absence as production entries in Tools. astra [NO]: D checks the location specified in the original finding. Section 15 retires the two bare execution names as independent commands, but sharing remains an active command and the exact cmd.browser.share_with_agent reference is still absent from Tools.md.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-e54b3afabeac1b898c98913a",
-      "line": 1784
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0318-6f6c8c0d7d",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: The repair table gives all three values for seven codes. GI-037 retains additional canonical GI-017 codes, including actions_missing_scope_runtime and actions_dispatch_input_invalid, without extending the table to those codes.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-e8a11748d3f22b24b1c58bba",
-      "line": 1391
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0221-7baff85371",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: The FABLE addendum defines ten lowercase canonical wire values. The live capabilities.get section still prescribes six uppercase strings as the exact canonical enum, with no adapter between its values and the later list.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-e9a09a9742076790d2b272df",
-      "line": 1344
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0294-83741bd5a0",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at 10ba97e699: Both closure rows depend on the same policy. The HITL entry names a project-root file, while the only cited Orchestrator iteration check uses a different location and is evidence-oriented.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-ee0d880fe7d372b34c249dd3",
-      "line": 1588
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0321-0412e3be09",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at df303e4707: The six-step fallback remains prose. The named lint-contractrefs definition checks reference spellings and paths and does not implement the packet-text and file-text normalization comparison.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-f16f17ff9e03aeb091742bda",
-      "line": 1394
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0264-112c3292f8",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Stage 1 final adjudication at df303e4707c1036bc30e56838c1502eaa9cee585 from split_round (SPLIT/review-sol-max-split-s1.jsonl, SPLIT/review-astra-max-split-s1.jsonl). SPLIT/review-sol-max-split-s1.jsonl: FileManager retires the nonexistent numeric pointers and routes the relevant protocol work to LSPSupport. The active LSPSupport editor map still assigns responsibilities to those same nonexistent FileManager subsections. The broken cross-reference survives in a current consumer. SPLIT/review-astra-max-split-s1.jsonl: FileManager retires the nonexistent \u00a710.10.5\u20138 references and provides a real \u00a710.4 for editor actions. The LSPSupport integration map still sends readers back to \u00a710.10 as the editor-side owner and explicitly assigns responsibilities to the missing subsections, preserving the broken peer reference that was reported.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-f451180436b89fd770006801",
-      "line": 1373
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-registry-l0163-explicitly-deferred-4a47fb491b",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at 10ba97e699: The formerly missing field lists now exist, including ingestion and backpressure. The shared minima do not give all eleven records a closed wire type and storage or transient owner.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-f56ab50f67c1562813bb45d4",
-      "line": 1481
     },
     {
       "audit_ids": [
@@ -1064,18 +473,6 @@
         "fable-20260706-deferred-action-repair",
         "closure-reaudit-20261104"
       ],
-      "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-action-plan-repair-0087-84af8d7f66",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at 10ba97e699: The supersession tells new authors which names to cite. Both original 7.4.2 labels and the duplicate 15 chapter number remain in the document.",
-      "closure_status": "reopened",
-      "finding_key": "sfk-f91b26266ecf23708f9d8d5e",
-      "line": 1533
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-deferred-action-repair",
-        "closure-reaudit-20261104"
-      ],
       "closure_id": "closure-reaudit-20261104--closure-fable-20260706-remaining-registry-l0162-explicitly-deferred-cf8ae69ed6",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Final pass at 10ba97e699: The owner gives the fixture row format and expected hash and event columns. It does not provide the actual protocol cases and corresponding byte inputs or expected results credited by the fixture-matrix closure.",
       "closure_status": "reopened",
@@ -1083,7 +480,7 @@
       "line": 1480
     }
   ],
-  "generated_at_utc": "2026-11-22T17:16:32Z",
+  "generated_at_utc": "2026-11-26T19:05:47Z",
   "reports": [
     {
       "audit_id": "audit-20260615-001-part-3-fable-cleanup",
@@ -1364,10 +761,10 @@
         "closure_status_counts": {
           "false_positive": 6,
           "reopened": 1,
-          "repaired": 5,
+          "repaired": 6,
           "stale_retired": 6
         },
-        "matching_rows": 18,
+        "matching_rows": 19,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -2354,91 +1751,6 @@
       "reported_status_family": "other",
       "scope_key": "audit-20260709-003-plan-assurance-fresh-agent-windowed-blind-exhaustive",
       "superseded_by": null
-    },
-    {
-      "audit_id": "audit-20260827-001-pmconcept7-usage-recovery",
-      "closure_registry_basis": {
-        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
-        "closure_status_counts": {},
-        "matching_rows": 0,
-        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
-      },
-      "current_blocker": false,
-      "effective_status": "historical_blocked_or_fail_report_indexed",
-      "ledger_id": null,
-      "path": "Plans/.audits/audit-20260827-001-pmconcept7-usage-recovery/FINAL_REPORT.md",
-      "reported_status": "FAIL_WITH_NAMED_RESIDUALS",
-      "reported_status_family": "blocked_or_fail",
-      "scope_key": "audit-20260827-001-pmconcept7-usage-recovery",
-      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
-    },
-    {
-      "audit_id": "audit-20260828-001-pmconcept7-usage-successor",
-      "closure_registry_basis": {
-        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
-        "closure_status_counts": {},
-        "matching_rows": 0,
-        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
-      },
-      "current_blocker": false,
-      "effective_status": "historical_report_status_unstated_or_nonstandard",
-      "ledger_id": null,
-      "path": "Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/FINAL_REPORT.md",
-      "reported_status": "CLASSIFIED_WITH_FAILURES_AND_NAMED_RESIDUALS",
-      "reported_status_family": "other",
-      "scope_key": "audit-20260828-001-pmconcept7-usage-successor",
-      "superseded_by": null
-    },
-    {
-      "audit_id": "audit-20260828-002-settings-tome-tabs-preport",
-      "closure_registry_basis": {
-        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
-        "closure_status_counts": {},
-        "matching_rows": 0,
-        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
-      },
-      "current_blocker": false,
-      "effective_status": "historical_report_status_unstated_or_nonstandard",
-      "ledger_id": null,
-      "path": "Plans/.audits/audit-20260828-002-settings-tome-tabs-preport/FINAL_REPORT.md",
-      "reported_status": null,
-      "reported_status_family": "unknown",
-      "scope_key": "audit-20260828-002-settings-tome-tabs-preport",
-      "superseded_by": null
-    },
-    {
-      "audit_id": "audit-20260828-003-chat-56-fast-lane",
-      "closure_registry_basis": {
-        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
-        "closure_status_counts": {},
-        "matching_rows": 0,
-        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
-      },
-      "current_blocker": false,
-      "effective_status": "historical_report_status_unstated_or_nonstandard",
-      "ledger_id": null,
-      "path": "Plans/.audits/audit-20260828-003-chat-56-fast-lane/FINAL_REPORT.md",
-      "reported_status": null,
-      "reported_status_family": "unknown",
-      "scope_key": "audit-20260828-003-chat-56-fast-lane",
-      "superseded_by": null
-    },
-    {
-      "audit_id": "audit-20260829-001-pmconcept7-widget-followup",
-      "closure_registry_basis": {
-        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
-        "closure_status_counts": {},
-        "matching_rows": 0,
-        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
-      },
-      "current_blocker": false,
-      "effective_status": "historical_report_status_unstated_or_nonstandard",
-      "ledger_id": null,
-      "path": "Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/FINAL_REPORT.md",
-      "reported_status": "CLASSIFIED_WITH_FAILURE_BLOCKERS_AND_NAMED_RESIDUALS",
-      "reported_status_family": "other",
-      "scope_key": "audit-20260829-001-pmconcept7-widget-followup",
-      "superseded_by": null
     }
   ],
   "schema_id": "pm.audit_status_index.v1",
@@ -2448,18 +1760,18 @@
     "reports_glob": "Plans/.audits/audit-*/FINAL_REPORT.md"
   },
   "summary": {
-    "closure_registry_row_count": 1803,
-    "current_blocker_count": 93,
-    "current_open_finding_count": 93,
-    "current_reopened_finding_count": 93,
+    "closure_registry_row_count": 1854,
+    "current_blocker_count": 42,
+    "current_open_finding_count": 42,
+    "current_reopened_finding_count": 42,
     "current_report_blocker_count": 0,
-    "historical_blocked_or_fail_report_count": 25,
-    "report_count": 71,
+    "historical_blocked_or_fail_report_count": 24,
+    "report_count": 66,
     "reported_status_family_counts": {
-      "blocked_or_fail": 25,
-      "other": 4,
+      "blocked_or_fail": 24,
+      "other": 2,
       "pass": 26,
-      "unknown": 16
+      "unknown": 14
     }
   }
 }
