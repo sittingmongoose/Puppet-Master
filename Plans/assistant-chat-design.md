@@ -31160,7 +31160,7 @@ command_payload_definitions:
           gap_note: "InvocationProvenance requires agent_reason (string, minLength 1) when invocation_source is agent_initiated, goal, prd, planning_wizard or subagent (Plans/web_operation_contracts.schema.json; UI_Command_Catalog.md:1028 'optional agent_reason'). Canon does not say whether the agent passes it as a UICommand arg or the dispatcher records it from the agent's turn; left out pending the web owner, candidate an optional agent_reason arg."
         - key: omitted:max_results
           choice: omitted
-          gap_note: "UCC-081 lists max_results among the advanced provider controls shown in /web help and settings (UI_Command_Catalog.md:1035) and WebActionInput's search branch carries max_results (integer, minimum 1; Tools.md:709, default 8 at Tools.md:757). Canon does not say these are per-call UICommand args rather than settings; left out pending the web owner."
+          gap_note: "UCC-081 lists max_results among the advanced provider controls shown in /web help and settings (UI_Command_Catalog.md:1035) and WebActionInput's search branch carries max_results (integer, minimum 1; Tools.md:716, default 8 at Tools.md:764). Canon does not say these are per-call UICommand args rather than settings; left out pending the web owner."
         - key: omitted:categories
           choice: omitted
           gap_note: "UCC-081 lets provider category help expose categories?: string[] with github, research, pdf when the provider supports them (UI_Command_Catalog.md:1036; WebActionInput search branch categories). Whether it is a per-call arg is not stated; left out pending the web owner."
@@ -31193,10 +31193,10 @@ command_payload_definitions:
           gap_note: "UCC-081 lists chunks_per_source among the advanced provider controls shown in /web help and settings (UI_Command_Catalog.md:1035); WebActionInput's search branch has no chunks_per_source field. Whether it is a per-call arg is not stated; left out pending the web owner."
         - key: omitted:sources
           choice: omitted
-          gap_note: "WebActionInput's search branch carries sources (array of strings; Plans/web_operation_contracts.schema.json#/$defs/WebActionInput; Tools.md:709 sources?), but section 5.2 fixes the /web search UI-command schema as { query } (assistant-chat-design.md:341) and UCC-081 does not list it among the provider controls. Whether it is a per-call arg is not stated; left out pending the web owner."
+          gap_note: "WebActionInput's search branch carries sources (array of strings; Plans/web_operation_contracts.schema.json#/$defs/WebActionInput; Tools.md:716 sources?), but section 5.2 fixes the /web search UI-command schema as { query } (assistant-chat-design.md:341) and UCC-081 does not list it among the provider controls. Whether it is a per-call arg is not stated; left out pending the web owner."
         - key: omitted:adapter_hint
           choice: omitted
-          gap_note: "WebActionInput's search branch carries adapter_hint (string; Plans/web_operation_contracts.schema.json#/$defs/WebActionInput; Tools.md:709 adapter_hint?), but section 5.2 fixes the /web search UI-command schema as { query } (assistant-chat-design.md:341) and UCC-081 does not list it among the provider controls. Whether it is a per-call arg is not stated; left out pending the web owner."
+          gap_note: "WebActionInput's search branch carries adapter_hint (string; Plans/web_operation_contracts.schema.json#/$defs/WebActionInput; Tools.md:716 adapter_hint?), but section 5.2 fixes the /web search UI-command schema as { query } (assistant-chat-design.md:341) and UCC-081 does not list it among the provider controls. Whether it is a per-call arg is not stated; left out pending the web owner."
         - key: omitted:cache_policy
           choice: omitted
           gap_note: "WebActionInput's search branch carries cache_policy ($ref CachePolicy; Plans/web_operation_contracts.schema.json#/$defs/WebActionInput), but section 5.2 fixes the /web search UI-command schema as { query } (assistant-chat-design.md:341) and UCC-081 does not list it among the provider controls. Whether it is a per-call arg is not stated; left out pending the web owner."
@@ -31342,20 +31342,20 @@ command_payload_definitions:
           default: none
           constraints: {minimum: 1}
           provenance: canon
-          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput crawl branch max_pages (integer, minimum 1); Plans/Tools.md:757 gives the webcrawl tool's own default execution limit max_pages = 25, owned by Tools.md (UI_Command_Catalog.md:1039)"
+          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput crawl branch max_pages (integer, minimum 1); Plans/Tools.md:764 gives the webcrawl tool's own default execution limit max_pages = 25, owned by Tools.md (UI_Command_Catalog.md:1039)"
         max_depth:
           type: integer
           required: false
           default: none
           constraints: {minimum: 0}
           provenance: canon
-          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput crawl branch max_depth (integer, minimum 0); Plans/Tools.md:757 gives the webcrawl tool's own default execution limit max_depth = 2"
+          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput crawl branch max_depth (integer, minimum 0); Plans/Tools.md:764 gives the webcrawl tool's own default execution limit max_depth = 2"
         same_origin_only:
           type: boolean
           required: false
           default: none
           provenance: canon
-          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput crawl branch same_origin_only (boolean); Plans/Tools.md:757 gives the webcrawl tool's own default execution limit same_origin_only = true"
+          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput crawl branch same_origin_only (boolean); Plans/Tools.md:764 gives the webcrawl tool's own default execution limit same_origin_only = true"
       owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -31372,13 +31372,13 @@ command_payload_definitions:
           gap_note: "Canon names no disabled code for the web rows; read as for cmd.chat.web.search. Crawl is host-scoped (UI_Command_Catalog.md:1038)."
         - key: field:max_pages
           choice: optional, no default
-          gap_note: "Plans/Tools.md:757 gives the webcrawl tool's default execution limit max_pages = 25, unless a caller or provider capability contract supplies a narrower effective limit, and detailed crawl limits stay owned by Plans/Tools.md (UI_Command_Catalog.md:1039). Choice: the UICommand arg has no default; when the caller leaves it out, the tool applies its own limit. Alternative: default: 25 on the arg, which would send the tool default as a caller-supplied value."
+          gap_note: "Plans/Tools.md:764 gives the webcrawl tool's default execution limit max_pages = 25, unless a caller or provider capability contract supplies a narrower effective limit, and detailed crawl limits stay owned by Plans/Tools.md (UI_Command_Catalog.md:1039). Choice: the UICommand arg has no default; when the caller leaves it out, the tool applies its own limit. Alternative: default: 25 on the arg, which would send the tool default as a caller-supplied value."
         - key: field:max_depth
           choice: optional, no default
-          gap_note: "Plans/Tools.md:757 gives the webcrawl tool's default execution limit max_depth = 2, unless a caller or provider capability contract supplies a narrower effective limit, and detailed crawl limits stay owned by Plans/Tools.md (UI_Command_Catalog.md:1039). Choice: the UICommand arg has no default; when the caller leaves it out, the tool applies its own limit. Alternative: default: 2 on the arg, which would send the tool default as a caller-supplied value."
+          gap_note: "Plans/Tools.md:764 gives the webcrawl tool's default execution limit max_depth = 2, unless a caller or provider capability contract supplies a narrower effective limit, and detailed crawl limits stay owned by Plans/Tools.md (UI_Command_Catalog.md:1039). Choice: the UICommand arg has no default; when the caller leaves it out, the tool applies its own limit. Alternative: default: 2 on the arg, which would send the tool default as a caller-supplied value."
         - key: field:same_origin_only
           choice: optional, no default
-          gap_note: "Plans/Tools.md:757 gives the webcrawl tool's default execution limit same_origin_only = true, unless a caller or provider capability contract supplies a narrower effective limit, and detailed crawl limits stay owned by Plans/Tools.md (UI_Command_Catalog.md:1039). Choice: the UICommand arg has no default; when the caller leaves it out, the tool applies its own limit. Alternative: default: true on the arg, which would send the tool default as a caller-supplied value."
+          gap_note: "Plans/Tools.md:764 gives the webcrawl tool's default execution limit same_origin_only = true, unless a caller or provider capability contract supplies a narrower effective limit, and detailed crawl limits stay owned by Plans/Tools.md (UI_Command_Catalog.md:1039). Choice: the UICommand arg has no default; when the caller leaves it out, the tool applies its own limit. Alternative: default: true on the arg, which would send the tool default as a caller-supplied value."
         - key: omitted:invocation_source
           choice: omitted
           gap_note: "Every web route persists invocation_source (UI_Command_Catalog.md:1028; Plans/web_operation_contracts.schema.json#/$defs/InvocationProvenance). Canon does not say whether it is a UICommand arg; left to the dispatcher, which derives it from source_surface and actor_ref."
@@ -31408,20 +31408,20 @@ command_payload_definitions:
           default: none
           constraints: {minimum: 1}
           provenance: canon
-          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput map branch max_pages (integer, minimum 1); Plans/Tools.md:757 gives the webmap tool's own default execution limit max_pages = 50"
+          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput map branch max_pages (integer, minimum 1); Plans/Tools.md:764 gives the webmap tool's own default execution limit max_pages = 50"
         max_depth:
           type: integer
           required: false
           default: none
           constraints: {minimum: 0}
           provenance: canon
-          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput map branch max_depth (integer, minimum 0); Plans/Tools.md:757 gives the webmap tool's own default execution limit max_depth = 3"
+          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput map branch max_depth (integer, minimum 0); Plans/Tools.md:764 gives the webmap tool's own default execution limit max_depth = 3"
         same_origin_only:
           type: boolean
           required: false
           default: none
           provenance: canon
-          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput map branch same_origin_only (boolean); Plans/Tools.md:757 gives the webmap tool's own default execution limit same_origin_only = true"
+          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput map branch same_origin_only (boolean); Plans/Tools.md:764 gives the webmap tool's own default execution limit same_origin_only = true"
       owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -31438,13 +31438,13 @@ command_payload_definitions:
           gap_note: "Canon names no disabled code for the web rows; read as for cmd.chat.web.search. Map is host-scoped (UI_Command_Catalog.md:1038)."
         - key: field:max_pages
           choice: optional, no default
-          gap_note: "Plans/Tools.md:757 gives the webmap tool's default execution limit max_pages = 50, unless a caller or provider capability contract supplies a narrower effective limit, and detailed crawl limits stay owned by Plans/Tools.md (UI_Command_Catalog.md:1039). Choice: the UICommand arg has no default; when the caller leaves it out, the tool applies its own limit. Alternative: default: 50 on the arg, which would send the tool default as a caller-supplied value."
+          gap_note: "Plans/Tools.md:764 gives the webmap tool's default execution limit max_pages = 50, unless a caller or provider capability contract supplies a narrower effective limit, and detailed crawl limits stay owned by Plans/Tools.md (UI_Command_Catalog.md:1039). Choice: the UICommand arg has no default; when the caller leaves it out, the tool applies its own limit. Alternative: default: 50 on the arg, which would send the tool default as a caller-supplied value."
         - key: field:max_depth
           choice: optional, no default
-          gap_note: "Plans/Tools.md:757 gives the webmap tool's default execution limit max_depth = 3, unless a caller or provider capability contract supplies a narrower effective limit, and detailed crawl limits stay owned by Plans/Tools.md (UI_Command_Catalog.md:1039). Choice: the UICommand arg has no default; when the caller leaves it out, the tool applies its own limit. Alternative: default: 3 on the arg, which would send the tool default as a caller-supplied value."
+          gap_note: "Plans/Tools.md:764 gives the webmap tool's default execution limit max_depth = 3, unless a caller or provider capability contract supplies a narrower effective limit, and detailed crawl limits stay owned by Plans/Tools.md (UI_Command_Catalog.md:1039). Choice: the UICommand arg has no default; when the caller leaves it out, the tool applies its own limit. Alternative: default: 3 on the arg, which would send the tool default as a caller-supplied value."
         - key: field:same_origin_only
           choice: optional, no default
-          gap_note: "Plans/Tools.md:757 gives the webmap tool's default execution limit same_origin_only = true, unless a caller or provider capability contract supplies a narrower effective limit, and detailed crawl limits stay owned by Plans/Tools.md (UI_Command_Catalog.md:1039). Choice: the UICommand arg has no default; when the caller leaves it out, the tool applies its own limit. Alternative: default: true on the arg, which would send the tool default as a caller-supplied value."
+          gap_note: "Plans/Tools.md:764 gives the webmap tool's default execution limit same_origin_only = true, unless a caller or provider capability contract supplies a narrower effective limit, and detailed crawl limits stay owned by Plans/Tools.md (UI_Command_Catalog.md:1039). Choice: the UICommand arg has no default; when the caller leaves it out, the tool applies its own limit. Alternative: default: true on the arg, which would send the tool default as a caller-supplied value."
         - key: omitted:invocation_source
           choice: omitted
           gap_note: "Every web route persists invocation_source (UI_Command_Catalog.md:1028; Plans/web_operation_contracts.schema.json#/$defs/InvocationProvenance). Canon does not say whether it is a UICommand arg; left to the dispatcher, which derives it from source_surface and actor_ref."

@@ -11689,7 +11689,7 @@ node_compile_hint:
 source_lineage:
   - "Plans/Wiring_Matrix.md:216"
   - "Plans/Wiring_Matrix.md:433-436"
-  - "Plans/Wiring_Matrix.md:1889-1943"
+  - "Plans/Wiring_Matrix.md:1890-1944"
 preserved_exact_tokens:
   - "cmd.terminal.reveal"
   - "cmd.terminal.terminate_session"
@@ -11751,7 +11751,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Plans/Multi-Account.md:5088"
-  - "Plans/FinalGUISpec.md:27233"
+  - "Plans/FinalGUISpec.md:27266"
   - "Plans/usage-feature.md:69-70"
   - "Plans/usage-feature.md:137"
   - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
@@ -12033,7 +12033,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- Plans/FinalGUISpec.md:28854-28900 (F3-434)
+- Plans/FinalGUISpec.md:28887-28933 (F3-434)
 - Plans/Settings_System.md#SSYS-018 (current typed route owner; supersedes bloom-specific routing)
 - Plans/Settings_System.md#SSYS-023 (exact 80-token transitive disposition registry)
 - Plans/settings_system_contract_fixtures.json#/packet_command_dispositions
