@@ -4,13 +4,13 @@ import importlib.util
 import json
 import os
 import signal
+import socket
 import stat
 import subprocess
 import sys
 import tempfile
 import time
 import unittest
-from concurrent.futures import ThreadPoolExecutor
 from unittest import mock
 from pathlib import Path
 
@@ -161,19 +161,22 @@ class RunValidatorSubprocessTests(unittest.TestCase):
         # know the grandchild pid directly, so we rely on the bounded elapsed time above as
         # the structural proof that the process group was reaped.
 
-    def test_nested_aggregate_validator_joins_wrapper_process_group_and_is_reaped(self) -> None:
+    def test_wrapper_timeout_kills_the_nested_validator_in_its_process_group(self) -> None:
         nested = self.tmp / "nested.py"
         wrapper = self.tmp / "wrapper.py"
         nested_state = self.tmp / "nested_state.json"
         wrapper_state = self.tmp / "wrapper_state.json"
+        socket_path = str(self.tmp / "nested.sock")
         write_stub_validator(
             nested,
             (
-                "import json, os, time\n"
+                "import json, os, socket\n"
                 "from pathlib import Path\n"
                 f"Path({str(nested_state)!r}).write_text("
                 "json.dumps({'pid': os.getpid(), 'pgid': os.getpgrp()}), encoding='utf-8')\n"
-                "time.sleep(60)\n"
+                "with socket.socket(socket.AF_UNIX) as alive:\n"
+                f"    alive.connect({socket_path!r})\n"
+                "    alive.recv(1)\n"
             ),
         )
         write_stub_validator(
@@ -190,49 +193,47 @@ class RunValidatorSubprocessTests(unittest.TestCase):
             ),
         )
 
-        started = time.monotonic()
-        with ThreadPoolExecutor(max_workers=1) as executor:
-            result = executor.submit(
-                pm_plans_verify.run_validator_subprocess,
-                "aggregate-wrapper",
-                [sys.executable, str(wrapper)],
-                timeout_seconds=10,
-                aggregate_child=True,
-            )
-            readiness_deadline = time.monotonic() + 8
-            while (
-                time.monotonic() < readiness_deadline
-                and not nested_state.exists()
-                and not result.done()
-            ):
-                time.sleep(0.05)
-            nested_started_before_timeout = nested_state.exists()
-            proc, timeout_report = result.result(timeout=15)
-        elapsed = time.monotonic() - started
+        real_popen = subprocess.Popen
+        with socket.socket(socket.AF_UNIX) as listener:
+            listener.bind(socket_path)
+            listener.listen(1)
+            listener.settimeout(15)
+
+            def start_when_nested_is_ready(*args, **kwargs):
+                proc = real_popen(*args, **kwargs)
+                try:
+                    connection, _ = listener.accept()
+                except OSError:
+                    pm_plans_verify._terminate_process_group(proc)
+                    proc.communicate(timeout=3)
+                    raise
+                self.addCleanup(connection.close)
+                connections.append(connection)
+                return proc
+
+            connections = []
+            # Start the real communicate timeout after the nested validator has joined the group.
+            with mock.patch.object(pm_plans_verify.subprocess, "Popen", start_when_nested_is_ready):
+                proc, timeout_report = pm_plans_verify.run_validator_subprocess(
+                    "aggregate-wrapper",
+                    [sys.executable, str(wrapper)],
+                    timeout_seconds=1,
+                    aggregate_child=True,
+                )
 
         self.assertIsNone(proc)
         assert timeout_report is not None
         self.assertEqual(timeout_report["failures"][0]["error"], "subprocess_timeout")
         self.assertTrue(timeout_report["failures"][0]["process_group_killed"])
-        self.assertLess(elapsed, 20.0)
-        self.assertTrue(nested_started_before_timeout)
-        self.assertTrue(wrapper_state.exists())
-        self.assertTrue(nested_state.exists())
         wrapper_process = json.loads(wrapper_state.read_text(encoding="utf-8"))
         nested_process = json.loads(nested_state.read_text(encoding="utf-8"))
         self.assertEqual(wrapper_process["pid"], wrapper_process["pgid"])
         self.assertEqual(nested_process["pgid"], wrapper_process["pgid"])
 
-        nested_pid = nested_process["pid"]
-        deadline = time.monotonic() + 3
-        while time.monotonic() < deadline:
-            try:
-                os.kill(nested_pid, 0)
-            except ProcessLookupError:
-                break
-            time.sleep(0.05)
-        else:
-            self.fail(f"nested aggregate validator still alive after wrapper timeout: pid={nested_pid}")
+        connection, = connections
+        connection.settimeout(3)
+        # EOF observes exit even if the adopting process has yet to reap the child's PID.
+        self.assertEqual(connection.recv(1), b"")
 
     def test_gui_asset_policy_gate_honors_timeout(self) -> None:
         """cmd_validate_gui_asset_policy must respect subcheck_timeout_seconds (regression)."""
