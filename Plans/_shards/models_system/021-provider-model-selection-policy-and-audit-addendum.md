@@ -4,7 +4,7 @@ Source: `Plans/Models_System.md`
 
 Source lines: L1327-L1392
 
-Source SHA256: `42b504fb432b87c710952fd8245a1810836260d7a168cbf9dea24b1bb5f87a77`
+Source SHA256: `7a2e916437d974a56da7a15b4dea7561bae5ee5b5de59a6e5b9a436fadbe4d21`
 
 ---
 
@@ -31,7 +31,7 @@ Resolve through §2 and MS-005/MS-099 only. The order is explicit run, scoped ow
 
 - **Capability check**: Before selecting a provider, verify it supports the required model and inference parameters (context length, output length, reasoning mode, etc.).
 - **Multi-account capability check**: Provider capability modeling MUST include multi-account-related behavior before any provider/account pool can be selected or switched. Required capability facts include `supports_multi_account`, signal sources/confidence, cooldown/retry-budget support, reset countdown support, and provider-specific limits that change account pressure interpretation or rotation safety.
-- **Cost gating**: If a model exceeds the active Persona's cost budget, skip it and move to the next in the precedence chain.
+- **Cost gating**: If a model exceeds the active Persona's cost budget, skip it and move to the next in the precedence chain. Only a model whose known cost is above the budget is skipped. A model whose price is unknown is not skipped by this gate and stays pickable; wherever that choice is shown (the resolver record's `selection_reason.alternatives[]`, the model picker and any settlement or receipt text) its price is shown as unknown (`cost_status` `unknown`), never as `$0.00` or as within budget (MS-135 `cost_budget` gate; DL-2604).
 - **Fallback**: If all preferred models exceed budget or are unavailable, emit a concern (not a silent failure) and suggest cheaper alternatives or escalation.
 
 Clamp/substitution decisions use the `clamp/substitution` reason-code family when the requested provider, model, effort, capability, instruction projection, or skill projection cannot be applied exactly.

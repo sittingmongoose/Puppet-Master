@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L9940-L11007
+Source lines: L9942-L11028
 
-Source SHA256: `1663096ef7d9e8dd0b9b404d382678770f70ddadb7a12126ab57770d47b0a5a4`
+Source SHA256: `f369d1a2aee3ea0d1cb2454134dcbc470d4d80565011af67668f2679c905c80d`
 
 ---
 
@@ -27,6 +27,25 @@ Repairs rows `sfk-756cb4154b9e486d8a6d74db`, `sfk-0a996093252d3d35aa59e6f2`, `sf
 | `cmd.browser.capture.region_to_chat` | artifact | 30000 | as `cmd.browser.capture.full_to_chat` | `guaranteed_everyday` | `capture_permitted` (the catalog precondition) | `workspace_preview`, `automation_session`; never `AuthBrowserSession` (`!protected_auth_browser`) | screenshot capture of a user-selected region | as `cmd.browser.capture.full_to_chat` | as `cmd.browser.capture.full_to_chat` | browser chrome capture chip (`#SMPFS-089`) |
 
 The two `cmd.browser.capture.*_to_chat` rows are the live screenshot actions; `cmd.browser.run_code`, `cmd.browser.evaluate` and `cmd.browser.capture_artifact` have no production entry point (the first two are compatibility input only; no catalog or wiring row reaches the third). Trace and video capture (`#SMPFS-091`'s named-action taxonomy) have no catalogued command; they are `advanced_debug_testing`, as this table's capture row said before 2026-11-26, and such a command joins this table before it may produce a manifest. The former `browser_run_code` and `browser_evaluate` tokens are compatibility aliases for `cmd.browser.run_code` and `cmd.browser.evaluate`. Timeout constants are disambiguated as follows: `5000ms` applies to page-evaluation commands; `30000ms` applies to user-mediated share, diagnostic, artifact, and open/wait actions; `30s` is display copy for `30000ms`.
+
+**Tier rule for every browser command (2026-11-26, DL-2604).** Every `cmd.browser.*` command in `Plans/UI_Command_Catalog.md` or this spec takes its `tier` from one rule, by what the command does, instead of from a row of its own in the table above. The rule has four effect levels. A command takes the highest level any of its effects reaches, in this order, highest first:
+
+| Effect level | A command is at this level when it | `tier` |
+| --- | --- | --- |
+| `runs_code_or_debugs` | evaluates code in the page, runs or resumes a Browser Program, or opens or operates DevTools (the `page-evaluation` and `diagnostic` buckets above) | `advanced_debug_testing` |
+| `sends_data_out` | delivers page content (a selection, element, component, screenshot or the session itself) to a destination other than its own caller's result: an agent thread (share with agent), the chat composer or a chat message (capture or add to chat), or anywhere outside Puppet Master | `guaranteed_everyday` |
+| `changes_page_or_session` | changes the page, a browser tab, page or workspace, the browser session or its agent-control state, the browser layout, or a browser setting | `guaranteed_everyday` |
+| `reads_page_only` | reads the page or browser state and changes nothing; it may draw a PM overlay over the page (a picker highlight) and record what it read as PM evidence for its caller (a receipt or a `BrowserArtifactManifest`) | `guaranteed_everyday` |
+
+The rows of the table above keep their explicit `tier`, and each agrees with the rule: `cmd.browser.share_with_agent`, `cmd.browser.capture.full_to_chat` and `cmd.browser.capture.region_to_chat` are `sends_data_out`; `cmd.browser.capture_artifact` is `reads_page_only`; `cmd.browser.run_code`, `cmd.browser.evaluate` and `cmd.browser.open_devtools` are `runs_code_or_debugs`. The rule cannot classify three commands by itself, because by effect alone they would be `changes_page_or_session` (pause, cancel) or `reads_page_only` (inspect), yet they act only on a Browser Program, which only an advanced run creates: `cmd.browser.program.pause`, `cmd.browser.program.cancel` and `cmd.browser.program.inspect` are `advanced_debug_testing`, with `cmd.browser.program.run` and `cmd.browser.program.resume`. Trace and video capture keep `advanced_debug_testing` as stated above. An alias takes its canonical command's level (`cmd.browser.devtools.open` as `cmd.browser.open_devtools`). `cmd.browser.component.recapture` is not a command (BSTALE-004) and no `cmd.browser.auth.*` command exists, so neither is classified. A new `cmd.browser.*` command takes its level from this rule when it is catalogued; it joins the table above only when it also needs its own timeout, output or artifact contract.
+
+Applying the rule to the catalogued commands on 2026-11-26 gives:
+- `runs_code_or_debugs` (`advanced_debug_testing`): `cmd.browser.page.evaluate`, `cmd.browser.program.run`, `cmd.browser.program.resume`, `cmd.browser.run_code`, `cmd.browser.evaluate`, `cmd.browser.open_devtools`, `cmd.browser.devtools.open`, `cmd.browser.toggle_devtools_dock`; by the named exception, `cmd.browser.program.pause`, `cmd.browser.program.cancel`, `cmd.browser.program.inspect`.
+- `sends_data_out` (`guaranteed_everyday`): `cmd.browser.share_with_agent`, `cmd.browser.pick_element_for_chat`, `cmd.browser.add_selection_to_chat`, `cmd.browser.add_selection_screenshot_to_chat`, `cmd.browser.add_selection_full_screenshot_to_chat`, `cmd.browser.add_screenshot_to_chat`, `cmd.browser.add_full_screenshot_to_chat`, `cmd.browser.capture.full_to_chat`, `cmd.browser.capture.region_to_chat`, `cmd.browser.component.send_now`, `cmd.browser.component.add_to_composer`, `cmd.browser.component.insert_at_cursor`.
+- `changes_page_or_session` (`guaranteed_everyday`): `cmd.browser.open_workspace_preview`, `cmd.browser.open_detached_preview`, `cmd.browser.focus_browser_tab`, `cmd.browser.detach_browser_tab`, `cmd.browser.navigate`, `cmd.browser.reload`, `cmd.browser.revoke_share_with_agent`, `cmd.browser.take_over`, `cmd.browser.pause_agent`, `cmd.browser.let_agent_continue`, `cmd.browser.stop_agent_keep_browser`, `cmd.browser.promote_to_normal_browsing`, `cmd.browser.reopen`, `cmd.browser.retry`, `cmd.browser.keep_closed`, `cmd.browser.page.create`, `cmd.browser.page.activate`, `cmd.browser.page.close`, `cmd.browser.workspace.create`, `cmd.browser.workspace.close`, `cmd.browser.workspace.reset`, `cmd.browser.component.mode.set_default`.
+- `reads_page_only` (`guaranteed_everyday`): `cmd.browser.page.representation.capture`, `cmd.browser.page.representation.delta`, `cmd.browser.page.representation.query`, `cmd.browser.component.pick`, `cmd.browser.capture_artifact`.
+
+The tier says which feature set a command belongs to; it grants nothing. Every command still passes its own catalog precondition, `permission_layer` and session-class rules, and none applies to `AuthBrowserSession`.
 
 `BrowserArtifactManifest` fields are `artifact_manifest_id`, `browser_session_id`, `action_id`, `artifact_refs[]`, `retention_class`, `created_at_utc`, `redaction_profile_id`, and `schema_version`.
 

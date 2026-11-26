@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L793-L3553
+Source lines: L793-L3554
 
-Source SHA256: `ee28c69294e427d0667c2f1addb8b76e2e5fa013d8156f767b8e18ff4a82a1c9`
+Source SHA256: `cbe54b3bd95aba15a9a5ab164164df6a976aeb9ab218e7dae4128fc2b7c58890`
 
 ---
 
@@ -1633,6 +1633,7 @@ preserved_exact_tokens:
   - "!`cmd`"
 negative_constraints:
   - "Reserved Assistant Chat slash commands fail validation even if override_builtin is enabled."
+  - "No GUI list editor for `arguments` is offered; Arguments hint is the only argument control (DL-2604 retires the list-editor request of registry line 1377)."
 owner_hints:
   - Plans/Commands_System.md
 ```

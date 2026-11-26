@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L9724-L10010
+Source lines: L9728-L10014
 
-Source SHA256: `42b504fb432b87c710952fd8245a1810836260d7a168cbf9dea24b1bb5f87a77`
+Source SHA256: `7a2e916437d974a56da7a15b4dea7561bae5ee5b5de59a6e5b9a436fadbe4d21`
 
 ---
 
@@ -277,7 +277,7 @@ Step 1, gates. A candidate that fails any gate is excluded and listed with `elig
 | `context_window` | `effective_context_window_tokens` is at least the request's estimated input tokens plus its reserved output tokens. | `context_too_small` |
 | `cost_budget` | No active Persona cost budget applies, or the candidate's estimated request cost is unknown, or it is known and at most that budget in microusd ("Provider capability and cost gating", MS-102). A known estimate above the budget fails. | `over_cost_budget` |
 
-The `cost_budget` gate is the hard "Cost gating" rule: an over-budget candidate is excluded before scoring, and no weight, `cost_policy` or `ignore_cost` setting can readmit it. The same gate is part of eligibility for a concrete pick and for every `fallback_chain[]` entry. An unknown estimate cannot be shown to exceed the budget, so it passes the gate and scores 0 on `cost` below.
+The `cost_budget` gate is the hard "Cost gating" rule: an over-budget candidate is excluded before scoring, and no weight, `cost_policy` or `ignore_cost` setting can readmit it. The same gate is part of eligibility for a concrete pick and for every `fallback_chain[]` entry. An unknown estimate cannot be shown to exceed the budget, so it passes the gate and scores 0 on `cost` below. A candidate with an unknown price therefore stays pickable (DL-2604). Wherever the choice is shown, in its `selection_reason.alternatives[]` entry, the model picker and any settlement or receipt text, its price is shown as unknown (`cost_status` `unknown`, as in usage-feature GUI-USG-003), never as `$0.00`, as a known estimate or as within budget. MS-136's visible unknown-cost fail-closed state is this display rule: it refuses to show or total an unknown price as a known cost, and it does not exclude the candidate.
 
 Step 2, factor scores. Each eligible candidate gets integer scores from 0 to 1000. `account_entitlement` and `cost_budget` are gates only and score nothing.
 
@@ -294,4 +294,4 @@ Step 3, weights. Weights are integer percentages that always sum to 100. The def
 
 Step 4, choice. `total_score = sum(weight * factor_score)`, an integer from 0 to 100000. The highest `total_score` wins. A tie is broken by lower configured `priority` (unlisted candidates take 2147483647), then `provider_id`, then `model_id`, both in ascending UTF-8 byte order. When no candidate is eligible the router returns `no_eligible_candidate`, the resolver walks `fallback_chain[]` up to `max_depth`, and exhaustion emits `fallback_exhausted`. When any candidate or fallback was excluded with `over_cost_budget`, that exhaustion also emits the MS-102 cost-budget concern with cheaper alternatives or escalation. Cost, latency, capability and quota inputs are read from refs pinned in the resolver record, so the same inputs always select the same winner.
 
-Each `selection_reason.alternatives[]` entry from the router has `provider_id` (string), `model_id` (string), `eligible` (boolean), `exclusion_reason?` (one of the six gate codes), `factor_scores?` (object with the six integer factor scores), `weights` (object with the six integer weights), `total_score?` (integer) and `priority` (integer).
+Each `selection_reason.alternatives[]` entry from the router has `provider_id` (string), `model_id` (string), `eligible` (boolean), `exclusion_reason?` (one of the six gate codes), `estimated_cost_microusd` (integer or null; null when the price is unknown, and the GUI then shows the price as unknown, never `$0.00`), `factor_scores?` (object with the six integer factor scores), `weights` (object with the six integer weights), `total_score?` (integer) and `priority` (integer).

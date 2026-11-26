@@ -9490,6 +9490,7 @@
     "DR-056",
     "GRS-3100",
     "DL-2603",
+    "DL-2604",
     "ACD-126",
     "WM-090",
     "ATS-054",
@@ -54251,6 +54252,31 @@
       "edge_type": "depends_on",
       "from": "DL-2603",
       "to": "MS-120"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2604",
+      "to": "CS-030"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2604",
+      "to": "DL-2602"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2604",
+      "to": "MS-102"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2604",
+      "to": "MS-135"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2604",
+      "to": "SMPFS-100"
     },
     {
       "edge_type": "depends_on",
@@ -165268,7 +165294,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-26T02:28:17Z",
+  "generated_at_utc": "2026-11-26T02:51:39Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -186105,8 +186131,8 @@
       "source_location": {
         "heading": "CDRY-021 — Wand module controls that are not commands",
         "heading_level": 3,
-        "heading_line": 7544,
-        "line": 7569,
+        "heading_line": 7545,
+        "line": 7570,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -186122,8 +186148,8 @@
       "source_location": {
         "heading": "CDRY-022 - The Wand Modules Mint Exactly Seven Commands On DL-130",
         "heading_level": 3,
-        "heading_line": 7810,
-        "line": 7832,
+        "heading_line": 7811,
+        "line": 7833,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -186139,8 +186165,8 @@
       "source_location": {
         "heading": "CDRY-023 - The Closure Answers Mint Exactly Two More Commands",
         "heading_level": 3,
-        "heading_line": 8009,
-        "line": 8023,
+        "heading_line": 8010,
+        "line": 8024,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188026,8 +188052,8 @@
       "source_location": {
         "heading": "CS-001 - Commands System Source-Preserving Bridge Retired",
         "heading_level": 3,
-        "heading_line": 3421,
-        "line": 3423,
+        "heading_line": 3422,
+        "line": 3424,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188536,8 +188562,8 @@
       "source_location": {
         "heading": "CS-031 - Command Edit Save Targets",
         "heading_level": 3,
-        "heading_line": 2422,
-        "line": 2424,
+        "heading_line": 2423,
+        "line": 2425,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188553,8 +188579,8 @@
       "source_location": {
         "heading": "CS-032 - Command Delete and Reveal Behavior",
         "heading_level": 3,
-        "heading_line": 2465,
-        "line": 2467,
+        "heading_line": 2466,
+        "line": 2468,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188570,8 +188596,8 @@
       "source_location": {
         "heading": "CS-033 - Command Save Schema Validation",
         "heading_level": 3,
-        "heading_line": 2507,
-        "line": 2509,
+        "heading_line": 2508,
+        "line": 2510,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188587,8 +188613,8 @@
       "source_location": {
         "heading": "CS-034 - Dry-Run Preview Rendering",
         "heading_level": 3,
-        "heading_line": 2559,
-        "line": 2561,
+        "heading_line": 2560,
+        "line": 2562,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188604,8 +188630,8 @@
       "source_location": {
         "heading": "CS-035 - Dry-Run Preview Execution Safety",
         "heading_level": 3,
-        "heading_line": 2609,
-        "line": 2611,
+        "heading_line": 2610,
+        "line": 2612,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188621,8 +188647,8 @@
       "source_location": {
         "heading": "CS-036 - Shortcut Binding Section Anchor",
         "heading_level": 3,
-        "heading_line": 2657,
-        "line": 2659,
+        "heading_line": 2658,
+        "line": 2660,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188638,8 +188664,8 @@
       "source_location": {
         "heading": "CS-037 - Reserved Slash-Command Set Lock",
         "heading_level": 3,
-        "heading_line": 2698,
-        "line": 2700,
+        "heading_line": 2699,
+        "line": 2701,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188655,8 +188681,8 @@
       "source_location": {
         "heading": "CS-038 - Web Slash Family Parsing and IDs",
         "heading_level": 3,
-        "heading_line": 2768,
-        "line": 2770,
+        "heading_line": 2769,
+        "line": 2771,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188672,8 +188698,8 @@
       "source_location": {
         "heading": "CS-039 - Reserved Dispatch Aliases and Override Policy",
         "heading_level": 3,
-        "heading_line": 2839,
-        "line": 2841,
+        "heading_line": 2840,
+        "line": 2842,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188689,8 +188715,8 @@
       "source_location": {
         "heading": "CS-040 - Reserved Command Catalog Presentation",
         "heading_level": 3,
-        "heading_line": 2899,
-        "line": 2901,
+        "heading_line": 2900,
+        "line": 2902,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188706,8 +188732,8 @@
       "source_location": {
         "heading": "CS-041 - User Command UICommand Dispatch Bridge",
         "heading_level": 3,
-        "heading_line": 2942,
-        "line": 2944,
+        "heading_line": 2943,
+        "line": 2945,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188723,8 +188749,8 @@
       "source_location": {
         "heading": "CS-042 - Debug Mode UICommand Family",
         "heading_level": 3,
-        "heading_line": 2997,
-        "line": 2999,
+        "heading_line": 2998,
+        "line": 3000,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188740,8 +188766,8 @@
       "source_location": {
         "heading": "CS-043 - OpenCode Reference Boundary",
         "heading_level": 3,
-        "heading_line": 3057,
-        "line": 3059,
+        "heading_line": 3058,
+        "line": 3060,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188757,8 +188783,8 @@
       "source_location": {
         "heading": "CS-044 - OpenCode Command Baseline Reference",
         "heading_level": 3,
-        "heading_line": 3104,
-        "line": 3106,
+        "heading_line": 3105,
+        "line": 3107,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188774,8 +188800,8 @@
       "source_location": {
         "heading": "CS-045 - Puppet Master Command Backend Deltas",
         "heading_level": 3,
-        "heading_line": 3158,
-        "line": 3160,
+        "heading_line": 3159,
+        "line": 3161,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188791,8 +188817,8 @@
       "source_location": {
         "heading": "CS-046 - Puppet Master Commands GUI Delta",
         "heading_level": 3,
-        "heading_line": 3225,
-        "line": 3227,
+        "heading_line": 3226,
+        "line": 3228,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188808,8 +188834,8 @@
       "source_location": {
         "heading": "CS-047 - Acceptance Storage and Reserved Names",
         "heading_level": 3,
-        "heading_line": 3267,
-        "line": 3269,
+        "heading_line": 3268,
+        "line": 3270,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188825,8 +188851,8 @@
       "source_location": {
         "heading": "CS-048 - Acceptance Template Permissions and Subtasks",
         "heading_level": 3,
-        "heading_line": 3317,
-        "line": 3319,
+        "heading_line": 3318,
+        "line": 3320,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188842,8 +188868,8 @@
       "source_location": {
         "heading": "CS-049 - Acceptance GUI Validation Preview Invocation",
         "heading_level": 3,
-        "heading_line": 3372,
-        "line": 3374,
+        "heading_line": 3373,
+        "line": 3375,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188859,8 +188885,8 @@
       "source_location": {
         "heading": "CS-050 - Duplicate Section Seven Recovery Compile Addendum",
         "heading_level": 3,
-        "heading_line": 3569,
-        "line": 3571,
+        "heading_line": 3570,
+        "line": 3572,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188876,8 +188902,8 @@
       "source_location": {
         "heading": "CS-051 - Goal Slash Reservation And Override Boundary",
         "heading_level": 3,
-        "heading_line": 3605,
-        "line": 3607,
+        "heading_line": 3606,
+        "line": 3608,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188893,8 +188919,8 @@
       "source_location": {
         "heading": "CS-052 - Planning Command State And Recovery Semantics",
         "heading_level": 3,
-        "heading_line": 3664,
-        "line": 3666,
+        "heading_line": 3665,
+        "line": 3667,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188910,8 +188936,8 @@
       "source_location": {
         "heading": "CS-053 - Teach Invocation Command Routes",
         "heading_level": 3,
-        "heading_line": 3724,
-        "line": 3726,
+        "heading_line": 3725,
+        "line": 3727,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188927,8 +188953,8 @@
       "source_location": {
         "heading": "CS-054 - Storage Access And Viewer Command Gate",
         "heading_level": 3,
-        "heading_line": 3834,
-        "line": 3836,
+        "heading_line": 3835,
+        "line": 3837,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188944,8 +188970,8 @@
       "source_location": {
         "heading": "CS-055 - Root Continuity Fallback And Value-Navigation Consumer",
         "heading_level": 3,
-        "heading_line": 3890,
-        "line": 3892,
+        "heading_line": 3891,
+        "line": 3893,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188961,8 +188987,8 @@
       "source_location": {
         "heading": "CS-056 - Exact Restore Retry Revert And SCM Command Admission",
         "heading_level": 3,
-        "heading_line": 3952,
-        "line": 3954,
+        "heading_line": 3953,
+        "line": 3955,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188978,8 +189004,8 @@
       "source_location": {
         "heading": "CS-057 - Conversation Restore-Point Registered Command Boundary",
         "heading_level": 3,
-        "heading_line": 4020,
-        "line": 4022,
+        "heading_line": 4021,
+        "line": 4023,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -188995,8 +189021,8 @@
       "source_location": {
         "heading": "CS-058 - EventRecord V2 Command Evidence Consumer",
         "heading_level": 3,
-        "heading_line": 4194,
-        "line": 4196,
+        "heading_line": 4195,
+        "line": 4197,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189012,8 +189038,8 @@
       "source_location": {
         "heading": "CS-059 - Storage Compatibility Maintenance Retention And Availability Gate",
         "heading_level": 3,
-        "heading_line": 4302,
-        "line": 4304,
+        "heading_line": 4303,
+        "line": 4305,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189029,8 +189055,8 @@
       "source_location": {
         "heading": "CS-060 - Panel Domain Reserved Prefix Registry Extension",
         "heading_level": 3,
-        "heading_line": 4393,
-        "line": 4395,
+        "heading_line": 4394,
+        "line": 4396,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189046,8 +189072,8 @@
       "source_location": {
         "heading": "CS-061 - Panel Switch Destination Vocabulary And Undock Adjudication",
         "heading_level": 3,
-        "heading_line": 4454,
-        "line": 4456,
+        "heading_line": 4455,
+        "line": 4457,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189063,8 +189089,8 @@
       "source_location": {
         "heading": "CS-062 - Panel Command Availability And Confirmation Class Assignments",
         "heading_level": 3,
-        "heading_line": 4511,
-        "line": 4513,
+        "heading_line": 4512,
+        "line": 4514,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189080,8 +189106,8 @@
       "source_location": {
         "heading": "CS-063 - Run & Debug Command Family Registration",
         "heading_level": 3,
-        "heading_line": 4657,
-        "line": 4659,
+        "heading_line": 4658,
+        "line": 4660,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189097,8 +189123,8 @@
       "source_location": {
         "heading": "CS-064 - Orchestrator Run-Control Trio Registration",
         "heading_level": 3,
-        "heading_line": 4715,
-        "line": 4717,
+        "heading_line": 4716,
+        "line": 4718,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189114,8 +189140,8 @@
       "source_location": {
         "heading": "CS-065 - Debug Investigation Verification and Cleanup Registration",
         "heading_level": 3,
-        "heading_line": 4775,
-        "line": 4777,
+        "heading_line": 4776,
+        "line": 4778,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189131,8 +189157,8 @@
       "source_location": {
         "heading": "CS-066 - Shared Runtime Command Census And Typed Family",
         "heading_level": 3,
-        "heading_line": 4151,
-        "line": 4153,
+        "heading_line": 4152,
+        "line": 4154,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189148,8 +189174,8 @@
       "source_location": {
         "heading": "CS-067 - Usage Forecast Command Family And View-Local Boundary",
         "heading_level": 3,
-        "heading_line": 4838,
-        "line": 4840,
+        "heading_line": 4839,
+        "line": 4841,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189165,8 +189191,8 @@
       "source_location": {
         "heading": "CS-068 - PMConcept7 Settled Interaction Command Reuse And Local Preview Boundary",
         "heading_level": 3,
-        "heading_line": 4961,
-        "line": 4963,
+        "heading_line": 4962,
+        "line": 4964,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189182,8 +189208,8 @@
       "source_location": {
         "heading": "CS-069 - Settings Command Family Registration",
         "heading_level": 3,
-        "heading_line": 5084,
-        "line": 5086,
+        "heading_line": 5085,
+        "line": 5087,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189199,8 +189225,8 @@
       "source_location": {
         "heading": "CS-070 - Cross-owner command registration and exact-return fences",
         "heading_level": 3,
-        "heading_line": 5361,
-        "line": 5363,
+        "heading_line": 5362,
+        "line": 5364,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189216,8 +189242,8 @@
       "source_location": {
         "heading": "CS-071 - Agent plugin lifecycle central registration",
         "heading_level": 3,
-        "heading_line": 5439,
-        "line": 5441,
+        "heading_line": 5440,
+        "line": 5442,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189233,8 +189259,8 @@
       "source_location": {
         "heading": "CS-072 - Guided Tour focus route stays a typed local action",
         "heading_level": 3,
-        "heading_line": 5493,
-        "line": 5495,
+        "heading_line": 5494,
+        "line": 5496,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189250,8 +189276,8 @@
       "source_location": {
         "heading": "CS-073 - Server And Egolite Central Command Registration",
         "heading_level": 3,
-        "heading_line": 5759,
-        "line": 5761,
+        "heading_line": 5760,
+        "line": 5762,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189267,8 +189293,8 @@
       "source_location": {
         "heading": "CS-074 - Remaining Touch Primary Command Closure",
         "heading_level": 3,
-        "heading_line": 6117,
-        "line": 6119,
+        "heading_line": 6118,
+        "line": 6120,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189284,8 +189310,8 @@
       "source_location": {
         "heading": "CS-075 - ConnectionDraft Activation Registration And Candidate Normalization",
         "heading_level": 3,
-        "heading_line": 6218,
-        "line": 6220,
+        "heading_line": 6219,
+        "line": 6221,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189301,8 +189327,8 @@
       "source_location": {
         "heading": "CS-076 - Post-Integration Auth Candidate Normalization",
         "heading_level": 3,
-        "heading_line": 6265,
-        "line": 6267,
+        "heading_line": 6266,
+        "line": 6268,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189318,8 +189344,8 @@
       "source_location": {
         "heading": "CS-077 - Neutral Source-Control Primary Registration Completion",
         "heading_level": 3,
-        "heading_line": 6312,
-        "line": 6314,
+        "heading_line": 6313,
+        "line": 6315,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189335,8 +189361,8 @@
       "source_location": {
         "heading": "CS-078 - Assistant Redesign Central Contract, Event, And Record Registration",
         "heading_level": 3,
-        "heading_line": 6560,
-        "line": 6562,
+        "heading_line": 6561,
+        "line": 6563,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189352,8 +189378,8 @@
       "source_location": {
         "heading": "16. Canonical Command Dispositions and Exact Reuse Invariants (APR-023)",
         "heading_level": 3,
-        "heading_line": 6763,
-        "line": 6790,
+        "heading_line": 6764,
+        "line": 6791,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189369,8 +189395,8 @@
       "source_location": {
         "heading": "CS-080 - Shared Runtime Result To Command Outcome Binding",
         "heading_level": 3,
-        "heading_line": 6860,
-        "line": 6862,
+        "heading_line": 6861,
+        "line": 6863,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189386,8 +189412,8 @@
       "source_location": {
         "heading": "CS-081 - Commands Shortcuts Mutation-Routing Census",
         "heading_level": 3,
-        "heading_line": 7230,
-        "line": 7232,
+        "heading_line": 7231,
+        "line": 7233,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189403,8 +189429,8 @@
       "source_location": {
         "heading": "CS-082 - Project Recovery And Forge CI Command Consumers",
         "heading_level": 3,
-        "heading_line": 7375,
-        "line": 7377,
+        "heading_line": 7376,
+        "line": 7378,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189420,8 +189446,8 @@
       "source_location": {
         "heading": "CS-083 - Git Adapter Command Contracts And Sole Targets",
         "heading_level": 3,
-        "heading_line": 7447,
-        "line": 7449,
+        "heading_line": 7448,
+        "line": 7450,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189437,8 +189463,8 @@
       "source_location": {
         "heading": "CS-085 - Central Contract Records For The Wand Module Commands",
         "heading_level": 3,
-        "heading_line": 7691,
-        "line": 7714,
+        "heading_line": 7692,
+        "line": 7715,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189454,8 +189480,8 @@
       "source_location": {
         "heading": "CS-086 - Text-Editing Keys Inside Sheet Text Fields",
         "heading_level": 3,
-        "heading_line": 7632,
-        "line": 7636,
+        "heading_line": 7633,
+        "line": 7637,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189471,8 +189497,8 @@
       "source_location": {
         "heading": "CS-087 - Central Contract Records For The Closure-Wave Commands",
         "heading_level": 3,
-        "heading_line": 7907,
-        "line": 7938,
+        "heading_line": 7908,
+        "line": 7939,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189488,8 +189514,8 @@
       "source_location": {
         "heading": "CS-088 - cmd.chat.plan.open_version Opens One Exact Plan Version's Document",
         "heading_level": 3,
-        "heading_line": 8173,
-        "line": 8175,
+        "heading_line": 8174,
+        "line": 8176,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189505,8 +189531,8 @@
       "source_location": {
         "heading": "CS-093 - 5.6 Pro Chat Round Non-Command Controls And The Subagent Open Reuse",
         "heading_level": 3,
-        "heading_line": 8079,
-        "line": 8094,
+        "heading_line": 8080,
+        "line": 8095,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189522,8 +189548,8 @@
       "source_location": {
         "heading": "CS-100 - Panel Tab And Layout Command Families, Local Action Prefixes And The View-State Ruling",
         "heading_level": 3,
-        "heading_line": 8239,
-        "line": 8261,
+        "heading_line": 8240,
+        "line": 8262,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189539,8 +189565,8 @@
       "source_location": {
         "heading": "CS-101 - Aliases And Retired Ids Of The Panel And Terminal Redesign",
         "heading_level": 3,
-        "heading_line": 8372,
-        "line": 8408,
+        "heading_line": 8373,
+        "line": 8409,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189556,8 +189582,8 @@
       "source_location": {
         "heading": "CS-102 - Customize And Notification Local Actions",
         "heading_level": 3,
-        "heading_line": 8493,
-        "line": 8495,
+        "heading_line": 8494,
+        "line": 8496,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189573,8 +189599,8 @@
       "source_location": {
         "heading": "CS-103 - Wonderer Research Alias And Grilling Session Dispatch",
         "heading_level": 3,
-        "heading_line": 8592,
-        "line": 8594,
+        "heading_line": 8593,
+        "line": 8595,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189590,8 +189616,8 @@
       "source_location": {
         "heading": "CS-104 - Hosted Chat Dispatch And Local Actions",
         "heading_level": 3,
-        "heading_line": 8662,
-        "line": 8664,
+        "heading_line": 8663,
+        "line": 8665,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189607,8 +189633,8 @@
       "source_location": {
         "heading": "CS-105 - Project Box Dispatch And Shortcuts",
         "heading_level": 3,
-        "heading_line": 8769,
-        "line": 8771,
+        "heading_line": 8770,
+        "line": 8772,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189624,8 +189650,8 @@
       "source_location": {
         "heading": "CS-106 - Work Action Contracts And Local Prefixes",
         "heading_level": 3,
-        "heading_line": 8852,
-        "line": 8854,
+        "heading_line": 8853,
+        "line": 8855,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189641,8 +189667,8 @@
       "source_location": {
         "heading": "CS-107 - DL-270 Storage Profile Command Boundary",
         "heading_level": 3,
-        "heading_line": 9027,
-        "line": 9039,
+        "heading_line": 9028,
+        "line": 9040,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189658,8 +189684,8 @@
       "source_location": {
         "heading": "CS-108 — Free Models route disable owner contract",
         "heading_level": 3,
-        "heading_line": 9124,
-        "line": 9126,
+        "heading_line": 9125,
+        "line": 9127,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189675,8 +189701,8 @@
       "source_location": {
         "heading": "CS-109 - Projects Refresh Settings",
         "heading_level": 3,
-        "heading_line": 9243,
-        "line": 9245,
+        "heading_line": 9244,
+        "line": 9246,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189692,8 +189718,8 @@
       "source_location": {
         "heading": "CS-110 - Projects Refresh Projects",
         "heading_level": 3,
-        "heading_line": 9426,
-        "line": 9428,
+        "heading_line": 9427,
+        "line": 9429,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189709,8 +189735,8 @@
       "source_location": {
         "heading": "CS-111 - Projects Refresh No Project",
         "heading_level": 3,
-        "heading_line": 9796,
-        "line": 9798,
+        "heading_line": 9797,
+        "line": 9799,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189726,8 +189752,8 @@
       "source_location": {
         "heading": "CS-112 - Projects Refresh Automation",
         "heading_level": 3,
-        "heading_line": 10230,
-        "line": 10232,
+        "heading_line": 10231,
+        "line": 10233,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189743,8 +189769,8 @@
       "source_location": {
         "heading": "CS-113 - Projects Refresh Goal Crew",
         "heading_level": 3,
-        "heading_line": 10389,
-        "line": 10391,
+        "heading_line": 10390,
+        "line": 10392,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189760,8 +189786,8 @@
       "source_location": {
         "heading": "CS-114 - Projects Refresh Plan Schedule",
         "heading_level": 3,
-        "heading_line": 10549,
-        "line": 10551,
+        "heading_line": 10550,
+        "line": 10552,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189777,8 +189803,8 @@
       "source_location": {
         "heading": "CS-125 - Debug Investigation Command Payload Definitions",
         "heading_level": 3,
-        "heading_line": 10713,
-        "line": 10715,
+        "heading_line": 10714,
+        "line": 10716,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -189794,8 +189820,8 @@
       "source_location": {
         "heading": "CS-1565 — Automation pause event route (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 11260,
-        "line": 11262,
+        "heading_line": 11261,
+        "line": 11263,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -218883,6 +218909,23 @@
         "heading_level": 3,
         "heading_line": 63460,
         "line": 63462,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "closure_reaudit_fix79_owner_answers",
+      "gui_related": true,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2604",
+      "reasoning_tier": "medium",
+      "risk_class": "owner_choice_drift",
+      "source_location": {
+        "heading": "DL-2604 - C-FIX79B: Jared takes the recommended answers to three more closure plan questions",
+        "heading_level": 3,
+        "heading_line": 63509,
+        "line": 63511,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -261364,8 +261407,8 @@
       "source_location": {
         "heading": "MS-001 - Models System Retired Source-Preserving Bridge",
         "heading_level": 3,
-        "heading_line": 7515,
-        "line": 7517,
+        "heading_line": 7519,
+        "line": 7521,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263098,8 +263141,8 @@
       "source_location": {
         "heading": "MS-103 - Clamp Substitution Reason Code Taxonomy",
         "heading_level": 3,
-        "heading_line": 7277,
-        "line": 7279,
+        "heading_line": 7281,
+        "line": 7283,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263115,8 +263158,8 @@
       "source_location": {
         "heading": "MS-104 - Clamp Substitution Semantics And Partial Evidence Disclosure",
         "heading_level": 3,
-        "heading_line": 7335,
-        "line": 7337,
+        "heading_line": 7339,
+        "line": 7341,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263132,8 +263175,8 @@
       "source_location": {
         "heading": "MS-105 - Selection Reason Payload Contract",
         "heading_level": 3,
-        "heading_line": 7391,
-        "line": 7393,
+        "heading_line": 7395,
+        "line": 7397,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263149,8 +263192,8 @@
       "source_location": {
         "heading": "MS-106 - Selection Reason Audit Trail Traceability",
         "heading_level": 3,
-        "heading_line": 7464,
-        "line": 7466,
+        "heading_line": 7468,
+        "line": 7470,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263166,8 +263209,8 @@
       "source_location": {
         "heading": "MS-107 - Provider Model Precedence Owner Pointer Compile Addendum",
         "heading_level": 3,
-        "heading_line": 7602,
-        "line": 7604,
+        "heading_line": 7606,
+        "line": 7608,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263183,8 +263226,8 @@
       "source_location": {
         "heading": "MS-108 - Goal Runtime Model Role Resolution Consumer",
         "heading_level": 3,
-        "heading_line": 7639,
-        "line": 7641,
+        "heading_line": 7643,
+        "line": 7645,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263200,8 +263243,8 @@
       "source_location": {
         "heading": "MS-109 - Orchestrator Capability Lane Binding Policy",
         "heading_level": 3,
-        "heading_line": 7703,
-        "line": 7705,
+        "heading_line": 7707,
+        "line": 7709,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263217,8 +263260,8 @@
       "source_location": {
         "heading": "MS-110 - Condensed Plans-To-Code Model Settings",
         "heading_level": 3,
-        "heading_line": 7808,
-        "line": 7810,
+        "heading_line": 7812,
+        "line": 7814,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263234,8 +263277,8 @@
       "source_location": {
         "heading": "MS-111 - Plans-To-Code Model Resolution Receipt",
         "heading_level": 3,
-        "heading_line": 7902,
-        "line": 7904,
+        "heading_line": 7906,
+        "line": 7908,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263251,8 +263294,8 @@
       "source_location": {
         "heading": "MS-112 - Planning Product Role Routing Consumers",
         "heading_level": 3,
-        "heading_line": 7967,
-        "line": 7969,
+        "heading_line": 7971,
+        "line": 7973,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263319,8 +263362,8 @@
       "source_location": {
         "heading": "MS-116 - Vision Bridge Requested Effective Route Resolution",
         "heading_level": 3,
-        "heading_line": 8027,
-        "line": 8029,
+        "heading_line": 8031,
+        "line": 8033,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263336,8 +263379,8 @@
       "source_location": {
         "heading": "MS-117 - Teach Teacher Low End Model Setting",
         "heading_level": 3,
-        "heading_line": 8118,
-        "line": 8120,
+        "heading_line": 8122,
+        "line": 8124,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263353,8 +263396,8 @@
       "source_location": {
         "heading": "MS-118 - Free Models Wrapper Catalog And Route Readiness Identity",
         "heading_level": 3,
-        "heading_line": 8273,
-        "line": 8275,
+        "heading_line": 8277,
+        "line": 8279,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263370,8 +263413,8 @@
       "source_location": {
         "heading": "MS-119 - Free Models Auto Apply Source Resolver And Runtime Adapter Boundary",
         "heading_level": 3,
-        "heading_line": 8361,
-        "line": 8363,
+        "heading_line": 8365,
+        "line": 8367,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263387,8 +263430,8 @@
       "source_location": {
         "heading": "MS-120 - Free Models Top-10 Precedence And Deterministic Fallback Eligibility",
         "heading_level": 3,
-        "heading_line": 8451,
-        "line": 8453,
+        "heading_line": 8455,
+        "line": 8457,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263404,8 +263447,8 @@
       "source_location": {
         "heading": "MS-121 - Free Models Availability Reason Model And Setup Eligibility",
         "heading_level": 3,
-        "heading_line": 8693,
-        "line": 8695,
+        "heading_line": 8697,
+        "line": 8699,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263421,8 +263464,8 @@
       "source_location": {
         "heading": "MS-122 - First-Run Paid Provider And Free Models Sequencing",
         "heading_level": 3,
-        "heading_line": 8553,
-        "line": 8555,
+        "heading_line": 8557,
+        "line": 8559,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263438,8 +263481,8 @@
       "source_location": {
         "heading": "MS-123 - P0-PROVIDER-METADATA-REPLAY",
         "heading_level": 3,
-        "heading_line": 8787,
-        "line": 8789,
+        "heading_line": 8791,
+        "line": 8793,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263455,8 +263498,8 @@
       "source_location": {
         "heading": "MS-124 - P0-PROVIDER-CAPABILITY-EPOCH",
         "heading_level": 3,
-        "heading_line": 8872,
-        "line": 8874,
+        "heading_line": 8876,
+        "line": 8878,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263472,8 +263515,8 @@
       "source_location": {
         "heading": "MS-125 - P0-REASONING-REPLAY-MATRIX",
         "heading_level": 3,
-        "heading_line": 8953,
-        "line": 8955,
+        "heading_line": 8957,
+        "line": 8959,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263489,8 +263532,8 @@
       "source_location": {
         "heading": "MS-126 - P0-EFFORT-POLICY-SETTLEMENT",
         "heading_level": 3,
-        "heading_line": 9032,
-        "line": 9034,
+        "heading_line": 9036,
+        "line": 9038,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263506,8 +263549,8 @@
       "source_location": {
         "heading": "MS-127 - P0-PROVIDER-CAPABILITY-EPOCH-2",
         "heading_level": 3,
-        "heading_line": 9119,
-        "line": 9121,
+        "heading_line": 9123,
+        "line": 9125,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263523,8 +263566,8 @@
       "source_location": {
         "heading": "MS-128 - P1-MODEL-SELECTION-ROUTER",
         "heading_level": 3,
-        "heading_line": 9205,
-        "line": 9207,
+        "heading_line": 9209,
+        "line": 9211,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263540,8 +263583,8 @@
       "source_location": {
         "heading": "MS-129 - P2-MODEL-CATALOG-CONFIDENCE-UI",
         "heading_level": 3,
-        "heading_line": 9286,
-        "line": 9288,
+        "heading_line": 9290,
+        "line": 9292,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263557,8 +263600,8 @@
       "source_location": {
         "heading": "MS-130 - P0-ENTITLEMENT-QUOTA-SETTLEMENT",
         "heading_level": 3,
-        "heading_line": 9374,
-        "line": 9376,
+        "heading_line": 9378,
+        "line": 9380,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263574,8 +263617,8 @@
       "source_location": {
         "heading": "MS-131 - provider_policy",
         "heading_level": 3,
-        "heading_line": 9453,
-        "line": 9455,
+        "heading_line": 9457,
+        "line": 9459,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263591,8 +263634,8 @@
       "source_location": {
         "heading": "MS-132 - provider_metadata_replay",
         "heading_level": 3,
-        "heading_line": 9523,
-        "line": 9525,
+        "heading_line": 9527,
+        "line": 9529,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263608,8 +263651,8 @@
       "source_location": {
         "heading": "MS-133 - provider_error_observability",
         "heading_level": 3,
-        "heading_line": 9591,
-        "line": 9593,
+        "heading_line": 9595,
+        "line": 9597,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263625,8 +263668,8 @@
       "source_location": {
         "heading": "MS-134 - Platform Specs Retirement And Capability Snapshot Authority",
         "heading_level": 3,
-        "heading_line": 9659,
-        "line": 9661,
+        "heading_line": 9663,
+        "line": 9665,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263642,8 +263685,8 @@
       "source_location": {
         "heading": "MS-135 - Provider Capability, Fallback, Lifecycle, And Error Schema Closure",
         "heading_level": 3,
-        "heading_line": 9728,
-        "line": 9730,
+        "heading_line": 9732,
+        "line": 9734,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263659,8 +263702,8 @@
       "source_location": {
         "heading": "MS-136 - Model Capability Usage Signal Display Contract",
         "heading_level": 3,
-        "heading_line": 10016,
-        "line": 10018,
+        "heading_line": 10020,
+        "line": 10022,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263676,8 +263719,8 @@
       "source_location": {
         "heading": "MS-137 - Requested Effective Route And Capability Evidence Layers",
         "heading_level": 3,
-        "heading_line": 10086,
-        "line": 10088,
+        "heading_line": 10090,
+        "line": 10092,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263693,8 +263736,8 @@
       "source_location": {
         "heading": "Continuity Capability Snapshot Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 10135,
-        "line": 10139,
+        "heading_line": 10139,
+        "line": 10143,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263710,8 +263753,8 @@
       "source_location": {
         "heading": "MS-139 - Original complete Models activation resolution custody",
         "heading_level": 3,
-        "heading_line": 10172,
-        "line": 10198,
+        "heading_line": 10176,
+        "line": 10202,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263727,8 +263770,8 @@
       "source_location": {
         "heading": "MS-199 - Event Authority model.catalog_refreshed 1.0.0 — newly authored owner contract under DL-045.",
         "heading_level": 3,
-        "heading_line": 10256,
-        "line": 10258,
+        "heading_line": 10260,
+        "line": 10262,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -295568,8 +295611,8 @@
       "source_location": {
         "heading": "SMPFS-001 - Section 15 Retired Source-Preserving Bridge",
         "heading_level": 3,
-        "heading_line": 8716,
-        "line": 8718,
+        "heading_line": 8718,
+        "line": 8720,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "retired",
@@ -297268,8 +297311,8 @@
       "source_location": {
         "heading": "SMPFS-101 - Promoted Command Families",
         "heading_level": 3,
-        "heading_line": 7363,
-        "line": 7365,
+        "heading_line": 7365,
+        "line": 7367,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297285,8 +297328,8 @@
       "source_location": {
         "heading": "SMPFS-102 - Command Category And Identity Reveal Rules",
         "heading_level": 3,
-        "heading_line": 7448,
-        "line": 7450,
+        "heading_line": 7450,
+        "line": 7452,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297302,8 +297345,8 @@
       "source_location": {
         "heading": "SMPFS-103 - Project Restore Identity",
         "heading_level": 3,
-        "heading_line": 7509,
-        "line": 7511,
+        "heading_line": 7511,
+        "line": 7513,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297319,8 +297362,8 @@
       "source_location": {
         "heading": "SMPFS-104 - Workspace And Detached Surface Restore",
         "heading_level": 3,
-        "heading_line": 7562,
-        "line": 7564,
+        "heading_line": 7564,
+        "line": 7566,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297336,8 +297379,8 @@
       "source_location": {
         "heading": "SMPFS-105 - Normal Browser Restore Scope",
         "heading_level": 3,
-        "heading_line": 7617,
-        "line": 7619,
+        "heading_line": 7619,
+        "line": 7621,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297353,8 +297396,8 @@
       "source_location": {
         "heading": "SMPFS-106 - Auth And Automation Restart Boundaries",
         "heading_level": 3,
-        "heading_line": 7680,
-        "line": 7682,
+        "heading_line": 7682,
+        "line": 7684,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297370,8 +297413,8 @@
       "source_location": {
         "heading": "SMPFS-107 - Terminal And Dev Restore Verification",
         "heading_level": 3,
-        "heading_line": 7744,
-        "line": 7746,
+        "heading_line": 7746,
+        "line": 7748,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297387,8 +297430,8 @@
       "source_location": {
         "heading": "SMPFS-108 - Terminal Durable Presentation Metadata",
         "heading_level": 3,
-        "heading_line": 7802,
-        "line": 7804,
+        "heading_line": 7804,
+        "line": 7806,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297404,8 +297447,8 @@
       "source_location": {
         "heading": "SMPFS-109 - Terminal Transcript And Runtime Persistence Tiers",
         "heading_level": 3,
-        "heading_line": 7869,
-        "line": 7871,
+        "heading_line": 7871,
+        "line": 7873,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297421,8 +297464,8 @@
       "source_location": {
         "heading": "SMPFS-110 - Canonical Restore Outcome Vocabulary",
         "heading_level": 3,
-        "heading_line": 7932,
-        "line": 7934,
+        "heading_line": 7934,
+        "line": 7936,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297438,8 +297481,8 @@
       "source_location": {
         "heading": "SMPFS-111 - Automation Promotion To Normal Browsing",
         "heading_level": 3,
-        "heading_line": 7987,
-        "line": 7989,
+        "heading_line": 7989,
+        "line": 7991,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297455,8 +297498,8 @@
       "source_location": {
         "heading": "SMPFS-112 - Frozen Browser Runtime History And Crash Evidence",
         "heading_level": 3,
-        "heading_line": 8047,
-        "line": 8049,
+        "heading_line": 8049,
+        "line": 8051,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297472,8 +297515,8 @@
       "source_location": {
         "heading": "SMPFS-113 - Profile Scope Isolation And SaveChanges",
         "heading_level": 3,
-        "heading_line": 8107,
-        "line": 8109,
+        "heading_line": 8109,
+        "line": 8111,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297489,8 +297532,8 @@
       "source_location": {
         "heading": "SMPFS-114 - Retired Shell Navigation And Usage Surfaces",
         "heading_level": 3,
-        "heading_line": 8180,
-        "line": 8182,
+        "heading_line": 8182,
+        "line": 8184,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297506,8 +297549,8 @@
       "source_location": {
         "heading": "SMPFS-115 - Browser Instance Reuse Non Goal",
         "heading_level": 3,
-        "heading_line": 8235,
-        "line": 8237,
+        "heading_line": 8237,
+        "line": 8239,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297523,8 +297566,8 @@
       "source_location": {
         "heading": "SMPFS-116 - Browser Host Placement Non Goal",
         "heading_level": 3,
-        "heading_line": 8288,
-        "line": 8290,
+        "heading_line": 8290,
+        "line": 8292,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297540,8 +297583,8 @@
       "source_location": {
         "heading": "SMPFS-117 - Silent Browser Context Injection Prohibition",
         "heading_level": 3,
-        "heading_line": 8340,
-        "line": 8342,
+        "heading_line": 8342,
+        "line": 8344,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297557,8 +297600,8 @@
       "source_location": {
         "heading": "SMPFS-118 - Storage Bleed Non Goal",
         "heading_level": 3,
-        "heading_line": 8393,
-        "line": 8395,
+        "heading_line": 8395,
+        "line": 8397,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297574,8 +297617,8 @@
       "source_location": {
         "heading": "SMPFS-119 - Low Level Browser Execution Non Goal",
         "heading_level": 3,
-        "heading_line": 8446,
-        "line": 8448,
+        "heading_line": 8448,
+        "line": 8450,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297591,8 +297634,8 @@
       "source_location": {
         "heading": "SMPFS-120 - Generic Watch Mode Non Goal",
         "heading_level": 3,
-        "heading_line": 8499,
-        "line": 8501,
+        "heading_line": 8501,
+        "line": 8503,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297608,8 +297651,8 @@
       "source_location": {
         "heading": "SMPFS-121 - MCP Config Passthrough Non Goal",
         "heading_level": 3,
-        "heading_line": 8551,
-        "line": 8553,
+        "heading_line": 8553,
+        "line": 8555,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297625,8 +297668,8 @@
       "source_location": {
         "heading": "SMPFS-122 - Tool Permission Scope Non Goal",
         "heading_level": 3,
-        "heading_line": 8601,
-        "line": 8603,
+        "heading_line": 8603,
+        "line": 8605,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297642,8 +297685,8 @@
       "source_location": {
         "heading": "SMPFS-123 - Persona Tier Selector Stale Disposition",
         "heading_level": 3,
-        "heading_line": 8661,
-        "line": 8663,
+        "heading_line": 8663,
+        "line": 8665,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297659,8 +297702,8 @@
       "source_location": {
         "heading": "SMPFS-124 - P0-TERMINAL-PROTOCOL-MATRIX",
         "heading_level": 3,
-        "heading_line": 8912,
-        "line": 8914,
+        "heading_line": 8914,
+        "line": 8916,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297676,8 +297719,8 @@
       "source_location": {
         "heading": "SMPFS-125 - P0-TERMINAL-OUTPUT-BACKPRESSURE",
         "heading_level": 3,
-        "heading_line": 10043,
-        "line": 10045,
+        "heading_line": 10064,
+        "line": 10066,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297693,8 +297736,8 @@
       "source_location": {
         "heading": "SMPFS-126 - P0-TERMINAL-ACCESSIBILITY-TEXT-MIRROR",
         "heading_level": 3,
-        "heading_line": 10123,
-        "line": 10125,
+        "heading_line": 10144,
+        "line": 10146,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297710,8 +297753,8 @@
       "source_location": {
         "heading": "SMPFS-127 - P1-TERMINAL-CLIPBOARD-PASTE-SAFETY",
         "heading_level": 3,
-        "heading_line": 10194,
-        "line": 10196,
+        "heading_line": 10215,
+        "line": 10217,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297727,8 +297770,8 @@
       "source_location": {
         "heading": "SMPFS-128 - P1-TERMINAL-SESSION-PRESERVE-UPDATE",
         "heading_level": 3,
-        "heading_line": 10274,
-        "line": 10276,
+        "heading_line": 10295,
+        "line": 10297,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297744,8 +297787,8 @@
       "source_location": {
         "heading": "SMPFS-129 - P1-TERMINAL-SEMANTIC-MARKER-PARSER",
         "heading_level": 3,
-        "heading_line": 10358,
-        "line": 10360,
+        "heading_line": 10379,
+        "line": 10381,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297761,8 +297804,8 @@
       "source_location": {
         "heading": "SMPFS-130 - P1-TERMINAL-CHUNK-SPANNING-PARSER",
         "heading_level": 3,
-        "heading_line": 10434,
-        "line": 10436,
+        "heading_line": 10455,
+        "line": 10457,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297778,8 +297821,8 @@
       "source_location": {
         "heading": "SMPFS-131 - P1-TERMINAL-A11Y-RANGE-MIRROR",
         "heading_level": 3,
-        "heading_line": 10506,
-        "line": 10508,
+        "heading_line": 10527,
+        "line": 10529,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297795,8 +297838,8 @@
       "source_location": {
         "heading": "SMPFS-132 - P1-TERMINAL-HOST-PROVENANCE-DOCTOR",
         "heading_level": 3,
-        "heading_line": 10576,
-        "line": 10578,
+        "heading_line": 10597,
+        "line": 10599,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297812,8 +297855,8 @@
       "source_location": {
         "heading": "SMPFS-133 - P1-TERMINAL-PTY-STREAM-CONTRACT",
         "heading_level": 3,
-        "heading_line": 10654,
-        "line": 10656,
+        "heading_line": 10675,
+        "line": 10677,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297829,8 +297872,8 @@
       "source_location": {
         "heading": "SMPFS-134 - P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS",
         "heading_level": 3,
-        "heading_line": 10723,
-        "line": 10725,
+        "heading_line": 10744,
+        "line": 10746,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297846,8 +297889,8 @@
       "source_location": {
         "heading": "SMPFS-135 - P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD",
         "heading_level": 3,
-        "heading_line": 10820,
-        "line": 10822,
+        "heading_line": 10841,
+        "line": 10843,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297863,8 +297906,8 @@
       "source_location": {
         "heading": "SMPFS-136 - P1-TERMINAL-INPUT-PASTEBOARD-MATRIX",
         "heading_level": 3,
-        "heading_line": 10891,
-        "line": 10893,
+        "heading_line": 10912,
+        "line": 10914,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297880,8 +297923,8 @@
       "source_location": {
         "heading": "SMPFS-137 - SMPFS-137",
         "heading_level": 3,
-        "heading_line": 10958,
-        "line": 10960,
+        "heading_line": 10979,
+        "line": 10981,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297897,8 +297940,8 @@
       "source_location": {
         "heading": "SMPFS-138 - Home Terminal Sections Workgroups And Pane Limits",
         "heading_level": 3,
-        "heading_line": 9885,
-        "line": 9887,
+        "heading_line": 9887,
+        "line": 9889,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "superseded",
@@ -297914,8 +297957,8 @@
       "source_location": {
         "heading": "SMPFS-139 - Typed Classical DebugSession Boundary",
         "heading_level": 3,
-        "heading_line": 9435,
-        "line": 9437,
+        "heading_line": 9437,
+        "line": 9439,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297931,8 +297974,8 @@
       "source_location": {
         "heading": "SMPFS-140 - Persistent EvalSession Policy Boundary",
         "heading_level": 3,
-        "heading_line": 9515,
-        "line": 9517,
+        "heading_line": 9517,
+        "line": 9519,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297948,8 +297991,8 @@
       "source_location": {
         "heading": "SMPFS-141 - Test Debug Lease And Awareness Consumption",
         "heading_level": 3,
-        "heading_line": 9598,
-        "line": 9600,
+        "heading_line": 9600,
+        "line": 9602,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297965,8 +298008,8 @@
       "source_location": {
         "heading": "SMPFS-142 - PM-Native Browser Program Architecture",
         "heading_level": 3,
-        "heading_line": 9678,
-        "line": 9680,
+        "heading_line": 9680,
+        "line": 9682,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297982,8 +298025,8 @@
       "source_location": {
         "heading": "SMPFS-143 - Protected AuthBrowserSession Boundary",
         "heading_level": 3,
-        "heading_line": 9726,
-        "line": 9728,
+        "heading_line": 9728,
+        "line": 9730,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -297999,8 +298042,8 @@
       "source_location": {
         "heading": "SMPFS-144 - Multi-Agent BrowserWorkspace Controller Fencing",
         "heading_level": 3,
-        "heading_line": 9767,
-        "line": 9769,
+        "heading_line": 9769,
+        "line": 9771,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298016,8 +298059,8 @@
       "source_location": {
         "heading": "SMPFS-145 - PM Browser Dependency Prohibition And External Project Exception",
         "heading_level": 3,
-        "heading_line": 9814,
-        "line": 9816,
+        "heading_line": 9816,
+        "line": 9818,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298033,8 +298076,8 @@
       "source_location": {
         "heading": "SMPFS-146 - Three Flow Onboarding And Doctor Handoff",
         "heading_level": 3,
-        "heading_line": 9387,
-        "line": 9389,
+        "heading_line": 9389,
+        "line": 9391,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298050,8 +298093,8 @@
       "source_location": {
         "heading": "SMPFS-147 - PM Browser Script Compiler And Typed BrowserProgram",
         "heading_level": 3,
-        "heading_line": 9171,
-        "line": 9173,
+        "heading_line": 9173,
+        "line": 9175,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298067,8 +298110,8 @@
       "source_location": {
         "heading": "SMPFS-148 - ProgramWorkspace Segments Effects And Reconstructive Handoff",
         "heading_level": 3,
-        "heading_line": 9201,
-        "line": 9203,
+        "heading_line": 9203,
+        "line": 9205,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298084,8 +298127,8 @@
       "source_location": {
         "heading": "SMPFS-149 - Exact-Generation PageRepresentation And RepresentationQuery",
         "heading_level": 3,
-        "heading_line": 9232,
-        "line": 9234,
+        "heading_line": 9234,
+        "line": 9236,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298101,8 +298144,8 @@
       "source_location": {
         "heading": "SMPFS-150 - BrowserWorkspace Isolation Controller Takeover And Transfer",
         "heading_level": 3,
-        "heading_line": 9262,
-        "line": 9264,
+        "heading_line": 9264,
+        "line": 9266,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298118,8 +298161,8 @@
       "source_location": {
         "heading": "SMPFS-151 - Browser Routing Routines Screenshot Policy And External Adapters",
         "heading_level": 3,
-        "heading_line": 9291,
-        "line": 9293,
+        "heading_line": 9293,
+        "line": 9295,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298135,8 +298178,8 @@
       "source_location": {
         "heading": "SMPFS-152 - Browser Receipts ObservableWork Command GUI And Migration Projection",
         "heading_level": 3,
-        "heading_line": 9322,
-        "line": 9324,
+        "heading_line": 9324,
+        "line": 9326,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298152,8 +298195,8 @@
       "source_location": {
         "heading": "SMPFS-153 - Browser Program Record-Addressable Schema Identity",
         "heading_level": 3,
-        "heading_line": 9352,
-        "line": 9354,
+        "heading_line": 9354,
+        "line": 9356,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298169,8 +298212,8 @@
       "source_location": {
         "heading": "SMPFS-154 - Browser Capability Digest And Human Step Projection Closure",
         "heading_level": 3,
-        "heading_line": 9045,
-        "line": 9047,
+        "heading_line": 9047,
+        "line": 9049,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298186,8 +298229,8 @@
       "source_location": {
         "heading": "SMPFS-155 - Focus-Independent Continuation And Truthful Browser Fidelity Profiles",
         "heading_level": 3,
-        "heading_line": 9087,
-        "line": 9089,
+        "heading_line": 9089,
+        "line": 9091,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298203,8 +298246,8 @@
       "source_location": {
         "heading": "SMPFS-156 - Browser Program Inspect Sole Future Handler",
         "heading_level": 3,
-        "heading_line": 9017,
-        "line": 9019,
+        "heading_line": 9019,
+        "line": 9021,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298220,8 +298263,8 @@
       "source_location": {
         "heading": "SMPFS-157 - Central Sole Future Handler Bindings",
         "heading_level": 3,
-        "heading_line": 11036,
-        "line": 11038,
+        "heading_line": 11057,
+        "line": 11059,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298237,8 +298280,8 @@
       "source_location": {
         "heading": "SMPFS-158 - Enhanced Keyboard Protocol Capability Profile",
         "heading_level": 3,
-        "heading_line": 11186,
-        "line": 11188,
+        "heading_line": 11207,
+        "line": 11209,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298254,8 +298297,8 @@
       "source_location": {
         "heading": "SMPFS-159 - Richer Shell Context In The PM Parser",
         "heading_level": 3,
-        "heading_line": 11273,
-        "line": 11275,
+        "heading_line": 11294,
+        "line": 11296,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298271,8 +298314,8 @@
       "source_location": {
         "heading": "SMPFS-160 - Provider Output Snapshot Classification",
         "heading_level": 3,
-        "heading_line": 11347,
-        "line": 11349,
+        "heading_line": 11368,
+        "line": 11370,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298288,8 +298331,8 @@
       "source_location": {
         "heading": "SMPFS-161 - Per-Host Remote Terminal Compatibility Setup",
         "heading_level": 3,
-        "heading_line": 11421,
-        "line": 11423,
+        "heading_line": 11442,
+        "line": 11444,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298305,8 +298348,8 @@
       "source_location": {
         "heading": "SMPFS-162 - Pane Advisory OSC Progress And Collision Policy",
         "heading_level": 3,
-        "heading_line": 11497,
-        "line": 11499,
+        "heading_line": 11518,
+        "line": 11520,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298322,8 +298365,8 @@
       "source_location": {
         "heading": "SMPFS-163 - Insert Command And Open Retained Output",
         "heading_level": 3,
-        "heading_line": 11580,
-        "line": 11582,
+        "heading_line": 11601,
+        "line": 11603,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298339,8 +298382,8 @@
       "source_location": {
         "heading": "SMPFS-164 - Environment Provenance And Pending Launch Changes",
         "heading_level": 3,
-        "heading_line": 11661,
-        "line": 11663,
+        "heading_line": 11682,
+        "line": 11684,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298356,8 +298399,8 @@
       "source_location": {
         "heading": "SMPFS-165 - Live Pane Input Protection",
         "heading_level": 3,
-        "heading_line": 11737,
-        "line": 11739,
+        "heading_line": 11758,
+        "line": 11760,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298373,8 +298416,8 @@
       "source_location": {
         "heading": "SMPFS-166 - Browser Event And Consumer Admission Boundary",
         "heading_level": 3,
-        "heading_line": 11876,
-        "line": 11878,
+        "heading_line": 11897,
+        "line": 11899,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298390,8 +298433,8 @@
       "source_location": {
         "heading": "SMPFS-167 - Workspace-created transition and historical inventory consumer",
         "heading_level": 3,
-        "heading_line": 12116,
-        "line": 12118,
+        "heading_line": 12137,
+        "line": 12139,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298407,8 +298450,8 @@
       "source_location": {
         "heading": "SMPFS-168 - Workspace-reset transition and historical boundary consumer",
         "heading_level": 3,
-        "heading_line": 12344,
-        "line": 12346,
+        "heading_line": 12365,
+        "line": 12367,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298424,8 +298467,8 @@
       "source_location": {
         "heading": "SMPFS-169 - Browser Program Result Budget And Output-Schema Binding",
         "heading_level": 3,
-        "heading_line": 13264,
-        "line": 13266,
+        "heading_line": 13285,
+        "line": 13287,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298441,8 +298484,8 @@
       "source_location": {
         "heading": "SMPFS-170 - Terminal workgroup moved retired compatibility lineage",
         "heading_level": 3,
-        "heading_line": 13307,
-        "line": 13309,
+        "heading_line": 13328,
+        "line": 13330,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "superseded",
@@ -298458,8 +298501,8 @@
       "source_location": {
         "heading": "SMPFS-180 - One Terminal Session Per Tab",
         "heading_level": 3,
-        "heading_line": 13380,
-        "line": 13382,
+        "heading_line": 13401,
+        "line": 13403,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298475,8 +298518,8 @@
       "source_location": {
         "heading": "SMPFS-181 - Terminal Image Protocols And Their Safety Rules",
         "heading_level": 3,
-        "heading_line": 13533,
-        "line": 13535,
+        "heading_line": 13554,
+        "line": 13556,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298492,8 +298535,8 @@
       "source_location": {
         "heading": "SMPFS-182 - People And Agents In One Terminal",
         "heading_level": 3,
-        "heading_line": 13694,
-        "line": 13696,
+        "heading_line": 13715,
+        "line": 13717,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298509,8 +298552,8 @@
       "source_location": {
         "heading": "SMPFS-183 - Command Marks, Links, Find And Accessibility In The Engine",
         "heading_level": 3,
-        "heading_line": 13829,
-        "line": 13831,
+        "heading_line": 13850,
+        "line": 13852,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298526,8 +298569,8 @@
       "source_location": {
         "heading": "SMPFS-184 - The Terminal Engine Stays Puppet Master's Own",
         "heading_level": 3,
-        "heading_line": 13982,
-        "line": 13984,
+        "heading_line": 14003,
+        "line": 14005,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298543,8 +298586,8 @@
       "source_location": {
         "heading": "SMPFS-244 - browser.session.created prepared semantic contract",
         "heading_level": 3,
-        "heading_line": 18608,
-        "line": 18610,
+        "heading_line": 18629,
+        "line": 18631,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298560,8 +298603,8 @@
       "source_location": {
         "heading": "SMPFS-245 - browser.session.state_changed prepared semantic contract",
         "heading_level": 3,
-        "heading_line": 18718,
-        "line": 18720,
+        "heading_line": 18739,
+        "line": 18741,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298577,8 +298620,8 @@
       "source_location": {
         "heading": "SMPFS-246 - browser.session.closed prepared semantic contract",
         "heading_level": 3,
-        "heading_line": 18829,
-        "line": 18831,
+        "heading_line": 18850,
+        "line": 18852,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298594,8 +298637,8 @@
       "source_location": {
         "heading": "SMPFS-247 - browser.session.promoted prepared semantic contract",
         "heading_level": 3,
-        "heading_line": 18938,
-        "line": 18940,
+        "heading_line": 18959,
+        "line": 18961,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298611,8 +298654,8 @@
       "source_location": {
         "heading": "SMPFS-248 - browser.session.takeover_state_changed prepared semantic contract",
         "heading_level": 3,
-        "heading_line": 19048,
-        "line": 19050,
+        "heading_line": 19069,
+        "line": 19071,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298628,8 +298671,8 @@
       "source_location": {
         "heading": "SMPFS-310 — browser.context_captured owner contract",
         "heading_level": 3,
-        "heading_line": 16059,
-        "line": 16061,
+        "heading_line": 16080,
+        "line": 16082,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298645,8 +298688,8 @@
       "source_location": {
         "heading": "SMPFS-311 — dev.session.started owner contract",
         "heading_level": 3,
-        "heading_line": 16287,
-        "line": 16289,
+        "heading_line": 16308,
+        "line": 16310,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298662,8 +298705,8 @@
       "source_location": {
         "heading": "SMPFS-312 — dev.session.stopping owner contract",
         "heading_level": 3,
-        "heading_line": 16480,
-        "line": 16482,
+        "heading_line": 16501,
+        "line": 16503,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298679,8 +298722,8 @@
       "source_location": {
         "heading": "SMPFS-313 — dev.session.stopped owner contract",
         "heading_level": 3,
-        "heading_line": 16672,
-        "line": 16674,
+        "heading_line": 16693,
+        "line": 16695,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298696,8 +298739,8 @@
       "source_location": {
         "heading": "SMPFS-314 — dev.session.restarting owner contract",
         "heading_level": 3,
-        "heading_line": 16864,
-        "line": 16866,
+        "heading_line": 16885,
+        "line": 16887,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298713,8 +298756,8 @@
       "source_location": {
         "heading": "SMPFS-315 — preview.session.started owner contract",
         "heading_level": 3,
-        "heading_line": 17057,
-        "line": 17059,
+        "heading_line": 17078,
+        "line": 17080,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298730,8 +298773,8 @@
       "source_location": {
         "heading": "SMPFS-316 — preview.session.refreshed owner contract",
         "heading_level": 3,
-        "heading_line": 17250,
-        "line": 17252,
+        "heading_line": 17271,
+        "line": 17273,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298747,8 +298790,8 @@
       "source_location": {
         "heading": "SMPFS-317 — preview.session.stopped owner contract",
         "heading_level": 3,
-        "heading_line": 17447,
-        "line": 17449,
+        "heading_line": 17468,
+        "line": 17470,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298764,8 +298807,8 @@
       "source_location": {
         "heading": "SMPFS-318 — catalog.install.started owner contract",
         "heading_level": 3,
-        "heading_line": 17639,
-        "line": 17641,
+        "heading_line": 17660,
+        "line": 17662,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298781,8 +298824,8 @@
       "source_location": {
         "heading": "SMPFS-319 — catalog.install.completed owner contract",
         "heading_level": 3,
-        "heading_line": 17777,
-        "line": 17779,
+        "heading_line": 17798,
+        "line": 17800,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298798,8 +298841,8 @@
       "source_location": {
         "heading": "SMPFS-320 — browser.context_shared deck-2 owner contract",
         "heading_level": 3,
-        "heading_line": 17916,
-        "line": 17918,
+        "heading_line": 17937,
+        "line": 17939,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298815,8 +298858,8 @@
       "source_location": {
         "heading": "SMPFS-321 — browser.context_share_revoked deck-2 owner contract",
         "heading_level": 3,
-        "heading_line": 18120,
-        "line": 18122,
+        "heading_line": 18141,
+        "line": 18143,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298832,8 +298875,8 @@
       "source_location": {
         "heading": "SMPFS-322 — catalog.update.started deck-2 owner contract",
         "heading_level": 3,
-        "heading_line": 18329,
-        "line": 18331,
+        "heading_line": 18350,
+        "line": 18352,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298849,8 +298892,8 @@
       "source_location": {
         "heading": "SMPFS-323 — catalog.update.completed deck-2 owner contract",
         "heading_level": 3,
-        "heading_line": 18385,
-        "line": 18387,
+        "heading_line": 18406,
+        "line": 18408,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298866,8 +298909,8 @@
       "source_location": {
         "heading": "SMPFS-324 — catalog.remove.started deck-2 owner contract",
         "heading_level": 3,
-        "heading_line": 18441,
-        "line": 18443,
+        "heading_line": 18462,
+        "line": 18464,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298883,8 +298926,8 @@
       "source_location": {
         "heading": "SMPFS-325 — catalog.remove.completed deck-2 owner contract",
         "heading_level": 3,
-        "heading_line": 18497,
-        "line": 18499,
+        "heading_line": 18518,
+        "line": 18520,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298900,8 +298943,8 @@
       "source_location": {
         "heading": "SMPFS-326 — tool.custom_headless.skipped deck-2 owner contract",
         "heading_level": 3,
-        "heading_line": 18553,
-        "line": 18555,
+        "heading_line": 18574,
+        "line": 18576,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298917,8 +298960,8 @@
       "source_location": {
         "heading": "SMPFS-328 - Browser command payload definitions",
         "heading_level": 3,
-        "heading_line": 14062,
-        "line": 14064,
+        "heading_line": 14083,
+        "line": 14085,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -298934,8 +298977,8 @@
       "source_location": {
         "heading": "SMPFS-329 - Terminal, dev-session and catalog command payload definitions",
         "heading_level": 3,
-        "heading_line": 15193,
-        "line": 15195,
+        "heading_line": 15214,
+        "line": 15216,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -329004,10 +329047,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27893,
+    "depends_on_edge_count": 27898,
     "downstream_blocked_node_count": 0,
-    "edge_count": 31126,
-    "node_count": 9631,
+    "edge_count": 31131,
+    "node_count": 9632,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3233,
     "unresolved_reference_count": 0

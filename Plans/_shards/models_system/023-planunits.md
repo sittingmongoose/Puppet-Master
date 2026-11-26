@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L1400-L7586
+Source lines: L1400-L7590
 
-Source SHA256: `42b504fb432b87c710952fd8245a1810836260d7a168cbf9dea24b1bb5f87a77`
+Source SHA256: `7a2e916437d974a56da7a15b4dea7561bae5ee5b5de59a6e5b9a436fadbe4d21`
 
 ---
 
@@ -5837,7 +5837,8 @@ status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: Cost gating skips models that exceed the active Persona cost budget and falls through; if all preferred models
   exceed budget or are unavailable, PM emits a concern and suggests cheaper alternatives or escalation rather than failing
-  silently.
+  silently. Only a known cost above the budget skips a model; a model with an unknown price stays pickable, and every place
+  that shows the choice shows its price as unknown (DL-2604).
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, data contracts, selection semantics, or backend audit behavior
   rather than direct GUI presentation.
@@ -5850,6 +5851,9 @@ acceptance_criteria:
 - The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
 - Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- A model whose known estimated cost is above the active Persona cost budget is skipped; a model whose price is unknown is
+  not skipped, and the resolver record, the model picker and settlement or receipt text show its price as unknown, never as
+  zero or as within budget (DL-2604).
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
