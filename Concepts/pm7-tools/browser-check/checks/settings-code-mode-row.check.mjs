@@ -3,7 +3,7 @@
 // Settings Search for "Code Mode" lists a result named Code Mode; the result opens a page that draws the row with the
 // inventory's label and sentence and one switch; the switch starts On (the inventory default), a click turns it Off,
 // and a second click turns it On again. In each of the three states the switch itself has to be shown (opacity-aware
-// computed visibility, box inside the window and every ancestor that clips by overflow), really paint (its pixels differ from the
+// computed visibility, box inside the window and inside the outer box of every ancestor that clips by overflow, to within a pixel), really paint (its pixels differ from the
 // same spot with the switch hidden, and again with only its knob hidden, so a switch or knob that paints nothing fails),
 // carry the row's label as its computed accessible name (found by role and name, not by reading aria-label), and be
 // drawn in the state aria-checked reports (the .on class, the knob's centre on the far or near half of the track by
@@ -153,7 +153,7 @@ export default async function (t) {
 		const all = await f.locator(SW).count();
 		const named = await f.getByRole('switch', { name: CANON_LABEL, exact: true }).and(f.locator(SW)).count();
 		await t.check(`${when}: the switch's computed accessible name is the inventory label`, INV.label === CANON_LABEL && all === 1 && named === 1, `visible switches for ${ID}: ${all}; of them with the role switch and the name "${CANON_LABEL}": ${named}`);
-		await t.check(`${when}: the switch itself is shown (opacity-aware visibility, box inside the window and every ancestor that clips by overflow)`, row.switchShown === true, JSON.stringify(row));
+		await t.check(`${when}: the switch itself is shown (opacity-aware visibility, box inside the window and inside the outer box of every ancestor that clips by overflow, to within a pixel)`, row.switchShown === true, JSON.stringify(row));
 		const pic = await paint();
 		await t.check(`${when}: the switch paints: its pixels differ from the same spot with the switch hidden`, !pic.drawn.equals(pic.noSwitch), `${pic.drawn.length} and ${pic.noSwitch.length} bytes`);
 		await t.check(`${when}: with the knob hidden the switch still paints something: the pixels differ from the same spot with the whole switch hidden`, !pic.noKnob.equals(pic.noSwitch), `${pic.noKnob.length} and ${pic.noSwitch.length} bytes`);
@@ -175,7 +175,7 @@ export default async function (t) {
 	if (!row.drawn) return;
 	await t.check('the row\'s first line is the inventory label', sameLabel(row.lines[0]), JSON.stringify(row.lines));
 	await t.check('the row holds the inventory\'s complete sentence, as one of its lines', row.lines.includes(norm(INV.desc)), JSON.stringify(row.lines));
-	await t.check('the label and the complete sentence pass the computed visibility checks, and their boxes fit inside the window and every ancestor that clips or scrolls by overflow', row.labelShown === true && row.descShown === true, `label ${row.labelShown}, sentence ${row.descShown}`);
+	await t.check('the label and the complete sentence pass the computed visibility checks, and their boxes fit inside the window and inside the outer box of every ancestor that clips or scrolls by overflow, to within a pixel', row.labelShown === true && row.descShown === true, `label ${row.labelShown}, sentence ${row.descShown}`);
 	await t.check('the row has exactly one switch', row.switches === 1, String(row.switches));
 	await t.check('the inventory row\'s default is On', INV.default === true, JSON.stringify(INV.default));
 	const onPic = await judge('at first, the inventory default', row, INV.default === true);
