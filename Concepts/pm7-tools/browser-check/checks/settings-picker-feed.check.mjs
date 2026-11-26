@@ -2,6 +2,160 @@
 export default async function (t) {
 	const noteSelector = '#pm-settings-portals > .psx-note[data-open]:not([data-leaving])';
 	const rowPicker = (id) => `#pm-settings-root .o55-msel[data-o55-msel="${id}"] [role="combobox"]`;
+	const detailsBody = '.detail-inspector[aria-hidden="false"] .detail-body';
+	const detailsPicker = '.detail-inspector[aria-hidden="false"] [data-action="o55-insp-pick"]';
+	const closeDetails = '.detail-inspector[aria-hidden="false"] [data-action="close-details"]';
+	const onlyOpen = t.args.only === 'open-position';
+
+	async function closeDetailsIfOpen(frame) {
+		const isOpen = await frame.evaluate(() => {
+			const insp = document.querySelector('#pm-settings-root .detail-inspector');
+			return !!insp && insp.getAttribute('aria-hidden') === 'false' && insp.style.display !== 'none';
+		});
+		if (!isOpen) return;
+		await frame.locator(closeDetails).click({ timeout: 8000 });
+		await frame.waitForFunction(() => {
+			const insp = document.querySelector('#pm-settings-root .detail-inspector');
+			return !insp || (insp.getAttribute('aria-hidden') === 'true' && insp.style.display === 'none' && !insp.firstElementChild);
+		}, null, { timeout: 5000 });
+	}
+
+	async function revealRow(frame, id) {
+		const about = frame.locator(`#pm-settings-root [id="setting-${id}"] > .o55-about`).first();
+		if (!await about.isVisible().catch(() => false)) {
+			await frame.evaluate((sid) => PM51.revealSetting(sid), id);
+			await about.waitFor({ state: 'visible', timeout: 8000 });
+			await t.page.waitForTimeout(200);
+		}
+		await about.scrollIntoViewIfNeeded({ timeout: 8000 });
+		return about;
+	}
+
+	async function waitForDetailsOpen(frame, id) {
+		await frame.waitForFunction((sid) => {
+			const insp = document.querySelector('#pm-settings-root .detail-inspector');
+			if (!insp || insp.getAttribute('aria-hidden') !== 'false' || insp.style.display === 'none') return false;
+			if (insp.querySelector(':scope > .o55-leaving')) return false;
+			const page = insp.querySelector(':scope > .o55-insp-page:not(.o55-leaving)') || insp;
+			const code = page.querySelector('.o55-insp-tech code');
+			if (!code || code.textContent.trim() !== sid) return false;
+			return !!page.querySelector(':scope > .detail-body > [data-psx-block="where"]');
+		}, id, { timeout: 8000 });
+		await frame.waitForFunction(() => {
+			const insp = document.querySelector('#pm-settings-root .detail-inspector');
+			return !!insp && insp.classList.contains('is-settled') && !insp.querySelector(':scope > .o55-leaving');
+		}, null, { timeout: 4000 }).catch(() => {});
+		await t.page.waitForTimeout(350);
+	}
+
+	function readOpenPosition(frame) {
+		return frame.evaluate(() => {
+			const insp = document.querySelector('#pm-settings-root .detail-inspector[aria-hidden="false"]');
+			const page = insp?.querySelector(':scope > .o55-insp-page:not(.o55-leaving)') || insp;
+			const pane = page?.querySelector(':scope > .detail-body');
+			if (!pane) return null;
+			const body = pane.getBoundingClientRect();
+			const rel = (el) => {
+				const r = el?.getBoundingClientRect();
+				if (!r || !r.width || !r.height) return null;
+				return {
+					top: Math.round(r.top - body.top),
+					bottom: Math.round(r.bottom - body.top),
+					visible: r.top >= body.top - 1 && r.bottom <= body.bottom + 1,
+				};
+			};
+			const now = rel(pane.querySelector(':scope > .o55-insp-now'));
+			const whereEl = pane.querySelector(':scope > [data-psx-block="where"]');
+			const whereHeadEl = whereEl?.querySelector('h4');
+			const whereHead = rel(whereHeadEl);
+			const where = rel(whereEl);
+			return {
+				id: page.querySelector('.o55-insp-tech code')?.textContent.trim() || null,
+				scrollTop: pane.scrollTop,
+				maxScroll: pane.scrollHeight - pane.clientHeight,
+				paneH: Math.round(body.height),
+				now,
+				whereHeadText: whereHeadEl?.textContent.trim() || null,
+				whereHead,
+				whereVisible: !!where && where.top >= -1 && where.top < body.height,
+			};
+		});
+	}
+
+	async function assertOpenedAtTop(frame, id, who, shotName = null) {
+		await waitForDetailsOpen(frame, id);
+		const pos = await readOpenPosition(frame);
+		t.log(`${who} ${JSON.stringify(pos)}`);
+		const ok = !!pos && pos.id === id && pos.scrollTop === 0 &&
+			!!pos.now?.visible && pos.whereHeadText === 'Where it applies' &&
+			!!pos.whereHead?.visible && pos.whereVisible;
+		await t.check(`${who}: Details opens at its top with value card and Where it applies visible`, ok, JSON.stringify(pos));
+		if (shotName) await t.shot(shotName, who);
+	}
+
+	async function runOpenPosition() {
+		const openMatrix = [['basic-dark', 1920, 1080], ['glass-dark', 740, 900]];
+		const openRows = [
+			{ id: 'ai.models.default-model', kind: 'model' },
+			{ id: 'ai.models.worker-model', kind: 'model override' },
+			{ id: 'ai.models.high-effort-worker-model', kind: 'effort model' },
+			{ id: 'ai.models.default-provider', kind: 'list picker' },
+			{ id: 'general.interaction.provider-disclosure', kind: 'toggle' },
+			{ id: 'ai.models.interleaved-thinking', kind: 'thinking toggle' },
+			{ id: 'ai.models.max-output-tokens', kind: 'number' },
+			{ id: 'planning.interview.plan-default-depth', kind: 'depth choice' },
+		];
+		const switchPairs = [
+			{ from: 'ai.models.default-provider', to: 'ai.models.default-model', kind: 'list-to-model switch' },
+			{ from: 'ai.models.worker-model', to: 'ai.models.high-effort-worker-model', kind: 'model-to-model switch' },
+		];
+		for (const [look, width, height] of openMatrix) {
+			await t.viewport(width, height);
+			const frame = await t.app.open();
+			if (!await frame.evaluate(() => document.documentElement.hasAttribute('data-psx-layer'))) {
+				await t.check('settings-picker-feed: not a settings-scope build, skipped (build it with tools/build_standalone.py)', true);
+				return;
+			}
+			await frame.waitForFunction(() => !!window.PSX?.lastReport, null, { timeout: 60000 });
+			await frame.evaluate((l) => PSX.setLook(l), look);
+			for (const row of openRows) {
+				for (const how of ['mouse', 'keyboard']) {
+					const who = `open-top ${look} ${width}x${height} ${row.kind} (${row.id}) ${how}`;
+					await t.step(who, async () => {
+						await closeDetailsIfOpen(frame);
+						const about = await revealRow(frame, row.id);
+						if (how === 'mouse') await about.click({ timeout: 8000 });
+						else { await about.focus(); await t.page.keyboard.press('Enter'); }
+						const shotName = row.id === 'ai.models.default-model' && how === 'mouse' ? `fo158-open-${look}-${width}x${height}` : null;
+						await assertOpenedAtTop(frame, row.id, who, shotName);
+					});
+				}
+			}
+			for (const pair of switchPairs) {
+				for (const how of ['mouse', 'keyboard']) {
+					const who = `open-top ${look} ${width}x${height} ${pair.kind} (${pair.from} -> ${pair.to}) ${how}`;
+					await t.step(who, async () => {
+						await closeDetailsIfOpen(frame);
+						const about = await revealRow(frame, pair.from);
+						await about.click({ timeout: 8000 });
+						await waitForDetailsOpen(frame, pair.from);
+						const nextBtn = frame.locator(`.detail-inspector[aria-hidden="false"] .o55-insp-near [data-action="setting-details"][data-setting="${pair.to}"]`).first();
+						await nextBtn.scrollIntoViewIfNeeded({ timeout: 8000 });
+						if (how === 'mouse') await nextBtn.click({ timeout: 8000 });
+						else { await nextBtn.focus(); await t.page.keyboard.press('Enter'); }
+						await assertOpenedAtTop(frame, pair.to, who);
+					});
+				}
+			}
+			await closeDetailsIfOpen(frame);
+		}
+	}
+
+	if (onlyOpen) {
+		await runOpenPosition();
+		return;
+	}
+
 	await t.viewport(1920, 1080);
 	const f = await t.app.open();
 	const layered = await f.evaluate(() => document.documentElement.hasAttribute('data-psx-layer'));
@@ -328,9 +482,6 @@ export default async function (t) {
 		['basic-dark', 1920, 1080], ['glass-light', 1280, 500],
 		['glass-dark', 1280, 500], ['glass-dark', 740, 900],
 	];
-	const detailsBody = '.detail-inspector[aria-hidden="false"] .detail-body';
-	const detailsPicker = '.detail-inspector[aria-hidden="false"] [data-action="o55-insp-pick"]';
-	const closeDetails = '.detail-inspector[aria-hidden="false"] [data-action="close-details"]';
 	function readDetailsPicker(frame, originalPoint = null) {
 		return frame.evaluate(({ detailsBody, detailsPicker, originalPoint }) => {
 			const pane = document.querySelector(detailsBody);
@@ -418,10 +569,17 @@ export default async function (t) {
 		await frame.evaluate((look) => PSX.setLook(look), look);
 		if (details) {
 			await frame.locator(`[id="setting-${id}"] > .o55-about`).click({ timeout: 8000 });
+			await waitForDetailsOpen(frame, id);
 			const destination = frame.locator('.psx-target-btn');
+			await destination.waitFor({ timeout: 8000 });
 			if (!/tastebook/i.test(await destination.innerText({ timeout: 8000 }))) {
-				await destination.click({ timeout: 8000 });
-				await frame.getByText('This project (tastebook)', { exact: true }).click({ timeout: 8000 });
+				const opt = frame.getByText('This project (tastebook)', { exact: true });
+				for (let attempt = 0; attempt < 2; attempt++) {
+					await destination.scrollIntoViewIfNeeded({ timeout: 8000 });
+					await destination.click({ timeout: 8000 });
+					if (await opt.waitFor({ state: 'visible', timeout: 2500 }).then(() => true, () => false)) break;
+				}
+				await opt.click({ timeout: 8000 });
 			}
 		}
 		return frame;
@@ -555,4 +713,5 @@ export default async function (t) {
 		}
 		await sweepDetailsEdges(look, width, height);
 	}
+	await runOpenPosition();
 }

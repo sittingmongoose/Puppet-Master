@@ -185,6 +185,12 @@
     return { focusKey: key && key.psxKey };
   }
 
+  function isDecoratedFor(cur) {
+    if (!cur || !cur.id) return false;
+    const where = cur.body.querySelector(':scope > [data-psx-block="where"]');
+    return !!where && where.dataset.psxSetting === cur.id;
+  }
+
   D.addEventListener('click', (e) => {
     const trigger = e.target.closest?.(MODEL_PICKER);
     if (!trigger) {
@@ -193,7 +199,7 @@
     }
     const cur = current();
     pickerOpening = null;
-    if (e.isTrusted && e.detail && cur?.body.contains(trigger) && PSX.isModel(cur.id) &&
+    if (e.isTrusted && e.detail && cur?.body.contains(trigger) && isDecoratedFor(cur) && PSX.isModel(cur.id) &&
         trigger.getAttribute('aria-expanded') === 'false') {
       pickerOpening = {
         trigger, scrollTop: cur.body.scrollTop, rect: trigger.getBoundingClientRect(),
@@ -202,7 +208,7 @@
   }, true);
 
   function modelPickerAnchor(cur) {
-    if (!cur || !PSX.isModel(cur.id)) return null;
+    if (!cur || !PSX.isModel(cur.id) || !isDecoratedFor(cur)) return null;
     const trigger = cur.body.querySelector(MODEL_PICKER);
     const picker = trigger?.getBoundingClientRect();
     if (!picker?.height) return null;
@@ -212,21 +218,24 @@
     if (pickerOpening?.trigger === trigger && D.activeElement === trigger && trigger.getAttribute('aria-expanded') === 'false') {
       const opening = pickerOpening;
       pickerOpening = null;
-      if (opening.scrollTop === cur.body.scrollTop) return opening.rect.top;
+      if (opening.scrollTop === cur.body.scrollTop) return { id: cur.id, top: opening.rect.top };
     }
-    return picker.bottom > body.top && picker.top < body.bottom ? picker.top : null;
+    if (editing && editing.id === cur.id) return null;
+    return picker.bottom > body.top && picker.top < body.bottom ? { id: cur.id, top: picker.top } : null;
   }
 
   function decorate(o) {
     o = o || {};
     const cur = current(); if (!cur || !cur.id) return;
     const { page, body, head, id } = cur;
+    if (lastOpen && lastOpen !== id) pickerOpening = null;
     lastOpen = id;
     PSX.adopt && PSX.adopt(id);
     // a draft being typed is not a reason to redraw (it would lose the caret and the reason shown under it)
     const sig = JSON.stringify([id, PSX.W.rev, S.ctx, S.actor, S.runMode, S.opt.end, S.targets[id] || null, editing && [editing.id, editing.level, editing.key, editing.isNew, editing.error], S.firstStart]);
     if (!o.force && page.dataset.psxDone === sig && (body.querySelector('[data-psx-block="where"]') || !DEF[id])) return;
-    const pickerTop = o.pickerTop === undefined ? modelPickerAnchor(cur) : o.pickerTop;
+    const anchor = o.pickerAnchor === undefined ? modelPickerAnchor(cur) : o.pickerAnchor;
+    const pickerTop = anchor && anchor.id === id ? anchor.top : null;
     const act = D.activeElement;
     const keep = o.focusKey || (act && page.contains(act) && act.closest('[data-psx-key]') ? act.closest('[data-psx-key]').dataset.psxKey : null);
     page.dataset.psxDone = sig;
@@ -279,6 +288,7 @@
     hideEngineWhere(body);
     const sec = D.createElement('section');
     sec.className = 'o55-insp-block psx-where'; sec.setAttribute('data-psx-block', 'where'); sec.setAttribute('data-psx-key', 'where');
+    sec.setAttribute('data-psx-setting', id);
     sec.setAttribute('data-psx-owner', 'per'); sec.setAttribute('data-psx-owner-name', `each ${thing}`);
     sec.innerHTML = `<h4>Where it applies</h4><p class="psx-where-sentence">Each ${esc(thing)} has its own.</p>`;
     const slot = (title, slotKey, text, bare) => sec.insertAdjacentHTML('beforeend', `<div class="psx-group is-not" role="group" aria-label="${esc(title)}" data-psx-slot="${slotKey}">${bare ? '' : `<div class="psx-ghead">${esc(title)}</div>`}<div class="psx-wnot">${bare ? `<span class="psx-wname">${esc(title)}</span>` : ''}<span class="psx-wnot-why">${esc(text)}</span></div></div>`);
@@ -299,13 +309,13 @@
     const lib = (off.library || []).includes(id);
     if (lib) { libraryWhere(body, now, id); return; }
     const own = OWNER_VIEWS[(off.owned || {})[id]];
-    if (own) { ownerWhere(body, now, own); return; }
+    if (own) { ownerWhere(body, now, own, id); return; }
     /* inventory alignment: every owner-held row (Plans' inventory home: thing) names its owner, in the same three parts
        and with no Change. A field of one account or one service keeps the base page's list of each one's value */
     if (!look && PSX.ownerHeld && PSX.ownerHeld(id)) {
       const eng = [...body.querySelectorAll(':scope > section.o55-insp-block')].find((x) => /^Where it applies$/i.test(((x.querySelector('h4') || {}).textContent || '').trim()));
       if (eng && now && /Each [\w ]+? can have its own/i.test(eng.textContent)) { perWhere(body, now, id); return; }
-      ownerWhere(body, now, ownerFacts(id)); return;
+      ownerWhere(body, now, ownerFacts(id), id); return;
     }
     if (!look && !cred) {
       // a row that belongs to one thing but is drawn as a plain row: the same three parts as an account's own rows
@@ -317,6 +327,7 @@
     hideEngineWhere(body);
     const sec = D.createElement('section');
     sec.className = 'o55-insp-block psx-where'; sec.setAttribute('data-psx-block', 'where'); sec.setAttribute('data-psx-key', 'where');
+    sec.setAttribute('data-psx-setting', id);
     const slot = (title, slotKey, html, bare) => sec.insertAdjacentHTML('beforeend', `<div class="psx-group is-not" role="group" aria-label="${esc(title)}" data-psx-slot="${slotKey}">${bare ? '' : `<div class="psx-ghead">${esc(title)}</div>`}<div class="psx-wnot">${bare ? `<span class="psx-wname">${esc(title)}</span>` : ''}${html}</div></div>`);
     const why = (t) => `<span class="psx-wnot-why">${esc(t)}</span>`;
     if (look) {
@@ -354,6 +365,7 @@
     }
     const sec = D.createElement('section');
     sec.className = 'o55-insp-block psx-where'; sec.setAttribute('data-psx-block', 'where'); sec.setAttribute('data-psx-key', 'where');
+    sec.setAttribute('data-psx-setting', id);
     sec.setAttribute('data-psx-owner', 'library'); sec.setAttribute('data-psx-owner-name', 'your library');
     sec.innerHTML = `<h4>Where it applies</h4><p class="psx-where-sentence">Same everywhere.</p>`;
     const slot = (title, slotKey, text, bare) => sec.insertAdjacentHTML('beforeend', `<div class="psx-group is-not" role="group" aria-label="${esc(title)}" data-psx-slot="${slotKey}">${bare ? '' : `<div class="psx-ghead">${esc(title)}</div>`}<div class="psx-wnot">${bare ? `<span class="psx-wname">${esc(title)}</span>` : ''}<span class="psx-wnot-why">${esc(text)}</span></div></div>`);
@@ -518,7 +530,7 @@
       project: perProject ? `A project can choose its own, inside ${owner}.` : `Not per project: ${owner} keeps it.`
     };
   }
-  function ownerWhere(body, now, v) {
+  function ownerWhere(body, now, v, id) {
     body.querySelectorAll(':scope > [data-psx-block="where"]').forEach((n) => n.remove());
     hideEngineWhere(body);
     /* inventory alignment: an owner-held row takes no value in Settings (its owner changes it, as "When you might change
@@ -532,6 +544,7 @@
     }
     const sec = D.createElement('section');
     sec.className = 'o55-insp-block psx-where'; sec.setAttribute('data-psx-block', 'where'); sec.setAttribute('data-psx-key', 'where');
+    sec.setAttribute('data-psx-setting', id);
     sec.setAttribute('data-psx-owner', v.kind || 'owned'); if (v.owner) sec.setAttribute('data-psx-owner-name', v.owner);
     sec.innerHTML = `<h4>Where it applies</h4><p class="psx-where-sentence">${esc(v.sentence)}</p>`;
     // Astra max N1: an owner with a place of its own is one click away
@@ -905,6 +918,7 @@
     const def = DEF[id], c = PSX.ctxFull(S.ctx);
     const sec = D.createElement('section');
     sec.className = 'o55-insp-block psx-where'; sec.setAttribute('data-psx-block', 'where'); sec.setAttribute('data-psx-key', 'where');
+    sec.setAttribute('data-psx-setting', id);
     sec.innerHTML = `<h4>Where it applies</h4><p class="psx-where-sentence">${esc(sentence(id, r))}</p>`;
     if (r.stale.length) { const wr = [...new Set(r.stale.map((x) => PSX.writer(x.level, x.key)).filter(Boolean))]; sec.insertAdjacentHTML('beforeend', `<div class="psx-wstate psx-where-note">${mark('offline')}<span>${esc(list(wr.map((k) => placeName('computer', k))))} ${wr.length === 1 ? 'isn’t' : 'aren’t'} answering. What ${wr.length === 1 ? 'it keeps is' : 'they keep is'} shown as of ${esc(PSX.W.asOf)}.</span></div>`); }
     if (DEVICES[S.actor] && DEVICES[S.actor].limited) sec.insertAdjacentHTML('beforeend', `<div class="psx-wstate psx-where-note">${mark('info')}<span>${esc(PSX.REASONS.limited_device[0])} The other lines are read only here.</span></div>`);
@@ -1273,10 +1287,10 @@
     if (P && P.syncInspector && !P.syncInspector.__psx) {
       const base = P.syncInspector;
       const wrapped = function () {
-        const pickerTop = modelPickerAnchor(current());
+        const pickerAnchor = modelPickerAnchor(current());
         const keep = strip();
         const r = base.apply(this, arguments);
-        try { decorate({ force: true, focusKey: keep.focusKey, pickerTop }); } catch (e) { console.error('[psx panel]', e); }
+        try { decorate({ force: true, focusKey: keep.focusKey, pickerAnchor }); } catch (e) { console.error('[psx panel]', e); }
         return r;
       };
       wrapped.__psx = true;
@@ -1290,6 +1304,7 @@
         if (open) soon();
         if (wasOpen && !open) {
           editing = null; pickerOpening = null; S.targets = {};
+          if (insp.dataset) delete insp.dataset.psxDone;
           // Esc closes the panel; focus returns to the row's end word
           const id = lastOpen;
           setTimeout(() => {
