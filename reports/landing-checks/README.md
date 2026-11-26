@@ -116,9 +116,12 @@ A held-back start reports to stderr once a minute. The subcheck timeout starts w
 runs. When `MemAvailable` is unavailable, the slot count still applies.
 
 The checker reads `--jobs`, `landing-budget-v1` and `landing-readiness-snapshot-v1` support from the
-target verifier's help. A target without snapshot support exits 3 before dispatch. With snapshot
-support, missing worker options or a host that cannot set up the shared slots cause the aggregates
-to run serially. A verifier that accepts `--jobs` receives `--jobs 1` in that case.
+target verifier's help. A target with snapshot support reads one private, read-only readiness
+snapshot for the whole run. A target without it (a historical verifier) runs its aggregates and
+exports serially against the live edition, with the end-of-run check below, and the report says
+`historical target: serial with end-of-run check`. With snapshot support, missing worker options or a
+host that cannot set up the shared slots also cause the aggregates to run serially. A verifier that
+accepts `--jobs` receives `--jobs 1` in that case.
 
 Both copies of a validator that `run-gates` and `audit-governance` share run on their own, once in
 each aggregate, as they always have: the pairing rule below judges them by what they report, not by
@@ -152,7 +155,8 @@ or `null` when missing. It covers these five direct inputs plus every artifact n
 - `adjudication/GROUP_ARTIFACT_MANIFEST.json`
 - `adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl`
 
-The report and baseline use SHA-256s computed from the snapshot's own bytes. Receipt hashes
+For a snapshot-capable target the report and baseline use SHA-256s computed from the snapshot's own
+bytes; for a historical target they use the live edition's bytes, re-verified at the end of the run. Receipt hashes
 are expectations to validate. The receipt's artifact paths must belong to the currentness edition.
 Canonical sources listed in the inventory and the validator script are deliberately outside this
 binding: edits to those remain readiness findings. Unreferenced audit outputs are outside it too.
@@ -161,7 +165,7 @@ so moving the same evidence does not change the comparison.
 
 Comparison refuses with exit 3 before running the checks if the binding is absent or invalid, or
 the path set, file presence or bytes differ. The checker verifies the snapshot against the live
-edition at capture and rehashes the snapshot after the readers finish. It rehashes the bound live
+edition at capture and rehashes the snapshot after the readers finish (snapshot-capable targets). It rehashes the bound live
 inputs after each aggregate and after exports. It also checks live file and directory identities
 and change times for a publication or rewrite that was reverted before the final hash.
 A changed edition or unreadable input stops the run before it issues a comparison or writes a
