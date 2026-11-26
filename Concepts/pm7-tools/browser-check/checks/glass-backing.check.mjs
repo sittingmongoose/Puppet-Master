@@ -83,7 +83,7 @@ function bcLayoutSig(s) {
 // how much of the page's content reads through the surface sel (null when it isn't on screen). R135-F5: the plates
 // are acquired with the pane's layout signature; an own-pane reflow during any plate reacquires the whole sequence
 // (bounded attempts), then a named could-not-judge result — never a pass, and never the icons' false read-through.
-async function readThrough(t, f, sel, { rerenderAgents = false } = {}) {
+async function readThrough(t, f, sel, { rerenderAgents = false, now = () => performance.now() } = {}) {
 	const r = await f.evaluate((s) => {
 		const e = document.querySelector(s); if (!e) return null;
 		const b = e.getBoundingClientRect(), x = Math.max(0, b.left), y = Math.max(0, b.top);
@@ -92,8 +92,9 @@ async function readThrough(t, f, sel, { rerenderAgents = false } = {}) {
 	}, sel);
 	if (!r) return null;
 	await f.waitForTimeout(400);
-	const ACQUISITIONS = 3;
+	const ACQUISITIONS = 3, SHOT_MAX_MS = 650;
 	for (let attempt = 1; ; attempt++) {
+		let captureStalled = false;
 		// R136-N3, R137-F1: bracket EVERY plate — the signature is sampled before a1 and after each of a1, a2,
 		// c0, b and c, and the sequence judges only when every sample equals the first. Endpoints alone let the
 		// real pane's 1-second reversible wrap pulse (0s -> 1s -> 2s, A -> B -> A) through: one acquisition spans
@@ -103,7 +104,12 @@ async function readThrough(t, f, sel, { rerenderAgents = false } = {}) {
 		if (sigStart === null) return null;
 		const sigs = [sigStart];
 		const sig = async () => { sigs.push(await f.evaluate(bcLayoutSig, sel)); };
-		const a1 = await shot(t, r); await sig(); await f.waitForTimeout(300); const a2 = await shot(t, r); await sig();
+		const grab = async (name) => {
+			const started = now(), plate = await shot(t, r), elapsed = now() - started;
+			if (elapsed > SHOT_MAX_MS) { captureStalled = true; t.log(`Glass backing ${sel}: ${name} capture took ${Math.round(elapsed)} ms (bound ${SHOT_MAX_MS})`); }
+			return plate;
+		};
+		const a1 = await grab('a1'); await sig(); await f.waitForTimeout(300); const a2 = await grab('a2'); await sig();
 		await f.evaluate((s) => {
 			const e = document.querySelector(s);
 			let oldStyle = e.getAttribute('style');
@@ -136,7 +142,7 @@ async function readThrough(t, f, sel, { rerenderAgents = false } = {}) {
 		}, sel);
 		try {
 			await f.waitForTimeout(350);
-			const c0 = await shot(t, r); await sig();
+			const c0 = await grab('c0'); await sig();
 			await f.evaluate(() => document.getElementById('bc-through').__bcOutsideOnly());
 			if (rerenderAgents) {
 				// Replace text leaves only. Rewriting the list's HTML also rebuilt its animated and painted descendants (T142).
@@ -150,12 +156,12 @@ async function readThrough(t, f, sel, { rerenderAgents = false } = {}) {
 				t.log(`Glass backing rerender: replaced ${replaced} Agents text elements before shot b`);
 			}
 			await f.waitForTimeout(350);
-			const b = await shot(t, r); await sig();
+			const b = await grab('b'); await sig();
 			// Exclude the surface's own glyphs, grown by 2 px to cover re-rasterisation against another backdrop.
 			await f.evaluate(() => document.getElementById('bc-through').__bcHideSurface());
 			await f.waitForTimeout(350);
-			const c = await shot(t, r); await sig();
-			if (sigs.every((s) => s !== null && s === sigStart)) return { rect: r, ...backingVerdict({ a1, a2, b, c, c0, width: r.width, height: r.height }) };
+			const c = await grab('c'); await sig();
+			if (!captureStalled && sigs.every((s) => s !== null && s === sigStart)) return { rect: r, ...backingVerdict({ a1, a2, b, c, c0, width: r.width, height: r.height }) };
 		} finally {
 			await f.evaluate(() => {
 				const st = document.getElementById('bc-through');
@@ -163,8 +169,8 @@ async function readThrough(t, f, sel, { rerenderAgents = false } = {}) {
 				st.__bcRestore();
 			});
 		}
-		if (attempt >= ACQUISITIONS) return { rect: r, reflowed: true, attempts: attempt };
-		t.log(`Glass backing ${sel}: own pane reflowed between the baseline and read-through plates (acquisition ${attempt}/${ACQUISITIONS}); reacquiring`);
+		if (attempt >= ACQUISITIONS) return { rect: r, reflowed: true, reason: captureStalled ? 'capture-time' : 'layout', attempts: attempt };
+		t.log(`Glass backing ${sel}: ${captureStalled ? 'a plate capture exceeded its time bound' : 'own pane reflowed'} between the baseline and read-through plates (acquisition ${attempt}/${ACQUISITIONS}); reacquiring`);
 		await f.waitForTimeout(400);
 	}
 }
@@ -196,7 +202,10 @@ export default async function (t) {
 	const judge = (look, name, m) => {
 		if (!m) { bad.push(`${look} ${name}: not on screen`); rows.push(`${look} ${name}: not on screen`); return; }
 		if (m.reflowed) {
-			const why = `${look} ${name}: could not judge: the surface's own layout reflowed between the baseline and read-through plates on all ${m.attempts} acquisitions (PM7PERF-GLASS-AGENTS-REFLOW, R135-F5)`;
+			const whyKind = m.reason === 'capture-time'
+				? `a plate capture exceeded the 650 ms bound on all ${m.attempts} acquisitions (R138-H1)`
+				: `the surface's own layout reflowed between the baseline and read-through plates on all ${m.attempts} acquisitions (PM7PERF-GLASS-AGENTS-REFLOW, R135-F5)`;
+			const why = `${look} ${name}: could not judge: ${whyKind}`;
 			bad.push(why); rows.push(why); return;
 		}
 		const pct = (m.share * 100).toFixed(2);

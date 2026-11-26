@@ -46,7 +46,7 @@ const TRANSPARENT = 'rgba(0, 0, 0, 0)';
 // the pane: five visible rows plus three scrolled below the clip; every row carries a non-text icon and a
 // shrink-wrapped <i data-work-time> timer leaf whose width ticks without moving the row (the real pane's 22
 // live timers, R136-N2). A wrap tick shifts rows 2-4 up 15 px (the witness's dy).
-function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = false } = {}) {
+function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = false, pulseShots = [], onShot = null } = {}) {
 	let shifted = false, wide = false, shots = 0, appended = null;
 	const inline = new Map();
 	const rowY = (i) => 20 + i * 34 + (shifted && i >= 2 ? -15 : 0);
@@ -113,8 +113,10 @@ function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = fa
 		page: { screenshot: async ({ clip }) => {
 			shots++;
 			if (tickShots.includes(shots)) shifted = !shifted; // the wrap tick lands before this shot
+			if (pulseShots.includes(shots)) shifted = !shifted; // A -> B before the stalled framebuffer read
 			if (widthShots.includes(shots)) wide = !wide; // a width-only timer tick lands before this shot
 			const full = render();
+			if (pulseShots.includes(shots)) shifted = !shifted; // B -> A before the screenshot promise resolves
 			const lx = clip.x - 61, ly = clip.y - 57, out = new Uint8Array(clip.width * clip.height * 4);
 			for (let y = 0; y < clip.height; y++) for (let x = 0; x < clip.width; x++) {
 				const s = ((y + ly) * W + (x + lx)) * 4, d = (y * clip.width + x) * 4;
@@ -122,6 +124,7 @@ function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = fa
 			}
 			const png = encodePng({ width: clip.width, height: clip.height, data: out });
 			if (afterShots.includes(shots)) shifted = !shifted; // the tick lands DURING this shot: framebuffer pre-wrap, signature post-wrap
+			onShot?.(shots);
 			return png;
 		} },
 	};
@@ -237,4 +240,14 @@ function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = fa
 		assert.notEqual(bcLayoutSig(SEL), badgeBefore, 'a CSS-only painted leaf movement must change the signature');
 	} finally { Object.assign(globalThis, saved); }
 }
-console.log('PASS own-pane reflow is detected from the layout signatures bracketing every plate: a single tick is reacquired into a clean verdict, persistent reflow ends in a bounded named could-not-judge (never a pass), a quiet pane keeps its first-acquisition pass, width-only timer ticks (visible or off-screen) are not reflow, ticks during a2 or c are caught, a 1-second A->B->A wrap pulse inside one acquisition is caught mid-sequence, and direct SVG plus CSS-only painted-leaf movement changes the signature');
+
+// R138-H1 RED: a >650 ms clip capture can contain both ticks of a 1 s A -> B -> A pulse while every layout
+// signature still reads A. The capture duration itself must force a fresh acquisition.
+{
+	let clock = 0;
+	const w = world([], { pulseShots: [1], onShot: (n) => { if (n === 1) clock += 700; } });
+	const m = await readThrough(w.t, w.f, SEL, { now: () => clock });
+	assert.ok(m && !m.reflowed && m.share <= 0.002, `a stalled pulse capture must be reacquired, not judged (share ${m && (m.share * 100).toFixed(3)}%)`);
+	assert.equal(w.shots(), 10, 'the stalled first acquisition is replaced by a quiet second acquisition');
+}
+console.log('PASS own-pane reflow is detected from the layout signatures bracketing every plate: a single tick is reacquired into a clean verdict, persistent reflow ends in a bounded named could-not-judge (never a pass), a quiet pane keeps its first-acquisition pass, width-only timer ticks (visible or off-screen) are not reflow, ticks during a2 or c are caught, a 1-second A->B->A wrap pulse inside one acquisition is caught mid-sequence, direct SVG plus CSS-only painted-leaf movement changes the signature, and a >650 ms capture that spans a full pulse is reacquired');
