@@ -13733,8 +13733,8 @@ canonical_text: >-
   moment, as the rest of its requested configuration under its delayed-work owners (Run_Modes RM-053, Permissions
   PS-145, and SQR-019 of Scheduling_and_Quota_Resume), and its run uses that value when it is dispatched. A snapshot or a run that was frozen before this row existed
   holds no value for it and is read as On, the behaviour before the row, without consulting current Settings and
-  without rewriting the snapshot. A child or subagent run started by a run in progress uses the value its parent
-  read, and a follow-up run spawned by context rotation continues the run it follows and uses that run's value, as
+  without rewriting the snapshot. A child or subagent run started by a run in progress uses its parent's frozen
+  value, and a follow-up run spawned by context rotation continues the run it follows and uses that run's value, as
   Run_Modes has it inherit that run's mode, strategy, effective runtime state and a narrowed-or-equal tool-policy snapshot. On, the run requests Code Mode under T-188. Off, the run requests
   ordinary tool calls: Puppet Master does not offer the script tool or the script's callable catalog on any route or
   by any channel, including the in-band carriage and the DAE projection of T-189; the run uses the route's ordinary
