@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L133-L1193
+Source lines: L133-L1187
 
-Source SHA256: `9cd803a01005f2d94b59256797511cdbbd7e5a06b7a98b3651b4e41c3db42334`
+Source SHA256: `aea4d86a54935b2ec031a8173f8fccb8dc8edd719569cf78a5aab4be41d8d809`
 
 ---
 
@@ -461,17 +461,11 @@ Broad-pass command and wiring reconciliation spans the command catalog plus its 
 
 Compare-open command identity is repository-scoped rather than UI-local. The compatibility token `compare_open` maps to `cmd.source_control.open_review` or `cmd.git.diff_open` with `project_id`, `repo_id`, optional `repo_relative_path`, left/right selectors that can bind to `worktree_id`, branch, commit, or revision, and presentation hints such as `side_by_side` versus `unified`. Path-level stage/unstage/discard commands remain separate from hunk-level aliases (`stage_hunk`, `unstage_hunk`, `discard_hunk`) and their plural command rows above. Conflict-review and `/open-resolution` actions must flow through Source Control conflict commands or `cmd.git.conflict_apply_resolution`; no consumer surface may create ad hoc compare, /diff, /compare, or /compare/stage state from path strings alone.
 
-The four Conflict Assistant rows select `Plans/source_control_contracts.schema.json#/$defs/conflict_assistant_request_v2` and carry `Plans/source_control_contracts.schema.json#/$defs/conflict_assistant_owner_result_v1` through `source_control_command_result_v2.owner_result_ref`. They carry the exact Project, repository, worktree, status generation and `conflict_selection_ref`. A file selection supplies its repo-relative `path` and `conflict_id`. Resolve Side adds `resolution_side`, `confirmation_ref`, optional `hunk_id`, and `manual_result_ref` for `manual` only. `Plans/WorktreeGitImprovement.md`, "Conflict Assistant command payloads and results", owns currentness, the Git writer lease, closed failures, exact return and effect receipts. DL-056 governs the Git-only mutations and Jujutsu view paths. The low-level `cmd.git.conflict_apply_resolution` keeps its separate request and choice set.
-
 Rules:
 - Review mode state is a Source Control view state with per-project persistence for compare target and filters; it is not canonical repository history.
-- Conflict Assistant open commands return typed routes. Open Merge Editor uses the shared opening module and emits the existing CV-361 `workspace.layout_changed` only when layout changes. Conflict mutations return owner effect receipts and admit no EventRecord through this binding. Blocked-state handoff stays with its existing event owner. Command receipts carry no conflicted file content.
+- Conflict Assistant open commands return typed routes. Open Merge Editor uses the shared opening module and emits the existing CV-361 `workspace.layout_changed` only when layout changes. Conflict mutations return owner effect receipts and admit no EventRecord through this binding. Blocked-state handoff stays with its existing event owner. Command receipts carry no conflicted file content. See [Conflict Assistant requests and results](#conflict-assistant-requests-and-results) for the typed contract.
 - `cmd.source_control.open_conflict` is the command-backed action behind the `Open Conflict Assistant` GUI entrypoint from `Source Control > Changes` and Orchestrator blocked worktree cards.
 - `/disabled` states must explain missing git, missing compare target, `stale-target`, absent conflict files, unavailable merge editor, or policy-restricted mutation rather than silently hiding the command.
-
-Retired audit wording is preserved below.
-
-> Conflict assistant commands record resolution events and blocked-state handoff outcomes through `/event/storage`; they do not persist conflicted file content.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L370-L904
+Source lines: L370-L895
 
-Source SHA256: `3fff81fcd092ae3531df9fa1a2fb10c89a604abb05e55ec19869bfb0c34d2f52`
+Source SHA256: `c15700b33a0ab06834344455d0ff5b9866c2ad79d54c7c65a255407486b42c78`
 
 ---
 
@@ -489,29 +489,21 @@ Runtime identity, handoff, and stewardship records preserve their concrete keys.
 - Treat `concern resolver` as distinct from owner/source roles.
 - Allow concern ownership reassignment without changing concern identity.
 
-`ConcernRecord` is the canonical typed concern object. Its fields are exactly those of `Plans/concern_created_contracts/concern_record.schema.json` (`additionalProperties: false`): every row below is a required key, a nullable key carries `null` rather than being omitted, and the record has no other field. Concern-action `rationale`, `confirmation_ref` and `audit_refs` belong to the action's typed command response (concern action policy above) and reach the record only as `evidence_refs[]` or `lineage_refs[]` entries; they are required for acknowledged, dismissed, resolved, and structural lineage edits.
+`ConcernRecord` is the canonical typed concern object. Its fields are exactly those of `Plans/concern_created_contracts/concern_record.schema.json` (`additionalProperties: false`): every key in the table below and in [Concern record envelope, references, and redaction fields](#concern-record-envelope-references-and-redaction-fields) is required, a nullable key carries `null` rather than being omitted, and the record has no other field. Concern-action `rationale`, `confirmation_ref` and `audit_refs` belong to the action's typed command response (concern action policy above) and reach the record only as `evidence_refs[]` or `lineage_refs[]` entries; they are required for acknowledged, dismissed, resolved, and structural lineage edits.
 
 | Field | Requirement |
 | --- | --- |
-| `schema_id` | Required; const `pm.storage_value.concern_record.v1`. |
 | `schema_version` | Required; const `1.0.0`. Payload schema version for the concern record. |
-| `record_id` | Required; non-empty string. Storage record identity. |
-| `record_kind` | Required; const `concern`. |
 | `concern_id` | Required; non-empty string. Stable concern identity that survives ownership reassignment. |
 | `project_id` | Required; non-empty string. Project scope for the concern. |
-| `revision` | Required; integer, at least 1; the first record is revision 1. |
 | `concern_category` | Required. Stable concern category for dedupe and routing. Closed enum `coverage_blocker | projection_trust | risk | weak_integration` (C-FIX79 decision, 2026-11-24, recorded in Decision_Log; Orchestrator_Page OP-004 stays the semantic owner of the concern family). Earlier wording called this field `category`; the stored key is `concern_category`. |
 | `severity` | Required. Impact severity, independent from `blocking_effect_ref`. Closed enum `info | warning | error | critical`. |
 | `status` | Required. Closed enum `active | acknowledged | resolved | dismissed`. |
 | `owner_kind` / `owner_ref` | Required. Current owner surface; distinct from creator and resolver. `owner_kind` is the closed enum `Runtime | Package Overseer | Seam Overseer | Corroboration | Graph Patch | Recovery | User | External Resource`; `owner_ref` is a `pmref:<kind>:<id>` string (8-320 chars). |
-| `creator_ref` | Required; `pmref:<kind>:<id>` string (8-320 chars). The actor or validator that raised the concern. |
 | `created_by_kind` / `created_by_ref` | Required. Actor or system that created the concern. `created_by_kind` is the closed enum `Runtime | Package Overseer | Seam Overseer | Corroboration | Graph Patch`; `created_by_ref` is a `pmref:<kind>:<id>` string (8-320 chars). |
-| `subject_ref` | Required; `pmref:<kind>:<id>` string (8-320 chars). |
 | `source_event_refs[]` | Required; 1-64 unique `pmref:<kind>:<id>` string (8-320 chars)s. Source-lineage refs: the events that caused or justified the concern. Earlier wording called these `source_refs[]`. |
 | `evidence_refs[]` | Required; 0-64 unique `pmref:<kind>:<id>` string (8-320 chars)s. Evidence supporting the concern, including the confirmation, rationale and audit refs of the concern actions applied to it. |
-| `artifact_refs[]` | Required; 0-64 unique `pmref:<kind>:<id>` string (8-320 chars)s. Runtime artifacts, nodes, packages, seams, route/open subjects or external resources affected beyond the primary `scope_ref`. |
 | `lineage_refs[]` | Required; 0-64 unique `pmref:<kind>:<id>` string (8-320 chars)s. Reopen, split, merge, supersession and graph-patch lineage, and the adjacent runtime and governance joins: review, corroboration, graph patch, recovery, blocked episode and promotion refs, each told apart by its pmref kind (`pmref:review:...`, `pmref:corroboration:...`, `pmref:graph_patch:...`, `pmref:recovery:...`, `pmref:blocked_episode:...`, `pmref:promotion:...`). |
-| `summary` | Required; `pmref:<kind>:<id>` string (8-320 chars). The summary text is held behind the ref, because the record is `secret_refs_only`. |
 | `created_at` / `updated_at` | Required; RFC 3339 date-time strings. |
 | `visibility_level` / `attention_level` / `chatworthy` | Required. Projection controls for user attention without changing lifecycle state. `visibility_level` is the closed enum `user_visible | project | restricted`; `attention_level` is the closed enum `info | warning | needs_action`; `chatworthy` is a boolean (C-FIX79 decision, 2026-11-24). |
 | `blocking_effect_ref` | Required, nullable; `pmref:<kind>:<id>` string (8-320 chars) or `null`. Runtime/blocking impact, explicitly separate from severity; earlier wording called it `blocking_effect?`. |
@@ -519,7 +511,6 @@ Runtime identity, handoff, and stewardship records preserve their concrete keys.
 | `resolver_ref` / `resolved_at` | Required, nullable. Resolver identity (`pmref:<kind>:<id>` string (8-320 chars)) and RFC 3339 time, set when status is `resolved` or `dismissed`, otherwise `null`. Earlier wording called these `resolved_by_kind?` / `resolved_by_ref?`; the resolver's kind is the pmref kind. |
 | `run_ref` | Required, nullable; `pmref:<kind>:<id>` string (8-320 chars) or `null`. Runtime lineage when the concern is attached to a run; earlier wording called it `run_id?`. |
 | `scope_ref` | Required, nullable; `pmref:<kind>:<id>` string (8-320 chars) or `null`. The primary node, package, seam, route/open, artifact or external-resource scope; further affected refs go in `artifact_refs[]`. Earlier wording called this `scope_refs[]`. |
-| `redaction_profile` | Required; const `secret_refs_only`. |
 
 ### route_target, OpenSubject, and command normalization
 

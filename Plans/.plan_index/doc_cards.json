@@ -5080,7 +5080,7 @@
         "False": 702,
         "True": 83
       },
-      "heading_count": 1001,
+      "heading_count": 1003,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -5265,7 +5265,7 @@
         "scripts/pm_event_numbers.py",
         "scripts/pm_setup_validation_oracles.py"
       ],
-      "line_count": 57775,
+      "line_count": 57784,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 785,
       "plan_unit_ids": [
@@ -6450,7 +6450,7 @@
         "worktree_lifecycle_record_loss",
         "wrong_original_source_realm_or_implicit_reference_alias"
       ],
-      "sha256": "3fff81fcd092ae3531df9fa1a2fb10c89a604abb05e55ec19869bfb0c34d2f52",
+      "sha256": "c15700b33a0ab06834344455d0ff5b9866c2ad79d54c7c65a255407486b42c78",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 769,
@@ -23719,7 +23719,7 @@
         "False": 22,
         "True": 177
       },
-      "heading_count": 408,
+      "heading_count": 414,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Plans/Assistant_Plan_Runtime.md",
@@ -23776,7 +23776,7 @@
         "scripts/pm-command-payload-defs-check.py",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 22094,
+      "line_count": 22100,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 199,
       "plan_unit_ids": [
@@ -24063,7 +24063,7 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "9cd803a01005f2d94b59256797511cdbbd7e5a06b7a98b3651b4e41c3db42334",
+      "sha256": "aea4d86a54935b2ec031a8173f8fccb8dc8edd719569cf78a5aab4be41d8d809",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 197,
@@ -24409,7 +24409,7 @@
         "Plans/usage_run_estimate_contracts.schema.json",
         "future usage events"
       ],
-      "line_count": 7686,
+      "line_count": 7685,
       "path": "Plans/usage-feature.md",
       "plan_unit_count": 108,
       "plan_unit_ids": [
@@ -24564,7 +24564,7 @@
         "usage_workspace_state_orphan_or_preview_persistence",
         "vision_usage_attribution_gap"
       ],
-      "sha256": "4f97c233f7f619be43e3d2817fbd864696cb4684a97327ae2589b3c59a891052",
+      "sha256": "31cedcd26482d640ef21956acc3ef9fff212022a00ae13c144d992bdeae275ae",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 108
@@ -25281,7 +25281,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-26T08:43:30Z",
+  "generated_at_utc": "2026-11-26T08:55:49Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8861-L11009
+Source lines: L8849-L10983
 
-Source SHA256: `9cd803a01005f2d94b59256797511cdbbd7e5a06b7a98b3651b4e41c3db42334`
+Source SHA256: `aea4d86a54935b2ec031a8173f8fccb8dc8edd719569cf78a5aab4be41d8d809`
 
 ---
 
@@ -908,8 +908,7 @@ command_payload_definition_map:
     - cmd.prd_builder.pack.reopen
     - cmd.prd_builder.revision.resubmit
     - cmd.prd_builder.source.import
-    basis: Covers the 28 rows of Concrete PRD Builder, Planning Wizard, and Plan Compile command rows (UCC-098 adds
-      them), 29 with cmd.prd_builder.revision.resubmit from 2026-11-24 (DL-2602).
+    basis: Covers the 28 rows of Concrete PRD Builder, Planning Wizard, and Plan Compile command rows (UCC-098 adds them), 29 with cmd.prd_builder.revision.resubmit from 2026-11-24 (DL-2602).
   - unit: UCC-098
     adds:
     - cmd.plan_compile.cancel
@@ -942,8 +941,7 @@ command_payload_definition_map:
     - cmd.prd_builder.revision.resubmit
     - cmd.prd_builder.source.import
     covers: []
-    basis: Adds the 28 rows of Concrete PRD Builder, Planning Wizard, and Plan Compile command rows (the command
-      family required by UCC-098 is concrete), 29 with cmd.prd_builder.revision.resubmit from 2026-11-24 (DL-2602).
+    basis: Adds the 28 rows of Concrete PRD Builder, Planning Wizard, and Plan Compile command rows (the command family required by UCC-098 is concrete), 29 with cmd.prd_builder.revision.resubmit from 2026-11-24 (DL-2602).
   - unit: UCC-099
     adds: []
     covers:
@@ -1875,14 +1873,10 @@ command_payload_definition_map:
     maps_to: blocked_state_required
     sources:
     - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
-  - owner_state: no_invalidated_refs
-    maps_to: blocked_state_required
-    sources:
-    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
-  - owner_state: no_open_annotations
-    maps_to: blocked_state_required
-    sources:
-    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes (cmd.prd_builder.revision.resubmit, DL-2602)
+  - {owner_state: no_invalidated_refs, maps_to: blocked_state_required,
+     sources: ['Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes']}
+  - {owner_state: no_open_annotations, maps_to: blocked_state_required,
+     sources: ['Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes (cmd.prd_builder.revision.resubmit, DL-2602)']}
   - owner_state: operation_in_progress
     maps_to: blocked_state_required
     sources:
@@ -1908,14 +1902,10 @@ command_payload_definition_map:
     maps_to: blocked_state_required
     sources:
     - Plans/GitHub_Integration.md#GI-041; GitHub_Integration.md Worktree Topology Commands
-  - owner_state: required_topic
-    maps_to: blocked_state_required
-    sources:
-    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
-  - owner_state: revision_running
-    maps_to: blocked_state_required
-    sources:
-    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes (cmd.prd_builder.revision.resubmit, DL-2602)
+  - {owner_state: required_topic, maps_to: blocked_state_required,
+     sources: ['Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes']}
+  - {owner_state: revision_running, maps_to: blocked_state_required,
+     sources: ['Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes (cmd.prd_builder.revision.resubmit, DL-2602)']}
   - owner_state: runtime_context_missing
     maps_to: not_configured
     sources:
@@ -1971,14 +1961,10 @@ command_payload_definition_map:
     maps_to: stale_projection
     sources:
     - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
-  - owner_state: stale_approved_plan_pack
-    maps_to: stale_projection
-    sources:
-    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
-  - owner_state: stale_bundle_revision
-    maps_to: stale_projection
-    sources:
-    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes (cmd.prd_builder.revision.resubmit, DL-2602)
+  - {owner_state: stale_approved_plan_pack, maps_to: stale_projection,
+     sources: ['Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes']}
+  - {owner_state: stale_bundle_revision, maps_to: stale_projection,
+     sources: ['Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes (cmd.prd_builder.revision.resubmit, DL-2602)']}
   - owner_state: stale_final_audit_closure
     maps_to: stale_projection
     sources:

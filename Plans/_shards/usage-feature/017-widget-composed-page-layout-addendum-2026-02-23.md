@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L762-L868
+Source lines: L762-L867
 
-Source SHA256: `4f97c233f7f619be43e3d2817fbd864696cb4684a97327ae2589b3c59a891052`
+Source SHA256: `31cedcd26482d640ef21956acc3ef9fff212022a00ae13c144d992bdeae275ae`
 
 ---
 
@@ -71,8 +71,7 @@ Each Usage widget has a gear icon in its header for per-widget configuration. Ex
 
 Configuration is persisted alongside the widget layout: each settled layout record carries `configuration_refs` (`Plans/Widget_System.md#WS-020`, `UsageWidgetLayoutRecord`), each resolving to that widget's configuration record governed by `Plans/Widget_System.md#WS-004` and this unit, and placement follows app default with project override per `Plans/Widget_System.md#section=3. Layout persistence`. On a dashboard board the configuration is kept in that board's envelope (`Plans/Widget_System.md#WS-030`). Widget_System has no section 5 or section 7: the former "section 7" citation and the `#5` ContractRef below are retired numeric aliases that resolve to these anchors.
 
-ContractRef: ContractName:Plans/Widget_System.md#5
-ContractRef: ContractName:Plans/Widget_System.md#WS-020, ContractName:Plans/Widget_System.md#WS-004, ContractName:Plans/Widget_System.md#WS-030
+ContractRef: ContractName:Plans/Widget_System.md#5, ContractName:Plans/Widget_System.md#WS-020, ContractName:Plans/Widget_System.md#WS-004, ContractName:Plans/Widget_System.md#WS-030
 
 ### Multi-Account Widget as First-Class Catalog Entry
 The multi-account widget remains a first-class catalog entry, but it is now a status and observability widget rather than the canonical setup surface.

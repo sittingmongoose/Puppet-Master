@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8579-L8650
+Source lines: L8573-L8640
 
-Source SHA256: `9cd803a01005f2d94b59256797511cdbbd7e5a06b7a98b3651b4e41c3db42334`
+Source SHA256: `aea4d86a54935b2ec031a8173f8fccb8dc8edd719569cf78a5aab4be41d8d809`
 
 ---
 
@@ -25,7 +25,6 @@ The command family required by UCC-098 is concrete. Production GUI controls may 
 | `cmd.prd_builder.conflict.resolve` | Resolve PRD conflict | conflict id, chosen resolution, rationale, source refs; disabled when selected sources are stale or unavailable | Conflict-resolution receipt |
 | `cmd.prd_builder.approve_for_planning_wizard` | Approve PRD for Planning Wizard | PRD Pack id/version/hash, source manifest hash, unresolved-warning acknowledgement, idempotency key; disabled when blocking conflicts or ledger sync failure exist | Approved PRD Pack snapshot and handoff receipt |
 | `cmd.prd_builder.pack.reopen` | Reopen PRD Pack | approved pack id/version, reason, currentness proof; disabled when reopening would bypass immutable history | Reopen receipt and new draft identity |
-| `cmd.prd_builder.revision.resubmit` | Resubmit with Annotations | bundle id, open annotation ids (default: every open durable annotation in deterministic order), expected bundle revision, idempotency key; disabled when no open annotation exists, the bundle revision is stale, or a revision pass is already running | Targeted revision receipt and one outcome record per annotation (`addressed`, `still_open` or `cannot_apply`); owner `Plans/PRD_Builder.md` PRDB-014, added 2026-11-24 (DL-2602) |
 | `cmd.planning_wizard.start` | Start Planning Wizard | approved PRD Pack ref or normalized requirements input, project context snapshot, testing policy snapshot | PlanningRun created/opened |
 | `cmd.planning_wizard.topic.open` | Open topic | PlanningRun id, topic id, expected topic map version | Topic projection selected |
 | `cmd.planning_wizard.topic.add` | Add topic | PlanningRun id, parent/dependency refs, label, source reason, topic map version | Topic added and topic map version advanced |
@@ -47,12 +46,10 @@ The command family required by UCC-098 is concrete. Production GUI controls may 
 | `cmd.plan_compile.inspect_assignment` | Inspect assignment | PlanCompileRun id, assignment id | Opens assignment inspector |
 | `cmd.plan_compile.request_bounded_recompile` | Request bounded recompile | PlanCompileRun id, affected PlanUnit refs, reason, currentness token | Bounded recompile request receipt |
 | `cmd.plan_compile.open_build` | Open Build | PlanCompileRun id, build/run identity, target artifact or route; disabled until `BuildStarted` or resulting build identity exists | Opens resulting build or build artifact route |
+| `cmd.prd_builder.revision.resubmit` | Resubmit with Annotations | bundle id, open annotation ids (default: every open durable annotation in deterministic order), expected bundle revision, idempotency key; disabled when no open annotation exists, the bundle revision is stale, or a revision pass is already running | Targeted revision receipt and one outcome record per annotation (`addressed`, `still_open` or `cannot_apply`); owner `Plans/PRD_Builder.md` PRDB-014, added 2026-11-24 (DL-2602) |
 
-Lineage pointer (DL-333): for each command here that UCC-230 routes, the Required payload and guard summary column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
-
-Amended 2026-11-05 (DL-333): these 28 catalog ids are canonical. `Plans/prd_planning_runtime_contracts.json` `ui_command_contracts` is keyed by them, records each id it used before in `alias_command_ids` (UCC-230 lists those as compatibility aliases, excluded from production wiring), and adds `cmd.planning_wizard.topic.open` and `cmd.prd_builder.annotation.resolve` from the rows above; `cmd.plan_compile.open_build` takes the PlanCompileRun id these rows name, not a goal run id.
-
-Amended 2026-11-24 (DL-2602, C-FIX79): `cmd.prd_builder.revision.resubmit`, the PRDB-014 targeted revision pass (`Resubmit with Annotations`), joins this set, so the canonical PRD Builder, Planning Wizard and Plan Compile ids are now 29. FinalGUISpec §7.19.2 bundle `Resubmit`, F3-150 and F3-322 dispatch it; `Plans/prd_planning_runtime_contracts.json` `ui_command_contracts` carries its contract and `Plans/Wiring_Matrix.production.json` row `catalog.prd_builder_revision_resubmit` wires it.
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Required payload and guard summary column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.\
+Amended 2026-11-05 (DL-333): these 28 catalog ids are canonical. `Plans/prd_planning_runtime_contracts.json` `ui_command_contracts` is keyed by them, records each id it used before in `alias_command_ids` (UCC-230 lists those as compatibility aliases, excluded from production wiring), and adds `cmd.planning_wizard.topic.open` and `cmd.prd_builder.annotation.resolve` from the rows above; `cmd.plan_compile.open_build` takes the PlanCompileRun id these rows name, not a goal run id. See [PRD Builder revision resubmission](#prd-builder-revision-resubmission) for the subsequent 29th command.
 
 ### Testing capability and visible-session command rows
 
@@ -71,8 +68,7 @@ Testing policy UI is a first-class command surface, not settings prose alone.
 
 | PMConcept token | Disposition |
 |---|---|
-| `cmd.chat.effort`, `cmd.chat.settings`, `cmd.chat.model`, `cmd.chat.mode`, `cmd.chat.open_debug_target_picker`, `cmd.chat.export_investigation_bundle`, `cmd.chat.revoke_investigation_item` | Cataloged command IDs for chat setting/debug routes; payloads carry thread/project/context scope and cannot mutate model/provider state without the owning settings contract. |
-| `cmd.chat.open_investigation_target` | Cataloged 2026-11-25 (C-FIX79): the Investigation Context `Open target` action (`Plans/assistant-chat-design.md` ACD-100). A no-persist `navigation_wrapper`: payload `thread_id` and `investigation_id`; it opens the investigation's `effective_target` (else `target`, by `debug_target_kind`) in the surface that owns that target through that surface's existing route, and never opens a raw payload (ACD-092). Disabled reasons: `stale_projection` when the target no longer resolves (the user runs `Revalidate target` first) and `unreachable` when the owning surface cannot open it. It records a no-persist route/open disposition and emits no event. The chat document's older Open target spelling is retired there, not aliased. |
+| `cmd.chat.effort`, `cmd.chat.settings`, `cmd.chat.model`, `cmd.chat.mode`, `cmd.chat.open_debug_target_picker`, `cmd.chat.export_investigation_bundle`, `cmd.chat.revoke_investigation_item` | Cataloged command IDs for chat setting/debug routes; payloads carry thread/project/context scope and cannot mutate model/provider state without the owning settings contract. See [Investigation Context Open target](#investigation-context-open-target) for the command that opens the target. |
 | `cmd.file.copy_full_path`, `cmd.file.copy_relative_path` | Cataloged compatibility wrappers over `cmd.file.copy_path` with `format = "absolute"` or `format = "relative"`; production UI may use either explicit wrapper if the wiring row declares the normalized copy-path payload. |
 | `cmd.git.open_diff` | Compatibility alias for `cmd.git.diff_open`; production wiring records the alias and the canonical target. |
 | `cmd.git.show_commit` | Compatibility alias for `cmd.source_control.history_open_commit`; production wiring records the alias and the canonical target. |

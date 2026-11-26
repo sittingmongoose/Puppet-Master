@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11085-L11283
+Source lines: L11059-L11249
 
-Source SHA256: `9cd803a01005f2d94b59256797511cdbbd7e5a06b7a98b3651b4e41c3db42334`
+Source SHA256: `aea4d86a54935b2ec031a8173f8fccb8dc8edd719569cf78a5aab4be41d8d809`
 
 ---
 
@@ -171,17 +171,9 @@ Historical `cmd.settings.open_notifications`, `cmd.settings.category.reset`, and
 Notifications destination emits `cmd.settings.open` with the Settings-owned typed target. Category reset
 and suggestion dismissal each compose `cmd.settings.transaction.preview` followed by
 `cmd.settings.transaction.apply`; neither bypasses the preview/currentness/confirmation/readback contract.
-The three historical spellings receive no primary handler, production-wiring row, or alias.
+The three historical spellings receive no primary handler, production-wiring row, or alias. See [Settings provider media route verification](#settings-provider-media-route-verification) for the media owner's Verify action.
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-018, SchemaID:pm.settings_system.contracts.v1, ContractName:Plans/FinalGUISpec.md
-
-### Settings provider media route verification
-
-| Command ID | Label | Preconditions and producer | Owner and sole handler | Typed payload and result |
-| --- | --- | --- | --- | --- |
-| `cmd.media.route.verify` | Verify | Explicit human activation in Settings > Providers on one exact provider/account/model/output-mode row. The media owner must admit the current row and its probe. | `Plans/Media_Generation_and_Capabilities.md`, "Generated Media Route Row Schema". `handlers::media::verify_route`. | `Plans/media_route_verification_contracts.schema.json#/$defs/MediaRouteVerifyRequest` → `Plans/media_route_verification_contracts.schema.json#/$defs/MediaRouteVerifyResult`. |
-
-This media-owned `domain_action` uses `catalog.media_route_verify` in `Plans/Wiring_Matrix.production.json`. Settings renders the per-row owner availability and disabled reason before dispatch and restores focus to the initiating row. It reads the route ID, output mode and capability snapshot from that same row. This action remains `handler_unavailable` until native handler proof exists. The closed `UICommandResponse` (CV-333) references the typed media result and receipt, with no new command EventRecord. Opening the Settings recovery link, verifying an auth profile or installation, and refreshing a model catalog do not invoke this action.
 
 ### Docker container start and Unraid template commands
 
