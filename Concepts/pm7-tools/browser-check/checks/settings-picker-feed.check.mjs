@@ -326,7 +326,26 @@ export default async function (t) {
 	];
 	const noteSelector = '#pm-settings-portals > .psx-note[data-open]:not([data-leaving])';
 	const detailsPicker = '.detail-inspector[aria-hidden="false"] [data-action="o55-insp-pick"]';
+	const closeDetails = '.detail-inspector[aria-hidden="false"] [data-action="close-details"]';
 	const rowPicker = (id) => `#pm-settings-root .o55-msel[data-o55-msel="${id}"] [role="combobox"]`;
+	async function checkReceiptBounds(frame, selector, name) {
+		const geometry = await frame.evaluate(({ selector, noteSelector }) => {
+			const note = document.querySelector(noteSelector);
+			const box = (el) => {
+				const rect = el?.getBoundingClientRect();
+				return rect?.width > 0 && rect.height > 0 ? rect.toJSON() : null;
+			};
+			const receipt = box(note);
+			const control = box(document.querySelector(selector));
+			const overlap = receipt && control ? {
+				width: Math.max(0, Math.min(receipt.right, control.right) - Math.max(receipt.left, control.left)),
+				height: Math.max(0, Math.min(receipt.bottom, control.bottom) - Math.max(receipt.top, control.top)),
+			} : null;
+			return { visible: !!note && Number(getComputedStyle(note).opacity) > 0.9, receipt, control, overlap };
+		}, { selector, noteSelector });
+		await t.check(name, Boolean(geometry.visible && geometry.overlap &&
+			(geometry.overlap.width === 0 || geometry.overlap.height === 0)), JSON.stringify(geometry));
+	}
 	async function checkReceipt(frame, selector, who) {
 		const hits = await frame.evaluate(({ selector, noteSelector }) => {
 			const trigger = document.querySelector(selector);
@@ -359,6 +378,8 @@ export default async function (t) {
 			hits.visible && hits.centre?.reaches && hits.letters.length === 'High depth'.length && hits.letters.every((p) => p.reaches),
 			JSON.stringify(hits));
 		await t.check(`${who}: Undo is reachable while the receipt is visible`, hits.visible && hits.undo?.reaches, JSON.stringify(hits.undo));
+		// The receipt can cover the chevron even when the centre and every character remain exposed.
+		await checkReceiptBounds(frame, selector, `${who}: visible receipt leaves the full picker trigger clear`);
 	}
 
 	for (const [look, width, height] of receiptMatrix) {
@@ -409,7 +430,8 @@ export default async function (t) {
 					const keyboardOpen = await trigger.getAttribute('aria-expanded') === 'true';
 					await t.check(`${who}: Enter also reopens the picker`, keyboardOpen);
 					if (keyboardOpen) await t.page.keyboard.press('Escape');
-					await frame.locator('.detail-inspector [data-action="close-details"]').click({ timeout: 8000 });
+					await checkReceiptBounds(frame, closeDetails, `${who}: visible receipt leaves Details Close clear`);
+					await frame.locator(closeDetails).click({ timeout: 8000 });
 					await frame.locator('.detail-scrim.is-open').waitFor({ state: 'hidden', timeout: 2000 });
 					await frame.locator(rowPicker(id)).scrollIntoViewIfNeeded({ timeout: 2000 });
 					await checkReceipt(frame, rowPicker(id), `${who} after closing Details`);
