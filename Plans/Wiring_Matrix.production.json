@@ -66468,17 +66468,16 @@
       "handler_location": "handlers::source_control::graph_filter",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.source_control.graph_filter must be registered in the UICommand dispatcher with typed args and result contract",
+        "The dispatcher resolves cmd.source_control.graph_filter to cmd.source_control.graph.filter before canonical payload validation.",
         "cmd.source_control.graph_filter must expose projected state selector and disabled reason before dispatch",
         "cmd.source_control.graph_filter dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.source_control.graph_filter must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "Compatibility alias only: underscore command normalizes to cmd.source_control.graph.filter and must not remain standalone source-control graph authority.",
         "cmd.source_control.graph_filter must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "One reviewed Project setup binding serves onboarding/New Project/conversion-to-new; no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing, and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive pause and last-good protection. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
         "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
-        "Projects refresh exact effect: cmd.source_control.graph_filter records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "Projects refresh exact effect: cmd.source_control.graph_filter normalizes to cmd.source_control.graph.filter before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance.",
         "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
       ],
       "evidence_required": "Production wiring contract for cmd.source_control.graph_filter; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Compatibility alias disposition: canonical evidence is catalog.source_control_graph_filter_canonical; this row does not provide separate production coverage.",
@@ -66486,9 +66485,9 @@
       "disabled_reason_projection": "state.commands.source_control_graph_filter.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.source_control.graph_filter records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid. Projects refresh: cmd.source_control.graph_filter records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "description": "cmd.source_control.graph_filter normalizes to cmd.source_control.graph.filter before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance.",
         "receipt_or_event_refs": [
-          "cmd.source_control.graph_filter.dispatch_receipt"
+          "cmd.source_control.graph.filter.dispatch_receipt"
         ]
       },
       "accessibility_contract": {
@@ -66501,7 +66500,7 @@
         {
           "test_id": "wiring.catalog.source_control_graph_filter.dispatcher",
           "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.source_control.graph_filter reaches handlers::source_control::graph_filter with typed args/result contract."
+          "requirement": "Dispatching cmd.source_control.graph_filter normalizes to cmd.source_control.graph.filter before validation and reaches handlers::source_control::graph_filter; a canonical replay with the same key and payload reuses the same result."
         },
         {
           "test_id": "wiring.catalog.source_control_graph_filter.state_projection",
@@ -66511,7 +66510,7 @@
         {
           "test_id": "wiring.catalog.source_control_graph_filter.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.source_control.graph_filter records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+          "requirement": "cmd.source_control.graph_filter normalizes to cmd.source_control.graph.filter before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance."
         },
         {
           "test_id": "wiring.catalog.source_control_graph_filter.accessibility",
@@ -66531,11 +66530,11 @@
         {
           "test_id": "fb.catalog.source_control_graph_filter.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.source_control.graph_filter records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+          "requirement": "cmd.source_control.graph_filter normalizes to cmd.source_control.graph.filter before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.source_control.graph_filter records dispatch receipt cmd.source_control.graph_filter.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.source_control.graph_filter uses cmd.source_control.graph.filter.dispatch_receipt and emits no unexpected persisted domain event."
       ],
       "request_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request_v2",
       "result_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result_v2"
@@ -66624,17 +66623,16 @@
       "handler_location": "handlers::source_control::graph_focus",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.source_control.graph_focus must be registered in the UICommand dispatcher with typed args and result contract",
+        "The dispatcher resolves cmd.source_control.graph_focus to cmd.source_control.graph.focus before canonical payload validation.",
         "cmd.source_control.graph_focus must expose projected state selector and disabled reason before dispatch",
         "cmd.source_control.graph_focus dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.source_control.graph_focus must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "Compatibility alias only: underscore command normalizes to cmd.source_control.graph.focus and must not remain standalone source-control graph authority.",
         "cmd.source_control.graph_focus must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "One reviewed Project setup binding serves onboarding/New Project/conversion-to-new; no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing, and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive pause and last-good protection. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
         "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
-        "Projects refresh exact effect: cmd.source_control.graph_focus records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "Projects refresh exact effect: cmd.source_control.graph_focus normalizes to cmd.source_control.graph.focus before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance.",
         "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
       ],
       "evidence_required": "Production wiring contract for cmd.source_control.graph_focus; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Compatibility alias disposition: canonical evidence is catalog.source_control_graph_focus_canonical; this row does not provide separate production coverage.",
@@ -66642,9 +66640,9 @@
       "disabled_reason_projection": "state.commands.source_control_graph_focus.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.source_control.graph_focus records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid. Projects refresh: cmd.source_control.graph_focus records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "description": "cmd.source_control.graph_focus normalizes to cmd.source_control.graph.focus before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance.",
         "receipt_or_event_refs": [
-          "cmd.source_control.graph_focus.dispatch_receipt"
+          "cmd.source_control.graph.focus.dispatch_receipt"
         ]
       },
       "accessibility_contract": {
@@ -66657,7 +66655,7 @@
         {
           "test_id": "wiring.catalog.source_control_graph_focus.dispatcher",
           "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.source_control.graph_focus reaches handlers::source_control::graph_focus with typed args/result contract."
+          "requirement": "Dispatching cmd.source_control.graph_focus normalizes to cmd.source_control.graph.focus before validation and reaches handlers::source_control::graph_focus; a canonical replay with the same key and payload reuses the same result."
         },
         {
           "test_id": "wiring.catalog.source_control_graph_focus.state_projection",
@@ -66667,7 +66665,7 @@
         {
           "test_id": "wiring.catalog.source_control_graph_focus.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.source_control.graph_focus records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+          "requirement": "cmd.source_control.graph_focus normalizes to cmd.source_control.graph.focus before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance."
         },
         {
           "test_id": "wiring.catalog.source_control_graph_focus.accessibility",
@@ -66687,11 +66685,11 @@
         {
           "test_id": "fb.catalog.source_control_graph_focus.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.source_control.graph_focus records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+          "requirement": "cmd.source_control.graph_focus normalizes to cmd.source_control.graph.focus before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.source_control.graph_focus records dispatch receipt cmd.source_control.graph_focus.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.source_control.graph_focus uses cmd.source_control.graph.focus.dispatch_receipt and emits no unexpected persisted domain event."
       ],
       "request_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request_v2",
       "result_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result_v2"
@@ -67023,15 +67021,16 @@
         "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
-        "Projects refresh exact effect: cmd.source_control.mark_conflict_resolved records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
-        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
+        "Projects refresh exact effect: Mark Conflict Resolved returns a typed owner result for the verified file resolution under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord.",
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "Validate the exact conflict selection and typed owner result under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results."
       ],
       "evidence_required": "Production wiring contract for cmd.source_control.mark_conflict_resolved; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.source_control_mark_conflict_resolved.availability",
       "disabled_reason_projection": "state.commands.source_control_mark_conflict_resolved.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.source_control.mark_conflict_resolved records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid. Projects refresh: cmd.source_control.mark_conflict_resolved records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "description": "Mark Conflict Resolved returns a typed owner result for the verified file resolution under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord.",
         "receipt_or_event_refs": [
           "cmd.source_control.mark_conflict_resolved.dispatch_receipt"
         ]
@@ -67056,7 +67055,7 @@
         {
           "test_id": "wiring.catalog.source_control_mark_conflict_resolved.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.source_control.mark_conflict_resolved records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+          "requirement": "Mark Conflict Resolved returns a typed owner result for the verified file resolution under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord."
         },
         {
           "test_id": "wiring.catalog.source_control_mark_conflict_resolved.accessibility",
@@ -67076,11 +67075,11 @@
         {
           "test_id": "fb.catalog.source_control_mark_conflict_resolved.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.source_control.mark_conflict_resolved records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+          "requirement": "Mark Conflict Resolved returns a typed owner result for the verified file resolution under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.source_control.mark_conflict_resolved records dispatch receipt cmd.source_control.mark_conflict_resolved.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.source_control.mark_conflict_resolved uses cmd.source_control.mark_conflict_resolved.dispatch_receipt and emits no unexpected persisted domain event."
       ],
       "request_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request_v2",
       "result_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result_v2"
@@ -67101,15 +67100,16 @@
         "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
-        "Projects refresh exact effect: cmd.source_control.open_conflict records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
-        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
+        "Projects refresh exact effect: Open Conflict Assistant returns the exact selected route or a typed owner refusal under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord.",
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "Validate the exact conflict selection and typed owner result under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results."
       ],
       "evidence_required": "Production wiring contract for cmd.source_control.open_conflict; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.source_control_open_conflict.availability",
       "disabled_reason_projection": "state.commands.source_control_open_conflict.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.source_control.open_conflict records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid. Projects refresh: cmd.source_control.open_conflict records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "description": "Open Conflict Assistant returns the exact selected route or a typed owner refusal under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord.",
         "receipt_or_event_refs": [
           "cmd.source_control.open_conflict.dispatch_receipt"
         ]
@@ -67134,7 +67134,7 @@
         {
           "test_id": "wiring.catalog.source_control_open_conflict.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.source_control.open_conflict records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+          "requirement": "Open Conflict Assistant returns the exact selected route or a typed owner refusal under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord."
         },
         {
           "test_id": "wiring.catalog.source_control_open_conflict.accessibility",
@@ -67154,11 +67154,11 @@
         {
           "test_id": "fb.catalog.source_control_open_conflict.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.source_control.open_conflict records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+          "requirement": "Open Conflict Assistant returns the exact selected route or a typed owner refusal under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.source_control.open_conflict records dispatch receipt cmd.source_control.open_conflict.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.source_control.open_conflict uses cmd.source_control.open_conflict.dispatch_receipt or returns the exact route and emits no unexpected persisted domain event."
       ],
       "request_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request_v2",
       "result_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result_v2"
@@ -67185,14 +67185,15 @@
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
         "Projects refresh exact effect: cmd.source_control.open_merge_editor resolves through the one opening module (F3-634, DR-071) into an editor tab (diff mode for diffs) with CV-360's placement fields. An open that adds a tab emits the one workspace.layout_changed with its v2 payload (CV-361); an open whose id is already open reveals that tab where it is, returns its receipt or route/open disposition and emits nothing. Corrected 2026-10-09 (WM-092): the row declared no event although an added tab is a structural change (DL-180).",
-        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "Validate the exact conflict selection and typed owner result under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results."
       ],
       "evidence_required": "Production wiring contract for cmd.source_control.open_merge_editor; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.source_control_open_merge_editor.availability",
       "disabled_reason_projection": "state.commands.source_control_open_merge_editor.disabled_reason",
       "effect_contract": {
         "effect_kind": "mixed",
-        "description": "cmd.source_control.open_merge_editor resolves through the one opening module (F3-634, DR-071) into an editor tab (diff mode for diffs) with CV-360's placement fields. An open that adds a tab emits the one workspace.layout_changed with its v2 payload (CV-361); an open whose id is already open reveals that tab where it is, returns its receipt or route/open disposition and emits nothing. Corrected 2026-10-09 (WM-092): the row declared no event although an added tab is a structural change (DL-180). Projects refresh: cmd.source_control.open_merge_editor resolves through the one opening module (F3-634, DR-071) into an editor tab (diff mode for diffs) with CV-360's placement fields. An open that adds a tab emits the one workspace.layout_changed with its v2 payload (CV-361); an open whose id is already open reveals that tab where it is, returns its receipt or route/open disposition and emits nothing. Corrected 2026-10-09 (WM-092): the row declared no event although an added tab is a structural change (DL-180).",
+        "description": "Open Merge Editor returns the typed route or refusal for the exact selected file and forwards CV-360 placement to the shared opening module (F3-634, DR-071). The existing production route emits one workspace.layout_changed for a layout change under CV-361, including an added tab, and none for an unchanged reveal. This Projects refresh binding grants no event admission. Selection and owner results follow Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results.",
         "receipt_or_event_refs": [
           "workspace.layout_changed",
           "cmd.source_control.open_merge_editor.dispatch_receipt"
@@ -67218,7 +67219,7 @@
         {
           "test_id": "wiring.catalog.source_control_open_merge_editor.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Assert the exact effect of cmd.source_control.open_merge_editor: one workspace.layout_changed when it adds a tab, and only its receipt or route/open disposition, with no event, when it reveals a tab that is already open; no other event."
+          "requirement": "Assert cmd.source_control.open_merge_editor emits exactly one workspace.layout_changed for a CV-361 layout change and none for an unchanged reveal. Assert there is no other event."
         },
         {
           "test_id": "wiring.catalog.source_control_open_merge_editor.accessibility",
@@ -67247,7 +67248,7 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.source_control.open_merge_editor emits exactly one workspace.layout_changed when it adds a tab and none when it reveals an open tab; no other event.",
+        "Assert cmd.source_control.open_merge_editor emits exactly one workspace.layout_changed for a CV-361 layout change and none for an unchanged reveal. Assert there is no other event.",
         "Assert cmd.source_control.open_merge_editor preserves command_id and correlation_id and carries where, mode, by and background unchanged into the opening module."
       ],
       "request_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request_v2",
@@ -67816,15 +67817,16 @@
         "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
-        "Projects refresh exact effect: cmd.source_control.resolve_conflict_side records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
-        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
+        "Projects refresh exact effect: Resolve Conflict Side returns a typed owner result for the exact confirmed file or hunk write under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord.",
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "Validate the exact conflict selection and typed owner result under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results."
       ],
       "evidence_required": "Production wiring contract for cmd.source_control.resolve_conflict_side; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.source_control_resolve_conflict_side.availability",
       "disabled_reason_projection": "state.commands.source_control_resolve_conflict_side.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.source_control.resolve_conflict_side records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid. Projects refresh: cmd.source_control.resolve_conflict_side records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "description": "Resolve Conflict Side returns a typed owner result for the exact confirmed file or hunk write under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord.",
         "receipt_or_event_refs": [
           "cmd.source_control.resolve_conflict_side.dispatch_receipt"
         ]
@@ -67849,7 +67851,7 @@
         {
           "test_id": "wiring.catalog.source_control_resolve_conflict_side.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.source_control.resolve_conflict_side records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+          "requirement": "Resolve Conflict Side returns a typed owner result for the exact confirmed file or hunk write under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord."
         },
         {
           "test_id": "wiring.catalog.source_control_resolve_conflict_side.accessibility",
@@ -67869,11 +67871,11 @@
         {
           "test_id": "fb.catalog.source_control_resolve_conflict_side.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.source_control.resolve_conflict_side records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+          "requirement": "Resolve Conflict Side returns a typed owner result for the exact confirmed file or hunk write under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.source_control.resolve_conflict_side records dispatch receipt cmd.source_control.resolve_conflict_side.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.source_control.resolve_conflict_side uses cmd.source_control.resolve_conflict_side.dispatch_receipt and emits no unexpected persisted domain event."
       ],
       "request_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request_v2",
       "result_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result_v2"
@@ -68932,10 +68934,10 @@
       "ui_element_id": "catalog.source_control_suggest_commit_groups",
       "ui_location": "Source Control surface; Projects refresh reverse consumers: Projects/New Project/onboarding/conversion; exact owner Details/recovery/Backup/SCM",
       "ui_command_id": "cmd.source_control.suggest_commit_groups",
-      "handler_location": "handlers::source_control::suggest_commit_groups",
+      "handler_location": "handlers::source_control::suggest_commit_batches",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.source_control.suggest_commit_groups must be registered in the UICommand dispatcher with typed args and result contract",
+        "The dispatcher resolves cmd.source_control.suggest_commit_groups to cmd.source_control.suggest_commit_batches before canonical payload validation.",
         "cmd.source_control.suggest_commit_groups must expose projected state selector and disabled reason before dispatch",
         "cmd.source_control.suggest_commit_groups dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.source_control.suggest_commit_groups must have a typed payload/result contract or explicit route/open no-persist disposition",
@@ -68944,40 +68946,40 @@
         "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
-        "Projects refresh exact effect: cmd.source_control.suggest_commit_groups records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "Projects refresh exact effect: cmd.source_control.suggest_commit_groups normalizes to cmd.source_control.suggest_commit_batches before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance.",
         "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
       ],
       "evidence_required": "Production wiring contract for cmd.source_control.suggest_commit_groups; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
-      "state_selector": "state.commands.source_control_suggest_commit_groups.availability",
-      "disabled_reason_projection": "state.commands.source_control_suggest_commit_groups.disabled_reason",
+      "state_selector": "state.commands.source_control_suggest_commit_batches.availability",
+      "disabled_reason_projection": "state.commands.source_control_suggest_commit_batches.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.source_control.suggest_commit_groups records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid. Projects refresh: cmd.source_control.suggest_commit_groups records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "description": "cmd.source_control.suggest_commit_groups normalizes to cmd.source_control.suggest_commit_batches before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance.",
         "receipt_or_event_refs": [
-          "cmd.source_control.suggest_commit_groups.dispatch_receipt"
+          "cmd.source_control.suggest_commit_batches.dispatch_receipt"
         ]
       },
       "accessibility_contract": {
         "role_or_semantics": "catalog.source_control_suggest_commit_groups exposes a stable role/name/description matching cmd.source_control.suggest_commit_groups.",
         "keyboard_access": "catalog.source_control_suggest_commit_groups is reachable and activatable by keyboard where the control is visible.",
         "focus_management": "catalog.source_control_suggest_commit_groups preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.source_control_suggest_commit_groups surfaces state.commands.source_control_suggest_commit_groups.disabled_reason to assistive technology when unavailable."
+        "disabled_announcement": "catalog.source_control_suggest_commit_groups surfaces state.commands.source_control_suggest_commit_batches.disabled_reason to assistive technology when unavailable."
       },
       "test_evidence": [
         {
           "test_id": "wiring.catalog.source_control_suggest_commit_groups.dispatcher",
           "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.source_control.suggest_commit_groups reaches handlers::source_control::suggest_commit_groups with typed args/result contract."
+          "requirement": "Dispatching cmd.source_control.suggest_commit_groups normalizes to cmd.source_control.suggest_commit_batches before validation and reaches handlers::source_control::suggest_commit_batches; a canonical replay with the same key and payload reuses the same result."
         },
         {
           "test_id": "wiring.catalog.source_control_suggest_commit_groups.state_projection",
           "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.source_control_suggest_commit_groups.availability and disabled copy reads state.commands.source_control_suggest_commit_groups.disabled_reason."
+          "requirement": "Availability reads state.commands.source_control_suggest_commit_batches.availability and disabled copy reads state.commands.source_control_suggest_commit_batches.disabled_reason."
         },
         {
           "test_id": "wiring.catalog.source_control_suggest_commit_groups.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.source_control.suggest_commit_groups records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+          "requirement": "cmd.source_control.suggest_commit_groups normalizes to cmd.source_control.suggest_commit_batches before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance."
         },
         {
           "test_id": "wiring.catalog.source_control_suggest_commit_groups.accessibility",
@@ -68997,11 +68999,11 @@
         {
           "test_id": "fb.catalog.source_control_suggest_commit_groups.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.source_control.suggest_commit_groups records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+          "requirement": "cmd.source_control.suggest_commit_groups normalizes to cmd.source_control.suggest_commit_batches before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.source_control.suggest_commit_groups records dispatch receipt cmd.source_control.suggest_commit_groups.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.source_control.suggest_commit_groups uses cmd.source_control.suggest_commit_batches.dispatch_receipt and emits no unexpected persisted domain event."
       ],
       "request_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request_v2",
       "result_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result_v2"

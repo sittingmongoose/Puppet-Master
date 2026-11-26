@@ -6919,6 +6919,9 @@
         },
         {
           "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/commit_batch_accept_request_v2"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/conflict_assistant_request_v2"
         }
       ]
     },
@@ -6949,7 +6952,14 @@
         "command_id": {
           "type": "string",
           "minLength": 1,
-          "maxLength": 256
+          "maxLength": 256,
+          "not": {
+            "enum": [
+              "cmd.source_control.graph_focus",
+              "cmd.source_control.graph_filter",
+              "cmd.source_control.suggest_commit_groups"
+            ]
+          }
         },
         "operation_id": {
           "type": "string",
@@ -7039,9 +7049,10 @@
                   "cmd.source_control.graph.layout",
                   "cmd.source_control.suggest_commit_batches",
                   "cmd.source_control.accept_commit_group",
-                  "cmd.source_control.graph_focus",
-                  "cmd.source_control.graph_filter",
-                  "cmd.source_control.suggest_commit_groups"
+                  "cmd.source_control.open_conflict",
+                  "cmd.source_control.open_merge_editor",
+                  "cmd.source_control.resolve_conflict_side",
+                  "cmd.source_control.mark_conflict_resolved"
                 ]
               }
             },
@@ -7555,6 +7566,7 @@
             "assistant_failed",
             "output_invalid",
             "suggestion_not_found",
+            "stage_selection_mismatch",
             "stage_failed",
             "stage_effect_unknown",
             "backend_unsupported"
@@ -7601,6 +7613,9 @@
         },
         "completed_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/timestamp"
+        },
+        "staging_disposition": {
+          "const": "already_staged"
         }
       },
       "allOf": [
@@ -7827,6 +7842,7 @@
                   "status_stale",
                   "permission_denied",
                   "suggestion_not_found",
+                  "stage_selection_mismatch",
                   "stage_failed",
                   "stage_effect_unknown",
                   "backend_unsupported"
@@ -7960,10 +7976,68 @@
               "suggestion_set_id",
               "batch_id",
               "stage_result_refs"
-            ],
+            ]
+          }
+        },
+        {
+          "if": {
             "properties": {
-              "stage_result_refs": {
-                "minItems": 1
+              "outcome": {
+                "const": "staged_for_review"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "if": {
+              "required": [
+                "staging_disposition"
+              ]
+            },
+            "then": {
+              "properties": {
+                "stage_result_refs": {
+                  "maxItems": 0
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "stage_result_refs": {
+                  "minItems": 1
+                }
+              }
+            }
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "staging_disposition"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "failure_code": {
+                "const": "stage_selection_mismatch"
+              }
+            },
+            "required": [
+              "failure_code"
+            ]
+          },
+          "then": {
+            "properties": {
+              "retry_attempts": {
+                "const": 0
               }
             }
           }
@@ -8047,6 +8121,548 @@
           "minimum": 0
         }
       }
+    },
+    "conflict_assistant_request_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "project_id",
+        "repo_id",
+        "worktree_id",
+        "status_generation",
+        "conflict_selection_ref",
+        "idempotency_key",
+        "return_context_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.command_request.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "enum": [
+            "cmd.source_control.open_conflict",
+            "cmd.source_control.open_merge_editor",
+            "cmd.source_control.resolve_conflict_side",
+            "cmd.source_control.mark_conflict_resolved"
+          ]
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "repo_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "worktree_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "status_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "conflict_selection_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "path": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/git_adapter_command_contracts.schema.json#/$defs/relative_repo_path"
+        },
+        "conflict_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "hunk_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "resolution_side": {
+          "enum": [
+            "ours",
+            "theirs",
+            "base",
+            "manual"
+          ]
+        },
+        "confirmation_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "manual_result_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "where": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "default": "auto"
+        },
+        "mode": {
+          "enum": [
+            "preview",
+            "keep"
+          ]
+        },
+        "by": {
+          "type": "string",
+          "pattern": "^(user|agent:.+)$",
+          "maxLength": 256,
+          "default": "user"
+        },
+        "background": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "dependentRequired": {
+        "path": [
+          "conflict_id"
+        ],
+        "conflict_id": [
+          "path"
+        ]
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "not": {
+                  "const": "cmd.source_control.open_conflict"
+                }
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "path",
+              "conflict_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.resolve_conflict_side"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "resolution_side",
+              "confirmation_ref"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "resolution_side"
+                  ]
+                },
+                {
+                  "required": [
+                    "confirmation_ref"
+                  ]
+                },
+                {
+                  "required": [
+                    "hunk_id"
+                  ]
+                },
+                {
+                  "required": [
+                    "manual_result_ref"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "resolution_side": {
+                "const": "manual"
+              }
+            },
+            "required": [
+              "resolution_side"
+            ]
+          },
+          "then": {
+            "required": [
+              "manual_result_ref"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "manual_result_ref"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "not": {
+                  "const": "cmd.source_control.open_merge_editor"
+                }
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "where"
+                  ]
+                },
+                {
+                  "required": [
+                    "mode"
+                  ]
+                },
+                {
+                  "required": [
+                    "by"
+                  ]
+                },
+                {
+                  "required": [
+                    "background"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "conflict_assistant_owner_result_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "command_id",
+        "operation_id",
+        "conflict_selection_ref",
+        "outcome",
+        "retry_allowed"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.conflict_assistant_owner_result.v1"
+        },
+        "command_id": {
+          "enum": [
+            "cmd.source_control.open_conflict",
+            "cmd.source_control.open_merge_editor",
+            "cmd.source_control.resolve_conflict_side",
+            "cmd.source_control.mark_conflict_resolved"
+          ]
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "conflict_selection_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "outcome": {
+          "enum": [
+            "opened",
+            "side_applied",
+            "marked_resolved",
+            "failed"
+          ]
+        },
+        "failure_code": {
+          "enum": [
+            "conflict_not_found",
+            "status_stale",
+            "permission_denied",
+            "protected_branch",
+            "operation_in_progress",
+            "route_unavailable",
+            "editor_unavailable",
+            "conflict_surface_read_only_on_jujutsu",
+            "write_failed",
+            "write_effect_unknown",
+            "confirmation_required",
+            "conflict_markers_remaining"
+          ]
+        },
+        "route_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "effect_receipt_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "retry_allowed": {
+          "const": false
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.open_conflict"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "opened",
+                  "failed"
+                ]
+              },
+              "failure_code": {
+                "enum": [
+                  "conflict_not_found",
+                  "status_stale",
+                  "permission_denied",
+                  "protected_branch",
+                  "operation_in_progress",
+                  "route_unavailable"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.open_merge_editor"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "opened",
+                  "failed"
+                ]
+              },
+              "failure_code": {
+                "enum": [
+                  "conflict_not_found",
+                  "status_stale",
+                  "permission_denied",
+                  "protected_branch",
+                  "operation_in_progress",
+                  "route_unavailable",
+                  "editor_unavailable"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.resolve_conflict_side"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "side_applied",
+                  "failed"
+                ]
+              },
+              "failure_code": {
+                "enum": [
+                  "conflict_not_found",
+                  "status_stale",
+                  "permission_denied",
+                  "protected_branch",
+                  "operation_in_progress",
+                  "conflict_surface_read_only_on_jujutsu",
+                  "write_failed",
+                  "write_effect_unknown",
+                  "confirmation_required"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.mark_conflict_resolved"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "marked_resolved",
+                  "failed"
+                ]
+              },
+              "failure_code": {
+                "enum": [
+                  "conflict_not_found",
+                  "status_stale",
+                  "permission_denied",
+                  "protected_branch",
+                  "operation_in_progress",
+                  "conflict_surface_read_only_on_jujutsu",
+                  "write_failed",
+                  "write_effect_unknown",
+                  "conflict_markers_remaining"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "failed"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "required": [
+              "failure_code"
+            ],
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "route_ref"
+                  ]
+                },
+                {
+                  "required": [
+                    "effect_receipt_ref"
+                  ]
+                }
+              ]
+            }
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "failure_code"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "opened"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "required": [
+              "route_ref"
+            ],
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "effect_receipt_ref"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "side_applied",
+                  "marked_resolved"
+                ]
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "required": [
+              "effect_receipt_ref"
+            ],
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "route_ref"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
     }
   },
   "x-backup-source-claim-boundary": {

@@ -31406,7 +31406,7 @@
       "persistence_refs": [
         "Plans/Source_Control_System.md#SCS-025",
         "Plans/storage-plan.md#SP-350",
-        "cmd.source_control.graph_filter records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        "cmd.source_control.graph_filter normalizes to cmd.source_control.graph.filter before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance."
       ],
       "migration_refs": [
         "Preserve historical Project resources/keys/hash/replay; explicit selected scope-aware sibling only. N25 uses linked birth by default; no private immutable rebind."
@@ -31530,7 +31530,7 @@
       "persistence_refs": [
         "Plans/Source_Control_System.md#SCS-025",
         "Plans/storage-plan.md#SP-350",
-        "cmd.source_control.graph_focus records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        "cmd.source_control.graph_focus normalizes to cmd.source_control.graph.focus before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance."
       ],
       "migration_refs": [
         "Preserve historical Project resources/keys/hash/replay; explicit selected scope-aware sibling only. N25 uses linked birth by default; no private immutable rebind."
@@ -31840,7 +31840,7 @@
       "persistence_refs": [
         "Plans/Source_Control_System.md#SCS-025",
         "Plans/storage-plan.md#SP-350",
-        "cmd.source_control.mark_conflict_resolved records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        "Mark Conflict Resolved returns a typed owner result for the verified file resolution under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord."
       ],
       "migration_refs": [
         "Preserve historical Project resources/keys/hash/replay; explicit selected scope-aware sibling only. N25 uses linked birth by default; no private immutable rebind."
@@ -31902,7 +31902,7 @@
       "persistence_refs": [
         "Plans/Source_Control_System.md#SCS-025",
         "Plans/storage-plan.md#SP-350",
-        "cmd.source_control.open_conflict records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        "Open Conflict Assistant returns the exact selected route or a typed owner refusal under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord."
       ],
       "migration_refs": [
         "Preserve historical Project resources/keys/hash/replay; explicit selected scope-aware sibling only. N25 uses linked birth by default; no private immutable rebind."
@@ -31964,7 +31964,7 @@
       "persistence_refs": [
         "Plans/Source_Control_System.md#SCS-025",
         "Plans/storage-plan.md#SP-350",
-        "cmd.source_control.open_merge_editor resolves through the one opening module (F3-634, DR-071) into an editor tab (diff mode for diffs) with CV-360's placement fields. An open that adds a tab emits the one workspace.layout_changed with its v2 payload (CV-361); an open whose id is already open reveals that tab where it is, returns its receipt or route/open disposition and emits nothing. Corrected 2026-10-09 (WM-092): the row declared no event although an added tab is a structural change (DL-180)."
+        "Open Merge Editor returns the typed route or refusal for the exact selected file and forwards CV-360 placement to the shared opening module (F3-634, DR-071). The existing production route emits one workspace.layout_changed for a layout change under CV-361, including an added tab, and none for an unchanged reveal. This Projects refresh binding grants no event admission. Selection and owner results follow Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results."
       ],
       "migration_refs": [
         "Preserve historical Project resources/keys/hash/replay; explicit selected scope-aware sibling only. N25 uses linked birth by default; no private immutable rebind."
@@ -32398,7 +32398,7 @@
       "persistence_refs": [
         "Plans/Source_Control_System.md#SCS-025",
         "Plans/storage-plan.md#SP-350",
-        "cmd.source_control.resolve_conflict_side records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        "Resolve Conflict Side returns a typed owner result for the exact confirmed file or hunk write under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord."
       ],
       "migration_refs": [
         "Preserve historical Project resources/keys/hash/replay; explicit selected scope-aware sibling only. N25 uses linked birth by default; no private immutable rebind."
@@ -33238,7 +33238,7 @@
       "availability_rule": "One reviewed Project setup binding serves onboarding/New Project/conversion-to-new; no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing, and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive pause and last-good protection. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
       "permission_gate": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
       "disabled_reason_rule": "Closed per-action selected owner reasons: invalid_request, command_not_registered, handler_unavailable, owner_unavailable, source_unavailable, target_not_found, wrong_scope, stale_projection, stale_revision, stale_currentness, stale_preview, permission_denied, read_only, target_not_answering, retained_approval, active_work_not_stopped, manual_stop_latched, application_automation_paused, app_automation_pause_unavailable, recovery_required, idempotency_conflict, dedupe_unavailable, undo_ineligible. A local/view/read path uses only its applicable reasons. Missing intrinsic Project target is distinct from valid application scope.",
-      "handler_owner": "handlers::source_control::suggest_commit_groups",
+      "handler_owner": "handlers::source_control::suggest_commit_batches",
       "handler_status": "specified",
       "wiring_status": "specified",
       "production_or_simulation": "Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware definitions are specified; native adoption remains unproved.",
@@ -33266,7 +33266,7 @@
       "persistence_refs": [
         "Plans/Source_Control_System.md#SCS-025",
         "Plans/storage-plan.md#SP-350",
-        "cmd.source_control.suggest_commit_groups records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        "cmd.source_control.suggest_commit_groups normalizes to cmd.source_control.suggest_commit_batches before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance."
       ],
       "migration_refs": [
         "Preserve historical Project resources/keys/hash/replay; explicit selected scope-aware sibling only. N25 uses linked birth by default; no private immutable rebind."
@@ -47275,7 +47275,7 @@
       "command",
       "cmd.source_control.graph_filter",
       "partial",
-      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.source_control.graph_filter records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.source_control.graph_filter normalizes to cmd.source_control.graph.filter before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance."
     ],
     [
       "TOUCH-FB-213",
@@ -47291,7 +47291,7 @@
       "command",
       "cmd.source_control.graph_focus",
       "partial",
-      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.source_control.graph_focus records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.source_control.graph_focus normalizes to cmd.source_control.graph.focus before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance."
     ],
     [
       "TOUCH-FB-215",
@@ -47323,7 +47323,7 @@
       "command",
       "cmd.source_control.mark_conflict_resolved",
       "partial",
-      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.source_control.mark_conflict_resolved records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. Mark Conflict Resolved returns a typed owner result for the verified file resolution under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord."
     ],
     [
       "TOUCH-FB-219",
@@ -47331,7 +47331,7 @@
       "command",
       "cmd.source_control.open_conflict",
       "partial",
-      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.source_control.open_conflict records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. Open Conflict Assistant returns the exact selected route or a typed owner refusal under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord."
     ],
     [
       "TOUCH-FB-220",
@@ -47339,7 +47339,7 @@
       "command",
       "cmd.source_control.open_merge_editor",
       "partial",
-      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.source_control.open_merge_editor resolves through the one opening module (F3-634, DR-071) into an editor tab (diff mode for diffs) with CV-360's placement fields. An open that adds a tab emits the one workspace.layout_changed with its v2 payload (CV-361); an open whose id is already open reveals that tab where it is, returns its receipt or route/open disposition and emits nothing. Corrected 2026-10-09 (WM-092): the row declared no event although an added tab is a structural change (DL-180)."
+      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. Open Merge Editor returns the typed route or refusal for the exact selected file and forwards CV-360 placement to the shared opening module (F3-634, DR-071). The existing production route emits one workspace.layout_changed for a layout change under CV-361, including an added tab, and none for an unchanged reveal. This Projects refresh binding grants no event admission. Selection and owner results follow Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results."
     ],
     [
       "TOUCH-FB-221",
@@ -47355,7 +47355,7 @@
       "command",
       "cmd.source_control.resolve_conflict_side",
       "partial",
-      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.source_control.resolve_conflict_side records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. Resolve Conflict Side returns a typed owner result for the exact confirmed file or hunk write under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord."
     ],
     [
       "TOUCH-FB-223",
@@ -47443,7 +47443,7 @@
       "command",
       "cmd.source_control.suggest_commit_groups",
       "partial",
-      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.source_control.suggest_commit_groups records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.source_control.suggest_commit_groups normalizes to cmd.source_control.suggest_commit_batches before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance."
     ],
     [
       "TOUCH-FB-234",

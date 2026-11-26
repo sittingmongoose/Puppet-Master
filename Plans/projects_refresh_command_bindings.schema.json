@@ -1036,7 +1036,6 @@
             "handlers::source_control::stash_pop",
             "handlers::source_control::status_refresh",
             "handlers::source_control::suggest_commit_batches",
-            "handlers::source_control::suggest_commit_groups",
             "handlers::source_control::toggle_generated_filter",
             "handlers::source_control::workspace_create",
             "handlers::source_control::workspace_list",
@@ -1085,7 +1084,12 @@
           "additionalProperties": false,
           "properties": {
             "alias_of_command_id": {
-              "type": "null"
+              "enum": [
+                null,
+                "cmd.source_control.graph.focus",
+                "cmd.source_control.graph.filter",
+                "cmd.source_control.suggest_commit_batches"
+              ]
             },
             "kind": {
               "type": "string",
@@ -2307,6 +2311,98 @@
             "required": [
               "command_id"
             ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.graph_focus"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::source_control::graph_focus"
+              },
+              "normalization": {
+                "const": {
+                  "kind": "compatibility_alias",
+                  "alias_of_command_id": "cmd.source_control.graph.focus"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.graph_filter"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::source_control::graph_filter"
+              },
+              "normalization": {
+                "const": {
+                  "kind": "compatibility_alias",
+                  "alias_of_command_id": "cmd.source_control.graph.filter"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.suggest_commit_groups"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::source_control::suggest_commit_batches"
+              },
+              "normalization": {
+                "const": {
+                  "kind": "compatibility_alias",
+                  "alias_of_command_id": "cmd.source_control.suggest_commit_batches"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "not": {
+                  "enum": [
+                    "cmd.source_control.graph_focus",
+                    "cmd.source_control.graph_filter",
+                    "cmd.source_control.suggest_commit_groups"
+                  ]
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "normalization": {
+                "properties": {
+                  "alias_of_command_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
           }
         }
       ]
