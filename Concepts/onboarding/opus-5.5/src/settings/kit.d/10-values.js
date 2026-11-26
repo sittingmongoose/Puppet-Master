@@ -302,7 +302,7 @@ const o55FirstSentence = text => { const m = /\S.*?(?:[.!?](?=\s|$))/.exec(Strin
 /* A label rows.d does not decide falls back to the inventory's, in sentence case: "Keep Running In System Tray" reads
    "Keep running in system tray". Names keep their capitals: product and tool names, words with an inner capital
    (GitHub, BrainStorm), all-caps words (MB, AI) and a few fixed phrases (Deep Plan, Grill Me, Docker Hub). */
-const O55_LABEL_PHRASES = ['Claude Code', 'Gemini CLI', 'Grok Build', 'Muse Code', 'OpenCode Go', 'OpenCode Zen', 'VS Code', 'Visual Studio Code', 'Docker Hub', 'Docker Manager', 'Puppet Master', 'Deep Plan', 'Deep Research', 'Grill Me', 'Back Seat Driver', 'Planning Wizard', 'Community Apps', 'Guided Tour', 'Assistant Chat', 'File Manager', 'Command Palette', 'Git HEAD'];
+const O55_LABEL_PHRASES = ['Claude Code', 'Gemini CLI', 'Grok Build', 'Muse Code', 'OpenCode Go', 'OpenCode Zen', 'VS Code', 'Visual Studio Code', 'Docker Hub', 'Docker Manager', 'Puppet Master', 'Deep Plan', 'Deep Research', 'Grill Me', 'Back Seat Driver', 'Planning Wizard', 'Community Apps', 'Guided Tour', 'Assistant Chat', 'File Manager', 'Command Palette', 'Git HEAD', 'Code Mode'];
 const O55_LABEL_KEEP = new Set(('I Basic Glass Retro Docker Kubernetes Helm Unraid Gemini Mermaid Git Markdown Ctrl Enter Shift Alt Cmd Esc Claude Codex Copilot Cursor '
   + 'Jujutsu Windows Linux Podman Grok Kimi Qwen DeepSeek Ollama Anthropic OpenAI Google Microsoft Apple Chrome Chromium Firefox Safari Playwright Rust Python '
   + 'TypeScript JavaScript Node Slack Discord Teams Telegram Jira Linear Notion Figma Wayland Tauri Tailscale Bitwarden Keychain Obsidian Zed Vim Emacs Neovim '

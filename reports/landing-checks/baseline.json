@@ -1214,11 +1214,11 @@
    }
   }
  },
- "commit": "3b0c31bbc5e5f5f42922061f633997445d5174d0",
+ "commit": "a0ceda51b824d3b9cbc00fb3029be3f932d4ac5c",
  "export_buckets": [
   {
    "check": "audit-governance",
-   "count": 2790,
+   "count": 2789,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1226,7 +1226,7 @@
   },
   {
    "check": "audit-governance",
-   "count": 180,
+   "count": 181,
    "error": "missing_ref",
    "fingerprints": [
     "001b3f76b8a2",
@@ -1393,6 +1393,7 @@
     "e445eec072f8",
     "e8e39d3a268a",
     "e91564f62f4c",
+    "e921cb61a4d5",
     "ec433d85ea5e",
     "ecf08654a7e6",
     "ef0212cdc46a",
@@ -1415,7 +1416,7 @@
   },
   {
    "check": "audit-governance",
-   "count": 2790,
+   "count": 2789,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1423,7 +1424,7 @@
   },
   {
    "check": "audit-governance",
-   "count": 180,
+   "count": 181,
    "error": "missing_ref",
    "fingerprints": [
     "001b3f76b8a2",
@@ -1590,6 +1591,7 @@
     "e445eec072f8",
     "e8e39d3a268a",
     "e91564f62f4c",
+    "e921cb61a4d5",
     "ec433d85ea5e",
     "ecf08654a7e6",
     "ef0212cdc46a",
@@ -1612,7 +1614,7 @@
   },
   {
    "check": "run-gates",
-   "count": 2790,
+   "count": 2789,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1620,7 +1622,7 @@
   },
   {
    "check": "run-gates",
-   "count": 180,
+   "count": 181,
    "error": "missing_ref",
    "fingerprints": [
     "001b3f76b8a2",
@@ -1787,6 +1789,7 @@
     "e445eec072f8",
     "e8e39d3a268a",
     "e91564f62f4c",
+    "e921cb61a4d5",
     "ec433d85ea5e",
     "ecf08654a7e6",
     "ef0212cdc46a",
@@ -1968,7 +1971,7 @@
   },
   {
    "check": "run-gates",
-   "count": 2790,
+   "count": 2789,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1976,7 +1979,7 @@
   },
   {
    "check": "run-gates",
-   "count": 180,
+   "count": 181,
    "error": "missing_ref",
    "fingerprints": [
     "001b3f76b8a2",
@@ -2143,6 +2146,7 @@
     "e445eec072f8",
     "e8e39d3a268a",
     "e91564f62f4c",
+    "e921cb61a4d5",
     "ec433d85ea5e",
     "ecf08654a7e6",
     "ef0212cdc46a",
@@ -2185,8 +2189,8 @@
   },
   "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
  },
- "recorded_at_utc": "2026-11-25T19:34:20Z",
- "run_dir": "Plans/.plan_migration/pds-20261125-001-current-planunit-snapshot",
+ "recorded_at_utc": "2026-11-26T17:44:21Z",
+ "run_dir": "Plans/.plan_migration/pds-20261126-001-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
  "untracked_inputs": [
   "tests/agent_packet_restrictions"
