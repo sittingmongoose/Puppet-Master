@@ -567,7 +567,6 @@ def _no_store(family, key, original, receiver, rest, args, kwargs):
         'walk truncated' if truncated else None
     if reason is not None:
         return _counted(family, key, reason, action)
-    owner_state.prepare_checkpoints()
     try:
         child = _probe(hook, arguments, stores, action)
         _left_nothing('child', child)

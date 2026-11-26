@@ -58,7 +58,6 @@ with the reason, and the judge gives CANNOT_DECIDE.
 """
 from __future__ import annotations
 
-import array
 import collections
 from collections.abc import Mapping
 import datetime
@@ -68,10 +67,7 @@ import hashlib
 import json
 import os
 import re
-import shutil
-import subprocess
 import sys
-import tempfile
 import types
 import weakref
 from pathlib import Path, PurePath
@@ -436,48 +432,18 @@ class _NotPlain(Exception):
     """The ordinary walker owns all types outside the fragment guard's closed set."""
 
 
-@functools.lru_cache(maxsize=1)
-def prepare_checkpoints():
-    """Load an optional guard in the parent before it forks a collector probe."""
-    if sys.implementation.name != 'cpython' or not getattr(sys, '_is_gil_enabled', lambda: True)():
-        return None
-    if not sys.platform.startswith('linux'):
-        return None
-    try:
-        import ctypes
-    except ImportError:
-        return None
-    if ctypes.sizeof(ctypes.c_void_p) != 8:
-        return None
-    cc = shutil.which('cc')
-    if cc is None:
-        return None
-    source = Path(__file__).resolve().with_name('pm_goal_dg5_owner_state_guard.c')
-    try:
-        code = source.read_bytes()
-        with tempfile.TemporaryDirectory(prefix='dg5-owner-guard-') as scratch:
-            library = Path(scratch) / 'guard.so'
-            subprocess.run([cc, '-shared', '-fPIC', '-O3', '-x', 'c', '-', '-o', str(library)],
-                           input=code, check=True, capture_output=True, timeout=30)
-            guard = ctypes.PyDLL(str(library)).dg5_owner_state_guard
-    except (OSError, subprocess.SubprocessError):
-        return None
-    from pm_goal_oracle_common import ROOT, SOURCE_BINDINGS
-    relative = str(source.relative_to(ROOT))
-    sha = hashlib.sha256(code).hexdigest()
-    if SOURCE_BINDINGS.setdefault(relative, sha) != sha:
-        raise ValueError('source changed during oracle run: ' + relative)
-    guard.argtypes = (ctypes.c_void_p, ctypes.c_size_t, ctypes.py_object, ctypes.py_object, ctypes.py_object)
-    guard.restype = ctypes.c_int
-    return guard
+def _parts(value, kind):
+    if kind is dict:
+        return tuple(value), tuple(value.values())
+    return (tuple(value),)
 
 
 class _PlainWalk(Walk):
     """Compile ordinary Walk bytes and a guard for one plain container fragment.
 
     Each first visit records the exact type, order and identities of its immediate
-    edges. Rows are in first-visit order. Therefore every native pointer read is
-    anchored by the live root or an edge already checked under the GIL. Identity
+    edges. Rows are in first-visit order. Each live value is retrieved from the
+    root or a part already checked in this walk. Identity
     reuse of a container is harmless: the replacement must match its entire row.
     The stamp retains only exact immutable leaves, whose identity pins rule out
     reusing their addresses for different values. It never retains a live container
@@ -490,7 +456,8 @@ class _PlainWalk(Walk):
         super().__init__(walk.hook)
         self.prefix = walk.memo
         self.references = {}
-        self.edges = array.array('Q')
+        self.rows = []
+        self.locations = {}
         self.leaves = {}
         self.disjoint = weakref.WeakSet()
         self.cache_weight = 0
@@ -511,18 +478,31 @@ class _PlainWalk(Walk):
                 self.put('prefix-ref', index)
                 return
             if ident not in self.memo:
-                start = len(self.edges)
-                self.edges.extend((ident, id(kind), len(value)))
-                if kind is dict:
-                    self.edges.extend(id(item) for pair in value.items() for item in pair)
-                else:
-                    self.edges.extend(map(id, value))
-                self.cache_weight += 128 + self.edges.itemsize * (len(self.edges) - start)
+                parts = _parts(value, kind)
+                edges = tuple(tuple(map(id, part)) for part in parts)
+                row_index = len(self.rows)
+                self.rows.append((ident, self.locations.get(ident), kind, edges))
+                for part_index, part in enumerate(parts):
+                    for offset, child in enumerate(part):
+                        child_kind = type(child)
+                        if type(child_kind) is type and child_kind in _PLAIN_CONTAINERS:
+                            self.locations.setdefault(id(child), (row_index, part_index, offset))
+                self.cache_weight += 256 + 40 * sum(map(len, edges))
         else:
             raise _NotPlain
         super().visit(value, stack)
 
-    def matches(self, walk, guard):
+    def seal(self):
+        """Record which live children must be kept for later shape checks."""
+        links = collections.defaultdict(lambda: ([], []))
+        for index, (_, location, _, _) in enumerate(self.rows):
+            if location is not None:
+                parent, part, offset = location
+                links[parent][part].append((index, offset))
+        self.rows = [(ident, kind, edges, *links.get(index, ((), ())))
+                     for index, (ident, _, kind, edges) in enumerate(self.rows)]
+
+    def matches(self, walk, root):
         memo = walk.memo
         if not memo.local.keys().isdisjoint(self.memo.keys()):
             return False
@@ -533,7 +513,31 @@ class _PlainWalk(Walk):
                 if not preceding.memo.keys().isdisjoint(self.memo.keys()):
                     return False
                 self.disjoint.add(preceding)
-        return guard(self.edges.buffer_info()[0], self.objects, dict, list, walk.pinned) == 1
+        pinned = [None] * len(self.rows)
+        pinned[0] = root
+        for index, (ident, kind, edges, first_links, value_links) in enumerate(self.rows):
+            value = pinned[index]
+            if type(value) is not kind or id(value) != ident:
+                return False
+            if len(value) != len(edges[0]) or tuple(map(id, value)) != edges[0]:
+                return False
+            if kind is dict:
+                values = value.values()
+                if tuple(map(id, values)) != edges[1]:
+                    return False
+                if value_links:
+                    items = tuple(values)
+                    for child, offset in value_links:
+                        pinned[child] = items[offset]
+                if first_links:
+                    keys = tuple(value)
+                    for child, offset in first_links:
+                        pinned[child] = keys[offset]
+            else:
+                for child, offset in first_links:
+                    pinned[child] = value[offset]
+        walk.pinned.extend(pinned)
+        return True
 
     def emit(self, walk):
         indexes = tuple(walk.memo[ident] for ident in self.references)
@@ -548,9 +552,8 @@ class _CheckpointWalk(Walk):
 
     CACHE_BYTES = 512 * 1024 * 1024
 
-    def __init__(self, hook, guard):
+    def __init__(self, hook):
         super().__init__(hook)
-        self.guard = guard
         self.memo = _CheckpointMemo()
 
     def _drain(self, stack):
@@ -570,7 +573,7 @@ class _CheckpointWalk(Walk):
             return False
         cache = self.hook._checkpoints
         fragment = cache.get(ident)
-        if fragment is not None and fragment.matches(self, self.guard):
+        if fragment is not None and fragment.matches(self, root):
             cache.move_to_end(ident)
             fragment.emit(self)
             return True
@@ -583,8 +586,10 @@ class _CheckpointWalk(Walk):
         self.pinned.extend(fragment.pinned)
         fragment.prefix = None
         fragment.pinned.clear()
+        fragment.locations.clear()
         weight = fragment.cache_weight
         if weight <= self.CACHE_BYTES:
+            fragment.seal()
             if ident in cache:
                 self.hook._checkpoint_bytes -= cache.pop(ident).cache_weight
             while self.hook._checkpoint_bytes + weight > self.CACHE_BYTES:
@@ -640,11 +645,8 @@ class Hook:
         needed to rebase its references. A different stream requires a hash
         collision to compare equal. The judge keeps its original format.
         """
-        guard = prepare_checkpoints()
-        walk = Walk(self) if guard is None else _CheckpointWalk(self, guard)
-        result = self._digest(walk, world, arguments)
-        if guard is not None:
-            result['schema'] = 'dg5-owner-checkpoint-v1'
+        result = self._digest(_CheckpointWalk(self), world, arguments)
+        result['schema'] = 'dg5-owner-checkpoint-v1'
         return result
 
     def _digest(self, walk, world, arguments):

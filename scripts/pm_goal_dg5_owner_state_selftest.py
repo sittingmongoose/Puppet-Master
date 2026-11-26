@@ -54,7 +54,7 @@ class CollectorMutationTests(unittest.TestCase):
         self.assertEqual(self.owner.read_graph(), 7)
         self.assertEqual(self.report['recorded_calls'], 1)
         hook = owner_state.HOOKS[c8.FAMILY]
-        if hasattr(hook, 'checkpoint') and owner_state.prepare_checkpoints() is not None:
+        if hasattr(hook, 'checkpoint'):
             block = hook._checkpoints[id(self.owner.GRAPH)]
             self.assertIn(id(self.owner.TARGET), block.memo)
         self.owner.MUTATE = True
