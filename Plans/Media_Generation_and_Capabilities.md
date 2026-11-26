@@ -380,6 +380,8 @@ ContractRef: ToolID:capabilities.get, ContractName:Plans/Contracts_V0.md, Contra
 
 `media.generate` is the uniform internal tool for all media generation. It accepts a structured request envelope and returns media output or an error.
 
+Route verification probe exception (2026-11-26): a request that carries `route_verification_probe` ("Route verification probe" under the generated-media route row schema) is the only request admitted to an exact route row that is not yet verified. It only verifies that row and produces no output for chat or projects. Every rule in this document that Cursor or any other generated-media output "requires a verified generated-media route" (§2.4 Cursor rules, the route-specific backend behavior in §2.5, §4.4, AC-MED03, AC-MED03A, MGAC-019, MGAC-030, MGAC-061, MGAC-069, MGAC-070 and the Cursor Image Generation Support-State Rule) governs ordinary requests and keeps that row disabled for them until its probe passes.
+
 ContractRef: ToolID:media.generate, ContractName:Plans/Tools.md
 
 ### 2.2 Request envelope
@@ -455,7 +457,7 @@ ContractRef: ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md,
 
 Cursor rules:
 - Cursor API-key/SDK proof is media-input/tooling evidence only unless a later owner contract proves product-native Cursor image generation.
-- When a Cursor route lacks a verified generated-media route for `kind=image`, image generation is disabled or capability-gated rather than routed to a fictional Cursor-native generator.
+- When a Cursor route lacks a verified generated-media route for `kind=image`, image generation is disabled or capability-gated rather than routed to a fictional Cursor-native generator. Only the Settings route verification probe for that exact row is admitted to it (§2.1).
 - when the active backend is Cursor and `kind` is `video`, `tts`, or `music`, disable the capability with `disabled_reason: BACKEND_UNSUPPORTED` unless a verified Cursor route later declares that generated-media kind.
 
 ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/usage-feature.md
@@ -600,7 +602,7 @@ ContractRef: ToolID:media.generate, SchemaID:pm.media.generate.result.v1, Primit
 
 ContractRef: ToolID:media.generate, Primitive:ArtifactStore
 
-**Route-specific backend behavior:** When the response `engine` identity resolves through the shared requested/effective runtime snapshot to a concrete `provider_entry_id` and `media_route_id`, PM checks that route's `generated_media_routes[]` for the requested `kind`. Cursor image generation is not assumed from image-input/API-key proof; it requires a verified generated-media route. For unsupported kinds, the backend returns `error.code = "BACKEND_UNSUPPORTED"` or the more specific provider status/error state.
+**Route-specific backend behavior:** When the response `engine` identity resolves through the shared requested/effective runtime snapshot to a concrete `provider_entry_id` and `media_route_id`, PM checks that route's `generated_media_routes[]` for the requested `kind`. Cursor image generation is not assumed from image-input/API-key proof; it requires a verified generated-media route, except that a request carrying `route_verification_probe` is admitted to the exact unverified row it names and to no other route (§2.1, "Route verification probe"). For unsupported kinds, the backend returns `error.code = "BACKEND_UNSUPPORTED"` or the more specific provider status/error state.
 
 On failure:
 ```json
@@ -893,7 +895,7 @@ When multiple visible capabilities are disabled for the same missing-configurati
 ContractRef: ToolID:capabilities.get, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md
 ### 4.4 Cursor backend behavior
 When the active backend is Cursor:
-- image generation is enabled only if the Cursor route declares a verified generated-media route for image output
+- image generation is enabled only if the Cursor route declares a verified generated-media route for image output; before that, only the Settings route verification probe for that row runs through it (§2.1)
 - image input/tooling evidence alone does not prove generated-image support
 - video, TTS, and music remain disabled with `disabled_reason: BACKEND_UNSUPPORTED` unless Cursor later declares verified generated-media routes
 - Cursor does not create a separate Gemini account model
@@ -963,7 +965,7 @@ ContractRef: ToolID:capabilities.get, Invariant:INV-003
 **Backend unsupported reason (`BACKEND_UNSUPPORTED`):**
 > "The current backend supports Image Generation only. To use Video/TTS/Music, use a provider route with verified generated-media support for that kind."
 
-The message above is shown only when the active backend has a `generated_media_route` row with `support_state = verified` whose `media_output_modes` include `image`, and the disabled capability is `media.video`, `media.tts` or `media.music`. In every other `BACKEND_UNSUPPORTED` case, including Cursor without a verified image route and `media.image` itself, the message is (2026-11-25):
+The message above is shown only when all three hold (amended 2026-11-26): the active backend has a `generated_media_route` row whose single output mode is `image` with `support_state = verified` from its own passed image probe whose `cache_expires_at_utc` has not passed; it has no `verified` row whose output mode is `video` or `audio`, so image is its only supported kind; and the disabled capability is `media.video`, `media.tts` or `media.music`. A backend with verified image and another verified kind therefore gets the kind-scoped message below for the kind it lacks. In every other `BACKEND_UNSUPPORTED` case, including Cursor without a verified image route and `media.image` itself, the message is (2026-11-25):
 > "The current backend has no verified generated-media route for this kind. Use a provider route with verified generated-media support, or verify this backend's route in Settings -> Providers."
 
 ContractRef: ToolID:capabilities.get, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Multi-Account.md
@@ -4695,7 +4697,7 @@ plan_unit_id: MGAC-066
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: The six disabled-reason messages are canonical verbatim UI copy for NOT_CONFIGURED, MODEL_UNAVAILABLE, ADMIN_DISABLED, BACKEND_UNSUPPORTED, RATE_LIMITED, and QUOTA_EXCEEDED. BACKEND_UNSUPPORTED has two verbatim variants; the Image-Generation-only message appears only when the active backend has a verified image generated_media_route and the disabled capability is video, TTS or music, and the no-verified-route message appears in every other BACKEND_UNSUPPORTED case.
+canonical_text: The six disabled-reason messages are canonical verbatim UI copy for NOT_CONFIGURED, MODEL_UNAVAILABLE, ADMIN_DISABLED, BACKEND_UNSUPPORTED, RATE_LIMITED, and QUOTA_EXCEEDED. BACKEND_UNSUPPORTED has two verbatim variants; the Image-Generation-only message appears only when the active backend has a verified image generated_media_route (its own unexpired image probe), no verified video or audio route, and the disabled capability is video, TTS or music, and the no-verified-route message appears in every other BACKEND_UNSUPPORTED case.
 gui_related: true
 gui_classification_reason: The unit defines user-visible capability picker, disabled-state presentation, UI copy, or interactive media behavior.
 split_recommended: true
@@ -6664,12 +6666,12 @@ Repairs rows `sfk-51d25f29a6483ed03b2d37ee`, `sfk-9096d5fb0ad91eab90349459`, and
 
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `route_id` | string | yes | Stable provider/account/model route id. |
+| `route_id` | string | yes | Stable provider/account/model/output-mode route id. |
 | `provider_id` | string | yes | Provider owner id. |
 | `account_id` | string | conditional | Required for account-bound providers. |
 | `model_id` | string | yes | Requested model id. |
 | `media_input_modes` | array<string> | yes | `text`, `image`, `mask`, `reference_image`, `audio`, or `video`. |
-| `media_output_modes` | array<string> | yes | `image`, `video`, `audio`, `text_caption`, or `artifact_bundle`. |
+| `media_output_modes` | array<string> | yes | `image`, `video`, `audio`, `text_caption`, or `artifact_bundle`. Exactly one value per row (2026-11-26): a provider/account/model that produces several output modes has one row per mode, so `support_state`, `disabled_reason`, `verification_probe_ref`, `verified_at_utc` and `cache_expires_at_utc` always describe that one mode. |
 | `support_state` | string | yes | `verified`, `unverified`, `capability_gated`, `disabled`, or `unsupported`. |
 | `disabled_reason` | string | conditional | Required when support_state is disabled or unsupported. |
 | `verification_probe_ref` | string | conditional | Required for verified routes. |
@@ -6678,7 +6680,9 @@ Repairs rows `sfk-51d25f29a6483ed03b2d37ee`, `sfk-9096d5fb0ad91eab90349459`, and
 
 Tie-break order when multiple eligible rows remain is: highest `support_state` rank (`verified`, `capability_gated`, `unverified`), then explicit user default, then lowest estimated cost, then lowest expected latency, then lexical `route_id`. First-match ordering is forbidden.
 
-**Route verification probe (2026-11-25).** A route row becomes `support_state = verified` for one output mode only through a passed `generated_media_route_probe` for that exact row and mode. This is the "E2E generated artifact proof" the provider rows require, and it fills the CV-292 provider route support evidence envelope (`proof_kind = generated_artifact_roundtrip`, `proof_timestamp = completed_at_utc`, `verification_state = verified`). Catalog presence, an HTTP 200 model listing, image-input or API-key proof, and output routed through another provider never pass a probe.
+**Route verification probe (2026-11-25).** A route row becomes `support_state = verified` for one output mode only through a passed `generated_media_route_probe` for that exact row and mode; because each row has exactly one output mode, the row's state is that mode's state. This is the "E2E generated artifact proof" the provider rows require, and it fills the CV-292 provider route support evidence envelope (`proof_kind = generated_artifact_roundtrip`, `proof_timestamp = completed_at_utc`, `verification_state = verified`). Catalog presence, an HTTP 200 model listing, image-input or API-key proof, and output routed through another provider never pass a probe.
+
+Probe admission (2026-11-26). The probe is a `media.generate` request whose envelope (§2.2) carries the optional field `route_verification_probe`, an object `{ probe_id: string, route_id: string, media_output_mode: string }`, default `null`. Only PM's Settings -> Providers verify action builds such a request; the agent-facing tool schema does not expose the field, and a request from any other caller that sets it fails with `INVALID_REQUEST`. A probe request is admitted to exactly the row named by `route_id` when that row's `support_state` is `unverified` or `verified` (a re-verify) and `media_output_mode` equals its output mode; for a `disabled`, `unsupported` or `capability_gated` row it fails with the row's mapped error from the disabled-reason table below and records no probe. Admission skips only the verified-route requirement: account, credential, quota, Permissions and policy checks still apply, `model_override` must be `null`, route selection, tie-break, fallback and any other route are never used, and an error from the row is the probe's result. Admission enables nothing for ordinary requests, which keep the row disabled until the probe passes.
 
 The probe sends one `media.generate` request through the row's own `provider_id`, `account_id` and `model_id`, with `count = 1`, the smallest size the route accepts, and a §2.2 `kind` (only `image`, `video`, `tts` or `music`) chosen from the output mode by this total table:
 
@@ -6690,9 +6694,9 @@ The probe sends one `media.generate` request through the row's own `provider_id`
 | `text_caption` | none | No `media.generate` probe exists, because §2.2 has no caption kind. |
 | `artifact_bundle` | none | No `media.generate` probe exists, because §2.2 has no bundle kind. |
 
-A row cannot become `verified` for `text_caption` or `artifact_bundle`; for those modes it stays `unverified` with `disabled_reason = route_unverified` (or `capability_gated` when its gate applies), and a `MediaFallbackCaptionPolicy` that names such a route still runs under its own permission, confidence and budget rules below. It passes only when the response has `success = true`, `engine.generated_media_route_id` equal to the probed `route_id`, and at least one artifact whose bytes are durable, whose `sha256` matches, whose `mime` is in the row's output mode (for `image`: `image/png`, `image/jpeg` or `image/webp`), and whose decoded `meta.w` and `meta.h` (or `meta.duration` for `tts`, `music` and `video`) are greater than zero. The probe artifact is kept only as its hash and metadata; its bytes are dropped after the check.
+A row cannot become `verified` for `text_caption` or `artifact_bundle`; for those modes it stays `unverified` with `disabled_reason = route_unverified` (or `capability_gated` when its gate applies), and a `MediaFallbackCaptionPolicy` that names such a route still runs under its own permission, confidence and budget rules below. It passes only when the response has `success = true`, `engine.generated_media_route_id` equal to the probed `route_id`, and at least one artifact whose bytes are durable, whose `sha256` matches, whose `mime` is in the row's output mode (for `image`: `image/png`, `image/jpeg` or `image/webp`), and whose decoded `meta.w` and `meta.h` (or `meta.duration` for `tts`, `music` and `video`) are greater than zero. The probe's output is stored like every `media.generate` output, by the §2.5 deterministic artifact layout and manifest contract, and its media result record carries the same `route_verification_probe` object; the probe record points to that result by `request_id`. The result is shown only in the route's verification history in Settings -> Providers and is never attached to a chat, session or project output.
 
-`verification_probe_ref` points to a record with these fields: `probe_id` (string), `route_id` (string), `provider_id` (string), `account_id` (string or null), `model_id` (string), `effective_model_id` (string), `media_output_mode` (string), `proof_kind` (`generated_artifact_roundtrip`), `result` (`passed`, `failed` or `inconclusive`), `failure_code` (a §2.6 `error.code`, or `artifact_invalid` when the provider succeeded but the artifact check failed; null when passed), `artifact_mime` (string or null), `artifact_sha256` (string or null), `artifact_w` and `artifact_h` (integer or null), `artifact_duration_s` (number or null), `capability_snapshot_ref` (string), `credential_route_epoch_id` (string), `started_at_utc` and `completed_at_utc` (RFC 3339 strings). `failed` sets the row to `support_state = unverified` with `disabled_reason = route_unverified`; `inconclusive` (timeout, `RATE_LIMITED` or `QUOTA_EXCEEDED`) leaves the previous state unchanged. A probe is never retried automatically.
+`verification_probe_ref` points to a record with these fields: `probe_id` (string), `request_id` (string, the probe's `media.generate` request), `route_id` (string), `provider_id` (string), `account_id` (string or null), `model_id` (string), `effective_model_id` (string), `media_output_mode` (string), `proof_kind` (`generated_artifact_roundtrip`), `result` (`passed`, `failed` or `inconclusive`), `failure_code` (a §2.6 `error.code`, or `artifact_invalid` when the provider succeeded but the artifact check failed; null when passed), `artifact_mime` (string or null), `artifact_sha256` (string or null), `artifact_w` and `artifact_h` (integer or null), `artifact_duration_s` (number or null), `capability_snapshot_ref` (string), `credential_route_epoch_id` (string), `started_at_utc` and `completed_at_utc` (RFC 3339 strings). `failed` sets the row to `support_state = unverified` with `disabled_reason = route_unverified`; `inconclusive` (timeout, `RATE_LIMITED` or `QUOTA_EXCEEDED`) leaves the previous state unchanged. A probe is never retried automatically.
 
 Cache and refresh rule: a passed probe sets `verified_at_utc = completed_at_utc` and `cache_expires_at_utc = verified_at_utc + 7 days`. A successful real `media.generate` result through the same row and mode that meets the same artifact checks renews both timestamps. Verification ends at once, and the row returns to `unverified` with `disabled_reason = route_unverified`, when `cache_expires_at_utc` passes, when the row's `credential_route_epoch_id` or ProviderCapabilityEpoch changes, when a catalog refresh changes the row's `model_id` or moves its model out of a dispatchable `model_lifecycle_state`, or when a real request through the row returns `BACKEND_UNSUPPORTED` or `MODEL_UNAVAILABLE`. Because a probe spends provider quota, PM runs a new probe only when the person chooses the route's verify action in Settings -> Providers; capability refresh (§4.7) re-reads the cached state and never probes by itself.
 
@@ -6778,15 +6782,15 @@ Fallback captions are separate artifacts. The selected model receipt must state 
 | --- | --- | --- |
 | `settlement_id` | string | Unique per settlement. |
 | `request_id` | string | Equals the `media.generate` `request_id` it settles. |
-| `selected_route_id` | string | The `generated_media_route.route_id` the request resolved to. |
+| `selected_route_id` | string or null | The `generated_media_route.route_id` the request resolved to; `null` only when the request failed before a route was selected (pre-route failure, below). |
 | `input_artifact_refs[]` | array of string (`artifact://` refs) | Every input the request carried, in request order. |
 | `accepted_input_modes[]` | array of string, each one of the route row's `media_input_modes` values | Modes the route took natively. |
 | `rejected_input_refs[]` | array of string | Inputs the route could not take natively. |
 | `rejection_reason_codes[]` | array of string, same length and order as `rejected_input_refs[]`, closed: `input_mode_unsupported`, `mime_unsupported`, `input_too_large`, `artifact_missing`, `caption_permission_denied`, `caption_low_confidence`, `caption_failed` | Why each rejected input was rejected. |
 | `fallback_caption_policy_id?` | string or null | The `MediaFallbackCaptionPolicy` used; null when none applied. |
 | `settlement_state` | string, closed: `pending`, `awaiting_caption_permission`, `captioning`, `settled_native`, `settled_with_captions`, `failed` | See the state table below. |
-| `input_dispositions[]` | array of objects `{ input_ref: string, disposition: "native" or "caption" or "rejected", caption_artifact_ref: string or null, caption_confidence: number 0.0-1.0 or null }`, one per `input_artifact_refs[]` entry, same order | What the selected model actually received for each input. |
-| `provider_payload_ref` | string | Ref to the redacted provider payload record. |
+| `input_dispositions[]` | array of objects `{ input_ref: string, disposition: "native" or "caption" or "rejected" or "not_evaluated", caption_artifact_ref: string or null, caption_confidence: number 0.0-1.0 or null }`, one per `input_artifact_refs[]` entry, same order | What the selected model actually received for each input; `not_evaluated` only in a pre-route failure, with both caption fields `null`. |
+| `provider_payload_ref` | string or null | Ref to the redacted provider payload record; `null` when the settlement ended before any provider payload was built (a pre-route failure, or a `failed` settlement reached before the generation request). |
 | `created_at_utc` | string (RFC 3339) | When the settlement was created. |
 | `schema_version` | integer | 1 for this shape. |
 
@@ -6797,6 +6801,7 @@ Settlement states. `settled_native`, `settled_with_captions` and `failed` are te
 | From | To | When |
 | --- | --- | --- |
 | `pending` | `failed` | At least one input is rejected with `mime_unsupported` or `artifact_missing`. This is checked first, before any provider request, including a caption call (MGAC-100: wrong MIME is blocked before the provider request), and no caption policy applies to these inputs. |
+| `pending` | `failed` | Pre-route failure: the request fails before a route is selected, for example `NOT_CONFIGURED` (no eligible route), `MODEL_UNAVAILABLE` or a §2.2 field other than `input_artifact_refs` failing validation. No input is checked: `selected_route_id = null`, `provider_payload_ref = null`, `accepted_input_modes[]`, `rejected_input_refs[]` and `rejection_reason_codes[]` are empty, every `input_dispositions[]` entry is `not_evaluated`, and `error.code` is the pre-route error itself, not the settlement codes below. |
 | `pending` | `settled_native` | Every input is accepted natively by the selected route. |
 | `pending` | `awaiting_caption_permission` | At least one input is rejected, every rejected input's code is `input_mode_unsupported` or `input_too_large` (the only captionable codes), the policy is `enabled`, and `requires_user_permission = true`. |
 | `pending` | `captioning` | At least one input is rejected, every rejected input's code is `input_mode_unsupported` or `input_too_large`, the policy is `enabled`, and `requires_user_permission = false`. |
@@ -6808,7 +6813,7 @@ Settlement states. `settled_native`, `settled_with_captions` and `failed` are te
 
 A caption call is not retried automatically; a retry is a new `media.generate` request with a new `request_id` (§2.5). A `failed` settlement ends the request with `success = false`, empty `artifacts`, and `error.code = INVALID_REQUEST` for `input_mode_unsupported`, `mime_unsupported`, `input_too_large`, `artifact_missing` or `caption_permission_denied`, or `error.code = PROVIDER_ERROR` for `caption_failed` or `caption_low_confidence`.
 
-Wire binding to `media.generate`. The request envelope (§2.2) gains two optional fields: `input_artifact_refs` (array of `artifact://` string refs, default empty) and `fallback_caption_policy_id` (string or null, default null). The response (§2.5) gains `input_settlement`: the full `MultimodalInputSettlement` object when `input_artifact_refs` is non-empty, otherwise `null`. Both on success and on failure, the media result record in the seglog carries the same `input_settlement`. Each caption is its own artifact in the payload store and is listed only through `input_dispositions[].caption_artifact_ref`, never in `artifacts[]`. When `retain_original_artifact = true` the original input refs stay resolvable beside the captions. The receipt states that the model saw the original media for a `native` disposition and only the caption text for a `caption` disposition.
+Wire binding to `media.generate`. The request envelope (§2.2) gains two optional fields: `input_artifact_refs` (array of `artifact://` string refs, default empty) and `fallback_caption_policy_id` (string or null, default null). The response (§2.5) gains `input_settlement`: the full `MultimodalInputSettlement` object when `input_artifact_refs` is non-empty, otherwise `null`. A pre-route failure still returns the full object in the shape the pre-route row above gives. The one exception is a request whose `input_artifact_refs` value itself is not a valid array of `artifact://` strings: it fails with `INVALID_REQUEST` and `input_settlement = null`, because there are no input refs to settle. Both on success and on failure, the media result record in the seglog carries the same `input_settlement`. Each caption is its own artifact in the payload store and is listed only through `input_dispositions[].caption_artifact_ref`, never in `artifacts[]`. When `retain_original_artifact = true` the original input refs stay resolvable beside the captions. The receipt states that the model saw the original media for a `native` disposition and only the caption text for a `caption` disposition.
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
 ## FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)
