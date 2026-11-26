@@ -62,8 +62,8 @@ another tone).
 ## Merging this into PMConcept7
 
 Jared approved the concept on 2026-11-25: "looks good otherwise. Make that last change and then wait until I have a
-different agent merge this in." Nothing here is landed. The overlay sits on main `3b0c31bbc5` (2026-11-25, after
-stream F's batch 20). For the agent that merges it, in this order:
+different agent merge this in." Nothing here is landed. The overlay sits on main `4f25a233c7` (2026-11-26, after
+stream F's FO-242 and FO-241). For the agent that merges it, in this order:
 
 1. **Bring the overlay to the main you merge into, before anything else:** `git fetch origin`, then
    `tools/rebase.sh origin/main` (`DRY=1` first shows what would happen and writes nothing). Every changed file under
@@ -74,7 +74,7 @@ stream F's batch 20). For the agent that merges it, in this order:
    a constant named `FOLLOW` to `managers/32-personas.js` (the overlay's is `ROUTE` now), and only `node --check`
    showed it. So after the rebase: `node --check` on every `.js` under `overlay/`, `tools/build.sh`, and the fifteen
    tests with `--set before=` a build of that main (which is `Concepts/PMConcept7.html` of that commit whenever the
-   page was republished with it; on `3b0c31bbc5` the two are byte-identical).
+   page was republished with it; on `3b0c31bbc5` and on `4f25a233c7` the two are byte-identical).
 2. **The fifty proposed browser rows need a home first** (`proposed/browser-rows.json`, sixth pass; Jared asked for
    more browser and recording settings). They are in no Plans inventory, and PMConcept7's build refuses a placement
    rule that names an id the inventory does not have ("O55 placement: rule names unknown id"). `tools/build.sh` adds
@@ -89,11 +89,10 @@ stream F's batch 20). For the agent that merges it, in this order:
    (`managers/90-refine-frame.js`, `o55/placement.d/24a-browser-rows.json` and `90-refine-goal-words.json`, the five
    `styles.d/9*-refine*.css`, and `home-redesign/src/terminal/css/27-customize-refine.css`). Then PMConcept7's own
    build and republish, as stream F does them.
-4. **Glass's wallpaper jump is fixed in the wrong place for a merge.** The bug is PMConcept7's own
-   (`liquid-glass/opus-5.5/src/glass.css`, the two `[data-lg-fixed]` rules, lines 254 and 299 on `3b0c31bbc5`: six
-   entries for a stack of five layers; see the seventh pass, 4). Take one `scroll,` and one `0 0,` out of each. The
-   overlay only overrides them, with the first two rules of `styles.d/99-refine-pass7.css`, which can go once
-   `glass.css` is right.
+4. **Glass's wallpaper jump: nothing to do.** The bug was PMConcept7's own (`liquid-glass/opus-5.5/src/glass.css`,
+   the two `[data-lg-fixed]` rules; see the seventh pass, 4). Stream F fixed it at the source (FO-242, main
+   `4f25a233c7`, 2026-11-26) and asked for the overlay's copy of the fix to go; it is gone from
+   `styles.d/99-refine-pass7.css`. The seventh-pass test still reads the pin, now on main's own rule.
 5. **The names live in a file the overlay does not hold.** The chapter's and the page's labels ("Memory &
    Automation", "Goals & Automation"), five search paths and the search entries for the old Goal's templates and
    "active Goals" are in `onboarding/opus-5.5/base/script/pm4-settings-js.js`. The overlay renames them and cleans the
@@ -205,9 +204,10 @@ back and forth on the left side behind the panels." This is PMConcept7's own bug
   the screen (54 px for the Files panel), from the wheel turn until the settle. The engine pins every sheet under
   every ancestor of the pointer, so the title bar, the left panel, Settings' rail and the status bar all jumped on any
   wheel turn.
-- **Fix:** five entries, the frost `fixed`. The overlay carries it as two rules of higher weight in
-  `styles.d/99-refine-pass7.css`; the same two lines are owed to `glass.css` itself (mailed to the stream F lead and
-  the program coordinator), after which the overlay's copy repeats it and can go.
+- **Fix:** five entries, the frost `fixed`. The overlay carried it as two rules of higher weight in
+  `styles.d/99-refine-pass7.css` and the same two lines were mailed to the stream F lead and the program coordinator.
+  Stream F landed them in `glass.css` on 2026-11-26 (FO-242, main `4f25a233c7`, with a kit check of its own,
+  `glass-pin-steady`), and the overlay's copy was removed the same day.
 
 Jared's recording (120 frames a second, 13 s) shows the frost in two states 54 px apart, the second one held from each
 wheel turn until 160 ms after the scroll ends. Measured here on the left panels at 1880 x 1050: 92,547 pixels change
@@ -230,8 +230,13 @@ code. Looked at: search before and after; Personas, Crews and Providers, which m
 the Planning page's checks (Basic dark, Friendly light); the Goals tabs (Glass dark and light); Personas' Defaults
 (Retro dark, NieR light). **Not run:** stream F's Settings checks.
 
-**To merge this into PMConcept7:** see "Merging this into PMConcept7" above (the glass.css fix, where the names are
-defined, the fifty rows).
+**Checked again on 2026-11-26, on main `4f25a233c7`, without the overlay's Glass rules:** the fifteen tests, 188
+checks, pass in one run against that main's own page; the pin check now passes on main's rule alone, and main's new
+Code Mode setting is where main draws it (Providers, Models, How models answer). The ten-look, alignment and tour
+scans were not repeated: nothing this work draws changed.
+
+**To merge this into PMConcept7:** see "Merging this into PMConcept7" above (where the names are defined, the fifty
+rows).
 
 ## Sixth pass (2026-11-24), after Jared's fifth review
 
