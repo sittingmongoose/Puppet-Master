@@ -142,6 +142,7 @@ import posixpath
 import re
 import shutil
 import signal
+import stat
 import subprocess
 import sys
 import tempfile
@@ -150,7 +151,7 @@ import time
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Iterator
+from typing import Any, Callable, Iterator
 
 if str(Path(__file__).resolve().parent) not in sys.path:
     sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -413,6 +414,36 @@ def audit_path_stamp(path: Path, *, follow_symlinks: bool = False) -> tuple[int,
     except FileNotFoundError:
         return None
     return info.st_dev, info.st_ino, info.st_mode, info.st_size, info.st_ctime_ns, info.st_mtime_ns
+
+
+ReadinessSourceIdentity = tuple[Path, dict[Path, tuple[int, ...]], tuple[int, ...] | None]
+
+
+def readiness_source_identity(path: Path) -> ReadinessSourceIdentity:
+    """Resolve the supplied path and stamp every link in its chain, including directory links."""
+    resolved = Path(path.drive + os.sep)
+    remaining = list(reversed(path.parts[1:]))
+    links: dict[Path, tuple[int, ...]] = {}
+    followed = 0
+    while remaining:
+        component = remaining.pop()
+        if component == "..":
+            resolved = resolved.parent
+            continue
+        candidate = resolved / component
+        stamp = audit_path_stamp(candidate)
+        if stamp is None or not stat.S_ISLNK(stamp[2]):
+            resolved = candidate
+            continue
+        followed += 1
+        if followed > 40:
+            raise RuntimeError(f"too many symlinks in readiness audit source: {path}")
+        links[candidate] = stamp
+        target = candidate.readlink()
+        if target.root:
+            resolved = Path((target.drive or resolved.drive) + os.sep)
+        remaining.extend(reversed(target.parts[1:] if target.root else target.parts))
+    return resolved, links, audit_path_stamp(resolved)
 
 
 def readiness_edition_stamp(edition: Path) -> dict[str, Any]:
@@ -1361,9 +1392,8 @@ def pm7_inventory_stale(paths: list[str], root: Path, runner=None) -> str | None
     return PM7_INVENTORY_MESSAGE
 
 
-def apply_pm7_inventory(code: int, paths: list[str], root: Path, json_mode: bool, runner=None) -> int:
+def apply_pm7_inventory(code: int, message: str | None, json_mode: bool) -> int:
     """Leave `code` as exit_code computed it, unless the inventory check is blocking."""
-    message = pm7_inventory_stale(paths, root, runner=runner)
     if not message:
         return code
     print(message, file=sys.stderr if json_mode else sys.stdout)
@@ -1710,6 +1740,7 @@ def write_row_report(
     partial: set[tuple[str, str]],
     paired: set[tuple[str, str]],
     fingerprints: dict[str, set[str] | None],
+    validate_inputs: Callable[[], None] | None = None,
 ) -> None:
     """--row-report: every row each subcheck gave in this run, for telling what one run added since another.
 
@@ -1753,9 +1784,12 @@ def write_row_report(
         mine = rows.get(name, [])
         complete = total is not None and len(mine) == total
         subchecks[name] = {"reported": total, "complete": complete, "rows": mine if complete else []}
+    payload = json.dumps({"schema_id": "pm.landing_check.rows.v1", "base": base, "subchecks": subchecks},
+                         sort_keys=True) + "\n"
+    if validate_inputs is not None:
+        validate_inputs()
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps({"schema_id": "pm.landing_check.rows.v1", "base": base, "subchecks": subchecks}, sort_keys=True) + "\n",
-                    encoding="utf-8")
+    path.write_text(payload, encoding="utf-8")
 
 
 def aggregate_subcheck_commands(
@@ -2278,26 +2312,22 @@ def main() -> int:
             parser.error(f"{option} must not be negative")
 
     root = Path(args.root).resolve()
-    if args.readiness_audit_root:
-        source_path = root / args.readiness_audit_root
-        source = source_path.resolve()
-        if not source.is_dir():
-            print(f"pm-landing-check: readiness audit source is not a directory: {source}", file=sys.stderr)
-            return 3
-    else:
-        source_path = (SHARED_READINESS_AUDIT_ROOT if SHARED_READINESS_AUDIT_ROOT.is_dir()
-                       else root / READINESS_AUDIT_REL)
-        source = source_path.resolve()
-    # One scratch directory for the run's worker slots, outside the repository. It is removed when
-    # the run ends, however it ends; check_main only points the aggregates at it.
+    source_path = (root / args.readiness_audit_root if args.readiness_audit_root else
+                   SHARED_READINESS_AUDIT_ROOT if SHARED_READINESS_AUDIT_ROOT.is_dir() else
+                   root / READINESS_AUDIT_REL)
+    args.slots_root = None
     try:
-        args.slots_root = Path(tempfile.mkdtemp(prefix="pm-landing-check-slots-"))
-    except OSError:
-        args.slots_root = None
-    try:
-        source_stamp = audit_path_stamp(source_path)
+        source_identity = readiness_source_identity(source_path)
+        source = source_identity[0]
+        if args.readiness_audit_root and not source.is_dir():
+            raise RuntimeError(f"readiness audit source is not a directory: {source}")
+        # One scratch directory for the run's worker slots, outside the repository.
+        try:
+            args.slots_root = Path(tempfile.mkdtemp(prefix="pm-landing-check-slots-"))
+        except OSError:
+            pass
         with ExitStack() as scratch, readiness_audit_source(root, source):
-            return check_main(args, root, source, source_path, source_stamp, scratch)
+            return check_main(args, root, source_path, source_identity, scratch)
     except (RuntimeError, OSError) as exc:
         print(f"pm-landing-check: {exc}", file=sys.stderr)
         return 3
@@ -2306,8 +2336,9 @@ def main() -> int:
             shutil.rmtree(args.slots_root, ignore_errors=True)
 
 
-def check_main(args: argparse.Namespace, root: Path, audit_source: Path, source_path: Path,
-               source_stamp: tuple[int, ...] | None, scratch: ExitStack) -> int:
+def check_main(args: argparse.Namespace, root: Path, source_path: Path,
+               source_identity: ReadinessSourceIdentity, scratch: ExitStack) -> int:
+    audit_source = source_identity[0]
     baseline_path = Path(args.baseline)
     if not baseline_path.is_absolute():
         baseline_path = root / baseline_path
@@ -2353,7 +2384,16 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path, source_
     currency: dict[str, Any] = {}
     live_edition = root / READINESS_AUDIT_REL
     live_stamp = readiness_edition_stamp(live_edition)
+    live_hashes = readiness_edition_hashes(audit_source)
     audit_inputs = readiness_audit_inputs(root)
+
+    def require_live_edition(when: str) -> None:
+        if (source_identity != readiness_source_identity(source_path)
+                or live_hashes != readiness_edition_hashes(audit_source)
+                or live_stamp != readiness_edition_stamp(live_edition)
+                or source_identity != readiness_source_identity(source_path)):
+            raise RuntimeError(f"the live readiness audit source or edition changed {when}")
+
     rename_context = None
     if not args.record_baseline:
         try:
@@ -2407,12 +2447,10 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path, source_
     if supports_snapshot:
         snapshot_dir = scratch.enter_context(tempfile.TemporaryDirectory(prefix="pm-landing-readiness-"))
         snapshot = Path(snapshot_dir).resolve() / "edition"
-        copy_readiness_edition(live_edition, snapshot)
+        copy_readiness_edition(audit_source, snapshot)
         snapshot_hashes = readiness_edition_hashes(snapshot)
         snapshot_stamp = readiness_edition_stamp(snapshot)
-        if (snapshot_hashes != readiness_edition_hashes(live_edition)
-                or live_stamp != readiness_edition_stamp(live_edition)
-                or source_stamp != audit_path_stamp(source_path)):
+        if snapshot_hashes != live_hashes:
             raise RuntimeError("readiness audit edition changed while taking its snapshot")
         snapshot_inputs = readiness_audit_inputs(root, snapshot)
         require_same_readiness_audit_inputs(audit_inputs, snapshot_inputs, "changed while taking the snapshot")
@@ -2420,6 +2458,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path, source_
         child_env[SNAPSHOT_ENV] = str(snapshot)
         child_env[SNAPSHOT_REPO_ENV] = str(root)
         child_env[SNAPSHOT_WALK_ENV] = "1" if live_edition.is_dir() and not live_edition.is_symlink() else "0"
+    require_live_edition("before dispatch")
 
     export_pool = None
     if jobs > 1:
@@ -2520,22 +2559,20 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path, source_
         slot_pool=export_pool)
     require_same_readiness_audit_inputs(audit_inputs, readiness_audit_inputs(root),
                                       "changed during the exports")
-    if snapshot is not None:
-        if (snapshot_hashes != readiness_edition_hashes(snapshot)
-                or snapshot_stamp != readiness_edition_stamp(snapshot)):
+    def require_final_edition() -> None:
+        if snapshot is not None and (snapshot_hashes != readiness_edition_hashes(snapshot)
+                                     or snapshot_stamp != readiness_edition_stamp(snapshot)):
             raise RuntimeError("the readiness audit snapshot changed during the checks")
-        if snapshot_hashes != readiness_edition_hashes(live_edition):
-            raise RuntimeError("the live readiness audit edition differs from its snapshot after the checks")
-    if live_stamp != readiness_edition_stamp(live_edition) or source_stamp != audit_path_stamp(source_path):
-        raise RuntimeError("the live readiness audit edition changed during the checks, "
-                           "even if its original bytes were restored")
+        require_live_edition("during the checks")
 
     if args.record_baseline:
         untracked = untracked_check_inputs(root)
         doc = build_baseline(commit, run_dir, items, counts, statuses, args.max_fingerprints, untracked,
                              [item for key in sorted(exported) for item in exported[key]], audit_inputs)
+        payload = json.dumps(doc, indent=1, sort_keys=True) + "\n"
+        require_final_edition()
         baseline_path.parent.mkdir(parents=True, exist_ok=True)
-        baseline_path.write_text(json.dumps(doc, indent=1, sort_keys=True) + "\n", encoding="utf-8")
+        baseline_path.write_text(payload, encoding="utf-8")
         print(f"pm-landing-check: baseline written to {baseline_label} at commit {commit}")
         print(f"  readiness audit source: {audit_source}; {len(audit_inputs['files'])} inputs bound by presence and SHA-256")
         for check in CHECKS:
@@ -2594,11 +2631,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path, source_
     pairs = pair_validators(counts, listed, baseline.get("checks") or {}, did_not_finish, items, commands,
                             version_change(before, after), keyed_now | from_export, killed_checks)
     paired = {("run-gates", row["run_gates"]) for row in pairs if row["paired"]}
-    if args.row_report:
-        # Rows a sample or a paired copy holds are not counted as renamed by the loop below, so the row report
-        # asks grown_buckets with the same set and its `grown_stale` cannot disagree with the check.
-        write_row_report(Path(args.row_report).resolve(), root, args.base, touched, items, counts, listed, did_not_finish,
-                         partial_subchecks(compared, baseline.get("checks") or {}), paired, known)
+    all_items = items
     items = [item for item in items if (item["check"], item["subcheck"]) not in paired]
     compared = {
         check: {name: counted for name, counted in compared[check].items() if (check, name) not in paired}
@@ -2688,6 +2721,13 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path, source_
     reported = [item for item in items if item["key"] in reported_keys]
     blocking = blocking_items(on_branch, grown, subcheck_growth)
     totals = subcheck_totals(counts, listed, did_not_finish)
+
+    inventory_message = pm7_inventory_stale(touched, root)
+    if args.row_report:
+        write_row_report(Path(args.row_report).resolve(), root, args.base, touched, all_items, counts, listed,
+                         did_not_finish, partial, paired, known, require_final_edition)
+    else:
+        require_final_edition()
 
     if args.json:
         if not rule_two:
@@ -2941,7 +2981,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path, source_
 
     return apply_pm7_inventory(
         exit_code(reported, grown, subcheck_growth, blocking, infrastructure),
-        touched, root, args.json)
+        inventory_message, args.json)
 
 
 def untracked_check_inputs(root: Path) -> list[str]:

@@ -3111,23 +3111,23 @@ class Pm7InventoryStale(unittest.TestCase):
         run = self.runner(1)
         self.assertIsNone(M.pm7_inventory_stale(["Plans/00-plans-index.md"], ROOT, runner=run))
         self.assertEqual(run.seen, {})
-        self.assertEqual(M.apply_pm7_inventory(0, ["scripts/pm-landing-check.py"], ROOT, False, runner=run), 0)
 
     def test_a_clean_page_check_leaves_the_landing_code_alone(self):
         run = self.runner(0)
-        self.assertIsNone(M.pm7_inventory_stale([M.PM7_INVENTORY], ROOT, runner=run))
+        message = M.pm7_inventory_stale([M.PM7_INVENTORY], ROOT, runner=run)
+        self.assertIsNone(message)
         self.assertEqual(run.seen["cmd"], [
             "python3", "Concepts/onboarding/opus-5.5/tools/build.py", "--publish-pm7", "--check"])
         self.assertEqual(run.seen["cwd"], ROOT)
-        self.assertEqual(M.apply_pm7_inventory(1, [M.PM7_INVENTORY], ROOT, False, runner=run), 1)
+        self.assertEqual(M.apply_pm7_inventory(1, message, False), 1)
 
     def test_a_failed_page_check_is_blocking_and_names_the_regeneration(self):
         run = self.runner(1)
-        self.assertEqual(M.pm7_inventory_stale([M.PM7_INVENTORY, "scripts/x.py"], ROOT, runner=run),
-                         "Plans inventory changed; regenerate the PM7 pages")
-        code, out, err = capture(lambda: M.apply_pm7_inventory(0, [M.PM7_INVENTORY], ROOT, False, runner=run))
+        message = M.pm7_inventory_stale([M.PM7_INVENTORY, "scripts/x.py"], ROOT, runner=run)
+        self.assertEqual(message, "Plans inventory changed; regenerate the PM7 pages")
+        code, out, err = capture(lambda: M.apply_pm7_inventory(0, message, False))
         self.assertEqual((code, out, err), (2, "Plans inventory changed; regenerate the PM7 pages\n", ""))
-        code, out, err = capture(lambda: M.apply_pm7_inventory(0, [M.PM7_INVENTORY], ROOT, True, runner=run))
+        code, out, err = capture(lambda: M.apply_pm7_inventory(0, message, True))
         self.assertEqual((code, out, err), (2, "", "Plans inventory changed; regenerate the PM7 pages\n"))
 
 
@@ -3561,6 +3561,81 @@ class AggregateReportsTests(unittest.TestCase):
 
 
 class AggregateReadinessInputs(LandingRun):
+    def test_readiness_source_link_changes_refuse_comparison_and_recording(self):
+        self.stub()
+        self.module.target_worker_support = lambda root: (True, True)
+        self.module.target_readiness_snapshot_support = lambda root: True
+        original_check = self.module.run_check
+        mkdtemp = tempfile.mkdtemp
+        edition_a, edition_b = (self.repo / name for name in ("edition-a", "edition-b"))
+        inventory = "CURRENT_EVENT_SOURCE_INVENTORY.json"
+        for edition, value in ((edition_a, "A"), (edition_b, "B")):
+            edition.mkdir()
+            (edition / inventory).write_text(json.dumps({"edition": value}))
+        selected = self.repo / "selected"
+        current = self.repo / "current"
+
+        def publish(link, target):
+            replacement = link.with_suffix(".new")
+            replacement.symlink_to(target, target_is_directory=True)
+            replacement.replace(link)
+
+        publish(selected, edition_a)
+        common = ("--readiness-audit-root", str(selected))
+        self.assertEqual(self.run_main(*common, "--record-baseline", "--baseline", "baseline.json")[0],
+                         0, self.stderr)
+        baseline = self.repo / "baseline.json"
+        original_bytes = baseline.read_bytes()
+        refused = self.repo / "refused.json"
+        row_report = Path(self.enterContext(tempfile.TemporaryDirectory())) / "rows.json"
+        for timing in ("startup", "dispatch", "rollback", "verdict"):
+            for jobs in (1, 4):
+                for record in (False, True):
+                    with self.subTest(timing=timing, jobs=jobs, record=record):
+                        publish(current, edition_a)
+                        publish(selected, edition_a if timing == "startup" else current)
+                        seen = []
+
+                        def make_scratch(*args, **kwargs):
+                            if timing == "startup" and kwargs.get("prefix") == "pm-landing-check-slots-":
+                                publish(selected, edition_b)
+                            return mkdtemp(*args, **kwargs)
+
+                        def run_check(check, root, run_dir, timeout, workers, env, supports_jobs):
+                            if check == "run-gates" and timing != "startup":
+                                snapshot = Path(env[M.SNAPSHOT_ENV])
+                                seen.append(json.loads((snapshot / inventory).read_bytes())["edition"])
+                                if timing in ("dispatch", "rollback"):
+                                    publish(current, edition_b)
+                                    if timing == "rollback":
+                                        publish(current, edition_a)
+                            return original_check(check, root, run_dir, timeout, workers, env, supports_jobs)
+
+                        finish_name = "build_baseline" if record else "pm7_inventory_stale"
+                        finish = getattr(self.module, finish_name)
+
+                        def finish_report(*args, **kwargs):
+                            result = finish(*args, **kwargs)
+                            if timing == "verdict":
+                                publish(current, edition_b)
+                            return result
+
+                        mode = (("--record-baseline", "--baseline", str(refused)) if record else
+                                ("--base", self.base, "--baseline", str(baseline),
+                                 "--row-report", str(row_report)))
+                        with patch.object(tempfile, "mkdtemp", make_scratch), \
+                                patch.object(self.module, "run_check", run_check), \
+                                patch.object(self.module, finish_name, finish_report):
+                            code, out = self.run_main(*common, "--jobs", str(jobs), *mode)
+                        self.assertEqual(code, 3, out + self.stderr)
+                        self.assertEqual(out, "")
+                        self.assertIn("readiness audit", self.stderr)
+                        self.assertEqual(seen, [] if timing == "startup" else ["A"])
+                        self.assertEqual(selected.resolve(), edition_a if timing == "rollback" else edition_b)
+                        self.assertEqual(baseline.read_bytes(), original_bytes)
+                        self.assertFalse(refused.exists())
+                        self.assertFalse(row_report.exists())
+
     def test_readers_share_a_snapshot_when_the_live_edition_is_restored_before_aggregate_returns(self):
         import threading
 
