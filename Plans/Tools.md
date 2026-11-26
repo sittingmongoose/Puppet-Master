@@ -10590,9 +10590,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:14
 - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:11
 - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:20
-- "Plans/Tools.md#section=`question` tool runtime contract"
-- "Plans/Tools.md#section=`todowrite` and `todoread` runtime contract"
-- "Plans/Tools.md#section=Web tool routing algorithm"
+- "Plans/Tools.md#section=13. Batch operations"
 preserved_exact_tokens:
 - 'urls: string[]'
 - 'formats?: string[]'
@@ -11271,9 +11269,9 @@ source_lineage:
   - pldg-20260615-001-part-4-fable-cleanup:atom-0010
   - pldg-20260615-001-part-4-fable-cleanup:atom-0011
   - pldg-20260615-001-part-4-fable-cleanup:atom-0012
-  - "local:Plans/Tools.md#section=Provider classes, defaults, and fallback disclosure"
-  - "local:Plans/Tools.md#section=Support-tier vocabulary"
-  - "local:Plans/Tools.md#section=Web tool routing algorithm"
+  - "local:Plans/Tools.md#section=11.1 Provider classes, defaults, and fallback disclosure"
+  - "local:Plans/Tools.md#section=11.2 Support-tier vocabulary"
+  - "local:Plans/Tools.md#section=12. Web tool routing algorithm"
 preserved_exact_tokens:
   - "Fields:"
   - "Rules:"

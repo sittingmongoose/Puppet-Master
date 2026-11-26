@@ -31160,7 +31160,7 @@ command_payload_definitions:
           gap_note: "InvocationProvenance requires agent_reason (string, minLength 1) when invocation_source is agent_initiated, goal, prd, planning_wizard or subagent (Plans/web_operation_contracts.schema.json; UI_Command_Catalog.md:1028 'optional agent_reason'). Canon does not say whether the agent passes it as a UICommand arg or the dispatcher records it from the agent's turn; left out pending the web owner, candidate an optional agent_reason arg."
         - key: omitted:max_results
           choice: omitted
-          gap_note: "UCC-081 lists max_results among the advanced provider controls shown in /web help and settings (UI_Command_Catalog.md:1035) and WebActionInput's search branch carries max_results (integer, minimum 1; Tools.md:716, default 8 at Tools.md:764). Canon does not say these are per-call UICommand args rather than settings; left out pending the web owner."
+          gap_note: "UCC-081 lists max_results among the advanced provider controls shown in /web help and settings (UI_Command_Catalog.md:1035) and WebActionInput's search branch carries max_results (integer, minimum 1; Tools.md:723, default 8 at Tools.md:764). Canon does not say these are per-call UICommand args rather than settings; left out pending the web owner."
         - key: omitted:categories
           choice: omitted
           gap_note: "UCC-081 lets provider category help expose categories?: string[] with github, research, pdf when the provider supports them (UI_Command_Catalog.md:1036; WebActionInput search branch categories). Whether it is a per-call arg is not stated; left out pending the web owner."
@@ -31193,10 +31193,10 @@ command_payload_definitions:
           gap_note: "UCC-081 lists chunks_per_source among the advanced provider controls shown in /web help and settings (UI_Command_Catalog.md:1035); WebActionInput's search branch has no chunks_per_source field. Whether it is a per-call arg is not stated; left out pending the web owner."
         - key: omitted:sources
           choice: omitted
-          gap_note: "WebActionInput's search branch carries sources (array of strings; Plans/web_operation_contracts.schema.json#/$defs/WebActionInput; Tools.md:716 sources?), but section 5.2 fixes the /web search UI-command schema as { query } (assistant-chat-design.md:341) and UCC-081 does not list it among the provider controls. Whether it is a per-call arg is not stated; left out pending the web owner."
+          gap_note: "WebActionInput's search branch carries sources (array of strings; Plans/web_operation_contracts.schema.json#/$defs/WebActionInput; Tools.md:723 sources?), but section 5.2 fixes the /web search UI-command schema as { query } (assistant-chat-design.md:341) and UCC-081 does not list it among the provider controls. Whether it is a per-call arg is not stated; left out pending the web owner."
         - key: omitted:adapter_hint
           choice: omitted
-          gap_note: "WebActionInput's search branch carries adapter_hint (string; Plans/web_operation_contracts.schema.json#/$defs/WebActionInput; Tools.md:716 adapter_hint?), but section 5.2 fixes the /web search UI-command schema as { query } (assistant-chat-design.md:341) and UCC-081 does not list it among the provider controls. Whether it is a per-call arg is not stated; left out pending the web owner."
+          gap_note: "WebActionInput's search branch carries adapter_hint (string; Plans/web_operation_contracts.schema.json#/$defs/WebActionInput; Tools.md:723 adapter_hint?), but section 5.2 fixes the /web search UI-command schema as { query } (assistant-chat-design.md:341) and UCC-081 does not list it among the provider controls. Whether it is a per-call arg is not stated; left out pending the web owner."
         - key: omitted:cache_policy
           choice: omitted
           gap_note: "WebActionInput's search branch carries cache_policy ($ref CachePolicy; Plans/web_operation_contracts.schema.json#/$defs/WebActionInput), but section 5.2 fixes the /web search UI-command schema as { query } (assistant-chat-design.md:341) and UCC-081 does not list it among the provider controls. Whether it is a per-call arg is not stated; left out pending the web owner."

@@ -6249,7 +6249,7 @@ command_payload_definitions:
             (UI_Command_Catalog.md:714) and names no single target. It is recorded on open, not on select, because
             the alias ends in the open (the select is the selection open already requires, precondition
             worktree_selected, :701), and one alias token is recorded on one definition. open_files is open's alias
-            (:702, :12495). GitHub_Integration.md:2215 lists switch among its Command IDs; the catalog, which keeps
+            (:702, :12495). GitHub_Integration.md:2315 lists switch among its Command IDs; the catalog, which keeps
             aliases, makes it an alias, and this definition follows the catalog. cmd.chat.worktree.open_files is
             recorded here too. Canon conflict: CV-160 lets it route to the canonical assistant worktree commands
             (Contracts_V0.md:1889, :11253), but none of the six opens files, while the catalog routes Open Files
@@ -6504,14 +6504,14 @@ command_payload_definitions:
           choice: [not_configured, permission_required, blocked_state_required, stale_projection]
           gap_note: >-
             The GitHub_Integration Worktree Topology disabled states, which cover cmd.git.worktree.create
-            (GitHub_Integration.md:2215-2217), map through the UCC-230 owner_state_code_map to
+            (GitHub_Integration.md:2315-2317), map through the UCC-230 owner_state_code_map to
             blocked_state_required (dirty_worktree, untracked_files, protected_branch, operation_in_progress),
             not_configured (missing_remote) and permission_required (permission_denied). The choice is the rest:
             not_configured also covers git_available false, blocked_state_required covers worktree_limit_reached
             (UI_Command_Catalog.md:704), and stale_projection is the 2.0B clause.
       aliases:
         - {command_id: cmd.worktree.provision, kind: compatibility_alias,
-           source: "Commands_System.md:4087 (compatibility spelling, not registered; canonical command cmd.git.worktree.create) and the catalog's candidate compatibility and rejection table (UI_Command_Catalog.md:14253, alias intent, no new row); a thread-scoped caller may use only the existing thread wrapper (DRY_Rules.md:2312; Shared_Integration_Runtime.md:352); UCC-230 non_definition_tokens targets it to this command"}
+           source: "Commands_System.md:4087 (compatibility spelling, not registered; canonical command cmd.git.worktree.create) and the catalog's candidate compatibility and rejection table (UI_Command_Catalog.md:14253, alias intent, no new row); a thread-scoped caller may use only the existing thread wrapper (DRY_Rules.md:2352; Shared_Integration_Runtime.md:352); UCC-230 non_definition_tokens targets it to this command"}
     - command_id: cmd.git.worktree.remove
       ucc_units: [UCC-054, UCC-055]
       command_kind: domain_action
@@ -6661,33 +6661,33 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "GitHub_Integration.md:2217 Worktree Topology Commands destructive confirmation field target_worktree_id (id per the UCC-230 *_id typing); the confirm-surface subject, the same worktree as worktree_id"
+          source: "GitHub_Integration.md:2317 Worktree Topology Commands destructive confirmation field target_worktree_id (id per the UCC-230 *_id typing); the confirm-surface subject, the same worktree as worktree_id"
         expected_path:
           type: path
           required: true
           default: none
           provenance: gap
-          gap_note: "GitHub_Integration.md:2217 names the destructive confirmation field expected_path and makes it required, but states no type. Choice: the vocabulary's path type; FileSafe normalizes it at run time (DL-333 resolution 11)."
+          gap_note: "GitHub_Integration.md:2317 names the destructive confirmation field expected_path and makes it required, but states no type. Choice: the vocabulary's path type; FileSafe normalizes it at run time (DL-333 resolution 11)."
         expected_branch:
           type: string
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
           provenance: gap
-          gap_note: "GitHub_Integration.md:2217 names the destructive confirmation field expected_branch and makes it required, but states no type or bounds. Choice: a branch-name string of 1..256 characters."
+          gap_note: "GitHub_Integration.md:2317 names the destructive confirmation field expected_branch and makes it required, but states no type or bounds. Choice: a branch-name string of 1..256 characters."
         confirmation_text:
           type: string
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
           provenance: gap
-          gap_note: "GitHub_Integration.md:2217 names the destructive confirmation field confirmation_text and makes it required, but states no type or bounds. Choice: a string of 1..256 characters."
+          gap_note: "GitHub_Integration.md:2317 names the destructive confirmation field confirmation_text and makes it required, but states no type or bounds. Choice: a string of 1..256 characters."
         permission_snapshot_id:
           type: id
           required: true
           default: none
           provenance: canon
-          source: "GitHub_Integration.md:2217 Worktree Topology Commands destructive confirmation field permission_snapshot_id (id per the UCC-230 *_id typing)"
+          source: "GitHub_Integration.md:2317 Worktree Topology Commands destructive confirmation field permission_snapshot_id (id per the UCC-230 *_id typing)"
         override_record_ref:
           type: ref
           required: false
@@ -6736,14 +6736,14 @@ command_payload_definitions:
           choice: [not_configured, permission_required, blocked_state_required, stale_projection]
           gap_note: >-
             The Worktree Topology Commands disabled states dirty_worktree, untracked_files, protected_branch,
-            missing_remote, permission_denied and operation_in_progress (GitHub_Integration.md:2217) map through the
+            missing_remote, permission_denied and operation_in_progress (GitHub_Integration.md:2317) map through the
             UCC-230 owner_state_code_map to blocked_state_required, not_configured and permission_required (DL-333
             resolution 6). The choice is the rest: the W-077 locked refusal and the row's other preconditions
             (UI_Command_Catalog.md:705) are blocked_state_required, git_available false is not_configured, and
             stale_projection is the 2.0B clause. Canon conflict: W-078 lets a dirty worktree be removed after a
             confirmation that previews the dirty paths (WorktreeGitImprovement.md:5463), while the row's precondition
             worktree_clean (UI_Command_Catalog.md:705) and GI's dirty_worktree disabled state
-            (GitHub_Integration.md:2217) block it. The definition takes the
+            (GitHub_Integration.md:2317) block it. The definition takes the
             row and GI side, so a dirty worktree is blocked_state_required; the owner doc has not reconciled them.
       aliases: []
     - command_id: cmd.git.worktree.prune
@@ -6898,7 +6898,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             GI-041 makes the approved request the command's subject ("it requires the approved request as its
-            subject"; direct prune execution without an approved request is invalid, GitHub_Integration.md:2600-2604)
+            subject"; direct prune execution without an approved request is invalid, GitHub_Integration.md:2700-2704)
             but names no field. Choice: a ref to the approved prune request that cmd.git.worktree.request_prune
             produced: the value of WorktreeRequestPruneResultV1.prune_request_ref once that request is approved.
         target_worktree_id:
@@ -6906,33 +6906,33 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "GI-041 canonical_text destructive confirmation field target_worktree_id (GitHub_Integration.md:2601; id per the UCC-230 *_id typing)"
+          source: "GI-041 canonical_text destructive confirmation field target_worktree_id (GitHub_Integration.md:2701; id per the UCC-230 *_id typing)"
         expected_path:
           type: path
           required: true
           default: none
           provenance: gap
-          gap_note: "GI-041 names the destructive confirmation field expected_path (GitHub_Integration.md:2601) and its acceptance criterion requires all five, but canon states no type. Choice: the vocabulary's path type; FileSafe normalizes it at run time (DL-333 resolution 11)."
+          gap_note: "GI-041 names the destructive confirmation field expected_path (GitHub_Integration.md:2701) and its acceptance criterion requires all five, but canon states no type. Choice: the vocabulary's path type; FileSafe normalizes it at run time (DL-333 resolution 11)."
         expected_branch:
           type: string
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
           provenance: gap
-          gap_note: "GI-041 names the destructive confirmation field expected_branch (GitHub_Integration.md:2601) but states no type or bounds. Choice: a branch-name string of 1..256 characters."
+          gap_note: "GI-041 names the destructive confirmation field expected_branch (GitHub_Integration.md:2701) but states no type or bounds. Choice: a branch-name string of 1..256 characters."
         confirmation_text:
           type: string
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
           provenance: gap
-          gap_note: "GI-041 names the destructive confirmation field confirmation_text (GitHub_Integration.md:2601) but states no type or bounds. Choice: a string of 1..256 characters."
+          gap_note: "GI-041 names the destructive confirmation field confirmation_text (GitHub_Integration.md:2701) but states no type or bounds. Choice: a string of 1..256 characters."
         permission_snapshot_id:
           type: id
           required: true
           default: none
           provenance: canon
-          source: "GI-041 canonical_text destructive confirmation field permission_snapshot_id (GitHub_Integration.md:2601; id per the UCC-230 *_id typing)"
+          source: "GI-041 canonical_text destructive confirmation field permission_snapshot_id (GitHub_Integration.md:2701; id per the UCC-230 *_id typing)"
         override_record_ref:
           type: ref
           required: false
@@ -6979,7 +6979,7 @@ command_payload_definitions:
         - key: disabled_reason_codes
           choice: [not_configured, permission_required, blocked_state_required, stale_projection]
           gap_note: >-
-            GI-041's six disabled states (GitHub_Integration.md:2602-2603) map through the UCC-230
+            GI-041's six disabled states (GitHub_Integration.md:2702-2703) map through the UCC-230
             owner_state_code_map to blocked_state_required, not_configured and permission_required (DL-333
             resolution 6). The choice is the rest: the W-077 locked refusal and the row's other preconditions
             (UI_Command_Catalog.md:706) are blocked_state_required, git_available false is not_configured, and
@@ -7007,7 +7007,7 @@ command_payload_definitions:
           required: false
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity safe_point_id; safe worktree action commands carry optional safe_point_id (UI_Command_Catalog.md:720); GI-041 gates the request form on safe-point awareness (GitHub_Integration.md:2598), and the cmd.git.worktree.prune that executes the request carries the same optional field"
+          source: "overlay UCC-054..UCC-055 optional identity safe_point_id; safe worktree action commands carry optional safe_point_id (UI_Command_Catalog.md:720); GI-041 gates the request form on safe-point awareness (GitHub_Integration.md:2698), and the cmd.git.worktree.prune that executes the request carries the same optional field"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -7031,7 +7031,7 @@ command_payload_definitions:
           choice: [not_configured, permission_required, blocked_state_required, stale_projection]
           gap_note: >-
             Canon names no disabled set for this row. GI-041 gates the request form on ownership badges, admin
-            override policy, prune protection defaults and safe-point awareness (GitHub_Integration.md:2597-2598);
+            override policy, prune protection defaults and safe-point awareness (GitHub_Integration.md:2697-2698);
             those map to permission_required and blocked_state_required. not_configured covers git_available false
             (UI_Command_Catalog.md:707), and stale_projection is the 2.0B clause.
       aliases: []
@@ -7678,7 +7678,7 @@ command_payload_definitions:
             to release; canon does not say whether release is offered on one.
       aliases:
         - {command_id: cmd.worktree.release, kind: compatibility_alias,
-           source: "Commands_System.md:4088 (compatibility spelling, not registered; canonical command cmd.git.worktree.release) and the catalog's candidate compatibility and rejection table (UI_Command_Catalog.md:14253, alias intent, no new row); DRY_Rules.md:2313 and Shared_Integration_Runtime.md:353 normalize it to this command; UCC-230 non_definition_tokens targets it to this command"}
+           source: "Commands_System.md:4088 (compatibility spelling, not registered; canonical command cmd.git.worktree.release) and the catalog's candidate compatibility and rejection table (UI_Command_Catalog.md:14253, alias intent, no new row); DRY_Rules.md:2353 and Shared_Integration_Runtime.md:353 normalize it to this command; UCC-230 non_definition_tokens targets it to this command"}
     - command_id: cmd.git.worktree.lock
       ucc_units: [UCC-054]
       command_kind: domain_action
@@ -7812,7 +7812,7 @@ command_payload_definitions:
         receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "dispatch receipt (catalog.git_worktree_prune)"}
     WorktreeRequestPruneResultV1:
       fields:
-        prune_request_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "the produced prune request, the subject cmd.git.worktree.prune executes once approved, where it is the value of approved_request_ref (GI-041, GitHub_Integration.md:2599-2600)"}
+        prune_request_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "the produced prune request, the subject cmd.git.worktree.prune executes once approved, where it is the value of approved_request_ref (GI-041, GitHub_Integration.md:2699-2700)"}
         receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "dispatch receipt (catalog.git_worktree_request_prune)"}
     WorktreeReuseResultV1:
       fields:
