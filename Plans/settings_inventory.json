@@ -15190,11 +15190,49 @@
     },
     {
       "id":
+        "code.editing.lsp-disable-automatic-downloads",
+      "label":
+        "Disable automatic LSP server downloads",
+      "desc":
+        "Stops Puppet Master from automatically downloading or updating language servers. Installed servers stay available.",
+      "type": "toggle",
+      "default": false,
+      "scope": [
+        "global"
+      ],
+      "tier": "advanced",
+      "search": [
+        "language server",
+        "LSP",
+        "automatic downloads",
+        "server updates",
+        "offline"
+      ],
+      "related_features": [
+        "editor"
+      ],
+      "layering": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere"
+        ],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "computer": "same_for_you",
+          "device": "same_for_you",
+          "project": "same_for_you"
+        }
+      }
+    },
+    {
+      "id":
         "code.editing.lsp-server-catalog",
       "label":
         "Language servers",
       "desc":
-        "Per-language server list: enable or disable each, and override its launch command, file types, environment, and startup options.",
+        "See each server's installation source, version, and status. Enable or disable servers, or override their launch settings.",
       "type": "list",
       "default": "Built-in catalog",
       "scope": [

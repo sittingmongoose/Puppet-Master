@@ -63566,3 +63566,63 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Commands_System.md#CS-030, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-100, ContractName:Plans/Models_System.md#MS-102, ContractName:Plans/Models_System.md#MS-135
+
+### DL-2605 - C-FIX79C: Puppet Master downloads pinned language servers
+
+```yaml
+plan_unit_id: DL-2605
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  On 2026-11-26 at 03:59 UTC, Jared answered card C-FIX79C with C. This closes the owner choice for registry line 1341. Puppet Master downloads clangd, marksman, taplo and slint-lsp from pinned upstream release assets. It also acquires the npm-distributed language servers named in LSPSupport §3.2 into its own Node package folder when a compatible Node runtime is already present.
+
+  The catalog assigns the install strategy independently of support classification and initial enablement. A selectable server that starts off must be enabled before it can download. The Rust catalog entry still discovers rust-analyzer on PATH and Go's gopls remains user-provisioned. Puppet Master does not install Node or mutate project packages. Section 3.4.1 governs the exact release manifest pins, per-platform SHA-256, npm integrity lockfiles, install paths, verified activation, rollback, and discovery fallback. The global Disable automatic LSP server downloads setting governs both first acquisition and automatic updates, and the Language servers rows report the effective source, progress and result.
+gui_related: true
+gui_classification_reason: The decision makes the download toggle operative and determines what the Language Servers settings show.
+split_recommended: false
+depends_on: [LSPS-008, LSPS-037, LSPS-059, SSYS-040]
+unblocks: []
+acceptance_criteria:
+- Every built-in catalog row names a strategy and the managed rows name their exact upstream repository or npm package.
+- Every managed install uses the verified release pin and integrity data on the selected host. An npm install requires a compatible Node runtime already present.
+- Turning on Disable automatic LSP server downloads prevents new automatic installs and updates while retaining working installed servers.
+- Offline, integrity failure, unsupported platform and missing Node lead to eligible installed or PATH fallback and specific guidance if no server can attach.
+- No earlier Decision_Log entry is rewritten.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py lint-path-refs
+risk_class: owner_choice_drift
+reasoning_tier: medium
+context_scope: closure_reaudit_fix79_lsp_downloads
+implementation_surfaces:
+- Plans/LSPSupport.md
+- Plans/Settings_System.md
+- Plans/settings_inventory.json
+node_compile_hint:
+  mode: owner_decision_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/fix79/card3/card.json, SHA-256 46e8570b660b1fc490590ee199a9e376444ea67184eb48d19177955c1de18f8a"
+- "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/LEAD-STATE.md (2026-11-25 11:02 PM EST entry, signed answer at 03:59 UTC and pm-mail 1126040002)"
+preserved_exact_tokens:
+- DL-2605
+- C-FIX79C
+- clangd
+- marksman
+- taplo
+- slint-lsp
+- rust-analyzer
+- Disable automatic LSP server downloads
+negative_constraints:
+- Do not auto-install rust-analyzer, Node or project packages.
+- Do not execute an unpinned or integrity-rejected managed download.
+- Do not rewrite earlier decision entries or claim runtime execution from these plan edits.
+owner_hints:
+- Plans/Decision_Log.md
+- Plans/LSPSupport.md
+- Plans/Settings_System.md
+```
+
+ContractRef: ContractName:Plans/LSPSupport.md#LSPS-008, ContractName:Plans/LSPSupport.md#LSPS-037, ContractName:Plans/LSPSupport.md#LSPS-059, ContractName:Plans/Settings_System.md#SSYS-040, ContractName:Plans/settings_inventory.json
