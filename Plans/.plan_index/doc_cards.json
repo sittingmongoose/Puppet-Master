@@ -638,7 +638,7 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 33854,
+      "line_count": 33857,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 525,
       "plan_unit_ids": [
@@ -1530,7 +1530,7 @@
         "wrong_chat_owner_or_unproved_dispatch",
         "xss_ssrf_url_smuggling_or_math_dos"
       ],
-      "sha256": "f8d1ba85b68d815aa3bc1d39db63e7a1ec013f070ade0539bfce30ef99c08b6a",
+      "sha256": "85c7c710c2dae5df1e6a2c77cc8f04e0c853b52853082d4457e03c4fb9c68678",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 521,
@@ -4450,7 +4450,7 @@
         "future command palette",
         "future command parser"
       ],
-      "line_count": 11310,
+      "line_count": 11312,
       "path": "Plans/Commands_System.md",
       "plan_unit_count": 108,
       "plan_unit_ids": [
@@ -4665,7 +4665,7 @@
         "view_state_command_inflation",
         "web_slash_family_drift"
       ],
-      "sha256": "36a25e001dd97fff1560bf041b2c8b5ca5255daae18d45736ae1967dab3bf3c9",
+      "sha256": "ee28c69294e427d0667c2f1addb8b76e2e5fa013d8156f767b8e18ff4a82a1c9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 108
@@ -9778,7 +9778,7 @@
         "future image source resolver",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 15355,
+      "line_count": 15374,
       "path": "Plans/FileSafe.md",
       "plan_unit_count": 213,
       "plan_unit_ids": [
@@ -10031,7 +10031,7 @@
         "unrecoverable_mutation",
         "unsafe_host_side_effect"
       ],
-      "sha256": "71445d627ac4db3042d0ba37f1d17b701496942d9972dcd09bfcc94dee617562",
+      "sha256": "3e882a0378b7f303bea75237ccea052aa845f958b7e7291a76b24feeefae7a95",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 213
@@ -10208,7 +10208,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 54867,
+      "line_count": 54871,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 680,
       "plan_unit_ids": [
@@ -11039,7 +11039,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "0737f9c7548e6723552109b18a980ef3bac1ed8bf8b11f41f3e801801596f4db",
+      "sha256": "7c52aa35b4fb3b308c17b6cf275e1f2f81fab5151885cf7a52d3ae688fdbe180",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 671,
@@ -11693,7 +11693,7 @@
         "Plans/event_family_registry.json",
         "future remote Git cache adapter"
       ],
-      "line_count": 2726,
+      "line_count": 2749,
       "path": "Plans/GitHub_Integration.md",
       "plan_unit_count": 42,
       "plan_unit_ids": [
@@ -11753,7 +11753,7 @@
         "p1_security_release_supply_chain_hardening",
         "remote_cache_consumer_drift"
       ],
-      "sha256": "806c13663546f8a6c2a800f8417e88642b2c888539efd9f70d0e5274fe2829e3",
+      "sha256": "6b9df4af93605f51a943490830ba1513b619a4f599d676d8e6f02b79a18a704b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 42
@@ -12556,7 +12556,7 @@
         "migration_lineage",
         "owner_drift"
       ],
-      "sha256": "15294ce379e7ee1c44b4c73f145526d2a0938dad9c3532a5e09e816ba1c3ddd5",
+      "sha256": "ef77d6a5fd1af588de375741a0a531c1d20b3510cab95821e02447a18a3a0f40",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 34
@@ -25128,7 +25128,7 @@
         "future Source Control worktree manager",
         "future worktree lock manager"
       ],
-      "line_count": 7795,
+      "line_count": 7800,
       "path": "Plans/WorktreeGitImprovement.md",
       "plan_unit_count": 85,
       "plan_unit_ids": [
@@ -25242,7 +25242,7 @@
         "worktree_panel_filter_drift",
         "worktree_row_presentation_drift"
       ],
-      "sha256": "0c1b687ef18e4d7f81250416ac53304eeb219c6257bf4adb8121be4cd9fe98c8",
+      "sha256": "3312b3df85bb8bcda384c2903870fba7081fc8467e0e7bc9b1e8b00e37349ead",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 85
@@ -25277,7 +25277,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-26T01:56:19Z",
+  "generated_at_utc": "2026-11-26T02:05:47Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

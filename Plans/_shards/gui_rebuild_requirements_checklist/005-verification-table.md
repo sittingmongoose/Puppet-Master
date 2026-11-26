@@ -4,7 +4,7 @@ Source: `Plans/GUI_Rebuild_Requirements_Checklist.md`
 
 Source lines: L58-L76
 
-Source SHA256: `15294ce379e7ee1c44b4c73f145526d2a0938dad9c3532a5e09e816ba1c3ddd5`
+Source SHA256: `ef77d6a5fd1af588de375741a0a531c1d20b3510cab95821e02447a18a3a0f40`
 
 ---
 
@@ -16,7 +16,7 @@ Source SHA256: `15294ce379e7ee1c44b4c73f145526d2a0938dad9c3532a5e09e816ba1c3ddd5
 | Widget hostability | Dashboard, Usage, and Orchestrator `Progress` only | Fail if `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, or `Ledger` are still treated as widgetized | `pass` | `Plans/Widget_System.md#WS-010`; `Plans/Widget_System.md#section=Progress-only widget hostability` |
 | Runtime approval identity | blocked-episode identity with `run_id`, `node_id`, `blocked_sequence`, `attempt_id?`, `allowed_action_ids[]` | Fail if `request_id`, `tier_id`, or `allowed_actions[]` remain primary | `pass` | `Plans/Contracts_V0.md#CV-029` (`allowed_actions[]`, `request_id`, `tier_id` compatibility or lineage only) |
 | Runtime identity display | inherited/overridden, requested/effective, honored/skipped/clamped | Fail if compact or detailed surfaces collapse these states | `pass` | `Plans/Personas.md#section=10. Persona Runtime Contract Expansion (2026-03-06)` (the three pairs stay distinct); `Plans/Contracts_V0.md#section=Requested/effective runtime identity field split` |
-| Projection state | `projection_freshness` and `projection_health` | Fail if trust is still modeled as one overloaded field | `pass` | `Plans/Contracts_V0.md#CV-048`; `Plans/Contracts_V0.md#section=Runtime lineage, route, and blocked-state closure` (`projection_freshness` and `projection_health` carried as separate fields) |
+| Projection state | `projection_freshness` and `projection_health` | Fail if trust is still modeled as one overloaded field | `fail` (2026-11-26) | `Plans/FinalGUISpec.md#section=15.6 Durable Storage Recovery, Continuity, and Trust Surfaces (Case L)` renders separate freshness and health enums. `Plans/Contracts_V0.md#CV-048` still defines one combined health vocabulary in its acceptance criteria. |
 | Usage correlation | `usage_event_ref` and runtime attribution fields | Fail if Orchestrator/Graph/Usage still correlate primarily by `tier_id` | `pass` | `Plans/Contracts_V0.md#CV-059` (tier/run/thread filters are degraded compatibility, not primary identity) |
 | Source-open behavior | `route_target`, `OpenSubject`, `OpenFile` split | Fail if path-only open is still treated as universal | `pass` | `Plans/Contracts_V0.md`, section 7.3 `route_target`; `Plans/Contracts_V0.md#section=7.4 OpenSubject`; `Plans/Contracts_V0.md#section=route_target, OpenSubject, and command normalization` (FileManager `OpenFile` stays narrow and path-based) |
 | Source Control boundary | narrow worktree-first Source Control; operational lane/package/seam Orchestrator | Fail if Source Control becomes lane-first canon or Orchestrator duplicates raw worktree inventory | `pass` | `Plans/Crosswalk.md#section=3.13B Rewrite-era owner-routing safety` (Source Control `worktree-first`, Orchestrator lane/package/seam first); `Plans/Crosswalk.md#section=3.4 Source Control and lane/worktree ownership` |

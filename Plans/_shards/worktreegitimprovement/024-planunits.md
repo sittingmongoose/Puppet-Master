@@ -2,9 +2,9 @@
 
 Source: `Plans/WorktreeGitImprovement.md`
 
-Source lines: L938-L4928
+Source lines: L939-L4930
 
-Source SHA256: `0c1b687ef18e4d7f81250416ac53304eeb219c6257bf4adb8121be4cd9fe98c8`
+Source SHA256: `3312b3df85bb8bcda384c2903870fba7081fc8467e0e7bc9b1e8b00e37349ead`
 
 ---
 
@@ -2720,7 +2720,7 @@ plan_unit_id: W-050
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: "Conflict worktree persistence is durable from the initial release: each unresolved merge conflict is a typed worktree_conflict_state.v1:{project_id}:{worktree_id} row in the canonical redb family (SP-340) with no JSON state file (SP-339), cleared only on resolve or explicit discard; any in-memory HashSet<node_id> is a per-session projection of those rows and never the authority (the former in-memory-only initial release option is retired), and conflict cleanup is never conflated with normal worktree cleanup."
+canonical_text: "Conflict worktree persistence is durable from the initial release: each unresolved merge conflict requires a typed worktree_conflict_state.v1:{project_id}:{worktree_id} row. Registration in the canonical redb family (SP-340 and storage-plan section 2.3.1) is an outstanding release prerequisite specified in section 7.4. There is no JSON state file (SP-339). Clear the row only on verified resolution or explicit discard. An in-memory HashSet<node_id> is a per-session projection of those rows and never the authority. The former in-memory-only initial release option is retired, and conflict cleanup is never conflated with normal worktree cleanup."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
 split_recommended: false
@@ -2737,6 +2737,7 @@ unblocks: []
 acceptance_criteria:
 - "After a merge conflict on node N, restarting the app and re-running N does not remove or recreate N's worktree: the worktree_conflict_state.v1 row is read at startup or project open and reuse stays blocked until resolve or explicit discard deletes the row."
 - "Clearing the in-memory projection (new session) without deleting the worktree_conflict_state.v1 row leaves the conflict visible and reuse blocked; ordinary worktree cleanup never deletes a worktree whose row exists."
+- "A missing path or gitdir and an unavailable durable conflict lookup each leave reuse blocked until the owner verifies that no unresolved conflict remains."
 - "W-050 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
 - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
@@ -3037,7 +3038,7 @@ plan_unit_id: W-056
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: "Resolved worktree decisions require durable conflict persistence as typed worktree_conflict_state.v1:{project_id}:{worktree_id} rows in the canonical redb family (SP-340), with the HashSet<node_id> active tracking of conflict worktrees kept only as a per-session projection rebuilt from those rows and never the authority (section 7.14 Worktree item 3, section 7.4), plus detached HEAD merge handling, recovery timing, and Windows-safe path behavior for worktree lifecycle implementation."
+canonical_text: "Resolved worktree decisions require durable conflict persistence as typed worktree_conflict_state.v1:{project_id}:{worktree_id} rows in the canonical redb family (SP-340), with the HashSet<node_id> active tracking of conflict worktrees kept only as a per-session projection rebuilt from those rows and never the authority (section 7.14 Worktree item 3, section 7.4), plus detached HEAD merge handling, recovery timing, and Windows-safe path behavior for worktree lifecycle implementation. Registering that key and value shape in Plans/storage_value_registry.json is an outstanding prerequisite (section 7.4) before the initial release enables the path."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
 split_recommended: false

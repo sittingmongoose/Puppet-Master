@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L27094-L27229
+Source lines: L27094-L27232
 
-Source SHA256: `0737f9c7548e6723552109b18a980ef3bac1ed8bf8b11f41f3e801801596f4db`
+Source SHA256: `7c52aa35b4fb3b308c17b6cf275e1f2f81fab5151885cf7a52d3ae688fdbe180`
 
 ---
 
@@ -112,12 +112,15 @@ canonical_text: >-
   Numbering Supersession", not a rename. The two `## 15.` chapters (`## 15. Persistence` and `## 15. Promoted widget
   catalog (web tools, planning, question, operation cards)`) and the two `#### 7.4.2` headings (`#### 7.4.2 Indexing
   settings subsection` and `#### 7.4.2 Agent Config Skills tab`) stay as declared aliases, and no heading is renamed.
-  Citations into any of them use the full heading name; a bare §15 or §15.n means the Persistence chapter, and a bare
-  §7.4.2 is not cited. Renumbering is left to a scheduled structural cleanup. Applied 2026-11-25: the bare §7.4.2
+  Citations into any of them use the full heading name, and a bare §7.4.2 is not cited. A bare §15 or §15.n already in
+  the plans resolves to the heading its own context names (an adjacent ContractRef or the heading title written beside
+  it, as in §15.3 Tantivy Indices); only a bare citation whose context names neither chapter's heading means the
+  Persistence chapter. Renumbering is left to a scheduled structural cleanup. Applied 2026-11-25: the bare §7.4.2
   citations in 00-plans-index, this document, OpenCode_Coverage_Matrix and LSPSupport now name the full heading; the
   Settings > LSP ones never meant either 7.4.2 heading and now cite `§7.4.4 Settings (Unified) panel specification`
   (its LSP row). Where a preserved exact token pins the old wording (the LSPSupport checklist lines), the bare §7.4.2
-  stays inside that token with the full heading named beside it.
+  stays inside that token with the full heading named beside it. The chat visualizer cites `15.6 Mermaid and inline
+  visualizer widgets` by name, distinct from `15.6 Durable Storage Recovery, Continuity, and Trust Surfaces (Case L)`.
 gui_related: true
 gui_classification_reason: Numbering deconfliction affects user-visible GUI spec sections, settings sections, and cross-reference anchors.
 depends_on: [F3-387]

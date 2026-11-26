@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L45229-L47287
+Source lines: L45233-L47291
 
-Source SHA256: `0737f9c7548e6723552109b18a980ef3bac1ed8bf8b11f41f3e801801596f4db`
+Source SHA256: `7c52aa35b4fb3b308c17b6cf275e1f2f81fab5151885cf7a52d3ae688fdbe180`
 
 ---
 
@@ -1554,7 +1554,7 @@ negative_constraints:
 compatibility_only_notes:
   - "Earlier text, lineage only (DL-180, 2026-10-09): Several dashboard tabs may be open, each a board with its own widget layout; `dashboard:home` is the Home dashboard, pinned in the default layout, and the \"+\" menu's Dashboard row lists the project's boards. The board's columns follow the dashboard tab's own width, never the window. Hosting, the boards, the per-board widget layout `widget_layout:v1:dashboard:<board_id>`, the catalogue and the move of today's one dashboard into `dashboard:home` are Plans/Widget_System.md#WS-030's. The Usage board engine runs several boards at once after the Usage port lands (this thread family does that refactor), and the per-kind widget presets tested at 400, 550 and 700 px are Plans/Widget_System.md#WS-017's one per-kind table (DL-176)."
   - "Earlier text, lineage only (R35, panels NUMBERS 6026fa8432): Below 200 px height the shared-holder note hides its icon and sub-line. Add widget is a 24 px target, about 98-119 px with its label and 24 × 24 px below 520 px; Show it here and Open transcript use 32 px document actions. Text formerly 10 px or 9 px inside the board is 11 px; compact status labels are 11/16 px with 10 px glyphs, lane dots 8 px and agent bars 4 px high with a 1 px radius. Card buttons have an 8 px radius and header Add widget 6 px, both 0 in Retro and NieR. Shared grid content has one holder: explicit activate or reveal claims it; an open while another grid is visible shows the note; hiding hands over to another visible grid and closing parks it. Widget-grid columns, reset sizes and reset-save timing are Plans/Widget_System.md#WS-030's. These described the old Home widgets moved between dashboard tabs, which left Home with DL-186."
-  - "The concept keeps custom dashboard names in pm.home.dashboards:v1:<project>, names its engine and hooks PMU.boards and PMW.dashboard, and gives its preset record a schema id of its own; those are concept lineage. `widget_presets:v1` is the product key for the person's presets (section 15.1), and the records are WS-030's and storage-plan's."
+  - "The concept keeps custom dashboard names in pm.home.dashboards:v1:<project>, names its engine and hooks PMU.boards and PMW.dashboard, and gives its preset record a schema id of its own; those are concept lineage. `widget_presets:v1` is the product key for the person's presets (15.1 redb Schema), and the records are WS-030's and storage-plan's."
   - "The concept's agents, their models and progress, and its build-failure notes for a missing board engine are demo data or build lineage, not canon."
 stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds dashboard tab presentation dimensions and shared-holder behaviour."

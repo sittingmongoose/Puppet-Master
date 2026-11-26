@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29722-L29798
+Source lines: L29725-L29801
 
-Source SHA256: `0737f9c7548e6723552109b18a980ef3bac1ed8bf8b11f41f3e801801596f4db`
+Source SHA256: `7c52aa35b4fb3b308c17b6cf275e1f2f81fab5151885cf7a52d3ae688fdbe180`
 
 ---
 
@@ -49,7 +49,7 @@ Repairs rows `sfk-66fc2872ed5f759cc6aaa0f5`, `sfk-832d3cce203e9e0009e0b90b`, and
 
 - The former 19-entry Settings table remains owner-routing and migration lineage only. F3-432 owns the search-first visible surface; Catalog, Sync, SSH, and Debug route to their named subsections or owner panels rather than becoming new tabs.
 - `Settings > Terminal` is owned by the terminal settings subsection; `Agent Config Skills` is owned by Agent Config and Skills owner docs.
-- The duplicate promoted-widget `## 15` heading is superseded by the named promoted-widget addendum anchor. Any "Section 15 terminal-core architecture" reference resolves to the terminal-core screen/buffer section, not the promoted-widget catalog.
+- The duplicate promoted-widget `## 15` heading is superseded by the named promoted-widget addendum anchor. Any "Section 15 terminal-core architecture" reference resolves to the terminal-core screen/buffer section, not the promoted-widget catalog. Clarified 2026-11-26 (DL-2602): no separate addendum anchor exists; the promoted-widget heading stays as the declared alias below and is cited by its full heading name. The terminal-core screen/buffer section is `Terminal-Core Section Anchor`, and its model is SMPFS-073 (Native Buffer Render Performance Model).
 - New citations must use explicit heading names instead of bare `§7.4` or `§15` when more than one migration-era alias exists.
 - Declared aliases (2026-11-24, DL-2602): `## 15. Persistence` and `## 15. Promoted widget catalog (web tools, planning, question, operation cards)` share the number 15, and `#### 7.4.2 Indexing settings subsection` and `#### 7.4.2 Agent Config Skills tab` share 7.4.2. All four headings stay as they are; citations use the full heading name, and renumbering waits for a scheduled structural cleanup (F3-389).
 

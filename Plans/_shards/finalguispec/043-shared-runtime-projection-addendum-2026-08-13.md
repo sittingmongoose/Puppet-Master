@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L5455-L27081
 
-Source SHA256: `0737f9c7548e6723552109b18a980ef3bac1ed8bf8b11f41f3e801801596f4db`
+Source SHA256: `7c52aa35b4fb3b308c17b6cf275e1f2f81fab5151885cf7a52d3ae688fdbe180`
 
 ---
 
@@ -10667,7 +10667,7 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Live terminal rendering follows the Section 15 terminal-core architecture: high-frequency
+  Live terminal rendering follows the Section 15 terminal-core architecture (SMPFS-073, Native Buffer Render Performance Model): high-frequency
   mutable grid, native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer
   ingestion and processing, while DOM/React/webview-style document-UI terminal cores are
   non-ship. On the web GUI, the terminal grid is drawn as a fixed, reused set of visible page-text
@@ -11926,7 +11926,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Extremely large datasets use a custom `Model` trait backed by a ring buffer; live terminal
-  rendering is excluded from the normal list rule and follows the Section 15 screen/buffer,
+  rendering is excluded from the normal list rule and follows the Section 15 screen/buffer model (SMPFS-073, Native Buffer Render Performance Model),
   diff-painting, off-UI-thread PTY/buffer architecture, while only bounded terminal transcript
   or plain-log projections use `VecModel`/`ListView`.
 gui_related: true
@@ -12471,7 +12471,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  On startup, the GUI restores layout, theme, dashboard widget layout, activity bar order, editor workspace and per-file dirty buffers, active project-facing shell state, historical hot-reload state, project onboarding/tour state, and safe detached-window coordinates from canonical persistence keys. Resettable corruption is secured before a disclosed reset; canonical editor loss uses mandatory-backup recovery and never becomes a false empty project. Amended 2026-10-09 (DL-180): Home's layout restores from `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (SP-330), the only Home layout authority, with `layout:v1` holding only side-panel dock state and the popped-out chat window's geometry; each dashboard board's widget layout restores from `widget_layout:v1:dashboard:<board_id>` (WS-030); section 15.4 gives the order. Amended 2026-10-10 (DL-186): each dashboard board restores from its per-project key `widget_layout:v1:<project_id>:<board_id>` (WS-030); the per-board key above was never written, and `widget_layout:v1:dashboard` converts into no board. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
+  On startup, the GUI restores layout, theme, dashboard widget layout, activity bar order, editor workspace and per-file dirty buffers, active project-facing shell state, historical hot-reload state, project onboarding/tour state, and safe detached-window coordinates from canonical persistence keys. Resettable corruption is secured before a disclosed reset; canonical editor loss uses mandatory-backup recovery and never becomes a false empty project. Amended 2026-10-09 (DL-180): Home's layout restores from `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (SP-330), the only Home layout authority, with `layout:v1` holding only side-panel dock state and the popped-out chat window's geometry; each dashboard board's widget layout restores from `widget_layout:v1:dashboard:<board_id>` (WS-030); 15.4 Startup Restore gives the order. Amended 2026-10-10 (DL-186): each dashboard board restores from its per-project key `widget_layout:v1:<project_id>:<board_id>` (WS-030); the per-board key above was never written, and `widget_layout:v1:dashboard` converts into no board. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines startup restoration of visible shell state.
@@ -13169,7 +13169,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Subscriptions based on 50ms polling are replaced with event-driven `invoke_from_event_loop`;
-  live terminal rendering remains under the Section 15 terminal-core architecture and is not a
+  live terminal rendering remains under the Section 15 terminal-core architecture (SMPFS-073, Native Buffer Render Performance Model) and is not a
   normal text-editor/list widget; dynamic UI scaling uses Slint native global/window scale
   factor only.
 gui_related: true
@@ -13653,7 +13653,7 @@ canonical_text: >-
   the performance of many visible terminal tabs: each terminal tab holds one session with one PTY and one bounded
   ring buffer (SMPFS-180), several terminals show at once only as several panels (F3-630), a hidden terminal tab
   stops its animation work (F3-635, F3-643), and there is no four-pane grid to budget for. The performance targets
-  for DL-035's own engine are Section 15's to set.
+  for DL-035's own engine are owned by SMPFS-073 (Native Buffer Render Performance Model).
 gui_related: true
 gui_classification_reason: >-
   This unit preserves one row of the user-visible Slint migration risks and mitigations table.
