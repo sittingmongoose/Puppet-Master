@@ -653,7 +653,7 @@ def publish_main(root: Path, lease: str, commit: str) -> int:
     if not targets:
         raise Refusal(f"no push targets are configured for {root}: add a remote before publishing")
     failures: list[str] = []
-    pushed: list[tuple[list[str], str]] = []
+    pushed: list[tuple[str, str]] = []
     for names, url in targets:
         label = f"remote {', '.join(names)} ({url})"
         result = git(root, "push", f"--force-with-lease={MAIN_REF}:{lease}", url, f"{commit}:{MAIN_REF}",
@@ -662,17 +662,32 @@ def publish_main(root: Path, lease: str, commit: str) -> int:
             failures.append(f"{label}: push exited {result.returncode}"
                             + (f": {result.stderr.strip()}" if result.stderr.strip() else ""))
         else:
-            pushed.append((names, url))
-    for names, url in pushed:
-        label = f"remote {', '.join(names)} ({url})"
-        tip = pushed_main(root, url)
+            pushed.append((label, url))
+    verified: list[str] = []
+    for label, url in pushed:
+        try:
+            tip = pushed_main(root, url)
+        except Refusal as exc:
+            failures.append(f"{label}: could not verify main: {exc}")
+            continue
         if tip != commit:
             failures.append(f"{label}: main is {tip or 'missing'}; expected {commit}")
+        else:
+            verified.append(f"Published {tip} to {label}: main verified")
+    if not failures:
+        try:
+            update_publish_tracking_refs(root, {name for names, _ in targets for name in names}, commit)
+        except Refusal as exc:
+            failures.append(f"could not update local tracking refs: {exc}")
     if failures:
-        raise Refusal("publishing the landed commit to every push target failed:\n" + "\n".join(failures))
-    update_publish_tracking_refs(root, {name for names, _ in targets for name in names}, commit)
-    for names, url in targets:
-        say(f"Published {commit} to remote {', '.join(names)} ({url}): main verified")
+        report = ["publishing the landed commit to every push target failed:", *failures]
+        if verified:
+            report.extend(["Verified targets:", *verified,
+                           "the landed targets are published; fix the failing one and rerun publish "
+                           "with the same arguments (landed targets report up to date)"])
+        raise Refusal("\n".join(report))
+    for line in verified:
+        say(line)
     return 0
 
 

@@ -3427,6 +3427,28 @@ class PublishAllTargetsTests(unittest.TestCase):
         self.assertEqual(self.tip(self.origin), self.head)
         self.assertEqual(self.tip(nas), diverged)
 
+    def test_partial_publish_refusal_lists_verified_and_failed_targets(self):
+        nas = self.two_push_urls()
+        rejected = self.bare("rejected.git", self.base)
+        self.git(self.shared, "remote", "add", "rejecting", str(rejected))
+        hook = self.put(rejected, "hooks/pre-receive", "#!/bin/sh\nexit 1\n")
+        hook.chmod(0o755)
+        self.git(rejected, "config", "core.hooksPath", str(hook.parent))
+        errors = io.StringIO()
+
+        with redirect_stderr(errors):
+            self.assertEqual(land.main(["publish", "--repo", str(self.shared),
+                                        "--lease", self.base, "--commit", self.head]), 3)
+
+        report = errors.getvalue()
+        for target in (self.origin, nas):
+            self.assertIn(f"Published {self.head} to remote origin ({target}): main verified", report)
+            self.assertEqual(self.tip(target), self.head)
+        self.assertIn(f"remote rejecting ({rejected}): push exited 1", report)
+        self.assertIn("the landed targets are published; fix the failing one and rerun publish "
+                      "with the same arguments (landed targets report up to date)", report)
+        self.assertEqual(self.tip(rejected), self.base)
+
     def test_every_push_carries_the_same_safety_lease(self):
         nas = self.two_push_urls()
         real = land.git
