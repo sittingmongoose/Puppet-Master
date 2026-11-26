@@ -8,6 +8,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shlex
 import shutil
 import signal
 import socket
@@ -3448,6 +3449,32 @@ class PublishAllTargetsTests(unittest.TestCase):
         self.assertIn("the landed targets are published; fix the failing one and rerun publish "
                       "with the same arguments (landed targets report up to date)", report)
         self.assertEqual(self.tip(rejected), self.base)
+
+    def test_behind_target_refuses_with_a_leased_catch_up_command(self):
+        nas = self.bare("behind mirror.git", self.base)
+        self.git(self.shared, "remote", "add", "truenas-backup", str(nas))
+        self.git(self.origin, "update-ref", land.MAIN_REF, self.head, self.base)
+        self.git(self.shared, "merge", "--ff-only", self.head)
+        self.git(self.shared, "commit", "--allow-empty", "-m", "next landing")
+        landed = land.revision(self.shared, land.MAIN_REF)
+
+        with self.assertRaises(land.Refusal) as refusal:
+            land.publish_main(self.shared, self.head, landed)
+
+        self.assertEqual(self.tip(self.origin), landed)
+        self.assertEqual(self.tip(nas), self.base)
+        self.assertIn(f"remote truenas-backup ({nas}): main at {self.base} is behind "
+                      f"publication lease {self.head}", str(refusal.exception))
+        repair = next(line for line in str(refusal.exception).splitlines() if line.startswith("git -C "))
+        args = shlex.split(repair)
+        self.assertEqual(args, ["git", "-C", str(self.shared), "push",
+                                f"--force-with-lease={land.MAIN_REF}:{self.base}",
+                                "--", str(nas), f"{self.head}:{land.MAIN_REF}"])
+
+        land.command(args)
+        self.assertEqual(self.tip(nas), self.head)
+        self.assertEqual(land.publish_main(self.shared, self.head, landed), 0)
+        self.assertEqual(self.tip(nas), landed)
 
     def test_every_push_carries_the_same_safety_lease(self):
         nas = self.two_push_urls()

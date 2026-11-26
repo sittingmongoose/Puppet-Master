@@ -636,6 +636,20 @@ def update_publish_tracking_refs(root: Path, names: Collection[str], commit: str
         git(root, "update-ref", "--no-deref", ref, commit, previous or "0" * len(commit))
 
 
+def behind_publish_target(root: Path, url: str, lease: str) -> Optional[str]:
+    """Suggest a manual fast-forward only when the failed target is provably behind the lease."""
+    try:
+        tip = pushed_main(root, url)
+        if tip is None or tip == lease or not is_ancestor(root, tip, lease):
+            return None
+    except Refusal:
+        # An unreachable target or an unknown tip cannot be classified as behind.
+        return None
+    repair = shlex.join(["git", "-C", str(root.resolve()), "push", f"--force-with-lease={MAIN_REF}:{tip}",
+                         "--", url, f"{lease}:{MAIN_REF}"])
+    return f"main at {tip} is behind publication lease {lease}. One-time catch-up:\n{repair}"
+
+
 def publish_main(root: Path, lease: str, commit: str) -> int:
     """Push the landed SHA to every configured push target under the verify lease, and verify each.
 
@@ -661,6 +675,8 @@ def publish_main(root: Path, lease: str, commit: str) -> int:
         if result.returncode:
             failures.append(f"{label}: push exited {result.returncode}"
                             + (f": {result.stderr.strip()}" if result.stderr.strip() else ""))
+            if repair := behind_publish_target(root, url, lease):
+                failures.append(f"{label}: {repair}")
         else:
             pushed.append((label, url))
     verified: list[str] = []
