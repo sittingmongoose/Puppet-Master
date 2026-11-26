@@ -45,8 +45,12 @@ const TRANSPARENT = 'rgba(0, 0, 0, 0)';
 // the pane: five visible rows plus three scrolled below the clip; every row carries a non-text icon and a
 // shrink-wrapped <i data-work-time> timer leaf whose width ticks without moving the row (the real pane's 22
 // live timers, R136-N2). A wrap tick shifts rows 2-4 up 15 px (the witness's dy).
-function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = false } = {}) {
-	let shifted = false, wide = false, shots = 0, appended = null;
+function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = false, shotMs = {}, pulseAt = null } = {}) {
+	let shifted = false, wide = false, shots = 0, appended = null, now = 0;
+	const advance = (ms) => {
+		now += ms;
+		if (pulseAt !== null) shifted = now >= pulseAt && now < pulseAt + 1000;
+	};
 	const inline = new Map();
 	const rowY = (i) => 20 + i * 34 + (shifted && i >= 2 ? -15 : 0);
 	const timerW = (i) => (wide && (!offscreenOnly || i >= 5) ? 47 : 40);
@@ -111,6 +115,8 @@ function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = fa
 		log: (m) => logs.push(m),
 		page: { screenshot: async ({ clip }) => {
 			shots++;
+			const duration = shotMs[shots] ?? 40;
+			advance(duration / 2);
 			if (tickShots.includes(shots)) shifted = !shifted; // the wrap tick lands before this shot
 			if (widthShots.includes(shots)) wide = !wide; // a width-only timer tick lands before this shot
 			const full = render();
@@ -120,12 +126,13 @@ function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = fa
 				out[d] = full[s]; out[d + 1] = full[s + 1]; out[d + 2] = full[s + 2]; out[d + 3] = full[s + 3];
 			}
 			const png = encodePng({ width: clip.width, height: clip.height, data: out });
+			advance(duration / 2);
 			if (afterShots.includes(shots)) shifted = !shifted; // the tick lands DURING this shot: framebuffer pre-wrap, signature post-wrap
 			return png;
 		} },
 	};
 	const f = {
-		waitForTimeout: async () => {},
+		waitForTimeout: async (ms) => advance(ms),
 		evaluate: async (fn, arg) => {
 			const saved = { document: globalThis.document, getComputedStyle: globalThis.getComputedStyle, innerWidth: globalThis.innerWidth, innerHeight: globalThis.innerHeight };
 			Object.assign(globalThis, { document: doc, getComputedStyle, innerWidth: 1920, innerHeight: 1080 });
@@ -209,5 +216,22 @@ function world(tickShots, { afterShots = [], widthShots = [], offscreenOnly = fa
 	assert.ok(m && !m.reflowed && m.share <= 0.002, `the A->B->A pulse must reacquire, not judge (base share ${m && (m.share * 100).toFixed(3)}%)`);
 	assert.equal(w.shots(), 10, 'the mid-sequence pulse is caught and the quiet reacquisition judges');
 	assert.ok(w.logs.some((l) => /reflowed/.test(l) && /reacquir/.test(l)), 'the reacquisition is logged');
+}
+// R138-H1: a1 ends at 440 ms, then the wrap starts during the wait before a2. The slow a2 takes
+// 750 ms and paints the shifted rows. The pulse ends before a2 returns at 1490 ms, leaving both
+// post-shot samples in state A. The pre-a2 sample must see state B and disqualify that acquisition.
+{
+	const w = world([], { shotMs: { 2: 750 }, pulseAt: 450 });
+	const m = await readThrough(w.t, w.f, SEL);
+	assert.ok(m && !m.reflowed && m.share <= 0.002, 'the quiet reacquisition judges clean');
+	assert.equal(w.shots(), 10, 'the pre-shot sample catches the pulse that ends inside a slow shot');
+	assert.ok(w.logs.some((l) => /reflowed/.test(l) && /reacquir/.test(l)));
+}
+// A long capture by itself is valid when the pane stays still.
+{
+	const w = world([], { shotMs: { 2: 750 } });
+	const m = await readThrough(w.t, w.f, SEL);
+	assert.ok(m && !m.reflowed && m.share === 0);
+	assert.equal(w.shots(), 5, 'a slow capture with steady layout keeps its first acquisition');
 }
 console.log('PASS own-pane reflow is detected from the layout signatures bracketing every plate: a single tick is reacquired into a clean verdict, persistent reflow ends in a bounded named could-not-judge (never a pass), a quiet pane keeps its first-acquisition pass, width-only timer ticks (visible or off-screen) are not reflow, ticks during a2 or c are caught, and a 1-second A->B->A wrap pulse inside one acquisition is caught mid-sequence, not judged on its equal endpoints');
