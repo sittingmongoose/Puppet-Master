@@ -326,7 +326,7 @@ File keys are the `*_override` spellings above, never the bare GUI labels `perso
 |---|---|---|---|
 | `name` | Required | `string` | Invocation name. Must pass validation and MUST NOT collide with reserved Assistant Chat built-ins or reserved git/GitHub prefixes. |
 | `description` | Required | `string` | Short user-facing description. |
-| `arguments` | Optional | `array<object>` | Positional argument schema for validation/help. Each item is an object with optional `name` (`string`), `hint` (`string`), and `required` (`boolean`); readers preserve unknown item keys. Binds losslessly to the GUI `argumentsHint` field (see mapping below). |
+| `arguments` | Optional | `array<object>` | Positional argument schema for validation/help. Each item is an object with optional `name` (`string`), `hint` (`string`), and `required` (`boolean`). The command file owns `name`, `required`, and every item after `arguments[0]`. Readers preserve unknown item keys byte-stable and never act on them. This table is the live item shape, superseding the 2026-07-08 FABLE addendum. Binds losslessly to the GUI `argumentsHint` field (see mapping below). |
 | `persona_override` | Optional | `string` | Requested Persona override for the command execution context. GUI label `persona`. |
 | `mode_override` | Optional | `string` | Requested runtime mode override when allowed by the owning surface. GUI label `mode`; file values are `ask`/`plan`/`regular`/`yolo` only (GUI `inherit` omits the key). |
 | `permissions_profile_override` | Optional | `string` | Permissions profile override, subject to the central permission system. This is the actual permissions override token; GUI label `permissionsProfile`. |
@@ -334,9 +334,7 @@ File keys are the `*_override` spellings above, never the bare GUI labels `perso
 | `enabled` | Optional | `boolean` | Command availability. Default `true` when absent. `false` hides the command from chat and the palette; the file stays in place. GUI label `Enabled`. |
 | `subtask` | Optional | `boolean` | Canonical child-run boundary (§4.2). Preserved through every file round-trip; default `false` on create. |
 
-GUI↔file mapping (lossless, both directions): GUI `template` is the Markdown body; GUI `description`, `subtask`, `override_builtin`, `enabled` copy by value with the defaults above; GUI `persona`/`mode`/`permissionsProfile` map to `persona_override`/`mode_override`/`permissions_profile_override` with `Inherit`/empty omitting the file key. GUI `argumentsHint` binds to `arguments[0].hint`: reading a missing array, missing item, or missing `hint` key yields `""`; writing a non-empty hint sets exactly that key (creating array/item as needed) and preserves every other item and key; writing `""` removes only the `hint` key. An item left with no keys is dropped only when it is the sole item, and the `arguments` field is then dropped too; when later items exist, the emptied first item stays as `{}` so every later argument keeps its position. Richer `arguments` arrays round-trip byte-stable through edits that do not touch the hint. The file spec never adopts bare GUI key spellings without this mapping.
-
-Argument authoring boundary (2026-11-25): the GUI authors exactly one argument value, `Arguments hint` (`argumentsHint`, at most 200 characters), in the New Command form (§6.1.3) and in the hero sheet (F2 of the 2026-09-26 Commands & Shortcuts census). There is no GUI list editor for `arguments`; the audit request for one (semantic closure registry line 1377) is retired by DL-2604, which keeps the selected one-field `Arguments hint` design (`Concepts/PMConcept7.html`, CS-030). An item's `name` and `required`, and every item after `arguments[0]`, are authored in the command file, and the GUI's hint edits preserve them. Item keys other than `name`, `hint` and `required` are unknown keys: readers keep them byte-stable and never act on them. This table is the only live item shape; the 2026-07-08 FABLE addendum's richer item fields are retired (see that addendum).
+GUI↔file mapping (lossless, both directions): GUI `template` is the Markdown body; GUI `description`, `subtask`, `override_builtin`, `enabled` copy by value with the defaults above; GUI `persona`/`mode`/`permissionsProfile` map to `persona_override`/`mode_override`/`permissions_profile_override` with `Inherit`/empty omitting the file key. The argument authoring boundary (DL-2604, CS-030) is one control, `Arguments hint` (`argumentsHint`, at most 200 characters), in New Command (§6.1.3) and the hero sheet (F2 of the 2026-09-26 Commands & Shortcuts census, `Concepts/PMConcept7.html`). DL-2604 retires the GUI list editor request (semantic closure registry line 1377). The hint binds to `arguments[0].hint`: reading a missing array, item, or `hint` yields `""`. A non-empty hint writes exactly that key, creating the array or item as needed. Clearing the hint removes only that key, unless it leaves the sole item empty, in which case the `arguments` field is dropped. When later items exist, keep the empty first item as `{}` to preserve their positions. Edits that leave the hint alone round-trip the entire array byte-stable. The file spec never adopts bare GUI key spellings without this mapping.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt_Pipeline.md
 
@@ -559,14 +557,11 @@ Sorted alphabetically by name; project-local entries sort before global when nam
 - **Permissions profile override** (dropdown populated from permission profiles, or null)
 - **Override built-in** (toggle; default off; visible only in Expert mode; reserved Assistant Chat slash commands fail validation even if this toggle is enabled, because `override_builtin` does not apply to canonical reserved chat commands.)
 - **Template body** (Markdown editor with syntax highlighting for `$ARGUMENTS`, `$N`, `@path`, `` !`cmd` `` patterns)
-
-Scope selector: project-local or global.
+- **Scope** selector (project-local or global)
 
 #### 6.1.4 Edit
 
-Row click or edit button opens the same editor pre-populated. Editing a global command while a project is active offers "Save as project override" (creates project-local copy) or "Save globally."
-
-Under the 2026-09-26 Commands & Shortcuts census (Owned local file actions, F2), an existing command is edited in the hero sheet: each field, `Arguments hint` included, commits on edit through `commands.update`, and the two save labels above are the retired first-draft spellings. Clearing `Arguments hint` on an existing command follows the §3.2 mapping: it removes only `arguments[0].hint` and keeps the item's other keys and every later item.
+Row click or edit opens the pre-populated hero sheet (2026-09-26 Commands & Shortcuts census, Owned local file actions, F2). Each field commits on edit through `commands.update`. Clearing `Arguments hint` follows §3.2 and preserves the item's other keys and every later item. The first-draft global command save labels "Save as project override" and "Save globally" are retired.
 
 #### 6.1.5 Delete
 
@@ -2372,10 +2367,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
-  New Command opens an editor form for name, description, Arguments hint, Persona, mode, subtask, permissions profile
-  override, override built-in, template body and project-local/global save scope, with existing
-  validation and syntax highlighting. There is no saved model or depth field under MD2 NEITHER; old
-  model_override data remains inspection-only through compatibility reads.
+  New Command opens an editor form for name, description, Arguments hint, Persona, mode, subtask, permissions profile override, override built-in, template body and project-local/global save scope, with existing validation and syntax highlighting.
+  There is no saved model or depth field under MD2 NEITHER; old model_override data remains inspection-only through compatibility reads.
 gui_related: true
 gui_classification_reason: The create editor form is a visible command authoring UI.
 split_recommended: true
@@ -4363,8 +4356,7 @@ owner_hints: [Plans/Commands_System.md, Plans/storage-plan.md, Plans/UI_Command_
 
 This addendum repairs non-runtime command-system rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
-- Repairs `sfk-f5d64ed00d4c22eab6a72e2e`: `arguments[]` entries have fields `name`, `type`, `required`, `default?`, `enum_values[]?`, `description`, and `ui_editor`. `type` values are `string`, `number`, `boolean`, `path`, `enum`, `object`, and `array`.
-  Retired 2026-11-25: the 2026-09-26 §3.2 rewrite is the live item shape: optional `name` (`string`), `hint` (`string`) and `required` (`boolean`), with unknown keys preserved. `type`, `default`, `enum_values`, `description` and `ui_editor` are not command-file keys; a file that carries them keeps them byte-stable as unknown keys and nothing validates or acts on them. The GUI authoring control is `Arguments hint` (§3.2 argument authoring boundary, §6.1.3).
+- Repairs `sfk-f5d64ed00d4c22eab6a72e2e`: `arguments[]` entries have fields `name`, `type`, `required`, `default?`, `enum_values[]?`, `description`, and `ui_editor`. `type` values are `string`, `number`, `boolean`, `path`, `enum`, `object`, and `array`. This shape was retired 2026-11-25. The 2026-09-26 §3.2 rewrite owns the live shape with optional `name` (`string`), `hint` (`string`) and `required` (`boolean`). Readers preserve `type`, `default`, `enum_values`, `description` and `ui_editor` byte-stable as unknown keys and never validate or act on them. The GUI authors `Arguments hint` through the §3.2 mapping (§6.1.3).
 - Repairs `sfk-9e43a6ff3203f5ce66e0126d`: Section 6 numbering is structurally superseded by named headings. Missing `6.4` and `6.5` are retired aliases; new citations must use heading names, not bare section numbers.
 - Repairs `sfk-03404db2c315565320a4b3e9`: reserved command prefixes are `cmd.git.`, `cmd.github.`, `cmd.source_control.`, `cmd.file.`, `cmd.permissions.`, `cmd.runtime.`, `cmd.testing.`, `cmd.browser.`, and `cmd.persona.`. Non-owner docs may consume but not mint commands under those prefixes.
 
@@ -6493,7 +6485,7 @@ This addendum records the central command-contract registration for the approved
 | `cmd.browser.component.mode.set_default` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::component_mode_set_default` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserComponentModeRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/SettingsTransactionResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
 | `cmd.browser.devtools.open` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::devtools_open` | `Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenRequest` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenResultV1` (navigation wrapper; the typed route result; C-FIX79 decision 2026-11-24) | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
 
-The eleven contract schema documents named above are owner-authored artifacts that must exist and validate before any row leaves `handler_unavailable`. Naming them here does not create them and does not admit a storage key or an EventRecord.
+All owner-authored contract schema documents referenced in the table must exist and validate before any row leaves `handler_unavailable`. Registration records the schema references. Schema creation, storage key admission and EventRecord admission remain with their respective owners.
 
 ### Typed error vocabulary
 
