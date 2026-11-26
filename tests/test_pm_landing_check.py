@@ -3545,6 +3545,58 @@ class AggregateReportsTests(unittest.TestCase):
         self.assertEqual(str(raised.exception), "audit fell over")
 
 
+class AggregateReadinessInputs(LandingRun):
+    def test_a_changed_edition_is_rejected_even_if_the_next_worker_restores_it(self):
+        import threading
+        from concurrent.futures import ThreadPoolExecutor
+
+        self.stub()
+        readiness = self.repo / M.READINESS_AUDIT_REL
+        readiness.mkdir(parents=True)
+        inventory = readiness / "CURRENT_EVENT_SOURCE_INVENTORY.json"
+        inventory.write_text('{"edition": 1}', encoding="utf-8")
+        original_check = self.module.run_check
+        compare_baseline = self.repo / "baseline.json"
+        new_baseline = self.repo / "mixed.json"
+        common_args = ("--readiness-audit-root", str(readiness))
+        code, out = self.run_main(*common_args, "--record-baseline", "--baseline", str(compare_baseline))
+        self.assertEqual(code, 0, out + self.stderr)
+        baseline_bytes = compare_baseline.read_bytes()
+
+        for jobs in (1, 4):
+            for record in (False, True):
+                with self.subTest(jobs=jobs, record=record):
+                    inventory.write_text('{"edition": 1}', encoding="utf-8")
+                    audit_finished = threading.Event()
+
+                    class SignalAuditCompletion(ThreadPoolExecutor):
+                        def submit(self, fn, check):
+                            future = super().submit(fn, check)
+                            if check == "audit-governance":
+                                future.add_done_callback(lambda _: audit_finished.set())
+                            return future
+
+                    def change_edition(check, *args):
+                        if check == "audit-governance":
+                            inventory.write_text('{"edition": 2}', encoding="utf-8")
+                        if check == "run-gates" and jobs > 1:
+                            self.assertTrue(audit_finished.wait(timeout=5))
+                            inventory.write_text('{"edition": 1}', encoding="utf-8")
+                        return original_check(check, *args)
+
+                    mode = (("--record-baseline", "--baseline", str(new_baseline)) if record else
+                            ("--base", self.base, "--baseline", str(compare_baseline)))
+                    with patch.object(self.module, "ThreadPoolExecutor", SignalAuditCompletion), \
+                            patch.object(self.module, "run_check", change_edition):
+                        code, out = self.run_main(*common_args, "--jobs", str(jobs), *mode)
+                    if jobs > 1:
+                        self.assertEqual(inventory.read_text(encoding="utf-8"), '{"edition": 1}')
+                    self.assertEqual(code, 3, out + self.stderr)
+                    self.assertIn("readiness audit inputs changed during audit-governance", self.stderr)
+                    self.assertEqual(compare_baseline.read_bytes(), baseline_bytes)
+                    self.assertFalse(new_baseline.exists())
+
+
 class SharedWorkerBudget(LandingRun):
     """Review N-F: --jobs is one budget for the whole check, capped, and gated on free memory."""
 

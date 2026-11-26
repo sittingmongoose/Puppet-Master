@@ -2317,8 +2317,15 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         listed[check] = listed_totals(check, report)
         if check == "audit-governance" and jobs <= 1:
             after = tree_state(root)
+
+    def run_with_readiness_check(check: str) -> dict[str, Any]:
+        report = run_check(check, root, run_dir, args.subcheck_timeout_seconds, jobs, child_env,
+                           supports_jobs)
+        # Check before this worker returns. A later aggregate may finish after the input edition
+        # has been restored, so checking only when consuming the reports can miss a change.
         require_same_readiness_audit_inputs(audit_inputs, readiness_audit_inputs(root),
-                                          f"changed during {check}")
+                                            f"changed during {check}")
+        return report
 
     # Review A2: the target checkout's verifier may predate --jobs; negotiate once, before any check.
     supports_jobs = target_accepts_jobs(root)
@@ -2328,22 +2335,9 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
 
     if jobs <= 1:
         for check in CHECKS:
-            try:
-                report = run_check(check, root, run_dir, args.subcheck_timeout_seconds, jobs, child_env,
-                                   supports_jobs)
-            except RuntimeError as exc:
-                print(f"pm-landing-check: {exc}", file=sys.stderr)
-                return 3
-            consume(check, report)
+            consume(check, run_with_readiness_check(check))
     else:
-        try:
-            reports = aggregate_reports(
-                lambda check: run_check(check, root, run_dir, args.subcheck_timeout_seconds, jobs, child_env,
-                                        supports_jobs),
-                jobs)
-        except RuntimeError as exc:
-            print(f"pm-landing-check: {exc}", file=sys.stderr)
-            return 3
+        reports = aggregate_reports(run_with_readiness_check, jobs)
         for check in CHECKS:
             consume(check, reports[check])
         # The pairing below asks whether both aggregates ran the same validator code; with the three
