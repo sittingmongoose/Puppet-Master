@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L6628-L31321
+Source lines: L6634-L31368
 
-Source SHA256: `7307d448314036b35907dbf3376709b36f026d1a43432f1c9db52e9c0f0a019d`
+Source SHA256: `fc1d16eb0b97f2c3c29472b847b9c3a022dffff1beea720b645391e162d5a356`
 
 ---
 
@@ -6109,7 +6109,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Tier-start verification separates BeforeTierStart, DuringTierStart, and AfterTierStart responsibilities, builds StartVerificationResult, logs/handles failures, emits canonical config.validation.passed|warning|failed events, updates redb projections and verification history, and defines src/verification/tier_start.rs with verify_tier_start. verify_tier_start and the BeforeTierStart/DuringTierStart/AfterTierStart labels are legacy names of VerifyUnitStart and its before/during/after phases (Execution-Unit Hook Naming); normalized records use VerifyUnitStart.
+  VerifyUnitStart verification (legacy alias: tier-start verification) separates its before, during and after phases
+  (legacy aliases BeforeTierStart, DuringTierStart, and AfterTierStart), builds StartVerificationResult, logs/handles
+  failures, emits canonical config.validation.passed|warning|failed events, and updates redb projections and
+  verification history. The source example implements VerifyUnitStart as verify_tier_start in
+  src/verification/tier_start.rs; both are legacy alias spellings (Execution-Unit Hook Naming), and normalized records
+  use VerifyUnitStart.
 gui_related: true
 gui_classification_reason: This unit covers verification result visibility, events, and persisted projections.
 split_recommended: false
@@ -6166,7 +6171,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  The orchestrator tier-entry example runs verify_tier_start before building execution context, handles VerificationStatus Pass/Fail/Warning through FailFast or WarnAndContinue policy, logs and persists results, and builds execution context only after pass or warn-and-continue. verify_tier_start is the legacy name of VerifyUnitStart (Execution-Unit Hook Naming).
+  The orchestrator unit-entry example runs VerifyUnitStart (legacy alias verify_tier_start, the example's function name)
+  before building execution context, handles VerificationStatus Pass/Fail/Warning through FailFast or WarnAndContinue
+  policy, logs and persists results, and builds execution context only after pass or warn-and-continue (Execution-Unit
+  Hook Naming).
 gui_related: false
 gui_classification_reason: This unit covers backend orchestrator flow, not GUI behavior.
 split_recommended: false
@@ -6285,7 +6293,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  verify_tier_start collects config wiring, GUI-backend mapping, backend-GUI mapping, operation sequence, and known-gap findings; maps severities to fail/warning/pass; and returns a StartVerificationResult with tier_type, node_id, findings, and Utc timestamp. verify_tier_start is the legacy name of VerifyUnitStart (Execution-Unit Hook Naming).
+  VerifyUnitStart (legacy alias verify_tier_start, the example's function name; Execution-Unit Hook Naming) collects
+  config wiring, GUI-backend mapping, backend-GUI mapping, operation sequence, and known-gap findings; maps severities
+  to fail/warning/pass; and returns a StartVerificationResult with tier_type, node_id, findings, and Utc timestamp.
 gui_related: true
 gui_classification_reason: This unit includes GUI/backend mapping algorithm checks and surfaced verification status.
 split_recommended: false
@@ -6701,7 +6711,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  BeforeTierEnd prepares verification context by collecting tier artifacts, computing git diff where applicable, loading tier context and execution history, and building a context with artifacts, diff, tier context, and config.
+  The before phase of VerifyUnitEnd (legacy alias BeforeTierEnd; Execution-Unit Hook Naming) prepares verification
+  context by collecting tier artifacts, computing git diff where applicable, loading tier context and execution history,
+  and building a context with artifacts, diff, tier context, and config.
 gui_related: false
 gui_classification_reason: This unit covers backend verification context preparation, not GUI behavior.
 split_recommended: false
@@ -6754,7 +6766,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  DuringTierEnd reruns wiring checks, acceptance criteria, quality verification via reviewer subagent and automated gate criteria, Document Set audit checks, collects results, and determines complete, incomplete, or complete-with-warnings tier status.
+  The during phase of VerifyUnitEnd (legacy alias DuringTierEnd; Execution-Unit Hook Naming) reruns wiring checks,
+  acceptance criteria, quality verification via reviewer subagent and automated gate criteria, Document Set audit
+  checks, collects results, and determines complete, incomplete, or complete-with-warnings tier status.
+  complete-with-warnings here is the end-verification outcome for non-blocking quality findings on a validated handoff,
+  never the outcome of a failed handoff (Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery
+  Actions).
 gui_related: true
 gui_classification_reason: This unit includes user-visible tier status outcomes and verification result handling.
 split_recommended: false
@@ -6814,7 +6831,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  AfterTierEnd persists verification results, updates tier status in PRD/state, generates feedback for agent/user when verification fails, and handles failures as rework or complete-with-warnings according to policy.
+  The after phase of VerifyUnitEnd (legacy alias AfterTierEnd; Execution-Unit Hook Naming) persists verification
+  results, updates tier status in PRD/state, generates feedback for agent/user when verification fails, and handles
+  failures as rework or complete-with-warnings according to policy.
 gui_related: true
 gui_classification_reason: This unit covers user/operator feedback and tier status surfaces.
 split_recommended: false
@@ -6872,7 +6891,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  The tier-end orchestrator example introduces tier_end verification integration, collecting artifacts and diff, calling verify_tier_end, mapping VerificationStatus to TierStatus, persisting results, updating tier status, and generating feedback when incomplete. verify_tier_end is the legacy name of VerifyUnitEnd (Execution-Unit Hook Naming).
+  The unit-end orchestrator example introduces VerifyUnitEnd integration (legacy alias spellings in the example: the
+  tier_end module and the verify_tier_end function; Execution-Unit Hook Naming), collecting artifacts and diff, calling
+  VerifyUnitEnd, mapping VerificationStatus to TierStatus, persisting results, updating tier status, and generating
+  feedback when incomplete.
 gui_related: false
 gui_classification_reason: This unit covers backend orchestrator example flow, not GUI behavior.
 split_recommended: false
@@ -8560,10 +8582,13 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  BeforeHandoffValidation detects output format, loads the SubagentOutput schema, and prepares validation context; DuringHandoffValidation
-  parses, validates required fields, types, and findings, extracts from text fallback, and requests one malformed-output retry;
-  AfterHandoffValidation persists validation results, updates tier context, and handles post-retry failure as partial output
-  with complete-with-warnings source disposition.
+  BeforeHandoffValidation detects output format, loads the SubagentOutput schema, and prepares validation context;
+  DuringHandoffValidation parses, validates required fields, types, and findings, extracts from text fallback, and
+  requests one malformed-output retry; AfterHandoffValidation persists validation results and updates the execution-unit
+  context with validated SubagentOutput only. A post-retry failure keeps the extracted partial output on the failed
+  attempt for review only and settles as a needs_review recovery point (Handoff failure boundary in Parser-Failure And
+  Unrelated-Failure Recovery Actions); the earlier partial output with complete with warnings source disposition is
+  retired source lineage.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -9025,9 +9050,13 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  The orchestrator subagent execution loop obtains the platform runner, executes the subagent, validates stdout/stderr through
-  HandoffValidator, returns validated SubagentOutput on success, requests retry with SubagentOutput::example format instructions
-  on malformed output, and after max retries warns and returns extracted partial output.
+  The orchestrator subagent execution loop obtains the platform runner, executes the subagent, validates stdout/stderr
+  through HandoffValidator, returns validated SubagentOutput on success, and requests retry with SubagentOutput::example
+  format instructions on malformed output. After max retries it warns, keeps the extracted partial output
+  (extract_partial_output) on the failed attempt for review only, and returns an error: the attempt settles with
+  failure_class = structured_output_invalid and the node takes the needs_review recovery point (Handoff failure boundary
+  in Parser-Failure And Unrelated-Failure Recovery Actions). The earlier return of extracted partial output as the
+  loop's result is retired source lineage.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -9098,8 +9127,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Handoff validation failure handling requests retry for JSON parse, missing field, and invalid severity failures, and after
-  max retries proceeds with partial output while preserving complete-with-warnings source wording as a compatibility disposition.
+  Handoff validation failure handling requests retry for JSON parse, missing field, and invalid severity failures. When
+  Max retries reached, the node does not proceed: the partial output is kept for review only and the node takes the
+  needs_review recovery point with Retry, Skip and View raw output (Handoff failure boundary in Parser-Failure And
+  Unrelated-Failure Recovery Actions). The earlier proceed with partial output and complete with warnings wording is
+  preserved only as retired source lineage.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -9585,10 +9617,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  AfterUnit handoff validation (the AfterTier hook name is an import-only alias stored as hook_name_normalized = AfterUnit
-  per Execution-Unit Hook Naming) logs platform, error type, and partial output snippet details, requests one retry with structured
-  JSON output instruction, and after retry failure proceeds with partial output fail-safe while preserving complete-with-warnings
-  source wording.
+  AfterUnit handoff validation (the AfterTier hook name is an import-only alias stored as hook_name_normalized =
+  AfterUnit per Execution-Unit Hook Naming) logs platform, error type, and partial output snippet details and requests
+  one retry with structured JSON output instruction. After retry failure it does not update ExecutionUnitContext from
+  the output: the partial output is kept on the failed attempt for review only and the node takes the needs_review
+  recovery point (Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions). The earlier
+  partial output (fail-safe) with complete with warnings wording is retired source lineage.
 gui_related: false
 gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
 split_recommended: false
@@ -10638,10 +10672,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Runtime handoff contract enforcement validates Task Report, Downstream Context, and Findings through AfterUnit validation
-  (the AfterTier hook name is an import-only alias stored as hook_name_normalized = AfterUnit per Execution-Unit Hook Naming),
-  blocks malformed responses, requests one retry with format instruction, and then proceeds with partial output complete-with-warnings
-  source disposition if still malformed.
+  Runtime handoff contract enforcement validates Task Report, Downstream Context, and Findings through AfterUnit
+  validation (the AfterTier hook name is an import-only alias stored as hook_name_normalized = AfterUnit per
+  Execution-Unit Hook Naming), blocks malformed responses, and requests one retry with format instruction. If still
+  malformed, the node takes the needs_review recovery point and the partial output is kept for review only (Handoff
+  failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions); the earlier partial output with complete
+  with warnings source disposition is retired source lineage.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
@@ -11135,8 +11171,10 @@ canonical_text: >-
   (OSI-004, OSI-093): the JSONL pass reads the CliBridge stream-json NDJSON events (Cursor, Claude Code); DirectApi
   final assistant content (Codex, Copilot, Gemini) is parsed as JSON with generic text extraction as the fallback; a
   Codex JSONL stream or Copilot text output is CLI-era history, not an implementation target. It keeps best-effort
-  partial output, parser edge-case tests, parser version tracking, and platform CLI version tracking for the CliBridge
-  providers, with the provider API and model version tracked in its place for the DirectApi providers.
+  partial output on the attempt for review (never forwarded after the automatic retries fail, and never marked complete
+  with warnings; Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions), parser edge-case
+  tests, parser version tracking, and platform CLI version tracking for the CliBridge providers, with the provider API
+  and model version tracked in its place for the DirectApi providers.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
@@ -11599,10 +11637,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Structured handoff prompt enforcement includes an explicit JSON schema example for every provider, validation-error
-  feedback in retry prompts, and best-effort partial output with warnings after retry failure. Copilot is DirectApi
-  (OSI-004, OSI-093) and gets the same JSON schema example; the Gap #22 instruction to give Copilot (text-only) a
-  markdown example instead of JSON is CLI-era history, not an implementation target.
+  Structured handoff prompt enforcement includes an explicit JSON schema example for every provider and validation-error
+  feedback in retry prompts. After retry failure the best-effort partial output is kept for review only and the node
+  takes the needs_review recovery point instead of proceeding with warnings (Handoff failure boundary in Parser-Failure
+  And Unrelated-Failure Recovery Actions). Copilot is DirectApi (OSI-004, OSI-093) and gets the same JSON schema
+  example; the Gap #22 instruction to give Copilot (text-only) a markdown example instead of JSON is CLI-era history,
+  not an implementation target.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, hook, lifecycle, validation, parser, remediation, continuity, or storage-boundary
@@ -13298,10 +13338,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Tier start/end verification lives with config-wiring verification under src/verification/, src/core/, or tier_verification.rs,
-  and the main orchestrator calls verify_tier_start on Phase/Task/Subtask entry and verify_tier_end after the acceptance gate
-  before marking the tier complete. verify_tier_start and verify_tier_end are legacy names of VerifyUnitStart and VerifyUnitEnd
-  (Execution-Unit Hook Naming); normalized records use the canonical names.
+  VerifyUnitStart and VerifyUnitEnd verification lives with config-wiring verification under src/verification/,
+  src/core/, or tier_verification.rs (a legacy module spelling), and the main orchestrator calls VerifyUnitStart (legacy
+  alias verify_tier_start) on Phase/Task/Subtask entry and VerifyUnitEnd (legacy alias verify_tier_end) after the
+  acceptance gate before marking the unit complete. Normalized records use the canonical names (Execution-Unit Hook
+  Naming).
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend verification placement and lifecycle timing rather than GUI presentation.

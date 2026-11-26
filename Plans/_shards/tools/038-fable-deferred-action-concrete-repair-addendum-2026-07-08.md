@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L12421-L12534
+Source lines: L12421-L12614
 
-Source SHA256: `451015240709f6db7e97e3b23696f3f8cb2b86890ae474bc245f302a7de4bffc`
+Source SHA256: `f69c7afb9adad4a86d8dbc2e50d4bb9cae0f3eb99b7ebb53df7c27cf747faa7e`
 
 ---
 
@@ -53,8 +53,43 @@ Every `bash` tool call (§3.5.1) produces exactly one `CommandInvocationContract
 | `env_policy_ref` | The environment policy of the shell binding. |
 | `permission_snapshot_id` | The snapshot the pre-dispatch Permissions and FileSafe evaluation used. |
 | `configured`, `allowed`, `injected`, `visible_to_model` | Copied from the `bash` entry of the `ActiveToolNamespaceReceipt` current at dispatch (below). |
+| `created_at_utc` | Stamped by the runtime when it builds the contract, before dispatch (RFC 3339 UTC). |
+| `schema_version` | `1.0.0`. |
 
 `mode`, `initial_wait`, `detach`, and `shellId` are execution controls of §3.5.1 and are not contract fields. A new binding runs `shell_string` as one argument to the interpreter (`-c` for `bash`, `zsh`, `sh`, and `fish`; `-NoProfile -Command` for `pwsh` and `powershell`; `/d /s /c` for `cmd`); a reused binding receives it as one complete command line under the DL-181 and SMPFS-182 write rules. `command` is never executed as `argv[0]`, and a non-string `command` is `validation_error`. `powershell_script` stays reserved for inspected PowerShell wrapper scripts (T-171) and `pty_input` for raw input to an interactive program; neither is produced by `bash`. Approval UI shows `shell_string` verbatim beside `interpreter_kind` and `executable_path`.
+
+#### `CommandInvocationContract` typed shape and variants (added 2026-11-26)
+
+Field types, for every tool that builds the contract (the `bash` mapping above is one producer):
+
+| Field | Type | Rule |
+|---|---|---|
+| `invocation_id` | string (UUID) | New for every call. |
+| `tool_call_id` | string | The tool call that produced the contract. |
+| `invocation_kind` | closed enum | One of the five values above; selects exactly one content field (variant table below). |
+| `interpreter` | object `{ interpreter_kind, executable_path, version? }` | As defined in the `interpreter` subsection above. |
+| `argv` | array of strings, at least 1 entry | `argv[0]` is the program, resolved to an absolute path before dispatch; each entry is passed as one argument with no shell. |
+| `shell_string` | string, at least 1 byte | Passed to the interpreter as one argument, byte for byte. |
+| `powershell_script` | string, at least 1 byte | The text of an inspected PowerShell wrapper script. |
+| `pty_input_ref` | string | Reference to the exact bytes written to the PTY of a bound terminal session. |
+| `cwd` | string | Absolute path. |
+| `env_policy_ref` | string | The environment policy applied to the process. |
+| `permission_snapshot_id` | string, optional | Present on every contract that is dispatched: the snapshot the pre-dispatch Permissions and FileSafe evaluation used. Absent only on a contract refused before that evaluation ran. |
+| `configured`, `allowed`, `injected`, `visible_to_model` | boolean | Copied from the producing tool's `ToolNamespaceEntry` in the `ActiveToolNamespaceReceipt` current at dispatch. |
+| `created_at_utc` | RFC 3339 UTC string | Stamped by the runtime when it builds the contract, before dispatch. |
+| `schema_version` | string | `1.0.0`. |
+
+Variants are exclusive. Exactly the content field the kind names is present; the other three content fields are absent:
+
+| `invocation_kind` | Required content field | `interpreter_kind` | Dispatch |
+|---|---|---|---|
+| `shell_string` | `shell_string` | any value except `none` | The interpreter runs `shell_string` as one argument (flags in the `bash` adapter paragraph above). |
+| `argv` | `argv` | `none` | Direct exec of `argv`; never routed through a shell (T-171). |
+| `powershell_script` | `powershell_script` | `pwsh` or `powershell` | Needs the inspected-wrapper receipt and, when configured, one-shot approval (T-171). |
+| `pty_input` | `pty_input_ref` | the shell of the bound terminal session; not `none` | The referenced bytes are written to that session under the DL-181 and SMPFS-182 write rules. |
+| `tui_automation` | none defined | none defined | Reserved, not admitted: no registered tool produces this kind and no body field exists for it. A contract carrying it is refused with `validation_error` before dispatch until an owner registers a TUI-automation tool and adds its body field to this table. |
+
+A contract that breaks a presence, type or variant rule is refused with `validation_error` before dispatch and nothing runs. Approval UI shows the one content field verbatim beside `invocation_kind`, `interpreter_kind` and `executable_path` (T-171 criterion 2).
 
 #### `ActiveToolNamespaceReceipt` typed contract (added 2026-11-25)
 
@@ -102,6 +137,51 @@ Example:
 ```
 
 Persistence of this receipt is not settled here: it needs a storage registration in `Plans/storage-plan.md` (a redb family or an admitted seglog event family), which this section does not create.
+
+#### `ProviderToolTurnAdmissionGate` typed contract (T-169, added 2026-11-26)
+
+One gate record is written for every provider tool call before the turn that carries it may enter replayable history or be dispatched.
+
+| Field | Type | Rule |
+|---|---|---|
+| `gate_id` | string | Opaque and unique. |
+| `tool_call_id` | string | The provider tool call judged. |
+| `provider_id`, `model_id` | string | The route that produced the call. |
+| `allowed` | boolean | True only when every check below passes. |
+| `denial_reason_code` | closed enum, optional | Required when `allowed` is false, absent when it is true. |
+| `permission_snapshot_id` | string, optional | The Permissions snapshot the dispatch check used; present whenever that check ran. |
+| `capability_snapshot_id` | string, optional | The `Plans/Models_System.md` capability snapshot of the route; present whenever the route has one. |
+| `created_at_utc` | RFC 3339 UTC string | |
+
+Checks, in this order; the first that fails gives the code: `tool_call_id_missing` (the call has no id), `tool_call_id_duplicate` (the id was already admitted in this session), `empty_tool_call` (no tool name), `args_unparseable` (streamed JSON or tool XML is partial, or the arguments are not one complete JSON value), `length_truncated` (the provider ended the tool-call deltas with a length finish reason), `tool_not_in_namespace` (the `ActiveToolNamespaceReceipt` current for the turn has no entry for the tool), then the namespace dispatch rule above (an entry that does not permit dispatch denies with its own `denial_reason_code`), `schema_invalid` (the arguments fail that entry's `schema_ref` schema), and `provider_metadata_missing` (provider-native metadata the route requires is absent). `denial_reason_code` is closed to these eight codes plus the `ToolNamespaceEntry.denial_reason_code` values.
+
+A denied call never enters replayable history and is never dispatched. It becomes a `provider_turn_malformed` record holding a raw-redacted reference to the provider output (T-169). The eight gate codes normalize to `failure_class = structured_output_invalid` and follow its `Plans/Executor_Protocol.md` §7.1 row (Max retries 2, no backoff): while a retry remains, the tool turn settles `retryable` and the provider turn is requested again; when the retries are spent it settles `malformed` and the run takes that classifier's escalation. A namespace denial is not retried: the tool turn settles `fatal` with the entry's code, the same denial the receipt section gives. Persistence of gate and `provider_turn_malformed` records waits on the same Storage registration as the receipt above.
+
+#### `ToolProgressHeartbeat` contract (T-175, added 2026-11-26)
+
+Every long-running tool call of the families `mcp`, `subagent`, `browser` and `device` emits heartbeats while it runs. The PM-side adapter that supervises the call emits them while the server, child session, browser session or device session behind it is alive and responsive, so silence means liveness was lost, not that the work is slow. A heartbeat is a live progress signal on the tool call; it is not a durable record. Command tools (`bash`) are outside this contract: their liveness is the terminal session's (§3.5.1).
+
+| Field | Type | Rule |
+|---|---|---|
+| `tool_call_id` | string | The running call. |
+| `tool_family` | closed enum `mcp`, `subagent`, `browser`, `device` | |
+| `sequence` | integer, at least 1 | Rises by one per heartbeat of the call. |
+| `progress` | object, optional | `{ completed?, total?, message? }`: `completed` integer at least 0, `total` integer at least 1, `message` string of at most 200 characters. |
+| `emitted_at_utc` | RFC 3339 UTC string | |
+
+Intervals. A family emits a heartbeat at least every `heartbeat_interval_ms`. For `mcp` that is the `Plans/MCP_Integration.md` liveness default (`heartbeat_interval_ms` 15000); the other three families use the same 15000 ms default. `max_silent_interval_ms` is twice the heartbeat interval (30000 by default). A heartbeat, an output chunk or a settlement of the call resets the silence timer.
+
+States of a running call, shown on its tool card:
+
+| From | Event | To |
+|---|---|---|
+| `running` | silent for `max_silent_interval_ms` | `stalled`: the card shows the call as stalled with the time since the last signal and keeps its Stop control |
+| `stalled` | any heartbeat, output chunk or settlement | `running` (or settled) |
+| `stalled` | still silent when the silence reaches `heartbeat_lost_after_ms` (120000 ms for every family; an `mcp` call's own `tool_call_timeout_ms`, counted from the call's start, still applies beside it) | settled: `ToolTurnSettlement.settlement_state = fatal` with error code `heartbeat_lost`, the code the MCP synthetic settlement receipt already uses |
+| `running` or `stalled` | user stops the call | settled through that tool's own stop path |
+
+`stalled` is a display state, not a settlement: the call keeps running and nothing is retried automatically.
+
 
 ### Webcrawl Host Pattern Matcher Owner
 

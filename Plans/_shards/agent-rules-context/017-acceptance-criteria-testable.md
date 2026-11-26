@@ -4,7 +4,7 @@ Source: `Plans/agent-rules-context.md`
 
 Source lines: L282-L295
 
-Source SHA256: `6b91d562302951c1829496351beef9881e2bdef842033d2c851c7dc913926863`
+Source SHA256: `f5e93509549ad684f2602fdc9132b4d307c0548e1afb4a303410eaab3d0b00b5`
 
 ---
 

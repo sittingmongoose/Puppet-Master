@@ -4,7 +4,7 @@ Source: `Plans/interview-subagent-integration.md`
 
 Source lines: L4-L9
 
-Source SHA256: `b20fdd4e4778c38aff651a829d22a06e4324aa2737186327fabbc383e2766c57`
+Source SHA256: `810e2cb3b16993f5add2acb295d309834c2aba3cc0ce222ca184e06d9ecaf7ed`
 
 ---
 

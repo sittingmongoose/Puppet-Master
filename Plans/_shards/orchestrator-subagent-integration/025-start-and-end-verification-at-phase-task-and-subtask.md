@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L1547-L3533
+Source lines: L1547-L3539
 
-Source SHA256: `7307d448314036b35907dbf3376709b36f026d1a43432f1c9db52e9c0f0a019d`
+Source SHA256: `fc1d16eb0b97f2c3c29472b847b9c3a022dffff1beea720b645391e162d5a356`
 
 ---
 
@@ -349,7 +349,7 @@ Config: `quality.gate.{check_name}.action` — override per check (`"fail"` or `
 - **Persist verification results:** Append the verification result to the canonical runtime verification/receipt event family and project it into redb-backed verification read models. The legacy `.puppet-master/state/verification-{node_id}-end.json` path is retired source-lineage. Amended 2026-10-31 (DL-270, SP-339): no file is written; results are read through `pm inspect` or `pm export`.
 - **Update tier status:** Update tier status in PRD/state based on verification results
 - **Generate feedback:** If verification failed, generate feedback for agent/user (what failed, which file/criterion, suggested fix)
-- **Handle failures:** If quality fails, either mark tier as "incomplete" (rework) or "complete with warnings" (log and proceed) per policy
+- **Handle failures:** If quality fails, either mark tier as "incomplete" (rework) or "complete with warnings" (log and proceed) per policy. This VerifyUnitEnd quality outcome is the only live use of "complete with warnings"; a unit whose handoff failed validation never reaches it (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)).
 
 **Implementation:** Create `src/verification/tier_end.rs` with `verify_tier_end()` function. Integrate with orchestrator tier completion point.
 
@@ -936,7 +936,7 @@ where F: FnOnce() -> Result<T>,
 
 - **Persist validation results:** Append the handoff-validation result to the canonical runtime verification/receipt event family and project it into redb-backed handoff validation read models. The legacy `.puppet-master/state/handoff-validation-{node_id}.json` path is retired source-lineage. Amended 2026-10-31 (DL-270, SP-339): no file is written; results are read through `pm inspect` or `pm export`.
 - **Update tier context:** Update tier context with validated `SubagentOutput` (task_report, downstream_context, findings)
-- **Handle validation failures:** If validation fails after retry, proceed with partial output but mark tier as "complete with warnings"
+- **Handle validation failures:** If validation fails after retry, the node does not advance: it takes the `needs_review` recovery point with [Retry] [Skip] [View raw output], and the extracted partial output is kept on the failed attempt for review only (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)). The earlier rule "proceed with partial output but mark tier as "complete with warnings"" is superseded source lineage.
 
 **Required output format:**
 
@@ -1208,9 +1208,15 @@ impl Orchestrator {
                     // Request retry with format instruction
                     retry_count += 1;
                     if retry_count >= validator.max_retries() {
-                        // Max retries reached, proceed with partial output
+                        // Max retries reached: the node does not advance. The extracted partial
+                        // output is kept on the failed attempt for [View raw output] only and is never
+                        // returned as validated output (Handoff failure boundary, Parser-Failure And
+                        // Unrelated-Failure Recovery Actions). The earlier "proceed with partial output"
+                        // return here is superseded source lineage.
                         tracing::warn!("Handoff validation failed after {} retries: {}", retry_count, msg);
-                        return Ok(validator.extract_partial_output(&output.stdout, &output.stderr)?);
+                        // Kept on the failed attempt beside the raw output in parser.error.
+                        let _partial_for_review = validator.extract_partial_output(&output.stdout, &output.stderr)?;
+                        return Err(anyhow!("structured_output_invalid: handoff validation failed after {} retries: {}", retry_count, msg));
                     }
 
                     // Update prompt with format instruction
@@ -1237,7 +1243,7 @@ impl Orchestrator {
 - **JSON parse failure:** If JSON parsing fails, attempt text extraction; if that fails and retry not attempted, request retry with format instruction
 - **Missing field failure:** If required field is missing, request retry with field requirement instruction
 - **Invalid severity failure:** If severity is invalid, request retry with valid severity values
-- **Max retries reached:** If max retries reached, proceed with partial output but mark tier as "complete with warnings"
+- **Max retries reached:** If max retries reached, the attempt settles with `failure_class = structured_output_invalid` and the node takes the `needs_review` recovery point; the partial output is kept for review only (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)). The earlier "proceed with partial output but mark tier as "complete with warnings"" is superseded source lineage.
 
 ```rust
                     .filter_map(|v| serde_json::from_value(v.clone()).ok())
@@ -1470,7 +1476,7 @@ pub fn validate_subagent_output(
 **Validation logic in AfterUnit hook** (legacy alias AfterTier, Execution-Unit Hook Naming)**:** AfterUnit hook calls `validate_subagent_output(output: &str, stderr: &str, platform: Platform) -> Result<SubagentOutput, ValidationError>`. If validation fails:
 1. Log error with details (platform, error type, partial output snippet).
 2. Request one retry (re-run subagent with "format your output as structured JSON" instruction appended to prompt).
-3. If retry also fails, proceed with partial output (fail-safe) but mark tier as "complete with warnings" in `ExecutionUnitContext`.
+3. If retry also fails, the node does not advance and `ExecutionUnitContext` is not updated from the output: the attempt settles with `failure_class = structured_output_invalid`, the raw output stays in `parser.error`, the extracted partial output is kept on the failed attempt for review only, and the node takes the `needs_review` recovery point with [Retry] [Skip] [View raw output] (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)). The earlier step "proceed with partial output (fail-safe) but mark tier as "complete with warnings"" is superseded source lineage.
 
 **Integration with existing ParsedOutput:**
 
@@ -1753,7 +1759,7 @@ where
 
 - **BeforeUnit/AfterUnit hooks** (legacy alias BeforeTier/AfterTier)**:** Wrap hook execution in `safe_hook_main` so hooks never crash.
 - **Verification functions:** Return `Result<(), VerificationError>` with structured error types.
-- **Subagent output parsing:** On parse failure, return `SubagentOutput { task_report: raw_output, downstream_context: None, findings: vec![] }` (partial output) rather than crashing.
+- **Subagent output parsing:** On parse failure, build `SubagentOutput { task_report: raw_output, downstream_context: None, findings: vec![] }` (partial output) rather than crashing; after the automatic retries it is kept on the failed attempt for review only and is never forwarded as validated output (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)).
 
 **Platform-specific implementation:** Platform-agnostic -- safe error handling is Rust-level. All platforms benefit from the same wrappers.
 
@@ -1784,7 +1790,7 @@ where
 
 - **AfterUnit hook** (legacy alias AfterTier)**:** Calls `validate_subagent_output()` (see #2 above).
 - **On validation failure:** Block response, request one retry with format instruction.
-- **After retry:** If still malformed, proceed with partial output (fail-safe) but mark tier as "complete with warnings."
+- **After retry:** If still malformed, the node takes the `needs_review` recovery point with [Retry] [Skip] [View raw output]; partial output is kept for review only (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)). The earlier "proceed with partial output (fail-safe) but mark tier as "complete with warnings."" is superseded source lineage.
 
 **Documentation:** Document the contract in AGENTS.md and in subagent prompt templates. State that subagents **must** produce structured output; runtime validation enforces it.
 
@@ -1863,7 +1869,7 @@ These lifecycle and quality features **complement** the existing start/end verif
 
 **Mitigation:**
 - **Multi-pass parsing:** Try JSON parse first, then JSONL (CliBridge stream-json NDJSON events only), then text extraction (the generic fallback every transport keeps, OSI-093). Use best-effort parsing with fallbacks.
-- **Partial output handling:** If parsing fails, extract what we can (e.g., `task_report` from text even if `findings` missing). Mark tier as "complete with warnings."
+- **Partial output handling:** If parsing fails, extract what we can (e.g., `task_report` from text even if `findings` missing) and keep it on the attempt for review; if the output is still invalid after the automatic retries, the node takes the `needs_review` recovery point (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)). The earlier "Mark tier as "complete with warnings."" is superseded source lineage.
 - **Parser testing:** Comprehensive test suite for each platform parser with edge cases (malformed JSON, unicode, large outputs, streaming).
 - **Parser versioning:** Track parser version and platform CLI version for the CliBridge providers (Cursor, Claude Code), and the provider API and model version for the DirectApi providers (Codex, Copilot, Gemini). Update parsers when either changes.
 
@@ -1930,7 +1936,7 @@ These lifecycle and quality features **complement** the existing start/end verif
   ```
 - **Platform-specific instructions:** none by transport: every provider, Copilot included, gets the JSON schema example above, because Copilot is DirectApi and its final assistant content is parsed as JSON (OSI-004, OSI-093, OSI-194). The earlier instruction "For Copilot (text-only), provide markdown format example instead of JSON" is CLI-era history, not an implementation target.
 - **Validation feedback:** If retry fails, include validation error in retry prompt: "Your output was missing 'task_report' field. Please include it."
-- **Fail-safe:** After retry fails, extract partial output (best-effort) and proceed with warnings.
+- **Fail-safe:** After retry fails, extract partial output (best-effort) and keep it for review; the node takes the `needs_review` recovery point rather than proceeding with warnings (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)).
 
 **Gap #23: Cross-platform hook adapter complexity**
 

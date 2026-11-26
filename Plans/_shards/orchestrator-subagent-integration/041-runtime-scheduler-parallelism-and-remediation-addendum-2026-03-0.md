@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L6387-L6542
+Source lines: L6393-L6548
 
-Source SHA256: `7307d448314036b35907dbf3376709b36f026d1a43432f1c9db52e9c0f0a019d`
+Source SHA256: `fc1d16eb0b97f2c3c29472b847b9c3a022dffff1beea720b645391e162d5a356`
 
 ---
 
@@ -124,7 +124,7 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Decisio
 
 | classifier family | classifier | auto retry | backoff | safe-point rollback | remediation child | terminal / escalation |
 |---|---|---|---|---|---|---|
-| `failure_class` | `provider_transient` | yes | `1s, 2s, 4s` | no | no | fail after 3 attempts |
+| `failure_class` | `provider_transient` | yes | `1s, 2s, 4s` | no | no | fail after 3 retries: the initial attempt plus at most 3 retries (4 attempts in all), one backoff wait before each retry, matching Max retries 3 in `Plans/Executor_Protocol.md` §7.1 |
 | `failure_class` | `structured_output_invalid` | one format retry | none | no | optional after failed retry | escalate to remediation or `needs_review` |
 | `failure_class` | `verification_failed` | no direct blind retry | none | yes | yes | pause after remediation ceiling |
 | `failure_class` | `reviewer_findings` | no direct blind retry | none | yes | yes | pause after remediation ceiling |

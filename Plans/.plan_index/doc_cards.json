@@ -271,7 +271,7 @@
         "Plans/orchestrator-subagent-integration.md",
         "future application rules pipeline"
       ],
-      "line_count": 2463,
+      "line_count": 2470,
       "path": "Plans/agent-rules-context.md",
       "plan_unit_count": 37,
       "plan_unit_ids": [
@@ -356,7 +356,7 @@
         "two_durable_rule_scopes",
         "visibility_rules"
       ],
-      "sha256": "6b91d562302951c1829496351beef9881e2bdef842033d2c851c7dc913926863",
+      "sha256": "f5e93509549ad684f2602fdc9132b4d307c0548e1afb4a303410eaab3d0b00b5",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 37
@@ -12734,7 +12734,7 @@
         "interview_runtime_drift",
         "migration_lineage"
       ],
-      "sha256": "b20fdd4e4778c38aff651a829d22a06e4324aa2737186327fabbc383e2766c57",
+      "sha256": "810e2cb3b16993f5add2acb295d309834c2aba3cc0ce222ca184e06d9ecaf7ed",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 19
@@ -12915,7 +12915,7 @@
         "Plans/Shared_Integration_Runtime.md",
         "Plans/UI_Command_Catalog.md"
       ],
-      "line_count": 7303,
+      "line_count": 7310,
       "path": "Plans/LSPSupport.md",
       "plan_unit_count": 114,
       "plan_unit_ids": [
@@ -13047,7 +13047,7 @@
         "lsp_write_transaction_order_or_identity_drift",
         "migration_lineage"
       ],
-      "sha256": "39cd6526bd476216599276cfa712ab44e793dc733e6d20f27b8dcf2b36e5dcb5",
+      "sha256": "de1f7abea0d557019f069b32ad43fb0b1ea7b4ac282b27ad40e82c103ae36c4b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 114
@@ -15173,7 +15173,7 @@
         "future Orchestrator prompt routes",
         "future subagent handoff and child-run receipt records"
       ],
-      "line_count": 35179,
+      "line_count": 35229,
       "path": "Plans/orchestrator-subagent-integration.md",
       "plan_unit_count": 472,
       "plan_unit_ids": [
@@ -16098,7 +16098,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "7307d448314036b35907dbf3376709b36f026d1a43432f1c9db52e9c0f0a019d",
+      "sha256": "fc1d16eb0b97f2c3c29472b847b9c3a022dffff1beea720b645391e162d5a356",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 470,
@@ -23339,7 +23339,7 @@
         "False": 121,
         "True": 69
       },
-      "heading_count": 342,
+      "heading_count": 345,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Back_Seat_Driver.md",
@@ -23374,7 +23374,7 @@
         "future tool registry and shell/integration command dispatch",
         "future vision_bridge tool"
       ],
-      "line_count": 13651,
+      "line_count": 13731,
       "path": "Plans/Tools.md",
       "plan_unit_count": 190,
       "plan_unit_ids": [
@@ -23649,7 +23649,7 @@
         "workflow_local_tool_registry_drift",
         "write_atomicity_drift"
       ],
-      "sha256": "451015240709f6db7e97e3b23696f3f8cb2b86890ae474bc245f302a7de4bffc",
+      "sha256": "f69c7afb9adad4a86d8dbc2e50d4bb9cae0f3eb99b7ebb53df7c27cf747faa7e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 189,
@@ -25277,7 +25277,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-26T01:48:18Z",
+  "generated_at_utc": "2026-11-26T01:56:19Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
