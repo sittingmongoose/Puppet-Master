@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L13358-L13782
+Source lines: L13358-L13788
 
-Source SHA256: `517d20ca3fa30c3461b77b245fe8aa92ad6c44749a83ff4780d71093c4d15400`
+Source SHA256: `f6bb129fc3117c3cadd29a1d9f098b2c9f923629cc5fa7f85dcc6753b29198d5`
 
 ---
 
@@ -69,8 +69,9 @@ canonical_text: >-
   provider-kept native tools counts when the route selected for any counted request keeps them, whether or not that
   request was then sent. So every run recorded as mixed or ordinary tool calls carries a typed reason, request-level
   admission diagnostics stay with their owners, and a run that requested Code Mode and is recorded as mixed or
-  ordinary tool calls is never a silent fallback: wherever the run's tool-calling mode is shown, its effective mode
-  and typed reason are shown with it, while a run that did not request Code Mode is shown neutrally as T-191 says.
+  ordinary tool calls is never a silent fallback: the run's transcript shows its effective mode and typed reason at the first request
+  on which the script tool was not offered, and every other surface that shows the run's tool-calling mode shows
+  them with it, while a run that did not request Code Mode is shown neutrally as T-191 says.
   Code Mode is never reported as effective for a run in which any tool other than the
   directly callable tools named in T-190 was dispatched another way. A new run in a resumed
   session or conversation reads T-191's row when it starts, like any other run; a run that continues under the same
@@ -86,7 +87,7 @@ acceptance_criteria:
   - A run for which T-191's row is Off requests ordinary tool calls, is offered the script tool on no request, and records effective mode ordinary tool calls with the typed reason setting, including a run that ended before its first request.
   - A run that requested Code Mode and ended before the offer was decided for any request records its effective mode as not applicable with no typed reason; a request whose offer was decided counts even if it was never sent to the provider.
   - A run whose effective mode is mixed or ordinary tool calls carries exactly one typed reason, and no surface describes that run as Code Mode.
-  - A run that requested Code Mode and is recorded as mixed or ordinary tool calls shows its effective mode and typed reason wherever its tool-calling mode is shown; it is never presented as if nothing had changed.
+  - A run that requested Code Mode and is recorded as mixed or ordinary tool calls shows its effective mode and typed reason in its transcript, at the first request on which the script tool was not offered, and on every other surface that shows its tool-calling mode; a run whose policy denies the script tool on every request therefore shows ordinary tool calls with the reason policy in its transcript.
   - The script tool is not offered on a request for which Shared Integration Runtime gives no positive report of a product-approved JavaScript EvalSession for the exact Host/Environment, whether it reports none, is unavailable, or its approval evidence is missing or stale; that request's tools travel by the route's ordinary tool-call path under T-189, and a run that is ordinary or mixed for that cause records the typed reason no approved JavaScript EvalSession.
   - A request with the row On, a positive report of an approved JavaScript EvalSession and policy admission, whose script tool is left out by selection or materialization under T-176 (not_selected, budget_deferred or schema_unavailable), is not offered the script tool; its request-selected tools travel by the ordinary path within the same bounds, and a run that is ordinary or mixed for that cause records the typed reason not materialized.
   - A run that requests Code Mode on a direct API route that keeps no native tools Puppet Master cannot disable, and is offered the script tool on its first requests but not on later ones because Shared Integration Runtime then reports no approved JavaScript EvalSession, records Code Mode when nothing, or only the directly callable tools named in T-190, was dispatched on the later requests, including when an ordinary call the model wrote there was rejected before dispatch, and mixed with the typed reason no approved JavaScript EvalSession when any other Puppet Master tool was dispatched on them.
@@ -158,7 +159,11 @@ canonical_text: >-
   writes a tool result itself is discarded and never enters replayable history. On a request on which the script
   tool is not offered, on an in-band route, the request-selected tools themselves are carried as
   in-band tool calls in that same owned dialect, under the same admission gate, call-ID and discarded-result rules;
-  that is the ordinary tool-call path of such a route. The carriage follows the route, not the model's
+  that is the ordinary tool-call path of such a route. On a direct API in-band route the result of an accepted
+  in-band call, of the script tool or of an ordinary tool, goes back to the model in the next request as a Puppet
+  Master-authored result in the owned dialect, tied to the Puppet Master-minted call ID, through the prompt
+  transport that route permits, with its content shaped and replayed as Prompt_Pipeline's tool-result rules say; on
+  a bridged CLI under HTE the hosted action loop returns the result as Run_Modes says. The carriage follows the route, not the model's
   tool_use flag alone: a bridged CLI under HTE that reports structured tool intents carries the request-selected
   tools as structured tool intents through the hosted action loop as before, a cooperative SDK or protocol route
   keeps returning tool intents to Puppet Master and a server bridge keeps its Puppet Master tool and MCP projection
@@ -212,6 +217,7 @@ unblocks: [T-191]
 acceptance_criteria:
   - Under Host Tool Execution a request on which the script tool is offered carries it and does not also carry one provider tool schema per registry tool the script can call; a request on which it is not offered keeps the ordinary tool-call path.
   - A model whose Models_System tool_use is false can use Code Mode through an owned in-band dialect on an in-band route, and a tool result the model wrote itself never reaches replayable history.
+  - On a direct API in-band route, the result of an accepted in-band call, from a script or from an ordinary tool, reaches the model in the next request as a Puppet Master-authored result in the owned dialect carrying the Puppet Master-minted call ID.
   - On a request on which the script tool is not offered, for any reason, on an in-band route (a direct API route under Host Tool Execution whose model's tool_use capability is false, or a bridged CLI under the HTE strategy without supported structured tool intents), every Puppet Master tool call made on that request is an in-band tool call in the owned dialect, under the same admission gate; on a bridged CLI under HTE with supported structured tool intents the same calls are structured tool intents, never in-band.
   - Under the DAE strategy, on a request on which the script tool is not offered, for any reason, a CLI that accepts projected Puppet Master tools is offered each request-selected Puppet Master tool that the ordinary form materializes as its own projected tool, and Puppet Master dispatches each call with the checks a script's call to that tool gets.
   - A run offered the script tool on some requests and not on others carries, on every request that is sent and whose route can carry Puppet Master tools, that request's selected tool calls by the one channel this unit gives it. A request stopped before it is sent carries nothing and is recorded as T-188 says; a request on a route that accepts no Puppet Master tools carries none.
@@ -392,7 +398,7 @@ acceptance_criteria:
   - Changing the row while a run is in progress or paused does not change that run, including after it resumes under the same run ID or gets a new attempt, and does not change a child or subagent run it starts afterwards or a follow-up run spawned by its context rotation; the next run that reads the row follows the new value.
   - A run dispatched from scheduled or delayed work uses the row value held in that work's frozen requested configuration, so a change to the row between scheduling and dispatch does not alter it; a quota or window resume of a run already started keeps the value under the same-run-ID rule.
   - With the row Off, the run is offered, through the route's ordinary channel where the route has one or T-189 adds one, each request-selected tool that the ordinary form materializes under T-176; a tool that T-176 defers or cannot materialize keeps that owner's explicit omission or stop outcome, and a request with the row On that lacks the script tool gets the same selection and the same omissions for the same inputs.
-  - For any complete call to a tool in the script's callable catalog that the route's ordinary channel can carry, the permission, approval, FileSafe, network and schema decision with the row Off is the same as for the same call made from a script with the row On; for the directly callable tools named in T-190, which are called directly in both modes, the decision on the same direct call is the same with the row On and Off. Both comparisons use the same request, policy snapshot, call-time inputs and answer to any approval prompt. Only the script tool itself and its callable catalog are absent with the row Off; the script wrapper and nested identity on the records, the number of provider rounds and the observed usage may differ, and a call whose arguments only a script could supply is not required to be repeatable as one ordinary call.
+  - For any complete call to a tool that is materialized and admitted both in the script's callable catalog with the row On and in the ordinary form with the row Off, the permission, approval, FileSafe, network and schema decision is the same in both; for the directly callable tools named in T-190, where present in both, the decision on the same direct call is the same with the row On and Off. Both comparisons use the same request, policy snapshot, call-time inputs and answer to any approval prompt. With the row Off the script tool and its callable catalog are absent, and which tools each form materializes stays subject to that form's own limits under T-189, so a tool one form defers is outside this comparison; the script wrapper and nested identity on the records, the number of provider rounds and the observed usage may differ, and a call whose arguments only a script could supply is not required to be repeatable as one ordinary call.
   - With the row Off, on a route that carries Puppet Master tool calls in-band under T-189, every Puppet Master tool call the run makes is carried in-band, any request-selected tool that the ordinary form materializes can be called that way, and the run's record shows requested and effective ordinary tool calls with the typed reason setting.
   - With the row Off on a delegated or reasoning-only route, the run's record shows the typed reason setting and the route's own execution-tier disclosure is still shown.
   - On a route that carries Puppet Master tool calls in-band, or a DAE route that accepts projected Puppet Master tools, with no approved JavaScript EvalSession on any request of the run: a run with the row On and a run with the row Off are both offered, through T-189's added path, the same request-selected tools that the ordinary form materializes, and differ only in the recorded requested mode and typed reason (no approved JavaScript EvalSession for On, setting for Off); the permission, approval, FileSafe, network and schema decision on any call either run makes is the same for the same call-time inputs.
