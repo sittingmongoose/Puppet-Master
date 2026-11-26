@@ -18,6 +18,9 @@ const ID = 'code.execution.code-mode';
 /* the inventory row itself: the label and the complete sentence the page has to draw */
 const INV = JSON.parse(readFileSync(new URL('../../../../Plans/settings_inventory.json', import.meta.url), 'utf8')).settings.find((s) => s.id === ID);
 const norm = (s) => String(s || '').replace(/\s+/g, ' ').trim();
+/* Tools T-191 fixes the spelling: "a toggle labelled Code Mode". The inventory is checked against that first, so the
+   page comparisons below cannot pass on an inventory that itself says "Code mode" (max review). */
+const CANON_LABEL = 'Code Mode';
 /* Code Mode is a fixed phrase (Settings_System §4 keeps those through sentence case), so the page draws the
    inventory label letter for letter; "Code mode" fails (review 5) */
 const sameLabel = (drawn) => norm(drawn) === norm(INV.label);
@@ -52,6 +55,8 @@ const ROW = ([id, label, desc]) => {
 		labelShown: shown(holder(label)), descShown: shown(holder(desc)),
 		switchShown: shown(sw) && Number(getComputedStyle(sw).opacity) > 0.5 && r.width >= 16 && r.height >= 10,
 		switchName: sw.getAttribute('aria-label') || '', onClass: sw.classList.contains('on'), knobX,
+		/* the setting's own value, read back from Settings, not from the switch's markup */
+		stored: (typeof PM51 !== 'undefined' && PM51 && typeof PM51.value === 'function') ? PM51.value(id) : 'unreadable',
 		switches: row.querySelectorAll('.toggle[role="switch"]').length, inView: r.top >= 0 && r.bottom <= innerHeight, at: [Math.round(r.left), Math.round(r.top)] };
 };
 
@@ -88,10 +93,12 @@ export default async function (t) {
 	const judge = async (when, row, on) => {
 		await t.check(`${when}: aria-checked says ${on ? 'On' : 'Off'}`, row.drawn === true && row.checked === String(on), JSON.stringify(row));
 		if (!row.drawn) return;
+		await t.check(`${when}: the setting's own value, read back from Settings, is ${on}`, row.stored === on, `PM51.value: ${JSON.stringify(row.stored)}`);
 		await t.check(`${when}: the switch itself is shown (opacity-aware visibility, box inside the window and every clipping ancestor)`, row.switchShown === true, JSON.stringify(row));
 		await t.check(`${when}: the switch is drawn ${on ? 'On' : 'Off'}, as aria-checked says (the .on class and the knob's place)`, row.onClass === on && (on ? row.knobX > 0 : row.knobX === 0), `class on ${row.onClass}, knob at ${row.knobX}`);
 	};
 
+	await t.check('the inventory row\'s label is spelled as Tools T-191 fixes it, "Code Mode"', INV && INV.label === CANON_LABEL, String(INV && INV.label));
 	const found = await findBySearch();
 	t.log(`Settings Search "Code Mode" lists results named: ${found.titles.slice(0, 8).join(' | ')}`);
 	await t.check('Settings Search for "Code Mode" lists a result whose name is the inventory label', found.at >= 0, found.titles.slice(0, 8).join(' | '));
