@@ -110,20 +110,24 @@ export default async function (t) {
 		const clip = { x: Math.floor(b.x), y: Math.floor(b.y), width: Math.ceil(b.width), height: Math.ceil(b.height) };
 		const drawn = await t.page.screenshot({ clip });
 		let noSwitch, noKnob;
+		/* remember the switch's own inline visibility exactly, and keep a handle to the one style node added */
+		const before = await el.evaluate((node) => [node.style.getPropertyValue('visibility'), node.style.getPropertyPriority('visibility')]);
+		let knobOff = null;
 		try {
 			await el.evaluate((node) => node.style.setProperty('visibility', 'hidden', 'important'));
 			noSwitch = await t.page.screenshot({ clip });
-			await el.evaluate((node) => {
-				node.style.removeProperty('visibility');
+			await el.evaluate((node, [v, pr]) => { if (v) node.style.setProperty('visibility', v, pr); else node.style.removeProperty('visibility'); }, before);
+			knobOff = await el.evaluateHandle((node) => {
 				const st = document.createElement('style');
-				st.id = 'cm-row-check-knob-off';
 				st.textContent = `.toggle[role="switch"][data-setting="${node.getAttribute('data-setting')}"]::after { visibility: hidden !important; }`;
 				document.head.appendChild(st);
+				return st;
 			});
 			noKnob = await t.page.screenshot({ clip });
 		} finally {
-			/* always put the page back as it was */
-			await el.evaluate((node) => { node.style.removeProperty('visibility'); const st = document.getElementById('cm-row-check-knob-off'); if (st) st.remove(); }).catch(() => {});
+			/* always put the page back exactly as it was */
+			await el.evaluate((node, [v, pr]) => { if (v) node.style.setProperty('visibility', v, pr); else node.style.removeProperty('visibility'); }, before).catch(() => {});
+			if (knobOff) await knobOff.evaluate((st) => st.remove()).catch(() => {});
 		}
 		return { drawn, noSwitch, noKnob };
 	};
