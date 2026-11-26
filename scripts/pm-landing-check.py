@@ -1311,33 +1311,45 @@ def bucket_evidence(
 
 def grown_bucket_row(bucket: str, count: int, baseline_count: int,
                      renamed: dict[str, int] | None, fingerprints: set[str] | None,
-                     closure: Counter[str] | None) -> dict[str, Any] | None:
+                     closure: Counter[str] | None,
+                     nonstale_baseline_count: int | None = None) -> dict[str, Any] | None:
     """One bucket's grown row, or None when it did not grow: the check's whole-bucket classification in one place.
 
     Staleness by error kind; a `missing_ref` bucket whose rows above the baseline's count are all renamed-shard
     staleness; and a complete `audit_closure_validator_error` bucket whose every current non-stale row is one
     recorded baseline fingerprint with count one (review L-07). `fingerprints` is None for a bucket the baseline
-    matches by count alone, so neither row-based excuse applies to it.
+    matches by count alone, so neither row-based excuse applies to it. For `audit_closure_validator_error`, when
+    the baseline recorded `nonstale_count`, any rise in non-stale rows blocks even if stale rows fell and kept
+    the total bucket count level or lower.
     """
-    if count <= baseline_count:
-        return None
     error = bucket.split("|")[2]
+    nonstale_count = sum((closure or {}).values()) if error == "audit_closure_validator_error" else 0
+    nonstale_grew = (error == "audit_closure_validator_error"
+                     and nonstale_baseline_count is not None
+                     and nonstale_count > nonstale_baseline_count)
+    if count <= baseline_count and not nonstale_grew:
+        return None
     by_rename = (error == "missing_ref" and renamed is not None
                  and count - renamed.get(bucket, 0) <= baseline_count)
     stale = is_staleness_kind(error) or by_rename
-    if (not stale and error == "audit_closure_validator_error" and fingerprints is not None
+    if (not stale and not nonstale_grew and error == "audit_closure_validator_error" and fingerprints is not None
             and all(n == 1 and fingerprint in fingerprints for fingerprint, n in (closure or {}).items())):
         stale = True
-    row = {"bucket": bucket, "baseline_count": baseline_count, "count": count, "stale": stale}
+    row: dict[str, Any] = {"bucket": bucket, "baseline_count": baseline_count, "count": count, "stale": stale}
     if by_rename:
         row["renamed_shard_refs"] = renamed.get(bucket, 0)
+    if nonstale_grew:
+        row["baseline_nonstale_count"] = nonstale_baseline_count
+        row["nonstale_count"] = nonstale_count
     return row
 
 
 def grown_buckets(seen: dict[str, int], baseline: dict[str, int],
                   renamed: dict[str, int] | None = None,
                   fingerprints: dict[str, set[str] | None] | None = None,
-                  closure: dict[str, Counter[str]] | None = None) -> list[dict[str, Any]]:
+                  closure: dict[str, Counter[str]] | None = None,
+                  nonstale_baseline: dict[str, int] | None = None,
+                  nonstale_fingerprints: dict[str, set[str] | None] | None = None) -> list[dict[str, Any]]:
     """Buckets that hold more failures than the baseline recorded.
 
     A bucket the baseline has never seen is left out: its failures are already named one by one in
@@ -1353,8 +1365,14 @@ def grown_buckets(seen: dict[str, int], baseline: dict[str, int],
     for name in sorted(seen):
         if name not in baseline:
             continue
+        nonstale_base = (nonstale_baseline or {}).get(name)
+        expected_fps = (
+            nonstale_fingerprints[name]
+            if nonstale_fingerprints is not None and name in nonstale_fingerprints
+            else (fingerprints or {}).get(name)
+        )
         row = grown_bucket_row(name, seen[name], baseline[name], renamed,
-                               (fingerprints or {}).get(name), (closure or {}).get(name))
+                               expected_fps, (closure or {}).get(name), nonstale_base)
         if row is not None:
             rows.append(row)
     return rows
@@ -1596,15 +1614,22 @@ def build_baseline(
             for check in CHECKS
         },
         "buckets": bucket_rows(items, max_fingerprints),
-        "export_buckets": bucket_rows(list(export_items), max_fingerprints),
+        # Complete-export subchecks record fingerprints for every row regardless of --max-fingerprints,
+        # so large exported buckets (e.g. >200 audit-closure rows) never degrade to count-only.
+        "export_buckets": bucket_rows(list(export_items), None),
     }
 
 
-def bucket_rows(items: list[dict[str, Any]], max_fingerprints: int) -> list[dict[str, Any]]:
+def bucket_rows(items: list[dict[str, Any]], max_fingerprints: int | None) -> list[dict[str, Any]]:
     """The baseline's rows for these failures: one per bucket, with its count and fingerprints."""
     buckets: dict[str, list[str]] = {}
+    nonstale_buckets: dict[str, list[str]] = {}
     for item in items:
-        buckets.setdefault(bucket_of(item), []).append(item["key"].rsplit("|", 1)[1])
+        name = bucket_of(item)
+        fingerprint = item["key"].rsplit("|", 1)[1]
+        buckets.setdefault(name, []).append(fingerprint)
+        if item["error"] == "audit_closure_validator_error" and not item["stale"]:
+            nonstale_buckets.setdefault(name, []).append(fingerprint)
     rows = []
     for name in sorted(buckets):
         check, subcheck, error, path = name.split("|", 3)
@@ -1618,8 +1643,17 @@ def bucket_rows(items: list[dict[str, Any]], max_fingerprints: int) -> list[dict
         }
         # Big buckets are the mass residue. Storing every fingerprint would make a file that is
         # rewritten on a schedule megabytes long, so they are matched by count instead, and the
-        # baseline says which ones those are.
-        row["fingerprints"] = fingerprints if len(fingerprints) <= max_fingerprints else None
+        # baseline says which ones those are. Complete-export buckets pass max_fingerprints=None.
+        row["fingerprints"] = (
+            fingerprints if max_fingerprints is None or len(fingerprints) <= max_fingerprints else None
+        )
+        if error == "audit_closure_validator_error":
+            nonstale = nonstale_buckets.get(name, [])
+            nonstale_fps = sorted(set(nonstale))
+            row["nonstale_count"] = len(nonstale)
+            row["nonstale_fingerprints"] = (
+                nonstale_fps if max_fingerprints is None or len(nonstale_fps) <= max_fingerprints else None
+            )
         rows.append(row)
     return rows
 
@@ -1651,6 +1685,30 @@ def baseline_index(
             known[name] = set(fingerprints) if isinstance(fingerprints, list) else None
             counts[name] = int(row.get("count", 0))
     return known, counts
+
+
+def baseline_closure_nonstale(
+    doc: dict[str, Any],
+    exported: set[tuple[str, str]] | frozenset[tuple[str, str]] = frozenset(),
+) -> tuple[dict[str, set[str] | None], dict[str, int]]:
+    """({bucket: non-stale fingerprints, or None if count-only}, {bucket: non-stale count}) for closure buckets.
+
+    Only buckets whose baseline row records `nonstale_count` appear here; older baselines omit it and
+    fall back to the bucket's total count and fingerprints.
+    """
+    known_nonstale: dict[str, set[str] | None] = {}
+    counts_nonstale: dict[str, int] = {}
+    for field in ("buckets", "export_buckets"):
+        for row in doc.get(field) or []:
+            if ((row["check"], row.get("subcheck", "")) in exported) != (field == "export_buckets"):
+                continue
+            if row.get("error") != "audit_closure_validator_error" or "nonstale_count" not in row:
+                continue
+            name = f"{row['check']}|{row.get('subcheck', '')}|{row['error']}|{row.get('path', '')}"
+            fps = row.get("nonstale_fingerprints")
+            known_nonstale[name] = set(fps) if isinstance(fps, list) else None
+            counts_nonstale[name] = int(row["nonstale_count"])
+    return known_nonstale, counts_nonstale
 
 
 def git_out(root: Path, *args: str) -> str | None:
@@ -1793,6 +1851,7 @@ def write_row_report(
     paired: set[tuple[str, str]],
     fingerprints: dict[str, set[str] | None],
     validate_inputs: Callable[[], None] | None = None,
+    nonstale_fingerprints: dict[str, set[str] | None] | None = None,
 ) -> None:
     """--row-report: every row each subcheck gave in this run, for telling what one run added since another.
 
@@ -1822,7 +1881,10 @@ def write_row_report(
         bucket = bucket_of(item)
         mine = (item["check"], item["subcheck"]) not in excluded
         row_renamed = ({bucket: 1} if item["error"] == "missing_ref" and item["stale"] and mine else {})
-        grown = (grown_bucket_row(bucket, 1, 0, row_renamed, fingerprints.get(bucket), closure.get(bucket))
+        closure_fps = (nonstale_fingerprints[bucket]
+                       if nonstale_fingerprints is not None and bucket in nonstale_fingerprints
+                       else fingerprints.get(bucket))
+        grown = (grown_bucket_row(bucket, 1, 0, row_renamed, closure_fps, closure.get(bucket))
                  if mine else None)
         rows.setdefault(f"{item['check']}/{item['subcheck'] or '-'}", []).append(
             {"key": item["key"], "stale": item["stale"],
@@ -2676,6 +2738,7 @@ def check_main(args: argparse.Namespace, root: Path, source_path: Path,
         if int(counted.get("sampled", 0)) < int(counted.get("reported", 0)) <= int(counted.get("exported", 0) or 0)
     } - current_partial - did_not_finish
     known, baseline_counts = baseline_index(baseline, from_export)
+    known_nonstale, baseline_nonstale_counts = baseline_closure_nonstale(baseline, from_export)
     direct, derived = split_touched(touched)
     tokens = path_tokens(direct)
     units = units_of_touched_docs(root, direct)
@@ -2709,6 +2772,10 @@ def check_main(args: argparse.Namespace, root: Path, source_path: Path,
     partial = partial_subchecks(compared, baseline.get("checks") or {})
 
     run_counts = bucket_counts(items)
+    run_nonstale_closure_counts = Counter(
+        bucket_of(item) for item in items
+        if item["error"] == "audit_closure_validator_error" and not item["stale"]
+    )
     rule_two = currency["rule_two_applies"]
     unknown_covered = (unknown_pre_existing_subchecks(compared, baseline_checks, run_counts, baseline_counts)
                        if rule_two else {})
@@ -2719,25 +2786,37 @@ def check_main(args: argparse.Namespace, root: Path, source_path: Path,
     changed_on_branch = 0
     for item in items:
         name = bucket_of(item)
+        in_partial = (item["check"], item["subcheck"]) in partial
+        closure_split = (not in_partial and item["error"] == "audit_closure_validator_error"
+                         and not item["stale"] and name in baseline_nonstale_counts)
         fresh = False
-        if (item["check"], item["subcheck"]) not in partial:
-            fingerprints = known.get(name, set())
+        if not in_partial:
+            fingerprints = known_nonstale[name] if closure_split and name in known_nonstale else known.get(name, set())
             fingerprint = item["key"].rsplit("|", 1)[1]
             fresh = fingerprints is not None and fingerprint not in fingerprints
         # Rule 2: a failure that is not staleness, in a bucket the baseline holds whose count has not
         # risen, is pre-existing, content changed or not. It never blocks and is reported with both
         # counts whenever it would have been reported at all: on a branch file, or with new content.
         # Only against a current baseline; against a stale one every failure is judged as before.
-        standing = (None if item["stale"] or not rule_two
-                    else standing_of(run_counts[name], baseline_counts.get(name)))
+        # For complete audit-closure buckets recording `nonstale_count`, compare non-stale counts so
+        # resolving a stale hash never excuses a newly introduced non-stale closure error.
+        if item["stale"] or not rule_two:
+            standing = None
+            standing_counts = None
+        elif closure_split:
+            standing = standing_of(run_nonstale_closure_counts[name], baseline_nonstale_counts[name])
+            standing_counts = (baseline_nonstale_counts[name], run_nonstale_closure_counts[name])
+        else:
+            standing = standing_of(run_counts[name], baseline_counts.get(name))
+            standing_counts = (baseline_counts.get(name), run_counts[name])
         covered = (None if standing or item["stale"] or not rule_two
                    else unknown_covered.get((item["check"], item["subcheck"])))
         if covered is not None:
             standing = UNKNOWN_PRE_EXISTING
         if standing == UNKNOWN_PRE_EXISTING:
             counted = {"standing": standing, "baseline_count": None, "count": run_counts[name], **covered}
-        elif standing:
-            counted = {"standing": standing, "baseline_count": baseline_counts[name], "count": run_counts[name]}
+        elif standing and standing_counts is not None:
+            counted = {"standing": standing, "baseline_count": standing_counts[0], "count": standing_counts[1]}
         else:
             counted = {}
         hits = names_branch_path(item, tokens, root, units)
@@ -2770,7 +2849,8 @@ def check_main(args: argparse.Namespace, root: Path, source_path: Path,
     # fingerprint proves one baseline occurrence, and growth is excused only when that accounts for every current
     # non-stale row. Sampled and paired subchecks do not enter the evidence in the first place.
     seen_buckets, renamed_buckets, nonstale_closure_fingerprints = bucket_evidence(items, partial)
-    grown = grown_buckets(seen_buckets, baseline_counts, renamed_buckets, known, nonstale_closure_fingerprints)
+    grown = grown_buckets(seen_buckets, baseline_counts, renamed_buckets, known, nonstale_closure_fingerprints,
+                          baseline_nonstale_counts, known_nonstale)
     subcheck_growth = grown_subchecks(compared, baseline.get("checks") or {})
     for row in subcheck_growth:
         row["stale"] = readiness_counter_is_staleness(row, items, run_counts, baseline_counts,
@@ -2794,7 +2874,7 @@ def check_main(args: argparse.Namespace, root: Path, source_path: Path,
     inventory_message = pm7_inventory_stale(touched, root)
     if args.row_report:
         write_row_report(Path(args.row_report).resolve(), root, args.base, touched, all_items, counts, listed,
-                         did_not_finish, partial, paired, known, require_final_edition)
+                         did_not_finish, partial, paired, known, require_final_edition, known_nonstale)
     else:
         require_final_edition()
 
@@ -2943,8 +3023,10 @@ def check_main(args: argparse.Namespace, root: Path, source_path: Path,
                 print(f"  ... {len(unknown_pre_existing) - 40} more")
         print(f"Checks whose failure count rose: {len(grown)}")
         for row in grown[:40]:
+            extra = (f" (non-stale {row['baseline_nonstale_count']} -> {row['nonstale_count']})"
+                     if "nonstale_count" in row else "")
             print(f"  [{'staleness' if row['stale'] else 'blocking '}] {row['bucket']}  "
-                  f"{row['baseline_count']} -> {row['count']}")
+                  f"{row['baseline_count']} -> {row['count']}{extra}")
         print(f"Subchecks reporting more failures than the baseline: {len(subcheck_growth)}")
         for row in subcheck_growth[:40]:
             if row["stale"]:

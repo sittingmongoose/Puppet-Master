@@ -3285,6 +3285,135 @@ class AuditClosureCompleteExport(LandingRun):
         )
         self.assertEqual(report["blocking"], 2)
 
+    def test_290_row_stale_baseline_classifies_291_stale_growth_and_blocks_stale_for_nonstale_swap(self):
+        """N2: post-C baseline (>200 rows) keeps full export fingerprints and non-stale counts so
+        290 -> 291 pure stale growth exits 1 while a 290 -> 290 stale-for-non-stale swap exits 2."""
+        base_rows = self.stale_291()  # 290 stale + 1 reopened
+        self.stub(gates={self.RG: base_rows}, audit={self.AG: base_rows})
+        self.exports[self.CMD] = base_rows
+        self.record()  # default --max-fingerprints 200
+        baseline = json.loads((self.repo / "baseline.json").read_text(encoding="utf-8"))
+        closure_export_buckets = [
+            row for row in baseline["export_buckets"]
+            if row["error"] == "audit_closure_validator_error"
+        ]
+        self.assertEqual(len(closure_export_buckets), 2)
+        with self.subTest("baseline_export_buckets"):
+            for row in closure_export_buckets:
+                self.assertEqual(row["count"], 290)
+                self.assertIsInstance(row["fingerprints"], list)
+                self.assertEqual(len(row["fingerprints"]), 290)
+                self.assertEqual(row["nonstale_count"], 0)
+                self.assertEqual(row["nonstale_fingerprints"], [])
+
+        self.touch("Plans/Tools.md")
+
+        # 1. 290 -> 291 pure stale growth must exit 1 (blocking 0), not false-block.
+        with self.subTest("stale_growth_290_to_291"):
+            grown_stale = list(base_rows[:-1]) + [
+                self.stale_closure_row(1999, "Plans/Tools.md#unit=T-999"),
+                base_rows[-1],
+            ]
+            self.stub(gates={self.RG: grown_stale}, audit={self.AG: grown_stale})
+            self.exports[self.CMD] = grown_stale
+            code, out = self.compare("--json")
+            report = json.loads(out)
+            self.assertEqual(code, 1, out)
+            self.assertEqual(report["blocking"], 0)
+            self.assertEqual(report["subchecks_compared_by_total_only"], [])
+            self.assertEqual(len(report["grown_buckets"]), 2)
+            self.assertTrue(
+                all(r["stale"] and r["baseline_count"] == 290 and r["count"] == 291 for r in report["grown_buckets"]),
+                report["grown_buckets"],
+            )
+
+            # Row-report must agree with the check's grown_stale classification on the 291-row stale branch.
+            with tempfile.TemporaryDirectory() as folder:
+                rr_path = Path(folder) / "rows.json"
+                rr_code, rr_out = self.compare("--row-report", str(rr_path))
+                self.assertEqual(rr_code, 1, rr_out)
+                rr_doc = json.loads(rr_path.read_text(encoding="utf-8"))
+                for key in (f"run-gates/{self.RG}", f"audit-governance/{self.AG}"):
+                    closure_rows = [r for r in rr_doc["subchecks"][key]["rows"]
+                                    if "|audit_closure_validator_error|" in r["key"]]
+                    self.assertEqual(len(closure_rows), 291)
+                    self.assertTrue(all(r["grown_stale"] for r in closure_rows), key)
+
+        # 2. 290 -> 290 swap of 1 stale row for 1 non-stale row must exit 2 (both on-branch and off-branch).
+        for label, target in (("on_branch", "Plans/Tools.md#unit=T-250"), ("off_branch", "Plans/Other.md#unit=O-250")):
+            with self.subTest(swap=label):
+                swapped = list(base_rows)
+                swapped[250] = self.nonstale_closure_row(1250, target)
+                self.stub(gates={self.RG: swapped}, audit={self.AG: swapped})
+                self.exports[self.CMD] = swapped
+                swap_code, swap_out = self.compare("--json")
+                swap_report = json.loads(swap_out)
+                self.assertEqual(swap_code, 2, swap_out)
+                self.assertEqual(len(swap_report["grown_buckets"]), 2)
+                self.assertTrue(
+                    all(
+                        not r["stale"] and r["baseline_count"] == 290 and r["count"] == 290
+                        and r["baseline_nonstale_count"] == 0 and r["nonstale_count"] == 1
+                        for r in swap_report["grown_buckets"]
+                    ),
+                    swap_report["grown_buckets"],
+                )
+                self.assertEqual(
+                    [i for i in swap_report["pre_existing"] if i["error"] == "audit_closure_validator_error"],
+                    [],
+                )
+                if label == "on_branch":
+                    self.assertEqual(swap_report["blocking"], 4)
+                else:
+                    self.assertEqual(swap_report["blocking"], 2)
+
+    def test_290_row_mixed_closure_baseline_preserves_preexisting_nonstale_and_blocks_new_swap(self):
+        """N2: a 290-row mixed baseline (289 stale + 1 pre-existing non-stale) exits 0 unchanged,
+        exits 1 on +1 stale (even if the pre-existing non-stale row names a touched file), and
+        exits 2 when a stale row is swapped for a second non-stale error."""
+        mixed_base = list(self.stale_291())
+        mixed_base[10] = self.nonstale_closure_row(1010, "Plans/Other.md#unit=O-010")
+        self.stub(gates={self.RG: mixed_base}, audit={self.AG: mixed_base})
+        self.exports[self.CMD] = mixed_base
+        self.record()
+
+        eq_code, eq_out = self.compare("--json")
+        self.assertEqual(eq_code, 0, eq_out)
+
+        self.touch("Plans/Other.md")
+        self.touch("Plans/Tools.md")
+
+        mixed_plus_stale = list(mixed_base[:-1]) + [
+            self.stale_closure_row(2000, "Plans/Tools.md#unit=T-998"),
+            mixed_base[-1],
+        ]
+        self.stub(gates={self.RG: mixed_plus_stale}, audit={self.AG: mixed_plus_stale})
+        self.exports[self.CMD] = mixed_plus_stale
+        ms_code, ms_out = self.compare("--json")
+        ms_report = json.loads(ms_out)
+        self.assertEqual(ms_code, 1, ms_out)
+        self.assertEqual(ms_report["blocking"], 0)
+        self.assertTrue(all(r["stale"] for r in ms_report["grown_buckets"]))
+        self.assertEqual(
+            {(i["check"], i["standing"], i["baseline_count"], i["count"]) for i in ms_report["pre_existing"]},
+            {("run-gates", "pre-existing", 1, 1), ("audit-governance", "pre-existing", 1, 1)},
+        )
+
+        mixed_swap = list(mixed_base)
+        mixed_swap[250] = self.nonstale_closure_row(1250, "Plans/Elsewhere.md#unit=E-250")
+        self.stub(gates={self.RG: mixed_swap}, audit={self.AG: mixed_swap})
+        self.exports[self.CMD] = mixed_swap
+        mx_code, mx_out = self.compare("--json")
+        mx_report = json.loads(mx_out)
+        self.assertEqual(mx_code, 2, mx_out)
+        # 2 grown buckets (non-stale 1 -> 2) + 2 on-branch non-stale rows (Rule 2 off when non-stale count rose).
+        self.assertEqual(mx_report["blocking"], 4)
+        self.assertTrue(
+            all(not r["stale"] and r["baseline_nonstale_count"] == 1 and r["nonstale_count"] == 2
+                for r in mx_report["grown_buckets"]),
+            mx_report["grown_buckets"],
+        )
+
 
 class RunExport(unittest.TestCase):
     """run_export against a stand-in scripts/pm-plans-verify.py, not a stub: the report it writes with
