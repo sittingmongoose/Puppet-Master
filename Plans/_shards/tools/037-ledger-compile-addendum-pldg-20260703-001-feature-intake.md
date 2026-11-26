@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L11732-L12439
+Source lines: L11733-L12442
 
-Source SHA256: `a1083255c7e8cb94f9b8203ce6191eff148d66620b449bb1828d7007c1e9cb45`
+Source SHA256: `b1bece01b0d5417f66804fce16f4201c0f92f8f579fbedaceeb72e27cb276928`
 
 ---
 
@@ -30,6 +30,7 @@ unblocks: []
 acceptance_criteria:
 - finish_reason=length with tool call is classified partial_truncated.
 - nullable reasoning/content arrays are normalized without crashing and without dropping provider-native metadata.
+- After dispatch, missing or null required content produces a typed result fact and cannot settle as success. An optional null reasoning array alongside a valid result keeps its provider metadata.
 - large MCP tool_result is stored as managed output ref or rejected with explicit retention failure.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
@@ -525,6 +526,7 @@ acceptance_criteria:
 - Empty output remains empty with reason
 - Missing image does not become fake caption
 - Malformed JSON records parse error and raw captured bytes
+- Apply the post-dispatch result table to zero bytes, empty arrays, absent required images and complete responses with invalid JSON. Check the settlement state, typed fact and evidence ref or explicit unavailability.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate

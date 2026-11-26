@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L14709-L14771
+Source lines: L14711-L14775
 
-Source SHA256: `438f1c21bca916df9c332069c5eb0b5b7fb47f2010570bfd6d2eb43a9f009526`
+Source SHA256: `cbe99c4cf8900fcc2dbe2827d70696e73d04ae91515257644b4fff9311e010c0`
 
 ---
 
@@ -16,7 +16,9 @@ This addendum repairs non-runtime FileSafe rows without creating WorkNodes, impl
 
 ### Trace persistence limits and sampling rule (2026-11-25)
 
-This completes `sfk-e8baa3796f5c29cdb66f46eb` for the "bounded per-run log quotas" and "log sampling levels" of F2-197; the redaction hook stays where F2-195 puts it. Every log or trace event bound for disk passes these steps in this order, and a later step never runs on an event an earlier step dropped: (1) sensitivity classification; (2) `RedactionSettlement` (F2-195); (3) severity and sampling filter; (4) quota check; (5) write. Disk bytes are counted after redaction, as the serialized record written.
+This completes `sfk-e8baa3796f5c29cdb66f46eb` for the "bounded per-run log quotas" and "log sampling levels" of F2-197. For standard disk-bound logs and traces, the write path runs (1) sensitivity classification, (2) `RedactionSettlement` (F2-195), (3) severity and sampling filter, (4) quota check, and (5) write. When a step drops an event, the later steps skip it. Disk bytes are counted after redaction, as the serialized record written.
+
+**F2-196 local raw debug capture.** After sensitivity classification, FileSafe may write raw payloads covered by F2-196 to a separate local capture only with explicit user opt-in and an unexpired capture. FileSafe encrypts the payload before writing it and applies the capture's expiry to local retention. This write path is outside `TracePersistencePolicy` and `ObservabilityEnvelope`. Raw capture bytes stay out of standard logs and traces, diagnostic and support bundles, and OTLP export. Any request to export the capture itself must warn the user that it contains unredacted data before export.
 
 **`RedactionSettlement` and `ObservabilityEnvelope` fields.** Both records are closed. These tables type the 2026-07-08 field lists above; `ObservabilityEnvelope` also carries `run_id`, `quota_owner_kind` and `quota_owner_id`, which per-run quota accounting needs. `identity_id` and `non_secret_ref` use the like-named definitions in `Plans/source_control_contracts.schema.json`. All timestamps are RFC 3339 UTC strings. All fields are required unless their presence rule says otherwise.
 
@@ -55,7 +57,7 @@ This completes `sfk-e8baa3796f5c29cdb66f46eb` for the "bounded per-run log quota
 | `max_bytes_per_run` | integer bytes | 16 MiB to 1 GiB, and at least `max_bytes_per_trace` | 256 MiB |
 | `terminal_coalesce_ms` | integer ms | 16 to 1000 | 100 |
 | `retention_days` | integer days | at least 1 | the retention class `Plans/storage-plan.md` assigns to the log family; this policy references it and never overrides it |
-| `redaction_required` | boolean | always `true` for any persisted trace | `true` |
+| `redaction_required` | boolean | always `true` for standard trace persistence | `true` |
 | `export_allowed` | boolean | `true` only when the user enables the optional OTLP export adapter | `false` |
 
 **Sampling levels.** Event severities are `error`, `warn`, `info`, `debug`, `trace`. `errors` persists `error` and `warn`; `standard` adds `info`; `debug` adds `debug` and `trace`, subject to `sample_rate`. `sample_rate` applies only to `debug` and `trace` events and only at level `debug`. The sampling decision is per trace and applies uniformly to all eligible events: its `debug`/`trace` events persist when the first 8 bytes of `sha256(trace_id)`, read as an unsigned big-endian integer and divided by 2^64, are less than `sample_rate`. `error` and `warn` events, and the join events usage needs (attempt start, attempt end, and each usage record carrying `attempt_id`), are never sampled out at any level.

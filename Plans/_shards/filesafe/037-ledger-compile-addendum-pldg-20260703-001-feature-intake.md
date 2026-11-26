@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L14017-L14422
+Source lines: L14017-L14424
 
-Source SHA256: `438f1c21bca916df9c332069c5eb0b5b7fb47f2010570bfd6d2eb43a9f009526`
+Source SHA256: `cbe99c4cf8900fcc2dbe2827d70696e73d04ae91515257644b4fff9311e010c0`
 
 ---
 
@@ -193,6 +193,8 @@ status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
   P0-LOG-REDACTION-BEFORE-WRITE (P0) is compiled as canonical Puppet Master intent for Logging, traces, diagnostics, and privacy: Add ObservabilityEnvelope and TracePersistencePolicy: sensitivity classification before persistence, bounded per-run log quotas, log sampling levels, per-character terminal log suppression, OTLP export adapter as optional, support-bundle redaction, and trace-to-usage correlation IDs. The preserved PM gap/delta is: Observability needs a redaction-before-write and log-volume contract shared by provider traces, WebSockets/SSE, terminal streams, subagents, tools, MCP, memory, and support bundles. The observed external-repo signal remains source-lineage evidence: Codex issues show raw logs with paths/env/account/token-like data, heavy idle I/O, and stale helper processes; Pi exposes OpenTelemetry hooks; OpenCode supports Helicone/monitoring headers; Warp issue logs show per-character terminal event floods.
+  The pre-write redaction requirement and the provider request and WebSocket payload check below apply to standard trace writes.
+  F2-196 governs the separate encrypted local debug capture.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:

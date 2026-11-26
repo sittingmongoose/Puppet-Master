@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L13596-L13821
+Source lines: L13615-L13845
 
-Source SHA256: `a1083255c7e8cb94f9b8203ce6191eff148d66620b449bb1828d7007c1e9cb45`
+Source SHA256: `b1bece01b0d5417f66804fce16f4201c0f92f8f579fbedaceeb72e27cb276928`
 
 ---
 
@@ -107,8 +107,9 @@ canonical_text: >-
   callable tools named in T-190 are described to the model as the
   script's callable catalog under T-176 materialization, rather than as one provider tool schema each. Wherever tool calls are carried
   in-band, including where the selected model's Models_System tool_use capability is false, the script tool and the
-  directly callable tools named in T-190 are carried as in-band tool calls in an owned dialect that Tools selects for the model family and records on the run; the T-169 admission gate
-  applies, with Puppet Master-minted call IDs standing in for provider IDs, and text in which the model
+  directly callable tools named in T-190 are carried as in-band tool calls in an owned dialect that Tools selects for the model family and records on the run.
+  The host mints a call ID for each recognized in-band call before the T-169 admission gate. Hosted structured intents also use IDs minted
+  at the host's intake. The selected carriage determines ID provenance before validation, so a missing native ID still fails T-169. Text in which the model
   writes a tool result itself is discarded and never enters replayable history. Where the script tool is offered and the provider keeps native tools that
   Puppet Master cannot disable, the script tool is not withdrawn, the provider's own tool calls stay outside Code
   Mode, and the run's effective mode is mixed. Where a provider accepts no Puppet Master tools at all, the effective
@@ -123,6 +124,7 @@ unblocks: []
 acceptance_criteria:
   - Under Host Tool Execution a request on which the script tool is offered carries it and does not also carry one provider tool schema per registry tool the script can call; a request on which it is not offered keeps the ordinary tool-call path.
   - A model whose Models_System tool_use is false can use Code Mode through an owned in-band dialect, and a tool result the model wrote itself never reaches replayable history.
+  - A recognized in-band script call carries the host-issued ID through T-169 and settlement. A provider-native script call with an omitted or empty ID is denied without a stand-in, including when length truncation supplies the denial reason.
   - A bridged CLI under the HTE strategy on which the script tool is offered runs in Code Mode through the hosted action loop with no provider tool_use, unless the next criterion applies, whether or not that CLI has a code mode of its own; under the DAE strategy with the Puppet Master script tool offered, the run is recorded as mixed. The exception changes only the effective tool-calling mode label; under HTE, RM-021 still terminates the run on a provider-originated tool_use.
   - A run on which the script tool is offered, on a provider that keeps native tools Puppet Master could not disable, is recorded as mixed, never as Code Mode.
 validation_surfaces:
@@ -185,7 +187,9 @@ canonical_text: >-
   output spills under T-177. Crossing the inline-output threshold uses the existing spill path and does not itself
   fail the script; crossing the EvalSession hard output-byte ceiling ends it with typed recovery evidence. Each nested call emits the same
   tool events, receipts and usage rollups as a direct call and also carries the script's operation identity, so the
-  transcript shows the script and every tool call it made. Only question and task, whose
+  transcript shows the script and every tool call it made. The host-issued child ID from section 4.4 is the child's tool_call_id in ToolTurnSettlement
+  and original_tool_call_id in any ToolRecoveryEnvelope. Both records carry the outer script's logical_operation_id as parent_operation_id.
+  The enclosing script retains its own call ID under T-189. Only question and task, whose
   contracts hand the turn to a person or to another agent, stay directly callable in Code Mode; they are not in the
   script's callable catalog, and calling them directly does not make the run mixed. The essential catalog search of
   T-176 is selected for every request on which the script tool is offered and in which it is policy_available, and is in the script's callable
@@ -198,6 +202,7 @@ acceptance_criteria:
   - A script cannot make a tool call that the same request could not make as a direct call, including when the argument values are computed while the script runs.
   - An approval asked for inside a script suspends that script and is answered through the ordinary approval path; a denial, including the immediate one when no person is available, reaches the script as a typed result.
   - Every nested call appears in the event log, receipts and usage rollups exactly as a direct call would, plus the script's operation identity.
+  - Two catalog searches within one script can settle successfully with distinct host-issued child IDs and the same parent_operation_id. A failed nested call repeats its child ID and parent_operation_id in the recovery envelope. The enclosing script retains its own call ID.
   - A script that passes its deadline or the EvalSession hard output-byte ceiling ends with typed recovery evidence, not a success-shaped result.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py lint-contractrefs

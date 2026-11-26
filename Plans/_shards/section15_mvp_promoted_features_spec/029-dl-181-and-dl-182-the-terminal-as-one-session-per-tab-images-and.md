@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L13367-L14091
+Source lines: L13367-L14092
 
-Source SHA256: `e49e3228bc62523aba2888eea83a5179816144c44614d6aa8a83af7b40b46a8f`
+Source SHA256: `d00d5538b214456bca124f0cead8ad6ca39f627e1d13472c765c8f3388293fc7`
 
 ---
 
@@ -228,10 +228,11 @@ canonical_text: >-
   resolved path is checked before opening, and `/proc`, `/sys` and `/dev` (except `/dev/shm`) are refused;
   symlinks are followed and loops fail; every read failure of any file medium (missing, unreadable, not regular,
   sensitive, shorter than claimed) answers exactly `EBADF:Failed to read image file`; temporary files are deleted
-  only inside `/tmp` or `/dev/shm` and only when the path contains `tty-graphics-protocol`; shared memory is
-  unlinked after reading. Remote (SSH) sessions and commands an agent typed may use direct transmission only, and
-  their file, temporary-file and shared-memory media get the same `EBADF` answer. Every error reply is a fixed
-  string that never echoes anything the program sent: `EINVAL:Invalid graphics command`, `ENOENT:Image not
+  only inside `/tmp` or `/dev/shm` and only when the path contains `tty-graphics-protocol`. On macOS, Linux and WSL,
+  shared memory is unlinked after reading. On native Windows the terminal unmaps its views and closes its handles
+  to the named file mapping after reading. Remote (SSH) sessions and commands an agent typed may use direct
+  transmission only, and their file, temporary-file and shared-memory media get the same `EBADF` answer. Every
+  error reply is a fixed string that never echoes anything the program sent: `EINVAL:Invalid graphics command`, `ENOENT:Image not
   found`, `ENODATA:Insufficient image data`, `EFBIG:Too much data`, `ENOSPC:Storage quota exceeded`,
   `ENOMEM:Image too large`, `EBADPNG:Image could not be decoded`, `EILSEQ:Continuation for an upload that is not in
   progress`, `ETOODEEP`, `ECYCLE` and `ENOPARENT`. A program that sends too much is refused; it never freezes the
@@ -280,7 +281,7 @@ acceptance_criteria:
 - "The kitty graphics protocol with every listed feature, sixel and iTerm2 inline images all ship in the first terminal release; none is phased or left behind an off flag."
 - "Every limit holds at its stated number; a sequence over its cap is dropped and kitty gets EFBIG; an over-quota image store evicts images without placements, then transient images, then the least recently used."
 - "A screen buffer keeps at most 4,096 placements, and the 4,097th drops the oldest placement that no other placement hangs from; no placement covers more than 10,000 cells."
-- "Every file-medium read failure answers exactly EBADF:Failed to read image file; /proc, /sys and /dev (except /dev/shm) are refused; symlink loops fail; temporary files are deleted only inside /tmp or /dev/shm and only with tty-graphics-protocol in the path; shared memory is unlinked after reading."
+- "Every file-medium read failure answers exactly EBADF:Failed to read image file; /proc, /sys and /dev (except /dev/shm) are refused; symlink loops fail; temporary files are deleted only inside /tmp or /dev/shm and only with tty-graphics-protocol in the path. After reading shared memory, unlink it on macOS, Linux and WSL. On native Windows unmap all terminal views and close all terminal handles to the named file mapping."
 - "A remote (SSH) session and a command an agent typed can send images only by direct transmission; their file, temporary-file and shared-memory media get EBADF."
 - "Every error reply is one of the fixed strings and never echoes program data."
 - "Output after an image waits for it; images anchor, scroll, reflow and clip with their cells; text written over sixel and iTerm2 images cuts them out; tmux passthrough works through Unicode placeholders."

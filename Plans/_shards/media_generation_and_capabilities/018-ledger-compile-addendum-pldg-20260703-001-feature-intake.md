@@ -2,9 +2,9 @@
 
 Source: `Plans/Media_Generation_and_Capabilities.md`
 
-Source lines: L6498-L6668
+Source lines: L6498-L6669
 
-Source SHA256: `8804feeaf24019974e418fc625ca17245b548214d352bce832ed0e8bce4e5a1e`
+Source SHA256: `42a50161304de11d5a3ca97a2ddd28cdacb6e11e07721b6463054a54834de00f`
 
 ---
 
@@ -127,6 +127,7 @@ validation_surfaces:
 - "Non-vision model with image shows \u201Ccaption fallback used,\u201D with caption artifact and cost."
 - User can disable fallback.
 - Replay confirmed caption delivery, pre-model refusal and timeout without delivery evidence. Check the per-input disclosure against the delivery evidence in both the response and the durable result record.
+- Replay an unresolved policy ID and a caption budget stop with two candidates. Check that policy rejection occurs before route selection, that each input has a terminal disposition, and that the receipt resolves billed or unknown caption cost from the caption call's UsageRecord on success and failure.
 risk_class: p1_security_release_supply_chain_hardening
 reasoning_tier: standard
 context_scope: security_release_supply_chain

@@ -9779,7 +9779,7 @@
         "future image source resolver",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 15381,
+      "line_count": 15385,
       "path": "Plans/FileSafe.md",
       "plan_unit_count": 213,
       "plan_unit_ids": [
@@ -10032,7 +10032,7 @@
         "unrecoverable_mutation",
         "unsafe_host_side_effect"
       ],
-      "sha256": "438f1c21bca916df9c332069c5eb0b5b7fb47f2010570bfd6d2eb43a9f009526",
+      "sha256": "cbe99c4cf8900fcc2dbe2827d70696e73d04ae91515257644b4fff9311e010c0",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 213
@@ -13236,7 +13236,7 @@
         "Plans/usage-feature.md",
         "future provider/model capability matrix"
       ],
-      "line_count": 6872,
+      "line_count": 6877,
       "path": "Plans/Media_Generation_and_Capabilities.md",
       "plan_unit_count": 101,
       "plan_unit_ids": [
@@ -13369,7 +13369,7 @@
         "p1_security_release_supply_chain_hardening",
         "retired_gemini_cli_nanobanana_resurrection"
       ],
-      "sha256": "8804feeaf24019974e418fc625ca17245b548214d352bce832ed0e8bce4e5a1e",
+      "sha256": "42a50161304de11d5a3ca97a2ddd28cdacb6e11e07721b6463054a54834de00f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 101
@@ -13382,6 +13382,7 @@
       "validation_surfaces": [
         "GUI can show original artifact and caption/fallback provenance.",
         "Non-vision model with image shows “caption fallback used,” with caption artifact and cost.",
+        "Replay an unresolved policy ID and a caption budget stop with two candidates. Check that policy rejection occurs before route selection, that each input has a terminal disposition, and that the receipt resolves billed or unknown caption cost from the caption call's UsageRecord on success and failure.",
         "Replay confirmed caption delivery, pre-model refusal and timeout without delivery evidence. Check the per-input disclosure against the delivery evidence in both the response and the durable result record.",
         "Text-only model + image file yields denied_or_captioned, never hidden prompt bloat.",
         "User can disable fallback.",
@@ -15174,7 +15175,7 @@
         "future Orchestrator prompt routes",
         "future subagent handoff and child-run receipt records"
       ],
-      "line_count": 35254,
+      "line_count": 35255,
       "path": "Plans/orchestrator-subagent-integration.md",
       "plan_unit_count": 472,
       "plan_unit_ids": [
@@ -16099,7 +16100,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "38d34db26da80964565005d04d798ccca333c92ae9dcdc5a3ea1c2045bd7f3b7",
+      "sha256": "519bdd0b9ae3c88e7b7e26fcb1d03e8dd8ef564b674dc00503d066e9a46ae072",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 470,
@@ -19831,7 +19832,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm_browser_program_semantics.py"
       ],
-      "line_count": 19327,
+      "line_count": 19330,
       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
       "plan_unit_count": 199,
       "plan_unit_ids": [
@@ -20177,7 +20178,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "e49e3228bc62523aba2888eea83a5179816144c44614d6aa8a83af7b40b46a8f",
+      "sha256": "d00d5538b214456bca124f0cead8ad6ca39f627e1d13472c765c8f3388293fc7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 195,
@@ -23376,7 +23377,7 @@
         "future tool registry and shell/integration command dispatch",
         "future vision_bridge tool"
       ],
-      "line_count": 13821,
+      "line_count": 13845,
       "path": "Plans/Tools.md",
       "plan_unit_count": 190,
       "plan_unit_ids": [
@@ -23651,7 +23652,7 @@
         "workflow_local_tool_registry_drift",
         "write_atomicity_drift"
       ],
-      "sha256": "a1083255c7e8cb94f9b8203ce6191eff148d66620b449bb1828d7007c1e9cb45",
+      "sha256": "b1bece01b0d5417f66804fce16f4201c0f92f8f579fbedaceeb72e27cb276928",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 189,
@@ -25279,7 +25280,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-26T05:26:57Z",
+  "generated_at_utc": "2026-11-26T06:06:43Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

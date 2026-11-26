@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L12441-L12699
+Source lines: L12444-L12718
 
-Source SHA256: `a1083255c7e8cb94f9b8203ce6191eff148d66620b449bb1828d7007c1e9cb45`
+Source SHA256: `b1bece01b0d5417f66804fce16f4201c0f92f8f579fbedaceeb72e27cb276928`
 
 ---
 
@@ -25,15 +25,15 @@ Repairs row `sfk-88d65b2be00892daadd2f0d8`.
 
 Repairs rows `sfk-0649b6a2c860f179ee699f58`, `sfk-e257db159bd84ee85f74371d`, and `sfk-47f640ed50d4ed24f6b34c49`.
 
-`ToolTurnSettlement` fields are `settlement_id`, `tool_call_id`, `settlement_state`, `result_ref?`, `error_ref?`, `truncation_ref?`, `redaction_ref?`, `retention_ref?`, `retry_after_ms?`, `created_at_utc`, and `schema_version`. Amended 2026-11-26: the list also has `gate_id?`, and `tool_call_id` is absent only for a call that arrived with no provider id, which the admission gate always denies; the `ToolTurnSettlement` typed shape below gives every type and presence rule.
+`ToolTurnSettlement` fields are `settlement_id`, `tool_call_id?`, `parent_operation_id?`, `gate_id?`, `settlement_state`, `result_ref?`, `result_facts?`, `error_ref?`, `truncation_ref?`, `redaction_ref?`, `retention_ref?`, `retry_after_ms?`, `created_at_utc`, and `schema_version`. The typed shape below gives the ID provenance and all field presence rules.
 
-`settlement_state` values are `success`, `partial`, `partial_truncated`, `malformed`, `nullable_content`, `redacted`, `retained`, `retryable`, and `fatal`. `success` is legal only when required result, error, truncation, retention, and redaction metadata are normalized.
+`settlement_state` values are `success`, `partial`, `partial_truncated`, `malformed`, `nullable_content`, `redacted`, `retained`, `retryable`, and `fatal`. `success` follows the §3.5 rule and the post-dispatch normalization below.
 
 `CommandInvocationContract` fields are `invocation_id`, `tool_call_id`, `invocation_kind`, `interpreter`, `argv?`, `shell_string?`, `powershell_script?`, `pty_input_ref?`, `cwd`, `env_policy_ref`, `permission_snapshot_id?`, `configured`, `allowed`, `injected`, `visible_to_model`, `created_at_utc`, and `schema_version`. Amended 2026-11-26: the list also has `terminal_session_id?`, typed below.
 
 `invocation_kind` values are `shell_string`, `argv`, `powershell_script`, `pty_input`, and `tui_automation`.
 
-`ProviderToolTurnAdmissionGate` fields are `gate_id`, `tool_call_id`, `provider_id`, `model_id`, `allowed`, `denial_reason_code?`, `permission_snapshot_id?`, `capability_snapshot_id?`, and `created_at_utc`. Amended 2026-11-26: the list also has `call_index`, and `tool_call_id` is absent only for a call that arrived with no provider id; the typed contract below gives every type and presence rule.
+`ProviderToolTurnAdmissionGate` fields are `gate_id`, `tool_call_id?`, `call_index`, `provider_id`, `model_id`, `allowed`, `denial_reason_code?`, `permission_snapshot_id?`, `capability_snapshot_id?`, and `created_at_utc`. The typed contract below gives the provider-native and T-189 in-band ID rules.
 
 #### `interpreter` type and the `bash` adapter binding (added 2026-11-25)
 
@@ -148,13 +148,13 @@ Persistence of this receipt is not settled here: it needs a storage registration
 
 #### `ProviderToolTurnAdmissionGate` typed contract (T-169, added 2026-11-26)
 
-One gate record is written for every provider tool call before the turn that carries it may enter replayable history or be dispatched.
+One gate record is written for every provider-native tool call subject to PM admission and every T-189 in-band tool call before the turn that carries it may enter replayable history or be dispatched. An EvalSession nested call enters the per-tool dispatch checks of §4.4 and T-190 using its host-issued identity, outside this provider-turn gate.
 
 | Field | Type | Rule |
 |---|---|---|
-| `gate_id` | string | Opaque and unique; minted by PM, never taken from the provider. It is the call's PM identity in every record that names the call. |
-| `tool_call_id` | nonempty string, optional | The provider's own id for the call judged. An omitted or empty provider id is absent here and always denied: as `tool_call_id_missing`, or as `length_truncated` when that check fired first. PM never invents a value for it. |
-| `call_index` | integer, at least 0 | The call's position among the tool calls of its provider turn, in stream order. With `gate_id` it identifies a call that has no provider id. |
+| `gate_id` | string | Opaque and unique, minted by PM. It correlates the gate with the records that reference this decision. |
+| `tool_call_id` | nonempty string, optional | For provider-native carriage, copy the provider's own id. An omitted or empty provider id is absent here and always denied as `tool_call_id_missing`, or as `length_truncated` when that check fired first. Native carriage never receives a stand-in. For T-189 in-band carriage, use the id that PM minted for this call before the gate. |
+| `call_index` | integer, at least 0 | The call's position among the tool calls of its provider turn, in stream order. With `gate_id` it identifies a denied call with no native id. |
 | `provider_id`, `model_id` | string | The route that produced the call. |
 | `allowed` | boolean | True only when every check below passes. |
 | `denial_reason_code` | closed enum, optional | Required when `allowed` is false, absent when it is true. |
@@ -166,7 +166,7 @@ Checks, in this order; the first that fails gives the code: `length_truncated` (
 
 A denied call never enters replayable history and is never dispatched. The gate emits one `provider_turn_malformed` record per denied call, using the payload below (T-169). The eight gate codes normalize to `failure_class = structured_output_invalid` and follow its `Plans/Executor_Protocol.md` §7.1 row (max retries 2, no backoff). If another provider-turn retry is admitted under that row and the existing retry budget and loop rules, the tool turn settles `retryable`. Otherwise it settles `malformed` and the run takes that classifier's escalation. The one exception is `length_truncated`: it follows the same retry row and settles `partial_truncated` on every attempt, as T-167 requires. Its structured error is `truncated_by_length` (Truncation gate), and no argument is synthesized. A namespace denial settles `fatal` with the receipt entry's own code and does not retry. An admitted provider retry requests one replacement for the failed turn, even when several calls were denied. It performs no invocation retry under §3.5.0A or "Retry classification and bounded recovery".
 
-All four records for a denied call carry the same `gate_id`: the gate record, the `provider_turn_malformed` record, the `ToolTurnSettlement` and the `ToolRecoveryEnvelope`. Copy the original provider id to each record when available. If it is absent, omit `tool_call_id` from the gate, malformed record and settlement, and omit `original_tool_call_id` from the recovery envelope. The envelope has `retryable: false` because the denied call itself cannot be dispatched again. Its `status` is `truncated` for `length_truncated`, `blocked` for a namespace denial and `failed` for other gate denials. Persistence of gate and `provider_turn_malformed` records waits on the same Storage registration as the receipt above.
+All four records for a denied call carry the same `gate_id`: the gate record, the `provider_turn_malformed` record, the `ToolTurnSettlement` and the `ToolRecoveryEnvelope`. Copy the gate's `tool_call_id` to each record when present, as `original_tool_call_id` in the recovery envelope. For a provider-native call that arrived without an id, omit the corresponding member in all four records. The envelope has `retryable: false` because the denied call itself cannot be dispatched again. Its `status` is `truncated` for `length_truncated`, `blocked` for a namespace denial and `failed` for other gate denials. Persistence of gate and `provider_turn_malformed` records waits on the same Storage registration as the receipt above.
 
 #### `provider_turn_malformed` payload (T-169)
 
@@ -178,7 +178,7 @@ The payload is one UTF-8 JSON object containing only the following members. Opti
 | `schema_version` | string constant | `1.0.0`. |
 | `gate_id` | nonempty string | Matches the denied gate record. |
 | `call_index` | integer, at least 0 | Copy the gate's position in the provider turn. |
-| `tool_call_id` | nonempty string, optional | Copy the gate's original provider id when present. |
+| `tool_call_id` | nonempty string, optional | Copy the gate's call id when present. |
 | `denial_reason_code` | closed enum | Copy the gate's reason, including the receipt's namespace reason when that check denied admission. |
 | `raw_redacted_state` | closed enum | `available` if redacted provider evidence could be captured and referenced, otherwise `unavailable`. |
 | `raw_redacted_ref` | nonempty string, optional | Required when `raw_redacted_state` is `available`, otherwise absent. Resolves to evidence from the same provider turn containing the rejected call's source as received, after secret redaction. |
@@ -208,11 +208,13 @@ One immutable settlement is written per tool call attempt, including a call the 
 | Field | Type | Rule |
 |---|---|---|
 | `settlement_id` | string | Opaque and unique. |
-| `tool_call_id` | nonempty string, optional | The provider's id for the call. Absent exactly when the gate received no id or an empty id, which it always denies. |
-| `gate_id` | string, optional | The `ProviderToolTurnAdmissionGate` record of the call. Present for every provider tool call; required when `tool_call_id` is absent. |
+| `tool_call_id` | nonempty string, optional | Copy the gated call id when present. Use the trusted PM-issued call id for a hosted structured intent or an EvalSession nested call. Omit only for a provider-native call denied without an id. |
+| `parent_operation_id` | nonempty string, optional | Required for an EvalSession nested call. The enclosing operation's `logical_operation_id`, which for Code Mode is the outer script's operation id. Absent on the outer script and other direct calls. |
+| `gate_id` | nonempty string, optional | The call's `ProviderToolTurnAdmissionGate` record. Present for every call judged by that gate, including native calls denied without an id. Absent for every other call, including nested calls. |
 | `settlement_state` | closed enum | One of the nine values above. |
-| `result_ref` | string, optional | Reference to the normalized tool result, a payload reference when spilled (DL-270, §3.5.0A). Present for every dispatched call that returned a result, so for `success` unless the tool's own contract omits it; absent for a call the gate denied. |
-| `error_ref` | string, optional | Reference to the structured error (its code, such as a gate code or `heartbeat_lost`, and the `ToolRecoveryEnvelope`). Required for `malformed`, `retryable` and `fatal` and for every gate denial; absent for `success`. |
+| `result_ref` | string, optional | Present whenever a normalized tool result exists, including a valid partial result. It is a payload reference when spilled (DL-270, §3.5.0A). Absent for a gate denial or when no normalized result exists. Required for `success` unless the tool's own contract omits it. |
+| `result_facts` | nonempty array of objects, optional | Required when a dispatched call matches a row in the post-dispatch result table below, with one fact per affected value. Absent otherwise. |
+| `error_ref` | string, optional | Reference to the structured error (its code and the `ToolRecoveryEnvelope`). Required for `malformed`, `retryable` and `fatal`, every gate denial, and any post-dispatch failure fact below even when another state takes precedence. Absent for `success`. |
 | `truncation_ref` | string, optional | Reference to the truncation facts: the bounded head/tail, exact original size and artifact ref of §3.5.0A, or the `provider_turn_malformed` record of a `length_truncated` denial. Required whenever output or arguments were truncated, so always for `partial_truncated`; absent for `success`. |
 | `redaction_ref` | string, optional | Reference to the redaction applied. Required whenever any result or output content was redacted, so always for `redacted`. |
 | `retention_ref` | `ToolManagedOutputRef` string, optional | The SP-337 content ID of this attempt's retained output, defined by T-177. Present whenever output was successfully spilled or retained, so always for `retained`. |
@@ -221,6 +223,20 @@ One immutable settlement is written per tool call attempt, including a call the 
 | `schema_version` | string | `1.0.0`. |
 
 `success` is legal only under the §3.5 rule (required result, error, truncation, retention and redaction metadata normalized and persisted, or intentionally omitted by the tool's own contract); a settlement that would break a presence rule above is never written as `success`: it takes the state the missing metadata gives (for failed retention, `fatal` or `partial_truncated`, §3.5.0A). Persistence of settlements waits on the same Storage registration as the receipt above.
+
+**Post-dispatch result normalization (T-167, T-173).** After dispatch, the adapter checks the returned result against the selected tool's result contract before settling the attempt or projecting its result into history. The table sets the facts and candidate states for the returned content. A typed execution error that accounts for the missing result follows its own error path. For declared output truncation use `truncation_ref` and `partial_truncated`; do not infer malformed or missing content solely from the cut. Normalize optional absent or null content and reasoning fields with their provider-native metadata intact. Keep any usable, valid content in its original shape, including empty strings or arrays, and preserve absence or null where observed. Never fill an empty or missing value with generated text, a caption or an image placeholder.
+
+| Observed result | `reason_code` | Candidate `settlement_state` |
+|---|---|---|
+| A tool result or result field that the tool contract requires to be present and non-null is absent or explicitly null, with no prior execution error explaining the absence. | `required_content_missing` for absence, `required_content_null` for null. | `nullable_content` |
+| A result field that requires an image lacks the actual image or its required artifact reference, including absent, null or empty image values. Use this row for the image field in place of the generic missing, null or empty row. | `required_image_missing` | `nullable_content` |
+| A zero-byte result, empty string or empty array that the tool contract requires to contain content. | `required_content_empty` | `nullable_content` |
+| An empty result allowed by the tool contract, including an explicitly void result. | `empty_output_allowed` | No failure state. Apply the ordinary settlement rules. |
+| A complete nonempty body declared JSON cannot be decoded as UTF-8 and one complete JSON value. Syntactically valid JSON `null` follows the content rules above. | `invalid_result_json` | `malformed` |
+
+Each fact has a `reason_code` from the table and `result_path`, a string JSON Pointer locating the field in the result contract's shape (empty string for the whole result or a body that could not be parsed). For `invalid_result_json`, the fact also has `parse_byte_offset`, a zero-based nonnegative integer offset into the received body where decoding or parsing failed (body length at EOF), and `raw_redacted_state` (`available` or `unavailable`). When `available`, `raw_redacted_ref` is a nonempty string resolving to the original result bytes after secret redaction, captured before any repair or reserialization and protected by the bounded capture and access rules of §3.5.0A. If policy, bounds or a capture/redaction failure prevents a safe capture, use `unavailable` and omit the ref. All three parse-only members are absent for other reasons. Keep these source bytes outside replayable history and surface only the typed failure and any valid normalized result.
+
+Every reason except `empty_output_allowed` is a failure fact. Preserve its code in `result_facts` even when another state wins under §3.5. `error_ref` resolves to the structured error and recovery envelope. Use the tool owner's code when it supplies one, such as `mcp_schema_mismatch`; otherwise use the reason of the first failure fact in table order, breaking ties by ascending UTF-8 `result_path`. For these content and parse failures use the terminal schema-mismatch classification and `retryable: false`, with `status: partial` if valid result content survives or `status: failed` if none survives. An independently applicable higher-priority failure keeps its own recovery status and diagnostics. The dispatched attempt receives its own settlement and never enters T-169's provider-turn denial or replacement path.
 
 #### `ToolProgressHeartbeat` contract (T-175, added 2026-11-26)
 
