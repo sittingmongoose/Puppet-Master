@@ -3482,6 +3482,20 @@ class AuditClosureCompleteExport(LandingRun):
         self.assertEqual(len(blocking_on_branch), 2)
         self.assertTrue(all(i["error"] == "audit_closure_validator_error" for i in blocking_on_branch))
 
+    def test_landing_checks_readme_documents_complete_closure_export_and_historical_fallback(self):
+        """N3: reports/landing-checks/README.md matches the complete audit-closure export contract."""
+        readme = (ROOT / "reports/landing-checks/README.md").read_text(encoding="utf-8")
+        self.assertNotIn("`validate-audit-closure` (no complete export)", readme)
+        self.assertNotIn(
+            "test_the_real_map_reads_every_aggregate_command_as_a_complete_export_but_audit_closure",
+            readme,
+        )
+        self.assertNotIn("audit-closure (201) keeps it after the refresh too, because it has no complete export", readme)
+        self.assertNotIn("What this leaves open: audit-closure stays sampled", readme)
+        self.assertIn("test_the_real_map_reads_every_aggregate_command_as_a_complete_export", readme)
+        self.assertIn("landing_closure_export_v1", readme)
+        self.assertIn("`validate-audit-closure`", readme)
+
 
 class RunExport(unittest.TestCase):
     """run_export against a stand-in scripts/pm-plans-verify.py, not a stub: the report it writes with
