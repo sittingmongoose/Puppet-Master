@@ -857,13 +857,13 @@ def infrastructure_row(item: dict[str, Any]) -> dict[str, Any]:
         "check": item["check"],
         "subcheck": item["subcheck"],
         "error": item["error"],
-        "kind": "killed" if killed else "timeout",
         "command_id": raw.get("command_id"),
         # A timeout is killed when its bound runs out, so the bound is how long it ran; a validator
         # killed from outside reported no bound.
         "elapsed_seconds": None if killed else (bound if known else None),
     }
     if killed:
+        row["kind"] = "killed"
         row["signal"] = raw.get("signal")
         row["signal_name"] = raw.get("signal_name")
     return row
@@ -1771,6 +1771,7 @@ def pair_validators(
     commands: dict[tuple[str, str], str] | str,
     changed: str | None,
     keyed: set[tuple[str, str]] | frozenset[tuple[str, str]] = frozenset(),
+    killed_checks: set[tuple[str, str]] | frozenset[tuple[str, str]] = frozenset(),
 ) -> list[dict[str, Any]]:
     """Review L-07: which run-gates copies of a validator are judged by their audit-governance copy.
 
@@ -1778,7 +1779,7 @@ def pair_validators(
     when the baseline was recorded, since those are the copies the baseline cannot key in full. Such
     a copy is paired with the audit-governance subcheck that runs the same command, and judged by its
     rows, only when both ran the same validator at the same version in this run (`changed` is None),
-    neither timed out, their totals agree, the audit-governance copy printed every failure now and at
+    both finished, their totals agree, the audit-governance copy printed every failure now and at
     the baseline, and every row the run-gates copy printed is among its rows, which with the equal
     totals is the evidence that both saw the same inputs. Otherwise the row says why not, and the
     run-gates copy keeps the truncated rule. `commands` is what each subcheck runs, or why that could
@@ -1829,9 +1830,11 @@ def pair_validators(
         row["audit_governance"], row["audit_governance_counts"] = twin, other
         unmatched = 0
         if ("run-gates", name) in did_not_finish:
-            row["reason"] = "the run-gates copy did not finish (timed out or killed)"
+            outcome = "was killed by a signal" if ("run-gates", name) in killed_checks else "timed out"
+            row["reason"] = f"the run-gates copy {outcome}"
         elif ("audit-governance", twin) in did_not_finish:
-            row["reason"] = "the audit-governance copy did not finish (timed out or killed)"
+            outcome = "was killed by a signal" if ("audit-governance", twin) in killed_checks else "timed out"
+            row["reason"] = f"the audit-governance copy {outcome}"
         elif changed:
             row["reason"] = changed
         elif own["reported"] != other["reported"]:
@@ -2361,6 +2364,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     for row in infrastructure:
         row["limit_seconds"] = args.subcheck_timeout_seconds
     did_not_finish = {(row["check"], row["subcheck"]) for row in infrastructure}
+    killed_checks = {(row["check"], row["subcheck"]) for row in infrastructure if row.get("kind") == "killed"}
 
     if args.record_baseline and infrastructure:
         # A baseline describes what each subcheck reports on main; a subcheck that was killed reported
@@ -2369,7 +2373,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
               "they report is unknown:", file=sys.stderr)
         for row in infrastructure:
             print(describe_infrastructure(row), file=sys.stderr)
-        if any(row.get("kind") == "killed" for row in infrastructure):
+        if killed_checks:
             print("pm-landing-check: a validator killed by a signal was stopped from outside; rerun when it "
                   "finishes, and raise --subcheck-timeout-seconds for one killed at its bound.",
                   file=sys.stderr)
@@ -2459,7 +2463,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     except Exception as exc:  # noqa: BLE001 - an unreadable map only means that no copy is paired.
         commands = f"{type(exc).__name__}: {exc}"
     pairs = pair_validators(counts, listed, baseline.get("checks") or {}, did_not_finish, items, commands,
-                            version_change(before, after), keyed_now | from_export)
+                            version_change(before, after), keyed_now | from_export, killed_checks)
     paired = {("run-gates", row["run_gates"]) for row in pairs if row["paired"]}
     if args.row_report:
         # Rows a sample or a paired copy holds are not counted as renamed by the loop below, so the row report
@@ -2794,9 +2798,10 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                 f"{row['check']}/{row['subcheck'] or '-'} "
                 + (("killed by " + (row.get("signal_name") or "a signal")) if row.get("kind") == "killed"
                    else f"killed after {row['elapsed_seconds']} s" if row["elapsed_seconds"] is not None
-                   else f"killed at its {args.subcheck_timeout_seconds} s limit")
+                   else "killed at the limit")
                 for row in infrastructure)
-            print(f"{plural(len(infrastructure), 'subcheck')} did not finish ({ran}), so what they would "
+            deadline = "" if killed_checks else f" within {args.subcheck_timeout_seconds} s, the limit"
+            print(f"{plural(len(infrastructure), 'subcheck')} did not finish{deadline} ({ran}), so what they would "
                   "report is unknown and this run was not fully verified: it cannot exit 0, and it exits 1 "
                   "unless something above stops the landing. Rerun each on its own and judge what it "
                   "reports by the same rules before pushing main.")

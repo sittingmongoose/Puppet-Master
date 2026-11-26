@@ -2079,11 +2079,12 @@ class RuleThreeTimeouts(LandingRun):
         self.assertIn("New since the baseline: 0", out)
         self.assertIn("Subchecks reporting more failures than the baseline: 0", out)
         self.assertIn("1 infrastructure result among them", out)
-        self.assertIn("2 subchecks did not finish (", out)
+        self.assertIn("2 subchecks did not finish within 180 s, the limit (", out)
         report = json.loads(self.compare("--json", "--subcheck-timeout-seconds", "180")[1])
         self.assertEqual([(r["check"], r["subcheck"], r["elapsed_seconds"], r["limit_seconds"])
                           for r in report["infrastructure"]],
                          [("run-gates", "lint_contractrefs", 180, 180), ("audit-governance", "support_refs", 180, 180)])
+        self.assertTrue(all("kind" not in row for row in report["infrastructure"]))
         self.assertEqual((report["new"], report["grown_subchecks"], report["blocking"]), ([], [], 0))
 
     def test_a_timeout_lifts_exit_zero_to_one_and_leaves_one_and_two_alone(self):
@@ -2325,8 +2326,8 @@ class PairedValidatorCopies(LandingRun):
         self.storage_shape(audit=[timeout_row("validate-implementation-readiness", 600)])
         code, out = self.compare()
         self.assertEqual(code, 1, out)
-        self.assertIn("(33 of 33 printed, 50 of 79 in the baseline): the audit-governance copy did not "
-                      "finish (timed out or killed);", out)
+        self.assertIn("(33 of 33 printed, 50 of 79 in the baseline): the audit-governance copy timed out;",
+                      out)
         self.assertIn("[unknown-pre-existing] run-gates/validate_implementation_readiness", out)
 
     def test_a_run_gates_row_the_audit_governance_copy_lacks_falls_back(self):
@@ -2411,7 +2412,8 @@ class TimeoutsLiftExitZero(LandingRun):
         # The timeout line names the subcheck, how long it ran and the limit.
         self.assertIn("[infrastructure] run-gates/lint_path_refs  subprocess_timeout (lint-path-refs)  "
                       "killed after 1800 s, at its limit of 1800 s", out)
-        self.assertIn("1 subcheck did not finish (run-gates/lint_path_refs killed after 1800 s)", out)
+        self.assertIn("1 subcheck did not finish within 1800 s, the limit "
+                      "(run-gates/lint_path_refs killed after 1800 s)", out)
         self.assertIn("it cannot exit 0", out)
 
     def test_a_complete_run_with_nothing_to_report_still_exits_zero(self):
